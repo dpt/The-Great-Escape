@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B3C4</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html">The Great Escape</a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="45992.html">B3A8</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#46020">Map</a></td>
+<td class="next">Next: <a class="link" href="46049.html">B3E1</a></td>
+</tr>
+</table>
+<div class="description">B3C4: action_poison</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="46020"></a>B3C4</td>
+<td class="instruction">LD HL,($8215)</td>
+<td class="comment">Load items_held.</td>
+</tr>
+<tr>
+<td class="address"><a name="46023"></a>B3C7</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment">Load item_FOOD.</td>
+</tr>
+<tr>
+<td class="address"><a name="46025"></a>B3C9</td>
+<td class="instruction">CP L</td>
+<td class="comment">Is 'low' slot item_FOOD?</td>
+</tr>
+<tr>
+<td class="address"><a name="46026"></a>B3CA</td>
+<td class="instruction">JR Z,$B3CE</td>
+<td class="comment">Yes - goto have_food.</td>
+</tr>
+<tr>
+<td class="address"><a name="46028"></a>B3CC</td>
+<td class="instruction">CP H</td>
+<td class="comment">Is 'high' slot item_FOOD?</td>
+</tr>
+<tr>
+<td class="address"><a name="46029"></a>B3CD</td>
+<td class="instruction">RET NZ</td>
+<td class="comment">No - return.</td>
+</tr>
+<tr>
+<td class="label"><a name="46030"></a>B3CE</td>
+<td class="instruction">LD HL,$76F9</td>
+<td class="comment">have_food: (test a character flag?)</td>
+</tr>
+<tr>
+<td class="address"><a name="46033"></a>B3D1</td>
+<td class="instruction">BIT 5,(HL)</td>
+<td class="comment">Bit 5 set?</td>
+</tr>
+<tr>
+<td class="address"><a name="46035"></a>B3D3</td>
+<td class="instruction">RET NZ</td>
+<td class="comment">Yes - return.</td>
+</tr>
+<tr>
+<td class="address"><a name="46036"></a>B3D4</td>
+<td class="instruction">SET 5,(HL)</td>
+<td class="comment">Set bit 5.</td>
+</tr>
+<tr>
+<td class="address"><a name="46038"></a>B3D6</td>
+<td class="instruction">LD A,$43</td>
+<td class="comment">Set item_attribute: FOOD to bright-purple/black.</td>
+</tr>
+<tr>
+<td class="address"><a name="46040"></a>B3D8</td>
+<td class="instruction">LD ($DD70),A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="46043"></a>B3DB</td>
+<td class="instruction">CALL <a class="link" href="31795.html">$7C33</a></td>
+<td class="comment">draw_all_items()</td>
+</tr>
+<tr>
+<td class="address"><a name="46046"></a>B3DE</td>
+<td class="instruction">JP <a class="link" href="41193.html">$A0E9</a></td>
+<td class="comment">goto increase_morale_by_10_score_by_50</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="45992.html">B3A8</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#46020">Map</a></td>
+<td class="next">Next: <a class="link" href="46049.html">B3E1</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

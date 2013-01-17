@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Data at 7CFC</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html">The Great Escape</a></td>
+<td class="headerText">Data</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="31977.html">7CE9</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31996">Map</a></td>
+<td class="next">Next: <a class="link" href="32021.html">7D15</a></td>
+</tr>
+</table>
+<div class="description">7CFC: message buffer stuff</div>
+<table class="dataDisassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="address"><a name="31996"></a>7CFC</td>
+<td class="instruction">DEFB $FF,$FF,$00,$00,$00,$00,$00,$00</td>
+<td class="dataComment" rowspan="3">message buffer (two starting slack bytes?)</td>
+</tr>
+<tr>
+<td class="address"><a name="32004"></a>7D04</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="32012"></a>7D0C</td>
+<td class="instruction">DEFB $00,$00,$FF</td>
+</tr>
+<tr>
+<td class="address"><a name="32015"></a>7D0F</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">message_display_counter</td>
+</tr>
+<tr>
+<td class="address"><a name="32016"></a>7D10</td>
+<td class="instruction">DEFB $80</td>
+<td class="dataComment">message_display_index</td>
+</tr>
+<tr>
+<td class="address"><a name="32017"></a>7D11</td>
+<td class="instruction">DEFW $7CFE</td>
+<td class="dataComment">message_buffer_pointer</td>
+</tr>
+<tr>
+<td class="address"><a name="32019"></a>7D13</td>
+<td class="instruction">DEFW $0000</td>
+<td class="dataComment">current_message_character</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="31977.html">7CE9</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31996">Map</a></td>
+<td class="next">Next: <a class="link" href="32021.html">7D15</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

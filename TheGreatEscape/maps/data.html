@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Data</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="map">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html">The Great Escape</a></td>
+<td class="headerText">Data</td>
+</tr>
+</table>
+<table class="map">
+<tr>
+<th>Page</th>
+<th>Byte</th>
+<th>Address</th>
+<th>Description</th>
+</tr>
+<tr>
+<td class="mapPage">91</td>
+<td class="mapByte">0</td>
+<td class="data"><a class="link" name="23296" href="../asm/23296.html">5B00</a></td>
+<td class="dataDesc">unknown - probably map data</td>
+</tr>
+<tr>
+<td class="mapPage">104</td>
+<td class="mapByte">160</td>
+<td class="data"><a class="link" name="26784" href="../asm/26784.html">68A0</a></td>
+<td class="dataDesc">indoor_room_index (zero if outdoors)</td>
+</tr>
+<tr>
+<td class="mapPage">104</td>
+<td class="mapByte">161</td>
+<td class="data"><a class="link" name="26785" href="../asm/26785.html">68A1</a></td>
+<td class="dataDesc">current_door</td>
+</tr>
+<tr>
+<td class="mapPage">105</td>
+<td class="mapByte">160</td>
+<td class="data"><a class="link" name="27040" href="../asm/27040.html">69A0</a></td>
+<td class="dataDesc">unknown - fourteen bytes long</td>
+</tr>
+<tr>
+<td class="mapPage">107</td>
+<td class="mapByte">121</td>
+<td class="data"><a class="link" name="27513" href="../asm/27513.html">6B79</a></td>
+<td class="dataDesc">pointers to six beds (beds of active prisoners) (note that the top hut has prisoners permanently in bed)</td>
+</tr>
+<tr>
+<td class="mapPage">107</td>
+<td class="mapByte">133</td>
+<td class="data"><a class="link" name="27525" href="../asm/27525.html">6B85</a></td>
+<td class="dataDesc">four byte structures (which are ranged checked by routine at <a class="link" href="../asm/45727.html">B29F</a>)</td>
+</tr>
+<tr>
+<td class="mapPage">107</td>
+<td class="mapByte">173</td>
+<td class="data"><a class="link" name="27565" href="../asm/27565.html">6BAD</a></td>
+<td class="dataDesc">Rooms and tunnels.</td>
+</tr>
+<tr>
+<td class="mapPage">112</td>
+<td class="mapByte">149</td>
+<td class="data"><a class="link" name="28821" href="../asm/28821.html">7095</a></td>
+<td class="dataDesc">Interior object tile refs.</td>
+</tr>
+<tr>
+<td class="mapPage">118</td>
+<td class="mapByte">18</td>
+<td class="data"><a class="link" name="30226" href="../asm/30226.html">7612</a></td>
+<td class="dataDesc">Characters.</td>
+</tr>
+<tr>
+<td class="mapPage">119</td>
+<td class="mapByte">56</td>
+<td class="data"><a class="link" name="30520" href="../asm/30520.html">7738</a></td>
+<td class="dataDesc">More object tile refs.</td>
+</tr>
+<tr>
+<td class="mapPage">120</td>
+<td class="mapByte">58</td>
+<td class="data"><a class="link" name="30778" href="../asm/30778.html">783A</a></td>
+<td class="dataDesc">unknown - bytes, 156 long, maybe</td>
+</tr>
+<tr>
+<td class="mapPage">120</td>
+<td class="mapByte">214</td>
+<td class="data"><a class="link" name="30934" href="../asm/30934.html">78D6</a></td>
+<td class="dataDesc">four byte structs (&lt;- sub 69DC)</td>
+</tr>
+<tr>
+<td class="mapPage">122</td>
+<td class="mapByte">198</td>
+<td class="data"><a class="link" name="31430" href="../asm/31430.html">7AC6</a></td>
+<td class="dataDesc">unk_7AC6, 3 bytes long (&lt;- solitary)</td>
+</tr>
+<tr>
+<td class="mapPage">123</td>
+<td class="mapByte">22</td>
+<td class="data"><a class="link" name="31510" href="../asm/31510.html">7B16</a></td>
+<td class="dataDesc">item actions jump table</td>
+</tr>
+<tr>
+<td class="mapPage">124</td>
+<td class="mapByte">252</td>
+<td class="data"><a class="link" name="31996" href="../asm/31996.html">7CFC</a></td>
+<td class="dataDesc">message buffer stuff</td>
+</tr>
+<tr>
+<td class="mapPage">125</td>
+<td class="mapByte">205</td>
+<td class="data"><a class="link" name="32205" href="../asm/32205.html">7DCD</a></td>
+<td class="dataDesc">Messages (non-ASCII: encoded to match the font; FF terminated).</td>
+</tr>
+<tr>
+<td class="mapPage">127</td>
+<td class="mapByte">0</td>
+<td class="data"><a class="link" name="32512" href="../asm/32512.html">7F00</a></td>
+<td class="dataDesc">Static tiles (those used on-screen for medals, etc.) 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">163</td>
+<td class="data"><a class="link" name="33187" href="../asm/33187.html">81A3</a></td>
+<td class="dataDesc">mystery byte</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">164</td>
+<td class="data"><a class="link" name="33188" href="../asm/33188.html">81A4</a></td>
+<td class="dataDesc">word_81A4</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">166</td>
+<td class="data"><a class="link" name="33190" href="../asm/33190.html">81A6</a></td>
+<td class="dataDesc">word_81A6</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">168</td>
+<td class="data"><a class="link" name="33192" href="../asm/33192.html">81A8</a></td>
+<td class="dataDesc">word_81A8</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">170</td>
+<td class="data"><a class="link" name="33194" href="../asm/33194.html">81AA</a></td>
+<td class="dataDesc">word_81AA</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">171</td>
+<td class="data"><a class="link" name="33195" href="../asm/33195.html">81AB</a></td>
+<td class="dataDesc">mystery byte</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">172</td>
+<td class="data"><a class="link" name="33196" href="../asm/33196.html">81AC</a></td>
+<td class="dataDesc">word_81AC</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">174</td>
+<td class="data"><a class="link" name="33198" href="../asm/33198.html">81AE</a></td>
+<td class="dataDesc">word_81AE</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">176</td>
+<td class="data"><a class="link" name="33200" href="../asm/33200.html">81B0</a></td>
+<td class="dataDesc">word_81B0</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">178</td>
+<td class="data"><a class="link" name="33202" href="../asm/33202.html">81B2</a></td>
+<td class="dataDesc">byte_81B2</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">179</td>
+<td class="data"><a class="link" name="33203" href="../asm/33203.html">81B3</a></td>
+<td class="dataDesc">byte_81B3</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">180</td>
+<td class="data"><a class="link" name="33204" href="../asm/33204.html">81B4</a></td>
+<td class="dataDesc">byte_81B4</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">181</td>
+<td class="data"><a class="link" name="33205" href="../asm/33205.html">81B5</a></td>
+<td class="dataDesc">map position related 1</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">182</td>
+<td class="data"><a class="link" name="33206" href="../asm/33206.html">81B6</a></td>
+<td class="dataDesc">map position related 2</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">183</td>
+<td class="data"><a class="link" name="33207" href="../asm/33207.html">81B7</a></td>
+<td class="dataDesc">byte_81B7</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">184</td>
+<td class="data"><a class="link" name="33208" href="../asm/33208.html">81B8</a></td>
+<td class="dataDesc">byte_81B8</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">185</td>
+<td class="data"><a class="link" name="33209" href="../asm/33209.html">81B9</a></td>
+<td class="dataDesc">wiresnips_related</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">186</td>
+<td class="data"><a class="link" name="33210" href="../asm/33210.html">81BA</a></td>
+<td class="dataDesc">mystery byte</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">187</td>
+<td class="data"><a class="link" name="33211" href="../asm/33211.html">81BB</a></td>
+<td class="dataDesc">map_position_maybe</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">189</td>
+<td class="data"><a class="link" name="33213" href="../asm/33213.html">81BD</a></td>
+<td class="dataDesc">byte_81BD (&lt;- a_flag_became_nonzero, something_then_decrease_morale)</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">190</td>
+<td class="data"><a class="link" name="33214" href="../asm/33214.html">81BE</a></td>
+<td class="dataDesc">first word of room structure [unsure]</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">191</td>
+<td class="data"><a class="link" name="33215" href="../asm/33215.html">81BF</a></td>
+<td class="dataDesc">byte_81BF (seems to hold many zeroes)</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">214</td>
+<td class="data"><a class="link" name="33238" href="../asm/33238.html">81D6</a></td>
+<td class="dataDesc">door related (&lt;- indoors maybe, &lt;- open door)</td>
+</tr>
+<tr>
+<td class="mapPage">129</td>
+<td class="mapByte">218</td>
+<td class="data"><a class="link" name="33242" href="../asm/33242.html">81DA</a></td>
+<td class="dataDesc">unk_81DA (&lt;- select_room_maybe, sub_B916)</td>
+</tr>
+<tr>
+<td class="mapPage">130</td>
+<td class="mapByte">19</td>
+<td class="data"><a class="link" name="33299" href="../asm/33299.html">8213</a></td>
+<td class="dataDesc">possibly holds an item</td>
+</tr>
+<tr>
+<td class="mapPage">130</td>
+<td class="mapByte">20</td>
+<td class="data"><a class="link" name="33300" href="../asm/33300.html">8214</a></td>
+<td class="dataDesc">byte_8214</td>
+</tr>
+<tr>
+<td class="mapPage">130</td>
+<td class="mapByte">21</td>
+<td class="data"><a class="link" name="33301" href="../asm/33301.html">8215</a></td>
+<td class="dataDesc">items held (two byte slots. initialised to 0xFFFF meaning no item in either slot)</td>
+</tr>
+<tr>
+<td class="mapPage">130</td>
+<td class="mapByte">23</td>
+<td class="data"><a class="link" name="33303" href="../asm/33303.html">8217</a></td>
+<td class="dataDesc">character_index</td>
+</tr>
+<tr>
+<td class="mapPage">130</td>
+<td class="mapByte">24</td>
+<td class="data"><a class="link" name="33304" href="../asm/33304.html">8218</a></td>
+<td class="dataDesc">tiles. starts with building masks.</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">47</td>
+<td class="data"><a class="link" name="41263" href="../asm/41263.html">A12F</a></td>
+<td class="dataDesc">game_counter: counts 00..FF then wraps.</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">48</td>
+<td class="data"><a class="link" name="41264" href="../asm/41264.html">A130</a></td>
+<td class="dataDesc">bell</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">49</td>
+<td class="data"><a class="link" name="41265" href="../asm/41265.html">A131</a></td>
+<td class="dataDesc">mystery byte</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">50</td>
+<td class="data"><a class="link" name="41266" href="../asm/41266.html">A132</a></td>
+<td class="dataDesc">score_digits</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">55</td>
+<td class="data"><a class="link" name="41271" href="../asm/41271.html">A137</a></td>
+<td class="dataDesc">byte_A137</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">56</td>
+<td class="data"><a class="link" name="41272" href="../asm/41272.html">A138</a></td>
+<td class="dataDesc">naughty_flag_perhaps</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">57</td>
+<td class="data"><a class="link" name="41273" href="../asm/41273.html">A139</a></td>
+<td class="dataDesc">morale_related_also</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">58</td>
+<td class="data"><a class="link" name="41274" href="../asm/41274.html">A13A</a></td>
+<td class="dataDesc">morale_related</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">60</td>
+<td class="data"><a class="link" name="41276" href="../asm/41276.html">A13C</a></td>
+<td class="dataDesc">morale</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">61</td>
+<td class="data"><a class="link" name="41277" href="../asm/41277.html">A13D</a></td>
+<td class="dataDesc">dispatch_counter</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">62</td>
+<td class="data"><a class="link" name="41278" href="../asm/41278.html">A13E</a></td>
+<td class="dataDesc">byte_A13E</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">63</td>
+<td class="data"><a class="link" name="41279" href="../asm/41279.html">A13F</a></td>
+<td class="dataDesc">bed_related_perhaps</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">64</td>
+<td class="data"><a class="link" name="41280" href="../asm/41280.html">A140</a></td>
+<td class="dataDesc">displayed_morale_maybe [displayed morale lags behind actual morale, as the flag moves slowly to its target]</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">65</td>
+<td class="data"><a class="link" name="41281" href="../asm/41281.html">A141</a></td>
+<td class="dataDesc">moraleflag_screen_address</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">67</td>
+<td class="data"><a class="link" name="41283" href="../asm/41283.html">A143</a></td>
+<td class="dataDesc">ptr_to_door_being_lockpicked: address of door in which bit 7 is cleared when picked</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">69</td>
+<td class="data"><a class="link" name="41285" href="../asm/41285.html">A145</a></td>
+<td class="dataDesc">user_locked_out_until: game time until user control is restored (e.g. when picking a lock or cutting wire)</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">70</td>
+<td class="data"><a class="link" name="41286" href="../asm/41286.html">A146</a></td>
+<td class="dataDesc">a_flag [unknown]  seems to be reset each day, might influence which parcels arrive</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">71</td>
+<td class="data"><a class="link" name="41287" href="../asm/41287.html">A147</a></td>
+<td class="dataDesc">bell ringing bitmaps</td>
+</tr>
+<tr>
+<td class="mapPage">161</td>
+<td class="mapByte">115</td>
+<td class="data"><a class="link" name="41331" href="../asm/41331.html">A173</a></td>
+<td class="dataDesc">timed_events array (15 event structures)</td>
+</tr>
+<tr>
+<td class="mapPage">162</td>
+<td class="mapByte">127</td>
+<td class="data"><a class="link" name="41599" href="../asm/41599.html">A27F</a></td>
+<td class="dataDesc">tenlong [unsure] (&lt;- sub_A35F, sub_A373)</td>
+</tr>
+<tr>
+<td class="mapPage">165</td>
+<td class="mapByte">206</td>
+<td class="data"><a class="link" name="42446" href="../asm/42446.html">A5CE</a></td>
+<td class="dataDesc">Screenlocstrings (screen address + string).</td>
+</tr>
+<tr>
+<td class="mapPage">166</td>
+<td class="mapByte">158</td>
+<td class="data"><a class="link" name="42654" href="../asm/42654.html">A69E</a></td>
+<td class="dataDesc">bitmap font: 0..9, A..Z (omitting O), space, full stop</td>
+</tr>
+<tr>
+<td class="mapPage">167</td>
+<td class="mapByte">198</td>
+<td class="data"><a class="link" name="42950" href="../asm/42950.html">A7C6</a></td>
+<td class="dataDesc">used by sub_AAFF</td>
+</tr>
+<tr>
+<td class="mapPage">167</td>
+<td class="mapByte">199</td>
+<td class="data"><a class="link" name="42951" href="../asm/42951.html">A7C7</a></td>
+<td class="dataDesc">plot_game_screen_x</td>
+</tr>
+<tr>
+<td class="mapPage">171</td>
+<td class="mapByte">49</td>
+<td class="data"><a class="link" name="43825" href="../asm/43825.html">AB31</a></td>
+<td class="dataDesc">jump table of (map_move_1, 2, 3, 4)</td>
+</tr>
+<tr>
+<td class="mapPage">171</td>
+<td class="mapByte">102</td>
+<td class="data"><a class="link" name="43878" href="../asm/43878.html">AB66</a></td>
+<td class="dataDesc">Zoombox (scene transition) stuff.</td>
+</tr>
+<tr>
+<td class="mapPage">173</td>
+<td class="mapByte">41</td>
+<td class="data"><a class="link" name="44329" href="../asm/44329.html">AD29</a></td>
+<td class="dataDesc">word_AD29</td>
+</tr>
+<tr>
+<td class="mapPage">174</td>
+<td class="mapByte">117</td>
+<td class="data"><a class="link" name="44661" href="../asm/44661.html">AE75</a></td>
+<td class="dataDesc">searchlight_related (&lt;- a_flag_became_nonzero, searchlight)</td>
+</tr>
+<tr>
+<td class="mapPage">174</td>
+<td class="mapByte">118</td>
+<td class="data"><a class="link" name="44662" href="../asm/44662.html">AE76</a></td>
+<td class="dataDesc">word_AE76 (&lt;- a_flag_became_nonzero)</td>
+</tr>
+<tr>
+<td class="mapPage">175</td>
+<td class="mapByte">142</td>
+<td class="data"><a class="link" name="44942" href="../asm/44942.html">AF8E</a></td>
+<td class="dataDesc">bribe_related</td>
+</tr>
+<tr>
+<td class="mapPage">176</td>
+<td class="mapByte">248</td>
+<td class="data"><a class="link" name="45304" href="../asm/45304.html">B0F8</a></td>
+<td class="dataDesc">four bytes (&lt;- sub_AFDF)</td>
+</tr>
+<tr>
+<td class="mapPage">181</td>
+<td class="mapByte">62</td>
+<td class="data"><a class="link" name="46398" href="../asm/46398.html">B53E</a></td>
+<td class="dataDesc">sixlong_things</td>
+</tr>
+<tr>
+<td class="mapPage">181</td>
+<td class="mapByte">78</td>
+<td class="data"><a class="link" name="46414" href="../asm/46414.html">B54E</a></td>
+<td class="dataDesc">wiresnips_related_table</td>
+</tr>
+<tr>
+<td class="mapPage">184</td>
+<td class="mapByte">25</td>
+<td class="data"><a class="link" name="47129" href="../asm/47129.html">B819</a></td>
+<td class="dataDesc">10 x 3-byte structs</td>
+</tr>
+<tr>
+<td class="mapPage">184</td>
+<td class="mapByte">55</td>
+<td class="data"><a class="link" name="47159" href="../asm/47159.html">B837</a></td>
+<td class="dataDesc">byte_B837</td>
+</tr>
+<tr>
+<td class="mapPage">184</td>
+<td class="mapByte">56</td>
+<td class="data"><a class="link" name="47160" href="../asm/47160.html">B838</a></td>
+<td class="dataDesc">byte_B838</td>
+</tr>
+<tr>
+<td class="mapPage">184</td>
+<td class="mapByte">57</td>
+<td class="data"><a class="link" name="47161" href="../asm/47161.html">B839</a></td>
+<td class="dataDesc">word_B839</td>
+</tr>
+<tr>
+<td class="mapPage">188</td>
+<td class="mapByte">238</td>
+<td class="data"><a class="link" name="48366" href="../asm/48366.html">BCEE</a></td>
+<td class="dataDesc">HUGE block of unknown data!</td>
+</tr>
+<tr>
+<td class="mapPage">196</td>
+<td class="mapByte">26</td>
+<td class="data"><a class="link" name="50202" href="../asm/50202.html">C41A</a></td>
+<td class="dataDesc">(&lt;- increment_word_C41A_low_byte_wrapping_at_15)</td>
+</tr>
+<tr>
+<td class="mapPage">200</td>
+<td class="mapByte">145</td>
+<td class="data"><a class="link" name="51345" href="../asm/51345.html">C891</a></td>
+<td class="dataDesc">(&lt;- called_from_main_loop_5, sub_CA81)</td>
+</tr>
+<tr>
+<td class="mapPage">204</td>
+<td class="mapByte">49</td>
+<td class="data"><a class="link" name="52273" href="../asm/52273.html">CC31</a></td>
+<td class="dataDesc">reset_data (&lt;- solitary)</td>
+</tr>
+<tr>
+<td class="mapPage">205</td>
+<td class="mapByte">106</td>
+<td class="data"><a class="link" name="52586" href="../asm/52586.html">CD6A</a></td>
+<td class="dataDesc">item_data_related (16 groups of 3 bytes)</td>
+</tr>
+<tr>
+<td class="mapPage">206</td>
+<td class="mapByte">34</td>
+<td class="data"><a class="link" name="52770" href="../asm/52770.html">CE22</a></td>
+<td class="dataDesc">Sprite definitions -- objects which can move.</td>
+</tr>
+<tr>
+<td class="mapPage">208</td>
+<td class="mapByte">38</td>
+<td class="data"><a class="link" name="53286" href="../asm/53286.html">D026</a></td>
+<td class="dataDesc">Sprite bitmaps and masks.</td>
+</tr>
+<tr>
+<td class="mapPage">221</td>
+<td class="mapByte">105</td>
+<td class="data"><a class="link" name="56681" href="../asm/56681.html">DD69</a></td>
+<td class="dataDesc">Item attributes -- 20 bytes, 4 of which are unknown, possibly unused.</td>
+</tr>
+<tr>
+<td class="mapPage">221</td>
+<td class="mapByte">125</td>
+<td class="data"><a class="link" name="56701" href="../asm/56701.html">DD7D</a></td>
+<td class="dataDesc">Item definitions.</td>
+</tr>
+<tr>
+<td class="mapPage">221</td>
+<td class="mapByte">221</td>
+<td class="data"><a class="link" name="56797" href="../asm/56797.html">DDDD</a></td>
+<td class="dataDesc">Item bitmaps and masks.</td>
+</tr>
+<tr>
+<td class="mapPage">224</td>
+<td class="mapByte">224</td>
+<td class="data"><a class="link" name="57568" href="../asm/57568.html">E0E0</a></td>
+<td class="dataDesc">pairs_of_offsets (jumps0..5) (&lt;- sub_DC41, sub_E420)</td>
+</tr>
+<tr>
+<td class="mapPage">224</td>
+<td class="mapByte">236</td>
+<td class="data"><a class="link" name="57580" href="../asm/57580.html">E0EC</a></td>
+<td class="dataDesc">pairs_of_offsets2 (&lt;- sub_E420)</td>
+</tr>
+<tr>
+<td class="mapPage">229</td>
+<td class="mapByte">95</td>
+<td class="data"><a class="link" name="58719" href="../asm/58719.html">E55F</a></td>
+<td class="dataDesc">probably tile data</td>
+</tr>
+<tr>
+<td class="mapPage">234</td>
+<td class="mapByte">116</td>
+<td class="data"><a class="link" name="60020" href="../asm/60020.html">EA74</a></td>
+<td class="dataDesc">(&lt;- sub_68A2)</td>
+</tr>
+<tr>
+<td class="mapPage">234</td>
+<td class="mapByte">124</td>
+<td class="data"><a class="link" name="60028" href="../asm/60028.html">EA7C</a></td>
+<td class="dataDesc">stru_EA7C - 47 x seven byte structs</td>
+</tr>
+<tr>
+<td class="mapPage">235</td>
+<td class="mapByte">197</td>
+<td class="data"><a class="link" name="60357" href="../asm/60357.html">EBC5</a></td>
+<td class="dataDesc">Table of pointers, 30 long, to byte arrays [unsure]  -- probably tiles</td>
+</tr>
+<tr>
+<td class="mapPage">236</td>
+<td class="mapByte">1</td>
+<td class="data"><a class="link" name="60417" href="../asm/60417.html">EC01</a></td>
+<td class="dataDesc">58 8-byte structs.</td>
+</tr>
+<tr>
+<td class="mapPage">237</td>
+<td class="mapByte">209</td>
+<td class="data"><a class="link" name="60881" href="../asm/60881.html">EDD1</a></td>
+<td class="dataDesc">saved_sp</td>
+</tr>
+<tr>
+<td class="mapPage">237</td>
+<td class="mapByte">211</td>
+<td class="data"><a class="link" name="60883" href="../asm/60883.html">EDD3</a></td>
+<td class="dataDesc">game screen scanline start addresses</td>
+</tr>
+<tr>
+<td class="mapPage">239</td>
+<td class="mapByte">249</td>
+<td class="data"><a class="link" name="61433" href="../asm/61433.html">EFF9</a></td>
+<td class="dataDesc">word_EFF9 (&lt;- action papers)</td>
+</tr>
+<tr>
+<td class="mapPage">240</td>
+<td class="mapByte">20</td>
+<td class="data"><a class="link" name="61460" href="../asm/61460.html">F014</a></td>
+<td class="dataDesc">menu screenlocstrings.</td>
+</tr>
+<tr>
+<td class="mapPage">240</td>
+<td class="mapByte">93</td>
+<td class="data"><a class="link" name="61533" href="../asm/61533.html">F05D</a></td>
+<td class="dataDesc">Gates and doors.</td>
+</tr>
+<tr>
+<td class="mapPage">240</td>
+<td class="mapByte">107</td>
+<td class="data"><a class="link" name="61547" href="../asm/61547.html">F06B</a></td>
+<td class="dataDesc">key_defs -- user-configured keys</td>
+</tr>
+<tr>
+<td class="mapPage">240</td>
+<td class="mapByte">118</td>
+<td class="data"><a class="link" name="61558" href="../asm/61558.html">F076</a></td>
+<td class="dataDesc">tile refs for statics</td>
+</tr>
+<tr>
+<td class="mapPage">241</td>
+<td class="mapByte">201</td>
+<td class="data"><a class="link" name="61897" href="../asm/61897.html">F1C9</a></td>
+<td class="dataDesc">twenty three bytes [unsure] -- main copies this somewhere</td>
+</tr>
+<tr>
+<td class="mapPage">242</td>
+<td class="mapByte">173</td>
+<td class="data"><a class="link" name="62125" href="../asm/62125.html">F2AD</a></td>
+<td class="dataDesc">Key choice prompt strings. (encoded to match font; first byte is count).</td>
+</tr>
+<tr>
+<td class="mapPage">242</td>
+<td class="mapByte">225</td>
+<td class="data"><a class="link" name="62177" href="../asm/62177.html">F2E1</a></td>
+<td class="dataDesc">unk_F2E1 (&lt;- choose_keys)</td>
+</tr>
+<tr>
+<td class="mapPage">242</td>
+<td class="mapByte">226</td>
+<td class="data"><a class="link" name="62178" href="../asm/62178.html">F2E2</a></td>
+<td class="dataDesc">keyboard port hi bytes (zero terminated)</td>
+</tr>
+<tr>
+<td class="mapPage">242</td>
+<td class="mapByte">235</td>
+<td class="data"><a class="link" name="62187" href="../asm/62187.html">F2EB</a></td>
+<td class="dataDesc">Counted strings (encoded to match font; first byte is count).</td>
+</tr>
+<tr>
+<td class="mapPage">243</td>
+<td class="mapByte">3</td>
+<td class="data"><a class="link" name="62211" href="../asm/62211.html">F303</a></td>
+<td class="dataDesc">key tables</td>
+</tr>
+<tr>
+<td class="mapPage">243</td>
+<td class="mapByte">43</td>
+<td class="data"><a class="link" name="62251" href="../asm/62251.html">F32B</a></td>
+<td class="dataDesc">screen address for chosen key names (5 long)</td>
+</tr>
+<tr>
+<td class="mapPage">244</td>
+<td class="mapByte">61</td>
+<td class="data"><a class="link" name="62525" href="../asm/62525.html">F43D</a></td>
+<td class="dataDesc">inputroutines -- array [4] of pointers to input routines</td>
+</tr>
+<tr>
+<td class="mapPage">244</td>
+<td class="mapByte">69</td>
+<td class="data"><a class="link" name="62533" href="../asm/62533.html">F445</a></td>
+<td class="dataDesc">chosen_input_device -- 0/1/2/3 keyboard/kempston/sinclair/protek</td>
+</tr>
+<tr>
+<td class="mapPage">244</td>
+<td class="mapByte">70</td>
+<td class="data"><a class="link" name="62534" href="../asm/62534.html">F446</a></td>
+<td class="dataDesc">key choice screenlocstrings.</td>
+</tr>
+<tr>
+<td class="mapPage">250</td>
+<td class="mapByte">72</td>
+<td class="data"><a class="link" name="64072" href="../asm/64072.html">FA48</a></td>
+<td class="dataDesc">music tuning table</td>
+</tr>
+<tr>
+<td class="mapPage">254</td>
+<td class="mapByte">244</td>
+<td class="data"><a class="link" name="65268" href="../asm/65268.html">FEF4</a></td>
+<td class="dataDesc">A block starting with NOPs.</td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

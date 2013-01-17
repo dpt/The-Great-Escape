@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at F335</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html">The Great Escape</a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="62251.html">F32B</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#62261">Map</a></td>
+<td class="next">Next: <a class="link" href="62288.html">F350</a></td>
+</tr>
+</table>
+<div class="description">F335: wipe_game_screen</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="62288.html">F350</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="62261"></a>F335</td>
+<td class="instruction">DI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62262"></a>F336</td>
+<td class="instruction">LD ($EDD1),SP</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62266"></a>F33A</td>
+<td class="instruction">LD SP,$EDD3</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62269"></a>F33D</td>
+<td class="instruction">LD A,$80</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="62271"></a>F33F</td>
+<td class="instruction">POP HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62272"></a>F340</td>
+<td class="instruction">LD B,$17</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="62274"></a>F342</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62276"></a>F344</td>
+<td class="instruction">INC L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62277"></a>F345</td>
+<td class="instruction">DJNZ $F342</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62279"></a>F347</td>
+<td class="instruction">DEC A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62280"></a>F348</td>
+<td class="instruction">JP NZ,$F33F</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62283"></a>F34B</td>
+<td class="instruction">LD SP,($EDD1)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="62287"></a>F34F</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="62251.html">F32B</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#62261">Map</a></td>
+<td class="next">Next: <a class="link" href="62288.html">F350</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

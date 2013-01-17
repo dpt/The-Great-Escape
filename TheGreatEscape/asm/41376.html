@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A1A0</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html">The Great Escape</a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="41331.html">A173</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41376">Map</a></td>
+<td class="next">Next: <a class="link" href="41411.html">A1C3</a></td>
+</tr>
+</table>
+<div class="description">A1A0: dispatch_table_thing // dispatches time-based game events like parcels, meals, exercise and roll calls</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40312.html">9D78</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="41376"></a>A1A0</td>
+<td class="instruction">LD HL,$A13D</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41379"></a>A1A3</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41380"></a>A1A4</td>
+<td class="instruction">INC A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41381"></a>A1A5</td>
+<td class="instruction">CP $8C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41383"></a>A1A7</td>
+<td class="instruction">JR NZ,$A1AA</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41385"></a>A1A9</td>
+<td class="instruction">XOR A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="41386"></a>A1AA</td>
+<td class="instruction">LD (HL),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41387"></a>A1AB</td>
+<td class="instruction">LD HL,$A173</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41390"></a>A1AE</td>
+<td class="instruction">LD B,$0F</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="41392"></a>A1B0</td>
+<td class="instruction">CP (HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41393"></a>A1B1</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41394"></a>A1B2</td>
+<td class="instruction">JR Z,$A1B9</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41396"></a>A1B4</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41397"></a>A1B5</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41398"></a>A1B6</td>
+<td class="instruction">DJNZ $A1B0</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41400"></a>A1B8</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="41401"></a>A1B9</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41402"></a>A1BA</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41403"></a>A1BB</td>
+<td class="instruction">LD H,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41404"></a>A1BC</td>
+<td class="instruction">LD L,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41405"></a>A1BD</td>
+<td class="instruction">LD A,$28</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41407"></a>A1BF</td>
+<td class="instruction">LD BC,$A130</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41410"></a>A1C2</td>
+<td class="instruction">JP (HL)</td>
+<td class="transparentComment" />
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="41331.html">A173</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41376">Map</a></td>
+<td class="next">Next: <a class="link" href="41411.html">A1C3</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

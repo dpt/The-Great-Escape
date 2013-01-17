@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A007</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html">The Great Escape</a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40737.html">9F21</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40967">Map</a></td>
+<td class="next">Next: <a class="link" href="41013.html">A035</a></td>
+</tr>
+</table>
+<div class="description">A007: a second in permitted area entry point</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40737.html">9F21</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="40967"></a>A007</td>
+<td class="instruction">LD HL,$68A0</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40970"></a>A00A</td>
+<td class="instruction">BIT 7,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40972"></a>A00C</td>
+<td class="instruction">JR Z,$A012</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40974"></a>A00E</td>
+<td class="instruction">AND $7F</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40976"></a>A010</td>
+<td class="instruction">CP (HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40977"></a>A011</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="40978"></a>A012</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40979"></a>A013</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40980"></a>A014</td>
+<td class="instruction">AND A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40981"></a>A015</td>
+<td class="instruction">RET NZ</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40982"></a>A016</td>
+<td class="instruction">LD DE,$81B8</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40985"></a>A019</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="40986"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="52120.html">CB98</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">A01A</td>
+<td class="instruction">ADD A,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40987"></a>A01B</td>
+<td class="instruction">ADD A,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40988"></a>A01C</td>
+<td class="instruction">LD C,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40989"></a>A01D</td>
+<td class="instruction">LD B,$00</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40991"></a>A01F</td>
+<td class="instruction">LD HL,$9F15</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40994"></a>A022</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40995"></a>A023</td>
+<td class="instruction">LD B,$02</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="40997"></a>A025</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40998"></a>A026</td>
+<td class="instruction">CP (HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="40999"></a>A027</td>
+<td class="instruction">RET C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41000"></a>A028</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41001"></a>A029</td>
+<td class="instruction">CP (HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41002"></a>A02A</td>
+<td class="instruction">JR C,$A02F</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41004"></a>A02C</td>
+<td class="instruction">OR $01</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41006"></a>A02E</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="41007"></a>A02F</td>
+<td class="instruction">INC DE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41008"></a>A030</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41009"></a>A031</td>
+<td class="instruction">DJNZ $A025</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41011"></a>A033</td>
+<td class="instruction">AND B</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="41012"></a>A034</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40737.html">9F21</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40967">Map</a></td>
+<td class="next">Next: <a class="link" href="41013.html">A035</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A38C</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html">The Great Escape</a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="41843.html">A373</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41868">Map</a></td>
+<td class="next">Next: <a class="link" href="41898.html">A3AA</a></td>
+</tr>
+</table>
+<div class="description">A38C: sub_A38C</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="41578.html">A26A</a>, <a class="link" href="41823.html">A35F</a> and <a class="link" href="41843.html">A373</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="41868"></a>A38C</td>
+<td class="instruction">CALL <a class="link" href="51129.html">$C7B9</a></td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41871"></a>A38F</td>
+<td class="instruction">BIT 6,(HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41873"></a>A391</td>
+<td class="instruction">JP Z,<a class="link" href="41898.html">$A3AA</a></td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41876"></a>A394</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41877"></a>A395</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41878"></a>A396</td>
+<td class="instruction">AND $1F</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41880"></a>A398</td>
+<td class="instruction">LD B,$07</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41882"></a>A39A</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41885"></a>A39D</td>
+<td class="instruction">LD HL,$8020</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="label"><a name="41888"></a>A3A0</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41889"></a>A3A1</td>
+<td class="instruction">JR Z,<a class="link" href="41907.html">$A3B3</a></td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41891"></a>A3A3</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41892"></a>A3A4</td>
+<td class="instruction">DJNZ $A3A0</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41894"></a>A3A6</td>
+<td class="instruction">POP BC</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41895"></a>A3A7</td>
+<td class="instruction">JR <a class="link" href="41898.html#41906">$A3B2</a></td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="41897"></a>A3A9</td>
+<td class="instruction">DEFB $19</td>
+<td class="comment">mystery byte</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="41843.html">A373</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41868">Map</a></td>
+<td class="next">Next: <a class="link" href="41898.html">A3AA</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>
