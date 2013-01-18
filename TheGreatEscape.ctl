@@ -4,11 +4,18 @@
 ; This disassembly copyright (c) David Thomas, 2012-2013. <dave@davespace.co.uk>
 ;
 ; To build the HTML disassembly, create a z80 snapshot of The Great Escape
-; named TheGreatEscape.sna, and run these commands from the top-level SkoolKit
+; named TheGreatEscape.z80, and run these commands from the top-level SkoolKit
 ; directory:
-;   ./sna2skool.py -c TheGreatEscape.ctl TheGreatEscape.sna > TheGreatEscape.skool
+;   ./sna2skool.py -c TheGreatEscape.ctl TheGreatEscape.z80 > TheGreatEscape.skool
 ;   ./skool2html.py TheGreatEscape.ref
 ;
+; To create a snapshot which preserves the loading screen, breakpoint $F068 and
+; alter that to jump to itself. Save the snapshot in Z80 format. Use a hex
+; editor on the .z80 to restore the bytes to their former values (JP $F163).
+
+; ------------------------------------------------------------------------------
+
+b $4000 Screen.
 
 ; ------------------------------------------------------------------------------
 
