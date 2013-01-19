@@ -969,52 +969,53 @@ B $7838 Object tile refs
 
 ; Characters.
 ;
-b $7612 Characters.
+b $7612 character_structs.
 D $7612 Array, 26 long, of 7-byte structures.
-B $7612 character_0
-B $7619 character_1
-B $7620 character_2
-B $7627 character_3
-B $762E character_4
-B $7635 character_5
-B $763C character_6
-B $7643 character_7: prisoner who sleeps at bed position A
-B $764A character_8: prisoner who sleeps at bed position B
-B $7651 character_9: prisoner who sleeps at bed position C
-B $7658 character_10: prisoner who sleeps at bed position D
-B $765F character_11: prisoner who sleeps at bed position E
-B $7666 character_12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
-B $766D character_13:
-B $7674 character_14:
-B $767B character_15:
-B $7682 character_16:
-B $7689 character_17:
-B $7690 character_18: prisoner who sits at bench position D
-B $7697 character_19: prisoner who sits at bench position E
-B $769E character_20: prisoner who sits at bench position F (<- sub_A289)
-B $76A5 character_21: prisoner who sits at bench position A
-B $76AC character_22: prisoner who sits at bench position B
-B $76B3 character_23: prisoner who sits at bench position C
-B $76BA character_24:
-B $76C1 character_25:
+B $7612 characterstruct_0:
+B $7619 characterstruct_1:
+B $7620 characterstruct_2:
+B $7627 characterstruct_3:
+B $762E characterstruct_4:
+B $7635 characterstruct_5:
+B $763C characterstruct_6:
+B $7643 characterstruct_7: prisoner who sleeps at bed position A
+B $764A characterstruct_8: prisoner who sleeps at bed position B
+B $7651 characterstruct_9: prisoner who sleeps at bed position C
+B $7658 characterstruct_10: prisoner who sleeps at bed position D
+B $765F characterstruct_11: prisoner who sleeps at bed position E
+B $7666 characterstruct_12: p butrisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
+B $766D characterstruct_13:
+B $7674 characterstruct_14:
+B $767B characterstruct_15:
+B $7682 characterstruct_16:
+B $7689 characterstruct_17:
+B $7690 characterstruct_18: prisoner who sits at bench position D
+B $7697 characterstruct_19: prisoner who sits at bench position E
+B $769E characterstruct_20: prisoner who sits at bench position F (<- sub_A289)
+B $76A5 characterstruct_21: prisoner who sits at bench position A
+B $76AC characterstruct_22: prisoner who sits at bench position B
+B $76B3 characterstruct_23: prisoner who sits at bench position C
+B $76BA characterstruct_24:
+B $76C1 characterstruct_25:
 ;
-D $77C8 Array, 16 long, of 7-byte structures. These 'characters' seem to be the game items.
-B $76C8 (wiresnips) (<- item_to_thing, pick_up_related)
-B $76CF (shovel)
-B $76D6 (lockpick)
-B $76DD (papers)
-B $76E4 (torch)
-B $76EB (bribe) (<- sub_B107)
-B $76F2 (uniform)
-B $76F9 (food) (<- action_poison, called_from_main_loop)
-B $7700 (poison)
-B $7707 (red key)
-B $770E (yellow key)
-B $7715 (green key)
-B $771C (red cross parcel) (<- event_new_red_cross_parcel, new_red_cross_parcel)  is the parcel a 'character'?
-B $7723 (radio)
-B $772A (purse)
-B $7731 (compass)
+b $77C8 item_structs.
+D $77C8 Array, 16 long, of 7-byte structures. These are 'characters' but seem to be the game items.
+B $76C8 itemstruct_0: wiresnips (<- item_to_thing, pick_up_related)
+B $76CF itemstruct_1: shovel
+B $76D6 itemstruct_2: lockpick
+B $76DD itemstruct_3: papers
+B $76E4 itemstruct_4: torch
+B $76EB itemstruct_5: bribe (<- use_bribe)
+B $76F2 itemstruct_6: uniform
+B $76F9 itemstruct_7: food (<- action_poison, called_from_main_loop)
+B $7700 itemstruct_8: poison
+B $7707 itemstruct_9: red key
+B $770E itemstruct_10: yellow key
+B $7715 itemstruct_11: green key
+B $771C itemstruct_12: red cross parcel (<- event_new_red_cross_parcel, new_red_cross_parcel)
+B $7723 itemstruct_13: radio
+B $772A itemstruct_14: purse
+B $7731 itemstruct_15: compass
 
 ; ------------------------------------------------------------------------------
 
