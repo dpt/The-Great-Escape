@@ -1422,11 +1422,11 @@ w $8215 items held (two byte slots. initialised to 0xFFFF meaning no item in eit
 b $8217 character_index
 
 b $8218 tiles. starts with building masks.
-D $8218 #UDGARRAY1,7,4,1;$8218-$858F-8(exterior-tiles0)
-D $8590 #UDGARRAY1,7,4,1;$8590-$8A17-8(exterior-tiles1)
-D $8A18 #UDGARRAY1,7,4,1;$8A18-$90F7-8(exterior-tiles2)
-D $90F8 #UDGARRAY1,7,4,1;$90F8-$988F-8(exterior-tiles3)
-D $9890 #UDGARRAY1,7,4,1;$9890-$9D77-8(interior-tiles0)
+D $8218 #UDGARRAY1,7,4,1;$8218-$858F-8(exterior-tiles0) 111 tiles
+D $8590 #UDGARRAY1,7,4,1;$8590-$8A17-8(exterior-tiles1) 145 tiles
+D $8A18 #UDGARRAY1,7,4,1;$8A18-$90F7-8(exterior-tiles2) 220 tiles
+D $90F8 #UDGARRAY1,7,4,1;$90F8-$988F-8(exterior-tiles3) 243 tiles
+D $9890 #UDGARRAY1,7,4,1;$9890-$9D77-8(interior-tiles0) 157 tiles
 
 B $8218,8 start of mask tiles, could be for hut? (<- plot_a_tile_perhaps)
 B $8590,8 start of hut tiles (<- plot_a_tile_perhaps)
