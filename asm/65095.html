@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at FE47</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="65024.html">FE00</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#65095">Map</a></td>
+<td class="next">Next: <a class="link" href="65150.html">FE7E</a></td>
+</tr>
+</table>
+<div class="description">FE47: inputroutine_protek</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Input routine: Protek joystick.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="65095"></a>FE47</td>
+<td class="instruction">LD BC,$F7FE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65098"></a>FE4A</td>
+<td class="instruction">IN A,(C)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65100"></a>FE4C</td>
+<td class="instruction">CPL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65101"></a>FE4D</td>
+<td class="instruction">AND $10</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65103"></a>FE4F</td>
+<td class="instruction">LD E,$03</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65105"></a>FE51</td>
+<td class="instruction">LD B,$EF</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65107"></a>FE53</td>
+<td class="instruction">JR NZ,$FE60</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65109"></a>FE55</td>
+<td class="instruction">IN A,(C)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65111"></a>FE57</td>
+<td class="instruction">CPL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65112"></a>FE58</td>
+<td class="instruction">AND $04</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65114"></a>FE5A</td>
+<td class="instruction">LD E,$06</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65116"></a>FE5C</td>
+<td class="instruction">JR NZ,$FE60</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65118"></a>FE5E</td>
+<td class="instruction">LD E,$00</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="65120"></a>FE60</td>
+<td class="instruction">IN A,(C)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65122"></a>FE62</td>
+<td class="instruction">CPL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65123"></a>FE63</td>
+<td class="instruction">LD D,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65124"></a>FE64</td>
+<td class="instruction">AND $08</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65126"></a>FE66</td>
+<td class="instruction">LD A,$01</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65128"></a>FE68</td>
+<td class="instruction">JR NZ,$FE72</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65130"></a>FE6A</td>
+<td class="instruction">LD A,D</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65131"></a>FE6B</td>
+<td class="instruction">AND $10</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65133"></a>FE6D</td>
+<td class="instruction">LD A,$02</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65135"></a>FE6F</td>
+<td class="instruction">JR NZ,$FE72</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65137"></a>FE71</td>
+<td class="instruction">XOR A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="65138"></a>FE72</td>
+<td class="instruction">ADD A,E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65139"></a>FE73</td>
+<td class="instruction">LD E,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65140"></a>FE74</td>
+<td class="instruction">LD A,D</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65141"></a>FE75</td>
+<td class="instruction">AND $01</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65143"></a>FE77</td>
+<td class="instruction">LD A,$09</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65145"></a>FE79</td>
+<td class="instruction">JR NZ,$FE7C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65147"></a>FE7B</td>
+<td class="instruction">XOR A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="65148"></a>FE7C</td>
+<td class="instruction">ADD A,E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="65149"></a>FE7D</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="65024.html">FE00</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#65095">Map</a></td>
+<td class="next">Next: <a class="link" href="65150.html">FE7E</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

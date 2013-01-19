@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B32D</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="45820.html">B2FC</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#45869">Map</a></td>
+<td class="next">Next: <a class="link" href="45959.html">B387</a></td>
+</tr>
+</table>
+<div class="description">B32D: indoors [unsure]</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="45557.html">B1F5</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="45869"></a>B32D</td>
+<td class="instruction">LD HL,$81D6</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="45872"></a>B330</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45873"></a>B331</td>
+<td class="instruction">CP $FF</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45875"></a>B333</td>
+<td class="instruction">RET Z</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45876"></a>B334</td>
+<td class="instruction">EXX</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45877"></a>B335</td>
+<td class="instruction">LD ($68A1),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45880"></a>B338</td>
+<td class="instruction">CALL <a class="link" href="27154.html">$6A12</a></td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45883"></a>B33B</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45884"></a>B33C</td>
+<td class="instruction">LD C,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45885"></a>B33D</td>
+<td class="instruction">AND $03</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45887"></a>B33F</td>
+<td class="instruction">LD B,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45888"></a>B340</td>
+<td class="instruction">LD A,(IY+$0E)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45891"></a>B343</td>
+<td class="instruction">AND $03</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45893"></a>B345</td>
+<td class="instruction">CP B</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45894"></a>B346</td>
+<td class="instruction">JR NZ,$B383</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45896"></a>B348</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45897"></a>B349</td>
+<td class="instruction">EX DE,HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45898"></a>B34A</td>
+<td class="instruction">LD HL,$81A4</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45901"></a>B34D</td>
+<td class="instruction">LD B,$02</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="45903"></a>B34F</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45904"></a>B350</td>
+<td class="instruction">SUB $03</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45906"></a>B352</td>
+<td class="instruction">CP (HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45907"></a>B353</td>
+<td class="instruction">JR NC,$B383</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45909"></a>B355</td>
+<td class="instruction">ADD A,$06</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45911"></a>B357</td>
+<td class="instruction">CP (HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45912"></a>B358</td>
+<td class="instruction">JR C,$B383</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45914"></a>B35A</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45915"></a>B35B</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45916"></a>B35C</td>
+<td class="instruction">INC DE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45917"></a>B35D</td>
+<td class="instruction">DJNZ $B34F</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45919"></a>B35F</td>
+<td class="instruction">INC DE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45920"></a>B360</td>
+<td class="instruction">EX DE,HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45921"></a>B361</td>
+<td class="instruction">PUSH HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45922"></a>B362</td>
+<td class="instruction">PUSH BC</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45923"></a>B363</td>
+<td class="instruction">CALL <a class="link" href="45524.html">$B1D4</a></td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45926"></a>B366</td>
+<td class="instruction">POP BC</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45927"></a>B367</td>
+<td class="instruction">POP HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45928"></a>B368</td>
+<td class="instruction">RET NZ</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45929"></a>B369</td>
+<td class="instruction">LD A,C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45930"></a>B36A</td>
+<td class="instruction">RRA</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45931"></a>B36B</td>
+<td class="instruction">RRA</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45932"></a>B36C</td>
+<td class="instruction">AND $3F</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45934"></a>B36E</td>
+<td class="instruction">LD (IY+$1C),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45937"></a>B371</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45938"></a>B372</td>
+<td class="instruction">LD A,($68A1)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45941"></a>B375</td>
+<td class="instruction">BIT 7,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45943"></a>B377</td>
+<td class="instruction">JR Z,$B380</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45945"></a>B379</td>
+<td class="instruction">LD A,L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45946"></a>B37A</td>
+<td class="instruction">SUB $08</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45948"></a>B37C</td>
+<td class="instruction">LD L,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45949"></a>B37D</td>
+<td class="instruction">JR NC,$B380</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45951"></a>B37F</td>
+<td class="instruction">DEC H</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="45952"></a>B380</td>
+<td class="instruction">JP <a class="link" href="26786.html">$68A2</a></td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="45955"></a>B383</td>
+<td class="instruction">EXX</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45956"></a>B384</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="45957"></a>B385</td>
+<td class="instruction">JR $B330</td>
+<td class="transparentComment" />
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="45820.html">B2FC</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#45869">Map</a></td>
+<td class="next">Next: <a class="link" href="45959.html">B387</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

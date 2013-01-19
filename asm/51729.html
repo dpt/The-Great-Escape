@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at CA11</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="51480.html">C918</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#51729">Map</a></td>
+<td class="next">Next: <a class="link" href="51785.html">CA49</a></td>
+</tr>
+</table>
+<div class="description">CA11: sub_CA11</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="51480.html">C918</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="51729"></a>CA11</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51730"></a>CA12</td>
+<td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51733"></a>CA15</td>
+<td class="instruction">LD A,L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51734"></a>CA16</td>
+<td class="instruction">ADD A,$0B</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51736"></a>CA18</td>
+<td class="instruction">LD L,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51737"></a>CA19</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51738"></a>CA1A</td>
+<td class="instruction">INC L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51739"></a>CA1B</td>
+<td class="instruction">LD D,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51740"></a>CA1C</td>
+<td class="instruction">EX DE,HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51741"></a>CA1D</td>
+<td class="instruction">SBC HL,BC</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51743"></a>CA1F</td>
+<td class="instruction">JR Z,$CA3E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51745"></a>CA21</td>
+<td class="instruction">JP M,$CA30</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51748"></a>CA24</td>
+<td class="instruction">LD A,H</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51749"></a>CA25</td>
+<td class="instruction">AND A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51750"></a>CA26</td>
+<td class="instruction">JR NZ,$CA2D</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51752"></a>CA28</td>
+<td class="instruction">LD A,L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51753"></a>CA29</td>
+<td class="instruction">CP $03</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51755"></a>CA2B</td>
+<td class="instruction">JR C,$CA3E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="51757"></a>CA2D</td>
+<td class="instruction">LD A,$08</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51759"></a>CA2F</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="51760"></a>CA30</td>
+<td class="instruction">LD A,H</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51761"></a>CA31</td>
+<td class="instruction">CP $FF</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51763"></a>CA33</td>
+<td class="instruction">JR NZ,$CA3B</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51765"></a>CA35</td>
+<td class="instruction">LD A,L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51766"></a>CA36</td>
+<td class="instruction">CP $FE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51768"></a>CA38</td>
+<td class="instruction">JP NC,$CA3E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="51771"></a>CA3B</td>
+<td class="instruction">LD A,$04</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51773"></a>CA3D</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="51774"></a>CA3E</td>
+<td class="instruction">EX DE,HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51775"></a>CA3F</td>
+<td class="instruction">LD A,L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51776"></a>CA40</td>
+<td class="instruction">SUB $0B</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51778"></a>CA42</td>
+<td class="instruction">LD L,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51779"></a>CA43</td>
+<td class="instruction">SET 5,(IY+$07)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51783"></a>CA47</td>
+<td class="instruction">XOR A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="51784"></a>CA48</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="51480.html">C918</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#51729">Map</a></td>
+<td class="next">Next: <a class="link" href="51785.html">CA49</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at EED3</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="60883.html">EDD3</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#61139">Map</a></td>
+<td class="next">Next: <a class="link" href="61338.html">EF9A</a></td>
+</tr>
+</table>
+<div class="description">EED3: plot_game_screen</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class="link" href="42251.html">A50B</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="61139"></a>EED3</td>
+<td class="instruction">LD ($EDD1),SP</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61143"></a>EED7</td>
+<td class="instruction">LD A,($A7C8)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61146"></a>EEDA</td>
+<td class="instruction">AND A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61147"></a>EEDB</td>
+<td class="instruction">JP NZ,$EF27</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61150"></a>EEDE</td>
+<td class="instruction">LD HL,$F291</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61153"></a>EEE1</td>
+<td class="instruction">LD A,($A7C7)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61156"></a>EEE4</td>
+<td class="instruction">ADD A,L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61157"></a>EEE5</td>
+<td class="instruction">JR NC,$EEE8</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61159"></a>EEE7</td>
+<td class="instruction">INC H</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="61160"></a>EEE8</td>
+<td class="instruction">LD L,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61161"></a>EEE9</td>
+<td class="instruction">LD SP,$EDD3</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61164"></a>EEEC</td>
+<td class="instruction">LD A,$80</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="61166"></a>EEEE</td>
+<td class="instruction">POP DE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61167"></a>EEEF</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61169"></a>EEF1</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61171"></a>EEF3</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61173"></a>EEF5</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61175"></a>EEF7</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61177"></a>EEF9</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61179"></a>EEFB</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61181"></a>EEFD</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61183"></a>EEFF</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61185"></a>EF01</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61187"></a>EF03</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61189"></a>EF05</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61191"></a>EF07</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61193"></a>EF09</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61195"></a>EF0B</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61197"></a>EF0D</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61199"></a>EF0F</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61201"></a>EF11</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61203"></a>EF13</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61205"></a>EF15</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61207"></a>EF17</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61209"></a>EF19</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61211"></a>EF1B</td>
+<td class="instruction">LDI</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61213"></a>EF1D</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61214"></a>EF1E</td>
+<td class="instruction">DEC A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61215"></a>EF1F</td>
+<td class="instruction">JP NZ,$EEEE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61218"></a>EF22</td>
+<td class="instruction">LD SP,($EDD1)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61222"></a>EF26</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="61223"></a>EF27</td>
+<td class="instruction">LD HL,$F290</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61226"></a>EF2A</td>
+<td class="instruction">LD A,($A7C7)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61229"></a>EF2D</td>
+<td class="instruction">ADD A,L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61230"></a>EF2E</td>
+<td class="instruction">JR NC,$EF31</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61232"></a>EF30</td>
+<td class="instruction">INC H</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="61233"></a>EF31</td>
+<td class="instruction">LD L,A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61234"></a>EF32</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61235"></a>EF33</td>
+<td class="instruction">INC L</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61236"></a>EF34</td>
+<td class="instruction">LD SP,$EDD3</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61239"></a>EF37</td>
+<td class="instruction">EXX</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61240"></a>EF38</td>
+<td class="instruction">LD B,$80</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="61242"></a>EF3A</td>
+<td class="instruction">EXX</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61243"></a>EF3B</td>
+<td class="instruction">POP DE</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61244"></a>EF3C</td>
+<td class="instruction">LD B,$04</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="label"><a name="61246"></a>EF3E</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61247"></a>EF3F</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61249"></a>EF41</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61250"></a>EF42</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61251"></a>EF43</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61252"></a>EF44</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61253"></a>EF45</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61254"></a>EF46</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61255"></a>EF47</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61256"></a>EF48</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61257"></a>EF49</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61259"></a>EF4B</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61260"></a>EF4C</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61261"></a>EF4D</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61262"></a>EF4E</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61263"></a>EF4F</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61264"></a>EF50</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61265"></a>EF51</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61266"></a>EF52</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61267"></a>EF53</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61269"></a>EF55</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61270"></a>EF56</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61271"></a>EF57</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61272"></a>EF58</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61273"></a>EF59</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61274"></a>EF5A</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61275"></a>EF5B</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61276"></a>EF5C</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61277"></a>EF5D</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61279"></a>EF5F</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61280"></a>EF60</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61281"></a>EF61</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61282"></a>EF62</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61283"></a>EF63</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61284"></a>EF64</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61285"></a>EF65</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61286"></a>EF66</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61287"></a>EF67</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61289"></a>EF69</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61290"></a>EF6A</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61291"></a>EF6B</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61292"></a>EF6C</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61293"></a>EF6D</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61294"></a>EF6E</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61295"></a>EF6F</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61296"></a>EF70</td>
+<td class="instruction">DJNZ $EF3E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61298"></a>EF72</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61299"></a>EF73</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61301"></a>EF75</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61302"></a>EF76</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61303"></a>EF77</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61304"></a>EF78</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61305"></a>EF79</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61306"></a>EF7A</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61307"></a>EF7B</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61308"></a>EF7C</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61309"></a>EF7D</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61311"></a>EF7F</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61312"></a>EF80</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61313"></a>EF81</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61314"></a>EF82</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61315"></a>EF83</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61316"></a>EF84</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61317"></a>EF85</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61318"></a>EF86</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61319"></a>EF87</td>
+<td class="instruction">RRD</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61321"></a>EF89</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61322"></a>EF8A</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61323"></a>EF8B</td>
+<td class="instruction">LD (DE),A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61324"></a>EF8C</td>
+<td class="instruction">LD (HL),C</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61325"></a>EF8D</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61326"></a>EF8E</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61327"></a>EF8F</td>
+<td class="instruction">INC E</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61328"></a>EF90</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61329"></a>EF91</td>
+<td class="instruction">INC HL</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61330"></a>EF92</td>
+<td class="instruction">EXX</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61331"></a>EF93</td>
+<td class="instruction">DJNZ $EF3A</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61333"></a>EF95</td>
+<td class="instruction">LD SP,($EDD1)</td>
+<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61337"></a>EF99</td>
+<td class="instruction">RET</td>
+<td class="transparentComment" />
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="60883.html">EDD3</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#61139">Map</a></td>
+<td class="next">Next: <a class="link" href="61338.html">EF9A</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

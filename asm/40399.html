@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 9DCF</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40312.html">9D78</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40399">Map</a></td>
+<td class="next">Next: <a class="link" href="40421.html">9DE5</a></td>
+</tr>
+</table>
+<div class="description">9DCF: check_morale (&lt;- main_loop)</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40312.html">9D78</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="40399"></a>9DCF</td>
+<td class="instruction">LD A,($A13C)</td>
+<td class="comment" rowspan="3">if (morale &gt;= 2) return;</td>
+</tr>
+<tr>
+<td class="address"><a name="40402"></a>9DD2</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address"><a name="40404"></a>9DD4</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="address"><a name="40405"></a>9DD5</td>
+<td class="instruction">LD BC,$0F00</td>
+<td class="comment" rowspan="2">queue_message_for_display(message_MORALE_IS_ZERO);</td>
+</tr>
+<tr>
+<td class="address"><a name="40408"></a>9DD8</td>
+<td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
+</tr>
+<tr>
+<td class="address"><a name="40411"></a>9DDB</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment" rowspan="2">*(morale_related + 1) = 0xFF; // mystery</td>
+</tr>
+<tr>
+<td class="address"><a name="40413"></a>9DDD</td>
+<td class="instruction">LD ($A13B),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40416"></a>9DE0</td>
+<td class="instruction">XOR A</td>
+<td class="comment" rowspan="2">*(morale_related_also) = 0; // mystery</td>
+</tr>
+<tr>
+<td class="address"><a name="40417"></a>9DE1</td>
+<td class="instruction">LD ($A139),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40420"></a>9DE4</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40312.html">9D78</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40399">Map</a></td>
+<td class="next">Next: <a class="link" href="40421.html">9DE5</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>
