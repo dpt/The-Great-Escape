@@ -2149,7 +2149,7 @@ c $C5D3 reset_object
 
 c $C651 sub_C651
 
-c $C6A0 called_from_main_loop_4
+c $C6A0 move_characters
 U $C6FD,2 UNUSED?
 C $C6FF
 
