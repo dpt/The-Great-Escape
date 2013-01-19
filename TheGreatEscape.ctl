@@ -1931,7 +1931,7 @@ C $C6FF
 
 c $C79A sub_C79A [leaf]
 
-c $C7B9 get_character
+c $C7B9 get_character_struct
 
 ; ------------------------------------------------------------------------------
 
