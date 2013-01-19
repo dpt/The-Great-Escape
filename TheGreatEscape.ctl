@@ -13,7 +13,376 @@
 ; alter that to jump to itself. Save the snapshot in Z80 format. Use a hex
 ; editor on the .z80 to restore the bytes to their former values (JP $F163).
 
-; ------------------------------------------------------------------------------
+; //////////////////////////////////////////////////////////////////////////////
+; CONSTANTS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; These are here for information only and are not used by any of the control
+; directives.
+;
+
+; ; enum attribute (width 1 byte)
+; attribute_BLUE_OVER_BLACK = 1
+; attribute_RED_OVER_BLACK = 2
+; attribute_PURPLE_OVER_BLACK = 3
+; attribute_GREEN_OVER_BLACK = 4
+; attribute_CYAN_OVER_BLACK = 5
+; attribute_YELLOW_OVER_BLACK = 6
+; attribute_WHITE_OVER_BLACK = 7
+; attribute_BRIGHT_BLUE_OVER_BLACK = 65
+; attribute_BRIGHT_RED_OVER_BLACK = 66
+; attribute_BRIGHT_PURPLE_OVER_BLACK = 67
+; attribute_BRIGHT_GREEN_OVER_BLACK = 68
+; attribute_BRIGHT_CYAN_OVER_BLACK = 69
+; attribute_BRIGHT_YELLOW_OVER_BLACK = 70
+; attribute_BRIGHT_WHITE_OVER_BLACK = 71
+
+; ; enum character
+; character_0 = 0
+; character_1 = 1
+; character_2 = 2
+; character_3 = 3
+; character_4 = 4
+; character_5 = 5
+; character_6 = 6
+; character_7_prisoner = 7             ; prisoner who sleeps at bed position A
+; character_8_prisoner = 8             ; prisoner who sleeps at bed position B
+; character_9_prisoner = 9             ; prisoner who sleeps at bed position C
+; character_10_prisoner = 10           ; prisoner who sleeps at bed position D
+; character_11_prisoner = 11           ; prisoner who sleeps at bed position E
+; character_12_prisoner = 12           ; prisoner who sleeps at bed position F
+; character_13 = 13
+; character_14 = 14
+; character_15 = 15
+; character_16 = 16
+; character_17 = 17
+; character_18_prisoner = 18           ; prisoner who sits at bench position D
+; character_19_prisoner = 19           ; prisoner who sits at bench position E
+; character_20_prisoner = 20           ; prisoner who sits at bench position F
+; character_21_prisoner = 21           ; prisoner who sits at bench position A
+; character_22_prisoner = 22           ; prisoner who sits at bench position B
+; character_23_prisoner = 23           ; prisoner who sits at bench position C
+; character_24 = 24
+; character_25 = 25
+; character_26 = 26                 ; suspect that non-character characters start here (could be the items -- both ranges are 16 long)
+; character_27 = 27
+; character_28 = 28
+; character_29 = 29
+; character_30 = 30
+; character_31 = 31
+; character_32 = 32
+; character_33 = 33
+; character_34 = 34
+; character_35 = 35
+; character_36 = 36
+; character_37 = 37
+; character_38 = 38
+; character_39 = 39
+; character_40 = 40
+; character_41 = 41
+
+; ; enum otherobject
+; suspect that these may be the same constants as the characters above
+; otherobject_STOVE1 = 26              ; secondary object types ... unknown which apply where atm
+;                                         ; movable objects perhaps?
+;                                         ;
+;                                         ; 7x prisoners
+;                                         ; ?x guards
+;                                         ; 3x dogs (i think)
+;                                         ; 1x commandant
+;                                         ; ...
+;                                         ; 2x stoves
+;                                         ; 1x crate
+; otherobject_STOVE2 = 27
+; otherobject_CRATE = 28
+
+; ; enum room
+; room_0 = 0
+; room_1_hut1right = 1
+; room_2_hut2left = 2
+; room_3_hut2right = 3
+; room_4_hut3left = 4
+; room_5_hut3right = 5
+; room_6_corridor = 6
+; room_7_corridor = 7
+; room_8_corridor = 8
+; room_9_crate = 9
+; room_10_lockpick = 10
+; room_11_papers = 11
+; room_12_corridor = 12
+; room_13_corridor = 13
+; room_14_torch = 14
+; room_15_uniform = 15
+; room_16_corridor = 16
+; room_17_corridor = 17
+; room_18_radio = 18
+; room_19_food = 19
+; room_20_redcross = 20
+; room_21_corridor = 21
+; room_22_redkey = 22
+; room_23_breakfast = 23
+; room_24_solitary = 24
+; room_25_breakfast = 25
+; room_26_hut1left = 26
+; room_27_hut1left = 27                ; mystery duplicate
+; room_28_hut1left = 28                ; mystery duplicate
+; room_29_secondtunnelstart = 29       ; possibly the second tunnel start
+;                                         ; many of the tunnels are displayed duplicated
+; room_30 = 30
+; room_31 = 31
+; room_32 = 32
+; room_33 = 33
+; room_34 = 34
+; room_35 = 35
+; room_36 = 36
+; room_37 = 37
+; room_38 = 38
+; room_39 = 39
+; room_40 = 40
+; room_41 = 41
+; room_42 = 42
+; room_43 = 43
+; room_44 = 44
+; room_45 = 45
+; room_46 = 46
+; room_47 = 47
+; room_48 = 48
+; room_49 = 49
+; room_50_blocked_tunnel = 50
+; room_51 = 51
+; room_255 = 255
+
+; ; enum item
+; item_WIRESNIPS = 0
+; item_SHOVEL = 1
+; item_LOCKPICK = 2
+; item_PAPERS = 3
+; item_TORCH = 4
+; item_BRIBE = 5
+; item_UNIFORM = 6
+; item_FOOD = 7
+; item_POISON = 8
+; item_RED_KEY = 9
+; item_YELLOW_KEY = 10
+; item_GREEN_KEY = 11
+; item_RED_CROSS_PARCEL = 12
+; item_RADIO = 13
+; item_PURSE = 14
+; item_COMPASS = 15
+; item_NONE = 255
+
+; ; enum zoombox_tiles
+; zoombox_tile_tl = 0
+; zoombox_tile_hz = 1
+; zoombox_tile_tr = 2
+; zoombox_tile_vt = 3
+; zoombox_tile_br = 4
+; zoombox_tile_bl = 5
+
+; ; enum static_tiles (width 1 byte)
+; statictile_empty = 0
+; statictile_horn_tl_tl = 1
+; statictile_horn_tl_tr = 2
+; statictile_horn_tl_bl = 3
+; statictile_horn_tl_br = 4
+; statictile_horn_tr_tl = 5
+; statictile_horn_tr_tr = 6
+; statictile_horn_tr_bl = 7
+; statictile_horn_tr_br = 8
+; statictile_horn_br_tl = 9
+; statictile_horn_br_tr = 10
+; statictile_horn_br_bl = 11
+; statictile_horn_br_br = 12
+; statictile_horn_bl_tl = 13
+; statictile_horn_bl_tr = 14
+; statictile_horn_bl_bl = 15
+; statictile_horn_bl_br = 16
+; statictile_wire_vt_left = 17
+; statictile_wire_vt_right = 18
+; statictile_wire_hz_left = 19
+; statictile_wire_hz_right = 20
+; statictile_longwire_hz_left = 21
+; statictile_longwire_hz_middle = 22
+; statictile_longwire_hz_right = 23
+; statictile_flagpole_top = 24
+; statictile_flagpole_middle = 25
+; statictile_flagpole_bottom = 26
+; statictile_grass_1 = 27
+; statictile_grass_2 = 28
+; statictile_grass_3 = 29
+; statictile_grass_4 = 30
+; statictile_grass_0 = 31
+; statictile_medal_0_0 = 32
+; statictile_medal_0_1 = 33
+; statictile_medal_0_2 = 34
+; statictile_medal_0_4 = 35
+; statictile_medal_0_6 = 36
+; statictile_medal_0_10 = 37
+; statictile_medal_1_0 = 38
+; statictile_medal_1_2 = 39
+; statictile_medal_1_4 = 40
+; statictile_medal_1_6 = 41
+; statictile_medal_1_10 = 42
+; statictile_medal_2_0 = 43
+; statictile_medal_2_1 = 44
+; statictile_medal_2_2 = 45
+; statictile_medal_2_4 = 46
+; statictile_medal_2_6 = 47
+; statictile_medal_2_10 = 48
+; statictile_medal_3_0 = 49
+; statictile_medal_3_1 = 50
+; statictile_medal_3_2 = 51
+; statictile_medal_3_3 = 52
+; statictile_medal_3_4 = 53
+; statictile_medal_3_5 = 54
+; statictile_medal_3_6 = 55
+; statictile_medal_3_7 = 56
+; statictile_medal_3_8 = 57
+; statictile_medal_3_9 = 58
+; statictile_medal_3_10 = 59
+; statictile_medal_4_0 = 60
+; statictile_medal_4_1 = 61
+; statictile_medal_4_2 = 62
+; statictile_medal_4_3 = 63
+; statictile_medal_4_4 = 64
+; statictile_medal_4_5 = 65
+; statictile_medal_4_6 = 66
+; statictile_medal_4_7 = 67
+; statictile_medal_4_8 = 68
+; statictile_medal_4_9 = 69
+; statictile_bell_0_0 = 70
+; statictile_bell_0_1 = 71
+; statictile_bell_0_2 = 72
+; statictile_bell_1_0 = 73
+; statictile_bell_1_1 = 74
+; statictile_bell_1_2 = 75
+; statictile_bell_2_0 = 76
+; statictile_bell_2_1 = 77
+; statictile_medal_1_1 = 78
+; static_tiles_4F = 79
+; static_tiles_50 = 80
+; static_tiles_51 = 81
+; static_tiles_52 = 82
+; static_tiles_53 = 83
+
+; ; enum message (width 1 byte)
+; message_MISSED_ROLL_CALL = 0
+; message_TIME_TO_WAKE_UP = 1
+; message_BREAKFAST_TIME = 2
+; message_EXERCISE_TIME = 3
+; message_TIME_FOR_BED = 4
+; message_THE_DOOR_IS_LOCKED = 5
+; message_IT_IS_OPEN = 6
+; message_INCORRECT_KEY = 7
+; message_ROLL_CALL = 8
+; message_RED_CROSS_PARCEL = 9
+; message_PICKING_THE_LOCK = 10
+; message_CUTTING_THE_WIRE = 11
+; message_YOU_OPEN_THE_BOX = 12
+; message_YOU_ARE_IN_SOLITARY = 13
+; message_WAIT_FOR_RELEASE = 14
+; message_MORALE_IS_ZERO = 15
+; message_ITEM_DISCOVERED = 16
+; message_HE_TAKES_THE_BRIBE = 17
+; message_AND_ACTS_AS_DECOY = 18
+; message_ANOTHER_DAY_DAWNS = 19
+
+; ; enum object
+; object_UNKNOWN_0 = 0                 ; unsure what this is
+; object_SMALL_TUNNEL_ENTRANCE = 1
+; object_ROOM_OUTLINE_2 = 2
+; object_TUNNEL_3 = 3
+; object_TUNNEL_JOIN_4 = 4
+; object_PRISONER_SAT_DOWN_MID_TABLE = 5
+; object_TUNNEL_CORNER_6 = 6
+; object_TUNNEL_7 = 7
+; object_WIDE_WINDOW = 8
+; object_EMPTY_BED = 9
+; object_SHORT_WARDROBE = 10
+; object_CHEST_OF_DRAWERS = 11
+; object_TUNNEL_12 = 12
+; object_EMPTY_BENCH = 13
+; object_TUNNEL_14 = 14
+; object_DOOR_FRAME_15 = 15
+; object_DOOR_FRAME_16 = 16
+; object_TUNNEL_17 = 17
+; object_TUNNEL_18 = 18
+; object_PRISONER_SAT_DOWN_END_TABLE = 19
+; object_COLLAPSED_TUNNEL = 20
+; object_ROOM_OUTLINE_21 = 21
+; object_CHAIR_POINTING_BOTTOM_RIGHT = 22
+; object_OCCUPIED_BED = 23
+; object_WARDROBE_WITH_KNOCKERS = 24
+; object_CHAIR_POINTING_BOTTOM_LEFT = 25
+; object_CUPBOARD = 26
+; object_ROOM_OUTLINE_27 = 27
+; object_TABLE_1 = 28
+; object_TABLE_2 = 29                 ; the two table objects look identical to me
+; object_STOVE_PIPE = 30
+; object_UNKNOWN_31 = 31               ; can't tell what it is
+; object_TALL_WARDROBE = 32
+; object_SMALL_SHELF = 33
+; object_SMALL_CRATE = 34
+; object_SMALL_WINDOW = 35
+; object_DOOR_FRAME_36 = 36
+; object_NOTICEBOARD = 37
+; object_DOOR_FRAME_38 = 38
+; object_DOOR_FRAME_39 = 39
+; object_DOOR_FRAME_40 = 40
+; object_ROOM_OUTLINE_41 = 41
+; object_CUPBOARD_42 = 42
+; object_MESS_BENCH = 43
+; object_MESS_TABLE = 44
+; object_MESS_BENCH_SHORT = 45
+; object_ROOM_OUTLINE_46 = 46
+; object_ROOM_OUTLINE_47 = 47
+; object_TINY_TABLE = 48
+; object_TINY_DRAWERS = 49
+; object_DRAWERS_50 = 50
+; object_DESK = 51
+; object_SINK = 52
+; object_KEY_RACK = 53
+; object__LIMIT = 54
+
+; ; enum location
+; location_0E00 = $0E00
+; location_1000 = $1000
+; location_2A00 = $2A00
+; location_2B00 = $2B00
+; location_2C00 = $2C00
+; location_2C01 = $2C01
+; location_2D00 = $2D00
+; location_8502 = $8502
+; location_8E04 = $8E04
+; location_9003 = $9003
+
+; ; enum sound (width 2 bytes)
+; sound_character_enters_1 = $2030
+; sound_character_enters_2 = $2040
+; sound_bell_ringer = $2530
+; sound_3030 = $3030
+; sound_drop_item = $3040
+
+; ; enum input
+; input_UP = 0                  ; wrong, for now
+; input_DOWN = 1                  ; wrong, for now
+; input_LEFT = 2                  ; wrong, for now
+; input_RIGHT = 3                  ; wrong, for now
+; input_FIRE = 9
+; input_UP_FIRE = 10
+; input_DOWN_FIRE = 11
+; input_LEFT_FIRE = 12
+; input_RIGHT_FIRE = 15
+
+; ; enum port_keyboard
+; port_KEYBOARD_12345 = $0F7FE
+
+; ; enum objecttile (width 1 byte)
+; objecttile_ESCAPE = 255              ; escape character
+
+; //////////////////////////////////////////////////////////////////////////////
+; CONTROL DIRECTIVES
+; //////////////////////////////////////////////////////////////////////////////
 
 b $4000 Screen.
 
