@@ -897,7 +897,273 @@ b $B837 byte_B837
 b $B838 byte_B838
 w $B839 word_B839
 
-b $BCEE HUGE block of unknown data!
+; ------------------------------------------------------------------------------
+
+; Map
+;
+b $BCEE Map tile refs. 54x32. Each byte represents a 32x32 tile.
+
+; The map, with blanks and grass replaced to show the outline more clearly:
+;
+;                                                                         5F 33 3C 58
+;                                                                   5F 33 34 2E 3D 45 3C 58
+;                               55 5E 31                         33 34 2B 37 2D 3F 28 48 42 5B 58
+;                               82 3E 30 2E 57             33 34 2E 37 2A 2F 2C 41 26 47 43 53 42 3C 57
+;                         75 76 81 5E 31 33 3C 5E 31 33 34 2B 35 2D 36 29 .. .. .. .. 49 44 54 43 3D 45 3C 58
+;                   75 76 7C 7F 80 3E 30 39 3D 3E 30 2E 35 2A 2F 38 .. .. .. .. .. .. .. .. 41 44 46 27 48 42 5B 58
+; 75 76 7A 79 75 76 7C 7F 7E 3A 5D 40 31 3A 3F 40 31 2D 2F 29 .. .. .. .. .. .. .. .. .. .. .. .. 41 26 47 43 53 42 3C 58
+; 6A 74 77 78 7B 7F 7E 3A 2F 2C 49 3B 32 2C 41 3B 32 38 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 49 44 54 43 3D 52 59 53
+; 63 64 66 6F 7D 3A 2F 38 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 06 07 .. .. .. .. .. .. .. .. 41 44 46 51 5D 58 5A 53
+; 65 62 6C 6D 36 2C .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 08 1A .. .. .. .. .. .. .. .. .. 41 44 5C 5B 57 58 5A 53
+; 63 64 6B 6E 71 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. .. .. .. .. .. .. 59 53 45 3C 57 58 5A
+; 61 62 5A 73 72 70 71 .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07 .. .. .. .. .. .. 55 58 5A 53 45 3C 57
+; 49 3B 68    5A 73 72 70 71 .. .. 75 76 7A 79 .. .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. .. .. .. .. 4B 45 3C 58 5A 53 45 45
+; .. .. 41 56 68    5A 73 72 70 71 6A 74 84 85 7A 79 .. 0D 0C 0B 17 20 16 15 18 .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. 4A 50 4C 52 5B 58 5A
+; .. .. .. .. 49 56 68 69 5A 73 72 63 86 88 74 77 78 .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07 49 44 4D 51 4C 52 3C 58
+; .. .. .. .. .. .. 49 67 68 69 5A 65 87 83 64 66 6F .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. 41 44 4E 51 4C 45 3C 58
+; .. .. .. .. .. .. .. .. 41 67 68 59 CC CD 62 8A 6D .. .. .. .. .. .. .. 0D 0C 0B 17 20 16 15 18 .. .. 02 03 04 05 09 1C 1B .. .. .. 49 44 4E 28 4C 52 5B 58
+; .. .. .. .. .. .. .. .. .. .. 41 89 CE CF D2 D5 6F .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. B9 BA .. 49 26 C8 C9 4C 45 3C 58
+; .. .. .. .. .. .. .. B9 BA B1 B1 49 D0 D1 D3 D6 D8 9B 9C .. .. .. .. .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. BB BC BD BE 9D 97 CA CB 4D 28 4C 45
+; .. .. .. .. .. .. BB BC BD BE AF B2 B7 93 D4 D7 D9 8E 90 9B 9C .. .. .. .. .. .. .. .. .. 0D 0C 0B 17 20 16 15 18 .. .. .. .. .. C5 C0 97 96 93 95 94 41 26 C8 C9
+; .. .. .. .. .. B1 B1 C5 C0 97 96 B3 B5 B6 '' '' 8C 8D 8B 8E 90 9B 9C .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. .. .. .. 9C 9D C6 C2 93 95 94 '' 99 98 97 CA CB
+; .. .. .. B1 B1 B0 AF C6 C2 93 95 B4 8B 8E 90 8F '' '' 8C 8D 8B 8E A8 AA 9C .. .. .. .. .. 10 11 13 18 .. .. .. .. .. 9C 9D 97 96 C7 C4 94 '' 99 98 97 96 93 95 94
+; .. .. B1 B0 AF 97 96 C7 C4 94 '' B8 8C 8D 8B 8E 90 8F '' '' 8C 8D A7 A6 90 9B 9C .. .. .. .. .. .. .. .. .. .. 9C 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. ..
+; .. .. B0 B2 B7 93 95 94 '' '' '' '' '' '' 8C 8D 8B 8E A8 A9 '' '' A5 A4 8B 8E 90 9B 9C .. .. B9 BA .. .. 9C 9D 97 96 93 95 94 B8 99 98 97 96 93 95 94 .. .. .. ..
+; .. .. B0 B3 B5 B6 '' '' '' '' '' '' '' '' '' '' 8C 8D A7 A6 90 8F '' '' 8C 8D 8B 8E 90 9B BB BC BD BE 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. ..
+; .. .. B1 B4 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' A5 A4 8B 8E 90 8F '' '' 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. ..
+; .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' 8C 8D AB AC 90 8F '' '' 8C 8D 8B C1 C2 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' B9 BA '' '' 99 98 97 AD AE 8B 8E 90 8F '' '' 8C C3 C4 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 8F BB BC BD BE 98 97 96 93 95 94 8C 8D 8B 8E 90 8F '' '' '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 .. .. .. .. 8C 8D 8B 8E 90 A2 A3 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B C1 C2 93 95 94 .. .. .. .. .. .. .. .. 8C 8D 8B A0 A1 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. 8C C3 C4 94 .. .. .. .. .. .. .. .. .. .. .. .. 8C 9F 9E 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+
+; Map tile stats:
+;
+; L = left facing, R = right facing
+;
+; Unused: 4F, 9A, DA..FF
+;
+;   3x00 (hut)
+;   3x01 (hut)
+;   9x02 (hut)
+;   9x03 (hut)
+;   9x04 (hut)
+;   9x05 (hut)
+;   3x06 (hut)
+;   3x07 (hut)
+;   3x08 (hut)
+;   3x09 (hut)
+;   6x0A (hut)
+;   3x0B (hut)
+;   3x0C (hut)
+;   3x0D (hut)
+;   3x0E (hut)
+;   3x0F (hut)
+;   3x10 (hut)
+;   3x11 (hut)
+;   3x12 (hut)
+;   3x13 (hut)
+;   3x14 (hut)
+;   6x15 (hut)
+;   9x16 (hut)
+;   6x17 (hut)
+;   9x18 (hut)
+;   3x19 (hut)
+;   3x1A (hut)
+;   3x1B (hut)
+;   3x1C (hut)
+;   3x1D (hut)
+;   3x1E (hut)
+;   3x1F (hut)
+;   3x20 (hut)
+;   3x21 (hut)
+;   3x22 (hut)
+; 226x23 (grass 1)
+; 198x24 (grass 2)
+; 192x25 (grass 3)
+;   4x26 L (lower door)
+;   1x27 L (upper door, with coat of arms)
+;   3x28 L (upper door)
+;   2x29 R (lower door)
+;   2x2A R (upper door)
+;   2x2B R (upper upper door + barb wire)
+;   4x2C R (ground level wall)
+;   3x2D R (lower window)
+;   4x2E R (upper window)
+;   5x2F R (ground level wall)
+;   3x30
+;   5x31 R (left edge wall)
+;   2x32
+;   6x33 R (lower window + barb wire)
+;   4x34 R (barb wire + lamp)
+;   2x35 R (upper wall + brickwork + lamp)
+;   2x36 R (high ground level wall + brickwork)
+;   2x37 R (upper wall + brickwork + lamp)
+;   3x38 R (low ground level wall + brickwork)
+;   1x39
+;   4x3A
+;   3x3B L (ground level wall)
+;  12x3C L (ground level wall)
+;   4x3D
+;   3x3E
+;   2x3F
+;   2x40
+;  11x41 L (ground level wall)
+;   4x42 L
+;   4x43 L
+;   8x44 L
+;  10x45 L (barb wire)
+;   2x46
+;   2x47
+;   2x48
+;  10x49 L (ground level wall)
+;   1x4A
+;   1x4B
+;   6x4C
+;   2x4D
+;   2x4E
+;   1x50
+;   3x51
+;   4x52
+;   8x53 L
+;   2x54 L
+;   2x55
+;   2x56 L (ground level wall)
+;   5x57 L (bricks)
+;  16x58 L (high bottom window)
+;   3x59
+;  11x5A L (dual lamps + bricks)
+;   5x5B
+;   1x5C
+;   2x5D
+;   3x5E
+;   2x5F
+; 303x60 (blank)
+;   1x61
+;   3x62
+;   3x63
+;   3x64
+;   2x65
+;   2x66
+;   2x67
+;   5x68
+;   2x69
+;   2x6A
+;   1x6B
+;   1x6C
+;   2x6D
+;   1x6E
+;   3x6F
+;   3x70 L
+;   4x71 L
+;   4x72 L
+;   4x73 L
+;   3x74 (roof hatch - left of pair)
+;   5x75 R
+;   5x76 R
+;   2x77 (roof hatch - right of pair + top wall)
+;   2x78 R (top wall right edge)
+;   3x79
+;   3x7A
+;   1x7B
+;   2x7C R
+;   1x7D R
+;   2x7E R
+;   3x7F R
+;   1x80
+;   1x81
+;   1x82
+;   1x83
+;   1x84 (roof hatch - right of pair)
+;   1x85
+;   1x86
+;   1x87
+;   1x88
+;   1x89
+;   1x8A
+;  20x8B (fence)
+;  21x8C (fence)
+;  18x8D (fence)
+;  18x8E (upper fence)
+;  11x8F (upper fence + pole + on long grass)
+;  19x90 (upper fence + on long grass)
+;  37x91 (grass)
+;  31x92 (grass)
+;  23x93 R (fence)
+;  26x94 R (fence)
+;  22x95 R (fence)
+;  19x96 R (fence)
+;  22x97 R (fence)
+;  11x98 R (fence)
+;  10x99 R (fence)
+;   6x9B L (top fence + pole)
+;  10x9C L (top fence + on grass)
+;   6x9D
+;   1x9E
+;   1x9F
+;   1xA0
+;   1xA1
+;   1xA2
+;   1xA3
+;   2xA4 L (gate)
+;   2xA5 L (gate)
+;   2xA6 L (gate)
+;   2xA7 L (gate)
+;   2xA8 L (gate)
+;   1xA9 L (gate)
+;   1xAA L (gate)
+;   1xAB
+;   1xAC
+;   1xAD
+;   1xAE
+;   3xAF
+;   4xB0
+;   8xB1
+;   2xB2
+;   2xB3
+;   2xB4
+;   2xB5
+;   2xB6
+;   2xB7
+;   2xB8 (tunnel entrance)
+;   4xB9 (tower)
+;   4xBA (tower)
+;   4xBB (tower)
+;   4xBC (tower)
+;   4xBD (tower)
+;   4xBE (tower)
+;   2xBF (tower + fence)
+;   4xC0 (tower + fence)
+;   2xC1 (tower + fence)
+;   4xC2 (tower + fence)
+;   2xC3 (tower + fence)
+;   4xC4 (tower + fence)
+;   2xC5 (tower + fence)
+;   2xC6 (tower + fence)
+;   2xC7 (tower + fence)
+;   2xC8
+;   2xC9
+;   2xCA
+;   2xCB
+;   1xCC
+;   1xCD
+;   1xCE
+;   1xCF
+;   1xD0
+;   1xD1
+;   1xD2
+;   1xD3
+;   1xD4
+;   1xD5
+;   1xD6
+;   1xD7
+;   1xD8
+;   1xD9
+
+; ------------------------------------------------------------------------------
 
 w $C41A (<- increment_word_C41A_low_byte_wrapping_at_15)
 
