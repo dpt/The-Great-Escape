@@ -2161,8 +2161,9 @@ c $C7B9 get_character_struct
 
 ; Character events and handlers.
 ;
-c $C7C6 character_event -- makes characters sit or sleep
-R $C7C6 HL Points to byte (e.g. 0x76C6)
+c $C7C6 character_event.
+D $C7C6 Makes characters sit, sleep or other things TBD.
+R $C7C6 HL Points to byte holding character index (e.g. 0x76C6).
 W $C7F9 Array of (character,index) mappings. (Some of the character indexes look too high though).
 W $C829 Array of pointers to event handlers.
 C $C83F handler: zero_morale_related
