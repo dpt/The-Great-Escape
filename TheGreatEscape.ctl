@@ -1428,10 +1428,10 @@ D $8A18 #UDGARRAY1,7,4,1;$8A18-$90F7-8(exterior-tiles2)
 D $90F8 #UDGARRAY1,7,4,1;$90F8-$988F-8(exterior-tiles3)
 D $9890 #UDGARRAY1,7,4,1;$9890-$9D77-8(interior-tiles0)
 
-B $8218,8 start of mask tiles, could be for hut? (<- sub_A9AD)
-B $8590,8 start of hut tiles (<- sub_A9AD)
+B $8218,8 start of mask tiles, could be for hut? (<- plot_a_tile_perhaps)
+B $8590,8 start of hut tiles (<- plot_a_tile_perhaps)
 
-B $8A18,8 tile: ground1 [start of exterior tiles] (<- sub_A9AD)
+B $8A18,8 tile: ground1 [start of exterior tiles] (<- plot_a_tile_perhaps)
 B $8A20,8 tile: ground2
 B $8A28,8 tile: ground3
 B $8A30,8 tile: ground4
@@ -2005,7 +2005,7 @@ c $A8E7 sub_A8E7
 
 c $A9A0 sub_A9A0
 
-c $A9AD sub_A9AD
+c $A9AD plot_a_tile_perhaps -- plots tiles to buffer
 
 c $A9E4 map_shunt_1
 
