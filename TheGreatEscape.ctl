@@ -21,7 +21,7 @@ b $4000 Screen.
 
 b $CE22 Sprite definitions -- objects which can move.
 ;
-D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT. 
+D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 D $CE22 Structure: (b) width in bytes, (b) height in rows, (w) data ptr, (w) mask ptr
 B $CE22 sprite: STOVE (16x22)
 B $CE28 sprite: CRATE (24x24)
@@ -103,7 +103,7 @@ B $D7BD bitmap: GUARD FACING BOTTOM RIGHT 2
 B $D7F7 bitmap: GUARD FACING BOTTOM RIGHT 3
 B $D82F bitmap: GUARD FACING BOTTOM RIGHT 4
 ;
-B $D867 bitmap: DOG FACING TOP LEFT 4 
+B $D867 bitmap: DOG FACING TOP LEFT 4
 B $D897 bitmap: DOG FACING TOP LEFT 3
 B $D8C7 bitmap: DOG FACING TOP LEFT 2
 B $D8F4 bitmap: DOG FACING TOP LEFT 1
@@ -151,7 +151,7 @@ B $DDD7 item_sprite: COMPASS
 b $DDDD Item bitmaps and masks.
 D $DDDD Raw data.
 ;
-B $DDDD item_bitmap: SHOVEL 
+B $DDDD item_bitmap: SHOVEL
 D $DDDD #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel)
 ;
 B $DDF7 item_bitmap: KEY (shared for all keys)
@@ -906,7 +906,7 @@ b $EA7C stru_EA7C - 47 x seven byte structs
 b $EC01 58 8-byte structs.
 
 b $F05D Gates and doors.
-B $F05D,2 gates_flags 
+B $F05D,2 gates_flags
 B $F05F,7 door_flags
 B $F066,2 unknown
 
@@ -1289,7 +1289,7 @@ c $C5D3 reset_object
 
 c $C651 sub_C651
 
-c $C6A0 called_from_main_loop_4 
+c $C6A0 called_from_main_loop_4
 U $C6FD,2 UNUSED?
 C $C6FF
 
@@ -1337,7 +1337,7 @@ c $CA11 sub_CA11
 
 c $CA49 sub_CA49
 
-c $CA81 sub_CA81 -- bribes, solitary, food, character enters sound, 
+c $CA81 sub_CA81 -- bribes, solitary, food, character enters sound,
 U $CB5F,2 two mystery bytes
 
 c $CB75 ld_bc_a
@@ -1380,7 +1380,7 @@ B $DD6C item_attribute: PAPERS - white/black
 B $DD6D item_attribute: TORCH - green/black
 B $DD6E item_attribute: BRIBE - bright-red/black
 B $DD6F item_attribute: UNIFORM - green/black
-B $DD70 item_attribute: FOOD - white/black 
+B $DD70 item_attribute: FOOD - white/black
 D $DD70 Food turns purple/black when it's poisoned.
 B $DD71 item_attribute: POISON - purple/black
 B $DD72 item_attribute: RED KEY - bright-red/black
