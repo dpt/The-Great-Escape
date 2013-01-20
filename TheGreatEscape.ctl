@@ -1421,23 +1421,34 @@ b $8214 byte_8214
 w $8215 items held (two byte slots. initialised to 0xFFFF meaning no item in either slot)
 b $8217 character_index
 
-b $8218 tiles. starts with building masks.
-D $8218 #UDGARRAY1,7,4,1;$8218-$858F-8(exterior-tiles0) 111 tiles
-D $8590 #UDGARRAY1,7,4,1;$8590-$8A17-8(exterior-tiles1) 145 tiles
-D $8A18 #UDGARRAY1,7,4,1;$8A18-$90F7-8(exterior-tiles2) 220 tiles
-D $90F8 #UDGARRAY1,7,4,1;$90F8-$988F-8(exterior-tiles3) 243 tiles
-D $9890 #UDGARRAY1,7,4,1;$9890-$9D77-8(interior-tiles0) 157 tiles
+; ------------------------------------------------------------------------------
 
-B $8218,8 start of mask tiles, could be for hut? (<- plot_a_tile_perhaps)
-B $8590,8 start of hut tiles (<- plot_a_tile_perhaps)
-
-B $8A18,8 tile: ground1 [start of exterior tiles] (<- plot_a_tile_perhaps)
+; Tiles.
+;
+b $8218 Tiles.
+;
+D $8218 #UDGARRAY1,7,4,1;$8218-$858F-8(exterior-tiles0)
+D $8590 #UDGARRAY1,7,4,1;$8590-$8A17-8(exterior-tiles1)
+D $8A18 #UDGARRAY1,7,4,1;$8A18-$90F7-8(exterior-tiles2)
+D $90F8 #UDGARRAY1,7,4,1;$90F8-$988F-8(exterior-tiles3)
+D $9890 #UDGARRAY1,7,4,1;$9890-$9D77-8(interior-tiles0)
+;
+B $8218 Exterior tiles 0. 111 tiles. Looks like mask tiles for huts. (<- plot_a_tile_perhaps)
+;
+B $8590 Exterior tiles 1. 145 tiles. Looks like tiles for huts. (<- plot_a_tile_perhaps)
+;
+B $8A18 Exterior tiles 2. 220 tiles. Looks like main building wall tiles. (<- plot_a_tile_perhaps)
+B $8A18,8 tile: ground1 [start of exterior tiles 2] (<- plot_a_tile_perhaps)
 B $8A20,8 tile: ground2
 B $8A28,8 tile: ground3
 B $8A30,8 tile: ground4
-
-B $90F8,8 [start of interior tiles]
+;
+B $90F8 Exterior tiles 3. 243 tiles. Looks like main building wall tiles.
+;
+B $9890 Interior tiles 0. 157 tiles. Interior tiles only.
 B $9768,8 empty tile (<- plot_indoor_tiles, sub_BCAA)
+
+; ------------------------------------------------------------------------------
 
 b $A12F game_counter: counts 00..FF then wraps.
 b $A130 bell
