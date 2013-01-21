@@ -1087,7 +1087,7 @@ B $F15E statics_corner_br
 
 ; ------------------------------------------------------------------------------
 
-b $EBC5 Table of pointers, 30 long, to byte arrays [unsure]  -- probably tiles
+b $EBC5 Table of pointers, 30 long, to byte arrays [unsure]  -- probably masks
 W $EBC5 -> $E55F
 W $EBC7 -> $E5FF
 W $EBC9 -> $E61E
@@ -1119,37 +1119,37 @@ W $EBFB -> $EA35
 W $EBFD -> $EA43
 W $EBFF -> $EA4A
 ;
-b $E55F probably tile data
-B $E55F probably tiles
-B $E5FF probably tiles
-B $E61E probably tiles
-B $E6CA probably tiles
-B $E74B probably tiles
-B $E758 probably tiles
-B $E77F probably tiles
-B $E796 probably tiles
-B $E7AF probably tiles
-B $E85C probably tiles
-B $E8A3 probably tiles
-B $E8F0 probably tiles
-B $E92F probably tiles
-B $E940 probably tiles
-B $E972 probably tiles
-B $E99A probably tiles
-B $E99F probably tiles
-B $E9B9 probably tiles
-B $E9C6 probably tiles
-B $E9CB probably tiles
-B $E9E6 probably tiles
-B $E9F5 probably tiles
-B $EA0E probably tiles
-B $EA2B probably tiles
-B $EA35 probably tiles
-B $EA43 probably tiles
-B $EA4A probably tiles
-B $EA53 probably tiles
-B $EA5D probably tiles
-B $EA67 probably tiles
+b $E55F probably mask data
+B $E55F probably masks
+B $E5FF probably masks
+B $E61E probably masks
+B $E6CA probably masks
+B $E74B probably masks
+B $E758 probably masks
+B $E77F probably masks
+B $E796 probably masks
+B $E7AF probably masks
+B $E85C probably masks
+B $E8A3 probably masks
+B $E8F0 probably masks
+B $E92F probably masks
+B $E940 probably masks
+B $E972 probably masks
+B $E99A probably masks
+B $E99F probably masks
+B $E9B9 probably masks
+B $E9C6 probably masks
+B $E9CB probably masks
+B $E9E6 probably masks
+B $E9F5 probably masks
+B $EA0E probably masks
+B $EA2B probably masks
+B $EA35 probably masks
+B $EA43 probably masks
+B $EA4A probably masks
+B $EA53 probably masks
+B $EA5D probably masks
+B $EA67 probably masks
 
 b $EA74 (<- sub_68A2)
 
@@ -1676,6 +1676,7 @@ D $BCEE Map super-tile refs. 54x32. Each byte represents a 32x32 tile.
 ;   6x4C
 ;   2x4D
 ;   2x4E
+;    (4F unused)
 ;   1x50
 ;   3x51
 ;   4x52
@@ -1750,6 +1751,7 @@ D $BCEE Map super-tile refs. 54x32. Each byte represents a 32x32 tile.
 ;  22x97 R (fence)
 ;  11x98 R (fence)
 ;  10x99 R (fence)
+     (9A unused)
 ;   6x9B L (top fence + pole)
 ;  10x9C L (top fence + on grass)
 ;   6x9D
