@@ -696,33 +696,67 @@ B $708C,1 collapsed_tunnel_obj [unsure]
 
 ; Screenlocstrings.
 ;
-; Screenlocstrings are a screen address and a string.
+; Screenlocstrings are a screen address followed by a counted string.
 ;
 b $A5CE Screenlocstrings (screen address + string).
-B $A5CE "WELL DONE"
-B $A5DA "YOU HAVE ESCAPED"
-B $A5ED "FROM THE CAMP"
-B $A5FD "AND WILL CROSS THE"
-B $A612 "BORDER SUCCESSFULLY"
-B $A628 "BUT WERE RECAPTURED"
-B $A63E "AND SHOT AS A SPY"
-B $A652 "TOTALLY UNPREPARED"
-B $A667 "TOTALLY LOST"
-B $A676 "DUE TO LACK OF PAPERS"
-B $A68E "PRESS ANY KEY"
+D $A5CE "WELL DONE"
+B $A5CE #CALL:decode_screenlocstring($A5CE)
+D $A5DA "YOU HAVE ESCAPED"
+B $A5DA #CALL:decode_screenlocstring($A5DA)
+D $A5ED "FROM THE CAMP"
+B $A5ED #CALL:decode_screenlocstring($A5ED)
+D $A5FD "AND WILL CROSS THE"
+B $A5FD #CALL:decode_screenlocstring($A5FD)
+D $A612 "BORDER SUCCESSFULLY"
+B $A612 #CALL:decode_screenlocstring($A612)
+D $A628 "BUT WERE RECAPTURED"
+B $A628 #CALL:decode_screenlocstring($A628)
+D $A63E "AND SHOT AS A SPY"
+B $A63E #CALL:decode_screenlocstring($A63E)
+D $A652 "TOTALLY UNPREPARED"
+B $A652 #CALL:decode_screenlocstring($A652)
+D $A667 "TOTALLY LOST"
+B $A667 #CALL:decode_screenlocstring($A667)
+D $A676 "DUE TO LACK OF PAPERS"
+B $A676 #CALL:decode_screenlocstring($A676)
+D $A68E "PRESS ANY KEY"
+B $A68E #CALL:decode_screenlocstring($A68E)
 ;
-b $F014 menu screenlocstrings.
-B $F014 "CONFIRM Y OR N"
+b $F014 Menu screenlocstrings.
+D $F014 "CONFIRM Y OR N"
+B $F014 #CALL:decode_screenlocstring($F014)
 ;
-b $F446 key choice screenlocstrings.
-B $F446 "CONTROLS"
-B $F451 "0 SELECT"
-B $F45C "1 KEYBOARD"
-B $F469 "2 KEMPSTON"
-B $F476 "3 SINCLAIR"
-B $F483 "4 PROTEK"
-B $F48E "BREAK OR CAPS AND SPACE"
-B $F4A8 "FOR NEW GAME"
+b $F2AD Key choice prompt strings.
+D $F2AD "CHOOSE KEYS"
+B $F2AD #CALL:decode_screenlocstring($F2AD)
+D $F2BB "LEFT"
+B $F2BB #CALL:decode_screenlocstring($F2BB)
+D $F2C3 "RIGHT"
+B $F2C3 #CALL:decode_screenlocstring($F2C3)
+D $F2CC "UP"
+B $F2CC #CALL:decode_screenlocstring($F2CC)
+D $F2D2 "DOWN"
+B $F2D2 #CALL:decode_screenlocstring($F2D2)
+D $F2DA "FIRE"
+B $F2DA #CALL:decode_screenlocstring($F2DA)
+;
+b $F446 Key choice screenlocstrings.
+D $F446 "CONTROLS"
+B $F446 #CALL:decode_screenlocstring($F446)
+D $F451 "0 SELECT"
+B $F451 #CALL:decode_screenlocstring($F451)
+D $F45C "1 KEYBOARD"
+B $F45C #CALL:decode_screenlocstring($F45C)
+D $F469 "2 KEMPSTON"
+B $F469 #CALL:decode_screenlocstring($F469)
+D $F476 "3 SINCLAIR"
+B $F476 #CALL:decode_screenlocstring($F476)
+D $F483 "4 PROTEK"
+B $F483 #CALL:decode_screenlocstring($F483)
+D $F48E "BREAK OR CAPS AND SPACE"
+B $F48E #CALL:decode_screenlocstring($F48E)
+D $F4A8 "FOR NEW GAME"
+B $F4A8 #CALL:decode_screenlocstring($F4A8)
 ;
 c $A5BF screenlocstring_plot
 
@@ -732,50 +766,62 @@ c $A5BF screenlocstring_plot
 ;
 b $7DCD Messages (non-ASCII: encoded to match the font; FF terminated).
 W $7DCD Array of pointers to messages.
-B $7DF5 "MISSED ROLL CALL"
-B $7E06 "TIME TO WAKE UP"
-B $7E16 "BREAKFAST TIME""
-B $7E25 "EXERCISE TIME""
-B $7E33 "TIME FOR BED"
-B $7E40 "THE DOOR IS LOCKED"
-B $7E53 "IT IS OPEN"
-B $7E5E "INCORRECT KEY"
-B $7E6C "ROLL CALL"
-B $7E76 "RED CROSS PARCEL"
-B $7E87 "PICKING THE LOCK"
-B $7E98 "CUTTING THE WIRE"
-B $7EA9 "YOU OPEN THE BOX"
-B $7EBA "YOU ARE IN SOLITARY"
-B $7ECE "WAIT FOR RELEASE"
-B $7EDF "MORALE IS ZERO"
-B $7EEE "ITEM DISCOVERED"
-B $F026 "HE TAKES THE BRIBE"
-B $F039 "AND ACTS AS DECOY"
-B $F04B "ANOTHER DAY DAWNS"
+D $7DF5 "MISSED ROLL CALL"
+B $7DF5 #CALL:decode_stringFF($7DF5)
+D $7E06 "TIME TO WAKE UP"
+B $7E06 #CALL:decode_stringFF($7E06)
+D $7E16 "BREAKFAST TIME"
+B $7E16 #CALL:decode_stringFF($7E16)
+D $7E25 "EXERCISE TIME"
+B $7E25 #CALL:decode_stringFF($7E25)
+D $7E33 "TIME FOR BED"
+B $7E33 #CALL:decode_stringFF($7E33)
+D $7E40 "THE DOOR IS LOCKED"
+B $7E40 #CALL:decode_stringFF($7E40)
+D $7E53 "IT IS OPEN"
+B $7E53 #CALL:decode_stringFF($7E53)
+D $7E5E "INCORRECT KEY"
+B $7E5E #CALL:decode_stringFF($7E5E)
+D $7E6C "ROLL CALL"
+B $7E6C #CALL:decode_stringFF($7E6C)
+D $7E76 "RED CROSS PARCEL"
+B $7E76 #CALL:decode_stringFF($7E76)
+D $7E87 "PICKING THE LOCK"
+B $7E87 #CALL:decode_stringFF($7E87)
+D $7E98 "CUTTING THE WIRE"
+B $7E98 #CALL:decode_stringFF($7E98)
+D $7EA9 "YOU OPEN THE BOX"
+B $7EA9 #CALL:decode_stringFF($7EA9)
+D $7EBA "YOU ARE IN SOLITARY"
+B $7EBA #CALL:decode_stringFF($7EBA)
+D $7ECE "WAIT FOR RELEASE"
+B $7ECE #CALL:decode_stringFF($7ECE)
+D $7EDF "MORALE IS ZERO"
+B $7EDF #CALL:decode_stringFF($7EDF)
+D $7EEE "ITEM DISCOVERED"
+B $7EEE #CALL:decode_stringFF($7EEE)
+;
+b $F025 More messages.
+D $F026 "HE TAKES THE BRIBE"
+B $F026 #CALL:decode_stringFF($F026)
+D $F039 "AND ACTS AS DECOY"
+B $F039 #CALL:decode_stringFF($F039)
+D $F04B "ANOTHER DAY DAWNS"
+B $F04B #CALL:decode_stringFF($F04B)
 
 ; ------------------------------------------------------------------------------
 
 ; Counted strings.
 ;
-b $F2AD Key choice prompt strings. (encoded to match font; first byte is count).
-W $F2AD choose_keys_screenaddr - holds screen position of 'CHOOSE KEYS' string
-B $F2AF counted_string: "CHOOSE KEYS"
-W $F2BB holds screen position of 'LEFT' string
-B $F2BD counted_string: "LEFT"
-W $F2C3 holds screen position of 'RIGHT' string
-B $F2C5 counted_string: "RIGHT"
-W $F2CC holds screen position of 'UP' string
-B $F2CE counted_string: "UP"
-W $F2D2 holds screen position of 'DOWN' string
-B $F2D4 counted_string: "DOWN"
-W $F2DA holds screen position of 'FIRE' string
-B $F2DC counted_string: "FIRE"
-
 b $F2EB Counted strings (encoded to match font; first byte is count).
-B $F2EB counted_string: "ENTER"
-B $F2F1 counted_string: "CAPS"
-B $F2F6 counted_string: "SYMBOL"
-B $F2FD counted_string: "SPACE"
+D $F2EB "ENTER"
+B $F2EB #CALL:decode_stringcounted($F2EB)
+D $F2F1 "CAPS"
+B $F2F1 #CALL:decode_stringcounted($F2F1)
+D $F2F6 "SYMBOL"
+B $F2F6 #CALL:decode_stringcounted($F2F6)
+D $F2FD "SPACE"
+B $F2FD #CALL:decode_stringcounted($F2FD)
 
 ; ------------------------------------------------------------------------------
 
