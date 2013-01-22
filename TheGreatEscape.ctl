@@ -1522,22 +1522,6 @@ b $A7C6 used by sub_AAFF
 
 w $AD29 word_AD29
 
-c $B3C4 action_poison
-C $B3C4 Load items_held.
-C $B3C7 Load item_FOOD.
-C $B3C9 Is 'low' slot item_FOOD?
-C $B3CA Yes - goto have_food.
-C $B3CC Is 'high' slot item_FOOD?
-C $B3CD No - return.
-C $B3CE have_food: (test a character flag?)
-C $B3D1 Bit 5 set?
-C $B3D3 Yes - return.
-C $B3D4 Set bit 5.
-C $B3D6 Set item_attribute: FOOD to bright-purple/black.
-C $B3D8
-C $B3DB draw_all_items()
-C $B3DE goto increase_morale_by_10_score_by_50
-
 b $B53E sixlong_things
 b $B54E wiresnips_related_table
 
@@ -2185,6 +2169,25 @@ c $B32D indoors [unsure]
 c $B387 action_red_cross_parcel
 
 c $B3A8 action_bribe
+
+; -----------------------------------------------------------------------------
+
+c $B3C4 action_poison
+  $B3C4 Load items_held.
+  $B3C7 Load item_FOOD.
+  $B3C9 Is 'low' slot item_FOOD?
+  $B3CA Yes - goto have_food.
+  $B3CC Is 'high' slot item_FOOD?
+  $B3CD No - return.
+  $B3CE have_food: (test a character flag?)
+  $B3D1 Bit 5 set?
+  $B3D3 Yes - return.
+  $B3D4 Set bit 5.
+  $B3D6 Set item_attribute: FOOD to bright-purple/black.
+  $B3DB draw_all_items()
+  $B3DE goto increase_morale_by_10_score_by_50
+
+; -----------------------------------------------------------------------------
 
 c $B3E1 action_uniform
 
