@@ -1943,7 +1943,7 @@ c $A007 a second in permitted area entry point
 
 c $A035 wave morale flag
 
-c $A071 set morale flag screen attributes
+c $A071 set_morale_flag_screen_attributes
 
 c $A082 call mystery if h AND 7 is zero
 
@@ -2377,13 +2377,35 @@ c $EFFC user confirm
 
 c $F075 counter of something [unsure]
 
+; ------------------------------------------------------------------------------
+
 c $F163 main
+  $F163 Disable interrupts and set up stack pointer.
+  $F167 wipe_full_screen_and_attributes();
+  $F16A set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
+  $F16F set_menu_item_attributes(attribute_YELLOW_OVER_BLACK);
+  $F174 plot_menu_text();
+  $F177 plot_score();
+  $F17A menu_screen();
+  $F17D [unknown]
+  $F1C3 looks_like_a_reset_fn();
+  $F1C6 goto pre_main;
+
+; ------------------------------------------------------------------------------
 
 c $F1E0 plot_menu_text
 
 c $F206 counter_set_0
 
+; ------------------------------------------------------------------------------
+
 c $F257 wipe_full_screen_and_attributes
+  $F257 memset(screen, 0, 0x1800);
+  $F265 memset(atttributes, attribute_WHITE_OVER_BLACK, 0x300);
+  $F26D border = 0; // black
+  $F270 return;
+
+; ------------------------------------------------------------------------------
 
 c $F271 select_input_device
 
