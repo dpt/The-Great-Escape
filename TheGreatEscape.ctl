@@ -1751,7 +1751,6 @@ D $BCEE Map super-tile refs. 54x32. Each byte represents a 32x32 tile.
 ;  22x97 R (fence)
 ;  11x98 R (fence)
 ;  10x99 R (fence)
-     (9A unused)
 ;    (9A unused)
 ;   6x9B L (top fence + pole)
 ;  10x9C L (top fence + on grass)
@@ -1882,7 +1881,37 @@ c $7CE9 get_next_scanline
 c $7D15 queue_message_for_display
 c $7D2F plot_glyph_(indirect)
 c $7D48 message_timer
+
+; ------------------------------------------------------------------------------
+
 c $9D78 main_loop
+  $9D78 some_sort_of_initial_setup_maybe
+  $9D7B for (;;) { check_morale();
+  $9D7E keyscan_game_cancel();
+  $9D81 message_timer();
+  $9D84 process_user_input();
+  $9D87 in_permitted_area();
+  $9D8A called_from_main_loop_3(); [unknown]
+  $9D8D move_characters();
+  $9D90 called_from_main_loop_5(); [unknown]
+  $9D93 called_from_main_loop_6(); [unknown]
+  $9D96 called_from_main_loop_7(); [unknown]
+  $9D99 called_from_main_loop_8(); [unknown]
+  $9D9C ring_bell();
+  $9D9F called_from_main_loop_9(); [unknown]
+  $9DA2 called_from_main_loop_10(); [unknown]
+  $9DA5 message_timer();
+  $9DA8 ring_bell();
+  $9DAB called_from_main_loop_11(); [unknown]
+  $9DAE plot_game_screen();
+  $9DB1 ring_bell();
+  $9DB4 if ($A145 != 0) call $ADBD; [unknown]
+  $9DBB if (indoor_room_index != 0) indoors_delay_loop();
+  $9DC2 wave_moraleflag
+  $9DC5 if ((game_counter & 63) == 0) dispatch_table_thing();
+  $9DCD }
+
+; ------------------------------------------------------------------------------
 
 c $9DCF check_morale (<- main_loop)
 C $9DCF if (morale >= 2) return;
@@ -2243,7 +2272,8 @@ C $C88D handler: pop_hl_and_player_sleeps
 ; called_from_main_loop_5
 ;
 b $C891 (<- called_from_main_loop_5, sub_CA81)
-C $C892 called_from_main_loop_5
+;
+c $C892 called_from_main_loop_5
 C $C892 Clear byte_A13E.
 C $C896 if (bell) sub_CCAB();
 C $C89D if (byte_C891 == 0) goto loc_C8B1;
