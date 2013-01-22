@@ -2439,7 +2439,7 @@ c $F52C get_tuning (music)
 c $FDE0 nop
 D $FDE0 No-op subroutine.
 
-c $FDE1 pre_main
+c $FDE1 loaded
 D $FDE1 Very first entry point used to shunt the game image down into its proper position.
 
 u $FDF3 UNUSED
