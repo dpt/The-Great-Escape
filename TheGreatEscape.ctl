@@ -1752,6 +1752,7 @@ D $BCEE Map super-tile refs. 54x32. Each byte represents a 32x32 tile.
 ;  11x98 R (fence)
 ;  10x99 R (fence)
      (9A unused)
+;    (9A unused)
 ;   6x9B L (top fence + pole)
 ;  10x9C L (top fence + on grass)
 ;   6x9D
