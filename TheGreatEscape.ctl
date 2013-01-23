@@ -2000,7 +2000,9 @@ R $A11D C Delay.
 
 ; ------------------------------------------------------------------------------
 
-c $A15F set game screen attributes
+c $A15F set_game_screen_attributes
+R $A15F A Attribute byte.
+  $A15F Starting at $5847, set 23 columns of 16 rows to A.
 
 ; ------------------------------------------------------------------------------
 
