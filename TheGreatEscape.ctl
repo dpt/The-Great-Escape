@@ -1862,7 +1862,19 @@ c $7C82 pick_up_related
 c $7CBE plot_bitmap
 c $7CD4 screen_wipe
 c $7CE9 get_next_scanline
+
+; ------------------------------------------------------------------------------
+
 c $7D15 queue_message_for_display
+R $7D15 B message_* index.
+R $7D15 C ...
+  $7D15 if (*(hl = message_buffer_pointer) == 0xFF) return;
+  $7D1C hl -= 2;
+  $7D1E a = *hl++; if (a != b) goto set;
+  $7D23 a = *hl; if (a == c) return;
+  $7D26 set: *++hl = b; *++hl = c; hl++;
+  $7D2B *message_buffer_pointer = hl;
+  $7D2E return;
 
 ; ------------------------------------------------------------------------------
 
