@@ -1981,7 +1981,21 @@ c $A0E9 increase_morale_by_10,_score_by_50
 
 c $A0F2 increase_morale_by_5
 
-c $A11D play speaker
+; ------------------------------------------------------------------------------
+
+c $A11D play_speaker
+R $A11D B Iterations.
+R $A11D C Delay.
+  $A11D
+  $A11E Self-modify delay loop at $A126.
+  $A121 Initial speaker bit.
+  $A123 do { Play.
+  $A127 while (delay--) ;
+  $A12A Toggle speaker bit.
+  $A12C } while (...);
+  $A12E return;
+
+; ------------------------------------------------------------------------------
 
 c $A15F set game screen attributes
 
