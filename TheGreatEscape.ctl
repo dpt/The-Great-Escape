@@ -1855,7 +1855,10 @@ c $7AF0 use_item_B
 c $7AF5 use_item_A
 c $7B36 pick_up_item
 c $7B8B drop_item
-c $7C26 item-to-thing
+c $7C26 item_to_thing
+
+; ------------------------------------------------------------------------------
+
 c $7C33 draw_all_items
 c $7C46 draw_item
 c $7C82 pick_up_related
@@ -1901,7 +1904,7 @@ c $7D48 message_timer
 ; ------------------------------------------------------------------------------
 
 c $9D78 main_loop
-  $9D78 some_sort_of_initial_setup_maybe
+  $9D78 some_sort_of_initial_setup_maybe();
   $9D7B for (;;) { check_morale();
   $9D7E keyscan_game_cancel();
   $9D81 message_timer();
@@ -1963,15 +1966,15 @@ c $9F21 in permitted area?
 
 c $A007 a second in permitted area entry point
 
-c $A035 wave morale flag
+c $A035 wave_morale_flag
 
 c $A071 set_morale_flag_screen_attributes
 
-c $A082 call mystery if h AND 7 is zero
+c $A082 call_mystery_if_h_AND_7_is_zero
 
 c $A095 indoors-only delay loop
 
-c $A09E ring bell
+c $A09E ring_bell
 
 c $A0D2 increase_morale
 
