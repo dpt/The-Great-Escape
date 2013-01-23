@@ -1988,21 +1988,23 @@ c $A15F set game screen attributes
 ; ------------------------------------------------------------------------------
 
 b $A173 timed_events array (15 event structures)
-  $A173 0, event_another_day_dawns
-  $A176 8, event_wake_up
-  $A179 12, event_new_red_cross_parcel
-  $A17C 16, event_go_to_roll_call
-  $A17F 20, event_roll_call
-  $A182 21, event_go_to_breakfast_time
-  $A185 36, event_breakfast_time
-  $A188 46, event_go_to_exercise_time
-  $A18B 64, event_exercise_time
-  $A18E 74, event_go_to_roll_call
-  $A191 78, event_roll_call
-  $A194 79, event_go_to_time_for_bed
-  $A197 98, event_time_for_bed
-  $A19A 100, event_night_time
-  $A19D 130, event_search_light
+  $A173 { 0, event_another_day_dawns }
+  $A176 { 8, event_wake_up }
+  $A179 { 12, event_new_red_cross_parcel }
+  $A17C { 16, event_go_to_roll_call }
+  $A17F { 20, event_roll_call }
+  $A182 { 21, event_go_to_breakfast_time }
+  $A185 { 36, event_breakfast_time }
+  $A188 { 46, event_go_to_exercise_time }
+  $A18B { 64, event_exercise_time }
+  $A18E { 74, event_go_to_roll_call }
+  $A191 { 78, event_roll_call }
+  $A194 { 79, event_go_to_time_for_bed }
+  $A197 { 98, event_time_for_bed }
+  $A19A { 100, event_night_time }
+  $A19D { 130, event_search_light }
+
+; ------------------------------------------------------------------------------
 
 c $A1A0 dispatch_table_thing // dispatches time-based game events like parcels, meals, exercise and roll calls
 
