@@ -830,7 +830,7 @@ B $F2FD #CALL:decode_stringcounted($F2FD)
 b $7F00 Static tiles (those used on-screen for medals, etc.) 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
 D $7F00 #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles)
 B $7F00,9 blank
-; i'm calling these speakers but are they more accurately tannoys?
+;
 B $7F09,9 speaker_tl_tl
 B $7F12,9 speaker_tl_tr
 B $7F1B,9 speaker_tl_bl
@@ -843,10 +843,11 @@ B $7F51,9 speaker_br_tl
 B $7F5A,9 speaker_br_tr
 B $7F63,9 speaker_br_bl
 B $7F6C,9 speaker_br_br
-B $7F75,9 speaker_3_tl
-B $7F7E,9 speaker_3_tr
-B $7F87,9 speaker_3_bl
-B $7F90,9 speaker_3_br
+B $7F75,9 speaker_bl_tl
+B $7F7E,9 speaker_bl_tr
+B $7F87,9 speaker_bl_bl
+B $7F90,9 speaker_bl_br
+;
 B $7F99,9 barbwire_v_top
 B $7FA2,9 barbwire_v_bottom
 B $7FAB,9 barbwire_h_left
@@ -854,6 +855,7 @@ B $7FB4,9 barbwire_h_right
 B $7FBD,9 barbwire_h_wide_left
 B $7FC6,9 barbwire_h_wide_middle
 B $7FCF,9 barbwire_h_wide_right
+;
 B $7FD8,9 flagpole_top
 B $7FE1,9 flagpole_middle
 B $7FEA,9 flagpole_bottom
@@ -862,46 +864,52 @@ B $7FFC,9 flagpole_ground2
 B $8005,9 flagpole_ground3
 B $800E,9 flagpole_ground4
 B $8017,9 flagpole_ground0
-B $8020,9 medal_0
-B $8029,9 medal_1
-B $8032,9 medal_2
-B $803B,9 medal_3
-B $8044,9 medal_4
-B $804D,9 medal_14
-B $8056,9 medal_5
-B $805F,9 medal_6
-B $8068,9 medal_7
-B $8071,9 medal_8
-B $807A,9 medal_9
-B $8083,9 medal_10
-B $808C,9 medal
-B $8095,9 medal
-B $809E,9 medal
-B $80A7,9 medal
-B $80B0,9 medal
-B $80B9,9 medal
-B $80C2,9 medal
-B $80CB,9 medal
-B $80D4,9 medal
-B $80DD,9 medal
-B $80E6,9 medal
-B $80EF,9 medal
-B $80F8,9 medal
-B $8101,9 medal
-B $810A,9 medal
-B $8113,9 medal
-B $811C,9 medal
-B $8125,9 medal
-B $812E,9 medal
-B $8137,9 medal
-B $8140,9 medal
-B $8149,9 medal
-B $8152,9 medal
-B $815B,9 medal
-B $8164,9 medal
-B $816D,9 medal
-B $8176,9 medal
-B $817F,9 bell_top_middle
+;
+B $8020,9 medal_0_0
+B $8029,9 medal_0_1/3/5/7/9
+B $8032,9 medal_0_2
+B $803B,9 medal_0_4
+B $8044,9 medal_0_6
+B $804D,9 medal_0_8
+;
+B $8056,9 medal_1_0
+B $805F,9 medal_1_2
+B $8068,9 medal_1_4
+B $8071,9 medal_1_6
+B $807A,9 medal_1_8
+B $8083,9 medal_1_10
+;
+B $808C,9 medal_2_0
+B $8095,9 medal_2_1/3/5/7/9
+B $809E,9 medal_2_2
+B $80A7,9 medal_2_4
+B $80B0,9 medal_2_6
+B $80B9,9 medal_2_8
+B $80C2,9 medal_2_10
+;
+B $80CB,9 medal_3_0
+B $80D4,9 medal_3_1
+B $80DD,9 medal_3_2
+B $80E6,9 medal_3_3
+B $80EF,9 medal_3_4
+B $80F8,9 medal_3_5
+B $8101,9 medal_3_6
+B $810A,9 medal_3_7
+B $8113,9 medal_3_8
+B $811C,9 medal_3_9
+;
+B $8125,9 medal_4_0
+B $812E,9 medal_4_1
+B $8137,9 medal_4_2
+B $8140,9 medal_4_3
+B $8149,9 medal_4_4
+B $8152,9 medal_4_5
+B $815B,9 medal_4_6
+B $8164,9 medal_4_7
+B $816D,9 medal_4_8
+B $8176,9 medal_4_9
+;
+b $817F,9 bell_top_middle
 B $8188,9 bell_top_right
 B $8191,9 bell_middle_left
 B $819A,9 bell_middle_middle
