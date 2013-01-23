@@ -1898,28 +1898,34 @@ c $9D78 main_loop
 ; ------------------------------------------------------------------------------
 
 c $9DCF check_morale (<- main_loop)
-C $9DCF if (morale >= 2) return;
-C $9DD5 queue_message_for_display(message_MORALE_IS_ZERO);
-C $9DDB *(morale_related + 1) = 0xFF; // mystery
-C $9DE0 *(morale_related_also) = 0; // mystery
-C $9DE4 return;
+  $9DCF if (morale >= 2) return;
+  $9DD5 queue_message_for_display(message_MORALE_IS_ZERO, 0);
+  $9DDB *(morale_related + 1) = 0xFF; // mystery
+  $9DE0 *(morale_related_also) = 0; // mystery
+  $9DE4 return;
+
+; ------------------------------------------------------------------------------
 
 c $9DE5 check for 'game cancel' keypress
-C $9DE5 if (!shift_pressed) return;
-C $9DED if (!space_pressed) return;
-C $9DF4 screen_reset_perhaps() user_confirm() if (confirmed) looks_like_a_reset_fn()
-C $9DFD if (indoor_room_index == 0) loc_B2FC(); else some_sort_of_initial_setup_maybe();
+  $9DE5 if (!shift_pressed) return;
+  $9DED if (!space_pressed) return;
+  $9DF4 screen_reset_perhaps() user_confirm() if (confirmed) looks_like_a_reset_fn()
+  $9DFD if (indoor_room_index == 0) loc_B2FC(); else some_sort_of_initial_setup_maybe();
+
+; ------------------------------------------------------------------------------
 
 c $9E07 process_user_input
-C $9E07 if (morale_related) return; // inhibits user control when morale hits zero
-C $9E0E if ((0x8001 & 3) == 0) goto is_zero;
-C $9E15 morale_related_also = 31;
-C $9E1A if (0x8001 == 1) goto lock_picked;
-C $9E1F goto sub_9EB2;
-C $9E22 is_zero: counter_of_something();
-C $9E25 hl = &morale_related_also; if (? != 0) goto user_input_super(hl);
-C $9E2D if (morale_related_also == 0) return;
-C $9E30 morale_related_also--; a = 0; goto user_input_fire_not_pressed;
+  $9E07 if (morale_related) return; // inhibits user control when morale hits zero
+  $9E0E if ((0x8001 & 3) == 0) goto is_zero;
+  $9E15 morale_related_also = 31;
+  $9E1A if (0x8001 == 1) goto lock_picked;
+  $9E1F goto sub_9EB2;
+  $9E22 is_zero: counter_of_something();
+  $9E25 hl = &morale_related_also; if (? != 0) goto user_input_super(hl);
+  $9E2D if (morale_related_also == 0) return;
+  $9E30 morale_related_also--; a = 0; goto user_input_fire_not_pressed;
+
+; ------------------------------------------------------------------------------
 
 c $9F21 in permitted area?
 
@@ -2141,16 +2147,21 @@ c $B107 use_bribe -- 'he takes the bribe' 'and acts as decoy'
 
 c $B14C sub_B14C -- outdoor drawing?
 
+; ------------------------------------------------------------------------------
+
 c $B1C7 rotate_A_left_3_widening_to_BC
 R $B1C7 A Argument.
-R $B1C7 BC Result of A << 3
-C $B1C7 result = 0;
-C $B1C9 arg <<= 1;
-C $B1CA result = (result << 1) + carry;
-C $B1CC arg <<= 1;
-C $B1CD result = (result << 1) + carry;
-C $B1CF arg <<= 1;
-C $B1D0 result = (result << 1) + carry;
+R $B1C7 BC Result of (A << 3).
+  $B1C7 result = 0;
+  $B1C9 arg <<= 1;
+  $B1CA result = (result << 1) + carry;
+  $B1CC arg <<= 1;
+  $B1CD result = (result << 1) + carry;
+  $B1CF arg <<= 1;
+  $B1D0 result = (result << 1) + carry;
+  $B1D3 return;
+
+; ------------------------------------------------------------------------------
 
 c $B1D4 is_door_open
 
