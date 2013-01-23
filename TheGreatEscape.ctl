@@ -1863,7 +1863,27 @@ c $7CBE plot_bitmap
 c $7CD4 screen_wipe
 c $7CE9 get_next_scanline
 c $7D15 queue_message_for_display
-c $7D2F plot_glyph_(indirect)
+
+; ------------------------------------------------------------------------------
+
+c $7D2F plot_glyph
+R $7D2F HL Pointer to glyph.
+R $7D2F DE Pointer to destination.
+  $7D2F a = *hl;
+  $7D30 ...
+  $7D31 hl = a * 8;
+  $7D37 bc = bitmap_font;
+  $7D3A hl += bc;
+  $7D3C 8 iterations.
+  $7D3E do { *de = *hl;
+  $7D40 d++; // i.e. de += 256;
+  $7D41 hl++;
+  $7D42 } while (--b);
+  $7D44 de++;
+  $7D47 return;
+
+; ------------------------------------------------------------------------------
+
 c $7D48 message_timer
 
 ; ------------------------------------------------------------------------------
