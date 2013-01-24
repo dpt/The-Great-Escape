@@ -1858,7 +1858,14 @@ c $6978 setup_stove1
 c $69C9 calledby_setup_movable_items
 c $69DC sub_69DC
 c $6A12 sub_6A12
-c $6A27 zero_some_area_407_bytes_long
+
+; ------------------------------------------------------------------------------
+
+c $6A27 wipe_visible_tiles
+D $6A27 Wipe the visible tiles array at $F0F8 (24 * 16 = 408);
+
+; ------------------------------------------------------------------------------
+
 c $6A35 select_room_maybe
 c $6AB5 draw_object_to_tiles [unsure]
 c $6B42 plot_indoor_tiles
