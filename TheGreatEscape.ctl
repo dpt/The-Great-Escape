@@ -2167,23 +2167,54 @@ C $AB44 map_move_2
 C $AB4F map_move_3
 C $AB5A map_move_4
 
-b $AB66 Zoombox (scene transition) stuff.
-B $AB66 zoombox related 1
-B $AB67 zoombox horizontal count
-B $AB68 zoombox related 3
-B $AB69 zoombox vertical count
-B $AB6A zoombox_attribute_value
-C $AB6B choose_zoombox_attributes
-C $ABA0 zoombox
-C $ABF9 zoombox 1
-C $AC6F zoombox 2
-C $ACFC zoombox draw tile
-B $AF5E zoombox_tile_wire_tl
-B $AF66 zoombox_tile_wire_hz
-B $AF6E zoombox_tile_wire_tr
-B $AF76 zoombox_tile_wire_vt
-B $AF7E zoombox_tile_wire_br
-B $AF86 zoombox_tile_wire_bl
+; -----------------------------------------------------------------------------
+
+b $AB66 Zoombox? stuff.
+  $AB66 zoombox related 1
+  $AB67 zoombox horizontal count
+  $AB68 zoombox related 3
+  $AB69 zoombox vertical count
+  $AB6A game_screen_attribute
+
+c $AB6B choose_game_screen_attributes
+  $AB6B A = (indoor_room_index);
+  $AB6E if (A >= room_29_secondtunnelstart) goto choose_attribute_for_tunnel;
+  $AB72 A = (day_or_night);
+  $AB75 C = attribute_WHITE_OVER_BLACK;
+  $AB77 if (A == 0) goto set_attribute_from_C;
+  $AB7A A = (indoor_room_index);
+  $AB7D C = attribute_BRIGHT_BLUE_OVER_BLACK;
+  $AB7F if (A == 0) goto set_attribute_from_C;
+  $AB82 C = attribute_CYAN_OVER_BLACK;
+  $AB84 set_attribute_from_C: A = C;
+  $AB85 set_attribute_from_A: (game_screen_attribute) = A;
+  $AB88 return;
+
+c $AB89 choose_attribute_for_tunnel
+  $AB89 C = attribute_RED_OVER_BLACK;
+  $AB8B HL = (items_held);
+  $AB8E A = item_TORCH;
+  $AB90 if (L == A) goto set_attribute_from_C;
+  $AB93 if (H == A) goto set_attribute_from_A;
+  $AB96 wipe_visible_tiles();
+  $AB99 plot_indoor_tiles();
+  $AB9C A = attribute_BLUE_OVER_BLACK;
+  $AB9E goto set_attribute_from_A;
+
+c $ABA0 zoombox
+  $ABF9 zoombox 1
+  $AC6F zoombox 2
+  $ACFC zoombox draw tile
+
+b $AF5E zoombox tiles
+  $AF5E zoombox_tile_wire_tl
+  $AF66 zoombox_tile_wire_hz
+  $AF6E zoombox_tile_wire_tr
+  $AF76 zoombox_tile_wire_vt
+  $AF7E zoombox_tile_wire_br
+  $AF86 zoombox_tile_wire_bl
+
+; -----------------------------------------------------------------------------
 
 b $AF8E bribe_related
 
