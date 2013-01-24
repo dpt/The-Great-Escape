@@ -1396,8 +1396,8 @@ u $81A3 UNUSED?
 b $A69E bitmap font: 0..9, A..Z (omitting O), space, full stop
 b $A7C7 plot_game_screen_x
 b $AB31 jumptable
-b $AE75 searchlight_related (<- a_flag_became_nonzero, searchlight)
-w $AE76 word_AE76 (<- a_flag_became_nonzero)
+b $AE75 searchlight_related (<- nighttime, searchlight)
+w $AE76 word_AE76 (<- nighttime)
 u $CB5F UNUSED
 u $CB92 UNUSED
 b $F1C9 twenty three bytes [unsure] -- main copies this somewhere
@@ -1464,7 +1464,7 @@ b $81B8 byte_81B8
 b $81B9 wiresnips_related
 b $81BA mystery byte
 w $81BB map_position_maybe
-b $81BD byte_81BD (<- a_flag_became_nonzero, something_then_decrease_morale)
+b $81BD byte_81BD (<- nighttime, something_then_decrease_morale)
 b $81BE first word of room structure [unsure]
 b $81BF byte_81BF (seems to hold many zeroes)
 b $81D6 door related (<- indoors maybe, <- open door)
@@ -1520,11 +1520,15 @@ b $A140 displayed_morale_maybe [displayed morale lags behind actual morale, as t
 w $A141 moraleflag_screen_address
 w $A143 ptr_to_door_being_lockpicked: address of door in which bit 7 is cleared when picked
 b $A145 user_locked_out_until: game time until user control is restored (e.g. when picking a lock or cutting wire)
-b $A146 a_flag [unknown]  seems to be reset each day, might influence which parcels arrive
+b $A146 day_or_night ($00 = daytime, $FF = nighttime)
+
+; ------------------------------------------------------------------------------
 
 b $A147 bell ringing bitmaps
 B $A147 bell_ringer_bitmap_off
 B $A153 bell_ringer_bitmap_on
+
+; ------------------------------------------------------------------------------
 
 b $A7C6 used by sub_AAFF
 
@@ -2220,7 +2224,7 @@ b $AF8E bribe_related
 
 c $AD59 sub_AD59
 
-c $ADBD a_flag_became_nonzero
+c $ADBD nighttime
 
 c $AE78 something_then_decrease_morale_10
 
