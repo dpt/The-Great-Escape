@@ -1165,224 +1165,224 @@ b $EA74 (<- sub_68A2)
 
 b $5B00 super_tiles
 D $5B00 Super tiles. 4x4 array of tile refs. The game map (at $BCEE) is constructed of (indices of) these.
-B $5B00,16,4 super_tile $00
-B $5B10,16,4 super_tile $01
-B $5B20,16,4 super_tile $02
-B $5B30,16,4 super_tile $03
-B $5B40,16,4 super_tile $04
-B $5B50,16,4 super_tile $05
-B $5B60,16,4 super_tile $06
-B $5B70,16,4 super_tile $07
-B $5B80,16,4 super_tile $08
-B $5B90,16,4 super_tile $09
-B $5BA0,16,4 super_tile $0A
-B $5BB0,16,4 super_tile $0B
-B $5BC0,16,4 super_tile $0C
-B $5BD0,16,4 super_tile $0D
-B $5BE0,16,4 super_tile $0E
-B $5BF0,16,4 super_tile $0F
-B $5C00,16,4 super_tile $10
-B $5C10,16,4 super_tile $11
-B $5C20,16,4 super_tile $12
-B $5C30,16,4 super_tile $13
-B $5C40,16,4 super_tile $14
-B $5C50,16,4 super_tile $15
-B $5C60,16,4 super_tile $16
-B $5C70,16,4 super_tile $17
-B $5C80,16,4 super_tile $18
-B $5C90,16,4 super_tile $19
-B $5CA0,16,4 super_tile $1A
-B $5CB0,16,4 super_tile $1B
-B $5CC0,16,4 super_tile $1C
-B $5CD0,16,4 super_tile $1D
-B $5CE0,16,4 super_tile $1E
-B $5CF0,16,4 super_tile $1F
-B $5D00,16,4 super_tile $20
-B $5D10,16,4 super_tile $21
-B $5D20,16,4 super_tile $22
-B $5D30,16,4 super_tile $23
-B $5D40,16,4 super_tile $24
-B $5D50,16,4 super_tile $25
-B $5D60,16,4 super_tile $26
-B $5D70,16,4 super_tile $27
-B $5D80,16,4 super_tile $28
-B $5D90,16,4 super_tile $29
-B $5DA0,16,4 super_tile $2A
-B $5DB0,16,4 super_tile $2B
-B $5DC0,16,4 super_tile $2C
-B $5DD0,16,4 super_tile $2D
-B $5DE0,16,4 super_tile $2E
-B $5DF0,16,4 super_tile $2F
-B $5E00,16,4 super_tile $30
-B $5E10,16,4 super_tile $31
-B $5E20,16,4 super_tile $32
-B $5E30,16,4 super_tile $33
-B $5E40,16,4 super_tile $34
-B $5E50,16,4 super_tile $35
-B $5E60,16,4 super_tile $36
-B $5E70,16,4 super_tile $37
-B $5E80,16,4 super_tile $38
-B $5E90,16,4 super_tile $39
-B $5EA0,16,4 super_tile $3A
-B $5EB0,16,4 super_tile $3B
-B $5EC0,16,4 super_tile $3C
-B $5ED0,16,4 super_tile $3D
-B $5EE0,16,4 super_tile $3E
-B $5EF0,16,4 super_tile $3F
-B $5F00,16,4 super_tile $40
-B $5F10,16,4 super_tile $41
-B $5F20,16,4 super_tile $42
-B $5F30,16,4 super_tile $43
-B $5F40,16,4 super_tile $44
-B $5F50,16,4 super_tile $45
-B $5F60,16,4 super_tile $46
-B $5F70,16,4 super_tile $47
-B $5F80,16,4 super_tile $48
-B $5F90,16,4 super_tile $49
-B $5FA0,16,4 super_tile $4A
-B $5FB0,16,4 super_tile $4B
-B $5FC0,16,4 super_tile $4C
-B $5FD0,16,4 super_tile $4D
-B $5FE0,16,4 super_tile $4E
-B $5FF0,16,4 super_tile $4F [unused by map]
-B $6000,16,4 super_tile $50
-B $6010,16,4 super_tile $51
-B $6020,16,4 super_tile $52
-B $6030,16,4 super_tile $53
-B $6040,16,4 super_tile $54
-B $6050,16,4 super_tile $55
-B $6060,16,4 super_tile $56
-B $6070,16,4 super_tile $57
-B $6080,16,4 super_tile $58
-B $6090,16,4 super_tile $59
-B $60A0,16,4 super_tile $5A
-B $60B0,16,4 super_tile $5B
-B $60C0,16,4 super_tile $5C
-B $60D0,16,4 super_tile $5D
-B $60E0,16,4 super_tile $5E
-B $60F0,16,4 super_tile $5F
-B $6100,16,4 super_tile $60
-B $6110,16,4 super_tile $61
-B $6120,16,4 super_tile $62
-B $6130,16,4 super_tile $63
-B $6140,16,4 super_tile $64
-B $6150,16,4 super_tile $65
-B $6160,16,4 super_tile $66
-B $6170,16,4 super_tile $67
-B $6180,16,4 super_tile $68
-B $6190,16,4 super_tile $69
-B $61A0,16,4 super_tile $6A
-B $61B0,16,4 super_tile $6B
-B $61C0,16,4 super_tile $6C
-B $61D0,16,4 super_tile $6D
-B $61E0,16,4 super_tile $6E
-B $61F0,16,4 super_tile $6F
-B $6200,16,4 super_tile $70
-B $6210,16,4 super_tile $71
-B $6220,16,4 super_tile $72
-B $6230,16,4 super_tile $73
-B $6240,16,4 super_tile $74
-B $6250,16,4 super_tile $75
-B $6260,16,4 super_tile $76
-B $6270,16,4 super_tile $77
-B $6280,16,4 super_tile $78
-B $6290,16,4 super_tile $79
-B $62A0,16,4 super_tile $7A
-B $62B0,16,4 super_tile $7B
-B $62C0,16,4 super_tile $7C
-B $62D0,16,4 super_tile $7D
-B $62E0,16,4 super_tile $7E
-B $62F0,16,4 super_tile $7F
-B $6300,16,4 super_tile $80
-B $6310,16,4 super_tile $81
-B $6320,16,4 super_tile $82
-B $6330,16,4 super_tile $83
-B $6340,16,4 super_tile $84
-B $6350,16,4 super_tile $85
-B $6360,16,4 super_tile $86
-B $6370,16,4 super_tile $87
-B $6380,16,4 super_tile $88
-B $6390,16,4 super_tile $89
-B $63A0,16,4 super_tile $8A
-B $63B0,16,4 super_tile $8B
-B $63C0,16,4 super_tile $8C
-B $63D0,16,4 super_tile $8D
-B $63E0,16,4 super_tile $8E
-B $63F0,16,4 super_tile $8F
-B $6400,16,4 super_tile $90
-B $6410,16,4 super_tile $91
-B $6420,16,4 super_tile $92
-B $6430,16,4 super_tile $93
-B $6440,16,4 super_tile $94
-B $6450,16,4 super_tile $95
-B $6460,16,4 super_tile $96
-B $6470,16,4 super_tile $97
-B $6480,16,4 super_tile $98
-B $6490,16,4 super_tile $99
-B $64A0,16,4 super_tile $9A [unused by map]
-B $64B0,16,4 super_tile $9B
-B $64C0,16,4 super_tile $9C
-B $64D0,16,4 super_tile $9D
-B $64E0,16,4 super_tile $9E
-B $64F0,16,4 super_tile $9F
-B $6500,16,4 super_tile $A0
-B $6510,16,4 super_tile $A1
-B $6520,16,4 super_tile $A2
-B $6530,16,4 super_tile $A3
-B $6540,16,4 super_tile $A4
-B $6550,16,4 super_tile $A5
-B $6560,16,4 super_tile $A6
-B $6570,16,4 super_tile $A7
-B $6580,16,4 super_tile $A8
-B $6590,16,4 super_tile $A9
-B $65A0,16,4 super_tile $AA
-B $65B0,16,4 super_tile $AB
-B $65C0,16,4 super_tile $AC
-B $65D0,16,4 super_tile $AD
-B $65E0,16,4 super_tile $AE
-B $65F0,16,4 super_tile $AF
-B $6600,16,4 super_tile $B0
-B $6610,16,4 super_tile $B1
-B $6620,16,4 super_tile $B2
-B $6630,16,4 super_tile $B3
-B $6640,16,4 super_tile $B4
-B $6650,16,4 super_tile $B5
-B $6660,16,4 super_tile $B6
-B $6670,16,4 super_tile $B7
-B $6680,16,4 super_tile $B8
-B $6690,16,4 super_tile $B9
-B $66A0,16,4 super_tile $BA
-B $66B0,16,4 super_tile $BB
-B $66C0,16,4 super_tile $BC
-B $66D0,16,4 super_tile $BD
-B $66E0,16,4 super_tile $BE
-B $66F0,16,4 super_tile $BF
-B $6700,16,4 super_tile $C0
-B $6710,16,4 super_tile $C1
-B $6720,16,4 super_tile $C2
-B $6730,16,4 super_tile $C3
-B $6740,16,4 super_tile $C4
-B $6750,16,4 super_tile $C5
-B $6760,16,4 super_tile $C6
-B $6770,16,4 super_tile $C7
-B $6780,16,4 super_tile $C8
-B $6790,16,4 super_tile $C9
-B $67A0,16,4 super_tile $CA
-B $67B0,16,4 super_tile $CB
-B $67C0,16,4 super_tile $CC
-B $67D0,16,4 super_tile $CD
-B $67E0,16,4 super_tile $CE
-B $67F0,16,4 super_tile $CF
-B $6800,16,4 super_tile $D0
-B $6810,16,4 super_tile $D1
-B $6820,16,4 super_tile $D2
-B $6830,16,4 super_tile $D3
-B $6840,16,4 super_tile $D4
-B $6850,16,4 super_tile $D5
-B $6860,16,4 super_tile $D6
-B $6870,16,4 super_tile $D7
-B $6880,16,4 super_tile $D8
-B $6890,16,4 super_tile $D9
+B $5B00,16,4 super_tile $00 #CALL:supertile($5B00)
+B $5B10,16,4 super_tile $01 #CALL:supertile($5B10)
+B $5B20,16,4 super_tile $02 #CALL:supertile($5B20)
+B $5B30,16,4 super_tile $03 #CALL:supertile($5B30)
+B $5B40,16,4 super_tile $04 #CALL:supertile($5B40)
+B $5B50,16,4 super_tile $05 #CALL:supertile($5B50)
+B $5B60,16,4 super_tile $06 #CALL:supertile($5B60)
+B $5B70,16,4 super_tile $07 #CALL:supertile($5B70)
+B $5B80,16,4 super_tile $08 #CALL:supertile($5B80)
+B $5B90,16,4 super_tile $09 #CALL:supertile($5B90)
+B $5BA0,16,4 super_tile $0A #CALL:supertile($5BA0)
+B $5BB0,16,4 super_tile $0B #CALL:supertile($5BB0)
+B $5BC0,16,4 super_tile $0C #CALL:supertile($5BC0)
+B $5BD0,16,4 super_tile $0D #CALL:supertile($5BD0)
+B $5BE0,16,4 super_tile $0E #CALL:supertile($5BE0)
+B $5BF0,16,4 super_tile $0F #CALL:supertile($5BF0)
+B $5C00,16,4 super_tile $10 #CALL:supertile($5C00)
+B $5C10,16,4 super_tile $11 #CALL:supertile($5C10)
+B $5C20,16,4 super_tile $12 #CALL:supertile($5C20)
+B $5C30,16,4 super_tile $13 #CALL:supertile($5C30)
+B $5C40,16,4 super_tile $14 #CALL:supertile($5C40)
+B $5C50,16,4 super_tile $15 #CALL:supertile($5C50)
+B $5C60,16,4 super_tile $16 #CALL:supertile($5C60)
+B $5C70,16,4 super_tile $17 #CALL:supertile($5C70)
+B $5C80,16,4 super_tile $18 #CALL:supertile($5C80)
+B $5C90,16,4 super_tile $19 #CALL:supertile($5C90)
+B $5CA0,16,4 super_tile $1A #CALL:supertile($5CA0)
+B $5CB0,16,4 super_tile $1B #CALL:supertile($5CB0)
+B $5CC0,16,4 super_tile $1C #CALL:supertile($5CC0)
+B $5CD0,16,4 super_tile $1D #CALL:supertile($5CD0)
+B $5CE0,16,4 super_tile $1E #CALL:supertile($5CE0)
+B $5CF0,16,4 super_tile $1F #CALL:supertile($5CF0)
+B $5D00,16,4 super_tile $20 #CALL:supertile($5D00)
+B $5D10,16,4 super_tile $21 #CALL:supertile($5D10)
+B $5D20,16,4 super_tile $22 #CALL:supertile($5D20)
+B $5D30,16,4 super_tile $23 #CALL:supertile($5D30)
+B $5D40,16,4 super_tile $24 #CALL:supertile($5D40)
+B $5D50,16,4 super_tile $25 #CALL:supertile($5D50)
+B $5D60,16,4 super_tile $26 #CALL:supertile($5D60)
+B $5D70,16,4 super_tile $27 #CALL:supertile($5D70)
+B $5D80,16,4 super_tile $28 #CALL:supertile($5D80)
+B $5D90,16,4 super_tile $29 #CALL:supertile($5D90)
+B $5DA0,16,4 super_tile $2A #CALL:supertile($5DA0)
+B $5DB0,16,4 super_tile $2B #CALL:supertile($5DB0)
+B $5DC0,16,4 super_tile $2C #CALL:supertile($5DC0)
+B $5DD0,16,4 super_tile $2D #CALL:supertile($5DD0)
+B $5DE0,16,4 super_tile $2E #CALL:supertile($5DE0)
+B $5DF0,16,4 super_tile $2F #CALL:supertile($5DF0)
+B $5E00,16,4 super_tile $30 #CALL:supertile($5E00)
+B $5E10,16,4 super_tile $31 #CALL:supertile($5E10)
+B $5E20,16,4 super_tile $32 #CALL:supertile($5E20)
+B $5E30,16,4 super_tile $33 #CALL:supertile($5E30)
+B $5E40,16,4 super_tile $34 #CALL:supertile($5E40)
+B $5E50,16,4 super_tile $35 #CALL:supertile($5E50)
+B $5E60,16,4 super_tile $36 #CALL:supertile($5E60)
+B $5E70,16,4 super_tile $37 #CALL:supertile($5E70)
+B $5E80,16,4 super_tile $38 #CALL:supertile($5E80)
+B $5E90,16,4 super_tile $39 #CALL:supertile($5E90)
+B $5EA0,16,4 super_tile $3A #CALL:supertile($5EA0)
+B $5EB0,16,4 super_tile $3B #CALL:supertile($5EB0)
+B $5EC0,16,4 super_tile $3C #CALL:supertile($5EC0)
+B $5ED0,16,4 super_tile $3D #CALL:supertile($5ED0)
+B $5EE0,16,4 super_tile $3E #CALL:supertile($5EE0)
+B $5EF0,16,4 super_tile $3F #CALL:supertile($5EF0)
+B $5F00,16,4 super_tile $40 #CALL:supertile($5F00)
+B $5F10,16,4 super_tile $41 #CALL:supertile($5F10)
+B $5F20,16,4 super_tile $42 #CALL:supertile($5F20)
+B $5F30,16,4 super_tile $43 #CALL:supertile($5F30)
+B $5F40,16,4 super_tile $44 #CALL:supertile($5F40)
+B $5F50,16,4 super_tile $45 #CALL:supertile($5F50)
+B $5F60,16,4 super_tile $46 #CALL:supertile($5F60)
+B $5F70,16,4 super_tile $47 #CALL:supertile($5F70)
+B $5F80,16,4 super_tile $48 #CALL:supertile($5F80)
+B $5F90,16,4 super_tile $49 #CALL:supertile($5F90)
+B $5FA0,16,4 super_tile $4A #CALL:supertile($5FA0)
+B $5FB0,16,4 super_tile $4B #CALL:supertile($5FB0)
+B $5FC0,16,4 super_tile $4C #CALL:supertile($5FC0)
+B $5FD0,16,4 super_tile $4D #CALL:supertile($5FD0)
+B $5FE0,16,4 super_tile $4E #CALL:supertile($5FE0)
+B $5FF0,16,4 super_tile $4F #CALL:supertile($5FF0) [unused by map]
+B $6000,16,4 super_tile $50 #CALL:supertile($6000)
+B $6010,16,4 super_tile $51 #CALL:supertile($6010)
+B $6020,16,4 super_tile $52 #CALL:supertile($6020)
+B $6030,16,4 super_tile $53 #CALL:supertile($6030)
+B $6040,16,4 super_tile $54 #CALL:supertile($6040)
+B $6050,16,4 super_tile $55 #CALL:supertile($6050)
+B $6060,16,4 super_tile $56 #CALL:supertile($6060)
+B $6070,16,4 super_tile $57 #CALL:supertile($6070)
+B $6080,16,4 super_tile $58 #CALL:supertile($6080)
+B $6090,16,4 super_tile $59 #CALL:supertile($6090)
+B $60A0,16,4 super_tile $5A #CALL:supertile($60A0)
+B $60B0,16,4 super_tile $5B #CALL:supertile($60B0)
+B $60C0,16,4 super_tile $5C #CALL:supertile($60C0)
+B $60D0,16,4 super_tile $5D #CALL:supertile($60D0)
+B $60E0,16,4 super_tile $5E #CALL:supertile($60E0)
+B $60F0,16,4 super_tile $5F #CALL:supertile($60F0)
+B $6100,16,4 super_tile $60 #CALL:supertile($6100)
+B $6110,16,4 super_tile $61 #CALL:supertile($6110)
+B $6120,16,4 super_tile $62 #CALL:supertile($6120)
+B $6130,16,4 super_tile $63 #CALL:supertile($6130)
+B $6140,16,4 super_tile $64 #CALL:supertile($6140)
+B $6150,16,4 super_tile $65 #CALL:supertile($6150)
+B $6160,16,4 super_tile $66 #CALL:supertile($6160)
+B $6170,16,4 super_tile $67 #CALL:supertile($6170)
+B $6180,16,4 super_tile $68 #CALL:supertile($6180)
+B $6190,16,4 super_tile $69 #CALL:supertile($6190)
+B $61A0,16,4 super_tile $6A #CALL:supertile($61A0)
+B $61B0,16,4 super_tile $6B #CALL:supertile($61B0)
+B $61C0,16,4 super_tile $6C #CALL:supertile($61C0)
+B $61D0,16,4 super_tile $6D #CALL:supertile($61D0)
+B $61E0,16,4 super_tile $6E #CALL:supertile($61E0)
+B $61F0,16,4 super_tile $6F #CALL:supertile($61F0)
+B $6200,16,4 super_tile $70 #CALL:supertile($6200)
+B $6210,16,4 super_tile $71 #CALL:supertile($6210)
+B $6220,16,4 super_tile $72 #CALL:supertile($6220)
+B $6230,16,4 super_tile $73 #CALL:supertile($6230)
+B $6240,16,4 super_tile $74 #CALL:supertile($6240)
+B $6250,16,4 super_tile $75 #CALL:supertile($6250)
+B $6260,16,4 super_tile $76 #CALL:supertile($6260)
+B $6270,16,4 super_tile $77 #CALL:supertile($6270)
+B $6280,16,4 super_tile $78 #CALL:supertile($6280)
+B $6290,16,4 super_tile $79 #CALL:supertile($6290)
+B $62A0,16,4 super_tile $7A #CALL:supertile($62A0)
+B $62B0,16,4 super_tile $7B #CALL:supertile($62B0)
+B $62C0,16,4 super_tile $7C #CALL:supertile($62C0)
+B $62D0,16,4 super_tile $7D #CALL:supertile($62D0)
+B $62E0,16,4 super_tile $7E #CALL:supertile($62E0)
+B $62F0,16,4 super_tile $7F #CALL:supertile($62F0)
+B $6300,16,4 super_tile $80 #CALL:supertile($6300)
+B $6310,16,4 super_tile $81 #CALL:supertile($6310)
+B $6320,16,4 super_tile $82 #CALL:supertile($6320)
+B $6330,16,4 super_tile $83 #CALL:supertile($6330)
+B $6340,16,4 super_tile $84 #CALL:supertile($6340)
+B $6350,16,4 super_tile $85 #CALL:supertile($6350)
+B $6360,16,4 super_tile $86 #CALL:supertile($6360)
+B $6370,16,4 super_tile $87 #CALL:supertile($6370)
+B $6380,16,4 super_tile $88 #CALL:supertile($6380)
+B $6390,16,4 super_tile $89 #CALL:supertile($6390)
+B $63A0,16,4 super_tile $8A #CALL:supertile($63A0)
+B $63B0,16,4 super_tile $8B #CALL:supertile($63B0)
+B $63C0,16,4 super_tile $8C #CALL:supertile($63C0)
+B $63D0,16,4 super_tile $8D #CALL:supertile($63D0)
+B $63E0,16,4 super_tile $8E #CALL:supertile($63E0)
+B $63F0,16,4 super_tile $8F #CALL:supertile($63F0)
+B $6400,16,4 super_tile $90 #CALL:supertile($6400)
+B $6410,16,4 super_tile $91 #CALL:supertile($6410)
+B $6420,16,4 super_tile $92 #CALL:supertile($6420)
+B $6430,16,4 super_tile $93 #CALL:supertile($6430)
+B $6440,16,4 super_tile $94 #CALL:supertile($6440)
+B $6450,16,4 super_tile $95 #CALL:supertile($6450)
+B $6460,16,4 super_tile $96 #CALL:supertile($6460)
+B $6470,16,4 super_tile $97 #CALL:supertile($6470)
+B $6480,16,4 super_tile $98 #CALL:supertile($6480)
+B $6490,16,4 super_tile $99 #CALL:supertile($6490)
+B $64A0,16,4 super_tile $9A #CALL:supertile($64A0) [unused by map]
+B $64B0,16,4 super_tile $9B #CALL:supertile($64B0)
+B $64C0,16,4 super_tile $9C #CALL:supertile($64C0)
+B $64D0,16,4 super_tile $9D #CALL:supertile($64D0)
+B $64E0,16,4 super_tile $9E #CALL:supertile($64E0)
+B $64F0,16,4 super_tile $9F #CALL:supertile($64F0)
+B $6500,16,4 super_tile $A0 #CALL:supertile($6500)
+B $6510,16,4 super_tile $A1 #CALL:supertile($6510)
+B $6520,16,4 super_tile $A2 #CALL:supertile($6520)
+B $6530,16,4 super_tile $A3 #CALL:supertile($6530)
+B $6540,16,4 super_tile $A4 #CALL:supertile($6540)
+B $6550,16,4 super_tile $A5 #CALL:supertile($6550)
+B $6560,16,4 super_tile $A6 #CALL:supertile($6560)
+B $6570,16,4 super_tile $A7 #CALL:supertile($6570)
+B $6580,16,4 super_tile $A8 #CALL:supertile($6580)
+B $6590,16,4 super_tile $A9 #CALL:supertile($6590)
+B $65A0,16,4 super_tile $AA #CALL:supertile($65A0)
+B $65B0,16,4 super_tile $AB #CALL:supertile($65B0)
+B $65C0,16,4 super_tile $AC #CALL:supertile($65C0)
+B $65D0,16,4 super_tile $AD #CALL:supertile($65D0)
+B $65E0,16,4 super_tile $AE #CALL:supertile($65E0)
+B $65F0,16,4 super_tile $AF #CALL:supertile($65F0)
+B $6600,16,4 super_tile $B0 #CALL:supertile($6600)
+B $6610,16,4 super_tile $B1 #CALL:supertile($6610)
+B $6620,16,4 super_tile $B2 #CALL:supertile($6620)
+B $6630,16,4 super_tile $B3 #CALL:supertile($6630)
+B $6640,16,4 super_tile $B4 #CALL:supertile($6640)
+B $6650,16,4 super_tile $B5 #CALL:supertile($6650)
+B $6660,16,4 super_tile $B6 #CALL:supertile($6660)
+B $6670,16,4 super_tile $B7 #CALL:supertile($6670)
+B $6680,16,4 super_tile $B8 #CALL:supertile($6680)
+B $6690,16,4 super_tile $B9 #CALL:supertile($6690)
+B $66A0,16,4 super_tile $BA #CALL:supertile($66A0)
+B $66B0,16,4 super_tile $BB #CALL:supertile($66B0)
+B $66C0,16,4 super_tile $BC #CALL:supertile($66C0)
+B $66D0,16,4 super_tile $BD #CALL:supertile($66D0)
+B $66E0,16,4 super_tile $BE #CALL:supertile($66E0)
+B $66F0,16,4 super_tile $BF #CALL:supertile($66F0)
+B $6700,16,4 super_tile $C0 #CALL:supertile($6700)
+B $6710,16,4 super_tile $C1 #CALL:supertile($6710)
+B $6720,16,4 super_tile $C2 #CALL:supertile($6720)
+B $6730,16,4 super_tile $C3 #CALL:supertile($6730)
+B $6740,16,4 super_tile $C4 #CALL:supertile($6740)
+B $6750,16,4 super_tile $C5 #CALL:supertile($6750)
+B $6760,16,4 super_tile $C6 #CALL:supertile($6760)
+B $6770,16,4 super_tile $C7 #CALL:supertile($6770)
+B $6780,16,4 super_tile $C8 #CALL:supertile($6780)
+B $6790,16,4 super_tile $C9 #CALL:supertile($6790)
+B $67A0,16,4 super_tile $CA #CALL:supertile($67A0)
+B $67B0,16,4 super_tile $CB #CALL:supertile($67B0)
+B $67C0,16,4 super_tile $CC #CALL:supertile($67C0)
+B $67D0,16,4 super_tile $CD #CALL:supertile($67D0)
+B $67E0,16,4 super_tile $CE #CALL:supertile($67E0)
+B $67F0,16,4 super_tile $CF #CALL:supertile($67F0)
+B $6800,16,4 super_tile $D0 #CALL:supertile($6800)
+B $6810,16,4 super_tile $D1 #CALL:supertile($6810)
+B $6820,16,4 super_tile $D2 #CALL:supertile($6820)
+B $6830,16,4 super_tile $D3 #CALL:supertile($6830)
+B $6840,16,4 super_tile $D4 #CALL:supertile($6840)
+B $6850,16,4 super_tile $D5 #CALL:supertile($6850)
+B $6860,16,4 super_tile $D6 #CALL:supertile($6860)
+B $6870,16,4 super_tile $D7 #CALL:supertile($6870)
+B $6880,16,4 super_tile $D8 #CALL:supertile($6880)
+B $6890,16,4 super_tile $D9 #CALL:supertile($6890)
 
 ; ------------------------------------------------------------------------------
 
