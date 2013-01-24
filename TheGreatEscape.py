@@ -49,6 +49,66 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         str     = self.decode_string(cwd, addr + 3, nbytes)
         return "screen address $%x, length $%x, string='%s'" % (scraddr, nbytes, str)
 
+    def tile(self, cwd, tile_index, supertile_index):
+        """ Tile and supertile index -> Udg. """
+
+        if supertile_index < 45:
+            data = 0x8590 # ext tiles 1
+        elif supertile_index < 139 or supertile_index >= 204:
+            data = 0x8A18 # ext tiles 2
+        else:
+            data = 0x90F8 # ext tiles 3
+
+        attr = 7
+        a = data + tile_index * 8
+        return Udg(attr, self.snapshot[a : a + 8])
+
+    def supertile(self, cwd, addr):
+        """ Supertile address -> image. """
+
+        stile = (addr - 0x5B00) // 16
+
+        # Build tile UDG array
+        udg_array = []
+
+        for i in range(4 * 4):
+            if i % 4 == 0:
+                udg_array.append([]) # start new row
+            udg_array[-1].append(self.tile(cwd, self.snapshot[addr + i], stile))
+
+        img_path_id = 'ScreenshotImagePath'
+        fname = 'supertile-%x' % stile
+        img_path = self.image_path(fname, img_path_id)
+        self.write_image(img_path, udg_array)
+
+        return self.img_element(cwd, img_path)
+
+    def all_supertiles(self, cwd, unused_arg):
+        s = ""
+        for addr in range(0x5B00, 0x68A0, 16):
+            s += self.supertile(cwd, addr)
+
+        return s
+
+    def map(self, cwd, addr, width, height):
+
+        # Build tile UDG array
+        udg_array = []
+
+        for y in range(0, height * 4):
+            udg_array.append([]) # start new row
+            for x in range(0, width * 4):
+                stileidx = self.snapshot[addr + (y // 4) * width + (x // 4)]
+                udg_array[-1].append(self.tile(cwd, self.snapshot[0x5B00 + stileidx * 16 + (y & 3) * 4 + (x & 3)], stileidx))
+
+        img_path_id = 'ScreenshotImagePath'
+        fname = 'map'
+        img_path = self.image_path(fname, img_path_id)
+        self.write_image(img_path, udg_array)
+
+        return self.img_element(cwd, img_path)
+
+
 class TheGreatEscapeAsmWriter(AsmWriter):
     pass
 
