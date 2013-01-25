@@ -912,7 +912,7 @@ B $8164,9 medal_4_7
 B $816D,9 medal_4_8
 B $8176,9 medal_4_9
 ;
-b $817F,9 bell_top_middle
+B $817F,9 bell_top_middle
 B $8188,9 bell_top_right
 B $8191,9 bell_middle_left
 B $819A,9 bell_middle_middle
