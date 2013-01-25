@@ -1040,7 +1040,7 @@ B $764A characterstruct_8: prisoner who sleeps at bed position B
 B $7651 characterstruct_9: prisoner who sleeps at bed position C
 B $7658 characterstruct_10: prisoner who sleeps at bed position D
 B $765F characterstruct_11: prisoner who sleeps at bed position E
-B $7666 characterstruct_12: p butrisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
+B $7666 characterstruct_12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
 B $766D characterstruct_13:
 B $7674 characterstruct_14:
 B $767B characterstruct_15:
