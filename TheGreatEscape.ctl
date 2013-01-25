@@ -1882,6 +1882,12 @@ c $7C26 item_to_thing
 ; ------------------------------------------------------------------------------
 
 c $7C33 draw_all_items
+  $7C33 draw_item(screenaddr_item1, items_held[0]);
+  $7C42 draw_item(screenaddr_item2, items_held[1]);
+  $7C45 return;
+
+; ------------------------------------------------------------------------------
+
 c $7C46 draw_item
 c $7C82 pick_up_related
 c $7CBE plot_bitmap
