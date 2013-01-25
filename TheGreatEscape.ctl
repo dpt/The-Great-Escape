@@ -387,7 +387,7 @@
 ; ------------------------------------------------------------------------------
 
 b $4000 Screen.
-D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } #TABLE#
+D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 
 ; ------------------------------------------------------------------------------
 
