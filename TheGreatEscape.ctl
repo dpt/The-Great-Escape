@@ -1853,7 +1853,6 @@ u $EFFB UNUSED?
 
 c $68A2 sub 68A2 - looks like it's resetting stuff
 C $68F4 some_sort_of_initial_setup_maybe (<- main and setup)
-46038
 c $6920 tunnel_related [unsure]
 c $6939 setup_movable_items
 c $696A setup_crate
