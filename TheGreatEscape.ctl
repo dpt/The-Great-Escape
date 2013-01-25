@@ -2165,7 +2165,23 @@ c $A8E7 sub_A8E7
 
 c $A9A0 sub_A9A0
 
+; -----------------------------------------------------------------------------
+
 c $A9AD plot_a_tile_perhaps -- plots tiles to buffer
+R $A9AD HL Likely the supertile index (used to select the correct tile group).
+R $A9AD A  Tile index
+  $A9AD ...
+  $A9B0 tiles = exterior_tiles_1;
+  $A9B3 if (super_tile < 45) goto got_it;
+  $A9B7 tiles = exterior_tiles_2;
+  $A9BA if (super_tile < 139) goto got_it;
+  $A9BE if (super_tile >= 204) goto got_it;
+  $A9C2 tiles = exterior_tiles_3;
+  $A9C5 got_it: ...
+  $A9D5 copy_tile: ...
+  $A9E3 return;
+
+; -----------------------------------------------------------------------------
 
 c $A9E4 map_shunt_1
 
