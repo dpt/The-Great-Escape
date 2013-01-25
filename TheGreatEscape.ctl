@@ -357,11 +357,11 @@
 ; location_9003 = $9003
 
 ; ; enum sound (width 2 bytes)
-; sound_character_enters_1 = $2030
-; sound_character_enters_2 = $2040
-; sound_bell_ringer = $2530
+; sound_CHARACTER_ENTERS_1 = $2030
+; sound_CHARACTER_ENTERS_2 = $2040
+; sound_BELL_RINGER = $2530
 ; sound_3030 = $3030
-; sound_drop_item = $3040
+; sound_DROP_ITEM = $3040
 
 ; ; enum input
 ; input_UP = 0                  ; wrong, for now
