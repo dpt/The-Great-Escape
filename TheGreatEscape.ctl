@@ -2162,6 +2162,22 @@ c $9E98 lock_picked -- locks user out until lock is picked
 
 ; ------------------------------------------------------------------------------
 
+c $9EB2 wire_snipped -- locks user out until wire is snipped
+  $9EB2 A = user_locked_out_until - game_counter;
+  $9EB9 if (A == 0) goto wire_successfully_snipped;
+  $9EBB if (A >= 4) return;
+  $9EBE $800D = table_9EE0[$800E & 3];
+  $9ECF return;
+  $9ED0 wire_successfully_snipped: $800E = A & 3;
+  $9ED6 $800D = 0x80;
+  $9ED9 $8013 = 0x18;
+  $9EDE goto clear_lockpick_wirecut_flags_and_return;
+
+; ------------------------------------------------------------------------------
+
+b $9EE0 Indexed by overlap.$800E.
+
+; ------------------------------------------------------------------------------
 
 b $9EE4 twentyonelong -- 7 structs, 3 wide. maps bytes to offsets
   $9EE4,3 byte_to_offset <42, unk_9EF9>
