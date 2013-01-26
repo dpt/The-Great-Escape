@@ -2154,12 +2154,10 @@ c $9E5C user_input_was_in_bed_perhaps
 ; ------------------------------------------------------------------------------
 
 c $9E98 lock_picked -- locks user out until lock is picked
-  $9E98 HL = &game_counter
-  $9E9B A = user_locked_out_until
-  $9E9E if (A != *HL) return;
-  $9EA0 *ptr_to_door_being_lockpicked &= ~(1 << 7); // open door
+  $9E98 if (user_locked_out_until != game_counter) return;
+  $9EA0 *ptr_to_door_being_lockpicked &= ~(1 << 7); // unlock
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
-  $9EAA clear bottom two bits of $8001
+  $9EAA clear_lockpick_wirecut_flags_and_return: clear bottom two bits of $8001
   $9EB1 return;
 
 ; ------------------------------------------------------------------------------
