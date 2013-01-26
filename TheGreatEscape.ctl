@@ -2109,7 +2109,20 @@ c $9E07 process_user_input
 
 ; ------------------------------------------------------------------------------
 
-c $9F21 in permitted area?
+c $9E34 user_input_super
+
+; ------------------------------------------------------------------------------
+
+c $9E5C user_input_was_in_bed_perhaps
+  $9E5C ...
+  $9E75 player_bed = object_EMPTY_BED;
+  $9E7A ...
+  $9E7D user_input_another_entry_point
+  $9E85 user_input_A137_was_zero
+  $9E8D A = 0x80;
+  $9E8F user_input_fire_not_pressed: if ($800D == A) return;
+  $9E94 $800D = A | 0x80;
+  $9E97 return;
 
 ; ------------------------------------------------------------------------------
 
