@@ -1903,6 +1903,17 @@ u $EFFB UNUSED?
 
 
 
+c $6920 tunnel_related -- probably when emerging from tunnel -- this is resetting the character sprite set to prisoner
+  $6929 ...
+  $6926 A = indoor_room_index;
+  $6929 if (A < room_29_secondtunnelstart) goto not_in_a_tunnel;
+  $692D ...
+  $692F (overlap.$8015) = sprite_prisoner_tl_4;
+  $6935 return;
+  $6936 not_in_a_tunnel: ...
+  $6938 return;
+
+; ------------------------------------------------------------------------------
 
 c $68A2 sub 68A2 - looks like it's resetting stuff
 C $68F4 some_sort_of_initial_setup_maybe (<- main and setup)
@@ -1960,6 +1971,23 @@ c $7B36 pick_up_item
 ; ------------------------------------------------------------------------------
 
 c $7B8B drop_item
+  $7B8B A = (items_held)
+  $7B8E if (A == item_NONE) return;
+  $7B91 if (A == item_UNIFORM) (overlap.$8015) = sprite_prisoner_tl_4;
+  $7B9C ...
+  $7B9D HL = items_held + 1 (item slot B)
+  $7BA0 A = (HL)
+  $7BA1 (HL) = item_NONE;
+  $7BA3 HL--;
+  $7BA4 (HL) = item_NONE;
+  $7BA5 draw_all_items();
+  $7BA8 play_speaker(sound_DROP_ITEM);
+  $7BAE choose_game_screen_attributes();
+  $7BB1 set_game_screen_attributes();
+  $7BB4 ...
+  $7BE3 return;
+  $7BE4 ...
+  $7C25 return;
 
 ; ------------------------------------------------------------------------------
 
@@ -2418,10 +2446,18 @@ c $B3C4 action_poison
 ; -----------------------------------------------------------------------------
 
 c $B3E1 action_uniform
+  $B3E1 HL = (overlap.$8015);
+  $B3E4 DE = sprite_guard_...;
+  $B3E7 A = (HL);
+  $B3E8 if (.. cheap equality test ..) return;
+  $B3EA ...
 
 c $B3F6 action_shovel
 
 c $B417 action_wiresnips
+  $B417 ...
+  $B482 (overlap.$8015) = sprite_prisoner_tl_4;
+  $B488 ...
 
 c $B495 action_lockpick
 
@@ -2440,6 +2476,10 @@ c $B5CE called_from_main_loop_9
 c $B71B reset_something
 
 c $B75A looks_like_a_reset_function [unsure]
+  $B75A ...
+  $B789 (overlap.$8015) = sprite_prisoner_tl_4;
+  $B78F ...
+  $B79A return;
 
 c $B79B reset map and characters [unsure]
 
@@ -2533,10 +2573,16 @@ c $CB85 increment_word_C41A_low_byte_wrapping_at_15
 ; ------------------------------------------------------------------------------
 
 c $CB98 solitary
+  $CC16 ...
+  $CC19 (overlap.$8015) = sprite_prisoner_tl_4;
+  $CC1F ...
 
 ; ------------------------------------------------------------------------------
 
 c $CC37 guards_follow_suspicious_player
+  $CC37 ...
+  $CC3E if (*overlap.$8015) == sprite_guard_tl_4 return;  // don't follow the player if he's dressed as a guard
+  $CC46 ...
 
 ; ------------------------------------------------------------------------------
 
