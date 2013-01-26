@@ -1874,6 +1874,24 @@ u $EFFB UNUSED?
 
 ; ------------------------------------------------------------------------------
 
+; game state which overlaps with tiles etc.
+;
+; vars referenced as (overlap.$8015)
+
+; b $8000 -- never written?
+; b $8001 -- flags: bit 6 gets toggled in set_target_location /  bit 0: picking lock /  bit 1: cutting wire
+; w $8002 -- could be a target location (set in set_target_location, user_input_was_in_bed_perhaps)
+; w $8004 -- (<- user_input_was_in_bed_perhaps)
+; b $800D -- tunnel related (<- process_user_input, wire_snipped, user_input_was_in_bed_perhaps) assigned from table at 9EE0
+; b $800E -- tunnel related, walk/crawl flag maybe? (bottom 2 bits index $9EE0)
+; w $800F --
+; w $8011 --
+; b $8013 -- set to 24 in user_input_was_in_bed_perhaps
+; w $8015 -- pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
+; w $8018 -- points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
+; w $801A -- points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
+; b $801C -- cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by sub_68A2 -- looks like a room index!
+; ? $8020 -- character reset data? (<- calledby_setup_movable_items)
 
 ; ------------------------------------------------------------------------------
 
