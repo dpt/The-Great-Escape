@@ -2549,8 +2549,18 @@ c $B3F6 action_shovel
 
 c $B417 action_wiresnips
   $B417 ...
+  $B466 A = 4; goto action_wiresnips_tail;
+  $B466 A = 5; goto action_wiresnips_tail;
+  $B46A A = 6; goto action_wiresnips_tail;
+  $B46E A = 7;
+  $B470 action_wiresnips_tail: ...
+  $B471 (overlap.$800E) = A;
+  $B475 (overlap.$800D) = 0x80;
+  $B478 (overlap.$8001) = 2;
+  $B47D (overlap.$8013) = 12;
   $B482 (overlap.$8015) = sprite_prisoner_tl_4;
-  $B488 ...
+  $B488 user_locked_out_until = game_counter + 96;
+  $B490 queue_message_for_display(message_CUTTING_THE_WIRE);
 
 c $B495 action_lockpick
 
