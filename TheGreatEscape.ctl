@@ -2110,6 +2110,23 @@ c $9E07 process_user_input
 c $9F21 in permitted area?
 
 c $A007 a second in permitted area entry point
+b $9EE4 twentyonelong -- 7 structs, 3 wide. maps bytes to offsets
+  $9EE4,3 byte_to_offset <42, unk_9EF9>
+  $9EE7,3 byte_to_offset < 5, unk_9EFC>
+  $9EEA,3 byte_to_offset <14, unk_9F01>
+  $9EED,3 byte_to_offset <16, unk_9F08>
+  $9EF0,3 byte_to_offset <44, unk_9F0E>
+  $9EF3,3 byte_to_offset <43, unk_9F11>
+  $9EF6,3 byte_to_offset <45, unk_9F13>
+  $9EF9 unk_9EF9
+  $9EFC unk_9EFC
+  $9F01 unk_9F01
+  $9F08 unk_9F08
+  $9F0E unk_9F0E
+  $9F11 unk_9F11
+  $9F13 unk_9F13
+
+; ------------------------------------------------------------------------------
 
 c $A035 wave_morale_flag
 
