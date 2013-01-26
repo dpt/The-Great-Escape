@@ -1996,11 +1996,11 @@ c $9DE5 check for 'game cancel' keypress
 
 c $9E07 process_user_input
   $9E07 if (morale_related) return; // inhibits user control when morale hits zero
-  $9E0E if ((0x8001 & 3) == 0) goto is_zero;
+  $9E0E if (($8001 & 3) == 0) goto zero_flags;
   $9E15 morale_related_also = 31;
-  $9E1A if (0x8001 == 1) goto lock_picked;
-  $9E1F goto sub_9EB2;
-  $9E22 is_zero: counter_of_something();
+  $9E1A if ($8001 == 1) goto lock_picked;
+  $9E1F goto wire_snipped;
+  $9E22 zero_flags: input_routine(); // lives at same address as counter_of_something
   $9E25 hl = &morale_related_also; if (? != 0) goto user_input_super(hl);
   $9E2D if (morale_related_also == 0) return;
   $9E30 morale_related_also--; a = 0; goto user_input_fire_not_pressed;
