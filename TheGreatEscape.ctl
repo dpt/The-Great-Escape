@@ -2209,7 +2209,7 @@ c $A2E2 sub_A2E2
 
 c $A33F set_target_location
   $A33F if (morale_related) return;
-  $A344 0x8001 |= (1<<6); 0x8002 = b; 0x8003 = c; return;
+  $A344 $8001 &= ~(1<<6); $8002 = b; $8003 = c; return;
 
 c $A351 sub_A351
 
