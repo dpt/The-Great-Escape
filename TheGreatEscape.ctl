@@ -1903,6 +1903,19 @@ u $EFFB UNUSED?
 
 
 
+; ------------------------------------------------------------------------------
+
+c $68A2 sub_68A2 -- looks like it's resetting stuff
+  $68A2 ...
+  $68DA A = overlap.$801C; (room index thing)
+  $68DD indoor_room_index = A;
+  $68E0 if (A != 0) goto some_sort_of_initial_setup_maybe;
+  $68E4 ...
+  $68F4 some_sort_of_initial_setup_maybe (<- main and setup) [subroutine or label?]
+  $691D goto main_loop;
+
+; ------------------------------------------------------------------------------
+
 c $6920 tunnel_related -- probably when emerging from tunnel -- this is resetting the character sprite set to prisoner
   $6929 ...
   $6926 A = indoor_room_index;
