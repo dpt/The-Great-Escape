@@ -2125,7 +2125,6 @@ c $9E98 lock_picked -- locks user out until lock is picked
 ; ------------------------------------------------------------------------------
 
 
-c $A007 a second in permitted area entry point
 b $9EE4 twentyonelong -- 7 structs, 3 wide. maps bytes to offsets
   $9EE4,3 byte_to_offset <42, unk_9EF9>
   $9EE7,3 byte_to_offset < 5, unk_9EFC>
@@ -2141,6 +2140,13 @@ b $9EE4 twentyonelong -- 7 structs, 3 wide. maps bytes to offsets
   $9F0E unk_9F0E
   $9F11 unk_9F11
   $9F13 unk_9F13
+
+; ------------------------------------------------------------------------------
+
+b $9F15 (<- in_permitted_area)
+
+c $9F21 in_permitted_area [unsure] -- could be as general as bounds detection
+  $A007 a second in_permitted_area entry point
 
 ; ------------------------------------------------------------------------------
 
