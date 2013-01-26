@@ -1860,7 +1860,6 @@ b $F2E2 keyboard port hi bytes (zero terminated)
 w $EDD1 saved_sp
 w $EDD3 game screen scanline start addresses
 
-w $EFF9 word_EFF9 (<- action papers)
 u $EFFB UNUSED?
 
 
