@@ -2530,9 +2530,26 @@ c $EED3 plot_game_screen
 
 c $EF9A event_roll_call
 
-c $EFCB action: papers
+; ------------------------------------------------------------------------------
+
+; HOLY SMOKES!
+; If you 'use' papers while wearing the uniform by the main gate you can leave
+; the camp!
+; I NEVER KNEW THAT!
+
+c $EFCB action_papers
+  $EFCB [range checking business x in (0x69..0x6D) and y in (0x49..0x4B)]
+  $EFDE if ((*overlap.$8015) != sprite_guard_tl_4) goto solitary; // using the papers at the main gate when not in uniform => get sent to solitary
+  $EFE8 increase_morale_by_10_score_by_50
+  $EFEB (overlap.$801C) = 0; // clear stored room index?
+  $EFEF ... must be a transition to outside the gate ...
+W $EFF9 word_EFF9 (<- action_papers)
+
+; ------------------------------------------------------------------------------
 
 c $EFFC user confirm
+
+; ------------------------------------------------------------------------------
 
 c $F075 counter of something [unsure]
 
