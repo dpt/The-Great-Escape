@@ -14,6 +14,23 @@
 ; editor on the .z80 to restore the bytes to their former values (JP $F163).
 
 ; //////////////////////////////////////////////////////////////////////////////
+; TODO
+; //////////////////////////////////////////////////////////////////////////////
+;
+; - Document everything!
+;   - sub_* functions
+;   - '...' indicates a gap in documentation
+; - Map out game state at $8000+ which overlaps graphics.
+; - Extract all images.
+;   - Sort out inverted masks issue.
+; - Drop 'resources' dir if possible.
+; - Use SkoolKit # refs more.
+;   - Currently using (<- somefunc) to show a reference.
+; - Sort entire .ctl file by address.
+;   - Presently data is listed first.
+; - Extract font.
+
+; //////////////////////////////////////////////////////////////////////////////
 ; CONSTANTS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
