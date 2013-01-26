@@ -2111,6 +2111,20 @@ c $9E07 process_user_input
 
 c $9F21 in permitted area?
 
+; ------------------------------------------------------------------------------
+
+c $9E98 lock_picked -- locks user out until lock is picked
+  $9E98 HL = &game_counter
+  $9E9B A = user_locked_out_until
+  $9E9E if (A != *HL) return;
+  $9EA0 *ptr_to_door_being_lockpicked &= ~(1 << 7); // open door
+  $9EA5 queue_message_for_display(message_IT_IS_OPEN);
+  $9EAA clear bottom two bits of $8001
+  $9EB1 return;
+
+; ------------------------------------------------------------------------------
+
+
 c $A007 a second in permitted area entry point
 b $9EE4 twentyonelong -- 7 structs, 3 wide. maps bytes to offsets
   $9EE4,3 byte_to_offset <42, unk_9EF9>
