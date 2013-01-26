@@ -1900,7 +1900,7 @@ c $7C26 item_to_thing
 
 c $7C33 draw_all_items
   $7C33 draw_item(screenaddr_item1, items_held[0]);
-  $7C42 draw_item(screenaddr_item2, items_held[1]);
+  $7C3C draw_item(screenaddr_item2, items_held[1]);
   $7C45 return;
 
 ; ------------------------------------------------------------------------------
