@@ -1072,8 +1072,8 @@ B $76B3 characterstruct_23: prisoner who sits at bench position C
 B $76BA characterstruct_24:
 B $76C1 characterstruct_25:
 ;
-b $77C8 item_structs.
-D $77C8 Array, 16 long, of 7-byte structures. These are 'characters' but seem to be the game items.
+b $76C8 item_structs.
+D $76C8 Array, 16 long, of 7-byte structures. These are 'characters' but seem to be the game items.
 B $76C8 itemstruct_0: wiresnips (<- item_to_thing, pick_up_related)
 B $76CF itemstruct_1: shovel
 B $76D6 itemstruct_2: lockpick
