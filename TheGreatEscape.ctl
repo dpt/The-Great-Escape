@@ -1961,8 +1961,10 @@ c $6B42 plot_indoor_tiles
 ; ------------------------------------------------------------------------------
 
 c $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
-c $7AF0 use_item_B
-c $7AF5 use_item_A
+  $7AF0 use_item_B
+  $7AF5 use_item_A
+  $7AFB (pointless_jump)
+  $7AFD ...
 
 ; ------------------------------------------------------------------------------
 
