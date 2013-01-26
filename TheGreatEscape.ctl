@@ -1915,10 +1915,21 @@ c $6920 tunnel_related -- probably when emerging from tunnel -- this is resettin
 
 ; ------------------------------------------------------------------------------
 
-c $68A2 sub 68A2 - looks like it's resetting stuff
-C $68F4 some_sort_of_initial_setup_maybe (<- main and setup)
-c $6920 tunnel_related [unsure]
 c $6939 setup_movable_items
+  $693C A = indoor_room_index;
+  $693F if (A != room_2_hut2left) goto not_stove1;
+  $6944 setup_stove1();
+  $6947 goto item_setup;
+  $6949 not_stove1: if (A != room_4_hut3left) goto not_stove2;
+  $694E setup_stove2();
+  $6951 goto item_setup;
+  $6953 not_stove2: if (A != room_9_crate) goto item_setup;
+  $6958 setup_crate();
+  $695B item_setup: called_from_main_loop_7();
+  $695E called_from_main_loop_8();
+  $6961 called_from_main_loop_9();
+  $6964 called_from_main_loop_10();
+  $6967 called_from_main_loop_11();
 
 ; ------------------------------------------------------------------------------
 
