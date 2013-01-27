@@ -411,24 +411,47 @@ D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 b $CE22 Sprite definitions -- objects which can move.
 ;
 D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
-D $CE22 Structure: (b) width in bytes, (b) height in rows, (w) data ptr, (w) mask ptr
-B $CE22 sprite: STOVE (16x22)
-B $CE28 sprite: CRATE (24x24)
-B $CE2E sprite: PRISONER (16x27) TOP LEFT 4
-B $CE34 sprite: PRISONER (16x28) TOP LEFT 3
-B $CE3A sprite: PRISONER (16x28) TOP LEFT 2
-B $CE40 sprite: PRISONER (16x28) TOP LEFT 1
-B $CE46 sprite: PRISONER (16x27) BOTTOM RIGHT 1
-B $CE4C sprite: PRISONER (16x29) BOTTOM RIGHT 2
-B $CE52 sprite: PRISONER (16x28) BOTTOM RIGHT 3
-B $CE58 sprite: PRISONER (16x28) BOTTOM RIGHT 4
-B $CE5E sprite: CRAWL (24x16) BOTTOM LEFT 2
-B $CE64 sprite: CRAWL (24x15) BOTTOM LEFT 1
-B $CE6A sprite: CRAWL (24x16) TOP LEFT 1
-B $CE70 sprite: CRAWL (24x16) TOP LEFT 2
-B $CE76 sprite: DOG [fillmeout]
-B $CEA6 sprite: GUARD [fillmeout]
-B $CED6 sprite: COMMANDANT [fillmeout]
+D $CE22 Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
+D $CE22 'tl' => character faces top left of the screen
+D $CE22 'br' => character faces bottom right of the screen
+B $CE22 sprite_stove           (16x22)
+B $CE28 sprite_crate           (24x24)
+B $CE2E sprite_prisoner_tl_4   (16x27)
+B $CE34 sprite_prisoner_tl_3   (16x28)
+B $CE3A sprite_prisoner_tl_2   (16x28)
+B $CE40 sprite_prisoner_tl_1   (16x28)
+B $CE46 sprite_prisoner_br_1   (16x27)
+B $CE4C sprite_prisoner_br_2   (16x29)
+B $CE52 sprite_prisoner_br_3   (16x28)
+B $CE58 sprite_prisoner_br_4   (16x28)
+B $CE5E sprite_crawl_bl_2      (24x16)
+B $CE64 sprite_crawl_bl_1      (24x15)
+B $CE6A sprite_crawl_tl_1      (24x16)
+B $CE70 sprite_crawl_tl_2      (24x16)
+B $CE76 sprite_dog_tl_4        (24x16)
+B $CE7C sprite_dog_tl_3        (24x16)
+B $CE82 sprite_dog_tl_2        (24x15)
+B $CE88 sprite_dog_tl_1        (24x15)
+B $CE8E sprite_dog_br_1        (24x14)
+B $CE94 sprite_dog_br_2        (24x15)
+B $CE9A sprite_dog_br_3        (24x15)
+B $CEA0 sprite_dog_br_4        (24x14)
+B $CEA6 sprite_guard_tl_4      (16x27)
+B $CEAC sprite_guard_tl_3      (16x29)
+B $CEB2 sprite_guard_tl_2      (16x27)
+B $CEB8 sprite_guard_tl_1      (16x27)
+B $CEBE sprite_guard_br_1      (16x29)
+B $CEC4 sprite_guard_br_2      (16x29)
+B $CECA sprite_guard_br_3      (16x28)
+B $CED0 sprite_guard_br_4      (16x28)
+B $CED6 sprite_commandant_tl_4 (16x28)
+B $CEDC sprite_commandant_tl_3 (16x30)
+B $CEE2 sprite_commandant_tl_2 (16x29)
+B $CEE8 sprite_commandant_tl_1 (16x29)
+B $CEEE sprite_commandant_br_1 (16x27)
+B $CEF4 sprite_commandant_br_2 (16x28)
+B $CEFA sprite_commandant_br_3 (16x27)
+B $CF00 sprite_commandant_br_4 (16x28)
 
 ; ------------------------------------------------------------------------------
 
