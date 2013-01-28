@@ -1698,8 +1698,9 @@ w $B839 word_B839
 ; Map
 ;
 b $BCEE map_tiles
-D $BCEE Map super-tile refs. 54x32. Each byte represents a 32x32 tile.
-D $BCEE #CALL:map($BCEE, 54, 32)
+D $BCEE Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
+D $BCEE #CALL:map($BCEE, 54, 34)
+  $BCEE,1836,54*34
 
 ; The map, with blanks and grass replaced to show the outline more clearly:
 ;
