@@ -2385,21 +2385,21 @@ R $A15F A Attribute byte.
 ; ------------------------------------------------------------------------------
 
 b $A173 timed_events array (15 event structures)
-  $A173 { 0, event_another_day_dawns }
-  $A176 { 8, event_wake_up }
-  $A179 { 12, event_new_red_cross_parcel }
-  $A17C { 16, event_go_to_roll_call }
-  $A17F { 20, event_roll_call }
-  $A182 { 21, event_go_to_breakfast_time }
-  $A185 { 36, event_breakfast_time }
-  $A188 { 46, event_go_to_exercise_time }
-  $A18B { 64, event_exercise_time }
-  $A18E { 74, event_go_to_roll_call }
-  $A191 { 78, event_roll_call }
-  $A194 { 79, event_go_to_time_for_bed }
-  $A197 { 98, event_time_for_bed }
-  $A19A { 100, event_night_time }
-  $A19D { 130, event_search_light }
+  $A173 {   0, #D$A1D3 }
+  $A176 {   8, #D$A1E7 }
+  $A179 {  12, #D$A228 }
+  $A17C {  16, #D$A1F0 }
+  $A17F {  20, #D$EF9A }
+  $A182 {  21, #D$A1F9 }
+  $A185 {  36, #D$A202 }
+  $A188 {  46, #D$A206 }
+  $A18B {  64, #D$A215 }
+  $A18E {  74, #D$A1F0 }
+  $A191 {  78, #D$EF9A }
+  $A194 {  79, #D$A219 }
+  $A197 {  98, #D$A264 }
+  $A19A { 100, #D$A1C3 }
+  $A19D { 130, #D$A26A }
 
 ; ------------------------------------------------------------------------------
 
