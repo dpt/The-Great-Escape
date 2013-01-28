@@ -408,6 +408,34 @@ D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 
 ; ------------------------------------------------------------------------------
 
+w $CDF2 something_character_related -- array, 24 long, of pointers to data
+  $CDF2 unk_CF26
+  $CDF4 unk_CF3A
+  $CDF6 unk_CF4E
+  $CDF8 unk_CF62
+  $CDFA unk_CF96
+  $CDFC unk_CFA2
+  $CDFE unk_CFAE
+  $CE00 unk_CFBA
+  $CE02 unk_CF76
+  $CE04 unk_CF7E
+  $CE06 unk_CF86
+  $CE08 unk_CF8E
+  $CE0A unk_CFC6
+  $CE0C unk_CFD2
+  $CE0E unk_CFDE
+  $CE10 unk_CFEA
+  $CE12 unk_CFF6
+  $CE14 unk_D002
+  $CE16 unk_D00E
+  $CE18 unk_D01A
+  $CE1A unk_CF06
+  $CE1C unk_CF0E
+  $CE1E unk_CF16
+  $CE20 unk_CF1E
+
+; ------------------------------------------------------------------------------
+
 b $CE22 Sprite definitions -- objects which can move.
 ;
 D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
@@ -455,6 +483,31 @@ D $CE22 'br' => character faces bottom right of the screen
 
 ; ------------------------------------------------------------------------------
 
+b $CF06 unknown character? related stuff  read by routine around $b64f (called_from_main_loop_9)
+  $CF06
+  $CF0E
+  $CF16
+  $CF1E
+  $CF26
+  $CF3A
+  $CF4E
+  $CF62
+  $CF76
+  $CF7E
+  $CF86
+  $CF8E
+  $CF96
+  $CFA2
+  $CFAE
+  $CFBA
+  $CFC6
+  $CFD2
+  $CFDE
+  $CFEA
+  $CFF6
+  $D002
+  $D00E
+  $D01A
 
 ; ------------------------------------------------------------------------------
 
