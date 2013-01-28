@@ -597,22 +597,22 @@ B $DB72 mask: STOVE
 b $DD7D Item definitions.
 D $DD7D Array of "sprite" structures.
 ;
-B $DD7D item_sprite: WIRESNIPS
-B $DD83 item_sprite: SHOVEL
-B $DD89 item_sprite: LOCKPICK
-B $DD8F item_sprite: PAPERS
-B $DD95 item_sprite: TORCH
-B $DD9B item_sprite: BRIBE
-B $DDA1 item_sprite: UNIFORM
-B $DDA7 item_sprite: FOOD
-B $DDAD item_sprite: POISON
-B $DDB3 item_sprite: RED KEY
-B $DDB9 item_sprite: YELLOW KEY
-B $DDBF item_sprite: GREEN KEY
-B $DDC5 item_sprite: PARCEL
-B $DDCB item_sprite: RADIO
-B $DDD1 item_sprite: PURSE
-B $DDD7 item_sprite: COMPASS
+  $DD7D item_sprite: WIRESNIPS
+  $DD83 item_sprite: SHOVEL
+  $DD89 item_sprite: LOCKPICK
+  $DD8F item_sprite: PAPERS
+  $DD95 item_sprite: TORCH
+  $DD9B item_sprite: BRIBE
+  $DDA1 item_sprite: UNIFORM
+  $DDA7 item_sprite: FOOD
+  $DDAD item_sprite: POISON
+  $DDB3 item_sprite: RED KEY
+  $DDB9 item_sprite: YELLOW KEY
+  $DDBF item_sprite: GREEN KEY
+  $DDC5 item_sprite: PARCEL
+  $DDCB item_sprite: RADIO
+  $DDD1 item_sprite: PURSE
+  $DDD7 item_sprite: COMPASS
 
 ; ------------------------------------------------------------------------------
 
