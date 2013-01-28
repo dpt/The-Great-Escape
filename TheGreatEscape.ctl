@@ -2876,27 +2876,27 @@ c $DD02 sub_DD02
 b $DD69 Item attributes -- 20 bytes, 4 of which are unknown, possibly unused.
 D $DD69 'Yellow/black' means yellow ink over black paper, for example.
 ;
-B $DD69 item_attribute: WIRESNIPS - yellow/black
-B $DD6A item_attribute: SHOVEL - cyan/black
-B $DD6B item_attribute: LOCKPICK - cyan/black
-B $DD6C item_attribute: PAPERS - white/black
-B $DD6D item_attribute: TORCH - green/black
-B $DD6E item_attribute: BRIBE - bright-red/black
-B $DD6F item_attribute: UNIFORM - green/black
-B $DD70 item_attribute: FOOD - white/black
+  $DD69 item_attribute: WIRESNIPS - yellow/black
+  $DD6A item_attribute: SHOVEL - cyan/black
+  $DD6B item_attribute: LOCKPICK - cyan/black
+  $DD6C item_attribute: PAPERS - white/black
+  $DD6D item_attribute: TORCH - green/black
+  $DD6E item_attribute: BRIBE - bright-red/black
+  $DD6F item_attribute: UNIFORM - green/black
+  $DD70 item_attribute: FOOD - white/black
 D $DD70 Food turns purple/black when it's poisoned.
-B $DD71 item_attribute: POISON - purple/black
-B $DD72 item_attribute: RED KEY - bright-red/black
-B $DD73 item_attribute: YELLOW KEY - yellow/black
-B $DD74 item_attribute: GREEN KEY - green/black
-B $DD75 item_attribute: PARCEL - cyan/black
-B $DD76 item_attribute: RADIO - white/black
-B $DD77 item_attribute: PURSE - white/black
-B $DD78 item_attribute: COMPASS - green/black
-B $DD79 item_attribute: Unused? - yellow/black
-B $DD7A item_attribute: Unused? - cyan/black
-B $DD7B item_attribute: Unused? - bright-red/black
-B $DD7C item_attribute: Unused? - bright-red/black
+  $DD71 item_attribute: POISON - purple/black
+  $DD72 item_attribute: RED KEY - bright-red/black
+  $DD73 item_attribute: YELLOW KEY - yellow/black
+  $DD74 item_attribute: GREEN KEY - green/black
+  $DD75 item_attribute: PARCEL - cyan/black
+  $DD76 item_attribute: RADIO - white/black
+  $DD77 item_attribute: PURSE - white/black
+  $DD78 item_attribute: COMPASS - green/black
+  $DD79 item_attribute: Unused? - yellow/black
+  $DD7A item_attribute: Unused? - cyan/black
+  $DD7B item_attribute: Unused? - bright-red/black
+  $DD7C item_attribute: Unused? - bright-red/black
 
 ; ------------------------------------------------------------------------------
 
