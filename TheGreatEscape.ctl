@@ -1633,8 +1633,39 @@ b $A7C6 used by sub_AAFF
 
 w $AD29 word_AD29
 
-b $B53E sixlong_things
-b $B54E wiresnips_related_table
+; ------------------------------------------------------------------------------
+
+b $B53E sixlong_things -- probably boundaries
+  $B53E,6
+  $B544,6
+  $B54A,6
+  $B550,6
+  $B556,6
+  $B55C,6
+  $B562,6
+  $B568,6
+  $B56E,6
+  $B574,6
+  $B57A,6
+  $B580,6
+
+; ------------------------------------------------------------------------------
+
+b $B586 wiresnips_related_table -- probably snippable places
+  $B586,6
+  $B58C,6
+  $B592,6
+  $B598,6
+  $B59E,6
+  $B5A4,6
+  $B5AA,6
+  $B5B0,6
+  $B5B6,6
+  $B5BC,6
+  $B5C2,6
+  $B5C8,6
+
+; ------------------------------------------------------------------------------
 
 b $B819 10 x 3-byte structs
 B $B819,30,3 looks_like_character_reset_data -- 10 x 3-byte structs
