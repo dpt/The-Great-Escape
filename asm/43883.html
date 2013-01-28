@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at AB6B</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="43878.html">AB66</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#43883">Map</a></td>
+<td class="next">Next: <a class="link" href="43913.html">AB89</a></td>
+</tr>
+</table>
+<div class="description">AB6B: choose_game_screen_attributes</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="31542.html">7B36</a>, <a class="link" href="31627.html">7B8B</a>, <a class="link" href="41427.html">A1D3</a>, <a class="link" href="43936.html">ABA0</a>, <a class="link" href="46070.html">B3F6</a> and <a class="link" href="47163.html">B83B</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="43883"></a>AB6B</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment">A = (indoor_room_index);</td>
+</tr>
+<tr>
+<td class="address"><a name="43886"></a>AB6E</td>
+<td class="instruction">CP $1D</td>
+<td class="comment" rowspan="2">if (A &gt;= room_29_secondtunnelstart) goto choose_attribute_for_tunnel;</td>
+</tr>
+<tr>
+<td class="address"><a name="43888"></a>AB70</td>
+<td class="instruction">JR NC,<a class="link" href="43913.html">$AB89</a></td>
+</tr>
+<tr>
+<td class="address"><a name="43890"></a>AB72</td>
+<td class="instruction">LD A,($A146)</td>
+<td class="comment">A = (day_or_night);</td>
+</tr>
+<tr>
+<td class="address"><a name="43893"></a>AB75</td>
+<td class="instruction">LD C,$07</td>
+<td class="comment">C = attribute_WHITE_OVER_BLACK;</td>
+</tr>
+<tr>
+<td class="address"><a name="43895"></a>AB77</td>
+<td class="instruction">AND A</td>
+<td class="comment" rowspan="2">if (A == 0) goto set_attribute_from_C;</td>
+</tr>
+<tr>
+<td class="address"><a name="43896"></a>AB78</td>
+<td class="instruction">JR Z,$AB84</td>
+</tr>
+<tr>
+<td class="address"><a name="43898"></a>AB7A</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment">A = (indoor_room_index);</td>
+</tr>
+<tr>
+<td class="address"><a name="43901"></a>AB7D</td>
+<td class="instruction">LD C,$41</td>
+<td class="comment">C = attribute_BRIGHT_BLUE_OVER_BLACK;</td>
+</tr>
+<tr>
+<td class="address"><a name="43903"></a>AB7F</td>
+<td class="instruction">AND A</td>
+<td class="comment" rowspan="2">if (A == 0) goto set_attribute_from_C;</td>
+</tr>
+<tr>
+<td class="address"><a name="43904"></a>AB80</td>
+<td class="instruction">JR Z,$AB84</td>
+</tr>
+<tr>
+<td class="address"><a name="43906"></a>AB82</td>
+<td class="instruction">LD C,$05</td>
+<td class="comment">C = attribute_CYAN_OVER_BLACK;</td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="43908"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="43913.html">AB89</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">AB84</td>
+<td class="instruction">LD A,C</td>
+<td class="comment">set_attribute_from_C: A = C;</td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="43909"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="43913.html">AB89</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">AB85</td>
+<td class="instruction">LD ($AB6A),A</td>
+<td class="comment">set_attribute_from_A: (game_screen_attribute) = A;</td>
+</tr>
+<tr>
+<td class="address"><a name="43912"></a>AB88</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="43878.html">AB66</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#43883">Map</a></td>
+<td class="next">Next: <a class="link" href="43913.html">AB89</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

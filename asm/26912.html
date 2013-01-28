@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="26937.html">6939</a></td>
 </tr>
 </table>
-<div class="description">6920: tunnel_related [unsure]</div>
+<div class="description">6920: tunnel_related -- probably when emerging from tunnel -- this is resetting the character sprite set to prisoner</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -35,62 +35,60 @@ Used by the routine at <a class="link" href="26786.html">68A2</a>.
 <tr>
 <td class="label"><a name="26912"></a>6920</td>
 <td class="instruction">LD HL,$800D</td>
-<td class="transparentComment" />
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="26915"></a>6923</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="transparentComment" />
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="26917"></a>6925</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="26918"></a>6926</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="transparentComment" />
+<td class="comment">A = indoor_room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="26921"></a>6929</td>
 <td class="instruction">CP $1D</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &lt; room_29_secondtunnelstart) goto not_in_a_tunnel;</td>
 </tr>
 <tr>
 <td class="address"><a name="26923"></a>692B</td>
 <td class="instruction">JR C,$6936</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="26925"></a>692D</td>
 <td class="instruction">SET 2,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">...</td>
 </tr>
 <tr>
 <td class="address"><a name="26927"></a>692F</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">(overlap.$8015) = sprite_prisoner_tl_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="26930"></a>6932</td>
 <td class="instruction">LD ($8015),HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="26933"></a>6935</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="26934"></a>6936</td>
 <td class="instruction">RES 2,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">not_in_a_tunnel: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="26936"></a>6938</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

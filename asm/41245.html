@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="41263.html">A12F</a></td>
 </tr>
 </table>
-<div class="description">A11D: play speaker</div>
+<div class="description">A11D: play_speaker</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -30,57 +30,62 @@
 Used by the routines at <a class="link" href="31542.html">7B36</a>, <a class="link" href="31627.html">7B8B</a>, <a class="link" href="41118.html">A09E</a>, <a class="link" href="50400.html">C4E0</a> and <a class="link" href="51841.html">CA81</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">B</td>
+<td class="registerContents">Iterations.</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="registerContents">Delay.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="41245"></a>A11D</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="41246"></a>A11E</td>
 <td class="instruction">LD ($A126),A</td>
-<td class="transparentComment" />
+<td class="comment">Self-modify delay loop at $A126.</td>
 </tr>
 <tr>
 <td class="address"><a name="41249"></a>A121</td>
 <td class="instruction">LD A,$10</td>
-<td class="transparentComment" />
+<td class="comment">Initial speaker bit.</td>
 </tr>
 <tr>
 <td class="label"><a name="41251"></a>A123</td>
 <td class="instruction">OUT ($FE),A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">do { Play. } {while (delay--) ; } Toggle speaker bit. while (...);</td>
 </tr>
 <tr>
 <td class="address"><a name="41253"></a>A125</td>
 <td class="instruction">LD C,$37</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="41255"></a>A127</td>
 <td class="instruction">DEC C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41256"></a>A128</td>
 <td class="instruction">JR NZ,$A127</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41258"></a>A12A</td>
 <td class="instruction">XOR $10</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41260"></a>A12C</td>
 <td class="instruction">DJNZ $A123</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41262"></a>A12E</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

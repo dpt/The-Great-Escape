@@ -35,67 +35,58 @@ Used by the routine at <a class="link" href="61795.html">F163</a>.
 <tr>
 <td class="label"><a name="62039"></a>F257</td>
 <td class="instruction">LD HL,$4000</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">memset(screen, 0, 0x1800);</td>
 </tr>
 <tr>
 <td class="address"><a name="62042"></a>F25A</td>
 <td class="instruction">LD DE,$4001</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62045"></a>F25D</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62047"></a>F25F</td>
 <td class="instruction">LD BC,$17FF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62050"></a>F262</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62052"></a>F264</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62053"></a>F265</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">memset(atttributes, attribute_WHITE_OVER_BLACK, 0x300);</td>
 </tr>
 <tr>
 <td class="address"><a name="62054"></a>F266</td>
 <td class="instruction">LD (HL),$07</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62056"></a>F268</td>
 <td class="instruction">LD BC,$02FF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62059"></a>F26B</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62061"></a>F26D</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">border = 0; // black</td>
 </tr>
 <tr>
 <td class="address"><a name="62062"></a>F26E</td>
 <td class="instruction">OUT ($FE),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62064"></a>F270</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

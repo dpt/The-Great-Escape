@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 9E98</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40540.html">9E5C</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40600">Map</a></td>
+<td class="next">Next: <a class="link" href="40626.html">9EB2</a></td>
+</tr>
+</table>
+<div class="description">9E98: lock_picked -- locks user out until lock is picked</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40455.html">9E07</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="40600"></a>9E98</td>
+<td class="instruction">LD HL,$A12F</td>
+<td class="comment" rowspan="4">if (user_locked_out_until != game_counter) return;</td>
+</tr>
+<tr>
+<td class="address"><a name="40603"></a>9E9B</td>
+<td class="instruction">LD A,($A145)</td>
+</tr>
+<tr>
+<td class="address"><a name="40606"></a>9E9E</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="40607"></a>9E9F</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="address"><a name="40608"></a>9EA0</td>
+<td class="instruction">LD HL,($A143)</td>
+<td class="comment" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~(1 &lt;&lt; 7); // unlock</td>
+</tr>
+<tr>
+<td class="address"><a name="40611"></a>9EA3</td>
+<td class="instruction">RES 7,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="40613"></a>9EA5</td>
+<td class="instruction">LD B,$06</td>
+<td class="comment" rowspan="2">queue_message_for_display(message_IT_IS_OPEN);</td>
+</tr>
+<tr>
+<td class="address"><a name="40615"></a>9EA7</td>
+<td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="40618"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="40626.html">9EB2</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">9EAA</td>
+<td class="instruction">LD HL,$8001</td>
+<td class="comment" rowspan="4">clear_lockpick_wirecut_flags_and_return: clear bottom two bits of $8001</td>
+</tr>
+<tr>
+<td class="address"><a name="40621"></a>9EAD</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="40622"></a>9EAE</td>
+<td class="instruction">AND $FC</td>
+</tr>
+<tr>
+<td class="address"><a name="40624"></a>9EB0</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40625"></a>9EB1</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40540.html">9E5C</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40600">Map</a></td>
+<td class="next">Next: <a class="link" href="40626.html">9EB2</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

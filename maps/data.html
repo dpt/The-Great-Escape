@@ -82,16 +82,16 @@
 <td class="dataDesc">character_structs.</td>
 </tr>
 <tr>
+<td class="mapPage">118</td>
+<td class="mapByte">200</td>
+<td class="data"><a class="link" name="30408" href="../asm/30408.html">76C8</a></td>
+<td class="dataDesc">item_structs.</td>
+</tr>
+<tr>
 <td class="mapPage">119</td>
 <td class="mapByte">56</td>
 <td class="data"><a class="link" name="30520" href="../asm/30520.html">7738</a></td>
 <td class="dataDesc">More object tile refs.</td>
-</tr>
-<tr>
-<td class="mapPage">119</td>
-<td class="mapByte">200</td>
-<td class="data"><a class="link" name="30664" href="../asm/30664.html">77C8</a></td>
-<td class="dataDesc">item_structs.</td>
 </tr>
 <tr>
 <td class="mapPage">120</td>
@@ -229,13 +229,13 @@
 <td class="mapPage">129</td>
 <td class="mapByte">184</td>
 <td class="data"><a class="link" name="33208" href="../asm/33208.html">81B8</a></td>
-<td class="dataDesc">byte_81B8</td>
+<td class="dataDesc">character_map_position_perhapsX</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">185</td>
 <td class="data"><a class="link" name="33209" href="../asm/33209.html">81B9</a></td>
-<td class="dataDesc">wiresnips_related</td>
+<td class="dataDesc">character_map_position_perhapsY</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -253,7 +253,7 @@
 <td class="mapPage">129</td>
 <td class="mapByte">189</td>
 <td class="data"><a class="link" name="33213" href="../asm/33213.html">81BD</a></td>
-<td class="dataDesc">byte_81BD (&lt;- a_flag_became_nonzero, something_then_decrease_morale)</td>
+<td class="dataDesc">byte_81BD (&lt;- nighttime, something_then_decrease_morale)</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -307,7 +307,25 @@
 <td class="mapPage">130</td>
 <td class="mapByte">24</td>
 <td class="data"><a class="link" name="33304" href="../asm/33304.html">8218</a></td>
-<td class="dataDesc">tiles. starts with building masks.</td>
+<td class="dataDesc">Tiles.</td>
+</tr>
+<tr>
+<td class="mapPage">158</td>
+<td class="mapByte">224</td>
+<td class="data"><a class="link" name="40672" href="../asm/40672.html">9EE0</a></td>
+<td class="dataDesc">Indexed by overlap.$800E.</td>
+</tr>
+<tr>
+<td class="mapPage">158</td>
+<td class="mapByte">228</td>
+<td class="data"><a class="link" name="40676" href="../asm/40676.html">9EE4</a></td>
+<td class="dataDesc">twentyonelong -- 7 structs, 3 wide. maps bytes to offsets</td>
+</tr>
+<tr>
+<td class="mapPage">159</td>
+<td class="mapByte">21</td>
+<td class="data"><a class="link" name="40725" href="../asm/40725.html">9F15</a></td>
+<td class="dataDesc">(&lt;- in_permitted_area)</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -409,7 +427,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">70</td>
 <td class="data"><a class="link" name="41286" href="../asm/41286.html">A146</a></td>
-<td class="dataDesc">a_flag [unknown]  seems to be reset each day, might influence which parcels arrive</td>
+<td class="dataDesc">day_or_night ($00 = daytime, $FF = nighttime)</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -463,7 +481,7 @@
 <td class="mapPage">171</td>
 <td class="mapByte">102</td>
 <td class="data"><a class="link" name="43878" href="../asm/43878.html">AB66</a></td>
-<td class="dataDesc">Zoombox (scene transition) stuff.</td>
+<td class="dataDesc">Zoombox? stuff.</td>
 </tr>
 <tr>
 <td class="mapPage">173</td>
@@ -475,13 +493,19 @@
 <td class="mapPage">174</td>
 <td class="mapByte">117</td>
 <td class="data"><a class="link" name="44661" href="../asm/44661.html">AE75</a></td>
-<td class="dataDesc">searchlight_related (&lt;- a_flag_became_nonzero, searchlight)</td>
+<td class="dataDesc">searchlight_related (&lt;- nighttime, searchlight)</td>
 </tr>
 <tr>
 <td class="mapPage">174</td>
 <td class="mapByte">118</td>
 <td class="data"><a class="link" name="44662" href="../asm/44662.html">AE76</a></td>
-<td class="dataDesc">word_AE76 (&lt;- a_flag_became_nonzero)</td>
+<td class="dataDesc">word_AE76 (&lt;- nighttime)</td>
+</tr>
+<tr>
+<td class="mapPage">175</td>
+<td class="mapByte">94</td>
+<td class="data"><a class="link" name="44894" href="../asm/44894.html">AF5E</a></td>
+<td class="dataDesc">zoombox tiles</td>
 </tr>
 <tr>
 <td class="mapPage">175</td>
@@ -499,13 +523,13 @@
 <td class="mapPage">181</td>
 <td class="mapByte">62</td>
 <td class="data"><a class="link" name="46398" href="../asm/46398.html">B53E</a></td>
-<td class="dataDesc">sixlong_things</td>
+<td class="dataDesc">sixlong_things -- probably boundaries</td>
 </tr>
 <tr>
 <td class="mapPage">181</td>
-<td class="mapByte">78</td>
-<td class="data"><a class="link" name="46414" href="../asm/46414.html">B54E</a></td>
-<td class="dataDesc">wiresnips_related_table</td>
+<td class="mapByte">134</td>
+<td class="data"><a class="link" name="46470" href="../asm/46470.html">B586</a></td>
+<td class="dataDesc">wiresnips_related_table -- probably snippable places</td>
 </tr>
 <tr>
 <td class="mapPage">184</td>
@@ -562,10 +586,22 @@
 <td class="dataDesc">item_data_related (16 groups of 3 bytes)</td>
 </tr>
 <tr>
+<td class="mapPage">205</td>
+<td class="mapByte">242</td>
+<td class="data"><a class="link" name="52722" href="../asm/52722.html">CDF2</a></td>
+<td class="dataDesc">something_character_related -- array, 24 long, of pointers to data</td>
+</tr>
+<tr>
 <td class="mapPage">206</td>
 <td class="mapByte">34</td>
 <td class="data"><a class="link" name="52770" href="../asm/52770.html">CE22</a></td>
 <td class="dataDesc">Sprite definitions -- objects which can move.</td>
+</tr>
+<tr>
+<td class="mapPage">207</td>
+<td class="mapByte">6</td>
+<td class="data"><a class="link" name="52998" href="../asm/52998.html">CF06</a></td>
+<td class="dataDesc">unknown character? related stuff  read by routine around $b64f (called_from_main_loop_9)</td>
 </tr>
 <tr>
 <td class="mapPage">208</td>
@@ -607,7 +643,7 @@
 <td class="mapPage">229</td>
 <td class="mapByte">95</td>
 <td class="data"><a class="link" name="58719" href="../asm/58719.html">E55F</a></td>
-<td class="dataDesc">probably tile data</td>
+<td class="dataDesc">probably mask data</td>
 </tr>
 <tr>
 <td class="mapPage">234</td>
@@ -625,7 +661,7 @@
 <td class="mapPage">235</td>
 <td class="mapByte">197</td>
 <td class="data"><a class="link" name="60357" href="../asm/60357.html">EBC5</a></td>
-<td class="dataDesc">Table of pointers, 30 long, to byte arrays [unsure]  -- probably tiles</td>
+<td class="dataDesc">Table of pointers, 30 long, to byte arrays [unsure]  -- probably masks</td>
 </tr>
 <tr>
 <td class="mapPage">236</td>
@@ -646,16 +682,16 @@
 <td class="dataDesc">game screen scanline start addresses</td>
 </tr>
 <tr>
-<td class="mapPage">239</td>
-<td class="mapByte">249</td>
-<td class="data"><a class="link" name="61433" href="../asm/61433.html">EFF9</a></td>
-<td class="dataDesc">word_EFF9 (&lt;- action papers)</td>
-</tr>
-<tr>
 <td class="mapPage">240</td>
 <td class="mapByte">20</td>
 <td class="data"><a class="link" name="61460" href="../asm/61460.html">F014</a></td>
-<td class="dataDesc">menu screenlocstrings.</td>
+<td class="dataDesc">Menu screenlocstrings.</td>
+</tr>
+<tr>
+<td class="mapPage">240</td>
+<td class="mapByte">37</td>
+<td class="data"><a class="link" name="61477" href="../asm/61477.html">F025</a></td>
+<td class="dataDesc">More messages.</td>
 </tr>
 <tr>
 <td class="mapPage">240</td>
@@ -685,7 +721,7 @@
 <td class="mapPage">242</td>
 <td class="mapByte">173</td>
 <td class="data"><a class="link" name="62125" href="../asm/62125.html">F2AD</a></td>
-<td class="dataDesc">Key choice prompt strings. (encoded to match font; first byte is count).</td>
+<td class="dataDesc">Key choice prompt strings.</td>
 </tr>
 <tr>
 <td class="mapPage">242</td>
@@ -733,7 +769,7 @@
 <td class="mapPage">244</td>
 <td class="mapByte">70</td>
 <td class="data"><a class="link" name="62534" href="../asm/62534.html">F446</a></td>
-<td class="dataDesc">key choice screenlocstrings.</td>
+<td class="dataDesc">Key choice screenlocstrings.</td>
 </tr>
 <tr>
 <td class="mapPage">250</td>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 9E5C</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40500.html">9E34</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40540">Map</a></td>
+<td class="next">Next: <a class="link" href="40600.html">9E98</a></td>
+</tr>
+</table>
+<div class="description">9E5C: user_input_was_in_bed_perhaps</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40500.html">9E34</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="40540"></a>9E5C</td>
+<td class="instruction">LD HL,$012C</td>
+<td class="comment" rowspan="9">...</td>
+</tr>
+<tr>
+<td class="address"><a name="40543"></a>9E5F</td>
+<td class="instruction">LD ($8002),HL</td>
+</tr>
+<tr>
+<td class="address"><a name="40546"></a>9E62</td>
+<td class="instruction">LD HL,$2E2E</td>
+</tr>
+<tr>
+<td class="address"><a name="40549"></a>9E65</td>
+<td class="instruction">LD ($8004),HL</td>
+</tr>
+<tr>
+<td class="address"><a name="40552"></a>9E68</td>
+<td class="instruction">LD H,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="40554"></a>9E6A</td>
+<td class="instruction">LD ($800F),HL</td>
+</tr>
+<tr>
+<td class="address"><a name="40557"></a>9E6D</td>
+<td class="instruction">LD ($8011),HL</td>
+</tr>
+<tr>
+<td class="address"><a name="40560"></a>9E70</td>
+<td class="instruction">LD A,$18</td>
+</tr>
+<tr>
+<td class="address"><a name="40562"></a>9E72</td>
+<td class="instruction">LD ($8013),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40565"></a>9E75</td>
+<td class="instruction">LD HL,$6C61</td>
+<td class="comment" rowspan="2">player_bed = object_EMPTY_BED;</td>
+</tr>
+<tr>
+<td class="address"><a name="40568"></a>9E78</td>
+<td class="instruction">LD (HL),$09</td>
+</tr>
+<tr>
+<td class="address"><a name="40570"></a>9E7A</td>
+<td class="instruction">LD HL,$A13F</td>
+<td class="comment">...</td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="40573"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="40500.html">9E34</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">9E7D</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment" rowspan="3">user_input_another_entry_point</td>
+</tr>
+<tr>
+<td class="address"><a name="40575"></a>9E7F</td>
+<td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
+</tr>
+<tr>
+<td class="address"><a name="40578"></a>9E82</td>
+<td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="40581"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="40500.html">9E34</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">9E85</td>
+<td class="instruction">POP AF</td>
+<td class="comment" rowspan="4">user_input_A137_was_zero</td>
+</tr>
+<tr>
+<td class="address"><a name="40582"></a>9E86</td>
+<td class="instruction">CP $09</td>
+</tr>
+<tr>
+<td class="address"><a name="40584"></a>9E88</td>
+<td class="instruction">JR C,$9E8F</td>
+</tr>
+<tr>
+<td class="address"><a name="40586"></a>9E8A</td>
+<td class="instruction">CALL <a class="link" href="31433.html">$7AC9</a></td>
+</tr>
+<tr>
+<td class="address"><a name="40589"></a>9E8D</td>
+<td class="instruction">LD A,$80</td>
+<td class="comment">A = 0x80;</td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="40591"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="40455.html">9E07</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">9E8F</td>
+<td class="instruction">LD HL,$800D</td>
+<td class="comment" rowspan="3">user_input_fire_not_pressed: if ($800D == A) return;</td>
+</tr>
+<tr>
+<td class="address"><a name="40594"></a>9E92</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="40595"></a>9E93</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="address"><a name="40596"></a>9E94</td>
+<td class="instruction">OR $80</td>
+<td class="comment" rowspan="2">$800D = A | 0x80;</td>
+</tr>
+<tr>
+<td class="address"><a name="40598"></a>9E96</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40599"></a>9E97</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40500.html">9E34</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40540">Map</a></td>
+<td class="next">Next: <a class="link" href="40600.html">9E98</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

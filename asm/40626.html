@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 9EB2</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40600.html">9E98</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40626">Map</a></td>
+<td class="next">Next: <a class="link" href="40672.html">9EE0</a></td>
+</tr>
+</table>
+<div class="description">9EB2: wire_snipped -- locks user out until wire is snipped</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40455.html">9E07</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="40626"></a>9EB2</td>
+<td class="instruction">LD HL,$A12F</td>
+<td class="comment" rowspan="3">A = user_locked_out_until - game_counter;</td>
+</tr>
+<tr>
+<td class="address"><a name="40629"></a>9EB5</td>
+<td class="instruction">LD A,($A145)</td>
+</tr>
+<tr>
+<td class="address"><a name="40632"></a>9EB8</td>
+<td class="instruction">SUB (HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="40633"></a>9EB9</td>
+<td class="instruction">JR Z,$9ED0</td>
+<td class="comment">if (A == 0) goto wire_successfully_snipped;</td>
+</tr>
+<tr>
+<td class="address"><a name="40635"></a>9EBB</td>
+<td class="instruction">CP $04</td>
+<td class="comment" rowspan="2">if (A &gt;= 4) return;</td>
+</tr>
+<tr>
+<td class="address"><a name="40637"></a>9EBD</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="address"><a name="40638"></a>9EBE</td>
+<td class="instruction">LD A,($800E)</td>
+<td class="comment" rowspan="9">$800D = table_9EE0[$800E &amp; 3];</td>
+</tr>
+<tr>
+<td class="address"><a name="40641"></a>9EC1</td>
+<td class="instruction">LD HL,$9EE0</td>
+</tr>
+<tr>
+<td class="address"><a name="40644"></a>9EC4</td>
+<td class="instruction">AND $03</td>
+</tr>
+<tr>
+<td class="address"><a name="40646"></a>9EC6</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="40647"></a>9EC7</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="40648"></a>9EC8</td>
+<td class="instruction">JR NC,$9ECB</td>
+</tr>
+<tr>
+<td class="address"><a name="40650"></a>9ECA</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="label"><a name="40651"></a>9ECB</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="40652"></a>9ECC</td>
+<td class="instruction">LD ($800D),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40655"></a>9ECF</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+<tr>
+<td class="label"><a name="40656"></a>9ED0</td>
+<td class="instruction">LD HL,$800E</td>
+<td class="comment" rowspan="3">wire_successfully_snipped: $800E = A &amp; 3;</td>
+</tr>
+<tr>
+<td class="address"><a name="40659"></a>9ED3</td>
+<td class="instruction">AND $03</td>
+</tr>
+<tr>
+<td class="address"><a name="40661"></a>9ED5</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40662"></a>9ED6</td>
+<td class="instruction">DEC L</td>
+<td class="comment" rowspan="2">$800D = 0x80;</td>
+</tr>
+<tr>
+<td class="address"><a name="40663"></a>9ED7</td>
+<td class="instruction">LD (HL),$80</td>
+</tr>
+<tr>
+<td class="address"><a name="40665"></a>9ED9</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment" rowspan="2">$8013 = 0x18;</td>
+</tr>
+<tr>
+<td class="address"><a name="40667"></a>9EDB</td>
+<td class="instruction">LD ($8013),A</td>
+</tr>
+<tr>
+<td class="address"><a name="40670"></a>9EDE</td>
+<td class="instruction">JR <a class="link" href="40600.html#40618">$9EAA</a></td>
+<td class="comment">goto clear_lockpick_wirecut_flags_and_return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="40600.html">9E98</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40626">Map</a></td>
+<td class="next">Next: <a class="link" href="40672.html">9EE0</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

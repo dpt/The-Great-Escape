@@ -49,37 +49,19 @@
 <td class="mapPage">104</td>
 <td class="mapByte">162</td>
 <td class="routine"><a class="link" name="26786" href="../asm/26786.html">68A2</a></td>
-<td class="routineDesc">sub 68A2 - looks like it's resetting stuff</td>
+<td class="routineDesc">sub_68A2 -- looks like it's resetting stuff</td>
 </tr>
 <tr>
 <td class="mapPage">105</td>
 <td class="mapByte">32</td>
 <td class="routine"><a class="link" name="26912" href="../asm/26912.html">6920</a></td>
-<td class="routineDesc">tunnel_related [unsure]</td>
+<td class="routineDesc">tunnel_related -- probably when emerging from tunnel -- this is resetting the character sprite set to prisoner</td>
 </tr>
 <tr>
 <td class="mapPage">105</td>
 <td class="mapByte">57</td>
 <td class="routine"><a class="link" name="26937" href="../asm/26937.html">6939</a></td>
 <td class="routineDesc">setup_movable_items</td>
-</tr>
-<tr>
-<td class="mapPage">105</td>
-<td class="mapByte">106</td>
-<td class="routine"><a class="link" name="26986" href="../asm/26986.html">696A</a></td>
-<td class="routineDesc">setup_crate</td>
-</tr>
-<tr>
-<td class="mapPage">105</td>
-<td class="mapByte">113</td>
-<td class="routine"><a class="link" name="26993" href="../asm/26993.html">6971</a></td>
-<td class="routineDesc">setup_stove2</td>
-</tr>
-<tr>
-<td class="mapPage">105</td>
-<td class="mapByte">120</td>
-<td class="routine"><a class="link" name="27000" href="../asm/27000.html">6978</a></td>
-<td class="routineDesc">setup_stove1</td>
 </tr>
 <tr>
 <td class="mapPage">105</td>
@@ -109,7 +91,7 @@
 <td class="mapPage">106</td>
 <td class="mapByte">39</td>
 <td class="routine"><a class="link" name="27175" href="../asm/27175.html">6A27</a></td>
-<td class="routineDesc">zero_some_area_407_bytes_long</td>
+<td class="routineDesc">wipe_visible_tiles</td>
 </tr>
 <tr>
 <td class="mapPage">106</td>
@@ -160,16 +142,16 @@
 <td class="dataDesc">character_structs.</td>
 </tr>
 <tr>
+<td class="mapPage">118</td>
+<td class="mapByte">200</td>
+<td class="data"><a class="link" name="30408" href="../asm/30408.html">76C8</a></td>
+<td class="dataDesc">item_structs.</td>
+</tr>
+<tr>
 <td class="mapPage">119</td>
 <td class="mapByte">56</td>
 <td class="data"><a class="link" name="30520" href="../asm/30520.html">7738</a></td>
 <td class="dataDesc">More object tile refs.</td>
-</tr>
-<tr>
-<td class="mapPage">119</td>
-<td class="mapByte">200</td>
-<td class="data"><a class="link" name="30664" href="../asm/30664.html">77C8</a></td>
-<td class="dataDesc">item_structs.</td>
 </tr>
 <tr>
 <td class="mapPage">120</td>
@@ -196,18 +178,6 @@
 <td class="routineDesc">check for 'pick up', 'drop' and both 'use item' keypresses</td>
 </tr>
 <tr>
-<td class="mapPage">122</td>
-<td class="mapByte">240</td>
-<td class="routine"><a class="link" name="31472" href="../asm/31472.html">7AF0</a></td>
-<td class="routineDesc">use_item_B</td>
-</tr>
-<tr>
-<td class="mapPage">122</td>
-<td class="mapByte">245</td>
-<td class="routine"><a class="link" name="31477" href="../asm/31477.html">7AF5</a></td>
-<td class="routineDesc">use_item_A</td>
-</tr>
-<tr>
 <td class="mapPage">123</td>
 <td class="mapByte">22</td>
 <td class="data"><a class="link" name="31510" href="../asm/31510.html">7B16</a></td>
@@ -229,7 +199,7 @@
 <td class="mapPage">124</td>
 <td class="mapByte">38</td>
 <td class="routine"><a class="link" name="31782" href="../asm/31782.html">7C26</a></td>
-<td class="routineDesc">item-to-thing</td>
+<td class="routineDesc">item_to_itemstruct</td>
 </tr>
 <tr>
 <td class="mapPage">124</td>
@@ -283,7 +253,7 @@
 <td class="mapPage">125</td>
 <td class="mapByte">47</td>
 <td class="routine"><a class="link" name="32047" href="../asm/32047.html">7D2F</a></td>
-<td class="routineDesc">plot_glyph_(indirect)</td>
+<td class="routineDesc">plot_glyph</td>
 </tr>
 <tr>
 <td class="mapPage">125</td>
@@ -397,13 +367,13 @@
 <td class="mapPage">129</td>
 <td class="mapByte">184</td>
 <td class="data"><a class="link" name="33208" href="../asm/33208.html">81B8</a></td>
-<td class="dataDesc">byte_81B8</td>
+<td class="dataDesc">character_map_position_perhapsX</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">185</td>
 <td class="data"><a class="link" name="33209" href="../asm/33209.html">81B9</a></td>
-<td class="dataDesc">wiresnips_related</td>
+<td class="dataDesc">character_map_position_perhapsY</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -421,7 +391,7 @@
 <td class="mapPage">129</td>
 <td class="mapByte">189</td>
 <td class="data"><a class="link" name="33213" href="../asm/33213.html">81BD</a></td>
-<td class="dataDesc">byte_81BD (&lt;- a_flag_became_nonzero, something_then_decrease_morale)</td>
+<td class="dataDesc">byte_81BD (&lt;- nighttime, something_then_decrease_morale)</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -475,7 +445,7 @@
 <td class="mapPage">130</td>
 <td class="mapByte">24</td>
 <td class="data"><a class="link" name="33304" href="../asm/33304.html">8218</a></td>
-<td class="dataDesc">tiles. starts with building masks.</td>
+<td class="dataDesc">Tiles.</td>
 </tr>
 <tr>
 <td class="mapPage">157</td>
@@ -502,34 +472,70 @@
 <td class="routineDesc">process_user_input</td>
 </tr>
 <tr>
+<td class="mapPage">158</td>
+<td class="mapByte">52</td>
+<td class="routine"><a class="link" name="40500" href="../asm/40500.html">9E34</a></td>
+<td class="routineDesc">user_input_super</td>
+</tr>
+<tr>
+<td class="mapPage">158</td>
+<td class="mapByte">92</td>
+<td class="routine"><a class="link" name="40540" href="../asm/40540.html">9E5C</a></td>
+<td class="routineDesc">user_input_was_in_bed_perhaps</td>
+</tr>
+<tr>
+<td class="mapPage">158</td>
+<td class="mapByte">152</td>
+<td class="routine"><a class="link" name="40600" href="../asm/40600.html">9E98</a></td>
+<td class="routineDesc">lock_picked -- locks user out until lock is picked</td>
+</tr>
+<tr>
+<td class="mapPage">158</td>
+<td class="mapByte">178</td>
+<td class="routine"><a class="link" name="40626" href="../asm/40626.html">9EB2</a></td>
+<td class="routineDesc">wire_snipped -- locks user out until wire is snipped</td>
+</tr>
+<tr>
+<td class="mapPage">158</td>
+<td class="mapByte">224</td>
+<td class="data"><a class="link" name="40672" href="../asm/40672.html">9EE0</a></td>
+<td class="dataDesc">Indexed by overlap.$800E.</td>
+</tr>
+<tr>
+<td class="mapPage">158</td>
+<td class="mapByte">228</td>
+<td class="data"><a class="link" name="40676" href="../asm/40676.html">9EE4</a></td>
+<td class="dataDesc">twentyonelong -- 7 structs, 3 wide. maps bytes to offsets</td>
+</tr>
+<tr>
+<td class="mapPage">159</td>
+<td class="mapByte">21</td>
+<td class="data"><a class="link" name="40725" href="../asm/40725.html">9F15</a></td>
+<td class="dataDesc">(&lt;- in_permitted_area)</td>
+</tr>
+<tr>
 <td class="mapPage">159</td>
 <td class="mapByte">33</td>
 <td class="routine"><a class="link" name="40737" href="../asm/40737.html">9F21</a></td>
-<td class="routineDesc">in permitted area?</td>
-</tr>
-<tr>
-<td class="mapPage">160</td>
-<td class="mapByte">7</td>
-<td class="routine"><a class="link" name="40967" href="../asm/40967.html">A007</a></td>
-<td class="routineDesc">a second in permitted area entry point</td>
+<td class="routineDesc">in_permitted_area [unsure] -- could be as general as bounds detection</td>
 </tr>
 <tr>
 <td class="mapPage">160</td>
 <td class="mapByte">53</td>
 <td class="routine"><a class="link" name="41013" href="../asm/41013.html">A035</a></td>
-<td class="routineDesc">wave morale flag</td>
+<td class="routineDesc">wave_morale_flag</td>
 </tr>
 <tr>
 <td class="mapPage">160</td>
 <td class="mapByte">113</td>
 <td class="routine"><a class="link" name="41073" href="../asm/41073.html">A071</a></td>
-<td class="routineDesc">set morale flag screen attributes</td>
+<td class="routineDesc">set_morale_flag_screen_attributes</td>
 </tr>
 <tr>
 <td class="mapPage">160</td>
 <td class="mapByte">130</td>
 <td class="routine"><a class="link" name="41090" href="../asm/41090.html">A082</a></td>
-<td class="routineDesc">call mystery if h AND 7 is zero</td>
+<td class="routineDesc">call_mystery_if_h_AND_7_is_zero</td>
 </tr>
 <tr>
 <td class="mapPage">160</td>
@@ -541,7 +547,7 @@
 <td class="mapPage">160</td>
 <td class="mapByte">158</td>
 <td class="routine"><a class="link" name="41118" href="../asm/41118.html">A09E</a></td>
-<td class="routineDesc">ring bell</td>
+<td class="routineDesc">ring_bell</td>
 </tr>
 <tr>
 <td class="mapPage">160</td>
@@ -571,7 +577,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">29</td>
 <td class="routine"><a class="link" name="41245" href="../asm/41245.html">A11D</a></td>
-<td class="routineDesc">play speaker</td>
+<td class="routineDesc">play_speaker</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -673,7 +679,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">70</td>
 <td class="data"><a class="link" name="41286" href="../asm/41286.html">A146</a></td>
-<td class="dataDesc">a_flag [unknown]  seems to be reset each day, might influence which parcels arrive</td>
+<td class="dataDesc">day_or_night ($00 = daytime, $FF = nighttime)</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -685,7 +691,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">95</td>
 <td class="routine"><a class="link" name="41311" href="../asm/41311.html">A15F</a></td>
-<td class="routineDesc">set game screen attributes</td>
+<td class="routineDesc">set_game_screen_attributes</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -1075,7 +1081,25 @@
 <td class="mapPage">171</td>
 <td class="mapByte">102</td>
 <td class="data"><a class="link" name="43878" href="../asm/43878.html">AB66</a></td>
-<td class="dataDesc">Zoombox (scene transition) stuff.</td>
+<td class="dataDesc">Zoombox? stuff.</td>
+</tr>
+<tr>
+<td class="mapPage">171</td>
+<td class="mapByte">107</td>
+<td class="routine"><a class="link" name="43883" href="../asm/43883.html">AB6B</a></td>
+<td class="routineDesc">choose_game_screen_attributes</td>
+</tr>
+<tr>
+<td class="mapPage">171</td>
+<td class="mapByte">137</td>
+<td class="routine"><a class="link" name="43913" href="../asm/43913.html">AB89</a></td>
+<td class="routineDesc">choose_attribute_for_tunnel</td>
+</tr>
+<tr>
+<td class="mapPage">171</td>
+<td class="mapByte">160</td>
+<td class="routine"><a class="link" name="43936" href="../asm/43936.html">ABA0</a></td>
+<td class="routineDesc">zoombox</td>
 </tr>
 <tr>
 <td class="mapPage">173</td>
@@ -1093,19 +1117,19 @@
 <td class="mapPage">173</td>
 <td class="mapByte">189</td>
 <td class="routine"><a class="link" name="44477" href="../asm/44477.html">ADBD</a></td>
-<td class="routineDesc">a_flag_became_nonzero</td>
+<td class="routineDesc">nighttime</td>
 </tr>
 <tr>
 <td class="mapPage">174</td>
 <td class="mapByte">117</td>
 <td class="data"><a class="link" name="44661" href="../asm/44661.html">AE75</a></td>
-<td class="dataDesc">searchlight_related (&lt;- a_flag_became_nonzero, searchlight)</td>
+<td class="dataDesc">searchlight_related (&lt;- nighttime, searchlight)</td>
 </tr>
 <tr>
 <td class="mapPage">174</td>
 <td class="mapByte">118</td>
 <td class="data"><a class="link" name="44662" href="../asm/44662.html">AE76</a></td>
-<td class="dataDesc">word_AE76 (&lt;- a_flag_became_nonzero)</td>
+<td class="dataDesc">word_AE76 (&lt;- nighttime)</td>
 </tr>
 <tr>
 <td class="mapPage">174</td>
@@ -1118,6 +1142,12 @@
 <td class="mapByte">184</td>
 <td class="routine"><a class="link" name="44728" href="../asm/44728.html">AEB8</a></td>
 <td class="routineDesc">searchlight</td>
+</tr>
+<tr>
+<td class="mapPage">175</td>
+<td class="mapByte">94</td>
+<td class="data"><a class="link" name="44894" href="../asm/44894.html">AF5E</a></td>
+<td class="dataDesc">zoombox tiles</td>
 </tr>
 <tr>
 <td class="mapPage">175</td>
@@ -1285,13 +1315,13 @@
 <td class="mapPage">181</td>
 <td class="mapByte">62</td>
 <td class="data"><a class="link" name="46398" href="../asm/46398.html">B53E</a></td>
-<td class="dataDesc">sixlong_things</td>
+<td class="dataDesc">sixlong_things -- probably boundaries</td>
 </tr>
 <tr>
 <td class="mapPage">181</td>
-<td class="mapByte">78</td>
-<td class="data"><a class="link" name="46414" href="../asm/46414.html">B54E</a></td>
-<td class="dataDesc">wiresnips_related_table</td>
+<td class="mapByte">134</td>
+<td class="data"><a class="link" name="46470" href="../asm/46470.html">B586</a></td>
+<td class="dataDesc">wiresnips_related_table -- probably snippable places</td>
 </tr>
 <tr>
 <td class="mapPage">181</td>
@@ -1456,6 +1486,12 @@
 <td class="dataDesc">(&lt;- called_from_main_loop_5, sub_CA81)</td>
 </tr>
 <tr>
+<td class="mapPage">200</td>
+<td class="mapByte">146</td>
+<td class="routine"><a class="link" name="51346" href="../asm/51346.html">C892</a></td>
+<td class="routineDesc">called_from_main_loop_5</td>
+</tr>
+<tr>
 <td class="mapPage">201</td>
 <td class="mapByte">24</td>
 <td class="routine"><a class="link" name="51480" href="../asm/51480.html">C918</a></td>
@@ -1558,10 +1594,22 @@
 <td class="dataDesc">item_data_related (16 groups of 3 bytes)</td>
 </tr>
 <tr>
+<td class="mapPage">205</td>
+<td class="mapByte">242</td>
+<td class="data"><a class="link" name="52722" href="../asm/52722.html">CDF2</a></td>
+<td class="dataDesc">something_character_related -- array, 24 long, of pointers to data</td>
+</tr>
+<tr>
 <td class="mapPage">206</td>
 <td class="mapByte">34</td>
 <td class="data"><a class="link" name="52770" href="../asm/52770.html">CE22</a></td>
 <td class="dataDesc">Sprite definitions -- objects which can move.</td>
+</tr>
+<tr>
+<td class="mapPage">207</td>
+<td class="mapByte">6</td>
+<td class="data"><a class="link" name="52998" href="../asm/52998.html">CF06</a></td>
+<td class="dataDesc">unknown character? related stuff  read by routine around $b64f (called_from_main_loop_9)</td>
 </tr>
 <tr>
 <td class="mapPage">208</td>
@@ -1693,7 +1741,7 @@
 <td class="mapPage">229</td>
 <td class="mapByte">95</td>
 <td class="data"><a class="link" name="58719" href="../asm/58719.html">E55F</a></td>
-<td class="dataDesc">probably tile data</td>
+<td class="dataDesc">probably mask data</td>
 </tr>
 <tr>
 <td class="mapPage">234</td>
@@ -1711,7 +1759,7 @@
 <td class="mapPage">235</td>
 <td class="mapByte">197</td>
 <td class="data"><a class="link" name="60357" href="../asm/60357.html">EBC5</a></td>
-<td class="dataDesc">Table of pointers, 30 long, to byte arrays [unsure]  -- probably tiles</td>
+<td class="dataDesc">Table of pointers, 30 long, to byte arrays [unsure]  -- probably masks</td>
 </tr>
 <tr>
 <td class="mapPage">236</td>
@@ -1747,13 +1795,7 @@
 <td class="mapPage">239</td>
 <td class="mapByte">203</td>
 <td class="routine"><a class="link" name="61387" href="../asm/61387.html">EFCB</a></td>
-<td class="routineDesc">action: papers</td>
-</tr>
-<tr>
-<td class="mapPage">239</td>
-<td class="mapByte">249</td>
-<td class="data"><a class="link" name="61433" href="../asm/61433.html">EFF9</a></td>
-<td class="dataDesc">word_EFF9 (&lt;- action papers)</td>
+<td class="routineDesc">action_papers</td>
 </tr>
 <tr>
 <td class="mapPage">239</td>
@@ -1771,7 +1813,13 @@
 <td class="mapPage">240</td>
 <td class="mapByte">20</td>
 <td class="data"><a class="link" name="61460" href="../asm/61460.html">F014</a></td>
-<td class="dataDesc">menu screenlocstrings.</td>
+<td class="dataDesc">Menu screenlocstrings.</td>
+</tr>
+<tr>
+<td class="mapPage">240</td>
+<td class="mapByte">37</td>
+<td class="data"><a class="link" name="61477" href="../asm/61477.html">F025</a></td>
+<td class="dataDesc">More messages.</td>
 </tr>
 <tr>
 <td class="mapPage">240</td>
@@ -1843,7 +1891,7 @@
 <td class="mapPage">242</td>
 <td class="mapByte">173</td>
 <td class="data"><a class="link" name="62125" href="../asm/62125.html">F2AD</a></td>
-<td class="dataDesc">Key choice prompt strings. (encoded to match font; first byte is count).</td>
+<td class="dataDesc">Key choice prompt strings.</td>
 </tr>
 <tr>
 <td class="mapPage">242</td>
@@ -1915,7 +1963,7 @@
 <td class="mapPage">244</td>
 <td class="mapByte">70</td>
 <td class="data"><a class="link" name="62534" href="../asm/62534.html">F446</a></td>
-<td class="dataDesc">key choice screenlocstrings.</td>
+<td class="dataDesc">Key choice screenlocstrings.</td>
 </tr>
 <tr>
 <td class="mapPage">244</td>
@@ -1945,7 +1993,7 @@
 <td class="mapPage">253</td>
 <td class="mapByte">225</td>
 <td class="routine"><a class="link" name="64993" href="../asm/64993.html">FDE1</a></td>
-<td class="routineDesc">pre_main</td>
+<td class="routineDesc">loaded</td>
 </tr>
 <tr>
 <td class="mapPage">253</td>

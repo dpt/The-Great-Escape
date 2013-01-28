@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="31795.html">7C33</a></td>
 </tr>
 </table>
-<div class="description">7C26: item-to-thing</div>
+<div class="description">7C26: item_to_itemstruct</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -30,62 +30,58 @@
 Used by the routines at <a class="link" href="31627.html">7B8B</a>, <a class="link" href="41512.html">A228</a> and <a class="link" href="52529.html">CD31</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Item index.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="31782"></a>7C26</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="11">return &amp;item_structs[A]; // $76C8 + A * 7</td>
 </tr>
 <tr>
 <td class="address"><a name="31783"></a>7C27</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31784"></a>7C28</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31785"></a>7C29</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31786"></a>7C2A</td>
 <td class="instruction">SUB L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31787"></a>7C2B</td>
 <td class="instruction">LD HL,$76C8</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31790"></a>7C2E</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31791"></a>7C2F</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31792"></a>7C30</td>
 <td class="instruction">RET NC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31793"></a>7C31</td>
 <td class="instruction">INC H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31794"></a>7C32</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

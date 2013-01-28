@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="32072.html">7D48</a></td>
 </tr>
 </table>
-<div class="description">7D2F: plot_glyph_(indirect)</div>
+<div class="description">7D2F: plot_glyph</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -30,12 +30,22 @@
 Used by the routines at <a class="link" href="32072.html">7D48</a>, <a class="link" href="41202.html">A0F2</a>, <a class="link" href="42431.html">A5BF</a> and <a class="link" href="62288.html">F350</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to glyph.</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="registerContents">Pointer to destination.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="32047"></a>7D2F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">a = *hl;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -50,97 +60,86 @@ This entry point is used by the routine at <a class="link" href="32072.html">7D4
 <tr>
 <td class="label">7D30</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">...</td>
 </tr>
 <tr>
 <td class="address"><a name="32049"></a>7D31</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="5">hl = a * 8;</td>
 </tr>
 <tr>
 <td class="address"><a name="32050"></a>7D32</td>
 <td class="instruction">LD H,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32052"></a>7D34</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32053"></a>7D35</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32054"></a>7D36</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32055"></a>7D37</td>
 <td class="instruction">LD BC,$A69E</td>
-<td class="transparentComment" />
+<td class="comment">bc = bitmap_font;</td>
 </tr>
 <tr>
 <td class="address"><a name="32058"></a>7D3A</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">hl += bc;</td>
 </tr>
 <tr>
 <td class="address"><a name="32059"></a>7D3B</td>
 <td class="instruction">PUSH DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32060"></a>7D3C</td>
 <td class="instruction">LD B,$08</td>
-<td class="transparentComment" />
+<td class="comment">8 iterations.</td>
 </tr>
 <tr>
 <td class="label"><a name="32062"></a>7D3E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="5">do { *de = *hl; } d++; // i.e. de += 256; hl++; while (--b);</td>
 </tr>
 <tr>
 <td class="address"><a name="32063"></a>7D3F</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32064"></a>7D40</td>
 <td class="instruction">INC D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32065"></a>7D41</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32066"></a>7D42</td>
 <td class="instruction">DJNZ $7D3E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32068"></a>7D44</td>
 <td class="instruction">POP DE</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">de++;</td>
 </tr>
 <tr>
 <td class="address"><a name="32069"></a>7D45</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32070"></a>7D46</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="32071"></a>7D47</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

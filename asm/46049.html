@@ -32,62 +32,55 @@
 <tr>
 <td class="label"><a name="46049"></a>B3E1</td>
 <td class="instruction">LD HL,$8015</td>
-<td class="transparentComment" />
+<td class="comment">HL = (overlap.$8015);</td>
 </tr>
 <tr>
 <td class="address"><a name="46052"></a>B3E4</td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="transparentComment" />
+<td class="comment">DE = sprite_guard_...;</td>
 </tr>
 <tr>
 <td class="address"><a name="46055"></a>B3E7</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">A = (HL);</td>
 </tr>
 <tr>
 <td class="address"><a name="46056"></a>B3E8</td>
 <td class="instruction">CP E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (.. cheap equality test ..) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="46057"></a>B3E9</td>
 <td class="instruction">RET Z</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46058"></a>B3EA</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="7">...</td>
 </tr>
 <tr>
 <td class="address"><a name="46061"></a>B3ED</td>
 <td class="instruction">CP $1D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46063"></a>B3EF</td>
 <td class="instruction">RET NC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46064"></a>B3F0</td>
 <td class="instruction">LD (HL),E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46065"></a>B3F1</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46066"></a>B3F2</td>
 <td class="instruction">LD (HL),D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46067"></a>B3F3</td>
 <td class="instruction">JP <a class="link" href="41193.html">$A0E9</a></td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

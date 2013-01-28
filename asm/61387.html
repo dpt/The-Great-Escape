@@ -18,10 +18,10 @@
 <tr>
 <td class="prev">Prev: <a class="link" href="61338.html">EF9A</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#61387">Map</a></td>
-<td class="next">Next: <a class="link" href="61433.html">EFF9</a></td>
+<td class="next">Next: <a class="link" href="61435.html">EFFB</a></td>
 </tr>
 </table>
-<div class="description">EFCB: action: papers</div>
+<div class="description">EFCB: action_papers</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -32,114 +32,103 @@
 <tr>
 <td class="label"><a name="61387"></a>EFCB</td>
 <td class="instruction">LD DE,$696D</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="11">[range checking business x in (0x69..0x6D) and y in (0x49..0x4B)]</td>
 </tr>
 <tr>
 <td class="address"><a name="61390"></a>EFCE</td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61393"></a>EFD1</td>
 <td class="instruction">LD B,$02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="61395"></a>EFD3</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61396"></a>EFD4</td>
 <td class="instruction">CP D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61397"></a>EFD5</td>
 <td class="instruction">RET C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61398"></a>EFD6</td>
 <td class="instruction">CP E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61399"></a>EFD7</td>
 <td class="instruction">RET NC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61400"></a>EFD8</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61401"></a>EFD9</td>
 <td class="instruction">LD DE,$494B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61404"></a>EFDC</td>
 <td class="instruction">DJNZ $EFD3</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61406"></a>EFDE</td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">if ((*overlap.$8015) != sprite_guard_tl_4) goto solitary; // using the papers at the main gate when not in uniform =&gt; get sent to solitary</td>
 </tr>
 <tr>
 <td class="address"><a name="61409"></a>EFE1</td>
 <td class="instruction">LD A,($8015)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61412"></a>EFE4</td>
 <td class="instruction">CP E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61413"></a>EFE5</td>
 <td class="instruction">JP NZ,<a class="link" href="52120.html">$CB98</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61416"></a>EFE8</td>
 <td class="instruction">CALL <a class="link" href="41193.html">$A0E9</a></td>
-<td class="transparentComment" />
+<td class="comment">increase_morale_by_10_score_by_50</td>
 </tr>
 <tr>
 <td class="address"><a name="61419"></a>EFEB</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">(overlap.$801C) = 0; // clear stored room index?</td>
 </tr>
 <tr>
 <td class="address"><a name="61420"></a>EFEC</td>
 <td class="instruction">LD ($801C),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61423"></a>EFEF</td>
 <td class="instruction">LD HL,$EFF9</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">... must be a transition to outside the gate ...</td>
 </tr>
 <tr>
 <td class="address"><a name="61426"></a>EFF2</td>
 <td class="instruction">LD IY,$8000</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61430"></a>EFF6</td>
 <td class="instruction">JP <a class="link" href="26786.html">$68A2</a></td>
-<td class="transparentComment" />
+</tr>
+<tr>
+<td class="address"><a name="61433"></a>EFF9</td>
+<td class="instruction">DEFW $8AD6</td>
+<td class="comment">word_EFF9 (&lt;- action_papers)</td>
 </tr>
 </table>
 <table class="prevNext">
 <tr>
 <td class="prev">Prev: <a class="link" href="61338.html">EF9A</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#61387">Map</a></td>
-<td class="next">Next: <a class="link" href="61433.html">EFF9</a></td>
+<td class="next">Next: <a class="link" href="61435.html">EFFB</a></td>
 </tr>
 </table>
 <div class="footer">

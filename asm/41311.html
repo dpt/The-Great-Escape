@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="41331.html">A173</a></td>
 </tr>
 </table>
-<div class="description">A15F: set game screen attributes</div>
+<div class="description">A15F: set_game_screen_attributes</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -30,62 +30,58 @@
 Used by the routines at <a class="link" href="31542.html">7B36</a>, <a class="link" href="31627.html">7B8B</a>, <a class="link" href="41427.html">A1D3</a>, <a class="link" href="42251.html">A50B</a>, <a class="link" href="47163.html">B83B</a> and <a class="link" href="62288.html">F350</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Attribute byte.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="41311"></a>A15F</td>
 <td class="instruction">LD HL,$5847</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="11">Starting at $5847, set 23 columns of 16 rows to A.</td>
 </tr>
 <tr>
 <td class="address"><a name="41314"></a>A162</td>
 <td class="instruction">LD C,$10</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41316"></a>A164</td>
 <td class="instruction">LD DE,$0009</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="41319"></a>A167</td>
 <td class="instruction">LD B,$17</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="41321"></a>A169</td>
 <td class="instruction">LD (HL),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41322"></a>A16A</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41323"></a>A16B</td>
 <td class="instruction">DJNZ $A169</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41325"></a>A16D</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41326"></a>A16E</td>
 <td class="instruction">DEC C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41327"></a>A16F</td>
 <td class="instruction">JP NZ,$A167</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41330"></a>A172</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

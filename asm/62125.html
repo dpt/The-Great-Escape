@@ -21,77 +21,104 @@
 <td class="next">Next: <a class="link" href="62177.html">F2E1</a></td>
 </tr>
 </table>
-<div class="description">F2AD: Key choice prompt strings. (encoded to match font; first byte is count).</div>
+<div class="description">F2AD: Key choice prompt strings.</div>
 <table class="dataDisassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+"CHOOSE KEYS"
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="address"><a name="62125"></a>F2AD</td>
-<td class="instruction">DEFW $406D</td>
-<td class="dataComment">choose_keys_screenaddr - holds screen position of 'CHOOSE KEYS' string</td>
+<td class="instruction">DEFB $6D,$40,$0B,$0C,$11,$00,$00,$1B</td>
+<td class="dataComment" rowspan="2">screen address $406d, length $b, string='CH00SE KEYS'</td>
 </tr>
 <tr>
-<td class="address"><a name="62127"></a>F2AF</td>
-<td class="instruction">DEFB $0B,$0C,$11,$00,$00,$1B,$0E,$23</td>
-<td class="dataComment" rowspan="2">counted_string: "CHOOSE KEYS"</td>
+<td class="address"><a name="62133"></a>F2B5</td>
+<td class="instruction">DEFB $0E,$23,$14,$0E,$21,$1B</td>
 </tr>
 <tr>
-<td class="address"><a name="62135"></a>F2B7</td>
-<td class="instruction">DEFB $14,$0E,$21,$1B</td>
+<td class="routineComment" colspan="3">
+<a name="62139"></a>
+<div class="comments">
+<div class="paragraph">
+"LEFT"
+</div>
+</div>
+</td>
 </tr>
 <tr>
-<td class="address"><a name="62139"></a>F2BB</td>
-<td class="instruction">DEFW $40CD</td>
-<td class="dataComment">holds screen position of 'LEFT' string</td>
+<td class="address">F2BB</td>
+<td class="instruction">DEFB $CD,$40,$05,$15,$0E,$0F,$1C,$24</td>
+<td class="dataComment">screen address $40cd, length $5, string='LEFT.'</td>
 </tr>
 <tr>
-<td class="address"><a name="62141"></a>F2BD</td>
-<td class="instruction">DEFB $05,$15,$0E,$0F,$1C,$24</td>
-<td class="dataComment">counted_string: "LEFT"</td>
+<td class="routineComment" colspan="3">
+<a name="62147"></a>
+<div class="comments">
+<div class="paragraph">
+"RIGHT"
+</div>
+</div>
+</td>
 </tr>
 <tr>
-<td class="address"><a name="62147"></a>F2C3</td>
-<td class="instruction">DEFW $480D</td>
-<td class="dataComment">holds screen position of 'RIGHT' string</td>
+<td class="address">F2C3</td>
+<td class="instruction">DEFB $0D,$48,$06,$1A,$12,$10,$11,$1C</td>
+<td class="dataComment" rowspan="2">screen address $480d, length $6, string='RIGHT.'</td>
 </tr>
 <tr>
-<td class="address"><a name="62149"></a>F2C5</td>
-<td class="instruction">DEFB $06,$1A,$12,$10,$11,$1C,$24</td>
-<td class="dataComment">counted_string: "RIGHT"</td>
+<td class="address"><a name="62155"></a>F2CB</td>
+<td class="instruction">DEFB $24</td>
 </tr>
 <tr>
-<td class="address"><a name="62156"></a>F2CC</td>
-<td class="instruction">DEFW $484D</td>
-<td class="dataComment">holds screen position of 'UP' string</td>
+<td class="routineComment" colspan="3">
+<a name="62156"></a>
+<div class="comments">
+<div class="paragraph">
+"UP"
+</div>
+</div>
+</td>
 </tr>
 <tr>
-<td class="address"><a name="62158"></a>F2CE</td>
-<td class="instruction">DEFB $03,$1D,$18,$24</td>
-<td class="dataComment">counted_string: "UP"</td>
+<td class="address">F2CC</td>
+<td class="instruction">DEFB $4D,$48,$03,$1D,$18,$24</td>
+<td class="dataComment">screen address $484d, length $3, string='UP.'</td>
 </tr>
 <tr>
-<td class="address"><a name="62162"></a>F2D2</td>
-<td class="instruction">DEFW $488D</td>
-<td class="dataComment">holds screen position of 'DOWN' string</td>
+<td class="routineComment" colspan="3">
+<a name="62162"></a>
+<div class="comments">
+<div class="paragraph">
+"DOWN"
+</div>
+</div>
+</td>
 </tr>
 <tr>
-<td class="address"><a name="62164"></a>F2D4</td>
-<td class="instruction">DEFB $05,$0D,$00,$1F,$17,$24</td>
-<td class="dataComment">counted_string: "DOWN"</td>
+<td class="address">F2D2</td>
+<td class="instruction">DEFB $8D,$48,$05,$0D,$00,$1F,$17,$24</td>
+<td class="dataComment">screen address $488d, length $5, string='D0WN.'</td>
 </tr>
 <tr>
-<td class="address"><a name="62170"></a>F2DA</td>
-<td class="instruction">DEFW $48CD</td>
-<td class="dataComment">holds screen position of 'FIRE' string</td>
+<td class="routineComment" colspan="3">
+<a name="62170"></a>
+<div class="comments">
+<div class="paragraph">
+"FIRE"
+</div>
+</div>
+</td>
 </tr>
 <tr>
-<td class="address"><a name="62172"></a>F2DC</td>
-<td class="instruction">DEFB $05,$0F,$12,$1A,$0E</td>
-<td class="dataComment">counted_string: "FIRE"</td>
+<td class="address">F2DA</td>
+<td class="instruction">DEFB $CD,$48,$05,$0F,$12,$1A,$0E</td>
+<td class="dataComment">screen address $48cd, length $5, string='FIRE.'</td>
 </tr>
 </table>
 <table class="prevNext">

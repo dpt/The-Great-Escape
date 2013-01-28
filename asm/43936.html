@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at ABA0</title>
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="43913.html">AB89</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#43936">Map</a></td>
+<td class="next">Next: <a class="link" href="44329.html">AD29</a></td>
+</tr>
+</table>
+<div class="description">ABA0: zoombox</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="link" href="42251.html">A50B</a> and <a class="link" href="45820.html">B2FC</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="43936"></a>ABA0</td>
+<td class="instruction">LD A,$0C</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43938"></a>ABA2</td>
+<td class="instruction">LD ($AB66),A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43941"></a>ABA5</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43943"></a>ABA7</td>
+<td class="instruction">LD ($AB68),A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43946"></a>ABAA</td>
+<td class="instruction">CALL <a class="link" href="43883.html">$AB6B</a></td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43949"></a>ABAD</td>
+<td class="instruction">LD H,A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43950"></a>ABAE</td>
+<td class="instruction">LD L,A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43951"></a>ABAF</td>
+<td class="instruction">LD ($5932),HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43954"></a>ABB2</td>
+<td class="instruction">LD ($5952),HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43957"></a>ABB5</td>
+<td class="instruction">XOR A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43958"></a>ABB6</td>
+<td class="instruction">LD ($AB67),A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43961"></a>ABB9</td>
+<td class="instruction">LD ($AB69),A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="label"><a name="43964"></a>ABBC</td>
+<td class="instruction">LD HL,$AB66</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43967"></a>ABBF</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43968"></a>ABC0</td>
+<td class="instruction">CP $01</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43970"></a>ABC2</td>
+<td class="instruction">JP Z,$ABCA</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43973"></a>ABC5</td>
+<td class="instruction">DEC (HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43974"></a>ABC6</td>
+<td class="instruction">DEC A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43975"></a>ABC7</td>
+<td class="instruction">INC HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43976"></a>ABC8</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43977"></a>ABC9</td>
+<td class="instruction">DEC HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="label"><a name="43978"></a>ABCA</td>
+<td class="instruction">INC HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43979"></a>ABCB</td>
+<td class="instruction">ADD A,(HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43980"></a>ABCC</td>
+<td class="instruction">CP $16</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43982"></a>ABCE</td>
+<td class="instruction">JP NC,$ABD2</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43985"></a>ABD1</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="label"><a name="43986"></a>ABD2</td>
+<td class="instruction">INC HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43987"></a>ABD3</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43988"></a>ABD4</td>
+<td class="instruction">CP $01</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43990"></a>ABD6</td>
+<td class="instruction">JP Z,$ABDE</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43993"></a>ABD9</td>
+<td class="instruction">DEC (HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43994"></a>ABDA</td>
+<td class="instruction">DEC A</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43995"></a>ABDB</td>
+<td class="instruction">INC HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43996"></a>ABDC</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43997"></a>ABDD</td>
+<td class="instruction">DEC HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="label"><a name="43998"></a>ABDE</td>
+<td class="instruction">INC HL</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="43999"></a>ABDF</td>
+<td class="instruction">ADD A,(HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44000"></a>ABE0</td>
+<td class="instruction">CP $0F</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44002"></a>ABE2</td>
+<td class="instruction">JP NC,$ABE6</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44005"></a>ABE5</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="label"><a name="44006"></a>ABE6</td>
+<td class="instruction">CALL $ABF9</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44009"></a>ABE9</td>
+<td class="instruction">CALL $AC6F</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44012"></a>ABEC</td>
+<td class="instruction">LD HL,$AB67</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44015"></a>ABEF</td>
+<td class="instruction">LD A,($AB69)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44018"></a>ABF2</td>
+<td class="instruction">ADD A,(HL)</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44019"></a>ABF3</td>
+<td class="instruction">CP $23</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44021"></a>ABF5</td>
+<td class="instruction">JP C,$ABBC</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="address"><a name="44024"></a>ABF8</td>
+<td class="instruction">RET</td>
+<td class="comment"></td>
+</tr>
+<tr>
+<td class="label"><a name="44025"></a>ABF9</td>
+<td class="instruction">LD A,($AB68)</td>
+<td class="comment" rowspan="76">zoombox 1</td>
+</tr>
+<tr>
+<td class="address"><a name="44028"></a>ABFC</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44029"></a>ABFD</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address"><a name="44030"></a>ABFE</td>
+<td class="instruction">SRL H</td>
+</tr>
+<tr>
+<td class="address"><a name="44032"></a>AC00</td>
+<td class="instruction">RRA</td>
+</tr>
+<tr>
+<td class="address"><a name="44033"></a>AC01</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44034"></a>AC02</td>
+<td class="instruction">LD D,H</td>
+</tr>
+<tr>
+<td class="address"><a name="44035"></a>AC03</td>
+<td class="instruction">SRL H</td>
+</tr>
+<tr>
+<td class="address"><a name="44037"></a>AC05</td>
+<td class="instruction">RRA</td>
+</tr>
+<tr>
+<td class="address"><a name="44038"></a>AC06</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44039"></a>AC07</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44040"></a>AC08</td>
+<td class="instruction">LD A,($AB66)</td>
+</tr>
+<tr>
+<td class="address"><a name="44043"></a>AC0B</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44044"></a>AC0C</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44045"></a>AC0D</td>
+<td class="instruction">JR NC,$AC10</td>
+</tr>
+<tr>
+<td class="address"><a name="44047"></a>AC0F</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="label"><a name="44048"></a>AC10</td>
+<td class="instruction">LD DE,$F291</td>
+</tr>
+<tr>
+<td class="address"><a name="44051"></a>AC13</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44052"></a>AC14</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44053"></a>AC15</td>
+<td class="instruction">LD A,($AB68)</td>
+</tr>
+<tr>
+<td class="address"><a name="44056"></a>AC18</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44057"></a>AC19</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44058"></a>AC1A</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44059"></a>AC1B</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44060"></a>AC1C</td>
+<td class="instruction">LD HL,$EDD3</td>
+</tr>
+<tr>
+<td class="address"><a name="44063"></a>AC1F</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44064"></a>AC20</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44065"></a>AC21</td>
+<td class="instruction">JR NC,$AC24</td>
+</tr>
+<tr>
+<td class="address"><a name="44067"></a>AC23</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="label"><a name="44068"></a>AC24</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="44069"></a>AC25</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44070"></a>AC26</td>
+<td class="instruction">LD H,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="44071"></a>AC27</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44072"></a>AC28</td>
+<td class="instruction">LD A,($AB66)</td>
+</tr>
+<tr>
+<td class="address"><a name="44075"></a>AC2B</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44076"></a>AC2C</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44077"></a>AC2D</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44078"></a>AC2E</td>
+<td class="instruction">LD A,($AB67)</td>
+</tr>
+<tr>
+<td class="address"><a name="44081"></a>AC31</td>
+<td class="instruction">LD ($AC55),A</td>
+</tr>
+<tr>
+<td class="address"><a name="44084"></a>AC34</td>
+<td class="instruction">NEG</td>
+</tr>
+<tr>
+<td class="address"><a name="44086"></a>AC36</td>
+<td class="instruction">ADD A,$18</td>
+</tr>
+<tr>
+<td class="address"><a name="44088"></a>AC38</td>
+<td class="instruction">LD ($AC4D),A</td>
+</tr>
+<tr>
+<td class="address"><a name="44091"></a>AC3B</td>
+<td class="instruction">LD A,($AB69)</td>
+</tr>
+<tr>
+<td class="address"><a name="44094"></a>AC3E</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="label"><a name="44095"></a>AC3F</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44096"></a>AC40</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44097"></a>AC41</td>
+<td class="instruction">LD A,$08</td>
+</tr>
+<tr>
+<td class="label"><a name="44099"></a>AC43</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address"><a name="44100"></a>AC44</td>
+<td class="instruction">LD A,($AB67)</td>
+</tr>
+<tr>
+<td class="address"><a name="44103"></a>AC47</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44104"></a>AC48</td>
+<td class="instruction">LD B,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="44106"></a>AC4A</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address"><a name="44108"></a>AC4C</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="44110"></a>AC4E</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44111"></a>AC4F</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44112"></a>AC50</td>
+<td class="instruction">JR NC,$AC53</td>
+</tr>
+<tr>
+<td class="address"><a name="44114"></a>AC52</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="label"><a name="44115"></a>AC53</td>
+<td class="instruction">LD A,E</td>
+</tr>
+<tr>
+<td class="address"><a name="44116"></a>AC54</td>
+<td class="instruction">SUB $00</td>
+</tr>
+<tr>
+<td class="address"><a name="44118"></a>AC56</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44119"></a>AC57</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="address"><a name="44120"></a>AC58</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address"><a name="44121"></a>AC59</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address"><a name="44122"></a>AC5A</td>
+<td class="instruction">JP NZ,$AC43</td>
+</tr>
+<tr>
+<td class="address"><a name="44125"></a>AC5D</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44126"></a>AC5E</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44127"></a>AC5F</td>
+<td class="instruction">LD BC,$0020</td>
+</tr>
+<tr>
+<td class="address"><a name="44130"></a>AC62</td>
+<td class="instruction">LD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44131"></a>AC63</td>
+<td class="instruction">CP $E0</td>
+</tr>
+<tr>
+<td class="address"><a name="44133"></a>AC65</td>
+<td class="instruction">JR C,$AC69</td>
+</tr>
+<tr>
+<td class="address"><a name="44135"></a>AC67</td>
+<td class="instruction">LD B,$07</td>
+</tr>
+<tr>
+<td class="label"><a name="44137"></a>AC69</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44138"></a>AC6A</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44139"></a>AC6B</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44140"></a>AC6C</td>
+<td class="instruction">DJNZ $AC3F</td>
+</tr>
+<tr>
+<td class="address"><a name="44142"></a>AC6E</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="label"><a name="44143"></a>AC6F</td>
+<td class="instruction">LD A,($AB68)</td>
+<td class="comment" rowspan="76">zoombox 2</td>
+</tr>
+<tr>
+<td class="address"><a name="44146"></a>AC72</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address"><a name="44147"></a>AC73</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44148"></a>AC74</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44149"></a>AC75</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44150"></a>AC76</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44151"></a>AC77</td>
+<td class="instruction">LD HL,$EDD3</td>
+</tr>
+<tr>
+<td class="address"><a name="44154"></a>AC7A</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44155"></a>AC7B</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44156"></a>AC7C</td>
+<td class="instruction">JR NC,$AC7F</td>
+</tr>
+<tr>
+<td class="address"><a name="44158"></a>AC7E</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="label"><a name="44159"></a>AC7F</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="44160"></a>AC80</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44161"></a>AC81</td>
+<td class="instruction">LD H,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="44162"></a>AC82</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44163"></a>AC83</td>
+<td class="instruction">LD A,($AB66)</td>
+</tr>
+<tr>
+<td class="address"><a name="44166"></a>AC86</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address"><a name="44167"></a>AC87</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44168"></a>AC88</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44169"></a>AC89</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="44171"></a>AC8B</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44174"></a>AC8E</td>
+<td class="instruction">INC L</td>
+</tr>
+<tr>
+<td class="address"><a name="44175"></a>AC8F</td>
+<td class="instruction">LD A,($AB67)</td>
+</tr>
+<tr>
+<td class="address"><a name="44178"></a>AC92</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="label"><a name="44179"></a>AC93</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="address"><a name="44181"></a>AC95</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44184"></a>AC98</td>
+<td class="instruction">INC L</td>
+</tr>
+<tr>
+<td class="address"><a name="44185"></a>AC99</td>
+<td class="instruction">DJNZ $AC93</td>
+</tr>
+<tr>
+<td class="address"><a name="44187"></a>AC9B</td>
+<td class="instruction">LD A,$02</td>
+</tr>
+<tr>
+<td class="address"><a name="44189"></a>AC9D</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44192"></a>ACA0</td>
+<td class="instruction">LD DE,$0020</td>
+</tr>
+<tr>
+<td class="address"><a name="44195"></a>ACA3</td>
+<td class="instruction">LD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44196"></a>ACA4</td>
+<td class="instruction">CP $E0</td>
+</tr>
+<tr>
+<td class="address"><a name="44198"></a>ACA6</td>
+<td class="instruction">JR C,$ACAA</td>
+</tr>
+<tr>
+<td class="address"><a name="44200"></a>ACA8</td>
+<td class="instruction">LD D,$07</td>
+</tr>
+<tr>
+<td class="label"><a name="44202"></a>ACAA</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44203"></a>ACAB</td>
+<td class="instruction">LD A,($AB69)</td>
+</tr>
+<tr>
+<td class="address"><a name="44206"></a>ACAE</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="label"><a name="44207"></a>ACAF</td>
+<td class="instruction">LD A,$03</td>
+</tr>
+<tr>
+<td class="address"><a name="44209"></a>ACB1</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44212"></a>ACB4</td>
+<td class="instruction">LD DE,$0020</td>
+</tr>
+<tr>
+<td class="address"><a name="44215"></a>ACB7</td>
+<td class="instruction">LD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44216"></a>ACB8</td>
+<td class="instruction">CP $E0</td>
+</tr>
+<tr>
+<td class="address"><a name="44218"></a>ACBA</td>
+<td class="instruction">JR C,$ACBE</td>
+</tr>
+<tr>
+<td class="address"><a name="44220"></a>ACBC</td>
+<td class="instruction">LD D,$07</td>
+</tr>
+<tr>
+<td class="label"><a name="44222"></a>ACBE</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44223"></a>ACBF</td>
+<td class="instruction">DJNZ $ACAF</td>
+</tr>
+<tr>
+<td class="address"><a name="44225"></a>ACC1</td>
+<td class="instruction">LD A,$04</td>
+</tr>
+<tr>
+<td class="address"><a name="44227"></a>ACC3</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44230"></a>ACC6</td>
+<td class="instruction">DEC L</td>
+</tr>
+<tr>
+<td class="address"><a name="44231"></a>ACC7</td>
+<td class="instruction">LD A,($AB67)</td>
+</tr>
+<tr>
+<td class="address"><a name="44234"></a>ACCA</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="label"><a name="44235"></a>ACCB</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="address"><a name="44237"></a>ACCD</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44240"></a>ACD0</td>
+<td class="instruction">DEC L</td>
+</tr>
+<tr>
+<td class="address"><a name="44241"></a>ACD1</td>
+<td class="instruction">DJNZ $ACCB</td>
+</tr>
+<tr>
+<td class="address"><a name="44243"></a>ACD3</td>
+<td class="instruction">LD A,$05</td>
+</tr>
+<tr>
+<td class="address"><a name="44245"></a>ACD5</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44248"></a>ACD8</td>
+<td class="instruction">LD DE,$FFE0</td>
+</tr>
+<tr>
+<td class="address"><a name="44251"></a>ACDB</td>
+<td class="instruction">LD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44252"></a>ACDC</td>
+<td class="instruction">CP $20</td>
+</tr>
+<tr>
+<td class="address"><a name="44254"></a>ACDE</td>
+<td class="instruction">JR NC,$ACE3</td>
+</tr>
+<tr>
+<td class="address"><a name="44256"></a>ACE0</td>
+<td class="instruction">LD DE,$F8E0</td>
+</tr>
+<tr>
+<td class="label"><a name="44259"></a>ACE3</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44260"></a>ACE4</td>
+<td class="instruction">LD A,($AB69)</td>
+</tr>
+<tr>
+<td class="address"><a name="44263"></a>ACE7</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="label"><a name="44264"></a>ACE8</td>
+<td class="instruction">LD A,$03</td>
+</tr>
+<tr>
+<td class="address"><a name="44266"></a>ACEA</td>
+<td class="instruction">CALL $ACFC</td>
+</tr>
+<tr>
+<td class="address"><a name="44269"></a>ACED</td>
+<td class="instruction">LD DE,$FFE0</td>
+</tr>
+<tr>
+<td class="address"><a name="44272"></a>ACF0</td>
+<td class="instruction">LD A,L</td>
+</tr>
+<tr>
+<td class="address"><a name="44273"></a>ACF1</td>
+<td class="instruction">CP $20</td>
+</tr>
+<tr>
+<td class="address"><a name="44275"></a>ACF3</td>
+<td class="instruction">JR NC,$ACF8</td>
+</tr>
+<tr>
+<td class="address"><a name="44277"></a>ACF5</td>
+<td class="instruction">LD DE,$F8E0</td>
+</tr>
+<tr>
+<td class="label"><a name="44280"></a>ACF8</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address"><a name="44281"></a>ACF9</td>
+<td class="instruction">DJNZ $ACE8</td>
+</tr>
+<tr>
+<td class="address"><a name="44283"></a>ACFB</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="label"><a name="44284"></a>ACFC</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment" rowspan="33">zoombox draw tile</td>
+</tr>
+<tr>
+<td class="address"><a name="44285"></a>ACFD</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address"><a name="44286"></a>ACFE</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44287"></a>ACFF</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44288"></a>AD00</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address"><a name="44289"></a>AD01</td>
+<td class="instruction">LD H,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="44291"></a>AD03</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44292"></a>AD04</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44293"></a>AD05</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44294"></a>AD06</td>
+<td class="instruction">LD BC,$AF5E</td>
+</tr>
+<tr>
+<td class="address"><a name="44297"></a>AD09</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44298"></a>AD0A</td>
+<td class="instruction">LD B,$08</td>
+</tr>
+<tr>
+<td class="label"><a name="44300"></a>AD0C</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address"><a name="44301"></a>AD0D</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="address"><a name="44302"></a>AD0E</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="address"><a name="44303"></a>AD0F</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44304"></a>AD10</td>
+<td class="instruction">DJNZ $AD0C</td>
+</tr>
+<tr>
+<td class="address"><a name="44306"></a>AD12</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="address"><a name="44307"></a>AD13</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address"><a name="44308"></a>AD14</td>
+<td class="instruction">LD H,$58</td>
+</tr>
+<tr>
+<td class="address"><a name="44310"></a>AD16</td>
+<td class="instruction">LD L,E</td>
+</tr>
+<tr>
+<td class="address"><a name="44311"></a>AD17</td>
+<td class="instruction">CP $48</td>
+</tr>
+<tr>
+<td class="address"><a name="44313"></a>AD19</td>
+<td class="instruction">JR C,$AD21</td>
+</tr>
+<tr>
+<td class="address"><a name="44315"></a>AD1B</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="address"><a name="44316"></a>AD1C</td>
+<td class="instruction">CP $50</td>
+</tr>
+<tr>
+<td class="address"><a name="44318"></a>AD1E</td>
+<td class="instruction">JR C,$AD21</td>
+</tr>
+<tr>
+<td class="address"><a name="44320"></a>AD20</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="label"><a name="44321"></a>AD21</td>
+<td class="instruction">LD A,($AB6A)</td>
+</tr>
+<tr>
+<td class="address"><a name="44324"></a>AD24</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address"><a name="44325"></a>AD25</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44326"></a>AD26</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address"><a name="44327"></a>AD27</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44328"></a>AD28</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="43913.html">AB89</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#43936">Map</a></td>
+<td class="next">Next: <a class="link" href="44329.html">AD29</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>
