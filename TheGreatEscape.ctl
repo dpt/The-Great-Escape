@@ -2858,10 +2858,28 @@ c $CCAB sub_CCAB
 c $CCCD sub_CCCD -- walks item_characterstructs. ignores green key and food items. may decide which items are 'found'.
 
 c $CCFB sub_CCFB -- walks item_characterstructs. ignores red cross parcel. may decide which items are 'found'.
+; ------------------------------------------------------------------------------
 
 c $CD31 item_discovered
 
-b $CD6A item_data_related (16 groups of 3 bytes)
+; ------------------------------------------------------------------------------
+
+b $CD6A item_data_related
+  $CD6A,$30,3*16
+
+; ------------------------------------------------------------------------------
+
+b $CD9A character meta data
+  $CD9A struct ... { something_character_related, sprite_commandant_tl_4 } meta_commandant; (<- sub_C4E0)
+  $CD9E struct ... { something_character_related, sprite_guard_tl_4 }      meta_guard;      (<- sub_C4E0)
+  $CDA2 struct ... { something_character_related, sprite_dog_tl_4 }        meta_dog;        (<- sub_C4E0)
+  $CDA6 struct ... { something_character_related, sprite_prisoner_tl_4 }   meta_prisoner;   (<- sub_C4E0)
+
+; ------------------------------------------------------------------------------
+
+b $CDAA unk_CDAA (<- called_from_main_loop_9)
+
+; ------------------------------------------------------------------------------
 
 c $DB9E called_from_main_loop_8
 
