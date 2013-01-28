@@ -1534,7 +1534,27 @@ b $78D6 four byte structs (<- sub 69DC)
 
 b $7AC6 unk_7AC6, 3 bytes long (<- solitary)
 
+; ------------------------------------------------------------------------------
+
 w $7B16 item actions jump table
+  $7B16 action_wiresnips
+  $7B18 action_shovel          
+  $7B1A action_lockpick        
+  $7B1C action_papers          
+  $7B1E -                      
+  $7B20 action_bribe           
+  $7B22 action_uniform         
+  $7B24 -                      
+  $7B26 action_poison          
+  $7B28 action_red_key         
+  $7B2A action_yellow_key      
+  $7B2C action_green_key       
+  $7B2E action_red_cross_parcel
+  $7B30 -
+  $7B32 -
+  $7B34 -
+
+; ------------------------------------------------------------------------------
 
 b $7CFC message buffer stuff
 B $7CFC message buffer (two starting slack bytes?)
