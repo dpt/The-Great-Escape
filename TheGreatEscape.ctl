@@ -2039,32 +2039,39 @@ c $6920 tunnel_related -- probably when emerging from tunnel -- this is resettin
 ; ------------------------------------------------------------------------------
 
 c $6939 setup_movable_items
+  $6939 calledby_setup_movable_items();
   $693C A = indoor_room_index;
-  $693F if (A != room_2_hut2left) goto not_stove1;
-  $6944 setup_stove1();
-  $6947 goto item_setup;
-  $6949 not_stove1: if (A != room_4_hut3left) goto not_stove2;
-  $694E setup_stove2();
-  $6951 goto item_setup;
-  $6953 not_stove2: if (A != room_9_crate) goto item_setup;
-  $6958 setup_crate();
-  $695B item_setup: called_from_main_loop_7();
+  $693F      if (A == room_2_hut2left) setup_stove1();
+  $6949 else if (A == room_4_hut3left) setup_stove2();
+  $6953 else if (A == room_9_crate)    setup_crate();
+  $695B called_from_main_loop_7();
   $695E called_from_main_loop_8();
   $6961 called_from_main_loop_9();
   $6964 called_from_main_loop_10();
   $6967 called_from_main_loop_11();
-
-; ------------------------------------------------------------------------------
-
-c $696A setup_crate
-
-; ------------------------------------------------------------------------------
-
-c $6971 setup_stove2
-
-; ------------------------------------------------------------------------------
-
-c $6978 setup_stove1
+;
+  $696A setup_crate
+  $696A HL = &crate;
+  $696D A = 28;
+  $696F goto setup_movable_items;
+;
+  $6971 setup_stove2
+  $6971 HL = &stove2;
+  $6974 A = 27;
+  $6976 goto setup_movable_items;
+;
+  $6978 setup_stove1
+  $6978 HL = &stove1;
+  $697B A = 26; // then fallthrough to...
+;
+  $697D setup_movable_items: (overlap.$8020) = A;
+  $6980 BC = 9;
+  $6983 DE = ...;
+  $6986 memcpy ...;
+;
+  $6988 ...
+;
+  $699F return;
 
 ; ------------------------------------------------------------------------------
 
