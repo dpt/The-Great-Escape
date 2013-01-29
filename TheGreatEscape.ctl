@@ -2931,9 +2931,14 @@ c $CCAB sub_CCAB -- searches for a character (0x14) and something else, sets a f
 
 ; ------------------------------------------------------------------------------
 
-c $CCCD sub_CCCD -- walks item_characterstructs. ignores green key and food items. may decide which items are 'found'.
+c $CCCD sub_CCCD -- walks item_characterstructs. 
+D $CCCD This ignores green key and food items. may decide which items are 'found'.
 
-c $CCFB sub_CCFB -- walks item_characterstructs. ignores red cross parcel. may decide which items are 'found'.
+; ------------------------------------------------------------------------------
+
+c $CCFB sub_CCFB -- walks item_characterstructs. 
+D $CCFB This ignores red cross parcel. may decide which items are 'found'.
+
 ; ------------------------------------------------------------------------------
 
 c $CD31 item_discovered
