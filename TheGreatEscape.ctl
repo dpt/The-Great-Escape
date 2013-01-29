@@ -1579,8 +1579,14 @@ b $81B4 byte_81B4
 b $81B5 map position related 1
 b $81B6 map position related 2
 b $81B7 byte_81B7
-b $81B8 byte_81B8
-b $81B9 wiresnips_related
+
+; ------------------------------------------------------------------------------
+
+b $81B8 player_map_position_perhapsX
+b $81B9 player_map_position_perhapsY
+
+; ------------------------------------------------------------------------------
+
 b $81BA mystery byte
 w $81BB map_position_maybe
 b $81BD byte_81BD (<- nighttime, something_then_decrease_morale)
