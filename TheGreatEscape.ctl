@@ -2196,19 +2196,19 @@ R $7D15 C ...
 ; ------------------------------------------------------------------------------
 
 c $7D2F plot_glyph
-R $7D2F HL Pointer to glyph.
-R $7D2F DE Pointer to destination.
-  $7D2F a = *hl;
+R $7D2F HL Pointer to glyph. (Preserved)
+R $7D2F DE Pointer to destination. (Updated to point to next character)
+  $7D2F A = *HL;
   $7D30 ...
-  $7D31 hl = a * 8;
-  $7D37 bc = bitmap_font;
-  $7D3A hl += bc;
+  $7D31 HL = A * 8;
+  $7D37 BC = bitmap_font;
+  $7D3A HL += BC;
   $7D3C 8 iterations.
-  $7D3E do { *de = *hl;
-  $7D40 d++; // i.e. de += 256;
-  $7D41 hl++;
-  $7D42 } while (--b);
-  $7D44 de++;
+  $7D3E do { *DE = *HL;
+  $7D40 D++; // i.e. DE += 256;
+  $7D41 HL++;
+  $7D42 } while (--B);
+  $7D44 DE++;
   $7D47 return;
 
 ; ------------------------------------------------------------------------------
