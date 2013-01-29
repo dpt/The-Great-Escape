@@ -2365,7 +2365,11 @@ c $A082 call_mystery_if_h_AND_7_is_zero
 
 ; ------------------------------------------------------------------------------
 
-c $A095 indoors-only delay loop
+c $A095 indoors_delay_loop
+D $A095 Delay loop called when the player is indoors.
+  $A095 BC = 0xFFF;
+  $A098 while (--BC) ;
+  $A09D return;
 
 ; ------------------------------------------------------------------------------
 
