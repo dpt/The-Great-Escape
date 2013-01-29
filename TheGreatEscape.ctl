@@ -2392,6 +2392,34 @@ D $A0F2 Increase morale by 5, score by 5.
   $A0F2 increase_morale(5);
   $A0F7 increase_score(5); return; // exit via
 
+; ------------------------------------------------------------------------------
+
+c $A0F9 increase_score
+D $A0F9 Increases the score then plots it.
+R $A0F9 B Amount to increase score by.
+  $A0F9 A = 10;
+  $A0FB HL = &score_digits + 4;
+  $A0FE do { tmp = HL;
+  $A0FF increment_score: *HL++;
+  $A100 if (*HL == A) { *HL-- = 0; goto increment_score; }
+  $A108 HL = tmp;
+  $A109 } while (--B);
+E $A0F9 FALL THROUGH into plot_score.
+
+; ------------------------------------------------------------------------------
+
+c $A10B plot_score
+D $A10B Draws the current score to screen.
+  $A10B HL = &score_digits;
+  $A10E DE = &score; // screen address of score
+  $A111 B = 5;
+  $A113 do {
+  $A114 plot_glyph(); // HL -> glyph, DE -> destination
+  $A117 HL++;
+  $A118 DE++;
+  $A119 ...
+  $A11A } while (--B);
+  $A11C return;
 
 ; ------------------------------------------------------------------------------
 
