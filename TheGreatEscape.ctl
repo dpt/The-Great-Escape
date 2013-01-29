@@ -2367,13 +2367,31 @@ c $A095 indoors-only delay loop
 
 c $A09E ring_bell
 
+; ------------------------------------------------------------------------------
+
 c $A0D2 increase_morale
+R $A0D2 B Amount to increase morale by. (Preserved)
+  $A0D2 A = morale + B;
+  $A0D6 if (A >= 0x70) A = 0x70; // MAX_MORALE = 0x70;
+  $A0DC set_morale_from_A: morale = A;
+  $A0DF return;
 
 c $A0E0 decrease_morale
+R $A0E0 B Amount to decrease morale by. (Preserved)
+  $A0E0 A = morale - B;
+  $A0E4 if (A < 0) A = 0; // MIN_MORALE = 0x00;
+  $A0E7 goto set_morale_from_A;
 
-c $A0E9 increase_morale_by_10,_score_by_50
+c $A0E9 increase_morale_by_10_score_by_50
+D $A0E9 Increase morale by 10, score by 50.
+  $A0E9 increase_morale(10);
+  $A0EE increase_score(50); return; // exit via
 
 c $A0F2 increase_morale_by_5
+D $A0F2 Increase morale by 5, score by 5.
+  $A0F2 increase_morale(5);
+  $A0F7 increase_score(5); return; // exit via
+
 
 ; ------------------------------------------------------------------------------
 
