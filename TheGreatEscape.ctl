@@ -2346,7 +2346,20 @@ c $9F21 in_permitted_area [unsure] -- could be as general as bounds detection
 
 c $A035 wave_morale_flag
 
+; ------------------------------------------------------------------------------
+
 c $A071 set_morale_flag_screen_attributes
+R $A071 A Attributes to use.
+  $A071 HL = $5842; // first attribute byte
+  $A074 DE = $001E; // skip
+  $A077 B  = $13;
+  $A079 loop: *HL++ = A; 
+  $A07B *HL++ = A;
+  $A07E HL += DE;
+  $A07F B--; if (B) goto loop:
+  $A081 return;
+
+; ------------------------------------------------------------------------------
 
 c $A082 call_mystery_if_h_AND_7_is_zero
 
