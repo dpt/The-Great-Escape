@@ -2920,7 +2920,16 @@ c $CC37 guards_follow_suspicious_player
 
 ; ------------------------------------------------------------------------------
 
-c $CCAB sub_CCAB
+c $CCAB sub_CCAB -- searches for a character (0x14) and something else, sets a flag
+  $CCAB HL = (overlap.$8020);
+  $CCB1 B  = 7;  // iterations
+  $CCB3 loop: ...
+  $CCB4 if (HL[0] < 0x14 && HL[19] < 0x20) HL[0] = 1; // set the flag [unknown]
+  $CCC9 HL += 32; // step to next element
+  $CCCA B--; if (B) goto loop;
+  $CCCC return;
+
+; ------------------------------------------------------------------------------
 
 c $CCCD sub_CCCD -- walks item_characterstructs. ignores green key and food items. may decide which items are 'found'.
 
