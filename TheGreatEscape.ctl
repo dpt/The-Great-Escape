@@ -2791,6 +2791,15 @@ c $B3E1 action_uniform
 ; -----------------------------------------------------------------------------
 
 c $B3F6 action_shovel
+D $B3F6 Player has tried to use the shovel item.
+  $B3F6 if (indoor_room_index != room_50_blocked_tunnel) return;
+  $B3FC if (roomdefn_50_blockage == 255) return; // blockage already cleared
+  $B402 roomdefn_50_blockage = 255;
+  $B407 roomdefn_50_collapsed_tunnel_obj = 0; // remove blockage graphic
+  $B40B select_room_maybe();
+  $B40E choose_game_screen_attributes();
+  $B411 plot_indoor_tiles();
+  $B414 increase_morale_by_10_score_by_50(); return; // exit via
 
 ; -----------------------------------------------------------------------------
 
