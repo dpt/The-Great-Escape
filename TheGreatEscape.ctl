@@ -2028,7 +2028,7 @@ u $EFFB UNUSED?
 ; w $8018 -- points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A -- points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
 ; b $801C -- cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by sub_68A2 -- looks like a room index!
-; ? $8020 -- character reset data? (<- calledby_setup_movable_items)
+; ? $8020 -- character reset data? (<- calledby_setup_movable_items) suspect 7 sets of 32 bytes (one per prisoner) possibly visible characters only? can there be >7 characters on-screen/visible at once? or is it prisoners only?
 
 ; ------------------------------------------------------------------------------
 
@@ -2804,11 +2804,51 @@ D $B3F6 Player has tried to use the shovel item.
 ; -----------------------------------------------------------------------------
 
 c $B417 action_wiresnips
-  $B417 ...
-  $B466 A = 4; goto action_wiresnips_tail;
-  $B466 A = 5; goto action_wiresnips_tail;
-  $B46A A = 6; goto action_wiresnips_tail;
-  $B46E A = 7;
+  $B417 HL = wiresnips_related_table + 3;
+  $B41A DE = player_map_position_perhapsY
+  $B41D B = 4; // iterations
+  $B41F loop: ...
+  $B420 A = (DE);
+  $B421 if (A >= (HL)) goto continue;
+  $B424 HL--;
+  $B425 if (A < (HL)) goto continue;
+  $B428 DE--; // player_map_position_perhapsX
+  $B429 A = (DE);
+  $B42A HL--;
+  $B42B if (A == (HL)) goto set_to_4;
+  $B42E A--;
+  $B42F if (A == (HL)) goto set_to_6;
+  $B432 DE++; // reset to Y
+  $B433 continue: ...
+  $B434 HL += 6; // array stride
+  $B43B B--; if (B) goto loop; // djnz
+;
+  $B43D DE--; // player_map_position_perhapsX
+  $B43E HL -= 3; // pointing to $B59E
+  $B441 B = 3; // iterations
+  $B443 loop2: ...
+  $B444 A = (DE);
+  $B445 if (A < (HL)) goto continue2;
+  $B448 HL++;
+  $B449 if (A >= (HL)) goto continue2;
+  $B44C DE++;
+  $B44D A = (DE);
+  $B44E HL++;
+  $B44F if (A == (HL)) goto set_to_5;
+  $B452 A--;
+  $B453 if (A == (HL)) goto set_to_7;
+  $B456 DE--;
+  $B457 continue2: ...
+  $B458 HL += 6; // array stride
+  $B45F B--; if (B) goto loop2; // djnz
+  $B461 return;
+;
+; i can see the first 7 entries in the table are used, but what about the remaining 5?
+;
+  $B466 set_to_4: A = 4; goto action_wiresnips_tail;
+  $B466 set_to_5: A = 5; goto action_wiresnips_tail;
+  $B46A set_to_6: A = 6; goto action_wiresnips_tail;
+  $B46E set_to_7: A = 7;
   $B470 action_wiresnips_tail: ...
   $B471 (overlap.$800E) = A;
   $B475 (overlap.$800D) = 0x80;
