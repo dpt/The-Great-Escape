@@ -2748,6 +2748,19 @@ D $B387 Player has tried to open the red cross parcel.
 ; -----------------------------------------------------------------------------
 
 c $B3A8 action_bribe
+D $B3A8 Player has tried to bribe a prisoner.
+D $B3A8 I suspect this searches visible characters only.
+  $B3A8 HL = (overlap.$8020);
+  $B3AB B = 7; // 7 iterations
+  $B3AD do { A = *HL;
+  $B3AE if ((A != 255) && (A >= 20)) goto found;
+  $B3B6 HL += 32; // sizeof a character struct
+  $B3BA } while (--B);
+  $B3BC return;
+  $B3BD found: bribe_related = A;
+  $B3C0 L++;
+  $B3C1 *HL = 1;
+  $B3C3 return;
 
 ; -----------------------------------------------------------------------------
 
