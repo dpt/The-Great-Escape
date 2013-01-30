@@ -2155,6 +2155,8 @@ c $7B8B drop_item
   $7BAE choose_game_screen_attributes();
   $7BB1 set_game_screen_attributes();
   $7BB4 ...
+  $7BB5 box_opening_maybe:
+  $7BB8 ...
   $7BE3 return;
   $7BE4 ...
   $7C25 return;
@@ -2731,6 +2733,17 @@ c $B32D indoors [unsure]
 ; -----------------------------------------------------------------------------
 
 c $B387 action_red_cross_parcel
+D $B387 Player has tried to open the red cross parcel.
+  $B387 ...
+  $B38C HL = &items_held;
+  $B38F A = item_RED_CROSS_PARCEL;
+  $B391 if (*HL != A) HL++;
+  $B395 *HL = item_NONE; // no longer have parcel (we assume one slot or the other has it)
+  $B397 draw_all_items();
+  $B39A A = red_cross_parcel_current_contents;
+  $B39D box_opening_maybe();
+  $B3A0 queue_message_for_display(message_YOU_OPEN_THE_BOX);
+  $B3A5 increase_morale_by_10_score_by_50(); return; // exit via
 
 ; -----------------------------------------------------------------------------
 
