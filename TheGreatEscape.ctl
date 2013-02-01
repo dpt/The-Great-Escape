@@ -2028,7 +2028,7 @@ u $EFFB UNUSED?
 
 ; game state which overlaps with tiles etc.
 ;
-; vars referenced as (overlap.$8015)
+; vars referenced as $8015 etc.
 
 ; b $8000 -- never written?
 ; b $8001 -- flags: bit 6 gets toggled in set_target_location /  bit 0: picking lock /  bit 1: cutting wire
@@ -2059,7 +2059,7 @@ u $EFFB UNUSED?
 
 c $68A2 sub_68A2 -- looks like it's resetting stuff
   $68A2 ...
-  $68DA A = overlap.$801C; (room index thing)
+  $68DA A = $801C; (room index thing)
   $68DD indoor_room_index = A;
   $68E0 if (A != 0) goto some_sort_of_initial_setup_maybe;
   $68E4 ...
@@ -2073,7 +2073,7 @@ c $6920 tunnel_related -- probably when emerging from tunnel -- this is resettin
   $6926 A = indoor_room_index;
   $6929 if (A < room_29_secondtunnelstart) goto not_in_a_tunnel;
   $692D ...
-  $692F (overlap.$8015) = sprite_prisoner_tl_4;
+  $692F $8015 = sprite_prisoner_tl_4;
   $6935 return;
   $6936 not_in_a_tunnel: ...
   $6938 return;
@@ -2106,7 +2106,7 @@ c $6939 setup_movable_items
   $6978 HL = &stove1;
   $697B A = 26; // then fallthrough to...
 ;
-  $697D setup_movable_items: (overlap.$8020) = A;
+  $697D setup_movable_items: $8020 = A;
   $6980 BC = 9;
   $6983 DE = ...;
   $6986 memcpy ...;
@@ -2158,7 +2158,7 @@ c $7B36 pick_up_item
 c $7B8B drop_item
   $7B8B A = (items_held)
   $7B8E if (A == item_NONE) return;
-  $7B91 if (A == item_UNIFORM) (overlap.$8015) = sprite_prisoner_tl_4;
+  $7B91 if (A == item_UNIFORM) $8015 = sprite_prisoner_tl_4;
   $7B9C ...
   $7B9D HL = items_held + 1 (item slot B)
   $7BA0 A = (HL)
@@ -2344,9 +2344,9 @@ c $9DE5 check for 'game cancel' keypress
 
 c $9E07 process_user_input
   $9E07 if (morale_related) return; // inhibits user control when morale hits zero
-  $9E0E if ((overlap.$8001 & 3) == 0) goto not_picking_lock_or_cutting_wire;
+  $9E0E if (($8001 & 3) == 0) goto not_picking_lock_or_cutting_wire;
   $9E15 morale_related_also = 31;
-  $9E1A if (overlap.$8001 == 1) goto picking_a_lock;
+  $9E1A if ($8001 == 1) goto picking_a_lock;
   $9E1F wire_snipped(); return; // exit via
   $9E22 not_picking_lock_or_cutting_wire: input_routine(); // lives at same address as counter_of_something
   $9E25 HL = &morale_related_also; 
@@ -2379,7 +2379,7 @@ c $9E98 picking_a_lock -- locks user out until lock is picked
   $9E98 if (user_locked_out_until != game_counter) return;
   $9EA0 *ptr_to_door_being_lockpicked &= ~(1 << 7); // unlock
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
-  $9EAA clear_lockpick_wirecut_flags_and_return: (overlap.$8001) &= ~3; // clear lock picking and wire snipping flags
+  $9EAA clear_lockpick_wirecut_flags_and_return: $8001 &= ~3; // clear lock picking and wire snipping flags
   $9EB1 return;
 
 ; ------------------------------------------------------------------------------
@@ -2398,7 +2398,7 @@ c $9EB2 wire_snipped -- locks user out until wire is snipped
 
 ; ------------------------------------------------------------------------------
 
-b $9EE0 Indexed by overlap.$800E.
+b $9EE0 Indexed by $800E.
 
 ; ------------------------------------------------------------------------------
 
@@ -2847,7 +2847,7 @@ D $B387 Player has tried to open the red cross parcel.
 c $B3A8 action_bribe
 D $B3A8 Player has tried to bribe a prisoner.
 D $B3A8 I suspect this searches visible characters only.
-  $B3A8 HL = (overlap.$8020);
+  $B3A8 HL = $8020;
   $B3AB B = 7; // 7 iterations
   $B3AD do { A = *HL;
   $B3AE if ((A != 255) && (A >= 20)) goto found;
@@ -2879,7 +2879,7 @@ c $B3C4 action_poison
 ; -----------------------------------------------------------------------------
 
 c $B3E1 action_uniform
-  $B3E1 HL = (overlap.$8015);
+  $B3E1 HL = $8015;
   $B3E4 DE = sprite_guard_...;
   $B3E7 A = (HL);
   $B3E8 if (.. cheap equality test ..) return;
@@ -2947,11 +2947,11 @@ c $B417 action_wiresnips
   $B46A set_to_6: A = 6; goto action_wiresnips_tail;
   $B46E set_to_7: A = 7;
   $B470 action_wiresnips_tail: ...
-  $B471 (overlap.$800E) = A;
-  $B475 (overlap.$800D) = 0x80;
-  $B478 (overlap.$8001) = 2;
-  $B47D (overlap.$8013) = 12;
-  $B482 (overlap.$8015) = sprite_prisoner_tl_4;
+  $B471 $800E = A;
+  $B475 $800D = 0x80;
+  $B478 $8001 = 2;
+  $B47D $8013 = 12;
+  $B482 $8015 = sprite_prisoner_tl_4;
   $B488 user_locked_out_until = game_counter + 96;
   $B490 queue_message_for_display(message_CUTTING_THE_WIRE);
 
@@ -2989,7 +2989,7 @@ c $B71B reset_something
 
 c $B75A looks_like_a_reset_function [unsure]
   $B75A ...
-  $B789 (overlap.$8015) = sprite_prisoner_tl_4;
+  $B789 $8015 = sprite_prisoner_tl_4;
   $B78F ...
   $B79A return;
 
@@ -3086,20 +3086,20 @@ c $CB85 increment_word_C41A_low_byte_wrapping_at_15
 
 c $CB98 solitary
   $CC16 ...
-  $CC19 (overlap.$8015) = sprite_prisoner_tl_4;
+  $CC19 $8015 = sprite_prisoner_tl_4;
   $CC1F ...
 
 ; ------------------------------------------------------------------------------
 
 c $CC37 guards_follow_suspicious_player
   $CC37 ...
-  $CC3E if (*overlap.$8015) == sprite_guard_tl_4 return;  // don't follow the player if he's dressed as a guard
+  $CC3E if (*$8015 == sprite_guard_tl_4) return;  // don't follow the player if he's dressed as a guard
   $CC46 ...
 
 ; ------------------------------------------------------------------------------
 
 c $CCAB sub_CCAB -- searches for a character (0x14) and something else, sets a flag
-  $CCAB HL = (overlap.$8020);
+  $CCAB HL = $8020;
   $CCB1 B  = 7;  // iterations
   $CCB3 loop: ...
   $CCB4 if (HL[0] < 0x14 && HL[19] < 0x20) HL[0] = 1; // set the flag [unknown]
@@ -3211,9 +3211,9 @@ c $EF9A event_roll_call
 
 c $EFCB action_papers
   $EFCB [range checking business x in (0x69..0x6D) and y in (0x49..0x4B)]
-  $EFDE if ((*overlap.$8015) != sprite_guard_tl_4) goto solitary; // using the papers at the main gate when not in uniform => get sent to solitary
+  $EFDE if (*$8015 != sprite_guard_tl_4) goto solitary; // using the papers at the main gate when not in uniform => get sent to solitary
   $EFE8 increase_morale_by_10_score_by_50
-  $EFEB (overlap.$801C) = 0; // clear stored room index?
+  $EFEB $801C = 0; // clear stored room index?
   $EFEF ... must be a transition to outside the gate ...
 W $EFF9 word_EFF9 (<- action_papers)
 
