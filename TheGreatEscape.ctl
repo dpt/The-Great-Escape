@@ -2372,11 +2372,11 @@ c $9E5C user_input_was_in_bed_perhaps
 
 ; ------------------------------------------------------------------------------
 
-c $9E98 lock_picked -- locks user out until lock is picked
+c $9E98 picking_a_lock -- locks user out until lock is picked
   $9E98 if (user_locked_out_until != game_counter) return;
   $9EA0 *ptr_to_door_being_lockpicked &= ~(1 << 7); // unlock
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
-  $9EAA clear_lockpick_wirecut_flags_and_return: clear bottom two bits of $8001
+  $9EAA clear_lockpick_wirecut_flags_and_return: (overlap.$8001) &= ~3; // clear lock picking and wire snipping flags
   $9EB1 return;
 
 ; ------------------------------------------------------------------------------
@@ -2387,7 +2387,8 @@ c $9EB2 wire_snipped -- locks user out until wire is snipped
   $9EBB if (A >= 4) return;
   $9EBE $800D = table_9EE0[$800E & 3];
   $9ECF return;
-  $9ED0 wire_successfully_snipped: $800E = A & 3;
+;
+  $9ED0 wire_successfully_snipped: $800E = A & 3; // walk/crawl flag?
   $9ED6 $800D = 0x80;
   $9ED9 $8013 = 0x18;
   $9EDE goto clear_lockpick_wirecut_flags_and_return;
