@@ -2296,9 +2296,9 @@ D $7D99 Looks like message_buffer is poked with the index of the message to disp
 
 ; ------------------------------------------------------------------------------
 
-c $9D78 main_loop
+c $9D78 main_loop_setup
   $9D78 some_sort_of_initial_setup_maybe();
-  $9D7B for (;;) { check_morale();
+  $9D7B main_loop: for (;;) { check_morale();
   $9D7E keyscan_game_cancel();
   $9D81 message_timer();
   $9D84 process_user_input();
@@ -3233,7 +3233,7 @@ c $F163 main
   $F17A menu_screen();
   $F17D [unknown]
   $F1C3 looks_like_a_reset_fn();
-  $F1C6 goto pre_main;
+  $F1C6 goto main_loop_setup;
 
 ; ------------------------------------------------------------------------------
 
