@@ -1638,7 +1638,14 @@ B $9768,8 empty tile (<- plot_indoor_tiles, sub_BCAA)
 ; ------------------------------------------------------------------------------
 
 b $A12F game_counter: counts 00..FF then wraps.
+
+; ------------------------------------------------------------------------------
+
 b $A130 bell
+D $A130 0 => ring indefinitely; 255 => don't ring; N => ring for N calls
+
+; ------------------------------------------------------------------------------
+
 b $A131 mystery byte
 b $A132 score_digits
 b $A137 byte_A137
@@ -2446,6 +2453,28 @@ D $A095 Delay loop called when the player is indoors.
 ; ------------------------------------------------------------------------------
 
 c $A09E ring_bell
+D $A09E Ring the alarm bell.
+D $A09E Called three times from main_loop.
+  $A09E HL = &bell;
+  $A0A1 A = *HL;
+  $A0A2 if (A == 255) return; // not ringing
+  $A0A5 if (A == 0) goto ring_a_ding_ding; // 0 => perpetual ringing
+  $A0A8 *HL = --A;
+  $A0AA if (A != 0) goto ring_a_ding_ding;
+  $A0AC *HL = 255; // counter hit zero - stop ringing
+  $A0AF return;
+;
+  $A0B0 ring_a_ding_ding: A = screenaddr_bell_ringer; // fetch visible state of bell
+  $A0B3 if (A == 63) goto plot_ringer_off; // toggle
+  $A0B8 goto plot_ringer_on; // note: redundant jump
+;
+  $A0BB plot_ringer_on: DE = bell_ringer_bitmap_on;
+  $A0BE plot_ringer();
+  $A0C1 play_speaker(sound_BELL_RINGER); // args=BC
+;
+  $A0C6 plot_ringer_off: DE = bell_ringer_bitmap_off;
+  $A0C9 plot_ringer: HL = screenaddr_bell_ringer;
+  $A0CC plot_bitmap(0x010C) // dimensions: 8 x 12 // args=BC // exit via
 
 ; ------------------------------------------------------------------------------
 
