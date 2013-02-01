@@ -863,7 +863,7 @@ c $A5BF screenlocstring_plot
 
 ; Messages - messages printed at the bottom of the screen when things happen.
 ;
-b $7DCD Messages (non-ASCII: encoded to match the font; FF terminated).
+b $7DCD messages_table (non-ASCII: encoded to match the font; FF terminated).
 W $7DCD Array of pointers to messages.
 D $7DF5 "MISSED ROLL CALL"
 B $7DF5 #CALL:decode_stringFF($7DF5)
@@ -1557,11 +1557,19 @@ w $7B16 item actions jump table
 ; ------------------------------------------------------------------------------
 
 b $7CFC message buffer stuff
-B $7CFC message buffer (two starting slack bytes?)
+
+B $7CFC message_buffer
+
 B $7D0F message_display_counter
+
 B $7D10 message_display_index
+D $7D10 If 128 then shunt_buffer_back_by_two. If > 128 then wipe message. Else ?
+
 W $7D11 message_buffer_pointer
+
 W $7D13 current_message_character
+
+; ------------------------------------------------------------------------------
 
 b $81A3 mystery byte
 
@@ -2209,11 +2217,11 @@ R $7D2F   DE Pointer to destination.
 R $7D2F O:HL Preserved.
 R $7D2F   DE Points to next character.
   $7D2F A = *HL;
-  $7D30 ...
+  $7D30 plot_single_glyph: ...
   $7D31 HL = A * 8;
   $7D37 BC = bitmap_font;
   $7D3A HL += BC;
-  $7D3C 8 iterations.
+  $7D3C B = 8; // 8 iterations
   $7D3E do { *DE = *HL;
   $7D40 D++; // i.e. DE += 256;
   $7D41 HL++;
@@ -2223,7 +2231,61 @@ R $7D2F   DE Points to next character.
 
 ; ------------------------------------------------------------------------------
 
-c $7D48 message_timer
+c $7D48 message_display
+  $7D48 if (message_display_counter == 0) goto draw_message; // exit via
+  $7D50 message_display_counter--;
+  $7D53 return;
+;
+  $7D54 A = message_display_index;
+  $7D57 if (A == 128) goto shunt_buffer_back_by_two;
+  $7D5B else if (A > 128) goto wipe_message;
+  $7D5D HL = current_message_character;
+  $7D60 DE = screen_text_start_address;
+  $7D63 DE |= A;
+  $7D65 plot_glyph();
+  $7D68 A = E;
+  $7D69 A = A & 31;
+  $7D6B message_display_index = A;
+  $7D6E HL++; // msgptr++
+  $7D6F A = *HL;
+  $7D70 if (A != 255) goto nonzero;
+  $7D75 message_display_counter = 31; // leave the message for 31 turns
+  $7D7A message_display_index |= 128; // then wipe it
+  $7D82 return;
+;
+  $7D83 nonzero: current_message_character = HL;
+  $7D86 return;
+
+; ------------------------------------------------------------------------------
+
+c $7D87 wipe_message
+  $7D87 A = message_display_index;
+  $7D8A message_display_index = --A;
+  $7D8E DE = screen_text_start_address;
+  $7D91 DE |= A;
+  $7D93 plot_single_glyph(35); // plot a SPACE character
+  $7D98 return;
+
+; ------------------------------------------------------------------------------
+
+c $7D99 shunt_buffer_back_by_two
+D $7D99 Looks like message_buffer is poked with the index of the message to display...
+  $7D99 HL = message_buffer_pointer;
+  $7D9C DE = &message_buffer;
+  $7D9F if (L == E) return; // cheap test
+;
+  $7DA2 swap(DE, HL);
+  $7DA3 A = *HL++;
+  $7DA5 C = *HL; // I don't understand why C is loaded here.
+  $7DA6 HL = &messages_table[A];
+  $7DAE E = *HL++;
+  $7DB0 D = *HL; // DE = messages_table[A]
+  $7DB1 swap(DE, HL);
+  $7DB2 current_message_character = HL;
+  $7DB5 memmove(message_buffer_slack, message_buffer, 16);
+  $7DC0 message_buffer_pointer -= 2;
+  $7DC8 message_display_index = 0;
+  $7DCC return;
 
 ; ------------------------------------------------------------------------------
 
