@@ -2337,21 +2337,24 @@ c $9DCF check_morale (<- main_loop)
 c $9DE5 check for 'game cancel' keypress
   $9DE5 if (!shift_pressed) return;
   $9DED if (!space_pressed) return;
-  $9DF4 screen_reset_perhaps() user_confirm() if (confirmed) looks_like_a_reset_fn()
-  $9DFD if (indoor_room_index == 0) loc_B2FC(); else some_sort_of_initial_setup_maybe();
+  $9DF4 screen_reset_perhaps(); user_confirm(); if (confirmed) looks_like_a_reset_fn();
+  $9DFD if (indoor_room_index == 0) loc_B2FC(); else some_sort_of_initial_setup_maybe(); // exit via
 
 ; ------------------------------------------------------------------------------
 
 c $9E07 process_user_input
   $9E07 if (morale_related) return; // inhibits user control when morale hits zero
-  $9E0E if (($8001 & 3) == 0) goto zero_flags;
+  $9E0E if ((overlap.$8001 & 3) == 0) goto not_picking_lock_or_cutting_wire;
   $9E15 morale_related_also = 31;
-  $9E1A if ($8001 == 1) goto lock_picked;
-  $9E1F goto wire_snipped;
-  $9E22 zero_flags: input_routine(); // lives at same address as counter_of_something
-  $9E25 hl = &morale_related_also; if (? != 0) goto user_input_super(hl);
+  $9E1A if (overlap.$8001 == 1) goto picking_a_lock;
+  $9E1F wire_snipped(); return; // exit via
+  $9E22 not_picking_lock_or_cutting_wire: input_routine(); // lives at same address as counter_of_something
+  $9E25 HL = &morale_related_also; 
+  $9E2A if (? != 0) goto user_input_super(HL);
   $9E2D if (morale_related_also == 0) return;
-  $9E30 morale_related_also--; a = 0; goto user_input_fire_not_pressed;
+  $9E30 morale_related_also--; 
+  $9E31 A = 0; 
+  $9E32 goto user_input_fire_not_pressed;
 
 ; ------------------------------------------------------------------------------
 
