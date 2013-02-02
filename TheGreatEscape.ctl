@@ -1650,7 +1650,7 @@ D $A130 0 => ring indefinitely; 255 => don't ring; N => ring for N calls
 
 b $A131 mystery byte
 b $A132 score_digits
-b $A137 byte_A137
+b $A137 breakfast_related
 b $A138 naughty_flag_perhaps
 b $A139 morale_related_also
 b $A13A morale_related
@@ -2038,9 +2038,9 @@ u $EFFB UNUSED?
 ; w $8004 -- (<- user_input_was_in_bed_perhaps)
 ; b $800D -- tunnel related (<- process_user_input, wire_snipped, user_input_was_in_bed_perhaps) assigned from table at 9EE0
 ; b $800E -- tunnel related, walk/crawl flag maybe? (bottom 2 bits index $9EE0)
-; w $800F --
-; w $8011 --
-; b $8013 -- set to 24 in user_input_was_in_bed_perhaps
+; w $800F -- position on Y axis (along the line of - bottom right to top left of screen) (set by user_input_super)
+; w $8011 -- position on X axis (along the line of - bottom left to top right of screen) (set by user_input_super)  i think this might be relative to the current size of the map. each step seems to be two pixels.
+; b $8013 -- character's vertical offset // set to 24 in user_input_was_in_bed_perhaps, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), no_idea ($B8DE), sub_E420 ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)
 ; w $8015 -- pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; w $8018 -- points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A -- points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
@@ -2362,23 +2362,44 @@ c $9E07 process_user_input
 ; ------------------------------------------------------------------------------
 
 c $9E34 user_input_super
+R $9E34 I:HL Points to ?
+  $9E34 *HL = 31;
+  $9E36 ... (push af) ...
+  $9E37 if (bed_related != 0) goto user_input_was_in_bed_perhaps;
+  $9E3D if (breakfast_related != 0) goto user_input_was_having_breakfast_perhaps;
+  $9E43 (word) $8002 = 0x002B; // ?
+  $9E49 (word) $800F = 0x0034; // set Y pos
+  $9E4E (word) $8011 = 0x003E; // set X pos
+  $9E52 bench_G = object_EMPTY_BENCH;
+  $9E57 HL = breakfast_related;
+  $9E5A goto user_input_another_entry_point;
 
 ; ------------------------------------------------------------------------------
 
 c $9E5C user_input_was_in_bed_perhaps
-  $9E5C ...
+  $9E5C (word) $8002 = 0x012C; // ?
+  $9E62 (word) $8004 = 0x2E2E; // another position?
+  $9E68 (word) $800F = 0x002E; // set Y pos
+  $9E6D (word) $8011 = 0x002E; // set X pos
+  $9E70 $8013 = 24; // set vertical offset
   $9E75 player_bed = object_EMPTY_BED;
-  $9E7A ...
-  $9E7D user_input_another_entry_point
-  $9E85 user_input_A137_was_zero
+  $9E7A HL = &bed_related;
+;
+  $9E7D user_input_another_entry_point: *HL = 0;
+  $9E7F select_room_maybe();
+  $9E82 plot_indoor_tiles();
+  $9E85 user_input_was_having_breakfast_perhaps: ... (pop af -- restores user input value stored at $9E36)
+  $9E86 if (A < input_FIRE) goto user_input_fire_not_pressed;
+  $9E8A check_for_pick_up_keypress();
   $9E8D A = 0x80;
-  $9E8F user_input_fire_not_pressed: if ($800D == A) return;
+  $9E8F user_input_fire_not_pressed: if (*$800D == A) return; // tunnel related?
   $9E94 $800D = A | 0x80;
   $9E97 return;
 
 ; ------------------------------------------------------------------------------
 
-c $9E98 picking_a_lock -- locks user out until lock is picked
+c $9E98 picking_a_lock 
+D $9E98 Locks user out until lock is picked.
   $9E98 if (user_locked_out_until != game_counter) return;
   $9EA0 *ptr_to_door_being_lockpicked &= ~(1 << 7); // unlock
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
@@ -2396,7 +2417,7 @@ c $9EB2 wire_snipped -- locks user out until wire is snipped
 ;
   $9ED0 wire_successfully_snipped: $800E = A & 3; // walk/crawl flag?
   $9ED6 $800D = 0x80;
-  $9ED9 $8013 = 0x18;
+  $9ED9 $8013 = 24; // set vertical offset
   $9EDE goto clear_lockpick_wirecut_flags_and_return;
 
 ; ------------------------------------------------------------------------------
@@ -2953,7 +2974,7 @@ c $B417 action_wiresnips
   $B471 $800E = A;
   $B475 $800D = 0x80;
   $B478 $8001 = 2;
-  $B47D $8013 = 12;
+  $B47D $8013 = 12; // set vertical offset
   $B482 $8015 = sprite_prisoner_tl_4;
   $B488 user_locked_out_until = game_counter + 96;
   $B490 queue_message_for_display(message_CUTTING_THE_WIRE);
