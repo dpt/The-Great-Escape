@@ -10,8 +10,9 @@
 ;   ./skool2html.py TheGreatEscape.ref
 ;
 ; To create a snapshot which preserves the loading screen, breakpoint $F068 and
-; alter that to jump to itself. Save the snapshot in Z80 format. Use a hex
-; editor on the .z80 to restore the bytes to their former values (JP $F163).
+; alter that to jump to itself when the TZX has loaded. Save the snapshot in
+; Z80 format. Use a hex editor on the .z80 to restore the bytes to their former
+; values (JP $F163).
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; TODO
