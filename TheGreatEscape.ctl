@@ -382,10 +382,11 @@
 ; sound_DROP_ITEM = $3040
 
 ; ; enum input
-; input_UP = 0                  ; wrong, for now
-; input_DOWN = 1                  ; wrong, for now
-; input_LEFT = 2                  ; wrong, for now
-; input_RIGHT = 3                  ; wrong, for now
+; input_NONE = 0
+; input_UP = ?
+; input_DOWN = ?
+; input_LEFT = ?
+; input_RIGHT = ?
 ; input_FIRE = 9
 ; input_UP_FIRE = 10
 ; input_DOWN_FIRE = 11
@@ -2349,9 +2350,10 @@ c $9E07 process_user_input
   $9E15 morale_related_also = 31;
   $9E1A if ($8001 == 1) goto picking_a_lock;
   $9E1F wire_snipped(); return; // exit via
-  $9E22 not_picking_lock_or_cutting_wire: input_routine(); // lives at same address as counter_of_something
+;
+  $9E22 not_picking_lock_or_cutting_wire: A = input_routine(); // lives at same address as counter_of_something
   $9E25 HL = &morale_related_also; 
-  $9E2A if (? != 0) goto user_input_super(HL);
+  $9E2A if (A != input_NONE) goto user_input_super(HL);
   $9E2D if (morale_related_also == 0) return;
   $9E30 morale_related_also--; 
   $9E31 A = 0; 
