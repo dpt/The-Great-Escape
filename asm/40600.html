@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at 9E98</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="40626.html">9EB2</a></td>
 </tr>
 </table>
-<div class="description">9E98: lock_picked -- locks user out until lock is picked</div>
+<div class="description">9E98: picking_a_lock</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40455.html">9E07</a>.
+Locks user out until lock is picked.
 </div>
 </div>
 </td>
@@ -80,7 +80,7 @@ This entry point is used by the routine at <a class="link" href="40626.html">9EB
 <tr>
 <td class="label">9EAA</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment" rowspan="4">clear_lockpick_wirecut_flags_and_return: clear bottom two bits of $8001</td>
+<td class="comment" rowspan="4">clear_lockpick_wirecut_flags_and_return: $8001 &amp;= ~3; // clear lock picking and wire snipping flags</td>
 </tr>
 <tr>
 <td class="address"><a name="40621"></a>9EAD</td>

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at 9DE5</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="40455.html">9E07</a></td>
 </tr>
 </table>
-<div class="description">9DE5: check for 'game cancel' keypress</div>
+<div class="description">9DE5: keyscan_cancel</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Check for 'game cancel' keypress.
 </div>
 </div>
 </td>
@@ -69,7 +69,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="40436"></a>9DF4</td>
 <td class="instruction">CALL <a class="link" href="42251.html">$A50B</a></td>
-<td class="comment" rowspan="3">screen_reset_perhaps() user_confirm() if (confirmed) looks_like_a_reset_fn()</td>
+<td class="comment" rowspan="3">screen_reset_perhaps(); user_confirm(); if (confirmed) looks_like_a_reset_fn();</td>
 </tr>
 <tr>
 <td class="address"><a name="40439"></a>9DF7</td>
@@ -82,7 +82,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="40445"></a>9DFD</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">if (indoor_room_index == 0) loc_B2FC(); else some_sort_of_initial_setup_maybe();</td>
+<td class="comment" rowspan="4">if (indoor_room_index == 0) loc_B2FC(); else some_sort_of_initial_setup_maybe(); // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="40448"></a>9E00</td>

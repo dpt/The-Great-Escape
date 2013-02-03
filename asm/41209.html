@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A0F9</title>
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="41202.html">A0F2</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41209">Map</a></td>
+<td class="next">Next: <a class="link" href="41227.html">A10B</a></td>
+</tr>
+</table>
+<div class="description">A0F9: increase_score</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Increases the score then plots it.
+</div>
+</div>
+<table class="input">
+<tr>
+<td class="register">B</td>
+<td class="registerContents">Amount to increase score by.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="41209"></a>A0F9</td>
+<td class="instruction">LD A,$0A</td>
+<td class="comment">A = 10;</td>
+</tr>
+<tr>
+<td class="address"><a name="41211"></a>A0FB</td>
+<td class="instruction">LD HL,$A136</td>
+<td class="comment">HL = &amp;score_digits + 4;</td>
+</tr>
+<tr>
+<td class="label"><a name="41214"></a>A0FE</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment">do { tmp = HL;</td>
+</tr>
+<tr>
+<td class="label"><a name="41215"></a>A0FF</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment">increment_score: *HL++;</td>
+</tr>
+<tr>
+<td class="address"><a name="41216"></a>A100</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment" rowspan="5">if (*HL == A) { *HL-- = 0; goto increment_score; }</td>
+</tr>
+<tr>
+<td class="address"><a name="41217"></a>A101</td>
+<td class="instruction">JR NZ,$A108</td>
+</tr>
+<tr>
+<td class="address"><a name="41219"></a>A103</td>
+<td class="instruction">LD (HL),$00</td>
+</tr>
+<tr>
+<td class="address"><a name="41221"></a>A105</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="41222"></a>A106</td>
+<td class="instruction">JR $A0FF</td>
+</tr>
+<tr>
+<td class="label"><a name="41224"></a>A108</td>
+<td class="instruction">POP HL</td>
+<td class="comment">HL = tmp;</td>
+</tr>
+<tr>
+<td class="address"><a name="41225"></a>A109</td>
+<td class="instruction">DJNZ $A0FE</td>
+<td class="comment">} while (--B);</td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<div class="comments">
+<div class="paragraph">
+FALL THROUGH into plot_score.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="41202.html">A0F2</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41209">Map</a></td>
+<td class="next">Next: <a class="link" href="41227.html">A10B</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

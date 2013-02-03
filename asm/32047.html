@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at 7D2F</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="32072.html">7D48</a>, <a class="link" href="41202.html">A0F2</a>, <a class="link" href="42431.html">A5BF</a> and <a class="link" href="62288.html">F350</a>.
+Used by the routines at <a class="link" href="32072.html">7D48</a>, <a class="link" href="41227.html">A10B</a>, <a class="link" href="42431.html">A5BF</a> and <a class="link" href="62288.html">F350</a>.
 </div>
 </div>
 <table class="input">
@@ -40,19 +40,29 @@ Used by the routines at <a class="link" href="32072.html">7D48</a>, <a class="li
 <td class="registerContents">Pointer to destination.</td>
 </tr>
 </table>
+<table class="output">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Preserved.</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="registerContents">Points to next character.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="32047"></a>7D2F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">a = *hl;</td>
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
 <a name="32048"></a>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a class="link" href="32072.html">7D48</a>.
+This entry point is used by the routine at <a class="link" href="32135.html">7D87</a>.
 </div>
 </div>
 </td>
@@ -60,12 +70,12 @@ This entry point is used by the routine at <a class="link" href="32072.html">7D4
 <tr>
 <td class="label">7D30</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">...</td>
+<td class="comment">plot_single_glyph: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="32049"></a>7D31</td>
 <td class="instruction">LD L,A</td>
-<td class="comment" rowspan="5">hl = a * 8;</td>
+<td class="comment" rowspan="5">HL = A * 8;</td>
 </tr>
 <tr>
 <td class="address"><a name="32050"></a>7D32</td>
@@ -86,12 +96,12 @@ This entry point is used by the routine at <a class="link" href="32072.html">7D4
 <tr>
 <td class="address"><a name="32055"></a>7D37</td>
 <td class="instruction">LD BC,$A69E</td>
-<td class="comment">bc = bitmap_font;</td>
+<td class="comment">BC = bitmap_font;</td>
 </tr>
 <tr>
 <td class="address"><a name="32058"></a>7D3A</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment" rowspan="2">hl += bc;</td>
+<td class="comment" rowspan="2">HL += BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="32059"></a>7D3B</td>
@@ -100,12 +110,12 @@ This entry point is used by the routine at <a class="link" href="32072.html">7D4
 <tr>
 <td class="address"><a name="32060"></a>7D3C</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment">8 iterations.</td>
+<td class="comment">B = 8; // 8 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="32062"></a>7D3E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="5">do { *de = *hl; } d++; // i.e. de += 256; hl++; while (--b);</td>
+<td class="comment" rowspan="5">do { *DE = *HL; } D++; // i.e. DE += 256; HL++; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="32063"></a>7D3F</td>
@@ -126,7 +136,7 @@ This entry point is used by the routine at <a class="link" href="32072.html">7D4
 <tr>
 <td class="address"><a name="32068"></a>7D44</td>
 <td class="instruction">POP DE</td>
-<td class="comment" rowspan="3">de++;</td>
+<td class="comment" rowspan="3">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="32069"></a>7D45</td>

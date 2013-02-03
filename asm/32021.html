@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at 7D15</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -45,7 +45,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="label"><a name="32021"></a>7D15</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment" rowspan="4">if (*(hl = message_buffer_pointer) == 0xFF) return;</td>
+<td class="comment" rowspan="4">if (*(HL = message_buffer_pointer) == 0xFF) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="32024"></a>7D18</td>
@@ -62,7 +62,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32028"></a>7D1C</td>
 <td class="instruction">DEC HL</td>
-<td class="comment" rowspan="2">hl -= 2;</td>
+<td class="comment" rowspan="2">HL -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="32029"></a>7D1D</td>
@@ -71,7 +71,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32030"></a>7D1E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="4">a = *hl++; if (a != b) goto set;</td>
+<td class="comment" rowspan="4">A = *HL++; if (A != B) goto set;</td>
 </tr>
 <tr>
 <td class="address"><a name="32031"></a>7D1F</td>
@@ -88,7 +88,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32035"></a>7D23</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="3">a = *hl; if (a == c) return;</td>
+<td class="comment" rowspan="3">A = *HL; if (A == C) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="32036"></a>7D24</td>
@@ -101,7 +101,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="label"><a name="32038"></a>7D26</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="5">set: *++hl = b; *++hl = c; hl++;</td>
+<td class="comment" rowspan="5">set: *++HL = B; *++HL = C; HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="32039"></a>7D27</td>
@@ -122,7 +122,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32043"></a>7D2B</td>
 <td class="instruction">LD ($7D11),HL</td>
-<td class="comment">*message_buffer_pointer = hl;</td>
+<td class="comment">*message_buffer_pointer = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="32046"></a>7D2E</td>

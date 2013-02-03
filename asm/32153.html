@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7D99</title>
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="32135.html">7D87</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#32153">Map</a></td>
+<td class="next">Next: <a class="link" href="32205.html">7DCD</a></td>
+</tr>
+</table>
+<div class="description">7D99: shunt_buffer_back_by_two</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Looks like message_buffer is poked with the index of the message to display...
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="32153"></a>7D99</td>
+<td class="instruction">LD HL,($7D11)</td>
+<td class="comment">HL = message_buffer_pointer;</td>
+</tr>
+<tr>
+<td class="address"><a name="32156"></a>7D9C</td>
+<td class="instruction">LD DE,$7CFE</td>
+<td class="comment">DE = &amp;message_buffer;</td>
+</tr>
+<tr>
+<td class="address"><a name="32159"></a>7D9F</td>
+<td class="instruction">LD A,L</td>
+<td class="comment" rowspan="3">if (L == E) return; // cheap test</td>
+</tr>
+<tr>
+<td class="address"><a name="32160"></a>7DA0</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="address"><a name="32161"></a>7DA1</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="address"><a name="32162"></a>7DA2</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment">swap(DE, HL);</td>
+</tr>
+<tr>
+<td class="address"><a name="32163"></a>7DA3</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment" rowspan="2">A = *HL++;</td>
+</tr>
+<tr>
+<td class="address"><a name="32164"></a>7DA4</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="32165"></a>7DA5</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment">C = *HL; // I don't understand why C is loaded here.</td>
+</tr>
+<tr>
+<td class="address"><a name="32166"></a>7DA6</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment" rowspan="5">HL = &amp;messages_table[A];</td>
+</tr>
+<tr>
+<td class="address"><a name="32167"></a>7DA7</td>
+<td class="instruction">LD HL,$7DCD</td>
+</tr>
+<tr>
+<td class="address"><a name="32170"></a>7DAA</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address"><a name="32171"></a>7DAB</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="32173"></a>7DAD</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address"><a name="32174"></a>7DAE</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment" rowspan="2">E = *HL++;</td>
+</tr>
+<tr>
+<td class="address"><a name="32175"></a>7DAF</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="32176"></a>7DB0</td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment">D = *HL; // DE = messages_table[A]</td>
+</tr>
+<tr>
+<td class="address"><a name="32177"></a>7DB1</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment">swap(DE, HL);</td>
+</tr>
+<tr>
+<td class="address"><a name="32178"></a>7DB2</td>
+<td class="instruction">LD ($7D13),HL</td>
+<td class="comment">current_message_character = HL;</td>
+</tr>
+<tr>
+<td class="address"><a name="32181"></a>7DB5</td>
+<td class="instruction">LD DE,$7CFC</td>
+<td class="comment" rowspan="4">memmove(message_buffer_slack, message_buffer, 16);</td>
+</tr>
+<tr>
+<td class="address"><a name="32184"></a>7DB8</td>
+<td class="instruction">LD HL,$7CFE</td>
+</tr>
+<tr>
+<td class="address"><a name="32187"></a>7DBB</td>
+<td class="instruction">LD BC,$0010</td>
+</tr>
+<tr>
+<td class="address"><a name="32190"></a>7DBE</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address"><a name="32192"></a>7DC0</td>
+<td class="instruction">LD HL,($7D11)</td>
+<td class="comment" rowspan="4">message_buffer_pointer -= 2;</td>
+</tr>
+<tr>
+<td class="address"><a name="32195"></a>7DC3</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="32196"></a>7DC4</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="32197"></a>7DC5</td>
+<td class="instruction">LD ($7D11),HL</td>
+</tr>
+<tr>
+<td class="address"><a name="32200"></a>7DC8</td>
+<td class="instruction">XOR A</td>
+<td class="comment" rowspan="2">message_display_index = 0;</td>
+</tr>
+<tr>
+<td class="address"><a name="32201"></a>7DC9</td>
+<td class="instruction">LD ($7D10),A</td>
+</tr>
+<tr>
+<td class="address"><a name="32204"></a>7DCC</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="32135.html">7D87</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#32153">Map</a></td>
+<td class="next">Next: <a class="link" href="32205.html">7DCD</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at B3A8</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -26,88 +26,89 @@
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+Player has tried to bribe a prisoner.
+</div>
+<div class="paragraph">
+I suspect this searches visible characters only.
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="45992"></a>B3A8</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="transparentComment" />
+<td class="comment">HL = $8020;</td>
 </tr>
 <tr>
 <td class="address"><a name="45995"></a>B3AB</td>
 <td class="instruction">LD B,$07</td>
-<td class="transparentComment" />
+<td class="comment">B = 7; // 7 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="45997"></a>B3AD</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">do { A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45998"></a>B3AE</td>
 <td class="instruction">CP $FF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">if ((A != 255) &amp;&amp; (A &gt;= 20)) goto found;</td>
 </tr>
 <tr>
 <td class="address"><a name="46000"></a>B3B0</td>
 <td class="instruction">JR Z,$B3B6</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46002"></a>B3B2</td>
 <td class="instruction">CP $14</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46004"></a>B3B4</td>
 <td class="instruction">JR NC,$B3BD</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="46006"></a>B3B6</td>
 <td class="instruction">LD A,$20</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">HL += 32; // sizeof a character struct</td>
 </tr>
 <tr>
 <td class="address"><a name="46008"></a>B3B8</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46009"></a>B3B9</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46010"></a>B3BA</td>
 <td class="instruction">DJNZ $B3AD</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46012"></a>B3BC</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="46013"></a>B3BD</td>
 <td class="instruction">LD ($AF8E),A</td>
-<td class="transparentComment" />
+<td class="comment">found: bribe_related = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46016"></a>B3C0</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
+<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46017"></a>B3C1</td>
 <td class="instruction">LD (HL),$01</td>
-<td class="transparentComment" />
+<td class="comment">*HL = 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="46019"></a>B3C3</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

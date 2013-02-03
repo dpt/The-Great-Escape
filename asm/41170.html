@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at A0D2</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -30,32 +30,35 @@
 Used by the routines at <a class="link" href="41193.html">A0E9</a> and <a class="link" href="41202.html">A0F2</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">B</td>
+<td class="registerContents">Amount to increase morale by. (Preserved)</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="41170"></a>A0D2</td>
 <td class="instruction">LD A,($A13C)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = morale + B;</td>
 </tr>
 <tr>
 <td class="address"><a name="41173"></a>A0D5</td>
 <td class="instruction">ADD A,B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41174"></a>A0D6</td>
 <td class="instruction">CP $70</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if (A &gt;= 0x70) A = 0x70; // MAX_MORALE = 0x70;</td>
 </tr>
 <tr>
 <td class="address"><a name="41176"></a>A0D8</td>
 <td class="instruction">JR C,$A0DC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41178"></a>A0DA</td>
 <td class="instruction">LD A,$70</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -70,12 +73,12 @@ This entry point is used by the routine at <a class="link" href="41184.html">A0E
 <tr>
 <td class="label">A0DC</td>
 <td class="instruction">LD ($A13C),A</td>
-<td class="transparentComment" />
+<td class="comment">set_morale_from_A: morale = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="41183"></a>A0DF</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

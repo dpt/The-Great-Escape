@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at EFCB</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -77,7 +77,7 @@
 <tr>
 <td class="address"><a name="61406"></a>EFDE</td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="comment" rowspan="4">if ((*overlap.$8015) != sprite_guard_tl_4) goto solitary; // using the papers at the main gate when not in uniform =&gt; get sent to solitary</td>
+<td class="comment" rowspan="4">if (*$8015 != sprite_guard_tl_4) goto solitary; // using the papers at the main gate when not in uniform =&gt; get sent to solitary</td>
 </tr>
 <tr>
 <td class="address"><a name="61409"></a>EFE1</td>
@@ -99,7 +99,7 @@
 <tr>
 <td class="address"><a name="61419"></a>EFEB</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">(overlap.$801C) = 0; // clear stored room index?</td>
+<td class="comment" rowspan="2">$801C = 0; // clear stored room index?</td>
 </tr>
 <tr>
 <td class="address"><a name="61420"></a>EFEC</td>

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at 9EB2</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="40672.html">9EE0</a></td>
 </tr>
 </table>
-<div class="description">9EB2: wire_snipped -- locks user out until wire is snipped</div>
+<div class="description">9EB2: wire_snipped</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40455.html">9E07</a>.
+Locks user out until wire is snipped.
 </div>
 </div>
 </td>
@@ -104,7 +104,7 @@ Used by the routine at <a class="link" href="40455.html">9E07</a>.
 <tr>
 <td class="label"><a name="40656"></a>9ED0</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment" rowspan="3">wire_successfully_snipped: $800E = A &amp; 3;</td>
+<td class="comment" rowspan="3">wire_successfully_snipped: $800E = A &amp; 3; // walk/crawl flag?</td>
 </tr>
 <tr>
 <td class="address"><a name="40659"></a>9ED3</td>
@@ -126,7 +126,7 @@ Used by the routine at <a class="link" href="40455.html">9E07</a>.
 <tr>
 <td class="address"><a name="40665"></a>9ED9</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment" rowspan="2">$8013 = 0x18;</td>
+<td class="comment" rowspan="2">$8013 = 24; // set vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="40667"></a>9EDB</td>

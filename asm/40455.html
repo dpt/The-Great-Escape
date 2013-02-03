@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at 9E07</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -56,7 +56,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="40462"></a>9E0E</td>
 <td class="instruction">LD A,($8001)</td>
-<td class="comment" rowspan="3">if (($8001 &amp; 3) == 0) goto zero_flags;</td>
+<td class="comment" rowspan="3">if (($8001 &amp; 3) == 0) goto not_picking_lock_or_cutting_wire;</td>
 </tr>
 <tr>
 <td class="address"><a name="40465"></a>9E11</td>
@@ -78,7 +78,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="40474"></a>9E1A</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="2">if ($8001 == 1) goto lock_picked;</td>
+<td class="comment" rowspan="2">if ($8001 == 1) goto picking_a_lock;</td>
 </tr>
 <tr>
 <td class="address"><a name="40476"></a>9E1C</td>
@@ -87,17 +87,17 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="40479"></a>9E1F</td>
 <td class="instruction">JP <a class="link" href="40626.html">$9EB2</a></td>
-<td class="comment">goto wire_snipped;</td>
+<td class="comment">wire_snipped(); return; // exit via</td>
 </tr>
 <tr>
 <td class="label"><a name="40482"></a>9E22</td>
 <td class="instruction">CALL <a class="link" href="61557.html">$F075</a></td>
-<td class="comment">zero_flags: input_routine(); // lives at same address as counter_of_something</td>
+<td class="comment">not_picking_lock_or_cutting_wire: A = input_routine(); // lives at same address as counter_of_something</td>
 </tr>
 <tr>
 <td class="address"><a name="40485"></a>9E25</td>
 <td class="instruction">LD HL,$A139</td>
-<td class="comment" rowspan="3">hl = &amp;morale_related_also; if (? != 0) goto user_input_super(hl);</td>
+<td class="comment" rowspan="2">HL = &amp;morale_related_also;</td>
 </tr>
 <tr>
 <td class="address"><a name="40488"></a>9E28</td>
@@ -106,6 +106,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="40490"></a>9E2A</td>
 <td class="instruction">JP NZ,<a class="link" href="40500.html">$9E34</a></td>
+<td class="comment">if (A != input_NONE) goto user_input_super(HL);</td>
 </tr>
 <tr>
 <td class="address"><a name="40493"></a>9E2D</td>
@@ -123,15 +124,17 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="40496"></a>9E30</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment" rowspan="3">morale_related_also--; a = 0; goto user_input_fire_not_pressed;</td>
+<td class="comment">morale_related_also--;</td>
 </tr>
 <tr>
 <td class="address"><a name="40497"></a>9E31</td>
 <td class="instruction">XOR A</td>
+<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="40498"></a>9E32</td>
 <td class="instruction">JR <a class="link" href="40540.html#40591">$9E8F</a></td>
+<td class="comment">goto user_input_fire_not_pressed;</td>
 </tr>
 </table>
 <table class="prevNext">

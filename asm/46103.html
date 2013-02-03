@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at B417</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -37,7 +37,7 @@
 <tr>
 <td class="address"><a name="46106"></a>B41A</td>
 <td class="instruction">LD DE,$81B9</td>
-<td class="comment">DE = character_map_position_perhapsY</td>
+<td class="comment">DE = player_map_position_perhapsY</td>
 </tr>
 <tr>
 <td class="address"><a name="46109"></a>B41D</td>
@@ -80,7 +80,7 @@
 <tr>
 <td class="address"><a name="46120"></a>B428</td>
 <td class="instruction">DEC DE</td>
-<td class="comment">DE--; // character_map_position_perhapsX</td>
+<td class="comment">DE--; // player_map_position_perhapsX</td>
 </tr>
 <tr>
 <td class="address"><a name="46121"></a>B429</td>
@@ -154,7 +154,7 @@
 <tr>
 <td class="address"><a name="46141"></a>B43D</td>
 <td class="instruction">DEC DE</td>
-<td class="comment">DE--; // character_map_position_perhapsX</td>
+<td class="comment">DE--; // player_map_position_perhapsX</td>
 </tr>
 <tr>
 <td class="address"><a name="46142"></a>B43E</td>
@@ -325,7 +325,7 @@
 <tr>
 <td class="address"><a name="46193"></a>B471</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment" rowspan="2">(overlap.$800E) = A;</td>
+<td class="comment" rowspan="2">$800E = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46196"></a>B474</td>
@@ -334,7 +334,7 @@
 <tr>
 <td class="address"><a name="46197"></a>B475</td>
 <td class="instruction">DEC L</td>
-<td class="comment" rowspan="2">(overlap.$800D) = 0x80;</td>
+<td class="comment" rowspan="2">$800D = 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46198"></a>B476</td>
@@ -343,7 +343,7 @@
 <tr>
 <td class="address"><a name="46200"></a>B478</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment" rowspan="2">(overlap.$8001) = 2;</td>
+<td class="comment" rowspan="2">$8001 = 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46203"></a>B47B</td>
@@ -352,7 +352,7 @@
 <tr>
 <td class="address"><a name="46205"></a>B47D</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment" rowspan="2">(overlap.$8013) = 12;</td>
+<td class="comment" rowspan="2">$8013 = 12; // set vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="46207"></a>B47F</td>
@@ -361,7 +361,7 @@
 <tr>
 <td class="address"><a name="46210"></a>B482</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="comment" rowspan="2">(overlap.$8015) = sprite_prisoner_tl_4;</td>
+<td class="comment" rowspan="2">$8015 = sprite_prisoner_tl_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46213"></a>B485</td>

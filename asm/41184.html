@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at A0E0</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -30,32 +30,36 @@
 Used by the routines at <a class="link" href="41427.html">A1D3</a>, <a class="link" href="44664.html">AE78</a>, <a class="link" href="52120.html">CB98</a> and <a class="link" href="52529.html">CD31</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">B</td>
+<td class="registerContents">Amount to decrease morale by. (Preserved)</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="41184"></a>A0E0</td>
 <td class="instruction">LD A,($A13C)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = morale - B;</td>
 </tr>
 <tr>
 <td class="address"><a name="41187"></a>A0E3</td>
 <td class="instruction">SUB B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41188"></a>A0E4</td>
 <td class="instruction">JR NC,<a class="link" href="41170.html#41180">$A0DC</a></td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &lt; 0) A = 0; // MIN_MORALE = 0x00;</td>
 </tr>
 <tr>
 <td class="address"><a name="41190"></a>A0E6</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41191"></a>A0E7</td>
 <td class="instruction">JR <a class="link" href="41170.html#41180">$A0DC</a></td>
-<td class="transparentComment" />
+<td class="comment">goto set_morale_from_A;</td>
 </tr>
 </table>
 <table class="prevNext">

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routines</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="map">
 <table class="header">
@@ -21,11 +21,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26786" href="../asm/26786.html">68A2</a></td>
-<td class="routineDesc">sub_68A2 -- looks like it's resetting stuff</td>
+<td class="routineDesc">sub_68A2</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26912" href="../asm/26912.html">6920</a></td>
-<td class="routineDesc">tunnel_related -- probably when emerging from tunnel -- this is resetting the character sprite set to prisoner</td>
+<td class="routineDesc">tunnel_related</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26937" href="../asm/26937.html">6939</a></td>
@@ -53,7 +53,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27317" href="../asm/27317.html">6AB5</a></td>
-<td class="routineDesc">draw_object_to_tiles [unsure]</td>
+<td class="routineDesc">draw_object_to_tiles</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27458" href="../asm/27458.html">6B42</a></td>
@@ -61,7 +61,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="31433" href="../asm/31433.html">7AC9</a></td>
-<td class="routineDesc">check for 'pick up', 'drop' and both 'use item' keypresses</td>
+<td class="routineDesc">check_for_pick_up_keypress</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="31472" href="../asm/31472.html">7AF0</a></td>
+<td class="routineDesc">use_item_B</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="31542" href="../asm/31542.html">7B36</a></td>
@@ -109,19 +113,27 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="32072" href="../asm/32072.html">7D48</a></td>
-<td class="routineDesc">message_timer</td>
+<td class="routineDesc">message_display</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="32135" href="../asm/32135.html">7D87</a></td>
+<td class="routineDesc">wipe_message</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="32153" href="../asm/32153.html">7D99</a></td>
+<td class="routineDesc">shunt_buffer_back_by_two</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40312" href="../asm/40312.html">9D78</a></td>
-<td class="routineDesc">main_loop</td>
+<td class="routineDesc">main_loop_setup</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40399" href="../asm/40399.html">9DCF</a></td>
-<td class="routineDesc">check_morale (&lt;- main_loop)</td>
+<td class="routineDesc">check_morale</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40421" href="../asm/40421.html">9DE5</a></td>
-<td class="routineDesc">check for 'game cancel' keypress</td>
+<td class="routineDesc">keyscan_cancel</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40455" href="../asm/40455.html">9E07</a></td>
@@ -137,15 +149,15 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40600" href="../asm/40600.html">9E98</a></td>
-<td class="routineDesc">lock_picked -- locks user out until lock is picked</td>
+<td class="routineDesc">picking_a_lock</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40626" href="../asm/40626.html">9EB2</a></td>
-<td class="routineDesc">wire_snipped -- locks user out until wire is snipped</td>
+<td class="routineDesc">wire_snipped</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40737" href="../asm/40737.html">9F21</a></td>
-<td class="routineDesc">in_permitted_area [unsure] -- could be as general as bounds detection</td>
+<td class="routineDesc">in_permitted_area</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41013" href="../asm/41013.html">A035</a></td>
@@ -161,7 +173,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41109" href="../asm/41109.html">A095</a></td>
-<td class="routineDesc">indoors-only delay loop</td>
+<td class="routineDesc">indoors_delay_loop</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41118" href="../asm/41118.html">A09E</a></td>
@@ -177,11 +189,19 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41193" href="../asm/41193.html">A0E9</a></td>
-<td class="routineDesc">increase_morale_by_10,_score_by_50</td>
+<td class="routineDesc">increase_morale_by_10_score_by_50</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41202" href="../asm/41202.html">A0F2</a></td>
 <td class="routineDesc">increase_morale_by_5</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="41209" href="../asm/41209.html">A0F9</a></td>
+<td class="routineDesc">increase_score</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="41227" href="../asm/41227.html">A10B</a></td>
+<td class="routineDesc">plot_score</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41245" href="../asm/41245.html">A11D</a></td>
@@ -193,7 +213,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41376" href="../asm/41376.html">A1A0</a></td>
-<td class="routineDesc">dispatch_table_thing // dispatches time-based game events like parcels, meals, exercise and roll calls</td>
+<td class="routineDesc">dispatch_table_thing</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41411" href="../asm/41411.html">A1C3</a></td>
@@ -261,11 +281,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41823" href="../asm/41823.html">A35F</a></td>
-<td class="routineDesc">sub_A35F -- uses tenlong structure</td>
+<td class="routineDesc">sub_A35F</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41843" href="../asm/41843.html">A373</a></td>
-<td class="routineDesc">sub_A373 -- uses tenlong structure</td>
+<td class="routineDesc">sub_A373</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41868" href="../asm/41868.html">A38C</a></td>
@@ -273,11 +293,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41898" href="../asm/41898.html">A3AA</a></td>
-<td class="routineDesc">not set</td>
+<td class="routineDesc">not_set</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41907" href="../asm/41907.html">A3B3</a></td>
-<td class="routineDesc">found [possibly a tail of above sub]</td>
+<td class="routineDesc">found</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41965" href="../asm/41965.html">A3ED</a></td>
@@ -285,7 +305,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41971" href="../asm/41971.html">A3F3</a></td>
-<td class="routineDesc">sub_A3F3 -- checks character indexes, sets target locations, ...</td>
+<td class="routineDesc">sub_A3F3</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41976" href="../asm/41976.html">A3F8</a></td>
@@ -296,44 +316,28 @@
 <td class="routineDesc">character_sits</td>
 </tr>
 <tr>
-<td class="routine"><a class="link" name="42052" href="../asm/42052.html">A444</a></td>
-<td class="routineDesc">character_sleeps</td>
-</tr>
-<tr>
-<td class="routine"><a class="link" name="42082" href="../asm/42082.html">A462</a></td>
-<td class="routineDesc">(common end of above two routines)</td>
-</tr>
-<tr>
 <td class="routine"><a class="link" name="42111" href="../asm/42111.html">A47F</a></td>
 <td class="routineDesc">player_sits</td>
 </tr>
 <tr>
-<td class="routine"><a class="link" name="42121" href="../asm/42121.html">A489</a></td>
-<td class="routineDesc">player_sleeps</td>
-</tr>
-<tr>
-<td class="routine"><a class="link" name="42129" href="../asm/42129.html">A491</a></td>
-<td class="routineDesc">(common end of the above two routines)</td>
-</tr>
-<tr>
 <td class="routine"><a class="link" name="42153" href="../asm/42153.html">A4A9</a></td>
-<td class="routineDesc">sets a target location 0E00</td>
+<td class="routineDesc">set_location_0xE00</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42167" href="../asm/42167.html">A4B7</a></td>
-<td class="routineDesc">sets a target location 8E04</td>
+<td class="routineDesc">set_location_0x8E04</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42181" href="../asm/42181.html">A4C5</a></td>
-<td class="routineDesc">sets a target location 1000</td>
+<td class="routineDesc">set_location_0x1000</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42195" href="../asm/42195.html">A4D3</a></td>
-<td class="routineDesc">sub_A4D3 -- something character related [very similar to the routine at $A3F3]</td>
+<td class="routineDesc">sub_A4D3</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42200" href="../asm/42200.html">A4D8</a></td>
-<td class="routineDesc">varA13E_is_zero_anotherone / sets a target location 2B00</td>
+<td class="routineDesc">varA13E_is_zero_anotherone</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42237" href="../asm/42237.html">A4FD</a></td>
@@ -341,7 +345,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42251" href="../asm/42251.html">A50B</a></td>
-<td class="routineDesc">screen reset [unsure]</td>
+<td class="routineDesc">screen_reset</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42268" href="../asm/42268.html">A51C</a></td>
@@ -349,7 +353,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42380" href="../asm/42380.html">A58C</a></td>
-<td class="routineDesc">keyscan all</td>
+<td class="routineDesc">keyscan_all</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42396" href="../asm/42396.html">A59C</a></td>
@@ -361,7 +365,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42953" href="../asm/42953.html">A7C9</a></td>
-<td class="routineDesc">sub_A7C9 -- resetish</td>
+<td class="routineDesc">sub_A7C9</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43018" href="../asm/43018.html">A80A</a></td>
@@ -373,7 +377,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43170" href="../asm/43170.html">A8A2</a></td>
-<td class="routineDesc">sub_A8A2 -- resetish</td>
+<td class="routineDesc">sub_A8A2</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43215" href="../asm/43215.html">A8CF</a></td>
@@ -389,7 +393,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43437" href="../asm/43437.html">A9AD</a></td>
-<td class="routineDesc">plot_a_tile_perhaps -- plots tiles to buffer</td>
+<td class="routineDesc">plot_a_tile_perhaps</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43492" href="../asm/43492.html">A9E4</a></td>
@@ -461,11 +465,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45319" href="../asm/45319.html">B107</a></td>
-<td class="routineDesc">use_bribe -- 'he takes the bribe' 'and acts as decoy'</td>
+<td class="routineDesc">use_bribe</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45388" href="../asm/45388.html">B14C</a></td>
-<td class="routineDesc">sub_B14C -- outdoor drawing?</td>
+<td class="routineDesc">sub_B14C</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45511" href="../asm/45511.html">B1C7</a></td>
@@ -497,7 +501,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45869" href="../asm/45869.html">B32D</a></td>
-<td class="routineDesc">indoors [unsure]</td>
+<td class="routineDesc">indoors</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45959" href="../asm/45959.html">B387</a></td>
@@ -557,11 +561,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="46938" href="../asm/46938.html">B75A</a></td>
-<td class="routineDesc">looks_like_a_reset_function [unsure]</td>
+<td class="routineDesc">looks_like_a_reset_function</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47003" href="../asm/47003.html">B79B</a></td>
-<td class="routineDesc">reset map and characters [unsure]</td>
+<td class="routineDesc">reset_map_and_characters</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47163" href="../asm/47163.html">B83B</a></td>
@@ -577,7 +581,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47382" href="../asm/47382.html">B916</a></td>
-<td class="routineDesc">sub_B916 -- sets attr of something, checks indoor room index, ...</td>
+<td class="routineDesc">sub_B916</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47836" href="../asm/47836.html">BADC</a></td>
@@ -617,7 +621,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51098" href="../asm/51098.html">C79A</a></td>
-<td class="routineDesc">sub_C79A [leaf]</td>
+<td class="routineDesc">sub_C79A</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51129" href="../asm/51129.html">C7B9</a></td>
@@ -625,7 +629,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51142" href="../asm/51142.html">C7C6</a></td>
-<td class="routineDesc">character_event.</td>
+<td class="routineDesc">character_event</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51346" href="../asm/51346.html">C892</a></td>
@@ -645,7 +649,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51841" href="../asm/51841.html">CA81</a></td>
-<td class="routineDesc">sub_CA81 -- bribes, solitary, food, character enters sound,</td>
+<td class="routineDesc">sub_CA81</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52085" href="../asm/52085.html">CB75</a></td>
@@ -673,11 +677,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52429" href="../asm/52429.html">CCCD</a></td>
-<td class="routineDesc">sub_CCCD -- walks item_characterstructs. ignores green key and food items. may decide which items are 'found'.</td>
+<td class="routineDesc">sub_CCCD</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52475" href="../asm/52475.html">CCFB</a></td>
-<td class="routineDesc">sub_CCFB -- walks item_characterstructs. ignores red cross parcel. may decide which items are 'found'.</td>
+<td class="routineDesc">sub_CCFB</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52529" href="../asm/52529.html">CD31</a></td>
@@ -689,7 +693,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="56299" href="../asm/56299.html">DBEB</a></td>
-<td class="routineDesc">something which uses rotate_A_left_3_widening_to_BC</td>
+<td class="routineDesc">Uses rotate_A_left_3_widening_to_BC.</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="56385" href="../asm/56385.html">DC41</a></td>
@@ -701,7 +705,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="57602" href="../asm/57602.html">E102</a></td>
-<td class="routineDesc">masked sprite plotter [unsure]</td>
+<td class="routineDesc">masked_sprite_plotter</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58015" href="../asm/58015.html">E29F</a></td>
@@ -717,11 +721,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58362" href="../asm/58362.html">E3FA</a></td>
-<td class="routineDesc">sub_E3FA [leaf]</td>
+<td class="routineDesc">sub_E3FA</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58383" href="../asm/58383.html">E40F</a></td>
-<td class="routineDesc">sub_E40F [leaf]</td>
+<td class="routineDesc">sub_E40F</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58400" href="../asm/58400.html">E420</a></td>
@@ -749,7 +753,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="61436" href="../asm/61436.html">EFFC</a></td>
-<td class="routineDesc">user confirm</td>
+<td class="routineDesc">user_confirm</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="61544" href="../asm/61544.html">F068</a></td>
@@ -757,7 +761,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="61557" href="../asm/61557.html">F075</a></td>
-<td class="routineDesc">counter of something [unsure]</td>
+<td class="routineDesc">counter_of_something</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="61795" href="../asm/61795.html">F163</a></td>
@@ -797,7 +801,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="62647" href="../asm/62647.html">F4B7</a></td>
-<td class="routineDesc">menu screen</td>
+<td class="routineDesc">menu_screen</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="62764" href="../asm/62764.html">F52C</a></td>

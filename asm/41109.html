@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>The Great Escape: Routine at A095</title>
-<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="41118.html">A09E</a></td>
 </tr>
 </table>
-<div class="description">A095: indoors-only delay loop</div>
+<div class="description">A095: indoors_delay_loop</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Delay loop called when the player is indoors.
 </div>
 </div>
 </td>
@@ -35,32 +35,29 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="41109"></a>A095</td>
 <td class="instruction">LD BC,$0FFF</td>
-<td class="transparentComment" />
+<td class="comment">BC = 0xFFF;</td>
 </tr>
 <tr>
 <td class="label"><a name="41112"></a>A098</td>
 <td class="instruction">DEC BC</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">while (--BC) ;</td>
 </tr>
 <tr>
 <td class="address"><a name="41113"></a>A099</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41114"></a>A09A</td>
 <td class="instruction">OR B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41115"></a>A09B</td>
 <td class="instruction">JR NZ,$A098</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41117"></a>A09D</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

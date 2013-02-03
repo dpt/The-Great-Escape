@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7D87</title>
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="32072.html">7D48</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#32135">Map</a></td>
+<td class="next">Next: <a class="link" href="32153.html">7D99</a></td>
+</tr>
+</table>
+<div class="description">7D87: wipe_message</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="32072.html">7D48</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="32135"></a>7D87</td>
+<td class="instruction">LD A,($7D10)</td>
+<td class="comment">A = message_display_index;</td>
+</tr>
+<tr>
+<td class="address"><a name="32138"></a>7D8A</td>
+<td class="instruction">DEC A</td>
+<td class="comment" rowspan="2">message_display_index = --A;</td>
+</tr>
+<tr>
+<td class="address"><a name="32139"></a>7D8B</td>
+<td class="instruction">LD ($7D10),A</td>
+</tr>
+<tr>
+<td class="address"><a name="32142"></a>7D8E</td>
+<td class="instruction">LD DE,$50E0</td>
+<td class="comment">DE = screen_text_start_address;</td>
+</tr>
+<tr>
+<td class="address"><a name="32145"></a>7D91</td>
+<td class="instruction">OR E</td>
+<td class="comment" rowspan="2">DE |= A;</td>
+</tr>
+<tr>
+<td class="address"><a name="32146"></a>7D92</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address"><a name="32147"></a>7D93</td>
+<td class="instruction">LD A,$23</td>
+<td class="comment" rowspan="2">plot_single_glyph(35); // plot a SPACE character</td>
+</tr>
+<tr>
+<td class="address"><a name="32149"></a>7D95</td>
+<td class="instruction">CALL <a class="link" href="32047.html#32048">$7D30</a></td>
+</tr>
+<tr>
+<td class="address"><a name="32152"></a>7D98</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="32072.html">7D48</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#32135">Map</a></td>
+<td class="next">Next: <a class="link" href="32153.html">7D99</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>
