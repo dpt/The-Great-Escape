@@ -1520,6 +1520,32 @@ D $69A0 Fourteen bytes long.
 
 ; ------------------------------------------------------------------------------
 
+b $69AE movable_objects
+D $69AE struct { word, word, word, const sprite *, byte };
+
+D $69AE stove1
+W $69AE { X coord?, 
+W $69B0 Y coord?, 
+W $69B2 ..., 
+W $69B4 &sprite_stove }
+  $69B6 0 // terminator?
+
+D $69B7 crate
+W $69B7 { X coord?,
+W $69B9 Y coord?,
+W $69BB ...,
+W $69BD &sprite_create }
+  $69BF 0 // terminator?
+
+D $69C0 stove2
+W $69C0 { X coord?,
+W $69C2 Y coord?,
+W $69C4 ...,
+W $69C6 &sprite_stove }
+  $69C8 0 // terminator?
+
+; ------------------------------------------------------------------------------
+
 w $6B79 beds
 D $6B79 6x pointers to bed. These are the beds of active prisoners.
 D $6B79 Note that the top hut has prisoners permanently in bed.
