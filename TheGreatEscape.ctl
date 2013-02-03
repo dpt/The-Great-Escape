@@ -405,40 +405,42 @@
 
 ; ------------------------------------------------------------------------------
 
-b $4000 Screen.
+b $4000 screen
 D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 
 ; ------------------------------------------------------------------------------
 
-w $CDF2 something_character_related -- array, 24 long, of pointers to data
-  $CDF2 unk_CF26
-  $CDF4 unk_CF3A
-  $CDF6 unk_CF4E
-  $CDF8 unk_CF62
-  $CDFA unk_CF96
-  $CDFC unk_CFA2
-  $CDFE unk_CFAE
-  $CE00 unk_CFBA
-  $CE02 unk_CF76
-  $CE04 unk_CF7E
-  $CE06 unk_CF86
-  $CE08 unk_CF8E
-  $CE0A unk_CFC6
-  $CE0C unk_CFD2
-  $CE0E unk_CFDE
-  $CE10 unk_CFEA
-  $CE12 unk_CFF6
-  $CE14 unk_D002
-  $CE16 unk_D00E
-  $CE18 unk_D01A
-  $CE1A unk_CF06
-  $CE1C unk_CF0E
-  $CE1E unk_CF16
-  $CE20 unk_CF1E
+w $CDF2 something_character_related
+D $CDF2 Array, 24 long, of pointers to data.
+  $CDF2 byte_CF26
+  $CDF4 byte_CF3A
+  $CDF6 byte_CF4E
+  $CDF8 byte_CF62
+  $CDFA byte_CF96
+  $CDFC byte_CFA2
+  $CDFE byte_CFAE
+  $CE00 byte_CFBA
+  $CE02 byte_CF76
+  $CE04 byte_CF7E
+  $CE06 byte_CF86
+  $CE08 byte_CF8E
+  $CE0A byte_CFC6
+  $CE0C byte_CFD2
+  $CE0E byte_CFDE
+  $CE10 byte_CFEA
+  $CE12 byte_CFF6
+  $CE14 byte_D002
+  $CE16 byte_D00E
+  $CE18 byte_D01A
+  $CE1A byte_CF06
+  $CE1C byte_CF0E
+  $CE1E byte_CF16
+  $CE20 byte_CF1E
 
 ; ------------------------------------------------------------------------------
 
-b $CE22 Sprite definitions -- objects which can move.
+b $CE22 sprites
+D $CE22 Objects which can move.
 ;
 D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 D $CE22 Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
@@ -485,7 +487,8 @@ D $CE22 'br' => character faces bottom right of the screen
 
 ; ------------------------------------------------------------------------------
 
-b $CF06 unknown character? related stuff  read by routine around $b64f (called_from_main_loop_9)
+b $CF06 character_related_stuff
+D $CF06 [unknown] character related stuff? read by routine around $b64f (called_from_main_loop_9)
   $CF06
   $CF0E
   $CF16
@@ -513,7 +516,8 @@ b $CF06 unknown character? related stuff  read by routine around $b64f (called_f
 
 ; ------------------------------------------------------------------------------
 
-b $D026 Sprite bitmaps and masks.
+b $D026 sprite_bitmaps_and_masks
+D $D026 Sprite bitmaps and masks.
 B $D026 Raw data.
 ;
 D $D026 #UDGTABLE { #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(commandant-top-left-1) | #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(commandant-top-left-2) | #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,116}(commandant-top-left-3) | #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(commandant-top-left-4) } TABLE#
@@ -596,7 +600,8 @@ B $DB72 mask: STOVE
 
 ; ------------------------------------------------------------------------------
 
-b $DD7D Item definitions.
+b $DD7D item_definitions
+D $DD7D Item definitions.
 D $DD7D Array of "sprite" structures.
 ;
   $DD7D item_sprite: WIRESNIPS
@@ -618,7 +623,8 @@ D $DD7D Array of "sprite" structures.
 
 ; ------------------------------------------------------------------------------
 
-b $DDDD Item bitmaps and masks.
+b $DDDD item_bitmaps_and_masks
+D $DDDD Item bitmaps and masks.
 D $DDDD Raw data.
 ;
 B $DDDD item_bitmap: SHOVEL
@@ -706,7 +712,8 @@ z $E0D7 UNUSED
 
 ; ------------------------------------------------------------------------------
 
-b $6BAD Rooms and tunnels.
+b $6BAD rooms_and_tunnels
+D $6BAD Rooms and tunnels.
 ;
 W $6BAD Array of pointers to rooms.
 W $6BE5 Array of pointers to tunnels.
@@ -714,7 +721,8 @@ W $6BE5 Array of pointers to tunnels.
 B $6C15 room_def: room1_hut1_right
 ;
 B $6C47 room_def: room2_hut2_left
-B $6C61,1 bed -- where the player sleeps
+B $6C61,1 bed
+D $6C61 Where the player sleeps.
 ;
 B $6C6D room_def: room3_hut2_right
 B $6C8A,1 bed_A
@@ -767,7 +775,8 @@ B $6F32 room_def: room25_breakfast
 B $6F4F,1 bench_D
 B $6F52,1 bench_E
 B $6F55,1 bench_F
-B $6F58,1 bench_G -- where the player sits
+B $6F58,1 bench_G
+D $6F58 Where the player sits.
 ;
 B $6F5B room_def: room26_hut1_left
 ;
@@ -799,7 +808,8 @@ B $708C,1 collapsed_tunnel_obj [unsure]
 ;
 ; Screenlocstrings are a screen address followed by a counted string.
 ;
-b $A5CE Screenlocstrings (screen address + string).
+b $A5CE screenlocstrings
+D $A5CE Screen address + string.
 D $A5CE "WELL DONE"
 B $A5CE #CALL:decode_screenlocstring($A5CE)
 D $A5DA "YOU HAVE ESCAPED"
@@ -823,11 +833,13 @@ B $A676 #CALL:decode_screenlocstring($A676)
 D $A68E "PRESS ANY KEY"
 B $A68E #CALL:decode_screenlocstring($A68E)
 ;
-b $F014 Menu screenlocstrings.
+b $F014 menu_screenlocstrings
+D $F014 Menu screenlocstrings.
 D $F014 "CONFIRM Y OR N"
 B $F014 #CALL:decode_screenlocstring($F014)
 ;
-b $F2AD Key choice prompt strings.
+b $F2AD key_choice_prompt_strings
+D $F2AD Key choice prompt strings.
 D $F2AD "CHOOSE KEYS"
 B $F2AD #CALL:decode_screenlocstring($F2AD)
 D $F2BB "LEFT"
@@ -841,7 +853,8 @@ B $F2D2 #CALL:decode_screenlocstring($F2D2)
 D $F2DA "FIRE"
 B $F2DA #CALL:decode_screenlocstring($F2DA)
 ;
-b $F446 Key choice screenlocstrings.
+b $F446 key_choice_screenlocstrings
+D $F446 Key choice screenlocstrings.
 D $F446 "CONTROLS"
 B $F446 #CALL:decode_screenlocstring($F446)
 D $F451 "0 SELECT"
@@ -865,7 +878,8 @@ c $A5BF screenlocstring_plot
 
 ; Messages - messages printed at the bottom of the screen when things happen.
 ;
-b $7DCD messages_table (non-ASCII: encoded to match the font; FF terminated).
+b $7DCD messages_table
+D $7DCD Non-ASCII: encoded to match the font; FF terminated.
 W $7DCD Array of pointers to messages.
 D $7DF5 "MISSED ROLL CALL"
 B $7DF5 #CALL:decode_stringFF($7DF5)
@@ -902,7 +916,8 @@ B $7EDF #CALL:decode_stringFF($7EDF)
 D $7EEE "ITEM DISCOVERED"
 B $7EEE #CALL:decode_stringFF($7EEE)
 ;
-b $F025 More messages.
+b $F025 more_messages
+D $F025 More messages.
 D $F026 "HE TAKES THE BRIBE"
 B $F026 #CALL:decode_stringFF($F026)
 D $F039 "AND ACTS AS DECOY"
@@ -914,7 +929,8 @@ B $F04B #CALL:decode_stringFF($F04B)
 
 ; Counted strings.
 ;
-b $F2EB Counted strings (encoded to match font; first byte is count).
+b $F2EB counted_strings
+D $F2EB Counted strings (encoded to match font; first byte is count).
 D $F2EB "ENTER"
 B $F2EB #CALL:decode_stringcounted($F2EB)
 D $F2F1 "CAPS"
@@ -928,7 +944,8 @@ B $F2FD #CALL:decode_stringcounted($F2FD)
 
 ; Static tiles.
 ;
-b $7F00 Static tiles (those used on-screen for medals, etc.) 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
+b $7F00 static_tiles
+D $7F00 Tiles used on-screen for medals, etc. 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
 D $7F00 #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles)
 B $7F00,9 blank
 ;
@@ -1019,7 +1036,7 @@ B $819A,9 bell_middle_middle
 
 ; Interior object tile refs.
 ;
-b $7095 Interior object tile refs.
+b $7095 interior_object_tile_refs
 W $7095 Array of pointer to interior object tile refs, 54 entries long (== number of interior room objects).
 B $7101 Object tile refs 0
 B $711B Object tile refs 1
@@ -1078,7 +1095,7 @@ B $75B3 the block which terminates the object tile refs [unsure what -- it could
 
 ; More object tile refs.
 ;
-b $7738 More object tile refs.
+b $7738 more_object_tile_refs
 W $7738 Array of pointers to object tile refs, 46 entries long.
 B $7794,1 could be a terminating $FF
 B $7795 Object tile refs
@@ -1124,7 +1141,7 @@ B $7838 Object tile refs
 
 ; Characters.
 ;
-b $7612 character_structs.
+b $7612 character_structs
 D $7612 Array, 26 long, of 7-byte structures.
 B $7612 characterstruct_0:
 B $7619 characterstruct_1:
@@ -1153,7 +1170,7 @@ B $76B3 characterstruct_23: prisoner who sits at bench position C
 B $76BA characterstruct_24:
 B $76C1 characterstruct_25:
 ;
-b $76C8 item_structs.
+b $76C8 item_structs
 D $76C8 Array, 16 long, of 7-byte structures. These are 'characters' but seem to be the game items.
 B $76C8 itemstruct_0: wiresnips (<- item_to_itemstruct, pick_up_related)
 B $76CF itemstruct_1: shovel
@@ -1174,7 +1191,7 @@ B $7731 itemstruct_15: compass
 
 ; ------------------------------------------------------------------------------
 
-b $F076 tile refs for statics
+b $F076 tile_refs_for_statics
 B $F076 statics_flagpole (struct: w(addr),flags+length,attrs[length])
 B $F08D statics_game_screen_left_border
 B $F0A4 statics_game_screen_right_border
@@ -1196,7 +1213,8 @@ B $F15E statics_corner_br
 
 ; ------------------------------------------------------------------------------
 
-b $EBC5 Table of pointers, 30 long, to byte arrays [unsure]  -- probably masks
+b $EBC5 table_of_pointers_30_long
+D $EBC5 Table of pointers, 30 long, to byte arrays [unsure]  -- probably masks
 W $EBC5 -> $E55F
 W $EBC7 -> $E5FF
 W $EBC9 -> $E61E
@@ -1228,7 +1246,7 @@ W $EBFB -> $EA35
 W $EBFD -> $EA43
 W $EBFF -> $EA4A
 ;
-b $E55F probably mask data
+b $E55F probably_mask_data
 B $E55F probably masks
 B $E5FF probably masks
 B $E61E probably masks
@@ -1487,58 +1505,123 @@ B $6890,16,4 super_tile $D9 #CALL:supertile($6890)
 
 ; ------------------------------------------------------------------------------
 
+b $68A0 indoor_room_index
+D $68A0 Zero if outdoors.
 
-b $68A0 indoor_room_index (zero if outdoors)
+; ------------------------------------------------------------------------------
+
 b $68A1 current_door
-b $69A0 unknown - fourteen bytes long
-w $6B79 pointers to six beds (beds of active prisoners) (note that the top hut has prisoners permanently in bed)
-w $6B85 four byte structures (which are ranged checked by routine at #R$B29F)
+D $68A1 Index.
+
+; ------------------------------------------------------------------------------
+
+b $69A0 byte_69A0
+D $69A0 Fourteen bytes long.
+
+; ------------------------------------------------------------------------------
+
+w $6B79 beds
+D $6B79 6x pointers to bed. These are the beds of active prisoners.
+D $6B79 Note that the top hut has prisoners permanently in bed.
+
+; ------------------------------------------------------------------------------
+
+w $6B85 four_byte_structures
+D $6B85 Four-byte structures which are ranged checked by routine at #R$B29F.
+
+; ------------------------------------------------------------------------------
+
 u $81A3 UNUSED?
-b $A69E bitmap font: 0..9, A..Z (omitting O), space, full stop
+
+; ------------------------------------------------------------------------------
+
+b $A69E bitmap_font
+D $A69E 0..9, A..Z (omitting O), space, full stop
+
+; ------------------------------------------------------------------------------
+
 b $A7C7 plot_game_screen_x
+
+; ------------------------------------------------------------------------------
+
 b $AB31 jumptable
-b $AE75 searchlight_related (<- nighttime, searchlight)
-w $AE76 word_AE76 (<- nighttime)
+
+; ------------------------------------------------------------------------------
+
+b $AE75 searchlight_related
+D $AE75 (<- nighttime, searchlight)
+
+; ------------------------------------------------------------------------------
+
+w $AE76 word_AE76
+D $AE76 (<- nighttime)
+
+; ------------------------------------------------------------------------------
+
 u $CB5F UNUSED
+
+; ------------------------------------------------------------------------------
+
 u $CB92 UNUSED
-b $F1C9 twenty three bytes [unsure] -- main copies this somewhere
-b $FA48 music tuning table
+
+; ------------------------------------------------------------------------------
+
+b $F1C9 twenty_three_bytes
+D $F1C9 main copies this somewhere
+
+; ------------------------------------------------------------------------------
+
+b $FA48 music_tuning_table
 
 ; ------------------------------------------------------------------------------
 
 ; something plotter ish
-w $E0E0 pairs_of_offsets (jumps0..5) (<- sub_DC41, sub_E420)
-W $E0E0 jump0
-W $E0E2 jump1
-W $E0E4 jump2
-W $E0E6 jump3
-W $E0E8 jump4
-W $E0EA jump5
-
-w $E0EC pairs_of_offsets2 (<- sub_E420)
-W $E0EC
-W $E0EE
-W $E0F0
-W $E0F2
-W $E0F4
-W $E0F6
-W $E0F8
-W $E0FA
-W $E0FC
-W $E0FE -> masked sprite plotter
-
-u $E100 UNUSED? (unsure if related to the above pairs_of_offsets2 table)
-
-
-b $783A unknown - bytes, 156 long, maybe
-
-b $78D6 four byte structs (<- sub 69DC)
-
-b $7AC6 unk_7AC6, 3 bytes long (<- solitary)
+w $E0E0 pairs_of_offsets
+D $E0E0 (<- sub_DC41, sub_E420)
+  $E0E0 jump0
+  $E0E2 jump1
+  $E0E4 jump2
+  $E0E6 jump3
+  $E0E8 jump4
+  $E0EA jump5
 
 ; ------------------------------------------------------------------------------
 
-w $7B16 item actions jump table
+w $E0EC pairs_of_offsets_2
+D $E0EC (<- sub_E420)
+  $E0EC
+  $E0EE
+  $E0F0
+  $E0F2
+  $E0F4
+  $E0F6
+  $E0F8
+  $E0FA
+  $E0FC
+  $E0FE Pointer to masked sprite plotter.
+
+; ------------------------------------------------------------------------------
+
+u $E100 UNUSED? (unsure if related to the above pairs_of_offsets2 table)
+
+; ------------------------------------------------------------------------------
+
+b $783A byte_783A
+D $783A bytes, 156 long, maybe
+
+; ------------------------------------------------------------------------------
+
+b $78D6 four_byte_structs
+D $78D6 (<- sub 69DC)
+
+; ------------------------------------------------------------------------------
+
+b $7AC6 byte_7AC6
+D $7AC6 3 bytes long (<- solitary)
+
+; ------------------------------------------------------------------------------
+
+w $7B16 item_actions_jump_table
   $7B16 action_wiresnips
   $7B18 action_shovel          
   $7B1A action_lockpick        
@@ -1558,36 +1641,33 @@ w $7B16 item actions jump table
 
 ; ------------------------------------------------------------------------------
 
-b $7CFC message buffer stuff
-
-B $7CFC message_buffer
-
-B $7D0F message_display_counter
-
-B $7D10 message_display_index
+b $7CFC message_buffer_stuff
+  $7CFC message_buffer
+  $7D0F message_display_counter
+  $7D10 message_display_index
 D $7D10 If 128 then shunt_buffer_back_by_two. If > 128 then wipe message. Else ?
-
 W $7D11 message_buffer_pointer
-
 W $7D13 current_message_character
 
 ; ------------------------------------------------------------------------------
 
-b $81A3 mystery byte
+b $81A3 mystery_byte_81A3
+
+; ------------------------------------------------------------------------------
 
 w $81A4 word_81A4
 w $81A6 word_81A6
 w $81A8 word_81A8
 b $81AA word_81AA
-b $81AB mystery byte
+b $81AB mystery_byte_81AB
 w $81AC word_81AC
 w $81AE word_81AE
 w $81B0 word_81B0
 b $81B2 byte_81B2
 b $81B3 byte_81B3
 b $81B4 byte_81B4
-b $81B5 map position related 1
-b $81B6 map position related 2
+b $81B5 map_position_related_1
+b $81B6 map_position_related_2
 b $81B7 byte_81B7
 
 ; ------------------------------------------------------------------------------
@@ -1597,24 +1677,60 @@ b $81B9 player_map_position_perhapsY
 
 ; ------------------------------------------------------------------------------
 
-b $81BA mystery byte
+b $81BA mystery_byte_81BA
+
+; ------------------------------------------------------------------------------
+
 w $81BB map_position_maybe
-b $81BD byte_81BD (<- nighttime, something_then_decrease_morale)
-b $81BE first word of room structure [unsure]
-b $81BF byte_81BF (seems to hold many zeroes)
-b $81D6 door related (<- indoors maybe, <- open door)
-B $81D9 door related (final byte?)
-b $81DA unk_81DA (<- select_room_maybe, sub_B916)
-b $8213 possibly holds an item
+
+; ------------------------------------------------------------------------------
+
+b $81BD byte_81BD
+D $81BD (<- nighttime, something_then_decrease_morale)
+
+; ------------------------------------------------------------------------------
+
+b $81BE first_word_of_room_structure
+D $81BE [unsure]
+
+; ------------------------------------------------------------------------------
+
+b $81BF byte_81BF
+D $81BF Seems to hold many zeroes.
+
+; ------------------------------------------------------------------------------
+
+b $81D6 door_related
+D $81D6 (<- indoors maybe, <- open door)
+D $81D9 Final byte?
+
+; ------------------------------------------------------------------------------
+
+b $81DA byte_81DA
+D $81DA (<- select_room_maybe, sub_B916)
+
+; ------------------------------------------------------------------------------
+
+b $8213 possibly_holds_an_item
+
+; ------------------------------------------------------------------------------
+
 b $8214 byte_8214
-w $8215 items held (two byte slots. initialised to 0xFFFF meaning no item in either slot)
+
+; ------------------------------------------------------------------------------
+
+w $8215 items_held
+D $8215 Two byte slots. initialised to 0xFFFF meaning no item in either slot.
+
+; ------------------------------------------------------------------------------
+
 b $8217 character_index
 
 ; ------------------------------------------------------------------------------
 
 ; Tiles.
 ;
-b $8218 Tiles.
+b $8218 tiles
 ;
 D $8218 #UDGARRAY1,7,4,1;$8218-$858F-8(exterior-tiles0)
 D $8590 #UDGARRAY1,7,4,1;$8590-$8A17-8(exterior-tiles1)
@@ -1639,7 +1755,8 @@ B $9768,8 empty tile (<- plot_indoor_tiles, sub_BCAA)
 
 ; ------------------------------------------------------------------------------
 
-b $A12F game_counter: counts 00..FF then wraps.
+b $A12F game_counter
+D $A12F Counts 00..FF then wraps.
 
 ; ------------------------------------------------------------------------------
 
@@ -1648,37 +1765,80 @@ D $A130 0 => ring indefinitely; 255 => don't ring; N => ring for N calls
 
 ; ------------------------------------------------------------------------------
 
-b $A131 mystery byte
-b $A132 score_digits
-b $A137 breakfast_related
-b $A138 naughty_flag_perhaps
-b $A139 morale_related_also
-b $A13A morale_related
-b $A13C morale
-b $A13D dispatch_counter
-b $A13E byte_A13E
-b $A13F bed_related_perhaps
-b $A140 displayed_morale_maybe [displayed morale lags behind actual morale, as the flag moves slowly to its target]
-w $A141 moraleflag_screen_address
-w $A143 ptr_to_door_being_lockpicked: address of door in which bit 7 is cleared when picked
-b $A145 user_locked_out_until: game time until user control is restored (e.g. when picking a lock or cutting wire)
-b $A146 day_or_night ($00 = daytime, $FF = nighttime)
+b $A131 mystery_byte_A131
 
 ; ------------------------------------------------------------------------------
 
-b $A147 bell ringing bitmaps
+b $A132 score_digits
+
+; ------------------------------------------------------------------------------
+
+b $A137 breakfast_related
+
+; ------------------------------------------------------------------------------
+
+b $A138 naughty_flag_perhaps
+
+; ------------------------------------------------------------------------------
+
+b $A139 morale_related_also
+b $A13A morale_related
+b $A13C morale
+
+; ------------------------------------------------------------------------------
+
+b $A13D dispatch_counter
+
+; ------------------------------------------------------------------------------
+
+b $A13E byte_A13E
+
+; ------------------------------------------------------------------------------
+
+b $A13F bed_related_perhaps
+
+; ------------------------------------------------------------------------------
+
+b $A140 displayed_morale_maybe
+D $A140 Displayed morale lags behind actual morale, as the flag moves slowly to its target.
+
+; ------------------------------------------------------------------------------
+
+w $A141 moraleflag_screen_address
+
+; ------------------------------------------------------------------------------
+
+w $A143 ptr_to_door_being_lockpicked
+D $A143 Address of door in which bit 7 is cleared when picked.
+
+; ------------------------------------------------------------------------------
+
+b $A145 user_locked_out_until
+D $A145 Game time until user control is restored (e.g. when picking a lock or cutting wire).
+
+; ------------------------------------------------------------------------------
+
+b $A146 day_or_night
+D $A146 $00 = daytime, $FF = nighttime.
+
+; ------------------------------------------------------------------------------
+
+b $A147 bell_ringer_bitmaps
 B $A147 bell_ringer_bitmap_off
 B $A153 bell_ringer_bitmap_on
 
 ; ------------------------------------------------------------------------------
 
-b $A7C6 used by sub_AAFF
+b $A7C6 used_by_sub_AAFF
+
+; ------------------------------------------------------------------------------
 
 w $AD29 word_AD29
 
 ; ------------------------------------------------------------------------------
 
-b $B53E sixlong_things -- probably boundaries
+b $B53E sixlong_things
+D $B53E Probably boundaries.
   $B53E,6
   $B544,6
   $B54A,6
@@ -1694,7 +1854,8 @@ b $B53E sixlong_things -- probably boundaries
 
 ; ------------------------------------------------------------------------------
 
-b $B586 wiresnips_related_table -- probably snippable places
+b $B586 wiresnips_related_table
+D $B586 Probably snippable places.
   $B586,6
   $B58C,6
   $B592,6
@@ -1710,10 +1871,20 @@ b $B586 wiresnips_related_table -- probably snippable places
 
 ; ------------------------------------------------------------------------------
 
-b $B819 10 x 3-byte structs
-B $B819,30,3 looks_like_character_reset_data -- 10 x 3-byte structs
+b $B819 looks_like_character_reset_data
+D $B819 10 x 3-byte structs
+  $B819,30,3 ...
+
+; ------------------------------------------------------------------------------
+
 b $B837 byte_B837
+
+; ------------------------------------------------------------------------------
+
 b $B838 byte_B838
+
+; ------------------------------------------------------------------------------
+
 w $B839 word_B839
 
 ; ------------------------------------------------------------------------------
@@ -1989,32 +2160,69 @@ D $BCEE #CALL:map($BCEE, 54, 34)
 
 ; ------------------------------------------------------------------------------
 
-w $C41A (<- increment_word_C41A_low_byte_wrapping_at_15)
+w $C41A word_C41A
+D $C41A [unknown] (<- increment_word_C41A_low_byte_wrapping_at_15)
 
-b $CC31 reset_data (<- solitary)
-b $EA7C stru_EA7C - 47 x seven byte structs
-b $EC01 58 8-byte structs.
+; ------------------------------------------------------------------------------
 
-b $F05D Gates and doors.
-B $F05D,2 gates_flags
-B $F05F,7 door_flags
-B $F066,2 unknown
+b $CC31 reset_data
+D $CC31 (<- solitary)
+
+; ------------------------------------------------------------------------------
+
+b $EA7C stru_EA7C
+D $EA7C 47x 7-byte structs.
+  $EA7C,329,7 Elements.
+
+; ------------------------------------------------------------------------------
+
+b $EC01 stru_EC01
+D $EC01 58x 8-byte structs.
+  $EC01,464,8 Elements.
+
+; ------------------------------------------------------------------------------
+
+b $F05D gates_and_doors
+  $F05D,2 gates_flags
+  $F05F,7 door_flags
+  $F066,2 unknown
+
+; ------------------------------------------------------------------------------
 
 c $F068 jump_to_main
 
-b $F06B key_defs -- user-configured keys
+; ------------------------------------------------------------------------------
+
+b $F06B key_defs
+D $F06B User-defined keys.
+
+; ------------------------------------------------------------------------------
 
 b $F075 counter_of_something
 
+; ------------------------------------------------------------------------------
 
-b $F2E1 unk_F2E1 (<- choose_keys)
-b $F2E2 keyboard port hi bytes (zero terminated)
+b $F2E1 byte_F2E1
+D $F2E1 (<- choose_keys)
 
+; ------------------------------------------------------------------------------
+
+b $F2E2 keyboard_port_hi_bytes
+D $F2E2 Zero terminated.
+
+; ------------------------------------------------------------------------------
 
 w $EDD1 saved_sp
-w $EDD3 game screen scanline start addresses
+
+; ------------------------------------------------------------------------------
+
+w $EDD3 game_screen_scanline_start_addresses
+
+; ------------------------------------------------------------------------------
 
 u $EFFB UNUSED?
+
+; ------------------------------------------------------------------------------
 
 
 
@@ -2059,7 +2267,8 @@ u $EFFB UNUSED?
 
 ; ------------------------------------------------------------------------------
 
-c $68A2 sub_68A2 -- looks like it's resetting stuff
+c $68A2 sub_68A2
+D $68A2 Looks like it's resetting stuff.
   $68A2 ...
   $68DA A = $801C; (room index thing)
   $68DD indoor_room_index = A;
@@ -2070,7 +2279,9 @@ c $68A2 sub_68A2 -- looks like it's resetting stuff
 
 ; ------------------------------------------------------------------------------
 
-c $6920 tunnel_related -- probably when emerging from tunnel -- this is resetting the character sprite set to prisoner
+c $6920 tunnel_related
+D $6920 Probably called when emerging from tunnel.
+D $6920 This is resetting the character sprite set to prisoner.
   $6929 ...
   $6926 A = indoor_room_index;
   $6929 if (A < room_29_secondtunnelstart) goto not_in_a_tunnel;
@@ -2137,7 +2348,11 @@ D $6A27 Wipe the visible tiles array at $F0F8 (24 * 16 = 408);
 ; ------------------------------------------------------------------------------
 
 c $6A35 select_room_maybe
-c $6AB5 draw_object_to_tiles [unsure]
+
+; ------------------------------------------------------------------------------
+
+c $6AB5 draw_object_to_tiles
+D $6AB5 [unsure]
 
 ; ------------------------------------------------------------------------------
 
@@ -2145,11 +2360,18 @@ c $6B42 plot_indoor_tiles
 
 ; ------------------------------------------------------------------------------
 
-c $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
-  $7AF0 use_item_B
-  $7AF5 use_item_A
+c $7AC9 check_for_pick_up_keypress
+D $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
+  $7AD3 check_for_drop_keypress:
+  $7ADD check_for_use_item_A_keypress:
+  $7AE7 check_for_use_item_B_keypress:
+  $7AEF nop_ret: return;
+
+c $7AF0 use_item_B
+  $7AF5 use_item_A:
   $7AFB (pointless_jump)
   $7AFD ...
+  $7B15 return;
 
 ; ------------------------------------------------------------------------------
 
@@ -2327,7 +2549,8 @@ c $9D78 main_loop_setup
 
 ; ------------------------------------------------------------------------------
 
-c $9DCF check_morale (<- main_loop)
+c $9DCF check_morale
+D $9DCF (<- main_loop)
   $9DCF if (morale >= 2) return;
   $9DD5 queue_message_for_display(message_MORALE_IS_ZERO, 0);
   $9DDB *(morale_related + 1) = 0xFF; // mystery
@@ -2336,7 +2559,8 @@ c $9DCF check_morale (<- main_loop)
 
 ; ------------------------------------------------------------------------------
 
-c $9DE5 check for 'game cancel' keypress
+c $9DE5 keyscan_cancel
+D $9DE5 Check for 'game cancel' keypress.
   $9DE5 if (!shift_pressed) return;
   $9DED if (!space_pressed) return;
   $9DF4 screen_reset_perhaps(); user_confirm(); if (confirmed) looks_like_a_reset_fn();
@@ -2408,7 +2632,8 @@ D $9E98 Locks user out until lock is picked.
 
 ; ------------------------------------------------------------------------------
 
-c $9EB2 wire_snipped -- locks user out until wire is snipped
+c $9EB2 wire_snipped
+D $9EB2 Locks user out until wire is snipped.
   $9EB2 A = user_locked_out_until - game_counter;
   $9EB9 if (A == 0) goto wire_successfully_snipped;
   $9EBB if (A >= 4) return;
@@ -2422,31 +2647,35 @@ c $9EB2 wire_snipped -- locks user out until wire is snipped
 
 ; ------------------------------------------------------------------------------
 
-b $9EE0 Indexed by $800E.
+b $9EE0 byte_9EE0
+D $9EE0 Indexed by $800E.
 
 ; ------------------------------------------------------------------------------
 
-b $9EE4 twentyonelong -- 7 structs, 3 wide. maps bytes to offsets
-  $9EE4,3 byte_to_offset <42, unk_9EF9>
-  $9EE7,3 byte_to_offset < 5, unk_9EFC>
-  $9EEA,3 byte_to_offset <14, unk_9F01>
-  $9EED,3 byte_to_offset <16, unk_9F08>
-  $9EF0,3 byte_to_offset <44, unk_9F0E>
-  $9EF3,3 byte_to_offset <43, unk_9F11>
-  $9EF6,3 byte_to_offset <45, unk_9F13>
-  $9EF9 unk_9EF9
-  $9EFC unk_9EFC
-  $9F01 unk_9F01
-  $9F08 unk_9F08
-  $9F0E unk_9F0E
-  $9F11 unk_9F11
-  $9F13 unk_9F13
+b $9EE4 twentyonelong
+D $9EE4 7 structs, 3 wide. maps bytes to offsets.
+  $9EE4,3 byte_to_offset <42, byte_9EF9>
+  $9EE7,3 byte_to_offset < 5, byte_9EFC>
+  $9EEA,3 byte_to_offset <14, byte_9F01>
+  $9EED,3 byte_to_offset <16, byte_9F08>
+  $9EF0,3 byte_to_offset <44, byte_9F0E>
+  $9EF3,3 byte_to_offset <43, byte_9F11>
+  $9EF6,3 byte_to_offset <45, byte_9F13>
+  $9EF9 byte_9EF9
+  $9EFC byte_9EFC
+  $9F01 byte_9F01
+  $9F08 byte_9F08
+  $9F0E byte_9F0E
+  $9F11 byte_9F11
+  $9F13 byte_9F13
 
 ; ------------------------------------------------------------------------------
 
-b $9F15 (<- in_permitted_area)
+b $9F15 byte_9F15
+D $9F15 (<- in_permitted_area)
 
-c $9F21 in_permitted_area [unsure] -- could be as general as bounds detection
+c $9F21 in_permitted_area
+D $9F21 [unsure] -- could be as general as bounds detection
   $A007 a second in_permitted_area entry point
 
 ; ------------------------------------------------------------------------------
@@ -2580,7 +2809,8 @@ R $A15F A Attribute byte.
 
 ; ------------------------------------------------------------------------------
 
-b $A173 timed_events array (15 event structures)
+b $A173 timed_events
+D $A173 Array of 15 event structures.
   $A173 {   0, #D$A1D3 }
   $A176 {   8, #D$A1E7 }
   $A179 {  12, #D$A228 }
@@ -2599,7 +2829,8 @@ b $A173 timed_events array (15 event structures)
 
 ; ------------------------------------------------------------------------------
 
-c $A1A0 dispatch_table_thing // dispatches time-based game events like parcels, meals, exercise and roll calls
+c $A1A0 dispatch_table_thing
+D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll calls.
 
 c $A1C3 event_night_time
 
@@ -2630,91 +2861,166 @@ c $A26A event_search_light
 
 ; ------------------------------------------------------------------------------
 
-b $A27F tenlong [unsure] (<- sub_A35F, sub_A373)
+b $A27F tenlong
+D $A27F [unsure] (<- sub_A35F, sub_A373)
+
+; ------------------------------------------------------------------------------
 
 c $A289 sub_A289
 
+; ------------------------------------------------------------------------------
+
 c $A2E2 sub_A2E2
+
+; ------------------------------------------------------------------------------
 
 c $A33F set_target_location
   $A33F if (morale_related) return;
   $A344 $8001 &= ~(1<<6); $8002 = b; $8003 = c; return;
 
+; ------------------------------------------------------------------------------
+
 c $A351 sub_A351
 
-c $A35F sub_A35F -- uses tenlong structure
+; ------------------------------------------------------------------------------
 
-c $A373 sub_A373 -- uses tenlong structure
+c $A35F sub_A35F
+D $A35F Uses tenlong structure.
+
+; ------------------------------------------------------------------------------
+
+c $A373 sub_A373
+D $A373 Uses tenlong structure.
+
+; ------------------------------------------------------------------------------
 
 c $A38C sub_A38C
-U $A3A9 mystery byte
 
-c $A3AA not set
+; ------------------------------------------------------------------------------
 
-c $A3B3 found [possibly a tail of above sub]
+U $A3A9 mystery_byte_A3A9
+
+; ------------------------------------------------------------------------------
+
+c $A3AA not_set
+
+; ------------------------------------------------------------------------------
+
+c $A3B3 found
+D $A3B3 [possibly a tail of above sub]
+
+; ------------------------------------------------------------------------------
 
 c $A3ED store_banked_A_then_C_at_HL
 
-c $A3F3 sub_A3F3 -- checks character indexes, sets target locations, ...
+; ------------------------------------------------------------------------------
+
+c $A3F3 sub_A3F3
+D $A3F3 Checks character indexes, sets target locations, ...
+
+; ------------------------------------------------------------------------------
 
 c $A3F8 varA13E_is_zero
 
+; ------------------------------------------------------------------------------
+
 c $A420 character_sits
+  $A444 character_sleeps
+D $A462 (common end of above two routines)
 
-c $A444 character_sleeps
-
-c $A462 (common end of above two routines)
+; ------------------------------------------------------------------------------
 
 c $A47F player_sits
+  $A489 player_sleeps
+D $A491 (common end of the above two routines)
 
-c $A489 player_sleeps
+; ------------------------------------------------------------------------------
 
-c $A491 (common end of the above two routines)
+c $A4A9 set_location_0xE00
+  $A4A9 set_target_location(0x0E00);
 
-c $A4A9 sets a target location 0E00
+; ------------------------------------------------------------------------------
 
-c $A4B7 sets a target location 8E04
+c $A4B7 set_location_0x8E04
+  $A4B7 set_target_location(0x8E04);
 
-c $A4C5 sets a target location 1000
+; ------------------------------------------------------------------------------
 
-c $A4D3 sub_A4D3 -- something character related [very similar to the routine at $A3F3]
+c $A4C5 set_location_0x1000
+  $A4C5 set_target_location(0x1000);
 
-c $A4D8 varA13E_is_zero_anotherone / sets a target location 2B00
+; ------------------------------------------------------------------------------
+
+c $A4D3 sub_A4D3
+D $A4D3 Something character related [very similar to the routine at $A3F3].
+
+; ------------------------------------------------------------------------------
+
+c $A4D8 varA13E_is_zero_anotherone
+D $A4D8 sets a target location 2B00
+
+; ------------------------------------------------------------------------------
 
 c $A4FD sub_A4FD
 
-c $A50B screen reset [unsure]
+; ------------------------------------------------------------------------------
+
+c $A50B screen_reset
+D $A50B [unsure]
+
+; ------------------------------------------------------------------------------
 
 c $A51C escaped
 
-c $A58C keyscan all
+; ------------------------------------------------------------------------------
+
+c $A58C keyscan_all
+
+; ------------------------------------------------------------------------------
 
 c $A59C do_we_have_required_objects_for_escape
 R $A59C HL (single) item slot
 R $A59C C previous return value
-C $A5A3 do_we_have_compass
-C $A5AA do_we_have_papers
-C $A5B1 do_we_have_purse
-C $A5B8 do_we_have_uniform
+  $A5A3 do_we_have_compass
+  $A5AA do_we_have_papers
+  $A5B1 do_we_have_purse
+  $A5B8 do_we_have_uniform
 
-c $A7C9 sub_A7C9 -- resetish
+; ------------------------------------------------------------------------------
+
+c $A7C9 sub_A7C9
+D $A7C9 resetish
+
+; ------------------------------------------------------------------------------
 
 c $A80A sub_A80A
 
+; ------------------------------------------------------------------------------
+
 c $A819 sub_A819
 
-c $A8A2 sub_A8A2 -- resetish
+; ------------------------------------------------------------------------------
+
+c $A8A2 sub_A8A2
+D $A8A2 resetish
+
+; ------------------------------------------------------------------------------
 
 c $A8CF sub_A8CF
 
+; ------------------------------------------------------------------------------
+
 c $A8E7 sub_A8E7
+
+; ------------------------------------------------------------------------------
 
 c $A9A0 sub_A9A0
 
 ; -----------------------------------------------------------------------------
 
-c $A9AD plot_a_tile_perhaps -- plots tiles to buffer
-R $A9AD HL Likely the supertile index (used to select the correct tile group).
+c $A9AD plot_a_tile_perhaps
+D $A9AD Plots tiles to buffer.
+R $A9AD HL Supertile index (used to select the correct tile group).
 R $A9AD A  Tile index
   $A9AD ...
   $A9B0 tiles = exterior_tiles_1;
@@ -2741,9 +3047,14 @@ c $AA6C map_shunt_3
 
 c $AA8D map_unshunt_3
 
+; ------------------------------------------------------------------------------
+
 c $AAB2 called_from_main_loop_10
 
-w $AB31 jump table of (map_move_1, 2, 3, 4)
+; ------------------------------------------------------------------------------
+
+w $AB31 map_move_jump_table
+D $AB31 jump table of (map_move_1, 2, 3, 4)
 C $AB39 map_move_1
 C $AB44 map_move_2
 C $AB4F map_move_3
@@ -2751,12 +3062,15 @@ C $AB5A map_move_4
 
 ; -----------------------------------------------------------------------------
 
-b $AB66 Zoombox? stuff.
-  $AB66 zoombox related 1
-  $AB67 zoombox horizontal count
-  $AB68 zoombox related 3
-  $AB69 zoombox vertical count
+b $AB66 zoombox_stuff
+D $AB66 [unsure]
+  $AB66 zoombox_related_1
+  $AB67 zoombox_horizontal_count
+  $AB68 zoombox_related_3
+  $AB69 zoombox_vertical_count
   $AB6A game_screen_attribute
+
+; -----------------------------------------------------------------------------
 
 c $AB6B choose_game_screen_attributes
   $AB6B A = (indoor_room_index);
@@ -2772,6 +3086,8 @@ c $AB6B choose_game_screen_attributes
   $AB85 set_attribute_from_A: (game_screen_attribute) = A;
   $AB88 return;
 
+; -----------------------------------------------------------------------------
+
 c $AB89 choose_attribute_for_tunnel
   $AB89 C = attribute_RED_OVER_BLACK;
   $AB8B HL = (items_held);
@@ -2783,10 +3099,14 @@ c $AB89 choose_attribute_for_tunnel
   $AB9C A = attribute_BLUE_OVER_BLACK;
   $AB9E goto set_attribute_from_A;
 
+; -----------------------------------------------------------------------------
+
 c $ABA0 zoombox
-  $ABF9 zoombox 1
-  $AC6F zoombox 2
-  $ACFC zoombox draw tile
+  $ABF9 zoombox_1
+  $AC6F zoombox_2
+  $ACFC zoombox_draw_tile
+
+; -----------------------------------------------------------------------------
 
 b $AF5E zoombox tiles
   $AF5E zoombox_tile_wire_tl
@@ -2800,26 +3120,50 @@ b $AF5E zoombox tiles
 
 b $AF8E bribe_related
 
+; ------------------------------------------------------------------------------
+
 c $AD59 sub_AD59
+
+; ------------------------------------------------------------------------------
 
 c $ADBD nighttime
 
+; ------------------------------------------------------------------------------
+
 c $AE78 something_then_decrease_morale_10
 
+; ------------------------------------------------------------------------------
+
 c $AEB8 searchlight
-B $AF3E bitmap: searchlight shape (circle)
+B $AF3E searchlight_shape
+D $AF3E Bitmap circle.
+
+; ------------------------------------------------------------------------------
 
 c $AF8F sub_AF8F
 
+; ------------------------------------------------------------------------------
+
 c $AFDF sub_AFDF
 
-b $B0F8 four bytes (<- sub_AFDF)
+; ------------------------------------------------------------------------------
+
+b $B0F8 four_bytes_B0F8
+D $B0F8 (<- sub_AFDF)
+
+; ------------------------------------------------------------------------------
 
 c $B0FC loc_B0FC
 
-c $B107 use_bribe -- 'he takes the bribe' 'and acts as decoy'
+; ------------------------------------------------------------------------------
 
-c $B14C sub_B14C -- outdoor drawing?
+c $B107 use_bribe
+D $B107 'he takes the bribe' 'and acts as decoy'
+
+; ------------------------------------------------------------------------------
+
+c $B14C sub_B14C
+D $B14C Outdoor drawing?
 
 ; ------------------------------------------------------------------------------
 
@@ -2839,17 +3183,30 @@ R $B1C7 BC Result of (A << 3).
 
 c $B1D4 is_door_open
 
+; ------------------------------------------------------------------------------
+
 c $B1F5 door_handling
+
+; ------------------------------------------------------------------------------
 
 c $B252 sub_B252
 
+; ------------------------------------------------------------------------------
+
 c $B295 rotate_A_left_2_widening_to_BC
+
+; ------------------------------------------------------------------------------
 
 c $B29F sub_B29F
 
+; ------------------------------------------------------------------------------
+
 c $B2FC resetty
 
-c $B32D indoors [unsure]
+; ------------------------------------------------------------------------------
+
+c $B32D indoors
+D $B32D [unsure]
 
 ; -----------------------------------------------------------------------------
 
@@ -3011,45 +3368,85 @@ c $B5CE called_from_main_loop_9
 
 c $B71B reset_something
 
-c $B75A looks_like_a_reset_function [unsure]
+; -----------------------------------------------------------------------------
+
+c $B75A looks_like_a_reset_function
+D $B75A [unsure]
   $B75A ...
   $B789 $8015 = sprite_prisoner_tl_4;
   $B78F ...
   $B79A return;
 
-c $B79B reset map and characters [unsure]
+; -----------------------------------------------------------------------------
+
+c $B79B reset_map_and_characters
+D $B79B [unsure]
+
+; -----------------------------------------------------------------------------
 
 c $B83B resetty
 
+; -----------------------------------------------------------------------------
+
 c $B866 called_from_main_loop_11
+
+; -----------------------------------------------------------------------------
 
 c $B89C no_idea
 
-c $B916 sub_B916 -- sets attr of something, checks indoor room index, ...
+; -----------------------------------------------------------------------------
+
+c $B916 sub_B916
+D $B916 Sets attr of something, checks indoor room index, ...
+
+; -----------------------------------------------------------------------------
 
 c $BADC sub_BADC
 
+; -----------------------------------------------------------------------------
+
 #c $BAF8 ff_anded_with_ff
+
+; -----------------------------------------------------------------------------
 
 c $BB98 called_from_main_loop_3
 
+; -----------------------------------------------------------------------------
+
 c $BCAA sub_BCAA
+
+; -----------------------------------------------------------------------------
 
 c $C41C called_from_main_loop_7
 
+; -----------------------------------------------------------------------------
+
 c $C47E called_from_main_loop_6
+
+; -----------------------------------------------------------------------------
 
 c $C4E0 sub_C4E0
 
+; -----------------------------------------------------------------------------
+
 c $C5D3 reset_object
 
+; -----------------------------------------------------------------------------
+
 c $C651 sub_C651
+
+; -----------------------------------------------------------------------------
 
 c $C6A0 move_characters
 U $C6FD,2 UNUSED?
 C $C6FF
 
-c $C79A sub_C79A [leaf]
+; -----------------------------------------------------------------------------
+
+c $C79A sub_C79A
+D $C79A [leaf]
+
+; -----------------------------------------------------------------------------
 
 c $C7B9 get_character_struct
 
@@ -3057,7 +3454,7 @@ c $C7B9 get_character_struct
 
 ; Character events and handlers.
 ;
-c $C7C6 character_event.
+c $C7C6 character_event
 D $C7C6 Makes characters sit, sleep or other things TBD.
 R $C7C6 HL Points to byte holding character index (e.g. 0x76C6).
 W $C7F9 Array of (character,index) mappings. (Some of the character indexes look too high though).
@@ -3078,7 +3475,8 @@ C $C88D handler: pop_hl_and_player_sleeps
 
 ; called_from_main_loop_5
 ;
-b $C891 (<- called_from_main_loop_5, sub_CA81)
+b $C891 byte_C891
+D $C891 (<- called_from_main_loop_5, sub_CA81)
 ;
 c $C892 called_from_main_loop_5
 C $C892 Clear byte_A13E.
@@ -3093,16 +3491,32 @@ C $C8B1 ...
 
 c $C918 sub_C918
 
+; ------------------------------------------------------------------------------
+
 c $CA11 sub_CA11
+
+; ------------------------------------------------------------------------------
 
 c $CA49 sub_CA49
 
-c $CA81 sub_CA81 -- bribes, solitary, food, character enters sound,
-U $CB5F,2 two mystery bytes
+; ------------------------------------------------------------------------------
+
+c $CA81 sub_CA81
+D $CA81 Bribes, solitary, food, 'character enters' sound.
+
+; ------------------------------------------------------------------------------
+
+U $CB5F,2 mystery_bytes_CB5F
+
+; ------------------------------------------------------------------------------
 
 c $CB75 ld_bc_a
 
+; ------------------------------------------------------------------------------
+
 c $CB79 element_A_of_table_7738
+
+; ------------------------------------------------------------------------------
 
 c $CB85 increment_word_C41A_low_byte_wrapping_at_15
 
@@ -3122,7 +3536,8 @@ c $CC37 guards_follow_suspicious_player
 
 ; ------------------------------------------------------------------------------
 
-c $CCAB sub_CCAB -- searches for a character (0x14) and something else, sets a flag
+c $CCAB sub_CCAB
+D $CCAB Searches for a character (0x14) and something else, sets a flag.
   $CCAB HL = $8020;
   $CCB1 B  = 7;  // iterations
   $CCB3 loop: ...
@@ -3133,13 +3548,15 @@ c $CCAB sub_CCAB -- searches for a character (0x14) and something else, sets a f
 
 ; ------------------------------------------------------------------------------
 
-c $CCCD sub_CCCD -- walks item_characterstructs. 
-D $CCCD This ignores green key and food items. may decide which items are 'found'.
+c $CCCD sub_CCCD
+D $CCCD Walks item_characterstructs. 
+D $CCCD This ignores green key and food items. May decide which items are 'found'.
 
 ; ------------------------------------------------------------------------------
 
-c $CCFB sub_CCFB -- walks item_characterstructs. 
-D $CCFB This ignores red cross parcel. may decide which items are 'found'.
+c $CCFB sub_CCFB
+D $CCFB Walks item_characterstructs. 
+D $CCFB This ignores red cross parcel. May decide which items are 'found'.
 
 ; ------------------------------------------------------------------------------
 
@@ -3152,7 +3569,7 @@ b $CD6A item_data_related
 
 ; ------------------------------------------------------------------------------
 
-b $CD9A character meta data
+b $CD9A character_meta_data
   $CD9A struct ... { something_character_related, sprite_commandant_tl_4 } meta_commandant; (<- sub_C4E0)
   $CD9E struct ... { something_character_related, sprite_guard_tl_4 }      meta_guard;      (<- sub_C4E0)
   $CDA2 struct ... { something_character_related, sprite_dog_tl_4 }        meta_dog;        (<- sub_C4E0)
@@ -3160,21 +3577,30 @@ b $CD9A character meta data
 
 ; ------------------------------------------------------------------------------
 
-b $CDAA unk_CDAA (<- called_from_main_loop_9)
+b $CDAA byte_CDAA
+D $CDAA (<- called_from_main_loop_9)
 
 ; ------------------------------------------------------------------------------
 
 c $DB9E called_from_main_loop_8
 
-c $DBEB something which uses rotate_A_left_3_widening_to_BC
+; ------------------------------------------------------------------------------
+
+c $DBEB sub_DBEB
+c $DBEB Uses rotate_A_left_3_widening_to_BC.
+
+; ------------------------------------------------------------------------------
 
 c $DC41 sub_DC41
+
+; ------------------------------------------------------------------------------
 
 c $DD02 sub_DD02
 
 ; ------------------------------------------------------------------------------
 
-b $DD69 Item attributes -- 20 bytes, 4 of which are unknown, possibly unused.
+b $DD69 item_attributes
+D $DD69 20 bytes, 4 of which are unknown, possibly unused.
 D $DD69 'Yellow/black' means yellow ink over black paper, for example.
 ;
   $DD69 item_attribute: WIRESNIPS - yellow/black
@@ -3201,24 +3627,45 @@ D $DD70 Food turns purple/black when it's poisoned.
 
 ; ------------------------------------------------------------------------------
 
-c $E102 masked sprite plotter [unsure]
+c $E102 masked_sprite_plotter
+D $E102 [unsure]
+
+; ------------------------------------------------------------------------------
 
 c $E29F sub_E29F
 
+; ------------------------------------------------------------------------------
+
 c $E2A2 sub_E2A2
+
+; ------------------------------------------------------------------------------
 
 c $E34E sub_E34E
 
-c $E3FA sub_E3FA [leaf]
+; ------------------------------------------------------------------------------
 
-c $E40F sub_E40F [leaf]
+c $E3FA sub_E3FA
+D $E3FA [leaf]
+
+; ------------------------------------------------------------------------------
+
+c $E40F sub_E40F
+D $E40F [leaf]
+
+; ------------------------------------------------------------------------------
 
 c $E420 sub_E420
 
+; ------------------------------------------------------------------------------
+
 c $E542 sub_E542
+
+; ------------------------------------------------------------------------------
 
 c $E550 rotate_AC_right_3_with_prologue
 C $E555 rotate_AC_right_3
+
+; ------------------------------------------------------------------------------
 
 c $EED3 plot_game_screen
 
@@ -3243,11 +3690,12 @@ W $EFF9 word_EFF9 (<- action_papers)
 
 ; ------------------------------------------------------------------------------
 
-c $EFFC user confirm
+c $EFFC user_confirm
 
 ; ------------------------------------------------------------------------------
 
-c $F075 counter of something [unsure]
+c $F075 counter_of_something
+D $F075 [unsure]
 
 ; ------------------------------------------------------------------------------
 
@@ -3267,6 +3715,8 @@ c $F163 main
 
 c $F1E0 plot_menu_text
 
+; ------------------------------------------------------------------------------
+
 c $F206 counter_set_0
 
 ; ------------------------------------------------------------------------------
@@ -3281,7 +3731,7 @@ c $F257 wipe_full_screen_and_attributes
 
 c $F271 select_input_device
 
-b $F303 key tables
+b $F303 key_tables
 B $F303 table_12345
 B $F308 table_09876
 B $F30D table_QWERT
@@ -3290,33 +3740,64 @@ B $F317 table_ASDFG
 B $F31C table_ENTERLKJH
 B $F321 table_SHIFTZXCV
 B $F326 table_SPACESYMSHFTMNB
-w $F32B screen address for chosen key names (5 long)
+;
+w $F32B key_name_screen_addrs
+D $F32B Screen addresses of chosen key names (5 long).
+
+; ------------------------------------------------------------------------------
 
 c $F335 wipe_game_screen
 
+; ------------------------------------------------------------------------------
+
 c $F350 choose_keys
+
+; ------------------------------------------------------------------------------
 
 c $F408 set_menu_item_attributes
 
+; ------------------------------------------------------------------------------
+
 c $F41C input_device_select_keyscan
 
-w $F43D inputroutines -- array [4] of pointers to input routines
+; ------------------------------------------------------------------------------
 
-b $F445 chosen_input_device -- 0/1/2/3 keyboard/kempston/sinclair/protek
+w $F43D inputroutines
+D $F43D Array [4] of pointers to input routines.
 
-c $F4B7 menu screen
+; ------------------------------------------------------------------------------
+
+b $F445 chosen_input_device
+D $F445 0/1/2/3 keyboard/kempston/sinclair/protek
+
+; ------------------------------------------------------------------------------
+
+c $F4B7 menu_screen
+
+; ------------------------------------------------------------------------------
 
 c $F52C get_tuning (music)
+
+; ------------------------------------------------------------------------------
 
 c $FDE0 nop
 D $FDE0 No-op subroutine.
 
+; ------------------------------------------------------------------------------
+
 c $FDE1 loaded
 D $FDE1 Very first entry point used to shunt the game image down into its proper position.
 
+; ------------------------------------------------------------------------------
+
 u $FDF3 UNUSED
 
-b $FEF4 A block starting with NOPs.
+; ------------------------------------------------------------------------------
+
+b $FEF4 mystery_FEF4
+D $FEF4 A block starting with NOPs.
+
+; ------------------------------------------------------------------------------
 
 ; Input routines (not called directly)
 ;
@@ -3336,4 +3817,6 @@ D $FEA3 Input routine: Fuller joystick. (Unused).
 
 c $FECD inputroutine_sinclair
 D $FECD Input routine: Sinclair joystick.
+
+; ------------------------------------------------------------------------------
 
