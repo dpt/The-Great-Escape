@@ -97,22 +97,7 @@
 ; character_38 = 38
 ; character_39 = 39
 ; character_40 = 40
-; character_41 = 41
-
-; ; enum otherobject
-; suspect that these may be the same constants as the characters above
-; otherobject_STOVE1 = 26              ; secondary object types ... unknown which apply where atm
-;                                         ; movable objects perhaps?
-;                                         ;
-;                                         ; 7x prisoners
-;                                         ; ?x guards
-;                                         ; 3x dogs (i think)
-;                                         ; 1x commandant
-;                                         ; ...
-;                                         ; 2x stoves
-;                                         ; 1x crate
-; otherobject_STOVE2 = 27
-; otherobject_CRATE = 28
+; character_41 = 41                     ; where did i get this maximum character number from?
 
 ; ; enum room
 ; room_0 = 0
