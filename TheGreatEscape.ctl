@@ -1521,27 +1521,27 @@ D $69A0 Fourteen bytes long.
 
 ; ------------------------------------------------------------------------------
 
-b $69AE movable_objects
-D $69AE struct { word, word, word, const sprite *, byte };
+b $69AE movable_items
+D $69AE struct { word y_coord; word x_coord; word vertical_offset; const sprite *; byte terminator; };
 
 D $69AE stove1
-W $69AE { X coord?, 
-W $69B0 Y coord?, 
-W $69B2 ..., 
+W $69AE { y_coord,
+W $69B0 x_coord,
+W $69B2 vertical_offset,
 W $69B4 &sprite_stove }
   $69B6 0 // terminator?
 
 D $69B7 crate
-W $69B7 { X coord?,
-W $69B9 Y coord?,
-W $69BB ...,
+W $69B7 { y_coord,
+W $69B9 x_coord,
+W $69BB vertical_offset,
 W $69BD &sprite_create }
   $69BF 0 // terminator?
 
 D $69C0 stove2
-W $69C0 { X coord?,
-W $69C2 Y coord?,
-W $69C4 ...,
+W $69C0 { y_coord,
+W $69C2 x_coord,
+W $69C4 vertical_offset,
 W $69C6 &sprite_stove }
   $69C8 0 // terminator?
 
