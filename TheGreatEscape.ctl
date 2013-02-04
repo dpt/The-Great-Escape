@@ -56,36 +56,37 @@
 ; attribute_BRIGHT_WHITE_OVER_BLACK = 71
 
 ; ; enum character
-; character_0 = 0
-; character_1 = 1
-; character_2 = 2
-; character_3 = 3
-; character_4 = 4
-; character_5 = 5
-; character_6 = 6
-; character_7_prisoner = 7             ; prisoner who sleeps at bed position A
-; character_8_prisoner = 8             ; prisoner who sleeps at bed position B
-; character_9_prisoner = 9             ; prisoner who sleeps at bed position C
-; character_10_prisoner = 10           ; prisoner who sleeps at bed position D
-; character_11_prisoner = 11           ; prisoner who sleeps at bed position E
-; character_12_prisoner = 12           ; prisoner who sleeps at bed position F
-; character_13 = 13
-; character_14 = 14
-; character_15 = 15
-; character_16 = 16
-; character_17 = 17
-; character_18_prisoner = 18           ; prisoner who sits at bench position D
-; character_19_prisoner = 19           ; prisoner who sits at bench position E
-; character_20_prisoner = 20           ; prisoner who sits at bench position F
-; character_21_prisoner = 21           ; prisoner who sits at bench position A
-; character_22_prisoner = 22           ; prisoner who sits at bench position B
-; character_23_prisoner = 23           ; prisoner who sits at bench position C
-; character_24 = 24
-; character_25 = 25
-; character_26 = 26                 ; suspect that non-character characters start here (could be the items -- both ranges are 16 long)
-; character_27 = 27
-; character_28 = 28
-; character_29 = 29
+; character_0 = 0                       ; ?
+; character_1 = 1                       ; guard
+; character_2 = 2                       ; guard
+; character_3 = 3                       ; guard
+; character_4 = 4                       ; guard
+; character_5 = 5                       ; ?
+; character_6 = 6                       ; player?
+; character_7_prisoner = 7              ; prisoner who sleeps at bed position A
+; character_8_prisoner = 8              ; prisoner who sleeps at bed position B
+; character_9_prisoner = 9              ; prisoner who sleeps at bed position C
+; character_10_prisoner = 10            ; prisoner who sleeps at bed position D
+; character_11_prisoner = 11            ; prisoner who sleeps at bed position E
+; character_12_prisoner = 12            ; prisoner who sleeps at bed position F
+; character_13 = 13                     ; guard
+; character_14 = 14                     ; ?
+; character_15 = 15                     ; ?
+; character_16 = 16                     ; ?
+; character_17 = 17                     ; ?
+; character_18_prisoner = 18            ; prisoner who sits at bench position D
+; character_19_prisoner = 19            ; prisoner who sits at bench position E
+; character_20_prisoner = 20            ; prisoner who sits at bench position F
+; character_21_prisoner = 21            ; prisoner who sits at bench position A
+; character_22_prisoner = 22            ; prisoner who sits at bench position B
+; character_23_prisoner = 23            ; prisoner who sits at bench position C
+; character_24 = 24                     ; ?
+; character_25 = 25                     ; ?
+; Non-character characters start here.
+; character_26_stove1 = 26              ; stove1
+; character_27_stove2 = 27              ; stove2
+; character_28_crate = 28               ; crate
+; character_29 = 29                     ; are any of these later characters used?
 ; character_30 = 30
 ; character_31 = 31
 ; character_32 = 32
@@ -1502,7 +1503,7 @@ D $68A1 Index.
 ; ------------------------------------------------------------------------------
 
 b $69A0 byte_69A0
-D $69A0 Fourteen bytes long.
+D $69A0 Fourteen bytes long. Current movable item perhaps?
 
 ; ------------------------------------------------------------------------------
 
@@ -2352,26 +2353,24 @@ c $6939 setup_movable_items
   $6964 called_from_main_loop_10();
   $6967 called_from_main_loop_11();
 ;
-  $696A setup_crate
-  $696A HL = &crate;
-  $696D A = 28;
+  $696A setup_crate: HL = &crate;
+  $696D A = character_28_crate;
   $696F goto setup_movable_items;
 ;
-  $6971 setup_stove2
-  $6971 HL = &stove2;
-  $6974 A = 27;
+  $6971 setup_stove2: HL = &stove2;
+  $6974 A = character_27_stove2;
   $6976 goto setup_movable_items;
 ;
-  $6978 setup_stove1
-  $6978 HL = &stove1;
-  $697B A = 26; // then fallthrough to...
+  $6978 setup_stove1: HL = &stove1;
+  $697B A = character_26_stove1; // then fallthrough to...
 ;
-  $697D setup_movable_items: $8020 = A;
-  $6980 BC = 9;
-  $6983 DE = ...;
-  $6986 memcpy ...;
-;
-  $6988 ...
+  $697D setup_movable_items: $8020 = A; // character index
+  $6980 memcpy($802F, HL, 9); // character 0 is $8020..$803F
+D $6988 This seems to copy into the byte_69A0 buffer, but I never see that buffer being read from.
+  $6988 memcpy(byte_69A0, $8021, 14);
+  $6993 $803C = indoor_room_index;
+  $6999 HL = $8020;
+  $699C reset_something();
 ;
   $699F return;
 
