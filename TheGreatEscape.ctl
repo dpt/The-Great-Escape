@@ -154,7 +154,7 @@
 ; room_49 = 49
 ; room_50_blocked_tunnel = 50
 ; room_51 = 51
-; room_255 = 255
+; room_NONE = 255
 
 ; ; enum item
 ; item_WIRESNIPS = 0
