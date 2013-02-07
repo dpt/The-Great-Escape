@@ -2821,7 +2821,7 @@ R $A0F9 B Amount to increase score by.
   $A0F9 A = 10;
   $A0FB HL = &score_digits + 4;
   $A0FE do { tmp = HL;
-  $A0FF increment_score: *HL++;
+  $A0FF increment_score: (*HL)++;
   $A100 if (*HL == A) { *HL-- = 0; goto increment_score; }
   $A108 HL = tmp;
   $A109 } while (--B);
