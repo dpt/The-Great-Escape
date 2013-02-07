@@ -1504,7 +1504,7 @@ D $68A1 Index.
 ; ------------------------------------------------------------------------------
 
 b $69A0 byte_69A0
-D $69A0 Fourteen bytes long. Current movable item perhaps?
+D $69A0 Fourteen bytes long.
 
 ; ------------------------------------------------------------------------------
 
@@ -2367,8 +2367,7 @@ c $6939 setup_movable_items
 ;
   $697D setup_movable_items: $8020 = A; // character index
   $6980 memcpy($802F, HL, 9); // character 0 is $8020..$803F
-D $6988 This seems to copy into the byte_69A0 buffer, but I never see that buffer being read from.
-  $6988 memcpy(byte_69A0, $8021, 14);
+  $6988 memcpy($8021, byte_69A0, 14);
   $6993 $803C = indoor_room_index;
   $6999 HL = $8020;
   $699C reset_something();
