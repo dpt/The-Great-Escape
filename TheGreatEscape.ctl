@@ -3621,8 +3621,26 @@ c $CD31 item_discovered
 
 ; ------------------------------------------------------------------------------
 
-b $CD6A item_data_related
-  $CD6A,$30,3*16
+b $CD6A item_location
+D $CD6A Array of 16 three-byte structures.
+D $CD6A struct item_location { byte room_and_flags; byte y; byte x; };
+D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
+  $CD6A item_WIRESNIPS        { ITEM_ROOM(room_NONE, (3<<6)), ... } // do these flags mean that the wiresnips are always or /never/ found?
+  $CD6D item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }
+  $CD70 item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }
+  $CD73 item_PAPERS           { ITEM_ROOM(room_11, 0), ... }
+  $CD76 item_TORCH            { ITEM_ROOM(room_14, 0), ... }
+  $CD79 item_BRIBE            { ITEM_ROOM(room_NONE, 0), ... }
+  $CD7C item_UNIFORM          { ITEM_ROOM(room_15, 0),  ... }
+  $CD7F item_FOOD             { ITEM_ROOM(room_19, 0), ... }
+  $CD82 item_POISON           { ITEM_ROOM(room_1, 0), ... }
+  $CD85 item_RED_KEY          { ITEM_ROOM(room_22, 0), ... }
+  $CD88 item_YELLOW_KEY       { ITEM_ROOM(room_11, 0), ... }
+  $CD8B item_GREEN_KEY        { ITEM_ROOM(room_0, 0), ... }
+  $CD8E item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0), ... }
+  $CD91 item_RADIO            { ITEM_ROOM(room_18, 0), ... }
+  $CD94 item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }
+  $CD97 item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }
 
 ; ------------------------------------------------------------------------------
 
