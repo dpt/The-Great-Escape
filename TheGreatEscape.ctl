@@ -101,7 +101,7 @@
 ; character_41 = 41                     ; where did i get this maximum character number from?
 
 ; ; enum room
-; room_0 = 0
+; room_0_outside = 0
 ; room_1_hut1right = 1
 ; room_2_hut2left = 2
 ; room_3_hut2right = 3
