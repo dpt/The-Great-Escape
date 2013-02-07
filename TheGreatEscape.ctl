@@ -1159,22 +1159,23 @@ B $76C1 characterstruct_25:
 ;
 b $76C8 item_structs
 D $76C8 Array, 16 long, of 7-byte structures. These are 'characters' but seem to be the game items.
-B $76C8 itemstruct_0: wiresnips (<- item_to_itemstruct, pick_up_related)
-B $76CF itemstruct_1: shovel
-B $76D6 itemstruct_2: lockpick
-B $76DD itemstruct_3: papers
-B $76E4 itemstruct_4: torch
-B $76EB itemstruct_5: bribe (<- use_bribe)
-B $76F2 itemstruct_6: uniform
-B $76F9 itemstruct_7: food (<- action_poison, called_from_main_loop)
-B $7700 itemstruct_8: poison
-B $7707 itemstruct_9: red key
-B $770E itemstruct_10: yellow key
-B $7715 itemstruct_11: green key
-B $771C itemstruct_12: red cross parcel (<- event_new_red_cross_parcel, new_red_cross_parcel)
-B $7723 itemstruct_13: radio
-B $772A itemstruct_14: purse
-B $7731 itemstruct_15: compass
+D $76C8 struct { byte item; byte room; byte ... 5 others ...; }
+B $76C8 itemstruct_0: wiresnips { item_WIRESNIPS, room_NONE, ... } (<- item_to_itemstruct, pick_up_related)
+B $76CF itemstruct_1: shovel { item_SHOVEL, room_9, ... }
+B $76D6 itemstruct_2: lockpick { item_LOCKPICK, room_10, ... }
+B $76DD itemstruct_3: papers { item_PAPERS, room_11, ... }
+B $76E4 itemstruct_4: torch { item_TORCH, room_14, ... }
+B $76EB itemstruct_5: bribe { item_BRIBE, room_NONE, ... } (<- use_bribe)
+B $76F2 itemstruct_6: uniform { item_UNIFORM, room_15, ... }
+B $76F9 itemstruct_7: food { item_FOOD, room_19, ... } (<- action_poison, called_from_main_loop)
+B $7700 itemstruct_8: poison { item_POISON, room_1, ... }
+B $7707 itemstruct_9: red key { item_RED_KEY, room_22, ... }
+B $770E itemstruct_10: yellow key { item_YELLOW_KEY, room_11, ... }
+B $7715 itemstruct_11: green key { item_GREEN_KEY, room_0, ... }
+B $771C itemstruct_12: red cross parcel { item_RED_CROSS_PARCEL, room_NONE, ... } (<- event_new_red_cross_parcel, new_red_cross_parcel)
+B $7723 itemstruct_13: radio { item_RADIO, room_18, ... }
+B $772A itemstruct_14: purse { item_PURSE, room_NONE, ... }
+B $7731 itemstruct_15: compass { item_COMPASS, room_NONE, ... }
 
 ; ------------------------------------------------------------------------------
 
