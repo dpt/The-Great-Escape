@@ -3652,6 +3652,28 @@ D $CCAB If I nop this out then guards don't spot the items I drop.
 c $CCCD sub_CCCD
 D $CCCD Walks item_characterstructs.
 D $CCCD This ignores green key and food items. May decide which items are 'found'.
+;
+  $CCCD A = indoor_room_index;
+  $CCD0 if (A == 0) goto outside;
+  $CCD3 sub_CCFB();
+  $CCD6 if (NZ) return;
+  $CCD7 sub_CCAB();
+  $CCDA return;
+;
+  $CCDB outside: HL = item_structs + 1;
+  $CCDE DE = 7; // stride
+  $CCE1 B = 16;
+  $CCE3 do < if (*HL & (1<<7)) goto check; // flag means what?
+  $CCE7 next: HL += DE;
+  $CCE8 > while (--B);
+  $CCEA return;
+;
+  $CCEB check: HL--;
+  $CCEC A = *HL & 0x0F;
+  $CCEF if (A == item_GREEN_KEY) goto next;
+  $CCF3 if (A == item_FOOD) goto next;
+  $CCF7 sub_CCAB();
+  $CCFA return;
 
 ; ------------------------------------------------------------------------------
 
