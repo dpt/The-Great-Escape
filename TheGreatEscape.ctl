@@ -1847,7 +1847,7 @@ b $A13F bed_related_perhaps
 
 ; ------------------------------------------------------------------------------
 
-b $A140 displayed_morale_maybe
+b $A140 displayed_morale
 D $A140 Displayed morale lags behind actual morale, as the flag moves slowly to its target.
 
 ; ------------------------------------------------------------------------------
@@ -2736,6 +2736,36 @@ D $9F21 [unsure] -- could be as general as bounds detection
 ; ------------------------------------------------------------------------------
 
 c $A035 wave_morale_flag
+;
+D $A035 Wave the flag every other turn.
+  $A035 HL = &game_counter;
+  $A038 (*HL)++;
+  $A039 A = *HL & 1;
+  $A03C if (A) return;
+;
+  $A03D PUSH HL
+  $A03E A = morale;
+  $A041 HL = &displayed_morale;
+  $A044 if (A == *HL) goto wiggle;
+  $A047 if (A >  *HL) goto increasing;
+;
+D $A04A Decreasing morale.
+  $A04A (*HL)--;
+  $A04B HL = moraleflag_screen_address;
+  $A04E get_next_scanline();
+  $A051 goto move;
+;
+  $A053 increasing: (*HL)++;
+  $A054 HL = moraleflag_screen_address;
+  $A057 get_prev_scanline();
+;
+  $A05A move: moraleflag_screen_address = HL;
+;
+  $A05D wiggle: DE = bitmap_flag_down;
+  $A060 POP HL
+  $A061 if ((*HL & 1) != 0) DE = bitmap_flag_up;
+  $A068 plot: HL = moraleflag_screen_address;
+  $A06E plot_bitmap(0x0319); // dimensions: 24 x 25 // args-BC // exit via
 
 ; ------------------------------------------------------------------------------
 
