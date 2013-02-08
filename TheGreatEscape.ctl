@@ -2744,10 +2744,10 @@ R $A071 A Attributes to use.
   $A071 HL = $5842; // first attribute byte
   $A074 DE = $001E; // skip
   $A077 B  = $13;
-  $A079 loop: *HL++ = A; 
+  $A079 do < *HL++ = A;
   $A07B *HL++ = A;
   $A07E HL += DE;
-  $A07F B--; if (B) goto loop:
+  $A07F > while (--B);
   $A081 return;
 
 ; ------------------------------------------------------------------------------
@@ -3341,7 +3341,7 @@ c $B417 action_wiresnips
   $B417 HL = wiresnips_related_table + 3;
   $B41A DE = player_map_position_perhapsY
   $B41D B = 4; // iterations
-  $B41F loop: ...
+  $B41F do < ...
   $B420 A = (DE);
   $B421 if (A >= (HL)) goto continue;
   $B424 HL--;
@@ -3355,12 +3355,12 @@ c $B417 action_wiresnips
   $B432 DE++; // reset to Y
   $B433 continue: ...
   $B434 HL += 6; // array stride
-  $B43B B--; if (B) goto loop; // djnz
+  $B43B > while (--B);
 ;
   $B43D DE--; // player_map_position_perhapsX
   $B43E HL -= 3; // pointing to $B59E
   $B441 B = 3; // iterations
-  $B443 loop2: ...
+  $B443 do < ...
   $B444 A = (DE);
   $B445 if (A < (HL)) goto continue2;
   $B448 HL++;
@@ -3374,7 +3374,7 @@ c $B417 action_wiresnips
   $B456 DE--;
   $B457 continue2: ...
   $B458 HL += 6; // array stride
-  $B45F B--; if (B) goto loop2; // djnz
+  $B45F > while (--B);
   $B461 return;
 ;
 ; i can see the first 7 entries in the table are used, but what about the remaining 5?
