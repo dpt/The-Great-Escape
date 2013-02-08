@@ -2631,11 +2631,11 @@ c $9E07 process_user_input
   $9E1F wire_snipped(); return; // exit via
 ;
   $9E22 not_picking_lock_or_cutting_wire: A = input_routine(); // lives at same address as counter_of_something
-  $9E25 HL = &morale_related_also; 
+  $9E25 HL = &morale_related_also;
   $9E2A if (A != input_NONE) goto user_input_super(HL);
   $9E2D if (morale_related_also == 0) return;
-  $9E30 morale_related_also--; 
-  $9E31 A = 0; 
+  $9E30 morale_related_also--;
+  $9E31 A = 0;
   $9E32 goto user_input_fire_not_pressed;
 
 ; ------------------------------------------------------------------------------
