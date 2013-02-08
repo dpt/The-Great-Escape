@@ -3597,13 +3597,14 @@ c $CC37 guards_follow_suspicious_player
 ; ------------------------------------------------------------------------------
 
 c $CCAB sub_CCAB
-D $CCAB Searches for a character (0x14) and something else, sets a flag.
+D $CCAB Searches for a visible character and something else, sets a flag.
+D $CCAB If I nop this out then guards don't spot the items I drop.
   $CCAB HL = $8020;
-  $CCB1 B  = 7;  // iterations
-  $CCB3 loop: ...
-  $CCB4 if (HL[0] < 0x14 && HL[19] < 0x20) HL[0] = 1; // set the flag [unknown]
+  $CCB1 B = 7; // iterations
+  $CCB3 do <
+  $CCB4 if (HL[0] < character_20_prisoner && HL[19] < 0x20) HL[1] = 1; // set the flag [player taken to solitary]
   $CCC9 HL += 32; // step to next element
-  $CCCA B--; if (B) goto loop;
+  $CCCA > while (--B);
   $CCCC return;
 
 ; ------------------------------------------------------------------------------
