@@ -2752,7 +2752,17 @@ R $A071 A Attributes to use.
 
 ; ------------------------------------------------------------------------------
 
-c $A082 call_mystery_if_h_AND_7_is_zero
+c $A082 get_prev_scanline
+D $A082 Given a screen address, returns the same position on the previous scanline.
+R $A082 I:HL Original screen address.
+R $A082 O:HL Updated screen address.
+;
+  $A082 if ((H & 7) != 0) // NNN bits
+  $A087   HL -= 256; // step back one scanline
+  $A088   return;
+;
+  $A089 if (L < 32) HL -= 32; else HL += 0x06E0; // complicated
+  $A094 return;
 
 ; ------------------------------------------------------------------------------
 
