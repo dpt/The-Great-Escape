@@ -2502,6 +2502,21 @@ R $7CBE I:BC Dimensions (w x h, where w is in bytes).
 ; ------------------------------------------------------------------------------
 
 c $7CD4 screen_wipe
+D $7CD4 Wipe the screen.
+R $7CD4 I:B  Number of bytes to set.
+R $7CD4 I:C  Number of scanlines.
+R $7CD4 I:HL Destination address.
+;
+  $7CD4 A = B;
+  $7CD5 (loopcounter + 1) = A;   // self modifying
+  $7CD8 do < loopcounter: B = 2; // modified
+  $7CDA PUSH HL
+  $7CDB do < *HL++ = 0;
+  $7CDE > while (--B);
+  $7CE0 POP HL
+  $7CE1 get_next_scanline();
+  $7CE4 > while (--C);
+  $7CE8 return;
 
 ; ------------------------------------------------------------------------------
 
