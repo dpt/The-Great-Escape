@@ -2489,6 +2489,19 @@ c $7CD4 screen_wipe
 ; ------------------------------------------------------------------------------
 
 c $7CE9 get_next_scanline
+D $A082 Given a screen address, returns the same position on the next scanline.
+R $A082 I:HL Original screen address.
+R $A082 O:HL Updated screen address.
+;
+  $7CE9 HL += 256;
+  $7CEA if ((H & 7) != 0) return;
+;
+  $7CEE PUSH DE
+  $7CEF DE = 0xF820;
+  $7CF2 if (L >= 0xE0) D = 0xFF;
+  $7CF9 HL += DE;
+  $7CFA POP DE
+  $7CFB return;
 
 ; ------------------------------------------------------------------------------
 
