@@ -3721,8 +3721,36 @@ D $CCCD This ignores green key and food items. May decide which items are 'found
 ; ------------------------------------------------------------------------------
 
 c $CCFB sub_CCFB
-D $CCFB Walks item_characterstructs. 
+D $CCFB Walks item_structs.
 D $CCFB This ignores red cross parcel. May decide which items are 'found'.
+R $CCFB I:A Room ref.
+R $CCFB O:A ?
+R $CCFB O:C ?
+;
+  $CCFB C = A; // room ref
+  $CCFC HL = item_structs + 1; // pointer to room ref
+  $CCFF B = 16; // nitems
+  $CD01 do < A = *HL & 63; // mask off flags [unsure, it's a bit suspect]
+  $CD04 if (A != C) goto skip; // check
+  $CD07 PUSH HL
+  $CD08 HL = &item_location[HL[-1] & 15]; // HL[-1] is item index [again, unsure why it's masked off]
+  $CD16 A = *HL; // room_and_flags
+  $CD17 if (A != C) goto rooms_dont_match; // item in wrong room?
+  $CD1A POP HL
+  $CD1B skip: HL += 7; // stride
+  $CD1F > while (--B);
+  $CD21 return; // return with NZ?
+;
+  $CD22 rooms_dont_match: POP HL
+  $CD23 HL--; // point to item
+  $CD24 A = *HL & 0x0F; // does this always need masking? are there flags?
+  $CD27 if (A != item_RED_CROSS_PARCEL) goto exit;
+  $CD2B HL++;
+  $CD2C goto skip;
+;
+  $CD2E exit: C = A;
+  $CD2F A = 0; // set Z
+  $CD30 return;
 
 ; ------------------------------------------------------------------------------
 
