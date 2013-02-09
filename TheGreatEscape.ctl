@@ -3561,7 +3561,29 @@ C $C6FF
 ; -----------------------------------------------------------------------------
 
 c $C79A sub_C79A
-D $C79A [leaf]
+D $C79A [leaf] (<- move_characters)
+R $C79A I:B  ?
+R $C79A I:DE Pointer to ?
+R $C79A I:HL Pointer to ?
+R $C79A O:B  ?
+;
+  $C79A (stash AF)
+  $C79B C = A; // ie. banked A
+  $C79C (unstash AF)
+  $C79D A = *DE - *HL;
+  $C79F if (A == 0) {
+  $C7A1 B++;
+  $C7A2 return; }
+;
+  $C7A3 if (A < 0) {
+  $C7A5 A = -A;
+  $C7A7 if (A >= C) A = C;
+  $C7AB *DE += A;
+  $C7AF return; }
+;
+  $C7B0 if (A >= C) A = C;
+  $C7B4 *DE -= A;
+  $C7B8 return;
 
 ; -----------------------------------------------------------------------------
 
