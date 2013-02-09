@@ -2481,6 +2481,23 @@ c $7C82 pick_up_related
 ; ------------------------------------------------------------------------------
 
 c $7CBE plot_bitmap
+D $7CBE Straight bitmap plot without masking.
+R $7CBE I:DE Source address.
+R $7CBE I:HL Destination address.
+R $7CBE I:BC Dimensions (w x h, where w is in bytes).
+;
+  $7CBE A = B;
+  $7CBF (loopcounter + 1) = A;   // self modifying
+  $7CC2 do < loopcounter: B = 3; // modified
+  $7CC4 PUSH HL
+  $7CC5 do < A = *DE;
+  $7CC6 *HL++ = A;
+  $7CC8 DE++;
+  $7CC9 > while (--B);
+  $7CCB POP HL
+  $7CCC get_next_scanline();
+  $7CCF > while (--C);
+  $7CD3 return;
 
 ; ------------------------------------------------------------------------------
 
