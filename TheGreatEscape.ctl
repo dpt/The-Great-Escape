@@ -587,25 +587,25 @@ B $DB72 mask: STOVE
 ; ------------------------------------------------------------------------------
 
 b $DD7D item_definitions
-D $DD7D Item definitions.
+D $DD7D Item definitions:
 D $DD7D Array of "sprite" structures.
 ;
-  $DD7D item_sprite: WIRESNIPS
-  $DD83 item_sprite: SHOVEL
-  $DD89 item_sprite: LOCKPICK
-  $DD8F item_sprite: PAPERS
-  $DD95 item_sprite: TORCH
-  $DD9B item_sprite: BRIBE
-  $DDA1 item_sprite: UNIFORM
-  $DDA7 item_sprite: FOOD
-  $DDAD item_sprite: POISON
-  $DDB3 item_sprite: RED KEY
-  $DDB9 item_sprite: YELLOW KEY
-  $DDBF item_sprite: GREEN KEY
-  $DDC5 item_sprite: PARCEL
-  $DDCB item_sprite: RADIO
-  $DDD1 item_sprite: PURSE
-  $DDD7 item_sprite: COMPASS
+  $DD7D { 2, 11, wiresnips_data, wiresnips_mask },
+  $DD83 { 2, 13, shovel_data, shovel_key_mask },
+  $DD89 { 2, 16, lockpick_data, lockpick_mask },
+  $DD8F { 2, 15, papers_data, papers_mask },
+  $DD95 { 2, 12, torch_data, torch_mask },
+  $DD9B { 2, 13, bribe_data, bribe_mask },
+  $DDA1 { 2, 16, uniform_data, uniform_mask },
+  $DDA7 { 2, 16, food_data, food_mask },
+  $DDAD { 2, 16, poison_data, poison_mask },
+  $DDB3 { 2, 13, key_data, shovel_key_mask },
+  $DDB9 { 2, 13, key_data, shovel_key_mask },
+  $DDBF { 2, 13, key_data, shovel_key_mask },
+  $DDC5 { 2, 16, parcel_data, parcel_mask },
+  $DDCB { 2, 16, radio_data, radio_mask },
+  $DDD1 { 2, 12, purse_data, purse_mask },
+  $DDD7 { 2, 12, compass_data, compass_mask },
 
 ; ------------------------------------------------------------------------------
 
@@ -2470,8 +2470,42 @@ c $7C33 draw_all_items
 ; ------------------------------------------------------------------------------
 
 c $7C46 draw_item
-R $7C46 A Item index.
-  $7C46 ...
+R $7C46 I:A  Item index.
+R $7C46 I:HL Screen address of item.
+;
+  $7C46 PUSH HL
+  $7C47 EX AF,AF'
+;
+D $7C54 Wipe item.
+  $7C48 B = 2; // 16 wide
+  $7C4A C = 16;
+  $7C4C screen_wipe();
+;
+  $7C4F POP HL
+  $7C50 EX AF,AF'
+  $7C51 if (A == item_NONE) return;
+;
+D $7C54 Set screen attributes.
+  $7C54 PUSH HL
+  $7C55 HL = (HL & ~0xFF00) | 0x5A00; // point to screen attributes
+  $7C57 PUSH AF
+  $7C58 A = item_attributes[A];
+  $7C61 *HL++ = A;
+  $7C63 *HL-- = A;
+  $7C65 HL |= 1<<5; // move to next attribute row
+  $7C67 *HL++ = A;
+  $7C69 *HL = A;
+  $7C6A POP AF
+;
+D $7C54 Plot bitmap.
+  $7C6B HL = &item_definitions[A]; // elements are six bytes wide
+  $7C76 B = *HL++;
+  $7C78 C = *HL++;
+  $7C7A E = *HL++;
+  $7C7C D = *HL;
+  $7C7D POP HL
+  $7C7E plot_bitmap();
+;
   $7C81 return;
 
 ; ------------------------------------------------------------------------------
