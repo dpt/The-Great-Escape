@@ -4039,6 +4039,18 @@ D $F32B Screen addresses of chosen key names (5 long).
 ; ------------------------------------------------------------------------------
 
 c $F335 wipe_game_screen
+  $F335 DI
+  $F336 saved_sp = SP;
+  $F33A sp = game_screen_scanline_start_addresses;
+  $F33D A = 128; // 128 rows
+  $F33F do < POP HL // start address
+  $F340 B = 23; // 23 columns
+  $F342 do < *HL = 0;
+  $F344 L++;
+  $F345 > while (--B);
+  $F347 > while (--A);
+  $F34B SP = saved_sp;
+  $F34F return;
 
 ; ------------------------------------------------------------------------------
 
