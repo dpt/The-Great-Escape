@@ -2683,7 +2683,7 @@ c $9D78 main_loop_setup
   $9DAB called_from_main_loop_11(); [unknown]
   $9DAE plot_game_screen();
   $9DB1 ring_bell();
-  $9DB4 if ($A145 != 0) call $ADBD; [unknown]
+  $9DB4 if (day_or_night != 0) nighttime();
   $9DBB if (indoor_room_index != 0) indoors_delay_loop();
   $9DC2 wave_morale_flag();
   $9DC5 if ((game_counter & 63) == 0) dispatch_table_thing();
