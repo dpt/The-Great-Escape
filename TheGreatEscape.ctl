@@ -4389,12 +4389,12 @@ c $EFFC user_confirm
 ;
   $F002 for (;;) < BC = port_KEYBOARD_POIUY;
   $F005 IN A,(C)
-  $F007 if ((A & (1<<4)) == 0) return; // is 'Y' pressed?
+  $F007 if ((A & (1<<4)) == 0) return; // is 'Y' pressed? return Z
 ;
   $F00A BC = port_KEYBOARD_SPACESYMSHFTMNB;
   $F00C IN A,(C)
   $F00E A = ~A;
-  $F00F if ((A & (1<<3)) != 0) return; // is 'N' pressed?
+  $F00F if ((A & (1<<3)) != 0) return; // is 'N' pressed? return NZ
 ;
   $F012 >
 
