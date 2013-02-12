@@ -369,18 +369,21 @@
 
 ; ; enum input
 ; input_NONE = 0
-; input_UP = ?
-; input_DOWN = ?
-; input_LEFT = ?
-; input_RIGHT = ?
+; input_UP = 1
+; input_DOWN = 2
+; input_LEFT = 3
+; input_RIGHT = 6
 ; input_FIRE = 9
-; input_UP_FIRE = 10
-; input_DOWN_FIRE = 11
-; input_LEFT_FIRE = 12
-; input_RIGHT_FIRE = 15
+; input_UP_FIRE = input_UP + input_FIRE
+; input_DOWN_FIRE = input_DOWN + input_FIRE
+; input_LEFT_FIRE = input_LEFT + input_FIRE
+; input_RIGHT_FIRE = input_RIGHT + input_FIRE
 
 ; ; enum port_keyboard
-; port_KEYBOARD_12345 = $0F7FE
+; port_KEYBOARD_12345 = $F7FE
+; port_KEYBOARD_POIUY = $DFFE
+; port_KEYBOARD_SPACESYMSHFTMNB = $7FFE
+; port_KEYBOARD_09876 = $EFFE
 
 ; ; enum objecttile (width 1 byte)
 ; objecttile_ESCAPE = 255              ; escape character
@@ -4119,22 +4122,169 @@ D $FEF4 A block starting with NOPs.
 
 ; Input routines (not called directly)
 ;
-; These are relocated into position (addr?) when chosen from the menu screen.
+; These are relocated into position $F075 when chosen from the menu screen.
 ;
 c $FE00 inputroutine_keyboard
-D $FE00 Input routine: Keyboard.
+D $FE00 Input routine for keyboard.
+R $FE00 O:A Input value (as per enum input).
+;
+  $FE00 HL = key_defs; // pairs of bytes (port high byte, key mask)
+  $FE03 C = 0xFE; // port 0xXXFE
+  $FE05 B = *HL++;
+  $FE07 IN A,(C)
+  $FE09 A = ~A & *HL++;
+  $FE0C if (A == 0) goto not_left;
+  $FE0E HL += 2; // skip right keydef
+  $FE10 E = input_LEFT;
+  $FE12 goto up_or_down;
+;
+  $FE14 not_left: B = *HL++;
+  $FE16 IN A,(C)
+  $FE18 A = ~A & *HL++;
+  $FE1B if (A == 0) goto not_right;
+;
+  $FE1D E = input_RIGHT;
+  $FE1F goto up_or_down;
+;
+  $FE21 not_right: E = A;
+;
+  $FE22 up_or_down: B = *HL++;
+  $FE24 IN A,(C)
+  $FE26 A = ~A & *HL++;
+  $FE29 if (A == 0) goto not_up;
+;
+  $FE2B HL += 2; // skip down keydef
+  $FE2D E += input_UP;
+  $FE2E goto fire;
+;
+  $FE30 not_up: B = *HL++;
+  $FE32 IN A,(C)
+  $FE34 A = ~A & *HL++;
+  $FE37 if (A == 0) goto fire;
+;
+  $FE39 E += input_DOWN;
+;
+  $FE3B fire: B = *HL++;
+  $FE3D IN A,(C)
+  $FE3F A = ~A & *HL++;
+  $FE42 A = E;
+  $FE43 if (A == 0) return;
+;
+  $FE44 A += input_FIRE;
+  $FE46 return;
+
+; ------------------------------------------------------------------------------
 
 c $FE47 inputroutine_protek
-D $FE47 Input routine: Protek joystick.
+D $FE47 Input routine for Protek (cursor) joystick.
+R $FE00 O:A Input value (as per enum input).
+;
+  $FE47 BC = port_KEYBOARD_12345;
+  $FE4A IN A,(C)
+  $FE4C A = ~A & (1<<4); // 5 == left
+  $FE4F E = input_LEFT;
+  $FE51 B = 0xEF; // port_KEYBOARD_09876
+  $FE53 if (nonzero) goto $FE60;
+;
+  $FE55 IN A,(C)
+  $FE57 A = ~A & (1<<2);
+  $FE5A E = input_RIGHT;
+  $FE5C if (nonzero) goto $FE60;
+;
+  $FE5E E = 0; // no horizontal
+;
+  $FE60 IN A,(C)
+  $FE62 A = ~A;
+  $FE63 D = A;
+  $FE64 A &= (1<<3);
+  $FE66 A = input_UP; // interleaved
+  $FE68 if (nonzero) goto got_vertical;
+;
+  $FE6A A = D;
+  $FE6B A &= (1<<4);
+  $FE6D A = input_DOWN; // interleaved
+  $FE6F if (nonzero) goto got_vertical;
+;
+  $FE71 A = input_NONE;
+;
+  $FE72 got_vertical: E += A;
+  $FE74 A = D & (1<<0);
+  $FE77 A = input_FIRE; // interleaved
+  $FE79 if (zero) A = 0; // no vertical
+;
+  $FE7C A += E; // combine axis
+  $FE7D return;
+
+; ------------------------------------------------------------------------------
 
 c $FE7E inputroutine_kempston
-D $FE7E Input routine: Kempston joystick.
+D $FE7E Input routine for Kempston joystick.
+; "#1F Kempston (000FUDLR, active high)"
+R $FE00 O:A Input value (as per enum input).
+;
+  $FE7E BC = 0x001F;
+  $FE81 IN A,(C)
+  $FE83 BC = 0;
+  $FE86 RRA
+  $FE87 if (carry) B = input_RIGHT;
+  $FE8B RRA
+  $FE8C if (carry) B = input_LEFT;
+  $FE90 RRA
+  $FE91 if (carry) C = input_DOWN;
+  $FE95 RRA
+  $FE96 if (carry) C = input_UP;
+  $FE9A RRA
+  $FE9B A = input_FIRE;
+  $FE9D if (!carry) A = 0;
+  $FEA0 A += B + C;
+  $FEA2 return;
+
+; ------------------------------------------------------------------------------
 
 c $FEA3 inputroutine_fuller
-D $FEA3 Input routine: Fuller joystick. (Unused).
+D $FEA3 Input routine for Fuller joystick. (Unused).
+; "#7F Fuller Box (FxxxRLDU, active low)"
+R $FE00 O:A Input value (as per enum input).
+;
+  $FEA3 BC = 0x007F;
+  $FEA6 IN A,(C)
+  $FEA8 BC = 0;
+  $FEAB if (A & (1<<4)) A = ~A;
+  $FEB0 RRA
+  $FEB1 if (carry) C = input_UP;
+  $FEB5 RRA
+  $FEB6 if (carry) C = input_DOWN;
+  $FEBA RRA
+  $FEBB if (carry) B = input_LEFT;
+  $FEBF RRA
+  $FEC0 if (carry) B = input_RIGHT;
+  $FEC4 if (A & (1<<3)) A = input_FIRE; // otherwise A is zero
+  $FECA A += B + C;
+  $FECC return;
+
+; ------------------------------------------------------------------------------
 
 c $FECD inputroutine_sinclair
-D $FECD Input routine: Sinclair joystick.
+D $FECD Input routine for Sinclair joystick.
+; "#EFFE Sinclair1 (000LRDUF, active low, corresponds to keys '6' to '0')"
+R $FECD O:A Input value (as per enum input).
+;
+  $FECD BC = port_KEYBOARD_09876;
+  $FED0 IN A,(C)
+  $FED2 A = ~A; // xxx67890
+  $FED3 BC = 0;
+  $FED6 RRCA // 0xxx6789
+  $FED7 RRCA // 90xxx678
+  $FED8 if (carry) C = input_UP;
+  $FEDC RRCA // 890xxx67
+  $FEDD if (carry) C = input_DOWN;
+  $FEE1 RRCA // 7890xxx6
+  $FEE2 if (carry) B = input_RIGHT;
+  $FEE6 RRCA // 67890xxx
+  $FEE7 if (carry) B = input_LEFT;
+  $FEEB if ((A & (1<<3)) == 0) A = input_FIRE;
+  $FEF1 A += B + C;
+  $FEF3 return;
 
 ; ------------------------------------------------------------------------------
 
