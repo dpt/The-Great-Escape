@@ -4425,6 +4425,56 @@ c $F1E0 plot_menu_text
 ; ------------------------------------------------------------------------------
 
 c $F206 counter_set_0
+D $F206 Suspect this plots static screen tiles.
+R $F206 I:HL Pointer to tile indices?
+;
+  $F206 A = 0;
+  $F207 goto $F20B;
+; This entry point is used by the routine at #R$F1E0.
+  $F209 A = 255;
+;
+  $F20B counter_of_something = A;
+  $F20E A = *HL & 0x7F;
+  $F211 B = A; // loop iterations
+  $F212 HL++;
+  $F213 PUSH DE
+  $F214 EXX
+  $F215 POP DE
+  $F216 EXX
+  $F217 do < A = *HL;
+  $F218 EXX
+  $F219 HL = &static_tiles[A]; // elements: 9 bytes each
+  $F227 B = 8; // 8 iterations
+;
+D $F229 Plot a tile.
+  $F229 do < A = *HL;
+  $F22A *DE = A;
+  $F22B DE += 256;
+  $F22C HL++;
+  $F22D > while (--B);
+  $F22F DE -= 256;
+  $F230 PUSH DE
+;
+D $F231 Calculate screen attribute address of tile.
+  $F231 A = D;
+  $F232 D = 0x58; // screen attributes base
+  $F234 if (A >= 0x48) D++; // ie. DE += 256;
+  $F239 if (A >= 0x50) D++;
+  $F23E *DE = *HL; // copy attribute byte
+  $F240 POP HL
+  $F241 A = counter_of_something;
+  $F244 if (A) goto $F24E;
+  $F247 H -= 7;  // HL -= 7*256;
+  $F24B L++;
+  $F24C goto $F251;
+;
+  $F24E get_next_scanline();
+;
+  $F251 EX DE,HL
+  $F252 EXX
+  $F253 HL++;
+  $F254 > while (--B);
+  $F256 return;
 
 ; ------------------------------------------------------------------------------
 
