@@ -4179,7 +4179,7 @@ D $CCCD This ignores green key and food items. May decide which items are 'found
   $CCCD A = indoor_room_index;
   $CCD0 if (A == 0) goto outside;
   $CCD3 sub_CCFB();
-  $CCD6 if (NZ) return;
+  $CCD6 if (nonzero) return;
   $CCD7 sub_CCAB();
   $CCDA return;
 ;
