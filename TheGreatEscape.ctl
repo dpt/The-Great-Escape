@@ -3896,8 +3896,147 @@ c $C651 sub_C651
 ; -----------------------------------------------------------------------------
 
 c $C6A0 move_characters
-U $C6FD,2 UNUSED?
-C $C6FF
+;
+  $C6A0 byte_A13E = 0xFF;
+  $C6A5 A = character_index;
+  $C6A8 A++;
+  $C6A9 if (A == 26) A = 0;
+  $C6AE character_index = A;
+  $C6B1 get_character_struct();
+  $C6B4 if (*HL & (1<<6)) return;
+  $C6B7 PUSH HL
+  $C6B8 HL++;
+  $C6B9 A = *HL;
+  $C6BA if (A == 0) goto $C6C5;
+  $C6BD sub_CCFB();
+  $C6C0 if (Z) item_discovered();
+;
+  $C6C5 POP HL
+  $C6C6 HL += 2;
+  $C6C8 PUSH HL
+  $C6C9 HL += 3;
+  $C6CC A = *HL;
+  $C6CD if (A != 0) goto $C6D2;
+  $C6D0 POP HL
+  $C6D1 return;
+;
+  $C6D2 sub_C651();
+  $C6D5 if (A != 0xFF) goto $C6FF;
+  $C6DA A = character_index;
+  $C6DD if (A == character_0) goto char_is_zero;
+  $C6E0 if (A >= character_12_prisoner) goto char_ge_12;
+;
+  $C6E4 *HL++ ^= 0x80;
+  $C6E9 if ((A & 7) != 0) (*HL) -= 2;
+;
+  $C6EF (*HL)++; // weird // i.e -1 or +1
+  $C6F0 POP HL
+  $C6F1 return;
+;
+  $C6F2 char_is_zero: A = *HL & 127; // fetching a character index?
+  $C6F5 if (A != 36) goto $C6E4;
+;
+  $C6F9 char_ge_12: POP DE        ;
+  $C6FA goto character_event; // exit via
+;
+U $C6FD,2 DEFB $18,$6F  ; UNUSED?
+;
+  $C6FF if (A != 128) goto $C76E;
+  $C704 POP DE
+  $C705 A = DE[-1];
+  $C708 PUSH HL
+  $C709 if (A != 0) got $C71F;
+  $C70D PUSH DE
+  $C70E DE = &word_81A4;
+  $C711 B = 2; // 2 iters
+  $C713 do < A = *HL;
+  $C714 AND A         ; don't understand
+  $C715 RRA           ; rotate right out into carry
+  $C716 *DE = A;
+  $C717 HL++;
+  $C718 DE++;
+  $C719 > while (--B);
+  $C71B HL = &word_81A4;
+  $C71E POP DE
+;
+  $C71F A = DE[-1];
+  $C722 AND A         ; if (A == 0) .. next op interleaved ..
+  $C723 A = 2;
+  $C725 JR Z,$C729    ; if (A == 0) goto $C729;
+  $C727 A = 6;
+;
+  $C729 EX AF,AF'     ;
+  $C72A B = 0;
+  $C72C sub_C79A();
+  $C72F DE++;
+  $C730 HL++;
+  $C731 sub_C79A();
+  $C734 POP HL        ;
+  $C735 A = B;
+  $C736 if (A != 2) return;
+;
+  $C739 DE -= 2;
+  $C73B HL--;
+  $C73C A = *HL & 0xFC;
+  $C73F RRA           ;
+  $C740 RRA           ;
+  $C741 *DE = A;
+  $C742 A = *HL & 3;
+  $C745 if (A >= 2) goto $C750;
+  $C749 HL += 5;
+  $C74E JR $C753      ;
+;
+  $C750 HL -= 3;
+;
+  $C753 A = *DE++;
+  $C755 if (A == 0) goto $C761;
+  $C758 LDI           ;
+  $C75A LDI           ;
+  $C75C LDI           ;
+  $C75E DE--;
+  $C75F JR $C78B      ;
+;
+  $C761 B = 3;
+  $C763 do < A = *HL;
+  $C764 AND A         ;
+  $C765 RRA           ;
+  $C766 *DE = A;
+  $C767 HL++;
+  $C768 DE++;
+  $C769 > while (--B);
+  $C76B DE--;
+  $C76C JR $C78B      ;
+;
+  $C76E POP DE        ;
+  $C76F A = DE[-1];
+  $C772 AND A         ;
+  $C773 A = 2;      // interleaving again
+  $C775 JR Z,$C779    ;
+  $C777 A = 6;
+;
+  $C779 EX AF,AF'     ;
+  $C77A B = 0;
+  $C77C sub_C79A();
+  $C77F HL++;
+  $C780 DE++;
+  $C781 sub_C79A();
+  $C784 DE++;
+  $C785 A = B;
+  $C786 if (A != 2) return;
+;
+  $C78B DE++;
+  $C78C EX DE,HL      ;
+  $C78D A = *HL;
+  $C78E if (A == 0xFF) return;
+;
+  $C791 if (A & (1<<7))
+  $C793 HL++;       // interleaved
+  $C794 JR NZ,exit
+  $C796 (*HL)++;
+  $C797 return;
+;
+  $C798 exit: (*HL)--;
+  $C799 return;
 
 ; -----------------------------------------------------------------------------
 
