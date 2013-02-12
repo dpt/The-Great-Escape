@@ -3819,7 +3819,63 @@ c $BCAA sub_BCAA
 
 ; -----------------------------------------------------------------------------
 
+; seems to move characters around, or perhaps just spawn them
+;
+
 c $C41C called_from_main_loop_7
+;
+D $C41C Form a map position in DE.
+  $C41C HL = map_position_maybe;
+  $C41F E = (L < 8) ? 0 : L;
+  $C426 D = (H < 8) ? 0 : H;
+;
+D $C42D Walk all character structs.
+  $C42D HL = &character_structs[0];
+  $C430 B = character_26_stove1; // the 26 'real' characters
+  $C432 do < if (*HL & (1<<6)) goto skip; // unknown flag
+;
+  $C436 (stash HL)
+  $C437 HL++; // $7613
+  $C438 A = indoor_room_index;
+  $C43B if (A != *HL) goto unstash_skip; // not in the visible room
+  $C43E if (A != 0) goto done_outdoors;
+;
+D $C441 Outdoors.
+  $C441 HL++; // $7614
+  $C442 A -= *HL; // A always starts as zero here
+  $C443 HL++; // $7615
+  $C444 A -= *HL;
+  $C445 HL++; // $7616
+  $C446 A -= *HL;
+  $C447 C = A;
+  $C448 A = D;
+  $C449 if (C <= A) goto unstash_skip; // check
+  $C44C A += 32;
+  $C44E if (A > 0xFF) A = 0xFF;
+  $C452 if (C > A) goto unstash_skip; // check
+;
+  $C455 HL--; // $7615
+  $C456 A = 64;
+  $C458 *HL += A;
+  $C459 HL--; // $7614
+  $C45A *HL -= A;
+  $C45B A *= 2; // A == 128
+  $C45C C = A;
+  $C45D A = E;
+  $C45E if (C <= A) goto unstash_skip; // check
+  $C461 A += 40;
+  $C463 if (A > 0xFF) A = 0xFF;
+  $C467 if (C > A) goto unstash_skip; // check
+;
+  $C46A done_outdoors: (unstash HL)
+  $C46B (stash HL, DE, BC)
+  $C46E sub_C4E0();
+  $C471 (unstash BC, DE)
+;
+  $C473 unstash_skip: (unstash HL)
+  $C474 skip: HL += 7; // stride
+  $C47B > while (--B);
+  $C47D return;
 
 ; -----------------------------------------------------------------------------
 
