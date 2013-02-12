@@ -1566,7 +1566,7 @@ D $AE75 (<- nighttime, searchlight)
 
 ; ------------------------------------------------------------------------------
 
-w $AE76 word_AE76
+w $AE76 searchlight_coords
 D $AE76 (<- nighttime)
 
 ; ------------------------------------------------------------------------------
@@ -1735,7 +1735,8 @@ w $81BB map_position_maybe
 
 ; ------------------------------------------------------------------------------
 
-b $81BD byte_81BD
+b $81BD spotlight_found_player
+D $81BD Suspect that this is a 'player has been found in spotlight' flag.
 D $81BD (<- nighttime, something_then_decrease_morale)
 
 ; ------------------------------------------------------------------------------
@@ -3309,14 +3310,233 @@ c $AD59 sub_AD59
 ; ------------------------------------------------------------------------------
 
 c $ADBD nighttime
+D $ADBD Turns the screen blue and tracks the player with a spotlight.
+;
+  $ADBD HL = &spotlight_found_player; // suspected spotlight_found_player flag (possible states: 0, 31, 255)
+  $ADC0 A = *HL;
+  $ADC1 if (A == 0xFF) goto not_tracking;
+;
+  $ADC6 A = indoor_room_index;
+  $ADC9 if (A == 0) goto outside;
+;
+  $ADCC *HL = 0xFF; // if the player goes indoors the searchlight loses track
+  $ADCE return;
+;
+  $ADCF outside: A = *HL; // get spotlight_found_player flag
+  $ADD0 if (A != 0x1F) goto $AE00;
+  $ADD5 HL = map_position_maybe;
+  $ADD8 D = L + 4;
+  $ADDC D = H;
+  $ADDD HL = searchlight_coords;
+  $ADE0 A = L;
+  $ADE1 if (A != E) goto $ADE9;
+  $ADE4 if (H == D) return; // strongly suspect this case means: highlight doesn't need to move, so quit
+  $ADE7 goto $ADF1;
+;
+  $ADE9 if (A >= E) goto $ADEF; // move highlight .. left? down?
+  $ADEC A++; // move highlight right? up?
+  $ADED goto $ADF0;
+;
+  $ADEF A--;
+;
+  $ADF0 L = A; // new coord
+;
+  $ADF1 A = H;
+  $ADF2 if (A == D) goto store;
+  $ADF5 if (A > D) goto $ADFB; // move highlight .. left? down?
+  $ADF8 A++;
+  $ADF9 goto $ADFC;
+;
+  $ADFB A--;
+;
+  $ADFC H = A; // new coord
+;
+  $ADFD store: searchlight_coords = HL;
+;
+  $AE00 DE = map_position_maybe;
+  $AE04 HL = $AE77; // &searchlight_coords + 1 byte;
+  $AE07 B = 1; // 1 iteration
+  $AE09 PUSH BC
+  $AE0A PUSH HL
+  $AE0B goto $AE3F;
+;
+  $AE0D not_tracking: HL = &word_AD29[0];
+  $AE10 B = 3; // 3 iterations
+  $AE12 do < PUSH BC
+  $AE13 PUSH HL
+  $AE14 sub_AD59();
+  $AE17 POP HL
+  $AE18 PUSH HL
+  $AE19 something_then_decrease_morale_10();
+  $AE1C POP HL
+  $AE1D PUSH HL
+  $AE1E DE = map_position_maybe;
+  $AE22 A = E + 23;
+  $AE25 if (A < *HL) goto next; // out of bounds maybe
+  $AE29 A = *HL + 16;
+  $AE2C if (A < E) goto next;
+  $AE30 HL++;
+  $AE31 A = D + 16;
+  $AE34 if (A < *HL) goto next;
+  $AE38 A = *HL + 16;
+  $AE3B if (A < D) goto next;
+;
+  $AE3F A = 0;
+;
+  $AE40 EX AF,AF'
+  $AE41 HL--;
+  $AE42 B = 0;
+  $AE44 A = *HL - E;
+  $AE46 if (A >= 0) goto $AE4E;
+  $AE49 B = 0xFF;
+  $AE4B EX AF,AF'
+  $AE4C A = ~A;
+  $AE4D EX AF,AF'
+;
+  $AE4E C = A;
+  $AE4F HL++;
+  $AE50 A = *HL;
+  $AE51 H = 0;
+  $AE53 A -= D;
+  $AE54 if (A < 0) H = 0xFF;
+;
+  $AE59 L = A;
+  $AE5A HL *= 32; // attribute address?
+  $AE5F HL += BC;
+  $AE60 HL += 0x5846; // screen attribute address of top-left game screen attribute
+  $AE64 EX DE,HL
+  $AE65 EX AF,AF'
+;
+  $AE66 searchlight_related = A;
+  $AE69 searchlight();
+;
+  $AE6C next: POP HL
+  $AE6D POP BC
+  $AE6E HL += 7;
+  $AE72 > while (--B);
+  $AE74 return;
 
 ; ------------------------------------------------------------------------------
 
 c $AE78 something_then_decrease_morale_10
+R $AE78 I:HL Pointer to ?
+;
+  $AE78 DE = map_position_maybe;
+  $AE7C B = E + 12;
+  $AE80 A = HL[0] + 5;
+  $AE83 if (A >= B) return;
+;
+  $AE85 A += 5;
+  $AE87 B -= 2;
+  $AE89 if (A < B) return;
+;
+  $AE8B (hoisted)
+  $AE8C B = D + 10;
+  $AE90 A = HL[1] + 5;
+  $AE93 if (A >= B) return;
+;
+  $AE95 C = A + 7;
+  $AE98 A = B - 4;
+  $AE9B if (A >= C) return;
+;
+  $AE9D A = spotlight_found_player;
+  $AEA0 if (A == 0x1F) return;
+;
+  $AEA3 A = 0x1F;
+  $AEA5 spotlight_found_player = A;
+  $AEA8 D = HL[0];
+  $AEAA E = HL[1];
+  $AEAB word_AE76 = DE;
+  $AEAF bell = 0;
+  $AEB3 decrease_morale(10); // exit via
 
 ; ------------------------------------------------------------------------------
 
 c $AEB8 searchlight
+  $AEB8 EXX
+  $AEB9 DE = &searchlight_shape[0];
+  $AEBC C = 16; // iterations  / width?
+  $AEBE do < EXX
+  $AEBF A = searchlight_related;
+  $AEC2 HL = 0x5A40; // screen attribute address (column 0 + bottom of game screen)
+  $AEC5 if (A == 0) goto $AED2;
+  $AEC9 A = E;
+  $AECA if ((A & 31) < 22) goto $AED2;
+  $AED0 L = 32;
+;
+  $AED2 SBC HL,DE // if (HL - DE - carry ...)
+  $AED4 RET C
+;
+  $AED5 PUSH DE
+  $AED6 HL = 0x5840; // screen attribute address (column 0 + top of game screen)
+  $AED9 if (A == 0) goto $AEE6;
+  $AEDD A = E & 31;
+  $AEE0 if (A < 7) goto $AEE6;
+  $AEE4 L = 32;
+;
+  $AEE6 SBC HL,DE
+  $AEE8 JR C,$AEF0
+;
+  $AEEA EXX
+  $AEEB DE += 2;
+  $AEED EXX
+  $AEEE goto nextrow;
+;
+  $AEF0 EX DE,HL
+  $AEF1 EXX
+  $AEF2 B = 2;
+  $AEF4 do < A = *DE;
+  $AEF5 EXX
+  $AEF6 DE = 0x071E;
+  $AEF9 C = A;
+  $AEFA B = 8;
+  $AEFC do < A = searchlight_related;
+  $AEFF if (A != 0) ...
+  $AF00 A = L; // interleaved
+  $AF01 goto $AF0C;
+;
+  $AF04 if ((A & 31) >= 22) goto $AF1B;
+;
+  $AF0A goto $AF18;
+;
+  $AF0C if ((A & 31) < E) goto $AF18;
+;
+  $AF11 EXX
+  $AF12 do < DE++; > while (--B);
+;
+  $AF15 EXX
+  $AF16 goto nextrow;
+;
+  $AF18 if (A >= D) goto $AF1F;
+;
+  $AF1B RL C // looks like bit extraction ...
+  $AF1D goto next;
+;
+  $AF1F RL C
+  $AF21 JP NC, plot_dark
+;
+  $AF24 *HL = attribute_YELLOW_OVER_BLACK;
+  $AF26 goto next;
+;
+  $AF28 plot_dark: *HL = attribute_BRIGHT_BLUE_OVER_BLACK;
+;
+  $AF2A next: HL++;
+  $AF2B > while (--B);
+;
+  $AF2D EXX
+  $AF2E DE++;
+  $AF2F > while (--B);
+;
+  $AF31 EXX
+;
+  $AF32 nextrow: POP HL
+  $AF33 HL += 32;
+  $AF37 EX DE,HL
+  $AF38 EXX
+  $AF39 > while (--C);
+;
+  $AF3D return;
+
 B $AF3E searchlight_shape
 D $AF3E Bitmap circle.
 
