@@ -410,7 +410,7 @@
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
 ; b $801C cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by sub_68A2 -- looks like a room index!
-; ? $8020 character reset data? (<- calledby_setup_movable_items) suspect 7 sets of 32 bytes (one per prisoner) possibly visible characters only? can there be >7 characters on-screen/visible at once? or is it prisoners only?
+; ? $8020 character reset data? (<- reset_all_objects) suspect 7 sets of 32 bytes (one per prisoner) possibly visible characters only? can there be >7 characters on-screen/visible at once? or is it prisoners only?
 
 ;   $8020 byte -- bit 6 means something here, likely merged with a character index
 ;   $8021 likely a room index
@@ -418,6 +418,8 @@
 ;   $8023 likely a position
 ;   $8024 likely a position
 ;   $803C room index within struct at $8020
+
+; w $81A2 (<- masked_sprite_plotter)
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; CONTROL DIRECTIVES
