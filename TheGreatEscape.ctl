@@ -776,8 +776,86 @@ c $6A35 select_room_maybe
 
 ; ------------------------------------------------------------------------------
 
-c $6AB5 draw_object_to_tiles
-D $6AB5 [unsure]
+c $6AB5 expand_object
+D $6AB5 Expands RLE-encoded objects to a full set of tile references.
+D $6AB5 Format:
+D $6AB5 <w> <h>: width, height
+D $6AB5 Repeat:
+D $6AB5 <t>: emit tile <t>
+D $6AB5 <0xFF> <64..127> <t>: emit tile <t> <t+1> <t+2> .. up to 63 times
+D $6AB5 <0xFF> <128..254> <t>: emit tile <t> up to 126 times
+D $6AB5 <0xFF> <0xFF>: emit <0xFF>
+R $6AB5 I:A  Object index.
+R $6AB5 I:DE Receives expanded tiles. Must point to correct x,y in tile buf.
+R $6AB5 O:BC Corrupted.
+R $6AB5 O:HL Corrupted.
+  $6AB5 HL = interior_object_tile_refs[A];
+  $6AC1 B = *HL++; // width
+  $6AC3 C = *HL++; // height
+  $6AC5 LD ($6AE7),B    // self modify (== width)
+;
+  $6AC9 expand: do < do < A = *HL;
+  $6ACA if (A != objecttile_ESCAPE) goto $6ADE;
+  $6ACE HL++;
+  $6ACF A = *HL;
+  $6AD0 if (A == objecttile_ESCAPE) goto $6ADE;  // FF FF => FF
+  $6AD4 A &= 0xF0;      // redundant?
+  $6AD6 if (A >= 128) goto $6AF4;
+  $6ADA if (A == 64) goto $6B19;
+;
+  $6ADE if (A) *DE = A;
+  $6AE2 HL++;
+  $6AE3 DE++;
+  $6AE4 > while (--B);
+  $6AE6 B = 1;        // self modified
+  $6AE8 DE += 24 - B;
+  $6AF0 > while (--C); // for each row
+  $6AF3 return;
+;
+; 128..255 case
+  $6AF4 A = *HL++ & 0x7F;
+  $6AF7 EX AF,AF'
+  $6AF9 A = *HL;
+  $6AFA EX AF,AF'
+;
+  $6AFB do < EX AF,AF'
+  $6AFC if (A > 0) *DE = A;
+;
+  $6B00 DE++;
+  $6B01 DJNZ $6B12
+; ran out of width
+  $6B03 LD A,($6AE7)    // A = width
+  $6B07 DE += 24 - A;   // stride
+  $6B0F A = *HL;
+  $6B10 if (--C == 0) return;
+;
+  $6B12 EX AF,AF'
+  $6B13 > while (--A);
+  $6B16 HL++;
+  $6B17 goto expand;
+;
+; 64..127 case
+  $6B19 A = 60;         // 'INC A'
+  $6B1B LD ($6B28),A    // self modify (but nothing else modifies it! possible evidence that other encodings with 'DEC A' were attempted)
+  $6B1E A = *HL++ & 0x0F;
+  $6B21 EX AF,AF'
+  $6B23 A = *HL;
+  $6B24 EX AF,AF'
+;
+  $6B25 do < EX AF,AF'
+  $6B26 *DE++ = A;
+  $6B28 INC A           // self modified
+  $6B29 DJNZ $6B3B
+  $6B2B PUSH AF
+  $6B2C LD A,($6AE7)    // A = width
+  $6B30 DE += 24 - A;   // stride
+  $6B38 POP AF
+  $6B3A if (--C == 0) return;
+;
+  $6B3B EX AF,AF'
+  $6B3D > while (--A);
+  $6B3F HL++;
+  $6B40 goto expand;
 
 ; ------------------------------------------------------------------------------
 
