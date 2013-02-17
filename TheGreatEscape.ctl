@@ -385,6 +385,10 @@
 ; ; enum objecttile (width 1 byte)
 ; objecttile_ESCAPE = 255              ; escape character
 
+; ; enum morale
+; morale_MIN = 0x00
+; morale_MAX = 0x70
+
 ; //////////////////////////////////////////////////////////////////////////////
 ; GAME STATE
 ; //////////////////////////////////////////////////////////////////////////////
@@ -1966,14 +1970,14 @@ D $A09E Called three times from main_loop.
 c $A0D2 increase_morale
 R $A0D2 B Amount to increase morale by. (Preserved)
   $A0D2 A = morale + B;
-  $A0D6 if (A >= 0x70) A = 0x70; // MAX_MORALE = 0x70;
+  $A0D6 if (A >= morale_MAX) A = morale_MAX;
   $A0DC set_morale_from_A: morale = A;
   $A0DF return;
 
 c $A0E0 decrease_morale
 R $A0E0 B Amount to decrease morale by. (Preserved)
   $A0E0 A = morale - B;
-  $A0E4 if (A < 0) A = 0; // MIN_MORALE = 0x00;
+  $A0E4 if (A < morale_MIN) A = morale_MIN;
   $A0E7 goto set_morale_from_A;
 
 c $A0E9 increase_morale_by_10_score_by_50
