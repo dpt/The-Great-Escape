@@ -684,7 +684,7 @@ D $6920 This is resetting the character sprite set to prisoner.
 ; ------------------------------------------------------------------------------
 
 c $6939 setup_movable_items
-  $6939 calledby_setup_movable_items();
+  $6939 reset_all_objects();
   $693C A = indoor_room_index;
   $693F      if (A == room_2_hut2left) setup_stove1();
   $6949 else if (A == room_4_hut3left) setup_stove2();
@@ -748,7 +748,17 @@ W $69C6 &sprite_stove }
 
 ; ------------------------------------------------------------------------------
 
-c $69C9 calledby_setup_movable_items
+c $69C9 reset_all_objects
+  $69C9 HL = $8020;
+  $69CC BC = 0x0720; // 7 iters, 32 stride
+  $69CF do < PUSH BC
+  $69D0 PUSH HL
+  $69D1 reset_object();
+  $69D4 POP HL
+  $69D5 POP BC
+  $69D6 HL += C;
+  $69D9 > while (--B);
+  $69DB return;
 
 ; ------------------------------------------------------------------------------
 
