@@ -782,7 +782,9 @@ R $6A12 O:DE Corrupted.
 ; ------------------------------------------------------------------------------
 
 c $6A27 wipe_visible_tiles
-D $6A27 Wipe the visible tiles array at $F0F8 (24 * 16 = 408);
+D $6A27 Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
+  $6A27 memset($F0F8, 0, 408);
+  $6A34 return;
 
 ; ------------------------------------------------------------------------------
 
