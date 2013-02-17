@@ -95,9 +95,9 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         # Build tile UDG array
         udg_array = []
 
-        for y in range(0, height * 4):
+        for y in range(height * 4):
             udg_array.append([]) # start new row
-            for x in range(0, width * 4):
+            for x in range(width * 4):
                 stileidx = self.snapshot[addr + (y // 4) * width + (x // 4)]
                 udg_array[-1].append(self.tile(cwd, self.snapshot[0x5B00 + stileidx * 16 + (y & 3) * 4 + (x & 3)], stileidx))
 
@@ -108,6 +108,77 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return self.img_element(cwd, img_path)
 
+    def interior_tile(self, cwd, tile_index):
+        """ Interior tile -> Udg. """
+
+        data = 0x9768
+        attr = 7
+        a = data + tile_index * 8
+        return Udg(attr, self.snapshot[a : a + 8])
+
+    def decode_all_objects(self, cwd, base, ents):
+        for index,i in enumerate(range(base, base + ents * 2, 2)):
+            addr = self.snapshot[i + 0] + self.snapshot[i + 1] * 256
+            self.decode_object(cwd, addr, index)
+
+    def decode_object(self, cwd, addr, index):
+        width, height, tiles = self.expand_object(cwd, addr)
+
+        tiles.reverse()
+
+        # Build tile UDG array
+        udg_array = []
+
+        for y in range(height):
+            udg_array.append([]) # start new row
+            for x in range(width):
+                udg_array[-1].append(self.interior_tile(cwd, tiles.pop()))
+
+        img_path_id = 'ScreenshotImagePath'
+        fname = 'object-%d' % index
+        img_path = self.image_path(fname, img_path_id)
+        self.write_image(img_path, udg_array)
+
+        return self.img_element(cwd, img_path)
+
+    def expand_object(self, cwd, addr):
+        width  = self.snapshot[addr + 0]
+        height = self.snapshot[addr + 1]
+
+        iters = width * height
+
+        s = []
+
+        p = addr + 2
+        while iters > 0:
+            b = self.snapshot[p]
+            p += 1
+            if b == 0xFF:
+                c = self.snapshot[p]
+                p += 1
+                if c == 0xFF:
+                    s.append(c)
+                    iters = iters - 1
+                elif c >= 128:
+                    d = self.snapshot[p]
+                    p += 1
+                    for i in range(1, 1 + c - 128):
+                        s.append(d)
+                        iters = iters - 1
+                elif c >= 64:
+                    d = self.snapshot[p]
+                    p += 1
+                    for i in range(d, d + c - 64):
+                        s.append(i)
+                        iters = iters - 1
+                elif c:
+                    s.append(c)
+                    iters = iters - 1
+            else:
+                s.append(b)
+                iters = iters - 1
+
+        return (width, height, s)
 
 class TheGreatEscapeAsmWriter(AsmWriter):
     pass
