@@ -289,7 +289,7 @@
 ; message_ANOTHER_DAY_DAWNS = 19
 
 ; ; enum object
-; object_UNKNOWN_0 = 0                 ; unsure what this is
+; object_TUNNEL_0 = 0
 ; object_SMALL_TUNNEL_ENTRANCE = 1
 ; object_ROOM_OUTLINE_2 = 2
 ; object_TUNNEL_3 = 3
@@ -318,9 +318,9 @@
 ; object_CUPBOARD = 26
 ; object_ROOM_OUTLINE_27 = 27
 ; object_TABLE_1 = 28
-; object_TABLE_2 = 29                 ; the two table objects look identical to me
+; object_TABLE_2 = 29                   ; the two table objects are identical
 ; object_STOVE_PIPE = 30
-; object_UNKNOWN_31 = 31               ; can't tell what it is
+; object_STUFF_31 = 31                  ; can't tell what this is supposed to be
 ; object_TALL_WARDROBE = 32
 ; object_SMALL_SHELF = 33
 ; object_SMALL_CRATE = 34
