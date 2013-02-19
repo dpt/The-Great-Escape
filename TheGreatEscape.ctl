@@ -1016,58 +1016,59 @@ B $708C,1 collapsed_tunnel_obj [unsure]
 ;
 b $7095 interior_object_tile_refs
 W $7095 Array of pointer to interior object tile refs, 54 entries long (== number of interior room objects).
-B $7101 Object tile refs 0
-B $711B Object tile refs 1
-B $7121 Object tile refs 3
-B $713B Object tile refs 4
-B $7155 Object tile refs 5
-B $715A Object tile refs 6
-B $7174 Object tile refs 7
-B $718E Object tile refs 12
-B $71A6 Object tile refs 13
-B $71AB Object tile refs 14
-B $71C4 Object tile refs 17
-B $71DE Object tile refs 18
-B $71F8 Object tile refs 19
-B $7200 Object tile refs 20
-B $721A Object tile refs 2
-B $728E Object tile refs 8
-B $72AE Object tile refs 9
-B $72C1 Object tile refs 10
-B $72CC Object tile refs 11
-B $72D1 Object tile refs 15
-B $72EB Object tile refs 16
-B $7305 Object tile refs 22
-B $730F Object tile refs 23
-B $7325 Object tile refs 24
-B $7333 Object tile refs 25
-B $733C Object tile refs 26
-B $7342 Object tile refs 28
-B $734B Object tile refs 30
-B $7359 Object tile refs 31
-B $735C Object tile refs 32
-B $736A Object tile refs 33
-B $736F Object tile refs 34
-B $7374 Object tile refs 35
-B $7385 Object tile refs 36
-B $7393 Object tile refs 37
-B $73A5 Object tile refs 38
-B $73BF Object tile refs 39
-B $73D9 Object tile refs 41
-B $7425 Object tile refs 42
-B $742D Object tile refs 43
-B $7452 Object tile refs 44
-B $7482 Object tile refs 45
-B $7493 Object tile refs 46
-B $74F5 Object tile refs 47
-B $7570 Object tile refs 48
-B $7576 Object tile refs 49
-B $757E Object tile refs 50
-B $7588 Object tile refs 51
-B $75A2 Object tile refs 52
-B $75AA Object tile refs 53
-B $75B0 Object tile refs 27
-B $75B3 the block which terminates the object tile refs [unsure what -- it could just be a large object definition]
+D $7095 #CALL:decode_all_objects($7095, 54)
+;
+B $7101 Interior object tile refs 0
+B $711B Interior object tile refs 1
+B $7121 Interior object tile refs 3
+B $713B Interior object tile refs 4
+B $7155 Interior object tile refs 5
+B $715A Interior object tile refs 6
+B $7174 Interior object tile refs 7
+B $718E Interior object tile refs 12
+B $71A6 Interior object tile refs 13
+B $71AB Interior object tile refs 14
+B $71C4 Interior object tile refs 17
+B $71DE Interior object tile refs 18
+B $71F8 Interior object tile refs 19
+B $7200 Interior object tile refs 20
+B $721A Interior object tile refs 2
+B $728E Interior object tile refs 8
+B $72AE Interior object tile refs 9
+B $72C1 Interior object tile refs 10
+B $72CC Interior object tile refs 11
+B $72D1 Interior object tile refs 15
+B $72EB Interior object tile refs 16
+B $7305 Interior object tile refs 22
+B $730F Interior object tile refs 23
+B $7325 Interior object tile refs 24
+B $7333 Interior object tile refs 25
+B $733C Interior object tile refs 26
+B $7342 Interior object tile refs 28
+B $734B Interior object tile refs 30
+B $7359 Interior object tile refs 31
+B $735C Interior object tile refs 32
+B $736A Interior object tile refs 33
+B $736F Interior object tile refs 34
+B $7374 Interior object tile refs 35
+B $7385 Interior object tile refs 36
+B $7393 Interior object tile refs 37
+B $73A5 Interior object tile refs 38
+B $73BF Interior object tile refs 39
+B $73D9 Interior object tile refs 41
+B $7425 Interior object tile refs 42
+B $742D Interior object tile refs 43
+B $7452 Interior object tile refs 44
+B $7482 Interior object tile refs 45
+B $7493 Interior object tile refs 46
+B $74F5 Interior object tile refs 47
+B $7570 Interior object tile refs 48
+B $7576 Interior object tile refs 49
+B $757E Interior object tile refs 50
+B $7588 Interior object tile refs 51
+B $75A2 Interior object tile refs 52
+B $75AA Interior object tile refs 53
+B $75B0 Interior object tile refs 27
 
 ; ------------------------------------------------------------------------------
 
