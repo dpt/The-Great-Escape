@@ -5127,6 +5127,33 @@ C $E555 rotate_AC_right_3
 
 ; ------------------------------------------------------------------------------
 
+c $E542 divide_3xAC_by_8_with_rounding
+D $E542 Divides 3 words by 8 with rounding to nearest.
+R $E542 I:HL Pointer to input words
+R $E542 I:DE Pointer to output bytes
+  $E542 B = 3;
+  $E544 do < A = *HL++;
+  $E546 C = *HL++;
+  $E547 divide_AC_by_8_with_rounding();
+  $E54A *DE++ = A;
+  $E54D > while (--B);
+  $E54F return;
+
+; ------------------------------------------------------------------------------
+
+c $E550 divide_AC_by_8_with_rounding
+D $E550 Divides AC by 8, with rounding to nearest.
+R $E550 I:A Low
+R $E550 I:C High
+  $E550 A += 4;
+  $E552 if (carry) C++;
+;
+C $E555 divide_AC_by_8
+  $E555 A = (A >> 3) | (C << 5); C >>= 3;
+  $E55E return;
+
+; ------------------------------------------------------------------------------
+
 b $E55F probably_mask_data
   $E55F probably masks
   $E5FF probably masks
