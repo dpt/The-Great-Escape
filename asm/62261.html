@@ -35,67 +35,66 @@ Used by the routine at <a class="link" href="62288.html">F350</a>.
 <tr>
 <td class="label"><a name="62261"></a>F335</td>
 <td class="instruction">DI</td>
-<td class="transparentComment" />
+<td class="comment">DI</td>
 </tr>
 <tr>
 <td class="address"><a name="62262"></a>F336</td>
 <td class="instruction">LD ($EDD1),SP</td>
-<td class="transparentComment" />
+<td class="comment">saved_sp = SP;</td>
 </tr>
 <tr>
 <td class="address"><a name="62266"></a>F33A</td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="transparentComment" />
+<td class="comment">sp = game_screen_scanline_start_addresses;</td>
 </tr>
 <tr>
 <td class="address"><a name="62269"></a>F33D</td>
 <td class="instruction">LD A,$80</td>
-<td class="transparentComment" />
+<td class="comment">A = 128; // 128 rows</td>
 </tr>
 <tr>
 <td class="label"><a name="62271"></a>F33F</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">do &lt; POP HL // start address</td>
 </tr>
 <tr>
 <td class="address"><a name="62272"></a>F340</td>
 <td class="instruction">LD B,$17</td>
-<td class="transparentComment" />
+<td class="comment">B = 23; // 23 columns</td>
 </tr>
 <tr>
 <td class="label"><a name="62274"></a>F342</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="transparentComment" />
+<td class="comment">do &lt; *HL = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="62276"></a>F344</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
+<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="62277"></a>F345</td>
 <td class="instruction">DJNZ $F342</td>
-<td class="transparentComment" />
+<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="62279"></a>F347</td>
 <td class="instruction">DEC A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">&gt; while (--A);</td>
 </tr>
 <tr>
 <td class="address"><a name="62280"></a>F348</td>
 <td class="instruction">JP NZ,$F33F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62283"></a>F34B</td>
 <td class="instruction">LD SP,($EDD1)</td>
-<td class="transparentComment" />
+<td class="comment">SP = saved_sp;</td>
 </tr>
 <tr>
 <td class="address"><a name="62287"></a>F34F</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

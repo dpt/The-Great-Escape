@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Input routine: Protek joystick.
+Input routine for Protek (cursor) joystick.
 </div>
 </div>
 </td>
@@ -35,167 +35,162 @@ Input routine: Protek joystick.
 <tr>
 <td class="label"><a name="65095"></a>FE47</td>
 <td class="instruction">LD BC,$F7FE</td>
-<td class="transparentComment" />
+<td class="comment">BC = port_KEYBOARD_12345;</td>
 </tr>
 <tr>
 <td class="address"><a name="65098"></a>FE4A</td>
 <td class="instruction">IN A,(C)</td>
-<td class="transparentComment" />
+<td class="comment">IN A,(C)</td>
 </tr>
 <tr>
 <td class="address"><a name="65100"></a>FE4C</td>
 <td class="instruction">CPL</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = ~A &amp; (1&lt;&lt;4); // 5 == left</td>
 </tr>
 <tr>
 <td class="address"><a name="65101"></a>FE4D</td>
 <td class="instruction">AND $10</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65103"></a>FE4F</td>
 <td class="instruction">LD E,$03</td>
-<td class="transparentComment" />
+<td class="comment">E = input_LEFT;</td>
 </tr>
 <tr>
 <td class="address"><a name="65105"></a>FE51</td>
 <td class="instruction">LD B,$EF</td>
-<td class="transparentComment" />
+<td class="comment">B = 0xEF; // port_KEYBOARD_09876</td>
 </tr>
 <tr>
 <td class="address"><a name="65107"></a>FE53</td>
 <td class="instruction">JR NZ,$FE60</td>
-<td class="transparentComment" />
+<td class="comment">if (nonzero) goto $FE60;</td>
 </tr>
 <tr>
 <td class="address"><a name="65109"></a>FE55</td>
 <td class="instruction">IN A,(C)</td>
-<td class="transparentComment" />
+<td class="comment">IN A,(C)</td>
 </tr>
 <tr>
 <td class="address"><a name="65111"></a>FE57</td>
 <td class="instruction">CPL</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = ~A &amp; (1&lt;&lt;2);</td>
 </tr>
 <tr>
 <td class="address"><a name="65112"></a>FE58</td>
 <td class="instruction">AND $04</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65114"></a>FE5A</td>
 <td class="instruction">LD E,$06</td>
-<td class="transparentComment" />
+<td class="comment">E = input_RIGHT;</td>
 </tr>
 <tr>
 <td class="address"><a name="65116"></a>FE5C</td>
 <td class="instruction">JR NZ,$FE60</td>
-<td class="transparentComment" />
+<td class="comment">if (nonzero) goto $FE60;</td>
 </tr>
 <tr>
 <td class="address"><a name="65118"></a>FE5E</td>
 <td class="instruction">LD E,$00</td>
-<td class="transparentComment" />
+<td class="comment">E = 0; // no horizontal</td>
 </tr>
 <tr>
 <td class="label"><a name="65120"></a>FE60</td>
 <td class="instruction">IN A,(C)</td>
-<td class="transparentComment" />
+<td class="comment">IN A,(C)</td>
 </tr>
 <tr>
 <td class="address"><a name="65122"></a>FE62</td>
 <td class="instruction">CPL</td>
-<td class="transparentComment" />
+<td class="comment">A = ~A;</td>
 </tr>
 <tr>
 <td class="address"><a name="65123"></a>FE63</td>
 <td class="instruction">LD D,A</td>
-<td class="transparentComment" />
+<td class="comment">D = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="65124"></a>FE64</td>
 <td class="instruction">AND $08</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= (1&lt;&lt;3);</td>
 </tr>
 <tr>
 <td class="address"><a name="65126"></a>FE66</td>
 <td class="instruction">LD A,$01</td>
-<td class="transparentComment" />
+<td class="comment">A = input_UP; // interleaved</td>
 </tr>
 <tr>
 <td class="address"><a name="65128"></a>FE68</td>
 <td class="instruction">JR NZ,$FE72</td>
-<td class="transparentComment" />
+<td class="comment">if (nonzero) goto got_vertical;</td>
 </tr>
 <tr>
 <td class="address"><a name="65130"></a>FE6A</td>
 <td class="instruction">LD A,D</td>
-<td class="transparentComment" />
+<td class="comment">A = D;</td>
 </tr>
 <tr>
 <td class="address"><a name="65131"></a>FE6B</td>
 <td class="instruction">AND $10</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= (1&lt;&lt;4);</td>
 </tr>
 <tr>
 <td class="address"><a name="65133"></a>FE6D</td>
 <td class="instruction">LD A,$02</td>
-<td class="transparentComment" />
+<td class="comment">A = input_DOWN; // interleaved</td>
 </tr>
 <tr>
 <td class="address"><a name="65135"></a>FE6F</td>
 <td class="instruction">JR NZ,$FE72</td>
-<td class="transparentComment" />
+<td class="comment">if (nonzero) goto got_vertical;</td>
 </tr>
 <tr>
 <td class="address"><a name="65137"></a>FE71</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment">A = input_NONE;</td>
 </tr>
 <tr>
 <td class="label"><a name="65138"></a>FE72</td>
 <td class="instruction">ADD A,E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">got_vertical: E += A;</td>
 </tr>
 <tr>
 <td class="address"><a name="65139"></a>FE73</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65140"></a>FE74</td>
 <td class="instruction">LD A,D</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = D &amp; (1&lt;&lt;0);</td>
 </tr>
 <tr>
 <td class="address"><a name="65141"></a>FE75</td>
 <td class="instruction">AND $01</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65143"></a>FE77</td>
 <td class="instruction">LD A,$09</td>
-<td class="transparentComment" />
+<td class="comment">A = input_FIRE; // interleaved</td>
 </tr>
 <tr>
 <td class="address"><a name="65145"></a>FE79</td>
 <td class="instruction">JR NZ,$FE7C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (zero) A = 0; // no vertical</td>
 </tr>
 <tr>
 <td class="address"><a name="65147"></a>FE7B</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="65148"></a>FE7C</td>
 <td class="instruction">ADD A,E</td>
-<td class="transparentComment" />
+<td class="comment">A += E; // combine axis</td>
 </tr>
 <tr>
 <td class="address"><a name="65149"></a>FE7D</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

@@ -27,7 +27,10 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Searches for a character (0x14) and something else, sets a flag.
+Searches for a visible character and something else, sets a flag.
+</div>
+<div class="paragraph">
+If I nop this out then guards don't spot the items I drop.
 </div>
 </div>
 </td>
@@ -44,17 +47,17 @@ Searches for a character (0x14) and something else, sets a flag.
 <tr>
 <td class="address"><a name="52401"></a>CCB1</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment">B  = 7;  // iterations</td>
+<td class="comment">B = 7; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="52403"></a>CCB3</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">loop: ...</td>
+<td class="comment">do &lt;</td>
 </tr>
 <tr>
 <td class="address"><a name="52404"></a>CCB4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="14">if (HL[0] &lt; 0x14 &amp;&amp; HL[19] &lt; 0x20) HL[0] = 1; // set the flag [unknown]</td>
+<td class="comment" rowspan="14">if (HL[0] &lt; character_20_prisoner &amp;&amp; HL[19] &lt; 0x20) HL[1] = 1; // set the flag [player taken to solitary]</td>
 </tr>
 <tr>
 <td class="address"><a name="52405"></a>CCB5</td>
@@ -116,7 +119,7 @@ Searches for a character (0x14) and something else, sets a flag.
 <tr>
 <td class="address"><a name="52426"></a>CCCA</td>
 <td class="instruction">DJNZ $CCB3</td>
-<td class="comment">B--; if (B) goto loop;</td>
+<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="52428"></a>CCCC</td>

@@ -30,207 +30,196 @@
 Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to ?</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="44664"></a>AE78</td>
 <td class="instruction">LD DE,($81BB)</td>
-<td class="transparentComment" />
+<td class="comment">DE = map_position_maybe;</td>
 </tr>
 <tr>
 <td class="address"><a name="44668"></a>AE7C</td>
 <td class="instruction">LD A,E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">B = E + 12;</td>
 </tr>
 <tr>
 <td class="address"><a name="44669"></a>AE7D</td>
 <td class="instruction">ADD A,$0C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44671"></a>AE7F</td>
 <td class="instruction">LD B,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44672"></a>AE80</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = HL[0] + 5;</td>
 </tr>
 <tr>
 <td class="address"><a name="44673"></a>AE81</td>
 <td class="instruction">ADD A,$05</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44675"></a>AE83</td>
 <td class="instruction">CP B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &gt;= B) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44676"></a>AE84</td>
 <td class="instruction">RET NC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44677"></a>AE85</td>
 <td class="instruction">ADD A,$05</td>
-<td class="transparentComment" />
+<td class="comment">A += 5;</td>
 </tr>
 <tr>
 <td class="address"><a name="44679"></a>AE87</td>
 <td class="instruction">DEC B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">B -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="44680"></a>AE88</td>
 <td class="instruction">DEC B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44681"></a>AE89</td>
 <td class="instruction">CP B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &lt; B) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44682"></a>AE8A</td>
 <td class="instruction">RET C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44683"></a>AE8B</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">(hoisted)</td>
 </tr>
 <tr>
 <td class="address"><a name="44684"></a>AE8C</td>
 <td class="instruction">LD A,D</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">B = D + 10;</td>
 </tr>
 <tr>
 <td class="address"><a name="44685"></a>AE8D</td>
 <td class="instruction">ADD A,$0A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44687"></a>AE8F</td>
 <td class="instruction">LD B,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44688"></a>AE90</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = HL[1] + 5;</td>
 </tr>
 <tr>
 <td class="address"><a name="44689"></a>AE91</td>
 <td class="instruction">ADD A,$05</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44691"></a>AE93</td>
 <td class="instruction">CP B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &gt;= B) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44692"></a>AE94</td>
 <td class="instruction">RET NC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44693"></a>AE95</td>
 <td class="instruction">ADD A,$07</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">C = A + 7;</td>
 </tr>
 <tr>
 <td class="address"><a name="44695"></a>AE97</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44696"></a>AE98</td>
 <td class="instruction">LD A,B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = B - 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="44697"></a>AE99</td>
 <td class="instruction">SUB $04</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44699"></a>AE9B</td>
 <td class="instruction">CP C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &gt;= C) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44700"></a>AE9C</td>
 <td class="instruction">RET NC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44701"></a>AE9D</td>
 <td class="instruction">LD A,($81BD)</td>
-<td class="transparentComment" />
+<td class="comment">A = spotlight_found_player;</td>
 </tr>
 <tr>
 <td class="address"><a name="44704"></a>AEA0</td>
 <td class="instruction">CP $1F</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == 0x1F) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44706"></a>AEA2</td>
 <td class="instruction">RET Z</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44707"></a>AEA3</td>
 <td class="instruction">LD A,$1F</td>
-<td class="transparentComment" />
+<td class="comment">A = 0x1F;</td>
 </tr>
 <tr>
 <td class="address"><a name="44709"></a>AEA5</td>
 <td class="instruction">LD ($81BD),A</td>
-<td class="transparentComment" />
+<td class="comment">spotlight_found_player = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="44712"></a>AEA8</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">D = HL[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="44713"></a>AEA9</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44714"></a>AEAA</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">E = HL[1];</td>
 </tr>
 <tr>
 <td class="address"><a name="44715"></a>AEAB</td>
 <td class="instruction">LD ($AE76),DE</td>
-<td class="transparentComment" />
+<td class="comment">word_AE76 = DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="44719"></a>AEAF</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">bell = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="44720"></a>AEB0</td>
 <td class="instruction">LD ($A130),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44723"></a>AEB3</td>
 <td class="instruction">LD B,$0A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">decrease_morale(10); // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="44725"></a>AEB5</td>
 <td class="instruction">JP <a class="link" href="41184.html">$A0E0</a></td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

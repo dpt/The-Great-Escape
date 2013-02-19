@@ -21,93 +21,102 @@
 <td class="next">Next: <a class="link" href="52634.html">CD9A</a></td>
 </tr>
 </table>
-<div class="description">CD6A: item_data_related</div>
+<div class="description">CD6A: item_location</div>
 <table class="dataDisassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+Array of 16 three-byte structures.
+</div>
+<div class="paragraph">
+struct item_location { byte room_and_flags; byte y; byte x; };
+</div>
+<div class="paragraph">
+#define ITEM_ROOM(item_no, flags) ((item_no &amp; 63) | flags)
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="address"><a name="52586"></a>CD6A</td>
 <td class="instruction">DEFB $FF,$40,$20</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_WIRESNIPS        { ITEM_ROOM(room_NONE, (3&lt;&lt;6)), ... } // do these flags mean that the wiresnips are always or /never/ found?</td>
 </tr>
 <tr>
 <td class="address"><a name="52589"></a>CD6D</td>
 <td class="instruction">DEFB $09,$3E,$30</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52592"></a>CD70</td>
 <td class="instruction">DEFB $0A,$49,$24</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52595"></a>CD73</td>
 <td class="instruction">DEFB $0B,$2A,$3A</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_PAPERS           { ITEM_ROOM(room_11, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52598"></a>CD76</td>
 <td class="instruction">DEFB $0E,$32,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_TORCH            { ITEM_ROOM(room_14, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52601"></a>CD79</td>
 <td class="instruction">DEFB $3F,$24,$2C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_BRIBE            { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52604"></a>CD7C</td>
 <td class="instruction">DEFB $0F,$2C,$41</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_UNIFORM          { ITEM_ROOM(room_15, 0),  ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52607"></a>CD7F</td>
 <td class="instruction">DEFB $13,$40,$30</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_FOOD             { ITEM_ROOM(room_19, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52610"></a>CD82</td>
 <td class="instruction">DEFB $01,$42,$34</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_POISON           { ITEM_ROOM(room_1, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52613"></a>CD85</td>
 <td class="instruction">DEFB $16,$3C,$2A</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_RED_KEY          { ITEM_ROOM(room_22, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52616"></a>CD88</td>
 <td class="instruction">DEFB $0B,$1C,$22</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_YELLOW_KEY       { ITEM_ROOM(room_11, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52619"></a>CD8B</td>
 <td class="instruction">DEFB $00,$4A,$48</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_GREEN_KEY        { ITEM_ROOM(room_0, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52622"></a>CD8E</td>
 <td class="instruction">DEFB $3F,$1C,$32</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52625"></a>CD91</td>
 <td class="instruction">DEFB $12,$24,$3A</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_RADIO            { ITEM_ROOM(room_18, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52628"></a>CD94</td>
 <td class="instruction">DEFB $3F,$1E,$22</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 <tr>
 <td class="address"><a name="52631"></a>CD97</td>
 <td class="instruction">DEFB $3F,$34,$1C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 </table>
 <table class="prevNext">

@@ -35,392 +35,377 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="label"><a name="44728"></a>AEB8</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44729"></a>AEB9</td>
 <td class="instruction">LD DE,$AF3E</td>
-<td class="comment"></td>
+<td class="comment">DE = &amp;searchlight_shape[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="44732"></a>AEBC</td>
 <td class="instruction">LD C,$10</td>
-<td class="comment"></td>
+<td class="comment">C = 16; // iterations  / width?</td>
 </tr>
 <tr>
 <td class="label"><a name="44734"></a>AEBE</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">do &lt; EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44735"></a>AEBF</td>
 <td class="instruction">LD A,($AE75)</td>
-<td class="comment"></td>
+<td class="comment">A = searchlight_related;</td>
 </tr>
 <tr>
 <td class="address"><a name="44738"></a>AEC2</td>
 <td class="instruction">LD HL,$5A40</td>
-<td class="comment"></td>
+<td class="comment">HL = 0x5A40; // screen attribute address (column 0 + bottom of game screen)</td>
 </tr>
 <tr>
 <td class="address"><a name="44741"></a>AEC5</td>
 <td class="instruction">AND A</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">if (A == 0) goto $AED2;</td>
 </tr>
 <tr>
 <td class="address"><a name="44742"></a>AEC6</td>
 <td class="instruction">JP Z,$AED2</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44745"></a>AEC9</td>
 <td class="instruction">LD A,E</td>
-<td class="comment"></td>
+<td class="comment">A = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="44746"></a>AECA</td>
 <td class="instruction">AND $1F</td>
-<td class="comment"></td>
+<td class="comment" rowspan="3">if ((A &amp; 31) &lt; 22) goto $AED2;</td>
 </tr>
 <tr>
 <td class="address"><a name="44748"></a>AECC</td>
 <td class="instruction">CP $16</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44750"></a>AECE</td>
 <td class="instruction">JR C,$AED2</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44752"></a>AED0</td>
 <td class="instruction">LD L,$20</td>
-<td class="comment"></td>
+<td class="comment">L = 32;</td>
 </tr>
 <tr>
 <td class="label"><a name="44754"></a>AED2</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment"></td>
+<td class="comment">SBC HL,DE // if (HL - DE - carry ...)</td>
 </tr>
 <tr>
 <td class="address"><a name="44756"></a>AED4</td>
 <td class="instruction">RET C</td>
-<td class="comment"></td>
+<td class="comment">RET C</td>
 </tr>
 <tr>
 <td class="address"><a name="44757"></a>AED5</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment"></td>
+<td class="comment">PUSH DE</td>
 </tr>
 <tr>
 <td class="address"><a name="44758"></a>AED6</td>
 <td class="instruction">LD HL,$5840</td>
-<td class="comment"></td>
+<td class="comment">HL = 0x5840; // screen attribute address (column 0 + top of game screen)</td>
 </tr>
 <tr>
 <td class="address"><a name="44761"></a>AED9</td>
 <td class="instruction">AND A</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">if (A == 0) goto $AEE6;</td>
 </tr>
 <tr>
 <td class="address"><a name="44762"></a>AEDA</td>
 <td class="instruction">JP Z,$AEE6</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44765"></a>AEDD</td>
 <td class="instruction">LD A,E</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">A = E &amp; 31;</td>
 </tr>
 <tr>
 <td class="address"><a name="44766"></a>AEDE</td>
 <td class="instruction">AND $1F</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44768"></a>AEE0</td>
 <td class="instruction">CP $07</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">if (A &lt; 7) goto $AEE6;</td>
 </tr>
 <tr>
 <td class="address"><a name="44770"></a>AEE2</td>
 <td class="instruction">JR C,$AEE6</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44772"></a>AEE4</td>
 <td class="instruction">LD L,$20</td>
-<td class="comment"></td>
+<td class="comment">L = 32;</td>
 </tr>
 <tr>
 <td class="label"><a name="44774"></a>AEE6</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment"></td>
+<td class="comment">SBC HL,DE</td>
 </tr>
 <tr>
 <td class="address"><a name="44776"></a>AEE8</td>
 <td class="instruction">JR C,$AEF0</td>
-<td class="comment"></td>
+<td class="comment">JR C,$AEF0</td>
 </tr>
 <tr>
 <td class="address"><a name="44778"></a>AEEA</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44779"></a>AEEB</td>
 <td class="instruction">INC DE</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">DE += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="44780"></a>AEEC</td>
 <td class="instruction">INC DE</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44781"></a>AEED</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44782"></a>AEEE</td>
 <td class="instruction">JR $AF32</td>
-<td class="comment"></td>
+<td class="comment">goto nextrow;</td>
 </tr>
 <tr>
 <td class="label"><a name="44784"></a>AEF0</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment"></td>
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="44785"></a>AEF1</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44786"></a>AEF2</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment"></td>
+<td class="comment">B = 2;</td>
 </tr>
 <tr>
 <td class="label"><a name="44788"></a>AEF4</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment"></td>
+<td class="comment">do &lt; A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="44789"></a>AEF5</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44790"></a>AEF6</td>
 <td class="instruction">LD DE,$071E</td>
-<td class="comment"></td>
+<td class="comment">DE = 0x071E;</td>
 </tr>
 <tr>
 <td class="address"><a name="44793"></a>AEF9</td>
 <td class="instruction">LD C,A</td>
-<td class="comment"></td>
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="44794"></a>AEFA</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment"></td>
+<td class="comment">B = 8;</td>
 </tr>
 <tr>
 <td class="label"><a name="44796"></a>AEFC</td>
 <td class="instruction">LD A,($AE75)</td>
-<td class="comment"></td>
+<td class="comment">do &lt; A = searchlight_related;</td>
 </tr>
 <tr>
 <td class="address"><a name="44799"></a>AEFF</td>
 <td class="instruction">AND A</td>
-<td class="comment"></td>
+<td class="comment">if (A != 0) ...</td>
 </tr>
 <tr>
 <td class="address"><a name="44800"></a>AF00</td>
 <td class="instruction">LD A,L</td>
-<td class="comment"></td>
+<td class="comment">A = L; // interleaved</td>
 </tr>
 <tr>
 <td class="address"><a name="44801"></a>AF01</td>
 <td class="instruction">JP Z,$AF0C</td>
-<td class="comment"></td>
+<td class="comment">goto $AF0C;</td>
 </tr>
 <tr>
 <td class="address"><a name="44804"></a>AF04</td>
 <td class="instruction">AND $1F</td>
-<td class="comment"></td>
+<td class="comment" rowspan="3">if ((A &amp; 31) &gt;= 22) goto $AF1B;</td>
 </tr>
 <tr>
 <td class="address"><a name="44806"></a>AF06</td>
 <td class="instruction">CP $16</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44808"></a>AF08</td>
 <td class="instruction">JR NC,$AF1B</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44810"></a>AF0A</td>
 <td class="instruction">JR $AF18</td>
-<td class="comment"></td>
+<td class="comment">goto $AF18;</td>
 </tr>
 <tr>
 <td class="label"><a name="44812"></a>AF0C</td>
 <td class="instruction">AND $1F</td>
-<td class="comment"></td>
+<td class="comment" rowspan="3">if ((A &amp; 31) &lt; E) goto $AF18;</td>
 </tr>
 <tr>
 <td class="address"><a name="44814"></a>AF0E</td>
 <td class="instruction">CP E</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44815"></a>AF0F</td>
 <td class="instruction">JR C,$AF18</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44817"></a>AF11</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="label"><a name="44818"></a>AF12</td>
 <td class="instruction">INC DE</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">do &lt; DE++; &gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44819"></a>AF13</td>
 <td class="instruction">DJNZ $AF12</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44821"></a>AF15</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44822"></a>AF16</td>
 <td class="instruction">JR $AF32</td>
-<td class="comment"></td>
+<td class="comment">goto nextrow;</td>
 </tr>
 <tr>
 <td class="label"><a name="44824"></a>AF18</td>
 <td class="instruction">CP D</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">if (A &gt;= D) goto $AF1F;</td>
 </tr>
 <tr>
 <td class="address"><a name="44825"></a>AF19</td>
 <td class="instruction">JR NC,$AF1F</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="label"><a name="44827"></a>AF1B</td>
 <td class="instruction">RL C</td>
-<td class="comment"></td>
+<td class="comment">RL C // looks like bit extraction ...</td>
 </tr>
 <tr>
 <td class="address"><a name="44829"></a>AF1D</td>
 <td class="instruction">JR $AF2A</td>
-<td class="comment"></td>
+<td class="comment">goto next;</td>
 </tr>
 <tr>
 <td class="label"><a name="44831"></a>AF1F</td>
 <td class="instruction">RL C</td>
-<td class="comment"></td>
+<td class="comment">RL C</td>
 </tr>
 <tr>
 <td class="address"><a name="44833"></a>AF21</td>
 <td class="instruction">JP NC,$AF28</td>
-<td class="comment"></td>
+<td class="comment">JP NC, plot_dark</td>
 </tr>
 <tr>
 <td class="address"><a name="44836"></a>AF24</td>
 <td class="instruction">LD (HL),$06</td>
-<td class="comment"></td>
+<td class="comment">*HL = attribute_YELLOW_OVER_BLACK;</td>
 </tr>
 <tr>
 <td class="address"><a name="44838"></a>AF26</td>
 <td class="instruction">JR $AF2A</td>
-<td class="comment"></td>
+<td class="comment">goto next;</td>
 </tr>
 <tr>
 <td class="label"><a name="44840"></a>AF28</td>
 <td class="instruction">LD (HL),$41</td>
-<td class="comment"></td>
+<td class="comment">plot_dark: *HL = attribute_BRIGHT_BLUE_OVER_BLACK;</td>
 </tr>
 <tr>
 <td class="label"><a name="44842"></a>AF2A</td>
 <td class="instruction">INC HL</td>
-<td class="comment"></td>
+<td class="comment">next: HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="44843"></a>AF2B</td>
 <td class="instruction">DJNZ $AEFC</td>
-<td class="comment"></td>
+<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44845"></a>AF2D</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44846"></a>AF2E</td>
 <td class="instruction">INC DE</td>
-<td class="comment"></td>
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="44847"></a>AF2F</td>
 <td class="instruction">DJNZ $AEF4</td>
-<td class="comment"></td>
+<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44849"></a>AF31</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="label"><a name="44850"></a>AF32</td>
 <td class="instruction">POP HL</td>
-<td class="comment"></td>
+<td class="comment">nextrow: POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="44851"></a>AF33</td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">HL += 32;</td>
 </tr>
 <tr>
 <td class="address"><a name="44854"></a>AF36</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44855"></a>AF37</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment"></td>
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="44856"></a>AF38</td>
 <td class="instruction">EXX</td>
-<td class="comment"></td>
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44857"></a>AF39</td>
 <td class="instruction">DEC C</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">&gt; while (--C);</td>
 </tr>
 <tr>
 <td class="address"><a name="44858"></a>AF3A</td>
 <td class="instruction">JP NZ,$AEBE</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="44861"></a>AF3D</td>
 <td class="instruction">RET</td>
-<td class="comment"></td>
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">

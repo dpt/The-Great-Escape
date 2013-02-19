@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Input routine: Kempston joystick.
+Input routine for Kempston joystick.
 </div>
 </div>
 </td>
@@ -35,112 +35,106 @@ Input routine: Kempston joystick.
 <tr>
 <td class="label"><a name="65150"></a>FE7E</td>
 <td class="instruction">LD BC,$001F</td>
-<td class="transparentComment" />
+<td class="comment">BC = 0x001F;</td>
 </tr>
 <tr>
 <td class="address"><a name="65153"></a>FE81</td>
 <td class="instruction">IN A,(C)</td>
-<td class="transparentComment" />
+<td class="comment">IN A,(C)</td>
 </tr>
 <tr>
 <td class="address"><a name="65155"></a>FE83</td>
 <td class="instruction">LD BC,$0000</td>
-<td class="transparentComment" />
+<td class="comment">BC = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="65158"></a>FE86</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="65159"></a>FE87</td>
 <td class="instruction">JR NC,$FE8B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (carry) B = input_RIGHT;</td>
 </tr>
 <tr>
 <td class="address"><a name="65161"></a>FE89</td>
 <td class="instruction">LD B,$06</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="65163"></a>FE8B</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="65164"></a>FE8C</td>
 <td class="instruction">JR NC,$FE90</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (carry) B = input_LEFT;</td>
 </tr>
 <tr>
 <td class="address"><a name="65166"></a>FE8E</td>
 <td class="instruction">LD B,$03</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="65168"></a>FE90</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="65169"></a>FE91</td>
 <td class="instruction">JR NC,$FE95</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (carry) C = input_DOWN;</td>
 </tr>
 <tr>
 <td class="address"><a name="65171"></a>FE93</td>
 <td class="instruction">LD C,$02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="65173"></a>FE95</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="65174"></a>FE96</td>
 <td class="instruction">JR NC,$FE9A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (carry) C = input_UP;</td>
 </tr>
 <tr>
 <td class="address"><a name="65176"></a>FE98</td>
 <td class="instruction">LD C,$01</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="65178"></a>FE9A</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="65179"></a>FE9B</td>
 <td class="instruction">LD A,$09</td>
-<td class="transparentComment" />
+<td class="comment">A = input_FIRE;</td>
 </tr>
 <tr>
 <td class="address"><a name="65181"></a>FE9D</td>
 <td class="instruction">JR C,$FEA0</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (!carry) A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="65183"></a>FE9F</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="65184"></a>FEA0</td>
 <td class="instruction">ADD A,B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A += B + C;</td>
 </tr>
 <tr>
 <td class="address"><a name="65185"></a>FEA1</td>
 <td class="instruction">ADD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65186"></a>FEA2</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

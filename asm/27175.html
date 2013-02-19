@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Wipe the visible tiles array at $F0F8 (24 * 16 = 408);
+Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
 </div>
 </div>
 </td>
@@ -35,32 +35,28 @@ Wipe the visible tiles array at $F0F8 (24 * 16 = 408);
 <tr>
 <td class="label"><a name="27175"></a>6A27</td>
 <td class="instruction">LD DE,$F0F9</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="5">memset($F0F8, 0, 408);</td>
 </tr>
 <tr>
 <td class="address"><a name="27178"></a>6A2A</td>
 <td class="instruction">LD HL,$F0F8</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="27181"></a>6A2D</td>
 <td class="instruction">LD BC,$0197</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="27184"></a>6A30</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="27186"></a>6A32</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="27188"></a>6A34</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

@@ -21,76 +21,92 @@
 <td class="next">Next: <a class="link" href="41109.html">A095</a></td>
 </tr>
 </table>
-<div class="description">A082: call_mystery_if_h_AND_7_is_zero</div>
+<div class="description">A082: get_prev_scanline</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="41013.html">A035</a>.
+Given a screen address, returns the same position on the next scanline.
+</div>
+<div class="paragraph">
+Given a screen address, returns the same position on the previous scanline.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Original screen address.</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Original screen address.</td>
+</tr>
+</table>
+<table class="output">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Updated screen address.</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Updated screen address.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="41090"></a>A082</td>
 <td class="instruction">LD A,H</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if ((H &amp; 7) != 0) // NNN bits</td>
 </tr>
 <tr>
 <td class="address"><a name="41091"></a>A083</td>
 <td class="instruction">AND $07</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41093"></a>A085</td>
 <td class="instruction">JR Z,$A089</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41095"></a>A087</td>
 <td class="instruction">DEC H</td>
-<td class="transparentComment" />
+<td class="comment">HL -= 256; // step back one scanline</td>
 </tr>
 <tr>
 <td class="address"><a name="41096"></a>A088</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="41097"></a>A089</td>
 <td class="instruction">LD DE,$06E0</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">if (L &lt; 32) HL -= 32; else HL += 0x06E0; // complicated</td>
 </tr>
 <tr>
 <td class="address"><a name="41100"></a>A08C</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41101"></a>A08D</td>
 <td class="instruction">CP $20</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41103"></a>A08F</td>
 <td class="instruction">JR NC,$A093</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41105"></a>A091</td>
 <td class="instruction">LD D,$FF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="41107"></a>A093</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41108"></a>A094</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

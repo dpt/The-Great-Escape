@@ -21,66 +21,73 @@
 <td class="next">Next: <a class="link" href="58704.html">E550</a></td>
 </tr>
 </table>
-<div class="description">E542: sub_E542</div>
+<div class="description">E542: divide_3xAC_by_8_with_rounding</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="31627.html">7B8B</a>, <a class="link" href="40737.html">9F21</a>, <a class="link" href="50643.html">C5D3</a>, <a class="link" href="51480.html">C918</a> and <a class="link" href="52279.html">CC37</a>.
+Divides 3 words by 8 with rounding to nearest.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to input words</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="registerContents">Pointer to output bytes</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="58690"></a>E542</td>
 <td class="instruction">LD B,$03</td>
-<td class="transparentComment" />
+<td class="comment">B = 3;</td>
 </tr>
 <tr>
 <td class="label"><a name="58692"></a>E544</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">do &lt; A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58693"></a>E545</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="58694"></a>E546</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">C = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58695"></a>E547</td>
 <td class="instruction">CALL <a class="link" href="58704.html">$E550</a></td>
-<td class="transparentComment" />
+<td class="comment">divide_AC_by_8_with_rounding();</td>
 </tr>
 <tr>
 <td class="address"><a name="58698"></a>E54A</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">*DE++ = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58699"></a>E54B</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="58700"></a>E54C</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="58701"></a>E54D</td>
 <td class="instruction">DJNZ $E544</td>
-<td class="transparentComment" />
+<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58703"></a>E54F</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

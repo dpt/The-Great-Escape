@@ -35,67 +35,62 @@ Used by the routines at <a class="link" href="31934.html">7CBE</a>, <a class="li
 <tr>
 <td class="label"><a name="31977"></a>7CE9</td>
 <td class="instruction">INC H</td>
-<td class="transparentComment" />
+<td class="comment">HL += 256;</td>
 </tr>
 <tr>
 <td class="address"><a name="31978"></a>7CEA</td>
 <td class="instruction">LD A,H</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if ((H &amp; 7) != 0) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="31979"></a>7CEB</td>
 <td class="instruction">AND $07</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31981"></a>7CED</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31982"></a>7CEE</td>
 <td class="instruction">PUSH DE</td>
-<td class="transparentComment" />
+<td class="comment">PUSH DE</td>
 </tr>
 <tr>
 <td class="address"><a name="31983"></a>7CEF</td>
 <td class="instruction">LD DE,$F820</td>
-<td class="transparentComment" />
+<td class="comment">DE = 0xF820;</td>
 </tr>
 <tr>
 <td class="address"><a name="31986"></a>7CF2</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">if (L &gt;= 0xE0) D = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="31987"></a>7CF3</td>
 <td class="instruction">CP $E0</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31989"></a>7CF5</td>
 <td class="instruction">JR C,$7CF9</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31991"></a>7CF7</td>
 <td class="instruction">LD D,$FF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="31993"></a>7CF9</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
+<td class="comment">HL += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31994"></a>7CFA</td>
 <td class="instruction">POP DE</td>
-<td class="transparentComment" />
+<td class="comment">POP DE</td>
 </tr>
 <tr>
 <td class="address"><a name="31995"></a>7CFB</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

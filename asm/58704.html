@@ -21,31 +21,40 @@
 <td class="next">Next: <a class="link" href="58719.html">E55F</a></td>
 </tr>
 </table>
-<div class="description">E550: rotate_AC_right_3_with_prologue</div>
+<div class="description">E550: divide_AC_by_8_with_rounding</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="31627.html">7B8B</a>, <a class="link" href="50302.html">C47E</a>, <a class="link" href="58400.html">E420</a> and <a class="link" href="58690.html">E542</a>.
+Divides AC by 8, with rounding to nearest.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Low</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="registerContents">High</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="58704"></a>E550</td>
 <td class="instruction">ADD A,$04</td>
-<td class="comment"></td>
+<td class="comment">A += 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="58706"></a>E552</td>
 <td class="instruction">JR NC,$E555</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">if (carry) C++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58708"></a>E554</td>
 <td class="instruction">INC C</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -60,7 +69,7 @@ This entry point is used by the routines at <a class="link" href="45820.html">B2
 <tr>
 <td class="label">E555</td>
 <td class="instruction">SRL C</td>
-<td class="comment" rowspan="7">rotate_AC_right_3</td>
+<td class="comment" rowspan="6">A = (A &gt;&gt; 3) | (C &lt;&lt; 5); C &gt;&gt;= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="58711"></a>E557</td>
@@ -85,6 +94,7 @@ This entry point is used by the routines at <a class="link" href="45820.html">B2
 <tr>
 <td class="address"><a name="58718"></a>E55E</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

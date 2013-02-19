@@ -35,7 +35,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class=
 <tr>
 <td class="label"><a name="26937"></a>6939</td>
 <td class="instruction">CALL <a class="link" href="27081.html">$69C9</a></td>
-<td class="comment">calledby_setup_movable_items();</td>
+<td class="comment">reset_all_objects();</td>
 </tr>
 <tr>
 <td class="address"><a name="26940"></a>693C</td>
@@ -117,12 +117,12 @@ Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class=
 <tr>
 <td class="label"><a name="26986"></a>696A</td>
 <td class="instruction">LD HL,$69B7</td>
-<td class="comment">HL = &amp;crate;</td>
+<td class="comment">setup_crate: HL = &amp;crate;</td>
 </tr>
 <tr>
 <td class="address"><a name="26989"></a>696D</td>
 <td class="instruction">LD A,$1C</td>
-<td class="comment">A = 28;</td>
+<td class="comment">A = character_28_crate;</td>
 </tr>
 <tr>
 <td class="address"><a name="26991"></a>696F</td>
@@ -132,12 +132,12 @@ Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class=
 <tr>
 <td class="label"><a name="26993"></a>6971</td>
 <td class="instruction">LD HL,$69C0</td>
-<td class="comment">HL = &amp;stove2;</td>
+<td class="comment">setup_stove2: HL = &amp;stove2;</td>
 </tr>
 <tr>
 <td class="address"><a name="26996"></a>6974</td>
 <td class="instruction">LD A,$1B</td>
-<td class="comment">A = 27;</td>
+<td class="comment">A = character_27_stove2;</td>
 </tr>
 <tr>
 <td class="address"><a name="26998"></a>6976</td>
@@ -147,37 +147,35 @@ Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class=
 <tr>
 <td class="label"><a name="27000"></a>6978</td>
 <td class="instruction">LD HL,$69AE</td>
-<td class="comment">HL = &amp;stove1;</td>
+<td class="comment">setup_stove1: HL = &amp;stove1;</td>
 </tr>
 <tr>
 <td class="address"><a name="27003"></a>697B</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment">A = 26; // then fallthrough to...</td>
+<td class="comment">A = character_26_stove1; // then fallthrough to...</td>
 </tr>
 <tr>
 <td class="label"><a name="27005"></a>697D</td>
 <td class="instruction">LD ($8020),A</td>
-<td class="comment">setup_movable_items: $8020 = A;</td>
+<td class="comment">setup_movable_items: $8020 = A; // character index</td>
 </tr>
 <tr>
 <td class="address"><a name="27008"></a>6980</td>
 <td class="instruction">LD BC,$0009</td>
-<td class="comment">BC = 9;</td>
+<td class="comment" rowspan="3">memcpy($802F, HL, 9); // character 0 is $8020..$803F</td>
 </tr>
 <tr>
 <td class="address"><a name="27011"></a>6983</td>
 <td class="instruction">LD DE,$802F</td>
-<td class="comment">DE = ...;</td>
 </tr>
 <tr>
 <td class="address"><a name="27014"></a>6986</td>
 <td class="instruction">LDIR</td>
-<td class="comment">memcpy ...;</td>
 </tr>
 <tr>
 <td class="address"><a name="27016"></a>6988</td>
 <td class="instruction">LD HL,$69A0</td>
-<td class="comment" rowspan="8">...</td>
+<td class="comment" rowspan="4">memcpy($8021, byte_69A0, 14);</td>
 </tr>
 <tr>
 <td class="address"><a name="27019"></a>698B</td>
@@ -194,6 +192,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class=
 <tr>
 <td class="address"><a name="27027"></a>6993</td>
 <td class="instruction">LD A,($68A0)</td>
+<td class="comment" rowspan="2">$803C = indoor_room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="27030"></a>6996</td>
@@ -202,10 +201,12 @@ Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class=
 <tr>
 <td class="address"><a name="27033"></a>6999</td>
 <td class="instruction">LD HL,$8020</td>
+<td class="comment">HL = $8020;</td>
 </tr>
 <tr>
 <td class="address"><a name="27036"></a>699C</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
+<td class="comment">reset_something();</td>
 </tr>
 <tr>
 <td class="address"><a name="27039"></a>699F</td>

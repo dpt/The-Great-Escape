@@ -27,70 +27,82 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="31814.html">7C46</a>.
+Wipe the screen.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">B</td>
+<td class="registerContents">Number of bytes to set.</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="registerContents">Number of scanlines.</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Destination address.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="31956"></a>7CD4</td>
 <td class="instruction">LD A,B</td>
-<td class="transparentComment" />
+<td class="comment">A = B;</td>
 </tr>
 <tr>
 <td class="address"><a name="31957"></a>7CD5</td>
 <td class="instruction">LD ($7CD9),A</td>
-<td class="transparentComment" />
+<td class="comment">(loopcounter + 1) = A;   // self modifying</td>
 </tr>
 <tr>
 <td class="label"><a name="31960"></a>7CD8</td>
 <td class="instruction">LD B,$02</td>
-<td class="transparentComment" />
+<td class="comment">do &lt; loopcounter: B = 2; // modified</td>
 </tr>
 <tr>
 <td class="address"><a name="31962"></a>7CDA</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="label"><a name="31963"></a>7CDB</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">do &lt; *HL++ = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="31965"></a>7CDD</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31966"></a>7CDE</td>
 <td class="instruction">DJNZ $7CDB</td>
-<td class="transparentComment" />
+<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31968"></a>7CE0</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31969"></a>7CE1</td>
 <td class="instruction">CALL <a class="link" href="31977.html">$7CE9</a></td>
-<td class="transparentComment" />
+<td class="comment">get_next_scanline();</td>
 </tr>
 <tr>
 <td class="address"><a name="31972"></a>7CE4</td>
 <td class="instruction">DEC C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">&gt; while (--C);</td>
 </tr>
 <tr>
 <td class="address"><a name="31973"></a>7CE5</td>
 <td class="instruction">JP NZ,$7CD8</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="31976"></a>7CE8</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

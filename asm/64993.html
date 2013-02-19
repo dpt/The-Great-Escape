@@ -35,37 +35,34 @@ Very first entry point used to shunt the game image down into its proper positio
 <tr>
 <td class="label"><a name="64993"></a>FDE1</td>
 <td class="instruction">DI</td>
-<td class="transparentComment" />
+<td class="comment">Disable interrupts.</td>
 </tr>
 <tr>
 <td class="address"><a name="64994"></a>FDE2</td>
 <td class="instruction">LD SP,$FFFF</td>
-<td class="transparentComment" />
+<td class="comment">SP = 0xFFFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="64997"></a>FDE5</td>
 <td class="instruction">LD BC,$9FE0</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">memmove(0x5B00, 0x5E00, 0x9FE0);</td>
 </tr>
 <tr>
 <td class="address"><a name="65000"></a>FDE8</td>
 <td class="instruction">LD HL,$5E00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65003"></a>FDEB</td>
 <td class="instruction">LD DE,$5B00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65006"></a>FDEE</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="65008"></a>FDF0</td>
 <td class="instruction">JP <a class="link" href="61544.html">$F068</a></td>
-<td class="transparentComment" />
+<td class="comment">goto jump_to_main; // exit via</td>
 </tr>
 </table>
 <table class="prevNext">
