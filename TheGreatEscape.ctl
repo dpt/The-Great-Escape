@@ -894,14 +894,12 @@ R $6B42 O:HL' Corrupted.
   $6B4A do < B = 24; // columns
   $6B4C do < PUSH HL
   $6B4D A = *DE;
-  $6B4E EXX
-  $6B4F HL = &interior_tiles[A];
-  $6B59 POP DE
-  $6B5A B = 8; C = 24;
-  $6B5D do < *DE = *HL++;
-  $6B5F DE += C;
-  $6B66 > while (--B);
-  $6B68 EXX
+  $6B4F HL' = &interior_tiles[A];
+  $6B59 POP DE'
+  $6B5A B' = 8; C' = 24;
+  $6B5D do < *DE' = *HL'++;
+  $6B5F DE' += C';
+  $6B66 > while (--B');
   $6B69 DE++;
   $6B6A HL++;
   $6B6B > while (--B);
