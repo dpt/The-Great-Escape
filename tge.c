@@ -9,69 +9,69 @@
 /* ----------------------------------------------------------------------- */
 
 // this duplicates data...
-enum object
+enum interior_object
 {
-  object_TUNNEL_0,
-  object_SMALL_TUNNEL_ENTRANCE,
-  object_ROOM_OUTLINE_2,
-  object_TUNNEL_3,
-  object_TUNNEL_JOIN_4,
-  object_PRISONER_SAT_DOWN_MID_TABLE,
-  object_TUNNEL_CORNER_6,
-  object_TUNNEL_7,
-  object_WIDE_WINDOW,
-  object_EMPTY_BED,
-  object_SHORT_WARDROBE,
-  object_CHEST_OF_DRAWERS,
-  object_TUNNEL_12,
-  object_EMPTY_BENCH,
-  object_TUNNEL_14,
-  object_DOOR_FRAME_15,
-  object_DOOR_FRAME_16,
-  object_TUNNEL_17,
-  object_TUNNEL_18,
-  object_PRISONER_SAT_DOWN_END_TABLE,
-  object_COLLAPSED_TUNNEL,
-  object_ROOM_OUTLINE_21,
-  object_CHAIR_POINTING_BOTTOM_RIGHT,
-  object_OCCUPIED_BED,
-  object_WARDROBE_WITH_KNOCKERS,
-  object_CHAIR_POINTING_BOTTOM_LEFT,
-  object_CUPBOARD,
-  object_ROOM_OUTLINE_27,
-  object_TABLE_1,
-  object_TABLE_2,
-  object_STOVE_PIPE,
-  object_STUFF_31,
-  object_TALL_WARDROBE,
-  object_SMALL_SHELF,
-  object_SMALL_CRATE,
-  object_SMALL_WINDOW,
-  object_DOOR_FRAME_36,
-  object_NOTICEBOARD,
-  object_DOOR_FRAME_38,
-  object_DOOR_FRAME_39,
-  object_DOOR_FRAME_40,
-  object_ROOM_OUTLINE_41,
-  object_CUPBOARD_42,
-  object_MESS_BENCH,
-  object_MESS_TABLE,
-  object_MESS_BENCH_SHORT,
-  object_ROOM_OUTLINE_46,
-  object_ROOM_OUTLINE_47,
-  object_TINY_TABLE,
-  object_TINY_DRAWERS,
-  object_DRAWERS_50,
-  object_DESK,
-  object_SINK,
-  object_KEY_RACK,
-  object__LIMIT
+  interiorobject_TUNNEL_0,
+  interiorobject_SMALL_TUNNEL_ENTRANCE,
+  interiorobject_ROOM_OUTLINE_2,
+  interiorobject_TUNNEL_3,
+  interiorobject_TUNNEL_JOIN_4,
+  interiorobject_PRISONER_SAT_DOWN_MID_TABLE,
+  interiorobject_TUNNEL_CORNER_6,
+  interiorobject_TUNNEL_7,
+  interiorobject_WIDE_WINDOW,
+  interiorobject_EMPTY_BED,
+  interiorobject_SHORT_WARDROBE,
+  interiorobject_CHEST_OF_DRAWERS,
+  interiorobject_TUNNEL_12,
+  interiorobject_EMPTY_BENCH,
+  interiorobject_TUNNEL_14,
+  interiorobject_DOOR_FRAME_15,
+  interiorobject_DOOR_FRAME_16,
+  interiorobject_TUNNEL_17,
+  interiorobject_TUNNEL_18,
+  interiorobject_PRISONER_SAT_DOWN_END_TABLE,
+  interiorobject_COLLAPSED_TUNNEL,
+  interiorobject_ROOM_OUTLINE_21,
+  interiorobject_CHAIR_POINTING_BOTTOM_RIGHT,
+  interiorobject_OCCUPIED_BED,
+  interiorobject_WARDROBE_WITH_KNOCKERS,
+  interiorobject_CHAIR_POINTING_BOTTOM_LEFT,
+  interiorobject_CUPBOARD,
+  interiorobject_ROOM_OUTLINE_27,
+  interiorobject_TABLE_1,
+  interiorobject_TABLE_2,
+  interiorobject_STOVE_PIPE,
+  interiorobject_STUFF_31,
+  interiorobject_TALL_WARDROBE,
+  interiorobject_SMALL_SHELF,
+  interiorobject_SMALL_CRATE,
+  interiorobject_SMALL_WINDOW,
+  interiorobject_DOOR_FRAME_36,
+  interiorobject_NOTICEBOARD,
+  interiorobject_DOOR_FRAME_38,
+  interiorobject_DOOR_FRAME_39,
+  interiorobject_DOOR_FRAME_40,
+  interiorobject_ROOM_OUTLINE_41,
+  interiorobject_CUPBOARD_42,
+  interiorobject_MESS_BENCH,
+  interiorobject_MESS_TABLE,
+  interiorobject_MESS_BENCH_SHORT,
+  interiorobject_ROOM_OUTLINE_46,
+  interiorobject_ROOM_OUTLINE_47,
+  interiorobject_TINY_TABLE,
+  interiorobject_TINY_DRAWERS,
+  interiorobject_DRAWERS_50,
+  interiorobject_DESK,
+  interiorobject_SINK,
+  interiorobject_KEY_RACK,
+  interiorobject__LIMIT
 };
 
-enum objecttile
+enum interior_object_tile
 {
-  objecttile_MAX = 194,
-  objecttile_ESCAPE = 255
+  interiorobjecttile_MAX = 194,
+  interiorobjecttile_ESCAPE = 255
 };
 
 /* ----------------------------------------------------------------------- */
@@ -82,10 +82,11 @@ typedef struct tgestate tgestate_t;
 /** A game object. */
 typedef struct tgeobject tgeobject_t;
 
-/** An interior (only?) object. */
-typedef enum object object_t;
+/** An interior object. */
+typedef enum interior_object object_t;
 
-typedef enum objecttile objecttile_t;
+/** An interior object tile. */
+typedef enum interior_object_tile objecttile_t;
 
 /** Tiles (also known as UDGs). */
 typedef uint8_t tileindex_t;
@@ -94,9 +95,9 @@ typedef tilerow_t tile_t[8];
 
 /* ----------------------------------------------------------------------- */
 
-extern const tgeobject_t *interior_object_tile_refs[object__LIMIT];
+extern const tgeobject_t *interior_object_tile_refs[interiorobject__LIMIT];
 
-extern const tile_t interior_tiles[objecttile_MAX];
+extern const tile_t interior_tiles[interiorobjecttile_MAX];
 
 /* ----------------------------------------------------------------------- */
 
@@ -145,10 +146,10 @@ void expand_object(tgestate_t *state, object_t index, uint8_t *output)
     {
 expand:
       byte = *data;
-      if (byte == objecttile_ESCAPE)
+      if (byte == interiorobjecttile_ESCAPE)
       {
         byte = *++data;
-        if (byte != objecttile_ESCAPE)
+        if (byte != interiorobjecttile_ESCAPE)
         {
           if (byte >= 128)
             goto run;

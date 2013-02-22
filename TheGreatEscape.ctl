@@ -288,62 +288,62 @@
 ; message_AND_ACTS_AS_DECOY = 18
 ; message_ANOTHER_DAY_DAWNS = 19
 
-; ; enum object
-; object_TUNNEL_0 = 0
-; object_SMALL_TUNNEL_ENTRANCE = 1
-; object_ROOM_OUTLINE_2 = 2
-; object_TUNNEL_3 = 3
-; object_TUNNEL_JOIN_4 = 4
-; object_PRISONER_SAT_DOWN_MID_TABLE = 5
-; object_TUNNEL_CORNER_6 = 6
-; object_TUNNEL_7 = 7
-; object_WIDE_WINDOW = 8
-; object_EMPTY_BED = 9
-; object_SHORT_WARDROBE = 10
-; object_CHEST_OF_DRAWERS = 11
-; object_TUNNEL_12 = 12
-; object_EMPTY_BENCH = 13
-; object_TUNNEL_14 = 14
-; object_DOOR_FRAME_15 = 15
-; object_DOOR_FRAME_16 = 16
-; object_TUNNEL_17 = 17
-; object_TUNNEL_18 = 18
-; object_PRISONER_SAT_DOWN_END_TABLE = 19
-; object_COLLAPSED_TUNNEL = 20
-; object_ROOM_OUTLINE_21 = 21
-; object_CHAIR_POINTING_BOTTOM_RIGHT = 22
-; object_OCCUPIED_BED = 23
-; object_WARDROBE_WITH_KNOCKERS = 24
-; object_CHAIR_POINTING_BOTTOM_LEFT = 25
-; object_CUPBOARD = 26
-; object_ROOM_OUTLINE_27 = 27
-; object_TABLE_1 = 28
-; object_TABLE_2 = 29                   ; the two table objects are identical
-; object_STOVE_PIPE = 30
-; object_STUFF_31 = 31                  ; can't tell what this is supposed to be
-; object_TALL_WARDROBE = 32
-; object_SMALL_SHELF = 33
-; object_SMALL_CRATE = 34
-; object_SMALL_WINDOW = 35
-; object_DOOR_FRAME_36 = 36
-; object_NOTICEBOARD = 37
-; object_DOOR_FRAME_38 = 38
-; object_DOOR_FRAME_39 = 39
-; object_DOOR_FRAME_40 = 40
-; object_ROOM_OUTLINE_41 = 41
-; object_CUPBOARD_42 = 42
-; object_MESS_BENCH = 43
-; object_MESS_TABLE = 44
-; object_MESS_BENCH_SHORT = 45
-; object_ROOM_OUTLINE_46 = 46
-; object_ROOM_OUTLINE_47 = 47
-; object_TINY_TABLE = 48
-; object_TINY_DRAWERS = 49
-; object_DRAWERS_50 = 50
-; object_DESK = 51
-; object_SINK = 52
-; object_KEY_RACK = 53
-; object__LIMIT = 54
+; ; enum interior_object
+; interiorobject_TUNNEL_0 = 0
+; interiorobject_SMALL_TUNNEL_ENTRANCE = 1
+; interiorobject_ROOM_OUTLINE_2 = 2
+; interiorobject_TUNNEL_3 = 3
+; interiorobject_TUNNEL_JOIN_4 = 4
+; interiorobject_PRISONER_SAT_DOWN_MID_TABLE = 5
+; interiorobject_TUNNEL_CORNER_6 = 6
+; interiorobject_TUNNEL_7 = 7
+; interiorobject_WIDE_WINDOW = 8
+; interiorobject_EMPTY_BED = 9
+; interiorobject_SHORT_WARDROBE = 10
+; interiorobject_CHEST_OF_DRAWERS = 11
+; interiorobject_TUNNEL_12 = 12
+; interiorobject_EMPTY_BENCH = 13
+; interiorobject_TUNNEL_14 = 14
+; interiorobject_DOOR_FRAME_15 = 15
+; interiorobject_DOOR_FRAME_16 = 16
+; interiorobject_TUNNEL_17 = 17
+; interiorobject_TUNNEL_18 = 18
+; interiorobject_PRISONER_SAT_DOWN_END_TABLE = 19
+; interiorobject_COLLAPSED_TUNNEL = 20
+; interiorobject_ROOM_OUTLINE_21 = 21
+; interiorobject_CHAIR_POINTING_BOTTOM_RIGHT = 22
+; interiorobject_OCCUPIED_BED = 23
+; interiorobject_WARDROBE_WITH_KNOCKERS = 24
+; interiorobject_CHAIR_POINTING_BOTTOM_LEFT = 25
+; interiorobject_CUPBOARD = 26
+; interiorobject_ROOM_OUTLINE_27 = 27
+; interiorobject_TABLE_1 = 28
+; interiorobject_TABLE_2 = 29                   ; the two table objects are identical
+; interiorobject_STOVE_PIPE = 30
+; interiorobject_STUFF_31 = 31                  ; can't tell what this is supposed to be
+; interiorobject_TALL_WARDROBE = 32
+; interiorobject_SMALL_SHELF = 33
+; interiorobject_SMALL_CRATE = 34
+; interiorobject_SMALL_WINDOW = 35
+; interiorobject_DOOR_FRAME_36 = 36
+; interiorobject_NOTICEBOARD = 37
+; interiorobject_DOOR_FRAME_38 = 38
+; interiorobject_DOOR_FRAME_39 = 39
+; interiorobject_DOOR_FRAME_40 = 40
+; interiorobject_ROOM_OUTLINE_41 = 41
+; interiorobject_CUPBOARD_42 = 42
+; interiorobject_MESS_BENCH = 43
+; interiorobject_MESS_TABLE = 44
+; interiorobject_MESS_BENCH_SHORT = 45
+; interiorobject_ROOM_OUTLINE_46 = 46
+; interiorobject_ROOM_OUTLINE_47 = 47
+; interiorobject_TINY_TABLE = 48
+; interiorobject_TINY_DRAWERS = 49
+; interiorobject_DRAWERS_50 = 50
+; interiorobject_DESK = 51
+; interiorobject_SINK = 52
+; interiorobject_KEY_RACK = 53
+; interiorobject__LIMIT = 54
 
 ; ; enum location
 ; location_0E00 = $0E00
@@ -382,8 +382,9 @@
 ; port_KEYBOARD_SPACESYMSHFTMNB = $7FFE
 ; port_KEYBOARD_09876 = $EFFE
 
-; ; enum objecttile (width 1 byte)
-; objecttile_ESCAPE = 255              ; escape character
+; ; enum interior_object_tile
+; interiorobjecttile_MAX = 194,
+; interiorobjecttile_ESCAPE = 255              ; escape character
 
 ; ; enum morale
 ; morale_MIN = 0x00
@@ -2693,7 +2694,7 @@ R $9E34 I:HL Points to ?
   $9E43 (word) $8002 = 0x002B; // ?
   $9E49 (word) $800F = 0x0034; // set Y pos
   $9E4E (word) $8011 = 0x003E; // set X pos
-  $9E52 bench_G = object_EMPTY_BENCH;
+  $9E52 bench_G = interiorobject_EMPTY_BENCH;
   $9E57 HL = breakfast_related;
   $9E5A goto user_input_another_entry_point;
 
@@ -2705,7 +2706,7 @@ c $9E5C user_input_was_in_bed_perhaps
   $9E68 (word) $800F = 0x002E; // set Y pos
   $9E6D (word) $8011 = 0x002E; // set X pos
   $9E70 $8013 = 24; // set vertical offset
-  $9E75 player_bed = object_EMPTY_BED;
+  $9E75 player_bed = interiorobject_EMPTY_BED;
   $9E7A HL = &bed_related;
 ;
   $9E7D user_input_another_entry_point: *HL = 0;
