@@ -117,9 +117,11 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         return Udg(attr, self.snapshot[a : a + 8])
 
     def decode_all_objects(self, cwd, base, ents):
+        s = ""
         for index,i in enumerate(range(base, base + ents * 2, 2)):
             addr = self.snapshot[i + 0] + self.snapshot[i + 1] * 256
-            self.decode_object(cwd, addr, index)
+            s += self.decode_object(cwd, addr, index) + "<br/>"
+        return s
 
     def decode_object(self, cwd, addr, index):
         width, height, tiles = self.expand_object(cwd, addr)
