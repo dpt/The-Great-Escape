@@ -3673,6 +3673,23 @@ R $B1C7 BC Result of (A << 3).
 ; ------------------------------------------------------------------------------
 
 c $B1D4 is_door_open
+R $B1D4 O:F Z set if door open.
+;
+  $B1D4 E = 0x7F;
+  $B1D6 C = current_door & E;
+  $B1DB HL = &gates_and_doors[0];
+  $B1DE B = 9; // 9 iterations
+  $B1E0 do < if (*HL & E == C) {
+  $B1E5 if ((*HL & (1<<7)) == 0) return; // unlocked
+;
+  $B1EA queue_message_for_display(message_THE_DOOR_IS_LOCKED);
+  $B1ED A |= 1; // set NZ
+  $B1EF return;
+
+  $B1F0 } HL++;
+  $B1F1 > while (--B);
+  $B1F3 A &= B; // set Z (B is zero)
+  $B1F4 return;
 
 ; ------------------------------------------------------------------------------
 
