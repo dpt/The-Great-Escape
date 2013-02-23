@@ -774,11 +774,12 @@ c $69DC sub_69DC
 ; ------------------------------------------------------------------------------
 
 c $6A12 sub_6A12
+D $6A12 Index turns into door_position struct pointer.
 R $6A12 I:A  Index of ...
 R $6A12 O:HL Pointer to ...
 R $6A12 O:DE Corrupted.
 ;
-  $6A12 HL = &four_byte_structs[A * 2]; // #R$78D6
+  $6A12 HL = &door_positions[A * 2]; // are they pairs of doors?
   $6A1D if (A & (1<<7)) HL += 4;
   $6A26 return;
 
@@ -1177,7 +1178,7 @@ D $783A bytes, 156 long, maybe
 
 ; ------------------------------------------------------------------------------
 
-b $78D6 four_byte_structs
+b $78D6 door_positions
 D $78D6,496,4 124 four-byte structs (<- sub 69DC)
 
 ; ------------------------------------------------------------------------------
