@@ -1433,8 +1433,7 @@ c $7D48 message_display
 c $7D87 wipe_message
   $7D87 A = message_display_index;
   $7D8A message_display_index = --A;
-  $7D8E DE = screen_text_start_address;
-  $7D91 DE |= A;
+  $7D8E DE = screen_text_start_address + A;
   $7D93 plot_single_glyph(35); // plot a SPACE character
   $7D98 return;
 
