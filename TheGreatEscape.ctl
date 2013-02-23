@@ -1408,29 +1408,25 @@ R $7D2F   DE Points to next character.
 ; ------------------------------------------------------------------------------
 
 c $7D48 message_display
-  $7D48 if (message_display_counter == 0) goto draw_message; // exit via
+  $7D48 if (message_display_counter > 0) {
   $7D50 message_display_counter--;
-  $7D53 return;
+  $7D53 return; }
 ;
   $7D54 A = message_display_index;
-  $7D57 if (A == 128) goto shunt_buffer_back_by_two;
-  $7D5B else if (A > 128) goto wipe_message;
-  $7D5D HL = current_message_character;
-  $7D60 DE = screen_text_start_address;
-  $7D63 DE |= A;
+  $7D57 if (A == 128) goto shunt_buffer_back_by_two; // exit via
+  $7D5B else if (A > 128) goto wipe_message; // exit via
+  $7D5D else { HL = current_message_character;
+  $7D60 DE = screen_text_start_address + A;
   $7D65 plot_glyph();
-  $7D68 A = E;
-  $7D69 A = A & 31;
-  $7D6B message_display_index = A;
-  $7D6E HL++; // msgptr++
-  $7D6F A = *HL;
+  $7D68 message_display_index = E & 31;
+  $7D6E A = *++HL;
   $7D70 if (A != 255) goto nonzero;
   $7D75 message_display_counter = 31; // leave the message for 31 turns
   $7D7A message_display_index |= 128; // then wipe it
   $7D82 return;
 ;
   $7D83 nonzero: current_message_character = HL;
-  $7D86 return;
+  $7D86 return; }
 
 ; ------------------------------------------------------------------------------
 
