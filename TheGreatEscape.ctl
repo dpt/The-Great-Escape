@@ -1379,9 +1379,9 @@ R $7D15 B message_* index.
 R $7D15 C ...
   $7D15 if (*(HL = message_buffer_pointer) == 0xFF) return;
   $7D1C HL -= 2;
-  $7D1E A = *HL++; if (A != B) goto set;
-  $7D23 A = *HL; if (A == C) return;
-  $7D26 set: *++HL = B; *++HL = C; HL++;
+  $7D1E A = *HL++; if (A == B) {
+  $7D23 A = *HL; if (A == C) return; }
+  $7D26 *++HL = B; *++HL = C; HL++;
   $7D2B *message_buffer_pointer = HL;
   $7D2E return;
 
