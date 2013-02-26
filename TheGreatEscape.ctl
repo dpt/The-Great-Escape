@@ -701,7 +701,7 @@ c $6939 setup_movable_items
   $695E called_from_main_loop_8();
   $6961 called_from_main_loop_9();
   $6964 called_from_main_loop_10();
-  $6967 called_from_main_loop_11();
+  $6967 called_from_main_loop_11(); return;
 ;
   $696A setup_crate: HL = &crate;
   $696D A = character_28_crate;
