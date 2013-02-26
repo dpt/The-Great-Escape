@@ -679,13 +679,14 @@ D $68A2 Looks like it's resetting stuff.
 c $6920 tunnel_related
 D $6920 Probably called when emerging from tunnel.
 D $6920 This is resetting the character sprite set to prisoner.
-  $6929 ...
+  $6920 HL = $800D;
+  $6923 *HL++ = 128;
   $6926 A = indoor_room_index;
-  $6929 if (A < room_29_secondtunnelstart) goto not_in_a_tunnel;
-  $692D ...
-  $692F $8015 = sprite_prisoner_tl_4;
-  $6935 return;
-  $6936 not_in_a_tunnel: ...
+  $6929 if (A >= room_29_secondtunnelstart) {
+  $692D *HL |= 1<<2;
+  $692F $8015 = &sprite_prisoner_tl_4;
+  $6935 } else {
+  $6936 *HL &= 1<<2; }
   $6938 return;
 
 ; ------------------------------------------------------------------------------
