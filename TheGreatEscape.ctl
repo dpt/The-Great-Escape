@@ -702,7 +702,7 @@ c $6939 setup_movable_items
   $6961 called_from_main_loop_9();
   $6964 called_from_main_loop_10();
   $6967 called_from_main_loop_11(); return;
-;
+
   $696A setup_crate: HL = &crate;
   $696D A = character_28_crate;
   $696F goto setup_movable_items;
@@ -720,39 +720,31 @@ c $6939 setup_movable_items
   $6993 $803C = indoor_room_index;
   $6999 HL = $8020;
   $699C reset_something();
-;
   $699F return;
 
-; ------------------------------------------------------------------------------
-
-b $69A0 byte_69A0
-D $69A0 Fourteen bytes long.
-
-; ------------------------------------------------------------------------------
+D $69A0 Fourteen bytes of reset data.
+B $69A0 byte_69A0
 
 b $69AE movable_items
-D $69AE struct { word y_coord; word x_coord; word vertical_offset; const sprite *; byte terminator; };
+D $69AE struct movable_item { word y_coord, x_coord; word vertical_offset; const sprite *; byte terminator; };
 
-D $69AE stove1
-W $69AE { y_coord,
+W $69AE struct movable_item stove1 = { y_coord,
 W $69B0 x_coord,
 W $69B2 vertical_offset,
-W $69B4 &sprite_stove }
-  $69B6 0 // terminator?
+W $69B4 &sprite_stove,
+  $69B6 0 };
 
-D $69B7 crate
-W $69B7 { y_coord,
+W $69B7 struct movable_item crate = { y_coord,
 W $69B9 x_coord,
 W $69BB vertical_offset,
-W $69BD &sprite_create }
-  $69BF 0 // terminator?
+W $69BD &sprite_crate,
+  $69BF 0 };
 
-D $69C0 stove2
-W $69C0 { y_coord,
+W $69C0 struct movable_item stove2 = { y_coord,
 W $69C2 x_coord,
 W $69C4 vertical_offset,
-W $69C6 &sprite_stove }
-  $69C8 0 // terminator?
+W $69C6 &sprite_stove,
+  $69C8 0 };
 
 ; ------------------------------------------------------------------------------
 
