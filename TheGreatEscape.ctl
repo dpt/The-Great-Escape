@@ -4536,8 +4536,6 @@ D $C891 (<- called_from_main_loop_5, sub_CA81)
 
 ; ------------------------------------------------------------------------------
 
-; called_from_main_loop_5
-;
 c $C892 called_from_main_loop_5
 C $C892 Clear byte_A13E.
 C $C896 if (bell) sub_CCAB();
