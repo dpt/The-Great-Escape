@@ -1124,8 +1124,8 @@ B $76C1 characterstruct_25:
 
 b $76C8 item_structs
 D $76C8 Array, 16 long, of 7-byte structures. These are 'characters' but seem to be the game items.
-D $76C8 struct { byte item; byte room; byte ... 5 others ...; }
-B $76C8 itemstruct_0: wiresnips { item_WIRESNIPS, room_NONE, ... } (<- item_to_itemstruct, pick_up_related)
+D $76C8 struct { byte item; byte room; byte y, x; ... 3 others ...; }
+B $76C8 itemstruct_0: wiresnips { item_WIRESNIPS, room_NONE, ... } (<- item_to_itemstruct, find_nearby_item)
 B $76CF itemstruct_1: shovel { item_SHOVEL, room_9, ... }
 B $76D6 itemstruct_2: lockpick { item_LOCKPICK, room_10, ... }
 B $76DD itemstruct_3: papers { item_PAPERS, room_11, ... }
@@ -1333,7 +1333,41 @@ D $7C54 Plot bitmap.
 
 ; ------------------------------------------------------------------------------
 
-c $7C82 pick_up_related
+c $7C82 find_nearby_item
+D $7C82 Returns an item within range of the player.
+R $7C82 O:AF Z set if item found.
+R $7C82 O:HL If found, pointer to item.
+; looks like C is a pick up radius
+  $7C82 C = 1; // outside
+  $7C84 if (indoor_room_index) C = 6;
+  $7C8C B = 16; // 16 iterations
+  $7C8E HL = &itemstruct_0.room;
+  $7C91 do < if ((*HL & (1<<7)) == 0) goto next; // item is not anywhere
+  $7C95 PUSH BC
+  $7C96 PUSH HL
+  $7C97 HL++;
+  $7C98 DE = &player_map_position_perhapsX;
+  $7C9B B = 2;
+; range check
+  $7C9D do < A = *DE - C;
+  $7C9F if (A >= *HL) goto popnext;
+  $7CA2 A += C * 2;
+  $7CA4 if (A < *HL) goto popnext;
+  $7CA7 HL++;
+  $7CA8 DE++;
+  $7CA9 > while (--B);
+  $7CAB POP HL
+  $7CAC HL--; // compensate for overshoot
+  $7CAD POP BC
+  $7CAE A = 0; // set Z (found)
+  $7CAF return; // (oddly written as RET Z, there's no need for it to be conditional)
+
+  $7CB0 popnext: POP HL
+  $7CB1 POP BC
+  $7CB2 next: HL += 7; // stride
+  $7CB9 > while (--B);
+  $7CBB A |= 1; // set NZ
+  $7CBD return;
 
 ; ------------------------------------------------------------------------------
 
