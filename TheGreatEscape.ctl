@@ -762,11 +762,35 @@ c $69C9 reset_all_objects
 
 ; ------------------------------------------------------------------------------
 
+; looks like it's filling door_related with stuff from the door_positions table
+;
+
 c $69DC sub_69DC
+D $69DC Wipe $81D6..$81D9 with 0xFF.
+  $69DC A = 0xFF;
+  $69DE DE = door_related + 3;
+  $69E1 B = 4;
+  $69E3 do < *DE-- = A;
+  $69E5 > while (--B);
+;
+  $69E7 DE++; // DE = door_related
+  $69E8 B = indoor_room_index << 2;
+  $69EE C = 0;
+  $69F1 HL' = &door_positions[0];
+  $69F4 B' = 124; // length of (door_positions)
+  $69F6 DE' = 4; // stride
+  $69F9 do < if (*HL' & 0xFC == B) {
+  $6A00 *DE++ = C ^ 0x80; }
+  $6A05 C ^= 0x80;
+  $6A08 if (C >= 0) C++; // increment every two stops?
+  $6A0E HL' += DE';
+  $6A0F > while (--B');
+;
+  $6A11 return;
 
 ; ------------------------------------------------------------------------------
 
-c $6A12 sub_6A12
+c $6A12 get_door_position
 D $6A12 Index turns into door_position struct pointer.
 R $6A12 I:A  Index of ...
 R $6A12 O:HL Pointer to ...
