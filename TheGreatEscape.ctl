@@ -1207,15 +1207,27 @@ D $7AC6 3 bytes long (<- solitary)
 
 c $7AC9 check_for_pick_up_keypress
 D $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
-  $7AD3 check_for_drop_keypress:
-  $7ADD check_for_use_item_A_keypress:
-  $7AE7 check_for_use_item_B_keypress:
-  $7AEF nop_ret: return;
+  $7AC9 if (A == input_UP_FIRE) pick_up_item();
+  $7AD3 else if (A == input_DOWN_FIRE) drop_item();
+  $7ADD else if (A == input_LEFT_FIRE) use_item_A();
+  $7AE7 else if (A == input_RIGHT_FIRE) use_item_B();
+  $7AEF return;
 
 c $7AF0 use_item_B
-  $7AF5 use_item_A:
+  $7AF0 A = items_held[1]; // $8216
+  $7AF3 goto use_item_common;
+
+c $7AF5 use_item_A
+  $7AF5 A = items_held[0]; // $8215 // FALLTHROUGH
+
+c $7AFB use_item_common
+  $7AF8 if (A == item_NONE) return;
   $7AFB (pointless_jump)
-  $7AFD ...
+  $7AFD HL = &item_actions_jump_table[A];
+  $7B05 L = *HL++;
+  $7B07 H = *HL;
+  $7B09 PUSH HL // exit via jump table entry
+  $7B0A memcpy(&word_81A4, $800F, 6); // copy Y,X and vertical offset
   $7B15 return;
 
 ; ------------------------------------------------------------------------------
