@@ -4506,20 +4506,118 @@ R $C7B9 I:A Character index.
 ;
 c $C7C6 character_event
 D $C7C6 Makes characters sit, sleep or other things TBD.
-R $C7C6 HL Points to byte holding character index (e.g. 0x76C6).
-W $C7F9 Array of (character,index) mappings. (Some of the character indexes look too high though).
-W $C829 Array of pointers to event handlers.
-C $C83F handler: zero_morale_related
-C $C845 handler: sub_C845 -- pop hl, store 3, inc hl, store 21, ret
-C $C84C handler: sub_C84C -- morale related
-C $C85C handler: morale_related__pop_hl_and_write_10FF_to_it
-C $C860 handler: morale_related__pop_hl_and_write_38FF_to_it
-C $C864 handler: morale_related__pop_hl_and_write_08FF_to_it
-C $C86C handler: pop_hl_and_check_varA13E
-C $C877 handler: pop_hl_and_check_varA13E_anotherone
-C $C882 handler: pop_hl_and_write_0005_to_it
-C $C889 handler: pop_hl_and_player_sits
-C $C88D handler: pop_hl_and_player_sleeps
+R $C7C6 I:HL Points to a byte holding character index (e.g. 0x76C6).
+  $C7C6 A = *HL;
+  $C7C7 if (A >= character_7_prisoner && A <= character_12_prisoner) goto character_sleeps;
+  $C7D0 if (A >= character_18_prisoner && A <= character_22_prisoner) goto character_sits;
+;
+  $C7D9 PUSH HL
+  $C7DA HL = character_to_event_handler_index_map;
+  $C7DD B = 24; // 24 iterations
+D $C7DF Locate the character in the map.
+  $C7DF do < if (A == *HL) goto call_action;
+  $C7E2 HL += 2;
+  $C7E4 > while (--B);
+  $C7E6 POP HL
+  $C7E7 *HL = 0; // no action
+  $C7E9 return;
+
+  $C7EA call_action: goto character_event_handlers[*++HL];
+
+D $C7F9 character_to_event_handler_index_map
+D $C7F9 Array of (character, character event handler index) mappings. (Some of the character indexes look too high though).
+W $C7F9 < 0xA6,  0 >,
+W $C7FB < 0xA7,  0 >,
+W $C7FD < 0xA8,  1 >,
+W $C7FF < 0xA9,  1 >,
+W $C801 < 0x05,  0 >,
+W $C803 < 0x06,  1 >,
+W $C805 < 0x85,  3 >,
+W $C807 < 0x86,  3 >,
+W $C809 < 0x0E,  2 >,
+W $C80B < 0x0F,  2 >,
+W $C80D < 0x8E,  0 >,
+W $C80F < 0x8F,  1 >,
+W $C811 < 0x10,  5 >,
+W $C813 < 0x11,  5 >,
+W $C815 < 0x90,  0 >,
+W $C817 < 0x91,  1 >,
+W $C819 < 0xA0,  0 >,
+W $C81B < 0xA1,  1 >,
+W $C81D < 0x2A,  7 >,
+W $C81F < 0x2C,  8 >,   // sleeps
+W $C821 < 0x2B,  9 >,   // sits
+W $C823 < 0xA4,  6 >,
+W $C825 < 0x24, 10 >,
+W $C827 < 0x25,  4 >,   // morale related
+
+D $C829 character_event_handlers
+D $C829 Array of pointers to character event handlers.
+W $C829 < &charevnt_pop_hl_and_write_08FF_to_it,
+W $C82B &charevnt_pop_hl_and_write_10FF_to_it,
+W $C82D &charevnt_pop_hl_and_write_38FF_to_it,
+W $C82F &charevnt_pop_hl_and_check_varA13E,
+W $C831 &charevnt_zero_morale_related,
+W $C833 &charevnt_pop_hl_and_check_varA13E_anotherone,
+W $C835 &charevnt_C845,
+W $C837 &charevnt_pop_hl_and_write_0005_to_it,
+W $C839 &charevnt_pop_hl_and_player_sleeps,
+W $C83B &charevnt_pop_hl_and_player_sits,
+W $C83D &charevnt_C84C, >
+
+D $C83F charevnt_zero_morale_related
+  $C83F morale_related = 0;
+  $C843 goto charevnt_pop_hl_and_write_08FF_to_it;
+
+D $C845 charevnt_C845
+  $C845 POP HL
+  $C846 *HL++ = 0x03;
+  $C849 *HL   = 0x15;
+  $C84B return;
+
+D $C84C charevnt_C84C
+  $C84C POP HL
+  $C84D *HL++ = 0xA4;
+  $C850 *HL   = 0x03;
+  $C852 morale_related_also = 0;
+  $C856 set_target_location(0x2500); return;
+
+D $C85C charevnt_pop_hl_and_write_10FF_to_it
+  $C85C C = 0x10;
+  $C85E goto exit;
+
+D $C860 charevnt_pop_hl_and_write_38FF_to_it
+  $C860 C = 0x38;
+  $C862 goto exit;
+
+D $C864 charevnt_pop_hl_and_write_08FF_to_it
+  $C864 C = 0x08;
+  $C866 exit: POP HL
+  $C867 *HL++ = 0xFF;
+  $C86A *HL   = C;
+  $C86B return;
+
+D $C86C charevnt_pop_hl_and_check_varA13E
+  $C86C POP HL
+  $C86D if (byte_A13E == 0) goto varA13E_is_zero; else goto sub_A3F3;
+
+D $C877 charevnt_pop_hl_and_check_varA13E_anotherone
+  $C877 POP HL
+  $C878 if (byte_A13E == 0) goto varA13E_is_zero_anotherone; else goto sub_A4D3;
+
+D $C882 charevnt_pop_hl_and_write_0005_to_it
+  $C882 POP HL
+  $C883 *HL++ = 0x05;
+  $C886 *HL   = 0x00;
+  $C888 return;
+
+D $C889 charevnt_pop_hl_and_player_sits
+  $C889 POP HL
+  $C88A goto player_sits;
+
+D $C88D charevnt_pop_hl_and_player_sleeps
+  $C88D POP HL
+  $C88E goto player_sleeps;
 
 ; ------------------------------------------------------------------------------
 
