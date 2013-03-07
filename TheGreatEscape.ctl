@@ -1158,7 +1158,7 @@ B $77D4 Object tile refs
 B $77D8 Object tile refs
 B $77DA Object tile refs
 B $77DC Object tile refs
- $77DE Object tile refs
+B $77DE Object tile refs
 B $77E1 Object tile refs
 B $77E7 Object tile refs
 B $77EC Object tile refs
