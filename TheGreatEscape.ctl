@@ -3713,6 +3713,35 @@ c $B0FC loc_B0FC
 
 c $B107 use_bribe
 D $B107 'he takes the bribe' 'and acts as decoy'
+  $B107 increase_morale_by_10_score_by_50();
+  $B10A IY[1] = 0;
+  $B10E PUSH IY
+  $B110 POP HL
+  $B111 L += 2;
+  $B113 CALL $CB23
+  $B116 DE = &items_held[0];
+  $B119 A = *DE;
+  $B11A if (A == item_BRIBE) goto $B123;
+  $B11E A = *++DE;
+  $B120 if (A != item_BRIBE) return; // have no bribes
+
+D $B123 We have a bribe.
+  $B123 *DE = item_NONE;
+  $B126 itemstruct_5.room = 0x3F;
+  $B12B draw_all_items();
+  $B12E B = 7; // 7 iterations
+  $B130 HL = $8020; // visible characters
+  $B133 do < A = *HL; // character index?
+  $B134 if (A < 20) < // why 20?
+  $B138 HL++;
+  $B139 *HL = 4;
+  $B13B HL--; >
+
+  $B13C HL += 32;
+  $B140 > while (--B);
+  $B142 queue_message_for_display(message_HE_TAKES_THE_BRIBE);
+  $B147 queue_message_for_display(message_AND_ACTS_AS_DECOY);
+  $B149 return;
 
 ; ------------------------------------------------------------------------------
 
