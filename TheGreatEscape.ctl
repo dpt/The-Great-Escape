@@ -3771,6 +3771,56 @@ c $B295 rotate_A_left_2_widening_to_BC
 ; ------------------------------------------------------------------------------
 
 c $B29F sub_B29F
+D $B29F This is doing something like checking the bounds for an interior room.
+R $B29F O:AF Corrupted.
+R $B29F O:BC Corrupted.
+R $B29F O:HL Corrupted.
+  $B29F BC = &four_byte_structures[first_byte_of_room_structure];
+  $B2AC HL = &word_81A4;
+  $B2AF A = *BC;
+  $B2B0 if (A < *HL) goto $B2E7;
+  $B2B3 A = *++BC + 4;
+  $B2B7 if (A >= *HL) goto $B2E7;
+
+  $B2BA HL += 2;
+  $B2BC DE++; // Stray code? DE is incremented but not used.
+  $B2BD A = *++BC - 4;
+  $B2C1 if (A < *HL) goto $B2E7;
+  $B2C4 A = *++BC;
+  $B2C6 if (A >= *HL) goto $B2E7;
+
+  $B2C9 HL = &byte_81BF[0];
+  $B2CC B = *HL; // iterations
+  $B2CE if (B == 0) return;
+
+  $B2D0 HL++;
+  $B2D1 do < PUSH BC
+  $B2D2 PUSH HL
+  $B2D3 DE = &word_81A4;
+  $B2D6 B = 2; // 2 iterations
+  $B2D8 do < A = *DE;
+  $B2D9 if (A < HL[0] || A >= HL[1]) goto $B2F2; // next outer loop iteration (eg break)
+  $B2E0 DE += 2;
+  $B2E2 HL += 2; // increment moved - hope it's still correct
+  $B2E3 > while (--B);
+
+D $B2E5 Found.
+  $B2E5 POP HL
+  $B2E6 POP BC
+
+  $B2E7 IY[7] ^= 0x20;
+  $B2EF A |= 1;
+  $B2F1 return; // return NZ
+
+D $B2F2 Next iteration.
+  $B2F2 POP HL
+  $B2F3 HL += 4;
+  $B2F7 POP BC
+  $B2F8 > while (--B);
+
+D $B2FA Not found.
+  $B2FA A &= B; // B is zero here
+  $B2FB return; // return Z
 
 ; ------------------------------------------------------------------------------
 
