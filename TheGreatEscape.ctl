@@ -992,7 +992,7 @@ D $6B85,40,4 10x 4-byte structures which are ranged checked by routine at #R$B29
 
 b $6BAD rooms_and_tunnels
 D $6BAD Rooms and tunnels.
-W $6BAD Array of pointers to rooms.
+W $6BAD Array of pointers to rooms (starting at 1).
 W $6BE5 Array of pointers to tunnels.
 ;
 B $6C15 room_def: room1_hut1_right
