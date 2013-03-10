@@ -3809,8 +3809,44 @@ D $B123 We have a bribe.
 
 ; ------------------------------------------------------------------------------
 
-c $B14C sub_B14C
-D $B14C Outdoor drawing?
+c $B14C bounds_check
+D $B14C Outdoor bounds detection?
+  $B14C if (indoor_room_index) { indoor_bounds_check(); return; }
+  $B153 B = 24; // 24 iterations (includes walls and fences)
+  $B155 DE = &walls[0];
+  $B158 do < PUSH BC
+  $B159 PUSH DE
+  $B15A A = *DE;
+  $B15B rotate_A_left_3_widening_to_BC();
+  $B15E if (word_81A4 < BC + 2) goto next;
+  $B167 A = *++DE;
+  $B169 rotate_A_left_3_widening_to_BC();
+  $B16C if (word_81A4 >= BC + 4) goto next;
+  $B177 A = *++DE;
+  $B179 rotate_A_left_3_widening_to_BC();
+  $B17C if (word_81A6 < BC) goto next;
+  $B183 A = *++DE;
+  $B185 rotate_A_left_3_widening_to_BC();
+  $B188 if (word_81A6 >= BC + 4) goto next;
+  $B193 A = *++DE;
+  $B195 rotate_A_left_3_widening_to_BC();
+  $B198 if (word_81A8 < BC) goto next;
+  $B19F A = *++DE;
+  $B1A1 rotate_A_left_3_widening_to_BC();
+  $B1A4 if (word_81A8 >= BC + 2) goto next;
+D $B1AD Found it.
+  $B1AD POP DE
+  $B1AE POP BC
+  $B1AF IY[7] ^= 0x20;
+  $B1B7 A |= 1;
+  $B1B9 return; // return NZ
+
+  $B1BA next: POP DE
+  $B1BB POP BC
+  $B1BC DE += 6;
+  $B1C1 > while (--B);
+  $B1C5 A &= B;
+  $B1C6 return; // return Z
 
 ; ------------------------------------------------------------------------------
 
@@ -3863,7 +3899,7 @@ c $B295 rotate_A_left_2_widening_to_BC
 
 ; ------------------------------------------------------------------------------
 
-c $B29F sub_B29F
+c $B29F indoor_bounds_check
 D $B29F This is doing something like checking the bounds for an interior room.
 R $B29F O:AF Corrupted.
 R $B29F O:BC Corrupted.
@@ -3998,20 +4034,20 @@ D $B3F6 Player has tried to use the shovel item.
 ; -----------------------------------------------------------------------------
 
 c $B417 action_wiresnips
-  $B417 HL = wiresnips_related_table + 3;
+  $B417 HL = &fences[0] + 3;
   $B41A DE = player_map_position_perhapsY
   $B41D B = 4; // iterations
   $B41F do < ...
-  $B420 A = (DE);
-  $B421 if (A >= (HL)) goto continue;
+  $B420 A = *DE;
+  $B421 if (A >= *HL) goto continue;
   $B424 HL--;
-  $B425 if (A < (HL)) goto continue;
+  $B425 if (A < *HL) goto continue;
   $B428 DE--; // player_map_position_perhapsX
-  $B429 A = (DE);
+  $B429 A = *DE;
   $B42A HL--;
-  $B42B if (A == (HL)) goto set_to_4;
+  $B42B if (A == *HL) goto set_to_4;
   $B42E A--;
-  $B42F if (A == (HL)) goto set_to_6;
+  $B42F if (A == *HL) goto set_to_6;
   $B432 DE++; // reset to Y
   $B433 continue: ...
   $B434 HL += 6; // array stride
@@ -4021,16 +4057,16 @@ c $B417 action_wiresnips
   $B43E HL -= 3; // pointing to $B59E
   $B441 B = 3; // iterations
   $B443 do < ...
-  $B444 A = (DE);
-  $B445 if (A < (HL)) goto continue2;
+  $B444 A = *DE;
+  $B445 if (A < *HL) goto continue2;
   $B448 HL++;
-  $B449 if (A >= (HL)) goto continue2;
+  $B449 if (A >= *HL) goto continue2;
   $B44C DE++;
-  $B44D A = (DE);
+  $B44D A = *DE;
   $B44E HL++;
-  $B44F if (A == (HL)) goto set_to_5;
+  $B44F if (A == *HL) goto set_to_5;
   $B452 A--;
-  $B453 if (A == (HL)) goto set_to_7;
+  $B453 if (A == *HL) goto set_to_7;
   $B456 DE--;
   $B457 continue2: ...
   $B458 HL += 6; // array stride
@@ -4078,8 +4114,8 @@ c $B4D0 open_door
 
 ; ------------------------------------------------------------------------------
 
-b $B53E sixlong_things
-D $B53E Probably boundaries.
+b $B53E walls
+D $B53E Boundaries.
   $B53E,6
   $B544,6
   $B54A,6
@@ -4095,8 +4131,8 @@ D $B53E Probably boundaries.
 
 ; ------------------------------------------------------------------------------
 
-b $B586 wiresnips_related_table
-D $B586 Probably snippable places.
+b $B586 fences
+D $B586 Boundaries.
   $B586,6
   $B58C,6
   $B592,6
