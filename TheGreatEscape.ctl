@@ -1002,6 +1002,18 @@ B $6C61,1 bed
 D $6C61 Where the player sleeps.
 ;
 B $6C6D room_def: room3_hut2_right
+B $6C80,1 10 nobjects
+B $6C81,3  2, 1, 4 interiorobject_ROOM_OUTLINE_2
+B $6C84,3  8, 8, 0 interiorobject_WIDE_WINDOW
+B $6C87,3  8, 2, 3 interiorobject_WIDE_WINDOW
+B $6C8A,3 23,10, 5 interiorobject_OCCUPIED_BED
+B $6C8D,3 23, 6, 7 interiorobject_OCCUPIED_BED
+B $6C90,3 23, 2, 9 interiorobject_OCCUPIED_BED
+B $6C93,3 11,16, 5 interiorobject_CHEST_OF_DRAWERS
+B $6C96,3 15,15, 8 interiorobject_DOOR_FRAME_15
+B $6C99,3 10,18, 5 interiorobject_SHORT_WARDROBE
+B $6C9C,3 16, 7,10 interiorobject_DOOR_FRAME_16
+
 B $6C8A,1 bed_A
 B $6C8D,1 bed_B
 B $6C90,1 bed_C
