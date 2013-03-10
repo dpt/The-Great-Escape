@@ -30,52 +30,57 @@
 Used by the routines at <a class="link" href="50769.html">C651</a> and <a class="link" href="51841.html">CA81</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Index.</td>
+</tr>
+</table>
+<table class="output">
+<tr>
+<td class="register">DE</td>
+<td class="registerContents">Element.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="52089"></a>CB79</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="8">DE = more_object_tile_refs[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="52090"></a>CB7A</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52091"></a>CB7B</td>
 <td class="instruction">LD D,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52093"></a>CB7D</td>
 <td class="instruction">LD HL,$7738</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52096"></a>CB80</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52097"></a>CB81</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52098"></a>CB82</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52099"></a>CB83</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52100"></a>CB84</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

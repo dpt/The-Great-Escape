@@ -35,197 +35,190 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <tr>
 <td class="label"><a name="44943"></a>AF8F</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="44944"></a>AF90</td>
 <td class="instruction">LD ($81AA),A</td>
-<td class="transparentComment" />
+<td class="comment">byte_81AA = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="44947"></a>AF93</td>
 <td class="instruction">SET 6,(IY+$07)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">IY[7] |= (1&lt;&lt;6)|(1&lt;&lt;7);</td>
 </tr>
 <tr>
 <td class="address"><a name="44951"></a>AF97</td>
 <td class="instruction">SET 7,(IY+$07)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44955"></a>AF9B</td>
 <td class="instruction">PUSH IY</td>
-<td class="transparentComment" />
+<td class="comment">PUSH IY</td>
 </tr>
 <tr>
 <td class="address"><a name="44957"></a>AF9D</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="44958"></a>AF9E</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
+<td class="comment">A = L;</td>
 </tr>
 <tr>
 <td class="address"><a name="44959"></a>AF9F</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="44960"></a>AFA0</td>
 <td class="instruction">PUSH AF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">if (A == 0 &amp;&amp; morale_related_also) door_handling();</td>
 </tr>
 <tr>
 <td class="address"><a name="44961"></a>AFA1</td>
 <td class="instruction">JR NZ,$AFAA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44963"></a>AFA3</td>
 <td class="instruction">LD A,($A139)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44966"></a>AFA6</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44967"></a>AFA7</td>
 <td class="instruction">CALL NZ,<a class="link" href="45557.html">$B1F5</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="44970"></a>AFAA</td>
 <td class="instruction">POP AF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44971"></a>AFAB</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="7">if (A || (($8001 &amp; 3) != 2)) { bounds_check(); return; }</td>
 </tr>
 <tr>
 <td class="address"><a name="44972"></a>AFAC</td>
 <td class="instruction">JR NZ,$AFB5</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44974"></a>AFAE</td>
 <td class="instruction">LD A,($8001)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44977"></a>AFB1</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44979"></a>AFB3</td>
 <td class="instruction">CP $02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="44981"></a>AFB5</td>
 <td class="instruction">CALL NZ,<a class="link" href="45388.html">$B14C</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="44984"></a>AFB8</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
 </tr>
 <tr>
-<td class="address"><a name="44985"></a>AFB9</td>
+<td class="routineComment" colspan="3">
+<a name="44985"></a>
+<div class="comments">
+<div class="paragraph">
+Cutting wire?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">AFB9</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="transparentComment" />
+<td class="comment">A = IY[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="44988"></a>AFBC</td>
 <td class="instruction">CP $1A</td>
-<td class="transparentComment" />
+<td class="comment">CP 26</td>
 </tr>
 <tr>
 <td class="address"><a name="44990"></a>AFBE</td>
 <td class="instruction">JR NC,$AFC4</td>
-<td class="transparentComment" />
+<td class="comment">JR NC,$AFC4</td>
 </tr>
 <tr>
 <td class="address"><a name="44992"></a>AFC0</td>
 <td class="instruction">CALL <a class="link" href="45023.html">$AFDF</a></td>
-<td class="transparentComment" />
+<td class="comment">CALL $AFDF</td>
 </tr>
 <tr>
 <td class="address"><a name="44995"></a>AFC3</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
+<td class="comment">RET NZ</td>
 </tr>
 <tr>
 <td class="label"><a name="44996"></a>AFC4</td>
 <td class="instruction">RES 6,(IY+$07)</td>
-<td class="transparentComment" />
+<td class="comment">IY[7] &amp;= ~(1&lt;&lt;6);</td>
 </tr>
 <tr>
 <td class="address"><a name="45000"></a>AFC8</td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">PUSH IY</td>
 </tr>
 <tr>
 <td class="address"><a name="45003"></a>AFCB</td>
 <td class="instruction">PUSH IY</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45005"></a>AFCD</td>
 <td class="instruction">POP DE</td>
-<td class="transparentComment" />
+<td class="comment">POP DE</td>
 </tr>
 <tr>
 <td class="address"><a name="45006"></a>AFCE</td>
 <td class="instruction">LD A,$0F</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">DE += 15;</td>
 </tr>
 <tr>
 <td class="address"><a name="45008"></a>AFD0</td>
 <td class="instruction">ADD A,E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45009"></a>AFD1</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45010"></a>AFD2</td>
 <td class="instruction">LD BC,$0006</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45013"></a>AFD5</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
+<td class="comment">memcpy(DE, &amp;word_81A4, 6);</td>
 </tr>
 <tr>
 <td class="address"><a name="45015"></a>AFD7</td>
 <td class="instruction">LD A,($81AA)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">IY[23] = byte_81AA;</td>
 </tr>
 <tr>
 <td class="address"><a name="45018"></a>AFDA</td>
 <td class="instruction">LD (IY+$17),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45021"></a>AFDD</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="45022"></a>AFDE</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

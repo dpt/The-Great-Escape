@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58400"></a>E420</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment" rowspan="3">L += 15;</td>
+<td class="comment" rowspan="3">HL += 15;</td>
 </tr>
 <tr>
 <td class="address"><a name="58402"></a>E422</td>
@@ -67,32 +67,32 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58413"></a>E42D</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58415"></a>E42F</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58416"></a>E430</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58418"></a>E432</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58419"></a>E433</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58421"></a>E435</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58422"></a>E436</td>
@@ -126,7 +126,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58431"></a>E43F</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">L++;</td>
+<td class="comment" rowspan="2">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58432"></a>E440</td>
@@ -164,7 +164,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58442"></a>E44A</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">L++;</td>
+<td class="comment" rowspan="2">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58443"></a>E44B</td>
@@ -319,12 +319,12 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58484"></a>E474</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58486"></a>E476</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58488"></a>E478</td>

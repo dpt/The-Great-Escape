@@ -65,12 +65,6 @@
 </tr>
 <tr>
 <td class="mapPage">105</td>
-<td class="mapByte">160</td>
-<td class="data"><a class="link" name="27040" href="../asm/27040.html">69A0</a></td>
-<td class="dataDesc">byte_69A0</td>
-</tr>
-<tr>
-<td class="mapPage">105</td>
 <td class="mapByte">174</td>
 <td class="data"><a class="link" name="27054" href="../asm/27054.html">69AE</a></td>
 <td class="dataDesc">movable_items</td>
@@ -91,7 +85,7 @@
 <td class="mapPage">106</td>
 <td class="mapByte">18</td>
 <td class="routine"><a class="link" name="27154" href="../asm/27154.html">6A12</a></td>
-<td class="routineDesc">sub_6A12</td>
+<td class="routineDesc">get_door_position</td>
 </tr>
 <tr>
 <td class="mapPage">106</td>
@@ -169,7 +163,7 @@
 <td class="mapPage">120</td>
 <td class="mapByte">214</td>
 <td class="data"><a class="link" name="30934" href="../asm/30934.html">78D6</a></td>
-<td class="dataDesc">four_byte_structs</td>
+<td class="dataDesc">door_positions</td>
 </tr>
 <tr>
 <td class="mapPage">122</td>
@@ -188,6 +182,18 @@
 <td class="mapByte">240</td>
 <td class="routine"><a class="link" name="31472" href="../asm/31472.html">7AF0</a></td>
 <td class="routineDesc">use_item_B</td>
+</tr>
+<tr>
+<td class="mapPage">122</td>
+<td class="mapByte">245</td>
+<td class="routine"><a class="link" name="31477" href="../asm/31477.html">7AF5</a></td>
+<td class="routineDesc">use_item_A</td>
+</tr>
+<tr>
+<td class="mapPage">122</td>
+<td class="mapByte">251</td>
+<td class="routine"><a class="link" name="31483" href="../asm/31483.html">7AFB</a></td>
+<td class="routineDesc">use_item_common</td>
 </tr>
 <tr>
 <td class="mapPage">123</td>
@@ -229,7 +235,7 @@
 <td class="mapPage">124</td>
 <td class="mapByte">130</td>
 <td class="routine"><a class="link" name="31874" href="../asm/31874.html">7C82</a></td>
-<td class="routineDesc">pick_up_related</td>
+<td class="routineDesc">find_nearby_item</td>
 </tr>
 <tr>
 <td class="mapPage">124</td>
@@ -325,7 +331,7 @@
 <td class="mapPage">129</td>
 <td class="mapByte">170</td>
 <td class="data"><a class="link" name="33194" href="../asm/33194.html">81AA</a></td>
-<td class="dataDesc">word_81AA</td>
+<td class="dataDesc">byte_81AA</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -421,7 +427,7 @@
 <td class="mapPage">129</td>
 <td class="mapByte">190</td>
 <td class="data"><a class="link" name="33214" href="../asm/33214.html">81BE</a></td>
-<td class="dataDesc">first_word_of_room_structure</td>
+<td class="dataDesc">first_byte_of_room_structure</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -1180,18 +1186,6 @@
 <td class="routineDesc">sub_AFDF</td>
 </tr>
 <tr>
-<td class="mapPage">176</td>
-<td class="mapByte">248</td>
-<td class="data"><a class="link" name="45304" href="../asm/45304.html">B0F8</a></td>
-<td class="dataDesc">four_bytes_B0F8</td>
-</tr>
-<tr>
-<td class="mapPage">176</td>
-<td class="mapByte">252</td>
-<td class="routine"><a class="link" name="45308" href="../asm/45308.html">B0FC</a></td>
-<td class="routineDesc">loc_B0FC</td>
-</tr>
-<tr>
 <td class="mapPage">177</td>
 <td class="mapByte">7</td>
 <td class="routine"><a class="link" name="45319" href="../asm/45319.html">B107</a></td>
@@ -1201,7 +1195,7 @@
 <td class="mapPage">177</td>
 <td class="mapByte">76</td>
 <td class="routine"><a class="link" name="45388" href="../asm/45388.html">B14C</a></td>
-<td class="routineDesc">sub_B14C</td>
+<td class="routineDesc">bounds_check</td>
 </tr>
 <tr>
 <td class="mapPage">177</td>
@@ -1237,7 +1231,7 @@
 <td class="mapPage">178</td>
 <td class="mapByte">159</td>
 <td class="routine"><a class="link" name="45727" href="../asm/45727.html">B29F</a></td>
-<td class="routineDesc">sub_B29F</td>
+<td class="routineDesc">indoor_bounds_check</td>
 </tr>
 <tr>
 <td class="mapPage">178</td>
@@ -1327,13 +1321,13 @@
 <td class="mapPage">181</td>
 <td class="mapByte">62</td>
 <td class="data"><a class="link" name="46398" href="../asm/46398.html">B53E</a></td>
-<td class="dataDesc">sixlong_things</td>
+<td class="dataDesc">walls</td>
 </tr>
 <tr>
 <td class="mapPage">181</td>
 <td class="mapByte">134</td>
 <td class="data"><a class="link" name="46470" href="../asm/46470.html">B586</a></td>
-<td class="dataDesc">wiresnips_related_table</td>
+<td class="dataDesc">fences</td>
 </tr>
 <tr>
 <td class="mapPage">181</td>
@@ -1537,7 +1531,7 @@
 <td class="mapPage">203</td>
 <td class="mapByte">117</td>
 <td class="routine"><a class="link" name="52085" href="../asm/52085.html">CB75</a></td>
-<td class="routineDesc">ld_bc_a</td>
+<td class="routineDesc">A_widened_to_BC</td>
 </tr>
 <tr>
 <td class="mapPage">203</td>
@@ -1549,7 +1543,7 @@
 <td class="mapPage">203</td>
 <td class="mapByte">133</td>
 <td class="routine"><a class="link" name="52101" href="../asm/52101.html">CB85</a></td>
-<td class="routineDesc">increment_word_C41A_low_byte_wrapping_at_15</td>
+<td class="routineDesc">get_A_indexed_by_C41A</td>
 </tr>
 <tr>
 <td class="mapPage">203</td>
@@ -1766,12 +1760,6 @@
 <td class="mapByte">95</td>
 <td class="data"><a class="link" name="58719" href="../asm/58719.html">E55F</a></td>
 <td class="dataDesc">probably_mask_data</td>
-</tr>
-<tr>
-<td class="mapPage">234</td>
-<td class="mapByte">116</td>
-<td class="data"><a class="link" name="60020" href="../asm/60020.html">EA74</a></td>
-<td class="dataDesc">(&lt;- sub_68A2)</td>
 </tr>
 <tr>
 <td class="mapPage">234</td>

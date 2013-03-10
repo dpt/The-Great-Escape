@@ -16,7 +16,7 @@
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="27040.html">69A0</a></td>
+<td class="prev">Prev: <a class="link" href="26937.html">6939</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#27054">Map</a></td>
 <td class="next">Next: <a class="link" href="27081.html">69C9</a></td>
 </tr>
@@ -27,10 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-struct { word y_coord; word x_coord; word vertical_offset; const sprite *; byte terminator; };
-</div>
-<div class="paragraph">
-stove1
+struct movable_item { word y_coord, x_coord; word vertical_offset; const sprite *; byte terminator; };
 </div>
 </div>
 </td>
@@ -38,93 +35,82 @@ stove1
 <tr>
 <td class="address"><a name="27054"></a>69AE</td>
 <td class="instruction">DEFW $003E</td>
-<td class="dataComment" rowspan="4">y_coord, x_coord, vertical_offset, &amp;sprite_stove</td>
+<td class="dataComment">struct movable_item stove1 = { y_coord,</td>
 </tr>
 <tr>
 <td class="address"><a name="27056"></a>69B0</td>
 <td class="instruction">DEFW $0023</td>
+<td class="dataComment">x_coord,</td>
 </tr>
 <tr>
 <td class="address"><a name="27058"></a>69B2</td>
 <td class="instruction">DEFW $0010</td>
+<td class="dataComment">vertical_offset,</td>
 </tr>
 <tr>
 <td class="address"><a name="27060"></a>69B4</td>
 <td class="instruction">DEFW <a class="link" href="52770.html">$CE22</a></td>
+<td class="dataComment">&amp;sprite_stove,</td>
 </tr>
 <tr>
 <td class="address"><a name="27062"></a>69B6</td>
 <td class="instruction">DEFB $00</td>
-<td class="dataComment">0 // terminator?</td>
+<td class="dataComment">0 };</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
-<a name="27063"></a>
-<div class="comments">
-<div class="paragraph">
-crate
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address">69B7</td>
+<td class="address"><a name="27063"></a>69B7</td>
 <td class="instruction">DEFW $0037</td>
-<td class="dataComment" rowspan="4">y_coord, x_coord, vertical_offset, &amp;sprite_create</td>
+<td class="dataComment">struct movable_item crate = { y_coord,</td>
 </tr>
 <tr>
 <td class="address"><a name="27065"></a>69B9</td>
 <td class="instruction">DEFW $0036</td>
+<td class="dataComment">x_coord,</td>
 </tr>
 <tr>
 <td class="address"><a name="27067"></a>69BB</td>
 <td class="instruction">DEFW $000E</td>
+<td class="dataComment">vertical_offset,</td>
 </tr>
 <tr>
 <td class="address"><a name="27069"></a>69BD</td>
 <td class="instruction">DEFW <a class="link" href="52770.html#52776">$CE28</a></td>
+<td class="dataComment">&amp;sprite_crate,</td>
 </tr>
 <tr>
 <td class="address"><a name="27071"></a>69BF</td>
 <td class="instruction">DEFB $00</td>
-<td class="dataComment">0 // terminator?</td>
+<td class="dataComment">0 };</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
-<a name="27072"></a>
-<div class="comments">
-<div class="paragraph">
-stove2
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address">69C0</td>
+<td class="address"><a name="27072"></a>69C0</td>
 <td class="instruction">DEFW $003E</td>
-<td class="dataComment" rowspan="4">y_coord, x_coord, vertical_offset, &amp;sprite_stove</td>
+<td class="dataComment">struct movable_item stove2 = { y_coord,</td>
 </tr>
 <tr>
 <td class="address"><a name="27074"></a>69C2</td>
 <td class="instruction">DEFW $0023</td>
+<td class="dataComment">x_coord,</td>
 </tr>
 <tr>
 <td class="address"><a name="27076"></a>69C4</td>
 <td class="instruction">DEFW $0010</td>
+<td class="dataComment">vertical_offset,</td>
 </tr>
 <tr>
 <td class="address"><a name="27078"></a>69C6</td>
 <td class="instruction">DEFW <a class="link" href="52770.html">$CE22</a></td>
+<td class="dataComment">&amp;sprite_stove,</td>
 </tr>
 <tr>
 <td class="address"><a name="27080"></a>69C8</td>
 <td class="instruction">DEFB $00</td>
-<td class="dataComment">0 // terminator?</td>
+<td class="dataComment">0 };</td>
 </tr>
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="27040.html">69A0</a></td>
+<td class="prev">Prev: <a class="link" href="26937.html">6939</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#27054">Map</a></td>
 <td class="next">Next: <a class="link" href="27081.html">69C9</a></td>
 </tr>

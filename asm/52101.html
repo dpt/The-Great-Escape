@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="52114.html">CB92</a></td>
 </tr>
 </table>
-<div class="description">CB85: increment_word_C41A_low_byte_wrapping_at_15</div>
+<div class="description">CB85: get_A_indexed_by_C41A</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -35,42 +35,40 @@ Used by the routine at <a class="link" href="50769.html">C651</a>.
 <tr>
 <td class="label"><a name="52101"></a>CB85</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">//</td>
 </tr>
 <tr>
 <td class="address"><a name="52102"></a>CB86</td>
 <td class="instruction">LD HL,($C41A)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">HL = word_C41A + 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="52105"></a>CB89</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52106"></a>CB8A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = *HL &amp; 0x0F;</td>
 </tr>
 <tr>
 <td class="address"><a name="52107"></a>CB8B</td>
 <td class="instruction">AND $0F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52109"></a>CB8D</td>
 <td class="instruction">LD ($C41A),HL</td>
-<td class="transparentComment" />
+<td class="comment">word_C41A = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="52112"></a>CB90</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">//</td>
 </tr>
 <tr>
 <td class="address"><a name="52113"></a>CB91</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

@@ -35,27 +35,32 @@ Looks like it's resetting stuff.
 <tr>
 <td class="label"><a name="26786"></a>68A2</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment" rowspan="37">...</td>
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="26787"></a>68A3</td>
 <td class="instruction">PUSH IY</td>
+<td class="comment">PUSH IY</td>
 </tr>
 <tr>
 <td class="address"><a name="26789"></a>68A5</td>
 <td class="instruction">POP HL</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="26790"></a>68A6</td>
 <td class="instruction">LD A,L</td>
+<td class="comment">A = L;</td>
 </tr>
 <tr>
 <td class="address"><a name="26791"></a>68A7</td>
 <td class="instruction">PUSH AF</td>
+<td class="comment">PUSH AF</td>
 </tr>
 <tr>
 <td class="address"><a name="26792"></a>68A8</td>
 <td class="instruction">ADD A,$0F</td>
+<td class="comment" rowspan="2">L = A + 15;</td>
 </tr>
 <tr>
 <td class="address"><a name="26794"></a>68AA</td>
@@ -64,10 +69,12 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26795"></a>68AB</td>
 <td class="instruction">LD A,(IY+$1C)</td>
+<td class="comment">A = IY[28];</td>
 </tr>
 <tr>
 <td class="address"><a name="26798"></a>68AE</td>
 <td class="instruction">AND A</td>
+<td class="comment" rowspan="22">if (A == 0) } B = 3; do &lt; PUSH BC A = *DE++; rotate_A_left_2_widening_to_BC(); {*HL++ = C; } {*HL++ = B; } POP BC &gt; while (--B); } else { B = 3; {do &lt; *HL++ = *DE++; } {*HL++ = 0; } &gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="26799"></a>68AF</td>
@@ -156,14 +163,17 @@ Looks like it's resetting stuff.
 <tr>
 <td class="label"><a name="26830"></a>68CE</td>
 <td class="instruction">POP AF</td>
+<td class="comment">POP AF</td>
 </tr>
 <tr>
 <td class="address"><a name="26831"></a>68CF</td>
 <td class="instruction">LD L,A</td>
+<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="26832"></a>68D0</td>
 <td class="instruction">AND A</td>
+<td class="comment" rowspan="3">if (A) { reset_object(); return; } // exit via (check)</td>
 </tr>
 <tr>
 <td class="address"><a name="26833"></a>68D1</td>
@@ -176,6 +186,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="label"><a name="26839"></a>68D7</td>
 <td class="instruction">INC L</td>
+<td class="comment" rowspan="2">*++HL &amp;= ~(1&lt;&lt;7);</td>
 </tr>
 <tr>
 <td class="address"><a name="26840"></a>68D8</td>
@@ -184,7 +195,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26842"></a>68DA</td>
 <td class="instruction">LD A,($801C)</td>
-<td class="comment">A = $801C; (room index thing)</td>
+<td class="comment">A = ($801C); // suspected room index</td>
 </tr>
 <tr>
 <td class="address"><a name="26845"></a>68DD</td>
@@ -194,7 +205,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26848"></a>68E0</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A != 0) goto some_sort_of_initial_setup_maybe;</td>
+<td class="comment" rowspan="2">if (A) goto some_sort_of_initial_setup_maybe;</td>
 </tr>
 <tr>
 <td class="address"><a name="26849"></a>68E1</td>
@@ -203,7 +214,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26852"></a>68E4</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment" rowspan="10">...</td>
+<td class="comment" rowspan="3">HL += 12;</td>
 </tr>
 <tr>
 <td class="address"><a name="26854"></a>68E6</td>
@@ -216,6 +227,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26856"></a>68E8</td>
 <td class="instruction">LD (HL),$80</td>
+<td class="comment" rowspan="2">*HL++ = 128;</td>
 </tr>
 <tr>
 <td class="address"><a name="26858"></a>68EA</td>
@@ -224,6 +236,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26859"></a>68EB</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment" rowspan="3">*HL &amp;= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="26860"></a>68EC</td>
@@ -236,10 +249,12 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26863"></a>68EF</td>
 <td class="instruction">CALL <a class="link" href="45820.html">$B2FC</a></td>
+<td class="comment">resetty();</td>
 </tr>
 <tr>
 <td class="address"><a name="26866"></a>68F2</td>
 <td class="instruction">JR $691A</td>
+<td class="comment">goto exit;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -254,7 +269,7 @@ This entry point is used by the routines at <a class="link" href="40312.html">9D
 <tr>
 <td class="label">68F4</td>
 <td class="instruction">LD HL,$0000</td>
-<td class="comment" rowspan="14">some_sort_of_initial_setup_maybe (&lt;- main and setup) [subroutine or label?]</td>
+<td class="comment" rowspan="2">plot_game_screen_x = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="26871"></a>68F7</td>
@@ -263,14 +278,17 @@ This entry point is used by the routines at <a class="link" href="40312.html">9D
 <tr>
 <td class="address"><a name="26874"></a>68FA</td>
 <td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
+<td class="comment">select_room_maybe();</td>
 </tr>
 <tr>
 <td class="address"><a name="26877"></a>68FD</td>
 <td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
+<td class="comment">plot_indoor_tiles();</td>
 </tr>
 <tr>
 <td class="address"><a name="26880"></a>6900</td>
 <td class="instruction">LD HL,$EA74</td>
+<td class="comment" rowspan="2">map_position_maybe = 0xEA74;</td>
 </tr>
 <tr>
 <td class="address"><a name="26883"></a>6903</td>
@@ -279,26 +297,32 @@ This entry point is used by the routines at <a class="link" href="40312.html">9D
 <tr>
 <td class="address"><a name="26886"></a>6906</td>
 <td class="instruction">CALL <a class="link" href="26912.html">$6920</a></td>
+<td class="comment">tunnel_related();</td>
 </tr>
 <tr>
 <td class="address"><a name="26889"></a>6909</td>
 <td class="instruction">LD HL,$8000</td>
+<td class="comment">HL = $8000; // redundant? (resetty sets HL to $8000 as its first instruction)</td>
 </tr>
 <tr>
 <td class="address"><a name="26892"></a>690C</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
+<td class="comment">resetty();</td>
 </tr>
 <tr>
 <td class="address"><a name="26895"></a>690F</td>
 <td class="instruction">CALL <a class="link" href="26937.html">$6939</a></td>
+<td class="comment">setup_movable_items();</td>
 </tr>
 <tr>
 <td class="address"><a name="26898"></a>6912</td>
 <td class="instruction">CALL <a class="link" href="43936.html">$ABA0</a></td>
+<td class="comment">zoombox();</td>
 </tr>
 <tr>
 <td class="address"><a name="26901"></a>6915</td>
 <td class="instruction">LD B,$01</td>
+<td class="comment" rowspan="2">increase_score(1);</td>
 </tr>
 <tr>
 <td class="address"><a name="26903"></a>6917</td>
@@ -307,6 +331,7 @@ This entry point is used by the routines at <a class="link" href="40312.html">9D
 <tr>
 <td class="label"><a name="26906"></a>691A</td>
 <td class="instruction">LD SP,$FFFF</td>
+<td class="comment">exit: SP = $FFFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="26909"></a>691D</td>

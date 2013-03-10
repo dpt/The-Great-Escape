@@ -35,7 +35,7 @@ Rooms and tunnels.
 <tr>
 <td class="address"><a name="27565"></a>6BAD</td>
 <td class="instruction">DEFW $6C15</td>
-<td class="dataComment" rowspan="28">Array of pointers to rooms.</td>
+<td class="dataComment" rowspan="28">Array of pointers to rooms (starting at 1).</td>
 </tr>
 <tr>
 <td class="address"><a name="27567"></a>6BAF</td>
@@ -316,7 +316,7 @@ Where the player sleeps.
 <tr>
 <td class="address"><a name="27757"></a>6C6D</td>
 <td class="instruction">DEFB $00,$03,$36,$44,$17,$22,$36,$44</td>
-<td class="dataComment" rowspan="4">room_def: room3_hut2_right</td>
+<td class="dataComment" rowspan="3">room_def: room3_hut2_right</td>
 </tr>
 <tr>
 <td class="address"><a name="27765"></a>6C75</td>
@@ -324,11 +324,27 @@ Where the player sleeps.
 </tr>
 <tr>
 <td class="address"><a name="27773"></a>6C7D</td>
-<td class="instruction">DEFB $01,$03,$0A,$0A,$02,$01,$04,$08</td>
+<td class="instruction">DEFB $01,$03,$0A</td>
 </tr>
 <tr>
-<td class="address"><a name="27781"></a>6C85</td>
-<td class="instruction">DEFB $08,$00,$08,$02,$03</td>
+<td class="address"><a name="27776"></a>6C80</td>
+<td class="instruction">DEFB $0A</td>
+<td class="dataComment">10 nobjects</td>
+</tr>
+<tr>
+<td class="address"><a name="27777"></a>6C81</td>
+<td class="instruction">DEFB $02,$01,$04</td>
+<td class="dataComment">2, 1, 4 interiorobject_ROOM_OUTLINE_2</td>
+</tr>
+<tr>
+<td class="address"><a name="27780"></a>6C84</td>
+<td class="instruction">DEFB $08,$08,$00</td>
+<td class="dataComment">8, 8, 0 interiorobject_WIDE_WINDOW</td>
+</tr>
+<tr>
+<td class="address"><a name="27783"></a>6C87</td>
+<td class="instruction">DEFB $08,$02,$03</td>
+<td class="dataComment">8, 2, 3 interiorobject_WIDE_WINDOW</td>
 </tr>
 <tr>
 <td class="address"><a name="27786"></a>6C8A</td>
@@ -357,13 +373,28 @@ Where the player sleeps.
 </tr>
 <tr>
 <td class="address"><a name="27793"></a>6C91</td>
-<td class="instruction">DEFB $02,$09,$0B,$10,$05,$0F,$0F,$08</td>
+<td class="instruction">DEFB $02,$09</td>
 <td class="dataComment"></td>
 </tr>
 <tr>
+<td class="address"><a name="27795"></a>6C93</td>
+<td class="instruction">DEFB $0B,$10,$05</td>
+<td class="dataComment">11,16, 5 interiorobject_CHEST_OF_DRAWERS</td>
+</tr>
+<tr>
+<td class="address"><a name="27798"></a>6C96</td>
+<td class="instruction">DEFB $0F,$0F,$08</td>
+<td class="dataComment">15,15, 8 interiorobject_DOOR_FRAME_15</td>
+</tr>
+<tr>
 <td class="address"><a name="27801"></a>6C99</td>
-<td class="instruction">DEFB $0A,$12,$05,$10,$07,$0A</td>
-<td class="dataComment"></td>
+<td class="instruction">DEFB $0A,$12,$05</td>
+<td class="dataComment">10,18, 5 interiorobject_SHORT_WARDROBE</td>
+</tr>
+<tr>
+<td class="address"><a name="27804"></a>6C9C</td>
+<td class="instruction">DEFB $10,$07,$0A</td>
+<td class="dataComment">16, 7,10 interiorobject_DOOR_FRAME_16</td>
 </tr>
 <tr>
 <td class="address"><a name="27807"></a>6C9F</td>

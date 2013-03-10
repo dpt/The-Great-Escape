@@ -4,7 +4,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Routine at 7AF0</title>
+<title>The Great Escape: Routine at 7AF5</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
@@ -16,12 +16,12 @@
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="31433.html">7AC9</a></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#31472">Map</a></td>
-<td class="next">Next: <a class="link" href="31477.html">7AF5</a></td>
+<td class="prev">Prev: <a class="link" href="31472.html">7AF0</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31477">Map</a></td>
+<td class="next">Next: <a class="link" href="31483.html">7AFB</a></td>
 </tr>
 </table>
-<div class="description">7AF0: use_item_B</div>
+<div class="description">7AF5: use_item_A</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -33,21 +33,35 @@ Used by the routine at <a class="link" href="31433.html">7AC9</a>.
 </td>
 </tr>
 <tr>
-<td class="label"><a name="31472"></a>7AF0</td>
-<td class="instruction">LD A,($8216)</td>
-<td class="comment">A = items_held[1]; // $8216</td>
+<td class="label"><a name="31477"></a>7AF5</td>
+<td class="instruction">LD A,($8215)</td>
+<td class="comment">A = items_held[0]; // $8215 // FALLTHROUGH</td>
 </tr>
 <tr>
-<td class="address"><a name="31475"></a>7AF3</td>
-<td class="instruction">JR <a class="link" href="31477.html#31480">$7AF8</a></td>
-<td class="comment">goto use_item_common;</td>
+<td class="routineComment" colspan="3">
+<a name="31480"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="31472.html">7AF0</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">7AF8</td>
+<td class="instruction">CP $FF</td>
+<td class="comment" rowspan="2">if (A == item_NONE) return;</td>
+</tr>
+<tr>
+<td class="address"><a name="31482"></a>7AFA</td>
+<td class="instruction">RET Z</td>
 </tr>
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="31433.html">7AC9</a></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#31472">Map</a></td>
-<td class="next">Next: <a class="link" href="31477.html">7AF5</a></td>
+<td class="prev">Prev: <a class="link" href="31472.html">7AF0</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31477">Map</a></td>
+<td class="next">Next: <a class="link" href="31483.html">7AFB</a></td>
 </tr>
 </table>
 <div class="footer">

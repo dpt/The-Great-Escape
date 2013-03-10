@@ -35,27 +35,24 @@ check for 'pick up', 'drop' and both 'use item' keypresses
 <tr>
 <td class="label"><a name="31433"></a>7AC9</td>
 <td class="instruction">CP $0A</td>
-<td class="comment"></td>
+<td class="comment" rowspan="4">if (A == input_UP_FIRE) pick_up_item();</td>
 </tr>
 <tr>
 <td class="address"><a name="31435"></a>7ACB</td>
 <td class="instruction">JP NZ,$7AD3</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="31438"></a>7ACE</td>
 <td class="instruction">CALL <a class="link" href="31542.html">$7B36</a></td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="31441"></a>7AD1</td>
 <td class="instruction">JR $7AEF</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="label"><a name="31443"></a>7AD3</td>
 <td class="instruction">CP $0B</td>
-<td class="comment" rowspan="4">check_for_drop_keypress:</td>
+<td class="comment" rowspan="4">else if (A == input_DOWN_FIRE) drop_item();</td>
 </tr>
 <tr>
 <td class="address"><a name="31445"></a>7AD5</td>
@@ -72,7 +69,7 @@ check for 'pick up', 'drop' and both 'use item' keypresses
 <tr>
 <td class="label"><a name="31453"></a>7ADD</td>
 <td class="instruction">CP $0C</td>
-<td class="comment" rowspan="4">check_for_use_item_A_keypress:</td>
+<td class="comment" rowspan="4">else if (A == input_LEFT_FIRE) use_item_A();</td>
 </tr>
 <tr>
 <td class="address"><a name="31455"></a>7ADF</td>
@@ -80,7 +77,7 @@ check for 'pick up', 'drop' and both 'use item' keypresses
 </tr>
 <tr>
 <td class="address"><a name="31458"></a>7AE2</td>
-<td class="instruction">CALL <a class="link" href="31472.html#31477">$7AF5</a></td>
+<td class="instruction">CALL <a class="link" href="31477.html">$7AF5</a></td>
 </tr>
 <tr>
 <td class="address"><a name="31461"></a>7AE5</td>
@@ -89,7 +86,7 @@ check for 'pick up', 'drop' and both 'use item' keypresses
 <tr>
 <td class="label"><a name="31463"></a>7AE7</td>
 <td class="instruction">CP $0F</td>
-<td class="comment" rowspan="3">check_for_use_item_B_keypress:</td>
+<td class="comment" rowspan="3">else if (A == input_RIGHT_FIRE) use_item_B();</td>
 </tr>
 <tr>
 <td class="address"><a name="31465"></a>7AE9</td>
@@ -102,7 +99,7 @@ check for 'pick up', 'drop' and both 'use item' keypresses
 <tr>
 <td class="label"><a name="31471"></a>7AEF</td>
 <td class="instruction">RET</td>
-<td class="comment">nop_ret: return;</td>
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

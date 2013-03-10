@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="31433.html">7AC9</a>.
 <tr>
 <td class="label"><a name="31627"></a>7B8B</td>
 <td class="instruction">LD A,($8215)</td>
-<td class="comment">A = (items_held)</td>
+<td class="comment">A = items_held[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="31630"></a>7B8E</td>
@@ -66,32 +66,41 @@ Used by the routine at <a class="link" href="31433.html">7AC9</a>.
 <tr>
 <td class="label"><a name="31644"></a>7B9C</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment">...</td>
+<td class="comment">PUSH AF</td>
 </tr>
 <tr>
-<td class="address"><a name="31645"></a>7B9D</td>
+<td class="routineComment" colspan="3">
+<a name="31645"></a>
+<div class="comments">
+<div class="paragraph">
+Shuffle items down.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">7B9D</td>
 <td class="instruction">LD HL,$8216</td>
-<td class="comment">HL = items_held + 1 (item slot B)</td>
+<td class="comment">HL = &amp;items_held[1];  // item slot B</td>
 </tr>
 <tr>
 <td class="address"><a name="31648"></a>7BA0</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = (HL)</td>
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="31649"></a>7BA1</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment">(HL) = item_NONE;</td>
+<td class="comment" rowspan="2">*HL-- = item_NONE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31651"></a>7BA3</td>
 <td class="instruction">DEC HL</td>
-<td class="comment">HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="31652"></a>7BA4</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment">(HL) = item_NONE;</td>
+<td class="comment">*HL = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31653"></a>7BA5</td>
@@ -120,7 +129,7 @@ Used by the routine at <a class="link" href="31433.html">7AC9</a>.
 <tr>
 <td class="address"><a name="31668"></a>7BB4</td>
 <td class="instruction">POP AF</td>
-<td class="comment">...</td>
+<td class="comment">POP AF</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -135,24 +144,27 @@ This entry point is used by the routine at <a class="link" href="45959.html">B38
 <tr>
 <td class="label">7BB5</td>
 <td class="instruction">CALL <a class="link" href="31782.html">$7C26</a></td>
-<td class="comment">box_opening_maybe:</td>
+<td class="comment">box_opening_maybe: item_to_itemstruct();</td>
 </tr>
 <tr>
 <td class="address"><a name="31672"></a>7BB8</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="34">...</td>
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="31673"></a>7BB9</td>
 <td class="instruction">LD A,($68A0)</td>
+<td class="comment">A = indoor_room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="31676"></a>7BBC</td>
 <td class="instruction">LD (HL),A</td>
+<td class="comment">*HL = A; // set object's room index</td>
 </tr>
 <tr>
 <td class="address"><a name="31677"></a>7BBD</td>
 <td class="instruction">AND A</td>
+<td class="comment" rowspan="32">if (A == 0) { // outdoors } HL++; PUSH HL {HL += 2; } POP DE HL = $800F; divide_3xAC_by_8_with_rounding(); DE--; {*DE = 0; } EX DE,HL HL--; {A = 64 + *HL--; } A -= *HL; A *= 2; C = A; {A = 0 - *HL++; } {A -= *HL++; } A -= *HL++; {B = A; } {*HL++ = C; } *HL = B; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="31678"></a>7BBE</td>
@@ -287,20 +299,21 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31715"></a>7BE3</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="31716"></a>7BE4</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="49">...</td>
+<td class="comment">else { HL++; // indoors</td>
 </tr>
 <tr>
 <td class="address"><a name="31717"></a>7BE5</td>
 <td class="instruction">LD DE,$800F</td>
+<td class="comment">DE = $800F;</td>
 </tr>
 <tr>
 <td class="address"><a name="31720"></a>7BE8</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment" rowspan="3">*HL++ = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31721"></a>7BE9</td>
@@ -313,6 +326,7 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31723"></a>7BEB</td>
 <td class="instruction">INC E</td>
+<td class="comment" rowspan="2">DE += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="31724"></a>7BEC</td>
@@ -321,6 +335,7 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31725"></a>7BED</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment" rowspan="3">*HL++ = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31726"></a>7BEE</td>
@@ -333,6 +348,7 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31728"></a>7BF0</td>
 <td class="instruction">LD (HL),$05</td>
+<td class="comment">*HL = 5;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -347,10 +363,12 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="label">7BF2</td>
 <td class="instruction">DEC HL</td>
+<td class="comment">HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="31731"></a>7BF3</td>
 <td class="instruction">LD D,$02</td>
+<td class="comment" rowspan="2">DE = 512 + *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="31733"></a>7BF5</td>
@@ -359,18 +377,22 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31734"></a>7BF6</td>
 <td class="instruction">EX DE,HL</td>
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31735"></a>7BF7</td>
 <td class="instruction">DEC DE</td>
+<td class="comment">DE--;</td>
 </tr>
 <tr>
 <td class="address"><a name="31736"></a>7BF8</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31737"></a>7BF9</td>
 <td class="instruction">LD C,A</td>
+<td class="comment" rowspan="2">BC = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31738"></a>7BFA</td>
@@ -379,34 +401,42 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31740"></a>7BFC</td>
 <td class="instruction">AND A</td>
+<td class="comment">AND A</td>
 </tr>
 <tr>
 <td class="address"><a name="31741"></a>7BFD</td>
 <td class="instruction">SBC HL,BC</td>
+<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="31743"></a>7BFF</td>
 <td class="instruction">ADD HL,HL</td>
+<td class="comment">HL *= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="31744"></a>7C00</td>
 <td class="instruction">LD C,H</td>
+<td class="comment">C = H;</td>
 </tr>
 <tr>
 <td class="address"><a name="31745"></a>7C01</td>
 <td class="instruction">LD A,L</td>
+<td class="comment">A = L;</td>
 </tr>
 <tr>
 <td class="address"><a name="31746"></a>7C02</td>
 <td class="instruction">CALL <a class="link" href="58704.html">$E550</a></td>
+<td class="comment">divide_AC_by_8_with_rounding();</td>
 </tr>
 <tr>
 <td class="address"><a name="31749"></a>7C05</td>
 <td class="instruction">EX AF,AF'</td>
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="31750"></a>7C06</td>
 <td class="instruction">LD HL,$0800</td>
+<td class="comment" rowspan="2">HL = 0x0800;</td>
 </tr>
 <tr>
 <td class="address"><a name="31753"></a>7C09</td>
@@ -415,66 +445,82 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31755"></a>7C0B</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31756"></a>7C0C</td>
 <td class="instruction">LD C,A</td>
+<td class="comment">BC = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31757"></a>7C0D</td>
 <td class="instruction">AND A</td>
+<td class="comment">AND A</td>
 </tr>
 <tr>
 <td class="address"><a name="31758"></a>7C0E</td>
 <td class="instruction">SBC HL,BC</td>
+<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="31760"></a>7C10</td>
 <td class="instruction">INC DE</td>
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="31761"></a>7C11</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31762"></a>7C12</td>
 <td class="instruction">LD C,A</td>
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31763"></a>7C13</td>
 <td class="instruction">SBC HL,BC</td>
+<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="31765"></a>7C15</td>
 <td class="instruction">INC DE</td>
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="31766"></a>7C16</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="31767"></a>7C17</td>
 <td class="instruction">LD C,A</td>
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31768"></a>7C18</td>
 <td class="instruction">SBC HL,BC</td>
+<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="31770"></a>7C1A</td>
 <td class="instruction">LD C,H</td>
+<td class="comment">C = H;</td>
 </tr>
 <tr>
 <td class="address"><a name="31771"></a>7C1B</td>
 <td class="instruction">LD A,L</td>
+<td class="comment">A = L;</td>
 </tr>
 <tr>
 <td class="address"><a name="31772"></a>7C1C</td>
 <td class="instruction">CALL <a class="link" href="58704.html">$E550</a></td>
+<td class="comment">divide_AC_by_8_with_rounding();</td>
 </tr>
 <tr>
 <td class="address"><a name="31775"></a>7C1F</td>
 <td class="instruction">INC DE</td>
+<td class="comment" rowspan="2">DE += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="31776"></a>7C20</td>
@@ -483,6 +529,7 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31777"></a>7C21</td>
 <td class="instruction">LD (DE),A</td>
+<td class="comment" rowspan="2">*DE-- = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31778"></a>7C22</td>
@@ -491,15 +538,17 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 <tr>
 <td class="address"><a name="31779"></a>7C23</td>
 <td class="instruction">EX AF,AF'</td>
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="31780"></a>7C24</td>
 <td class="instruction">LD (DE),A</td>
+<td class="comment">*DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31781"></a>7C25</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">return; }</td>
 </tr>
 </table>
 <table class="prevNext">

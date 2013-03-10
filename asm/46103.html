@@ -32,7 +32,7 @@
 <tr>
 <td class="label"><a name="46103"></a>B417</td>
 <td class="instruction">LD HL,$B589</td>
-<td class="comment">HL = wiresnips_related_table + 3;</td>
+<td class="comment">HL = &amp;fences[0] + 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="46106"></a>B41A</td>
@@ -52,12 +52,12 @@
 <tr>
 <td class="address"><a name="46112"></a>B420</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = (DE);</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46113"></a>B421</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= (HL)) goto continue;</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto continue;</td>
 </tr>
 <tr>
 <td class="address"><a name="46114"></a>B422</td>
@@ -71,7 +71,7 @@
 <tr>
 <td class="address"><a name="46117"></a>B425</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; (HL)) goto continue;</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) goto continue;</td>
 </tr>
 <tr>
 <td class="address"><a name="46118"></a>B426</td>
@@ -85,7 +85,7 @@
 <tr>
 <td class="address"><a name="46121"></a>B429</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = (DE);</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46122"></a>B42A</td>
@@ -95,7 +95,7 @@
 <tr>
 <td class="address"><a name="46123"></a>B42B</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A == (HL)) goto set_to_4;</td>
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46124"></a>B42C</td>
@@ -109,7 +109,7 @@
 <tr>
 <td class="address"><a name="46127"></a>B42F</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A == (HL)) goto set_to_6;</td>
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_6;</td>
 </tr>
 <tr>
 <td class="address"><a name="46128"></a>B430</td>
@@ -182,12 +182,12 @@
 <tr>
 <td class="address"><a name="46148"></a>B444</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = (DE);</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46149"></a>B445</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; (HL)) goto continue2;</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) goto continue2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46150"></a>B446</td>
@@ -201,7 +201,7 @@
 <tr>
 <td class="address"><a name="46153"></a>B449</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= (HL)) goto continue2;</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto continue2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46154"></a>B44A</td>
@@ -215,7 +215,7 @@
 <tr>
 <td class="address"><a name="46157"></a>B44D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = (DE);</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46158"></a>B44E</td>
@@ -225,7 +225,7 @@
 <tr>
 <td class="address"><a name="46159"></a>B44F</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A == (HL)) goto set_to_5;</td>
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_5;</td>
 </tr>
 <tr>
 <td class="address"><a name="46160"></a>B450</td>
@@ -239,7 +239,7 @@
 <tr>
 <td class="address"><a name="46163"></a>B453</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A == (HL)) goto set_to_7;</td>
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_7;</td>
 </tr>
 <tr>
 <td class="address"><a name="46164"></a>B454</td>

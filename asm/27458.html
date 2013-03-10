@@ -94,17 +94,16 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="address"><a name="27469"></a>6B4D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
+<td class="comment" rowspan="2">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="27470"></a>6B4E</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="27471"></a>6B4F</td>
 <td class="instruction">LD L,A</td>
-<td class="comment" rowspan="7">HL = &amp;interior_tiles[A];</td>
+<td class="comment" rowspan="7">HL' = &amp;interior_tiles[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="27472"></a>6B50</td>
@@ -133,17 +132,17 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="address"><a name="27481"></a>6B59</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DE</td>
+<td class="comment">POP DE'</td>
 </tr>
 <tr>
 <td class="address"><a name="27482"></a>6B5A</td>
 <td class="instruction">LD BC,$0818</td>
-<td class="comment">B = 8; C = 24;</td>
+<td class="comment">B' = 8; C' = 24;</td>
 </tr>
 <tr>
 <td class="label"><a name="27485"></a>6B5D</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">do &lt; *DE = *HL++;</td>
+<td class="comment" rowspan="2">do &lt; *DE' = *HL'++;</td>
 </tr>
 <tr>
 <td class="address"><a name="27486"></a>6B5E</td>
@@ -152,7 +151,7 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="address"><a name="27487"></a>6B5F</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="6">DE += C;</td>
+<td class="comment" rowspan="6">DE' += C';</td>
 </tr>
 <tr>
 <td class="address"><a name="27488"></a>6B60</td>
@@ -177,12 +176,11 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="address"><a name="27494"></a>6B66</td>
 <td class="instruction">DJNZ $6B5D</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment" rowspan="2">&gt; while (--B');</td>
 </tr>
 <tr>
 <td class="address"><a name="27496"></a>6B68</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="27497"></a>6B69</td>

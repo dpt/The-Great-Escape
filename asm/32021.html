@@ -71,7 +71,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32030"></a>7D1E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="4">A = *HL++; if (A != B) goto set;</td>
+<td class="comment" rowspan="7">A = *HL++; if (A == B) } {A = *HL; if (A == C) return; }</td>
 </tr>
 <tr>
 <td class="address"><a name="32031"></a>7D1F</td>
@@ -88,7 +88,6 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32035"></a>7D23</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="3">A = *HL; if (A == C) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="32036"></a>7D24</td>
@@ -101,7 +100,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="label"><a name="32038"></a>7D26</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="5">set: *++HL = B; *++HL = C; HL++;</td>
+<td class="comment" rowspan="5">*++HL = B; *++HL = C; HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="32039"></a>7D27</td>

@@ -33,7 +33,7 @@ Makes characters sit, sleep or other things TBD.
 <table class="input">
 <tr>
 <td class="register">HL</td>
-<td class="registerContents">Points to byte holding character index (e.g. 0x76C6).</td>
+<td class="registerContents">Points to a byte holding character index (e.g. 0x76C6).</td>
 </tr>
 </table>
 </td>
@@ -41,309 +41,369 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="label"><a name="51142"></a>C7C6</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment"></td>
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="51143"></a>C7C7</td>
 <td class="instruction">CP $07</td>
-<td class="comment"></td>
+<td class="comment" rowspan="4">if (A &gt;= character_7_prisoner &amp;&amp; A &lt;= character_12_prisoner) goto character_sleeps;</td>
 </tr>
 <tr>
 <td class="address"><a name="51145"></a>C7C9</td>
 <td class="instruction">JR C,$C7D0</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51147"></a>C7CB</td>
 <td class="instruction">CP $0D</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51149"></a>C7CD</td>
 <td class="instruction">JP C,<a class="link" href="42016.html#42052">$A444</a></td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="label"><a name="51152"></a>C7D0</td>
 <td class="instruction">CP $12</td>
-<td class="comment"></td>
+<td class="comment" rowspan="4">if (A &gt;= character_18_prisoner &amp;&amp; A &lt;= character_22_prisoner) goto character_sits;</td>
 </tr>
 <tr>
 <td class="address"><a name="51154"></a>C7D2</td>
 <td class="instruction">JR C,$C7D9</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51156"></a>C7D4</td>
 <td class="instruction">CP $17</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51158"></a>C7D6</td>
 <td class="instruction">JP C,<a class="link" href="42016.html">$A420</a></td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="label"><a name="51161"></a>C7D9</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment"></td>
+<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51162"></a>C7DA</td>
 <td class="instruction">LD HL,$C7F9</td>
-<td class="comment"></td>
+<td class="comment">HL = character_to_event_handler_index_map;</td>
 </tr>
 <tr>
 <td class="address"><a name="51165"></a>C7DD</td>
 <td class="instruction">LD B,$18</td>
-<td class="comment"></td>
+<td class="comment">B = 24; // 24 iterations</td>
 </tr>
 <tr>
-<td class="label"><a name="51167"></a>C7DF</td>
+<td class="routineComment" colspan="3">
+<a name="51167"></a>
+<div class="comments">
+<div class="paragraph">
+Locate the character in the map.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">C7DF</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">do &lt; if (A == *HL) goto call_action;</td>
 </tr>
 <tr>
 <td class="address"><a name="51168"></a>C7E0</td>
 <td class="instruction">JR Z,$C7EA</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51170"></a>C7E2</td>
 <td class="instruction">INC HL</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">HL += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="51171"></a>C7E3</td>
 <td class="instruction">INC HL</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51172"></a>C7E4</td>
 <td class="instruction">DJNZ $C7DF</td>
-<td class="comment"></td>
+<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="51174"></a>C7E6</td>
 <td class="instruction">POP HL</td>
-<td class="comment"></td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51175"></a>C7E7</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment"></td>
+<td class="comment">*HL = 0; // no action</td>
 </tr>
 <tr>
 <td class="address"><a name="51177"></a>C7E9</td>
 <td class="instruction">RET</td>
-<td class="comment"></td>
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="51178"></a>C7EA</td>
 <td class="instruction">INC HL</td>
-<td class="comment"></td>
+<td class="comment" rowspan="12">call_action: goto character_event_handlers[*++HL];</td>
 </tr>
 <tr>
 <td class="address"><a name="51179"></a>C7EB</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51180"></a>C7EC</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51181"></a>C7ED</td>
 <td class="instruction">LD C,A</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51182"></a>C7EE</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51184"></a>C7F0</td>
 <td class="instruction">LD HL,$C829</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51187"></a>C7F3</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51188"></a>C7F4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51189"></a>C7F5</td>
 <td class="instruction">INC HL</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51190"></a>C7F6</td>
 <td class="instruction">LD H,(HL)</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51191"></a>C7F7</td>
 <td class="instruction">LD L,A</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51192"></a>C7F8</td>
 <td class="instruction">JP (HL)</td>
-<td class="comment"></td>
 </tr>
 <tr>
-<td class="address"><a name="51193"></a>C7F9</td>
+<td class="routineComment" colspan="3">
+<a name="51193"></a>
+<div class="comments">
+<div class="paragraph">
+character_to_event_handler_index_map
+</div>
+<div class="paragraph">
+Array of (character, character event handler index) mappings. (Some of the character indexes look too high though).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C7F9</td>
 <td class="instruction">DEFW $00A6</td>
-<td class="comment" rowspan="24">Array of (character,index) mappings. (Some of the character indexes look too high though).</td>
+<td class="comment">&lt; 0xA6,  0 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51195"></a>C7FB</td>
 <td class="instruction">DEFW $00A7</td>
+<td class="comment">&lt; 0xA7,  0 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51197"></a>C7FD</td>
 <td class="instruction">DEFW $01A8</td>
+<td class="comment">&lt; 0xA8,  1 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51199"></a>C7FF</td>
 <td class="instruction">DEFW $01A9</td>
+<td class="comment">&lt; 0xA9,  1 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51201"></a>C801</td>
 <td class="instruction">DEFW $0005</td>
+<td class="comment">&lt; 0x05,  0 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51203"></a>C803</td>
 <td class="instruction">DEFW $0106</td>
+<td class="comment">&lt; 0x06,  1 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51205"></a>C805</td>
 <td class="instruction">DEFW $0385</td>
+<td class="comment">&lt; 0x85,  3 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51207"></a>C807</td>
 <td class="instruction">DEFW $0386</td>
+<td class="comment">&lt; 0x86,  3 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51209"></a>C809</td>
 <td class="instruction">DEFW $020E</td>
+<td class="comment">&lt; 0x0E,  2 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51211"></a>C80B</td>
 <td class="instruction">DEFW $020F</td>
+<td class="comment">&lt; 0x0F,  2 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51213"></a>C80D</td>
 <td class="instruction">DEFW $008E</td>
+<td class="comment">&lt; 0x8E,  0 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51215"></a>C80F</td>
 <td class="instruction">DEFW $018F</td>
+<td class="comment">&lt; 0x8F,  1 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51217"></a>C811</td>
 <td class="instruction">DEFW $0510</td>
+<td class="comment">&lt; 0x10,  5 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51219"></a>C813</td>
 <td class="instruction">DEFW $0511</td>
+<td class="comment">&lt; 0x11,  5 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51221"></a>C815</td>
 <td class="instruction">DEFW $0090</td>
+<td class="comment">&lt; 0x90,  0 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51223"></a>C817</td>
 <td class="instruction">DEFW $0191</td>
+<td class="comment">&lt; 0x91,  1 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51225"></a>C819</td>
 <td class="instruction">DEFW $00A0</td>
+<td class="comment">&lt; 0xA0,  0 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51227"></a>C81B</td>
 <td class="instruction">DEFW $01A1</td>
+<td class="comment">&lt; 0xA1,  1 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51229"></a>C81D</td>
 <td class="instruction">DEFW $072A</td>
+<td class="comment">&lt; 0x2A,  7 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51231"></a>C81F</td>
 <td class="instruction">DEFW $082C</td>
+<td class="comment">&lt; 0x2C,  8 &gt;,   // sleeps</td>
 </tr>
 <tr>
 <td class="address"><a name="51233"></a>C821</td>
 <td class="instruction">DEFW $092B</td>
+<td class="comment">&lt; 0x2B,  9 &gt;,   // sits</td>
 </tr>
 <tr>
 <td class="address"><a name="51235"></a>C823</td>
 <td class="instruction">DEFW $06A4</td>
+<td class="comment">&lt; 0xA4,  6 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51237"></a>C825</td>
 <td class="instruction">DEFW $0A24</td>
+<td class="comment">&lt; 0x24, 10 &gt;,</td>
 </tr>
 <tr>
 <td class="address"><a name="51239"></a>C827</td>
 <td class="instruction">DEFW $0425</td>
+<td class="comment">&lt; 0x25,  4 &gt;,   // morale related</td>
 </tr>
 <tr>
-<td class="address"><a name="51241"></a>C829</td>
+<td class="routineComment" colspan="3">
+<a name="51241"></a>
+<div class="comments">
+<div class="paragraph">
+character_event_handlers
+</div>
+<div class="paragraph">
+Array of pointers to character event handlers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C829</td>
 <td class="instruction">DEFW $C864</td>
-<td class="comment" rowspan="11">Array of pointers to event handlers.</td>
+<td class="comment">&lt; &amp;charevnt_pop_hl_and_write_08FF_to_it,</td>
 </tr>
 <tr>
 <td class="address"><a name="51243"></a>C82B</td>
 <td class="instruction">DEFW $C85C</td>
+<td class="comment">&amp;charevnt_pop_hl_and_write_10FF_to_it,</td>
 </tr>
 <tr>
 <td class="address"><a name="51245"></a>C82D</td>
 <td class="instruction">DEFW $C860</td>
+<td class="comment">&amp;charevnt_pop_hl_and_write_38FF_to_it,</td>
 </tr>
 <tr>
 <td class="address"><a name="51247"></a>C82F</td>
 <td class="instruction">DEFW $C86C</td>
+<td class="comment">&amp;charevnt_pop_hl_and_check_varA13E,</td>
 </tr>
 <tr>
 <td class="address"><a name="51249"></a>C831</td>
 <td class="instruction">DEFW $C83F</td>
+<td class="comment">&amp;charevnt_zero_morale_related,</td>
 </tr>
 <tr>
 <td class="address"><a name="51251"></a>C833</td>
 <td class="instruction">DEFW $C877</td>
+<td class="comment">&amp;charevnt_pop_hl_and_check_varA13E_anotherone,</td>
 </tr>
 <tr>
 <td class="address"><a name="51253"></a>C835</td>
 <td class="instruction">DEFW $C845</td>
+<td class="comment">&amp;charevnt_C845,</td>
 </tr>
 <tr>
 <td class="address"><a name="51255"></a>C837</td>
 <td class="instruction">DEFW $C882</td>
+<td class="comment">&amp;charevnt_pop_hl_and_write_0005_to_it,</td>
 </tr>
 <tr>
 <td class="address"><a name="51257"></a>C839</td>
 <td class="instruction">DEFW $C88D</td>
+<td class="comment">&amp;charevnt_pop_hl_and_player_sleeps,</td>
 </tr>
 <tr>
 <td class="address"><a name="51259"></a>C83B</td>
 <td class="instruction">DEFW $C889</td>
+<td class="comment">&amp;charevnt_pop_hl_and_player_sits,</td>
 </tr>
 <tr>
 <td class="address"><a name="51261"></a>C83D</td>
 <td class="instruction">DEFW $C84C</td>
+<td class="comment">&amp;charevnt_C84C, &gt;</td>
 </tr>
 <tr>
-<td class="address"><a name="51263"></a>C83F</td>
+<td class="routineComment" colspan="3">
+<a name="51263"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_zero_morale_related
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C83F</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="3">handler: zero_morale_related</td>
+<td class="comment" rowspan="2">morale_related = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="51264"></a>C840</td>
@@ -352,15 +412,27 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="address"><a name="51267"></a>C843</td>
 <td class="instruction">JR $C864</td>
+<td class="comment">goto charevnt_pop_hl_and_write_08FF_to_it;</td>
 </tr>
 <tr>
-<td class="address"><a name="51269"></a>C845</td>
+<td class="routineComment" colspan="3">
+<a name="51269"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_C845
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C845</td>
 <td class="instruction">POP HL</td>
-<td class="comment" rowspan="5">handler: sub_C845 -- pop hl, store 3, inc hl, store 21, ret</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51270"></a>C846</td>
 <td class="instruction">LD (HL),$03</td>
+<td class="comment" rowspan="2">*HL++ = 0x03;</td>
 </tr>
 <tr>
 <td class="address"><a name="51272"></a>C848</td>
@@ -369,19 +441,32 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="address"><a name="51273"></a>C849</td>
 <td class="instruction">LD (HL),$15</td>
+<td class="comment">*HL   = 0x15;</td>
 </tr>
 <tr>
 <td class="address"><a name="51275"></a>C84B</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 <tr>
-<td class="address"><a name="51276"></a>C84C</td>
+<td class="routineComment" colspan="3">
+<a name="51276"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_C84C
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C84C</td>
 <td class="instruction">POP HL</td>
-<td class="comment" rowspan="8">handler: sub_C84C -- morale related</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51277"></a>C84D</td>
 <td class="instruction">LD (HL),$A4</td>
+<td class="comment" rowspan="2">*HL++ = 0xA4;</td>
 </tr>
 <tr>
 <td class="address"><a name="51279"></a>C84F</td>
@@ -390,10 +475,12 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="address"><a name="51280"></a>C850</td>
 <td class="instruction">LD (HL),$03</td>
+<td class="comment">*HL   = 0x03;</td>
 </tr>
 <tr>
 <td class="address"><a name="51282"></a>C852</td>
 <td class="instruction">XOR A</td>
+<td class="comment" rowspan="2">morale_related_also = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="51283"></a>C853</td>
@@ -402,41 +489,76 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="address"><a name="51286"></a>C856</td>
 <td class="instruction">LD BC,$2500</td>
+<td class="comment" rowspan="2">set_target_location(0x2500); return;</td>
 </tr>
 <tr>
 <td class="address"><a name="51289"></a>C859</td>
 <td class="instruction">JP <a class="link" href="41791.html#41796">$A344</a></td>
 </tr>
 <tr>
-<td class="address"><a name="51292"></a>C85C</td>
+<td class="routineComment" colspan="3">
+<a name="51292"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_write_10FF_to_it
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C85C</td>
 <td class="instruction">LD C,$10</td>
-<td class="comment" rowspan="2">handler: morale_related__pop_hl_and_write_10FF_to_it</td>
+<td class="comment">C = 0x10;</td>
 </tr>
 <tr>
 <td class="address"><a name="51294"></a>C85E</td>
 <td class="instruction">JR $C866</td>
+<td class="comment">goto exit;</td>
 </tr>
 <tr>
-<td class="address"><a name="51296"></a>C860</td>
+<td class="routineComment" colspan="3">
+<a name="51296"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_write_38FF_to_it
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C860</td>
 <td class="instruction">LD C,$38</td>
-<td class="comment" rowspan="2">handler: morale_related__pop_hl_and_write_38FF_to_it</td>
+<td class="comment">C = 0x38;</td>
 </tr>
 <tr>
 <td class="address"><a name="51298"></a>C862</td>
 <td class="instruction">JR $C866</td>
+<td class="comment">goto exit;</td>
 </tr>
 <tr>
-<td class="label"><a name="51300"></a>C864</td>
+<td class="routineComment" colspan="3">
+<a name="51300"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_write_08FF_to_it
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">C864</td>
 <td class="instruction">LD C,$08</td>
-<td class="comment" rowspan="6">handler: morale_related__pop_hl_and_write_08FF_to_it</td>
+<td class="comment">C = 0x08;</td>
 </tr>
 <tr>
 <td class="label"><a name="51302"></a>C866</td>
 <td class="instruction">POP HL</td>
+<td class="comment">exit: POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51303"></a>C867</td>
 <td class="instruction">LD (HL),$FF</td>
+<td class="comment" rowspan="2">*HL++ = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="51305"></a>C869</td>
@@ -445,19 +567,32 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="address"><a name="51306"></a>C86A</td>
 <td class="instruction">LD (HL),C</td>
+<td class="comment">*HL   = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="51307"></a>C86B</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 <tr>
-<td class="address"><a name="51308"></a>C86C</td>
+<td class="routineComment" colspan="3">
+<a name="51308"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_check_varA13E
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C86C</td>
 <td class="instruction">POP HL</td>
-<td class="comment" rowspan="5">handler: pop_hl_and_check_varA13E</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51309"></a>C86D</td>
 <td class="instruction">LD A,($A13E)</td>
+<td class="comment" rowspan="4">if (byte_A13E == 0) goto varA13E_is_zero; else goto sub_A3F3;</td>
 </tr>
 <tr>
 <td class="address"><a name="51312"></a>C870</td>
@@ -472,13 +607,24 @@ Makes characters sit, sleep or other things TBD.
 <td class="instruction">JP <a class="link" href="41971.html">$A3F3</a></td>
 </tr>
 <tr>
-<td class="address"><a name="51319"></a>C877</td>
+<td class="routineComment" colspan="3">
+<a name="51319"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_check_varA13E_anotherone
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C877</td>
 <td class="instruction">POP HL</td>
-<td class="comment" rowspan="5">handler: pop_hl_and_check_varA13E_anotherone</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51320"></a>C878</td>
 <td class="instruction">LD A,($A13E)</td>
+<td class="comment" rowspan="4">if (byte_A13E == 0) goto varA13E_is_zero_anotherone; else goto sub_A4D3;</td>
 </tr>
 <tr>
 <td class="address"><a name="51323"></a>C87B</td>
@@ -493,13 +639,24 @@ Makes characters sit, sleep or other things TBD.
 <td class="instruction">JP <a class="link" href="42195.html">$A4D3</a></td>
 </tr>
 <tr>
-<td class="address"><a name="51330"></a>C882</td>
+<td class="routineComment" colspan="3">
+<a name="51330"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_write_0005_to_it
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C882</td>
 <td class="instruction">POP HL</td>
-<td class="comment" rowspan="5">handler: pop_hl_and_write_0005_to_it</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51331"></a>C883</td>
 <td class="instruction">LD (HL),$05</td>
+<td class="comment" rowspan="2">*HL++ = 0x05;</td>
 </tr>
 <tr>
 <td class="address"><a name="51333"></a>C885</td>
@@ -508,28 +665,52 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="address"><a name="51334"></a>C886</td>
 <td class="instruction">LD (HL),$00</td>
+<td class="comment">*HL   = 0x00;</td>
 </tr>
 <tr>
 <td class="address"><a name="51336"></a>C888</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 <tr>
-<td class="address"><a name="51337"></a>C889</td>
+<td class="routineComment" colspan="3">
+<a name="51337"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_player_sits
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C889</td>
 <td class="instruction">POP HL</td>
-<td class="comment" rowspan="2">handler: pop_hl_and_player_sits</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51338"></a>C88A</td>
 <td class="instruction">JP <a class="link" href="42111.html">$A47F</a></td>
+<td class="comment">goto player_sits;</td>
 </tr>
 <tr>
-<td class="address"><a name="51341"></a>C88D</td>
+<td class="routineComment" colspan="3">
+<a name="51341"></a>
+<div class="comments">
+<div class="paragraph">
+charevnt_pop_hl_and_player_sleeps
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C88D</td>
 <td class="instruction">POP HL</td>
-<td class="comment" rowspan="2">handler: pop_hl_and_player_sleeps</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51342"></a>C88E</td>
 <td class="instruction">JP <a class="link" href="42111.html#42121">$A489</a></td>
+<td class="comment">goto player_sleeps;</td>
 </tr>
 </table>
 <table class="prevNext">

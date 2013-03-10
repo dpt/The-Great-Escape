@@ -38,17 +38,16 @@ This is resetting the character sprite set to prisoner.
 <tr>
 <td class="label"><a name="26912"></a>6920</td>
 <td class="instruction">LD HL,$800D</td>
-<td class="comment"></td>
+<td class="comment">HL = $800D;</td>
 </tr>
 <tr>
 <td class="address"><a name="26915"></a>6923</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">*HL++ = 128;</td>
 </tr>
 <tr>
 <td class="address"><a name="26917"></a>6925</td>
 <td class="instruction">INC L</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="26918"></a>6926</td>
@@ -58,7 +57,7 @@ This is resetting the character sprite set to prisoner.
 <tr>
 <td class="address"><a name="26921"></a>6929</td>
 <td class="instruction">CP $1D</td>
-<td class="comment" rowspan="2">if (A &lt; room_29_secondtunnelstart) goto not_in_a_tunnel;</td>
+<td class="comment" rowspan="7">if (A &gt;= room_29_secondtunnelstart) } *HL |= 1&lt;&lt;2; {$8015 = &amp;sprite_prisoner_tl_4; } } else { *HL &amp;= 1&lt;&lt;2;</td>
 </tr>
 <tr>
 <td class="address"><a name="26923"></a>692B</td>
@@ -67,12 +66,10 @@ This is resetting the character sprite set to prisoner.
 <tr>
 <td class="address"><a name="26925"></a>692D</td>
 <td class="instruction">SET 2,(HL)</td>
-<td class="comment">...</td>
 </tr>
 <tr>
 <td class="address"><a name="26927"></a>692F</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="comment" rowspan="2">$8015 = sprite_prisoner_tl_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="26930"></a>6932</td>
@@ -81,12 +78,10 @@ This is resetting the character sprite set to prisoner.
 <tr>
 <td class="address"><a name="26933"></a>6935</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="26934"></a>6936</td>
 <td class="instruction">RES 2,(HL)</td>
-<td class="comment">not_in_a_tunnel: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="26936"></a>6938</td>

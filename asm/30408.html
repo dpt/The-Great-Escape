@@ -30,7 +30,7 @@
 Array, 16 long, of 7-byte structures. These are 'characters' but seem to be the game items.
 </div>
 <div class="paragraph">
-struct { byte item; byte room; byte ... 5 others ...; }
+struct { byte item; byte room; byte y, x; ... 3 others ...; }
 </div>
 </div>
 </td>
@@ -38,7 +38,7 @@ struct { byte item; byte room; byte ... 5 others ...; }
 <tr>
 <td class="address"><a name="30408"></a>76C8</td>
 <td class="instruction">DEFB $00,$FF,$40,$20,$02,$78,$F4</td>
-<td class="dataComment">itemstruct_0: wiresnips { item_WIRESNIPS, room_NONE, ... } (&lt;- item_to_itemstruct, pick_up_related)</td>
+<td class="dataComment">itemstruct_0: wiresnips { item_WIRESNIPS, room_NONE, ... } (&lt;- item_to_itemstruct, find_nearby_item)</td>
 </tr>
 <tr>
 <td class="address"><a name="30415"></a>76CF</td>

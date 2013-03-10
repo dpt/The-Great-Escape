@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="32072"></a>7D48</td>
 <td class="instruction">LD A,($7D0F)</td>
-<td class="comment" rowspan="4">if (message_display_counter == 0) goto draw_message; // exit via</td>
+<td class="comment" rowspan="6">if (message_display_counter &gt; 0) } message_display_counter--; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="32075"></a>7D4B</td>
@@ -52,12 +52,10 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="32080"></a>7D50</td>
 <td class="instruction">LD ($7D0F),A</td>
-<td class="comment">message_display_counter--;</td>
 </tr>
 <tr>
 <td class="address"><a name="32083"></a>7D53</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="32084"></a>7D54</td>
@@ -67,7 +65,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="32087"></a>7D57</td>
 <td class="instruction">CP $80</td>
-<td class="comment" rowspan="2">if (A == 128) goto shunt_buffer_back_by_two;</td>
+<td class="comment" rowspan="2">if (A == 128) goto shunt_buffer_back_by_two; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="32089"></a>7D59</td>
@@ -76,22 +74,21 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="32091"></a>7D5B</td>
 <td class="instruction">JR NC,<a class="link" href="32135.html">$7D87</a></td>
-<td class="comment">else if (A &gt; 128) goto wipe_message;</td>
+<td class="comment">else if (A &gt; 128) goto wipe_message; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="32093"></a>7D5D</td>
 <td class="instruction">LD HL,($7D13)</td>
-<td class="comment">HL = current_message_character;</td>
+<td class="comment">else { HL = current_message_character;</td>
 </tr>
 <tr>
 <td class="address"><a name="32096"></a>7D60</td>
 <td class="instruction">LD DE,$50E0</td>
-<td class="comment">DE = screen_text_start_address;</td>
+<td class="comment" rowspan="3">DE = screen_text_start_address + A;</td>
 </tr>
 <tr>
 <td class="address"><a name="32099"></a>7D63</td>
 <td class="instruction">OR E</td>
-<td class="comment" rowspan="2">DE |= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="32100"></a>7D64</td>
@@ -105,27 +102,24 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="32104"></a>7D68</td>
 <td class="instruction">LD A,E</td>
-<td class="comment">A = E;</td>
+<td class="comment" rowspan="3">message_display_index = E &amp; 31;</td>
 </tr>
 <tr>
 <td class="address"><a name="32105"></a>7D69</td>
 <td class="instruction">AND $1F</td>
-<td class="comment">A = A &amp; 31;</td>
 </tr>
 <tr>
 <td class="address"><a name="32107"></a>7D6B</td>
 <td class="instruction">LD ($7D10),A</td>
-<td class="comment">message_display_index = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="32110"></a>7D6E</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++; // msgptr++</td>
+<td class="comment" rowspan="2">A = *++HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="32111"></a>7D6F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="32112"></a>7D70</td>
@@ -171,7 +165,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="32134"></a>7D86</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">return; }</td>
 </tr>
 </table>
 <table class="prevNext">

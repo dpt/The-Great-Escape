@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="27175.html">6A27</a></td>
 </tr>
 </table>
-<div class="description">6A12: sub_6A12</div>
+<div class="description">6A12: get_door_position</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="45869.html">B32D</a>, <a class="link" href="46288.html">B4D0</a>, <a class="link" href="50769.html">C651</a> and <a class="link" href="51841.html">CA81</a>.
+Index turns into door_position struct pointer.
 </div>
 </div>
 <table class="input">
@@ -51,7 +51,7 @@ Used by the routines at <a class="link" href="45869.html">B32D</a>, <a class="li
 <tr>
 <td class="label"><a name="27154"></a>6A12</td>
 <td class="instruction">LD C,A</td>
-<td class="comment" rowspan="8">HL = &amp;four_byte_structs[A * 2]; // <a class="link" href="30934.html">78D6</a></td>
+<td class="comment" rowspan="8">HL = &amp;door_positions[A * 2]; // are they pairs of doors?</td>
 </tr>
 <tr>
 <td class="address"><a name="27155"></a>6A13</td>
