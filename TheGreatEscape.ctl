@@ -831,7 +831,7 @@ R $6AB5 O:HL Corrupted.
   $6AC3 C = *HL++; // height
   $6AC5 LD ($6AE7),B    // self modify (== width)
 ;
-  $6AC9 expand: do < do < A = *HL;
+  $6AC9 do < do < expand: A = *HL;
   $6ACA if (A != objecttile_ESCAPE) goto $6ADE;
   $6ACE HL++;
   $6ACF A = *HL;
