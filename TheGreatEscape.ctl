@@ -810,6 +810,58 @@ D $6A27 Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
 ; ------------------------------------------------------------------------------
 
 c $6A35 select_room_maybe
+  $6A35 wipe_visible_tiles();
+  $6A38 HL = rooms_and_tunnels[indoor_room_index - 1];
+
+  $6A48 PUSH HL
+  $6A49 sub_69DC();
+  $6A4C POP HL
+  $6A4D DE = &first_byte_of_room_structure;
+  $6A50 LDI // *DE++ = *HL++; BC--;
+  $6A52 A = *HL;
+  $6A53 AND A
+  $6A54 *DE = A;
+  $6A55 if (A == 0) <
+  $6A57 HL++;
+  $6A58 > else
+
+  $6A5A < memcpy(DE, HL, (A * 4) + 1); >
+
+  $6A62 DE = byte_81DA;
+  $6A65 A = *HL++;
+  $6A67 *DE = A;
+  $6A68 AND A
+  $6A69 if (A) <
+;
+  $6A6B DE++;
+  $6A6C B = A;
+  $6A6D do < PUSH BC
+  $6A6E PUSH HL
+  $6A6F memcpy(DE, &stru_EA7C[*HL], 7);
+  $6A83 *DE++ = 32;
+  $6A87 POP HL
+  $6A88 HL++;
+  $6A89 POP BC
+  $6A8A > while (--B); >
+;
+  $6A8C B = *HL; // count of objects
+  $6A8D if (B == 0) return;
+;
+  $6A90 HL++;
+  $6A91 do < PUSH BC
+  $6A92 C = *HL++; // object index
+  $6A94 A = *HL++; // column
+  $6A96 PUSH HL
+  $6A97 HL = $F0F8 + *HL * 24 + A; // $F0F8 = visible_tiles_array (so *HL = row, A = column)
+  $6AAA EX DE,HL
+  $6AAB A = C;
+  $6AAC expand_object();
+  $6AAF POP HL
+  $6AB0 POP BC
+  $6AB1 HL++;
+  $6AB2 > while (--B);
+;
+  $6AB4 return;
 
 ; ------------------------------------------------------------------------------
 
