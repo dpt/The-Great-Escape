@@ -3247,6 +3247,43 @@ c $A289 sub_A289
 ; ------------------------------------------------------------------------------
 
 c $A2E2 sub_A2E2
+  $A2E2 A = breakfast_related;
+  $A2E5 A &= A;
+  $A2E6 if (A) <
+  $A2E9 $800F = 52; // player Y position
+  $A2EE $8011 = 62; > // player X position
+  $A2F2 breakfast_related = 0;
+  $A2F6 set_target_location(location_9003);
+  $A2FC HL = $769F; // &characterstruct_20 + 1; // point to room refs?
+  $A2FF DE = 7; // stride
+  $A302 A = room_25_breakfast;
+  $A304 B = 3; // 3 iterations
+  $A306 do < *HL = A;
+  $A307 HL += DE;
+  $A308 > while (--B);
+  $A30A A = room_23_breakfast;
+  $A30C B = 3; // 3 iterations
+  $A30E do < *HL = A;
+  $A30F HL += DE;
+  $A310 > while (--B);
+  $A312 A = 144;
+  $A314 EX AF,AF'
+  $A315 C = 3;
+  $A317 sub_A373();
+  $A31A A = interiorobject_EMPTY_BENCH;
+  $A31C room23_breakfast.bench_A = A;
+  $A31F room23_breakfast.bench_B = A;
+  $A322 room23_breakfast.bench_C = A;
+  $A325 room23_breakfast.bench_D = A;
+  $A328 room23_breakfast.bench_E = A;
+  $A32B room23_breakfast.bench_F = A;
+  $A32E room23_breakfast.bench_G = A;
+  $A331 A = indoor_room_index;
+  $A334 A &= A;
+  $A335 if (A == 0) return;
+  $A336 if (A >= room_29_secondtunnelstart) return;
+  $A339 select_room_maybe();
+  $A33C plot_indoor_tiles(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
