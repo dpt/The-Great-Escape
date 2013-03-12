@@ -4665,6 +4665,45 @@ D $C441 Outdoors.
 ; -----------------------------------------------------------------------------
 
 c $C47E called_from_main_loop_6
+D $C47E Run through all visible characters, resetting them.
+  $C47E HL = &map_position_maybe;
+  $C481 E = MAX(L - 9, 0);
+  $C488 D = MAX(H - 9, 0);
+;
+  $C48F B = 7; // 7 iterations
+  $C491 HL = $8020;
+  $C494 do < A = *HL;
+  $C495 if (A == 255) goto next; // no character?
+  $C49A PUSH HL
+  $C49B HL += 28;
+  $C49F if (indoor_room_index != *HL) goto reset; // character not in room
+;
+  $C4A5 C = *--HL;
+  $C4A7 A = *--HL;
+  $C4A9 divide_AC_by_8_with_rounding();
+  $C4AC C = A;
+  $C4AD if (C <= D || C > MIN(D + 34, 255)) goto reset;
+;
+  $C4BA C = *--HL;
+  $C4BC A = *--HL;
+  $C4BE divide_AC_by_8_with_rounding:$E555(); // without rounding
+  $C4C1 C = A;
+  $C4C2 if (C <= E || C > MIN(E + 42, 255)) goto reset;
+  $C4C6 goto pop_next;
+ ;
+  $C4CF reset: POP HL
+  $C4D0 PUSH HL
+  $C4D1 PUSH DE
+  $C4D2 PUSH BC
+  $C4D3 reset_object();
+  $C4D6 POP BC
+  $C4D7 POP DE
+;
+  $C4D8 pop_next: POP HL
+;
+  $C4D9 next: HL += 32;
+  $C4DD > while (--B);
+  $C4DF return;
 
 ; -----------------------------------------------------------------------------
 
