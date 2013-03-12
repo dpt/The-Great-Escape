@@ -3294,16 +3294,46 @@ c $A33F set_target_location
 ; ------------------------------------------------------------------------------
 
 c $A351 sub_A351
+  $A351 set_target_location(location_8502);
+  $A357 Adash = 133;
+  $A35A C = 2;
+  $A35C sub_A373(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
 c $A35F sub_A35F
+R $A35F O:Adash Counter incremented.
 D $A35F Uses tenlong structure.
+  $A35F HL = &tenlong;
+  $A362 B = 10;
+  $A364 do < PUSH HL
+  $A365 PUSH BC
+  $A366 A = *HL;
+  $A367 sub_A38C();
+  $A36A Adash++;
+  $A36D POP BC
+  $A36E POP HL
+  $A36F HL++;
+  $A370 > while (--B);
+  $A372 return;
 
 ; ------------------------------------------------------------------------------
 
 c $A373 sub_A373
+R $A373 O:Adash Counter incremented.
 D $A373 Uses tenlong structure.
+  $A373 HL = &tenlong;
+  $A376 B = 10;
+  $A378 do < PUSH HL
+  $A379 PUSH BC
+  $A37A A = *HL;
+  $A37B sub_A38C();
+  $A37E POP BC
+  $A37F if (B == 6) Adash++; // 6 is player?
+  $A387 POP HL
+  $A388 HL++;
+  $A389 > while (--B);
+  $A38B return;
 
 ; ------------------------------------------------------------------------------
 
