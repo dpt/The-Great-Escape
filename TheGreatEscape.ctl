@@ -5606,11 +5606,45 @@ c $E34E sub_E34E
 
 c $E3FA sub_E3FA
 D $E3FA [leaf]
+  $E3FA H = 0x7F;
+  $E3FC L = E;
+  $E3FD E = B;
+  $E3FE B = *HL;
+  $E3FF L = E;
+  $E400 E = *HL;
+  $E401 L = C;
+  $E402 C = *HL;
+  $E403 EXX
+  $E404 H = 0x7F;
+  $E406 L = E;
+  $E407 E = B;
+  $E408 B = *HL;
+  $E409 L = E;
+  $E40A E = *HL;
+  $E40B L = C;
+  $E40C C = *HL;
+  $E40D EXX
+  $E40E return;
 
 ; ------------------------------------------------------------------------------
 
 c $E40F sub_E40F
 D $E40F [leaf]
+  $E40F H = 0x7F;
+  $E411 L = D;
+  $E412 D = E;
+  $E413 E = *HL;
+  $E414 L = D;
+  $E415 D = *HL;
+  $E416 EXX
+  $E417 H = 0x7F;
+  $E419 L = D;
+  $E41A D = E;
+  $E41B E = *HL;
+  $E41C L = D;
+  $E41D D = *HL;
+  $E41E EXX
+  $E41F return;
 
 ; ------------------------------------------------------------------------------
 
