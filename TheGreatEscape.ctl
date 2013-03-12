@@ -1317,6 +1317,44 @@ w $7B16 item_actions_jump_table
 ; ------------------------------------------------------------------------------
 
 c $7B36 pick_up_item
+  $7B36 HL = items_held;
+  $7B39 A = item_NONE;
+  $7B3B if (L != A && H != A) return; // no spare slots
+  $7B40 find_nearby_item();
+  $7B43 if (NZ) return; // not found
+
+D $7B44 Locate the empty item slot.
+  $7B44 DE = &items_held[0];
+  $7B47 A = *DE;
+  $7B48 if (A != item_NONE) DE++;
+  $7B4D *DE = *HL & 0x1F;
+  $7B51 PUSH HL
+  $7B52 A = indoor_room_index;
+  $7B55 if (A == 0) { // indoors
+  $7B5A sub_A8A2(); // resettish
+  $7B5D }
+
+  $7B5F else { select_room_maybe();
+  $7B62 plot_indoor_tiles();
+  $7B65 choose_game_screen_attributes();
+  $7B68 set_game_screen_attributes(); }
+
+  $7B6B POP HL
+  $7B6C if ((*HL & (1<<7)) == 0) {
+  $7B70 *HL |= 1<<7;
+  $7B72 PUSH HL
+  $7B73 increase_morale_by_5();
+  $7B76 POP HL }
+
+  $7B77 A = 0;
+  $7B78 HL++;
+  $7B79 *HL = A;
+  $7B7A HL += 4;
+  $7B7E *HL++ = A;
+  $7B80 *HL = A;
+  $7B81 draw_all_items();
+  $7B84 play_speaker(sound_3030);
+  $7B8A return;
 
 ; ------------------------------------------------------------------------------
 
