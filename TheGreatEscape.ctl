@@ -666,12 +666,53 @@ D $68A1 Index.
 
 c $68A2 sub_68A2
 D $68A2 Looks like it's resetting stuff.
-  $68A2 ...
-  $68DA A = $801C; (room index thing)
+  $68A2 EX DE,HL
+  $68A3 PUSH IY
+  $68A5 POP HL
+  $68A6 A = L;
+  $68A7 PUSH AF
+  $68A8 L = A + 15;
+  $68AB A = IY[28];
+  $68AE if (A == 0) {
+  $68B2 B = 3;
+  $68B4 do < PUSH BC
+  $68B5 A = *DE++;
+  $68B6 rotate_A_left_2_widening_to_BC();
+  $68B9 *HL++ = C;
+  $68BB *HL++ = B;
+  $68BE POP BC
+  $68BF > while (--B);
+  $68C1 } else {
+  $68C3 B = 3;
+  $68C5 do < *HL++ = *DE++;
+  $68C8 *HL++ = 0;
+  $68CC > while (--B); }
+  $68CE POP AF
+  $68CF L = A;
+  $68D0 if (A) { reset_object(); return; } // exit via (check)
+  $68D7 *++HL &= ~(1<<7);
+  $68DA A = ($801C); // suspected room index
   $68DD indoor_room_index = A;
-  $68E0 if (A != 0) goto some_sort_of_initial_setup_maybe;
-  $68E4 ...
-  $68F4 some_sort_of_initial_setup_maybe (<- main and setup) [subroutine or label?]
+  $68E0 if (A) goto some_sort_of_initial_setup_maybe;
+  $68E4 HL += 12;
+  $68E8 *HL++ = 128;
+  $68EB *HL &= 3;
+  $68EF resetty();
+  $68F2 goto exit;
+
+; This entry point is used by the routines at #R$9D78, #R$9DE5 and #R$B75A.
+  $68F4 plot_game_screen_x = 0;
+  $68FA select_room_maybe();
+  $68FD plot_indoor_tiles();
+  $6900 map_position_maybe = 0xEA74;
+  $6906 tunnel_related();
+  $6909 HL = $8000; // redundant? (resetty sets HL to $8000 as its first instruction)
+  $690C resetty();
+  $690F setup_movable_items();
+  $6912 zoombox();
+  $6915 increase_score(1);
+
+  $691A exit: SP = $FFFF;
   $691D goto main_loop;
 
 ; ------------------------------------------------------------------------------
