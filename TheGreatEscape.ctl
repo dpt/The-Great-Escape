@@ -4141,6 +4141,46 @@ R $B1D4 O:F Z set if door open.
 ; ------------------------------------------------------------------------------
 
 c $B1F5 door_handling
+  $B1F5 A = indoor_room_index;
+  $B1F8 if (A) goto indoors; // exit via?
+  $B1FC HL = &door_positions[0];
+  $B1FF E = IY[14];
+  $B202 if (E >= 2) HL = &door_position[1];
+  $B20A D = 3;  // mask
+  $B20C B = 16;
+  $B20E do < A = *HL & D;
+  $B210 if (A == E) {
+;
+  $B213 PUSH BC
+  $B214 PUSH HL
+  $B215 PUSH DE
+  $B216 sub_B252();
+  $B219 POP DE
+  $B21A POP HL
+  $B21B POP BC
+  $B21C JR NC,$B229
+;
+  $B21E } HL += 8;
+  $B225 > while (--B);
+;
+  $B227 A &= B; // set Z (B is zero)
+  $B228 return;
+
+  $B229 A = 16 - B;
+  $B22C current_door = A;
+  $B22F EXX
+  $B230 is_door_open();
+  $B233 if (NZ) return; // door was locked
+;
+  $B234 EXX
+  $B235 IY[28] = (*HL >> 2) & 0x3F;
+  $B23D if ((*HL & 3) >= 2) {
+;
+  $B244 HL += 5;
+  $B249 sub_68A2(); return; // seems to goto reset then jump back to main (icky)
+;
+  $B24C } HL -= 3;
+  $B24F sub_68A2(); return;
 
 ; ------------------------------------------------------------------------------
 
