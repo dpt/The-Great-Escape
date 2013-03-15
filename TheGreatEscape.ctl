@@ -3463,14 +3463,42 @@ c $A38C sub_A38C
 U $A3A9,1 unused_A3A9
 D $A3A9 Unreferenced byte.
 
-; ------------------------------------------------------------------------------
+  $A3AA not_set: HL += 5;
+  $A3AF store_banked_A_then_C_at_HL();
+  $A3B2 exit: return;
 
-c $A3AA not_set
+  $A3B3 found:
+  $A3B3 POP BC
+  $A3B4 HL++;
+  $A3B5 *HL++ &= ~(1<<6);
+  $A3B8 store_banked_A_then_C_at_HL();
 
-; ------------------------------------------------------------------------------
+; This entry point is used by the routine at #R$A33F.
+  $A3BB byte_A13E = 0;
+  $A3BF PUSH BC
+  $A3C0 PUSH HL
+  $A3C1 HL--;
+  $A3C2 sub_C651();
+  $A3C5 POP DE
+  $A3C6 DE++;
+  $A3C7 LDI // *DE++ = *HL++; BC--;
+  $A3C9 LDI // *DE++ = *HL++; BC--;
+  $A3CB if (A != 255) goto A3DF;
+  $A3D0 DE -= 6;
+  $A3D4 PUSH DE
+  $A3D5 POP IY
+  $A3D7 EX DE,HL
+  $A3D8 HL += 2;
+  $A3DA CALL $CB23
+  $A3DD POP BC
+  $A3DE return;
 
-c $A3B3 found
-D $A3B3 [possibly a tail of above sub]
+  $A3DF if (A != 128) goto A3EB;
+  $A3E4 DE -= 5;
+  $A3E8 EX DE,HL
+  $A3E9 *HL |= 1<<6;
+  $A3EB POP BC
+  $A3EC return;
 
 ; ------------------------------------------------------------------------------
 
