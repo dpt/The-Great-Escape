@@ -5719,7 +5719,9 @@ R $E550 I:C High
   $E550 A += 4;
   $E552 if (carry) C++;
 ;
-C $E555 divide_AC_by_8
+; fallthrough
+
+c $E555 divide_AC_by_8
   $E555 A = (A >> 3) | (C << 5); C >>= 3;
   $E55E return;
 
