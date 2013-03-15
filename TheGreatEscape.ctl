@@ -5814,6 +5814,99 @@ w $EDD3 game_screen_scanline_start_addresses
 ; ------------------------------------------------------------------------------
 
 c $EED3 plot_game_screen
+  $EED3 saved_sp = SP;
+  $EED7 A = *(&plot_game_screen_x + 1);
+  $EEDA if (A) goto $EF27; // unaligned?
+  $EEDE HL = $F291 + plot_game_screen_x;
+  $EEE9 SP = game_screen_scanline_start_addresses;
+  $EEEC A = 128;
+  $EEEE do < DE = *SP++;
+  $EEEF *DE++ = *HL++; // 23x
+  $EEF1 *DE++ = *HL++;
+  $EEF3 *DE++ = *HL++;
+  $EEF5 *DE++ = *HL++;
+  $EEF7 *DE++ = *HL++;
+  $EEF9 *DE++ = *HL++;
+  $EEFB *DE++ = *HL++;
+  $EEFD *DE++ = *HL++;
+  $EEFF *DE++ = *HL++;
+  $EF01 *DE++ = *HL++;
+  $EF03 *DE++ = *HL++;
+  $EF05 *DE++ = *HL++;
+  $EF07 *DE++ = *HL++;
+  $EF09 *DE++ = *HL++;
+  $EF0B *DE++ = *HL++;
+  $EF0D *DE++ = *HL++;
+  $EF0F *DE++ = *HL++;
+  $EF11 *DE++ = *HL++;
+  $EF13 *DE++ = *HL++;
+  $EF15 *DE++ = *HL++;
+  $EF17 *DE++ = *HL++;
+  $EF19 *DE++ = *HL++;
+  $EF1B *DE++ = *HL++;
+  $EF1D HL++; // skip 24th
+  $EF1E > while (--A);
+  $EF22 SP = saved_sp;
+  $EF26 return;
+
+  $EF27 HL = $F290 + plot_game_screen_x;
+  $EF32 A = *HL++;
+  $EF34 SP = game_screen_scanline_start_addresses;
+  $EF37 EXX
+  $EF38 Bdash = 128;
+
+  $EF3A do <
+  $EF3B POP DE
+  $EF3C B = 4;
+
+  $EF3E do < C = *HL;
+  $EF3F RRD
+  $EF42 Adash = *HL;
+  $EF43 *DE++ = Adash;
+  $EF44 *HL++ = C;
+  $EF48 C = *HL;
+  $EF49 RRD
+  $EF4C Adash = *HL;
+  $EF4D *DE++ = Adash;
+  $EF4E *HL++ = C;
+  $EF52 C = *HL;
+  $EF53 RRD
+  $EF56 Adash = *HL;
+  $EF57 *DE++ = Adash;
+  $EF58 *HL++ = C;
+  $EF5C C = *HL;
+  $EF5D RRD
+  $EF60 Adash = *HL;
+  $EF61 *DE++ = Adash;
+  $EF62 *HL++ = C;
+  $EF66 C = *HL;
+  $EF67 RRD
+  $EF6A Adash = *HL;
+  $EF6B *DE++ = Adash;
+  $EF6C *HL++ = C;
+  $EF70 > while (--B);
+
+  $EF72 C = *HL;
+  $EF73 RRD
+  $EF76 Adash = *HL;
+  $EF77 *DE++ = Adash;
+  $EF78 *HL++ = C;
+  $EF7C C = *HL;
+  $EF7D RRD
+  $EF80 Adash = *HL;
+  $EF81 *DE++ = Adash;
+  $EF82 *HL++ = C;
+  $EF86 C = *HL;
+  $EF87 RRD
+  $EF8A Adash = *HL;
+  $EF8B *DE++ = Adash;
+  $EF8C *HL++ = C;
+  $EF90 A = *HL;
+  $EF91 HL++;
+  $EF93 > while (--Bdash);
+
+  $EF95 SP = saved_sp;
+  $EF99 return;
 
 ; ------------------------------------------------------------------------------
 
