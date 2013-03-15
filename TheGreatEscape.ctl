@@ -3338,10 +3338,20 @@ D $A373 Uses tenlong structure.
 ; ------------------------------------------------------------------------------
 
 c $A38C sub_A38C
+  $A38C get_character_struct();
+  $A38F if ((*HL & (1<<6)) == 0) goto not_set;
+  $A394 PUSH BC
+  $A395 A = *HL & 0x1F;
+  $A398 B = 7; // 7 iterations
+  $A39A DE = 32; // stride
+  $A39D HL = $8020;
+  $A3A0 do < if (A == *HL) goto found;
+  $A3A3 HL += DE;
+  $A3A4 > while (--B);
+  $A3A6 POP BC
+  $A3A7 goto exit;
 
-; ------------------------------------------------------------------------------
-
-U $A3A9 unused_A3A9
+U $A3A9,1 unused_A3A9
 D $A3A9 Unreferenced byte.
 
 ; ------------------------------------------------------------------------------
@@ -4712,7 +4722,7 @@ D $C47E Run through all visible characters, resetting them.
   $C4C1 C = A;
   $C4C2 if (C <= E || C > MIN(E + 42, 255)) goto reset;
   $C4C6 goto pop_next;
- ;
+;
   $C4CF reset: POP HL
   $C4D0 PUSH HL
   $C4D1 PUSH DE
