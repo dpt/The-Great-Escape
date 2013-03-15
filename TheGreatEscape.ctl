@@ -3040,7 +3040,7 @@ D $9EE4 7 structs, 3 wide. maps bytes to offsets.
 ; ------------------------------------------------------------------------------
 
 b $9F15 byte_9F15
-D $9F15 (<- in_permitted_area)
+D $9F15,12,4 three groups of four (<- in_permitted_area) possibly (un)permitted area bounds
 
 ; ------------------------------------------------------------------------------
 
