@@ -4062,6 +4062,28 @@ D $B2FA Not found.
 ; ------------------------------------------------------------------------------
 
 c $B2FC resetty
+D $B2FC Resets ... something.
+  $B2FC HL = $8000;
+  $B2FF reset_something();
+;
+  $B302 HL = $8018;
+  $B305 A = *HL++;
+  $B307 C = *HL;
+  $B308 divide_AC_by_8();
+  $B30B map_position_maybe[0] = A - 11;
+;
+  $B310 HL++;
+  $B311 A = *HL++;
+  $B313 C = *HL;
+  $B314 divide_AC_by_8();
+  $B317 map_position_maybe[1] = A - 6;
+;
+  $B31C indoor_room_index = room_NONE;
+  $B320 sub_A7C9();
+  $B323 sub_A8A2();
+  $B326 setup_movable_items();
+  $B329 zoombox();
+  $B32C return;
 
 ; ------------------------------------------------------------------------------
 
