@@ -1359,25 +1359,93 @@ D $7B44 Locate the empty item slot.
 ; ------------------------------------------------------------------------------
 
 c $7B8B drop_item
-  $7B8B A = (items_held)
+  $7B8B A = items_held[0];
   $7B8E if (A == item_NONE) return;
   $7B91 if (A == item_UNIFORM) $8015 = sprite_prisoner_tl_4;
-  $7B9C ...
-  $7B9D HL = items_held + 1 (item slot B)
-  $7BA0 A = (HL)
-  $7BA1 (HL) = item_NONE;
-  $7BA3 HL--;
-  $7BA4 (HL) = item_NONE;
+  $7B9C PUSH AF
+D $7B9D Shuffle items down.
+  $7B9D HL = &items_held[1];  // item slot B
+  $7BA0 A = *HL;
+  $7BA1 *HL-- = item_NONE;
+  $7BA4 *HL = A;
   $7BA5 draw_all_items();
   $7BA8 play_speaker(sound_DROP_ITEM);
   $7BAE choose_game_screen_attributes();
   $7BB1 set_game_screen_attributes();
-  $7BB4 ...
-  $7BB5 box_opening_maybe:
-  $7BB8 ...
-  $7BE3 return;
-  $7BE4 ...
-  $7C25 return;
+  $7BB4 POP AF
+;
+; looks like it's converting character position + offset into object position + offset by dividing
+  $7BB5 box_opening_maybe: item_to_itemstruct();
+  $7BB8 HL++;
+  $7BB9 A = indoor_room_index;
+  $7BBC *HL = A; // set object's room index
+  $7BBD if (A == 0) { // outdoors
+  $7BC0 HL++;
+  $7BC1 PUSH HL
+  $7BC2 HL += 2;
+  $7BC4 POP DE
+  $7BC5 HL = $800F;
+  $7BC8 divide_3xAC_by_8_with_rounding();
+  $7BCB DE--;
+  $7BCC *DE = 0;
+  $7BCF EX DE,HL
+;
+; This entry point is used by the routine at #R$CD31.
+  $7BD0 HL--;
+  $7BD1 A = 64 + *HL--;
+  $7BD5 A -= *HL;
+  $7BD6 A *= 2;
+  $7BD7 C = A;
+  $7BD8 A = 0 - *HL++;
+  $7BDB A -= *HL++;
+  $7BDD A -= *HL++;
+  $7BDE B = A;
+  $7BE0 *HL++ = C;
+  $7BE2 *HL = B;
+  $7BE3 return; }
+
+  $7BE4 else { HL++; // indoors
+  $7BE5 DE = $800F;
+  $7BE8 *HL++ = *DE;
+  $7BEB DE += 2;
+  $7BED *HL++ = *DE;
+  $7BF0 *HL = 5;
+;
+;; This entry point is used by the routine at #R$CD31.
+  $7BF2 HL--;
+  $7BF3 DE = 512 + *HL;
+  $7BF6 EX DE,HL
+  $7BF7 DE--;
+  $7BF8 A = *DE;
+  $7BF9 BC = A;
+  $7BFC AND A
+  $7BFD HL -= BC;
+  $7BFF HL *= 2;
+  $7C00 C = H;
+  $7C01 A = L;
+  $7C02 divide_AC_by_8_with_rounding();
+  $7C05 EX AF,AF'
+  $7C06 HL = 0x0800;
+  $7C0B A = *DE;
+  $7C0C BC = A;
+  $7C0D AND A
+  $7C0E HL -= BC;
+  $7C10 DE++;
+  $7C11 A = *DE;
+  $7C12 C = A;
+  $7C13 HL -= BC;
+  $7C15 DE++;
+  $7C16 A = *DE;
+  $7C17 C = A;
+  $7C18 HL -= BC;
+  $7C1A C = H;
+  $7C1B A = L;
+  $7C1C divide_AC_by_8_with_rounding();
+  $7C1F DE += 2;
+  $7C21 *DE-- = A;
+  $7C23 EX AF,AF'
+  $7C24 *DE = A;
+  $7C25 return; }
 
 ; ------------------------------------------------------------------------------
 
