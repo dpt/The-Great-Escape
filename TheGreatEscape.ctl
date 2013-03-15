@@ -4921,6 +4921,56 @@ c $C4E0 sub_C4E0
 ; -----------------------------------------------------------------------------
 
 c $C5D3 reset_object
+  $C5D3 A = *HL;
+  $C5D4 if (A == item_NONE) return; // might need character_NONE
+  $C5D7 if (A < character_26_stove1) goto $C602; // non-object character
+  $C5DC *HL++ = 0xFF;
+  $C5DF *HL = 0xFF;
+  $C5E1 HL += 6;
+  $C5E5 *HL = 0;
+  $C5E7 HL += 8;
+  $C5EB DE = &movable_items[0]; // stove1
+  $C5EE if (A == character_26_stove1) goto $C5FC;
+  $C5F2 DE = &movable_items[2]; // stove2
+  $C5F5 if (A == character_27_stove2) goto $C5FC;
+  $C5F9 DE = &movable_items[1]; // crate
+;
+  $C5FC memcpy(DE, HL, 6);
+  $C601 return;
+;
+  $C602 EX DE,HL
+  $C603 get_character_struct();
+  $C606 *HL &= ~(1<<6);
+  $C608 DE += 28;
+  $C60C A = *DE;
+  $C60D *++HL = A;
+  $C610 EX DE,HL
+  $C611 HL -= 21;
+  $C615 *HL = 0;
+  $C617 HL += 8;
+  $C61A DE++;
+  $C61C if (A == 0) {
+  $C61F divide_3xAC_by_8_with_rounding();
+  $C622 } else {
+;
+  $C624 B = 3;
+  $C626 do < *DE++ = *HL;
+  $C628 HL += 2;
+  $C62B > while (--B); }
+;
+  $C62D HL -= 21;
+  $C631 A = *HL;
+  $C632 *HL++ = 255;
+  $C635 *HL++ = 255;
+  $C638 if (A >= 16 && A < 20) {
+  $C640 *HL++ = 255;
+  $C643 *HL = 0;
+  $C645 if (A >= 18) *HL = 24;
+  $C64B HL--; }
+;
+  $C64C *DE++ = *HL++; BC--;
+  $C64E *DE++ = *HL++; BC--;
+  $C650 return;
 
 ; -----------------------------------------------------------------------------
 
