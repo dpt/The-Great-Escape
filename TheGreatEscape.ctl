@@ -5110,9 +5110,71 @@ D $CB92 Likely unreferenced bytes.
 ; ------------------------------------------------------------------------------
 
 c $CB98 solitary
-  $CC16 ...
+D $CB98 Silence bell.
+  $CB98 bell = 255;
+;
+D $CB9D Discover and lose held items.
+  $CB9D HL = &items_held[0];
+  $CBA0 C = *HL;
+  $CBA1 *HL = item_NONE;
+  $CBA2 item_discovered();
+  $CBA5 HL = &items_held[1];
+  $CBA8 C = *HL;
+  $CBA9 *HL = item_NONE;
+  $CBAB item_discovered();
+  $CBAE draw_all_items();
+;
+D $CBB1 Reset all items. [unsure]
+  $CBB1 B = 16; // all items
+  $CBB3 HL = &item_structs[0].room;
+;
+  $CBB6 do < PUSH BC
+  $CBB7 PUSH HL
+  $CBB8 A = *HL & 0x3F;
+  $CBBB JR NZ,$CBDC
+  $CBBD A = *--HL;
+  $CBBF HL += 2;
+  $CBC1 EX DE,HL
+  $CBC2 EX AF,AF'
+  $CBC3 A = 0;
+;
+  $CBC4 do < PUSH AF
+  $CBC5 PUSH DE
+  $CBC6 CALL $A01A // end of in_permitted_area
+  $CBC9 JR Z,$CBD5
+  $CBCB POP DE
+  $CBCC POP AF
+  $CBCD > while (++A != 3);
+  $CBD3 JR $CBDC
+
+  $CBD5 POP DE
+  $CBD6 POP AF
+  $CBD7 EX AF,AF'
+  $CBD8 C = A;
+  $CBD9 item_discovered();
+;
+  $CBDC POP HL
+  $CBDD POP BC
+  $CBDE HL += 7; // stride
+  $CBE2 > while (--B);
+;
+  $CBE4 $801C = room_24_solitary;
+  $CBE9 current_door = 20;
+  $CBEE decrease_morale(35);
+  $CBF3 reset_map_and_characters();
+  $CBF6 memcpy(&character_structs[0].secondbyte, &reset_data, 6);
+  $CC01 queue_message_for_display(message_YOU_ARE_IN_SOLITARY);
+  $CC06 queue_message_for_display(message_WAIT_FOR_RELEASE);
+  $CC0B queue_message_for_display(message_ANOTHER_DAY_DAWNS);
+  $CC10 morale_related = 255;
+  $CC15 morale_related_also = 0;
   $CC19 $8015 = sprite_prisoner_tl_4;
-  $CC1F ...
+  $CC1F HL = &byte_7AC6;
+  $CC22 IY = $8000;
+  $CC26 IY[14] = 3;
+  $CC2A A = 0;
+  $CC2B ($8002) = A;
+  $CC2E sub_68A2(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
