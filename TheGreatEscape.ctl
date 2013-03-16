@@ -4194,6 +4194,21 @@ c $B1F5 door_handling
 ; ------------------------------------------------------------------------------
 
 c $B252 sub_B252
+D $B252 (word_81A4, word_81A6) within (-3,+3) of HL[1..] scaled << 2
+R $B252 I:HL Pointer to (byte before) coord byte pair.
+R $B252 O:F  C/NC if match/nomatch.
+  $B252 A = HL[1];
+  $B254 -
+  $B255 rotate_A_left_2_widening_to_BC();
+  $B258 if (word_81A4 < BC - 3 || word_81A4 >= BC + 3) return; // with C set
+;
+  $B273 -
+  $B274 A = HL[2];
+  $B276 rotate_A_left_2_widening_to_BC();
+  $B279 -
+  $B27A if (word_81A6 < BC - 3 || word_81A6 >= BC + 3) return; // with C set
+;
+  $B294 return; // C not set
 
 ; ------------------------------------------------------------------------------
 
