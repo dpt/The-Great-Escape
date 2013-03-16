@@ -682,7 +682,7 @@ D $68A2 Looks like it's resetting stuff.
   $68B2 B = 3;
   $68B4 do < PUSH BC
   $68B5 A = *DE++;
-  $68B6 rotate_A_left_2_widening_to_BC();
+  $68B6 BC_becomes_A_times_4();
   $68B9 *HL++ = C;
   $68BB *HL++ = B;
   $68BE POP BC
@@ -4081,22 +4081,22 @@ D $B14C Outdoor bounds detection?
   $B158 do < PUSH BC
   $B159 PUSH DE
   $B15A A = *DE;
-  $B15B rotate_A_left_3_widening_to_BC();
+  $B15B BC_becomes_A_times_8();
   $B15E if (word_81A4 < BC + 2) goto next;
   $B167 A = *++DE;
-  $B169 rotate_A_left_3_widening_to_BC();
+  $B169 BC_becomes_A_times_8();
   $B16C if (word_81A4 >= BC + 4) goto next;
   $B177 A = *++DE;
-  $B179 rotate_A_left_3_widening_to_BC();
+  $B179 BC_becomes_A_times_8();
   $B17C if (word_81A6 < BC) goto next;
   $B183 A = *++DE;
-  $B185 rotate_A_left_3_widening_to_BC();
+  $B185 BC_becomes_A_times_8();
   $B188 if (word_81A6 >= BC + 4) goto next;
   $B193 A = *++DE;
-  $B195 rotate_A_left_3_widening_to_BC();
+  $B195 BC_becomes_A_times_8();
   $B198 if (word_81A8 < BC) goto next;
   $B19F A = *++DE;
-  $B1A1 rotate_A_left_3_widening_to_BC();
+  $B1A1 BC_becomes_A_times_8();
   $B1A4 if (word_81A8 >= BC + 2) goto next;
 D $B1AD Found it.
   $B1AD POP DE
@@ -4114,16 +4114,17 @@ D $B1AD Found it.
 
 ; ------------------------------------------------------------------------------
 
-c $B1C7 rotate_A_left_3_widening_to_BC
-R $B1C7 A Argument.
+c $B1C7 BC_becomes_A_times_8
+R $B1C7 A  Argument.
 R $B1C7 BC Result of (A << 3).
-  $B1C7 result = 0;
-  $B1C9 arg <<= 1;
-  $B1CA result = (result << 1) + carry;
-  $B1CC arg <<= 1;
-  $B1CD result = (result << 1) + carry;
-  $B1CF arg <<= 1;
-  $B1D0 result = (result << 1) + carry;
+  $B1C7 B = 0;
+  $B1C9 A <<= 1;
+  $B1CA B = (B << 1) + carry;
+  $B1CC A <<= 1;
+  $B1CD B = (B << 1) + carry;
+  $B1CF A <<= 1;
+  $B1D0 B = (B << 1) + carry;
+  $B1D2 C = A;
   $B1D3 return;
 
 ; ------------------------------------------------------------------------------
@@ -4199,12 +4200,12 @@ R $B252 I:HL Pointer to (byte before) coord byte pair.
 R $B252 O:F  C/NC if match/nomatch.
   $B252 A = HL[1];
   $B254 -
-  $B255 rotate_A_left_2_widening_to_BC();
+  $B255 BC_becomes_A_times_4();
   $B258 if (word_81A4 < BC - 3 || word_81A4 >= BC + 3) return; // with C set
 ;
   $B273 -
   $B274 A = HL[2];
-  $B276 rotate_A_left_2_widening_to_BC();
+  $B276 BC_becomes_A_times_4();
   $B279 -
   $B27A if (word_81A6 < BC - 3 || word_81A6 >= BC + 3) return; // with C set
 ;
@@ -4212,8 +4213,15 @@ R $B252 O:F  C/NC if match/nomatch.
 
 ; ------------------------------------------------------------------------------
 
-c $B295 rotate_A_left_2_widening_to_BC
-  $B295 BC = A << 2;
+c $B295 BC_becomes_A_times_4
+R $B295 A  Argument.
+R $B295 BC Result of (A << 2).
+  $B295 B = 0;
+  $B297 A <<= 1;
+  $B298 B = (B << 1) + carry;
+  $B29A A <<= 1;
+  $B29B B = (B << 1) + carry;
+  $B29D C = A;
   $B29E return;
 
 ; ------------------------------------------------------------------------------
@@ -5790,7 +5798,7 @@ c $DB9E called_from_main_loop_8
 ; ------------------------------------------------------------------------------
 
 c $DBEB sub_DBEB
-c $DBEB Uses rotate_A_left_3_widening_to_BC.
+c $DBEB Uses BC_becomes_A_times_8.
 
 ; ------------------------------------------------------------------------------
 
