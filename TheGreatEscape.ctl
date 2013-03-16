@@ -4490,6 +4490,63 @@ R $B4B8 I:A Room number the key is for.
 ; -----------------------------------------------------------------------------
 
 c $B4D0 open_door
+  $B4D0 if (indoor_room_index == 0) goto outdoors; else goto indoors;
+ 
+  $B4D9 outdoors: B = 5; // 5 iterations (they must overlap)
+  $B4DB HL = &gates_flags;
+ 
+  $B4DE do < A = *HL & 0x7F;
+  $B4E1 EXX
+  $B4E2 get_door_position();
+  $B4E5 PUSH HL
+  $B4E6 sub_B252();
+  $B4E9 POP HL
+  $B4EA if (NC) goto return_zero; // in range
+  $B4EC HL += 4;
+  $B4F0 sub_B252();
+  $B4F3 if (NC) goto return_zero; // in range
+  $B4F5 EXX
+  $B4F6 HL++;
+  $B4F7 > while (--B);
+  $B4F9 return;
+
+  $B4FA return_zero: EXX
+  $B4FB A = 0; // ok
+  $B4FC return;
+
+  $B4FD indoors: HL = &door_flags;
+  $B500 B = 8; // 8 iterations
+  $B502 do < C = *HL & 0x7F;
+D $B506 Search door_related for C.
+  $B506 DE = &door_related;
+  $B509 for (;;) < A = *DE;
+  $B50A if (A == 0xFF) goto next;
+  $B50E if ((A & 0x7F) == C) goto found;
+  $B513 DE++;
+  $B514 >
+  $B516 next: HL++;
+  $B517 > while (--B);
+  $B519 A |= 1; // not ok
+  $B51B return;
+
+  $B51C found: A = *DE;
+  $B51D EXX
+  $B51E get_door_position();
+  $B521 HL++;
+  $B522 EX DE,HL
+D $B523 Range check pattern (-3..+3).
+  $B523 HL = &word_81A4;
+  $B526 B = 2; // 2 iterations
+  $B528 do < if (*HL <= *DE - 3 || *HL > *DE + 3) goto exx_next;
+  $B533 HL += 2;
+  $B535 DE++;
+  $B536 > while (--B);
+  $B538 EXX
+  $B539 A = 0; // ok
+  $B53A return;
+
+  $B53B exx_next: EXX
+  $B53C goto next;
 
 ; ------------------------------------------------------------------------------
 
