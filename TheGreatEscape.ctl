@@ -1419,9 +1419,12 @@ D $7B9D Shuffle items down.
   $7BAE choose_game_screen_attributes();
   $7BB1 set_game_screen_attributes();
   $7BB4 POP AF
-;
+
+
 ; looks like it's converting character position + offset into object position + offset by dividing
-  $7BB5 box_opening_maybe: item_to_itemstruct();
+c $7BB5 drop_item_A
+R $7BB5 I:A Item.
+  $7BB5 item_to_itemstruct();
   $7BB8 HL++;
   $7BB9 A = indoor_room_index;
   $7BBC *HL = A; // set object's room index
@@ -4286,14 +4289,14 @@ D $B32D [unsure]
 
 c $B387 action_red_cross_parcel
 D $B387 Player has tried to open the red cross parcel.
-  $B387 ...
+  $B387 itemstruct_12.room = 0x3F; // room_NONE & 0x3F;
   $B38C HL = &items_held;
   $B38F A = item_RED_CROSS_PARCEL;
   $B391 if (*HL != A) HL++;
   $B395 *HL = item_NONE; // no longer have parcel (we assume one slot or the other has it)
   $B397 draw_all_items();
   $B39A A = red_cross_parcel_current_contents;
-  $B39D box_opening_maybe();
+  $B39D drop_item_A();
   $B3A0 queue_message_for_display(message_YOU_OPEN_THE_BOX);
   $B3A5 increase_morale_by_10_score_by_50(); return; // exit via
 
