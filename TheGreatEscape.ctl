@@ -4414,7 +4414,7 @@ c $B417 action_wiresnips
 
 c $B495 action_lockpick
   $B495 open_door();
-  $B498 if (NZ) return; 
+  $B498 if (NZ) return; // wrong door?
   $B499 ptr_to_door_being_lockpicked = HL;
   $B49C user_locked_out_until = game_counter + 0xFF;
   $B4A4 ($8001) = flag_PICKING_LOCK;
@@ -4423,18 +4423,42 @@ c $B495 action_lockpick
 ; -----------------------------------------------------------------------------
 
 c $B4AE action_red_key
+  $B4AE A = room_22_redkey;
+  $B4B0 goto action_key;
 
 ; -----------------------------------------------------------------------------
 
 c $B4B2 action_yellow_key
+  $B4B2 A = room_13_corridor;
+  $B4B4 goto action_key;
 
 ; -----------------------------------------------------------------------------
 
 c $B4B6 action_green_key
+  $B4B6 A = room_14_torch;
+
+; fallthrough
 
 ; -----------------------------------------------------------------------------
 
 c $B4B8 action_key
+D $B4B8 Common end of action_*_key routines.
+R $B4B8 I:A Room number the key is for.
+  $B4B8 PUSH AF
+  $B4B9 open_door();
+  $B4BC POP BC
+  $B4BD if (NZ) return; // wrong door?
+  $B4BE A = *HL & 0x7F; // mask off 'locked' flag?
+  $B4C1 if (A != B) {
+  $B4C2 B = message_INCORRECT_KEY;
+  $B4C4 } else {
+  $B4C6 *HL &= ~(1<<7); // clear the 'locked' flag ?
+  $B4C8 increase_morale_by_10_score_by_50();
+  $B4CB B = message_IT_IS_OPEN; }
+  
+  $B4CD qmsg: queue_message_for_display(B);
+
+; fallthrough
 
 ; -----------------------------------------------------------------------------
 
