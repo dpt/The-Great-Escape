@@ -3037,6 +3037,7 @@ D $9EE4 7 structs, 3 wide. maps bytes to offsets.
   $9EF0,3 byte_to_offset <44, byte_9F0E>
   $9EF3,3 byte_to_offset <43, byte_9F11>
   $9EF6,3 byte_to_offset <45, byte_9F13>
+D $9EF9 Data 0xFF terminated.
   $9EF9 byte_9EF9
   $9EFC byte_9EFC
   $9F01 byte_9F01
