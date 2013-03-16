@@ -390,6 +390,11 @@
 ; morale_MIN = 0x00
 ; morale_MAX = 0x70
 
+; ; $8001 flags
+; flag_PICKING_LOCK = 1<<0,
+; flag_CUTTING_WIRE = 1<<1
+
+
 ; //////////////////////////////////////////////////////////////////////////////
 ; GAME STATE
 ; //////////////////////////////////////////////////////////////////////////////
@@ -4408,6 +4413,12 @@ c $B417 action_wiresnips
 ; -----------------------------------------------------------------------------
 
 c $B495 action_lockpick
+  $B495 open_door();
+  $B498 if (NZ) return; 
+  $B499 ptr_to_door_being_lockpicked = HL;
+  $B49C user_locked_out_until = game_counter + 0xFF;
+  $B4A4 ($8001) = flag_PICKING_LOCK;
+  $B4A9 queue_message_for_display(message_PICKING_THE_LOCK);
 
 ; -----------------------------------------------------------------------------
 
