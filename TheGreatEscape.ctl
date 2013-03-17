@@ -3055,7 +3055,120 @@ D $9F15,12,4 three groups of four (<- in_permitted_area) possibly (un)permitted 
 
 c $9F21 in_permitted_area
 D $9F21 [unsure] -- could be as general as bounds detection
-  $A007 a second in_permitted_area entry point
+  $9F21 HL = $800F; // position on Y axis
+  $9F24 DE = &player_map_position_perhapsX;
+  $9F27 A = indoor_room_index;
+  $9F2A if (A == 0) { // outdoors
+  $9F2E divide_3xAC_by_8_with_rounding();
+  $9F31 if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped;
+  $9F47 } else {
+
+  $9F49 *DE++ = *HL++; // indoors
+  $9F4B HL++;
+  $9F4C *DE++ = *HL++;
+  $9F4E HL++;
+  $9F4F *DE++ = *HL++; }
+
+  $9F51 A = ($8001) & 3;
+  $9F56 if (A) goto set_flag_red;
+  $9F59 if (dispatch_counter >= 100) {
+  $9F60 if (indoor_room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }
+
+  $9F6B if (morale_related) goto set_flag_green;
+  $9F72 HL = $8002; // target location
+  $9F75 A = *HL++;
+  $9F77 C = *HL;
+  $9F78 if (A & (1<<7)) C++;
+  $9F7D if (A == 255) {
+  $9F81 A = *HL & 0xF8;
+  $9F84 if (A == 8) A = 1; else A = 2;
+  $9F8C in_permitted_area_end_bit();
+  $9F8F if (Z) goto set_flag_green; else goto set_flag_red; } else {
+
+  $9F93 A &= 0x7F;
+  $9F95 HL = &twentyonelong[0]; // table mapping bytes to offsets
+  $9F98 B = 7; // 7 iterations
+  $9F9A do < if (A == *HL++) goto found;
+  $9F9E HL += 2;
+  $9FA0 > while (--B);
+  $9FA2 goto set_flag_green; }
+
+  $9FA4 found: E = *HL++; // fetch offset
+  $9FA6 D = *HL;
+  $9FA7 PUSH DE
+  $9FA8 POP HL   // HL = DE;
+  $9FA9 B = 0;
+  $9FAB HL += BC;
+  $9FAC A = *HL;
+  $9FAD PUSH DE
+  $9FAE in_permitted_area_end_bit();
+  $9FB1 POP HL
+  $9FB2 JR Z,set_flag_green;
+
+  $9FB4 A = ($8002);
+  $9FB7 if (A & (1<<7)) HL++;
+  $9FBC BC = 0; // counter?
+  $9FBF for (;;) < PUSH BC
+  $9FC0 PUSH HL
+  $9FC1 HL += BC;
+  $9FC2 A = *HL;
+  $9FC3 if (A == 255) goto pop_and_set_flag_red; // hit end of list
+  $9FC7 in_permitted_area_end_bit();
+  $9FCA POP HL
+  $9FCB POP BC
+  $9FCC JR Z,set_target_then_set_flag_green;
+  $9FCE BC++;
+  $9FCF >
+
+  $9FD1 set_target_then_set_flag_green: B = ($8002);
+  $9FD5 set_target_location(); // uses B, C
+  $9FD8 goto set_flag_green;
+
+  $9FDA pop_and_set_flag_red: POP BC
+  $9FDB POP HL
+  $9FDC goto set_flag_red;
+
+D $9FDE Green flag code path.
+  $9FDE set_flag_green: A = 0; // naughty_flag
+  $9FDF C = attribute_BRIGHT_GREEN_OVER_BLACK;
+
+  $9FE1 flag_select: naughty_flag_perhaps = A;
+  $9FE4 A = C;
+  $9FE5 HL = $5842; // first morale flag attribute byte
+  $9FE8 if (A == *HL) return;
+  $9FEA if (A != attribute_BRIGHT_GREEN_OVER_BLACK) goto set_morale_flag_screen_attributes; // exit via
+  $9FEF bell = 255; // silence bell
+  $9FF4 A = C;
+  $9FF5 goto set_morale_flag_screen_attributes; // exit via
+
+D $9FF8 Red flag code path.
+  $9FF8 set_flag_red: C = attribute_BRIGHT_RED_OVER_BLACK;
+  $9FFA A = ($5842); // first morale flag attribute byte
+  $9FFD if (A == C) return; // flag already red
+  $9FFF ($800D) = 0; // "tunnel related" thing
+  $A003 A = 255; // naughty_flag
+  $A005 goto flag_select;
+
+; ------------------------------------------------------------------------------
+
+; is this the end of in_permitted_area or a separate routine?
+c $A007 in_permitted_area_end_bit
+  $A007 HL = indoor_room_index;
+  $A00A if (A & (1<<7)) return *HL == A & 0x7F; // return with flags
+;
+  $A012 if (*HL) return;
+  $A016 DE = &player_map_position_perhapsX;
+;
+; This entry point is used by the routine at #R$CB98.
+  $A01A HL = &byte_9F15[A * 4];
+  $A023 B = 2;
+  $A025 do < A = *DE++;
+  $A026 if (A < HL[0]) return; // return with flags ?? (presumably NZ is set)
+  $A028 if (A >= HL[1]) { A |= 1; return; } // return with flags NZ
+  $A030 HL += 2;
+  $A031 > while (--B);
+  $A033 A &= B;
+  $A034 return; // return with flags Z
 
 ; ------------------------------------------------------------------------------
 
