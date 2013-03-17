@@ -2951,7 +2951,7 @@ c $9E07 process_user_input
   $9E1A if ($8001 == 1) goto picking_a_lock;
   $9E1F wire_snipped(); return; // exit via
 ;
-  $9E22 not_picking_lock_or_cutting_wire: A = input_routine(); // lives at same address as counter_of_something
+  $9E22 not_picking_lock_or_cutting_wire: A = input_routine(); // lives at same address as plot_static_tiles_direction
   $9E25 HL = &morale_related_also;
   $9E2A if (A != input_NONE) goto user_input_super(HL);
   $9E2D if (morale_related_also == 0) return;
@@ -6519,7 +6519,7 @@ D $F06B,10,2 User-defined keys. Pairs of (port, key mask).
 
 ; ------------------------------------------------------------------------------
 
-b $F075 counter_of_something
+b $F075 plot_static_tiles_direction
 
 ; ------------------------------------------------------------------------------
 
@@ -6550,7 +6550,7 @@ c $F163 main
   $F167 wipe_full_screen_and_attributes();
   $F16A set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
   $F16F set_menu_item_attributes(attribute_YELLOW_OVER_BLACK);
-  $F174 plot_menu_text();
+  $F174 plot_statics_and_menu_text();
   $F177 plot_score();
   $F17A menu_screen();
   $F17D [unknown]
@@ -6564,23 +6564,44 @@ D $F1C9 main copies this somewhere
 
 ; ------------------------------------------------------------------------------
 
-c $F1E0 plot_menu_text
+c $F1E0 plot_statics_and_menu_text
+D $F1E0 Plot statics and menu text.
+  $F1E0 HL = &tile_refs_for_statics;
+  $F1E3 B = 18; // 18 iterations
+  $F1E5 do < PUSH BC
+  $F1E6 E = *HL++; // screen address
+  $F1E8 D = *HL++;
+  $F1EA if (*HL & (1<<7)) <
+  $F1EE plot_static_tiles_vertical();
+  $F1F1 > else <
+  $F1F3 plot_static_tiles_horizontal(); >
+  $F1F6 POP BC
+  $F1F7 > while (--B);
+;
+D $F1F9 Plot menu text.
+  $F1F9 B = 8; // 8 iterations
+  $F1FB HL = &key_choice_screenlocstrings;
+  $F1FE do < PUSH BC
+  $F1FF screenlocstring_plot();
+  $F202 POP BC
+  $F203 > while (--B);
+  $F205 return;
 
 ; ------------------------------------------------------------------------------
 
-c $F206 counter_set_0
-D $F206 Suspect this plots static screen tiles.
-R $F206 I:HL Pointer to tile indices?
+c $F206 plot_static_tiles_horizontal
+D $F206 Plot static screen tiles.
+R $F206 I:DE Pointer to screen address.
+R $F206 I:HL Pointer to tile indices.
 ;
   $F206 A = 0;
-  $F207 goto $F20B;
+  $F207 goto plot_static_tiles;
+
 ; This entry point is used by the routine at #R$F1E0.
-  $F209 A = 255;
+  $F209 plot_static_tiles_vertical: A = 255;
 ;
-  $F20B counter_of_something = A;
-  $F20E A = *HL & 0x7F;
-  $F211 B = A; // loop iterations
-  $F212 HL++;
+  $F20B plot_static_tiles: plot_static_tiles_direction = A;
+  $F20E B = *HL++ & 0x7F; // loop iterations
   $F213 PUSH DE
   $F214 EXX
   $F215 POP DE
@@ -6591,10 +6612,8 @@ R $F206 I:HL Pointer to tile indices?
   $F227 B = 8; // 8 iterations
 ;
 D $F229 Plot a tile.
-  $F229 do < A = *HL;
-  $F22A *DE = A;
-  $F22B DE += 256;
-  $F22C HL++;
+  $F229 do < *DE = *HL++;
+  $F22B DE += 256; // next row
   $F22D > while (--B);
   $F22F DE -= 256;
   $F230 PUSH DE
@@ -6606,14 +6625,12 @@ D $F231 Calculate screen attribute address of tile.
   $F239 if (A >= 0x50) D++;
   $F23E *DE = *HL; // copy attribute byte
   $F240 POP HL
-  $F241 A = counter_of_something;
-  $F244 if (A) goto $F24E;
+  $F241 A = plot_static_tiles_direction;
+  $F244 if (A == 0) < // horizontal
   $F247 H -= 7;  // HL -= 7*256;
   $F24B L++;
-  $F24C goto $F251;
-;
-  $F24E get_next_scanline();
-;
+  $F24C > else < // vertical
+  $F24E get_next_scanline(); >
   $F251 EX DE,HL
   $F252 EXX
   $F253 HL++;
