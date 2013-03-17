@@ -5014,7 +5014,7 @@ D $C47E Run through all visible characters, resetting them.
 ;
   $C4BA C = *--HL;
   $C4BC A = *--HL;
-  $C4BE divide_AC_by_8_with_rounding:$E555(); // without rounding
+  $C4BE divide_AC_by_8(); // without rounding
   $C4C1 C = A;
   $C4C2 if (C <= E || C > MIN(E + 42, 255)) goto reset;
   $C4C6 goto pop_next;
