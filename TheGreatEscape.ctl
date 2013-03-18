@@ -3322,15 +3322,15 @@ D $A10B Draws the current score to screen.
 ; ------------------------------------------------------------------------------
 
 c $A11D play_speaker
-R $A11D B Iterations.
-R $A11D C Delay.
-  $A11D
-  $A11E Self-modify delay loop at $A126.
-  $A121 Initial speaker bit.
-  $A123 do { Play.
-  $A127 while (delay--) ;
-  $A12A Toggle speaker bit.
-  $A12C } while (...);
+D $A11D Makes a sound through the speaker.
+R $A11D I:B Number of iterations to play for.
+R $A11D I:C Delay inbetween each iteration.
+  $A11D delay = C; // Self-modify delay loop at $A126.
+  $A121 A = 16; // Initial speaker bit.
+  $A123 do { OUT ($FE),A // Play.
+  $A127 C = delay; while (C--) ;
+  $A12A A ^= 16; // Toggle speaker bit.
+  $A12C } while (--B);
   $A12E return;
 
 ; ------------------------------------------------------------------------------
