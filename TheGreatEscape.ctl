@@ -3438,6 +3438,22 @@ D $A173 Array of 15 event structures.
 
 c $A1A0 dispatch_table_thing
 D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll calls.
+  $A1A0 HL = &dispatch_counter;
+  $A1A3 A = *HL + 1;
+  $A1A5 if (A == 140) A = 0;
+  $A1AA *HL = A;
+  $A1AB HL = &timed_events[0];
+  $A1AE B = 15; // 15 iterations
+  $A1B0 do < if (A == *HL++) goto found;
+  $A1B4 HL += 2;
+  $A1B6 > while (--B);
+  $A1B8 return;
+
+  $A1B9 found: L = *HL++;
+  $A1BB H = *HL;
+  $A1BD A = 40;
+  $A1BF BC = &bell;
+  $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
 
