@@ -3268,14 +3268,14 @@ D $A09E Called three times from main_loop.
 ; ------------------------------------------------------------------------------
 
 c $A0D2 increase_morale
-R $A0D2 B Amount to increase morale by. (Preserved)
+R $A0D2 I:B Amount to increase morale by. (Preserved)
   $A0D2 A = morale + B;
   $A0D6 if (A >= morale_MAX) A = morale_MAX;
   $A0DC set_morale_from_A: morale = A;
   $A0DF return;
 
 c $A0E0 decrease_morale
-R $A0E0 B Amount to decrease morale by. (Preserved)
+R $A0E0 I:B Amount to decrease morale by. (Preserved)
   $A0E0 A = morale - B;
   $A0E4 if (A < morale_MIN) A = morale_MIN;
   $A0E7 goto set_morale_from_A;
@@ -3294,7 +3294,7 @@ D $A0F2 Increase morale by 5, score by 5.
 
 c $A0F9 increase_score
 D $A0F9 Increases the score then plots it.
-R $A0F9 B Amount to increase score by.
+R $A0F9 I:B Amount to increase score by.
   $A0F9 A = 10;
   $A0FB HL = &score_digits + 4;
   $A0FE do { tmp = HL;
