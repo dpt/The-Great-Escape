@@ -1631,9 +1631,9 @@ R $7CD4 I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 c $7CE9 get_next_scanline
-D $A082 Given a screen address, returns the same position on the next scanline.
-R $A082 I:HL Original screen address.
-R $A082 O:HL Updated screen address.
+D $7CE9 Given a screen address, returns the same position on the next scanline.
+R $7CE9 I:HL Original screen address.
+R $7CE9 O:HL Updated screen address.
 ;
   $7CE9 HL += 256;
   $7CEA if ((H & 7) != 0) return;
