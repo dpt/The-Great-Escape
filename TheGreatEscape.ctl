@@ -3412,21 +3412,21 @@ R $A15F A Attribute byte.
 
 b $A173 timed_events
 D $A173 Array of 15 event structures.
-  $A173 {   0, #D$A1D3 }
-  $A176 {   8, #D$A1E7 }
-  $A179 {  12, #D$A228 }
-  $A17C {  16, #D$A1F0 }
-  $A17F {  20, #D$EF9A }
-  $A182 {  21, #D$A1F9 }
-  $A185 {  36, #D$A202 }
-  $A188 {  46, #D$A206 }
-  $A18B {  64, #D$A215 }
-  $A18E {  74, #D$A1F0 }
-  $A191 {  78, #D$EF9A }
-  $A194 {  79, #D$A219 }
-  $A197 {  98, #D$A264 }
-  $A19A { 100, #D$A1C3 }
-  $A19D { 130, #D$A26A }
+  $A173 {   0, event_another_day_dawns },
+  $A176 {   8, event_wake_up },
+  $A179 {  12, event_new_red_cross_parcel },
+  $A17C {  16, event_go_to_roll_call },
+  $A17F {  20, event_roll_call },
+  $A182 {  21, event_go_to_breakfast_time },
+  $A185 {  36, event_breakfast_time },
+  $A188 {  46, event_go_to_exercise_time },
+  $A18B {  64, event_exercise_time },
+  $A18E {  74, event_go_to_roll_call },
+  $A191 {  78, event_roll_call },
+  $A194 {  79, event_go_to_time_for_bed },
+  $A197 {  98, event_time_for_bed },
+  $A19A { 100, event_night_time },
+  $A19D { 130, event_search_light },
 
 ; ------------------------------------------------------------------------------
 
@@ -3450,31 +3450,106 @@ D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll
   $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
+  $A1C3 if (bed_related_perhaps == 0) set_target_location(location_2C01);
+  $A1CF A = $FF;
+  $A1D1 goto set_attrs;
 
 c $A1D3 event_another_day_dawns
+  $A1D3 queue_message_for_display(message_ANOTHER_DAY_DAWNS);
+  $A1D8 decrease_morale(25);
+  $A1DD A = 0;
+;
+; fallthrough
+;
+R $A1DE I:A 0/255 for day/night.
+  $A1DE set_attrs: day_or_night = A;
+  $A1E1 choose_game_screen_attributes();
+  $A1E4 set_game_screen_attributes(); return; // exit via
 
 c $A1E7 event_wake_up
+  $A1E7 (BC) = A; // bell = 40;
+  $A1E8 queue_message_for_display(message_TIME_TO_WAKE_UP);
+  $A1ED sub_A289(); return; // exit via
 
 c $A1F0 event_go_to_roll_call
+  $A1F0 (BC) = A; // bell = 40;
+  $A1F1 queue_message_for_display(message_ROLL_CALL);
+  $A1F6 sub_A4FD(); return; // exit via
 
 c $A1F9 event_go_to_breakfast_time
+  $A1F9 (BC) = A; // bell = 40;
+  $A1FA queue_message_for_display(message_BREAKFAST_TIME);
+  $A1FF set_location_0x1000(); return; // exit via
 
 c $A202 event_breakfast_time
+  $A202 (BC) = A; // bell = 40;
+  $A203 sub_A2E2(); return; // exit via
 
 c $A206 event_go_to_exercise_time
+  $A206 (BC) = A; // bell = 40;
+  $A207 queue_message_for_display(message_EXERCISE_TIME);
+  $A20C gates_and_doors[0] = 0x00; gates_and_doors[1] = 0x01; // unlock the gates
+  $A212 set_location_0xE00(); return; // exit via
 
 c $A215 event_exercise_time
+  $A215 (BC) = A; // bell = 40;
+  $A216 set_location_0x8E04(); return; // exit via
 
 c $A219 event_go_to_time_for_bed
+  $A219 (BC) = A; // bell = 40;
+  $A21A gates_and_doors[0] = 0x80; gates_and_doors[1] = 0x81; // lock the gates
+  $A220 queue_message_for_display(message_TIME_FOR_BED);
+  $A225 sub_A351(); return; // exit via
 
 c $A228 event_new_red_cross_parcel
-B $A259 sixlong [it's something like: data to set the parcel object up]
-B $A25F red_cross_parcel_contents_list (purse, wiresnips, bribe, compass)
+ c$A228 A = itemstruct_12.room & 0x3F;
+  $A22D if (A != 0x3F) return;
+  $A230 DE = &red_cross_parcel_contents_list[0];
+  $A233 B = 4; // length of above
+  $A235 do { A = *DE;
+  $A236 item_to_itemstruct();
+  $A239 HL++;
+  $A23A if ((*HL & 0x3F) == 0x3F) goto found;
+  $A241 DE++;
+  $A242 } while (--B);
+  $A244 return;
+
+  $A245 found: red_cross_parcel_current_contents = *DE;
+  $A249 memcpy(&itemstruct_12.room, red_cross_parcel_reset_data, 6);
+  $A254 queue_message_for_display(message_RED_CROSS_PARCEL); return; // exit via
+
+B $A259 red_cross_parcel_reset_data
+D $A259 Data to set the parcel object up (room, y, x, ...).
+
+B $A25F red_cross_parcel_contents_list
+D $A25F { item_PURSE, item_WIRESNIPS, item_BRIBE, item_COMPASS }
+
 B $A263 red_cross_parcel_current_contents
 
 c $A264 event_time_for_bed
+  $A264 A = $A6;
+  $A266 C = 3;
+  $A268 goto $A26E;
 
 c $A26A event_search_light
+  $A26A A = $26;
+  $A26C C = 0;
+;
+; fallthrough
+;
+
+  $A26E EX AF,AF'
+  $A26F Adash = $0C;
+  $A271 B = 4; // 4 iterations
+  $A273 do { PUSH AF
+  $A274 sub_A38C();
+  $A277 POP AF
+  $A278 Adash++;
+  $A279 EX AF,AF'
+  $A27A A++;
+  $A27B EX AF,AF'
+  $A27C } while (--B);
+  $A27E return;
 
 ; ------------------------------------------------------------------------------
 
@@ -3484,6 +3559,7 @@ D $A27F [unsure] (<- sub_A35F, sub_A373)
 ; ------------------------------------------------------------------------------
 
 c $A289 sub_A289
+D $A289 Called by event_wake_up.
 
 ; ------------------------------------------------------------------------------
 
