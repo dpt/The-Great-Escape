@@ -170,6 +170,7 @@
 ; item_RADIO = 13
 ; item_PURSE = 14
 ; item_COMPASS = 15
+; item__LIMIT = 16
 ; item_NONE = 255
 
 ; ; enum zoombox_tiles
@@ -1556,36 +1557,35 @@ c $7C82 find_nearby_item
 D $7C82 Returns an item within range of the player.
 R $7C82 O:AF Z set if item found.
 R $7C82 O:HL If found, pointer to item.
-; looks like C is a pick up radius
+;
+D $7C82 Select a pick up radius.
   $7C82 C = 1; // outside
-  $7C84 if (indoor_room_index) C = 6;
-  $7C8C B = 16; // 16 iterations
+  $7C84 if (indoor_room_index) C = 6; // inside
+  $7C8C B = item__LIMIT; // 16 iterations
   $7C8E HL = &itemstruct_0.room;
   $7C91 do < if ((*HL & (1<<7)) == 0) goto next; // item is not anywhere
   $7C95 PUSH BC
   $7C96 PUSH HL
   $7C97 HL++;
   $7C98 DE = &player_map_position_perhapsX;
-  $7C9B B = 2;
-; range check
-  $7C9D do < A = *DE - C;
-  $7C9F if (A >= *HL) goto popnext;
-  $7CA2 A += C * 2;
-  $7CA4 if (A < *HL) goto popnext;
+  $7C9B B = 2; // 2 iterations
+D $7C9D Range check.
+  $7C9D do < A = *DE++;
+  $7C9F if (A - C >= *HL || A + C < *HL) goto popnext;
   $7CA7 HL++;
-  $7CA8 DE++;
   $7CA9 > while (--B);
   $7CAB POP HL
   $7CAC HL--; // compensate for overshoot
   $7CAD POP BC
   $7CAE A = 0; // set Z (found)
-  $7CAF return; // (oddly written as RET Z, there's no need for it to be conditional)
+D $7CAF The next instruction is written as RET Z but there's no need for it to be conditional.
+  $7CAF return;
 
   $7CB0 popnext: POP HL
   $7CB1 POP BC
   $7CB2 next: HL += 7; // stride
   $7CB9 > while (--B);
-  $7CBB A |= 1; // set NZ
+  $7CBB A |= 1; // set NZ (not found)
   $7CBD return;
 
 ; ------------------------------------------------------------------------------
