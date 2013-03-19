@@ -1599,12 +1599,8 @@ R $7CBE I:BC Dimensions (w x h, where w is in bytes).
   $7CBE A = B;
   $7CBF (loopcounter + 1) = A;   // self modifying
   $7CC2 do { loopcounter: B = 3; // modified
-  $7CC4 PUSH HL
-  $7CC5 do { A = *DE;
-  $7CC6 *HL++ = A;
-  $7CC8 DE++;
-  $7CC9 } while (--B);
-  $7CCB POP HL
+  $7CC4 dst = HL;
+  $7CC5 do { *dst++ = *DE++; } while (--B);
   $7CCC get_next_scanline();
   $7CCF } while (--C);
   $7CD3 return;
@@ -1620,10 +1616,8 @@ R $7CD4 I:HL Destination address.
   $7CD4 A = B;
   $7CD5 (loopcounter + 1) = A;   // self modifying
   $7CD8 do { loopcounter: B = 2; // modified
-  $7CDA PUSH HL
-  $7CDB do { *HL++ = 0;
-  $7CDE } while (--B);
-  $7CE0 POP HL
+  $7CDA dst = HL;
+  $7CDB do { *dst++ = 0; } while (--B);
   $7CE1 get_next_scanline();
   $7CE4 } while (--C);
   $7CE8 return;
