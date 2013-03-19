@@ -703,7 +703,7 @@ D $68A2 Looks like it's resetting stuff.
   $68E4 HL += 12;
   $68E8 *HL++ = 128;
   $68EB *HL &= 3;
-  $68EF resetty();
+  $68EF resetty1();
   $68F2 goto exit;
 
 ; This entry point is used by the routines at #R$9D78, #R$9DE5 and #R$B75A.
@@ -712,8 +712,8 @@ D $68A2 Looks like it's resetting stuff.
   $68FD plot_indoor_tiles();
   $6900 map_position_maybe = 0xEA74;
   $6906 tunnel_related();
-  $6909 HL = $8000; // redundant? (resetty sets HL to $8000 as its first instruction)
-  $690C resetty();
+  $6909 HL = $8000; // redundant? (reset_something sets HL to $8000 as its first instruction)
+  $690C reset_something();
   $690F setup_movable_items();
   $6912 zoombox();
   $6915 increase_score(1);
@@ -4402,7 +4402,7 @@ D $B2FA Not found.
 
 ; ------------------------------------------------------------------------------
 
-c $B2FC resetty
+c $B2FC resetty1
 D $B2FC Resets ... something.
   $B2FC HL = $8000;
   $B2FF reset_something();
@@ -4746,7 +4746,7 @@ w $B839 word_B839
 
 ; -----------------------------------------------------------------------------
 
-c $B83B resetty
+c $B83B resetty2
 
 ; -----------------------------------------------------------------------------
 
