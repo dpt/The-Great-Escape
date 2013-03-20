@@ -680,7 +680,7 @@ D $68A2 Looks like it's resetting stuff.
   $68A8 L = A + 15;
   $68AB A = IY[28];
   $68AE if (A == 0) {
-  $68B2 B = 3;
+  $68B2 B = 3; // 3 iterations
   $68B4 do { PUSH BC
   $68B5 A = *DE++;
   $68B6 BC_becomes_A_times_4();
@@ -689,7 +689,7 @@ D $68A2 Looks like it's resetting stuff.
   $68BE POP BC
   $68BF } while (--B);
   $68C1 } else {
-  $68C3 B = 3;
+  $68C3 B = 3; // 3 iterations
   $68C5 do { *HL++ = *DE++;
   $68C8 *HL++ = 0;
   $68CC } while (--B); }
