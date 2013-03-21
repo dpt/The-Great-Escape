@@ -3560,6 +3560,53 @@ D $A27F [unsure] (<- sub_A35F, sub_A373)
 
 c $A289 sub_A289
 D $A289 Called by event_wake_up.
+  $A289 A = player_in_bed;
+  $A28C if (A == 0) goto $A299; // odd that this jumps into a point which sets player_in_bed to zero when it's already zero
+  $A290 HL = $800F; // player's Y position
+  $A293 *HL = 0x2E;
+  $A295 HL += 2; // player's X position
+  $A297 *HL = 0x2E;
+;
+  $A299 player_in_bed = 0;
+  $A29D set_target_location(location_2A00);
+  $A2A3 HL = &characterstruct_20.room;
+  $A2A6 DE = 7; // characterstruct stride
+;
+  $A2A9 A = room_3_hut2right;
+  $A2AB B = 3; // 3 iterations
+  $A2AD do { *HL = A;
+  $A2AE HL += DE;
+  $A2AF } while (--B);
+;
+  $A2B1 A = room_5_hut3right;
+  $A2B3 B = 3; // 3 iterations
+  $A2B5 do { *HL = A;
+  $A2B6 HL += DE;
+  $A2B7 } while (--B);
+;
+  $A2B9 A = 5; // incremented by sub_A373
+  $A2BB EX AF,AF'
+  $A2BC C = 0; // BC = 0
+  $A2BE sub_A373();
+;
+D $A2C1 Update all the bed objects to be empty.
+  $A2C1 A = interiorobject_EMPTY_BED;
+  $A2C3 HL = &beds[0];
+D $A2C6 7 iterations BUT only six beds in the data structure. Likely bug resulting in write to $1A42.
+  $A2C6 B = 7; // 7 iterations
+  $A2C8 do { E = *HL++;
+  $A2CA D = *HL++;
+  $A2CC *DE = A;
+  $A2CD } while (--B);
+;
+D $A2CF Update the player's bed object to be empty.
+  $A2CF room2_hut2_left.bed = A;
+;
+  $A2D3 A = indoor_room_index;
+  $A2D6 if (A == 0 || A >= room_6_corridor) return;
+  $A2DB select_room_maybe();
+  $A2DE plot_indoor_tiles();
+  $A2E1 return;
 
 ; ------------------------------------------------------------------------------
 
