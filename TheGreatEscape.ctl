@@ -1950,7 +1950,7 @@ D $81BD (<- nighttime, something_then_decrease_morale)
 
 ; ------------------------------------------------------------------------------
 
-b $81BE first_word_of_room_structure
+b $81BE first_byte_of_room_structure
 D $81BE [unsure]
 
 ; ------------------------------------------------------------------------------
