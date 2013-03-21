@@ -2960,12 +2960,12 @@ R $9E34 I:HL Points to ?
   $9E34 *HL = 31;
   $9E36 ... (push af) ...
   $9E37 if (player_in_bed != 0) goto user_input_was_in_bed_perhaps;
-  $9E3D if (breakfast_related != 0) goto user_input_was_having_breakfast_perhaps;
+  $9E3D if (player_in_breakfast != 0) goto user_input_was_having_breakfast_perhaps;
   $9E43 (word) $8002 = 0x002B; // ?
   $9E49 (word) $800F = 0x0034; // set Y pos
   $9E4E (word) $8011 = 0x003E; // set X pos
   $9E52 bench_G = interiorobject_EMPTY_BENCH;
-  $9E57 HL = breakfast_related;
+  $9E57 HL = player_in_breakfast;
   $9E5A goto user_input_another_entry_point;
 
 ; ------------------------------------------------------------------------------
@@ -3348,7 +3348,7 @@ b $A132 score_digits
 
 ; ------------------------------------------------------------------------------
 
-b $A137 breakfast_related
+b $A137 player_in_breakfast
 
 ; ------------------------------------------------------------------------------
 
@@ -3612,12 +3612,12 @@ D $A2CF Update the player's bed object to be empty.
 ; ------------------------------------------------------------------------------
 
 c $A2E2 sub_A2E2
-  $A2E2 A = breakfast_related;
+  $A2E2 A = player_in_breakfast;
   $A2E5 A &= A;
   $A2E6 if (A) {
   $A2E9 $800F = 52; // player Y position
   $A2EE $8011 = 62; } // player X position
-  $A2F2 breakfast_related = 0;
+  $A2F2 player_in_breakfast = 0;
   $A2F6 set_target_location(location_9003);
   $A2FC HL = $769F; // &characterstruct_20 + 1; // point to room refs?
   $A2FF DE = 7; // stride
