@@ -5359,6 +5359,46 @@ c $C5D3 reset_object
 ; -----------------------------------------------------------------------------
 
 c $C651 sub_C651
+  $C651 A = *HL;
+  $C652 if (A == 255) {
+  $C656 A = *++HL & 0xF8;
+  $C65A *HL = A;
+  $C65B get_A_indexed_by_C41A();
+  $C65E A &= 7;
+  $C660 A += *HL;
+  $C661 *HL = A; }
+
+  $C664 else { PUSH HL
+  $C665 C = *++HL;
+  $C667 element_A_of_table_7738();
+  $C66A H = 0;
+  $C66C A = C;
+  $C66D if (A == 255) H--;
+  $C672 L = A;
+  $C673 HL += DE;
+  $C674 EX DE,HL
+  $C675 A = *DE;
+  $C676 CP 255 // if (A == 255)
+  $C678 POP HL // interleaved
+  $C679 JR Z,$C69D
+  $C67B A &= 0x7F;
+  $C67D if (A < 40) {
+  $C681 A = *DE;
+  $C682 if (*HL & (1<<7)) A ^= 0x80;
+  $C688 sub_68A2();
+  $C68B HL++;
+  $C68C A = 128;
+  $C68E return; }
+
+  $C68F A = *DE - 40; }
+
+  $C692 HL = byte_783A + A * 2; // is table words?
+
+  $C69B A = 0;
+  $C69C return;
+
+  $C69D A = 255;
+  $C69F return;
 
 ; -----------------------------------------------------------------------------
 
