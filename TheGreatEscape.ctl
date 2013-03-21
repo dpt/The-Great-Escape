@@ -3503,7 +3503,7 @@ c $A219 event_go_to_time_for_bed
   $A225 sub_A351(); return; // exit via
 
 c $A228 event_new_red_cross_parcel
- c$A228 A = itemstruct_12.room & 0x3F;
+  $A228 A = itemstruct_12.room & 0x3F;
   $A22D if (A != 0x3F) return;
   $A230 DE = &red_cross_parcel_contents_list[0];
   $A233 B = 4; // length of above
