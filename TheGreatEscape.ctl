@@ -3781,8 +3781,27 @@ D $A462 (common end of above two routines)
 ; ------------------------------------------------------------------------------
 
 c $A47F player_sits
-  $A489 player_sleeps
+  $A47F room25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
+  $A484 HL = &player_in_breakfast;
+  $A487 goto player_sits_sleeps_end;
+
+c $A489 player_sleeps
+  $A489 room2_hut2_left.bed = interiorobject_OCCUPIED_BED;
+  $A48E HL = &player_in_bed;
+
 D $A491 (common end of the above two routines)
+  $A491 player_sits_sleeps_end: *HL = 0xFF; // set in breakfast, or in bed
+  $A493 A = 0;
+  $A494 $8002 = A; // target location? bottom byte only?
+;
+D $A498 Set player position to zero.
+  $A498 HL = $800F;
+  $A49B B = 4; // 4 iterations
+  $A49D do { *HL++ = A;
+  $A49F } while (--B);
+  $A4A1 HL = $8000;
+  $A4A4 reset_something();
+  $A4A7 goto select_room_and_plot;
 
 ; ------------------------------------------------------------------------------
 
