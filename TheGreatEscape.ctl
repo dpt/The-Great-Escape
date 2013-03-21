@@ -2959,7 +2959,7 @@ c $9E34 user_input_super
 R $9E34 I:HL Points to ?
   $9E34 *HL = 31;
   $9E36 ... (push af) ...
-  $9E37 if (bed_related != 0) goto user_input_was_in_bed_perhaps;
+  $9E37 if (player_in_bed != 0) goto user_input_was_in_bed_perhaps;
   $9E3D if (breakfast_related != 0) goto user_input_was_having_breakfast_perhaps;
   $9E43 (word) $8002 = 0x002B; // ?
   $9E49 (word) $800F = 0x0034; // set Y pos
@@ -2977,7 +2977,7 @@ c $9E5C user_input_was_in_bed_perhaps
   $9E6D (word) $8011 = 0x002E; // set X pos
   $9E70 $8013 = 24; // set vertical offset
   $9E75 player_bed = interiorobject_EMPTY_BED;
-  $9E7A HL = &bed_related;
+  $9E7A HL = &player_in_bed;
 ;
   $9E7D user_input_another_entry_point: *HL = 0;
   $9E7F select_room_maybe();
@@ -3370,7 +3370,7 @@ b $A13E byte_A13E
 
 ; ------------------------------------------------------------------------------
 
-b $A13F bed_related_perhaps
+b $A13F player_in_bed
 
 ; ------------------------------------------------------------------------------
 
@@ -3450,7 +3450,7 @@ D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll
   $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
-  $A1C3 if (bed_related_perhaps == 0) set_target_location(location_2C01);
+  $A1C3 if (player_in_bed == 0) set_target_location(location_2C01);
   $A1CF A = $FF;
   $A1D1 goto set_attrs;
 
