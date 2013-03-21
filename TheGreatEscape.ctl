@@ -77,8 +77,8 @@
 ; character_21_prisoner = 21            ; prisoner who sits at bench position A
 ; character_22_prisoner = 22            ; prisoner who sits at bench position B
 ; character_23_prisoner = 23            ; prisoner who sits at bench position C
-; character_24 = 24                     ; ?
-; character_25 = 25                     ; ?
+; character_24 = 24                     ; breakfast guard?
+; character_25 = 25                     ; breakfast guard?
 ; Non-character characters start here.
 ; character_26_stove1 = 26              ; stove1
 ; character_27_stove2 = 27              ; stove2
