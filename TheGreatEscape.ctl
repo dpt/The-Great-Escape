@@ -3925,6 +3925,16 @@ c $A5A3 do_we_have_objects: if (A == item_COMPASS) { A = 1; return; } // have co
 ; ------------------------------------------------------------------------------
 
 c $A5BF screenlocstring_plot
+R $A5BF I:HL Pointer to screenlocstring.
+  $A5BF E = *HL++; // read loc into DE
+  $A5C1 D = *HL++;
+  $A5C3 B = *HL++; // iterations
+  $A5C5 do { PUSH BC
+  $A5C6 plot_glyph();
+  $A5C9 HL++;
+  $A5CA POP BC
+  $A5CB } while (--B);
+  $A5CD return;
 
 ; ------------------------------------------------------------------------------
 
