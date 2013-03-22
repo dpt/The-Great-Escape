@@ -3907,12 +3907,20 @@ R $A58C O:A Pressed key.
 ; ------------------------------------------------------------------------------
 
 c $A59C do_we_have_required_objects_for_escape
-R $A59C HL (single) item slot
-R $A59C C previous return value
-  $A5A3 do_we_have_compass
-  $A5AA do_we_have_papers
-  $A5B1 do_we_have_purse
-  $A5B8 do_we_have_uniform
+R $A59C I:HL Pointer to (single) item slot.
+R $A59C I:C  Previous return value.
+R $A59C O:C  Previous return value + 0/1/2/4/8.
+  $A59C A = *HL;
+  $A59D do_we_have_objects();
+  $A5A0 C += A;
+  $A5A2 return;
+ 
+c $A5A3 do_we_have_objects: if (A == item_COMPASS) { A = 1; return; } // have compass
+  $A5AA if (A == item_PAPERS)  { A = 2; return; } // have papers
+  $A5B1 if (A == item_PURSE)   { A = 4; return; } // have purse
+  $A5B8 if (A == item_UNIFORM) { A = 8; return; } // have uniform
+  $A5BD A = 0; // have no required objects
+  $A5BE return;
 
 ; ------------------------------------------------------------------------------
 
