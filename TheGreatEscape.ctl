@@ -3835,8 +3835,13 @@ c $A4FD sub_A4FD
 ; ------------------------------------------------------------------------------
 
 c $A50B screen_reset
-D $A50B [unsure]
-
+  $A50B wipe_visible_tiles();
+  $A50E plot_indoor_tiles();
+  $A511 zoombox();
+  $A514 plot_game_screen();
+  $A517 A = attribute_WHITE_OVER_BLACK;
+  $A519 set_game_screen_attributes(); return; // exit via
+  
 ; ------------------------------------------------------------------------------
 
 c $A51C escaped
