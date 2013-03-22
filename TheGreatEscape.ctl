@@ -3894,6 +3894,15 @@ D $A51C Print 'well done' message then test to see if the right objects were use
 ; ------------------------------------------------------------------------------
 
 c $A58C keyscan_all
+R $A58C O:A Pressed key.
+  $A58C BC = $FEFE;
+  $A58F do { IN A,(C)
+  $A591 A = ~A & 0x1F;
+  $A594 if (A) return;
+  $A595 RLC B
+  $A597 } while (CARRY);
+  $A59A A = 0;
+  $A59B return;
 
 ; ------------------------------------------------------------------------------
 
