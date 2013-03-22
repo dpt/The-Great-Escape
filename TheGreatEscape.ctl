@@ -3845,6 +3845,51 @@ c $A50B screen_reset
 ; ------------------------------------------------------------------------------
 
 c $A51C escaped
+D $A51C Print 'well done' message then test to see if the right objects were used in the escape attempt.
+  $A51C screen_reset();
+  $A51F HL = &screenlocstring_well_done;
+  $A522 screenlocstring_plot(); // WELL DONE
+  $A525 screenlocstring_plot(); // YOU HAVE ESCAPED
+  $A528 screenlocstring_plot(); // FROM THE CAMP
+  $A52B C = 0; // preserve A
+  $A52D HL = &items_held[0];
+  $A530 do_we_have_required_objects_for_escape();
+  $A533 HL++; // &items_held[1];
+  $A534 do_we_have_required_objects_for_escape();
+  $A537 A = C;
+  $A538 if (A == 5) goto success; // 1 + 4 == compass + purse
+  $A53C else if (A != 3) goto captured; // 1 + 2 == compass + papers
+; fallthrough
+
+  $A540 success: HL = &screenlocstring_and_will_cross_the;
+  $A543 screenlocstring_plot(); // AND WILL CROSS THE
+  $A546 screenlocstring_plot(); // BORDER SUCCESSFULLY
+  $A549 A = 0xFF; // success flag
+  $A54B PUSH AF
+  $A54C goto press_any_key;
+
+  $A54E captured: PUSH AF
+  $A54F HL = &screenlocstring_but_were_recaptured;
+  $A552 screenlocstring_plot(); // BUT WERE RECAPTURED
+  $A555 POP AF
+  $A556 PUSH AF
+  $A557 if (A >= 8) goto plot; // at least a uniform => 'but were recaptured'
+  $A55B HL = &screenlocstring_totally_unprepared;
+  $A55E if (A == 0) goto plot; // no objects => 'totally unprepared'
+  $A561 HL = &screenlocstring_totally_lost;
+  $A564 if ((A & (1<<0)) == 0) goto plot; // no compass => 'totally lost'
+  $A568 HL = &screenlocstring_due_to_lack_of_papers;
+;
+  $A56B plot: screenlocstring_plot();
+;
+  $A56E press_any_key: HL = &screenlocstring_press_any_key;
+  $A571 screenlocstring_plot(); // PRESS ANY KEY
+  $A574 do { keyscan_all(); } while (NZ); // wait for up-down keypress?
+  $A579 do { keyscan_all(); } while (Z);
+  $A57E POP AF
+  $A57F if (A == 0xFF) looks_like_a_reset_fn(); return; // exit via
+  $A584 if (A >= 8) looks_like_a_reset_fn(); return; // exit via
+  $A589 solitary(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
