@@ -303,6 +303,7 @@
 ; message_HE_TAKES_THE_BRIBE = 17
 ; message_AND_ACTS_AS_DECOY = 18
 ; message_ANOTHER_DAY_DAWNS = 19
+; message_NONE = 255
 
 ; ; enum interior_object
 ; interiorobject_TUNNEL_0 = 0
@@ -1669,7 +1670,7 @@ W $7D13 current_message_character
 c $7D15 queue_message_for_display
 R $7D15 B message_* index.
 R $7D15 C ...
-  $7D15 if (*(HL = message_buffer_pointer) == 0xFF) return;
+  $7D15 if (*(HL = message_buffer_pointer) == message_NONE) return;
   $7D1C HL -= 2;
   $7D1E A = *HL++; if (A == B) {
   $7D23 A = *HL; if (A == C) return; }
