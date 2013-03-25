@@ -4042,16 +4042,98 @@ R $A9AD A  Tile index
 ; -----------------------------------------------------------------------------
 
 c $A9E4 map_shunt_1
+  $A9E4 HL = &map_position_maybe;
+  $A9E7 (*HL)++;
+  $A9E8 sub_A7C9();
+  $A9EB HL = visible_tiles_start_address + 1;
+  $A9EE DE = visible_tiles_start_address;
+  $A9F1 BC = visible_tiles_length - 1;
+  $A9F4 LDIR
+  $A9F6 HL = screen_buffer_start_address + 1;
+  $A9F9 DE = screen_buffer_start_address;
+  $A9FC BC = screen_buffer_length - 1;
+  $A9FF LDIR
+  $AA01 sub_A8CF();
+  $AA04 return;
 
 c $AA05 map_unshunt_1
+  $AA05 HL = &map_position_maybe;
+  $AA08 (*HL)--;
+  $AA09 sub_A7C9();
+  $AA0C HL = visible_tiles_end_address - 1;
+  $AA0F DE = visible_tiles_end_address;
+  $AA12 BC = visible_tiles_length - 1;
+  $AA15 LDDR
+  $AA17 HL = screen_buffer_end_address;
+  $AA1A DE = screen_buffer_end_address + 1;
+  $AA1D BC = screen_buffer_length;
+  $AA20 LDDR
+  $AA22 sub_A8E7();
+  $AA25 return;
 
 c $AA26 map_shunt_2
+  $AA26 L--;
+  $AA27 H++;
+  $AA28 map_position_maybe = HL;
+  $AA2B sub_A7C9();
+  $AA2E HL = visible_tiles_start_address + 24;
+  $AA31 DE = visible_tiles_start_address + 1;
+  $AA34 BC = visible_tiles_length - 24;
+  $AA37 LDIR
+  $AA39 HL = screen_buffer_start_address + 24 * 8;
+  $AA3C DE = screen_buffer_start_address + 1;
+  $AA3F BC = screen_buffer_length - 24 * 8;
+  $AA42 LDIR
+  $AA44 sub_A80A();
+  $AA47 sub_A8E7();
+  $AA4A return;
 
 c $AA4B map_unshunt_2
+  $AA4B HL = &map_position_maybe[1];
+  $AA4E (*HL)++;
+  $AA4F sub_A7C9();
+  $AA52 HL = visible_tiles_start_address + 24;
+  $AA55 DE = visible_tiles_start_address;
+  $AA58 BC = visible_tiles_length - 24;
+  $AA5B LDIR
+  $AA5D HL = screen_buffer_start_address + 24 * 8;
+  $AA60 DE = screen_buffer_start_address;
+  $AA63 BC = screen_buffer_length - 24 * 8;
+  $AA66 LDIR
+  $AA68 sub_A80A();
+  $AA6B return;
 
 c $AA6C map_shunt_3
+  $AA6C HL = &map_position_maybe[1];
+  $AA6F (*HL)--;
+  $AA70 sub_A7C9();
+  $AA73 HL = visible_tiles_end_address - 24;
+  $AA76 DE = visible_tiles_end_address;
+  $AA79 BC = visible_tiles_length - 24;
+  $AA7C LDDR
+  $AA7E HL = screen_buffer_end_address - 24 * 8;
+  $AA81 DE = screen_buffer_end_address;
+  $AA84 BC = screen_buffer_length - 24 * 8;
+  $AA87 LDDR
+  $AA89 sub_A819();
+  $AA8C return;
 
 c $AA8D map_unshunt_3
+  $AA8D L++;
+  $AA8E H--;
+  $AA8F map_position_maybe = HL;
+  $AA92 sub_A7C9();
+  $AA95 HL = visible_tiles_end_address - 24;
+  $AA98 DE = visible_tiles_end_address - 1;
+  $AA9B BC = visible_tiles_length - 24 - 1;
+  $AA9E LDDR
+  $AAA0 HL = screen_buffer_end_address - 24 * 8;
+  $AAA3 DE = screen_buffer_end_address - 1;
+  $AAA6 BC = screen_buffer_length - 24 * 8 - 1;
+  $AAA9 LDDR
+  $AAAB sub_A819();
+  $AAAE sub_A8CF();
+  $AAB1 return;
 
 ; ------------------------------------------------------------------------------
 
