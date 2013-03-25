@@ -28,6 +28,21 @@
 ; - Use SkoolKit # refs more.
 ;   - Currently using (<- somefunc) to show a reference.
 ; - Extract font.
+; //////////////////////////////////////////////////////////////////////////////
+; ASSEMBLY PATTERNS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; Multiply A by 2^N:
+;   A += A (N times)
+;
+; Increment HL by 8-bit increment:
+;   A = L
+;   A += increment
+;   L = A
+;   JR NC,skip
+;   H++
+;   skip:
+; does this only work for HL?
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; CONSTANTS
