@@ -3869,9 +3869,9 @@ D $A51C Print 'well done' message then test to see if the right objects were use
   $A528 screenlocstring_plot(); // FROM THE CAMP
   $A52B C = 0; // preserve A
   $A52D HL = &items_held[0];
-  $A530 do_we_have_required_objects_for_escape();
+  $A530 have_required_items();
   $A533 HL++; // &items_held[1];
-  $A534 do_we_have_required_objects_for_escape();
+  $A534 have_required_items();
   $A537 A = C;
   $A538 if (A == 5) goto success; // 1 + 4 == compass + purse
   $A53C else if (A != 3) goto captured; // 1 + 2 == compass + papers
@@ -3922,16 +3922,16 @@ R $A58C O:A Pressed key.
 
 ; ------------------------------------------------------------------------------
 
-c $A59C do_we_have_required_objects_for_escape
+c $A59C have_required_items
 R $A59C I:HL Pointer to (single) item slot.
 R $A59C I:C  Previous return value.
 R $A59C O:C  Previous return value + 0/1/2/4/8.
   $A59C A = *HL;
-  $A59D do_we_have_objects();
+  $A59D item_to_bitmask();
   $A5A0 C += A;
   $A5A2 return;
  
-c $A5A3 do_we_have_objects: if (A == item_COMPASS) { A = 1; return; } // have compass
+c $A5A3 item_to_bitmask: if (A == item_COMPASS) { A = 1; return; } // have compass
   $A5AA if (A == item_PAPERS)  { A = 2; return; } // have papers
   $A5B1 if (A == item_PURSE)   { A = 4; return; } // have purse
   $A5B8 if (A == item_UNIFORM) { A = 8; return; } // have uniform
@@ -3942,9 +3942,9 @@ c $A5A3 do_we_have_objects: if (A == item_COMPASS) { A = 1; return; } // have co
 
 c $A5BF screenlocstring_plot
 R $A5BF I:HL Pointer to screenlocstring.
-  $A5BF E = *HL++; // read loc into DE
+  $A5BF E = *HL++; // read screen address into DE
   $A5C1 D = *HL++;
-  $A5C3 B = *HL++; // iterations
+  $A5C3 B = *HL++; // iterations / nbytes
   $A5C5 do { PUSH BC
   $A5C6 plot_glyph();
   $A5C9 HL++;
