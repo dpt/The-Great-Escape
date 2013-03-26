@@ -33,7 +33,7 @@
 ; //////////////////////////////////////////////////////////////////////////////
 ;
 ; Multiply A by 2^N:
-;   A += A (N times)
+;   ADD A,A ; A += A (N times)
 ;
 ; Increment HL by 8-bit increment:
 ;   A = L
@@ -43,6 +43,14 @@
 ;   H++
 ;   skip:
 ; does this only work for HL?
+;
+; if-else:
+;   CP <value>
+;   JR <cond>,elsepart;
+;   <ifwork>
+;   JR endifpart;
+;   elsepart: <elsework>
+;   endifpart:
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; CONSTANTS
