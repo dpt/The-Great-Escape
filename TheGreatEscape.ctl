@@ -1543,7 +1543,7 @@ R $7C46 I:HL Screen address of item.
   $7C46 PUSH HL
   $7C47 EX AF,AF'
 ;
-D $7C54 Wipe item.
+D $7C48 Wipe item.
   $7C48 B = 2; // 16 wide
   $7C4A C = 16;
   $7C4C screen_wipe();
@@ -1564,7 +1564,7 @@ D $7C54 Set screen attributes.
   $7C69 *HL = A;
   $7C6A POP AF
 ;
-D $7C54 Plot bitmap.
+D $7C6B Plot bitmap.
   $7C6B HL = &item_definitions[A]; // elements are six bytes wide
   $7C76 B = *HL++;
   $7C78 C = *HL++;
