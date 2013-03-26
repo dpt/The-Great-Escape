@@ -771,7 +771,7 @@ c $6939 setup_movable_items
   $695B called_from_main_loop_7();
   $695E called_from_main_loop_8();
   $6961 called_from_main_loop_9();
-  $6964 called_from_main_loop_10();
+  $6964 move_map();
   $6967 called_from_main_loop_11(); return;
 
   $696A setup_crate: HL = &crate;
@@ -2929,7 +2929,7 @@ c $9D78 main_loop_setup
   $9D99 called_from_main_loop_8(); // [unknown]
   $9D9C ring_bell();
   $9D9F called_from_main_loop_9(); // [unknown]
-  $9DA2 called_from_main_loop_10(); // [unknown]
+  $9DA2 move_map();
   $9DA5 message_timer();
   $9DA8 ring_bell();
   $9DAB called_from_main_loop_11(); // [unknown]
@@ -3994,7 +3994,7 @@ D $A69E 0..9, A..Z (omitting O), space, full stop
 
 ; ------------------------------------------------------------------------------
 
-b $A7C6 used_by_sub_AAFF
+b $A7C6 used_by_move_map
 
 ; ------------------------------------------------------------------------------
 
@@ -4145,16 +4145,96 @@ c $AA8D map_unshunt_3
 
 ; ------------------------------------------------------------------------------
 
-c $AAB2 called_from_main_loop_10
+c $AAB2 move_map
+D $AAB2 Moves the map as the character walks.
+R $AAB2 O:HL == map_position_maybe
+  $AAB2 if (indoor_room_index) return; // outdoors only
+  $AAB7 if ($8007 & (1<<6)) return;
+  $AABD HL = $800A;
+  $AAC0 E = *HL++;
+  $AAC2 D = *HL++;
+  $AAC4 C = *HL; // $800C
+  $AAC5 DE += 3;
+  $AAC8 A = *DE;
+  $AAC9 if (A == 255) return;
+  $AACC if (C & (1<<7)) A ^= 2;
+  $AAD2 PUSH AF
+  $AAD3 HL = &map_move_jump_table[A];
+  $AADB A = *HL++; // ie. HL = (word at HL); HL += 2;
+  $AADD H = *HL;
+  $AADE L = A;
+  $AADF POP AF
+  $AAE0 PUSH HL
+  $AAE1 PUSH AF
+  $AAE2 BC = 0x7C00;
+  $AAE5 if (A >= 2) B = 0x00;
+  $AAEB else if (A != 1 && A != 2) C = 0xC0;
+  $AAF5 HL = map_position_maybe;
+  $AAF8 if (L == C || H == B) {
+  $AAFC popret: POP AF
+  $AAFD POP HL
+  $AAFE return; }
+  $AB03 POP AF
+  $AB04 HL = &used_by_move_map; // screen offset of some sort?
+  $AB07 if (A >= 2) {
+  $AB0B A = *HL + 1;
+  $AB0D } else {
+  $AB0F A = *HL - 1; }
+  $AB11 A &= 3;
+  $AB13 *HL = A;
+  $AB14 EX DE,HL
+  $AB15 HL = 0x0000;
+; I /think/ this is equivalent:
+; HL = 0x0000;
+; if (A != 0) {
+;     HL = 0x0060;
+;     if (A != 2) {
+;         HL = 0xFF30;
+;         if (A != 1) {
+;             HL = 0xFF90;
+;         }
+;     }
+; }
+  $AB18 if (A == 0) goto ab2a
+  $AB1B L = 0x60;
+  $AB1D if (A == 2) goto ab2a
+  $AB21 HL = 0xFF30;
+  $AB24 if (A == 1) goto ab2a
+  $AB28 L = 0x90;
+  $AB2A plot_game_screen_x = HL;
+  $AB2D HL = map_position_maybe;
+  $AB30 return;
 
-; ------------------------------------------------------------------------------
+W $AB31 map_move_jump_table
+  $AB31 { map_move_1, 
+  $AB33 map_move_2, 
+  $AB35 map_move_3,
+  $AB37 map_move_4 };
 
-w $AB31 map_move_jump_table
-D $AB31 jump table of (map_move_1, 2, 3, 4)
 C $AB39 map_move_1
+  $AB39 A = *DE;
+  $AB3A if (A == 0) goto map_unshunt_2;
+  $AB3E if ((A & (1<<0)) == 0) return;
+  $AB41 goto map_shunt_1;
+
 C $AB44 map_move_2
+  $AB44 A = *DE;
+  $AB45 if (A == 0) goto map_shunt_2;
+  $AB49 if (A != 2) return;
+  $AB4C goto map_unshunt_1;
+
 C $AB4F map_move_3
+  $AB4F A = *DE;
+  $AB50 if (A == 3) goto map_shunt_3;
+  $AB55 RRA // rotate right?
+  $AB56 JP NC,map_unshunt_1;
+  $AB59 return;
+
 C $AB5A map_move_4
+  $AB5A A = *DE;
+  $AB5B if (A == 1) goto map_shunt_1;
+  $AB60 if (A == 3) goto map_unshunt_3;
+  $AB65 return;
 
 ; -----------------------------------------------------------------------------
 
