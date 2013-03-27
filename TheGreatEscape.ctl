@@ -197,12 +197,12 @@
 ; item_NONE = 255
 
 ; ; enum zoombox_tiles
-; zoombox_tile_tl = 0
-; zoombox_tile_hz = 1
-; zoombox_tile_tr = 2
-; zoombox_tile_vt = 3
-; zoombox_tile_br = 4
-; zoombox_tile_bl = 5
+; zoombox_tile_TL = 0
+; zoombox_tile_HZ = 1
+; zoombox_tile_TR = 2
+; zoombox_tile_VT = 3
+; zoombox_tile_BR = 4
+; zoombox_tile_BL = 5
 
 ; ; enum static_tiles (width 1 byte)
 ; statictile_empty = 0
@@ -4240,9 +4240,9 @@ C $AB5A map_move_4
 
 b $AB66 zoombox_stuff
 D $AB66 [unsure]
-  $AB66 zoombox_related_1
+  $AB66 zoombox_x
   $AB67 zoombox_horizontal_count
-  $AB68 zoombox_related_3
+  $AB68 zoombox_y
   $AB69 zoombox_vertical_count
   $AB6A game_screen_attribute
 
@@ -4278,13 +4278,171 @@ c $AB89 choose_attribute_for_tunnel
 ; -----------------------------------------------------------------------------
 
 c $ABA0 zoombox
-  $ABF9 zoombox_1
-  $AC6F zoombox_2
-  $ACFC zoombox_draw_tile
+  $ABA0 zoombox_x = 12;
+  $ABA5 zoombox_y = 8;
+  $ABAA choose_game_screen_attributes();
+  $ABAD H = A;
+  $ABAE L = A;
+  $ABAF ($5932) = HL; // set 2 attrs
+  $ABB2 ($5952) = HL; // set 2 attrs
+  $ABB5 zoombox_horizontal_count = 0;
+  $ABB9 zoombox_vertical_count = 0;
 
-; ------------------------------------------------------------------------------
+  $ABBC do { HL = &zoombox_x;
+  $ABBF A = *HL;
+  $ABC0 if (A != 1) {
+  $ABC5 *HL--;
+  $ABC6 A--;
+  $ABC7 HL++;
+  $ABC8 *HL++;
+  $ABC9 HL--; }
+  $ABCA HL++;
+  $ABCB A += *HL;
+  $ABCC if (A < 22) *HL++;
+  $ABD2 HL++;
+  $ABD3 A = *HL;
+  $ABD4 if (A != 1) {
+  $ABD9 *HL--;
+  $ABDA A--;
+  $ABDB HL++;
+  $ABDC *HL++;
+  $ABDD HL--; }
+  $ABDE HL++;
+  $ABDF A += *HL;
+  $ABE0 if (A < 15) *HL++;
+  $ABE6 zoombox_1();
+  $ABE9 zoombox_2();
+  $ABEC A = zoombox_vertical_count + zoombox_horizontal_count;
+  $ABF3 } while (A < 35);
+  $ABF8 return;
 
-w $AD29 word_AD29
+C $ABF9 zoombox_1
+  $ABF9 A = zoombox_y;
+  $ABFC H = A;
+  $ABFD A = 0;
+  $ABFE SRL H
+  $AC00 RRA
+  $AC01 E = A;
+  $AC02 D = H;
+  $AC03 SRL H
+  $AC05 RRA
+  $AC06 L = A;
+  $AC07 HL += DE;
+  $AC08 HL += zoombox_x;
+  $AC10 DE = screen_buffer_start_address + 1;
+  $AC13 HL += DE;
+  $AC14 EX DE,HL
+  $AC15 HL = game_screen_scanline_start_addresses[zoombox_y * 8]; // ie. * 16
+  $AC28 A = zoombox_x;
+  $AC2B A += L;
+  $AC2C L = A;
+  $AC2D EX DE,HL
+  $AC2E A = zoombox_horizontal_count;
+  $AC31 ($AC55) = A; // self modify
+  $AC34 A = -A + 24;
+  $AC38 ($AC4D) = A; // self modify
+  $AC3B A = zoombox_vertical_count;
+  $AC3E B = A; // iterations
+  $AC3F do { PUSH BC
+  $AC40 PUSH DE
+  $AC41 A = 8; // 8 iterations
+  $AC43 do { EX AF,AF'
+  $AC44 BC = zoombox_horizontal_count;
+  $AC4A LDIR
+  $AC4C A = 0; // self modified
+  $AC4E HL += A;
+  $AC53 A = E;
+  $AC54 A -= 0; // self modified
+  $AC56 E = A;
+  $AC57 D++;
+  $AC58 EX AF,AF'
+  $AC59 } while (--A);
+  $AC5D POP DE
+  $AC5E EX DE,HL
+  $AC5F BC = 0x0020;
+  $AC62 if (L >= 224) B = 0x07;
+  $AC69 HL += BC;
+  $AC6A EX DE,HL
+  $AC6B POP BC
+  $AC6C } while (--B);
+  $AC6E return;
+
+C $AC6F zoombox_2
+  $AC6F HL = game_screen_scanline_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
+D $AC83 Top left.
+  $AC83 HL += zoombox_x - 1;
+  $AC89 zoombox_draw_tile(zoombox_tile_TL);
+  $AC8E HL++;
+;
+D $AC8F Horizontal.
+  $AC8F B = zoombox_horizontal_count; // iterations
+  $AC93 do { zoombox_draw_tile(zoombox_tile_HZ);
+  $AC98 HL++;
+  $AC99 } while (--B);
+;
+D $AC9B Top right.
+  $AC9B zoombox_draw_tile(zoombox_tile_TR);
+  $ACA0 DE = 0x0020;
+  $ACA3 if (L >= 224) D = 0x07;
+  $ACAA HL += DE;
+;
+D $ACAB Vertical.
+  $ACAB B = zoombox_vertical_count; // iterations
+  $ACAF do { zoombox_draw_tile(zoombox_tile_VT);
+  $ACB4 DE = 0x0020;
+  $ACB7 if (L >= 224) D = 0x07;
+  $ACBE HL += DE;
+  $ACBF } while (--B);
+;
+D $ACC1 Bottom right.
+  $ACC1 zoombox_draw_tile(zoombox_tile_BR);
+  $ACC6 HL--;
+;
+D $ACC7 Horizontal.
+  $ACC7 B = zoombox_horizontal_count; // iterations
+  $ACCB do { zoombox_draw_tile(zoombox_tile_HZ);
+  $ACD0 HL--;
+  $ACD1 } while (--B);
+;
+D $ACD3 Bottom left.
+  $ACD3 zoombox_draw_tile(zoombox_tile_BL);
+  $ACD8 DE = 0xFFE0;
+  $ACDB if (L < 32) DE = 0xF8E0;
+  $ACE3 HL += DE;
+;
+D $ACE4 Vertical.
+  $ACE4 B = zoombox_vertical_count; // iterations
+  $ACE8 do { zoombox_draw_tile(zoombox_tile_VT);
+  $ACED DE = 0xFFE0;
+  $ACF0 if (L < 32) DE = 0xF8E0;
+  $ACF8 HL += DE;
+  $ACF9 } while (--B);
+;
+  $ACFB return;
+
+C $ACFC zoombox_draw_tile
+R $ACFC I:AF Index of tile to draw.
+R $ACFC I:BC (preserved)
+R $ACFC I:HL Destination address.
+  $ACFC PUSH BC
+  $ACFD PUSH AF
+  $ACFE PUSH HL
+  $ACFF EX DE,HL
+  $AD00 HL = &zoombox_tiles[A];
+  $AD0A B = 8; // 8 iterations
+  $AD0C do { *DE = *HL++;
+  $AD0E DE += 256;
+  $AD10 } while (--B);
+  $AD12 A = D - 1; // ie. (DE - 256) >> 8
+  $AD14 H = 0x58; // attributes
+  $AD16 L = E;
+  $AD17 if (A >= 0x48) { H++;
+  $AD1C if (A >= 0x50) H++; }
+  $AD21 *HL = game_screen_attribute;
+  $AD25 POP HL
+  $AD26 POP AF
+  $AD27 POP BC
+  $AD28 return;
 
 ; ------------------------------------------------------------------------------
 
