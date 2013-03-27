@@ -4264,6 +4264,7 @@ D $AB66 [unsure]
 ; -----------------------------------------------------------------------------
 
 c $AB6B choose_game_screen_attributes
+R $AB6B O:A Chosen attribute.
   $AB6B A = (indoor_room_index);
   $AB6E if (A >= room_29_secondtunnelstart) goto choose_attribute_for_tunnel;
   $AB72 A = (day_or_night);
