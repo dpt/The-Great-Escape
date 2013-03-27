@@ -4032,19 +4032,34 @@ c $A9A0 sub_A9A0
 
 ; -----------------------------------------------------------------------------
 
-c $A9AD plot_a_tile_perhaps
-D $A9AD Plots tiles to buffer.
-R $A9AD HL Supertile index (used to select the correct tile group).
-R $A9AD A  Tile index
-  $A9AD ...
-  $A9B0 tiles = exterior_tiles_1;
-  $A9B3 if (super_tile < 45) goto got_it;
-  $A9B7 tiles = exterior_tiles_2;
-  $A9BA if (super_tile < 139) goto got_it;
-  $A9BE if (super_tile >= 204) goto got_it;
-  $A9C2 tiles = exterior_tiles_3;
-  $A9C5 got_it: ...
-  $A9D5 copy_tile: ...
+c $A9AD plot_tile
+D $A9AD Plots a tile to the buffer.
+R $A9AD I:HL Pointer to supertile index (used to select the correct tile group).
+R $A9AD I:A  Tile index
+  $A9AD EXX
+  $A9AE tile_index = A;
+;
+  $A9AF A = *HL; // get supertile index
+  $A9B0 if (A < 45) { BC = exterior_tiles_1; }
+  $A9BA else if (A < 139 || A >= 204) { BC = exterior_tiles_2; }
+  $A9C2 else { BC = exterior_tiles_3; }
+;
+  $A9C5 PUSH HL
+  $A9C6 A = tile_index;
+  $A9C7 HL = A * 8 + BC;
+  $A9CE PUSH DE
+  $A9CF EX DE,HL
+  $A9D0 BC = 24; // stride
+  $A9D3 A = 8; // 8 iterations
+  $A9D5 do {
+  $A9D6 *HL = *DE++;
+  $A9D8 HL += BC;
+  $A9DB } while (--A);
+  $A9DF POP DE
+  $A9E0 DE++;
+  $A9E1 POP HL
+  $A9E2 EXX
+;
   $A9E3 return;
 
 ; -----------------------------------------------------------------------------
