@@ -6554,7 +6554,20 @@ D $B916 Sets attr of something, checks indoor room index, ...
 
 ; -----------------------------------------------------------------------------
 
-c $BADC sub_BADC
+c $BADC mask_against_tile
+D $BADC Tiles related. Masks characters obscured by foreground objects.
+R $BADC I:A  Mask tile index.
+R $BADC I:HL Pointer to destination.
+  $BADC PUSH HL
+  $BADD EXX
+  $BADE HL = &tiles[A];
+  $BAE8 POP DE
+  $BAE9 B = 8; // 8 iterations
+  $BAEB do { *DE &= *HL++;
+  $BAEF DE += 4;
+  $BAF3 } while (--B);
+  $BAF5 EXX
+  $BAF6 return;
 
 ; -----------------------------------------------------------------------------
 
