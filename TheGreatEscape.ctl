@@ -9486,6 +9486,125 @@ c $E2A2 sub_E2A2
 ; ------------------------------------------------------------------------------
 
 c $E34E sub_E34E
+  $E34E SUB $04
+  $E350 A += A;
+  $E351 L = A;
+  $E352 A += A;
+  $E353 A += L;
+  $E354 ($E39A) = A;
+  $E357 ($E37D) = A;
+  $E35A EXX
+  $E35B HL = ($81AE);
+  $E35E EXX
+  $E35F HL = ($81AC);
+  $E362 B = $20;
+**$E364 D = *HL;
+  $E365 HL++;
+  $E366 E = *HL;
+  $E367 HL++;
+  $E368 PUSH HL
+  $E369 EXX
+  $E36A D = *HL;
+  $E36B HL++;
+  $E36C E = *HL;
+  $E36D HL++;
+  $E36E PUSH HL
+  $E36F A = ($81B7);
+  $E372 A &= A;
+  $E373 CALL M,$E40F
+  $E376 HL = ($81B0);
+  $E379 C = $FF;
+  $E37B SCF
+  $E37C JR $E37E
+**$E37E RL E
+  $E380 RL D
+  $E382 RL C
+  $E384 RL E
+  $E386 RL D
+  $E388 RL C
+  $E38A RL E
+  $E38C RL D
+  $E38E RL C
+  $E390 RL E
+  $E392 RL D
+  $E394 RL C
+  $E396 EXX
+  $E397 XA |= A;
+  $E398 C = A;
+  $E399 JR $E39B
+**$E39B SLA E
+  $E39D RL D
+  $E39F RL C
+  $E3A1 SLA E
+  $E3A3 RL D
+  $E3A5 RL C
+  $E3A7 SLA E
+  $E3A9 RL D
+  $E3AB RL C
+  $E3AD SLA E
+  $E3AF RL D
+  $E3B1 RL C
+  $E3B3 HL = ($81A2);
+  $E3B6 EXX
+  $E3B7 A = *HL;
+  $E3B8 CPL
+  $E3B9 A |= C;
+  $E3BA EXX
+  $E3BB A &= *HL;
+  $E3BC EX AF,AF'
+  $E3BD A = C;
+  $E3BE EXX
+  $E3BF A &= *HL;
+  $E3C0 C = A;
+  $E3C1 EX AF,AF'
+  $E3C2 A |= C;
+  $E3C3 L++;
+  $E3C4 EXX
+  $E3C5 *HL = A;
+  $E3C6 HL++;
+  $E3C7 EXX
+  $E3C8 A = *HL;
+  $E3C9 CPL
+  $E3CA A |= D;
+  $E3CB EXX
+  $E3CC A &= *HL;
+  $E3CD EX AF,AF'
+  $E3CE A = D;
+  $E3CF EXX
+  $E3D0 A &= *HL;
+  $E3D1 D = A;
+  $E3D2 EX AF,AF'
+  $E3D3 A |= D;
+  $E3D4 L++;
+  $E3D5 EXX
+  $E3D6 *HL = A;
+  $E3D7 HL++;
+  $E3D8 EXX
+  $E3D9 A = *HL;
+  $E3DA CPL
+  $E3DB A |= E;
+  $E3DC EXX
+  $E3DD A &= *HL;
+  $E3DE EX AF,AF'
+  $E3DF A = E;
+  $E3E0 EXX
+  $E3E1 A &= *HL;
+  $E3E2 E = A;
+  $E3E3 EX AF,AF'
+  $E3E4 A |= E;
+  $E3E5 L++;
+  $E3E6 L++;
+  $E3E7 ($81B0) = HL;
+  $E3EA POP HL
+  $E3EB EXX
+  $E3EC *HL = A;
+  $E3ED DE = $0016;
+  $E3F0 HL += DE;
+  $E3F1 ($81A2) = HL;
+  $E3F4 POP HL
+  $E3F5 B--;
+  $E3F6 JP NZ,$E364
+  $E3F9 return;
 
 ; ------------------------------------------------------------------------------
 
