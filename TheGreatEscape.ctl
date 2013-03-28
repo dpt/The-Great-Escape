@@ -5149,15 +5149,159 @@ D $AFB9 Cutting wire?
 ; ------------------------------------------------------------------------------
 
 c $AFDF sub_AFDF
+  $AFDF HL = $8001;
+  $AFE2 B = 8; // 8 iterations
+  $AFE4 do { if (*HL & (1<<7)) goto $B0FE;
+  $AFE9 PUSH BC
+  $AFEA PUSH HL
+  $AFEB HL += 14;
+  $AFEF C = *HL++;
+  $AFF1 B = *HL;
+  $AFF2 EX DE,HL
 
-; ------------------------------------------------------------------------------
+  $AFF3 HL = word_81A4;
+  $AFF6 BC += 4;
+  $AFFE HL -= BC;
+  $B000 JR Z,$B014 // HL == BC?
+  $B002 JP NC,$B0FC // HL >= BC? or other way around?
 
-b $B0F8 four_bytes_B0F8
+  $B005 BC -= 8;
+  $B00C HL = word_81A4 - BC;
+  $B011 JP C,$B0FC
+
+  $B014 EX DE,HL
+  $B015 HL++;
+  $B016 C = *HL++;
+  $B018 B = *HL;
+  $B019 EX DE,HL
+
+  $B01A HL = word_81A6;
+  $B01D BC += 4;
+  $B025 HL -= BC;
+  $B027 JR Z,$B03B // HL == BC?
+  $B029 JP NC,$B0FC
+
+  $B02C BC -= 8;
+  $B033 HL = word_81A6 - BC;
+  $B038 JP C,$B0FC
+
+  $B03B EX DE,HL
+  $B03C HL++;
+  $B03D C = *HL;
+  $B03E A = word_81A8;
+  $B041 A -= C;
+  $B042 JR NC,$B046
+
+  $B044 A = -A;
+  $B046 CP 24
+  $B048 JP NC,$B0FC
+  $B04B A = IY[1] & 15;
+  $B050 CP 1
+  $B052 JR NZ,$B071
+
+  $B054 POP HL
+  $B055 PUSH HL
+  $B056 L--;
+  $B057 A = L;
+  $B058 A &= A;
+  $B059 JR NZ,$B071
+  $B05B A = bribed_character;
+  $B05E if (A != *IY) goto $B068;
+  $B063 use_bribe();
+  $B066 JR $B071
+
+  $B068 POP HL
+  $B069 POP BC
+  $B06A PUSH IY
+  $B06C POP HL
+  $B06D L++;
+  $B06E solitary(); return; // exit via
+
+  $B071 POP HL
+  $B072 DEC L
+  $B073 A = *HL;
+  $B074 CP 26
+  $B076 JR C,$B0B9
+  $B078 PUSH HL
+  $B079 EX AF,AF'
+  $B07A HL += 17;
+  $B07E EX AF,AF'
+  $B07F BC = $0723;
+  $B082 CP 28
+  $B084 A = IY[14];
+  $B087 JR NZ,$B08F
+  $B089 L -= 2;
+  $B08B C = 54;
+  $B08D A ^= 1;
+
+  $B08F A &= A;
+  $B090 JR NZ,$B09D
+  $B092 A = *HL;
+  $B093 CP C
+  $B094 JR Z,$B0B8
+  $B096 JR C,$B09A
+  $B098 (*HL) -= 2;
+  $B09A *HL++;
+  $B09B JR $B0B8
+
+  $B09D CP 1
+  $B09F JR NZ,$B0A9
+
+  $B0A1 A = C + B;
+  $B0A3 CP *HL;
+  $B0A4 JR Z,$B0B8
+
+  $B0A6 *HL++;
+  $B0A7 JR $B0B8
+
+  $B0A9 CP 2
+  $B0AB JR NZ,$B0B2
+
+  $B0AD A = C - B;
+  $B0AF *HL = A;
+  $B0B0 JR $B0B8
+
+  $B0B2 A = C - B;
+  $B0B4 CP *HL;
+  $B0B5 JR Z,$B0B8
+
+  $B0B7 (*HL)--;
+
+  $B0B8 POP HL
+  $B0B9 POP BC
+  $B0BA HL += 13;
+  $B0BE A = *HL & 0x7F;
+  $B0C1 JR Z,$B0DB
+
+  $B0C3 HL++;
+  $B0C4 A = *HL ^ 2;
+  $B0C7 CP IY[14];
+  $B0CA JR Z,$B0DB
+
+  $B0CC IY[13] = $80;
+
+  $B0D0 IY[7] = (IY[7] & 0xF0) | 5;
+  $B0DA RET NZ // check
+
+  $B0DB BC = IY[14];
+  $B0E0 A = four_bytes_B0F8[BC];
+  $B0E5 IY[13] = A;
+  $B0E8 BIT 0,C
+  $B0EA JR NZ,$B0F2
+  $B0EC IY[7] &= ~(1<<5);
+  $B0F0 JR $B0D0
+
+  $B0F2 IY[7] |= 1<<5;
+  $B0F6 JR $B0D0
+
+B $B0F8,4 four_bytes_B0F8
 D $B0F8 (<- sub_AFDF)
 
-; ------------------------------------------------------------------------------
-
-c $B0FC loc_B0FC
+  $B0FC POP HL
+  $B0FD POP BC
+  $B0FE HL += 32;
+  $B102 } while (--B);
+  $B106 return;
 
 ; ------------------------------------------------------------------------------
 
