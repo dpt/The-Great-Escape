@@ -3967,7 +3967,7 @@ c $A50B screen_reset
   $A514 plot_game_screen();
   $A517 A = attribute_WHITE_OVER_BLACK;
   $A519 set_game_screen_attributes(); return; // exit via
-  
+
 ; ------------------------------------------------------------------------------
 
 c $A51C escaped
@@ -4040,7 +4040,7 @@ R $A59C O:C  Previous return value + 0/1/2/4/8.
   $A59D item_to_bitmask();
   $A5A0 C += A;
   $A5A2 return;
- 
+
 c $A5A3 item_to_bitmask: if (A == item_COMPASS) { A = 1; return; } // have compass
   $A5AA if (A == item_PAPERS)  { A = 2; return; } // have papers
   $A5B1 if (A == item_PURSE)   { A = 4; return; } // have purse
@@ -5794,7 +5794,7 @@ R $B4B8 I:A Room number the key is for.
   $B4C6 *HL &= ~(1<<7); // clear the 'locked' flag ?
   $B4C8 increase_morale_by_10_score_by_50();
   $B4CB B = message_IT_IS_OPEN; }
-  
+
   $B4CD qmsg: queue_message_for_display(B);
 
 ; fallthrough
@@ -5803,10 +5803,10 @@ R $B4B8 I:A Room number the key is for.
 
 c $B4D0 open_door
   $B4D0 if (indoor_room_index == 0) goto outdoors; else goto indoors;
- 
+
   $B4D9 outdoors: B = 5; // 5 iterations (they must overlap)
   $B4DB HL = &gates_flags;
- 
+
   $B4DE do { A = *HL & 0x7F;
   $B4E1 EXX
   $B4E2 get_door_position();
