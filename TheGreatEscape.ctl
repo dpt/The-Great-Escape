@@ -6067,6 +6067,60 @@ D $B75A [unsure]
 
 c $B79B reset_map_and_characters
 D $B79B [unsure]
+  $B79B B = 7;
+  $B79D HL = $8020;
+  $B7A0 do { PUSH BC
+  $B7A1 PUSH HL
+  $B7A2 reset_object();
+  $B7A5 POP HL
+  $B7A6 HL += 32;
+  $B7AA POP BC
+  $B7AB } while (--B);
+  $B7AD dispatch_counter = 7;
+  $B7B2 day_or_night = 0;
+  $B7B6 ($8001) = 0;
+  $B7B9 collapsed_tunnel_obj = interiorobject_COLLAPSED_TUNNEL;
+  $B7BE blockage = 0x34;
+D $B7C3 Lock the gates.
+  $B7C3 HL = &gates_and_doors[0];
+  $B7C6 B = 9; // 9 iterations
+  $B7C8 do { SET 7,*HL++
+  $B7CA HL++;
+  $B7CB } while (--B);
+  $B7CD B = 6; // 6 iterations
+  $B7CF A = interiorobject_OCCUPIED_BED;
+  $B7D1 HL = &beds[0];
+  $B7D4 do { E = *HL++;
+  $B7D6 D = *HL++;
+  $B7D8 *DE = A;
+  $B7D9 } while (--B);
+  $B7DB bench_A = interiorobject_EMPTY_BENCH;
+  $B7E0 bench_B = interiorobject_EMPTY_BENCH;
+  $B7E3 bench_C = interiorobject_EMPTY_BENCH;
+  $B7E6 bench_D = interiorobject_EMPTY_BENCH;
+  $B7E9 bench_E = interiorobject_EMPTY_BENCH;
+  $B7EC bench_F = interiorobject_EMPTY_BENCH;
+  $B7EF bench_G = interiorobject_EMPTY_BENCH;
+  $B7F2 DE = &characterstruct_12[0].(first byte);
+  $B7F5 C = 10;
+  $B7F7 HL = &looks_like_character_reset_data[0];
+  $B7FA do { B = 3;
+  $B7FC do { *DE++ = *HL++;
+  $B800 } while (--B);  // memcpy
+  $B802 EX DE,HL
+  $B803 *HL = $12;
+  $B805 HL++;
+  $B806 *HL = $00;
+  $B808 HL++;
+  $B809 HL++;
+  $B80A HL++;
+  $B80B EX DE,HL
+  $B80C A = C;
+  $B80D CP $07
+  $B80F JR NZ,$B814
+  $B811 DE = $769F;
+**$B814 } while (--C);
+  $B818 return;
 
 ; ------------------------------------------------------------------------------
 
