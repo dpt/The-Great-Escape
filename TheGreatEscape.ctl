@@ -9357,10 +9357,131 @@ R $E102 I:IY ...
 ; ------------------------------------------------------------------------------
 
 c $E29F sub_E29F
+  $E29F A = 0;
+  $E2A0 goto E2AC;
 
 ; ------------------------------------------------------------------------------
 
 c $E2A2 sub_E2A2
+  $E2A2 A = (IY+$18);
+  $E2A5 A &= $07;
+  $E2A7 CP $04
+  $E2A9 JP NC,$E34E
+; This entry point is used by the routine at #R$E29F.
+**$E2AC CPL
+  $E2AD A &= $03;
+  $E2AF A += A;
+  $E2B0 H = A;
+  $E2B1 A += A;
+  $E2B2 A += H;
+  $E2B3 ($E2DC) = A;
+  $E2B6 ($E2F4) = A;
+  $E2B9 EXX
+  $E2BA HL = ($81AE);
+  $E2BD EXX
+  $E2BE HL = ($81AC);
+  $E2C1 B = $20;
+**$E2C3 D = *HL;
+  $E2C4 HL++;
+  $E2C5 E = *HL;
+  $E2C6 HL++;
+  $E2C7 PUSH HL
+  $E2C8 EXX
+  $E2C9 D = *HL;
+  $E2CA HL++;
+  $E2CB E = *HL;
+  $E2CC HL++;
+  $E2CD PUSH HL
+  $E2CE A = ($81B7);
+  $E2D1 A &= A;
+  $E2D2 CALL M,$E40F
+  $E2D5 HL = ($81B0);
+  $E2D8 C = $FF;
+  $E2DA SCF
+  $E2DB JR $E2DD
+**$E2DD RR D
+  $E2DF RR E
+  $E2E1 RR C
+  $E2E3 RR D
+  $E2E5 RR E
+  $E2E7 RR C
+  $E2E9 RR D
+  $E2EB RR E
+  $E2ED RR C
+  $E2EF EXX
+  $E2F0 C = $00;
+  $E2F2 A &= A;
+  $E2F3 JR $E2F5
+**$E2F5 SRL D
+  $E2F7 RR E
+  $E2F9 RR C
+  $E2FB SRL D
+  $E2FD RR E
+  $E2FF RR C
+  $E301 SRL D
+  $E303 RR E
+  $E305 RR C
+  $E307 HL = ($81A2);
+  $E30A EXX
+  $E30B A = *HL;
+  $E30C CPL
+  $E30D A |= D;
+  $E30E EXX
+  $E30F A &= *HL;
+  $E310 EX AF,AF'
+  $E311 A = D;
+  $E312 EXX
+  $E313 A &= *HL;
+  $E314 D = A;
+  $E315 EX AF,AF'
+  $E316 A |= D;
+  $E317 L++;
+  $E318 EXX
+  $E319 *HL = A;
+  $E31A HL++;
+  $E31B EXX
+  $E31C A = *HL;
+  $E31D CPL
+  $E31E A |= E;
+  $E31F EXX
+  $E320 A &= *HL;
+  $E321 EX AF,AF'
+  $E322 A = E;
+  $E323 EXX
+  $E324 A &= *HL;
+  $E325 E = A;
+  $E326 EX AF,AF'
+  $E327 A |= E;
+  $E328 L++;
+  $E329 EXX
+  $E32A *HL = A;
+  $E32B HL++;
+  $E32C EXX
+  $E32D A = *HL;
+  $E32E CPL
+  $E32F A |= C;
+  $E330 EXX
+  $E331 A &= *HL;
+  $E332 EX AF,AF'
+  $E333 A = C;
+  $E334 EXX
+  $E335 A &= *HL;
+  $E336 C = A;
+  $E337 EX AF,AF'
+  $E338 A |= C;
+  $E339 L++;
+  $E33A L++;
+  $E33B ($81B0) = HL;
+  $E33E POP HL
+  $E33F EXX
+  $E340 *HL = A;
+  $E341 DE = $0016;
+  $E344 HL += DE;
+  $E345 ($81A2) = HL;
+  $E348 POP HL
+  $E349 B--;
+  $E34A JP NZ,$E2C3
+  $E34D return;
 
 ; ------------------------------------------------------------------------------
 
