@@ -7774,6 +7774,132 @@ C $C8B1 ...
 ; ------------------------------------------------------------------------------
 
 c $C918 sub_C918
+D $C918 ...
+
+  $C918 A = IY[7];
+  $C91B B = A;
+  $C91C A &= 0x0F;
+  $C91E if (A) {
+  $C920 IY[7] = --B;
+  $C924 return; }
+
+  $C925 PUSH IY  // equivalent to HL = IY ?
+  $C927 POP HL
+  $C928 A = *++HL;
+  $C92A if (A == 0) goto $C9BA;
+
+  $C92E if (A == 1) {
+  $C932 PUSH HL
+  $C933 EXX
+  $C934 POP DE
+  $C935 DE += 3;
+  $C938 HL = 0x81B8; // player_map_position_perhapsX
+  $C93B *DE++ = *HL++;
+  $C93D *DE++ = *HL++;
+  $C93F EXX
+  $C940 JP $C9C0 }
+
+  $C943 if (A == 2) {
+  $C947 A = morale_related_also;
+  $C94A if (A) goto $C932;
+  $C94D *HL++ = 0;
+  $C950 JP $CB23 }
+
+  $C953 if (A == 3) {
+  $C957 PUSH HL
+  $C958 EX DE,HL
+  $C959 if (itemstruct_7.room & (1<<7)) {
+  $C960 HL++;
+  $C961 DE += 3;
+  $C965 *DE++ = *HL++;
+  $C967 *DE++ = *HL++;
+  $C969 POP HL
+  $C96A JR $C9C0 } else {
+
+  $C96C A = 0;
+  $C96D *DE = A;
+  $C96E EX DE,HL
+  $C96F *++HL = 0xFF;
+  $C972 *++HL = 0;
+  $C975 POP HL
+  $C976 JP $CB23 } }
+
+  $C979 if (A == 4) {
+  $C97D PUSH HL
+  $C97E A = bribed_character;
+  $C981 if (A != 0xFF) {
+  $C985 C = A;
+  $C986 B = 7; // 7 iterations
+  $C988 HL = $8020;
+  $C98B do { A = C;
+  $C98C CP *HL
+  $C98D JR Z,$C99C
+  $C98F HL += 32;
+  $C993 } while (--B); }
+
+  $C995 POP HL
+  $C996 *HL++ = 0;
+  $C999 JP $CB23
+
+  $C99C HL += 15;
+  $C9A0 POP DE
+  $C9A1 PUSH DE
+  $C9A2 DE += 3;
+  $C9A6 A = indoor_room_index; // might fold down
+  $C9A9 if (A) {
+  $C9AD divide_3xAC_by_8_with_rounding();
+  $C9B0 } else {
+  $C9B2 *DE++ = *HL++;
+  $C9B4 HL++;
+  $C9B5 *DE++ = *HL++; }
+
+  $C9B7 POP HL
+  $C9B8 JR $C9C0 }
+
+  $C9BA A = *++HL;
+  $C9BC HL--;
+  $C9BD if (A == 0) goto sub_C918::$C9F5;
+
+  $C9C0 A = *HL;
+  $C9C1 EXX
+  $C9C2 C = A;
+  $C9C3 A = indoor_room_index;
+  $C9C6 if (A) {
+  $C9C9 HL = &A_widened_to_BC;
+  $C9CC } else {
+  $C9CE if (C & (1<<6)) {
+  $C9D2 HL = &BC_becomes_A_times_4;
+  $C9D5 } else {
+  $C9D7 HL = &BC_becomes_A_times_8; } }
+
+  $C9DA ($CA13) = HL; // self-modify sub_CA11::CA13
+  $C9DD ($CA4B) = HL; // self-modify sub_CA11::CA4B
+  $C9E0 EXX
+  $C9E1 if (IY[7] & (1<<5)) goto $C9FF;
+
+  $C9E7 HL += 3;
+  $C9EA sub_CA11();
+  $C9ED JR NZ,$C9F5
+
+  $C9EF sub_CA49();
+  $C9F2 JP Z,$CA81
+
+; This entry point is used by the routine at #R$CA81.
+  $C9F5 if (IY[13] == 0)
+  $C9F8 return;
+;
+  $C9F9 IY[13] = A | 0x80;
+  $C9FE return;
+
+  $C9FF L += 4;
+  $CA03 sub_CA49();
+  $CA06 JR NZ,$C9F5
+
+  $CA08 sub_CA11();
+  $CA0B JR NZ,$C9F5
+
+  $CA0D HL--;
+  $CA0E sub_CA91(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
