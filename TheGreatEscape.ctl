@@ -7942,6 +7942,40 @@ c $CA11 sub_CA11
 ; ------------------------------------------------------------------------------
 
 c $CA49 sub_CA49
+  $CA49 A = *HL;
+  $CA4A BC_becomes_A_times_8();       // self modified
+  $CA4D HL += 12;
+  $CA51 E = *HL++;
+  $CA53 D = *HL;
+  $CA54 EX DE,HL
+  $CA55 SBC HL,BC
+  $CA57 JR Z,$CA76
+  $CA59 JP M,$CA68
+  $CA5C A = H;
+  $CA5D AND A
+  $CA5E JR NZ,$CA65
+  $CA60 A = L;
+  $CA61 CP 3
+  $CA63 JR C,$CA76
+  $CA65 A = 5;
+  $CA67 return;
+
+  $CA68 A = H;
+  $CA69 CP 255
+  $CA6B JR NZ,$CA73
+  $CA6D A = L;
+  $CA6E CP 254
+  $CA70 JP NC,$CA76
+  $CA73 A = 7;
+  $CA75 return;
+
+  $CA76 EX DE,HL
+  $CA77 A = L;
+  $CA78 SUB 14
+  $CA7A L = A;
+  $CA7B RES 5,IY[7]
+  $CA7F A = 0;
+  $CA80 return;
 
 ; ------------------------------------------------------------------------------
 
