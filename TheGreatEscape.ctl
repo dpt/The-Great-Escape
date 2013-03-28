@@ -8490,6 +8490,55 @@ B $DB72 mask: STOVE
 ; ------------------------------------------------------------------------------
 
 c $DB9E called_from_main_loop_8
+  $DB9E A = ($68A0);
+  $DBA1 CP $FF
+  $DBA3 JR NZ,$DBA6
+  $DBA5 A = 0;
+**$DBA6 C = A;
+  $DBA7 DE = ($81BB);
+  $DBAB B = $10;
+  $DBAD HL = $76C9;
+**$DBB0 do { PUSH HL
+  $DBB1 A = (HL);
+  $DBB2 AND $3F
+  $DBB4 CP C
+  $DBB5 JR NZ,$DBDC
+  $DBB7 HL++;
+  $DBB8 HL++;
+  $DBB9 HL++;
+  $DBBA HL++;
+  $DBBB A = E;
+  $DBBC A--;
+  $DBBD A--;
+  $DBBE CP (HL)
+  $DBBF JR Z,$DBC3
+  $DBC1 JR NC,$DBDC
+**$DBC3 A += $19;
+  $DBC5 CP (HL)
+  $DBC6 JR C,$DBDC
+  $DBC8 A = D;
+  $DBC9 HL++;
+  $DBCA A--;
+  $DBCB CP (HL)
+  $DBCC JR Z,$DBD0
+  $DBCE JR NC,$DBDC
+**$DBD0 A += $11;
+  $DBD2 CP (HL)
+  $DBD3 JR C,$DBDC
+  $DBD5 POP HL
+  $DBD6 SET 7,(HL)
+  $DBD8 SET 6,(HL)
+  $DBDA JR $DBE1
+**$DBDC POP HL
+  $DBDD RES 7,(HL)
+  $DBDF RES 6,(HL)
+**$DBE1 A = $07;
+  $DBE3 A += L;
+  $DBE4 L = A;
+  $DBE5 JR NC,$DBE8
+  $DBE7 H++;
+**$DBE8 } while (--B);
+  $DBEA return;
 
 ; ------------------------------------------------------------------------------
 
