@@ -7904,6 +7904,40 @@ D $C918 ...
 ; ------------------------------------------------------------------------------
 
 c $CA11 sub_CA11
+  $CA11 A = *HL;
+  $CA12 BC_becomes_A_times_8();      // self modified
+  $CA15 HL += 11;
+  $CA19 E = *HL++;
+  $CA1B D = *HL;
+  $CA1C EX DE,HL
+  $CA1D SBC HL,BC
+  $CA1F JR Z,$CA3E
+  $CA21 JP M,$CA30
+  $CA24 A = H;
+  $CA25 AND A
+  $CA26 JR NZ,$CA2D
+  $CA28 A = L;
+  $CA29 CP 3
+  $CA2B JR C,$CA3E
+  $CA2D A = 8;
+  $CA2F return;
+
+  $CA30 A = H;
+  $CA31 CP 255
+  $CA33 JR NZ,$CA3B
+  $CA35 A = L;
+  $CA36 CP 254
+  $CA38 JP NC,$CA3E
+  $CA3B A = 4;
+  $CA3D return;
+
+  $CA3E EX DE,HL
+  $CA3F A = L;
+  $CA40 SUB 11
+  $CA42 L = A;
+  $CA43 SET 5,IY[7]
+  $CA47 A = 0;
+  $CA48 return;
 
 ; ------------------------------------------------------------------------------
 
