@@ -8841,6 +8841,62 @@ c $DC41 sub_DC41
 ; ------------------------------------------------------------------------------
 
 c $DD02 sub_DD02
+  $DD02 HL = $81B5;
+  $DD05 DE = ($81BB);
+  $DD09 A = E;
+  $DD0A A += $18;
+  $DD0C A -= (HL);
+  $DD0D JR Z,$DD66
+  $DD0F JR C,$DD66
+  $DD11 CP $03
+  $DD13 JP NC,$DD1B
+  $DD16 B = $00;
+  $DD18 C = A;
+  $DD19 JR $DD33
+**$DD1B A = (HL);
+  $DD1C A += $03;
+  $DD1E A -= E;
+  $DD1F JR Z,$DD66
+  $DD21 JR C,$DD66
+  $DD23 CP $03
+  $DD25 JP NC,$DD2F
+  $DD28 C = A;
+  $DD29 A = $03;
+  $DD2B A -= C;
+  $DD2C B = A;
+  $DD2D JR $DD33
+**$DD2F B = $00;
+  $DD31 C = $03;
+**$DD33 A = D;
+  $DD34 A += $11;
+  $DD36 HL++;
+  $DD37 A -= (HL);
+  $DD38 JR Z,$DD66
+  $DD3A JR C,$DD66
+  $DD3C CP $02
+  $DD3E JP NC,$DD47
+  $DD41 E = $08;
+  $DD43 D = $00;
+  $DD45 JR $DD64
+**$DD47 A = (HL);
+  $DD48 A += $02;
+  $DD4A A -= D;
+  $DD4B JR Z,$DD66
+  $DD4D JR C,$DD66
+  $DD4F CP $02
+  $DD51 JP NC,$DD5E
+  $DD54 A = ($8214);
+  $DD57 A -= $08;
+  $DD59 E = A;
+  $DD5A D = $08;
+  $DD5C JR $DD64
+**$DD5E D = $00;
+  $DD60 A = ($8214);
+  $DD63 E = A;
+**$DD64 A = 0;
+  $DD65 return;
+**$DD66 A |= $01;
+  $DD68 return;
 
 ; ------------------------------------------------------------------------------
 
