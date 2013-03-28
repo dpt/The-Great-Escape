@@ -9653,15 +9653,144 @@ D $E40F [leaf]
 ; ------------------------------------------------------------------------------
 
 c $E420 sub_E420
-
-; ------------------------------------------------------------------------------
-
-c $E542 sub_E542
-
-; ------------------------------------------------------------------------------
-
-c $E550 rotate_AC_right_3_with_prologue
-C $E555 rotate_AC_right_3
+  $E420 HL += 15;
+  $E424 DE = &byte_81B2;
+  $E427 A = indoor_room_index;
+  $E42A if (A == 0) goto outdoors;
+  $E42D *DE++ = *HL++;
+  $E42F HL++;
+  $E430 *DE++ = *HL++;
+  $E432 HL++;
+  $E433 *DE++ = *HL++;
+  $E435 HL++;
+  $E436 JR $E44E
+;
+  $E438 outdoors: A = *HL++;
+  $E43A C = *HL;
+  $E43B divide_AC_by_8_with_rounding();
+  $E43E *DE++ = A;
+  $E43F HL++;
+  $E441 B = 2; // 2 iterations
+  $E443 do { A = *HL++;
+  $E445 C = *HL;
+  $E446 divide_AC_by_8();
+  $E449 *DE++ = A;
+  $E44A HL++;
+  $E44C } while (--B);
+;
+  $E44E C = *HL++;
+  $E450 B = *HL++;
+  $E451 PUSH BC
+  $E453 A = *HL++;
+  $E454 byte_81B7 = A;
+  $E457 EX AF,AF'
+  $E459 B = 2; // 2 iterations
+  $E45B do { A = *HL++;
+  $E45D C = *HL++;
+  $E45E divide_AC_by_8();
+  $E461 *DE++ = A;
+  $E464 } while (--B);
+;
+  $E466 EX AF,AF'
+  $E467 POP DE
+  $E468 DE += A * 6;
+;
+  $E471 L += 2;
+  $E473 EX DE,HL
+  $E474 *DE++ = *HL++;
+  $E476 *DE++ = *HL++;
+  $E478 memcpy(word_81AC, HL, 4);
+  $E480 ff_anded_with_ff();
+  $E483 if (A) return;
+;
+  $E485 PUSH BC
+  $E486 PUSH DE
+  $E487 A = IY[30];
+  $E48A if (A - 3 == 0) {
+  $E48E ($E2C2) = E; // self-modify
+  $E492 ($E363) = E; // self-modify
+  $E495 A = 3;
+  $E497 HL = pairs_of_offsets;
+  $E49A } else {
+;
+  $E49C A = E;
+  $E49D ($E121) = A; // self-modify
+  $E4A0 ($E1E2) = A; // self-modify
+  $E4A3 A = 4;
+  $E4A5 HL = pairs_of_offsets2; }
+;
+  $E4A8 PUSH HL
+  $E4A9 ($E4C0) = A; // self-modify
+  $E4AC E = A;
+  $E4AD A = B;
+  $E4AE if (A == 0) {
+  $E4B1 A = 0x77;
+  $E4B3 EX AF,AF'
+  $E4B4 A = C;
+  $E4B5 } else {
+;
+  $E4B7 A = 0;
+  $E4B8 EX AF,AF'
+  $E4B9 A = E;
+  $E4BA SUB C }
+;
+  $E4BB EXX
+  $E4BC POP HL
+  $E4BD C = A;
+  $E4BE EX AF,AF'
+  $E4BF B = 3; // 3 iterations // self modified by $E4A9
+  $E4C1 do { E = *HL++;
+  $E4C3 D = *HL++;
+  $E4C4 *DE = A;
+  $E4C6 E = *HL++;
+  $E4C8 D = *HL++;
+  $E4CA *DE = A;
+  $E4CB C--;
+  $E4CC if (Z) A ^= 0x77;
+  $E4D0 } while (--B);
+;
+  $E4D2 EXX
+  $E4D3 A = D;
+  $E4D4 AND A
+  $E4D5 DE = 0;
+  $E4D8 if (Z) {
+;
+  $E4DA HL = $81BC * 8;
+  $E4E3 EX DE,HL
+  $E4E4 L = IY[26];
+  $E4E7 H = IY[27];
+  $E4EA AND A
+  $E4EB SBC HL,DE
+  $E4ED HL *= 24;
+  $E4F4 EX DE,HL }
+;
+  $E4F5 A = map_position_related_1;
+  $E4F8 HL = &map_position_maybe;
+  $E4FB A -= *HL;
+  $E4FC HL = A;
+  $E4FF JR NC,$E503
+  $E501 H = 0xFF;
+;
+  $E503 HL += DE + 0xF290;
+  $E508 ($81A2) = HL;
+  $E50B HL = 0x8100;
+  $E50E POP DE
+  $E50F PUSH DE
+  $E510 L += D * 4 + (IY[26] & 7) * 4;
+  $E51E word_81B0 = HL;
+  $E521 POP DE
+  $E522 A = D;
+  $E523 if (A) {
+  $E526 D = A;
+  $E527 A = 0;
+  $E528 E = IY[30] - 1;
+  $E52C do { A += E; } while (--D); }
+;
+  $E531 E = A;
+  $E532 word_81AC += DE;
+  $E539 word_81AE += DE;
+  $E540 POP BC
+  $E541 return;
 
 ; ------------------------------------------------------------------------------
 
