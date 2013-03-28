@@ -28,6 +28,10 @@
 ; - Use SkoolKit # refs more.
 ;   - Currently using (<- somefunc) to show a reference.
 ; - Extract font.
+;
+; - Check occurences of INC/DEC (HL) against places where I may have mistakenly converted these as INC/DEC HL...
+; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
+
 ; //////////////////////////////////////////////////////////////////////////////
 ; ASSEMBLY PATTERNS
 ; //////////////////////////////////////////////////////////////////////////////
@@ -415,6 +419,9 @@
 ; morale_MIN = 0x00
 ; morale_MAX = 0x70
 
+; ; food item flags
+; itemfood_POISONED = 1<<5
+
 ; ; $8001 flags
 ; flag_PICKING_LOCK = 1<<0,
 ; flag_CUTTING_WIRE = 1<<1
@@ -432,6 +439,8 @@
 ; b $8001 flags: bit 6 gets toggled in set_target_location /  bit 0: picking lock /  bit 1: cutting wire
 ; w $8002 could be a target location (set in set_target_location, user_input_was_in_bed_perhaps)
 ; w $8004 (<- user_input_was_in_bed_perhaps)
+; b $8007
+; b $800A
 ; b $800D tunnel related (<- process_user_input, wire_snipped, user_input_was_in_bed_perhaps) assigned from table at 9EE0
 ; b $800E tunnel related, walk/crawl flag maybe? (bottom 2 bits index $9EE0)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by user_input_super)
@@ -449,6 +458,8 @@
 ;   $8023 likely a position
 ;   $8024 likely a position
 ;   $803C room index within struct at $8020
+
+; $8131 <- spotlight_foo
 
 ; w $81A2 (<- masked_sprite_plotter)
 
@@ -1754,7 +1765,7 @@ D $7D99 Looks like message_buffer is poked with the index of the message to disp
   $7DB0 D = *HL; // DE = messages_table[A]
   $7DB1 swap(DE, HL);
   $7DB2 current_message_character = HL;
-  $7DB5 memmove(message_buffer_slack, message_buffer, 16);
+  $7DB5 memmove(message_buffer, message_buffer + 2, 16);
   $7DC0 message_buffer_pointer -= 2;
   $7DC8 message_display_index = 0;
   $7DCC return;
@@ -1912,7 +1923,7 @@ w $81A8 word_81A8
 
 ; ------------------------------------------------------------------------------
 
-b $81AA word_81AA
+b $81AA byte_81AA
 
 ; ------------------------------------------------------------------------------
 
@@ -4552,8 +4563,8 @@ R $AAB2 O:HL == map_position_maybe
   $AB30 return;
 
 W $AB31 map_move_jump_table
-  $AB31 { map_move_1, 
-  $AB33 map_move_2, 
+  $AB31 { map_move_1,
+  $AB33 map_move_2,
   $AB35 map_move_3,
   $AB37 map_move_4 };
 
@@ -4910,7 +4921,7 @@ D $ADBD Turns the screen blue and tracks the player with a spotlight.
   $AE0A PUSH HL
   $AE0B goto $AE3F;
 ;
-  $AE0D not_tracking: HL = &word_AD29[0];
+  $AE0D not_tracking: HL = &word_AD29_used_by_nighttime[0];
   $AE10 B = 3; // 3 iterations
   $AE12 do { PUSH BC
   $AE13 PUSH HL
@@ -5114,7 +5125,7 @@ b $AF5E zoombox tiles
 
 ; -----------------------------------------------------------------------------
 
-b $AF8E bribe_related
+b $AF8E bribed_character
 
 ; ------------------------------------------------------------------------------
 
@@ -7136,7 +7147,7 @@ D $BCEE #CALL:map($BCEE, 54, 34)
 ; ------------------------------------------------------------------------------
 
 w $C41A word_C41A
-D $C41A [unknown] (<- increment_word_C41A_low_byte_wrapping_at_15)
+D $C41A [unknown] (<- get_A_indexed_by_C41A)
 
 ; -----------------------------------------------------------------------------
 
@@ -8408,7 +8419,7 @@ b $CD9A character_meta_data
 ; ------------------------------------------------------------------------------
 
 b $CDAA byte_CDAA
-D $CDAA (<- called_from_main_loop_9)
+D $CDAA,72,9 Groups of nine. (<- called_from_main_loop_9)
 
 ; ------------------------------------------------------------------------------
 
