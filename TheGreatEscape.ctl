@@ -5899,6 +5899,156 @@ D $B586 Boundaries.
 ; -----------------------------------------------------------------------------
 
 c $B5CE called_from_main_loop_9
+  $B5CE B = 8;
+  $B5D0 IY = $8000;
+;
+  $B5D4 do { A = IY[1];
+  $B5D7 if (A == 0xFF) goto next;
+  $B5DC PUSH BC
+  $B5DD IY[1] |= 1<<7;
+  $B5E1 if (IY[13] & (1<<7)) goto $B6BE;
+  $B5E8 H = IY[11];
+  $B5EB L = IY[10];
+  $B5EE A = IY[12];
+  $B5F1 A &= A;
+  $B5F2 JP P,$B64F // even parity
+  $B5F5 A &= 0x7F;
+  $B5F7 if (A == 0) goto $B6C2;
+  $B5FA HL += (A + 1) * 4 - 1;
+  $B602 A = *HL++;
+  $B603 EX AF,AF'
+;
+  $B605 EX DE,HL
+  $B606 L = IY[15];
+  $B609 H = IY[16];
+  $B60C A = *DE;
+  $B60D C = A;
+  $B60E A &= 0x80;
+  $B610 if (A) A = 0xFF;
+  $B614 B = A;
+  $B615 HL -= BC;
+  $B617 word_81A4 = HL;
+;
+  $B61A DE++;
+  $B61B L = IY[17];
+  $B61E H = IY[18];
+  $B621 A = *DE;
+  $B622 C = A;
+  $B623 A &= 0x80;
+  $B625 if (A) A = 0xFF;
+  $B629 B = A;
+  $B62A HL -= BC;
+  $B62C word_81A6 = HL;
+;
+  $B62F DE++;
+  $B630 L = IY[19];
+  $B633 H = IY[20];
+  $B636 A = *DE;
+  $B637 C = A;
+  $B638 A &= 0x80;
+  $B63A if (A) A = 0xFF;
+  $B63E B = A;
+  $B63F HL -= BC;
+  $B641 word_81A8 = HL;
+;
+  $B644 sub_AF8F();
+  $B647 JP NZ,$B6A8
+  $B64A IY[12]--;
+  $B64D JR $B6A2
+
+  $B64F if (A == *HL) goto $B6C2;
+  $B653 HL += (A + 1) * 4;
+;
+  $B65A EX DE,HL
+  $B65B A = *DE;
+  $B65C L = A;
+  $B65D A &= 0x80;
+  $B65F if (A) A = 0xFF;
+  $B663 H = A;
+  $B664 C = IY[15];
+  $B667 B = IY[16];
+  $B66A HL += BC;
+  $B66B word_81A4 = HL;
+;
+  $B66E DE++;
+  $B66F A = *DE;
+  $B670 L = A;
+  $B671 A &= 0x80;
+  $B673 if (A) A = 0xFF;
+  $B677 H = A;
+  $B678 C = IY[17];
+  $B67B B = IY[18];
+  $B67E HL += BC;
+  $B67F word_81A6 = HL;
+;
+  $B682 DE++;
+  $B683 A = *DE;
+  $B684 L = A;
+  $B685 A &= 0x80;
+  $B687 if (A) A = 0xFF;
+  $B68B H = A;
+  $B68C C = IY[19];
+  $B68F B = IY[20];
+  $B692 HL += BC;
+  $B693 word_81A8 = HL;
+;
+  $B696 DE++;
+  $B697 A = *DE;
+  $B698 EX AF,AF'
+  $B699 sub_AF8F();
+  $B69C JP NZ,$B6A8
+  $B69F IY[12]++;
+;
+  $B6A2 PUSH IY
+  $B6A4 POP HL
+  $B6A5 reset_something:$B729();
+;
+  $B6A8 POP BC
+  $B6A9 A = IY[1];
+  $B6AC if (A != 0xFF) IY[1] &= ~(1<<7);
+;
+  $B6B4 next: DE = 32; // stride
+  $B6B7 IY += DE;
+  $B6B9 } while (--B);
+  $B6BD return;
+
+  $B6BE IY[13] &= ~(1<<7);
+;
+  $B6C2 A = byte_CDAA[IY[14] * 9 + IY[13]];
+  $B6D5 C = A;
+  $B6D6 L = IY[8];
+  $B6D9 H = IY[9];
+  $B6DC A += A;
+  $B6DD E = A;
+  $B6DE HL += DE;
+  $B6DF E = *HL;
+  $B6E0 HL++;
+  $B6E1 IY[10] = E;
+  $B6E4 D = *HL;
+  $B6E5 IY[11] = D;
+  $B6E8 if ((C & (1<<7)) == 0) {
+  $B6EC IY[12] = 0;
+  $B6F0 DE += 2;
+  $B6F2 A = *DE;
+  $B6F3 IY[14] = A;
+  $B6F6 DE += 2;
+  $B6F8 EX DE,HL
+  $B6F9 JP $B65A }
+
+  $B6FC A = *DE;
+  $B6FD C = A;
+  $B6FE A |= 0x80;
+  $B700 IY[12] = A;
+  $B703 A = *++DE;
+  $B705 IY[14] = A;
+  $B708 DE += 3;
+  $B70B PUSH DE
+  $B70C EX DE,HL
+  $B70D HL += C * 4 - 1;
+  $B715 A = *HL;
+  $B716 EX AF,AF'
+  $B717 POP HL
+  $B718 JP $B605
 
 ; -----------------------------------------------------------------------------
 
