@@ -6187,6 +6187,75 @@ D $B866 Spotlight related.
 ; -----------------------------------------------------------------------------
 
 c $B89C no_idea
+  $B89C BC = 0;
+  $B89F DE = 0;
+  $B8A1 A = 0xFF;
+  $B8A3 EX AF,AF'
+  $B8A4 EXX
+  $B8A5 DE = 0;
+  $B8A8 BC = 0x0820; // B = 8 iterations, C = stride, 32
+  $B8AB HL = 0x8007;
+  $B8AE do { if ((*HL & (1<<7)) == 0) goto next;
+  $B8B2 PUSH HL
+  $B8B3 PUSH BC
+  $B8B4 HL += 8;
+  $B8B8 C = *HL++;
+  $B8BA B = *HL;
+  $B8BB BC += 4;
+  $B8BF PUSH BC
+  $B8C0 EXX
+  $B8C1 POP HL
+  $B8C2 SBC HL,BC
+  $B8C4 EXX
+  $B8C5 JR C,pop_next
+  $B8C7 HL++;
+  $B8C8 C = *HL++;
+  $B8CA B = *HL;
+  $B8CB BC += 4;
+  $B8CF PUSH BC
+  $B8D0 EXX
+  $B8D1 POP HL
+  $B8D2 SBC HL,DE
+  $B8D4 EXX
+  $B8D5 JR C,pop_next
+  $B8D7 HL++;
+  $B8D8 POP BC
+  $B8D9 PUSH BC
+  $B8DA A = 8;
+  $B8DC A -= B;
+  $B8DD EX AF,AF'
+  $B8DE E = *HL++;
+  $B8E0 D = *HL;
+  $B8E1 PUSH HL
+  $B8E2 EXX
+  $B8E3 POP HL
+  $B8E4 L -= 2;
+  $B8E6 D = *HL--;
+  $B8E8 E = *HL--;
+  $B8EA B = *HL--;
+  $B8EC C = *HL;
+  $B8ED HL -= 15;
+  $B8F1 PUSH HL
+  $B8F2 POP IY
+  $B8F4 EXX
+  $B8F5 pop_next: POP BC
+  $B8F6 POP HL
+  $B8F7 next: HL += C;
+  $B8FA } while (--B);
+  $B8FC sub_DBEB();
+  $B8FF EX AF,AF'
+  $B900 BIT 7,A
+  $B902 RET NZ
+  $B903 PUSH IY
+  $B905 POP HL
+  $B906 if ((A & (1<<6)) == 0) {
+  $B90A RES 7,(IY+$07)
+  $B90E return; } else {
+  $B90F HL++;
+  $B910 RES 6,*HL
+  $B912 BIT 6,*HL
+  $B914 HL--;
+  $B915 return; }
 
 ; -----------------------------------------------------------------------------
 
