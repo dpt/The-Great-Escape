@@ -4220,6 +4220,36 @@ D $A819 Causes some tile plotting.
 
 c $A8A2 sub_A8A2
 D $A8A2 resetish
+  $A8A2 DE = $F0F8;
+  $A8A5 EXX
+  $A8A6 HL = $FF58;
+  $A8A9 DE = $F290;
+  $A8AC A = map_position_maybe[0];
+  $A8AF B = 24; // 24 iterations (screen rows?)
+  $A8B1 do { PUSH BC
+  $A8B2 PUSH DE
+  $A8B3 PUSH HL
+  $A8B4 PUSH AF
+  $A8B5 EXX
+  $A8B6 PUSH DE
+  $A8B7 EXX
+  $A8B8 CALL $A8F4
+  $A8BB EXX
+  $A8BC POP DE
+  $A8BD DE++;
+  $A8BE EXX
+  $A8BF POP AF
+  $A8C0 POP HL
+  $A8C1 A++;
+  $A8C2 C = A;
+  $A8C3 A &= 3;
+  $A8C5 if (A == 0) HL++;
+  $A8C8 A = C;
+  $A8C9 POP DE
+  $A8CA DE++;
+  $A8CB POP BC
+  $A8CC } while (--B);
+  $A8CE return;
 
 ; ------------------------------------------------------------------------------
 
