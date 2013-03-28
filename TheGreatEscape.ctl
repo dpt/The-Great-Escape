@@ -8656,6 +8656,65 @@ c $DB9E called_from_main_loop_8
 
 c $DBEB sub_DBEB
 c $DBEB Uses BC_becomes_A_times_8.
+  $DBEB BC = $1007;
+  $DBEE HL = $76C9;
+  $DBF1 do { BIT 7,(HL)
+  $DBF3 JR Z,$DC38
+  $DBF5 BIT 6,(HL)
+  $DBF7 JR Z,$DC38
+  $DBF9 PUSH HL
+  $DBFA PUSH BC
+  $DBFB HL++;
+  $DBFC A = (HL);
+  $DBFD CALL $B1C7
+  $DC00 PUSH BC
+  $DC01 EXX
+  $DC02 POP HL
+  $DC03 AND A
+  $DC04 SBC HL,BC
+  $DC06 EXX
+  $DC07 JR Z,$DC36
+  $DC09 JR C,$DC36
+  $DC0B HL++;
+  $DC0C A = (HL);
+  $DC0D CALL $B1C7
+  $DC10 PUSH BC
+  $DC11 EXX
+  $DC12 POP HL
+  $DC13 SBC HL,DE
+  $DC15 EXX
+  $DC16 JR Z,$DC36
+  $DC18 JR C,$DC36
+  $DC1A PUSH HL
+  $DC1B EXX
+  $DC1C POP HL
+  $DC1D A = (HL);
+  $DC1E CALL $B1C7
+  $DC21 E = C;
+  $DC22 D = B;
+  $DC23 HL--;
+  $DC24 A = (HL);
+  $DC25 CALL $B1C7
+  $DC28 HL--;
+  $DC29 HL--;
+  $DC2A PUSH HL
+  $DC2B POP IY
+  $DC2D EXX
+  $DC2E POP BC
+  $DC2F PUSH BC
+  $DC30 A = $10;
+  $DC32 A -= B;
+  $DC33 A |= $40;
+  $DC35 EX AF,AF'
+**$DC36 POP BC
+  $DC37 POP HL
+**$DC38 A = C;
+  $DC39 A += L;
+  $DC3A L = A;
+  $DC3B JR NC,$DC3E
+  $DC3D H++;
+**$DC3E } while (--B);
+  $DC40 return;
 
 ; ------------------------------------------------------------------------------
 
