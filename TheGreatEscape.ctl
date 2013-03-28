@@ -892,7 +892,7 @@ c $6A35 select_room_maybe
   $6A52 A = *HL;
   $6A53 AND A
   $6A54 *DE = A;
-  $6A55 if (A == 0) <
+  $6A55 if (A == 0) {
   $6A57 HL++;
   $6A58 } else {
 
@@ -902,7 +902,7 @@ c $6A35 select_room_maybe
   $6A65 A = *HL++;
   $6A67 *DE = A;
   $6A68 AND A
-  $6A69 if (A) <
+  $6A69 if (A) {
 ;
   $6A6B DE++;
   $6A6C B = A;
@@ -6295,7 +6295,7 @@ D $CCAB Searches for a visible character and something else, sets a flag.
 D $CCAB If I nop this out then guards don't spot the items I drop.
   $CCAB HL = $8020;
   $CCB1 B = 7; // iterations
-  $CCB3 do <
+  $CCB3 do {
   $CCB4 if (HL[0] < character_20_prisoner && HL[19] < 0x20) HL[1] = 1; // set the flag [player taken to solitary]
   $CCC9 HL += 32; // step to next element
   $CCCA } while (--B);
@@ -7019,7 +7019,7 @@ c $EED3 plot_game_screen
   $EF37 EXX
   $EF38 Bdash = 128;
 
-  $EF3A do <
+  $EF3A do {
   $EF3B POP DE
   $EF3C B = 4;
 
@@ -7202,7 +7202,7 @@ D $F1E0 Plot statics and menu text.
   $F1E5 do { PUSH BC
   $F1E6 E = *HL++; // screen address
   $F1E8 D = *HL++;
-  $F1EA if (*HL & (1<<7)) <
+  $F1EA if (*HL & (1<<7)) {
   $F1EE plot_static_tiles_vertical();
   $F1F1 } else {
   $F1F3 plot_static_tiles_horizontal(); }
