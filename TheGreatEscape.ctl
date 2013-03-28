@@ -7981,15 +7981,127 @@ c $CA49 sub_CA49
 
 c $CA81 sub_CA81
 D $CA81 Bribes, solitary, food, 'character enters' sound.
+  $CA81 A = IY[1];
+  $CA84 C = A;
+  $CA85 A &= 63;
+  $CA87 if (A) {
+  $CA89 if (A == 1) {
 
-; ------------------------------------------------------------------------------
+  $CA8D A = bribed_character;
+  $CA90 if (A == [IY]) { use_bribe(); return; } // exit via
+  $CA96 else { solitary(); return; } } // exit via
 
-U $CB5F unused_CB5F
-D $CB5F,2 Unreferenced bytes.
+  $CA99 else if (A == 2 || A == 4) { return; }
 
-; ------------------------------------------------------------------------------
+  $CA9F PUSH HL
+  $CAA0 HL = &itemstruct_7.item; // item_FOOD poisoned?
+  $CAA3 if ((*HL & itemfood_POISONED) == 0) A = 32; else A = 255;
+  $CAAB byte_C891 = A;
+  $CAAE POP HL
+  $CAAF HL -= 2;
+  $CAB1 *HL = 0;
+  $CAB3 goto sub_C918::C9F5; }
 
-c $CB75 ld_bc_a
+  $CAB6 if ((C & (1<<6)) == 0) goto $CB13;
+
+  $CABA C = *--HL;
+  $CABC A = *--HL;
+  $CABE PUSH HL
+  $CABF element_A_of_table_7738();
+  $CAC2 POP HL
+  $CAC3 DE += C;
+  $CAC9 A = *DE;
+  $CACA if (*HL & (1<<7)) A ^= 0x80;
+
+  $CAD0 PUSH AF
+  $CAD1 A = *HL++;
+  $CAD3 if (A & (1<<7)) *HL -= 2;
+  $CAD9 *HL++;
+  $CADA POP AF
+  $CADB get_door_position(); // door related
+  $CADE A = *HL;
+  $CADF RRA
+  $CAE0 RRA
+  $CAE1 AND 63
+  $CAE3 IY[28] = A;
+  $CAE6 A = *HL & 3;
+  $CAE9 if (A < 2) HL += 5; else HL -= 3;
+  $CAF8 PUSH HL
+  $CAF9 PUSH IY
+  $CAFB POP HL
+  $CAFC A = L;
+  $CAFD if (A == 0) {
+  $CB01 HL++;
+  $CB02 *HL++ &= ~(1<<6);
+  $CB05 CALL $CB23 }
+
+  $CB08 POP HL
+  $CB09 sub_68A2();
+  $CB0C BC = sound_CHARACTER_ENTERS_1;
+  $CB0F play_speaker();
+  $CB12 return;
+
+  $CB13 HL -= 2;
+  $CB15 A = *HL;
+  $CB16 if (A != 255) {
+
+  $CB1A HL++;
+  $CB1B if (A & (1<<7)) {
+  $CB1F (*HL) -= 2;
+  $CB21 } else { (*HL)++;
+  $CB22 HL--; }
+
+; possibly a fallthrough here
+
+; This entry point is used by the routines at #R$A3B3, #R$B107 and #R$C918.
+  $CB23 PUSH HL
+  $CB24 sub_C651();
+  $CB27 if (A == 255)
+  $CB29 JP NZ,$CB61
+;
+  $CB2C POP HL
+; This entry point is used by the routine at #R$C4E0.
+  $CB2D A = L;
+  $CB2E if (A == 2) goto $CB46;
+  $CB33 A = [IY] & 0x1F;
+  $CB38 JR NZ,$CB42
+
+  $CB3A A = *HL & 0x7F;
+  $CB3D CP 36
+  $CB3F JR Z,$CB46
+
+  $CB41 A = 0;
+  $CB42 CP 12
+  $CB44 JR C,$CB50
+
+  $CB46 PUSH HL
+  $CB47 character_event();
+  $CB4A POP HL
+  $CB4B A = *HL;
+  $CB4C if (A == 0) return;
+  $CB4E JR $CB23
+
+  $CB50 *HL++ = *HL ^ 0x80;
+  $CB55 if (A & (1<<7)) {
+  $CB59 (*HL)--;
+  $CB5A (*HL)--; }
+
+  $CB5B (*HL)++
+  $CB5C HL--;
+  $CB5D A = 0;
+  $CB5E return;
+
+U $CB5F,2 Unreferenced bytes.
+
+  $CB61 if (A == 128) {
+  $CB66 IY[1] |= (1<<6); }
+
+  $CB6A POP DE
+  $CB6B DE += 2;
+  $CB6D BC = 2;
+  $CB70 LDIR
+  $CB72 A = 128;
+  $CB74 return;
 
 ; ------------------------------------------------------------------------------
 
