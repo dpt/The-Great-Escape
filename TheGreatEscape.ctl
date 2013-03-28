@@ -6140,11 +6140,49 @@ w $B839 word_B839
 
 ; -----------------------------------------------------------------------------
 
-c $B83B resetty2
+c $B83B spotlight_foo
+  $B83B PUSH IY
+  $B83D POP HL
+  $B83E if (L) return;
+  $B841 HL = $8131;
+  $B844 BC = 0x0804; // 8 iterations, C is ?
+  $B847 do { if (*HL != 0) goto b860
+  $B84B HL += 4;
+  $B84F } while (--B);
+  $B851 HL = &spotlight_found_player;
+  $B854 (*HL)--;
+  $B855 if (0xFF != *HL) return;
+  $B859 choose_game_screen_attributes();
+  $B85C set_game_screen_attributes();
+  $B85F return;
+
+  $B860 spotlight_found_player = 0x1F;
+  $B865 return;
 
 ; -----------------------------------------------------------------------------
 
 c $B866 called_from_main_loop_11
+D $B866 Spotlight related.
+  $B866 no_idea();
+  $B869 if (NZ) return;
+  $B86A if (A & (1<<6)) goto b88f
+  $B86E sub_E420();
+  $B871 if (NZ) goto called_from_main_loop_11;
+  $B873 sub_B916();
+  $B876 if (spotlight_found_player != 0xFF) spotlight_foo();
+  $B87E A = IY[0x1E];
+  $B881 if (A != 3) {
+  $B885 masked_sprite_plotter();
+  $B888 goto called_from_main_loop_11; }
+
+  $B88A if (Z) sub_E2A2(); // odd to test for Z since it's always set
+  $B88D goto called_from_main_loop_11;
+
+  $B88F sub_DC41();
+  $B892 if (NZ) goto called_from_main_loop_11;
+  $B894 sub_B916();
+  $B897 sub_E29F();
+  $B89A goto called_from_main_loop_11;
 
 ; -----------------------------------------------------------------------------
 
