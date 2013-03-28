@@ -3926,11 +3926,28 @@ c $A4C5 set_location_0x1000
 
 c $A4D3 sub_A4D3
 D $A4D3 Something character related [very similar to the routine at $A3F3].
+  $A4D3 A = character_index;
+  $A4D6 goto $A4E4;
 
 ; ------------------------------------------------------------------------------
 
 c $A4D8 varA13E_is_zero_anotherone
-D $A4D8 sets a target location 2B00
+D $A4D8 sets a target location 2B00. seems to get hit around breakfasting time. if i nobble this it stops him sitting for breakfast.
+  $A4D8 A = *IY; // must be a character index
+  $A4DC if (A) goto $A4E4;
+  $A4DE set_target_location(location_2B00); return; // exit via
+
+; This entry point is used by the routine at #R$A4D3.
+  $A4E4 HL[1] = 0;
+  $A4E7 if (A > 19) { // change this to 20 and character_21? stands in place of a guard
+  $A4EF newA = A - 2; // seems to affect position at table
+  $A4F1 } else {
+  $A4F3 ... moved below ...
+  $A4F5 newA = 24; // interleaved // guard character?
+  $A4F7 if (A & (1<<0)) newA++; }
+  $A4FA HL[0] = newA;
+  $A4FC return;
+; is it all just working out positions where people sit / stand?
 
 ; ------------------------------------------------------------------------------
 
