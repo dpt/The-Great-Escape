@@ -4793,7 +4793,69 @@ R $ACFC I:HL Destination address.
 
 ; ------------------------------------------------------------------------------
 
+w $AD29 word_AD29_used_by_nighttime
+
+; ------------------------------------------------------------------------------
+
 c $AD59 sub_AD59
+D $AD59 Used by nighttime.
+  $AD59 E = *HL++;
+  $AD5B D = *HL++;
+  $AD5D *HL--;
+  $AD5E JP NZ,$AD99
+  $AD61 HL += 2;
+  $AD63 A = *HL;
+  $AD64 BIT 7,A
+  $AD66 JP Z,$AD76
+  $AD69 A &= 0x7F;
+  $AD6B JP NZ,$AD72
+  $AD6E RES 7,*HL
+  $AD70 JR $AD74 // why not just jump direct?
+
+  $AD72 (*HL)--;
+  $AD73 A--;
+
+  $AD74 JR $AD78
+
+  $AD76 A++;
+  $AD77 *HL = A;
+
+  $AD78 HL++;
+  $AD79 C = *HL++;
+  $AD7B B = *HL;
+  $AD7C HL -= 2;
+  $AD7E A += A;
+  $AD7F A += C;
+  $AD80 C = A;
+  $AD81 JR NC,$AD84
+  $AD83 B++;
+
+  $AD84 A = *BC;
+  $AD85 if (A != 0xFF) goto ad90
+  $AD8A (*HL)--;
+  $AD8B *HL |= 1<<7;
+  $AD8D BC -= 2;
+  $AD8F A = *BC;
+
+  $AD90 HL -= 2;
+  $AD92 *HL++ = *BC++;
+  $AD96 *HL = *BC;
+  $AD98 return;
+
+  $AD99 HL++;
+  $AD9A A = *HL++;
+  $AD9C BIT 7,*HL
+  $AD9E JR Z,$ADA2
+  $ADA0 A ^= 2;
+
+  $ADA2 if (A < 2) D -= 2;
+
+  $ADA8 D++;
+  $ADA9 if (A != 0 && A != 3) { E += 2; } else { E -= 2 };
+  $ADB6 HL -= 3;
+  $ADB9 *HL-- = D;
+  $ADBB *HL = E;
+  $ADBC return;
 
 ; ------------------------------------------------------------------------------
 
