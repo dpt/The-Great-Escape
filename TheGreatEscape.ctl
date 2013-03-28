@@ -8719,6 +8719,124 @@ c $DBEB Uses BC_becomes_A_times_8.
 ; ------------------------------------------------------------------------------
 
 c $DC41 sub_DC41
+  $DC41 A &= 0x3F;
+  $DC43 possibly_holds_an_item = A;
+  $DC46 PUSH IY
+  $DC48 POP HL
+  $DC49 HL += 2;
+  $DC4B DE = &byte_81B2;
+  $DC4E BC = 5;
+  $DC51 LDIR
+  $DC53 EX DE,HL
+  $DC54 (HL) = B;
+  $DC55 HL = &item_definitions[0];
+  $DC58 A += A;
+  $DC59 C = A;
+  $DC5A A += A;
+  $DC5B A += C;
+  $DC5C C = A;
+  $DC5D HL += BC;
+  $DC5E HL++;
+  $DC5F A = (HL);
+  $DC60 byte_8214 = A;
+  $DC63 HL++;
+  $DC64 DE = $81AC;
+  $DC67 BC = $0004;
+  $DC6A LDIR
+  $DC6C sub_DD02();
+  $DC6F RET NZ
+  $DC70 PUSH BC
+  $DC71 PUSH DE
+  $DC72 A = E;
+  $DC73 ($E2C2) = A; // self modify
+  $DC76 A = B;
+  $DC77 AND A
+  $DC78 JP NZ,$DC81
+  $DC7B A = $77;
+  $DC7D EX AF,AF'
+  $DC7E A = C;
+  $DC7F JR $DC86
+
+**$DC81 A = 0;
+  $DC82 EX AF,AF'
+  $DC83 A = $03;
+  $DC85 A -= C;
+**$DC86 EXX
+  $DC87 C = A;
+  $DC88 EX AF,AF'
+  $DC89 HL = $E0E0;
+  $DC8C B = $03;
+**$DC8E do { E = (HL);
+  $DC8F HL++;
+  $DC90 D = (HL);
+  $DC91 (DE) = A;
+  $DC92 HL++;
+  $DC93 E = (HL);
+  $DC94 HL++;
+  $DC95 D = (HL);
+  $DC96 HL++;
+  $DC97 (DE) = A;
+  $DC98 C--;
+  $DC99 JR NZ,$DC9D
+  $DC9B XA |= $77;
+**$DC9D } while (--B);
+  $DC9F EXX
+  $DCA0 A = D;
+  $DCA1 AND A
+  $DCA2 DE = $0000;
+  $DCA5 JR NZ,$DCBC
+  $DCA7 HL = $81BC;
+  $DCAA A = ($81B6);
+  $DCAD A -= (HL);
+  $DCAE HL = A * 64;
+  $DCB7 E = L;
+  $DCB8 D = H;
+  $DCB9 HL += HL;
+  $DCBA HL += DE;
+  $DCBB EX DE,HL
+**$DCBC A = ($81B5);
+  $DCBF HL = $81BB;
+  $DCC2 A -= (HL);
+  $DCC3 L = A;
+  $DCC4 H = $00;
+  $DCC6 JR NC,$DCCA
+  $DCC8 H = $FF;
+**$DCCA HL += DE;
+  $DCCB DE = $F290;
+  $DCCE HL += DE;
+  $DCCF ($81A2) = HL;
+  $DCD2 HL = $8100;
+  $DCD5 POP DE
+  $DCD6 PUSH DE
+  $DCD7 A = D;
+  $DCD8 A += A;
+  $DCD9 A += A;
+  $DCDA A += L;
+  $DCDB L = A;
+  $DCDC ($81B0) = HL;
+  $DCDF POP DE
+  $DCE0 PUSH DE
+  $DCE1 A = D;
+  $DCE2 AND A
+  $DCE3 JR Z,$DCEF
+  $DCE5 D = A;
+  $DCE6 A = 0;
+  $DCE7 E = $03;
+  $DCE9 E--;
+**$DCEA A += E;
+  $DCEB D--;
+  $DCEC JP NZ,$DCEA
+**$DCEF E = A;
+  $DCF0 HL = ($81AC);
+  $DCF3 HL += DE;
+  $DCF4 ($81AC) = HL;
+  $DCF7 HL = ($81AE);
+  $DCFA HL += DE;
+  $DCFB ($81AE) = HL;
+  $DCFE POP BC
+  $DCFF POP DE
+  $DD00 A = 0;
+  $DD01 return;
 
 ; ------------------------------------------------------------------------------
 
