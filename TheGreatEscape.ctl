@@ -2022,18 +2022,18 @@ b $8218 tiles
 ;D $90F8 #UDGARRAY1,7,4,1;$90F8-$9767-8(exterior-tiles3)
 ;D $9768 #UDGARRAY1,7,4,1;$9768-$9D77-8(interior-tiles)
 ;
-D $8218 Exterior tiles set 0. 111 tiles. Looks like mask tiles for huts. (<- plot_a_tile_perhaps)
-D $8590 Exterior tiles set 1. 145 tiles. Looks like tiles for huts. (<- plot_a_tile_perhaps)
-D $8A18 Exterior tiles set 2. 220 tiles. Looks like main building wall tiles. (<- plot_a_tile_perhaps)
+D $8218 Exterior tiles set 0. 111 tiles. Looks like mask tiles for huts. (<- plot_tile)
+D $8590 Exterior tiles set 1. 145 tiles. Looks like tiles for huts. (<- plot_tile)
+D $8A18 Exterior tiles set 2. 220 tiles. Looks like main building wall tiles. (<- plot_tile)
 D $90F8 Exterior tiles set 3. 243 tiles. Looks like main building wall tiles.
 D $9768 Interior tiles. 194 tiles.
 ;
-;B $8A18,8 tile: ground1 [start of exterior tiles 2] (<- plot_a_tile_perhaps)
+;B $8A18,8 tile: ground1 [start of exterior tiles 2] (<- plot_tile)
 ;B $8A20,8 tile: ground2
 ;B $8A28,8 tile: ground3
 ;B $8A30,8 tile: ground4
 ;
-;D $9768,8 empty tile (<- plot_indoor_tiles, sub_BCAA)
+;D $9768,8 empty tile (<- plot_indoor_tiles, select_tiles)
 
 B $8218 #UDGARRAY1,7,4,1;$8218-$821F-8(exterior-tiles0-000)
 B $8220 #UDGARRAY1,7,4,1;$8220-$8227-8(exterior-tiles0-001)
