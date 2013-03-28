@@ -6661,6 +6661,174 @@ c $BAF7 ff_anded_with_ff
 ; -----------------------------------------------------------------------------
 
 c $BB98 called_from_main_loop_3
+  $BB98 B = $08;
+  $BB9A IY = $8000;
+**$BB9E PUSH BC
+  $BB9F A = (IY+$01);
+  $BBA2 CP $FF
+  $BBA4 JP Z,$BC9F
+  $BBA7 H = (IY+$1B);
+  $BBAA A = (IY+$1A);
+  $BBAD SRL H
+  $BBAF RRA
+  $BBB0 SRL H
+  $BBB2 RRA
+  $BBB3 SRL H
+  $BBB5 RRA
+  $BBB6 ($81B6) = A;
+  $BBB9 H = (IY+$19);
+  $BBBC A = (IY+$18);
+  $BBBF SRL H
+  $BBC1 RRA
+  $BBC2 SRL H
+  $BBC4 RRA
+  $BBC5 SRL H
+  $BBC7 RRA
+  $BBC8 ($81B5) = A;
+  $BBCB CALL $BAF7
+  $BBCE CP $FF
+  $BBD0 JP Z,$BC9F
+  $BBD3 A = E;
+  $BBD4 RRA
+  $BBD5 RRA
+  $BBD6 RRA
+  $BBD7 A &= $1F;
+  $BBD9 A += $02;
+  $BBDB PUSH AF
+  $BBDC HL = $81B6;
+  $BBDF A += *HL;
+  $BBE0 HL = $81BC;
+  $BBE3 A -= *HL;
+  $BBE4 JR C,$BBF7
+  $BBE6 A -= $11;
+  $BBE8 JR Z,$BBF7
+  $BBEA JR C,$BBF7
+  $BBEC E = A;
+  $BBED POP AF
+  $BBEE A -= E;
+  $BBEF JP C,$BC9F
+  $BBF2 JR NZ,$BBF8
+  $BBF4 JP $BC9F
+**$BBF7 POP AF
+**$BBF8 CP $05
+  $BBFA JP Z,$BC02
+  $BBFD JP C,$BC02
+  $BC00 A = $05;
+**$BC02 ($BC5F) = A;
+  $BC05 A = C;
+  $BC06 ($BC61) = A;
+  $BC09 ($BC89) = A;
+  $BC0C A = $18;
+  $BC0E A -= C;
+  $BC0F ($BC8E) = A;
+  $BC12 A += $A8;
+  $BC14 ($BC95) = A;
+  $BC17 HL = $81BB;
+  $BC1A A = B;
+  $BC1B A &= A;
+  $BC1C A = $00;
+  $BC1E JR NZ,$BC24
+  $BC20 A = ($81B5);
+  $BC23 A -= *HL;
+**$BC24 B = A;
+  $BC25 A = D;
+  $BC26 A &= A;
+  $BC27 A = $00;
+  $BC29 JR NZ,$BC30
+  $BC2B HL++;
+  $BC2C A = ($81B6);
+  $BC2F A -= *HL;
+**$BC30 C = A;
+  $BC31 H = C;
+  $BC32 XOR A
+  $BC33 SRL H
+  $BC35 RRA
+  $BC36 E = A;
+  $BC37 D = H;
+  $BC38 SRL H
+  $BC3A RRA
+  $BC3B L = A;
+  $BC3C HL += DE;
+  $BC3D E = B;
+  $BC3E D = $00;
+  $BC40 HL += DE;
+  $BC41 DE = $F290;
+  $BC44 HL += DE;
+  $BC45 EX DE,HL
+  $BC46 PUSH BC
+  $BC47 EXX
+  $BC48 POP HL
+  $BC49 EXX
+  $BC4A A = B;
+  $BC4B L = C;
+  $BC4C H = $00;
+  $BC4E HL += HL;
+  $BC4F HL += HL;
+  $BC50 HL += HL;
+  $BC51 C = L;
+  $BC52 B = H;
+  $BC53 HL += HL;
+  $BC54 HL += BC;
+  $BC55 C = A;
+  $BC56 B = $00;
+  $BC58 HL += BC;
+  $BC59 BC = $F0F8;
+  $BC5C HL += BC;
+  $BC5D EX DE,HL
+  $BC5E C = $05;
+**$BC60 B = $04;
+**$BC62 do { PUSH HL
+  $BC63 A = *DE;
+  $BC64 EXX
+  $BC65 POP DE
+  $BC66 PUSH HL
+  $BC67 select_tiles();
+  $BC6A L = A;
+  $BC6B H = $00;
+  $BC6D HL += HL;
+  $BC6E HL += HL;
+  $BC6F HL += HL;
+  $BC70 HL += BC;
+  $BC71 BC = $0818;
+**$BC74 do { A = *HL;
+  $BC75 *DE = A;
+  $BC76 A = C;
+  $BC77 A += E;
+  $BC78 JR NC,$BC7B
+  $BC7A D++;
+**$BC7B E = A;
+  $BC7C L++;
+  $BC7D } while (--B);
+  $BC7F POP HL
+  $BC80 H++;
+  $BC81 EXX
+  $BC82 DE++;
+  $BC83 HL++;
+  $BC84 } while (--B);
+  $BC86 EXX
+  $BC87 A = H;
+  $BC88 A -= $00;
+  $BC8A H = A;
+  $BC8B L++;
+  $BC8C EXX
+  $BC8D A = $14;
+  $BC8F A += E;
+  $BC90 JR NC,$BC93
+  $BC92 D++;
+**$BC93 E = A;
+  $BC94 A = $BC;
+  $BC96 A += L;
+  $BC97 JR NC,$BC9A
+  $BC99 H++;
+**$BC9A L = A;
+  $BC9B C--;
+  $BC9C JP NZ,$BC60
+**$BC9F POP BC
+  $BCA0 DE = $0020;
+  $BCA3 IY += DE;
+  $BCA5 B--;
+  $BCA6 JP NZ,$BB9E
+  $BCA9 return;
 
 ; -----------------------------------------------------------------------------
 
