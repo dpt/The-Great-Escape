@@ -4146,6 +4146,75 @@ c $A80A sub_A80A
 ; ------------------------------------------------------------------------------
 
 c $A819 sub_A819
+D $A819 Causes some tile plotting.
+  $A819 DE = $F0F8;
+  $A81C EXX
+  $A81D HL = $FF58;
+  $A820 A = map_position_maybe[1]; // map_position_maybe hi
+  $A823 DE = $F290;
+
+; This entry point is used by the routine at #R$A80A.
+  $A826 A = (A & 3) * 4;
+  $A82A ($A86A) = A; // self modify
+  $A82D C = A;
+  $A82E A = (map_position_maybe[0] & 3) + C;
+  $A834 EX AF,AF'
+  $A835 A = *HL;
+  $A836 EXX
+  $A837 HL = 0x5B00 + A * 16;
+  $A842 EX AF,AF'
+  $A843 A += L;
+  $A844 L = A;
+  $A845 A = -A;
+  $A847 A &= 3;
+  $A849 if (A == 0) A = 4;
+  $A84D B = A; // iterations
+  $A84E do { A = *HL;
+  $A84F *DE = A;
+  $A850 plot_tile();
+  $A853 HL++;
+  $A854 DE++;
+  $A855 } while (--B);
+  $A857 EXX
+  $A858 HL++;
+  $A859 B = 5; // 5 iterations
+  $A85B do { PUSH BC
+  $A85C A = *HL;
+  $A85D EXX
+  $A85E HL = &super_tiles[A];
+  $A869 A = 0; // must be self modified
+  $A86B A += L; // looks odd
+  $A86C L = A;
+  $A86D B = 4; // 4 iterations
+  $A86F do { A = *HL;
+  $A870 *DE = A;
+  $A871 plot_tile();
+  $A874 HL++;
+  $A875 DE++;
+  $A876 } while (--B);
+  $A878 EXX
+  $A879 HL++;
+  $A87A POP BC
+  $A87B } while (--B);
+  $A87D A = C;
+  $A87E EX AF,AF'
+  $A87F A = *HL;
+  $A880 EXX
+  $A881 HL = &super_tiles[A];
+  $A88C A = ($A86A); // read self modified
+  $A88F A += L;
+  $A890 L = A;
+  $A891 A = map_position_maybe[0]; // map_position_maybe lo
+  $A894 A &= 3;
+  $A896 if (A == 0) return;
+  $A897 B = A;
+  $A898 do { A = *HL;
+  $A899 *DE = A;
+  $A89A plot_tile();
+  $A89D HL++;
+  $A89E DE++;
+  $A89F } while (--B);
+  $A8A1 return;
 
 ; ------------------------------------------------------------------------------
 
