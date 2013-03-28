@@ -4254,6 +4254,14 @@ D $A8A2 resetish
 ; ------------------------------------------------------------------------------
 
 c $A8CF sub_A8CF
+  $A8CF DE = $F10F;
+  $A8D2 EXX
+  $A8D3 HL = $FF5E;
+  $A8D6 DE = $F2A7;
+  $A8D9 A = map_position_maybe[0] & 3; // map_position_maybe lo
+  $A8DE if (A == 0) HL--;
+  $A8E1 A = map_position_maybe[0] - 1; // map_position_maybe lo
+  $A8E5 JR $A8F4
 
 ; ------------------------------------------------------------------------------
 
