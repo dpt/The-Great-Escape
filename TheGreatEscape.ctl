@@ -3952,6 +3952,11 @@ D $A4D8 sets a target location 2B00. seems to get hit around breakfasting time. 
 ; ------------------------------------------------------------------------------
 
 c $A4FD sub_A4FD
+  $A4FD A = 26;
+  $A4FF EX AF,AF'
+  $A500 C = 0;
+  $A502 sub_A35F();
+  $A505 set_target_location(location_2D00);
 
 ; ------------------------------------------------------------------------------
 
