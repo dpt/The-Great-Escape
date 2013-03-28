@@ -4106,6 +4106,32 @@ b $A7C7 plot_game_screen_x
 
 c $A7C9 sub_A7C9
 D $A7C9 resetish
+  $A7C9 A = map_position_maybe[1] & 0xFC;
+  $A7CE HL = A;
+  $A7D1 RRA
+  $A7D2 A &= 0x7F;
+  $A7D4 HL += A;
+  $A7D9 HL *= 9;
+  $A7DF DE = $BCB8; // &map_tiles[0] - some_amount
+  $A7E2 HL += DE;
+  $A7E3 A = map_position_maybe;
+  $A7E6 RRA
+  $A7E7 RRA
+  $A7E8 A &= 0x3F;
+  $A7EA DE = A;
+  $A7ED HL += DE;
+  $A7EE A = 5;
+  $A7F0 DE = $FF58;
+  $A7F3 do { LDI
+  $A7F5 LDI
+  $A7F7 LDI
+  $A7F9 LDI
+  $A7FB LDI
+  $A7FD LDI
+  $A7FF LDI
+  $A801 HL += 0x2F;
+  $A805 } while (--A);
+  $A809 return;
 
 ; ------------------------------------------------------------------------------
 
