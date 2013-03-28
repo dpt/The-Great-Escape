@@ -7243,6 +7243,121 @@ D $C47E Run through all visible characters, resetting them.
 ; -----------------------------------------------------------------------------
 
 c $C4E0 sub_C4E0
+  $C4E0 BIT 6,*HL  // if (*HL & (1<<6)) ...
+  $C4E2 RET NZ
+;
+  $C4E3 PUSH HL
+  $C4E4 HL = $8020;
+  $C4E7 DE = 32; // stride
+  $C4EA A = 255;
+  $C4EC B = 7; // 7 iterations
+  $C4EE do { if (A == *HL) goto $C4F6;
+  $C4F1 HL += DE;
+  $C4F2 } while (--B);
+  $C4F4 POP HL
+  $C4F5 return;
+
+  $C4F6 POP DE
+  $C4F7 PUSH HL
+  $C4F8 POP IY
+  $C4FA PUSH HL
+  $C4FB PUSH DE
+  $C4FC DE++;
+  $C4FD HL = &word_81A4;
+  $C500 A = *DE++;
+  $C502 A &= A;
+  $C503 JR NZ,$C518
+  $C505 A = 3; // 3 iterations
+  $C507 do { EX AF,AF'
+  $C508 A = *DE;
+  $C509 BC_becomes_A_times_8();
+  $C50C *HL++ = C;
+  $C50E *HL++ = B;
+  $C510 DE++;
+  $C511 EX AF,AF'
+  $C512 } while (--A);
+  $C516 JR $C523
+
+  $C518 B = 3; // 3 iterations
+  $C51A do { *HL++ = *DE++;
+  $C51E *HL++ = 0;
+  $C521 } while (--B);
+
+  $C523 sub_AFDF();
+  $C526 if (Z) bounds_check();
+  $C529 POP DE
+  $C52A POP HL
+  $C52B RET NZ
+
+  $C52C A = *DE | 64;
+  $C52F *DE = A;
+  $C530 A &= 0x1F;
+  $C532 *HL++ = A;
+  $C534 *HL = 0;
+  $C536 PUSH DE
+  $C537 DE = &character_meta_data[0]; // commandant
+  $C53A if (A == 0) goto selected;
+  $C53D DE = &character_meta_data[1]; // guard
+  $C540 if (A < 16) goto selected;
+  $C544 DE = &character_meta_data[2]; // dog
+  $C547 if (A < 20) goto selected;
+  $C54B DE = &character_meta_data[3]; // prisoner
+
+  $C54E selected: EX DE,HL
+  $C54F DE += 7;
+  $C553 LDI
+  $C555 LDI
+  $C557 DE += 11;
+  $C55B LDI
+  $C55D LDI
+  $C55F DE -= 8;
+  $C563 memcpy(DE, &word_81A4, 6);
+  $C56B POP HL
+  $C56C HL += 5;
+  $C571 DE += 7;
+  $C575 A = indoor_room_index;
+  $C578 *DE = A;
+  $C579 AND A
+  $C57A JR Z,$C588
+  $C57C play_speaker(sound_CHARACTER_ENTERS_2);
+  $C582 play_speaker(sound_CHARACTER_ENTERS_1);
+
+  $C588 DE -= 26;
+  $C58C LDI
+  $C58E LDI
+  $C590 HL -= 2;
+
+  $C592 A = *HL;
+  $C593 AND A
+  $C594 JR NZ,$C59C
+  $C596 DE += 3;
+  $C59A JR $C5C4
+
+  $C59C A = 0;
+  $C59D byte_A13E = A;
+  $C5A0 PUSH DE
+  $C5A1 sub_C651();
+  $C5A4 if (A != 255) goto $C5B6;
+  $C5A8 POP HL
+  $C5A9 HL -= 2;
+  $C5AB PUSH HL
+  $C5AC CALL $CB2D
+  $C5AF POP HL
+  $C5B0 DE = HL + 2;
+  $C5B4 JR $C592
+
+  $C5B6 if (A == 128) IY[1] |= 1<<6;
+  $C5BE POP DE
+  $C5BF memcpy(DE, HL, 3);
+
+  $C5C4 A = 0;
+  $C5C5 *DE = A;
+  $C5C6 DE -= 7;
+  $C5CA EX DE,HL
+  $C5CB PUSH HL
+  $C5CC reset_something();
+  $C5CF POP HL
+  $C5D0 sub_C918(); return; // exit via
 
 ; -----------------------------------------------------------------------------
 
