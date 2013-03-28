@@ -6284,9 +6284,67 @@ D $CC31 (<- solitary)
 ; ------------------------------------------------------------------------------
 
 c $CC37 guards_follow_suspicious_player
-  $CC37 ...
-  $CC3E if (*$8015 == sprite_guard_tl_4) return;  // don't follow the player if he's dressed as a guard
-  $CC46 ...
+  $CC37 PUSH IY
+  $CC39 POP HL
+  $CC3A A = *HL;
+D $CC3B Don't follow the player if he's dressed as a guard
+  $CC3B if (A && *$8015 == sprite_guard_tl_4) return;
+  $CC46 HL++;
+  $CC47 A = *HL;
+  $CC48 if (A == 4) return;
+  $CC4B HL--;
+  $CC4C HL += 15;
+  $CC50 DE = &byte_81B2;
+  $CC53 if (indoor_room_index) goto indoors;
+  $CC5A divide_3xAC_by_8_with_rounding();
+  $CC5D HL = &player_map_position_perhapsX;
+  $CC60 DE = &byte_81B2;
+  $CC63 A = IY[14];
+  $CC66 RRA
+  $CC67 C = A;
+  $CC68 JR C,$CC80
+  $CC6A HL++;
+  $CC6B DE++;
+; range check
+  $CC6C A = *DE - 1;
+  $CC6E if (A >= *HL) return;
+  $CC70 A += 2;
+  $CC72 if (A < *HL) return;
+  $CC74 HL--;
+  $CC75 DE--;
+  $CC76 A = *DE;
+  $CC77 CP *HL  // This is odd: Why CP then BIT?
+  $CC78 BIT 0,C
+  $CC7A JR NZ,$CC7D
+  $CC7C CCF  // invert carry
+
+  $CC7D RET C   // This is odd: CCF then RET C?
+  $CC7E goto indoors;
+
+; range check
+  $CC80 A = *DE - 1;
+  $CC82 if (A >= *HL) return;
+  $CC84 A += 2;
+  $CC86 if (A < *HL) return;
+  $CC88 HL++;
+  $CC89 DE++;
+  $CC8A A = *DE;  // more oddness
+  $CC8B CP *HL
+  $CC8C BIT 0,C
+  $CC8E JR NZ,$CC91
+  $CC90 CCF  // invert carry
+
+  $CC91 RET C
+
+  $CC92 indoors: if (naughty_flag_perhaps) goto CCA3;
+  $CC98 A = IY[19];
+  $CC9B if (A >= 32) return;
+  $CC9E IY[1] = 2;
+  $CCA2 return;
+
+  $CCA3 bell = 0; // ring indefinitely
+  $CCA7 sub_CCAB();
+  $CCAA return;
 
 ; ------------------------------------------------------------------------------
 
