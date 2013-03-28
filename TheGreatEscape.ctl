@@ -4266,10 +4266,92 @@ c $A8CF sub_A8CF
 ; ------------------------------------------------------------------------------
 
 c $A8E7 sub_A8E7
+  $A8E7 DE = $F0F8;
+  $A8EA EXX
+  $A8EB HL = $FF58;
+  $A8EE DE = $F290;
+  $A8F1 A = map_position_maybe[0]; // map_position_maybe lo
+;; This entry point is used by the routines at #R$A8A2 and #R$A8CF.
+  $A8F4 A &= 3;
+  $A8F6 ($A94D) = A; // self modify
+  $A8F9 C = A;
+  $A8FA A = (map_position_maybe[1] & 3) * 4 + C;
+  $A902 EX AF,AF'
+  $A903 A = *HL;
+  $A904 EXX
+  $A905 HL = 0x5B00 + A * 16;
+  $A910 EX AF,AF'
+  $A911 A += L;
+  $A912 L = A;
+  $A913 RRA
+  $A914 RRA
+  $A915 A = -(A & 3) & 3;
+  $A91B if (A == 0) A = 4;
+  $A91F EX DE,HL
+  $A920 BC = 24; // 24 iterations (screen rows?)
+  $A923 do { PUSH AF
+  $A924 A = *DE;
+  $A925 *HL = A;
+  $A926 call_plot_tile_inc_de();
+  $A929 DE += 4; // stride
+  $A92D HL += BC;
+  $A92E POP AF
+  $A92F } while (--A);
+  $A933 EX DE,HL
+  $A934 EXX
+  $A935 HL += 7;
+  $A93C B = 3; // 3 iterations
+  $A93E do { PUSH BC
+  $A93F A = *HL;
+  $A940 EXX
+  $A941 HL = 0x5B00 + A * 16;
+  $A94C A = 0; // self modified
+  $A94E A += L;
+  $A94F L = A;
+  $A950 BC = 24; // stride
+  $A953 EX DE,HL
+  $A954 A = 4;
+  $A956 do { PUSH AF
+  $A957 A = *DE;
+  $A958 *HL = A;
+  $A959 call_plot_tile_inc_de();
+  $A95C HL += BC;
+  $A95D DE += 4; // stride
+  $A961 POP AF
+  $A962 } while (--A);
+  $A966 EX DE,HL
+  $A967 EXX
+  $A968 A = L;
+  $A969 A += 7;
+  $A96B L = A;
+  $A96C JR NC,$A96F
+  $A96E H++;
+  $A96F POP BC
+  $A970 } while (--B);
+  $A972 A = *HL;
+  $A973 EXX
+  $A974 HL = 0x5B00 + A * 16;
+  $A97F A = ($A94D);
+  $A982 A += L;
+  $A983 L = A;
+  $A984 A = map_position_maybe[1];
+  $A987 A &= 3;
+  $A989 A++;
+  $A98A BC = $18;
+  $A98D EX DE,HL
+  $A98E do { PUSH AF
+  $A98F A = *DE;
+  $A990 *HL = A;
+  $A991 call_plot_tile_inc_de();
+  $A994 A = 4;
+  $A996 A += E;
+  $A997 E = A;
+  $A998 HL += BC;
+  $A999 POP AF
+  $A99A } while (--A);
+  $A99E EX DE,HL
+  $A99F return;
 
-; ------------------------------------------------------------------------------
-
-c $A9A0 sub_A9A0
 
 ; -----------------------------------------------------------------------------
 
