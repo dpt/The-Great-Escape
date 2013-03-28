@@ -3791,10 +3791,31 @@ c $A3ED store_banked_A_then_C_at_HL
 
 c $A3F3 sub_A3F3
 D $A3F3 Checks character indexes, sets target locations, ...
+  $A3F3 A = character_index;
+  $A3F6 JR $A404
 
 ; ------------------------------------------------------------------------------
 
 c $A3F8 varA13E_is_zero
+  $A3F8 A = [IY];
+  $A3FB if (A == 0) set_target_location(location_2C00);
+
+; This entry point is used by the routine at #R$A3F3.
+  $A404 *++HL = 0;
+  $A407 CP 19  // if (A <= 19) goto A413;
+  $A409 JP Z,$A413
+  $A40C JP C,$A413
+  $A40F A -= 13;
+  $A411 JR $A41D
+
+  $A413 BIT 0,A  // if (A & (1<<0)) ...
+  $A415 A = 13;
+  $A417 JR Z,$A41D  // goto A41D;
+  $A419 *HL = 1;
+  $A41B A |= 0x80;
+
+  $A41D *--HL = A;
+  $A41F return;
 
 ; ------------------------------------------------------------------------------
 
