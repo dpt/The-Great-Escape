@@ -5327,9 +5327,7 @@ D $B123 We have a bribe.
   $B130 HL = $8020; // visible characters
   $B133 do { A = *HL; // character index?
   $B134 if (A < 20) { // why 20?
-  $B138 HL++;
-  $B139 *HL = 4;
-  $B13B HL--; }
+  $B138 HL[1] = 4; }
   $B13C HL += 32;
   $B140 } while (--B);
   $B142 queue_message_for_display(message_HE_TAKES_THE_BRIBE);
