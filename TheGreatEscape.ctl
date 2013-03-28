@@ -6366,6 +6366,31 @@ R $CCFB O:C ?
 ; ------------------------------------------------------------------------------
 
 c $CD31 item_discovered
+R $CD31 I:C ...
+  $CD31 A = C;
+  $CD32 if (A == 0xFF) return;
+  $CD35 A &= 0x0F;
+  $CD37 PUSH AF
+  $CD38 queue_message_for_display(message_ITEM_DISCOVERED);
+  $CD3D decrease_morale(5);
+  $CD42 POP AF
+  $CD43 A = item_location[A].room_and_flags;
+  $CD4D EX DE,HL
+  $CD4E EX AF,AF'
+  $CD4F A = C;
+  $CD50 item_to_itemstruct();
+  $CD53 RES 7,*HL
+  $CD55 EX DE,HL
+  $CD56 DE++;
+  $CD57 memcpy(DE, HL, 3); DE += 3; HL += 3;
+  $CD5C EX DE,HL
+  $CD5D EX AF,AF'
+  $CD5E if (A) goto cd65
+  $CD61 *HL = A;
+  $CD62 JP $7BD0
+
+  $CD65 *HL = 5;
+  $CD67 JP $7BF2
 
 ; ------------------------------------------------------------------------------
 
