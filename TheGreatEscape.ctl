@@ -6261,6 +6261,296 @@ c $B89C no_idea
 
 c $B916 sub_B916
 D $B916 Sets attr of something, checks indoor room index, ...
+  $B916 HL = $8100;
+  $B919 (HL) = $FF;
+  $B91B DE = $8101;
+  $B91E BC = $009F;
+  $B921 LDIR
+  $B923 A = indoor_room_index;
+  $B926 A &= A;
+  $B927 JR Z,$B935
+  $B929 HL = $81DA;
+  $B92C A = (HL);
+  $B92D A &= A;
+  $B92E RET Z
+  $B92F B = A;
+  $B930 HL++;
+  $B931 HL++;
+  $B932 HL++;
+  $B933 JR $B93A
+
+**$B935 B = $3B;
+  $B937 HL = $EC03;
+**$B93A PUSH BC
+  $B93B PUSH HL
+  $B93C A = ($81B5);
+  $B93F A--;
+  $B940 CP (HL)
+  $B941 JP NC,$BAC3
+  $B944 A += $04;
+  $B946 HL--;
+  $B947 CP (HL)
+  $B948 JP C,$BAC3
+  $B94B HL++;
+  $B94C HL++;
+  $B94D HL++;
+  $B94E A = ($81B6);
+  $B951 A--;
+  $B952 CP (HL)
+  $B953 JP NC,$BAC3
+  $B956 A += $05;
+  $B958 HL--;
+  $B959 CP (HL)
+  $B95A JP C,$BAC3
+  $B95D HL++;
+  $B95E HL++;
+  $B95F A = ($81B2);
+  $B962 CP (HL)
+  $B963 JP Z,$BAC3
+  $B966 JP C,$BAC3
+  $B969 HL++;
+  $B96A A = ($81B3);
+  $B96D CP (HL)
+  $B96E JP C,$BAC3
+  $B971 HL++;
+  $B972 A = ($81B4);
+  $B975 A &= A;
+  $B976 JR Z,$B979
+  $B978 A--;
+**$B979 CP (HL)
+  $B97A JP NC,$BAC3
+  $B97D A = L;
+  $B97E A -= $06;
+  $B980 L = A;
+  $B981 JR NC,$B984
+  $B983 H--;
+**$B984 A = ($81B5);
+  $B987 C = A;
+  $B988 CP (HL)
+  $B989 JP C,$B99F
+  $B98C A -= (HL);
+  $B98D ($B837) = A;
+  $B990 HL++;
+  $B991 A = (HL);
+  $B992 A -= C;
+  $B993 CP $03
+  $B995 JR C,$B999
+  $B997 A = $03;
+**$B999 A++;
+  $B99A ($B83A) = A;
+  $B99D JR $B9B6
+
+**$B99F B = (HL);
+  $B9A0 XOR A
+  $B9A1 ($B837) = A;
+  $B9A4 A = B;
+  $B9A5 A -= C;
+  $B9A6 C = A;
+  $B9A7 A = $04;
+  $B9A9 A -= C;
+  $B9AA C = A;
+  $B9AB HL++;
+  $B9AC A = (HL);
+  $B9AD A -= B;
+  $B9AE A++;
+  $B9AF CP C
+  $B9B0 JR C,$B9B3
+  $B9B2 A = C;
+**$B9B3 ($B83A) = A;
+**$B9B6 HL++;
+  $B9B7 A = ($81B6);
+  $B9BA C = A;
+  $B9BB CP (HL)
+  $B9BC JP C,$B9D2
+  $B9BF A -= (HL);
+  $B9C0 ($B838) = A;
+  $B9C3 HL++;
+  $B9C4 A = (HL);
+  $B9C5 A -= C;
+  $B9C6 CP $04
+  $B9C8 JR C,$B9CC
+  $B9CA A = $04;
+**$B9CC A++;
+  $B9CD ($B839) = A;
+  $B9D0 JR $B9E9
+
+**$B9D2 B = (HL);
+  $B9D3 XOR A
+  $B9D4 ($B838) = A;
+  $B9D7 A = B;
+  $B9D8 A -= C;
+  $B9D9 C = A;
+  $B9DA A = $05;
+  $B9DC A -= C;
+  $B9DD C = A;
+  $B9DE HL++;
+  $B9DF A = (HL);
+  $B9E0 A -= B;
+  $B9E1 A++;
+  $B9E2 CP C
+  $B9E3 JR C,$B9E6
+  $B9E5 A = C;
+**$B9E6 ($B839) = A;
+**$B9E9 HL--;
+  $B9EA BC = $0000;
+  $B9ED A = ($B838);
+  $B9F0 A &= A;
+  $B9F1 JR NZ,$B9FA
+  $B9F3 A = ($81B6);
+  $B9F6 NEG
+  $B9F8 A += (HL);
+  $B9F9 C = A;
+**$B9FA HL--;
+  $B9FB HL--;
+  $B9FC A = ($B837);
+  $B9FF A &= A;
+  $BA00 JR NZ,$BA09
+  $BA02 A = ($81B5);
+  $BA05 NEG
+  $BA07 A += (HL);
+  $BA08 B = A;
+**$BA09 HL--;
+  $BA0A A = (HL);
+  $BA0B EX AF,AF'
+  $BA0C A = C;
+  $BA0D A += A;
+  $BA0E A += A;
+  $BA0F A += A;
+  $BA10 A += A;
+  $BA11 A += A;
+  $BA12 A += B;
+  $BA13 HL = $8100;
+  $BA16 A += L;
+  $BA17 L = A;
+  $BA18 ($81A0) = HL;
+  $BA1B EX AF,AF'
+  $BA1C A += A;
+  $BA1D C = A;
+  $BA1E B = $00;
+  $BA20 HL = $EBC5;
+  $BA23 HL += BC;
+  $BA24 E = (HL);
+  $BA25 HL++;
+  $BA26 D = (HL);
+  $BA27 HL = ($B839);
+  $BA2A A = L;
+  $BA2B ($BA70) = A;
+  $BA2E A = H;
+  $BA2F ($BA72) = A;
+  $BA32 A = (DE);
+  $BA33 A -= H;
+  $BA34 ($BA90) = A;
+  $BA37 A = $20;
+  $BA39 A -= H;
+  $BA3A ($BABA) = A;
+  $BA3D PUSH DE
+  $BA3E A = (DE);
+  $BA3F E = A;
+  $BA40 A = ($B838);
+  $BA43 CALL $BACD
+  $BA46 A = ($B837);
+  $BA49 E = A;
+  $BA4A HL += DE;
+  $BA4B POP DE
+  $BA4C HL++;
+**$BA4D A = (DE);
+  $BA4E A &= A;
+  $BA4F JP P,$BA60
+  $BA52 A &= $7F;
+  $BA54 DE++;
+  $BA55 C = A;
+  $BA56 SBC HL,BC
+  $BA58 JR C,$BA69
+  $BA5A DE++;
+  $BA5B JR NZ,$BA4D
+  $BA5D XOR A
+  $BA5E JR $BA6C
+
+**$BA60 DE++;
+  $BA61 HL--;
+  $BA62 A = L;
+  $BA63 OR H
+  $BA64 JP NZ,$BA4D
+  $BA67 JR $BA6C
+
+**$BA69 A = L;
+  $BA6A NEG
+**$BA6C HL = ($81A0);
+  $BA6F C = $01;
+**$BA71 B = $01;
+**$BA73 do { EX AF,AF'
+  $BA74 A = (DE);
+  $BA75 A &= A;
+  $BA76 JP P,$BA7E
+  $BA79 A &= $7F;
+  $BA7B EX AF,AF'
+  $BA7C DE++;
+  $BA7D A = (DE);
+**$BA7E A &= A;
+  $BA7F CALL NZ,$BADC
+  $BA82 L++;
+  $BA83 EX AF,AF'
+  $BA84 A &= A;
+  $BA85 JR Z,$BA8B
+  $BA87 A--;
+  $BA88 JR Z,$BA8B
+  $BA8A DE--;
+**$BA8B DE++;
+  $BA8C } while (--B);
+  $BA8E PUSH BC
+  $BA8F B = $01;
+  $BA91 EX AF,AF'
+  $BA92 A = B;
+  $BA93 A &= A;
+  $BA94 JP Z,$BAB9
+  $BA97 EX AF,AF'
+  $BA98 A &= A;
+  $BA99 JR NZ,$BAA3
+**$BA9B do { A = (DE);
+  $BA9C A &= A;
+  $BA9D JP P,$BAAF
+  $BAA0 A &= $7F;
+  $BAA2 DE++;
+**$BAA3 C = A;
+  $BAA4 A = B;
+  $BAA5 A -= C;
+  $BAA6 B = A;
+  $BAA7 JR C,$BAB6
+  $BAA9 DE++;
+  $BAAA JR NZ,$BA9B
+  $BAAC EX AF,AF'
+  $BAAD JR $BAB9
+
+**$BAAF DE++;
+  $BAB0 } while (--B);
+  $BAB2 A = 0;
+  $BAB3 EX AF,AF'
+  $BAB4 JR $BAB9
+
+**$BAB6 NEG
+  $BAB8 EX AF,AF'
+**$BAB9 A = $20;
+  $BABB A += L;
+  $BABC L = A;
+  $BABD EX AF,AF'
+  $BABE POP BC
+  $BABF C--;
+  $BAC0 JP NZ,$BA71
+**$BAC3 POP HL
+  $BAC4 POP BC
+  $BAC5 DE = $0008;
+  $BAC8 HL += DE;
+  $BAC9 B--;
+  $BACA JP NZ,$B93A
+**$BACD B = $08;
+  $BACF HL = $0000;
+  $BAD2 D = H;
+**$BAD3 do { HL += HL;
+  $BAD4 RLA
+  $BAD5 JP NC,$BAD9
+  $BAD8 HL += DE;
+**$BAD9 } while (--B);
+  $BADB return;
 
 ; -----------------------------------------------------------------------------
 
