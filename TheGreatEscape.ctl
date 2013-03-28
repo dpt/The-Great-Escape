@@ -6572,6 +6572,91 @@ R $BADC I:HL Pointer to destination.
 ; -----------------------------------------------------------------------------
 
 c $BAF7 ff_anded_with_ff
+  $BAF7 HL = $81B5;
+  $BAFA A = map_position_maybe[0];
+  $BAFD A += $18;
+  $BAFF A -= *HL;
+  $BB00 JP Z,$BB94
+  $BB03 JP C,$BB94
+  $BB06 CP (IY+$1E)
+  $BB09 JP NC,$BB11
+  $BB0C B = $00;
+  $BB0E C = A;
+  $BB0F JR $BB33
+
+**$BB11 A = *HL;
+  $BB12 A += (IY+$1E);
+  $BB15 HL = $81BB;
+  $BB18 A -= *HL;
+  $BB19 JP Z,$BB94
+  $BB1C JP C,$BB94
+  $BB1F CP (IY+$1E)
+  $BB22 JP NC,$BB2E
+  $BB25 C = A;
+  $BB26 NEG
+  $BB28 A += (IY+$1E);
+  $BB2B B = A;
+  $BB2C JR $BB33
+
+**$BB2E B = $00;
+  $BB30 C = (IY+$1E);
+**$BB33 A = map_position_maybe[1];
+  $BB36 A += $11;
+  $BB38 L = A;
+  $BB39 H = $00;
+  $BB3B HL += HL;
+  $BB3C HL += HL;
+  $BB3D HL += HL;
+  $BB3E E = (IY+$1A);
+  $BB41 D = (IY+$1B);
+  $BB44 A &= A;
+  $BB45 SBC HL,DE
+  $BB47 JP Z,$BB94
+  $BB4A JP C,$BB94
+  $BB4D A = H;
+  $BB4E A &= A;
+  $BB4F JP NZ,$BB94
+  $BB52 A = L;
+  $BB53 CP (IY+$1F)
+  $BB56 JP NC,$BB5E
+  $BB59 E = A;
+  $BB5A D = $00;
+  $BB5C JR $BB92
+
+**$BB5E L = (IY+$1F);
+  $BB61 H = $00;
+  $BB63 HL += DE;
+  $BB64 EX DE,HL
+  $BB65 A = map_position_maybe[1];
+  $BB68 L = A;
+  $BB69 H = $00;
+  $BB6B HL += HL;
+  $BB6C HL += HL;
+  $BB6D HL += HL;
+  $BB6E EX DE,HL
+  $BB6F A &= A;
+  $BB70 SBC HL,DE
+  $BB72 JP C,$BB94
+  $BB75 JP Z,$BB94
+  $BB78 A = H;
+  $BB79 A &= A;
+  $BB7A JP NZ,$BB94
+  $BB7D A = L;
+  $BB7E CP (IY+$1F)
+  $BB81 JP NC,$BB8D
+  $BB84 E = A;
+  $BB85 NEG
+  $BB87 A += (IY+$1F);
+  $BB8A D = A;
+  $BB8B JR $BB92
+
+**$BB8D D = $00;
+  $BB8F E = (IY+$1F);
+**$BB92 XOR A
+  $BB93 return;
+**$BB94 A = $FF;
+  $BB96 A &= A;
+  $BB97 return;
 
 ; -----------------------------------------------------------------------------
 
