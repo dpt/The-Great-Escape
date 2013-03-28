@@ -6832,7 +6832,35 @@ c $BB98 called_from_main_loop_3
 
 ; -----------------------------------------------------------------------------
 
-c $BCAA sub_BCAA
+c $BCAA select_tiles
+R $BCAA O:BC Pointer to tiles.
+  $BCAA EX AF,AF'
+  $BCAB if (indoor_room_index == 0) goto outdoors;
+  $BCB1 BC = &interior_tiles[0];
+  $BCB4 EX AF,AF'
+  $BCB5 return;
+
+  $BCB6 outdoors: A = (map_position_maybe[1] & 3) + L;
+  $BCBC RRA
+  $BCBD RRA
+  $BCBE A &= 0x3F;
+  $BCC0 L = A * 7;
+  $BCC6 A = (map_position_maybe[0] & 3) + H;
+  $BCCC RRA
+  $BCCD RRA
+  $BCCE A = (A & 0x3F) + L;
+  $BCD1 HL = $FF58;
+  $BCD4 A += L;
+  $BCD5 L = A;
+  $BCD6 A = *HL;
+  $BCD7 BC = &exterior_tiles_1[0];
+  $BCDA if (A < 45) goto exit;
+  $BCDE BC = &exterior_tiles_2[0];
+  $BCE1 if (A < 139 || A >= 204) goto exit;
+  $BCE9 BC = &exterior_tiles_3[0];
+;
+  $BCEC exit: EX AF,AF'
+  $BCED return;
 
 ; ------------------------------------------------------------------------------
 
