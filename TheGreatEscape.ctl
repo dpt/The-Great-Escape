@@ -5119,6 +5119,32 @@ b $AF8E bribe_related
 ; ------------------------------------------------------------------------------
 
 c $AF8F sub_AF8F
+  $AF8F EX AF,AF'
+  $AF90 byte_81AA = A;
+  $AF93 IY[7] |= (1<<6)|(1<<7);
+  $AF9B PUSH IY
+  $AF9D POP HL
+  $AF9E A = L;
+  $AF9F A &= A;
+  $AFA0 if (A == 0 && morale_related_also) door_handling();
+  $AFAB if (A || (($8001 & 3) != 2)) { bounds_check(); return; }
+
+D $AFB9 Cutting wire?
+  $AFB9 A = IY[0];
+  $AFBC CP 26
+  $AFBE JR NC,$AFC4
+
+  $AFC0 CALL $AFDF
+  $AFC3 RET NZ
+
+  $AFC4 IY[7] &= ~(1<<6);
+  $AFC8 PUSH IY
+  $AFCD POP DE
+  $AFCE DE += 15;
+  $AFD5 memcpy(DE, &word_81A4, 6);
+  $AFD7 IY[23] = byte_81AA;
+  $AFDD A = 0;
+  $AFDE return;
 
 ; ------------------------------------------------------------------------------
 
