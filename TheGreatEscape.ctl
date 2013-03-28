@@ -5063,11 +5063,13 @@ c $B3C4 action_poison
 ; -----------------------------------------------------------------------------
 
 c $B3E1 action_uniform
-  $B3E1 HL = $8015;
-  $B3E4 DE = sprite_guard_...;
-  $B3E7 A = (HL);
-  $B3E8 if (.. cheap equality test ..) return;
-  $B3EA ...
+  $B3E1 HL = $8015; // current character sprite set
+  $B3E4 DE = &sprite_guard_tl_4;
+  $B3E7 if (*HL == E) return; // cheap equality test // already in uniform
+  $B3EA if (indoor_room_index >= room_29_secondtunnelstart) return; // can't don uniform when in a tunnel
+  $B3F0 *HL++ = E;
+  $B3F1 *HL = D;
+  $B3F3 increase_morale_by_10_score_by_50(); return;
 
 ; -----------------------------------------------------------------------------
 
