@@ -3899,16 +3899,28 @@ D $A498 Set player position to zero.
 
 c $A4A9 set_location_0xE00
   $A4A9 set_target_location(0x0E00);
+  $A4AF A = $0E;
+  $A4B1 EX AF,AF'
+  $A4B2 C = $00;
+  $A4B4 sub_A373(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
 c $A4B7 set_location_0x8E04
   $A4B7 set_target_location(0x8E04);
+  $A4BD A = $8E;
+  $A4BF EX AF,AF'
+  $A4C0 C = $04;
+  $A4C2 sub_A373(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
 c $A4C5 set_location_0x1000
   $A4C5 set_target_location(0x1000);
+  $A4CB A = $10;
+  $A4CD EX AF,AF'
+  $A4CE C = $00;
+  $A4D0 sub_A373(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
