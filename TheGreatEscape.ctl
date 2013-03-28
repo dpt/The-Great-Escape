@@ -9046,27 +9046,28 @@ D $E0D7 Likely unreferenced byte.
 ; something plotter ish
 w $E0E0 pairs_of_offsets
 D $E0E0 (<- sub_DC41, sub_E420)
-  $E0E0 jump0
-  $E0E2 jump1
-  $E0E4 jump2
-  $E0E6 jump3
-  $E0E8 jump4
-  $E0EA jump5
+  $E0E0 sub_E29F::jump0
+  $E0E2 sub_E34E::jump1
+  $E0E4 sub_E29F::jump2
+  $E0E6 sub_E34E::jump3
+  $E0E8 sub_E29F::jump4
+  $E0EA sub_E34E::jump5
 
 ; ------------------------------------------------------------------------------
 
-w $E0EC pairs_of_offsets_2
+w $E0EC masked_sprite_plotter_jump_table
 D $E0EC (<- sub_E420)
-  $E0EC
-  $E0EE
-  $E0F0
-  $E0F2
-  $E0F4
-  $E0F6
-  $E0F8
-  $E0FA
-  $E0FC
-  $E0FE Pointer to masked sprite plotter.
+  $E0EC masked_sprite_plotter::E188
+  $E0EE masked_sprite_plotter::E259
+  $E0F0 masked_sprite_plotter::E199
+  $E0F2 masked_sprite_plotter::E26A
+  $E0F4 masked_sprite_plotter::E1AA
+  $E0F6 masked_sprite_plotter::E27B
+  $E0F8 masked_sprite_plotter::E1BF
+  $E0FA masked_sprite_plotter::E290
+; these two look different
+  $E0FC sub_E29F::$E2A2
+  $E0FE masked_sprite_plotter
 
 ; ------------------------------------------------------------------------------
 
@@ -9076,7 +9077,282 @@ D $E100 Unsure if related to the above pairs_of_offsets2 table.
 ; ------------------------------------------------------------------------------
 
 c $E102 masked_sprite_plotter
-D $E102 [unsure]
+D $E102 Called when moving between gates on the way to exercise? Perhaps when something's visible through the fence... e.g. dogs. AHA dogs are 24 wide...
+
+R $E102 I:IY ...
+;
+  $E102 A = IY[24] & 7; // saw IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0
+  $E107 if (A >= 4) goto unaligned;
+;
+  $E10C A = (~A & 3) * 8; // form jump table offset
+  $E112 ($E161) = A; // self-modify: set branch target
+  $E115 ($E143) = A; // self-modify: set branch target
+  $E118 EXX
+  $E119 HL = word_81AE;
+  $E11C EXX
+  $E11D HL = word_81AC;
+  $E120 B = 32; // 32 iterations
+;
+; suspect: fetch source data then mask. 3 bytes each.
+  $E122 do { PUSH BC
+  $E123 B = *HL++; // bitmap bytes
+  $E125 C = *HL++;
+  $E127 E = *HL++;
+  $E129 PUSH HL
+  $E12A EXX
+  $E12B B = *HL++; // mask bytes
+  $E12D C = *HL++;
+  $E12F E = *HL++;
+  $E131 PUSH HL
+  $E132 A = byte_81B7;
+  $E135 A &= A;
+  $E136 CALL M,$E3FA
+;
+  $E139 HL = word_81B0;
+  $E13C EXX
+  $E13D HL = ($81A2);
+  $E140 D = 0;
+  $E142 JR $E144 // self-modified to jump into ...
+;
+  $E144 SRL B
+  $E146 RR C
+  $E148 RR E
+  $E14A RR D
+;
+  $E14C SRL B
+  $E14E RR C
+  $E150 RR E
+  $E152 RR D
+;
+  $E154 SRL B
+  $E156 RR C
+  $E158 RR E
+  $E15A RR D
+;
+  $E15C EXX
+  $E15D D = 255;
+  $E15F SCF
+  $E160 JR $E162 // self-modified to jump into ...
+;
+  $E162 RR B
+  $E164 RR C
+  $E166 RR E
+  $E168 RR D
+;
+  $E16A RR B
+  $E16C RR C
+  $E16E RR E
+  $E170 RR D
+;
+  $E172 RR B
+  $E174 RR C
+  $E176 RR E
+  $E178 RR D
+;
+  $E17A A = ~*HL | B;       // 1
+  $E17D EXX
+  $E17E A &= *HL;
+  $E17F EX AF,AF'
+  $E180 A = B;
+  $E181 EXX
+  $E182 A &= *HL;
+  $E183 B = A;
+  $E184 EX AF,AF'
+  $E185 A |= B;
+  $E186 L++;
+  $E187 EXX
+  $E188 *HL++ = A;          // jump target 0
+  $E18A EXX
+  $E18B A = ~*HL | C;       // 2
+  $E18E EXX
+  $E18F A &= *HL;
+  $E190 EX AF,AF'
+  $E191 A = C;
+  $E192 EXX
+  $E193 A &= *HL;
+  $E194 C = A;
+  $E195 EX AF,AF'
+  $E196 A |= C;
+  $E197 L++;
+  $E198 EXX
+  $E199 *HL++ = A;          // jump target 2
+  $E19B EXX
+  $E19C A = ~*HL | E;       // 3
+  $E19F EXX
+  $E1A0 A &= *HL;
+  $E1A1 EX AF,AF'
+  $E1A2 A = E;
+  $E1A3 EXX
+  $E1A4 A &= *HL;
+  $E1A5 E = A;
+  $E1A6 EX AF,AF'
+  $E1A7 A |= E;
+  $E1A8 L++;
+  $E1A9 EXX
+  $E1AA *HL++ = A;          // jump target 4
+  $E1AC EXX
+  $E1AD A = ~*HL | D;       // 4
+  $E1B0 EXX
+  $E1B1 A &= *HL;
+  $E1B2 EX AF,AF'
+  $E1B3 A = D;
+  $E1B4 EXX
+  $E1B5 A &= *HL;
+  $E1B6 D = A;
+  $E1B7 EX AF,AF'
+  $E1B8 A |= D;
+  $E1B9 L++;
+  $E1BA word_81B0 = HL;
+  $E1BD POP HL
+  $E1BE EXX
+  $E1BF *HL = A;            // jump target 6
+  $E1C0 HL += 21;
+  $E1C4 ($81A2) = HL;
+  $E1C7 POP HL
+  $E1C8 POP BC
+  $E1C9 } while (--B);
+  $E1CD return;
+
+  $E1CE unaligned: A -= 4;
+  $E1D0 RLCA
+  $E1D1 RLCA
+  $E1D2 RLCA
+  $E1D3 ($E22A) = A; // self-modify: set branch target
+  $E1D6 ($E204) = A; // self-modify: set branch target
+  $E1D9 EXX
+  $E1DA HL = word_81AE;
+  $E1DD EXX
+  $E1DE HL = word_81AC;
+  $E1E1 B = 32;
+;
+  $E1E3 do { PUSH BC
+  $E1E4 B = *HL++;
+  $E1E6 C = *HL++;
+  $E1E8 E = *HL++;
+  $E1EA PUSH HL
+  $E1EB EXX
+  $E1EC B = *HL++;
+  $E1EE C = *HL++;
+  $E1F0 E = *HL++;
+  $E1F2 PUSH HL
+  $E1F3 A = byte_81B7;
+  $E1F6 A &= A;
+  $E1F7 CALL M,$E3FA
+;
+  $E1FA HL = word_81B0;
+  $E1FD EXX
+  $E1FE HL = ($81A2);
+  $E201 D = 0;
+  $E203 JR $E205 // self-modified to jump into ...
+;
+  $E205 SLA E
+  $E207 RL C
+  $E209 RL B
+  $E20B RL D
+;
+  $E20D SLA E
+  $E20F RL C
+  $E211 RL B
+  $E213 RL D
+;
+  $E215 SLA E
+  $E217 RL C
+  $E219 RL B
+  $E21B RL D
+;
+  $E21D SLA E
+  $E21F RL C
+  $E221 RL B
+  $E223 RL D
+;
+  $E225 EXX
+  $E226 D = 255;
+  $E228 SCF
+  $E229 JR $E22B // self-modified to jump into ...
+;
+  $E22B RL E
+  $E22D RL C
+  $E22F RL B
+  $E231 RL D
+;
+  $E233 RL E
+  $E235 RL C
+  $E237 RL B
+  $E239 RL D
+;
+  $E23B RL E
+  $E23D RL C
+  $E23F RL B
+  $E241 RL D
+;
+  $E243 RL E
+  $E245 RL C
+  $E247 RL B
+  $E249 RL D
+;
+  $E24B A = ~*HL | D;       // 1
+  $E24E EXX
+  $E24F A &= *HL;
+  $E250 EX AF,AF'
+  $E251 A = D;
+  $E252 EXX
+  $E253 A &= *HL;
+  $E254 D = A;
+  $E255 EX AF,AF'
+  $E256 A |= D;
+  $E257 L++;
+  $E258 EXX
+  $E259 *HL++ = A;          // jump target 2
+  $E25B EXX
+  $E25C A = ~*HL | B;       // 2
+  $E25F EXX
+  $E260 A &= *HL;
+  $E261 EX AF,AF'
+  $E262 A = B;
+  $E263 EXX
+  $E264 A &= *HL;
+  $E265 B = A;
+  $E266 EX AF,AF'
+  $E267 A |= B;
+  $E268 L++;
+  $E269 EXX
+  $E26A *HL++ = A;          // jump target 3
+  $E26C EXX
+  $E26D A = ~*HL | C;       // 3
+  $E270 EXX
+  $E271 A &= *HL;
+  $E272 EX AF,AF'
+  $E273 A = C;
+  $E274 EXX
+  $E275 A &= *HL;
+  $E276 C = A;
+  $E277 EX AF,AF'
+  $E278 A |= C;
+  $E279 L++;
+  $E27A EXX
+  $E27B *HL++ = A;          // jump target 5
+  $E27D EXX
+  $E27E A = ~*HL | E;       // 4
+  $E281 EXX
+  $E282 A &= *HL;
+  $E283 EX AF,AF'
+  $E284 A = E;
+  $E285 EXX
+  $E286 A &= *HL;
+  $E287 E = A;
+  $E288 EX AF,AF'
+  $E289 A |= E;
+  $E28A L++;
+  $E28B word_81B0 = HL;
+  $E28E POP HL
+  $E28F EXX
+  $E290 *HL = A;            // jump target 7
+  $E291 HL += 21;
+  $E295 ($81A2) = HL;
+  $E298 POP HL
+  $E299 POP BC
+  $E29A } while (--B);
+  $E29E return;
 
 ; ------------------------------------------------------------------------------
 
