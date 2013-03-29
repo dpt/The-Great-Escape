@@ -6093,9 +6093,27 @@ R $B71B I:HL Pointer to ...
 
 c $B75A looks_like_a_reset_function
 D $B75A [unsure]
-  $B75A ...
+  $B75A BC = $1000; // B = 16, C = 0
+  $B75D do { PUSH BC
+  $B75E item_discovered();
+  $B761 POP BC
+  $B762 C++;
+  $B763 } while (--B);
+  $B765 message_buffer_pointer = message_buffer + 2;
+  $B76B reset_map_and_characters();
+  $B76E ($8001) = 0;
+  $B772 HL = &score_digits[0]; // score_digits .. morale_related
+  $B775 B = 10; // iterations
+  $B777 do { *HL++ = 0;
+  $B779 } while (--B); // could do a memset
+  $B77B morale = morale_MAX;
+  $B77D plot_score();
+  $B780 items_held = 0xFFFF;
+  $B786 draw_all_items();
   $B789 $8015 = sprite_prisoner_tl_4;
-  $B78F ...
+  $B78F indoor_room_index = room_2_hut2left;
+  $B794 player_sleeps();
+  $B797 sub_68A2::68F4();
   $B79A return;
 
 ; -----------------------------------------------------------------------------
