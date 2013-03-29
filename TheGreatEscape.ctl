@@ -6062,6 +6062,32 @@ c $B5CE called_from_main_loop_9
 ; -----------------------------------------------------------------------------
 
 c $B71B reset_something
+D $B75A [unsure]
+R $B71B I:HL Pointer to ...
+  $B71B PUSH HL
+  $B71C memcpy(&word_81A4, HL + 15, 6); // DE/HL updated CHECK
+  $B728 POP HL
+; This entry point is used by the routine at #R$B5CE.
+  $B729 EX DE,HL
+  $B72A DE += 24;
+  $B72E HL = word_81A6 + 0x0200;
+  $B735 //
+  $B739 A &= A; // reset carry before SBC
+  $B73A HL -= word_81A4;
+  $B73C HL += HL;
+  $B73D EX DE,HL
+  $B73E *HL++ = E;
+  $B740 *HL++ = D;
+  $B742 EX DE,HL
+  $B743 HL = 0x0800;
+  $B746 A &= A; // reset carry before SBC
+  $B747 HL -= word_81A4;
+  $B74D HL -= word_81A8;
+  $B753 HL -= word_81A6;
+  $B755 EX DE,HL
+  $B756 *HL++ = E;
+  $B758 *HL = D;
+  $B759 return;
 
 ; -----------------------------------------------------------------------------
 
