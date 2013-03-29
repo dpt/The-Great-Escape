@@ -450,7 +450,8 @@
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
 ; b $801C cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by sub_68A2 -- looks like a room index!
-; ? $8020 character reset data? (<- reset_all_objects) suspect 7 sets of 32 bytes (one per prisoner) possibly visible characters only? can there be >7 characters on-screen/visible at once? or is it prisoners only?
+;
+; $8020 visible character data. 7 sets of 32 bytes, one per visible character. can there be >7 characters on-screen/visible at once? or is it prisoners only?
 
 ;   $8020 byte -- bit 6 means something here, likely merged with a character index
 ;   $8021 likely a room index
@@ -6119,34 +6120,31 @@ D $B75A [unsure]
 ; -----------------------------------------------------------------------------
 
 c $B79B reset_map_and_characters
-D $B79B [unsure]
-  $B79B B = 7;
+D $B79B Resets all visible characters, dispatch_counter, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
+  $B79B B = 7; // iterations
   $B79D HL = $8020;
-  $B7A0 do { PUSH BC
-  $B7A1 PUSH HL
+  $B7A0 do {
   $B7A2 reset_object();
-  $B7A5 POP HL
   $B7A6 HL += 32;
-  $B7AA POP BC
   $B7AB } while (--B);
   $B7AD dispatch_counter = 7;
   $B7B2 day_or_night = 0;
-  $B7B6 ($8001) = 0;
+  $B7B6 ($8001) = 0; // flags
   $B7B9 collapsed_tunnel_obj = interiorobject_COLLAPSED_TUNNEL;
   $B7BE blockage = 0x34;
 D $B7C3 Lock the gates.
   $B7C3 HL = &gates_and_doors[0];
   $B7C6 B = 9; // 9 iterations
-  $B7C8 do { SET 7,*HL++
-  $B7CA HL++;
+  $B7C8 do { *HL++ |= 1<<7;
   $B7CB } while (--B);
-  $B7CD B = 6; // 6 iterations
-  $B7CF A = interiorobject_OCCUPIED_BED;
-  $B7D1 HL = &beds[0];
+D $B7CD Reset all beds.
+  $B7CD B = 6; // iterations
+  $B7CF HL = &beds[0];
   $B7D4 do { E = *HL++;
   $B7D6 D = *HL++;
-  $B7D8 *DE = A;
+  $B7D8 *DE = interiorobject_OCCUPIED_BED;
   $B7D9 } while (--B);
+D $B7DB Clear the mess halls.
   $B7DB bench_A = interiorobject_EMPTY_BENCH;
   $B7E0 bench_B = interiorobject_EMPTY_BENCH;
   $B7E3 bench_C = interiorobject_EMPTY_BENCH;
@@ -6154,32 +6152,29 @@ D $B7C3 Lock the gates.
   $B7E9 bench_E = interiorobject_EMPTY_BENCH;
   $B7EC bench_F = interiorobject_EMPTY_BENCH;
   $B7EF bench_G = interiorobject_EMPTY_BENCH;
-  $B7F2 DE = &characterstruct_12[0].(first byte);
+D $B7F2 Reset characters 12..15 and 20..25.
+  $B7F2 DE = &characterstruct_12.BYTE1;
   $B7F5 C = 10;
-  $B7F7 HL = &looks_like_character_reset_data[0];
-  $B7FA do { B = 3;
+  $B7F7 HL = &character_reset_data[0];
+  $B7FA do { B = 3; // iterations
   $B7FC do { *DE++ = *HL++;
-  $B800 } while (--B);  // memcpy
-  $B802 EX DE,HL
-  $B803 *HL = $12;
-  $B805 HL++;
-  $B806 *HL = $00;
-  $B808 HL++;
-  $B809 HL++;
-  $B80A HL++;
-  $B80B EX DE,HL
-  $B80C A = C;
-  $B80D CP $07
-  $B80F JR NZ,$B814
-  $B811 DE = $769F;
-**$B814 } while (--C);
+  $B800 } while (--B);
+  $B803 *DE++ = 0x12; // reset to 0x12 but the initial data is 0x18
+  $B806 *DE++ = 0x00;
+  $B809 DE += 2;
+  $B80C if (C == 7) DE = &characterstruct_20.BYTE1;
+  $B814 } while (--C);
   $B818 return;
 
 ; ------------------------------------------------------------------------------
 
-b $B819 looks_like_character_reset_data
+b $B819 character_reset_data
 D $B819 10 x 3-byte structs
   $B819,30,3 ...
+
+; $766E is 2, but reset_map_and_characters resets it to 3 (the only byte the
+; differs between the default character data and the character_reset_data). Bug?
+; Significant?
 
 ; ------------------------------------------------------------------------------
 
