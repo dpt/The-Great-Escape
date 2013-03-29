@@ -10059,6 +10059,26 @@ c $EED3 plot_game_screen
 ; ------------------------------------------------------------------------------
 
 c $EF9A event_roll_call
+D $EF9A Is the player within the roll call area bounds?
+  $EF9A DE = $727C; // X bound
+  $EF9D HL = &player_map_position_perhapsX;
+  $EFA0 B = 2; // iterations
+  $EFA2 do { A = *HL++;
+  $EFA3 if (A < D || A >= E) goto not_at_roll_call;
+  $EFAA DE = $6A72; // Y bound
+  $EFAD } while (--B);
+D $EFAF [unsure]
+  $EFAF HL = $800D;
+  $EFB2 B = 8; // iterations
+  $EFB4 do { *HL++ = 0x80;
+  $EFB7 *HL = 0x03;
+  $EFB9 HL += 31;
+  $EFBD } while (--B);
+  $EFBF return;
+
+  $EFC0 not_at_roll_call: bell = 0; // ring indefinitely
+  $EFC4 queue_message_for_display(message_MISSED_ROLL_CALL);
+  $EFC8 sub_CCAB(); // exit via
 
 ; ------------------------------------------------------------------------------
 
