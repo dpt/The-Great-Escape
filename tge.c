@@ -269,10 +269,10 @@ struct tgeobject
 
 /* ----------------------------------------------------------------------- */
 
-/* 0x6AB5 */
+/* $6AB5 */
 void expand_object(tgestate_t *state, object_t index, uint8_t *output)
 {
-  int                rows, columns;
+  int                columns;
   const tgeobject_t *obj;
   int                width, height;
   int                saved_width;
@@ -280,7 +280,6 @@ void expand_object(tgestate_t *state, object_t index, uint8_t *output)
   int                byte;
   int                val;
 
-  rows        = state->rows;
   columns     = state->columns;
 
   obj         = interior_object_tile_refs[index];
@@ -375,7 +374,7 @@ range:
 
 /* ----------------------------------------------------------------------- */
 
-/* 0x6B42 */
+/* $6B42 */
 void plot_indoor_tiles(tgestate_t *state)
 {
   int                  rows;
