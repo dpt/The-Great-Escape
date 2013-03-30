@@ -533,3 +533,38 @@ void screenlocstring_plot(tgestate_t *state, uint8_t *HL)
   while (--nbytes);
 }
 
+/* ----------------------------------------------------------------------- */
+
+#define door_FLAG_LOCKED (1 << 7)
+
+/* $B1D4 */
+int is_door_open(tgestate_t *state)
+{
+  int      mask;
+  int      cur;
+  uint8_t *door;
+  int      iters;
+
+  mask  = 0xFF & ~door_FLAG_LOCKED;
+  cur   = state->current_door & mask;
+  door  = &state->gates_and_doors[0];
+  iters = 9;
+  do
+  {
+    if ((*door & mask) == cur)
+    {
+      if ((*door & door_FLAG_LOCKED) == 0)
+        return 0; // open
+
+      queue_message_for_display(state, message_THE_DOOR_IS_LOCKED);
+      return 1; // locked
+    }
+    door++;
+  }
+  while (--iters);
+
+  return 0; // open
+}
+
+/* ----------------------------------------------------------------------- */
+
