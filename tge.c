@@ -421,6 +421,26 @@ void plot_indoor_tiles(tgestate_t *state)
 
 /* ----------------------------------------------------------------------- */
 
+/* $7CE9 */
+/* Given a screen address, return the same position on the next scanline. */
+uint16_t get_next_scanline(uint16_t HL) /* stateless */
+{
+  uint16_t DE;
+
+  HL += 0x0100;
+  if (HL & 0x0700)
+    return HL; /* line count didn't rollover */
+
+  if ((HL & 0xFF) >= 0xE0)
+    DE = 0xFF20;
+  else
+    DE = 0xF820;
+
+  return HL + DE; /* needs to be a 16-bit add! */
+}
+
+/* ----------------------------------------------------------------------- */
+
 
 /* ----------------------------------------------------------------------- */
 
