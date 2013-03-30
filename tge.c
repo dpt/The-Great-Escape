@@ -11,6 +11,32 @@
 // ENUMERATIONS
 //
 
+enum message
+{
+  message_MISSED_ROLL_CALL,
+  message_TIME_TO_WAKE_UP,
+  message_BREAKFAST_TIME,
+  message_EXERCISE_TIME,
+  message_TIME_FOR_BED,
+  message_THE_DOOR_IS_LOCKED,
+  message_IT_IS_OPEN,
+  message_INCORRECT_KEY,
+  message_ROLL_CALL,
+  message_RED_CROSS_PARCEL,
+  message_PICKING_THE_LOCK,
+  message_CUTTING_THE_WIRE,
+  message_YOU_OPEN_THE_BOX,
+  message_YOU_ARE_IN_SOLITARY,
+  message_WAIT_FOR_RELEASE,
+  message_MORALE_IS_ZERO,
+  message_ITEM_DISCOVERED,
+  message_HE_TAKES_THE_BRIBE,
+  message_AND_ACTS_AS_DECOY,
+  message_ANOTHER_DAY_DAWNS,
+  message__LIMIT,
+  message_NONE = 255
+};
+
 // this duplicates data...
 enum interior_object
 {
@@ -94,6 +120,9 @@ typedef struct tgestate tgestate_t;
 /** A game object. */
 typedef struct tgeobject tgeobject_t;
 
+/** A message. */
+typedef enum message message_t;
+
 /** An interior object. */
 typedef enum interior_object object_t;
 
@@ -125,6 +154,8 @@ extern const tile_t interior_tiles[interiorobjecttile_MAX];
 // FORWARD REFERENCES
 //
 
+
+static const char *messages_table[message__LIMIT];
 
 /* ----------------------------------------------------------------------- */
 
@@ -300,3 +331,27 @@ void plot_indoor_tiles(tgestate_t *state)
 
 /* ----------------------------------------------------------------------- */
 
+
+/* ----------------------------------------------------------------------- */
+
+/* $7DCD */
+static const char *messages_table[message__LIMIT] =
+{
+  "MISSED ROLL CALL",
+  "TIME TO WAKE UP",
+  "BREAKFAST TIME",
+  "EXERCISE TIME",
+  "TIME FOR BED",
+  "THE DOOR IS LOCKED",
+  "IT IS OPEN",
+  "INCORRECT KEY",
+  "ROLL CALL",
+  "RED CROSS PARCEL",
+  "PICKING THE LOCK",
+  "CUTTING THE WIRE",
+  "YOU OPEN THE BOX",
+  "YOU ARE IN SOLITARY",
+  "WAIT FOR RELEASE",
+  "MORALE IS ZERO",
+  "ITEM DISCOVERED",
+};
