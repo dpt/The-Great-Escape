@@ -11,6 +11,28 @@
 // ENUMERATIONS
 //
 
+enum item
+{
+  item_WIRESNIPS,
+  item_SHOVEL,
+  item_LOCKPICK,
+  item_PAPERS,
+  item_TORCH,
+  item_BRIBE,
+  item_UNIFORM,
+  item_FOOD,
+  item_POISON,
+  item_RED_KEY,
+  item_YELLOW_KEY,
+  item_GREEN_KEY,
+  item_RED_CROSS_PARCEL,
+  item_RADIO,
+  item_PURSE,
+  item_COMPASS,
+  item__LIMIT,
+  item_NONE = 255
+};
+
 enum message
 {
   message_MISSED_ROLL_CALL,
@@ -134,6 +156,9 @@ typedef uint8_t tileindex_t;
 typedef uint8_t tilerow_t;
 typedef tilerow_t tile_t[8];
 
+/** An item. */
+typedef enum item item_t;
+
 /* ----------------------------------------------------------------------- */
 
 // EXTERNS
@@ -156,6 +181,8 @@ extern const tile_t interior_tiles[interiorobjecttile_MAX];
 
 
 static const char *messages_table[message__LIMIT];
+
+int item_to_bitmask(item_t item);
 
 /* ----------------------------------------------------------------------- */
 
@@ -355,3 +382,27 @@ static const char *messages_table[message__LIMIT] =
   "MORALE IS ZERO",
   "ITEM DISCOVERED",
 };
+
+/* ----------------------------------------------------------------------- */
+
+/* $A59C */
+int have_required_items(const item_t *pitem, int previous)
+{
+  return item_to_bitmask(*pitem) + previous;
+}
+
+/* $A5A3 */
+int item_to_bitmask(item_t item)
+{
+  switch (item)
+  {
+    case item_COMPASS: return 1;
+    case item_PAPERS:  return 2;
+    case item_PURSE:   return 4;
+    case item_UNIFORM: return 8;
+    default: return 0;
+  }
+}
+
+/* ----------------------------------------------------------------------- */
+
