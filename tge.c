@@ -8,6 +8,9 @@
 
 /* ----------------------------------------------------------------------- */
 
+// ENUMERATIONS
+//
+
 // this duplicates data...
 enum interior_object
 {
@@ -76,6 +79,15 @@ enum interior_object_tile
 
 /* ----------------------------------------------------------------------- */
 
+// CONSTANTS
+//
+
+
+/* ----------------------------------------------------------------------- */
+
+// TYPES
+//
+
 /** The state of the game. */
 typedef struct tgestate tgestate_t;
 
@@ -95,11 +107,29 @@ typedef tilerow_t tile_t[8];
 
 /* ----------------------------------------------------------------------- */
 
+// EXTERNS
+//
+
 extern const tgeobject_t *interior_object_tile_refs[interiorobject__LIMIT];
 
 extern const tile_t interior_tiles[interiorobjecttile_MAX];
 
+
 /* ----------------------------------------------------------------------- */
+
+// STATIC CONSTS
+//
+
+/* ----------------------------------------------------------------------- */
+
+// FORWARD REFERENCES
+//
+
+
+/* ----------------------------------------------------------------------- */
+
+// STRUCTURES
+//
 
 struct tgestate
 {
