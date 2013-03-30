@@ -255,10 +255,20 @@ int item_to_bitmask(item_t item);
 
 struct tgestate
 {
+  // ADDITIONAL VARIABLES
   int          columns;    // e.g. 24
   int          rows;       // e.g. 16
+
   uint8_t     *screen_buf;
   tileindex_t *tile_buf;
+
+  // EXISTING VARIABLES
+  uint8_t      current_door;                // $68A1
+
+
+  uint8_t      gates_and_doors[9];          // $F05D
+
+
 };
 
 struct tgeobject
