@@ -10181,18 +10181,55 @@ b $F076 tile_refs_for_statics
 ; ------------------------------------------------------------------------------
 
 c $F163 main
-  $F163 Disable interrupts and set up stack pointer.
+D $F163 Disable interrupts and set up stack pointer.
   $F167 wipe_full_screen_and_attributes();
   $F16A set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
   $F16F set_menu_item_attributes(attribute_YELLOW_OVER_BLACK);
   $F174 plot_statics_and_menu_text();
   $F177 plot_score();
   $F17A menu_screen();
-  $F17D [unknown]
+  
+D $F17D Construct a table of 256 bit-reversed bytes at 0x7F00.
+  $F17D HL = 0x7F00;
+  $F180 do { A = L;
+  $F181 C = 0;
+  $F183 B = 8; // iterations
+  $F185 do { carry = A & 1; A >>= 1; // flips a byte
+  $F186 C = (C << 1) | carry;
+  $F188 } while (--B);
+  $F18A *HL++ = C;
+  $F18F } while ((HL & 0xFF) != 0);
+;
+D $F190 ... HL = $8000 ...
+  $F190 DE = &twenty_three_bytes;
+  $F193 B = 8; // iterations
+  $F195 do { 
+  $F196
+  $F198
+  $F19B 
+  $F19C memcpy(HL, DE, 23);
+  $F19F HL += 32;
+  $F1A3
+  $F1A4 } while (--B);
+;
+D $F1A7 ... FF FF at 0x8020 and every 32 bytes after ...
+  $F1A7 B = 7; // iterations
+  $F1A9 HL = 0x8020;
+  $F1AC
+  $F1AF
+  $F1B1 do { HL[0] = 0xFF;
+  $F1B3 HL[1] = 0xFF;
+  $F1B4 HL += 32;
+  $F1B5 } while (--B);
+;
+D $F1B7 Zero 0x118 bytes at HL (== $8100) onwards.
+D $F1B7 This is likely wiping everything up until the start of tiles ($8218).
+  $F1B7 BC = 0x118;
+  $F1BA do { *HL++ = 0;
+  $F1BD } while (--BC != 0);
+;
   $F1C3 looks_like_a_reset_fn();
   $F1C6 goto main_loop_setup;
-
-; ------------------------------------------------------------------------------
 
 b $F1C9 twenty_three_bytes
 D $F1C9 main copies this somewhere
