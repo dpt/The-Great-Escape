@@ -154,7 +154,7 @@ typedef enum interior_object_tile objecttile_t;
 /** Tiles (also known as UDGs). */
 typedef uint8_t tileindex_t;
 typedef uint8_t tilerow_t;
-typedef tilerow_t tile_t[8];
+typedef struct { tilerow_t row[8]; } tile_t;
 
 /** An item. */
 typedef enum item item_t;
@@ -400,7 +400,7 @@ void plot_indoor_tiles(tgestate_t *state)
     {
       const tilerow_t *tile_data;
 
-      tile_data = &interior_tiles[*tiles_buf++][0];
+      tile_data = &interior_tiles[*tiles_buf++].row[0];
 
       bytes  = 8;
       stride = columns;
