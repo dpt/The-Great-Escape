@@ -1677,25 +1677,30 @@ R $7CE9 O:HL Updated screen address.
 
 ; ------------------------------------------------------------------------------
 
-b $7CFC message_buffer_stuff
-  $7CFC message_buffer
+b $7CFC message_queue_stuff
+  $7CFC message_queue
+D $7CFC LIFO queue of message IDs.
   $7D0F message_display_counter
   $7D10 message_display_index
-D $7D10 If 128 then shunt_buffer_back_by_two. If > 128 then wipe message. Else ?
-W $7D11 message_buffer_pointer
+D $7D10 If 128 then next_message. If > 128 then wipe message. Else ?
+W $7D11 message_queue_pointer
+D $7D11 Where to append new messages.
 W $7D13 current_message_character
 
 ; ------------------------------------------------------------------------------
 
 c $7D15 queue_message_for_display
-R $7D15 B message_* index.
-R $7D15 C ...
-  $7D15 if (*(HL = message_buffer_pointer) == message_NONE) return;
+D $7D15 Add the specified message to the queue of pending messages.
+D $7D15 The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
+R $7D15 I:B message_* index.
+R $7D15 I:C Possibly a second message index.
+  $7D15 if (*(HL = message_queue_pointer) == message_NONE) return;
+D $7D1C Are we already about to show this message?
   $7D1C HL -= 2;
-  $7D1E A = *HL++; if (A == B) {
-  $7D23 A = *HL; if (A == C) return; }
-  $7D26 *++HL = B; *++HL = C; HL++;
-  $7D2B *message_buffer_pointer = HL;
+  $7D1E if (*HL++ == B && *HL++ == C) return;
+D $7D26 Add it to the queue.
+  $7D26 *HL++ = B; *HL++ = C;
+  $7D2B *message_queue_pointer = HL;
   $7D2E return;
 
 ; ------------------------------------------------------------------------------
@@ -1726,19 +1731,19 @@ c $7D48 message_display
   $7D53 return; }
 ;
   $7D54 A = message_display_index;
-  $7D57 if (A == 128) goto shunt_buffer_back_by_two; // exit via
+  $7D57 if (A == 128) goto next_message; // exit via
   $7D5B else if (A > 128) goto wipe_message; // exit via
   $7D5D else { HL = current_message_character;
   $7D60 DE = screen_text_start_address + A;
   $7D65 plot_glyph();
   $7D68 message_display_index = E & 31;
   $7D6E A = *++HL;
-  $7D70 if (A != 255) goto nonzero;
+  $7D70 if (A != 255) goto not_eol;
   $7D75 message_display_counter = 31; // leave the message for 31 turns
   $7D7A message_display_index |= 128; // then wipe it
   $7D82 return;
 ;
-  $7D83 nonzero: current_message_character = HL;
+  $7D83 not_eol: current_message_character = HL;
   $7D86 return; }
 
 ; ------------------------------------------------------------------------------
@@ -1752,22 +1757,18 @@ c $7D87 wipe_message
 
 ; ------------------------------------------------------------------------------
 
-c $7D99 shunt_buffer_back_by_two
-D $7D99 Looks like message_buffer is poked with the index of the message to display...
-  $7D99 HL = message_buffer_pointer;
-  $7D9C DE = &message_buffer;
-  $7D9F if (L == E) return; // cheap test
+c $7D99 next_message
+D $7D99 Looks like message_queue is poked with the index of the message to display...
+  $7D99 HL = message_queue_pointer;
+  $7D9C DE = &message_queue[0];
+  $7D9F if (L == E) return; // cheap test -- no more messages?
 ;
-  $7DA2 swap(DE, HL);
-  $7DA3 A = *HL++;
-  $7DA5 C = *HL; // I don't understand why C is loaded here.
-  $7DA6 HL = &messages_table[A];
-  $7DAE E = *HL++;
-  $7DB0 D = *HL; // DE = messages_table[A]
-  $7DB1 swap(DE, HL);
+  $7DA3 A = *DE++;
+  $7DA5 C = *DE; // C is loaded here but not used. This could be a hangover from 16-bit message IDs.
+  $7DA6 HL = messages_table[A];
   $7DB2 current_message_character = HL;
-  $7DB5 memmove(message_buffer, message_buffer + 2, 16);
-  $7DC0 message_buffer_pointer -= 2;
+  $7DB5 memmove(message_queue, message_queue + 2, 16); // drop first element
+  $7DC0 message_queue_pointer -= 2;
   $7DC8 message_display_index = 0;
   $7DCC return;
 
@@ -6100,7 +6101,7 @@ D $B75A [unsure]
   $B761 POP BC
   $B762 C++;
   $B763 } while (--B);
-  $B765 message_buffer_pointer = message_buffer + 2;
+  $B765 message_queue_pointer = message_queue + 2;
   $B76B reset_map_and_characters();
   $B76E ($8001) = 0;
   $B772 HL = &score_digits[0]; // score_digits .. morale_related
