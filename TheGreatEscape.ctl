@@ -4054,7 +4054,8 @@ R $A59C O:C  Previous return value + 0/1/2/4/8.
   $A5A0 C += A;
   $A5A2 return;
 
-c $A5A3 item_to_bitmask: if (A == item_COMPASS) { A = 1; return; } // have compass
+c $A5A3 item_to_bitmask
+  $A5A3 if (A == item_COMPASS) { A = 1; return; } // have compass
   $A5AA if (A == item_PAPERS)  { A = 2; return; } // have papers
   $A5B1 if (A == item_PURSE)   { A = 4; return; } // have purse
   $A5B8 if (A == item_UNIFORM) { A = 8; return; } // have uniform
