@@ -8093,12 +8093,12 @@ D $CA81 Bribes, solitary, food, 'character enters' sound.
 
   $CB13 HL -= 2;
   $CB15 A = *HL;
-  $CB16 if (A != 255) {
+  $CB16 if (A == 255) goto cb23;
 
   $CB1A HL++;
   $CB1B if (A & (1<<7)) {
-  $CB1F (*HL) -= 2;
-  $CB21 } else { (*HL)++;
+  $CB1F (*HL) -= 2; }
+  $CB21 else { (*HL)++;
   $CB22 HL--; }
 
 ; possibly a fallthrough here
