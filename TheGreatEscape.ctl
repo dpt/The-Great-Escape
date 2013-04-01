@@ -1702,9 +1702,9 @@ R $7D15 C ...
 
 c $7D2F plot_glyph
 R $7D2F I:HL Pointer to glyph.
-R $7D2F   DE Pointer to destination.
+R $7D2F I:DE Pointer to destination.
 R $7D2F O:HL Preserved.
-R $7D2F   DE Points to next character.
+R $7D2F O:DE Points to next character.
   $7D2F A = *HL;
   $7D30 plot_single_glyph: ...
   $7D31 HL = A * 8;
