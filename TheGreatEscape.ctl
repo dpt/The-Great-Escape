@@ -718,8 +718,7 @@ D $68A1 Index.
 c $68A2 sub_68A2
 D $68A2 Looks like it's resetting stuff.
   $68A2 EX DE,HL
-  $68A3 PUSH IY
-  $68A5 POP HL
+  $68A3 HL = IY;
   $68A6 A = L;
   $68A7 PUSH AF
   $68A8 L = A + 15;
@@ -5145,8 +5144,7 @@ c $AF8F sub_AF8F
   $AF8F EX AF,AF'
   $AF90 byte_81AA = A;
   $AF93 IY[7] |= (1<<6)|(1<<7);
-  $AF9B PUSH IY
-  $AF9D POP HL
+  $AF9B HL = IY;
   $AF9E A = L;
   $AF9F A &= A;
   $AFA0 if (A == 0 && morale_related_also) door_handling();
@@ -5161,8 +5159,7 @@ D $AFB9 Cutting wire?
   $AFC3 RET NZ
 
   $AFC4 IY[7] &= ~(1<<6);
-  $AFC8 PUSH IY
-  $AFCD POP DE
+  $AFC8 DE = IY;
   $AFCE DE += 15;
   $AFD5 memcpy(DE, &word_81A4, 6);
   $AFD7 IY[23] = byte_81AA;
@@ -5235,8 +5232,7 @@ c $AFDF sub_AFDF
 
   $B068 POP HL
   $B069 POP BC
-  $B06A PUSH IY
-  $B06C POP HL
+  $B06A HL = IY;
   $B06D L++;
   $B06E solitary(); return; // exit via
 
@@ -5332,10 +5328,8 @@ c $B107 use_bribe
 D $B107 'he takes the bribe' 'and acts as decoy'
   $B107 increase_morale_by_10_score_by_50();
   $B10A IY[1] = 0;
-  $B10E PUSH IY
-  $B110 POP HL
-  $B111 L += 2;
   $B113 CALL $CB23
+  $B10E HL = IY + 2;
   $B116 DE = &items_held[0];
   $B119 A = *DE;
   $B11A if (A == item_BRIBE) goto $B123;
@@ -6020,8 +6014,7 @@ c $B5CE called_from_main_loop_9
   $B69C JP NZ,$B6A8
   $B69F IY[12]++;
 ;
-  $B6A2 PUSH IY
-  $B6A4 POP HL
+  $B6A2 HL = IY;
   $B6A5 reset_something:$B729();
 ;
   $B6A8 POP BC
@@ -6202,8 +6195,7 @@ w $B839 word_B839
 ; -----------------------------------------------------------------------------
 
 c $B83B spotlight_foo
-  $B83B PUSH IY
-  $B83D POP HL
+  $B83B HL = IY;
   $B83E if (L) return;
   $B841 HL = $8131;
   $B844 BC = 0x0804; // 8 iterations, C is ?
@@ -6296,8 +6288,7 @@ c $B89C no_idea
   $B8EA B = *HL--;
   $B8EC C = *HL;
   $B8ED HL -= 15;
-  $B8F1 PUSH HL
-  $B8F2 POP IY
+  $B8F1 IY = HL;
   $B8F4 EXX
   $B8F5 pop_next: POP BC
   $B8F6 POP HL
@@ -7844,8 +7835,7 @@ D $C918 ...
   $C920 IY[7] = --B;
   $C924 return; }
 
-  $C925 PUSH IY  // equivalent to HL = IY ?
-  $C927 POP HL
+  $C925 HL = IY;
   $C928 A = *++HL;
   $C92A if (A == 0) goto $C9BA;
 
@@ -8088,8 +8078,7 @@ D $CA81 Bribes, solitary, food, 'character enters' sound.
   $CAE6 A = *HL & 3;
   $CAE9 if (A < 2) HL += 5; else HL -= 3;
   $CAF8 PUSH HL
-  $CAF9 PUSH IY
-  $CAFB POP HL
+  $CAF9 HL = IY;
   $CAFC A = L;
   $CAFD if (A == 0) {
   $CB01 HL++;
@@ -8269,8 +8258,7 @@ D $CC31 (<- solitary)
 ; ------------------------------------------------------------------------------
 
 c $CC37 guards_follow_suspicious_player
-  $CC37 PUSH IY
-  $CC39 POP HL
+  $CC37 HL = IY;
   $CC3A A = *HL;
 D $CC3B Don't follow the player if he's dressed as a guard
   $CC3B if (A && *$8015 == sprite_guard_tl_4) return;
@@ -8782,8 +8770,7 @@ c $DBEB Uses BC_becomes_A_times_8.
 c $DC41 sub_DC41
   $DC41 A &= 0x3F;
   $DC43 possibly_holds_an_item = A;
-  $DC46 PUSH IY
-  $DC48 POP HL
+  $DC46 HL = IY;
   $DC49 HL += 2;
   $DC4B DE = &byte_81B2;
   $DC4E BC = 5;
