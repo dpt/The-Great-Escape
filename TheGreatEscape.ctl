@@ -55,6 +55,15 @@
 ;   JR endifpart;
 ;   elsepart: <elsework>
 ;   endifpart:
+;
+; Less than or equal:
+;   CP $0F
+;   JP Z,$C8F1
+;   JP C,$C8F1
+;
+; Transfer between awkward registers:
+;   PUSH reg
+;   POP anotherreg
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; CONSTANTS
