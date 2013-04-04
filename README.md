@@ -6,25 +6,28 @@ Reverse engineering Denton Designs' classic ZX Spectrum 48K game [The Great Esca
 SkoolKit
 --------
 
-I'm reversing the game using [SkoolKit](http://pyskool.ca/?page_id=177). This is the rather nice toolkit for disassembling ZX Spectrum software written by Richard Dymond.
+I'm reversing the game with the help of [SkoolKit](http://pyskool.ca/?page_id=177). This is the rather nice toolkit for disassembling ZX Spectrum software written by Richard Dymond.
 
 View an aperiodically updated version of the HTML disassembly [here](http://dpt.github.com/The-Great-Escape/).
 
-Currently the disassembly is _control_ file based rather than _skool_ file based.
+Note that currently the disassembly is contained in a  _control_ file rather than a _skool_ file.
 
 Goals
 -----
 
-Goal one is to build a complete disassembly of the game using a C-style pseudocode (and Z80 fragments where C syntax cannot cope).
+**Goal one** is to build a complete disassembly of the game using a C-style pseudocode (and Z80 fragments where C syntax cannot cope).
 
-Goal two is to transform that C-style pseudocode into real C source code which behaves exactly as the original game does.
+**Goal two** is to transform that C-style pseudocode into real C source code which behaves exactly as the original game does.
 
-Instructions
-------------
+Goal One - Reverse
+------------------
+
+### Building the Disassembly
 
 * Make a local clone of this repository.
-* Drop a Z80 format snapshot of the game into the project directory. Call it TheGreatEscape.z80.
-* Run kit.sh.
+* `cd reverse`.
+* Drop a Z80 format snapshot of the game into the project directory. Call it `TheGreatEscape.z80`.
+* `./kit.sh`.
 
 You will see:
 
@@ -43,20 +46,17 @@ You will see:
       Writing TheGreatEscape/reference/glossary.html
       Writing TheGreatEscape/index.html
 
-* Open up TheGreatEscape/index.html in your browser.
+* Open up `TheGreatEscape/index.html` in your browser.
 
-Syntax Considerations
----------------------
+### Currrent State
 
-C's curly bracket syntax conflicts with SkoolKit's so you'll notice I'll often replace them with angle brackets.
+I don't grok all the code yet, so I have to be vague when naming symbols. You will notice stuff like:
 
-Vagueness
----------
-
-I don't grok all the code yet, so I have to be vague when naming symbols. :-) You may notice stuff like:
-
-* 'sub_*' is a function I don't know the purpose of.
+* 'sub_*' names a function I don't know the purpose of.
 * 'byte_*' and 'word_*' in this context mean 'something which I can see is accessed as a byte (or word) but I can't yet tell what it is.'
-* 'mystery' is not yet understood.
-* 'unsure' is suspected purpose but not confident.
-* Vague tokens like 'maybe' or 'possibly' indicate that I'm not quite sure of something.
+* Vague tokens like 'maybe', 'mystery', 'unsure' or 'possibly' indicate that I'm not quite sure of something.
+
+Goal Two - Reimplement
+----------------------
+
+Later. :-)

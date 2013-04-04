@@ -1,6 +1,7 @@
 /* tge.c */
 
 #include <stdint.h>
+#include <string.h>
 
 /* ----------------------------------------------------------------------- */
 
@@ -130,6 +131,15 @@ enum interior_object_tile
 // CONSTANTS
 //
 
+#define screen_text_start_address   ((uint16_t) 0x50E0)
+
+#define visible_tiles_start_address ((uint16_t) 0xF0F8)
+#define visible_tiles_end_address   ((uint16_t) 0xF28F) /* inclusive */
+#define visible_tiles_length        (24 * 17)
+
+#define screen_buffer_start_address ((uint16_t) 0xF290)
+#define screen_buffer_end_address   ((uint16_t) 0xFF4F) /* inclusive */
+#define screen_buffer_length        (24 * 8 * 17)
 
 /* ----------------------------------------------------------------------- */
 
@@ -159,6 +169,15 @@ typedef struct { tilerow_t row[8]; } tile_t;
 /** An item. */
 typedef enum item item_t;
 
+/** A wall or a fence */
+typedef struct wall
+{
+  uint8_t a, b;
+  uint8_t c, d;
+  uint8_t e, f;
+}
+wall_t;
+
 /* ----------------------------------------------------------------------- */
 
 // EXTERNS
@@ -168,6 +187,7 @@ extern const tgeobject_t *interior_object_tile_refs[interiorobject__LIMIT];
 
 extern const tile_t interior_tiles[interiorobjecttile_MAX];
 
+extern const uint8_t *game_screen_scanline_start_addresses[128]; // CHECK
 
 /* ----------------------------------------------------------------------- */
 
@@ -243,10 +263,14 @@ static const unsigned char ascii_to_font[256] =
 //
 
 uint8_t *plot_single_glyph(int A, uint8_t *output);
+void wipe_message(tgestate_t *state);
+void shunt_buffer_back_by_two(tgestate_t *state);
 
 static const char *messages_table[message__LIMIT];
 
 int item_to_bitmask(item_t item);
+
+static const wall_t walls[];
 
 /* ----------------------------------------------------------------------- */
 
@@ -263,12 +287,23 @@ struct tgestate
   tileindex_t *tile_buf;
 
   // EXISTING VARIABLES
+  uint8_t      indoor_room_index;           // $68A0
   uint8_t      current_door;                // $68A1
 
+  uint8_t      message_buffer[19];          // $7CFC
+  uint8_t      message_display_counter;     // $7D0F
+  uint8_t      message_display_index;       // $7D10
+  uint8_t     *message_buffer_pointer;      // $7D11
+  uint8_t     *current_message_character;   // $7D13
+
+  uint16_t     word_81A4;                   // $81A4
+  uint16_t     word_81A6;                   // $81A6
+  uint16_t     word_81A8;                   // $81A8
 
   uint8_t      gates_and_doors[9];          // $F05D
 
 
+  uint8_t      RAM[65536];
 };
 
 struct tgeobject
@@ -451,6 +486,29 @@ uint16_t get_next_scanline(uint16_t HL) /* stateless */
 
 /* ----------------------------------------------------------------------- */
 
+/* $7D15 */
+/* The original code accepts BC as the message index. However all-but-one of
+ * the callers only setup B, not BC. We therefore ignore the second argument
+ * here. */
+void queue_message_for_display(tgestate_t *state,
+                               message_t   message_index)
+{
+  uint8_t *HL;
+
+  HL = state->message_buffer_pointer; // insertion point pointer?
+  if (*HL == message_NONE)
+    return;
+
+  /* Are we already about to show this message? */
+  HL -= 2;
+  if (*HL++ == message_index && *HL++ == 0)
+    return;
+
+  /* Add it to the queue. */
+  *HL++ = message_index;
+  *HL++ = 0;
+  *state->message_buffer_pointer = HL;
+}
 
 /* ----------------------------------------------------------------------- */
 
@@ -481,6 +539,82 @@ uint8_t *plot_single_glyph(int character, uint8_t *output)
 
 /* ----------------------------------------------------------------------- */
 
+/* $7D48 */
+void message_display(tgestate_t *state)
+{
+  uint8_t        A;
+  const uint8_t *HL;
+  uint8_t       *DE;
+
+  if (state->message_display_counter > 0)
+  {
+    state->message_display_counter--;
+    return;
+  }
+
+  A = state->message_display_index;
+  if (A == 128)
+  {
+    shunt_buffer_back_by_two(state);
+  }
+  else if (A > 128)
+  {
+    wipe_message(state);
+  }
+  else
+  {
+    HL = state->current_message_character;
+    DE = screen_text_start_address + A;
+    plot_glyph(HL, DE);
+    state->message_display_index = (intptr_t) DE & 31;
+    A = *++HL;
+    if (A == 255) // end of string
+    {
+      state->message_display_counter = 31; // leave the message for 31 turns
+      state->message_display_index |= 128; // then wipe it
+    }
+    else
+    {
+      state->current_message_character = HL;
+    }
+  }
+}
+
+/* ----------------------------------------------------------------------- */
+
+/* $7D87 */
+void wipe_message(tgestate_t *state)
+{
+  int      index;
+  uint8_t *DE;
+
+  index = state->message_display_index;
+  state->message_display_index = --index;
+  DE = screen_text_start_address + index;
+  plot_single_glyph(' ', DE); // plot a SPACE character
+}
+
+/* ----------------------------------------------------------------------- */
+
+/* $7D99 */
+void shunt_buffer_back_by_two(tgestate_t *state)
+{
+  uint8_t    *DE;
+  const char *message;
+
+  DE = &state->message_buffer[0];
+  if (state->message_buffer_pointer == DE)
+    return;
+
+  // message id is stored in the buffer itself
+
+  message = messages_table[*DE];
+
+  state->current_message_character = (uint8_t *) message; // should i cast away const?
+  memmove(state->message_buffer, state->message_buffer + 2, 16);
+  state->message_buffer_pointer -= 2;
+  state->message_display_index = 0;
+}
 
 /* ----------------------------------------------------------------------- */
 
@@ -545,6 +679,49 @@ void screenlocstring_plot(tgestate_t *state, uint8_t *HL)
 
 /* ----------------------------------------------------------------------- */
 
+/* $B14C */
+int bounds_check(tgestate_t *state)
+{
+  uint8_t       B;
+  const wall_t *wall;
+
+  if (state->indoor_room_index)
+    return indoor_bounds_check(state);
+
+  B = 24; // nwalls (count of walls + fences)
+  wall = &walls[0];
+  do
+  {
+    uint16_t min0, max0, min1, max1, min2, max2;
+
+    min0 = wall->a * 8;
+    max0 = wall->b * 8;
+    min1 = wall->c * 8;
+    max1 = wall->d * 8;
+    min2 = wall->e * 8;
+    max2 = wall->f * 8;
+
+    if (state->word_81A4 >= min0 + 2 &&
+        state->word_81A4 <  max0 + 4 &&
+        state->word_81A6 >= min1     &&
+        state->word_81A6 <  max1 + 4 &&
+        state->word_81A8 >= min2     &&
+        state->word_81A8 <  max2 + 2)
+    {
+#if 0
+      IY[7] ^= 0x20;
+#endif
+      return 1; // NZ
+    }
+
+    wall++;
+  }
+  while (--B);
+  return 0; // Z
+}
+
+/* ----------------------------------------------------------------------- */
+
 #define door_FLAG_LOCKED (1 << 7)
 
 /* $B1D4 */
@@ -577,4 +754,165 @@ int is_door_open(tgestate_t *state)
 }
 
 /* ----------------------------------------------------------------------- */
+
+static const wall_t walls[] =
+{
+  /* $B53E */ /* walls */
+  { 0x6A, 0x6E, 0x52, 0x62, 0x00, 0x0B },
+  { 0x5E, 0x62, 0x52, 0x62, 0x00, 0x0B },
+  { 0x52, 0x56, 0x52, 0x62, 0x00, 0x0B },
+  { 0x3E, 0x5A, 0x6A, 0x80, 0x00, 0x30 },
+  { 0x34, 0x80, 0x72, 0x80, 0x00, 0x30 },
+  { 0x7E, 0x98, 0x5E, 0x80, 0x00, 0x30 },
+  { 0x82, 0x98, 0x5A, 0x80, 0x00, 0x30 },
+  { 0x86, 0x8C, 0x46, 0x80, 0x00, 0x0A },
+  { 0x82, 0x86, 0x46, 0x4A, 0x00, 0x12 },
+  { 0x6E, 0x82, 0x46, 0x47, 0x00, 0x0A },
+  { 0x6D, 0x6F, 0x45, 0x49, 0x00, 0x12 },
+  { 0x67, 0x69, 0x45, 0x49, 0x00, 0x12 },
+  /* $B586 */ /* fences */
+  { 0x46, 0x46, 0x46, 0x6A, 0x00, 0x08 },
+  { 0x3E, 0x3E, 0x3E, 0x6A, 0x00, 0x08 },
+  { 0x4E, 0x4E, 0x2E, 0x3E, 0x00, 0x08 },
+  { 0x68, 0x68, 0x2E, 0x45, 0x00, 0x08 },
+  { 0x3E, 0x68, 0x3E, 0x3E, 0x00, 0x08 },
+  { 0x4E, 0x68, 0x2E, 0x2E, 0x00, 0x08 },
+  { 0x46, 0x67, 0x46, 0x46, 0x00, 0x08 },
+  { 0x68, 0x6A, 0x38, 0x3A, 0x00, 0x08 },
+  { 0x4E, 0x50, 0x2E, 0x30, 0x00, 0x08 },
+  { 0x46, 0x48, 0x46, 0x48, 0x00, 0x08 },
+  { 0x46, 0x48, 0x5E, 0x60, 0x00, 0x08 },
+  { 0x69, 0x6D, 0x46, 0x49, 0x00, 0x08 },
+};
+
+/* ----------------------------------------------------------------------- */
+
+#if 0
+
+#define SCREEN_BUFFER_BASE 0xF291
+
+/* $EED3 */
+void plot_game_screen(tgestate_t *state)
+{
+  uint8_t  A;
+  uint8_t *SP;
+
+  A = *(&plot_game_screen_x + 1); // meh
+  if (A)
+    goto unaligned;
+
+  HL = SCREEN_BUFFER_BASE + plot_game_screen_x;
+  SP = game_screen_scanline_start_addresses;
+  A  = 128;
+  do
+  {
+    DE = *SP++;
+    *DE = *HL++; // 23x
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    *DE = *HL++;
+    HL++; // skip 24th
+  }
+  while (--A);
+
+  return;
+
+
+unaligned:
+
+  HL = SCREEN_BUFFER_BASE + plot_game_screen_x;
+  A  = *HL++;
+  SP = game_screen_scanline_start_addresses;
+  Bdash = 128; // 128 iterations
+  do
+  {
+    DE = *SP++;
+
+    // RRD:
+    // T = A & 0x0F;
+    // A = (*HL & 0x0F) | (A & 0xF0);
+    // *HL = (*HL >> 4) | (T << 4);
+
+    B = 4; // 4 iterations
+    do
+    {
+      C = *HL;
+      RRD;
+      Adash = *HL;
+      *DE++ = Adash;
+      *HL++ = C;
+
+      C = *HL;
+      RRD;
+      Adash = *HL;
+      *DE++ = Adash;
+      *HL++ = C;
+
+      C = *HL;
+      RRD;
+      Adash = *HL;
+      *DE++ = Adash;
+      *HL++ = C;
+
+      C = *HL;
+      RRD;
+      Adash = *HL;
+      *DE++ = Adash;
+      *HL++ = C;
+
+      C = *HL;
+      RRD;
+      Adash = *HL;
+      *DE++ = Adash;
+      *HL++ = C;
+    }
+    while (--B);
+
+    C = *HL;
+    RRD;
+    Adash = *HL;
+    *DE++ = Adash;
+    *HL++ = C;
+
+    C = *HL;
+    RRD;
+    Adash = *HL;
+    *DE++ = Adash;
+    *HL++ = C;
+
+    C = *HL;
+    RRD;
+    Adash = *HL;
+    *DE++ = Adash;
+    *HL++ = C;
+
+    A = *HL;
+    HL++;
+  }
+  while (--Bdash);
+
+  SP = saved_sp;
+  return;
+}
+
+#endif
 
