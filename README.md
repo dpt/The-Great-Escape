@@ -27,11 +27,12 @@ Goal One - Reverse
 * Make a local clone of this repository.
 * `cd reverse`.
 * Drop a Z80 format snapshot of the game into the project directory. Call it `TheGreatEscape.z80`.
-* `./kit.sh`.
+* `make install`. This will install TheGreatEscape.py into your SkoolKit installation. You only have to do this once. (Note: you may have to customise the path inside `Makefile`).
+* `make tge`.
 
 You will see:
 
-    $ ./kit.sh 
+    $ make tge
     Using skool file: TheGreatEscape.skool
     Using ref file: TheGreatEscape.ref
     Parsing TheGreatEscape.skool
@@ -46,7 +47,7 @@ You will see:
       Writing TheGreatEscape/reference/glossary.html
       Writing TheGreatEscape/index.html
 
-* Open up `TheGreatEscape/index.html` in your browser.
+* Open up `build/TheGreatEscape/index.html` in your browser.
 
 ### Currrent State
 
