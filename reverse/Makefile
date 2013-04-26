@@ -20,4 +20,4 @@ TGE=TheGreatEscape
 tge:
 	mkdir -p $(BUILD)
 	sna2skool.py $(OPTIONS) -c $(TGE).ctl $(TGE).z80 > $(BUILD)/$(TGE).skool 
-	skool2html.py $(OPTIONS) -o $(TGE).skool
+	skool2html.py $(OPTIONS) -o $(BUILD)/$(TGE).skool
