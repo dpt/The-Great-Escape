@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-sets a target location 2B00
+sets a target location 2B00. seems to get hit around breakfasting time. if i nobble this it stops him sitting for breakfast.
 </div>
 </div>
 </td>
@@ -35,27 +35,25 @@ sets a target location 2B00
 <tr>
 <td class="label"><a name="42200"></a>A4D8</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = *IY; // must be a character index</td>
 </tr>
 <tr>
 <td class="address"><a name="42203"></a>A4DB</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42204"></a>A4DC</td>
 <td class="instruction">JR NZ,$A4E4</td>
-<td class="transparentComment" />
+<td class="comment">if (A) goto $A4E4;</td>
 </tr>
 <tr>
 <td class="address"><a name="42206"></a>A4DE</td>
 <td class="instruction">LD BC,$2B00</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">set_target_location(location_2B00); return; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="42209"></a>A4E1</td>
 <td class="instruction">JP <a class="link" href="41791.html">$A33F</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -70,72 +68,62 @@ This entry point is used by the routine at <a class="link" href="42195.html">A4D
 <tr>
 <td class="label">A4E4</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">HL[1] = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="42213"></a>A4E5</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42215"></a>A4E7</td>
 <td class="instruction">CP $13</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="9">if (A &gt; 19) { // change this to 20 and character_21? stands in place of a guard } newA = A - 2; // seems to affect position at table } else { ... moved below ... newA = 24; // interleaved // guard character? {if (A &amp; (1&lt;&lt;0)) newA++; }</td>
 </tr>
 <tr>
 <td class="address"><a name="42217"></a>A4E9</td>
 <td class="instruction">JP Z,$A4F3</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42220"></a>A4EC</td>
 <td class="instruction">JP C,$A4F3</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42223"></a>A4EF</td>
 <td class="instruction">SUB $02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42225"></a>A4F1</td>
 <td class="instruction">JR $A4FA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="42227"></a>A4F3</td>
 <td class="instruction">BIT 0,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42229"></a>A4F5</td>
 <td class="instruction">LD A,$18</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42231"></a>A4F7</td>
 <td class="instruction">JR Z,$A4FA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42233"></a>A4F9</td>
 <td class="instruction">INC A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="42234"></a>A4FA</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">HL[0] = newA;</td>
 </tr>
 <tr>
 <td class="address"><a name="42235"></a>A4FB</td>
 <td class="instruction">LD (HL),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42236"></a>A4FC</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

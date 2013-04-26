@@ -27,15 +27,27 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class="link" href="46288.html">B4D0</a>.
+(word_81A4, word_81A6) within (-3,+3) of HL[1..] scaled &lt;&lt; 2
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to (byte before) coord byte pair.</td>
+</tr>
+</table>
+<table class="output">
+<tr>
+<td class="register">F</td>
+<td class="registerContents">C/NC if match/nomatch.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="45650"></a>B252</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">A = *++HL;</td>
+<td class="comment" rowspan="2">A = HL[1];</td>
 </tr>
 <tr>
 <td class="address"><a name="45651"></a>B253</td>
@@ -44,17 +56,17 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="address"><a name="45652"></a>B254</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="45653"></a>B255</td>
 <td class="instruction">CALL <a class="link" href="45717.html">$B295</a></td>
-<td class="comment">rotate_A_left_2_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_4();</td>
 </tr>
 <tr>
 <td class="address"><a name="45656"></a>B258</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="5">BC -= 3;</td>
+<td class="comment" rowspan="17">if (word_81A4 &lt; BC - 3 || word_81A4 &gt;= BC + 3) return; // with C set</td>
 </tr>
 <tr>
 <td class="address"><a name="45657"></a>B259</td>
@@ -75,22 +87,18 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="label"><a name="45663"></a>B25F</td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment">HL = word_81A4;</td>
 </tr>
 <tr>
 <td class="address"><a name="45666"></a>B262</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">SBC HL,BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45668"></a>B264</td>
 <td class="instruction">RET C</td>
-<td class="comment">RET C</td>
 </tr>
 <tr>
 <td class="address"><a name="45669"></a>B265</td>
 <td class="instruction">LD A,$06</td>
-<td class="comment" rowspan="5">BC += 6;</td>
 </tr>
 <tr>
 <td class="address"><a name="45671"></a>B267</td>
@@ -111,32 +119,28 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="label"><a name="45676"></a>B26C</td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment">HL = word_81A4;</td>
 </tr>
 <tr>
 <td class="address"><a name="45679"></a>B26F</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">SBC HL,BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45681"></a>B271</td>
 <td class="instruction">CCF</td>
-<td class="comment">CCF</td>
 </tr>
 <tr>
 <td class="address"><a name="45682"></a>B272</td>
 <td class="instruction">RET C</td>
-<td class="comment">RET C</td>
 </tr>
 <tr>
 <td class="address"><a name="45683"></a>B273</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="45684"></a>B274</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">A = *++HL;</td>
+<td class="comment" rowspan="2">A = HL[2];</td>
 </tr>
 <tr>
 <td class="address"><a name="45685"></a>B275</td>
@@ -145,17 +149,17 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="address"><a name="45686"></a>B276</td>
 <td class="instruction">CALL <a class="link" href="45717.html">$B295</a></td>
-<td class="comment">rotate_A_left_2_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_4();</td>
 </tr>
 <tr>
 <td class="address"><a name="45689"></a>B279</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="45690"></a>B27A</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="5">BC -= 3;</td>
+<td class="comment" rowspan="16">if (word_81A6 &lt; BC - 3 || word_81A6 &gt;= BC + 3) return; // with C set</td>
 </tr>
 <tr>
 <td class="address"><a name="45691"></a>B27B</td>
@@ -176,22 +180,18 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="label"><a name="45697"></a>B281</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment">HL = word_81A6;</td>
 </tr>
 <tr>
 <td class="address"><a name="45700"></a>B284</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">SBC HL,BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45702"></a>B286</td>
 <td class="instruction">RET C</td>
-<td class="comment">RET C</td>
 </tr>
 <tr>
 <td class="address"><a name="45703"></a>B287</td>
 <td class="instruction">LD A,$06</td>
-<td class="comment" rowspan="5">BC += 6;</td>
 </tr>
 <tr>
 <td class="address"><a name="45705"></a>B289</td>
@@ -212,22 +212,19 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="label"><a name="45710"></a>B28E</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment">HL = word_81A6;</td>
 </tr>
 <tr>
 <td class="address"><a name="45713"></a>B291</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">SBC HL,BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45715"></a>B293</td>
 <td class="instruction">CCF</td>
-<td class="comment">CCF</td>
 </tr>
 <tr>
 <td class="address"><a name="45716"></a>B294</td>
 <td class="instruction">RET</td>
-<td class="comment">RET</td>
+<td class="comment">return; // C not set</td>
 </tr>
 </table>
 <table class="prevNext">

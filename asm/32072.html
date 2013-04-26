@@ -65,7 +65,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="32087"></a>7D57</td>
 <td class="instruction">CP $80</td>
-<td class="comment" rowspan="2">if (A == 128) goto shunt_buffer_back_by_two; // exit via</td>
+<td class="comment" rowspan="2">if (A == 128) goto next_message; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="32089"></a>7D59</td>
@@ -124,7 +124,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="32112"></a>7D70</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A != 255) goto nonzero;</td>
+<td class="comment" rowspan="2">if (A != 255) goto not_eol;</td>
 </tr>
 <tr>
 <td class="address"><a name="32114"></a>7D72</td>
@@ -160,7 +160,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="32131"></a>7D83</td>
 <td class="instruction">LD ($7D13),HL</td>
-<td class="comment">nonzero: current_message_character = HL;</td>
+<td class="comment">not_eol: current_message_character = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="32134"></a>7D86</td>

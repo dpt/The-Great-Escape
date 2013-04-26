@@ -45,17 +45,17 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51845"></a>CA85</td>
 <td class="instruction">AND $3F</td>
-<td class="comment">AND 63</td>
+<td class="comment">A &amp;= 63;</td>
 </tr>
 <tr>
 <td class="address"><a name="51847"></a>CA87</td>
 <td class="instruction">JR Z,$CAB6</td>
-<td class="comment">if (A) &lt;</td>
+<td class="comment">if (A) {</td>
 </tr>
 <tr>
 <td class="address"><a name="51849"></a>CA89</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="2">if (A == 1) &lt;</td>
+<td class="comment" rowspan="6">if (A == 1) } A = bribed_character; {if (A == [IY]) { use_bribe(); return; } // exit via } else { solitary(); return; } } // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="51851"></a>CA8B</td>
@@ -64,12 +64,10 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51853"></a>CA8D</td>
 <td class="instruction">LD A,($AF8E)</td>
-<td class="comment">A = bribe_related;</td>
 </tr>
 <tr>
 <td class="address"><a name="51856"></a>CA90</td>
 <td class="instruction">CP (IY+$00)</td>
-<td class="comment" rowspan="2">if (A == [IY]) &lt; use_bribe(); return; &gt; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="51859"></a>CA93</td>
@@ -78,12 +76,11 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51862"></a>CA96</td>
 <td class="instruction">JP <a class="link" href="52120.html">$CB98</a></td>
-<td class="comment">else &lt; solitary(); return; &gt; &gt; // exit via</td>
 </tr>
 <tr>
 <td class="label"><a name="51865"></a>CA99</td>
 <td class="instruction">CP $02</td>
-<td class="comment" rowspan="4">else if (A == 2 || A == 4) &lt; return; &gt;</td>
+<td class="comment" rowspan="4">else if (A == 2 || A == 4) { return; }</td>
 </tr>
 <tr>
 <td class="address"><a name="51867"></a>CA9B</td>
@@ -155,7 +152,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51891"></a>CAB3</td>
 <td class="instruction">JP <a class="link" href="51480.html#51701">$C9F5</a></td>
-<td class="comment">goto sub_C918::C9F5; &gt;</td>
+<td class="comment">goto sub_C918::C9F5; }</td>
 </tr>
 <tr>
 <td class="label"><a name="51894"></a>CAB6</td>
@@ -371,12 +368,11 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51961"></a>CAF9</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment">PUSH IY</td>
+<td class="comment" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
 <td class="address"><a name="51963"></a>CAFB</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51964"></a>CAFC</td>
@@ -386,7 +382,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51965"></a>CAFD</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) &lt;</td>
+<td class="comment" rowspan="6">if (A == 0) } HL++; {*HL++ &amp;= ~(1&lt;&lt;6); } CALL $CB23</td>
 </tr>
 <tr>
 <td class="address"><a name="51966"></a>CAFE</td>
@@ -395,12 +391,10 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51969"></a>CB01</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="51970"></a>CB02</td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="comment" rowspan="2">*HL++ &amp;= ~(1&lt;&lt;6);</td>
 </tr>
 <tr>
 <td class="address"><a name="51972"></a>CB04</td>
@@ -409,7 +403,6 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51973"></a>CB05</td>
 <td class="instruction">CALL $CB23</td>
-<td class="comment">CALL $CB23 &gt;</td>
 </tr>
 <tr>
 <td class="label"><a name="51976"></a>CB08</td>
@@ -453,7 +446,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51990"></a>CB16</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A != 255) &lt;</td>
+<td class="comment" rowspan="2">if (A == 255) goto cb23;</td>
 </tr>
 <tr>
 <td class="address"><a name="51992"></a>CB18</td>
@@ -467,7 +460,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51995"></a>CB1B</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment" rowspan="2">if (A &amp; (1&lt;&lt;7)) &lt;</td>
+<td class="comment" rowspan="4">if (A &amp; (1&lt;&lt;7)) } {(*HL) -= 2; }</td>
 </tr>
 <tr>
 <td class="address"><a name="51997"></a>CB1D</td>
@@ -476,7 +469,6 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51999"></a>CB1F</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment" rowspan="2">(*HL) -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="52000"></a>CB20</td>
@@ -485,19 +477,19 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="label"><a name="52001"></a>CB21</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment">&gt; else &lt; (*HL)++;</td>
+<td class="comment">else { (*HL)++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52002"></a>CB22</td>
 <td class="instruction">DEC L</td>
-<td class="comment">HL--; &gt;</td>
+<td class="comment">HL--; }</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
 <a name="52003"></a>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a class="link" href="41907.html">A3B3</a>, <a class="link" href="45319.html">B107</a> and <a class="link" href="51480.html">C918</a>.
+This entry point is used by the routines at <a class="link" href="41868.html">A38C</a>, <a class="link" href="45319.html">B107</a> and <a class="link" href="51480.html">C918</a>.
 </div>
 </div>
 </td>
@@ -545,12 +537,11 @@ This entry point is used by the routine at <a class="link" href="50400.html">C4E
 <tr>
 <td class="address"><a name="52014"></a>CB2E</td>
 <td class="instruction">CP $02</td>
-<td class="comment">CP 2</td>
+<td class="comment" rowspan="2">if (A == 2) goto $CB46;</td>
 </tr>
 <tr>
 <td class="address"><a name="52016"></a>CB30</td>
 <td class="instruction">JP Z,$CB46</td>
-<td class="comment">JP Z,$CB46</td>
 </tr>
 <tr>
 <td class="address"><a name="52019"></a>CB33</td>
@@ -632,7 +623,7 @@ This entry point is used by the routine at <a class="link" href="50400.html">C4E
 <tr>
 <td class="address"><a name="52046"></a>CB4E</td>
 <td class="instruction">JR $CB23</td>
-<td class="comment">JR $CB23</td>
+<td class="comment">goto $CB23;</td>
 </tr>
 <tr>
 <td class="label"><a name="52048"></a>CB50</td>

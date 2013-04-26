@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="45869.html">B32D</a></td>
 </tr>
 </table>
-<div class="description">B2FC: resetty</div>
+<div class="description">B2FC: resetty1</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class="link" href="40421.html">9DE5</a>.
+Resets ... something.
 </div>
 </div>
 </td>
@@ -35,117 +35,112 @@ Used by the routines at <a class="link" href="26786.html">68A2</a> and <a class=
 <tr>
 <td class="label"><a name="45820"></a>B2FC</td>
 <td class="instruction">LD HL,$8000</td>
-<td class="transparentComment" />
+<td class="comment">HL = $8000;</td>
 </tr>
 <tr>
 <td class="address"><a name="45823"></a>B2FF</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="transparentComment" />
+<td class="comment">reset_something();</td>
 </tr>
 <tr>
 <td class="address"><a name="45826"></a>B302</td>
 <td class="instruction">LD HL,$8018</td>
-<td class="transparentComment" />
+<td class="comment">HL = $8018;</td>
 </tr>
 <tr>
 <td class="address"><a name="45829"></a>B305</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45830"></a>B306</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45831"></a>B307</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">C = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45832"></a>B308</td>
-<td class="instruction">CALL <a class="link" href="58704.html#58709">$E555</a></td>
-<td class="transparentComment" />
+<td class="instruction">CALL <a class="link" href="58709.html">$E555</a></td>
+<td class="comment">divide_AC_by_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45835"></a>B30B</td>
 <td class="instruction">SUB $0B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">map_position_maybe[0] = A - 11;</td>
 </tr>
 <tr>
 <td class="address"><a name="45837"></a>B30D</td>
 <td class="instruction">LD ($81BB),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45840"></a>B310</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45841"></a>B311</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45842"></a>B312</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45843"></a>B313</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">C = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45844"></a>B314</td>
-<td class="instruction">CALL <a class="link" href="58704.html#58709">$E555</a></td>
-<td class="transparentComment" />
+<td class="instruction">CALL <a class="link" href="58709.html">$E555</a></td>
+<td class="comment">divide_AC_by_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45847"></a>B317</td>
 <td class="instruction">SUB $06</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">map_position_maybe[1] = A - 6;</td>
 </tr>
 <tr>
 <td class="address"><a name="45849"></a>B319</td>
 <td class="instruction">LD ($81BC),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45852"></a>B31C</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">indoor_room_index = room_NONE;</td>
 </tr>
 <tr>
 <td class="address"><a name="45853"></a>B31D</td>
 <td class="instruction">LD ($68A0),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45856"></a>B320</td>
 <td class="instruction">CALL <a class="link" href="42953.html">$A7C9</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_A7C9();</td>
 </tr>
 <tr>
 <td class="address"><a name="45859"></a>B323</td>
 <td class="instruction">CALL <a class="link" href="43170.html">$A8A2</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_A8A2();</td>
 </tr>
 <tr>
 <td class="address"><a name="45862"></a>B326</td>
 <td class="instruction">CALL <a class="link" href="26937.html">$6939</a></td>
-<td class="transparentComment" />
+<td class="comment">setup_movable_items();</td>
 </tr>
 <tr>
 <td class="address"><a name="45865"></a>B329</td>
 <td class="instruction">CALL <a class="link" href="43936.html">$ABA0</a></td>
-<td class="transparentComment" />
+<td class="comment">zoombox();</td>
 </tr>
 <tr>
 <td class="address"><a name="45868"></a>B32C</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

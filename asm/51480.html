@@ -69,12 +69,11 @@
 <tr>
 <td class="label"><a name="51493"></a>C925</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment">PUSH IY  // equivalent to HL = IY ?</td>
+<td class="comment" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
 <td class="address"><a name="51495"></a>C927</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51496"></a>C928</td>
@@ -183,7 +182,7 @@
 <tr>
 <td class="label"><a name="51539"></a>C953</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="24">if (A == 3) } PUSH HL EX DE,HL {if (itemstruct_7.room &amp; (1&lt;&lt;7)) { } HL++; {DE += 3; } *DE++ = *HL++; *DE++ = *HL++; POP HL JR $C9C0 } else { A = 0; *DE = A; EX DE,HL {*++HL = 0xFF; } {*++HL = 0; } POP HL JP $CB23 }</td>
+<td class="comment" rowspan="24">if (A == 3) } PUSH HL EX DE,HL {if (itemstruct_7.room &amp; (1&lt;&lt;7)) { } HL++; {DE += 3; } *DE++ = *HL++; *DE++ = *HL++; POP HL goto $C9C0 } else {; A = 0; *DE = A; EX DE,HL {*++HL = 0xFF; } {*++HL = 0; } POP HL JP $CB23 }</td>
 </tr>
 <tr>
 <td class="address"><a name="51541"></a>C955</td>
@@ -280,7 +279,7 @@
 <tr>
 <td class="label"><a name="51577"></a>C979</td>
 <td class="instruction">CP $04</td>
-<td class="comment" rowspan="38">if (A == 4) } PUSH HL A = bribe_related; {if (A != 0xFF) { } C = A; B = 7; // 7 iterations HL = $8020; do &lt; A = C; CP *HL JR Z,$C99C {HL += 32; } &gt; while (--B); } POP HL {*HL++ = 0; } JP $CB23 {HL += 15; } POP DE PUSH DE {DE += 3; } A = indoor_room_index; // might fold down {if (A) { } divide_3xAC_by_8_with_rounding(); } else { *DE++ = *HL++; HL++; *DE++ = *HL++; } POP HL JR $C9C0</td>
+<td class="comment" rowspan="38">if (A == 4) } PUSH HL A = bribed_character; {if (A != 0xFF) { } C = A; B = 7; // 7 iterations HL = $8020; do { A = C; CP *HL JR Z,$C99C {HL += 32; } } while (--B); } POP HL {*HL++ = 0; } JP $CB23 {HL += 15; } POP DE PUSH DE {DE += 3; } A = indoor_room_index; // might fold down {if (A) { } divide_3xAC_by_8_with_rounding(); } else { *DE++ = *HL++; HL++; *DE++ = *HL++; } POP HL goto $C9C0 };</td>
 </tr>
 <tr>
 <td class="address"><a name="51579"></a>C97B</td>
@@ -476,7 +475,7 @@
 <tr>
 <td class="address"><a name="51654"></a>C9C6</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="9">if (A) } HL = &amp;A_widened_to_BC; } else { {if (C &amp; (1&lt;&lt;6)) { } HL = &amp;rotate_A_left_2_widening_to_BC; } else { HL = &amp;rotate_A_left_3_widening_to_BC; }</td>
+<td class="comment" rowspan="9">if (A) } HL = &amp;A_widened_to_BC; } else { {if (C &amp; (1&lt;&lt;6)) { } HL = &amp;BC_becomes_A_times_4; } else { HL = &amp;BC_becomes_A_times_8; }</td>
 </tr>
 <tr>
 <td class="address"><a name="51655"></a>C9C7</td>

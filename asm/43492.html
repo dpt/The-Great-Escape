@@ -26,73 +26,76 @@
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="43698.html">AAB2</a>.
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="43492"></a>A9E4</td>
 <td class="instruction">LD HL,$81BB</td>
-<td class="transparentComment" />
+<td class="comment">HL = &amp;map_position_maybe;</td>
 </tr>
 <tr>
 <td class="address"><a name="43495"></a>A9E7</td>
 <td class="instruction">INC (HL)</td>
-<td class="transparentComment" />
+<td class="comment">(*HL)++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43496"></a>A9E8</td>
 <td class="instruction">CALL <a class="link" href="42953.html">$A7C9</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_A7C9();</td>
 </tr>
 <tr>
 <td class="address"><a name="43499"></a>A9EB</td>
 <td class="instruction">LD HL,$F0F9</td>
-<td class="transparentComment" />
+<td class="comment">HL = visible_tiles_start_address + 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43502"></a>A9EE</td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="transparentComment" />
+<td class="comment">DE = visible_tiles_start_address;</td>
 </tr>
 <tr>
 <td class="address"><a name="43505"></a>A9F1</td>
 <td class="instruction">LD BC,$0197</td>
-<td class="transparentComment" />
+<td class="comment">BC = visible_tiles_length - 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43508"></a>A9F4</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
+<td class="comment">LDIR</td>
 </tr>
 <tr>
 <td class="address"><a name="43510"></a>A9F6</td>
 <td class="instruction">LD HL,$F291</td>
-<td class="transparentComment" />
+<td class="comment">HL = screen_buffer_start_address + 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43513"></a>A9F9</td>
 <td class="instruction">LD DE,$F290</td>
-<td class="transparentComment" />
+<td class="comment">DE = screen_buffer_start_address;</td>
 </tr>
 <tr>
 <td class="address"><a name="43516"></a>A9FC</td>
 <td class="instruction">LD BC,$0CBF</td>
-<td class="transparentComment" />
+<td class="comment">BC = screen_buffer_length - 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43519"></a>A9FF</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
+<td class="comment">LDIR</td>
 </tr>
 <tr>
 <td class="address"><a name="43521"></a>AA01</td>
 <td class="instruction">CALL <a class="link" href="43215.html">$A8CF</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_A8CF();</td>
 </tr>
 <tr>
 <td class="address"><a name="43524"></a>AA04</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

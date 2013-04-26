@@ -21,18 +21,21 @@
 <td class="next">Next: <a class="link" href="32021.html">7D15</a></td>
 </tr>
 </table>
-<div class="description">7CFC: message_buffer_stuff</div>
+<div class="description">7CFC: message_queue_stuff</div>
 <table class="dataDisassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+LIFO queue of message IDs.
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="address"><a name="31996"></a>7CFC</td>
 <td class="instruction">DEFB $FF,$FF,$00,$00,$00,$00,$00,$00</td>
-<td class="dataComment" rowspan="3">message_buffer</td>
+<td class="dataComment" rowspan="3">message_queue</td>
 </tr>
 <tr>
 <td class="address"><a name="32004"></a>7D04</td>
@@ -52,7 +55,7 @@
 <a name="32016"></a>
 <div class="comments">
 <div class="paragraph">
-If 128 then shunt_buffer_back_by_two. If &gt; 128 then wipe message. Else ?
+If 128 then next_message. If &gt; 128 then wipe message. Else ?
 </div>
 </div>
 </td>
@@ -63,9 +66,19 @@ If 128 then shunt_buffer_back_by_two. If &gt; 128 then wipe message. Else ?
 <td class="dataComment">message_display_index</td>
 </tr>
 <tr>
-<td class="address"><a name="32017"></a>7D11</td>
+<td class="routineComment" colspan="3">
+<a name="32017"></a>
+<div class="comments">
+<div class="paragraph">
+Where to append new messages.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">7D11</td>
 <td class="instruction">DEFW $7CFE</td>
-<td class="dataComment">message_buffer_pointer</td>
+<td class="dataComment">message_queue_pointer</td>
 </tr>
 <tr>
 <td class="address"><a name="32019"></a>7D13</td>

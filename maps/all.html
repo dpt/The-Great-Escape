@@ -214,6 +214,12 @@
 <td class="routineDesc">drop_item</td>
 </tr>
 <tr>
+<td class="mapPage">123</td>
+<td class="mapByte">181</td>
+<td class="routine"><a class="link" name="31669" href="../asm/31669.html">7BB5</a></td>
+<td class="routineDesc">drop_item_A</td>
+</tr>
+<tr>
 <td class="mapPage">124</td>
 <td class="mapByte">38</td>
 <td class="routine"><a class="link" name="31782" href="../asm/31782.html">7C26</a></td>
@@ -259,7 +265,7 @@
 <td class="mapPage">124</td>
 <td class="mapByte">252</td>
 <td class="data"><a class="link" name="31996" href="../asm/31996.html">7CFC</a></td>
-<td class="dataDesc">message_buffer_stuff</td>
+<td class="dataDesc">message_queue_stuff</td>
 </tr>
 <tr>
 <td class="mapPage">125</td>
@@ -289,7 +295,7 @@
 <td class="mapPage">125</td>
 <td class="mapByte">153</td>
 <td class="routine"><a class="link" name="32153" href="../asm/32153.html">7D99</a></td>
-<td class="routineDesc">shunt_buffer_back_by_two</td>
+<td class="routineDesc">next_message</td>
 </tr>
 <tr>
 <td class="mapPage">125</td>
@@ -551,6 +557,12 @@
 </tr>
 <tr>
 <td class="mapPage">160</td>
+<td class="mapByte">7</td>
+<td class="routine"><a class="link" name="40967" href="../asm/40967.html">A007</a></td>
+<td class="routineDesc">in_permitted_area_end_bit</td>
+</tr>
+<tr>
+<td class="mapPage">160</td>
 <td class="mapByte">53</td>
 <td class="routine"><a class="link" name="41013" href="../asm/41013.html">A035</a></td>
 <td class="routineDesc">wave_morale_flag</td>
@@ -649,7 +661,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">55</td>
 <td class="data"><a class="link" name="41271" href="../asm/41271.html">A137</a></td>
-<td class="dataDesc">breakfast_related</td>
+<td class="dataDesc">player_in_breakfast</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -691,7 +703,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">63</td>
 <td class="data"><a class="link" name="41279" href="../asm/41279.html">A13F</a></td>
-<td class="dataDesc">bed_related_perhaps</td>
+<td class="dataDesc">player_in_bed</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -869,18 +881,6 @@
 </tr>
 <tr>
 <td class="mapPage">163</td>
-<td class="mapByte">170</td>
-<td class="routine"><a class="link" name="41898" href="../asm/41898.html">A3AA</a></td>
-<td class="routineDesc">not_set</td>
-</tr>
-<tr>
-<td class="mapPage">163</td>
-<td class="mapByte">179</td>
-<td class="routine"><a class="link" name="41907" href="../asm/41907.html">A3B3</a></td>
-<td class="routineDesc">found</td>
-</tr>
-<tr>
-<td class="mapPage">163</td>
 <td class="mapByte">237</td>
 <td class="routine"><a class="link" name="41965" href="../asm/41965.html">A3ED</a></td>
 <td class="routineDesc">store_banked_A_then_C_at_HL</td>
@@ -908,6 +908,12 @@
 <td class="mapByte">127</td>
 <td class="routine"><a class="link" name="42111" href="../asm/42111.html">A47F</a></td>
 <td class="routineDesc">player_sits</td>
+</tr>
+<tr>
+<td class="mapPage">164</td>
+<td class="mapByte">137</td>
+<td class="routine"><a class="link" name="42121" href="../asm/42121.html">A489</a></td>
+<td class="routineDesc">player_sleeps</td>
 </tr>
 <tr>
 <td class="mapPage">164</td>
@@ -967,7 +973,13 @@
 <td class="mapPage">165</td>
 <td class="mapByte">156</td>
 <td class="routine"><a class="link" name="42396" href="../asm/42396.html">A59C</a></td>
-<td class="routineDesc">do_we_have_required_objects_for_escape</td>
+<td class="routineDesc">have_required_items</td>
+</tr>
+<tr>
+<td class="mapPage">165</td>
+<td class="mapByte">163</td>
+<td class="routine"><a class="link" name="42403" href="../asm/42403.html">A5A3</a></td>
+<td class="routineDesc">item_to_bitmask</td>
 </tr>
 <tr>
 <td class="mapPage">165</td>
@@ -991,7 +1003,7 @@
 <td class="mapPage">167</td>
 <td class="mapByte">198</td>
 <td class="data"><a class="link" name="42950" href="../asm/42950.html">A7C6</a></td>
-<td class="dataDesc">used_by_sub_AAFF</td>
+<td class="dataDesc">used_by_move_map</td>
 </tr>
 <tr>
 <td class="mapPage">167</td>
@@ -1039,13 +1051,13 @@
 <td class="mapPage">169</td>
 <td class="mapByte">160</td>
 <td class="routine"><a class="link" name="43424" href="../asm/43424.html">A9A0</a></td>
-<td class="routineDesc">sub_A9A0</td>
+<td class="routineDesc">call_plot_tile_inc_de</td>
 </tr>
 <tr>
 <td class="mapPage">169</td>
 <td class="mapByte">173</td>
 <td class="routine"><a class="link" name="43437" href="../asm/43437.html">A9AD</a></td>
-<td class="routineDesc">plot_a_tile_perhaps</td>
+<td class="routineDesc">plot_tile</td>
 </tr>
 <tr>
 <td class="mapPage">169</td>
@@ -1087,13 +1099,7 @@
 <td class="mapPage">170</td>
 <td class="mapByte">178</td>
 <td class="routine"><a class="link" name="43698" href="../asm/43698.html">AAB2</a></td>
-<td class="routineDesc">called_from_main_loop_10</td>
-</tr>
-<tr>
-<td class="mapPage">171</td>
-<td class="mapByte">49</td>
-<td class="data"><a class="link" name="43825" href="../asm/43825.html">AB31</a></td>
-<td class="dataDesc">map_move_jump_table</td>
+<td class="routineDesc">move_map</td>
 </tr>
 <tr>
 <td class="mapPage">171</td>
@@ -1123,7 +1129,7 @@
 <td class="mapPage">173</td>
 <td class="mapByte">41</td>
 <td class="data"><a class="link" name="44329" href="../asm/44329.html">AD29</a></td>
-<td class="dataDesc">word_AD29</td>
+<td class="dataDesc">word_AD29_used_by_nighttime</td>
 </tr>
 <tr>
 <td class="mapPage">173</td>
@@ -1171,7 +1177,7 @@
 <td class="mapPage">175</td>
 <td class="mapByte">142</td>
 <td class="data"><a class="link" name="44942" href="../asm/44942.html">AF8E</a></td>
-<td class="dataDesc">bribe_related</td>
+<td class="dataDesc">bribed_character</td>
 </tr>
 <tr>
 <td class="mapPage">175</td>
@@ -1201,7 +1207,7 @@
 <td class="mapPage">177</td>
 <td class="mapByte">199</td>
 <td class="routine"><a class="link" name="45511" href="../asm/45511.html">B1C7</a></td>
-<td class="routineDesc">rotate_A_left_3_widening_to_BC</td>
+<td class="routineDesc">BC_becomes_A_times_8</td>
 </tr>
 <tr>
 <td class="mapPage">177</td>
@@ -1225,7 +1231,7 @@
 <td class="mapPage">178</td>
 <td class="mapByte">149</td>
 <td class="routine"><a class="link" name="45717" href="../asm/45717.html">B295</a></td>
-<td class="routineDesc">rotate_A_left_2_widening_to_BC</td>
+<td class="routineDesc">BC_becomes_A_times_4</td>
 </tr>
 <tr>
 <td class="mapPage">178</td>
@@ -1237,7 +1243,7 @@
 <td class="mapPage">178</td>
 <td class="mapByte">252</td>
 <td class="routine"><a class="link" name="45820" href="../asm/45820.html">B2FC</a></td>
-<td class="routineDesc">resetty</td>
+<td class="routineDesc">resetty1</td>
 </tr>
 <tr>
 <td class="mapPage">179</td>
@@ -1357,7 +1363,7 @@
 <td class="mapPage">184</td>
 <td class="mapByte">25</td>
 <td class="data"><a class="link" name="47129" href="../asm/47129.html">B819</a></td>
-<td class="dataDesc">looks_like_character_reset_data</td>
+<td class="dataDesc">character_reset_data</td>
 </tr>
 <tr>
 <td class="mapPage">184</td>
@@ -1381,7 +1387,7 @@
 <td class="mapPage">184</td>
 <td class="mapByte">59</td>
 <td class="routine"><a class="link" name="47163" href="../asm/47163.html">B83B</a></td>
-<td class="routineDesc">resetty</td>
+<td class="routineDesc">spotlight_foo</td>
 </tr>
 <tr>
 <td class="mapPage">184</td>
@@ -1393,7 +1399,7 @@
 <td class="mapPage">184</td>
 <td class="mapByte">156</td>
 <td class="routine"><a class="link" name="47260" href="../asm/47260.html">B89C</a></td>
-<td class="routineDesc">no_idea</td>
+<td class="routineDesc">sub_B89C</td>
 </tr>
 <tr>
 <td class="mapPage">185</td>
@@ -1405,13 +1411,13 @@
 <td class="mapPage">186</td>
 <td class="mapByte">220</td>
 <td class="routine"><a class="link" name="47836" href="../asm/47836.html">BADC</a></td>
-<td class="routineDesc">sub_BADC</td>
+<td class="routineDesc">mask_against_tile</td>
 </tr>
 <tr>
 <td class="mapPage">186</td>
 <td class="mapByte">247</td>
 <td class="routine"><a class="link" name="47863" href="../asm/47863.html">BAF7</a></td>
-<td class="routineDesc">ff_anded_with_ff</td>
+<td class="routineDesc">sub_BAF7</td>
 </tr>
 <tr>
 <td class="mapPage">187</td>
@@ -1423,7 +1429,7 @@
 <td class="mapPage">188</td>
 <td class="mapByte">170</td>
 <td class="routine"><a class="link" name="48298" href="../asm/48298.html">BCAA</a></td>
-<td class="routineDesc">sub_BCAA</td>
+<td class="routineDesc">select_tiles</td>
 </tr>
 <tr>
 <td class="mapPage">188</td>
@@ -1645,7 +1651,7 @@
 <td class="mapPage">219</td>
 <td class="mapByte">235</td>
 <td class="routine"><a class="link" name="56299" href="../asm/56299.html">DBEB</a></td>
-<td class="routineDesc">Uses rotate_A_left_3_widening_to_BC.</td>
+<td class="routineDesc">Uses BC_becomes_A_times_8.</td>
 </tr>
 <tr>
 <td class="mapPage">220</td>
@@ -1757,6 +1763,12 @@
 </tr>
 <tr>
 <td class="mapPage">229</td>
+<td class="mapByte">85</td>
+<td class="routine"><a class="link" name="58709" href="../asm/58709.html">E555</a></td>
+<td class="routineDesc">divide_AC_by_8</td>
+</tr>
+<tr>
+<td class="mapPage">229</td>
 <td class="mapByte">95</td>
 <td class="data"><a class="link" name="58719" href="../asm/58719.html">E55F</a></td>
 <td class="dataDesc">probably_mask_data</td>
@@ -1855,7 +1867,7 @@
 <td class="mapPage">240</td>
 <td class="mapByte">117</td>
 <td class="data"><a class="link" name="61557" href="../asm/61557.html">F075</a></td>
-<td class="dataDesc">counter_of_something</td>
+<td class="dataDesc">plot_static_tiles_direction</td>
 </tr>
 <tr>
 <td class="mapPage">240</td>
@@ -1879,13 +1891,13 @@
 <td class="mapPage">241</td>
 <td class="mapByte">224</td>
 <td class="routine"><a class="link" name="61920" href="../asm/61920.html">F1E0</a></td>
-<td class="routineDesc">plot_menu_text</td>
+<td class="routineDesc">plot_statics_and_menu_text</td>
 </tr>
 <tr>
 <td class="mapPage">242</td>
 <td class="mapByte">6</td>
 <td class="routine"><a class="link" name="61958" href="../asm/61958.html">F206</a></td>
-<td class="routineDesc">counter_set_0</td>
+<td class="routineDesc">plot_static_tiles_horizontal</td>
 </tr>
 <tr>
 <td class="mapPage">242</td>

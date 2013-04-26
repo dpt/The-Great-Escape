@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="45524.html">B1D4</a></td>
 </tr>
 </table>
-<div class="description">B1C7: rotate_A_left_3_widening_to_BC</div>
+<div class="description">B1C7: BC_becomes_A_times_8</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -45,41 +45,42 @@ Used by the routines at <a class="link" href="45388.html">B14C</a>, <a class="li
 <tr>
 <td class="label"><a name="45511"></a>B1C7</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment">result = 0;</td>
+<td class="comment">B = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="45513"></a>B1C9</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment">arg &lt;&lt;= 1;</td>
+<td class="comment">A &lt;&lt;= 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="45514"></a>B1CA</td>
 <td class="instruction">RL B</td>
-<td class="comment">result = (result &lt;&lt; 1) + carry;</td>
+<td class="comment">B = (B &lt;&lt; 1) + carry;</td>
 </tr>
 <tr>
 <td class="address"><a name="45516"></a>B1CC</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment">arg &lt;&lt;= 1;</td>
+<td class="comment">A &lt;&lt;= 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="45517"></a>B1CD</td>
 <td class="instruction">RL B</td>
-<td class="comment">result = (result &lt;&lt; 1) + carry;</td>
+<td class="comment">B = (B &lt;&lt; 1) + carry;</td>
 </tr>
 <tr>
 <td class="address"><a name="45519"></a>B1CF</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment">arg &lt;&lt;= 1;</td>
+<td class="comment">A &lt;&lt;= 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="45520"></a>B1D0</td>
 <td class="instruction">RL B</td>
-<td class="comment" rowspan="2">result = (result &lt;&lt; 1) + carry;</td>
+<td class="comment">B = (B &lt;&lt; 1) + carry;</td>
 </tr>
 <tr>
 <td class="address"><a name="45522"></a>B1D2</td>
 <td class="instruction">LD C,A</td>
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="45523"></a>B1D3</td>

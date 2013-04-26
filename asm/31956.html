@@ -59,17 +59,17 @@ Wipe the screen.
 <tr>
 <td class="label"><a name="31960"></a>7CD8</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment">do &lt; loopcounter: B = 2; // modified</td>
+<td class="comment">do { loopcounter: B = 2; // modified</td>
 </tr>
 <tr>
 <td class="address"><a name="31962"></a>7CDA</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">dst = HL;</td>
 </tr>
 <tr>
 <td class="label"><a name="31963"></a>7CDB</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment" rowspan="2">do &lt; *HL++ = 0;</td>
+<td class="comment" rowspan="4">do { *dst++ = 0; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31965"></a>7CDD</td>
@@ -78,12 +78,10 @@ Wipe the screen.
 <tr>
 <td class="address"><a name="31966"></a>7CDE</td>
 <td class="instruction">DJNZ $7CDB</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31968"></a>7CE0</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31969"></a>7CE1</td>
@@ -93,11 +91,12 @@ Wipe the screen.
 <tr>
 <td class="address"><a name="31972"></a>7CE4</td>
 <td class="instruction">DEC C</td>
-<td class="comment" rowspan="2">&gt; while (--C);</td>
+<td class="comment">} while (--C);</td>
 </tr>
 <tr>
 <td class="address"><a name="31973"></a>7CE5</td>
 <td class="instruction">JP NZ,$7CD8</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="31976"></a>7CE8</td>

@@ -32,8 +32,12 @@ Used by the routines at <a class="link" href="61795.html">F163</a> and <a class=
 </div>
 <table class="input">
 <tr>
+<td class="register">A</td>
+<td class="registerContents">Item index.</td>
+</tr>
+<tr>
 <td class="register">E</td>
-<td class="registerContents">Attribute.</td>
+<td class="registerContents">Attributes.</td>
 </tr>
 </table>
 </td>
@@ -48,7 +52,7 @@ Used by the routines at <a class="link" href="61795.html">F163</a> and <a class=
 <a name="62475"></a>
 <div class="comments">
 <div class="paragraph">
-Skip to the right position.
+Skip to the item's row.
 </div>
 </div>
 </td>
@@ -56,7 +60,7 @@ Skip to the right position.
 <tr>
 <td class="address">F40B</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A) &lt;</td>
+<td class="comment" rowspan="7">if (A) } B = A; {do { L += 64; } while (--B); } // skip two rows per iteration</td>
 </tr>
 <tr>
 <td class="address"><a name="62476"></a>F40C</td>
@@ -65,12 +69,10 @@ Skip to the right position.
 <tr>
 <td class="address"><a name="62478"></a>F40E</td>
 <td class="instruction">LD B,A</td>
-<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="label"><a name="62479"></a>F40F</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="4">do &lt; L += 64; &gt; while (--B); &gt; // skip two rows per iteration</td>
 </tr>
 <tr>
 <td class="address"><a name="62480"></a>F410</td>
@@ -102,7 +104,7 @@ Draw.
 <tr>
 <td class="label"><a name="62487"></a>F417</td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment" rowspan="3">do &lt; *HL++ = E; &gt; while (--B);</td>
+<td class="comment" rowspan="3">do { *HL++ = E; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="62488"></a>F418</td>

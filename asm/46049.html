@@ -32,22 +32,21 @@
 <tr>
 <td class="label"><a name="46049"></a>B3E1</td>
 <td class="instruction">LD HL,$8015</td>
-<td class="comment">HL = $8015;</td>
+<td class="comment">HL = $8015; // current character sprite set</td>
 </tr>
 <tr>
 <td class="address"><a name="46052"></a>B3E4</td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="comment">DE = sprite_guard_...;</td>
+<td class="comment">DE = &amp;sprite_guard_tl_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46055"></a>B3E7</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = (HL);</td>
+<td class="comment" rowspan="3">if (*HL == E) return; // cheap equality test // already in uniform</td>
 </tr>
 <tr>
 <td class="address"><a name="46056"></a>B3E8</td>
 <td class="instruction">CP E</td>
-<td class="comment" rowspan="2">if (.. cheap equality test ..) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="46057"></a>B3E9</td>
@@ -56,7 +55,7 @@
 <tr>
 <td class="address"><a name="46058"></a>B3EA</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="7">...</td>
+<td class="comment" rowspan="3">if (indoor_room_index &gt;= room_29_secondtunnelstart) return; // can't don uniform when in a tunnel</td>
 </tr>
 <tr>
 <td class="address"><a name="46061"></a>B3ED</td>
@@ -69,10 +68,12 @@
 <tr>
 <td class="address"><a name="46064"></a>B3F0</td>
 <td class="instruction">LD (HL),E</td>
+<td class="comment">*HL++ = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="46065"></a>B3F1</td>
 <td class="instruction">INC L</td>
+<td class="comment" rowspan="2">*HL = D;</td>
 </tr>
 <tr>
 <td class="address"><a name="46066"></a>B3F2</td>
@@ -81,6 +82,7 @@
 <tr>
 <td class="address"><a name="46067"></a>B3F3</td>
 <td class="instruction">JP <a class="link" href="41193.html">$A0E9</a></td>
+<td class="comment">increase_morale_by_10_score_by_50(); return;</td>
 </tr>
 </table>
 <table class="prevNext">

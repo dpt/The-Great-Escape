@@ -32,32 +32,30 @@
 <tr>
 <td class="label"><a name="41497"></a>A219</td>
 <td class="instruction">LD (BC),A</td>
-<td class="transparentComment" />
+<td class="comment">(BC) = A; // bell = 40;</td>
 </tr>
 <tr>
 <td class="address"><a name="41498"></a>A21A</td>
 <td class="instruction">LD HL,$8180</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">gates_and_doors[0] = 0x80; gates_and_doors[1] = 0x81; // lock the gates</td>
 </tr>
 <tr>
 <td class="address"><a name="41501"></a>A21D</td>
 <td class="instruction">LD ($F05D),HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41504"></a>A220</td>
 <td class="instruction">LD B,$04</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">queue_message_for_display(message_TIME_FOR_BED);</td>
 </tr>
 <tr>
 <td class="address"><a name="41506"></a>A222</td>
 <td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41509"></a>A225</td>
 <td class="instruction">JP <a class="link" href="41809.html">$A351</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_A351(); return; // exit via</td>
 </tr>
 </table>
 <table class="prevNext">

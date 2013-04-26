@@ -30,177 +30,172 @@
 Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="link" href="50848.html">C6A0</a>, <a class="link" href="51346.html">C892</a> and <a class="link" href="52120.html">CB98</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">C</td>
+<td class="registerContents">Item.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="52529"></a>CD31</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
+<td class="comment">A = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="52530"></a>CD32</td>
 <td class="instruction">CP $FF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == item_NONE) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52532"></a>CD34</td>
 <td class="instruction">RET Z</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52533"></a>CD35</td>
 <td class="instruction">AND $0F</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= 0x0F;</td>
 </tr>
 <tr>
 <td class="address"><a name="52535"></a>CD37</td>
 <td class="instruction">PUSH AF</td>
-<td class="transparentComment" />
+<td class="comment">PUSH AF</td>
 </tr>
 <tr>
 <td class="address"><a name="52536"></a>CD38</td>
 <td class="instruction">LD B,$10</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">queue_message_for_display(message_ITEM_DISCOVERED);</td>
 </tr>
 <tr>
 <td class="address"><a name="52538"></a>CD3A</td>
 <td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52541"></a>CD3D</td>
 <td class="instruction">LD B,$05</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">decrease_morale(5);</td>
 </tr>
 <tr>
 <td class="address"><a name="52543"></a>CD3F</td>
 <td class="instruction">CALL <a class="link" href="41184.html">$A0E0</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52546"></a>CD42</td>
 <td class="instruction">POP AF</td>
-<td class="transparentComment" />
+<td class="comment">POP AF</td>
 </tr>
 <tr>
 <td class="address"><a name="52547"></a>CD43</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="7">A = item_location[A].room_and_flags;</td>
 </tr>
 <tr>
 <td class="address"><a name="52548"></a>CD44</td>
 <td class="instruction">ADD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52549"></a>CD45</td>
 <td class="instruction">LD HL,$CD6A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52552"></a>CD48</td>
 <td class="instruction">LD D,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52554"></a>CD4A</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52555"></a>CD4B</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52556"></a>CD4C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52557"></a>CD4D</td>
 <td class="instruction">EX DE,HL</td>
-<td class="transparentComment" />
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="52558"></a>CD4E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="52559"></a>CD4F</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
+<td class="comment">A = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="52560"></a>CD50</td>
 <td class="instruction">CALL <a class="link" href="31782.html">$7C26</a></td>
-<td class="transparentComment" />
+<td class="comment">item_to_itemstruct();</td>
 </tr>
 <tr>
 <td class="address"><a name="52563"></a>CD53</td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">RES 7,*HL</td>
 </tr>
 <tr>
 <td class="address"><a name="52565"></a>CD55</td>
 <td class="instruction">EX DE,HL</td>
-<td class="transparentComment" />
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="52566"></a>CD56</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52567"></a>CD57</td>
 <td class="instruction">LD BC,$0003</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">memcpy(DE, HL, 3); DE += 3; HL += 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="52570"></a>CD5A</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52572"></a>CD5C</td>
 <td class="instruction">EX DE,HL</td>
-<td class="transparentComment" />
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="52573"></a>CD5D</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="52574"></a>CD5E</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A) goto cd65</td>
 </tr>
 <tr>
 <td class="address"><a name="52575"></a>CD5F</td>
 <td class="instruction">JR NZ,$CD65</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="52577"></a>CD61</td>
 <td class="instruction">LD (HL),A</td>
-<td class="transparentComment" />
+<td class="comment">*HL = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="52578"></a>CD62</td>
-<td class="instruction">JP <a class="link" href="31627.html#31696">$7BD0</a></td>
-<td class="transparentComment" />
+<td class="instruction">JP <a class="link" href="31669.html#31696">$7BD0</a></td>
+<td class="comment">JP $7BD0</td>
 </tr>
 <tr>
 <td class="label"><a name="52581"></a>CD65</td>
 <td class="instruction">LD (HL),$05</td>
-<td class="transparentComment" />
+<td class="comment">*HL = 5;</td>
 </tr>
 <tr>
 <td class="address"><a name="52583"></a>CD67</td>
-<td class="instruction">JP <a class="link" href="31627.html#31730">$7BF2</a></td>
-<td class="transparentComment" />
+<td class="instruction">JP <a class="link" href="31669.html#31730">$7BF2</a></td>
+<td class="comment">JP $7BF2</td>
 </tr>
 </table>
 <table class="prevNext">

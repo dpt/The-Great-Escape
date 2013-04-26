@@ -59,22 +59,21 @@ Straight bitmap plot without masking.
 <tr>
 <td class="label"><a name="31938"></a>7CC2</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment">do &lt; loopcounter: B = 3; // modified</td>
+<td class="comment">do { loopcounter: B = 3; // modified</td>
 </tr>
 <tr>
 <td class="address"><a name="31940"></a>7CC4</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">dst = HL;</td>
 </tr>
 <tr>
 <td class="label"><a name="31941"></a>7CC5</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">do &lt; A = *DE;</td>
+<td class="comment" rowspan="6">do { *dst++ = *DE++; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31942"></a>7CC6</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment" rowspan="2">*HL++ = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="31943"></a>7CC7</td>
@@ -83,17 +82,14 @@ Straight bitmap plot without masking.
 <tr>
 <td class="address"><a name="31944"></a>7CC8</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="31945"></a>7CC9</td>
 <td class="instruction">DJNZ $7CC5</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31947"></a>7CCB</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31948"></a>7CCC</td>
@@ -103,11 +99,12 @@ Straight bitmap plot without masking.
 <tr>
 <td class="address"><a name="31951"></a>7CCF</td>
 <td class="instruction">DEC C</td>
-<td class="comment" rowspan="2">&gt; while (--C);</td>
+<td class="comment">} while (--C);</td>
 </tr>
 <tr>
 <td class="address"><a name="31952"></a>7CD0</td>
 <td class="instruction">JP NZ,$7CC2</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="31955"></a>7CD3</td>

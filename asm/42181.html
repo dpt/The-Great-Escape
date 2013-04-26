@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="41465.html">A1F9</a>.
 <tr>
 <td class="label"><a name="42181"></a>A4C5</td>
 <td class="instruction">LD BC,$1000</td>
-<td class="comment" rowspan="6">set_target_location(0x1000);</td>
+<td class="comment" rowspan="2">set_target_location(0x1000);</td>
 </tr>
 <tr>
 <td class="address"><a name="42184"></a>A4C8</td>
@@ -44,18 +44,22 @@ Used by the routine at <a class="link" href="41465.html">A1F9</a>.
 <tr>
 <td class="address"><a name="42187"></a>A4CB</td>
 <td class="instruction">LD A,$10</td>
+<td class="comment">A = $10;</td>
 </tr>
 <tr>
 <td class="address"><a name="42189"></a>A4CD</td>
 <td class="instruction">EX AF,AF'</td>
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="42190"></a>A4CE</td>
 <td class="instruction">LD C,$00</td>
+<td class="comment">C = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="42192"></a>A4D0</td>
 <td class="instruction">JP <a class="link" href="41843.html">$A373</a></td>
+<td class="comment">sub_A373(); return; // exit via</td>
 </tr>
 </table>
 <table class="prevNext">

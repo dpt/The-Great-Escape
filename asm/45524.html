@@ -69,7 +69,7 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="label"><a name="45536"></a>B1E0</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="11">do &lt; if (*HL &amp; E == C) } {if ((*HL &amp; (1&lt;&lt;7)) == 0) return; // unlocked } queue_message_for_display(message_THE_DOOR_IS_LOCKED); A |= 1; // set NZ return; HL++;</td>
+<td class="comment" rowspan="12">do { if (*HL &amp; E == C) } {if ((*HL &amp; (1&lt;&lt;7)) == 0) return; // unlocked } queue_message_for_display(message_THE_DOOR_IS_LOCKED); A |= 1; // set NZ return; } HL++; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45537"></a>B1E1</td>
@@ -114,7 +114,6 @@ Used by the routines at <a class="link" href="45557.html">B1F5</a> and <a class=
 <tr>
 <td class="address"><a name="45553"></a>B1F1</td>
 <td class="instruction">DJNZ $B1E0</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45555"></a>B1F3</td>

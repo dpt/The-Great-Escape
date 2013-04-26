@@ -251,7 +251,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="label"><a name="44557"></a>AE0D</td>
 <td class="instruction">LD HL,$AD29</td>
-<td class="comment">not_tracking: HL = &amp;word_AD29[0];</td>
+<td class="comment">not_tracking: HL = &amp;word_AD29_used_by_nighttime[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="44560"></a>AE10</td>
@@ -261,7 +261,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="label"><a name="44562"></a>AE12</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do &lt; PUSH BC</td>
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="44563"></a>AE13</td>
@@ -550,7 +550,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44658"></a>AE72</td>
 <td class="instruction">DJNZ $AE12</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44660"></a>AE74</td>

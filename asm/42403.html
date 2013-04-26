@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A5A3</title>
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="42396.html">A59C</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#42403">Map</a></td>
+<td class="next">Next: <a class="link" href="42431.html">A5BF</a></td>
+</tr>
+</table>
+<div class="description">A5A3: item_to_bitmask</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="42396.html">A59C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="42403"></a>A5A3</td>
+<td class="instruction">CP $0F</td>
+<td class="comment" rowspan="4">if (A == item_COMPASS) { A = 1; return; } // have compass</td>
+</tr>
+<tr>
+<td class="address"><a name="42405"></a>A5A5</td>
+<td class="instruction">JR NZ,$A5AA</td>
+</tr>
+<tr>
+<td class="address"><a name="42407"></a>A5A7</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="address"><a name="42409"></a>A5A9</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="label"><a name="42410"></a>A5AA</td>
+<td class="instruction">CP $03</td>
+<td class="comment" rowspan="4">if (A == item_PAPERS)  { A = 2; return; } // have papers</td>
+</tr>
+<tr>
+<td class="address"><a name="42412"></a>A5AC</td>
+<td class="instruction">JR NZ,$A5B1</td>
+</tr>
+<tr>
+<td class="address"><a name="42414"></a>A5AE</td>
+<td class="instruction">LD A,$02</td>
+</tr>
+<tr>
+<td class="address"><a name="42416"></a>A5B0</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="label"><a name="42417"></a>A5B1</td>
+<td class="instruction">CP $0E</td>
+<td class="comment" rowspan="4">if (A == item_PURSE)   { A = 4; return; } // have purse</td>
+</tr>
+<tr>
+<td class="address"><a name="42419"></a>A5B3</td>
+<td class="instruction">JR NZ,$A5B8</td>
+</tr>
+<tr>
+<td class="address"><a name="42421"></a>A5B5</td>
+<td class="instruction">LD A,$04</td>
+</tr>
+<tr>
+<td class="address"><a name="42423"></a>A5B7</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="label"><a name="42424"></a>A5B8</td>
+<td class="instruction">CP $06</td>
+<td class="comment" rowspan="3">if (A == item_UNIFORM) { A = 8; return; } // have uniform</td>
+</tr>
+<tr>
+<td class="address"><a name="42426"></a>A5BA</td>
+<td class="instruction">LD A,$08</td>
+</tr>
+<tr>
+<td class="address"><a name="42428"></a>A5BC</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="address"><a name="42429"></a>A5BD</td>
+<td class="instruction">XOR A</td>
+<td class="comment">A = 0; // have no required objects</td>
+</tr>
+<tr>
+<td class="address"><a name="42430"></a>A5BE</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="42396.html">A59C</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#42403">Map</a></td>
+<td class="next">Next: <a class="link" href="42431.html">A5BF</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+</div>
+</body>
+</html>

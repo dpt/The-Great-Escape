@@ -205,7 +205,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="label"><a name="45777"></a>B2D1</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do &lt; PUSH BC</td>
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45778"></a>B2D2</td>
@@ -225,7 +225,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="label"><a name="45784"></a>B2D8</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">do &lt; A = *DE;</td>
+<td class="comment">do { A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="45785"></a>B2D9</td>
@@ -265,7 +265,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45795"></a>B2E3</td>
 <td class="instruction">DJNZ $B2D8</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -290,7 +290,7 @@ Found.
 <tr>
 <td class="label"><a name="45799"></a>B2E7</td>
 <td class="instruction">LD A,(IY+$07)</td>
-<td class="comment" rowspan="3">IY[7] ^= 0x20;</td>
+<td class="comment" rowspan="3">IY[7] ^= 0x20; // stop character?</td>
 </tr>
 <tr>
 <td class="address"><a name="45802"></a>B2EA</td>
@@ -342,7 +342,7 @@ Next iteration.
 <tr>
 <td class="address"><a name="45816"></a>B2F8</td>
 <td class="instruction">DJNZ $B2D1</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">

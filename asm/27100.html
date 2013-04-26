@@ -50,7 +50,7 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="label"><a name="27107"></a>69E3</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment" rowspan="2">do &lt; *DE-- = A;</td>
+<td class="comment" rowspan="3">do { *DE-- = A; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="27108"></a>69E4</td>
@@ -59,7 +59,6 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="address"><a name="27109"></a>69E5</td>
 <td class="instruction">DJNZ $69E3</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="27111"></a>69E7</td>
@@ -110,7 +109,7 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="label"><a name="27129"></a>69F9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="9">do &lt; if (*HL' &amp; 0xFC == B) } {*DE++ = C ^ 0x80; }</td>
+<td class="comment" rowspan="17">do { if (*HL' &amp; 0xFC == B) } {*DE++ = C ^ 0x80; } } {C ^= 0x80; } {if (C &gt;= 0) C++; // increment every two stops? } HL' += DE'; while (--B');</td>
 </tr>
 <tr>
 <td class="address"><a name="27130"></a>69FA</td>
@@ -147,7 +146,6 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="label"><a name="27141"></a>6A05</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="2">C ^= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="27142"></a>6A06</td>
@@ -156,7 +154,6 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="address"><a name="27144"></a>6A08</td>
 <td class="instruction">JP M,$6A0C</td>
-<td class="comment" rowspan="4">if (C &gt;= 0) C++; // increment every two stops?</td>
 </tr>
 <tr>
 <td class="address"><a name="27147"></a>6A0B</td>
@@ -173,12 +170,10 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="address"><a name="27150"></a>6A0E</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL' += DE';</td>
 </tr>
 <tr>
 <td class="address"><a name="27151"></a>6A0F</td>
 <td class="instruction">DJNZ $69F9</td>
-<td class="comment">&gt; while (--B');</td>
 </tr>
 <tr>
 <td class="address"><a name="27153"></a>6A11</td>

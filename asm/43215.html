@@ -35,57 +35,54 @@ Used by the routines at <a class="link" href="43492.html">A9E4</a> and <a class=
 <tr>
 <td class="label"><a name="43215"></a>A8CF</td>
 <td class="instruction">LD DE,$F10F</td>
-<td class="transparentComment" />
+<td class="comment">DE = $F10F;</td>
 </tr>
 <tr>
 <td class="address"><a name="43218"></a>A8D2</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43219"></a>A8D3</td>
 <td class="instruction">LD HL,$FF5E</td>
-<td class="transparentComment" />
+<td class="comment">HL = $FF5E;</td>
 </tr>
 <tr>
 <td class="address"><a name="43222"></a>A8D6</td>
 <td class="instruction">LD DE,$F2A7</td>
-<td class="transparentComment" />
+<td class="comment">DE = $F2A7;</td>
 </tr>
 <tr>
 <td class="address"><a name="43225"></a>A8D9</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = map_position_maybe[0] &amp; 3; // map_position_maybe lo</td>
 </tr>
 <tr>
 <td class="address"><a name="43228"></a>A8DC</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43230"></a>A8DE</td>
 <td class="instruction">JR NZ,$A8E1</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == 0) HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="43232"></a>A8E0</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="43233"></a>A8E1</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = map_position_maybe[0] - 1; // map_position_maybe lo</td>
 </tr>
 <tr>
 <td class="address"><a name="43236"></a>A8E4</td>
 <td class="instruction">DEC A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43237"></a>A8E5</td>
 <td class="instruction">JR <a class="link" href="43239.html#43252">$A8F4</a></td>
-<td class="transparentComment" />
+<td class="comment">goto $A8F4;</td>
 </tr>
 </table>
 <table class="prevNext">

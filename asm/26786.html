@@ -40,12 +40,11 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26787"></a>68A3</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment">PUSH IY</td>
+<td class="comment" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
 <td class="address"><a name="26789"></a>68A5</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="26790"></a>68A6</td>
@@ -74,7 +73,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26798"></a>68AE</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="22">if (A == 0) } B = 3; do &lt; PUSH BC A = *DE++; rotate_A_left_2_widening_to_BC(); {*HL++ = C; } {*HL++ = B; } POP BC &gt; while (--B); } else { B = 3; {do &lt; *HL++ = *DE++; } {*HL++ = 0; } &gt; while (--B);</td>
+<td class="comment" rowspan="22">if (A == 0) } B = 3; // 3 iterations do { PUSH BC A = *DE++; BC_becomes_A_times_4(); {*HL++ = C; } {*HL++ = B; } POP BC } while (--B); } else { B = 3; // 3 iterations {do { *HL++ = *DE++; } {*HL++ = 0; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="26799"></a>68AF</td>
@@ -249,7 +248,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26863"></a>68EF</td>
 <td class="instruction">CALL <a class="link" href="45820.html">$B2FC</a></td>
-<td class="comment">resetty();</td>
+<td class="comment">resetty1();</td>
 </tr>
 <tr>
 <td class="address"><a name="26866"></a>68F2</td>
@@ -302,12 +301,12 @@ This entry point is used by the routines at <a class="link" href="40312.html">9D
 <tr>
 <td class="address"><a name="26889"></a>6909</td>
 <td class="instruction">LD HL,$8000</td>
-<td class="comment">HL = $8000; // redundant? (resetty sets HL to $8000 as its first instruction)</td>
+<td class="comment">HL = $8000; // redundant? (reset_something sets HL to $8000 as its first instruction)</td>
 </tr>
 <tr>
 <td class="address"><a name="26892"></a>690C</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">resetty();</td>
+<td class="comment">reset_something();</td>
 </tr>
 <tr>
 <td class="address"><a name="26895"></a>690F</td>

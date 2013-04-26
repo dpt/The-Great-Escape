@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="43437.html">A9AD</a></td>
 </tr>
 </table>
-<div class="description">A9A0: sub_A9A0</div>
+<div class="description">A9A0: call_plot_tile_inc_de</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -35,47 +35,43 @@ Used by the routine at <a class="link" href="43239.html">A8E7</a>.
 <tr>
 <td class="label"><a name="43424"></a>A9A0</td>
 <td class="instruction">CALL <a class="link" href="43437.html">$A9AD</a></td>
-<td class="transparentComment" />
+<td class="comment">plot_tile();</td>
 </tr>
 <tr>
 <td class="address"><a name="43427"></a>A9A3</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43428"></a>A9A4</td>
 <td class="instruction">LD A,E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="5">DE += 0xBF;</td>
 </tr>
 <tr>
 <td class="address"><a name="43429"></a>A9A5</td>
 <td class="instruction">ADD A,$BF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43431"></a>A9A7</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43432"></a>A9A8</td>
 <td class="instruction">JR NC,$A9AB</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43434"></a>A9AA</td>
 <td class="instruction">INC D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="43435"></a>A9AB</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43436"></a>A9AC</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

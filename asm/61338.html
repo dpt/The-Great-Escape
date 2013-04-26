@@ -26,138 +26,139 @@
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+Is the player within the roll call area bounds?
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="61338"></a>EF9A</td>
 <td class="instruction">LD DE,$727C</td>
-<td class="transparentComment" />
+<td class="comment">DE = $727C; // X bound</td>
 </tr>
 <tr>
 <td class="address"><a name="61341"></a>EF9D</td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="transparentComment" />
+<td class="comment">HL = &amp;player_map_position_perhapsX;</td>
 </tr>
 <tr>
 <td class="address"><a name="61344"></a>EFA0</td>
 <td class="instruction">LD B,$02</td>
-<td class="transparentComment" />
+<td class="comment">B = 2; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="61346"></a>EFA2</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">do { A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="61347"></a>EFA3</td>
 <td class="instruction">CP D</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="5">if (A &lt; D || A &gt;= E) goto not_at_roll_call;</td>
 </tr>
 <tr>
 <td class="address"><a name="61348"></a>EFA4</td>
 <td class="instruction">JR C,$EFC0</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61350"></a>EFA6</td>
 <td class="instruction">CP E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61351"></a>EFA7</td>
 <td class="instruction">JR NC,$EFC0</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61353"></a>EFA9</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61354"></a>EFAA</td>
 <td class="instruction">LD DE,$6A72</td>
-<td class="transparentComment" />
+<td class="comment">DE = $6A72; // Y bound</td>
 </tr>
 <tr>
 <td class="address"><a name="61357"></a>EFAD</td>
 <td class="instruction">DJNZ $EFA2</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="61359"></a>EFAF</td>
+<td class="routineComment" colspan="3">
+<a name="61359"></a>
+<div class="comments">
+<div class="paragraph">
+[unsure]
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">EFAF</td>
 <td class="instruction">LD HL,$800D</td>
-<td class="transparentComment" />
+<td class="comment">HL = $800D;</td>
 </tr>
 <tr>
 <td class="address"><a name="61362"></a>EFB2</td>
 <td class="instruction">LD B,$08</td>
-<td class="transparentComment" />
+<td class="comment">B = 8; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="61364"></a>EFB4</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="7">do { *HL++ = 0x80; } *HL = 0x03; {HL += 31; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="61366"></a>EFB6</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61367"></a>EFB7</td>
 <td class="instruction">LD (HL),$03</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61369"></a>EFB9</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61370"></a>EFBA</td>
 <td class="instruction">ADD A,$1F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61372"></a>EFBC</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61373"></a>EFBD</td>
 <td class="instruction">DJNZ $EFB4</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61375"></a>EFBF</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="61376"></a>EFC0</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">not_at_roll_call: bell = 0; // ring indefinitely</td>
 </tr>
 <tr>
 <td class="address"><a name="61377"></a>EFC1</td>
 <td class="instruction">LD ($A130),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61380"></a>EFC4</td>
 <td class="instruction">LD B,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">queue_message_for_display(message_MISSED_ROLL_CALL);</td>
 </tr>
 <tr>
 <td class="address"><a name="61381"></a>EFC5</td>
 <td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="61384"></a>EFC8</td>
 <td class="instruction">JP <a class="link" href="52395.html">$CCAB</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_CCAB(); // exit via</td>
 </tr>
 </table>
 <table class="prevNext">

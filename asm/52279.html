@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="label"><a name="52279"></a>CC37</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment" rowspan="5">...</td>
+<td class="comment" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
 <td class="address"><a name="52281"></a>CC39</td>
@@ -44,10 +44,22 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52282"></a>CC3A</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
-<td class="address"><a name="52283"></a>CC3B</td>
+<td class="routineComment" colspan="3">
+<a name="52283"></a>
+<div class="comments">
+<div class="paragraph">
+Don't follow the player if he's dressed as a guard
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CC3B</td>
 <td class="instruction">AND A</td>
+<td class="comment" rowspan="6">if (A &amp;&amp; *$8015 == sprite_guard_tl_4) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52284"></a>CC3C</td>
@@ -56,7 +68,6 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52286"></a>CC3E</td>
 <td class="instruction">LD A,($8015)</td>
-<td class="comment" rowspan="4">if (*$8015 == sprite_guard_tl_4) return;  // don't follow the player if he's dressed as a guard</td>
 </tr>
 <tr>
 <td class="address"><a name="52289"></a>CC41</td>
@@ -73,15 +84,17 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="label"><a name="52294"></a>CC46</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="64">...</td>
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52295"></a>CC47</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="52296"></a>CC48</td>
 <td class="instruction">CP $04</td>
+<td class="comment" rowspan="2">if (A == 4) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52298"></a>CC4A</td>
@@ -90,10 +103,12 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52299"></a>CC4B</td>
 <td class="instruction">DEC L</td>
+<td class="comment">HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="52300"></a>CC4C</td>
 <td class="instruction">LD A,L</td>
+<td class="comment" rowspan="3">HL += 15;</td>
 </tr>
 <tr>
 <td class="address"><a name="52301"></a>CC4D</td>
@@ -106,10 +121,12 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52304"></a>CC50</td>
 <td class="instruction">LD DE,$81B2</td>
+<td class="comment">DE = &amp;byte_81B2;</td>
 </tr>
 <tr>
 <td class="address"><a name="52307"></a>CC53</td>
 <td class="instruction">LD A,($68A0)</td>
+<td class="comment" rowspan="3">if (indoor_room_index) goto indoors;</td>
 </tr>
 <tr>
 <td class="address"><a name="52310"></a>CC56</td>
@@ -122,42 +139,52 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52314"></a>CC5A</td>
 <td class="instruction">CALL <a class="link" href="58690.html">$E542</a></td>
+<td class="comment">divide_3xAC_by_8_with_rounding();</td>
 </tr>
 <tr>
 <td class="address"><a name="52317"></a>CC5D</td>
 <td class="instruction">LD HL,$81B8</td>
+<td class="comment">HL = &amp;player_map_position_perhapsX;</td>
 </tr>
 <tr>
 <td class="address"><a name="52320"></a>CC60</td>
 <td class="instruction">LD DE,$81B2</td>
+<td class="comment">DE = &amp;byte_81B2;</td>
 </tr>
 <tr>
 <td class="address"><a name="52323"></a>CC63</td>
 <td class="instruction">LD A,(IY+$0E)</td>
+<td class="comment">A = IY[14];</td>
 </tr>
 <tr>
 <td class="address"><a name="52326"></a>CC66</td>
 <td class="instruction">RRA</td>
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="52327"></a>CC67</td>
 <td class="instruction">LD C,A</td>
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="52328"></a>CC68</td>
 <td class="instruction">JR C,$CC80</td>
+<td class="comment">JR C,$CC80</td>
 </tr>
 <tr>
 <td class="address"><a name="52330"></a>CC6A</td>
 <td class="instruction">INC HL</td>
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52331"></a>CC6B</td>
 <td class="instruction">INC DE</td>
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52332"></a>CC6C</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment" rowspan="2">A = *DE - 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="52333"></a>CC6D</td>
@@ -166,6 +193,7 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52334"></a>CC6E</td>
 <td class="instruction">CP (HL)</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52335"></a>CC6F</td>
@@ -174,10 +202,12 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52336"></a>CC70</td>
 <td class="instruction">ADD A,$02</td>
+<td class="comment">A += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="52338"></a>CC72</td>
 <td class="instruction">CP (HL)</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52339"></a>CC73</td>
@@ -186,42 +216,52 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52340"></a>CC74</td>
 <td class="instruction">DEC HL</td>
+<td class="comment">HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="52341"></a>CC75</td>
 <td class="instruction">DEC DE</td>
+<td class="comment">DE--;</td>
 </tr>
 <tr>
 <td class="address"><a name="52342"></a>CC76</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="52343"></a>CC77</td>
 <td class="instruction">CP (HL)</td>
+<td class="comment">CP *HL  // This is odd: Why CP then BIT?</td>
 </tr>
 <tr>
 <td class="address"><a name="52344"></a>CC78</td>
 <td class="instruction">BIT 0,C</td>
+<td class="comment">BIT 0,C</td>
 </tr>
 <tr>
 <td class="address"><a name="52346"></a>CC7A</td>
 <td class="instruction">JR NZ,$CC7D</td>
+<td class="comment">JR NZ,$CC7D</td>
 </tr>
 <tr>
 <td class="address"><a name="52348"></a>CC7C</td>
 <td class="instruction">CCF</td>
+<td class="comment">CCF  // invert carry</td>
 </tr>
 <tr>
 <td class="label"><a name="52349"></a>CC7D</td>
 <td class="instruction">RET C</td>
+<td class="comment">RET C   // This is odd: CCF then RET C?</td>
 </tr>
 <tr>
 <td class="address"><a name="52350"></a>CC7E</td>
 <td class="instruction">JR $CC92</td>
+<td class="comment">goto indoors;</td>
 </tr>
 <tr>
 <td class="label"><a name="52352"></a>CC80</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment" rowspan="2">A = *DE - 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="52353"></a>CC81</td>
@@ -230,6 +270,7 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52354"></a>CC82</td>
 <td class="instruction">CP (HL)</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52355"></a>CC83</td>
@@ -238,10 +279,12 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52356"></a>CC84</td>
 <td class="instruction">ADD A,$02</td>
+<td class="comment">A += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="52358"></a>CC86</td>
 <td class="instruction">CP (HL)</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52359"></a>CC87</td>
@@ -250,38 +293,47 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52360"></a>CC88</td>
 <td class="instruction">INC HL</td>
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52361"></a>CC89</td>
 <td class="instruction">INC DE</td>
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52362"></a>CC8A</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment">A = *DE;  // more oddness</td>
 </tr>
 <tr>
 <td class="address"><a name="52363"></a>CC8B</td>
 <td class="instruction">CP (HL)</td>
+<td class="comment">CP *HL</td>
 </tr>
 <tr>
 <td class="address"><a name="52364"></a>CC8C</td>
 <td class="instruction">BIT 0,C</td>
+<td class="comment">BIT 0,C</td>
 </tr>
 <tr>
 <td class="address"><a name="52366"></a>CC8E</td>
 <td class="instruction">JR NZ,$CC91</td>
+<td class="comment">JR NZ,$CC91</td>
 </tr>
 <tr>
 <td class="address"><a name="52368"></a>CC90</td>
 <td class="instruction">CCF</td>
+<td class="comment">CCF  // invert carry</td>
 </tr>
 <tr>
 <td class="label"><a name="52369"></a>CC91</td>
 <td class="instruction">RET C</td>
+<td class="comment">RET C</td>
 </tr>
 <tr>
 <td class="label"><a name="52370"></a>CC92</td>
 <td class="instruction">LD A,($A138)</td>
+<td class="comment" rowspan="3">indoors: if (naughty_flag_perhaps) goto CCA3;</td>
 </tr>
 <tr>
 <td class="address"><a name="52373"></a>CC95</td>
@@ -294,10 +346,12 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52376"></a>CC98</td>
 <td class="instruction">LD A,(IY+$13)</td>
+<td class="comment">A = IY[19];</td>
 </tr>
 <tr>
 <td class="address"><a name="52379"></a>CC9B</td>
 <td class="instruction">CP $20</td>
+<td class="comment" rowspan="2">if (A &gt;= 32) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52381"></a>CC9D</td>
@@ -306,14 +360,17 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52382"></a>CC9E</td>
 <td class="instruction">LD (IY+$01),$02</td>
+<td class="comment">IY[1] = 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="52386"></a>CCA2</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="52387"></a>CCA3</td>
 <td class="instruction">XOR A</td>
+<td class="comment" rowspan="2">bell = 0; // ring indefinitely</td>
 </tr>
 <tr>
 <td class="address"><a name="52388"></a>CCA4</td>
@@ -322,10 +379,12 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <tr>
 <td class="address"><a name="52391"></a>CCA7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
+<td class="comment">sub_CCAB();</td>
 </tr>
 <tr>
 <td class="address"><a name="52394"></a>CCAA</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

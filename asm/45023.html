@@ -45,7 +45,7 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="label"><a name="45028"></a>AFE4</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="2">do &lt; if (*HL &amp; (1&lt;&lt;7)) goto $B0FE;</td>
+<td class="comment" rowspan="170">do { if (*HL &amp; (1&lt;&lt;7)) goto $B0FE; } PUSH BC PUSH HL {HL += 14; } {C = *HL++; } B = *HL; EX DE,HL HL = word_81A4; {BC += 4; } HL -= BC; JR Z,$B014 // HL == BC? JP NC,$B0FC // HL &gt;= BC? or other way around? {BC -= 8; } {HL = word_81A4 - BC; } JP C,$B0FC EX DE,HL HL++; {C = *HL++; } B = *HL; EX DE,HL HL = word_81A6; {BC += 4; } HL -= BC; JR Z,$B03B // HL == BC? JP NC,$B0FC {BC -= 8; } {HL = word_81A6 - BC; } JP C,$B0FC EX DE,HL HL++; C = *HL; A = word_81A8; A -= C; JR NC,$B046 A = -A; CP 24 JP NC,$B0FC {A = IY[1] &amp; 15; } CP 1 JR NZ,$B071 POP HL PUSH HL L--; A = L; A &amp;= A; JR NZ,$B071 A = bribed_character; {if (A != *IY) goto $B068; } use_bribe(); goto $B071; POP HL POP BC {HL = IY; } L++; solitary(); return; // exit via POP HL DEC L A = *HL; CP 26 JR C,$B0B9 PUSH HL EX AF,AF' {HL += 17; } EX AF,AF' BC = $0723; CP 28 A = IY[14]; JR NZ,$B08F {L -= 2; } C = 54; A ^= 1; A &amp;= A; JR NZ,$B09D A = *HL; CP C JR Z,$B0B8 JR C,$B09A {(*HL) -= 2; } *HL++; goto $B0B8; CP 1 JR NZ,$B0A9 {A = C + B; } CP *HL; JR Z,$B0B8 *HL++; goto $B0B8; CP 2 JR NZ,$B0B2 {A = C - B; } *HL = A; goto $B0B8; {A = C - B; } CP *HL; JR Z,$B0B8 (*HL)--; POP HL POP BC {HL += 13; } {A = *HL &amp; 0x7F; } JR Z,$B0DB HL++; {A = *HL ^ 2; } CP IY[14]; JR Z,$B0DB IY[13] = $80; {IY[7] = (IY[7] &amp; 0xF0) | 5; } RET NZ // check {BC = IY[14]; } {A = four_bytes_B0F8[BC]; } IY[13] = A; BIT 0,C JR NZ,$B0F2 IY[7] &amp;= ~(1&lt;&lt;5); goto $B0D0; IY[7] |= 1&lt;&lt;5; goto $B0D0; four_bytes_B0F8 POP HL POP BC {HL += 32; } {} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45030"></a>AFE6</td>
@@ -54,17 +54,14 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45033"></a>AFE9</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45034"></a>AFEA</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45035"></a>AFEB</td>
 <td class="instruction">LD A,$0E</td>
-<td class="comment" rowspan="3">HL += 14;</td>
 </tr>
 <tr>
 <td class="address"><a name="45037"></a>AFED</td>
@@ -77,7 +74,6 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45039"></a>AFEF</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment" rowspan="2">C = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45040"></a>AFF0</td>
@@ -86,22 +82,18 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45041"></a>AFF1</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment">B = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45042"></a>AFF2</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45043"></a>AFF3</td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment">HL = word_81A4;</td>
 </tr>
 <tr>
 <td class="address"><a name="45046"></a>AFF6</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment" rowspan="6">BC += 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="45048"></a>AFF8</td>
@@ -126,22 +118,18 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="label"><a name="45054"></a>AFFE</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="45056"></a>B000</td>
 <td class="instruction">JR Z,$B014</td>
-<td class="comment">JR Z,$B014 // HL == BC?</td>
 </tr>
 <tr>
 <td class="address"><a name="45058"></a>B002</td>
 <td class="instruction">JP NC,$B0FC</td>
-<td class="comment">JP NC,$B0FC // HL &gt;= BC? or other way around?</td>
 </tr>
 <tr>
 <td class="address"><a name="45061"></a>B005</td>
 <td class="instruction">SUB $08</td>
-<td class="comment" rowspan="5">BC -= 8;</td>
 </tr>
 <tr>
 <td class="address"><a name="45063"></a>B007</td>
@@ -162,7 +150,6 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="label"><a name="45068"></a>B00C</td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment" rowspan="2">HL = word_81A4 - BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="45071"></a>B00F</td>
@@ -171,22 +158,18 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45073"></a>B011</td>
 <td class="instruction">JP C,$B0FC</td>
-<td class="comment">JP C,$B0FC</td>
 </tr>
 <tr>
 <td class="label"><a name="45076"></a>B014</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45077"></a>B015</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45078"></a>B016</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment" rowspan="2">C = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45079"></a>B017</td>
@@ -195,22 +178,18 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45080"></a>B018</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment">B = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45081"></a>B019</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45082"></a>B01A</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment">HL = word_81A6;</td>
 </tr>
 <tr>
 <td class="address"><a name="45085"></a>B01D</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment" rowspan="6">BC += 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="45087"></a>B01F</td>
@@ -235,22 +214,18 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="label"><a name="45093"></a>B025</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="45095"></a>B027</td>
 <td class="instruction">JR Z,$B03B</td>
-<td class="comment">JR Z,$B03B // HL == BC?</td>
 </tr>
 <tr>
 <td class="address"><a name="45097"></a>B029</td>
 <td class="instruction">JP NC,$B0FC</td>
-<td class="comment">JP NC,$B0FC</td>
 </tr>
 <tr>
 <td class="address"><a name="45100"></a>B02C</td>
 <td class="instruction">SUB $08</td>
-<td class="comment" rowspan="5">BC -= 8;</td>
 </tr>
 <tr>
 <td class="address"><a name="45102"></a>B02E</td>
@@ -271,7 +246,6 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="label"><a name="45107"></a>B033</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment" rowspan="2">HL = word_81A6 - BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="45110"></a>B036</td>
@@ -280,57 +254,46 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45112"></a>B038</td>
 <td class="instruction">JP C,$B0FC</td>
-<td class="comment">JP C,$B0FC</td>
 </tr>
 <tr>
 <td class="label"><a name="45115"></a>B03B</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45116"></a>B03C</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45117"></a>B03D</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45118"></a>B03E</td>
 <td class="instruction">LD A,($81A8)</td>
-<td class="comment">A = word_81A8;</td>
 </tr>
 <tr>
 <td class="address"><a name="45121"></a>B041</td>
 <td class="instruction">SUB C</td>
-<td class="comment">A -= C;</td>
 </tr>
 <tr>
 <td class="address"><a name="45122"></a>B042</td>
 <td class="instruction">JR NC,$B046</td>
-<td class="comment">JR NC,$B046</td>
 </tr>
 <tr>
 <td class="address"><a name="45124"></a>B044</td>
 <td class="instruction">NEG</td>
-<td class="comment">A = -A;</td>
 </tr>
 <tr>
 <td class="label"><a name="45126"></a>B046</td>
 <td class="instruction">CP $18</td>
-<td class="comment">CP 24</td>
 </tr>
 <tr>
 <td class="address"><a name="45128"></a>B048</td>
 <td class="instruction">JP NC,$B0FC</td>
-<td class="comment">JP NC,$B0FC</td>
 </tr>
 <tr>
 <td class="address"><a name="45131"></a>B04B</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment" rowspan="2">A = IY[1] &amp; 15;</td>
 </tr>
 <tr>
 <td class="address"><a name="45134"></a>B04E</td>
@@ -339,52 +302,42 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45136"></a>B050</td>
 <td class="instruction">CP $01</td>
-<td class="comment">CP 1</td>
 </tr>
 <tr>
 <td class="address"><a name="45138"></a>B052</td>
 <td class="instruction">JR NZ,$B071</td>
-<td class="comment">JR NZ,$B071</td>
 </tr>
 <tr>
 <td class="address"><a name="45140"></a>B054</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45141"></a>B055</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45142"></a>B056</td>
 <td class="instruction">DEC L</td>
-<td class="comment">L--;</td>
 </tr>
 <tr>
 <td class="address"><a name="45143"></a>B057</td>
 <td class="instruction">LD A,L</td>
-<td class="comment">A = L;</td>
 </tr>
 <tr>
 <td class="address"><a name="45144"></a>B058</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="45145"></a>B059</td>
 <td class="instruction">JR NZ,$B071</td>
-<td class="comment">JR NZ,$B071</td>
 </tr>
 <tr>
 <td class="address"><a name="45147"></a>B05B</td>
 <td class="instruction">LD A,($AF8E)</td>
-<td class="comment">A = bribe_related;</td>
 </tr>
 <tr>
 <td class="address"><a name="45150"></a>B05E</td>
 <td class="instruction">CP (IY+$00)</td>
-<td class="comment" rowspan="2">if (A != *IY) goto $B068;</td>
 </tr>
 <tr>
 <td class="address"><a name="45153"></a>B061</td>
@@ -393,82 +346,66 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45155"></a>B063</td>
 <td class="instruction">CALL <a class="link" href="45319.html">$B107</a></td>
-<td class="comment">use_bribe();</td>
 </tr>
 <tr>
 <td class="address"><a name="45158"></a>B066</td>
 <td class="instruction">JR $B071</td>
-<td class="comment">JR $B071</td>
 </tr>
 <tr>
 <td class="label"><a name="45160"></a>B068</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45161"></a>B069</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45162"></a>B06A</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment">PUSH IY</td>
 </tr>
 <tr>
 <td class="address"><a name="45164"></a>B06C</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45165"></a>B06D</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45166"></a>B06E</td>
 <td class="instruction">JP <a class="link" href="52120.html">$CB98</a></td>
-<td class="comment">solitary(); return; // exit via</td>
 </tr>
 <tr>
 <td class="label"><a name="45169"></a>B071</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45170"></a>B072</td>
 <td class="instruction">DEC L</td>
-<td class="comment">DEC L</td>
 </tr>
 <tr>
 <td class="address"><a name="45171"></a>B073</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45172"></a>B074</td>
 <td class="instruction">CP $1A</td>
-<td class="comment">CP 26</td>
 </tr>
 <tr>
 <td class="address"><a name="45174"></a>B076</td>
 <td class="instruction">JR C,$B0B9</td>
-<td class="comment">JR C,$B0B9</td>
 </tr>
 <tr>
 <td class="address"><a name="45176"></a>B078</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45177"></a>B079</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="45178"></a>B07A</td>
 <td class="instruction">LD A,$11</td>
-<td class="comment" rowspan="3">HL += 17;</td>
 </tr>
 <tr>
 <td class="address"><a name="45180"></a>B07C</td>
@@ -481,32 +418,26 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45182"></a>B07E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="45183"></a>B07F</td>
 <td class="instruction">LD BC,$0723</td>
-<td class="comment">BC = $0723;</td>
 </tr>
 <tr>
 <td class="address"><a name="45186"></a>B082</td>
 <td class="instruction">CP $1C</td>
-<td class="comment">CP 28</td>
 </tr>
 <tr>
 <td class="address"><a name="45188"></a>B084</td>
 <td class="instruction">LD A,(IY+$0E)</td>
-<td class="comment">A = IY[14];</td>
 </tr>
 <tr>
 <td class="address"><a name="45191"></a>B087</td>
 <td class="instruction">JR NZ,$B08F</td>
-<td class="comment">JR NZ,$B08F</td>
 </tr>
 <tr>
 <td class="address"><a name="45193"></a>B089</td>
 <td class="instruction">DEC L</td>
-<td class="comment" rowspan="2">L -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="45194"></a>B08A</td>
@@ -515,47 +446,38 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45195"></a>B08B</td>
 <td class="instruction">LD C,$36</td>
-<td class="comment">C = 54;</td>
 </tr>
 <tr>
 <td class="address"><a name="45197"></a>B08D</td>
 <td class="instruction">XOR $01</td>
-<td class="comment">A ^= 1;</td>
 </tr>
 <tr>
 <td class="label"><a name="45199"></a>B08F</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="45200"></a>B090</td>
 <td class="instruction">JR NZ,$B09D</td>
-<td class="comment">JR NZ,$B09D</td>
 </tr>
 <tr>
 <td class="address"><a name="45202"></a>B092</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45203"></a>B093</td>
 <td class="instruction">CP C</td>
-<td class="comment">CP C</td>
 </tr>
 <tr>
 <td class="address"><a name="45204"></a>B094</td>
 <td class="instruction">JR Z,$B0B8</td>
-<td class="comment">JR Z,$B0B8</td>
 </tr>
 <tr>
 <td class="address"><a name="45206"></a>B096</td>
 <td class="instruction">JR C,$B09A</td>
-<td class="comment">JR C,$B09A</td>
 </tr>
 <tr>
 <td class="address"><a name="45208"></a>B098</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment" rowspan="2">(*HL) -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="45209"></a>B099</td>
@@ -564,27 +486,22 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="label"><a name="45210"></a>B09A</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment">*HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45211"></a>B09B</td>
 <td class="instruction">JR $B0B8</td>
-<td class="comment">JR $B0B8</td>
 </tr>
 <tr>
 <td class="label"><a name="45213"></a>B09D</td>
 <td class="instruction">CP $01</td>
-<td class="comment">CP 1</td>
 </tr>
 <tr>
 <td class="address"><a name="45215"></a>B09F</td>
 <td class="instruction">JR NZ,$B0A9</td>
-<td class="comment">JR NZ,$B0A9</td>
 </tr>
 <tr>
 <td class="address"><a name="45217"></a>B0A1</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="2">A = C + B;</td>
 </tr>
 <tr>
 <td class="address"><a name="45218"></a>B0A2</td>
@@ -593,37 +510,30 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45219"></a>B0A3</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment">CP *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45220"></a>B0A4</td>
 <td class="instruction">JR Z,$B0B8</td>
-<td class="comment">JR Z,$B0B8</td>
 </tr>
 <tr>
 <td class="address"><a name="45222"></a>B0A6</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment">*HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45223"></a>B0A7</td>
 <td class="instruction">JR $B0B8</td>
-<td class="comment">JR $B0B8</td>
 </tr>
 <tr>
 <td class="label"><a name="45225"></a>B0A9</td>
 <td class="instruction">CP $02</td>
-<td class="comment">CP 2</td>
 </tr>
 <tr>
 <td class="address"><a name="45227"></a>B0AB</td>
 <td class="instruction">JR NZ,$B0B2</td>
-<td class="comment">JR NZ,$B0B2</td>
 </tr>
 <tr>
 <td class="address"><a name="45229"></a>B0AD</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="2">A = C - B;</td>
 </tr>
 <tr>
 <td class="address"><a name="45230"></a>B0AE</td>
@@ -632,17 +542,14 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45231"></a>B0AF</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment">*HL = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="45232"></a>B0B0</td>
 <td class="instruction">JR $B0B8</td>
-<td class="comment">JR $B0B8</td>
 </tr>
 <tr>
 <td class="label"><a name="45234"></a>B0B2</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="2">A = C - B;</td>
 </tr>
 <tr>
 <td class="address"><a name="45235"></a>B0B3</td>
@@ -651,32 +558,26 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45236"></a>B0B4</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment">CP *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="45237"></a>B0B5</td>
 <td class="instruction">JR Z,$B0B8</td>
-<td class="comment">JR Z,$B0B8</td>
 </tr>
 <tr>
 <td class="address"><a name="45239"></a>B0B7</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment">(*HL)--;</td>
 </tr>
 <tr>
 <td class="label"><a name="45240"></a>B0B8</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="label"><a name="45241"></a>B0B9</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45242"></a>B0BA</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="3">HL += 13;</td>
 </tr>
 <tr>
 <td class="address"><a name="45243"></a>B0BB</td>
@@ -689,7 +590,6 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45246"></a>B0BE</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 0x7F;</td>
 </tr>
 <tr>
 <td class="address"><a name="45247"></a>B0BF</td>
@@ -698,17 +598,14 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45249"></a>B0C1</td>
 <td class="instruction">JR Z,$B0DB</td>
-<td class="comment">JR Z,$B0DB</td>
 </tr>
 <tr>
 <td class="address"><a name="45251"></a>B0C3</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45252"></a>B0C4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL ^ 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="45253"></a>B0C5</td>
@@ -717,22 +614,18 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45255"></a>B0C7</td>
 <td class="instruction">CP (IY+$0E)</td>
-<td class="comment">CP IY[14];</td>
 </tr>
 <tr>
 <td class="address"><a name="45258"></a>B0CA</td>
 <td class="instruction">JR Z,$B0DB</td>
-<td class="comment">JR Z,$B0DB</td>
 </tr>
 <tr>
 <td class="address"><a name="45260"></a>B0CC</td>
 <td class="instruction">LD (IY+$0D),$80</td>
-<td class="comment">IY[13] = $80;</td>
 </tr>
 <tr>
 <td class="label"><a name="45264"></a>B0D0</td>
 <td class="instruction">LD A,(IY+$07)</td>
-<td class="comment" rowspan="4">IY[7] = (IY[7] &amp; 0xF0) | 5;</td>
 </tr>
 <tr>
 <td class="address"><a name="45267"></a>B0D3</td>
@@ -749,12 +642,10 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45274"></a>B0DA</td>
 <td class="instruction">RET NZ</td>
-<td class="comment">RET NZ // check</td>
 </tr>
 <tr>
 <td class="label"><a name="45275"></a>B0DB</td>
 <td class="instruction">LD C,(IY+$0E)</td>
-<td class="comment" rowspan="2">BC = IY[14];</td>
 </tr>
 <tr>
 <td class="address"><a name="45278"></a>B0DE</td>
@@ -763,7 +654,6 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45280"></a>B0E0</td>
 <td class="instruction">LD HL,$B0F8</td>
-<td class="comment" rowspan="3">A = four_bytes_B0F8[BC];</td>
 </tr>
 <tr>
 <td class="address"><a name="45283"></a>B0E3</td>
@@ -776,37 +666,30 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45285"></a>B0E5</td>
 <td class="instruction">LD (IY+$0D),A</td>
-<td class="comment">IY[13] = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="45288"></a>B0E8</td>
 <td class="instruction">BIT 0,C</td>
-<td class="comment">BIT 0,C</td>
 </tr>
 <tr>
 <td class="address"><a name="45290"></a>B0EA</td>
 <td class="instruction">JR NZ,$B0F2</td>
-<td class="comment">JR NZ,$B0F2</td>
 </tr>
 <tr>
 <td class="address"><a name="45292"></a>B0EC</td>
 <td class="instruction">RES 5,(IY+$07)</td>
-<td class="comment">IY[7] &amp;= ~(1&lt;&lt;5);</td>
 </tr>
 <tr>
 <td class="address"><a name="45296"></a>B0F0</td>
 <td class="instruction">JR $B0D0</td>
-<td class="comment">JR $B0D0</td>
 </tr>
 <tr>
 <td class="label"><a name="45298"></a>B0F2</td>
 <td class="instruction">SET 5,(IY+$07)</td>
-<td class="comment">IY[7] |= 1&lt;&lt;5;</td>
 </tr>
 <tr>
 <td class="address"><a name="45302"></a>B0F6</td>
 <td class="instruction">JR $B0D0</td>
-<td class="comment">JR $B0D0</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -821,22 +704,18 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address">B0F8</td>
 <td class="instruction">DEFB $85,$84,$87,$88</td>
-<td class="comment">four_bytes_B0F8</td>
 </tr>
 <tr>
 <td class="label"><a name="45308"></a>B0FC</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45309"></a>B0FD</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="label"><a name="45310"></a>B0FE</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="3">HL += 32;</td>
 </tr>
 <tr>
 <td class="address"><a name="45311"></a>B0FF</td>
@@ -849,7 +728,6 @@ Used by the routines at <a class="link" href="44943.html">AF8F</a> and <a class=
 <tr>
 <td class="address"><a name="45314"></a>B102</td>
 <td class="instruction">DEC B</td>
-<td class="comment" rowspan="2">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45315"></a>B103</td>

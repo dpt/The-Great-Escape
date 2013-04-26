@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="43628.html">AA6C</a> and <a class="link" href="43661.html">AA8D</a>.
+Causes some tile plotting.
 </div>
 </div>
 </td>
@@ -35,27 +35,27 @@ Used by the routines at <a class="link" href="43628.html">AA6C</a> and <a class=
 <tr>
 <td class="label"><a name="43033"></a>A819</td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="transparentComment" />
+<td class="comment">DE = $F0F8;</td>
 </tr>
 <tr>
 <td class="address"><a name="43036"></a>A81C</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43037"></a>A81D</td>
 <td class="instruction">LD HL,$FF58</td>
-<td class="transparentComment" />
+<td class="comment">HL = $FF58;</td>
 </tr>
 <tr>
 <td class="address"><a name="43040"></a>A820</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="transparentComment" />
+<td class="comment">A = map_position_maybe[1]; // map_position_maybe hi</td>
 </tr>
 <tr>
 <td class="address"><a name="43043"></a>A823</td>
 <td class="instruction">LD DE,$F290</td>
-<td class="transparentComment" />
+<td class="comment">DE = $F290;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -70,442 +70,415 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="label">A826</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">A = (A &amp; 3) * 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="43048"></a>A828</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43049"></a>A829</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43050"></a>A82A</td>
 <td class="instruction">LD ($A86A),A</td>
-<td class="transparentComment" />
+<td class="comment">($A86A) = A; // self modify</td>
 </tr>
 <tr>
 <td class="address"><a name="43053"></a>A82D</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43054"></a>A82E</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">A = (map_position_maybe[0] &amp; 3) + C;</td>
 </tr>
 <tr>
 <td class="address"><a name="43057"></a>A831</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43059"></a>A833</td>
 <td class="instruction">ADD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43060"></a>A834</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="43061"></a>A835</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="43062"></a>A836</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43063"></a>A837</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="9">HL = 0x5B00 + A * 16;</td>
 </tr>
 <tr>
 <td class="address"><a name="43064"></a>A838</td>
 <td class="instruction">LD H,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43066"></a>A83A</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43067"></a>A83B</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43068"></a>A83C</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43069"></a>A83D</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43070"></a>A83E</td>
 <td class="instruction">LD A,$5B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43072"></a>A840</td>
 <td class="instruction">ADD A,H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43073"></a>A841</td>
 <td class="instruction">LD H,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43074"></a>A842</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="43075"></a>A843</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
+<td class="comment">A += L;</td>
 </tr>
 <tr>
 <td class="address"><a name="43076"></a>A844</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43077"></a>A845</td>
 <td class="instruction">NEG</td>
-<td class="transparentComment" />
+<td class="comment">A = -A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43079"></a>A847</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="43081"></a>A849</td>
 <td class="instruction">JR NZ,$A84D</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == 0) A = 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="43083"></a>A84B</td>
 <td class="instruction">LD A,$04</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="43085"></a>A84D</td>
 <td class="instruction">LD B,A</td>
-<td class="transparentComment" />
+<td class="comment">B = A; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="43086"></a>A84E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">do { A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="43087"></a>A84F</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
+<td class="comment">*DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43088"></a>A850</td>
 <td class="instruction">CALL <a class="link" href="43437.html">$A9AD</a></td>
-<td class="transparentComment" />
+<td class="comment">plot_tile();</td>
 </tr>
 <tr>
 <td class="address"><a name="43091"></a>A853</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43092"></a>A854</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43093"></a>A855</td>
 <td class="instruction">DJNZ $A84E</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="43095"></a>A857</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43096"></a>A858</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43097"></a>A859</td>
 <td class="instruction">LD B,$05</td>
-<td class="transparentComment" />
+<td class="comment">B = 5; // 5 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="43099"></a>A85B</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="43100"></a>A85C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="43101"></a>A85D</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43102"></a>A85E</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="8">HL = &amp;super_tiles[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="43103"></a>A85F</td>
 <td class="instruction">LD H,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43105"></a>A861</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43106"></a>A862</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43107"></a>A863</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43108"></a>A864</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43109"></a>A865</td>
 <td class="instruction">LD BC,$5B00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43112"></a>A868</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43113"></a>A869</td>
 <td class="instruction">LD A,$00</td>
-<td class="transparentComment" />
+<td class="comment">A = 0; // must be self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="43115"></a>A86B</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
+<td class="comment">A += L; // looks odd</td>
 </tr>
 <tr>
 <td class="address"><a name="43116"></a>A86C</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43117"></a>A86D</td>
 <td class="instruction">LD B,$04</td>
-<td class="transparentComment" />
+<td class="comment">B = 4; // 4 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="43119"></a>A86F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">do { A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="43120"></a>A870</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
+<td class="comment">*DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43121"></a>A871</td>
 <td class="instruction">CALL <a class="link" href="43437.html">$A9AD</a></td>
-<td class="transparentComment" />
+<td class="comment">plot_tile();</td>
 </tr>
 <tr>
 <td class="address"><a name="43124"></a>A874</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43125"></a>A875</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43126"></a>A876</td>
 <td class="instruction">DJNZ $A86F</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="43128"></a>A878</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43129"></a>A879</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43130"></a>A87A</td>
 <td class="instruction">POP BC</td>
-<td class="transparentComment" />
+<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="43131"></a>A87B</td>
 <td class="instruction">DJNZ $A85B</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="43133"></a>A87D</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
+<td class="comment">A = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="43134"></a>A87E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="43135"></a>A87F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="43136"></a>A880</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="43137"></a>A881</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="8">HL = &amp;super_tiles[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="43138"></a>A882</td>
 <td class="instruction">LD H,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43140"></a>A884</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43141"></a>A885</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43142"></a>A886</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43143"></a>A887</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43144"></a>A888</td>
 <td class="instruction">LD BC,$5B00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43147"></a>A88B</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43148"></a>A88C</td>
 <td class="instruction">LD A,($A86A)</td>
-<td class="transparentComment" />
+<td class="comment">A = ($A86A); // read self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="43151"></a>A88F</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
+<td class="comment">A += L;</td>
 </tr>
 <tr>
 <td class="address"><a name="43152"></a>A890</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43153"></a>A891</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="transparentComment" />
+<td class="comment">A = map_position_maybe[0]; // map_position_maybe lo</td>
 </tr>
 <tr>
 <td class="address"><a name="43156"></a>A894</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="43158"></a>A896</td>
 <td class="instruction">RET Z</td>
-<td class="transparentComment" />
+<td class="comment">if (A == 0) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="43159"></a>A897</td>
 <td class="instruction">LD B,A</td>
-<td class="transparentComment" />
+<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="label"><a name="43160"></a>A898</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">do { A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="43161"></a>A899</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
+<td class="comment">*DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43162"></a>A89A</td>
 <td class="instruction">CALL <a class="link" href="43437.html">$A9AD</a></td>
-<td class="transparentComment" />
+<td class="comment">plot_tile();</td>
 </tr>
 <tr>
 <td class="address"><a name="43165"></a>A89D</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43166"></a>A89E</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43167"></a>A89F</td>
 <td class="instruction">DJNZ $A898</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="43169"></a>A8A1</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

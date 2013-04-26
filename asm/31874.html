@@ -29,6 +29,9 @@
 <div class="paragraph">
 Returns an item within range of the player.
 </div>
+<div class="paragraph">
+Select a pick up radius.
+</div>
 </div>
 <table class="output">
 <tr>
@@ -50,7 +53,7 @@ Returns an item within range of the player.
 <tr>
 <td class="address"><a name="31876"></a>7C84</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">if (indoor_room_index) C = 6;</td>
+<td class="comment" rowspan="4">if (indoor_room_index) C = 6; // inside</td>
 </tr>
 <tr>
 <td class="address"><a name="31879"></a>7C87</td>
@@ -67,7 +70,7 @@ Returns an item within range of the player.
 <tr>
 <td class="label"><a name="31884"></a>7C8C</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment">B = 16; // 16 iterations</td>
+<td class="comment">B = item__LIMIT; // 16 iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="31886"></a>7C8E</td>
@@ -77,7 +80,7 @@ Returns an item within range of the player.
 <tr>
 <td class="label"><a name="31889"></a>7C91</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="2">do &lt; if ((*HL &amp; (1&lt;&lt;7)) == 0) goto next; // item is not anywhere</td>
+<td class="comment" rowspan="31">do { if ((*HL &amp; (1&lt;&lt;7)) == 0) goto next; // item is not anywhere} PUSH BC PUSH HL HL++; DE = &amp;player_map_position_perhapsX; B = 2; // 2 iterations {do { A = *DE++; } {if (A - C &gt;= *HL || A + C &lt; *HL) goto popnext; } {HL++; } } while (--B); POP HL HL--; // compensate for overshoot POP BC A = 0; // set Z (found) return; popnext: POP HL POP BC {next: HL += 7; // stride } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31891"></a>7C93</td>
@@ -86,32 +89,36 @@ Returns an item within range of the player.
 <tr>
 <td class="address"><a name="31893"></a>7C95</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="31894"></a>7C96</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31895"></a>7C97</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="31896"></a>7C98</td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment">DE = &amp;player_map_position_perhapsX;</td>
 </tr>
 <tr>
 <td class="address"><a name="31899"></a>7C9B</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment">B = 2;</td>
 </tr>
 <tr>
-<td class="label"><a name="31901"></a>7C9D</td>
+<td class="routineComment" colspan="3">
+<a name="31901"></a>
+<div class="comments">
+<div class="paragraph">
+Range check.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">7C9D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="2">do &lt; A = *DE - C;</td>
 </tr>
 <tr>
 <td class="address"><a name="31902"></a>7C9E</td>
@@ -120,7 +127,6 @@ Returns an item within range of the player.
 <tr>
 <td class="address"><a name="31903"></a>7C9F</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto popnext;</td>
 </tr>
 <tr>
 <td class="address"><a name="31904"></a>7CA0</td>
@@ -129,7 +135,6 @@ Returns an item within range of the player.
 <tr>
 <td class="address"><a name="31906"></a>7CA2</td>
 <td class="instruction">ADD A,C</td>
-<td class="comment" rowspan="2">A += C * 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="31907"></a>7CA3</td>
@@ -138,7 +143,6 @@ Returns an item within range of the player.
 <tr>
 <td class="address"><a name="31908"></a>7CA4</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; *HL) goto popnext;</td>
 </tr>
 <tr>
 <td class="address"><a name="31909"></a>7CA5</td>
@@ -147,57 +151,56 @@ Returns an item within range of the player.
 <tr>
 <td class="address"><a name="31911"></a>7CA7</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="31912"></a>7CA8</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="31913"></a>7CA9</td>
 <td class="instruction">DJNZ $7C9D</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31915"></a>7CAB</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31916"></a>7CAC</td>
 <td class="instruction">DEC HL</td>
-<td class="comment">HL--; // compensate for overshoot</td>
 </tr>
 <tr>
 <td class="address"><a name="31917"></a>7CAD</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="31918"></a>7CAE</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0; // set Z (found)</td>
 </tr>
 <tr>
-<td class="address"><a name="31919"></a>7CAF</td>
+<td class="routineComment" colspan="3">
+<a name="31919"></a>
+<div class="comments">
+<div class="paragraph">
+The next instruction is written as RET Z but there's no need for it to be conditional.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">7CAF</td>
 <td class="instruction">RET Z</td>
-<td class="comment">return; // (oddly written as RET Z, there's no need for it to be conditional)</td>
 </tr>
 <tr>
 <td class="label"><a name="31920"></a>7CB0</td>
 <td class="instruction">POP HL</td>
-<td class="comment">popnext: POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31921"></a>7CB1</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="label"><a name="31922"></a>7CB2</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment" rowspan="5">next: HL += 7; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="31924"></a>7CB4</td>
@@ -218,12 +221,11 @@ Returns an item within range of the player.
 <tr>
 <td class="label"><a name="31929"></a>7CB9</td>
 <td class="instruction">DJNZ $7C91</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31931"></a>7CBB</td>
 <td class="instruction">OR $01</td>
-<td class="comment">A |= 1; // set NZ</td>
+<td class="comment">A |= 1; // set NZ (not found)</td>
 </tr>
 <tr>
 <td class="address"><a name="31933"></a>7CBD</td>

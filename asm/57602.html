@@ -115,7 +115,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="label"><a name="57634"></a>E122</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do &lt; PUSH BC</td>
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="57635"></a>E123</td>
@@ -224,7 +224,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57666"></a>E142</td>
 <td class="instruction">JR $E144</td>
-<td class="comment">JR $E144 // self-modified to jump into ...</td>
+<td class="comment">goto $E144 // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57668"></a>E144</td>
@@ -304,7 +304,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57696"></a>E160</td>
 <td class="instruction">JR $E162</td>
-<td class="comment">JR $E162 // self-modified to jump into ...</td>
+<td class="comment">goto $E162 // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57698"></a>E162</td>
@@ -722,11 +722,12 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57801"></a>E1C9</td>
 <td class="instruction">DEC B</td>
-<td class="comment" rowspan="2">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="57802"></a>E1CA</td>
 <td class="instruction">JP NZ,$E122</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="57805"></a>E1CD</td>
@@ -791,7 +792,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="label"><a name="57827"></a>E1E3</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do &lt; PUSH BC</td>
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="57828"></a>E1E4</td>
@@ -900,7 +901,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57859"></a>E203</td>
 <td class="instruction">JR $E205</td>
-<td class="comment">JR $E205 // self-modified to jump into ...</td>
+<td class="comment">goto $E205 // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57861"></a>E205</td>
@@ -1000,7 +1001,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57897"></a>E229</td>
 <td class="instruction">JR $E22B</td>
-<td class="comment">JR $E22B // self-modified to jump into ...</td>
+<td class="comment">goto $E22B // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57899"></a>E22B</td>
@@ -1438,11 +1439,12 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="58010"></a>E29A</td>
 <td class="instruction">DEC B</td>
-<td class="comment" rowspan="2">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58011"></a>E29B</td>
 <td class="instruction">JP NZ,$E1E3</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="58014"></a>E29E</td>

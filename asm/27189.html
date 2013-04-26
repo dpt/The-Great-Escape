@@ -115,7 +115,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27219"></a>6A53</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A</td>
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="27220"></a>6A54</td>
@@ -125,7 +125,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27221"></a>6A55</td>
 <td class="instruction">JR NZ,$6A5A</td>
-<td class="comment">if (A == 0) &lt;</td>
+<td class="comment">if (A == 0) {</td>
 </tr>
 <tr>
 <td class="address"><a name="27223"></a>6A57</td>
@@ -135,32 +135,37 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27224"></a>6A58</td>
 <td class="instruction">JR $6A62</td>
-<td class="comment">&gt; else</td>
+<td class="comment">} else {</td>
 </tr>
 <tr>
 <td class="label"><a name="27226"></a>6A5A</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment" rowspan="6">&lt; memcpy(DE, HL, (A * 4) + 1); &gt;</td>
+<td class="comment">memcpy(DE, HL, (A * 4) + 1);</td>
 </tr>
 <tr>
 <td class="address"><a name="27227"></a>6A5B</td>
 <td class="instruction">ADD A,A</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="27228"></a>6A5C</td>
 <td class="instruction">INC A</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="27229"></a>6A5D</td>
 <td class="instruction">LD C,A</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="27230"></a>6A5E</td>
 <td class="instruction">LD B,$00</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="27232"></a>6A60</td>
 <td class="instruction">LDIR</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="27234"></a>6A62</td>
@@ -184,12 +189,12 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27240"></a>6A68</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A</td>
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="27241"></a>6A69</td>
 <td class="instruction">JR Z,$6A8C</td>
-<td class="comment">if (A) &lt;</td>
+<td class="comment">if (A) {</td>
 </tr>
 <tr>
 <td class="address"><a name="27243"></a>6A6B</td>
@@ -204,7 +209,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="label"><a name="27245"></a>6A6D</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do &lt; PUSH BC</td>
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="27246"></a>6A6E</td>
@@ -295,7 +300,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27274"></a>6A8A</td>
 <td class="instruction">DJNZ $6A6D</td>
-<td class="comment">&gt; while (--B); &gt;</td>
+<td class="comment">} while (--B); }</td>
 </tr>
 <tr>
 <td class="label"><a name="27276"></a>6A8C</td>
@@ -323,7 +328,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="label"><a name="27281"></a>6A91</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do &lt; PUSH BC</td>
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="27282"></a>6A92</td>
@@ -442,7 +447,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27314"></a>6AB2</td>
 <td class="instruction">DJNZ $6A91</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="27316"></a>6AB4</td>

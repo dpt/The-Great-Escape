@@ -284,7 +284,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="50937"></a>C6F9</td>
 <td class="instruction">POP DE</td>
-<td class="comment">char_ge_12: POP DE        ;</td>
+<td class="comment">char_ge_12: POP DE</td>
 </tr>
 <tr>
 <td class="address"><a name="50938"></a>C6FA</td>
@@ -355,12 +355,12 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="50963"></a>C713</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">do &lt; A = *HL;</td>
+<td class="comment">do { A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="50964"></a>C714</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A         ; don't understand</td>
+<td class="comment">A &amp;= A;         ; don't understand</td>
 </tr>
 <tr>
 <td class="address"><a name="50965"></a>C715</td>
@@ -385,7 +385,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="50969"></a>C719</td>
 <td class="instruction">DJNZ $C713</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="50971"></a>C71B</td>
@@ -413,7 +413,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="50978"></a>C722</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A         ; if (A == 0) .. next op interleaved ..</td>
+<td class="comment">A &amp;= A;         ; if (A == 0) .. next op interleaved ..</td>
 </tr>
 <tr>
 <td class="address"><a name="50979"></a>C723</td>
@@ -433,7 +433,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="50985"></a>C729</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'     ;</td>
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="50986"></a>C72A</td>
@@ -463,7 +463,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="50996"></a>C734</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL        ;</td>
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="50997"></a>C735</td>
@@ -491,12 +491,12 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51003"></a>C73B</td>
 <td class="instruction">DEC HL</td>
-<td class="comment">HL--;</td>
+<td class="comment">HL--</td>
 </tr>
 <tr>
 <td class="address"><a name="51004"></a>C73C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 0xFC;</td>
+<td class="comment" rowspan="2">A = *HL &amp; 0xFC</td>
 </tr>
 <tr>
 <td class="address"><a name="51005"></a>C73D</td>
@@ -505,22 +505,22 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51007"></a>C73F</td>
 <td class="instruction">RRA</td>
-<td class="comment">RRA           ;</td>
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="51008"></a>C740</td>
 <td class="instruction">RRA</td>
-<td class="comment">RRA           ;</td>
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="51009"></a>C741</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment">*DE = A;</td>
+<td class="comment">*DE = A</td>
 </tr>
 <tr>
 <td class="address"><a name="51010"></a>C742</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 3;</td>
+<td class="comment" rowspan="2">A = *HL &amp; 3</td>
 </tr>
 <tr>
 <td class="address"><a name="51011"></a>C743</td>
@@ -529,7 +529,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51013"></a>C745</td>
 <td class="instruction">CP $02</td>
-<td class="comment" rowspan="2">if (A &gt;= 2) goto $C750;</td>
+<td class="comment" rowspan="2">if (A &gt;= 2) goto $C750</td>
 </tr>
 <tr>
 <td class="address"><a name="51015"></a>C747</td>
@@ -538,7 +538,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51017"></a>C749</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="5">HL += 5;</td>
+<td class="comment" rowspan="5">HL += 5</td>
 </tr>
 <tr>
 <td class="address"><a name="51018"></a>C74A</td>
@@ -559,12 +559,12 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51022"></a>C74E</td>
 <td class="instruction">JR $C753</td>
-<td class="comment">JR $C753      ;</td>
+<td class="comment">goto $C753;</td>
 </tr>
 <tr>
 <td class="label"><a name="51024"></a>C750</td>
 <td class="instruction">DEC HL</td>
-<td class="comment" rowspan="3">HL -= 3;</td>
+<td class="comment" rowspan="3">HL -= 3</td>
 </tr>
 <tr>
 <td class="address"><a name="51025"></a>C751</td>
@@ -577,7 +577,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="51027"></a>C753</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="2">A = *DE++;</td>
+<td class="comment" rowspan="2">A = *DE++</td>
 </tr>
 <tr>
 <td class="address"><a name="51028"></a>C754</td>
@@ -586,7 +586,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51029"></a>C755</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto $C761;</td>
+<td class="comment" rowspan="2">if (A == 0) goto $C761</td>
 </tr>
 <tr>
 <td class="address"><a name="51030"></a>C756</td>
@@ -595,87 +595,87 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51032"></a>C758</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
+<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="51034"></a>C75A</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
+<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="51036"></a>C75C</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
+<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="51038"></a>C75E</td>
 <td class="instruction">DEC DE</td>
-<td class="comment">DE--;</td>
+<td class="comment">DE--</td>
 </tr>
 <tr>
 <td class="address"><a name="51039"></a>C75F</td>
 <td class="instruction">JR $C78B</td>
-<td class="comment">JR $C78B      ;</td>
+<td class="comment">goto $C78B;</td>
 </tr>
 <tr>
 <td class="label"><a name="51041"></a>C761</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment">B = 3;</td>
+<td class="comment">B = 3</td>
 </tr>
 <tr>
 <td class="label"><a name="51043"></a>C763</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">do &lt; A = *HL;</td>
+<td class="comment">do { A = *HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51044"></a>C764</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A         ;</td>
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="51045"></a>C765</td>
 <td class="instruction">RRA</td>
-<td class="comment">RRA           ;</td>
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="51046"></a>C766</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment">*DE = A;</td>
+<td class="comment">*DE = A</td>
 </tr>
 <tr>
 <td class="address"><a name="51047"></a>C767</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">HL++</td>
 </tr>
 <tr>
 <td class="address"><a name="51048"></a>C768</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
+<td class="comment">DE++</td>
 </tr>
 <tr>
 <td class="address"><a name="51049"></a>C769</td>
 <td class="instruction">DJNZ $C763</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B)</td>
 </tr>
 <tr>
 <td class="address"><a name="51051"></a>C76B</td>
 <td class="instruction">DEC DE</td>
-<td class="comment">DE--;</td>
+<td class="comment">DE--</td>
 </tr>
 <tr>
 <td class="address"><a name="51052"></a>C76C</td>
 <td class="instruction">JR $C78B</td>
-<td class="comment">JR $C78B      ;</td>
+<td class="comment">goto $C78B;</td>
 </tr>
 <tr>
 <td class="label"><a name="51054"></a>C76E</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DE        ;</td>
+<td class="comment">POP DE</td>
 </tr>
 <tr>
 <td class="address"><a name="51055"></a>C76F</td>
 <td class="instruction">DEC DE</td>
-<td class="comment" rowspan="3">A = DE[-1];</td>
+<td class="comment" rowspan="3">A = DE[-1]</td>
 </tr>
 <tr>
 <td class="address"><a name="51056"></a>C770</td>
@@ -688,7 +688,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51058"></a>C772</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A         ;</td>
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="51059"></a>C773</td>
@@ -698,57 +698,57 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="address"><a name="51061"></a>C775</td>
 <td class="instruction">JR Z,$C779</td>
-<td class="comment">JR Z,$C779    ;</td>
+<td class="comment">JR Z,$C779</td>
 </tr>
 <tr>
 <td class="address"><a name="51063"></a>C777</td>
 <td class="instruction">LD A,$06</td>
-<td class="comment">A = 6;</td>
+<td class="comment">A = 6</td>
 </tr>
 <tr>
 <td class="label"><a name="51065"></a>C779</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'     ;</td>
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="51066"></a>C77A</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment">B = 0;</td>
+<td class="comment">B = 0</td>
 </tr>
 <tr>
 <td class="address"><a name="51068"></a>C77C</td>
 <td class="instruction">CALL <a class="link" href="51098.html">$C79A</a></td>
-<td class="comment">sub_C79A();</td>
+<td class="comment">sub_C79A()</td>
 </tr>
 <tr>
 <td class="address"><a name="51071"></a>C77F</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">HL++</td>
 </tr>
 <tr>
 <td class="address"><a name="51072"></a>C780</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
+<td class="comment">DE++</td>
 </tr>
 <tr>
 <td class="address"><a name="51073"></a>C781</td>
 <td class="instruction">CALL <a class="link" href="51098.html">$C79A</a></td>
-<td class="comment">sub_C79A();</td>
+<td class="comment">sub_C79A()</td>
 </tr>
 <tr>
 <td class="address"><a name="51076"></a>C784</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
+<td class="comment">DE++</td>
 </tr>
 <tr>
 <td class="address"><a name="51077"></a>C785</td>
 <td class="instruction">LD A,B</td>
-<td class="comment">A = B;</td>
+<td class="comment">A = B</td>
 </tr>
 <tr>
 <td class="address"><a name="51078"></a>C786</td>
 <td class="instruction">CP $02</td>
-<td class="comment" rowspan="3">if (A != 2) return;</td>
+<td class="comment" rowspan="3">if (A != 2) return</td>
 </tr>
 <tr>
 <td class="address"><a name="51080"></a>C788</td>
@@ -761,12 +761,12 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="51083"></a>C78B</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
+<td class="comment">DE++</td>
 </tr>
 <tr>
 <td class="address"><a name="51084"></a>C78C</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL      ;</td>
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="51085"></a>C78D</td>

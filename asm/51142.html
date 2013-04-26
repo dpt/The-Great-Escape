@@ -105,7 +105,7 @@ Locate the character in the map.
 <tr>
 <td class="label">C7DF</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">do &lt; if (A == *HL) goto call_action;</td>
+<td class="comment" rowspan="5">do { if (A == *HL) goto call_action; } {HL += 2; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="51168"></a>C7E0</td>
@@ -114,7 +114,6 @@ Locate the character in the map.
 <tr>
 <td class="address"><a name="51170"></a>C7E2</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">HL += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="51171"></a>C7E3</td>
@@ -123,7 +122,6 @@ Locate the character in the map.
 <tr>
 <td class="address"><a name="51172"></a>C7E4</td>
 <td class="instruction">DJNZ $C7DF</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="51174"></a>C7E6</td>
@@ -205,122 +203,122 @@ Array of (character, character event handler index) mappings. (Some of the chara
 <tr>
 <td class="address">C7F9</td>
 <td class="instruction">DEFW $00A6</td>
-<td class="comment">&lt; 0xA6,  0 &gt;,</td>
+<td class="comment">0xA6,  0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51195"></a>C7FB</td>
 <td class="instruction">DEFW $00A7</td>
-<td class="comment">&lt; 0xA7,  0 &gt;,</td>
+<td class="comment">0xA7,  0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51197"></a>C7FD</td>
 <td class="instruction">DEFW $01A8</td>
-<td class="comment">&lt; 0xA8,  1 &gt;,</td>
+<td class="comment">0xA8,  1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51199"></a>C7FF</td>
 <td class="instruction">DEFW $01A9</td>
-<td class="comment">&lt; 0xA9,  1 &gt;,</td>
+<td class="comment">0xA9,  1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51201"></a>C801</td>
 <td class="instruction">DEFW $0005</td>
-<td class="comment">&lt; 0x05,  0 &gt;,</td>
+<td class="comment">0x05,  0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51203"></a>C803</td>
 <td class="instruction">DEFW $0106</td>
-<td class="comment">&lt; 0x06,  1 &gt;,</td>
+<td class="comment">0x06,  1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51205"></a>C805</td>
 <td class="instruction">DEFW $0385</td>
-<td class="comment">&lt; 0x85,  3 &gt;,</td>
+<td class="comment">0x85,  3 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51207"></a>C807</td>
 <td class="instruction">DEFW $0386</td>
-<td class="comment">&lt; 0x86,  3 &gt;,</td>
+<td class="comment">0x86,  3 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51209"></a>C809</td>
 <td class="instruction">DEFW $020E</td>
-<td class="comment">&lt; 0x0E,  2 &gt;,</td>
+<td class="comment">0x0E,  2 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51211"></a>C80B</td>
 <td class="instruction">DEFW $020F</td>
-<td class="comment">&lt; 0x0F,  2 &gt;,</td>
+<td class="comment">0x0F,  2 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51213"></a>C80D</td>
 <td class="instruction">DEFW $008E</td>
-<td class="comment">&lt; 0x8E,  0 &gt;,</td>
+<td class="comment">0x8E,  0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51215"></a>C80F</td>
 <td class="instruction">DEFW $018F</td>
-<td class="comment">&lt; 0x8F,  1 &gt;,</td>
+<td class="comment">0x8F,  1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51217"></a>C811</td>
 <td class="instruction">DEFW $0510</td>
-<td class="comment">&lt; 0x10,  5 &gt;,</td>
+<td class="comment">0x10,  5 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51219"></a>C813</td>
 <td class="instruction">DEFW $0511</td>
-<td class="comment">&lt; 0x11,  5 &gt;,</td>
+<td class="comment">0x11,  5 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51221"></a>C815</td>
 <td class="instruction">DEFW $0090</td>
-<td class="comment">&lt; 0x90,  0 &gt;,</td>
+<td class="comment">0x90,  0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51223"></a>C817</td>
 <td class="instruction">DEFW $0191</td>
-<td class="comment">&lt; 0x91,  1 &gt;,</td>
+<td class="comment">0x91,  1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51225"></a>C819</td>
 <td class="instruction">DEFW $00A0</td>
-<td class="comment">&lt; 0xA0,  0 &gt;,</td>
+<td class="comment">0xA0,  0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51227"></a>C81B</td>
 <td class="instruction">DEFW $01A1</td>
-<td class="comment">&lt; 0xA1,  1 &gt;,</td>
+<td class="comment">0xA1,  1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51229"></a>C81D</td>
 <td class="instruction">DEFW $072A</td>
-<td class="comment">&lt; 0x2A,  7 &gt;,</td>
+<td class="comment">0x2A,  7 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51231"></a>C81F</td>
 <td class="instruction">DEFW $082C</td>
-<td class="comment">&lt; 0x2C,  8 &gt;,   // sleeps</td>
+<td class="comment">0x2C,  8 },   // sleeps</td>
 </tr>
 <tr>
 <td class="address"><a name="51233"></a>C821</td>
 <td class="instruction">DEFW $092B</td>
-<td class="comment">&lt; 0x2B,  9 &gt;,   // sits</td>
+<td class="comment">0x2B,  9 },   // sits</td>
 </tr>
 <tr>
 <td class="address"><a name="51235"></a>C823</td>
 <td class="instruction">DEFW $06A4</td>
-<td class="comment">&lt; 0xA4,  6 &gt;,</td>
+<td class="comment">0xA4,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51237"></a>C825</td>
 <td class="instruction">DEFW $0A24</td>
-<td class="comment">&lt; 0x24, 10 &gt;,</td>
+<td class="comment">0x24, 10 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51239"></a>C827</td>
 <td class="instruction">DEFW $0425</td>
-<td class="comment">&lt; 0x25,  4 &gt;,   // morale related</td>
+<td class="comment">0x25,  4 },   // morale related</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -338,7 +336,7 @@ Array of pointers to character event handlers.
 <tr>
 <td class="address">C829</td>
 <td class="instruction">DEFW $C864</td>
-<td class="comment">&lt; &amp;charevnt_pop_hl_and_write_08FF_to_it,</td>
+<td class="comment">struct foo character_event_handlers[] = { &amp;charevnt_pop_hl_and_write_08FF_to_it,</td>
 </tr>
 <tr>
 <td class="address"><a name="51243"></a>C82B</td>
@@ -388,7 +386,7 @@ Array of pointers to character event handlers.
 <tr>
 <td class="address"><a name="51261"></a>C83D</td>
 <td class="instruction">DEFW $C84C</td>
-<td class="comment">&amp;charevnt_C84C, &gt;</td>
+<td class="comment">&amp;charevnt_C84C, };</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -709,7 +707,7 @@ charevnt_pop_hl_and_player_sleeps
 </tr>
 <tr>
 <td class="address"><a name="51342"></a>C88E</td>
-<td class="instruction">JP <a class="link" href="42111.html#42121">$A489</a></td>
+<td class="instruction">JP <a class="link" href="42121.html">$A489</a></td>
 <td class="comment">goto player_sleeps;</td>
 </tr>
 </table>

@@ -50,7 +50,7 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="label"><a name="44734"></a>AEBE</td>
 <td class="instruction">EXX</td>
-<td class="comment">do &lt; EXX</td>
+<td class="comment">do { EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="44735"></a>AEBF</td>
@@ -198,7 +198,7 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="label"><a name="44788"></a>AEF4</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">do &lt; A = *DE;</td>
+<td class="comment">do { A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="44789"></a>AEF5</td>
@@ -223,7 +223,7 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="label"><a name="44796"></a>AEFC</td>
 <td class="instruction">LD A,($AE75)</td>
-<td class="comment">do &lt; A = searchlight_related;</td>
+<td class="comment">do { A = searchlight_related;</td>
 </tr>
 <tr>
 <td class="address"><a name="44799"></a>AEFF</td>
@@ -279,7 +279,7 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="label"><a name="44818"></a>AF12</td>
 <td class="instruction">INC DE</td>
-<td class="comment" rowspan="2">do &lt; DE++; &gt; while (--B);</td>
+<td class="comment" rowspan="2">do { DE++; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44819"></a>AF13</td>
@@ -347,7 +347,7 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="address"><a name="44843"></a>AF2B</td>
 <td class="instruction">DJNZ $AEFC</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44845"></a>AF2D</td>
@@ -362,7 +362,7 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="address"><a name="44847"></a>AF2F</td>
 <td class="instruction">DJNZ $AEF4</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44849"></a>AF31</td>
@@ -396,11 +396,12 @@ Used by the routine at <a class="link" href="44477.html">ADBD</a>.
 <tr>
 <td class="address"><a name="44857"></a>AF39</td>
 <td class="instruction">DEC C</td>
-<td class="comment" rowspan="2">&gt; while (--C);</td>
+<td class="comment">} while (--C);</td>
 </tr>
 <tr>
 <td class="address"><a name="44858"></a>AF3A</td>
 <td class="instruction">JP NZ,$AEBE</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="44861"></a>AF3D</td>

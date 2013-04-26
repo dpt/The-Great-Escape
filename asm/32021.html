@@ -27,7 +27,10 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="link" href="40600.html">9E98</a>, <a class="link" href="41427.html">A1D3</a>, <a class="link" href="41447.html">A1E7</a>, <a class="link" href="41456.html">A1F0</a>, <a class="link" href="41465.html">A1F9</a>, <a class="link" href="41478.html">A206</a>, <a class="link" href="41497.html">A219</a>, <a class="link" href="41512.html">A228</a>, <a class="link" href="45319.html">B107</a>, <a class="link" href="45524.html">B1D4</a>, <a class="link" href="45959.html">B387</a>, <a class="link" href="46103.html">B417</a>, <a class="link" href="46229.html">B495</a>, <a class="link" href="46264.html">B4B8</a>, <a class="link" href="52120.html">CB98</a>, <a class="link" href="52529.html">CD31</a> and <a class="link" href="61338.html">EF9A</a>.
+Add the specified message to the queue of pending messages.
+</div>
+<div class="paragraph">
+The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
 </div>
 </div>
 <table class="input">
@@ -37,7 +40,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="registerContents">...</td>
+<td class="registerContents">Possibly a second message index.</td>
 </tr>
 </table>
 </td>
@@ -45,7 +48,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="label"><a name="32021"></a>7D15</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment" rowspan="4">if (*(HL = message_buffer_pointer) == 0xFF) return;</td>
+<td class="comment" rowspan="4">if (*(HL = message_queue_pointer) == message_NONE) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="32024"></a>7D18</td>
@@ -60,7 +63,17 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
-<td class="address"><a name="32028"></a>7D1C</td>
+<td class="routineComment" colspan="3">
+<a name="32028"></a>
+<div class="comments">
+<div class="paragraph">
+Are we already about to show this message?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">7D1C</td>
 <td class="instruction">DEC HL</td>
 <td class="comment" rowspan="2">HL -= 2;</td>
 </tr>
@@ -71,7 +84,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32030"></a>7D1E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="7">A = *HL++; if (A == B) } {A = *HL; if (A == C) return; }</td>
+<td class="comment" rowspan="7">if (*HL++ == B &amp;&amp; *HL++ == C) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="32031"></a>7D1F</td>
@@ -98,9 +111,19 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
-<td class="label"><a name="32038"></a>7D26</td>
+<td class="routineComment" colspan="3">
+<a name="32038"></a>
+<div class="comments">
+<div class="paragraph">
+Add it to the queue.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">7D26</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="5">*++HL = B; *++HL = C; HL++;</td>
+<td class="comment" rowspan="5">*HL++ = B; *HL++ = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="32039"></a>7D27</td>
@@ -121,7 +144,7 @@ Used by the routines at <a class="link" href="40399.html">9DCF</a>, <a class="li
 <tr>
 <td class="address"><a name="32043"></a>7D2B</td>
 <td class="instruction">LD ($7D11),HL</td>
-<td class="comment">*message_buffer_pointer = HL;</td>
+<td class="comment">message_queue_pointer = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="32046"></a>7D2E</td>

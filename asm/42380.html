@@ -30,52 +30,57 @@
 Used by the routine at <a class="link" href="42268.html">A51C</a>.
 </div>
 </div>
+<table class="output">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Pressed key.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="42380"></a>A58C</td>
 <td class="instruction">LD BC,$FEFE</td>
-<td class="transparentComment" />
+<td class="comment">BC = $FEFE;</td>
 </tr>
 <tr>
 <td class="label"><a name="42383"></a>A58F</td>
 <td class="instruction">IN A,(C)</td>
-<td class="transparentComment" />
+<td class="comment">do { IN A,(C)</td>
 </tr>
 <tr>
 <td class="address"><a name="42385"></a>A591</td>
 <td class="instruction">CPL</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = ~A &amp; 0x1F;</td>
 </tr>
 <tr>
 <td class="address"><a name="42386"></a>A592</td>
 <td class="instruction">AND $1F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="42388"></a>A594</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
+<td class="comment">if (A) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="42389"></a>A595</td>
 <td class="instruction">RLC B</td>
-<td class="transparentComment" />
+<td class="comment">RLC B</td>
 </tr>
 <tr>
 <td class="address"><a name="42391"></a>A597</td>
 <td class="instruction">JP C,$A58F</td>
-<td class="transparentComment" />
+<td class="comment">} while (CARRY);</td>
 </tr>
 <tr>
 <td class="address"><a name="42394"></a>A59A</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="42395"></a>A59B</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

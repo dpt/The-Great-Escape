@@ -51,7 +51,7 @@ Used by the routine at <a class="link" href="40455.html">9E07</a>.
 <tr>
 <td class="address"><a name="40503"></a>9E37</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment" rowspan="3">if (bed_related != 0) goto user_input_was_in_bed_perhaps;</td>
+<td class="comment" rowspan="3">if (player_in_bed != 0) goto user_input_was_in_bed_perhaps;</td>
 </tr>
 <tr>
 <td class="address"><a name="40506"></a>9E3A</td>
@@ -64,7 +64,7 @@ Used by the routine at <a class="link" href="40455.html">9E07</a>.
 <tr>
 <td class="address"><a name="40509"></a>9E3D</td>
 <td class="instruction">LD A,($A137)</td>
-<td class="comment" rowspan="3">if (breakfast_related != 0) goto user_input_was_having_breakfast_perhaps;</td>
+<td class="comment" rowspan="3">if (player_in_breakfast != 0) goto user_input_was_having_breakfast_perhaps;</td>
 </tr>
 <tr>
 <td class="address"><a name="40512"></a>9E40</td>
@@ -117,7 +117,7 @@ Used by the routine at <a class="link" href="40455.html">9E07</a>.
 <tr>
 <td class="address"><a name="40535"></a>9E57</td>
 <td class="instruction">LD HL,$A137</td>
-<td class="comment">HL = breakfast_related;</td>
+<td class="comment">HL = player_in_breakfast;</td>
 </tr>
 <tr>
 <td class="address"><a name="40538"></a>9E5A</td>

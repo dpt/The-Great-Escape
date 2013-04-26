@@ -58,7 +58,7 @@ Outdoor bounds detection?
 <tr>
 <td class="label"><a name="45400"></a>B158</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do &lt; PUSH BC</td>
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="45401"></a>B159</td>
@@ -73,7 +73,7 @@ Outdoor bounds detection?
 <tr>
 <td class="address"><a name="45403"></a>B15B</td>
 <td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
-<td class="comment">rotate_A_left_3_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45406"></a>B15E</td>
@@ -108,7 +108,7 @@ Outdoor bounds detection?
 <tr>
 <td class="address"><a name="45417"></a>B169</td>
 <td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
-<td class="comment">rotate_A_left_3_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45420"></a>B16C</td>
@@ -151,7 +151,7 @@ Outdoor bounds detection?
 <tr>
 <td class="address"><a name="45433"></a>B179</td>
 <td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
-<td class="comment">rotate_A_left_3_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45436"></a>B17C</td>
@@ -178,7 +178,7 @@ Outdoor bounds detection?
 <tr>
 <td class="address"><a name="45445"></a>B185</td>
 <td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
-<td class="comment">rotate_A_left_3_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45448"></a>B188</td>
@@ -221,7 +221,7 @@ Outdoor bounds detection?
 <tr>
 <td class="address"><a name="45461"></a>B195</td>
 <td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
-<td class="comment">rotate_A_left_3_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45464"></a>B198</td>
@@ -248,7 +248,7 @@ Outdoor bounds detection?
 <tr>
 <td class="address"><a name="45473"></a>B1A1</td>
 <td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
-<td class="comment">rotate_A_left_3_widening_to_BC();</td>
+<td class="comment">BC_becomes_A_times_8();</td>
 </tr>
 <tr>
 <td class="address"><a name="45476"></a>B1A4</td>
@@ -307,12 +307,12 @@ Found it.
 <tr>
 <td class="address"><a name="45495"></a>B1B7</td>
 <td class="instruction">OR $01</td>
-<td class="comment">A |= 1;</td>
+<td class="comment">A |= 1; // return NZ</td>
 </tr>
 <tr>
 <td class="address"><a name="45497"></a>B1B9</td>
 <td class="instruction">RET</td>
-<td class="comment">return; // return NZ</td>
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="45498"></a>B1BA</td>
@@ -340,21 +340,22 @@ Found it.
 <tr>
 <td class="address"><a name="45505"></a>B1C1</td>
 <td class="instruction">DEC B</td>
-<td class="comment" rowspan="2">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45506"></a>B1C2</td>
 <td class="instruction">JP NZ,$B158</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="45509"></a>B1C5</td>
 <td class="instruction">AND B</td>
-<td class="comment">A &amp;= B;</td>
+<td class="comment">A &amp;= B; // return Z</td>
 </tr>
 <tr>
 <td class="address"><a name="45510"></a>B1C6</td>
 <td class="instruction">RET</td>
-<td class="comment">return; // return Z</td>
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

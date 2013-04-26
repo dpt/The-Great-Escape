@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="47382.html">B916</a></td>
 </tr>
 </table>
-<div class="description">B89C: no_idea</div>
+<div class="description">B89C: sub_B89C</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -35,457 +35,380 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="47260"></a>B89C</td>
 <td class="instruction">LD BC,$0000</td>
-<td class="transparentComment" />
+<td class="comment">BC = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="47263"></a>B89F</td>
 <td class="instruction">LD D,C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">DE = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="47264"></a>B8A0</td>
 <td class="instruction">LD E,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47265"></a>B8A1</td>
 <td class="instruction">LD A,$FF</td>
-<td class="transparentComment" />
+<td class="comment">A = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="47267"></a>B8A3</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="47268"></a>B8A4</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="47269"></a>B8A5</td>
 <td class="instruction">LD DE,$0000</td>
-<td class="transparentComment" />
+<td class="comment">DE = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="47272"></a>B8A8</td>
 <td class="instruction">LD BC,$0820</td>
-<td class="transparentComment" />
+<td class="comment">BC = 0x0820; // B = 8 iterations, C = stride, 32</td>
 </tr>
 <tr>
 <td class="address"><a name="47275"></a>B8AB</td>
 <td class="instruction">LD HL,$8007</td>
-<td class="transparentComment" />
+<td class="comment">HL = $8007;</td>
 </tr>
 <tr>
 <td class="label"><a name="47278"></a>B8AE</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="67">do { if ((*HL &amp; (1&lt;&lt;7)) == 0) goto next; } PUSH HL PUSH BC {HL += 8; } {C = *HL++; } B = *HL; {BC += 4; } PUSH BC EXX POP HL SBC HL,BC EXX JR C,pop_next HL++; {C = *HL++; } B = *HL; {BC += 4; } PUSH BC EXX POP HL SBC HL,DE EXX JR C,pop_next HL++; POP BC PUSH BC A = 8; A -= B; EX AF,AF' {E = *HL++; } D = *HL; PUSH HL EXX POP HL {L -= 2; } {D = *HL--; } {E = *HL--; } {B = *HL--; } C = *HL; {HL -= 15; } {IY = HL; } EXX pop_next: POP BC POP HL {next: HL += C; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="47280"></a>B8B0</td>
 <td class="instruction">JR Z,$B8F7</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47282"></a>B8B2</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47283"></a>B8B3</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47284"></a>B8B4</td>
 <td class="instruction">LD A,$08</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47286"></a>B8B6</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47287"></a>B8B7</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47288"></a>B8B8</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47289"></a>B8B9</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47290"></a>B8BA</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47291"></a>B8BB</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47292"></a>B8BC</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47293"></a>B8BD</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47294"></a>B8BE</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47295"></a>B8BF</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47296"></a>B8C0</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47297"></a>B8C1</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47298"></a>B8C2</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47300"></a>B8C4</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47301"></a>B8C5</td>
 <td class="instruction">JR C,$B8F5</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47303"></a>B8C7</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47304"></a>B8C8</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47305"></a>B8C9</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47306"></a>B8CA</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47307"></a>B8CB</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47308"></a>B8CC</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47309"></a>B8CD</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47310"></a>B8CE</td>
 <td class="instruction">INC BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47311"></a>B8CF</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47312"></a>B8D0</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47313"></a>B8D1</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47314"></a>B8D2</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47316"></a>B8D4</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47317"></a>B8D5</td>
 <td class="instruction">JR C,$B8F5</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47319"></a>B8D7</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47320"></a>B8D8</td>
 <td class="instruction">POP BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47321"></a>B8D9</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47322"></a>B8DA</td>
 <td class="instruction">LD A,$08</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47324"></a>B8DC</td>
 <td class="instruction">SUB B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47325"></a>B8DD</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47326"></a>B8DE</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47327"></a>B8DF</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47328"></a>B8E0</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47329"></a>B8E1</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47330"></a>B8E2</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47331"></a>B8E3</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47332"></a>B8E4</td>
 <td class="instruction">DEC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47333"></a>B8E5</td>
 <td class="instruction">DEC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47334"></a>B8E6</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47335"></a>B8E7</td>
 <td class="instruction">DEC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47336"></a>B8E8</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47337"></a>B8E9</td>
 <td class="instruction">DEC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47338"></a>B8EA</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47339"></a>B8EB</td>
 <td class="instruction">DEC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47340"></a>B8EC</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47341"></a>B8ED</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47342"></a>B8EE</td>
 <td class="instruction">SUB $0F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47344"></a>B8F0</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47345"></a>B8F1</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47346"></a>B8F2</td>
 <td class="instruction">POP IY</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47348"></a>B8F4</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="47349"></a>B8F5</td>
 <td class="instruction">POP BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47350"></a>B8F6</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="47351"></a>B8F7</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47352"></a>B8F8</td>
 <td class="instruction">ADD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47353"></a>B8F9</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47354"></a>B8FA</td>
 <td class="instruction">DJNZ $B8AE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47356"></a>B8FC</td>
 <td class="instruction">CALL <a class="link" href="56299.html">$DBEB</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_DBEB();</td>
 </tr>
 <tr>
 <td class="address"><a name="47359"></a>B8FF</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="47360"></a>B900</td>
 <td class="instruction">BIT 7,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &amp; (1&lt;&lt;7)) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="47362"></a>B902</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47363"></a>B903</td>
 <td class="instruction">PUSH IY</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
 <td class="address"><a name="47365"></a>B905</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47366"></a>B906</td>
 <td class="instruction">BIT 6,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="9">if ((A &amp; (1&lt;&lt;6)) == 0) } IY[7] &amp;= ~(1&lt;&lt;7); return; } else { {HL[1] &amp;= ~(1&lt;&lt;6); } {BIT 6,HL[1]  // test bit ... are we returning flags? but we can't be as we're followed by another instruction...} return;</td>
 </tr>
 <tr>
 <td class="address"><a name="47368"></a>B908</td>
 <td class="instruction">JR NZ,$B90F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47370"></a>B90A</td>
 <td class="instruction">RES 7,(IY+$07)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47374"></a>B90E</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="47375"></a>B90F</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47376"></a>B910</td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47378"></a>B912</td>
 <td class="instruction">BIT 6,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47380"></a>B914</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47381"></a>B915</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

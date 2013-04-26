@@ -18,7 +18,7 @@
 <tr>
 <td class="prev">Prev: <a class="link" href="40725.html">9F15</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40737">Map</a></td>
-<td class="next">Next: <a class="link" href="41013.html">A035</a></td>
+<td class="next">Next: <a class="link" href="40967.html">A007</a></td>
 </tr>
 </table>
 <div class="description">9F21: in_permitted_area</div>
@@ -35,12 +35,12 @@
 <tr>
 <td class="label"><a name="40737"></a>9F21</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment">HL = $800F;</td>
+<td class="comment">HL = $800F; // position on Y axis</td>
 </tr>
 <tr>
 <td class="address"><a name="40740"></a>9F24</td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment">DE = $81B8; // player_map_position_perhapsX</td>
+<td class="comment">DE = &amp;player_map_position_perhapsX;</td>
 </tr>
 <tr>
 <td class="address"><a name="40743"></a>9F27</td>
@@ -50,87 +50,71 @@
 <tr>
 <td class="address"><a name="40746"></a>9F2A</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
+<td class="comment" rowspan="17">if (A == 0) { // outdoors } divide_3xAC_by_8_with_rounding(); {if (($8018) &gt;= 0x06C8 || ($801A) &gt;= 0x0448) goto escaped; } } else { *DE++ = *HL++; // indoors HL++; *DE++ = *HL++; HL++; *DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="40747"></a>9F2B</td>
 <td class="instruction">JP NZ,$9F49</td>
-<td class="comment">JP NZ,$9F49</td>
 </tr>
 <tr>
 <td class="address"><a name="40750"></a>9F2E</td>
 <td class="instruction">CALL <a class="link" href="58690.html">$E542</a></td>
-<td class="comment">divide_3xAC_by_8_with_rounding();</td>
 </tr>
 <tr>
 <td class="address"><a name="40753"></a>9F31</td>
 <td class="instruction">LD HL,($8018)</td>
-<td class="comment">HL = ($8018);</td>
 </tr>
 <tr>
 <td class="address"><a name="40756"></a>9F34</td>
 <td class="instruction">LD DE,$06C8</td>
-<td class="comment">DE = 0x06C8;</td>
 </tr>
 <tr>
 <td class="address"><a name="40759"></a>9F37</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment">SBC HL,DE</td>
 </tr>
 <tr>
 <td class="address"><a name="40761"></a>9F39</td>
 <td class="instruction">JP NC,<a class="link" href="42268.html">$A51C</a></td>
-<td class="comment">JP NC,escaped</td>
 </tr>
 <tr>
 <td class="address"><a name="40764"></a>9F3C</td>
 <td class="instruction">LD HL,($801A)</td>
-<td class="comment">HL = ($801A);</td>
 </tr>
 <tr>
 <td class="address"><a name="40767"></a>9F3F</td>
 <td class="instruction">LD DE,$0448</td>
-<td class="comment">DE = 0x0448;</td>
 </tr>
 <tr>
 <td class="address"><a name="40770"></a>9F42</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment">SBC HL,DE</td>
 </tr>
 <tr>
 <td class="address"><a name="40772"></a>9F44</td>
 <td class="instruction">JP NC,<a class="link" href="42268.html">$A51C</a></td>
-<td class="comment">JP NC,escaped</td>
 </tr>
 <tr>
 <td class="address"><a name="40775"></a>9F47</td>
 <td class="instruction">JR $9F51</td>
-<td class="comment">JR $9F51</td>
 </tr>
 <tr>
 <td class="label"><a name="40777"></a>9F49</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="40779"></a>9F4B</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="40780"></a>9F4C</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="40782"></a>9F4E</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="40783"></a>9F4F</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="label"><a name="40785"></a>9F51</td>
@@ -144,17 +128,16 @@
 <tr>
 <td class="address"><a name="40790"></a>9F56</td>
 <td class="instruction">JP NZ,$9FF8</td>
-<td class="comment">JP NZ,$9FF8</td>
+<td class="comment">if (A) goto set_flag_red;</td>
 </tr>
 <tr>
 <td class="address"><a name="40793"></a>9F59</td>
 <td class="instruction">LD A,($A13D)</td>
-<td class="comment">A = dispatch_counter;</td>
+<td class="comment" rowspan="7">if (dispatch_counter &gt;= 100) } {if (indoor_room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }</td>
 </tr>
 <tr>
 <td class="address"><a name="40796"></a>9F5C</td>
 <td class="instruction">CP $64</td>
-<td class="comment" rowspan="6">if (A &gt;= 100) } A = indoor_room_index; CP 2 JP Z,$9FDE JP $9FF8 } // else...?</td>
 </tr>
 <tr>
 <td class="address"><a name="40798"></a>9F5E</td>
@@ -179,22 +162,20 @@
 <tr>
 <td class="label"><a name="40811"></a>9F6B</td>
 <td class="instruction">LD A,($A13A)</td>
-<td class="comment">A = morale_related;</td>
+<td class="comment" rowspan="3">if (morale_related) goto set_flag_green;</td>
 </tr>
 <tr>
 <td class="address"><a name="40814"></a>9F6E</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="40815"></a>9F6F</td>
 <td class="instruction">JP NZ,$9FDE</td>
-<td class="comment">JP NZ,$9FDE</td>
 </tr>
 <tr>
 <td class="address"><a name="40818"></a>9F72</td>
 <td class="instruction">LD HL,$8002</td>
-<td class="comment">HL = $8002;</td>
+<td class="comment">HL = $8002; // target location</td>
 </tr>
 <tr>
 <td class="address"><a name="40821"></a>9F75</td>
@@ -213,92 +194,76 @@
 <tr>
 <td class="address"><a name="40824"></a>9F78</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment">BIT 7,A</td>
+<td class="comment" rowspan="3">if (A &amp; (1&lt;&lt;7)) C++;</td>
 </tr>
 <tr>
 <td class="address"><a name="40826"></a>9F7A</td>
 <td class="instruction">JR Z,$9F7D</td>
-<td class="comment">JR Z,$9F7D</td>
 </tr>
 <tr>
 <td class="address"><a name="40828"></a>9F7C</td>
 <td class="instruction">INC C</td>
-<td class="comment">C++;</td>
 </tr>
 <tr>
 <td class="label"><a name="40829"></a>9F7D</td>
 <td class="instruction">CP $FF</td>
-<td class="comment">CP 255</td>
+<td class="comment" rowspan="21">if (A == 255) } {A = *HL &amp; 0xF8; } {if (A == 8) A = 1; else A = 2; } in_permitted_area_end_bit(); {if (Z) goto set_flag_green; else goto set_flag_red; } else {} A &amp;= 0x7F; HL = &amp;twentyonelong[0]; // table mapping bytes to offsets B = 7; // 7 iterations {do { if (A == *HL++) goto found; } {HL += 2; } } while (--B); goto set_flag_green;</td>
 </tr>
 <tr>
 <td class="address"><a name="40831"></a>9F7F</td>
 <td class="instruction">JR NZ,$9F93</td>
-<td class="comment">JR NZ,$9F93</td>
 </tr>
 <tr>
 <td class="address"><a name="40833"></a>9F81</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="40834"></a>9F82</td>
 <td class="instruction">AND $F8</td>
-<td class="comment">A &amp;= $F8;</td>
 </tr>
 <tr>
 <td class="address"><a name="40836"></a>9F84</td>
 <td class="instruction">CP $08</td>
-<td class="comment">CP 8</td>
 </tr>
 <tr>
 <td class="address"><a name="40838"></a>9F86</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment">A = 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="40840"></a>9F88</td>
 <td class="instruction">JR Z,$9F8C</td>
-<td class="comment">JR Z,$9F8C</td>
 </tr>
 <tr>
 <td class="address"><a name="40842"></a>9F8A</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment">A = 2;</td>
 </tr>
 <tr>
 <td class="label"><a name="40844"></a>9F8C</td>
-<td class="instruction">CALL $A007</td>
-<td class="comment">CALL $A007</td>
+<td class="instruction">CALL <a class="link" href="40967.html">$A007</a></td>
 </tr>
 <tr>
 <td class="address"><a name="40847"></a>9F8F</td>
 <td class="instruction">JR Z,$9FDE</td>
-<td class="comment">JR Z,$9FDE</td>
 </tr>
 <tr>
 <td class="address"><a name="40849"></a>9F91</td>
 <td class="instruction">JR $9FF8</td>
-<td class="comment">JR $9FF8</td>
 </tr>
 <tr>
 <td class="label"><a name="40851"></a>9F93</td>
 <td class="instruction">AND $7F</td>
-<td class="comment">A &amp;= $7F;</td>
 </tr>
 <tr>
 <td class="address"><a name="40853"></a>9F95</td>
 <td class="instruction">LD HL,$9EE4</td>
-<td class="comment">HL = &amp;twentyonelong[0]; // bounds of permitted area?</td>
 </tr>
 <tr>
 <td class="address"><a name="40856"></a>9F98</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment">B = 7;</td>
 </tr>
 <tr>
 <td class="label"><a name="40858"></a>9F9A</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">do &lt; CP *HL++; // if (A == *HL++)</td>
 </tr>
 <tr>
 <td class="address"><a name="40859"></a>9F9B</td>
@@ -307,12 +272,10 @@
 <tr>
 <td class="address"><a name="40860"></a>9F9C</td>
 <td class="instruction">JR Z,$9FA4</td>
-<td class="comment">JR Z,$9FA4</td>
 </tr>
 <tr>
 <td class="address"><a name="40862"></a>9F9E</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">HL += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="40863"></a>9F9F</td>
@@ -321,17 +284,15 @@
 <tr>
 <td class="address"><a name="40864"></a>9FA0</td>
 <td class="instruction">DJNZ $9F9A</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="40866"></a>9FA2</td>
 <td class="instruction">JR $9FDE</td>
-<td class="comment">JR $9FDE</td>
 </tr>
 <tr>
 <td class="label"><a name="40868"></a>9FA4</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="2">E = *HL++;</td>
+<td class="comment" rowspan="2">found: E = *HL++; // fetch offset</td>
 </tr>
 <tr>
 <td class="address"><a name="40869"></a>9FA5</td>
@@ -350,7 +311,7 @@
 <tr>
 <td class="address"><a name="40872"></a>9FA8</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">POP HL   // HL = DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="40873"></a>9FA9</td>
@@ -374,8 +335,8 @@
 </tr>
 <tr>
 <td class="address"><a name="40878"></a>9FAE</td>
-<td class="instruction">CALL $A007</td>
-<td class="comment">CALL $A007</td>
+<td class="instruction">CALL <a class="link" href="40967.html">$A007</a></td>
+<td class="comment">in_permitted_area_end_bit();</td>
 </tr>
 <tr>
 <td class="address"><a name="40881"></a>9FB1</td>
@@ -385,7 +346,7 @@
 <tr>
 <td class="address"><a name="40882"></a>9FB2</td>
 <td class="instruction">JR Z,$9FDE</td>
-<td class="comment">JR Z,$9FDE</td>
+<td class="comment">JR Z,set_flag_green;</td>
 </tr>
 <tr>
 <td class="address"><a name="40884"></a>9FB4</td>
@@ -395,27 +356,25 @@
 <tr>
 <td class="address"><a name="40887"></a>9FB7</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment">BIT 7,A</td>
+<td class="comment" rowspan="3">if (A &amp; (1&lt;&lt;7)) HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="40889"></a>9FB9</td>
 <td class="instruction">JR Z,$9FBC</td>
-<td class="comment">JR Z,$9FBC</td>
 </tr>
 <tr>
 <td class="address"><a name="40891"></a>9FBB</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="label"><a name="40892"></a>9FBC</td>
 <td class="instruction">LD BC,$0000</td>
-<td class="comment">BC = 0;</td>
+<td class="comment">BC = 0; // counter?</td>
 </tr>
 <tr>
 <td class="label"><a name="40895"></a>9FBF</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">PUSH BC</td>
+<td class="comment">for (;;) { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="40896"></a>9FC0</td>
@@ -435,17 +394,16 @@
 <tr>
 <td class="address"><a name="40899"></a>9FC3</td>
 <td class="instruction">CP $FF</td>
-<td class="comment">CP 255</td>
+<td class="comment" rowspan="2">if (A == 255) goto pop_and_set_flag_red; // hit end of list</td>
 </tr>
 <tr>
 <td class="address"><a name="40901"></a>9FC5</td>
 <td class="instruction">JR Z,$9FDA</td>
-<td class="comment">JR Z,$9FDA</td>
 </tr>
 <tr>
 <td class="address"><a name="40903"></a>9FC7</td>
-<td class="instruction">CALL $A007</td>
-<td class="comment">CALL $A007</td>
+<td class="instruction">CALL <a class="link" href="40967.html">$A007</a></td>
+<td class="comment">in_permitted_area_end_bit();</td>
 </tr>
 <tr>
 <td class="address"><a name="40906"></a>9FCA</td>
@@ -460,42 +418,41 @@
 <tr>
 <td class="address"><a name="40908"></a>9FCC</td>
 <td class="instruction">JR Z,$9FD1</td>
-<td class="comment">JR Z,$9FD1</td>
+<td class="comment">JR Z,set_target_then_set_flag_green;</td>
 </tr>
 <tr>
 <td class="address"><a name="40910"></a>9FCE</td>
 <td class="instruction">INC C</td>
-<td class="comment">C++;</td>
+<td class="comment">BC++;</td>
 </tr>
 <tr>
 <td class="address"><a name="40911"></a>9FCF</td>
 <td class="instruction">JR $9FBF</td>
-<td class="comment">JR $9FBF // loop</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="40913"></a>9FD1</td>
 <td class="instruction">LD A,($8002)</td>
-<td class="comment">A = ($8002);</td>
+<td class="comment" rowspan="2">set_target_then_set_flag_green: B = ($8002);</td>
 </tr>
 <tr>
 <td class="address"><a name="40916"></a>9FD4</td>
 <td class="instruction">LD B,A</td>
-<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="40917"></a>9FD5</td>
 <td class="instruction">CALL <a class="link" href="41791.html">$A33F</a></td>
-<td class="comment">set_target_location();</td>
+<td class="comment">set_target_location(); // uses B, C</td>
 </tr>
 <tr>
 <td class="address"><a name="40920"></a>9FD8</td>
 <td class="instruction">JR $9FDE</td>
-<td class="comment">JR $9FDE</td>
+<td class="comment">goto set_flag_green;</td>
 </tr>
 <tr>
 <td class="label"><a name="40922"></a>9FDA</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
+<td class="comment">pop_and_set_flag_red: POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="40923"></a>9FDB</td>
@@ -505,22 +462,32 @@
 <tr>
 <td class="address"><a name="40924"></a>9FDC</td>
 <td class="instruction">JR $9FF8</td>
-<td class="comment">JR $9FF8</td>
+<td class="comment">goto set_flag_red;</td>
 </tr>
 <tr>
-<td class="label"><a name="40926"></a>9FDE</td>
+<td class="routineComment" colspan="3">
+<a name="40926"></a>
+<div class="comments">
+<div class="paragraph">
+Green flag code path.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">9FDE</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0;</td>
+<td class="comment">set_flag_green: A = 0; // naughty_flag</td>
 </tr>
 <tr>
 <td class="address"><a name="40927"></a>9FDF</td>
 <td class="instruction">LD C,$44</td>
-<td class="comment">C = $44;</td>
+<td class="comment">C = attribute_BRIGHT_GREEN_OVER_BLACK;</td>
 </tr>
 <tr>
 <td class="label"><a name="40929"></a>9FE1</td>
 <td class="instruction">LD ($A138),A</td>
-<td class="comment">naughty_flag_perhaps = A;</td>
+<td class="comment">flag_select: naughty_flag_perhaps = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="40932"></a>9FE4</td>
@@ -535,27 +502,25 @@
 <tr>
 <td class="address"><a name="40936"></a>9FE8</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment">CP *HL;</td>
+<td class="comment" rowspan="2">if (A == *HL) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="40937"></a>9FE9</td>
 <td class="instruction">RET Z</td>
-<td class="comment">RET Z</td>
 </tr>
 <tr>
 <td class="address"><a name="40938"></a>9FEA</td>
 <td class="instruction">CP $44</td>
-<td class="comment">CP attribute_BRIGHT_GREEN_OVER_BLACK;</td>
+<td class="comment" rowspan="2">if (A != attribute_BRIGHT_GREEN_OVER_BLACK) goto set_morale_flag_screen_attributes; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="40940"></a>9FEC</td>
 <td class="instruction">JP NZ,<a class="link" href="41073.html">$A071</a></td>
-<td class="comment">JP NZ,set_morale_flag_screen_attributes</td>
 </tr>
 <tr>
 <td class="address"><a name="40943"></a>9FEF</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">bell = 255;</td>
+<td class="comment" rowspan="2">bell = 255; // silence bell</td>
 </tr>
 <tr>
 <td class="address"><a name="40945"></a>9FF1</td>
@@ -569,12 +534,22 @@
 <tr>
 <td class="address"><a name="40949"></a>9FF5</td>
 <td class="instruction">JP <a class="link" href="41073.html">$A071</a></td>
-<td class="comment">JP set_morale_flag_screen_attributes</td>
+<td class="comment">goto set_morale_flag_screen_attributes; // exit via</td>
 </tr>
 <tr>
-<td class="label"><a name="40952"></a>9FF8</td>
+<td class="routineComment" colspan="3">
+<a name="40952"></a>
+<div class="comments">
+<div class="paragraph">
+Red flag code path.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">9FF8</td>
 <td class="instruction">LD C,$42</td>
-<td class="comment">C = attribute_BRIGHT_RED_OVER_BLACK;</td>
+<td class="comment">set_flag_red: C = attribute_BRIGHT_RED_OVER_BLACK;</td>
 </tr>
 <tr>
 <td class="address"><a name="40954"></a>9FFA</td>
@@ -584,207 +559,37 @@
 <tr>
 <td class="address"><a name="40957"></a>9FFD</td>
 <td class="instruction">CP C</td>
-<td class="comment">CP C</td>
+<td class="comment" rowspan="2">if (A == C) return; // flag already red</td>
 </tr>
 <tr>
 <td class="address"><a name="40958"></a>9FFE</td>
 <td class="instruction">RET Z</td>
-<td class="comment">RET Z</td>
 </tr>
 <tr>
 <td class="address"><a name="40959"></a>9FFF</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0;</td>
+<td class="comment" rowspan="2">($800D) = 0; // "tunnel related" thing</td>
 </tr>
 <tr>
 <td class="address"><a name="40960"></a>A000</td>
 <td class="instruction">LD ($800D),A</td>
-<td class="comment">($800D) = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="40963"></a>A003</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment">A = 255;</td>
+<td class="comment">A = 255; // naughty_flag</td>
 </tr>
 <tr>
 <td class="address"><a name="40965"></a>A005</td>
 <td class="instruction">JR $9FE1</td>
-<td class="comment">JR $9FE1</td>
-</tr>
-<tr>
-<td class="label"><a name="40967"></a>A007</td>
-<td class="instruction">LD HL,$68A0</td>
-<td class="comment">HL = indoor_room_index; // a second in_permitted_area entry point;</td>
-</tr>
-<tr>
-<td class="address"><a name="40970"></a>A00A</td>
-<td class="instruction">BIT 7,A</td>
-<td class="comment">BIT 7,A</td>
-</tr>
-<tr>
-<td class="address"><a name="40972"></a>A00C</td>
-<td class="instruction">JR Z,$A012</td>
-<td class="comment">JR Z,$A012</td>
-</tr>
-<tr>
-<td class="address"><a name="40974"></a>A00E</td>
-<td class="instruction">AND $7F</td>
-<td class="comment">A &amp;= $7F;</td>
-</tr>
-<tr>
-<td class="address"><a name="40976"></a>A010</td>
-<td class="instruction">CP (HL)</td>
-<td class="comment">CP *HL;</td>
-</tr>
-<tr>
-<td class="address"><a name="40977"></a>A011</td>
-<td class="instruction">RET</td>
-<td class="comment">return;</td>
-</tr>
-<tr>
-<td class="label"><a name="40978"></a>A012</td>
-<td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
-</tr>
-<tr>
-<td class="address"><a name="40979"></a>A013</td>
-<td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
-</tr>
-<tr>
-<td class="address"><a name="40980"></a>A014</td>
-<td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
-</tr>
-<tr>
-<td class="address"><a name="40981"></a>A015</td>
-<td class="instruction">RET NZ</td>
-<td class="comment">RET NZ</td>
-</tr>
-<tr>
-<td class="address"><a name="40982"></a>A016</td>
-<td class="instruction">LD DE,$81B8</td>
-<td class="comment">DE = &amp;player_map_position_perhapsX;</td>
-</tr>
-<tr>
-<td class="address"><a name="40985"></a>A019</td>
-<td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
-</tr>
-<tr>
-<td class="routineComment" colspan="3">
-<a name="40986"></a>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a class="link" href="52120.html">CB98</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="label">A01A</td>
-<td class="instruction">ADD A,A</td>
-<td class="comment" rowspan="2">A *= 4;</td>
-</tr>
-<tr>
-<td class="address"><a name="40987"></a>A01B</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="address"><a name="40988"></a>A01C</td>
-<td class="instruction">LD C,A</td>
-<td class="comment" rowspan="2">BC = A;</td>
-</tr>
-<tr>
-<td class="address"><a name="40989"></a>A01D</td>
-<td class="instruction">LD B,$00</td>
-</tr>
-<tr>
-<td class="address"><a name="40991"></a>A01F</td>
-<td class="instruction">LD HL,$9F15</td>
-<td class="comment">HL = &amp;byte_9F15;</td>
-</tr>
-<tr>
-<td class="address"><a name="40994"></a>A022</td>
-<td class="instruction">ADD HL,BC</td>
-<td class="comment">HL += BC;</td>
-</tr>
-<tr>
-<td class="address"><a name="40995"></a>A023</td>
-<td class="instruction">LD B,$02</td>
-<td class="comment">B = 2;</td>
-</tr>
-<tr>
-<td class="label"><a name="40997"></a>A025</td>
-<td class="instruction">LD A,(DE)</td>
-<td class="comment">do &lt; A = *DE;</td>
-</tr>
-<tr>
-<td class="address"><a name="40998"></a>A026</td>
-<td class="instruction">CP (HL)</td>
-<td class="comment">CP *HL</td>
-</tr>
-<tr>
-<td class="address"><a name="40999"></a>A027</td>
-<td class="instruction">RET C</td>
-<td class="comment">RET C</td>
-</tr>
-<tr>
-<td class="address"><a name="41000"></a>A028</td>
-<td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
-</tr>
-<tr>
-<td class="address"><a name="41001"></a>A029</td>
-<td class="instruction">CP (HL)</td>
-<td class="comment">CP *HL</td>
-</tr>
-<tr>
-<td class="address"><a name="41002"></a>A02A</td>
-<td class="instruction">JR C,$A02F</td>
-<td class="comment">JR C,$A02F</td>
-</tr>
-<tr>
-<td class="address"><a name="41004"></a>A02C</td>
-<td class="instruction">OR $01</td>
-<td class="comment">A |= 1;</td>
-</tr>
-<tr>
-<td class="address"><a name="41006"></a>A02E</td>
-<td class="instruction">RET</td>
-<td class="comment">return;</td>
-</tr>
-<tr>
-<td class="label"><a name="41007"></a>A02F</td>
-<td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
-</tr>
-<tr>
-<td class="address"><a name="41008"></a>A030</td>
-<td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
-</tr>
-<tr>
-<td class="address"><a name="41009"></a>A031</td>
-<td class="instruction">DJNZ $A025</td>
-<td class="comment">&gt; while (--B);</td>
-</tr>
-<tr>
-<td class="address"><a name="41011"></a>A033</td>
-<td class="instruction">AND B</td>
-<td class="comment">A &amp;= B;</td>
-</tr>
-<tr>
-<td class="address"><a name="41012"></a>A034</td>
-<td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">goto flag_select;</td>
 </tr>
 </table>
 <table class="prevNext">
 <tr>
 <td class="prev">Prev: <a class="link" href="40725.html">9F15</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40737">Map</a></td>
-<td class="next">Next: <a class="link" href="41013.html">A035</a></td>
+<td class="next">Next: <a class="link" href="40967.html">A007</a></td>
 </tr>
 </table>
 <div class="footer">

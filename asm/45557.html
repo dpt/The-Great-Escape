@@ -86,7 +86,7 @@ Used by the routine at <a class="link" href="44943.html">AF8F</a>.
 <tr>
 <td class="label"><a name="45582"></a>B20E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">do &lt; A = *HL &amp; D;</td>
+<td class="comment" rowspan="18">do { A = *HL &amp; D; } {if (A == E) { } PUSH BC PUSH HL PUSH DE sub_B252(); POP DE POP HL POP BC JR NC,$B229 {} HL += 8; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45583"></a>B20F</td>
@@ -95,7 +95,6 @@ Used by the routine at <a class="link" href="44943.html">AF8F</a>.
 <tr>
 <td class="address"><a name="45584"></a>B210</td>
 <td class="instruction">CP E</td>
-<td class="comment" rowspan="15">if (A == E) } PUSH BC PUSH HL PUSH DE sub_B252(); POP DE POP HL POP BC JR NC,$B229 {} HL += 8;</td>
 </tr>
 <tr>
 <td class="address"><a name="45585"></a>B211</td>
@@ -156,7 +155,6 @@ Used by the routine at <a class="link" href="44943.html">AF8F</a>.
 <tr>
 <td class="label"><a name="45605"></a>B225</td>
 <td class="instruction">DJNZ $B20E</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45607"></a>B227</td>

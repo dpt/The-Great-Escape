@@ -55,7 +55,7 @@ Used by the routine at <a class="link" href="62288.html">F350</a>.
 <tr>
 <td class="label"><a name="62271"></a>F33F</td>
 <td class="instruction">POP HL</td>
-<td class="comment">do &lt; POP HL // start address</td>
+<td class="comment">do { POP HL // start address</td>
 </tr>
 <tr>
 <td class="address"><a name="62272"></a>F340</td>
@@ -65,7 +65,7 @@ Used by the routine at <a class="link" href="62288.html">F350</a>.
 <tr>
 <td class="label"><a name="62274"></a>F342</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment">do &lt; *HL = 0;</td>
+<td class="comment">do { *HL = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="62276"></a>F344</td>
@@ -75,16 +75,17 @@ Used by the routine at <a class="link" href="62288.html">F350</a>.
 <tr>
 <td class="address"><a name="62277"></a>F345</td>
 <td class="instruction">DJNZ $F342</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="62279"></a>F347</td>
 <td class="instruction">DEC A</td>
-<td class="comment" rowspan="2">&gt; while (--A);</td>
+<td class="comment">} while (--A);</td>
 </tr>
 <tr>
 <td class="address"><a name="62280"></a>F348</td>
 <td class="instruction">JP NZ,$F33F</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="62283"></a>F34B</td>

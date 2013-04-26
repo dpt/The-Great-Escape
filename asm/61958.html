@@ -21,19 +21,23 @@
 <td class="next">Next: <a class="link" href="62039.html">F257</a></td>
 </tr>
 </table>
-<div class="description">F206: counter_set_0</div>
+<div class="description">F206: plot_static_tiles_horizontal</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Suspect this plots static screen tiles.
+Plot static screen tiles.
 </div>
 </div>
 <table class="input">
 <tr>
+<td class="register">DE</td>
+<td class="registerContents">Pointer to screen address.</td>
+</tr>
+<tr>
 <td class="register">HL</td>
-<td class="registerContents">Pointer to tile indices?</td>
+<td class="registerContents">Pointer to tile indices.</td>
 </tr>
 </table>
 </td>
@@ -46,7 +50,7 @@ Suspect this plots static screen tiles.
 <tr>
 <td class="address"><a name="61959"></a>F207</td>
 <td class="instruction">JR $F20B</td>
-<td class="comment">goto $F20B;</td>
+<td class="comment">goto plot_static_tiles;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -61,17 +65,17 @@ This entry point is used by the routine at <a class="link" href="61920.html">F1E
 <tr>
 <td class="label">F209</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment">A = 255;</td>
+<td class="comment">plot_static_tiles_vertical: A = 255;</td>
 </tr>
 <tr>
 <td class="label"><a name="61963"></a>F20B</td>
 <td class="instruction">LD ($F075),A</td>
-<td class="comment">counter_of_something = A;</td>
+<td class="comment">plot_static_tiles: plot_static_tiles_direction = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="61966"></a>F20E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 0x7F;</td>
+<td class="comment" rowspan="4">B = *HL++ &amp; 0x7F; // loop iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="61967"></a>F20F</td>
@@ -80,12 +84,10 @@ This entry point is used by the routine at <a class="link" href="61920.html">F1E
 <tr>
 <td class="address"><a name="61969"></a>F211</td>
 <td class="instruction">LD B,A</td>
-<td class="comment">B = A; // loop iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="61970"></a>F212</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="61971"></a>F213</td>
@@ -110,7 +112,7 @@ This entry point is used by the routine at <a class="link" href="61920.html">F1E
 <tr>
 <td class="label"><a name="61975"></a>F217</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">do &lt; A = *HL;</td>
+<td class="comment">do { A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="61976"></a>F218</td>
@@ -176,27 +178,23 @@ Plot a tile.
 <tr>
 <td class="label">F229</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">do &lt; A = *HL;</td>
+<td class="comment" rowspan="5">do { *DE = *HL++; } {DE += 256; // next row } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="61994"></a>F22A</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment">*DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="61995"></a>F22B</td>
 <td class="instruction">INC D</td>
-<td class="comment">DE += 256;</td>
 </tr>
 <tr>
 <td class="address"><a name="61996"></a>F22C</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="61997"></a>F22D</td>
 <td class="instruction">DJNZ $F229</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="61999"></a>F22F</td>
@@ -271,12 +269,12 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address"><a name="62017"></a>F241</td>
 <td class="instruction">LD A,($F075)</td>
-<td class="comment">A = counter_of_something;</td>
+<td class="comment">A = plot_static_tiles_direction;</td>
 </tr>
 <tr>
 <td class="address"><a name="62020"></a>F244</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A) goto $F24E;</td>
+<td class="comment" rowspan="8">if (A == 0) { // horizontal } {H -= 7;  // HL -= 7*256; } L++; } else { // vertical get_next_scanline();</td>
 </tr>
 <tr>
 <td class="address"><a name="62021"></a>F245</td>
@@ -285,7 +283,6 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address"><a name="62023"></a>F247</td>
 <td class="instruction">LD A,H</td>
-<td class="comment" rowspan="3">H -= 7;  // HL -= 7*256;</td>
 </tr>
 <tr>
 <td class="address"><a name="62024"></a>F248</td>
@@ -298,17 +295,14 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address"><a name="62027"></a>F24B</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="62028"></a>F24C</td>
 <td class="instruction">JR $F251</td>
-<td class="comment">goto $F251;</td>
 </tr>
 <tr>
 <td class="label"><a name="62030"></a>F24E</td>
 <td class="instruction">CALL <a class="link" href="31977.html">$7CE9</a></td>
-<td class="comment">get_next_scanline();</td>
 </tr>
 <tr>
 <td class="label"><a name="62033"></a>F251</td>
@@ -328,7 +322,7 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address"><a name="62036"></a>F254</td>
 <td class="instruction">DJNZ $F217</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="62038"></a>F256</td>

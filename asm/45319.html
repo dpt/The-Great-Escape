@@ -45,17 +45,15 @@
 <tr>
 <td class="address"><a name="45326"></a>B10E</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment">PUSH IY</td>
+<td class="comment" rowspan="4">HL = IY + 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="45328"></a>B110</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45329"></a>B111</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">L += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="45330"></a>B112</td>
@@ -64,7 +62,7 @@
 <tr>
 <td class="address"><a name="45331"></a>B113</td>
 <td class="instruction">CALL <a class="link" href="51841.html#52003">$CB23</a></td>
-<td class="comment">CALL $CB23</td>
+<td class="comment">sub_CA81::CB23();</td>
 </tr>
 <tr>
 <td class="address"><a name="45334"></a>B116</td>
@@ -74,12 +72,11 @@
 <tr>
 <td class="address"><a name="45337"></a>B119</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
+<td class="comment" rowspan="3">if (*DE != item_BRIBE) goto got_bribe;</td>
 </tr>
 <tr>
 <td class="address"><a name="45338"></a>B11A</td>
 <td class="instruction">CP $05</td>
-<td class="comment" rowspan="2">if (A == item_BRIBE) goto $B123;</td>
 </tr>
 <tr>
 <td class="address"><a name="45340"></a>B11C</td>
@@ -88,7 +85,7 @@
 <tr>
 <td class="address"><a name="45342"></a>B11E</td>
 <td class="instruction">INC DE</td>
-<td class="comment" rowspan="2">A = *++DE;</td>
+<td class="comment" rowspan="4">if (*++DE != item_BRIBE) return; // have no bribes</td>
 </tr>
 <tr>
 <td class="address"><a name="45343"></a>B11F</td>
@@ -97,7 +94,6 @@
 <tr>
 <td class="address"><a name="45344"></a>B120</td>
 <td class="instruction">CP $05</td>
-<td class="comment" rowspan="2">if (A != item_BRIBE) return; // have no bribes</td>
 </tr>
 <tr>
 <td class="address"><a name="45346"></a>B122</td>
@@ -116,7 +112,7 @@ We have a bribe.
 <tr>
 <td class="label">B123</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">*DE = item_NONE;</td>
+<td class="comment" rowspan="2">got_bribe: *DE = item_NONE;</td>
 </tr>
 <tr>
 <td class="address"><a name="45349"></a>B125</td>
@@ -125,7 +121,7 @@ We have a bribe.
 <tr>
 <td class="address"><a name="45350"></a>B126</td>
 <td class="instruction">AND $3F</td>
-<td class="comment" rowspan="2">itemstruct_5.room = 0x3F;</td>
+<td class="comment" rowspan="2">itemstruct_5.room = 0x3F; // == bribe item</td>
 </tr>
 <tr>
 <td class="address"><a name="45352"></a>B128</td>
@@ -149,12 +145,11 @@ We have a bribe.
 <tr>
 <td class="label"><a name="45363"></a>B133</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">do &lt; A = *HL; // character index?</td>
+<td class="comment" rowspan="10">do { if (HL[0] &lt; 20) { // likely character index. but why 20? } {HL[1] = 4; } // character has taken bribe? } {HL += 32; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45364"></a>B134</td>
 <td class="instruction">CP $14</td>
-<td class="comment" rowspan="2">if (A &lt; 20) &lt; // why 20?</td>
 </tr>
 <tr>
 <td class="address"><a name="45366"></a>B136</td>
@@ -163,22 +158,18 @@ We have a bribe.
 <tr>
 <td class="address"><a name="45368"></a>B138</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45369"></a>B139</td>
 <td class="instruction">LD (HL),$04</td>
-<td class="comment">*HL = 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="45371"></a>B13B</td>
 <td class="instruction">DEC L</td>
-<td class="comment">HL--; &gt;</td>
 </tr>
 <tr>
 <td class="label"><a name="45372"></a>B13C</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="3">HL += 32;</td>
 </tr>
 <tr>
 <td class="address"><a name="45373"></a>B13D</td>
@@ -191,7 +182,6 @@ We have a bribe.
 <tr>
 <td class="address"><a name="45376"></a>B140</td>
 <td class="instruction">DJNZ $B133</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45378"></a>B142</td>

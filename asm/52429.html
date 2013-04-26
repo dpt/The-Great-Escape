@@ -87,7 +87,7 @@ This ignores green key and food items. May decide which items are 'found'.
 <tr>
 <td class="label"><a name="52451"></a>CCE3</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="2">do &lt; if (*HL &amp; (1&lt;&lt;7)) goto check; // flag means what?</td>
+<td class="comment" rowspan="4">do { if (*HL &amp; (1&lt;&lt;7)) goto check; // flag means what? } next: HL += DE; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="52453"></a>CCE5</td>
@@ -96,12 +96,10 @@ This ignores green key and food items. May decide which items are 'found'.
 <tr>
 <td class="label"><a name="52455"></a>CCE7</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">next: HL += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="52456"></a>CCE8</td>
 <td class="instruction">DJNZ $CCE3</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="52458"></a>CCEA</td>

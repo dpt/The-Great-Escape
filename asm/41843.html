@@ -30,92 +30,93 @@
 Uses tenlong structure.
 </div>
 </div>
+<table class="output">
+<tr>
+<td class="register">Adash</td>
+<td class="registerContents">Counter incremented.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="41843"></a>A373</td>
 <td class="instruction">LD HL,$A27F</td>
-<td class="transparentComment" />
+<td class="comment">HL = &amp;tenlong;</td>
 </tr>
 <tr>
 <td class="address"><a name="41846"></a>A376</td>
 <td class="instruction">LD B,$0A</td>
-<td class="transparentComment" />
+<td class="comment">B = 10;</td>
 </tr>
 <tr>
 <td class="label"><a name="41848"></a>A378</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">do { PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="41849"></a>A379</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
+<td class="comment">PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="41850"></a>A37A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="41851"></a>A37B</td>
 <td class="instruction">CALL <a class="link" href="41868.html">$A38C</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_A38C();</td>
 </tr>
 <tr>
 <td class="address"><a name="41854"></a>A37E</td>
 <td class="instruction">POP BC</td>
-<td class="transparentComment" />
+<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="41855"></a>A37F</td>
 <td class="instruction">LD A,B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">if (B == 6) Adash++; // 6 is player?</td>
 </tr>
 <tr>
 <td class="address"><a name="41856"></a>A380</td>
 <td class="instruction">CP $06</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41858"></a>A382</td>
 <td class="instruction">JR NZ,$A387</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41860"></a>A384</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41861"></a>A385</td>
 <td class="instruction">INC A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41862"></a>A386</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="41863"></a>A387</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="41864"></a>A388</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="41865"></a>A389</td>
 <td class="instruction">DJNZ $A378</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="41867"></a>A38B</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

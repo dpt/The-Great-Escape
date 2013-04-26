@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="32205.html">7DCD</a></td>
 </tr>
 </table>
-<div class="description">7D99: shunt_buffer_back_by_two</div>
+<div class="description">7D99: next_message</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Looks like message_buffer is poked with the index of the message to display...
+Looks like message_queue is poked with the index of the message to display...
 </div>
 </div>
 </td>
@@ -35,17 +35,17 @@ Looks like message_buffer is poked with the index of the message to display...
 <tr>
 <td class="label"><a name="32153"></a>7D99</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment">HL = message_buffer_pointer;</td>
+<td class="comment">HL = message_queue_pointer;</td>
 </tr>
 <tr>
 <td class="address"><a name="32156"></a>7D9C</td>
 <td class="instruction">LD DE,$7CFE</td>
-<td class="comment">DE = &amp;message_buffer;</td>
+<td class="comment">DE = &amp;message_queue[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="32159"></a>7D9F</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="3">if (L == E) return; // cheap test</td>
+<td class="comment" rowspan="4">if (L == E) return; // cheap test -- no more messages?</td>
 </tr>
 <tr>
 <td class="address"><a name="32160"></a>7DA0</td>
@@ -58,12 +58,11 @@ Looks like message_buffer is poked with the index of the message to display...
 <tr>
 <td class="address"><a name="32162"></a>7DA2</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">swap(DE, HL);</td>
 </tr>
 <tr>
 <td class="address"><a name="32163"></a>7DA3</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL++;</td>
+<td class="comment" rowspan="2">A = *DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="32164"></a>7DA4</td>
@@ -72,12 +71,12 @@ Looks like message_buffer is poked with the index of the message to display...
 <tr>
 <td class="address"><a name="32165"></a>7DA5</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL; // I don't understand why C is loaded here.</td>
+<td class="comment">C = *DE; // C is loaded here but not used. This could be a hangover from 16-bit message IDs.</td>
 </tr>
 <tr>
 <td class="address"><a name="32166"></a>7DA6</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment" rowspan="5">HL = &amp;messages_table[A];</td>
+<td class="comment" rowspan="9">HL = messages_table[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="32167"></a>7DA7</td>
@@ -98,7 +97,6 @@ Looks like message_buffer is poked with the index of the message to display...
 <tr>
 <td class="address"><a name="32174"></a>7DAE</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="32175"></a>7DAF</td>
@@ -107,12 +105,10 @@ Looks like message_buffer is poked with the index of the message to display...
 <tr>
 <td class="address"><a name="32176"></a>7DB0</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment">D = *HL; // DE = messages_table[A]</td>
 </tr>
 <tr>
 <td class="address"><a name="32177"></a>7DB1</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">swap(DE, HL);</td>
 </tr>
 <tr>
 <td class="address"><a name="32178"></a>7DB2</td>
@@ -122,7 +118,7 @@ Looks like message_buffer is poked with the index of the message to display...
 <tr>
 <td class="address"><a name="32181"></a>7DB5</td>
 <td class="instruction">LD DE,$7CFC</td>
-<td class="comment" rowspan="4">memmove(message_buffer, message_buffer + 2, 16);</td>
+<td class="comment" rowspan="4">memmove(message_queue, message_queue + 2, 16); // drop first element</td>
 </tr>
 <tr>
 <td class="address"><a name="32184"></a>7DB8</td>
@@ -139,7 +135,7 @@ Looks like message_buffer is poked with the index of the message to display...
 <tr>
 <td class="address"><a name="32192"></a>7DC0</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment" rowspan="4">message_buffer_pointer -= 2;</td>
+<td class="comment" rowspan="4">message_queue_pointer -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="32195"></a>7DC3</td>

@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="26937.html">6939</a> and <a class="link" href="40312.html">9D78</a>.
+Spotlight related.
 </div>
 </div>
 </td>
@@ -35,112 +35,106 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="47206"></a>B866</td>
 <td class="instruction">CALL <a class="link" href="47260.html">$B89C</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_B89C();</td>
 </tr>
 <tr>
 <td class="address"><a name="47209"></a>B869</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
+<td class="comment">if (NZ) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="47210"></a>B86A</td>
 <td class="instruction">BIT 6,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &amp; (1&lt;&lt;6)) goto b88f</td>
 </tr>
 <tr>
 <td class="address"><a name="47212"></a>B86C</td>
 <td class="instruction">JR NZ,$B88F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47214"></a>B86E</td>
 <td class="instruction">CALL <a class="link" href="58400.html">$E420</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_E420();</td>
 </tr>
 <tr>
 <td class="address"><a name="47217"></a>B871</td>
 <td class="instruction">JR NZ,$B866</td>
-<td class="transparentComment" />
+<td class="comment">if (NZ) goto called_from_main_loop_11;</td>
 </tr>
 <tr>
 <td class="address"><a name="47219"></a>B873</td>
 <td class="instruction">CALL <a class="link" href="47382.html">$B916</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_B916();</td>
 </tr>
 <tr>
 <td class="address"><a name="47222"></a>B876</td>
 <td class="instruction">LD A,($81BD)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if (spotlight_found_player != 0xFF) spotlight_foo();</td>
 </tr>
 <tr>
 <td class="address"><a name="47225"></a>B879</td>
 <td class="instruction">CP $FF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47227"></a>B87B</td>
 <td class="instruction">CALL NZ,<a class="link" href="47163.html">$B83B</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47230"></a>B87E</td>
 <td class="instruction">LD A,(IY+$1E)</td>
-<td class="transparentComment" />
+<td class="comment">A = IY[0x1E];</td>
 </tr>
 <tr>
 <td class="address"><a name="47233"></a>B881</td>
 <td class="instruction">CP $03</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">if (A != 3) } masked_sprite_plotter(); goto called_from_main_loop_11;</td>
 </tr>
 <tr>
 <td class="address"><a name="47235"></a>B883</td>
 <td class="instruction">JR Z,$B88A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47237"></a>B885</td>
 <td class="instruction">CALL <a class="link" href="57602.html">$E102</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47240"></a>B888</td>
 <td class="instruction">JR $B866</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="47242"></a>B88A</td>
 <td class="instruction">CALL Z,<a class="link" href="58018.html">$E2A2</a></td>
-<td class="transparentComment" />
+<td class="comment">if (Z) sub_E2A2(); // odd to test for Z since it's always set</td>
 </tr>
 <tr>
 <td class="address"><a name="47245"></a>B88D</td>
 <td class="instruction">JR $B866</td>
-<td class="transparentComment" />
+<td class="comment">goto called_from_main_loop_11;</td>
 </tr>
 <tr>
 <td class="label"><a name="47247"></a>B88F</td>
 <td class="instruction">CALL <a class="link" href="56385.html">$DC41</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_DC41();</td>
 </tr>
 <tr>
 <td class="address"><a name="47250"></a>B892</td>
 <td class="instruction">JR NZ,$B866</td>
-<td class="transparentComment" />
+<td class="comment">if (NZ) goto called_from_main_loop_11;</td>
 </tr>
 <tr>
 <td class="address"><a name="47252"></a>B894</td>
 <td class="instruction">CALL <a class="link" href="47382.html">$B916</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_B916();</td>
 </tr>
 <tr>
 <td class="address"><a name="47255"></a>B897</td>
 <td class="instruction">CALL <a class="link" href="58015.html">$E29F</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_E29F();</td>
 </tr>
 <tr>
 <td class="address"><a name="47258"></a>B89A</td>
 <td class="instruction">JR $B866</td>
-<td class="transparentComment" />
+<td class="comment">goto called_from_main_loop_11;</td>
 </tr>
 </table>
 <table class="prevNext">

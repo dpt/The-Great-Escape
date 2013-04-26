@@ -53,7 +53,7 @@ I suspect this searches visible characters only.
 <tr>
 <td class="address"><a name="45998"></a>B3AE</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="4">if ((A != 255) &amp;&amp; (A &gt;= 20)) goto found;</td>
+<td class="comment" rowspan="4">if ((A != 255) &amp;&amp; (A &gt;= 20)) goto found; // character index?</td>
 </tr>
 <tr>
 <td class="address"><a name="46000"></a>B3B0</td>
@@ -93,17 +93,16 @@ I suspect this searches visible characters only.
 <tr>
 <td class="label"><a name="46013"></a>B3BD</td>
 <td class="instruction">LD ($AF8E),A</td>
-<td class="comment">found: bribe_related = A;</td>
+<td class="comment">found: bribed_character = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46016"></a>B3C0</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
+<td class="comment" rowspan="2">HL[1] = 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="46017"></a>B3C1</td>
 <td class="instruction">LD (HL),$01</td>
-<td class="comment">*HL = 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="46019"></a>B3C3</td>

@@ -32,12 +32,12 @@
 <tr>
 <td class="label"><a name="41578"></a>A26A</td>
 <td class="instruction">LD A,$26</td>
-<td class="transparentComment" />
+<td class="comment">A = $26;</td>
 </tr>
 <tr>
 <td class="address"><a name="41580"></a>A26C</td>
 <td class="instruction">LD C,$00</td>
-<td class="transparentComment" />
+<td class="comment">C = 0;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -52,62 +52,62 @@ This entry point is used by the routine at <a class="link" href="41572.html">A26
 <tr>
 <td class="label">A26E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="41583"></a>A26F</td>
 <td class="instruction">LD A,$0C</td>
-<td class="transparentComment" />
+<td class="comment">Adash = $0C;</td>
 </tr>
 <tr>
 <td class="address"><a name="41585"></a>A271</td>
 <td class="instruction">LD B,$04</td>
-<td class="transparentComment" />
+<td class="comment">B = 4; // 4 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="41587"></a>A273</td>
 <td class="instruction">PUSH AF</td>
-<td class="transparentComment" />
+<td class="comment">do { PUSH AF</td>
 </tr>
 <tr>
 <td class="address"><a name="41588"></a>A274</td>
 <td class="instruction">CALL <a class="link" href="41868.html">$A38C</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_A38C();</td>
 </tr>
 <tr>
 <td class="address"><a name="41591"></a>A277</td>
 <td class="instruction">POP AF</td>
-<td class="transparentComment" />
+<td class="comment">POP AF</td>
 </tr>
 <tr>
 <td class="address"><a name="41592"></a>A278</td>
 <td class="instruction">INC A</td>
-<td class="transparentComment" />
+<td class="comment">Adash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="41593"></a>A279</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="41594"></a>A27A</td>
 <td class="instruction">INC A</td>
-<td class="transparentComment" />
+<td class="comment">A++;</td>
 </tr>
 <tr>
 <td class="address"><a name="41595"></a>A27B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="41596"></a>A27C</td>
 <td class="instruction">DJNZ $A273</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="41598"></a>A27E</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

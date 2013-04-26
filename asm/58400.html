@@ -97,7 +97,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58422"></a>E436</td>
 <td class="instruction">JR $E44E</td>
-<td class="comment">JR $E44E</td>
+<td class="comment">goto $E44E;</td>
 </tr>
 <tr>
 <td class="label"><a name="58424"></a>E438</td>
@@ -140,7 +140,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58435"></a>E443</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">do &lt; A = *HL++;</td>
+<td class="comment" rowspan="8">do { A = *HL++; } C = *HL; divide_AC_by_8(); *DE++ = A; {HL++; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58436"></a>E444</td>
@@ -149,22 +149,18 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58437"></a>E445</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="58438"></a>E446</td>
-<td class="instruction">CALL <a class="link" href="58704.html#58709">$E555</a></td>
-<td class="comment">divide_AC_by_8();</td>
+<td class="instruction">CALL <a class="link" href="58709.html">$E555</a></td>
 </tr>
 <tr>
 <td class="address"><a name="58441"></a>E449</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment">*DE++ = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58442"></a>E44A</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58443"></a>E44B</td>
@@ -173,7 +169,6 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58444"></a>E44C</td>
 <td class="instruction">DJNZ $E443</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="label"><a name="58446"></a>E44E</td>
@@ -225,7 +220,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58459"></a>E45B</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">do &lt; A = *HL++;</td>
+<td class="comment" rowspan="8">do { A = *HL++; } C = *HL++; divide_AC_by_8(); {*DE++ = A; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58460"></a>E45C</td>
@@ -234,17 +229,14 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58461"></a>E45D</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58462"></a>E45E</td>
-<td class="instruction">CALL <a class="link" href="58704.html#58709">$E555</a></td>
-<td class="comment">divide_AC_by_8();</td>
+<td class="instruction">CALL <a class="link" href="58709.html">$E555</a></td>
 </tr>
 <tr>
 <td class="address"><a name="58465"></a>E461</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment" rowspan="3">*DE++ = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58466"></a>E462</td>
@@ -257,7 +249,6 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58468"></a>E464</td>
 <td class="instruction">DJNZ $E45B</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58470"></a>E466</td>
@@ -342,7 +333,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58496"></a>E480</td>
 <td class="instruction">CALL <a class="link" href="47863.html">$BAF7</a></td>
-<td class="comment">ff_anded_with_ff();</td>
+<td class="comment">sub_BAF7();</td>
 </tr>
 <tr>
 <td class="address"><a name="58499"></a>E483</td>
@@ -371,7 +362,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58506"></a>E48A</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="2">if (A - 3 == 0) &lt;</td>
+<td class="comment" rowspan="13">if (A - 3 == 0) } {($E2C2) = E; // self-modify } ($E363) = E; // self-modify A = 3; HL = pairs_of_offsets; } else { A = E; ($E121) = A; // self-modify ($E1E2) = A; // self-modify A = 4; HL = pairs_of_offsets2;</td>
 </tr>
 <tr>
 <td class="address"><a name="58508"></a>E48C</td>
@@ -380,7 +371,6 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58510"></a>E48E</td>
 <td class="instruction">LD A,E</td>
-<td class="comment" rowspan="2">($E2C2) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58511"></a>E48F</td>
@@ -389,47 +379,38 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58514"></a>E492</td>
 <td class="instruction">LD ($E363),A</td>
-<td class="comment">($E363) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58517"></a>E495</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment">A = 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="58519"></a>E497</td>
 <td class="instruction">LD HL,$E0E0</td>
-<td class="comment">HL = pairs_of_offsets;</td>
 </tr>
 <tr>
 <td class="address"><a name="58522"></a>E49A</td>
 <td class="instruction">JR $E4A8</td>
-<td class="comment">&gt; else &lt;</td>
 </tr>
 <tr>
 <td class="label"><a name="58524"></a>E49C</td>
 <td class="instruction">LD A,E</td>
-<td class="comment">A = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="58525"></a>E49D</td>
 <td class="instruction">LD ($E121),A</td>
-<td class="comment">($E121) = A; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58528"></a>E4A0</td>
 <td class="instruction">LD ($E1E2),A</td>
-<td class="comment">($E1E2) = A; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58531"></a>E4A3</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment">A = 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="58533"></a>E4A5</td>
 <td class="instruction">LD HL,$E0EC</td>
-<td class="comment">HL = pairs_of_offsets2; &gt;</td>
 </tr>
 <tr>
 <td class="label"><a name="58536"></a>E4A8</td>
@@ -454,7 +435,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58542"></a>E4AE</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) &lt;</td>
+<td class="comment" rowspan="10">if (A == 0) } A = 0x77; EX AF,AF' A = C; } else { A = 0; EX AF,AF' A = E; SUB C</td>
 </tr>
 <tr>
 <td class="address"><a name="58543"></a>E4AF</td>
@@ -463,42 +444,34 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58545"></a>E4B1</td>
 <td class="instruction">LD A,$77</td>
-<td class="comment">A = 0x77;</td>
 </tr>
 <tr>
 <td class="address"><a name="58547"></a>E4B3</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="58548"></a>E4B4</td>
 <td class="instruction">LD A,C</td>
-<td class="comment">A = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="58549"></a>E4B5</td>
 <td class="instruction">JR $E4BB</td>
-<td class="comment">&gt; else &lt;</td>
 </tr>
 <tr>
 <td class="label"><a name="58551"></a>E4B7</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="58552"></a>E4B8</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="58553"></a>E4B9</td>
 <td class="instruction">LD A,E</td>
-<td class="comment">A = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="58554"></a>E4BA</td>
 <td class="instruction">SUB C</td>
-<td class="comment">SUB C &gt;</td>
 </tr>
 <tr>
 <td class="label"><a name="58555"></a>E4BB</td>
@@ -528,7 +501,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58561"></a>E4C1</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="2">do &lt; E = *HL++;</td>
+<td class="comment" rowspan="14">do { E = *HL++; } D = *HL++; {*DE = A; } {E = *HL++; } {D = *HL++; } *DE = A; C--; {if (Z) A ^= 0x77; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58562"></a>E4C2</td>
@@ -537,12 +510,10 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58563"></a>E4C3</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment">D = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58564"></a>E4C4</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment" rowspan="2">*DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58565"></a>E4C5</td>
@@ -551,7 +522,6 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58566"></a>E4C6</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58567"></a>E4C7</td>
@@ -560,7 +530,6 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58568"></a>E4C8</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment" rowspan="2">D = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58569"></a>E4C9</td>
@@ -569,17 +538,14 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58570"></a>E4CA</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment">*DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58571"></a>E4CB</td>
 <td class="instruction">DEC C</td>
-<td class="comment">C--;</td>
 </tr>
 <tr>
 <td class="address"><a name="58572"></a>E4CC</td>
 <td class="instruction">JR NZ,$E4D0</td>
-<td class="comment" rowspan="2">if (Z) A ^= 0x77;</td>
 </tr>
 <tr>
 <td class="address"><a name="58574"></a>E4CE</td>
@@ -588,7 +554,6 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58576"></a>E4D0</td>
 <td class="instruction">DJNZ $E4C1</td>
-<td class="comment">&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58578"></a>E4D2</td>
@@ -603,7 +568,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58580"></a>E4D4</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A</td>
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58581"></a>E4D5</td>
@@ -613,7 +578,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58584"></a>E4D8</td>
 <td class="instruction">JR NZ,$E4F5</td>
-<td class="comment">if (Z) &lt;</td>
+<td class="comment">if (Z) {</td>
 </tr>
 <tr>
 <td class="address"><a name="58586"></a>E4DA</td>
@@ -658,7 +623,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58602"></a>E4EA</td>
 <td class="instruction">AND A</td>
-<td class="comment">AND A</td>
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58603"></a>E4EB</td>
@@ -697,7 +662,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58612"></a>E4F4</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL &gt;</td>
+<td class="comment">EX DE,HL }</td>
 </tr>
 <tr>
 <td class="label"><a name="58613"></a>E4F5</td>
@@ -829,7 +794,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58659"></a>E523</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A) &lt;</td>
+<td class="comment" rowspan="9">if (A) } D = A; A = 0; {E = IY[30] - 1; } {do { A += E; } while (--D); }</td>
 </tr>
 <tr>
 <td class="address"><a name="58660"></a>E524</td>
@@ -838,17 +803,14 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58662"></a>E526</td>
 <td class="instruction">LD D,A</td>
-<td class="comment">D = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58663"></a>E527</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="58664"></a>E528</td>
 <td class="instruction">LD E,(IY+$1E)</td>
-<td class="comment" rowspan="2">E = IY[30] - 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="58667"></a>E52B</td>
@@ -857,7 +819,6 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58668"></a>E52C</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment" rowspan="3">do &lt; A += E; &gt; while (--D); &gt;</td>
 </tr>
 <tr>
 <td class="address"><a name="58669"></a>E52D</td>

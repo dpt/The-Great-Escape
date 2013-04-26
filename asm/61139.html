@@ -89,7 +89,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="label"><a name="61166"></a>EEEE</td>
 <td class="instruction">POP DE</td>
-<td class="comment">do &lt; DE = *SP++;</td>
+<td class="comment">do { DE = *SP++;</td>
 </tr>
 <tr>
 <td class="address"><a name="61167"></a>EEEF</td>
@@ -214,11 +214,12 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61214"></a>EF1E</td>
 <td class="instruction">DEC A</td>
-<td class="comment" rowspan="2">&gt; while (--A);</td>
+<td class="comment">} while (--A);</td>
 </tr>
 <tr>
 <td class="address"><a name="61215"></a>EF1F</td>
 <td class="instruction">JP NZ,$EEEE</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="61218"></a>EF22</td>
@@ -282,7 +283,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="label"><a name="61242"></a>EF3A</td>
 <td class="instruction">EXX</td>
-<td class="comment">do &lt;</td>
+<td class="comment">do {</td>
 </tr>
 <tr>
 <td class="address"><a name="61243"></a>EF3B</td>
@@ -297,7 +298,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="label"><a name="61246"></a>EF3E</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">do &lt; C = *HL;</td>
+<td class="comment">do { C = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="61247"></a>EF3F</td>
@@ -502,7 +503,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61296"></a>EF70</td>
 <td class="instruction">DJNZ $EF3E</td>
-<td class="comment">&gt; while (--B);</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="61298"></a>EF72</td>
@@ -644,7 +645,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61331"></a>EF93</td>
 <td class="instruction">DJNZ $EF3A</td>
-<td class="comment">&gt; while (--Bdash);</td>
+<td class="comment">} while (--Bdash);</td>
 </tr>
 <tr>
 <td class="address"><a name="61333"></a>EF95</td>

@@ -32,22 +32,21 @@
 <tr>
 <td class="label"><a name="41465"></a>A1F9</td>
 <td class="instruction">LD (BC),A</td>
-<td class="transparentComment" />
+<td class="comment">(BC) = A; // bell = 40;</td>
 </tr>
 <tr>
 <td class="address"><a name="41466"></a>A1FA</td>
 <td class="instruction">LD B,$02</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">queue_message_for_display(message_BREAKFAST_TIME);</td>
 </tr>
 <tr>
 <td class="address"><a name="41468"></a>A1FC</td>
 <td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="41471"></a>A1FF</td>
 <td class="instruction">JP <a class="link" href="42181.html">$A4C5</a></td>
-<td class="transparentComment" />
+<td class="comment">set_location_0x1000(); return; // exit via</td>
 </tr>
 </table>
 <table class="prevNext">
