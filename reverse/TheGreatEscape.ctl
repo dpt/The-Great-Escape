@@ -3922,7 +3922,7 @@ c $A4A9 set_location_0xE00
   $A4A9 set_target_location(0x0E00);
   $A4AF A = $0E;
   $A4B1 EX AF,AF'
-  $A4B2 C = $00;
+  $A4B2 C = 0;
   $A4B4 sub_A373(); return; // exit via
 
 ; ------------------------------------------------------------------------------
@@ -3940,7 +3940,7 @@ c $A4C5 set_location_0x1000
   $A4C5 set_target_location(0x1000);
   $A4CB A = $10;
   $A4CD EX AF,AF'
-  $A4CE C = $00;
+  $A4CE C = 0;
   $A4D0 sub_A373(); return; // exit via
 
 ; ------------------------------------------------------------------------------
@@ -4751,14 +4751,14 @@ D $AC8F Horizontal.
 ;
 D $AC9B Top right.
   $AC9B zoombox_draw_tile(zoombox_tile_TR);
-  $ACA0 DE = 0x0020;
+  $ACA0 DE = 32;
   $ACA3 if (L >= 224) D = 0x07;
   $ACAA HL += DE;
 ;
 D $ACAB Vertical.
   $ACAB B = zoombox_vertical_count; // iterations
   $ACAF do { zoombox_draw_tile(zoombox_tile_VT);
-  $ACB4 DE = 0x0020;
+  $ACB4 DE = 32;
   $ACB7 if (L >= 224) D = 0x07;
   $ACBE HL += DE;
   $ACBF } while (--B);
@@ -6550,7 +6550,7 @@ D $B916 Sets attr of something, checks indoor room index, ...
 **$BA8B DE++;
   $BA8C } while (--B);
   $BA8E PUSH BC
-  $BA8F B = $01;
+  $BA8F B = 1; // self modified
   $BA91 EX AF,AF'
   $BA92 A = B;
   $BA93 A &= A;
@@ -6561,7 +6561,7 @@ D $B916 Sets attr of something, checks indoor room index, ...
 **$BA9B do { A = (DE);
   $BA9C A &= A;
   $BA9D JP P,$BAAF
-  $BAA0 A &= $7F;
+  $BAA0 A &= 0x7F;
   $BAA2 DE++;
 **$BAA3 C = A;
   $BAA4 A = B;
@@ -6709,7 +6709,7 @@ D $BAF7 Sets the flags for return but looks like caller never uses them.
 ; -----------------------------------------------------------------------------
 
 c $BB98 called_from_main_loop_3
-  $BB98 B = $08;
+  $BB98 B = 8; // iterations
   $BB9A IY = $8000;
 **$BB9E PUSH BC
   $BB9F A = (IY+$01);
@@ -6756,12 +6756,15 @@ c $BB98 called_from_main_loop_3
   $BBEF JP C,$BC9F
   $BBF2 JR NZ,$BBF8
   $BBF4 JP $BC9F
-**$BBF7 POP AF
-**$BBF8 CP $05
+
+  $BBF7 POP AF
+;
+  $BBF8 CP 5
   $BBFA JP Z,$BC02
   $BBFD JP C,$BC02
-  $BC00 A = $05;
-**$BC02 ($BC5F) = A;
+  $BC00 A = 5;
+;
+  $BC02 ($BC5F) = A;
   $BC05 A = C;
   $BC06 ($BC61) = A;
   $BC09 ($BC89) = A;
@@ -6854,11 +6857,11 @@ c $BB98 called_from_main_loop_3
   $BC84 } while (--B);
   $BC86 EXX
   $BC87 A = H;
-  $BC88 A -= $00;
+  $BC88 A -= 0; // odd
   $BC8A H = A;
   $BC8B L++;
   $BC8C EXX
-  $BC8D A = $14;
+  $BC8D A = 20;
   $BC8F A += E;
   $BC90 JR NC,$BC93
   $BC92 D++;
@@ -6871,7 +6874,7 @@ c $BB98 called_from_main_loop_3
   $BC9B C--;
   $BC9C JP NZ,$BC60
 **$BC9F POP BC
-  $BCA0 DE = $0020;
+  $BCA0 DE = 32;
   $BCA3 IY += DE;
   $BCA5 B--;
   $BCA6 JP NZ,$BB9E
@@ -8841,7 +8844,7 @@ c $DC41 sub_DC41
   $DCBF HL = $81BB;
   $DCC2 A -= (HL);
   $DCC3 L = A;
-  $DCC4 H = $00;
+  $DCC4 H = 0;
   $DCC6 JR NC,$DCCA
   $DCC8 H = $FF;
 **$DCCA HL += DE;
@@ -8893,7 +8896,7 @@ c $DD02 sub_DD02
   $DD0F JR C,$DD66
   $DD11 CP $03
   $DD13 JP NC,$DD1B
-  $DD16 B = $00;
+  $DD16 B = 0;
   $DD18 C = A;
   $DD19 goto $DD33;
  
@@ -9428,8 +9431,9 @@ c $E2A2 sub_E2A2
   $E2BA HL = ($81AE);
   $E2BD EXX
   $E2BE HL = ($81AC);
-  $E2C1 B = $20;
-**$E2C3 D = *HL;
+  $E2C1 B = 32;
+;
+  $E2C3 D = *HL;
   $E2C4 HL++;
   $E2C5 E = *HL;
   $E2C6 HL++;
@@ -9458,7 +9462,7 @@ c $E2A2 sub_E2A2
   $E2EB RR E
   $E2ED RR C
   $E2EF EXX
-  $E2F0 C = $00;
+  $E2F0 C = 0;
   $E2F2 A &= A;
   $E2F3 JR $E2F5
 **$E2F5 SRL D
@@ -9546,8 +9550,9 @@ c $E34E sub_E34E
   $E35B HL = ($81AE);
   $E35E EXX
   $E35F HL = ($81AC);
-  $E362 B = $20;
-**$E364 D = *HL;
+  $E362 B = 32;
+;
+  $E364 D = *HL;
   $E365 HL++;
   $E366 E = *HL;
   $E367 HL++;
