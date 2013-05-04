@@ -4074,6 +4074,7 @@ c $A5A3 item_to_bitmask
 
 c $A5BF screenlocstring_plot
 R $A5BF I:HL Pointer to screenlocstring.
+R $A5BF O:HL Pointer to byte after screenlocstring.
   $A5BF E = *HL++; // read screen address into DE
   $A5C1 D = *HL++;
   $A5C3 B = *HL++; // iterations / nbytes
