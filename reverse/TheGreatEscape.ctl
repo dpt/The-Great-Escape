@@ -454,7 +454,7 @@
 ; b $800E tunnel related, walk/crawl flag maybe? (bottom 2 bits index $9EE0)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by user_input_super)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by user_input_super)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; b $8013 character's vertical offset // set to 24 in user_input_was_in_bed_perhaps, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), no_idea ($B8DE), sub_E420 ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)
+; b $8013 character's vertical offset // set to 24 in user_input_was_in_bed_perhaps, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), sub_E420 ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
@@ -6216,7 +6216,7 @@ c $B83B spotlight_foo
 
 c $B866 called_from_main_loop_11
 D $B866 Spotlight related.
-  $B866 no_idea();
+  $B866 sub_B89C();
   $B869 if (NZ) return;
   $B86A if (A & (1<<6)) goto b88f
   $B86E sub_E420();
@@ -6239,7 +6239,7 @@ D $B866 Spotlight related.
 
 ; -----------------------------------------------------------------------------
 
-c $B89C no_idea
+c $B89C sub_B89C
   $B89C BC = 0;
   $B89F DE = 0;
   $B8A1 A = 0xFF;
