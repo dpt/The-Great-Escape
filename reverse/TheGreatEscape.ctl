@@ -10179,14 +10179,14 @@ b $F076 tile_refs_for_statics
 ; ------------------------------------------------------------------------------
 
 c $F163 main
-D $F163 Disable interrupts and set up stack pointer.
+  $F163 (Disable interrupts and set up stack pointer.)
   $F167 wipe_full_screen_and_attributes();
   $F16A set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
   $F16F set_menu_item_attributes(attribute_YELLOW_OVER_BLACK);
   $F174 plot_statics_and_menu_text();
   $F177 plot_score();
   $F17A menu_screen();
-  
+
 D $F17D Construct a table of 256 bit-reversed bytes at 0x7F00.
   $F17D HL = 0x7F00;
   $F180 do { A = L;
