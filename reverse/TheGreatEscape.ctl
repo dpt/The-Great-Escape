@@ -3823,9 +3823,7 @@ c $A3F8 varA13E_is_zero
 
 ; This entry point is used by the routine at #R$A3F3.
   $A404 *++HL = 0;
-  $A407 CP 19  // if (A <= 19) goto A413;
-  $A409 JP Z,$A413
-  $A40C JP C,$A413
+  $A407 if (A <= 19) goto $A413;
   $A40F A -= 13;
   $A411 goto $A41D;
 
