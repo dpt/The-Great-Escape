@@ -910,7 +910,7 @@ c $6A35 select_room_maybe
   $6A4D DE = &first_byte_of_room_structure;
   $6A50 LDI // *DE++ = *HL++; BC--;
   $6A52 A = *HL;
-  $6A53 AND A
+  $6A53 A &= A;
   $6A54 *DE = A;
   $6A55 if (A == 0) {
   $6A57 HL++;
@@ -921,7 +921,7 @@ c $6A35 select_room_maybe
   $6A62 DE = byte_81DA;
   $6A65 A = *HL++;
   $6A67 *DE = A;
-  $6A68 AND A
+  $6A68 A &= A;
   $6A69 if (A) {
 ;
   $6A6B DE++;
@@ -1512,7 +1512,7 @@ R $7BB5 I:A Item.
   $7BF7 DE--;
   $7BF8 A = *DE;
   $7BF9 BC = A;
-  $7BFC AND A
+  $7BFC A &= A;
   $7BFD HL -= BC;
   $7BFF HL *= 2;
   $7C00 C = H;
@@ -1522,7 +1522,7 @@ R $7BB5 I:A Item.
   $7C06 HL = 0x0800;
   $7C0B A = *DE;
   $7C0C BC = A;
-  $7C0D AND A
+  $7C0D A &= A;
   $7C0E HL -= BC;
   $7C10 DE++;
   $7C11 A = *DE;
@@ -7364,7 +7364,7 @@ c $C4E0 sub_C4E0
   $C571 DE += 7;
   $C575 A = indoor_room_index;
   $C578 *DE = A;
-  $C579 AND A
+  $C579 A &= A;
   $C57A JR Z,$C588
   $C57C play_speaker(sound_CHARACTER_ENTERS_2);
   $C582 play_speaker(sound_CHARACTER_ENTERS_1);
@@ -7375,7 +7375,7 @@ c $C4E0 sub_C4E0
   $C590 HL -= 2;
 
   $C592 A = *HL;
-  $C593 AND A
+  $C593 A &= A;
   $C594 JR NZ,$C59C
   $C596 DE += 3;
   $C59A JR $C5C4
@@ -7561,7 +7561,7 @@ U $C6FD,2 DEFB $18,$6F  ; UNUSED?
   $C70E DE = &word_81A4;
   $C711 B = 2; // 2 iters
   $C713 do { A = *HL;
-  $C714 AND A         ; don't understand
+  $C714 A &= A;         ; don't understand
   $C715 RRA           ; rotate right out into carry
   $C716 *DE = A;
   $C717 HL++;
@@ -7571,7 +7571,7 @@ U $C6FD,2 DEFB $18,$6F  ; UNUSED?
   $C71E POP DE
 ;
   $C71F A = DE[-1];
-  $C722 AND A         ; if (A == 0) .. next op interleaved ..
+  $C722 A &= A;         ; if (A == 0) .. next op interleaved ..
   $C723 A = 2;
   $C725 JR Z,$C729    ; if (A == 0) goto $C729;
   $C727 A = 6;
@@ -7960,7 +7960,7 @@ c $CA11 sub_CA11
   $CA1F JR Z,$CA3E
   $CA21 JP M,$CA30
   $CA24 A = H;
-  $CA25 AND A
+  $CA25 A &= A;
   $CA26 JR NZ,$CA2D
   $CA28 A = L;
   $CA29 CP 3
@@ -7998,7 +7998,7 @@ c $CA49 sub_CA49
   $CA57 JR Z,$CA76
   $CA59 JP M,$CA68
   $CA5C A = H;
-  $CA5D AND A
+  $CA5D A &= A;
   $CA5E JR NZ,$CA65
   $CA60 A = L;
   $CA61 CP 3
@@ -8714,7 +8714,7 @@ c $DBEB Uses BC_becomes_A_times_8.
   $DC00 PUSH BC
   $DC01 EXX
   $DC02 POP HL
-  $DC03 AND A
+  $DC03 A &= A;
   $DC04 SBC HL,BC
   $DC06 EXX
   $DC07 JR Z,$DC36
@@ -8793,7 +8793,7 @@ c $DC41 sub_DC41
   $DC72 A = E;
   $DC73 ($E2C2) = A; // self modify
   $DC76 A = B;
-  $DC77 AND A
+  $DC77 A &= A;
   $DC78 JP NZ,$DC81
   $DC7B A = $77;
   $DC7D EX AF,AF'
@@ -8825,7 +8825,7 @@ c $DC41 sub_DC41
 **$DC9D } while (--B);
   $DC9F EXX
   $DCA0 A = D;
-  $DCA1 AND A
+  $DCA1 A &= A;
   $DCA2 DE = $0000;
   $DCA5 JR NZ,$DCBC
   $DCA7 HL = $81BC;
@@ -8860,7 +8860,7 @@ c $DC41 sub_DC41
   $DCDF POP DE
   $DCE0 PUSH DE
   $DCE1 A = D;
-  $DCE2 AND A
+  $DCE2 A &= A;
   $DCE3 JR Z,$DCEF
   $DCE5 D = A;
   $DCE6 A = 0;
@@ -9794,7 +9794,7 @@ c $E420 sub_E420
 ;
   $E4D2 EXX
   $E4D3 A = D;
-  $E4D4 AND A
+  $E4D4 A &= A;
   $E4D5 DE = 0;
   $E4D8 if (Z) {
 ;
@@ -9802,7 +9802,7 @@ c $E420 sub_E420
   $E4E3 EX DE,HL
   $E4E4 L = IY[26];
   $E4E7 H = IY[27];
-  $E4EA AND A
+  $E4EA A &= A;
   $E4EB SBC HL,DE
   $E4ED HL *= 24;
   $E4F4 EX DE,HL }
