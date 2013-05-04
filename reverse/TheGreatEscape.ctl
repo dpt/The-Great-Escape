@@ -10401,11 +10401,12 @@ c $F350 choose_keys
 ; ------------------------------------------------------------------------------
 
 c $F408 set_menu_item_attributes
-R $F408 I:E Attribute.
+R $F408 I:A Item index.
+R $F408 I:E Attributes.
 ;
   $F408 HL = 0x590D; // initial screen attribute address
 ;
-D $F40B Skip to the right position.
+D $F40B Skip to the item's row.
   $F40B if (A) {
   $F40E B = A;
   $F40F do { L += 64; } while (--B); } // skip two rows per iteration
