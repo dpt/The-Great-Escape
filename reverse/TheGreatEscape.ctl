@@ -10449,16 +10449,89 @@ B $F4A8 #CALL:decode_screenlocstring($F4A8)
 ; ------------------------------------------------------------------------------
 
 c $F4B7 menu_screen
+  $F4B7 for (;;) { select_input_device();
+  $F4BA wave_morale_flag();
+;
+  $F4BD HL = music_ptr_0 + 1; // 16-bit read
+;
+  $F4C1 for (;;) { music_ptr_0 = HL; // 16-bit write
+  $F4C4 DE = &music_data_maybe[0];
+  $F4C7 HL += DE;
+  $F4C8 A = *HL;
+  $F4C9 if (A != 255) break;
+  $F4CD HL = 0;
+  $F4D0 }
+;
+  $F4D2 get_tuning();
+  $F4D5 EXX
+  $F4D6 HL = music_ptr_1 + 1;
+;
+  $F4DA for (;;) { music_ptr_1 = HL;
+  $F4DD DE = &music_data2_maybe[0];
+  $F4E0 HL += DE;
+  $F4E1 A = *HL;
+  $F4E2 if (A != 255) break;
+  $F4E6 HL = 0;
+  $F4E9 }
+;
+  $F4EB get_tuning();
+  $F4EE A = B;
+  $F4EF EXX
+  $F4F0 PUSH BC
+  $F4F1 if (A == 255) {
+  $F4F5 EXX
+  $F4F6 POP BC
+  $F4F7 DE = BC;
+  $F4F9 EXX
+  $F4FA } else {
+  $F4FC POP BC }
+;
+  $F4FD A = 24; // 24 iterations
+  $F4FF do { EX AF,AF'
+  $F500 H = 0xFF;
+;
+  $F502 do { if (--B == 0) {
+  $F504 if (--C == 0) {
+  $F508 L ^= 16;
+  $F50C OUT ($FE),L
+  $F50E BC = DE; } }
+  $F510 EXX
+;
+  $F511 if (--B == 0) {
+  $F513 if (--C == 0) {
+  $F517 L ^= 16;
+  $F51B OUT ($FE),L
+  $F51D BC = DE; } }
+  $F51F EXX
+;
+  $F520 } while (--H);
+  $F524 EX AF,AF'
+  $F525 } while (--A);
+  $F529 }
 
 ; ------------------------------------------------------------------------------
 
-c $F52C get_tuning (music)
-b $F541 music_data_maybe
+c $F52C get_tuning
+R $F52C I:A  Index.
+R $F52C O:BC ...
+R $F52C O:DE ...
+  $F52C BC = music_tuning_table[A];
+  $F537 C++;
+  $F538 B++;
+  $F539 if (B == 0) C++; // unusual 16-bit add?
+  $F53C L = 0;
+  $F53E DE = BC;
+  $F540 return;
+
+w $F541 music_ptr_0
+w $F545 music_ptr_1
+b $F546 unknown/unused
+b $F546 music_data_maybe
 b $F7C7 music_data2_maybe
 
 ; ------------------------------------------------------------------------------
 
-b $FA48 music_tuning_table
+w $FA48 music_tuning_table
 
 ; ------------------------------------------------------------------------------
 
