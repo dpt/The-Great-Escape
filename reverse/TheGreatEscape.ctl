@@ -2968,8 +2968,8 @@ c $9DCF check_morale
 D $9DCF (<- main_loop)
   $9DCF if (morale >= 2) return;
   $9DD5 queue_message_for_display(message_MORALE_IS_ZERO, 0);
-  $9DDB *(morale_related + 1) = 0xFF; // mystery
-  $9DE0 *(morale_related_also) = 0; // mystery
+  $9DDB morale_related[1] = 0xFF; // mystery
+  $9DE0 morale_related_also = 0; // mystery
   $9DE4 return;
 
 ; ------------------------------------------------------------------------------
