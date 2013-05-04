@@ -1708,7 +1708,7 @@ D $7D1C Are we already about to show this message?
   $7D1E if (*HL++ == B && *HL++ == C) return;
 D $7D26 Add it to the queue.
   $7D26 *HL++ = B; *HL++ = C;
-  $7D2B *message_queue_pointer = HL;
+  $7D2B message_queue_pointer = HL;
   $7D2E return;
 
 ; ------------------------------------------------------------------------------
