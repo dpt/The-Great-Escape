@@ -6623,20 +6623,18 @@ R $BADC I:HL Pointer to destination.
 
 ; -----------------------------------------------------------------------------
 
-c $BAF7 ff_anded_with_ff
-  $BAF7 HL = $81B5;
-  $BAFA A = map_position_maybe[0];
-  $BAFD A += $18;
+c $BAF7 sub_BAF7
+D $BAF7 Sets the flags for return but looks like caller never uses them.
+  $BAF7 HL = &map_position_related_1;
+  $BAFA A = map_position_maybe[0] + 24;
   $BAFF A -= *HL;
-  $BB00 JP Z,$BB94
-  $BB03 JP C,$BB94
+  $BB00 if (A <= 0) goto bb94;
   $BB06 CP (IY+$1E)
   $BB09 JP NC,$BB11
-  $BB0C B = $00;
-  $BB0E C = A;
-  $BB0F JR $BB33
+  $BB0C BC = A;
+  $BB0F goto $BB33;
 
-**$BB11 A = *HL;
+  $BB11 A = *HL;
   $BB12 A += (IY+$1E);
   $BB15 HL = $81BB;
   $BB18 A -= *HL;
@@ -6645,20 +6643,16 @@ c $BAF7 ff_anded_with_ff
   $BB1F CP (IY+$1E)
   $BB22 JP NC,$BB2E
   $BB25 C = A;
-  $BB26 NEG
+  $BB26 A = -A;
   $BB28 A += (IY+$1E);
   $BB2B B = A;
-  $BB2C JR $BB33
+  $BB2C goto $BB33;
 
-**$BB2E B = $00;
-  $BB30 C = (IY+$1E);
-**$BB33 A = map_position_maybe[1];
-  $BB36 A += $11;
-  $BB38 L = A;
-  $BB39 H = $00;
-  $BB3B HL += HL;
-  $BB3C HL += HL;
-  $BB3D HL += HL;
+  $BB2E BC = (IY+$1E);
+;
+  $BB33 A = map_position_maybe[1];
+  $BB36 A += 17;
+  $BB38 HL = A * 8;
   $BB3E E = (IY+$1A);
   $BB41 D = (IY+$1B);
   $BB44 A &= A;
@@ -6697,17 +6691,19 @@ c $BAF7 ff_anded_with_ff
   $BB7E CP (IY+$1F)
   $BB81 JP NC,$BB8D
   $BB84 E = A;
-  $BB85 NEG
+  $BB85 A = -A;
   $BB87 A += (IY+$1F);
   $BB8A D = A;
-  $BB8B JR $BB92
+  $BB8B goto $BB92;
 
-**$BB8D D = $00;
+  $BB8D D = 0;
   $BB8F E = (IY+$1F);
-**$BB92 XOR A
+;
+  $BB92 A = 0; // return Z
   $BB93 return;
-**$BB94 A = $FF;
-  $BB96 A &= A;
+
+  $BB94 A = 0xFF;
+  $BB96 A &= A; // return NZ
   $BB97 return;
 
 ; -----------------------------------------------------------------------------
@@ -6737,9 +6733,8 @@ c $BB98 called_from_main_loop_3
   $BBC5 SRL H
   $BBC7 RRA
   $BBC8 ($81B5) = A;
-  $BBCB CALL $BAF7
-  $BBCE CP $FF
-  $BBD0 JP Z,$BC9F
+  $BBCB sub_BAF7();
+  $BBCE if (A == 0xFF) goto BC9F;
   $BBD3 A = E;
   $BBD4 RRA
   $BBD5 RRA
@@ -9748,7 +9743,7 @@ c $E420 sub_E420
   $E474 *DE++ = *HL++;
   $E476 *DE++ = *HL++;
   $E478 memcpy(word_81AC, HL, 4);
-  $E480 ff_anded_with_ff();
+  $E480 sub_BAF7();
   $E483 if (A) return;
 ;
   $E485 PUSH BC
