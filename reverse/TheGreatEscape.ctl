@@ -3813,7 +3813,7 @@ c $A3ED store_banked_A_then_C_at_HL
 c $A3F3 sub_A3F3
 D $A3F3 Checks character indexes, sets target locations, ...
   $A3F3 A = character_index;
-  $A3F6 JR $A404
+  $A3F6 goto $A404;
 
 ; ------------------------------------------------------------------------------
 
@@ -3827,7 +3827,7 @@ c $A3F8 varA13E_is_zero
   $A409 JP Z,$A413
   $A40C JP C,$A413
   $A40F A -= 13;
-  $A411 JR $A41D
+  $A411 goto $A41D;
 
   $A413 BIT 0,A  // if (A & (1<<0)) ...
   $A415 A = 13;
@@ -3858,7 +3858,7 @@ c $A420 character_sits
   $A43E JR C,$A462
 
   $A440 C = 23;
-  $A442 JR $A462
+  $A442 goto $A462;
 
 D $A444 character_sleeps
   $A444 PUSH AF
@@ -4283,7 +4283,7 @@ c $A8CF sub_A8CF
   $A8D9 A = map_position_maybe[0] & 3; // map_position_maybe lo
   $A8DE if (A == 0) HL--;
   $A8E1 A = map_position_maybe[0] - 1; // map_position_maybe lo
-  $A8E5 JR $A8F4
+  $A8E5 goto $A8F4;
 
 ; ------------------------------------------------------------------------------
 
@@ -4832,12 +4832,12 @@ D $AD59 Used by nighttime.
   $AD69 A &= 0x7F;
   $AD6B JP NZ,$AD72
   $AD6E RES 7,*HL
-  $AD70 JR $AD74 // why not just jump direct?
+  $AD70 goto $AD74 // JR-to-JR: Why not just jump direct?;
 
   $AD72 (*HL)--;
   $AD73 A--;
 
-  $AD74 JR $AD78
+  $AD74 goto $AD78;
 
   $AD76 A++;
   $AD77 *HL = A;
@@ -5228,7 +5228,7 @@ c $AFDF sub_AFDF
   $B05B A = bribed_character;
   $B05E if (A != *IY) goto $B068;
   $B063 use_bribe();
-  $B066 JR $B071
+  $B066 goto $B071;
 
   $B068 POP HL
   $B069 POP BC
@@ -5261,7 +5261,7 @@ c $AFDF sub_AFDF
   $B096 JR C,$B09A
   $B098 (*HL) -= 2;
   $B09A *HL++;
-  $B09B JR $B0B8
+  $B09B goto $B0B8;
 
   $B09D CP 1
   $B09F JR NZ,$B0A9
@@ -5271,14 +5271,14 @@ c $AFDF sub_AFDF
   $B0A4 JR Z,$B0B8
 
   $B0A6 *HL++;
-  $B0A7 JR $B0B8
+  $B0A7 goto $B0B8;
 
   $B0A9 CP 2
   $B0AB JR NZ,$B0B2
 
   $B0AD A = C - B;
   $B0AF *HL = A;
-  $B0B0 JR $B0B8
+  $B0B0 goto $B0B8;
 
   $B0B2 A = C - B;
   $B0B4 CP *HL;
@@ -5308,10 +5308,10 @@ c $AFDF sub_AFDF
   $B0E8 BIT 0,C
   $B0EA JR NZ,$B0F2
   $B0EC IY[7] &= ~(1<<5);
-  $B0F0 JR $B0D0
+  $B0F0 goto $B0D0;
 
   $B0F2 IY[7] |= 1<<5;
-  $B0F6 JR $B0D0
+  $B0F6 goto $B0D0;
 
 B $B0F8,4 four_bytes_B0F8
 D $B0F8 (<- sub_AFDF)
@@ -5969,7 +5969,7 @@ c $B5CE called_from_main_loop_9
   $B644 sub_AF8F();
   $B647 JP NZ,$B6A8
   $B64A IY[12]--;
-  $B64D JR $B6A2
+  $B64D goto $B6A2;
 
   $B64F if (A == *HL) goto $B6C2;
   $B653 HL += (A + 1) * 4;
@@ -7323,7 +7323,7 @@ c $C4E0 sub_C4E0
   $C510 DE++;
   $C511 EX AF,AF'
   $C512 } while (--A);
-  $C516 JR $C523
+  $C516 goto $C523;
 
   $C518 B = 3; // 3 iterations
   $C51A do { *HL++ = *DE++;
@@ -7378,7 +7378,7 @@ c $C4E0 sub_C4E0
   $C593 A &= A;
   $C594 JR NZ,$C59C
   $C596 DE += 3;
-  $C59A JR $C5C4
+  $C59A goto $C5C4;
 
   $C59C A = 0;
   $C59D byte_A13E = A;
@@ -7391,7 +7391,7 @@ c $C4E0 sub_C4E0
   $C5AC CALL $CB2D
   $C5AF POP HL
   $C5B0 DE = HL + 2;
-  $C5B4 JR $C592
+  $C5B4 goto $C592;
 
   $C5B6 if (A == 128) IY[1] |= 1<<6;
   $C5BE POP DE
@@ -7860,7 +7860,7 @@ D $C918 ...
   $C965 *DE++ = *HL++;
   $C967 *DE++ = *HL++;
   $C969 POP HL
-  $C96A JR $C9C0 } else {
+  $C96A goto $C9C0 } else {;
 
   $C96C A = 0;
   $C96D *DE = A;
@@ -7900,7 +7900,7 @@ D $C918 ...
   $C9B5 *DE++ = *HL++; }
 
   $C9B7 POP HL
-  $C9B8 JR $C9C0 }
+  $C9B8 goto $C9C0 };
 
   $C9BA A = *++HL;
   $C9BC HL--;
@@ -8124,7 +8124,7 @@ D $CA81 Bribes, solitary, food, 'character enters' sound.
   $CB4A POP HL
   $CB4B A = *HL;
   $CB4C if (A == 0) return;
-  $CB4E JR $CB23
+  $CB4E goto $CB23;
 
   $CB50 *HL++ = *HL ^ 0x80;
   $CB55 if (A & (1<<7)) {
@@ -8214,7 +8214,7 @@ D $CBB1 Reset all items. [unsure]
   $CBCB POP DE
   $CBCC POP AF
   $CBCD } while (++A != 3);
-  $CBD3 JR $CBDC
+  $CBD3 goto $CBDC;
 
   $CBD5 POP DE
   $CBD6 POP AF
@@ -8798,7 +8798,7 @@ c $DC41 sub_DC41
   $DC7B A = $77;
   $DC7D EX AF,AF'
   $DC7E A = C;
-  $DC7F JR $DC86
+  $DC7F goto $DC86;
 
 **$DC81 A = 0;
   $DC82 EX AF,AF'
@@ -8895,8 +8895,9 @@ c $DD02 sub_DD02
   $DD13 JP NC,$DD1B
   $DD16 B = $00;
   $DD18 C = A;
-  $DD19 JR $DD33
-**$DD1B A = (HL);
+  $DD19 goto $DD33;
+ 
+  $DD1B A = (HL);
   $DD1C A += $03;
   $DD1E A -= E;
   $DD1F JR Z,$DD66
@@ -8907,10 +8908,12 @@ c $DD02 sub_DD02
   $DD29 A = $03;
   $DD2B A -= C;
   $DD2C B = A;
-  $DD2D JR $DD33
-**$DD2F B = $00;
+  $DD2D goto $DD33;
+ 
+  $DD2F B = 0;
   $DD31 C = $03;
-**$DD33 A = D;
+;
+  $DD33 A = D;
   $DD34 A += $11;
   $DD36 HL++;
   $DD37 A -= (HL);
@@ -8919,9 +8922,10 @@ c $DD02 sub_DD02
   $DD3C CP $02
   $DD3E JP NC,$DD47
   $DD41 E = $08;
-  $DD43 D = $00;
-  $DD45 JR $DD64
-**$DD47 A = (HL);
+  $DD43 D = 0;
+  $DD45 goto $DD64;
+ 
+  $DD47 A = (HL);
   $DD48 A += $02;
   $DD4A A -= D;
   $DD4B JR Z,$DD66
@@ -8932,8 +8936,9 @@ c $DD02 sub_DD02
   $DD57 A -= $08;
   $DD59 E = A;
   $DD5A D = $08;
-  $DD5C JR $DD64
-**$DD5E D = $00;
+  $DD5C goto $DD64;
+ 
+  $DD5E D = 0;
   $DD60 A = ($8214);
   $DD63 E = A;
 **$DD64 A = 0;
@@ -9155,8 +9160,8 @@ R $E102 I:IY ...
   $E13C EXX
   $E13D HL = ($81A2);
   $E140 D = 0;
-  $E142 JR $E144 // self-modified to jump into ...
-;
+  $E142 goto $E144 // self-modified to jump into ...;
+ 
   $E144 SRL B
   $E146 RR C
   $E148 RR E
@@ -9175,8 +9180,8 @@ R $E102 I:IY ...
   $E15C EXX
   $E15D D = 255;
   $E15F SCF
-  $E160 JR $E162 // self-modified to jump into ...
-;
+  $E160 goto $E162 // self-modified to jump into ...;
+ 
   $E162 RR B
   $E164 RR C
   $E166 RR E
@@ -9286,8 +9291,8 @@ R $E102 I:IY ...
   $E1FD EXX
   $E1FE HL = ($81A2);
   $E201 D = 0;
-  $E203 JR $E205 // self-modified to jump into ...
-;
+  $E203 goto $E205 // self-modified to jump into ...;
+
   $E205 SLA E
   $E207 RL C
   $E209 RL B
@@ -9311,8 +9316,8 @@ R $E102 I:IY ...
   $E225 EXX
   $E226 D = 255;
   $E228 SCF
-  $E229 JR $E22B // self-modified to jump into ...
-;
+  $E229 goto $E22B // self-modified to jump into ...;
+ 
   $E22B RL E
   $E22D RL C
   $E22F RL B
@@ -9441,8 +9446,9 @@ c $E2A2 sub_E2A2
   $E2D5 HL = ($81B0);
   $E2D8 C = $FF;
   $E2DA SCF
-  $E2DB JR $E2DD
-**$E2DD RR D
+  $E2DB goto $E2DD;
+ 
+  $E2DD RR D
   $E2DF RR E
   $E2E1 RR C
   $E2E3 RR D
@@ -9558,8 +9564,9 @@ c $E34E sub_E34E
   $E376 HL = ($81B0);
   $E379 C = $FF;
   $E37B SCF
-  $E37C JR $E37E
-**$E37E RL E
+  $E37C goto $E37E;
+ 
+  $E37E RL E
   $E380 RL D
   $E382 RL C
   $E384 RL E
@@ -9574,8 +9581,9 @@ c $E34E sub_E34E
   $E396 EXX
   $E397 XA |= A;
   $E398 C = A;
-  $E399 JR $E39B
-**$E39B SLA E
+  $E399 goto $E39B;
+ 
+  $E39B SLA E
   $E39D RL D
   $E39F RL C
   $E3A1 SLA E
@@ -9706,8 +9714,8 @@ c $E420 sub_E420
   $E432 HL++;
   $E433 *DE++ = *HL++;
   $E435 HL++;
-  $E436 JR $E44E
-;
+  $E436 goto $E44E;
+ 
   $E438 outdoors: A = *HL++;
   $E43A C = *HL;
   $E43B divide_AC_by_8_with_rounding();
