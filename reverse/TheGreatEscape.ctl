@@ -4847,11 +4847,7 @@ D $AD59 Used by nighttime.
   $AD79 C = *HL++;
   $AD7B B = *HL;
   $AD7C HL -= 2;
-  $AD7E A += A;
-  $AD7F A += C;
-  $AD80 C = A;
-  $AD81 JR NC,$AD84
-  $AD83 B++;
+  $AD7E BC += A * 2;
 
   $AD84 A = *BC;
   $AD85 if (A != 0xFF) goto ad90
