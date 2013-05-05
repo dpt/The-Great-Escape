@@ -5536,7 +5536,7 @@ D $B2E5 Found.
   $B2E5 POP HL
   $B2E6 POP BC
 
-  $B2E7 IY[7] ^= 0x20;
+  $B2E7 IY[7] ^= 0x20; // stop character?
   $B2EF A |= 1;
   $B2F1 return; // return NZ
 
