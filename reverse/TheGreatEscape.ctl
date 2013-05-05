@@ -6657,20 +6657,14 @@ D $BAF7 Sets the flags for return but looks like caller never uses them.
   $BB52 A = L;
   $BB53 CP (IY+$1F)
   $BB56 JP NC,$BB5E
-  $BB59 E = A;
-  $BB5A D = $00;
-  $BB5C JR $BB92
+  $BB59 DE = A;
+  $BB5C goto $BB92;
 
-**$BB5E L = (IY+$1F);
-  $BB61 H = $00;
+  $BB5E HL = (IY+$1F);
   $BB63 HL += DE;
   $BB64 EX DE,HL
   $BB65 A = map_position_maybe[1];
-  $BB68 L = A;
-  $BB69 H = $00;
-  $BB6B HL += HL;
-  $BB6C HL += HL;
-  $BB6D HL += HL;
+  $BB68 HL = A * 8;
   $BB6E EX DE,HL
   $BB6F A &= A;
   $BB70 SBC HL,DE
@@ -6731,8 +6725,7 @@ c $BB98 called_from_main_loop_3
   $BBD4 RRA
   $BBD5 RRA
   $BBD6 RRA
-  $BBD7 A &= $1F;
-  $BBD9 A += $02;
+  $BBD7 A = (A & 31) + 2;
   $BBDB PUSH AF
   $BBDC HL = $81B6;
   $BBDF A += *HL;
@@ -6760,29 +6753,30 @@ c $BB98 called_from_main_loop_3
   $BC05 A = C;
   $BC06 ($BC61) = A;
   $BC09 ($BC89) = A;
-  $BC0C A = $18;
-  $BC0E A -= C;
+  $BC0C A = 24 - C;
   $BC0F ($BC8E) = A;
   $BC12 A += $A8;
   $BC14 ($BC95) = A;
   $BC17 HL = $81BB;
   $BC1A A = B;
-  $BC1B A &= A;
-  $BC1C A = $00;
+  $BC1B A &= A; // looks redundant
+  $BC1C A = 0;
   $BC1E JR NZ,$BC24
   $BC20 A = ($81B5);
   $BC23 A -= *HL;
-**$BC24 B = A;
+;
+  $BC24 B = A;
   $BC25 A = D;
-  $BC26 A &= A;
-  $BC27 A = $00;
+  $BC26 A &= A; // looks redundant
+  $BC27 A = 0;
   $BC29 JR NZ,$BC30
   $BC2B HL++;
   $BC2C A = ($81B6);
   $BC2F A -= *HL;
-**$BC30 C = A;
+;
+  $BC30 C = A;
   $BC31 H = C;
-  $BC32 XOR A
+  $BC32 A = 0;
   $BC33 SRL H
   $BC35 RRA
   $BC36 E = A;
@@ -6791,8 +6785,7 @@ c $BB98 called_from_main_loop_3
   $BC3A RRA
   $BC3B L = A;
   $BC3C HL += DE;
-  $BC3D E = B;
-  $BC3E D = $00;
+  $BC3D DE = B;
   $BC40 HL += DE;
   $BC41 DE = $F290;
   $BC44 HL += DE;
@@ -6802,44 +6795,23 @@ c $BB98 called_from_main_loop_3
   $BC48 POP HL
   $BC49 EXX
   $BC4A A = B;
-  $BC4B L = C;
-  $BC4C H = $00;
-  $BC4E HL += HL;
-  $BC4F HL += HL;
-  $BC50 HL += HL;
-  $BC51 C = L;
-  $BC52 B = H;
-  $BC53 HL += HL;
-  $BC54 HL += BC;
-  $BC55 C = A;
-  $BC56 B = $00;
-  $BC58 HL += BC;
-  $BC59 BC = $F0F8;
+  $BC4B HL = (C * 8) * 3 + A;
+  $BC59 BC = $F0F8; // tiles buf
   $BC5C HL += BC;
   $BC5D EX DE,HL
-  $BC5E C = $05;
-**$BC60 B = $04;
-**$BC62 do { PUSH HL
+  $BC5E C = 5;
+;
+  $BC60 do { B = 4; // iterations
+  $BC62 do { PUSH HL
   $BC63 A = *DE;
   $BC64 EXX
   $BC65 POP DE
   $BC66 PUSH HL
   $BC67 select_tiles();
-  $BC6A L = A;
-  $BC6B H = $00;
-  $BC6D HL += HL;
-  $BC6E HL += HL;
-  $BC6F HL += HL;
-  $BC70 HL += BC;
-  $BC71 BC = $0818;
-**$BC74 do { A = *HL;
-  $BC75 *DE = A;
-  $BC76 A = C;
-  $BC77 A += E;
-  $BC78 JR NC,$BC7B
-  $BC7A D++;
-**$BC7B E = A;
-  $BC7C L++;
+  $BC6A HL = A * 8 + BC;
+  $BC71 B, C = 8, 24; // iterations, stride
+  $BC74 do { *DE = *HL++;
+  $BC76 DE += C;
   $BC7D } while (--B);
   $BC7F POP HL
   $BC80 H++;
