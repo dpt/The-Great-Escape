@@ -6239,7 +6239,7 @@ c $B89C sub_B89C
   $B8A4 EXX
   $B8A5 DE = 0;
   $B8A8 BC = 0x0820; // B = 8 iterations, C = stride, 32
-  $B8AB HL = 0x8007;
+  $B8AB HL = $8007;
   $B8AE do { if ((*HL & (1<<7)) == 0) goto next;
   $B8B2 PUSH HL
   $B8B3 PUSH BC
