@@ -9845,6 +9845,7 @@ D $EBC5 Table of pointers, 30 long, to byte arrays [unsure]  -- probably masks
 
 b $EC01 stru_EC01
 D $EC01 58x 8-byte structs.
+D $EC01 struct { ?, lo, hi, lo, hi, ?, ?, ? };
 
 ; ------------------------------------------------------------------------------
 
