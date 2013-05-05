@@ -10438,6 +10438,7 @@ w $FA48 music_tuning_table
 
 ; ------------------------------------------------------------------------------
 
+; nothing calls this! (so it's just an unused byte)
 c $FDE0 nop
 D $FDE0 No-op subroutine.
   $FDE0 return;
