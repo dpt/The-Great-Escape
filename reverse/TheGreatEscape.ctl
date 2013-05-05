@@ -6150,7 +6150,7 @@ D $B7DB Clear the mess halls.
   $B7EF bench_G = interiorobject_EMPTY_BENCH;
 D $B7F2 Reset characters 12..15 and 20..25.
   $B7F2 DE = &characterstruct_12.BYTE1;
-  $B7F5 C = 10;
+  $B7F5 C = 10; // iterations
   $B7F7 HL = &character_reset_data[0];
   $B7FA do { B = 3; // iterations
   $B7FC do { *DE++ = *HL++;
