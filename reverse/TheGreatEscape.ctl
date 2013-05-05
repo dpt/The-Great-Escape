@@ -6288,17 +6288,13 @@ c $B89C sub_B89C
   $B8FA } while (--B);
   $B8FC sub_DBEB();
   $B8FF EX AF,AF'
-  $B900 BIT 7,A
-  $B902 RET NZ
-  $B903 PUSH IY
-  $B905 POP HL
+  $B900 if (A & (1<<7)) return;
+  $B903 HL = IY;
   $B906 if ((A & (1<<6)) == 0) {
-  $B90A RES 7,(IY+$07)
+  $B90A IY[7] &= ~(1<<7);
   $B90E return; } else {
-  $B90F HL++;
-  $B910 RES 6,*HL
-  $B912 BIT 6,*HL
-  $B914 HL--;
+  $B90F HL[1] &= ~(1<<6);
+  $B912 BIT 6,HL[1]  // test bit ... are we returning flags? but we can't be as we're followed by another instruction...
   $B915 return; }
 
 ; -----------------------------------------------------------------------------
