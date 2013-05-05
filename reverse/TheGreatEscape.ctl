@@ -7416,7 +7416,7 @@ c $C6A0 move_characters
   $C6F2 char_is_zero: A = *HL & 127; // fetching a character index?
   $C6F5 if (A != 36) goto $C6E4;
 ;
-  $C6F9 char_ge_12: POP DE        ;
+  $C6F9 char_ge_12: POP DE
   $C6FA goto character_event; // exit via
 ;
 U $C6FD,2 DEFB $18,$6F  ; UNUSED?
@@ -7445,67 +7445,67 @@ U $C6FD,2 DEFB $18,$6F  ; UNUSED?
   $C725 JR Z,$C729    ; if (A == 0) goto $C729;
   $C727 A = 6;
 ;
-  $C729 EX AF,AF'     ;
+  $C729 EX AF,AF'
   $C72A B = 0;
   $C72C sub_C79A();
   $C72F DE++;
   $C730 HL++;
   $C731 sub_C79A();
-  $C734 POP HL        ;
+  $C734 POP HL
   $C735 A = B;
   $C736 if (A != 2) return;
 ;
   $C739 DE -= 2;
-  $C73B HL--;
-  $C73C A = *HL & 0xFC;
-  $C73F RRA           ;
-  $C740 RRA           ;
-  $C741 *DE = A;
-  $C742 A = *HL & 3;
-  $C745 if (A >= 2) goto $C750;
-  $C749 HL += 5;
-  $C74E JR $C753      ;
-;
-  $C750 HL -= 3;
-;
-  $C753 A = *DE++;
-  $C755 if (A == 0) goto $C761;
-  $C758 LDI           ;
-  $C75A LDI           ;
-  $C75C LDI           ;
-  $C75E DE--;
-  $C75F JR $C78B      ;
-;
-  $C761 B = 3;
-  $C763 do { A = *HL;
-  $C764 AND A         ;
-  $C765 RRA           ;
-  $C766 *DE = A;
-  $C767 HL++;
-  $C768 DE++;
-  $C769 } while (--B);
-  $C76B DE--;
-  $C76C JR $C78B      ;
-;
-  $C76E POP DE        ;
-  $C76F A = DE[-1];
-  $C772 AND A         ;
+  $C73B HL--
+  $C73C A = *HL & 0xFC
+  $C73F RRA
+  $C740 RRA
+  $C741 *DE = A
+  $C742 A = *HL & 3
+  $C745 if (A >= 2) goto $C750
+  $C749 HL += 5
+  $C74E goto $C753;
+
+  $C750 HL -= 3
+
+  $C753 A = *DE++
+  $C755 if (A == 0) goto $C761
+  $C758 LDI
+  $C75A LDI
+  $C75C LDI
+  $C75E DE--
+  $C75F goto $C78B;
+
+  $C761 B = 3
+  $C763 do { A = *HL
+  $C764 A &= A;
+  $C765 RRA
+  $C766 *DE = A
+  $C767 HL++
+  $C768 DE++
+  $C769 } while (--B)
+  $C76B DE--
+  $C76C goto $C78B;
+
+  $C76E POP DE
+  $C76F A = DE[-1]
+  $C772 A &= A;
   $C773 A = 2;      // interleaving again
-  $C775 JR Z,$C779    ;
-  $C777 A = 6;
-;
-  $C779 EX AF,AF'     ;
-  $C77A B = 0;
-  $C77C sub_C79A();
-  $C77F HL++;
-  $C780 DE++;
-  $C781 sub_C79A();
-  $C784 DE++;
-  $C785 A = B;
-  $C786 if (A != 2) return;
-;
-  $C78B DE++;
-  $C78C EX DE,HL      ;
+  $C775 JR Z,$C779
+  $C777 A = 6
+
+  $C779 EX AF,AF'
+  $C77A B = 0
+  $C77C sub_C79A()
+  $C77F HL++
+  $C780 DE++
+  $C781 sub_C79A()
+  $C784 DE++
+  $C785 A = B
+  $C786 if (A != 2) return
+
+  $C78B DE++
+  $C78C EX DE,HL
   $C78D A = *HL;
   $C78E if (A == 0xFF) return;
 ;
