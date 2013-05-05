@@ -5374,15 +5374,15 @@ D $B1AD Found it.
   $B1AD POP DE
   $B1AE POP BC
   $B1AF IY[7] ^= 0x20;
-  $B1B7 A |= 1;
-  $B1B9 return; // return NZ
+  $B1B7 A |= 1; // return NZ
+  $B1B9 return;
 
   $B1BA next: POP DE
   $B1BB POP BC
   $B1BC DE += 6;
   $B1C1 } while (--B);
-  $B1C5 A &= B;
-  $B1C6 return; // return Z
+  $B1C5 A &= B; // return Z
+  $B1C6 return;
 
 ; ------------------------------------------------------------------------------
 
