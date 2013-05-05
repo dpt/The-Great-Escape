@@ -6599,8 +6599,9 @@ D $BAF7 Sets the flags for return but looks like caller never uses them.
 c $BB98 called_from_main_loop_3
   $BB98 B = 8; // iterations
   $BB9A IY = $8000;
-**$BB9E PUSH BC
-  $BB9F A = (IY+$01);
+
+  $BB9E do { PUSH BC
+  $BB9F A = IY[1];
   $BBA2 CP $FF
   $BBA4 JP Z,$BC9F
   $BBA7 H = (IY+$1B);
@@ -6731,19 +6732,20 @@ c $BB98 called_from_main_loop_3
   $BC8F A += E;
   $BC90 JR NC,$BC93
   $BC92 D++;
-**$BC93 E = A;
+;
+  $BC93 E = A;
   $BC94 A = $BC;
   $BC96 A += L;
   $BC97 JR NC,$BC9A
   $BC99 H++;
-**$BC9A L = A;
-  $BC9B C--;
-  $BC9C JP NZ,$BC60
-**$BC9F POP BC
+;
+  $BC9A L = A;
+  $BC9B } while (--C);
+;
+  $BC9F POP BC
   $BCA0 DE = 32;
   $BCA3 IY += DE;
-  $BCA5 B--;
-  $BCA6 JP NZ,$BB9E
+  $BCA6 } while (--B);
   $BCA9 return;
 
 ; -----------------------------------------------------------------------------
@@ -8519,11 +8521,13 @@ c $DB9E called_from_main_loop_8
   $DBA1 CP $FF
   $DBA3 JR NZ,$DBA6
   $DBA5 A = 0;
-**$DBA6 C = A;
+;
+  $DBA6 C = A;
   $DBA7 DE = ($81BB);
   $DBAB B = $10;
   $DBAD HL = $76C9;
-**$DBB0 do { PUSH HL
+;
+  $DBB0 do { PUSH HL
   $DBB1 A = (HL);
   $DBB2 AND $3F
   $DBB4 CP C
@@ -8538,7 +8542,8 @@ c $DB9E called_from_main_loop_8
   $DBBE CP (HL)
   $DBBF JR Z,$DBC3
   $DBC1 JR NC,$DBDC
-**$DBC3 A += $19;
+;
+  $DBC3 A += $19;
   $DBC5 CP (HL)
   $DBC6 JR C,$DBDC
   $DBC8 A = D;
@@ -8547,22 +8552,26 @@ c $DB9E called_from_main_loop_8
   $DBCB CP (HL)
   $DBCC JR Z,$DBD0
   $DBCE JR NC,$DBDC
-**$DBD0 A += $11;
+;
+  $DBD0 A += $11;
   $DBD2 CP (HL)
   $DBD3 JR C,$DBDC
   $DBD5 POP HL
   $DBD6 SET 7,(HL)
   $DBD8 SET 6,(HL)
-  $DBDA JR $DBE1
-**$DBDC POP HL
+  $DBDA goto $DBE1;
+ 
+  $DBDC POP HL
   $DBDD RES 7,(HL)
   $DBDF RES 6,(HL)
-**$DBE1 A = $07;
+;
+  $DBE1 A = $07;
   $DBE3 A += L;
   $DBE4 L = A;
   $DBE5 JR NC,$DBE8
   $DBE7 H++;
-**$DBE8 } while (--B);
+;
+  $DBE8 } while (--B);
   $DBEA return;
 
 ; ------------------------------------------------------------------------------
@@ -8619,14 +8628,17 @@ c $DBEB Uses BC_becomes_A_times_8.
   $DC32 A -= B;
   $DC33 A |= $40;
   $DC35 EX AF,AF'
-**$DC36 POP BC
+;
+  $DC36 POP BC
   $DC37 POP HL
-**$DC38 A = C;
+;
+  $DC38 A = C;
   $DC39 A += L;
   $DC3A L = A;
   $DC3B JR NC,$DC3E
   $DC3D H++;
-**$DC3E } while (--B);
+;
+  $DC3E } while (--B);
   $DC40 return;
 
 ; ------------------------------------------------------------------------------
@@ -8669,16 +8681,18 @@ c $DC41 sub_DC41
   $DC7E A = C;
   $DC7F goto $DC86;
 
-**$DC81 A = 0;
+  $DC81 A = 0;
   $DC82 EX AF,AF'
   $DC83 A = $03;
   $DC85 A -= C;
-**$DC86 EXX
+;
+  $DC86 EXX
   $DC87 C = A;
   $DC88 EX AF,AF'
   $DC89 HL = $E0E0;
   $DC8C B = $03;
-**$DC8E do { E = (HL);
+;
+  $DC8E do { E = (HL);
   $DC8F HL++;
   $DC90 D = (HL);
   $DC91 (DE) = A;
@@ -8691,7 +8705,8 @@ c $DC41 sub_DC41
   $DC98 C--;
   $DC99 JR NZ,$DC9D
   $DC9B XA |= $77;
-**$DC9D } while (--B);
+;
+  $DC9D } while (--B);
   $DC9F EXX
   $DCA0 A = D;
   $DCA1 A &= A;
@@ -8706,14 +8721,16 @@ c $DC41 sub_DC41
   $DCB9 HL += HL;
   $DCBA HL += DE;
   $DCBB EX DE,HL
-**$DCBC A = ($81B5);
+;
+  $DCBC A = ($81B5);
   $DCBF HL = $81BB;
   $DCC2 A -= (HL);
   $DCC3 L = A;
   $DCC4 H = 0;
   $DCC6 JR NC,$DCCA
   $DCC8 H = $FF;
-**$DCCA HL += DE;
+;
+  $DCCA HL += DE;
   $DCCB DE = $F290;
   $DCCE HL += DE;
   $DCCF ($81A2) = HL;
@@ -8735,10 +8752,12 @@ c $DC41 sub_DC41
   $DCE6 A = 0;
   $DCE7 E = $03;
   $DCE9 E--;
-**$DCEA A += E;
+;
+  $DCEA A += E;
   $DCEB D--;
   $DCEC JP NZ,$DCEA
-**$DCEF E = A;
+;
+  $DCEF E = A;
   $DCF0 HL = ($81AC);
   $DCF3 HL += DE;
   $DCF4 ($81AC) = HL;
@@ -8810,9 +8829,11 @@ c $DD02 sub_DD02
   $DD5E D = 0;
   $DD60 A = ($8214);
   $DD63 E = A;
-**$DD64 A = 0;
+;
+  $DD64 A = 0;
   $DD65 return;
-**$DD66 A |= $01;
+;
+  $DD66 A |= $01;
   $DD68 return;
 
 ; ------------------------------------------------------------------------------
@@ -9285,7 +9306,8 @@ c $E2A2 sub_E2A2
   $E2A7 CP $04
   $E2A9 JP NC,$E34E
 ; This entry point is used by the routine at #R$E29F.
-**$E2AC CPL
+;
+  $E2AC CPL
   $E2AD A &= $03;
   $E2AF A += A;
   $E2B0 H = A;
@@ -9330,8 +9352,9 @@ c $E2A2 sub_E2A2
   $E2EF EXX
   $E2F0 C = 0;
   $E2F2 A &= A;
-  $E2F3 JR $E2F5
-**$E2F5 SRL D
+  $E2F3 goto $E2F5;
+ 
+  $E2F5 SRL D
   $E2F7 RR E
   $E2F9 RR C
   $E2FB SRL D
