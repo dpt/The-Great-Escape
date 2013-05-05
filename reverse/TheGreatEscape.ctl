@@ -8359,9 +8359,9 @@ R $CCFB O:C ?
 ; ------------------------------------------------------------------------------
 
 c $CD31 item_discovered
-R $CD31 I:C ...
+R $CD31 I:C Item.
   $CD31 A = C;
-  $CD32 if (A == 0xFF) return;
+  $CD32 if (A == item_NONE) return;
   $CD35 A &= 0x0F;
   $CD37 PUSH AF
   $CD38 queue_message_for_display(message_ITEM_DISCOVERED);
