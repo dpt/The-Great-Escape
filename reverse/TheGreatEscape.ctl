@@ -10424,8 +10424,8 @@ R $F52C O:DE ...
   $F540 return;
 
 w $F541 music_ptr_0
-w $F545 music_ptr_1
-b $F546 unknown/unused
+w $F543 music_ptr_1
+b $F545 unknown/unused
 b $F546 music_data_maybe
 b $F7C7 music_data2_maybe
 
