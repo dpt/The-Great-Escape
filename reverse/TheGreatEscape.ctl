@@ -7818,76 +7818,45 @@ D $C918 ...
 ; ------------------------------------------------------------------------------
 
 c $CA11 sub_CA11
+R $CA11 I:HL Pointer to ?
+R $CA11 O:HL Pointer to ?
   $CA11 A = *HL;
-  $CA12 BC_becomes_A_times_8();      // self modified
+  $CA12 BC_becomes_A_times_8();      // self modified by $C9DA
   $CA15 HL += 11;
   $CA19 E = *HL++;
   $CA1B D = *HL;
   $CA1C EX DE,HL
-  $CA1D SBC HL,BC
-  $CA1F JR Z,$CA3E
-  $CA21 JP M,$CA30
-  $CA24 A = H;
-  $CA25 A &= A;
-  $CA26 JR NZ,$CA2D
-  $CA28 A = L;
-  $CA29 CP 3
-  $CA2B JR C,$CA3E
-  $CA2D A = 8;
-  $CA2F return;
-
-  $CA30 A = H;
-  $CA31 CP 255
-  $CA33 JR NZ,$CA3B
-  $CA35 A = L;
-  $CA36 CP 254
-  $CA38 JP NC,$CA3E
-  $CA3B A = 4;
-  $CA3D return;
-
+  $CA1D HL -= BC;
+  $CA1F if (HL) {
+  $CA21 if (HL > 0) {
+  $CA24 if (H != 0 || L >= 3) { A = 8; return; } } else {
+  $CA30 if (H != 255 || L < 254) { A = 4; return; } } }
   $CA3E EX DE,HL
-  $CA3F A = L;
-  $CA40 SUB 11
-  $CA42 L = A;
-  $CA43 SET 5,IY[7]
+  $CA3F HL -= 11;
+  $CA43 IY[7] |= 1<<5;
   $CA47 A = 0;
   $CA48 return;
 
 ; ------------------------------------------------------------------------------
 
 c $CA49 sub_CA49
+D $CA49 Nearly identical routine to sub_CA11 above.
+R $CA49 I:HL Pointer to ?
+R $CA49 O:HL Pointer to ?
   $CA49 A = *HL;
-  $CA4A BC_becomes_A_times_8();       // self modified
+  $CA4A BC_becomes_A_times_8();       // self modified by $C9DD
   $CA4D HL += 12;
   $CA51 E = *HL++;
   $CA53 D = *HL;
   $CA54 EX DE,HL
-  $CA55 SBC HL,BC
-  $CA57 JR Z,$CA76
-  $CA59 JP M,$CA68
-  $CA5C A = H;
-  $CA5D A &= A;
-  $CA5E JR NZ,$CA65
-  $CA60 A = L;
-  $CA61 CP 3
-  $CA63 JR C,$CA76
-  $CA65 A = 5;
-  $CA67 return;
-
-  $CA68 A = H;
-  $CA69 CP 255
-  $CA6B JR NZ,$CA73
-  $CA6D A = L;
-  $CA6E CP 254
-  $CA70 JP NC,$CA76
-  $CA73 A = 7;
-  $CA75 return;
-
+  $CA55 HL -= BC;
+  $CA57 if (HL) {
+  $CA59 if (HL > 0) {
+  $CA5C if (H != 0 || L >= 3) { A = 5; return; } } else {
+  $CA68 if (H != 255 || L < 254) { A = 7; return; } } }
   $CA76 EX DE,HL
-  $CA77 A = L;
-  $CA78 SUB 14
-  $CA7A L = A;
-  $CA7B RES 5,IY[7]
+  $CA77 HL -= 14;
+  $CA7B IY[7] &= ~(1<<5);
   $CA7F A = 0;
   $CA80 return;
 
