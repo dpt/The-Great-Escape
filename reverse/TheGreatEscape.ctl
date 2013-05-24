@@ -8281,10 +8281,10 @@ D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
 ; ------------------------------------------------------------------------------
 
 b $CD9A character_meta_data
-  $CD9A struct ... { something_character_related, sprite_commandant_tl_4 } meta_commandant; (<- sub_C4E0)
-  $CD9E struct ... { something_character_related, sprite_guard_tl_4 }      meta_guard;      (<- sub_C4E0)
-  $CDA2 struct ... { something_character_related, sprite_dog_tl_4 }        meta_dog;        (<- sub_C4E0)
-  $CDA6 struct ... { something_character_related, sprite_prisoner_tl_4 }   meta_prisoner;   (<- sub_C4E0)
+  $CD9A { &something_character_related[0], &sprites[30] } // meta_commandant (<- sub_C4E0)
+  $CD9E { &something_character_related[0], &sprites[22] } // meta_guard (<- sub_C4E0)
+  $CDA2 { &something_character_related[0], &sprites[14] } // meta_dog (<- sub_C4E0)
+  $CDA6 { &something_character_related[0], &sprites[2]  } // meta_prisoner (<- sub_C4E0)
 
 ; ------------------------------------------------------------------------------
 
@@ -8328,44 +8328,44 @@ D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 D $CE22 Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
 D $CE22 'tl' => character faces top left of the screen
 D $CE22 'br' => character faces bottom right of the screen
-  $CE22 sprite_stove           (16x22)
-  $CE28 sprite_crate           (24x24)
-  $CE2E sprite_prisoner_tl_4   (16x27)
-  $CE34 sprite_prisoner_tl_3   (16x28)
-  $CE3A sprite_prisoner_tl_2   (16x28)
-  $CE40 sprite_prisoner_tl_1   (16x28)
-  $CE46 sprite_prisoner_br_1   (16x27)
-  $CE4C sprite_prisoner_br_2   (16x29)
-  $CE52 sprite_prisoner_br_3   (16x28)
-  $CE58 sprite_prisoner_br_4   (16x28)
-  $CE5E sprite_crawl_bl_2      (24x16)
-  $CE64 sprite_crawl_bl_1      (24x15)
-  $CE6A sprite_crawl_tl_1      (24x16)
-  $CE70 sprite_crawl_tl_2      (24x16)
-  $CE76 sprite_dog_tl_4        (24x16)
-  $CE7C sprite_dog_tl_3        (24x16)
-  $CE82 sprite_dog_tl_2        (24x15)
-  $CE88 sprite_dog_tl_1        (24x15)
-  $CE8E sprite_dog_br_1        (24x14)
-  $CE94 sprite_dog_br_2        (24x15)
-  $CE9A sprite_dog_br_3        (24x15)
-  $CEA0 sprite_dog_br_4        (24x14)
-  $CEA6 sprite_guard_tl_4      (16x27)
-  $CEAC sprite_guard_tl_3      (16x29)
-  $CEB2 sprite_guard_tl_2      (16x27)
-  $CEB8 sprite_guard_tl_1      (16x27)
-  $CEBE sprite_guard_br_1      (16x29)
-  $CEC4 sprite_guard_br_2      (16x29)
-  $CECA sprite_guard_br_3      (16x28)
-  $CED0 sprite_guard_br_4      (16x28)
-  $CED6 sprite_commandant_tl_4 (16x28)
-  $CEDC sprite_commandant_tl_3 (16x30)
-  $CEE2 sprite_commandant_tl_2 (16x29)
-  $CEE8 sprite_commandant_tl_1 (16x29)
-  $CEEE sprite_commandant_br_1 (16x27)
-  $CEF4 sprite_commandant_br_2 (16x28)
-  $CEFA sprite_commandant_br_3 (16x27)
-  $CF00 sprite_commandant_br_4 (16x28)
+  $CE22 { 3, 22, &bitmap_stove          , &mask_stove        } // (16x22,$DB46,$DB72)
+  $CE28 { 4, 24, &bitmap_crate          , &mask_crate        } // (24x24,$DAB6,$DAFE)
+  $CE2E { 3, 27, &bitmap_prisoner_tl_4  , &mask_various_tl_4 } // (16x27,$D28C,$D545)
+  $CE34 { 3, 28, &bitmap_prisoner_tl_3  , &mask_various_tl_3 } // (16x28,$D256,$D505)
+  $CE3A { 3, 28, &bitmap_prisoner_tl_2  , &mask_various_tl_2 } // (16x28,$D220,$D4C5)
+  $CE40 { 3, 28, &bitmap_prisoner_tl_1  , &mask_various_tl_1 } // (16x28,$D1EA,$D485)
+  $CE46 { 3, 27, &bitmap_prisoner_br_1  , &mask_various_br_1 } // (16x27,$D2C0,$D585)
+  $CE4C { 3, 29, &bitmap_prisoner_br_2  , &mask_various_br_2 } // (16x29,$D2F4,$D5C5)
+  $CE52 { 3, 28, &bitmap_prisoner_br_3  , &mask_various_br_3 } // (16x28,$D32C,$D605)
+  $CE58 { 3, 28, &bitmap_prisoner_br_4  , &mask_various_br_4 } // (16x28,$D362,$D63D)
+  $CE5E { 4, 16, &bitmap_crawl_bl_2     , &mask_crawl_bl     } // (24x16,$D3C5,$D677)
+  $CE64 { 4, 15, &bitmap_crawl_bl_1     , &mask_crawl_bl     } // (24x15,$D398,$D677)
+  $CE6A { 4, 16, &bitmap_crawl_tl_1     , &mask_crawl_bl     } // (24x16,$D3F5,$D455)
+  $CE70 { 4, 16, &bitmap_crawl_tl_2     , &mask_crawl_bl     } // (24x16,$D425,$D455)
+  $CE76 { 4, 16, &bitmap_dog_tl_1       , &mask_dog_tl       } // (24x16,$D867,$D921)
+  $CE7C { 4, 16, &bitmap_dog_tl_2       , &mask_dog_tl       } // (24x16,$D897,$D921)
+  $CE82 { 4, 15, &bitmap_dog_tl_3       , &mask_dog_tl       } // (24x15,$D8C7,$D921)
+  $CE88 { 4, 15, &bitmap_dog_tl_4       , &mask_dog_tl       } // (24x15,$D8F4,$D921)
+  $CE8E { 4, 14, &bitmap_dog_br_1       , &mask_dog_br       } // (24x14,$D951,$D9F9)
+  $CE94 { 4, 15, &bitmap_dog_br_2       , &mask_dog_br       } // (24x15,$D97B,$D9F9)
+  $CE9A { 4, 15, &bitmap_dog_br_3       , &mask_dog_br       } // (24x15,$D9A8,$D9F9)
+  $CEA0 { 4, 14, &bitmap_dog_br_4       , &mask_dog_br       } // (24x14,$D9CF,$D9F9)
+  $CEA6 { 3, 27, &bitmap_guard_tl_4     , &mask_various_tl_4 } // (16x27,$D74D,$D545)
+  $CEAC { 3, 29, &bitmap_guard_tl_3     , &mask_various_tl_3 } // (16x29,$D713,$D505)
+  $CEB2 { 3, 27, &bitmap_guard_tl_2     , &mask_various_tl_2 } // (16x27,$D6DD,$D4C5)
+  $CEB8 { 3, 27, &bitmap_guard_tl_1     , &mask_various_tl_1 } // (16x27,$D6A7,$D485)
+  $CEBE { 3, 29, &bitmap_guard_br_1     , &mask_various_br_1 } // (16x29,$D783,$D585)
+  $CEC4 { 3, 29, &bitmap_guard_br_2     , &mask_various_br_2 } // (16x29,$D7BD,$D5C5)
+  $CECA { 3, 28, &bitmap_guard_br_3     , &mask_various_br_3 } // (16x28,$D7F7,$D605)
+  $CED0 { 3, 28, &bitmap_guard_br_4     , &mask_various_br_4 } // (16x28,$D82F,$D63D)
+  $CED6 { 3, 28, &bitmap_commandant_tl_4, &mask_various_tl_4 } // (16x28,$D0D6,$D545)
+  $CEDC { 3, 30, &bitmap_commandant_tl_3, &mask_various_tl_3 } // (16x30,$D09A,$D505)
+  $CEE2 { 3, 29, &bitmap_commandant_tl_2, &mask_various_tl_2 } // (16x29,$D060,$D4C5)
+  $CEE8 { 3, 29, &bitmap_commandant_tl_1, &mask_various_tl_1 } // (16x29,$D026,$D485)
+  $CEEE { 3, 27, &bitmap_commandant_br_1, &mask_various_br_1 } // (16x27,$D10E,$D585)
+  $CEF4 { 3, 28, &bitmap_commandant_br_2, &mask_various_br_2 } // (16x28,$D144,$D5C5)
+  $CEFA { 3, 27, &bitmap_commandant_br_3, &mask_various_br_3 } // (16x27,$D17C,$D605)
+  $CF00 { 3, 28, &bitmap_commandant_br_4, &mask_various_br_4 } // (16x28,$D1B2,$D63D)
 
 ; ------------------------------------------------------------------------------
 
@@ -8402,51 +8402,41 @@ b $D026 sprite_bitmaps_and_masks
 D $D026 Sprite bitmaps and masks.
 B $D026 Raw data.
 ;
-D $D026 #UDGTABLE { #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(commandant-top-left-1) | #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(commandant-top-left-2) | #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,116}(commandant-top-left-3) | #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(commandant-top-left-4) } TABLE#
-D $D026 Masks need inverting: #UDGARRAY2,7,4,2;$D026-$D05F-1-16:$D485-$D4C4-1-16{0,0,64,116}(commandant-top-left-1masked)
 B $D026 bitmap: COMMANDANT FACING TOP LEFT 1
 B $D060 bitmap: COMMANDANT FACING TOP LEFT 2
 B $D09A bitmap: COMMANDANT FACING TOP LEFT 3
 B $D0D6 bitmap: COMMANDANT FACING TOP LEFT 4
 ;
-D $D10E #UDGTABLE { #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(commandant-bottom-right-1) | #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(commandant-bottom-right-2) | #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(commandant-bottom-right-3) | #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(commandant-bottom-right-4) } TABLE#
 B $D10E bitmap: COMMANDANT FACING BOTTOM RIGHT 1
 B $D144 bitmap: COMMANDANT FACING BOTTOM RIGHT 2
 B $D17C bitmap: COMMANDANT FACING BOTTOM RIGHT 3
 B $D1B2 bitmap: COMMANDANT FACING BOTTOM RIGHT 4
 ;
-D $D1EA #UDGTABLE { #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(prisoner-top-left-1) | #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(prisoner-top-left-2) | #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(prisoner-top-left-3) | #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(prisoner-top-left-4) } TABLE#
 B $D1EA bitmap: PRISONER FACING TOP LEFT 1
 B $D220 bitmap: PRISONER FACING TOP LEFT 2
 B $D256 bitmap: PRISONER FACING TOP LEFT 3
 B $D28C bitmap: PRISONER FACING TOP LEFT 4
 ;
-D $D2C0 #UDGTABLE { #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(prisoner-bottom-right-1) | #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(prisoner-bottom-right-2) | #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(prisoner-bottom-right-3) | #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(prisoner-bottom-right-4) } TABLE#
 B $D2C0 bitmap: PRISONER FACING BOTTOM RIGHT 1
 B $D2F4 bitmap: PRISONER FACING BOTTOM RIGHT 2
 B $D32C bitmap: PRISONER FACING BOTTOM RIGHT 3
 B $D362 bitmap: PRISONER FACING BOTTOM RIGHT 4
 ;
-D $D398 #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,64}(crawl-bottom-left-1)
-D $D3C5 #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,60}(crawl-bottom-left-2)
-D $D3F5 #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(crawl-top-left-1)
-D $D425 #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(crawl-top-left-2)
-D $D455 #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(crawl-mask-top-left-shared)
 B $D398 bitmap: CRAWL FACING BOTTOM LEFT 1
 B $D3C5 bitmap: CRAWL FACING BOTTOM LEFT 2
 B $D3F5 bitmap: CRAWL FACING TOP LEFT 1
 B $D425 bitmap: CRAWL FACING TOP LEFT 2
 B $D455 mask: CRAWL FACING TOP LEFT (shared)
 ;
-B $D485 mask: COMMANDANT FACING TOP LEFT 1
-B $D4C5 mask: COMMANDANT FACING TOP LEFT 2
-B $D505 mask: COMMANDANT FACING TOP LEFT 3
-B $D545 mask: COMMANDANT FACING TOP LEFT 4
+B $D485 mask: VARIOUS FACING TOP LEFT 1
+B $D4C5 mask: VARIOUS FACING TOP LEFT 2
+B $D505 mask: VARIOUS FACING TOP LEFT 3
+B $D545 mask: VARIOUS FACING TOP LEFT 4
 ;
-B $D585 mask: COMMANDANT FACING BOTTOM RIGHT 1
-B $D5C5 mask: COMMANDANT FACING BOTTOM RIGHT 2
-B $D605 mask: COMMANDANT FACING BOTTOM RIGHT 3
-B $D63D mask: COMMANDANT FACING BOTTOM RIGHT 4
+B $D585 mask: VARIOUS FACING BOTTOM RIGHT 1
+B $D5C5 mask: VARIOUS FACING BOTTOM RIGHT 2
+B $D605 mask: VARIOUS FACING BOTTOM RIGHT 3
+B $D63D mask: VARIOUS FACING BOTTOM RIGHT 4
 B $D677 mask: CRAWL FACING BOTTOM LEFT (shared)
 ;
 B $D6A7 bitmap: GUARD FACING TOP LEFT 1
@@ -8459,10 +8449,10 @@ B $D7BD bitmap: GUARD FACING BOTTOM RIGHT 2
 B $D7F7 bitmap: GUARD FACING BOTTOM RIGHT 3
 B $D82F bitmap: GUARD FACING BOTTOM RIGHT 4
 ;
-B $D867 bitmap: DOG FACING TOP LEFT 4
-B $D897 bitmap: DOG FACING TOP LEFT 3
-B $D8C7 bitmap: DOG FACING TOP LEFT 2
-B $D8F4 bitmap: DOG FACING TOP LEFT 1
+B $D867 bitmap: DOG FACING TOP LEFT 1
+B $D897 bitmap: DOG FACING TOP LEFT 2
+B $D8C7 bitmap: DOG FACING TOP LEFT 3
+B $D8F4 bitmap: DOG FACING TOP LEFT 4
 B $D921 mask: DOG FACING TOP LEFT (shared)
 ;
 B $D951 bitmap: DOG FACING BOTTOM RIGHT 1
@@ -8479,6 +8469,79 @@ B $DAFE mask: CRATE
 ;
 B $DB46 bitmap: STOVE
 B $DB72 mask: STOVE
+
+;
+; UDGs for above
+;
+
+D $D026 #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1)
+D $D060 #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2)
+D $D09A #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-3)
+D $D0D6 #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-top-left-4)
+;
+D $D10E #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-1)
+D $D144 #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-2)
+D $D17C #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-3)
+D $D1B2 #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-4)
+;
+D $D1EA #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-1)
+D $D220 #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-2)
+D $D256 #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-3)
+D $D28C #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(bitmap-prisoner-facing-top-left-4)
+;
+D $D2C0 #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(bitmap-prisoner-facing-bottom-right-1)
+D $D2F4 #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-bottom-right-2)
+D $D32C #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-3)
+D $D362 #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-4)
+;
+D $D398 #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-left-1)
+D $D3C5 #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-left-2)
+D $D3F5 #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-1)
+D $D425 #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-2)
+D $D455 #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left)
+;
+D $D485 #UDGARRAY2,7,4,2;$D485-$D4C4-1-16{0,0,64,116}(mask-various-facing-top-left-1)
+D $D4C5 #UDGARRAY2,7,4,2;$D4C5-$D504-1-16{0,0,64,116}(mask-various-facing-top-left-2)
+D $D505 #UDGARRAY2,7,4,2;$D505-$D544-1-16{0,0,64,116}(mask-various-facing-top-left-3)
+D $D545 #UDGARRAY2,7,4,2;$D545-$D584-1-16{0,0,64,112}(mask-various-facing-top-left-4)
+;
+D $D585 #UDGARRAY2,7,4,2;$D585-$D5C4-1-16{0,0,64,108}(mask-various-facing-top-right-1)
+D $D5C5 #UDGARRAY2,7,4,2;$D5C5-$D604-1-16{0,0,64,112}(mask-various-facing-top-right-2)
+D $D605 #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,108}(mask-various-facing-top-right-3)
+D $D63D #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,112}(mask-various-facing-top-right-4)
+D $D677 #UDGARRAY3,7,4,3;$D677-$D6A6-1-24{0,0,96,64}(mask-crawl-facing-bottom-left)
+;
+D $D6A7 #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(mask-guard-facing-top-left-1)
+D $D6DD #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(mask-guard-facing-top-left-2)
+D $D713 #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(mask-guard-facing-top-left-3)
+D $D74D #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(mask-guard-facing-top-left-4)
+;
+D $D783 #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(mask-guard-facing-bottom-right-1)
+D $D7BD #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(mask-guard-facing-bottom-right-2)
+D $D7F7 #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(mask-guard-facing-bottom-right-3)
+D $D82F #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(mask-guard-facing-bottom-right-4)
+;
+D $D867 #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1)
+D $D897 #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2)
+D $D8C7 #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3)
+D $D8F4 #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4)
+D $D921 #UDGARRAY3,7,4,3;$D921-$D950-1-24{0,0,96,64}(mask-dog-facing-top-left)
+;
+D $D951 #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-1)
+D $D97B #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-2)
+D $D9A8 #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,52}(bitmap-dog-facing-bottom-right-3)
+D $D9CF #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-4)
+D $D9F9 #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24{0,0,96,64}(mask-dog-facing-bottom-right)
+;
+; I'm currently unsure of the exact dimensions of the following flag graphics.
+D $DA29 #UDGARRAY3,7,4,3;$DA29-$DA6A-1-24{0,0,96,96}(flag-up)
+D $DA6B #UDGARRAY3,7,4,3;$DA6B-$DAB5-1-24{0,0,96,96}(flag-down)
+;
+D $DAB6 #UDGARRAY3,7,4,3;$DAB6-$DAFD-1-24{0,0,96,96}(bitmap-crate)
+D $DAFE #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24{0,0,96,96}(mask-crate)
+;
+D $DB46 #UDGARRAY2,7,4,2;$DB46-$DB72-1-16{0,0,64,88}(bitmap-stove)
+D $DB72 #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16{0,0,64,88}(mask-stove)  
 
 ; ------------------------------------------------------------------------------
 
