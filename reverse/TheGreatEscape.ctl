@@ -994,22 +994,22 @@ R $6AB5 O:HL Corrupted.
 ;
 ; 128..255 case
   $6AF4 A = *HL++ & 0x7F;
-  $6AF7 EX AF,AF'
-  $6AF9 A = *HL;
-  $6AFA EX AF,AF'
+  $6AF7 -
+  $6AF9 Adash = *HL;
+  $6AFA -
 ;
-  $6AFB do { EX AF,AF'
-  $6AFC if (A > 0) *DE = A;
+  $6AFB do {
+  $6AFC if (Adash > 0) *DE = Adash;
 ;
   $6B00 DE++;
   $6B01 DJNZ $6B12
 ; ran out of width
-  $6B03 LD A,($6AE7)    // A = width
-  $6B07 DE += 24 - A;   // stride
-  $6B0F A = *HL;
+  $6B03 LD Adash,($6AE7)    // Adash = width
+  $6B07 DE += 24 - Adash;   // stride
+  $6B0F Adash = *HL;
   $6B10 if (--C == 0) return;
 ;
-  $6B12 EX AF,AF'
+  $6B12 -
   $6B13 } while (--A);
   $6B16 HL++;
   $6B17 goto expand;
@@ -1018,21 +1018,21 @@ R $6AB5 O:HL Corrupted.
   $6B19 A = 60;         // 'INC A'
   $6B1B LD ($6B28),A    // self modify (but nothing else modifies it! possible evidence that other encodings with 'DEC A' were attempted)
   $6B1E A = *HL++ & 0x0F;
-  $6B21 EX AF,AF'
-  $6B23 A = *HL;
-  $6B24 EX AF,AF'
+  $6B21 -
+  $6B23 Adash = *HL;
+  $6B24 -
 ;
-  $6B25 do { EX AF,AF'
-  $6B26 *DE++ = A;
-  $6B28 INC A           // self modified
+  $6B25 do { -
+  $6B26 *DE++ = Adash;
+  $6B28 INC Adash           // self modified
   $6B29 DJNZ $6B3B
-  $6B2B PUSH AF
-  $6B2C LD A,($6AE7)    // A = width
-  $6B30 DE += 24 - A;   // stride
-  $6B38 POP AF
+  $6B2B PUSH AFdash
+  $6B2C LD Adash,($6AE7)    // Adash = width
+  $6B30 DE += 24 - Adash;   // stride
+  $6B38 POP AFdash
   $6B3A if (--C == 0) return;
 ;
-  $6B3B EX AF,AF'
+  $6B3B -
   $6B3D } while (--A);
   $6B3F HL++;
   $6B40 goto expand;
