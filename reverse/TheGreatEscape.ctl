@@ -8540,60 +8540,44 @@ D $DB72 #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16{0,0,64,88}(mask-stove)
 ; ------------------------------------------------------------------------------
 
 c $DB9E called_from_main_loop_8
-  $DB9E A = ($68A0);
-  $DBA1 CP $FF
-  $DBA3 JR NZ,$DBA6
-  $DBA5 A = 0;
+D $DB9E Iterates over item structs.
+  $DB9E A = indoor_room_index;
+  $DBA1 if (A == room_NONE) A = 0;
 ;
-  $DBA6 C = A;
-  $DBA7 DE = ($81BB);
-  $DBAB B = $10;
-  $DBAD HL = $76C9;
+; similar to sub_CCFB (in that it iterates over item_structs)
+  $DBA6 C = A; // room ref
+  $DBA7 DE = map_position_maybe;
+  $DBAB B = 16; // items__LIMIT
+  $DBAD HL = &item_structs[0].room;
 ;
   $DBB0 do { PUSH HL
-  $DBB1 A = (HL);
-  $DBB2 AND $3F
-  $DBB4 CP C
-  $DBB5 JR NZ,$DBDC
-  $DBB7 HL++;
-  $DBB8 HL++;
-  $DBB9 HL++;
-  $DBBA HL++;
-  $DBBB A = E;
-  $DBBC A--;
-  $DBBD A--;
-  $DBBE CP (HL)
-  $DBBF JR Z,$DBC3
-  $DBC1 JR NC,$DBDC
+  $DBB1 A = *HL & 0x3F; // get room no.
+  $DBB4 if (A != C) goto reset;
 ;
-  $DBC3 A += $19;
-  $DBC5 CP (HL)
-  $DBC6 JR C,$DBDC
+D $DBB4 (A - 2 .. A + 23)
+  $DBB7 HL += 4;
+  $DBBB A = E - 2; // map pos
+  $DBBE -
+  $DBC1 if (A > *HL) goto reset;
+  $DBC3 A += 25; // map pos
+  $DBC5 if (A < *HL) goto reset;
+;
+D $DBC8 (A - 1 .. A + 16)
   $DBC8 A = D;
   $DBC9 HL++;
-  $DBCA A--;
-  $DBCB CP (HL)
-  $DBCC JR Z,$DBD0
-  $DBCE JR NC,$DBDC
-;
-  $DBD0 A += $11;
-  $DBD2 CP (HL)
-  $DBD3 JR C,$DBDC
+  $DBCA A = A - 1; // map pos
+  $DBCB -
+  $DBCE if (A > *HL) goto reset;
+  $DBD0 A += 17; // map pos
+  $DBD2 if (A < *HL) goto reset;
   $DBD5 POP HL
-  $DBD6 SET 7,(HL)
-  $DBD8 SET 6,(HL)
-  $DBDA goto $DBE1;
- 
-  $DBDC POP HL
-  $DBDD RES 7,(HL)
-  $DBDF RES 6,(HL)
+  $DBD6 *HL |= (1<<6) | (1<<7);
+  $DBDA goto continue;
+
+  $DBDC reset: POP HL
+  $DBDD *HL &= ~((1<<6) | (1<<7));
 ;
-  $DBE1 A = $07;
-  $DBE3 A += L;
-  $DBE4 L = A;
-  $DBE5 JR NC,$DBE8
-  $DBE7 H++;
-;
+  $DBE1 continue: HL += 7; // stride
   $DBE8 } while (--B);
   $DBEA return;
 
