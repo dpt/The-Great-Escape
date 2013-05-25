@@ -22,9 +22,7 @@
 ;   - sub_* functions
 ;   - '...' indicates a gap in documentation
 ; - Map out game state at $8000+ which overlaps graphics.
-; - Extract all images.
-;   - Sort out inverted masks issue.
-; - Drop 'resources' dir if possible.
+; - Sort out inverted masks issue.
 ; - Use SkoolKit # refs more.
 ;   - Currently using (<- somefunc) to show a reference.
 ; - Extract font.
