@@ -3244,7 +3244,7 @@ D $A04A Decreasing morale.
 ; ------------------------------------------------------------------------------
 
 c $A071 set_morale_flag_screen_attributes
-R $A071 A Attributes to use.
+R $A071 I:A Attributes to use.
   $A071 HL = $5842; // first attribute byte
   $A074 DE = $001E; // skip
   $A077 B  = $13;
