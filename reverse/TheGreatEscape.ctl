@@ -6300,11 +6300,7 @@ c $B89C sub_B89C
 
 c $B916 sub_B916
 D $B916 Sets attr of something, checks indoor room index, ...
-  $B916 HL = $8100; // memset 0xa0 bytes to 0xff
-  $B919 *HL = $FF;
-  $B91B DE = $8101;
-  $B91E BC = 0x9F;
-  $B921 LDIR
+  $B916 memset($8100, 0xFF, 0xA0);
   $B923 if (indoor_room_index) {
   $B929 HL = &byte_81DA;
   $B92C A = *HL;
