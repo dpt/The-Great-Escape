@@ -6492,18 +6492,18 @@ D $BA1C If I break this bit then the character gets drawn on top of *indoors* ob
 ; -----------------------------------------------------------------------------
 
 c $BADC mask_against_tile
-D $BADC Tiles related. Masks characters obscured by foreground objects.
+D $BADC Masks characters obscured by foreground objects.
 R $BADC I:A  Mask tile index.
 R $BADC I:HL Pointer to destination.
-  $BADC PUSH HL
-  $BADD EXX
-  $BADE HL = &tiles[A];
-  $BAE8 POP DE
-  $BAE9 B = 8; // 8 iterations
-  $BAEB do { *DE &= *HL++;
-  $BAEF DE += 4;
-  $BAF3 } while (--B);
-  $BAF5 EXX
+  $BADC DEdash = HL
+  $BADD
+  $BADE HLdash = &tiles[A];
+  $BAE8
+  $BAE9 Bdash = 8; // 8 iterations
+  $BAEB do { *DEdash &= *HLdash++;
+  $BAEF DEdash += 4; // stride of 4 => supertile?
+  $BAF3 } while (--Bdash);
+  $BAF5
   $BAF6 return;
 
 ; -----------------------------------------------------------------------------
