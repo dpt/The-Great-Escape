@@ -9576,46 +9576,63 @@ c $E34E sub_E34E
 
 ; ------------------------------------------------------------------------------
 
-c $E3FA sub_E3FA
-D $E3FA [leaf]
-  $E3FA H = 0x7F;
-  $E3FC L = E;
-  $E3FD E = B;
-  $E3FE B = *HL;
-  $E3FF L = E;
-  $E400 E = *HL;
-  $E401 L = C;
-  $E402 C = *HL;
-  $E403 EXX
-  $E404 H = 0x7F;
-  $E406 L = E;
-  $E407 E = B;
-  $E408 B = *HL;
-  $E409 L = E;
-  $E40A E = *HL;
-  $E40B L = C;
-  $E40C C = *HL;
-  $E40D EXX
+c $E3FA flip_24_masked_pixels
+D $E3FA Takes the 24 pixels in E,B,C and reverses them bitwise.
+D $E3FA Does the same for the mask pixels in E',B',C'.
+; Simultaneously:
+;  C = reversed[E];
+;  B = reversed[B];
+;  E = reversed[C];
+R $E3FA I:E  First 8 pixels.
+R $E3FA I:BC Second 16 pixels.
+R $E3FA O:E  Reversed pixels.
+R $E3FA O:BC Reversed pixels.
+D $E3FA Roll the bitmap.
+  $E3FA H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 -> table of bit reversed bytes
+  $E3FC L = E;     
+  $E3FD E = B;     // DE = (DE & 0xFF00) | (BC >> 8);
+  $E3FE B = *HL;   // BC = (*HL << 8) | (BC & 0xFF);
+  $E3FF L = E;     // HL = (HL & 0xFF00) | (DE & 0xFF);
+  $E400 E = *HL;   // DE = (DE & 0xFF00) | *HL;
+  $E401 L = C;     // HL = (HL & 0xFF00) | (BC & 0xFF);
+  $E402 C = *HL;   // BC = (BC & 0xFF00) | *HL;
+  $E403
+D $E404 Roll the mask.
+  $E404 Hdash = 0x7F;
+  $E406 Ldash = Edash;
+  $E407 Edash = Bdash;
+  $E408 Bdash = *HLdash;
+  $E409 Ldash = Edash;
+  $E40A Edash = *HLdash;
+  $E40B Ldash = Cdash;
+  $E40C Cdash = *HLdash;
+  $E40D
   $E40E return;
 
 ; ------------------------------------------------------------------------------
 
-c $E40F sub_E40F
-D $E40F [leaf]
-  $E40F H = 0x7F;
+c $E40F flip_16_masked_pixels
+D $E40F Takes the 16 pixels in D,E and reverses them bitwise.
+D $E40F Does the same for the mask pixels in D',E'.
+R $E40F I:DE 16 pixels to reverse.
+R $E40F O:DE Reversed pixels.
+D $E40F Roll the bitmap.
+  $E40F H = 0x7F;  // HL = 0x7F00 | (DE >> 8); // 0x7F00 -> table of bit reversed bytes
   $E411 L = D;
-  $E412 D = E;
+  $E412 D = E;     // DE = (E << 8) | *HL;
   $E413 E = *HL;
-  $E414 L = D;
-  $E415 D = *HL;
-  $E416 EXX
-  $E417 H = 0x7F;
-  $E419 L = D;
-  $E41A D = E;
-  $E41B E = *HL;
-  $E41C L = D;
-  $E41D D = *HL;
-  $E41E EXX
+  $E414 L = D;     // HL = (HL & 0xFF00) | (DE >> 8);
+  $E415 D = *HL;   // DE = (*HL << 8) | (DE & 0x00FF);
+  $E416
+  ; 'dash' is assigned here relative to the register state on entry
+D $E417 Roll the mask.
+  $E417 Hdash = 0x7F;
+  $E419 Ldash = Ddash;
+  $E41A Ddash = Edash;
+  $E41B Edash = *HLdash;
+  $E41C Ldash = Ddash;
+  $E41D Ddash = *HLdash;
+  $E41E
   $E41F return;
 
 ; ------------------------------------------------------------------------------
