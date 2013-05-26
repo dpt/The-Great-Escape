@@ -25,7 +25,6 @@
 ; - Sort out inverted masks issue.
 ; - Use SkoolKit # refs more.
 ;   - Currently using (<- somefunc) to show a reference.
-; - Extract font.
 ;
 ; - Check occurences of INC/DEC (HL) against places where I may have mistakenly converted these as INC/DEC HL...
 ; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
@@ -4112,6 +4111,7 @@ D $A68E "PRESS ANY KEY"
 
 b $A69E bitmap_font
 D $A69E 0..9, A..Z (omitting O), space, full stop
+D $A69E #FONT$A69E,35,7,2{0,0,560,16}(font)
 
 ; ------------------------------------------------------------------------------
 
