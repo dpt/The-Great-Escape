@@ -6322,23 +6322,21 @@ R $B93A I:B Iterations.
   $B97D HL -= 6;
   $B984 A = map_position_related_1;
   $B987 C = A;
-  $B988 if (A < *HL) goto b99f;
+  $B988 if (A >= *HL) {
   $B98C A -= *HL;
   $B98D byte_B837 = A;
   $B990 HL++;
   $B991 A = *HL - C;
   $B993 if (A >= 3) A = 3;
   $B999 ($B83A) = ++A; // word_B839 + 1
-  $B99D goto $B9B6;
-
+  $B99D } else {
   $B99F B = *HL;
   $B9A0 byte_B837 = 0;
   $B9A4 C = 4 - (B - C);
   $B9AB HL++;
   $B9AC A = (*HL - B) + 1;
   $B9AF if (A > C) A = C;
-  $B9B3 ($B83A) = A; // word_B839 + 1
-;
+  $B9B3 ($B83A) = A; // word_B839 + 1 }
   $B9B6 HL++;
   $B9B7 A = map_position_related_2;
   $B9BA C = A;
