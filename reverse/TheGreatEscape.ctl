@@ -26,7 +26,6 @@
 ; - Use SkoolKit # refs more.
 ;   - Currently using (<- somefunc) to show a reference.
 ;
-; - Check occurences of INC/DEC (HL) against places where I may have mistakenly converted these as INC/DEC HL...
 ; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
 
 ; //////////////////////////////////////////////////////////////////////////////
@@ -4653,25 +4652,25 @@ c $ABA0 zoombox
   $ABBC do { HL = &zoombox_x;
   $ABBF A = *HL;
   $ABC0 if (A != 1) {
-  $ABC5 *HL--;
+  $ABC5 (*HL)--;
   $ABC6 A--;
   $ABC7 HL++;
-  $ABC8 *HL++;
+  $ABC8 (*HL)++;
   $ABC9 HL--; }
   $ABCA HL++;
   $ABCB A += *HL;
-  $ABCC if (A < 22) *HL++;
+  $ABCC if (A < 22) (*HL)++;
   $ABD2 HL++;
   $ABD3 A = *HL;
   $ABD4 if (A != 1) {
-  $ABD9 *HL--;
+  $ABD9 (*HL)--;
   $ABDA A--;
   $ABDB HL++;
-  $ABDC *HL++;
+  $ABDC (*HL)++;
   $ABDD HL--; }
   $ABDE HL++;
   $ABDF A += *HL;
-  $ABE0 if (A < 15) *HL++;
+  $ABE0 if (A < 15) (*HL)++;
   $ABE6 zoombox_1();
   $ABE9 zoombox_2();
   $ABEC A = zoombox_vertical_count + zoombox_horizontal_count;
@@ -4816,7 +4815,7 @@ c $AD59 sub_AD59
 D $AD59 Used by nighttime.
   $AD59 E = *HL++;
   $AD5B D = *HL++;
-  $AD5D *HL--;
+  $AD5D (*HL)--;
   $AD5E JP NZ,$AD99
   $AD61 HL += 2;
   $AD63 A = *HL;
@@ -5249,7 +5248,7 @@ c $AFDF sub_AFDF
   $B094 JR Z,$B0B8
   $B096 JR C,$B09A
   $B098 (*HL) -= 2;
-  $B09A *HL++;
+  $B09A (*HL)++;
   $B09B goto $B0B8;
 
   $B09D CP 1
@@ -5259,7 +5258,7 @@ c $AFDF sub_AFDF
   $B0A3 CP *HL;
   $B0A4 JR Z,$B0B8
 
-  $B0A6 *HL++;
+  $B0A6 (*HL)++;
   $B0A7 goto $B0B8;
 
   $B0A9 CP 2
@@ -7888,8 +7887,8 @@ D $CA81 Bribes, solitary, food, 'character enters' sound.
 
   $CAD0 PUSH AF
   $CAD1 A = *HL++;
-  $CAD3 if (A & (1<<7)) *HL -= 2;
-  $CAD9 *HL++;
+  $CAD3 if (A & (1<<7)) (*HL) -= 2;
+  $CAD9 (*HL)++;
   $CADA POP AF
   $CADB get_door_position(); // door related
   $CADE A = *HL;
