@@ -1037,26 +1037,25 @@ R $6AB5 O:HL Corrupted.
 
 c $6B42 plot_indoor_tiles
 D $6B42 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer.
-R $6B42 O:A   Corrupted.
-R $6B42 O:BC  Corrupted.
-R $6B42 O:DE  Corrupted.
-R $6B42 O:HL  Corrupted.
-R $6B42 O:A'  Corrupted.
-R $6B42 O:BC' Corrupted.
-R $6B42 O:DE' Corrupted.
-R $6B42 O:HL' Corrupted.
+R $6B42 O:A      Corrupted.
+R $6B42 O:BC     Corrupted.
+R $6B42 O:DE     Corrupted.
+R $6B42 O:HL     Corrupted.
+R $6B42 O:Adash  Corrupted.
+R $6B42 O:BCdash Corrupted.
+R $6B42 O:DEdash Corrupted.
+R $6B42 O:HLdash Corrupted.
   $6B42 HL = $F290;  // screen buf
   $6B45 DE = $F0F8;  // tiles buf
   $6B48 C = 16;      // rows
   $6B4A do { B = 24; // columns
-  $6B4C do { PUSH HL
-  $6B4D A = *DE;
-  $6B4F HL' = &interior_tiles[A];
-  $6B59 POP DE'
-  $6B5A B' = 8; C' = 24;
-  $6B5D do { *DE' = *HL'++;
-  $6B5F DE' += C';
-  $6B66 } while (--B');
+  $6B4C do {
+  $6B4D tileptr = &interior_tiles[*DE];
+  $6B59 screenptr = HL;
+  $6B5A iters = 8; stride = 24;
+  $6B5D do { *screenptr = *tileptr++;
+  $6B5F screenptr += stride;
+  $6B66 } while (--iters);
   $6B69 DE++;
   $6B6A HL++;
   $6B6B } while (--B);
