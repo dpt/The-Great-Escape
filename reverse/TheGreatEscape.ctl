@@ -8981,7 +8981,6 @@ D $E0D7 Likely unreferenced byte.
 ; ------------------------------------------------------------------------------
 
 ; something plotter ish
-w $E0E0 pairs_of_offsets
 D $E0E0 (<- sub_DC41, sub_E420)
   $E0E0 sub_E29F::jump0
   $E0E2 sub_E34E::jump1
@@ -8992,7 +8991,6 @@ D $E0E0 (<- sub_DC41, sub_E420)
 
 ; ------------------------------------------------------------------------------
 
-w $E0EC masked_sprite_plotter_jump_table
 D $E0EC (<- sub_E420)
   $E0EC masked_sprite_plotter::E188
   $E0EE masked_sprite_plotter::E259
@@ -9002,6 +9000,8 @@ D $E0EC (<- sub_E420)
   $E0F6 masked_sprite_plotter::E27B
   $E0F8 masked_sprite_plotter::E1BF
   $E0FA masked_sprite_plotter::E290
+w $E0E0 masked_sprite_plotter_16_jump_table
+w $E0EC masked_sprite_plotter_24_jump_table
 ; these two look different
   $E0FC sub_E29F::$E2A2
   $E0FE masked_sprite_plotter
@@ -9667,19 +9667,17 @@ c $E420 sub_E420
   $E485 PUSH BC
   $E486 PUSH DE
   $E487 A = IY[30];
-  $E48A if (A - 3 == 0) {
+  $E48A if (A == 3) { // 3 => 16 wide (4 => 24 wide)
   $E48E ($E2C2) = E; // self-modify
   $E492 ($E363) = E; // self-modify
   $E495 A = 3;
-  $E497 HL = pairs_of_offsets;
+  $E497 HL = masked_sprite_plotter_16_jump_table;
   $E49A } else {
-;
   $E49C A = E;
   $E49D ($E121) = A; // self-modify
   $E4A0 ($E1E2) = A; // self-modify
   $E4A3 A = 4;
-  $E4A5 HL = pairs_of_offsets2; }
-;
+  $E4A5 HL = masked_sprite_plotter_24_jump_table; }
   $E4A8 PUSH HL
   $E4A9 ($E4C0) = A; // self-modify
   $E4AC E = A;
