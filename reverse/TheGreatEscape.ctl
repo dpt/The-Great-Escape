@@ -3213,32 +3213,28 @@ c $A035 wave_morale_flag
 D $A035 Wave the flag every other turn.
   $A035 HL = &game_counter;
   $A038 (*HL)++;
-  $A039 A = *HL & 1;
-  $A03C if (A) return;
+  $A039 if (*HL & 1) return;
 ;
   $A03D PUSH HL
   $A03E A = morale;
   $A041 HL = &displayed_morale;
-  $A044 if (A == *HL) goto wiggle;
-  $A047 if (A >  *HL) goto increasing;
-;
+  $A044 if (A != *HL) {
+  $A047 if (A < *HL) {
 D $A04A Decreasing morale.
   $A04A (*HL)--;
   $A04B HL = moraleflag_screen_address;
   $A04E get_next_scanline();
-  $A051 goto move;
-;
-  $A053 increasing: (*HL)++;
+  $A051 } else {
+D $A053 Increasing morale.
+  $A053 (*HL)++;
   $A054 HL = moraleflag_screen_address;
-  $A057 get_prev_scanline();
-;
-  $A05A move: moraleflag_screen_address = HL;
-;
-  $A05D wiggle: DE = bitmap_flag_down;
+  $A057 get_prev_scanline(); }
+  $A05A moraleflag_screen_address = HL; }
+  $A05D DE = bitmap_flag_down;
   $A060 POP HL
-  $A061 if ((*HL & 1) != 0) DE = bitmap_flag_up;
-  $A068 plot: HL = moraleflag_screen_address;
-  $A06E plot_bitmap(0x0319); // dimensions: 24 x 25 // args-BC // exit via
+  $A061 if (*HL & 2) DE = bitmap_flag_up;
+  $A068 HL = moraleflag_screen_address;
+  $A06E plot_bitmap(0x0319); return; // dimensions: 24 x 25 // args-BC // exit via
 
 ; ------------------------------------------------------------------------------
 
