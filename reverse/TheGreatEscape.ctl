@@ -863,15 +863,15 @@ D $69DC Wipe $81D6..$81D9 with 0xFF.
   $69E7 DE++; // DE = door_related
   $69E8 B = indoor_room_index << 2;
   $69EE C = 0;
-  $69F1 HL' = &door_positions[0];
-  $69F4 B' = 124; // length of (door_positions)
-  $69F6 DE' = 4; // stride
-  $69F9 do { if (*HL' & 0xFC == B) {
+  $69F1 HLdash = &door_positions[0];
+  $69F4 Bdash = 124; // length of (door_positions)
+  $69F6 DEdash = 4; // stride
+  $69F9 do { if (*HLdash & 0xFC == B) {
   $6A00 *DE++ = C ^ 0x80; }
   $6A05 C ^= 0x80;
   $6A08 if (C >= 0) C++; // increment every two stops?
-  $6A0E HL' += DE';
-  $6A0F } while (--B');
+  $6A0E HLdash += DEdash;
+  $6A0F } while (--Bdash);
 ;
   $6A11 return;
 
