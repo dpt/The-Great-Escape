@@ -424,13 +424,34 @@
 ; morale_MIN = 0x00
 ; morale_MAX = 0x70
 
+; ; $8000 flags (and $8020, $8041, ...)
+; flag_8000_EMPTY_SLOT = 0xFF
+
+; ; $8001 flags (and $8021, $8041, ...)
+; flag_PICKING_LOCK = 1<<0,
+; flag_CUTTING_WIRE = 1<<1,
+; flag_8001_6       = 1<<6,
+; flag_8001_7       = 1<<7,
+
+; flag_8002_7       = 1<<7,
+
+; ; $8007 flags (and $8027, $8047, ...)
+; flag_8007_5       = 1<<5,
+; flag_8007_6       = 1<<6,
+; flag_8007_7       = 1<<7,
+
+; itemstruct_ITEM_HELD = 1<<7,  // set when the item is picked up (maybe)
+; itemstruct_ROOM_6    = 1<<6,
+; itemstruct_ROOM_NONE = 1<<7,  // set when the item is unavailable
+
 ; ; food item flags
 ; itemfood_POISONED = 1<<5
 
-; ; $8001 flags
-; flag_PICKING_LOCK = 1<<0,
-; flag_CUTTING_WIRE = 1<<1
+; gates_and_doors_LOCKED = 1<<7
 
+; characterstruct_BYTE0_BIT6 = 1<<6, // this disables the character
+; characterstruct_BYTE0_MASK = 0x1F,
+; characterstruct_BYTE5_BIT7 = 1<<7,
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; GAME STATE
@@ -439,23 +460,35 @@
 ; game state which overlaps with tiles etc.
 ;
 ; vars referenced as $8015 etc.
+;
+; $8000 seems to be an array of eight 32-wide active/visible character structures. the first is likely the player character.
 
-; b $8000 never written?
+; b $8000 character index? (0xFF if no active character)
 ; b $8001 flags: bit 6 gets toggled in set_target_location /  bit 0: picking lock /  bit 1: cutting wire
 ; w $8002 could be a target location (set in set_target_location, user_input_was_in_bed_perhaps)
-; w $8004 (<- user_input_was_in_bed_perhaps)
-; b $8007
-; b $800A
+; w $8004 (<- user_input_was_in_bed_perhaps) a coordinate? (i see it getting scaled in #R$CA11)
+; ? $8006
+; b $8007 bits 5/6/7: flags
+; ? $8008
+; ? $8009
+; ? $800A (written by called_from_main_loop_9)
+; ? $800B (written by called_from_main_loop_9)
+; ? $800C (written by called_from_main_loop_9)
 ; b $800D tunnel related (<- process_user_input, wire_snipped, user_input_was_in_bed_perhaps) assigned from table at 9EE0
 ; b $800E tunnel related, walk/crawl flag maybe? (bottom 2 bits index $9EE0)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by user_input_super)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by user_input_super)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; b $8013 character's vertical offset // set to 24 in user_input_was_in_bed_perhaps, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), sub_E420 ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)
+; b $8013 character's vertical offset // set to 24 in user_input_was_in_bed_perhaps, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)
+; ? $8014
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
+; b $8017 sub_AF8F sets this to byte_81AA
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
 ; b $801C cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by sub_68A2 -- looks like a room index!
-;
+; ? $801D
+; ? $801E
+; ? $801F (written by setup_sprite_plotting)
+
 ; $8020 visible character data. 7 sets of 32 bytes, one per visible character. can there be >7 characters on-screen/visible at once? or is it prisoners only?
 
 ;   $8020 byte -- bit 6 means something here, likely merged with a character index
@@ -736,7 +769,7 @@ D $68A2 Looks like it's resetting stuff.
   $68CE POP AF
   $68CF L = A;
   $68D0 if (A) { reset_object(); return; } // exit via (check)
-  $68D7 *++HL &= ~(1<<7);
+  $68D7 *++HL &= ~flag_8001_7;
   $68DA A = ($801C); // suspected room index
   $68DD indoor_room_index = A;
   $68E0 if (A) goto some_sort_of_initial_setup_maybe;
@@ -1426,8 +1459,8 @@ D $7B44 Locate the empty item slot.
   $7B68 set_game_screen_attributes(); }
 
   $7B6B POP HL
-  $7B6C if ((*HL & (1<<7)) == 0) {
-  $7B70 *HL |= 1<<7;
+  $7B6C if ((*HL & itemstruct_ITEM_HELD) == 0) {
+  $7B70 *HL |= itemstruct_ITEM_HELD;
   $7B72 PUSH HL
   $7B73 increase_morale_by_5();
   $7B76 POP HL }
@@ -1602,7 +1635,7 @@ D $7C82 Select a pick up radius.
   $7C84 if (indoor_room_index) C = 6; // inside
   $7C8C B = item__LIMIT; // 16 iterations
   $7C8E HL = &itemstruct_0.room;
-  $7C91 do { if ((*HL & (1<<7)) == 0) goto next; // item is not anywhere
+  $7C91 do { if ((*HL & itemstruct_ROOM_NONE) == 0) goto next; // item is not anywhere
   $7C95 PUSH BC
   $7C96 PUSH HL
   $7C97 HL++;
@@ -3112,7 +3145,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F72 HL = $8002; // target location
   $9F75 A = *HL++;
   $9F77 C = *HL;
-  $9F78 if (A & (1<<7)) C++;
+  $9F78 if (A & flag_8002_7) C++;
   $9F7D if (A == 255) {
   $9F81 A = *HL & 0xF8;
   $9F84 if (A == 8) A = 1; else A = 2;
@@ -3140,7 +3173,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9FB2 JR Z,set_flag_green;
 
   $9FB4 A = ($8002);
-  $9FB7 if (A & (1<<7)) HL++;
+  $9FB7 if (A & flag_8002_7) HL++;
   $9FBC BC = 0; // counter?
   $9FBF for (;;) { PUSH BC
   $9FC0 PUSH HL
@@ -3690,7 +3723,7 @@ c $A2E2 sub_A2E2
 
 c $A33F set_target_location
   $A33F if (morale_related) return;
-  $A344 $8001 &= ~(1<<6); $8002 = b; $8003 = c; return;
+  $A344 $8001 &= ~flag_8001_6; $8002 = b; $8003 = c; return;
 
 ; ------------------------------------------------------------------------------
 
@@ -3739,10 +3772,10 @@ D $A373 Uses tenlong structure.
 ; ------------------------------------------------------------------------------
 
 c $A38C sub_A38C
-  $A38C get_character_struct();
-  $A38F if ((*HL & (1<<6)) == 0) goto not_set;
+  $A38C HL = get_character_struct(A);
+  $A38F if ((*HL & characterstruct_BYTE0_BIT6) == 0) goto not_set;
   $A394 PUSH BC
-  $A395 A = *HL & 0x1F;
+  $A395 A = *HL & characterstruct_BYTE0_MASK;
   $A398 B = 7; // 7 iterations
   $A39A DE = 32; // stride
   $A39D HL = $8020;
@@ -3762,7 +3795,7 @@ D $A3A9 Unreferenced byte.
   $A3B3 found:
   $A3B3 POP BC
   $A3B4 HL++;
-  $A3B5 *HL++ &= ~(1<<6);
+  $A3B5 *HL++ &= ~flag_8001_6;
   $A3B8 store_banked_A_then_C_at_HL();
 
 ; This entry point is used by the routine at #R$A33F.
@@ -3803,26 +3836,26 @@ c $A3ED store_banked_A_then_C_at_HL
 
 c $A3F3 sub_A3F3
 D $A3F3 Checks character indexes, sets target locations, ...
+R $A3F3 I:HL -> charstruct?
   $A3F3 A = character_index;
   $A3F6 goto $A404;
 
-; ------------------------------------------------------------------------------
-
 c $A3F8 varA13E_is_zero
-  $A3F8 A = [IY];
+D $A3F8 Gets hit when player enters hut at end of day.
+  $A3F8 A = IY[0];  // IY=8000, 
   $A3FB if (A == 0) set_target_location(location_2C00);
 
 ; This entry point is used by the routine at #R$A3F3.
-  $A404 *++HL = 0;
-  $A407 if (A <= 19) goto $A413;
-  $A40F A -= 13;
-  $A411 goto $A41D;
-
+R $A404 I:A Character index.
+  $A404 *++HL = 0; // HL=766b,7672,  charstruct + 5 (charstruct+6 when zeroed)
+  $A407 if (A > 19) {
+  $A40F A -= 13; // 20.. => 7..
+  $A411 } else {
   $A413 BIT 0,A  // if (A & (1<<0)) ...
   $A415 A = 13;
   $A417 JR Z,$A41D  // goto A41D;
-  $A419 *HL = 1;
-  $A41B A |= 0x80;
+  $A419 *HL = 1; // e.g. 7681,7673,
+  $A41B A |= 0x80; }
 
   $A41D *--HL = A;
   $A41F return;
@@ -5121,7 +5154,7 @@ b $AF5E zoombox tiles
   $AF7E zoombox_tile_wire_br
   $AF86 zoombox_tile_wire_bl
 
-; -----------------------------------------------------------------------------
+; ------------------------------------------------------------------------------
 
 b $AF8E bribed_character
 
@@ -5130,25 +5163,21 @@ b $AF8E bribed_character
 c $AF8F sub_AF8F
   $AF8F EX AF,AF'
   $AF90 byte_81AA = A;
-  $AF93 IY[7] |= (1<<6)|(1<<7);
+  $AF93 IY[7] |= flag_8007_6 | flag_8007_7;  // wild guess: clamp character in position?
   $AF9B HL = IY;
   $AF9E A = L;
   $AF9F A &= A;
   $AFA0 if (A == 0 && morale_related_also) door_handling();
-  $AFAB if (A || (($8001 & 3) != 2)) { bounds_check(); return; }
-
-D $AFB9 Cutting wire?
-  $AFB9 A = IY[0];
-  $AFBC CP 26
-  $AFBE JR NC,$AFC4
-
-  $AFC0 CALL $AFDF
-  $AFC3 RET NZ
-
-  $AFC4 IY[7] &= ~(1<<6);
-  $AFC8 DE = IY;
-  $AFCE DE += 15;
-  $AFD5 memcpy(DE, &word_81A4, 6);
+  $AFAB if (A || (($8001 & (flag_PICKING_LOCK | flag_CUTTING_WIRE)) != flag_CUTTING_WIRE)) { bounds_check(); return; }
+;
+D $AFB9 Cutting wire only from here onwards?
+  $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
+  $AFBC if (A < 26) { // a character index
+  $AFC0 sub_AFDF();
+  $AFC3 RET NZ }
+;
+  $AFC4 IY[7] &= ~flag_8007_6;
+  $AFC8 memcpy(IY + 15, &word_81A4, 6); // $800F // copy Y,X and vertical offset
   $AFD7 IY[23] = byte_81AA;
   $AFDD A = 0;
   $AFDE return;
@@ -5158,7 +5187,7 @@ D $AFB9 Cutting wire?
 c $AFDF sub_AFDF
   $AFDF HL = $8001;
   $AFE2 B = 8; // 8 iterations
-  $AFE4 do { if (*HL & (1<<7)) goto $B0FE;
+  $AFE4 do { if (*HL & flag_8001_7) goto next; // $8001, $8021, ...
   $AFE9 PUSH BC
   $AFEA PUSH HL
   $AFEB HL += 14;
@@ -5396,12 +5425,11 @@ R $B1C7 BC Result of (A << 3).
 c $B1D4 is_door_open
 R $B1D4 O:F Z set if door open.
 ;
-  $B1D4 E = 0x7F;
-  $B1D6 C = current_door & E;
+  $B1D4 C = current_door & 0x7F;
   $B1DB HL = &gates_and_doors[0];
   $B1DE B = 9; // 9 iterations
-  $B1E0 do { if (*HL & E == C) {
-  $B1E5 if ((*HL & (1<<7)) == 0) return; // unlocked
+  $B1E0 do { if (*HL & 0x7F == C) {
+  $B1E5 if ((*HL & gates_and_doors_LOCKED) == 0) return; // unlocked
 ;
   $B1EA queue_message_for_display(message_THE_DOOR_IS_LOCKED);
   $B1ED A |= 1; // set NZ
@@ -5788,15 +5816,14 @@ R $B4B8 I:A Room number the key is for.
   $B4B9 open_door();
   $B4BC POP BC
   $B4BD if (NZ) return; // wrong door?
-  $B4BE A = *HL & 0x7F; // mask off 'locked' flag?
+  $B4BE A = *HL & ~gates_and_doors_LOCKED; // mask off locked flag
   $B4C1 if (A != B) {
   $B4C2 B = message_INCORRECT_KEY;
   $B4C4 } else {
-  $B4C6 *HL &= ~(1<<7); // clear the 'locked' flag ?
+  $B4C6 *HL &= ~gates_and_doors_LOCKED; // clear the locked flag
   $B4C8 increase_morale_by_10_score_by_50();
   $B4CB B = message_IT_IS_OPEN; }
-
-  $B4CD qmsg: queue_message_for_display(B);
+  $B4CD queue_message_for_display(B);
 
 ; fallthrough
 
@@ -5808,7 +5835,7 @@ c $B4D0 open_door
   $B4D9 outdoors: B = 5; // 5 iterations (they must overlap)
   $B4DB HL = &gates_flags;
 
-  $B4DE do { A = *HL & 0x7F;
+  $B4DE do { A = *HL & ~gates_and_doors_LOCKED;
   $B4E1 EXX
   $B4E2 get_door_position();
   $B4E5 PUSH HL
@@ -5829,15 +5856,14 @@ c $B4D0 open_door
 
   $B4FD indoors: HL = &door_flags;
   $B500 B = 8; // 8 iterations
-  $B502 do { C = *HL & 0x7F;
+  $B502 do { C = *HL & ~gates_and_doors_LOCKED;
 D $B506 Search door_related for C.
   $B506 DE = &door_related;
   $B509 for (;;) { A = *DE;
-  $B50A if (A == 0xFF) goto next;
-  $B50E if ((A & 0x7F) == C) goto found;
-  $B513 DE++;
-  $B514 }
-  $B516 next: HL++;
+  $B50A if (A != 0xFF) {
+  $B50E if ((A & 0x7F) == C) goto found; // 7f is likely ~gates_and_doors_LOCKED but unsure
+  $B513 DE++; } }
+  $B516 HL++;
   $B517 } while (--B);
   $B519 A |= 1; // not ok
   $B51B return;
@@ -5904,8 +5930,8 @@ c $B5CE called_from_main_loop_9
   $B5D4 do { A = IY[1];
   $B5D7 if (A == 0xFF) goto next;
   $B5DC PUSH BC
-  $B5DD IY[1] |= 1<<7;
-  $B5E1 if (IY[13] & (1<<7)) goto $B6BE;
+  $B5DD IY[1] |= flag_8001_7; // $8001
+  $B5E1 if (IY[13] & (1<<7)) goto $B6BE; // $800D
   $B5E8 H = IY[11];
   $B5EB L = IY[10];
   $B5EE A = IY[12];
@@ -5918,7 +5944,7 @@ c $B5CE called_from_main_loop_9
   $B603 EX AF,AF'
 ;
   $B605 EX DE,HL
-  $B606 L = IY[15];
+  $B606 L = IY[15]; // Y axis
   $B609 H = IY[16];
   $B60C A = *DE;
   $B60D C = A;
@@ -5929,7 +5955,7 @@ c $B5CE called_from_main_loop_9
   $B617 word_81A4 = HL;
 ;
   $B61A DE++;
-  $B61B L = IY[17];
+  $B61B L = IY[17]; // X axis
   $B61E H = IY[18];
   $B621 A = *DE;
   $B622 C = A;
@@ -5940,7 +5966,7 @@ c $B5CE called_from_main_loop_9
   $B62C word_81A6 = HL;
 ;
   $B62F DE++;
-  $B630 L = IY[19];
+  $B630 L = IY[19]; // vertical offset
   $B633 H = IY[20];
   $B636 A = *DE;
   $B637 C = A;
@@ -5964,7 +5990,7 @@ c $B5CE called_from_main_loop_9
   $B65D A &= 0x80;
   $B65F if (A) A = 0xFF;
   $B663 H = A;
-  $B664 C = IY[15];
+  $B664 C = IY[15]; // Y axis
   $B667 B = IY[16];
   $B66A HL += BC;
   $B66B word_81A4 = HL;
@@ -5975,7 +6001,7 @@ c $B5CE called_from_main_loop_9
   $B671 A &= 0x80;
   $B673 if (A) A = 0xFF;
   $B677 H = A;
-  $B678 C = IY[17];
+  $B678 C = IY[17]; // X axis
   $B67B B = IY[18];
   $B67E HL += BC;
   $B67F word_81A6 = HL;
@@ -5986,7 +6012,7 @@ c $B5CE called_from_main_loop_9
   $B685 A &= 0x80;
   $B687 if (A) A = 0xFF;
   $B68B H = A;
-  $B68C C = IY[19];
+  $B68C C = IY[19]; // vertical offset
   $B68F B = IY[20];
   $B692 HL += BC;
   $B693 word_81A8 = HL;
@@ -6002,8 +6028,8 @@ c $B5CE called_from_main_loop_9
   $B6A5 reset_something:$B729();
 ;
   $B6A8 POP BC
-  $B6A9 A = IY[1];
-  $B6AC if (A != 0xFF) IY[1] &= ~(1<<7);
+  $B6A9 A = IY[1]; // $8001
+  $B6AC if (A != 0xFF) IY[1] &= ~flag_8001_7;
 ;
   $B6B4 next: DE = 32; // stride
   $B6B7 IY += DE;
@@ -6233,7 +6259,7 @@ c $B89C sub_B89C
   $B8A5 DE = 0;
   $B8A8 BC = 0x0820; // B = 8 iterations, C = stride, 32
   $B8AB HL = $8007;
-  $B8AE do { if ((*HL & (1<<7)) == 0) goto next;
+  $B8AE do { if ((*HL & flag_8007_7) == 0) goto next;
   $B8B2 PUSH HL
   $B8B3 PUSH BC
   $B8B4 HL += 8;
@@ -6284,10 +6310,10 @@ c $B89C sub_B89C
   $B900 if (A & (1<<7)) return;
   $B903 HL = IY;
   $B906 if ((A & (1<<6)) == 0) {
-  $B90A IY[7] &= ~(1<<7);
+  $B90A IY[7] &= ~flag_8007_7;
   $B90E return; } else {
-  $B90F HL[1] &= ~(1<<6);
-  $B912 BIT 6,HL[1]  // test bit ... are we returning flags? but we can't be as we're followed by another instruction...
+  $B90F HL[1] &= ~itemstruct_ROOM_6;
+  $B912 BIT 6,HL[1]  // odd. this tests the bit we've just cleared as if we're setting flags for return. but we can't be as we're followed by another instruction...
   $B915 return; }
 
 ; -----------------------------------------------------------------------------
@@ -7053,7 +7079,7 @@ D $C41C Form a map position in DE.
 D $C42D Walk all character structs.
   $C42D HL = &character_structs[0];
   $C430 B = character_26_stove1; // the 26 'real' characters
-  $C432 do { if (*HL & (1<<6)) goto skip; // unknown flag
+  $C432 do { if (*HL & characterstruct_BYTE0_BIT6) goto skip;
 ;
   $C436 (stash HL)
   $C437 HL++; // $7613
@@ -7144,55 +7170,54 @@ D $C47E Run through all visible characters, resetting them.
 ; -----------------------------------------------------------------------------
 
 c $C4E0 sub_C4E0
-  $C4E0 BIT 6,*HL  // if (*HL & (1<<6)) ...
-  $C4E2 RET NZ
+D $C4E0 Spawns characters? / Adds characters to the active character list.
+R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
+  $C4E0 if (*HL & characterstruct_BYTE0_BIT6) return;
 ;
   $C4E3 PUSH HL
-  $C4E4 HL = $8020;
-  $C4E7 DE = 32; // stride
-  $C4EA A = 255;
+  $C4E4 HL = $8020; // active character list
+  $C4E7 -
+  $C4EA -
   $C4EC B = 7; // 7 iterations
-  $C4EE do { if (A == *HL) goto $C4F6;
-  $C4F1 HL += DE;
+  $C4EE do { if (*HL == flag_8000_EMPTY_SLOT) goto found; // empty slot found?
+  $C4F1 HL += 32; // stride
   $C4F2 } while (--B);
   $C4F4 POP HL
   $C4F5 return;
 
-  $C4F6 POP DE
-  $C4F7 PUSH HL
-  $C4F8 POP IY
-  $C4FA PUSH HL
+  $C4F6 found: POP DE  // DE = HL (-> active character list)
+  $C4F7 PUSH HL // resave
+  $C4F8 POP IY  // IY = HL (-> active character list)
+  $C4FA PUSH HL // resave
   $C4FB PUSH DE
-  $C4FC DE++;
+  $C4FC DE++; // $8021 etc.
   $C4FD HL = &word_81A4;
   $C500 A = *DE++;
   $C502 A &= A;
-  $C503 JR NZ,$C518
+  $C503 if (A == 0) {
   $C505 A = 3; // 3 iterations
-  $C507 do { EX AF,AF'
-  $C508 A = *DE;
-  $C509 BC_becomes_A_times_8();
+  $C507 do {
+  $C508 BC = *DE * 8;
   $C50C *HL++ = C;
   $C50E *HL++ = B;
   $C510 DE++;
-  $C511 EX AF,AF'
+  $C511 -
   $C512 } while (--A);
-  $C516 goto $C523;
-
+  $C516 } else {
   $C518 B = 3; // 3 iterations
   $C51A do { *HL++ = *DE++;
   $C51E *HL++ = 0;
-  $C521 } while (--B);
-
+  $C521 } while (--B); }
+;
   $C523 sub_AFDF();
   $C526 if (Z) bounds_check();
   $C529 POP DE
   $C52A POP HL
   $C52B RET NZ
-
-  $C52C A = *DE | 64;
+;
+  $C52C A = *DE | characterstruct_BYTE0_BIT6;
   $C52F *DE = A;
-  $C530 A &= 0x1F;
+  $C530 A &= characterstruct_BYTE0_MASK;
   $C532 *HL++ = A;
   $C534 *HL = 0;
   $C536 PUSH DE
@@ -7203,14 +7228,14 @@ c $C4E0 sub_C4E0
   $C544 DE = &character_meta_data[2]; // dog
   $C547 if (A < 20) goto selected;
   $C54B DE = &character_meta_data[3]; // prisoner
-
+;
   $C54E selected: EX DE,HL
   $C54F DE += 7;
-  $C553 LDI
-  $C555 LDI
+  $C553 LDI  // *DE++ = *HL++; B--;
+  $C555 LDI  // *DE++ = *HL++; B--;
   $C557 DE += 11;
-  $C55B LDI
-  $C55D LDI
+  $C55B LDI  // *DE++ = *HL++; B--;
+  $C55D LDI  // *DE++ = *HL++; B--;
   $C55F DE -= 8;
   $C563 memcpy(DE, &word_81A4, 6);
   $C56B POP HL
@@ -7222,37 +7247,34 @@ c $C4E0 sub_C4E0
   $C57A JR Z,$C588
   $C57C play_speaker(sound_CHARACTER_ENTERS_2);
   $C582 play_speaker(sound_CHARACTER_ENTERS_1);
-
+;
   $C588 DE -= 26;
-  $C58C LDI
-  $C58E LDI
+  $C58C LDI  // *DE++ = *HL++; B--;
+  $C58E LDI  // *DE++ = *HL++; B--;
   $C590 HL -= 2;
-
+;
   $C592 A = *HL;
-  $C593 A &= A;
-  $C594 JR NZ,$C59C
+  $C593 if (A == 0) {
   $C596 DE += 3;
-  $C59A goto $C5C4;
+  $C59A } else {
 
-  $C59C A = 0;
-  $C59D byte_A13E = A;
+  $C59C byte_A13E = 0;
   $C5A0 PUSH DE
   $C5A1 sub_C651();
-  $C5A4 if (A != 255) goto $C5B6;
+  $C5A4 if (A == 255) {
   $C5A8 POP HL
   $C5A9 HL -= 2;
   $C5AB PUSH HL
   $C5AC CALL $CB2D
   $C5AF POP HL
   $C5B0 DE = HL + 2;
-  $C5B4 goto $C592;
+  $C5B4 goto $C592; }
 
-  $C5B6 if (A == 128) IY[1] |= 1<<6;
+  $C5B6 if (A == 128) IY[1] |= flag_8001_6; // $8021
   $C5BE POP DE
-  $C5BF memcpy(DE, HL, 3);
-
-  $C5C4 A = 0;
-  $C5C5 *DE = A;
+  $C5BF memcpy(DE, HL, 3); }
+;
+  $C5C4 *DE = 0;
   $C5C6 DE -= 7;
   $C5CA EX DE,HL
   $C5CB PUSH HL
@@ -7282,7 +7304,7 @@ c $C5D3 reset_object
 ;
   $C602 EX DE,HL
   $C603 get_character_struct();
-  $C606 *HL &= ~(1<<6);
+  $C606 *HL &= ~characterstruct_BYTE0_BIT6;
   $C608 DE += 28;
   $C60C A = *DE;
   $C60D *++HL = A;
@@ -7304,7 +7326,7 @@ c $C5D3 reset_object
   $C631 A = *HL;
   $C632 *HL++ = 255;
   $C635 *HL++ = 255;
-  $C638 if (A >= 16 && A < 20) {
+  $C638 if (A >= 16 && A < 20) { // likely character index
   $C640 *HL++ = 255;
   $C643 *HL = 0;
   $C645 if (A >= 18) *HL = 24;
@@ -7342,7 +7364,7 @@ c $C651 sub_C651
   $C67B A &= 0x7F;
   $C67D if (A < 40) {
   $C681 A = *DE;
-  $C682 if (*HL & (1<<7)) A ^= 0x80;
+  $C682 if (*HL & (1<<7)) A ^= 0x80; // 762C, 8002, 7672, 7679, 7680, 76A3, 76AA, 76B1, 76B8, 76BF, ... looks quite general
   $C688 sub_68A2();
   $C68B HL++;
   $C68C A = 128;
@@ -7363,12 +7385,11 @@ c $C651 sub_C651
 c $C6A0 move_characters
 ;
   $C6A0 byte_A13E = 0xFF;
-  $C6A5 A = character_index;
-  $C6A8 A++;
+  $C6A5 A = character_index + 1;
   $C6A9 if (A == 26) A = 0;
   $C6AE character_index = A;
   $C6B1 get_character_struct();
-  $C6B4 if (*HL & (1<<6)) return;
+  $C6B4 if (*HL & characterstruct_BYTE0_BIT6) return; // 76c1, 7612, 7619, 7620, 7627, 762e, 7635, 763c, 7643, 764a, 7651, 7658, ...
   $C6B7 PUSH HL
   $C6B8 HL++;
   $C6B9 A = *HL;
@@ -7804,22 +7825,24 @@ D $C918 ...
 ; ------------------------------------------------------------------------------
 
 c $CA11 sub_CA11
-R $CA11 I:HL Pointer to ?
+R $CA11 I:HL Pointer to ?  (observed: $8004,$8044,$8064,$8084)
+R $CA11 I:IY Pointer to ?  (observed: $8000,$8040,$8060,$8080 ie. active character ptr)
+R $CA11 O:A  8/4/0 .. meaning ?
 R $CA11 O:HL Pointer to ?
   $CA11 A = *HL;
-  $CA12 BC_becomes_A_times_8();      // self modified by $C9DA
-  $CA15 HL += 11;
+  $CA12 BC_becomes_A_times_8();      // self modified by #R$C9DA
+  $CA15 HL += 11; // -> position on Y axis ($800F etc.)
   $CA19 E = *HL++;
   $CA1B D = *HL;
-  $CA1C EX DE,HL
-  $CA1D HL -= BC;
-  $CA1F if (HL) {
-  $CA21 if (HL > 0) {
-  $CA24 if (H != 0 || L >= 3) { A = 8; return; } } else {
-  $CA30 if (H != 255 || L < 254) { A = 4; return; } } }
-  $CA3E EX DE,HL
+  $CA1C -
+  $CA1D DE -= BC;
+  $CA1F if (DE) {
+  $CA21 if (DE > 0) { // +ve
+  $CA24 if (D != 0 || E >= 3) { A = 8; return; } } else { // -ve
+  $CA30 if (D != 255 || E < 254) { A = 4; return; } } }
+  $CA3E -
   $CA3F HL -= 11;
-  $CA43 IY[7] |= 1<<5;
+  $CA43 IY[7] |= flag_8007_5;
   $CA47 A = 0;
   $CA48 return;
 
@@ -7827,22 +7850,24 @@ R $CA11 O:HL Pointer to ?
 
 c $CA49 sub_CA49
 D $CA49 Nearly identical routine to sub_CA11 above.
-R $CA49 I:HL Pointer to ?
+R $CA49 I:HL Pointer to ?  (observed: $8025,$8065,$8005)
+R $CA11 I:IY Pointer to ?  (active character ptr)
+R $CA11 O:A  5/7/0 .. meaning ?
 R $CA49 O:HL Pointer to ?
   $CA49 A = *HL;
   $CA4A BC_becomes_A_times_8();       // self modified by $C9DD
-  $CA4D HL += 12;
+  $CA4D HL += 12; // position on X axis ($8011 etc.)
   $CA51 E = *HL++;
   $CA53 D = *HL;
-  $CA54 EX DE,HL
-  $CA55 HL -= BC;
-  $CA57 if (HL) {
-  $CA59 if (HL > 0) {
-  $CA5C if (H != 0 || L >= 3) { A = 5; return; } } else {
-  $CA68 if (H != 255 || L < 254) { A = 7; return; } } }
-  $CA76 EX DE,HL
+  $CA54 -
+  $CA55 DE -= BC;
+  $CA57 if (DE) {
+  $CA59 if (DE > 0) { // +ve
+  $CA5C if (D != 0 || E >= 3) { A = 5; return; } } else { // -ve
+  $CA68 if (D != 255 || E < 254) { A = 7; return; } } }
+  $CA76 -
   $CA77 HL -= 14;
-  $CA7B IY[7] &= ~(1<<5);
+  $CA7B IY[7] &= ~flag_8007_5;
   $CA7F A = 0;
   $CA80 return;
 
@@ -7962,7 +7987,7 @@ D $CA81 Bribes, solitary, food, 'character enters' sound.
 U $CB5F,2 Unreferenced bytes.
 
   $CB61 if (A == 128) {
-  $CB66 IY[1] |= (1<<6); }
+  $CB66 IY[1] |= flag_8001_6; } // $8021
 
   $CB6A POP DE
   $CB6B DE += 2;
@@ -8163,10 +8188,10 @@ D $CCCD This ignores green key and food items. May decide which items are 'found
   $CCD7 sub_CCAB();
   $CCDA return;
 ;
-  $CCDB outside: HL = item_structs + 1;
+  $CCDB outside: HL = &itemstruct_0.room;
   $CCDE DE = 7; // stride
-  $CCE1 B = 16;
-  $CCE3 do { if (*HL & (1<<7)) goto check; // flag means what?
+  $CCE1 B = 16; // n. itemstructs
+  $CCE3 do { if (*HL & itemstruct_ROOM_NONE) goto check; // item unavailable
   $CCE7 next: HL += DE;
   $CCE8 } while (--B);
   $CCEA return;
@@ -8188,8 +8213,8 @@ R $CCFB O:A ?
 R $CCFB O:C ?
 ;
   $CCFB C = A; // room ref
-  $CCFC HL = item_structs + 1; // pointer to room ref
-  $CCFF B = 16; // nitems
+  $CCFC HL = &item_structs[0].room; // pointer to room ref
+  $CCFF B = 16; // items__LIMIT
   $CD01 do { A = *HL & 63; // mask off flags [unsure, it's a bit suspect]
   $CD04 if (A != C) goto skip; // check
   $CD07 PUSH HL
