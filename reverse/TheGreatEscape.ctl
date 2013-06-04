@@ -3863,53 +3863,48 @@ R $A404 I:A Character index.
 ; ------------------------------------------------------------------------------
 
 c $A420 character_sits
+R $A420 I:A Character.
   $A420 PUSH AF
   $A421 EX DE,HL
-  $A422 A -= character_18_prisoner;
+  $A422 A -= character_18_prisoner; // first three characters
   $A424 HL = &room25_breakfast.bench_D;
-  $A427 if (A < 3) goto poke_object; // first three characters
-
+  $A427 if (A >= 3) { // second three characters
   $A42B HL = &room23_breakfast.bench_A;
-  $A430 A -= 3; // second three characters
-
-  $A430 poke_object: HL += A * 3;
+  $A430 A -= 3; }
+D $A430 Poke object.
+  $A430 HL += A * 3;
   $A437 *HL = interiorobject_PRISONER_SAT_DOWN_MID_TABLE;
   $A439 POP AF
-  $A43A C = 25;
-  $A43C CP 21
-  $A43E JR C,$A462
-
-  $A440 C = 23;
+  $A43A C = room25_breakfast;
+  $A43C if (A >= character_21_prisoner) C = room24_breakfast;
   $A442 goto $A462;
 
 D $A444 character_sleeps
   $A444 PUSH AF
   $A445 A = (A - 7) * 2
   $A448 EX DE,HL
-  $A449 HL = &beds[A];
+  $A449 HL = &beds[A];  // BC = beds[A];
   $A450 C = *HL++;
   $A452 B = *HL;
-  $A453 A = 23;
-  $A455 *BC = A;
+  $A453 *BC = interiorobject_OCCUPIED_BED;
   $A456 POP AF
-  $A457 if (A < 10) {
-  $A45C C = 3;
+  $A457 if (A < character_10_prisoner) {
+  $A45C C = room3_hut2_right;
   $A45E } else {
-  $A460 C = 5; }
-
+  $A460 C = room5_hut3_right; }
+;
 D $A462 (common end of above two routines)
   $A462 character_sit_sleep_common: EX DE,HL
-  $A463 *HL = 0;
+  $A463 *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)
   $A465 EX AF,AF'
-  $A466 A = indoor_room_index;
-  $A469 if (A == C) goto A473; // force a refresh
+  $A466 if (indoor_room_index == C) goto A473;
   $A46C HL -= 4;
   $A470 *HL = 255;
   $A472 return;
 
+D $A473 Force a refresh.
   $A473 HL += 26;
   $A477 *HL = 255;
-;
   $A479 select_room_and_plot: select_room_maybe();
   $A47C plot_indoor_tiles(); return;
 
