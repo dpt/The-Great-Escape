@@ -2974,7 +2974,7 @@ c $9DCF check_morale
 D $9DCF (<- main_loop)
   $9DCF if (morale >= 2) return;
   $9DD5 queue_message_for_display(message_MORALE_IS_ZERO, 0);
-  $9DDB morale_related[1] = 0xFF; // mystery
+  $9DDB morale_related |= 0xFF00; // inhibit user input
   $9DE0 morale_related_also = 0; // mystery
   $9DE4 return;
 
@@ -2990,38 +2990,35 @@ D $9DE5 Check for 'game cancel' keypress.
 ; ------------------------------------------------------------------------------
 
 c $9E07 process_user_input
-  $9E07 if (morale_related) return; // inhibits user control when morale hits zero
-  $9E0E if (($8001 & 3) == 0) goto not_picking_lock_or_cutting_wire;
-  $9E15 morale_related_also = 31;
-  $9E1A if ($8001 == 1) goto picking_a_lock;
-  $9E1F wire_snipped(); return; // exit via
+  $9E07 if (morale_related) return; // inhibits user control when morale hits zero // reads morale_related as word
+  $9E0E if ($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) {
+D $9E15 Picking a lock, or cutting wire fence.
+  $9E15   morale_related_also = 31;
+  $9E1A   if ($8001 == vischar_BYTE1_PICKING_LOCK) goto picking_a_lock;
+D $9E1F   Cutting wire fence.
+  $9E1F   wire_snipped(); return; } // exit via
 ;
-  $9E22 not_picking_lock_or_cutting_wire: A = input_routine(); // lives at same address as plot_static_tiles_direction
+  $9E22 A = input_routine(); // lives at same address as plot_static_tiles_direction
   $9E25 HL = &morale_related_also;
-  $9E2A if (A != input_NONE) goto user_input_super(HL);
-  $9E2D if (morale_related_also == 0) return;
-  $9E30 morale_related_also--;
-  $9E31 A = 0;
-  $9E32 goto user_input_fire_not_pressed;
+  $9E2A if (A == input_NONE) {
+  $9E2D   if (morale_related_also == 0) return;
+  $9E30   morale_related_also--;
+  $9E31   A = 0;
+  $9E32   goto user_input_fire_not_pressed; }
 
-; ------------------------------------------------------------------------------
-
-c $9E34 user_input_super
-R $9E34 I:HL Points to ?
+R $9E34 I:HL Pointer to morale_related_also.
   $9E34 *HL = 31;
   $9E36 ... (push af) ...
-  $9E37 if (player_in_bed != 0) goto user_input_was_in_bed_perhaps;
-  $9E3D if (player_in_breakfast != 0) goto user_input_was_having_breakfast_perhaps;
-  $9E43 (word) $8002 = 0x002B; // ?
-  $9E49 (word) $800F = 0x0034; // set Y pos
-  $9E4E (word) $8011 = 0x003E; // set X pos
-  $9E52 bench_G = interiorobject_EMPTY_BENCH;
-  $9E57 HL = player_in_breakfast;
-  $9E5A goto user_input_another_entry_point;
+  $9E37 if (player_in_bed == 0) {
+  $9E3D   if (player_in_breakfast != 0) goto user_input_was_having_breakfast_perhaps;
+  $9E43   (word) $8002 = 0x002B; // set target location?
+  $9E49   (word) $800F = 0x0034; // set Y pos
+  $9E4E   (word) $8011 = 0x003E; // set X pos
+  $9E52   room25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
+  $9E57   HL = player_in_breakfast;
+  $9E5A   goto user_input_another_entry_point; }
 
-; ------------------------------------------------------------------------------
-
-c $9E5C user_input_was_in_bed_perhaps
+D $9E5C Likely: player was in bed.
   $9E5C (word) $8002 = 0x012C; // ?
   $9E62 (word) $8004 = 0x2E2E; // another position?
   $9E68 (word) $800F = 0x002E; // set Y pos
@@ -3119,7 +3116,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F59 if (dispatch_counter >= 100) {
   $9F60 if (indoor_room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }
 
-  $9F6B if (morale_related) goto set_flag_green;
+  $9F6B if (morale_related & 0x00FF) goto set_flag_green; // reads morale_related as byte
   $9F72 HL = $8002; // target location
   $9F75 A = *HL++;
   $9F77 C = *HL;
@@ -7602,7 +7599,7 @@ W $C83B &charevnt_pop_hl_and_player_sits,
 W $C83D &charevnt_C84C, };
 
 D $C83F charevnt_zero_morale_related
-  $C83F morale_related = 0;
+  $C83F morale_related = 0; // writes morale_related as a byte
   $C843 goto charevnt_pop_hl_and_write_08FF_to_it;
 
 D $C845 charevnt_C845
@@ -7663,13 +7660,35 @@ D $C891 (<- called_from_main_loop_5, sub_CA81)
 ; ------------------------------------------------------------------------------
 
 c $C892 called_from_main_loop_5
-C $C892 Clear byte_A13E.
-C $C896 if (bell) sub_CCAB();
-C $C89D if (byte_C891 == 0) goto loc_C8B1;
-C $C8A4 if (--byte_C891 == 0) goto loc_C8B1;
-C $C8A7 (wipe a flag bit in character data?)
-C $C8AA (something gets discovered)
-C $C8B1 ...
+D $C892 Causes characters to follow the player if they're being suspicious. Poisoned food handling.
+  $C892 byte_A13E = 0;
+  $C896 if (bell) sub_CCAB();
+  $C89D if (byte_C891 == 0) goto loc_C8B1;
+  $C8A4 if (--byte_C891 == 0) goto loc_C8B1;
+  $C8A7 itemstruct_7.item &= ~itemfood_POISONED;
+  $C8AC C = item_FOOD;
+  $C8AE item_discovered();
+  $C8B1 IY = $8020; // vischars
+  $C8B5 B = 7; // iterations
+  $C8B7 do { -
+  $C8B8 if (IY[1] != room_NONE) { // likely a room index
+  $C8C0 A = IY[0] & 31; // character index
+D $C8C5 Change '20' here to a higher number and prisoners will start following the player too. The character numbers I've defined earlier and the ones used here (and observed) elsewhere are a different set where < 20 is a guard.
+  $C8C5 if (A < 20) {
+  $C8CA -
+  $C8CB sub_CCCD();
+  $C8CE if (naughty_flag_perhaps || morale_related_also) guards_follow_suspicious_player();
+  $C8DB -
+  $C8DC if (A > 15) { // 16,17,18,19  // could these be the dogs?
+  $C8E4 if (itemstruct_7.room & itemstruct_ROOM_NONE) IY[1] = 3; } } // if food is nowhere assign it to room_3_hut2right?
+  $C8F1 sub_C918(); }
+  $C8F4 -
+  $C8F5 IY += 32; // stride
+  $C8FA } while (--B);
+  $C8FE if (!naughty_flag_perhaps && ((morale_related & 0x00FF) || !morale_related_also)) { // reads morale_related as a byte
+  $C910 IY = $8000;
+  $C914 sub_C918(); }
+  $C917 return;
 
 ; ------------------------------------------------------------------------------
 
@@ -8060,7 +8079,7 @@ D $CBB1 Reset all items. [unsure]
   $CC01 queue_message_for_display(message_YOU_ARE_IN_SOLITARY);
   $CC06 queue_message_for_display(message_WAIT_FOR_RELEASE);
   $CC0B queue_message_for_display(message_ANOTHER_DAY_DAWNS);
-  $CC10 morale_related = 255;
+  $CC10 morale_related = 0xFF;  // writes morale_related as a byte
   $CC15 morale_related_also = 0;
   $CC19 $8015 = sprite_prisoner_tl_4;
   $CC1F HL = &byte_7AC6;
