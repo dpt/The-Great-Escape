@@ -1510,65 +1510,40 @@ R $7BB5 I:A Item.
   $7BC2 HL += 2;
   $7BC4 POP DE
   $7BC5 HL = $800F;
-  $7BC8 divide_3xAC_by_8_with_rounding();
+  $7BC8 divide_array_by_8_with_rounding(HL,DE);
   $7BCB DE--;
   $7BCC *DE = 0;
   $7BCF EX DE,HL
 ;
 ; This entry point is used by the routine at #R$CD31.
-  $7BD0 HL--;
-  $7BD1 A = 64 + *HL--;
-  $7BD5 A -= *HL;
-  $7BD6 A *= 2;
-  $7BD7 C = A;
-  $7BD8 A = 0 - *HL++;
-  $7BDB A -= *HL++;
-  $7BDD A -= *HL++;
-  $7BDE B = A;
+R $7BD0 I:HL Pointer to dropped itemstruct + 4.
+  $7BD0 C = (64 + HL[1] - HL[0]) * 2; // itemstruct.x, itemstruct.y;
+  $7BD8 B = 0 - HL[2] - HL[3] - HL[4]; HL += 5;
   $7BE0 *HL++ = C;
   $7BE2 *HL = B;
   $7BE3 return; }
-
+;
   $7BE4 else { HL++; // indoors
-  $7BE5 DE = $800F;
+  $7BE5 DE = $800F; // position on y axis
   $7BE8 *HL++ = *DE;
-  $7BEB DE += 2;
+  $7BEB DE += 2; // position on x axis
   $7BED *HL++ = *DE;
   $7BF0 *HL = 5;
 ;
-;; This entry point is used by the routine at #R$CD31.
+; This entry point is used by the routine at #R$CD31.
+R $7BF2 I:HL Pointer to ? $77AE (odd - that's object tile refs...)
   $7BF2 HL--;
-  $7BF3 DE = 512 + *HL;
+  $7BF3 DE = 0x0200 + HL[0];  // 512 / 8 = 64
   $7BF6 EX DE,HL
   $7BF7 DE--;
-  $7BF8 A = *DE;
-  $7BF9 BC = A;
-  $7BFC A &= A;
-  $7BFD HL -= BC;
-  $7BFF HL *= 2;
-  $7C00 C = H;
-  $7C01 A = L;
-  $7C02 divide_AC_by_8_with_rounding();
-  $7C05 EX AF,AF'
-  $7C06 HL = 0x0800;
-  $7C0B A = *DE;
-  $7C0C BC = A;
-  $7C0D A &= A;
-  $7C0E HL -= BC;
-  $7C10 DE++;
-  $7C11 A = *DE;
-  $7C12 C = A;
-  $7C13 HL -= BC;
-  $7C15 DE++;
-  $7C16 A = *DE;
-  $7C17 C = A;
-  $7C18 HL -= BC;
-  $7C1A C = H;
-  $7C1B A = L;
-  $7C1C divide_AC_by_8_with_rounding();
+  $7BF8 HL = (HL - DE[0]) * 2;
+  $7C00 A = divide_by_8_with_rounding(H,L);
+  $7C05 -
+  $7C06 HL = 0x0800 - DE[0] - DE[1] - DE[2]; DE += 2;
+  $7C1A Adash = divide_by_8_with_rounding(H,L);
   $7C1F DE += 2;
-  $7C21 *DE-- = A;
-  $7C23 EX AF,AF'
+  $7C21 *DE-- = Adash;
+  $7C23 -
   $7C24 *DE = A;
   $7C25 return; }
 
@@ -3129,7 +3104,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F24 DE = &player_map_position_perhapsX;
   $9F27 A = indoor_room_index;
   $9F2A if (A == 0) { // outdoors
-  $9F2E divide_3xAC_by_8_with_rounding();
+  $9F2E divide_array_by_8_with_rounding(HL,DE);
   $9F31 if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped;
   $9F47 } else {
 
@@ -5578,14 +5553,14 @@ D $B2FC Resets ... something.
   $B302 HL = $8018;
   $B305 A = *HL++;
   $B307 C = *HL;
-  $B308 divide_AC_by_8();
-  $B30B map_position_maybe[0] = A - 11;
+  $B308 divide_by_8(C,A);
+  $B30B map_position[0] = A - 11;
 ;
   $B310 HL++;
   $B311 A = *HL++;
   $B313 C = *HL;
-  $B314 divide_AC_by_8();
-  $B317 map_position_maybe[1] = A - 6;
+  $B314 divide_by_8(C,A);
+  $B317 map_position[1] = A - 6;
 ;
   $B31C indoor_room_index = room_NONE;
   $B320 sub_A7C9();
@@ -7140,13 +7115,13 @@ D $C47E Run through all visible characters, resetting them.
 ;
   $C4A5 C = *--HL;
   $C4A7 A = *--HL;
-  $C4A9 divide_AC_by_8_with_rounding();
+  $C4A9 divide_by_8_with_rounding(C,A);
   $C4AC C = A;
   $C4AD if (C <= D || C > MIN(D + 34, 255)) goto reset;
 ;
   $C4BA C = *--HL;
   $C4BC A = *--HL;
-  $C4BE divide_AC_by_8(); // without rounding
+  $C4BE divide_by_8(C,A);
   $C4C1 C = A;
   $C4C2 if (C <= E || C > MIN(E + 42, 255)) goto reset;
   $C4C6 goto pop_next;
@@ -7312,7 +7287,7 @@ c $C5D3 reset_object
   $C617 HL += 8;
   $C61A DE++;
   $C61C if (A == 0) {
-  $C61F divide_3xAC_by_8_with_rounding();
+  $C61F divide_array_by_8_with_rounding(HL,DE);
   $C622 } else {
 ;
   $C624 B = 3;
@@ -7764,9 +7739,8 @@ D $C918 ...
   $C9A0 POP DE
   $C9A1 PUSH DE
   $C9A2 DE += 3;
-  $C9A6 A = indoor_room_index; // might fold down
-  $C9A9 if (A) {
-  $C9AD divide_3xAC_by_8_with_rounding();
+  $C9A6 if (indoor_room_index) {
+  $C9AD divide_by_8_with_rounding(HL,DE);
   $C9B0 } else {
   $C9B2 *DE++ = *HL++;
   $C9B4 HL++;
@@ -8110,7 +8084,7 @@ D $CC3B Don't follow the player if he's dressed as a guard
   $CC4C HL += 15;
   $CC50 DE = &byte_81B2;
   $CC53 if (indoor_room_index) goto indoors;
-  $CC5A divide_3xAC_by_8_with_rounding();
+  $CC5A divide_array_by_8_with_rounding(HL,DE);
   $CC5D HL = &player_map_position_perhapsX;
   $CC60 DE = &byte_81B2;
   $CC63 A = IY[14];
@@ -9776,30 +9750,31 @@ c $E420 sub_E420
 
 ; ------------------------------------------------------------------------------
 
-c $E542 divide_3xAC_by_8_with_rounding
+c $E542 divide_array_by_8_with_rounding
 D $E542 Divides 3 words by 8 with rounding to nearest.
 R $E542 I:HL Pointer to input words
 R $E542 I:DE Pointer to output bytes
   $E542 B = 3;
   $E544 do { A = *HL++;
   $E546 C = *HL++;
-  $E547 divide_AC_by_8_with_rounding();
+  $E547 divide_by_8_with_rounding(C,A);
   $E54A *DE++ = A;
   $E54D } while (--B);
   $E54F return;
 
 ; ------------------------------------------------------------------------------
 
-c $E550 divide_AC_by_8_with_rounding
+c $E550 divide_by_8_with_rounding
 D $E550 Divides AC by 8, with rounding to nearest.
-R $E550 I:A Low
-R $E550 I:C High
+R $E550 I:A Low.
+R $E550 I:C High.
+R $E550 O:A Result.
   $E550 A += 4;
   $E552 if (carry) C++;
 ;
 ; fallthrough
 
-c $E555 divide_AC_by_8
+c $E555 divide_CA_by_8
   $E555 A = (A >> 3) | (C << 5); C >>= 3;
   $E55E return;
 
