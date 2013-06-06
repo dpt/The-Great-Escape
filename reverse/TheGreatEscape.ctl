@@ -424,34 +424,37 @@
 ; morale_MIN = 0x00
 ; morale_MAX = 0x70
 
-; ; $8000 flags (and $8020, $8041, ...)
-; flag_8000_EMPTY_SLOT = 0xFF
+; ; enum vischar
+; ; $800x flags (and $802x, $804x, ...)
+; vischar_BYTE0_EMPTY_SLOT   = 0xFF,
+; vischar_BYTE0_MASK         = 0x1F,
+; vischar_BYTE1_MASK         = 0x3F,
+; vischar_BYTE1_PICKING_LOCK = 1<<0,
+; vischar_BYTE1_CUTTING_WIRE = 1<<1,
+; vischar_BYTE1_BIT6         = 1<<6,
+; vischar_BYTE1_BIT7         = 1<<7,
+; vischar_BYTE2_MASK         = 0x7F,
+; vischar_BYTE2_BIT7         = 1<<7,
+; vischar_BYTE7_MASK         = 0x0F,
+; vischar_BYTE7_BIT5         = 1<<5,
+; vischar_BYTE7_BIT6         = 1<<6,
+; vischar_BYTE7_BIT7         = 1<<7,
 
-; ; $8001 flags (and $8021, $8041, ...)
-; flag_PICKING_LOCK = 1<<0,
-; flag_CUTTING_WIRE = 1<<1,
-; flag_8001_6       = 1<<6,
-; flag_8001_7       = 1<<7,
-
-; flag_8002_7       = 1<<7,
-
-; ; $8007 flags (and $8027, $8047, ...)
-; flag_8007_5       = 1<<5,
-; flag_8007_6       = 1<<6,
-; flag_8007_7       = 1<<7,
-
-; itemstruct_ITEM_HELD = 1<<7,  // set when the item is picked up (maybe)
-; itemstruct_ROOM_6    = 1<<6,
-; itemstruct_ROOM_NONE = 1<<7,  // set when the item is unavailable
+; ; enum itemstruct
+; itemstruct_ITEM_HELD       = 1<<7,  // set when the item is picked up (maybe)
+; itemstruct_ROOM_6          = 1<<6,
+; itemstruct_ROOM_NONE       = 1<<7,  // set when the item is unavailable
 
 ; ; food item flags
-; itemfood_POISONED = 1<<5
+; itemfood_POISONED          = 1<<5
 
-; gates_and_doors_LOCKED = 1<<7
+; gates_and_doors_LOCKED     = 1<<7
 
 ; characterstruct_BYTE0_BIT6 = 1<<6, // this disables the character
 ; characterstruct_BYTE0_MASK = 0x1F,
 ; characterstruct_BYTE5_BIT7 = 1<<7,
+
+; doorposition_BYTE0_BIT7    = 1<<7, // means "use the next 4-byte struct"
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; GAME STATE
@@ -769,7 +772,7 @@ D $68A2 Looks like it's resetting stuff.
   $68CE POP AF
   $68CF L = A;
   $68D0 if (A) { reset_object(); return; } // exit via (check)
-  $68D7 *++HL &= ~flag_8001_7;
+  $68D7 *++HL &= ~vischar_BYTE1_BIT7;
   $68DA A = ($801C); // suspected room index
   $68DD indoor_room_index = A;
   $68E0 if (A) goto some_sort_of_initial_setup_maybe;
@@ -917,7 +920,7 @@ R $6A12 O:HL Pointer to ...
 R $6A12 O:DE Corrupted.
 ;
   $6A12 HL = &door_positions[A * 2]; // are they pairs of doors?
-  $6A1D if (A & (1<<7)) HL += 4;
+  $6A1D if (A & doorposition_BYTE0_BIT7) HL += 4;
   $6A26 return;
 
 ; ------------------------------------------------------------------------------
@@ -3070,7 +3073,7 @@ D $9E98 Locks user out until lock is picked.
   $9E98 if (user_locked_out_until != game_counter) return;
   $9EA0 *ptr_to_door_being_lockpicked &= ~(1 << 7); // unlock
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
-  $9EAA clear_lockpick_wirecut_flags_and_return: $8001 &= ~3; // clear lock picking and wire snipping flags
+  $9EAA clear_lockpick_wirecut_flags_and_return: $8001 &= ~(vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);
   $9EB1 return;
 
 ; ------------------------------------------------------------------------------
@@ -3145,7 +3148,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F72 HL = $8002; // target location
   $9F75 A = *HL++;
   $9F77 C = *HL;
-  $9F78 if (A & flag_8002_7) C++;
+  $9F78 if (A & vischar_BYTE2_BIT7) C++;
   $9F7D if (A == 255) {
   $9F81 A = *HL & 0xF8;
   $9F84 if (A == 8) A = 1; else A = 2;
@@ -3173,7 +3176,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9FB2 JR Z,set_flag_green;
 
   $9FB4 A = ($8002);
-  $9FB7 if (A & flag_8002_7) HL++;
+  $9FB7 if (A & vischar_BYTE2_BIT7) HL++;
   $9FBC BC = 0; // counter?
   $9FBF for (;;) { PUSH BC
   $9FC0 PUSH HL
@@ -3722,8 +3725,8 @@ c $A2E2 sub_A2E2
 ; ------------------------------------------------------------------------------
 
 c $A33F set_target_location
-  $A33F if (morale_related) return;
-  $A344 $8001 &= ~flag_8001_6; $8002 = b; $8003 = c; return;
+  $A33F if (morale_related & 0x00FF) return; // reads morale_related as a byte
+  $A344 $8001 &= ~vischar_BYTE1_BIT6; $8002 = b; $8003 = c; return;
 
 ; ------------------------------------------------------------------------------
 
@@ -3795,7 +3798,7 @@ D $A3A9 Unreferenced byte.
   $A3B3 found:
   $A3B3 POP BC
   $A3B4 HL++;
-  $A3B5 *HL++ &= ~flag_8001_6;
+  $A3B5 *HL++ &= ~vischar_BYTE1_BIT6;
   $A3B8 store_banked_A_then_C_at_HL();
 
 ; This entry point is used by the routine at #R$A33F.
@@ -5158,12 +5161,12 @@ b $AF8E bribed_character
 c $AF8F sub_AF8F
   $AF8F EX AF,AF'
   $AF90 byte_81AA = A;
-  $AF93 IY[7] |= flag_8007_6 | flag_8007_7;  // wild guess: clamp character in position?
+  $AF93 IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_BIT7;  // wild guess: clamp character in position?
   $AF9B HL = IY;
   $AF9E A = L;
   $AF9F A &= A;
   $AFA0 if (A == 0 && morale_related_also) door_handling();
-  $AFAB if (A || (($8001 & (flag_PICKING_LOCK | flag_CUTTING_WIRE)) != flag_CUTTING_WIRE)) { bounds_check(); return; }
+  $AFAB if (A || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) { bounds_check(); return; }
 ;
 D $AFB9 Cutting wire only from here onwards?
   $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
@@ -5171,7 +5174,7 @@ D $AFB9 Cutting wire only from here onwards?
   $AFC0 sub_AFDF();
   $AFC3 RET NZ }
 ;
-  $AFC4 IY[7] &= ~flag_8007_6;
+  $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
   $AFC8 memcpy(IY + 15, &word_81A4, 6); // $800F // copy Y,X and vertical offset
   $AFD7 IY[23] = byte_81AA;
   $AFDD A = 0;
@@ -5182,7 +5185,7 @@ D $AFB9 Cutting wire only from here onwards?
 c $AFDF sub_AFDF
   $AFDF HL = $8001;
   $AFE2 B = 8; // 8 iterations
-  $AFE4 do { if (*HL & flag_8001_7) goto next; // $8001, $8021, ...
+  $AFE4 do { if (*HL & vischar_BYTE1_BIT7) goto next; // $8001, $8021, ...
   $AFE9 PUSH BC
   $AFEA PUSH HL
   $AFEB HL += 14;
@@ -5780,7 +5783,7 @@ c $B495 action_lockpick
   $B498 if (NZ) return; // wrong door?
   $B499 ptr_to_door_being_lockpicked = HL;
   $B49C user_locked_out_until = game_counter + 0xFF;
-  $B4A4 ($8001) = flag_PICKING_LOCK;
+  $B4A4 ($8001) = vischar_BYTE1_PICKING_LOCK;
   $B4A9 queue_message_for_display(message_PICKING_THE_LOCK);
 
 ; -----------------------------------------------------------------------------
@@ -5925,7 +5928,7 @@ c $B5CE called_from_main_loop_9
   $B5D4 do { A = IY[1];
   $B5D7 if (A == 0xFF) goto next;
   $B5DC PUSH BC
-  $B5DD IY[1] |= flag_8001_7; // $8001
+  $B5DD IY[1] |= vischar_BYTE1_BIT7; // $8001
   $B5E1 if (IY[13] & (1<<7)) goto $B6BE; // $800D
   $B5E8 H = IY[11];
   $B5EB L = IY[10];
@@ -6024,7 +6027,7 @@ c $B5CE called_from_main_loop_9
 ;
   $B6A8 POP BC
   $B6A9 A = IY[1]; // $8001
-  $B6AC if (A != 0xFF) IY[1] &= ~flag_8001_7;
+  $B6AC if (A != 0xFF) IY[1] &= ~vischar_BYTE1_BIT7;
 ;
   $B6B4 next: DE = 32; // stride
   $B6B7 IY += DE;
@@ -6144,7 +6147,7 @@ D $B79B Resets all visible characters, dispatch_counter, day_or_night flag, gene
 D $B7C3 Lock the gates.
   $B7C3 HL = &gates_and_doors[0];
   $B7C6 B = 9; // 9 iterations
-  $B7C8 do { *HL++ |= 1<<7;
+  $B7C8 do { *HL++ |= gates_and_doors_LOCKED;
   $B7CB } while (--B);
 D $B7CD Reset all beds.
   $B7CD B = 6; // iterations
@@ -6254,7 +6257,7 @@ c $B89C sub_B89C
   $B8A5 DE = 0;
   $B8A8 BC = 0x0820; // B = 8 iterations, C = stride, 32
   $B8AB HL = $8007;
-  $B8AE do { if ((*HL & flag_8007_7) == 0) goto next;
+  $B8AE do { if ((*HL & vischar_BYTE7_BIT7) == 0) goto next;
   $B8B2 PUSH HL
   $B8B3 PUSH BC
   $B8B4 HL += 8;
@@ -6305,7 +6308,7 @@ c $B89C sub_B89C
   $B900 if (A & (1<<7)) return;
   $B903 HL = IY;
   $B906 if ((A & (1<<6)) == 0) {
-  $B90A IY[7] &= ~flag_8007_7;
+  $B90A IY[7] &= ~vischar_BYTE7_BIT7;
   $B90E return; } else {
   $B90F HL[1] &= ~itemstruct_ROOM_6;
   $B912 BIT 6,HL[1]  // odd. this tests the bit we've just cleared as if we're setting flags for return. but we can't be as we're followed by another instruction...
@@ -7837,7 +7840,7 @@ R $CA11 O:HL Pointer to ?
   $CA30 if (D != 255 || E < 254) { A = 4; return; } } }
   $CA3E -
   $CA3F HL -= 11;
-  $CA43 IY[7] |= flag_8007_5;
+  $CA43 IY[7] |= vischar_BYTE7_BIT5;
   $CA47 A = 0;
   $CA48 return;
 
@@ -7862,7 +7865,7 @@ R $CA49 O:HL Pointer to ?
   $CA68 if (D != 255 || E < 254) { A = 7; return; } } }
   $CA76 -
   $CA77 HL -= 14;
-  $CA7B IY[7] &= ~flag_8007_5;
+  $CA7B IY[7] &= ~vischar_BYTE7_BIT5;
   $CA7F A = 0;
   $CA80 return;
 
