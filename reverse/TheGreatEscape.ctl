@@ -786,7 +786,7 @@ D $68A2 Looks like it's resetting stuff.
   $68F4 plot_game_screen_x = 0;
   $68FA select_room_maybe();
   $68FD plot_indoor_tiles();
-  $6900 map_position_maybe = 0xEA74;
+  $6900 map_position = 0xEA74;
   $6906 tunnel_related();
   $6909 HL = $8000; // redundant? (reset_something sets HL to $8000 as its first instruction)
   $690C reset_something();
@@ -1991,7 +1991,7 @@ D $81BA Likely unreferenced byte.
 
 ; ------------------------------------------------------------------------------
 
-w $81BB map_position_maybe
+w $81BB map_position
 
 ; ------------------------------------------------------------------------------
 
@@ -3404,7 +3404,13 @@ b $A138 naughty_flag_perhaps
 ; ------------------------------------------------------------------------------
 
 b $A139 morale_related_also
-b $A13A morale_related
+D $A139 Kinda looks like a counter.
+
+w $A13A morale_related
+D $A13A Read as a word by process_user_input and check_morale. Everything else treats this as a byte.
+D $A13A Inhibits user input when nonzero.
+D $A13A Unsure why this is a word and not a byte.
+
 b $A13C morale
 
 ; ------------------------------------------------------------------------------
@@ -4154,56 +4160,55 @@ D $A7C9 resetish
 
 ; ------------------------------------------------------------------------------
 
-c $A80A sub_A80A
-  $A80A DE = $F278;
-  $A80D EXX
-  $A80E HL = $FF74;
-  $A811 A = map_position_maybe[1];
-  $A814 DE = $FE90;
-  $A817 sub_A8A2(); return; // exit via
+; two entry points
 
-; ------------------------------------------------------------------------------
+c $A80A sub_A80A
+D $A80A Causes some tile plotting.
+  $A80A DE = $F278;
+  $A80D -
+  $A80E HLdash = $FF74;
+  $A811 A = map_position >> 8; // map_position hi
+  $A814 DEdash = $FE90;
+  $A817 goto A826;
 
 c $A819 sub_A819
 D $A819 Causes some tile plotting.
-  $A819 DE = $F0F8;
-  $A81C EXX
-  $A81D HL = $FF58;
-  $A820 A = map_position_maybe[1]; // map_position_maybe hi
-  $A823 DE = $F290;
+  $A819 DE = $F0F8; // visible tiles array
+  $A81C -
+  $A81D HLdash = $FF58;
+  $A820 A = map_position >> 8; // map_position hi
+  $A823 DEdash = $F290;
 
 ; This entry point is used by the routine at #R$A80A.
   $A826 A = (A & 3) * 4;
   $A82A ($A86A) = A; // self modify
-  $A82D C = A;
-  $A82E A = (map_position_maybe[0] & 3) + C;
-  $A834 EX AF,AF'
-  $A835 A = *HL;
-  $A836 EXX
-  $A837 HL = 0x5B00 + A * 16;
-  $A842 EX AF,AF'
+  $A82D Cdash = A;
+  $A82E A = (map_position[0] & 3) + Cdash;
+  $A834 -
+  $A835 Adash = *HLdash;
+  $A836 -
+  $A837 HL = 0x5B00 + Adash * 16;
+  $A842 -
   $A843 A += L;
   $A844 L = A;
-  $A845 A = -A;
-  $A847 A &= 3;
+  $A845 A = -A & 3;
   $A849 if (A == 0) A = 4;
   $A84D B = A; // iterations
-  $A84E do { A = *HL;
+  $A84E do { A = *HL; // A = tile index
   $A84F *DE = A;
   $A850 plot_tile();
   $A853 HL++;
   $A854 DE++;
   $A855 } while (--B);
-  $A857 EXX
-  $A858 HL++;
-  $A859 B = 5; // 5 iterations
-  $A85B do { PUSH BC
-  $A85C A = *HL;
-  $A85D EXX
+  $A857 -
+  $A858 HLdash++;
+  $A859 Bdash = 5; // 5 iterations
+  $A85B do { PUSH BCdash
+  $A85C A = *HLdash;
+  $A85D -
   $A85E HL = &super_tiles[A];
-  $A869 A = 0; // must be self modified
-  $A86B A += L; // looks odd
-  $A86C L = A;
+  $A869 A = 0; // self modified by $A82A
+  $A86B L += A;
   $A86D B = 4; // 4 iterations
   $A86F do { A = *HL;
   $A870 *DE = A;
@@ -4211,20 +4216,18 @@ D $A819 Causes some tile plotting.
   $A874 HL++;
   $A875 DE++;
   $A876 } while (--B);
-  $A878 EXX
-  $A879 HL++;
-  $A87A POP BC
-  $A87B } while (--B);
-  $A87D A = C;
-  $A87E EX AF,AF'
-  $A87F A = *HL;
-  $A880 EXX
+  $A878 -
+  $A879 HLdash++;
+  $A87A POP BCdash
+  $A87B } while (--Bdash);
+  $A87D A = Cdash;
+  $A87E EX AF,AF' // unpaired?
+  $A87F A = *HLdash;
+  $A880 -
   $A881 HL = &super_tiles[A];
   $A88C A = ($A86A); // read self modified
-  $A88F A += L;
-  $A890 L = A;
-  $A891 A = map_position_maybe[0]; // map_position_maybe lo
-  $A894 A &= 3;
+  $A88F L += A;
+  $A891 A = map_position[0] & 3; // map_position lo
   $A896 if (A == 0) return;
   $A897 B = A;
   $A898 do { A = *HL;
@@ -4239,35 +4242,40 @@ D $A819 Causes some tile plotting.
 
 c $A8A2 sub_A8A2
 D $A8A2 resetish
-  $A8A2 DE = $F0F8;
-  $A8A5 EXX
-  $A8A6 HL = $FF58;
-  $A8A9 DE = $F290;
-  $A8AC A = map_position_maybe[0];
-  $A8AF B = 24; // 24 iterations (screen rows?)
-  $A8B1 do { PUSH BC
-  $A8B2 PUSH DE
-  $A8B3 PUSH HL
-  $A8B4 PUSH AF
-  $A8B5 EXX
+  $A8A2 DE = $F0F8; // visible tiles array
+
+  $A8A5 -
+  $A8A6 HLdash = $FF58;
+  $A8A9 DEdash = $F290;
+  $A8AC A = map_position[0];
+  $A8AF Bdash = 24; // 24 iterations (screen rows?)
+  $A8B1 do { PUSH BCdash
+  $A8B2 PUSH DEdash
+  $A8B3 PUSH HLdash
+  $A8B4 PUSH AFdash
+
+  $A8B5 -
   $A8B6 PUSH DE
-  $A8B7 EXX
-  $A8B8 CALL $A8F4
-  $A8BB EXX
+
+  $A8B7 -
+  $A8B8 CALL $A8F4 // sub_A8E7::A8F4;
+
+  $A8BB -
   $A8BC POP DE
   $A8BD DE++;
-  $A8BE EXX
+
+  $A8BE -
   $A8BF POP AF
-  $A8C0 POP HL
+  $A8C0 POP HLdash
   $A8C1 A++;
-  $A8C2 C = A;
+  $A8C2 Cdash = A;
   $A8C3 A &= 3;
-  $A8C5 if (A == 0) HL++;
-  $A8C8 A = C;
-  $A8C9 POP DE
-  $A8CA DE++;
-  $A8CB POP BC
-  $A8CC } while (--B);
+  $A8C5 if (A == 0) HLdash++;
+  $A8C8 A = Cdash;
+  $A8C9 POP DEdash
+  $A8CA DEdash++;
+  $A8CB POP BCdash
+  $A8CC } while (--Bdash);
   $A8CE return;
 
 ; ------------------------------------------------------------------------------
@@ -4277,10 +4285,10 @@ c $A8CF sub_A8CF
   $A8D2 EXX
   $A8D3 HL = $FF5E;
   $A8D6 DE = $F2A7;
-  $A8D9 A = map_position_maybe[0] & 3; // map_position_maybe lo
+  $A8D9 A = map_position[0] & 3; // map_position lo
   $A8DE if (A == 0) HL--;
-  $A8E1 A = map_position_maybe[0] - 1; // map_position_maybe lo
   $A8E5 goto $A8F4;
+  $A8E1 A = map_position[0] - 1; // map_position lo
 
 ; ------------------------------------------------------------------------------
 
@@ -4289,17 +4297,17 @@ c $A8E7 sub_A8E7
   $A8EA EXX
   $A8EB HL = $FF58;
   $A8EE DE = $F290;
-  $A8F1 A = map_position_maybe[0]; // map_position_maybe lo
+  $A8F1 A = map_position[0]; // map_position lo
 ;; This entry point is used by the routines at #R$A8A2 and #R$A8CF.
   $A8F4 A &= 3;
   $A8F6 ($A94D) = A; // self modify
   $A8F9 C = A;
-  $A8FA A = (map_position_maybe[1] & 3) * 4 + C;
-  $A902 EX AF,AF'
-  $A903 A = *HL;
+  $A8FA A = ((map_position >> 8) & 3) * 4 + C;
+  $A902 -
+  $A903 Adash = *HL;
   $A904 EXX
-  $A905 HL = 0x5B00 + A * 16;
-  $A910 EX AF,AF'
+  $A905 HL = 0x5B00 + Adash * 16;
+  $A910 -
   $A911 A += L;
   $A912 L = A;
   $A913 RRA
@@ -4353,7 +4361,7 @@ c $A8E7 sub_A8E7
   $A97F A = ($A94D);
   $A982 A += L;
   $A983 L = A;
-  $A984 A = map_position_maybe[1];
+  $A984 A = map_position >> 8;
   $A987 A &= 3;
   $A989 A++;
   $A98A BC = $18;
@@ -4415,7 +4423,7 @@ R $A9AD I:A  Tile index
 ; -----------------------------------------------------------------------------
 
 c $A9E4 map_shunt_1
-  $A9E4 HL = &map_position_maybe;
+  $A9E4 HL = &map_position;
   $A9E7 (*HL)++;
   $A9E8 sub_A7C9();
   $A9EB HL = visible_tiles_start_address + 1;
@@ -4430,7 +4438,7 @@ c $A9E4 map_shunt_1
   $AA04 return;
 
 c $AA05 map_unshunt_1
-  $AA05 HL = &map_position_maybe;
+  $AA05 HL = &map_position;
   $AA08 (*HL)--;
   $AA09 sub_A7C9();
   $AA0C HL = visible_tiles_end_address - 1;
@@ -4447,8 +4455,8 @@ c $AA05 map_unshunt_1
 c $AA26 map_shunt_2
   $AA26 L--;
   $AA27 H++;
-  $AA28 map_position_maybe = HL;
   $AA2B sub_A7C9();
+  $AA28 map_position = HL;
   $AA2E HL = visible_tiles_start_address + 24;
   $AA31 DE = visible_tiles_start_address + 1;
   $AA34 BC = visible_tiles_length - 24;
@@ -4462,7 +4470,7 @@ c $AA26 map_shunt_2
   $AA4A return;
 
 c $AA4B map_unshunt_2
-  $AA4B HL = &map_position_maybe[1];
+  $AA4B HL = &map_position[1];
   $AA4E (*HL)++;
   $AA4F sub_A7C9();
   $AA52 HL = visible_tiles_start_address + 24;
@@ -4477,7 +4485,7 @@ c $AA4B map_unshunt_2
   $AA6B return;
 
 c $AA6C map_shunt_3
-  $AA6C HL = &map_position_maybe[1];
+  $AA6C HL = &map_position[1];
   $AA6F (*HL)--;
   $AA70 sub_A7C9();
   $AA73 HL = visible_tiles_end_address - 24;
@@ -4494,8 +4502,8 @@ c $AA6C map_shunt_3
 c $AA8D map_unshunt_3
   $AA8D L++;
   $AA8E H--;
-  $AA8F map_position_maybe = HL;
   $AA92 sub_A7C9();
+  $AA8F map_position = HL;
   $AA95 HL = visible_tiles_end_address - 24;
   $AA98 DE = visible_tiles_end_address - 1;
   $AA9B BC = visible_tiles_length - 24 - 1;
@@ -4512,7 +4520,7 @@ c $AA8D map_unshunt_3
 
 c $AAB2 move_map
 D $AAB2 Moves the map as the character walks.
-R $AAB2 O:HL == map_position_maybe
+R $AAB2 O:HL == map_position
   $AAB2 if (indoor_room_index) return; // outdoors only
   $AAB7 if ($8007 & (1<<6)) return;
   $AABD HL = $800A;
@@ -4534,7 +4542,7 @@ R $AAB2 O:HL == map_position_maybe
   $AAE2 BC = 0x7C00;
   $AAE5 if (A >= 2) B = 0x00;
   $AAEB else if (A != 1 && A != 2) C = 0xC0;
-  $AAF5 HL = map_position_maybe;
+  $AAF5 HL = map_position;
   $AAF8 if (L == C || H == B) {
   $AAFC popret: POP AF
   $AAFD POP HL
@@ -4567,7 +4575,7 @@ R $AAB2 O:HL == map_position_maybe
   $AB24 if (A == 1) goto ab2a
   $AB28 L = 0x90;
   $AB2A plot_game_screen_x = HL;
-  $AB2D HL = map_position_maybe;
+  $AB2D HL = map_position;
   $AB30 return;
 
 W $AB31 map_move_jump_table
@@ -4889,7 +4897,7 @@ D $ADBD Turns the screen blue and tracks the player with a spotlight.
 ;
   $ADCF outside: A = *HL; // get spotlight_found_player flag
   $ADD0 if (A != 0x1F) goto $AE00;
-  $ADD5 HL = map_position_maybe;
+  $ADD5 HL = map_position;
   $ADD8 D = L + 4;
   $ADDC D = H;
   $ADDD HL = searchlight_coords;
@@ -4918,7 +4926,7 @@ D $ADBD Turns the screen blue and tracks the player with a spotlight.
 ;
   $ADFD store: searchlight_coords = HL;
 ;
-  $AE00 DE = map_position_maybe;
+  $AE00 DE = map_position;
   $AE04 HL = $AE77; // &searchlight_coords + 1 byte;
   $AE07 B = 1; // 1 iteration
   $AE09 PUSH BC
@@ -4935,7 +4943,7 @@ D $ADBD Turns the screen blue and tracks the player with a spotlight.
   $AE19 something_then_decrease_morale_10();
   $AE1C POP HL
   $AE1D PUSH HL
-  $AE1E DE = map_position_maybe;
+  $AE1E DE = map_position;
   $AE22 A = E + 23;
   $AE25 if (A < *HL) goto next; // out of bounds maybe
   $AE29 A = *HL + 16;
@@ -4996,7 +5004,7 @@ D $AE76 (<- nighttime)
 c $AE78 something_then_decrease_morale_10
 R $AE78 I:HL Pointer to ?
 ;
-  $AE78 DE = map_position_maybe;
+  $AE78 DE = map_position;
   $AE7C B = E + 12;
   $AE80 A = HL[0] + 5;
   $AE83 if (A >= B) return;
@@ -6734,32 +6742,29 @@ c $BB98 called_from_main_loop_3
 
 c $BCAA select_tiles
 R $BCAA O:BC Pointer to tiles.
-  $BCAA EX AF,AF'
+  $BCAA -
   $BCAB if (indoor_room_index == 0) goto outdoors;
   $BCB1 BC = &interior_tiles[0];
-  $BCB4 EX AF,AF'
+  $BCB4 -
   $BCB5 return;
 
-  $BCB6 outdoors: A = (map_position_maybe[1] & 3) + L;
-  $BCBC RRA
-  $BCBD RRA
-  $BCBE A &= 0x3F;
-  $BCC0 L = A * 7;
-  $BCC6 A = (map_position_maybe[0] & 3) + H;
-  $BCCC RRA
-  $BCCD RRA
-  $BCCE A = (A & 0x3F) + L;
-  $BCD1 HL = $FF58;
-  $BCD4 A += L;
-  $BCD5 L = A;
-  $BCD6 A = *HL;
+  $BCB6 outdoors: Adash = ((map_position >> 8) & 3) + L;
+  $BCBC RRA // Adash
+  $BCBD RRA // Adash
+  $BCBE L = (Adash & 0x3F) * 7;
+  $BCC6 Adash = (map_position[0] & 3) + H;
+  $BCCC RRA // Adash
+  $BCCD RRA // Adash
+  $BCCE Adash = (Adash & 0x3F) + L;
+  $BCD1 HL = $FF58 + Adash;
+  $BCD6 Adash = *HL;
   $BCD7 BC = &exterior_tiles_1[0];
-  $BCDA if (A < 45) goto exit;
+  $BCDA if (Adash < 45) goto exit;
   $BCDE BC = &exterior_tiles_2[0];
-  $BCE1 if (A < 139 || A >= 204) goto exit;
+  $BCE1 if (Adash < 139 || Adash >= 204) goto exit;
   $BCE9 BC = &exterior_tiles_3[0];
 ;
-  $BCEC exit: EX AF,AF'
+  $BCEC exit:
   $BCED return;
 
 ; ------------------------------------------------------------------------------
@@ -7045,7 +7050,7 @@ D $C41A [unknown] (<- get_A_indexed_by_C41A)
 c $C41C called_from_main_loop_7
 ;
 D $C41C Form a map position in DE.
-  $C41C HL = map_position_maybe;
+  $C41C HL = map_position;
   $C41F E = (L < 8) ? 0 : L;
   $C426 D = (H < 8) ? 0 : H;
 ;
@@ -7101,7 +7106,7 @@ D $C441 Outdoors.
 
 c $C47E called_from_main_loop_6
 D $C47E Run through all visible characters, resetting them.
-  $C47E HL = &map_position_maybe;
+  $C47E HL = &map_position;
   $C481 E = MAX(L - 9, 0);
   $C488 D = MAX(H - 9, 0);
 ;
@@ -8535,7 +8540,7 @@ D $DB9E Iterates over item structs.
 ;
 ; similar to sub_CCFB (in that it iterates over item_structs)
   $DBA6 C = A; // room ref
-  $DBA7 DE = map_position_maybe;
+  $DBA7 DE = map_position;
   $DBAB B = 16; // items__LIMIT
   $DBAD HL = &item_structs[0].room;
 ;
@@ -9719,15 +9724,13 @@ c $E420 sub_E420
   $E4EB SBC HL,DE
   $E4ED HL *= 24;
   $E4F4 EX DE,HL }
-;
   $E4F5 A = map_position_related_1;
-  $E4F8 HL = &map_position_maybe;
+  $E4F8 HL = &map_position;
   $E4FB A -= *HL;
   $E4FC HL = A;
   $E4FF JR NC,$E503
   $E501 H = 0xFF;
-;
-  $E503 HL += DE + 0xF290;
+  $E503 HL += DE + 0xF290; // screen buf
   $E508 ($81A2) = HL;
   $E50B HL = 0x8100;
   $E50E POP DE
