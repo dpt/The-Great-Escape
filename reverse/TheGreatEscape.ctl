@@ -501,9 +501,11 @@
 ;   $8024 likely a position
 ;   $803C room index within struct at $8020
 
+; $8100 mask buffer thing
+
 ; $8131 <- spotlight_foo
 
-; w $81A2 (<- masked_sprite_plotter)
+; w $81A2 (<- masked_sprite_plotter_*)  likely screen buffer pointer
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; CONTROL DIRECTIVES
@@ -1948,36 +1950,22 @@ D $81AB Likely unreferenced byte.
 
 ; ------------------------------------------------------------------------------
 
-w $81AC word_81AC
-
-; ------------------------------------------------------------------------------
-
-w $81AE word_81AE
-
-; ------------------------------------------------------------------------------
-
-w $81B0 word_81B0
+w $81AC bitmap_pointer
+w $81AE mask_pointer
+w $81B0 foreground_mask_pointer
 
 ; ------------------------------------------------------------------------------
 
 b $81B2 byte_81B2
-
-; ------------------------------------------------------------------------------
-
 b $81B3 byte_81B3
-
-; ------------------------------------------------------------------------------
-
 b $81B4 byte_81B4
-
-; ------------------------------------------------------------------------------
-
 b $81B5 map_position_related_1
 b $81B6 map_position_related_2
 
 ; ------------------------------------------------------------------------------
 
-b $81B7 byte_81B7
+b $81B7 flip_sprite
+D $81B7 Controls character left/right flipping.
 
 ; ------------------------------------------------------------------------------
 
@@ -6208,22 +6196,22 @@ D $B866 Spotlight related.
   $B866 sub_B89C();
   $B869 if (NZ) return;
   $B86A if (A & (1<<6)) goto b88f
-  $B86E sub_E420();
+  $B86E setup_sprite_plotting();
   $B871 if (NZ) goto called_from_main_loop_11;
   $B873 sub_B916();
   $B876 if (spotlight_found_player != 0xFF) spotlight_foo();
   $B87E A = IY[0x1E];
   $B881 if (A != 3) {
-  $B885 masked_sprite_plotter();
+  $B885 masked_sprite_plotter_24_wide();
   $B888 goto called_from_main_loop_11; }
 
-  $B88A if (Z) sub_E2A2(); // odd to test for Z since it's always set
+  $B88A if (Z) masked_sprite_plotter_16_wide_case_1(); // odd to test for Z since it's always set
   $B88D goto called_from_main_loop_11;
 
   $B88F sub_DC41();
   $B892 if (NZ) goto called_from_main_loop_11;
   $B894 sub_B916();
-  $B897 sub_E29F();
+  $B897 masked_sprite_plotter_16_wide_case_1_spotlight();
   $B89A goto called_from_main_loop_11;
 
 ; -----------------------------------------------------------------------------
@@ -8778,12 +8766,8 @@ c $DC41 sub_DC41
   $DCEC JP NZ,$DCEA
 ;
   $DCEF E = A;
-  $DCF0 HL = ($81AC);
-  $DCF3 HL += DE;
-  $DCF4 ($81AC) = HL;
-  $DCF7 HL = ($81AE);
-  $DCFA HL += DE;
-  $DCFB ($81AE) = HL;
+  $DCF0 bitmap_pointer += DE;
+  $DCF7 mask_pointer += DE;
   $DCFE POP BC
   $DCFF POP DE
   $DD00 A = 0;
@@ -9002,187 +8986,138 @@ D $E0D7 Likely unreferenced byte.
 ; ------------------------------------------------------------------------------
 
 ; something plotter ish
-D $E0E0 (<- sub_DC41, sub_E420)
-  $E0E0 sub_E29F::jump0
-  $E0E2 sub_E34E::jump1
-  $E0E4 sub_E29F::jump2
-  $E0E6 sub_E34E::jump3
-  $E0E8 sub_E29F::jump4
-  $E0EA sub_E34E::jump5
+w $E0E0 masked_sprite_plotter_16_jump_table
+D $E0E0 (<- sub_DC41, setup_sprite_plotting)
+  $E0E0 masked_sprite_plotter_16_wide_case_1::jump0
+  $E0E2 masked_sprite_plotter_16_wide_case_2::jump1
+  $E0E4 masked_sprite_plotter_16_wide_case_1::jump2
+  $E0E6 masked_sprite_plotter_16_wide_case_2::jump3
+  $E0E8 masked_sprite_plotter_16_wide_case_1::jump4
+  $E0EA masked_sprite_plotter_16_wide_case_2::jump5
 
 ; ------------------------------------------------------------------------------
 
-D $E0EC (<- sub_E420)
-  $E0EC masked_sprite_plotter::E188
-  $E0EE masked_sprite_plotter::E259
-  $E0F0 masked_sprite_plotter::E199
-  $E0F2 masked_sprite_plotter::E26A
-  $E0F4 masked_sprite_plotter::E1AA
-  $E0F6 masked_sprite_plotter::E27B
-  $E0F8 masked_sprite_plotter::E1BF
-  $E0FA masked_sprite_plotter::E290
-w $E0E0 masked_sprite_plotter_16_jump_table
 w $E0EC masked_sprite_plotter_24_jump_table
+D $E0EC (<- setup_sprite_plotting)
+  $E0EC masked_sprite_plotter_24_wide::E188
+  $E0EE masked_sprite_plotter_24_wide::E259
+  $E0F0 masked_sprite_plotter_24_wide::E199
+  $E0F2 masked_sprite_plotter_24_wide::E26A
+  $E0F4 masked_sprite_plotter_24_wide::E1AA
+  $E0F6 masked_sprite_plotter_24_wide::E27B
+  $E0F8 masked_sprite_plotter_24_wide::E1BF
+  $E0FA masked_sprite_plotter_24_wide::E290
 ; these two look different
-  $E0FC sub_E29F::$E2A2
-  $E0FE masked_sprite_plotter
+  $E0FC masked_sprite_plotter_16_wide_case_1
+  $E0FE masked_sprite_plotter_24_wide
 
 ; ------------------------------------------------------------------------------
 
 u $E100 unused_E100
-D $E100 Unsure if related to the above pairs_of_offsets2 table.
+D $E100 Unsure if related to the above masked_sprite_plotter_24_jump_table table.
 
 ; ------------------------------------------------------------------------------
 
-c $E102 masked_sprite_plotter
-D $E102 Called when moving between gates on the way to exercise? Perhaps when something's visible through the fence... e.g. dogs. AHA dogs are 24 wide...
+; masked_sprite_plotters
+;
+; An w-wide masked sprite plotter takes a w-pixel wide input bitmap and plots
+; it across, up to, (w+8) pixels.
+;
 
-R $E102 I:IY ...
+c $E102 masked_sprite_plotter_24_wide
+D $E102 Sprite plotter. Used for characters and objects.
+R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
 ;
-  $E102 A = IY[24] & 7; // saw IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0
-  $E107 if (A >= 4) goto unaligned;
+  $E102 if ((A = IY[24] & 7) >= 4) goto unaligned;
 ;
-  $E10C A = (~A & 3) * 8; // form jump table offset
-  $E112 ($E161) = A; // self-modify: set branch target
-  $E115 ($E143) = A; // self-modify: set branch target
-  $E118 EXX
-  $E119 HL = word_81AE;
-  $E11C EXX
-  $E11D HL = word_81AC;
-  $E120 B = 32; // 32 iterations
+  $E10C A = (~A & 3) * 8; // jump table offset
+  $E112 ($E161) = A; // self-modify // set branch target of second jump
+  $E115 ($E143) = A; // self-modify // set branch target of first jump
+  $E118 maskptr = mask_pointer; // mask pointer
+  $E11C bitmapptr = bitmap_pointer; // bitmap pointer
+  $E120 iters = 32; // iterations // height? // self modified
+  $E122 do { bm0 = *bitmapptr++; // bitmap bytes
+  $E125 bm1 = *bitmapptr++;
+  $E127 bm2 = *bitmapptr++;
+  $E12B mask0 = *maskptr++; // mask bytes
+  $E12D mask1 = *maskptr++;
+  $E12F mask2 = *maskptr++;
+  $E132 if (flip_sprite & (1<<7)) flip_24_masked_pixels();
+  $E139 foremaskptr = foreground_mask_pointer;
+  $E13D screenptr = ($81A2); // screen ptr // moved compared to the other routines
 ;
-; suspect: fetch source data then mask. 3 bytes each.
-  $E122 do { PUSH BC
-  $E123 B = *HL++; // bitmap bytes
-  $E125 C = *HL++;
-  $E127 E = *HL++;
-  $E129 PUSH HL
-  $E12A EXX
-  $E12B B = *HL++; // mask bytes
-  $E12D C = *HL++;
-  $E12F E = *HL++;
-  $E131 PUSH HL
-  $E132 A = byte_81B7;
-  $E135 A &= A;
-  $E136 CALL M,$E3FA
+D $E140 Shift bitmap.
 ;
-  $E139 HL = word_81B0;
-  $E13C EXX
-  $E13D HL = ($81A2);
-  $E140 D = 0;
-  $E142 goto $E144 // self-modified to jump into ...;
- 
-  $E144 SRL B
-  $E146 RR C
-  $E148 RR E
-  $E14A RR D
+  $E140 bm3 = 0;
+  $E142 goto $E144 // self-modified // jump table
+  $E144 SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
+  $E146 RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
+  $E148 RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry;
+  $E14A RR bm3       // new_carry = bm3 & 1; bm3 = (bm3 >> 1) | (carry << 7); carry = new_carry;
+  $E14C SRL bm0 // 1
+  $E14E RR bm1
+  $E150 RR bm2
+  $E152 RR bm3
+  $E154 SRL bm0 // 2
+  $E156 RR bm1
+  $E158 RR bm2
+  $E15A RR bm3
 ;
-  $E14C SRL B
-  $E14E RR C
-  $E150 RR E
-  $E152 RR D
+D $E15D Shift mask.
 ;
-  $E154 SRL B
-  $E156 RR C
-  $E158 RR E
-  $E15A RR D
+  $E15D mask3 = 0xFF;
+  $E15F carry = 1;
+  $E160 goto $E162 // self-modified // jump table
+  $E162 RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
+  $E164 RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
+  $E166 RR mask2      // new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry;
+  $E168 RR mask3      // new_carry = mask3 & 1; mask3 = (mask3 >> 1) | (carry << 7); carry = new_carry;
+  $E16A RR mask0
+  $E16C RR mask1
+  $E16E RR mask2
+  $E170 RR mask3
+  $E172 RR mask0
+  $E174 RR mask1
+  $E176 RR mask2
+  $E178 RR mask3
 ;
-  $E15C EXX
-  $E15D D = 255;
-  $E15F SCF
-  $E160 goto $E162 // self-modified to jump into ...;
- 
-  $E162 RR B
-  $E164 RR C
-  $E166 RR E
-  $E168 RR D
+D $E17A Plot, using foreground mask.
 ;
-  $E16A RR B
-  $E16C RR C
-  $E16E RR E
-  $E170 RR D
+  $E17A A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
+  $E186 foremaskptr++;
 ;
-  $E172 RR B
-  $E174 RR C
-  $E176 RR E
-  $E178 RR D
+  $E188 *screenptr++ = A;          // jump target 0
+  $E18B A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
+  $E197 foremaskptr++;
 ;
-  $E17A A = ~*HL | B;       // 1
-  $E17D EXX
-  $E17E A &= *HL;
-  $E17F EX AF,AF'
-  $E180 A = B;
-  $E181 EXX
-  $E182 A &= *HL;
-  $E183 B = A;
-  $E184 EX AF,AF'
-  $E185 A |= B;
-  $E186 L++;
-  $E187 EXX
-  $E188 *HL++ = A;          // jump target 0
-  $E18A EXX
-  $E18B A = ~*HL | C;       // 2
-  $E18E EXX
-  $E18F A &= *HL;
-  $E190 EX AF,AF'
-  $E191 A = C;
-  $E192 EXX
-  $E193 A &= *HL;
-  $E194 C = A;
-  $E195 EX AF,AF'
-  $E196 A |= C;
-  $E197 L++;
-  $E198 EXX
-  $E199 *HL++ = A;          // jump target 2
-  $E19B EXX
-  $E19C A = ~*HL | E;       // 3
-  $E19F EXX
-  $E1A0 A &= *HL;
-  $E1A1 EX AF,AF'
-  $E1A2 A = E;
-  $E1A3 EXX
-  $E1A4 A &= *HL;
-  $E1A5 E = A;
-  $E1A6 EX AF,AF'
-  $E1A7 A |= E;
-  $E1A8 L++;
-  $E1A9 EXX
-  $E1AA *HL++ = A;          // jump target 4
-  $E1AC EXX
-  $E1AD A = ~*HL | D;       // 4
-  $E1B0 EXX
-  $E1B1 A &= *HL;
-  $E1B2 EX AF,AF'
-  $E1B3 A = D;
-  $E1B4 EXX
-  $E1B5 A &= *HL;
-  $E1B6 D = A;
-  $E1B7 EX AF,AF'
-  $E1B8 A |= D;
-  $E1B9 L++;
-  $E1BA word_81B0 = HL;
-  $E1BD POP HL
-  $E1BE EXX
-  $E1BF *HL = A;            // jump target 6
-  $E1C0 HL += 21;
-  $E1C4 ($81A2) = HL;
-  $E1C7 POP HL
-  $E1C8 POP BC
-  $E1C9 } while (--B);
+  $E199 *screenptr++ = A;          // jump target 2
+  $E19C A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
+  $E1A8 foremaskptr++;
+;
+  $E1AA *screenptr++ = A;          // jump target 4
+  $E1AD A = ((~*foremaskptr | mask3) & *screenptr) | (bm3 & *foremaskptr);
+  $E1B9 foremaskptr++;
+  $E1BA foreground_mask_pointer = foremaskptr;
+;
+  $E1BD *screenptr = A;            // jump target 6
+  $E1C0 screenptr += 21; // stride (24 - 3)
+  $E1C4 ($81A2) = screenptr;
+  $E1C8 } while (--iters);
   $E1CD return;
+
+
+
+
 
   $E1CE unaligned: A -= 4;
   $E1D0 RLCA
   $E1D1 RLCA
   $E1D2 RLCA
-  $E1D3 ($E22A) = A; // self-modify: set branch target
-  $E1D6 ($E204) = A; // self-modify: set branch target
-  $E1D9 EXX
-  $E1DA HL = word_81AE;
-  $E1DD EXX
-  $E1DE HL = word_81AC;
+  $E1D3 ($E22A) = A; // self-modify: set branch target - second jump
+  $E1D6 ($E204) = A; // self-modify: set branch target - first jump
+  $E1D9 HLdash = mask_pointer;
+  $E1DD HL = bitmap_pointer;
   $E1E1 B = 32;
-;
   $E1E3 do { PUSH BC
   $E1E4 B = *HL++;
   $E1E6 C = *HL++;
@@ -9193,56 +9128,44 @@ R $E102 I:IY ...
   $E1EE C = *HL++;
   $E1F0 E = *HL++;
   $E1F2 PUSH HL
-  $E1F3 A = byte_81B7;
-  $E1F6 A &= A;
-  $E1F7 CALL M,$E3FA
-;
-  $E1FA HL = word_81B0;
+  $E1F3 if (flip_sprite & (1<<7)) flip_24_masked_pixels();
+  $E1FA HL = foreground_mask_pointer;
   $E1FD EXX
   $E1FE HL = ($81A2);
   $E201 D = 0;
   $E203 goto $E205 // self-modified to jump into ...;
-
   $E205 SLA E
   $E207 RL C
   $E209 RL B
   $E20B RL D
-;
   $E20D SLA E
   $E20F RL C
   $E211 RL B
   $E213 RL D
-;
   $E215 SLA E
   $E217 RL C
   $E219 RL B
   $E21B RL D
-;
   $E21D SLA E
   $E21F RL C
   $E221 RL B
   $E223 RL D
-;
   $E225 EXX
   $E226 D = 255;
   $E228 SCF
   $E229 goto $E22B // self-modified to jump into ...;
- 
   $E22B RL E
   $E22D RL C
   $E22F RL B
   $E231 RL D
-;
   $E233 RL E
   $E235 RL C
   $E237 RL B
   $E239 RL D
-;
   $E23B RL E
   $E23D RL C
   $E23F RL B
   $E241 RL D
-;
   $E243 RL E
   $E245 RL C
   $E247 RL B
@@ -9301,7 +9224,7 @@ R $E102 I:IY ...
   $E288 EX AF,AF'
   $E289 A |= E;
   $E28A L++;
-  $E28B word_81B0 = HL;
+  $E28B foreground_mask_pointer = HL;
   $E28E POP HL
   $E28F EXX
   $E290 *HL = A;            // jump target 7
@@ -9314,261 +9237,170 @@ R $E102 I:IY ...
 
 ; ------------------------------------------------------------------------------
 
-c $E29F sub_E29F
+c $E29F masked_sprite_plotter_16_wide_case_1_spotlight
+D $E29F Direct entry point used by spotlight code.
   $E29F A = 0;
   $E2A0 goto E2AC;
 
 ; ------------------------------------------------------------------------------
+;
+; +-----+ +-----+
+; |  *  | |** **|
+; | *** | |*   *|
+; |  *  | |** **|
+; +-----+ +-----+
+; sprite  mask
+;
 
-c $E2A2 sub_E2A2
-  $E2A2 A = (IY+$18);
-  $E2A5 A &= $07;
-  $E2A7 CP $04
-  $E2A9 JP NC,$E34E
+c $E2A2 masked_sprite_plotter_16_wide_case_1
+D $E2A2 Sprite plotter. Used for characters and objects.
+D $E2A2 Looks like it plots a two byte-wide sprite with mask into a three byte-wide destination.
+  $E2A2 if ((A = IY[24] & 7) >= 4) goto masked_sprite_plotter_16_wide_case_2;
+;
 ; This entry point is used by the routine at #R$E29F.
 ;
-  $E2AC CPL
-  $E2AD A &= $03;
-  $E2AF A += A;
-  $E2B0 H = A;
-  $E2B1 A += A;
-  $E2B2 A += H;
-  $E2B3 ($E2DC) = A;
-  $E2B6 ($E2F4) = A;
-  $E2B9 EXX
-  $E2BA HL = ($81AE);
-  $E2BD EXX
-  $E2BE HL = ($81AC);
-  $E2C1 B = 32;
+  $E2AC A = (~A & 3) * 6; // jump table offset
+  $E2B3 ($E2DC) = A; // self-modify - first jump
+  $E2B6 ($E2F4) = A; // self-modify - second jump
+  $E2B9 maskptr = mask_pointer; // maskptr = HL'  // observed: $D505 (a mask)
+  $E2BE bitmapptr = bitmap_pointer; // bitmapptr = HL  // observed: $D256 (a bitmap)
 ;
-  $E2C3 D = *HL;
-  $E2C4 HL++;
-  $E2C5 E = *HL;
-  $E2C6 HL++;
-  $E2C7 PUSH HL
-  $E2C8 EXX
-  $E2C9 D = *HL;
-  $E2CA HL++;
-  $E2CB E = *HL;
-  $E2CC HL++;
-  $E2CD PUSH HL
-  $E2CE A = ($81B7);
-  $E2D1 A &= A;
-  $E2D2 CALL M,$E40F
-  $E2D5 HL = ($81B0);
-  $E2D8 C = $FF;
-  $E2DA SCF
-  $E2DB goto $E2DD;
- 
-  $E2DD RR D
-  $E2DF RR E
-  $E2E1 RR C
-  $E2E3 RR D
-  $E2E5 RR E
-  $E2E7 RR C
-  $E2E9 RR D
-  $E2EB RR E
-  $E2ED RR C
-  $E2EF EXX
-  $E2F0 C = 0;
-  $E2F2 A &= A;
-  $E2F3 goto $E2F5;
- 
-  $E2F5 SRL D
-  $E2F7 RR E
-  $E2F9 RR C
-  $E2FB SRL D
-  $E2FD RR E
-  $E2FF RR C
-  $E301 SRL D
-  $E303 RR E
-  $E305 RR C
-  $E307 HL = ($81A2);
-  $E30A EXX
-  $E30B A = *HL;
-  $E30C CPL
-  $E30D A |= D;
-  $E30E EXX
-  $E30F A &= *HL;
-  $E310 EX AF,AF'
-  $E311 A = D;
-  $E312 EXX
-  $E313 A &= *HL;
-  $E314 D = A;
-  $E315 EX AF,AF'
-  $E316 A |= D;
-  $E317 L++;
-  $E318 EXX
-  $E319 *HL = A;
-  $E31A HL++;
-  $E31B EXX
-  $E31C A = *HL;
-  $E31D CPL
-  $E31E A |= E;
-  $E31F EXX
-  $E320 A &= *HL;
-  $E321 EX AF,AF'
-  $E322 A = E;
-  $E323 EXX
-  $E324 A &= *HL;
-  $E325 E = A;
-  $E326 EX AF,AF'
-  $E327 A |= E;
-  $E328 L++;
-  $E329 EXX
-  $E32A *HL = A;
-  $E32B HL++;
-  $E32C EXX
-  $E32D A = *HL;
-  $E32E CPL
-  $E32F A |= C;
-  $E330 EXX
-  $E331 A &= *HL;
-  $E332 EX AF,AF'
-  $E333 A = C;
-  $E334 EXX
-  $E335 A &= *HL;
-  $E336 C = A;
-  $E337 EX AF,AF'
-  $E338 A |= C;
-  $E339 L++;
-  $E33A L++;
-  $E33B ($81B0) = HL;
-  $E33E POP HL
-  $E33F EXX
-  $E340 *HL = A;
-  $E341 DE = $0016;
-  $E344 HL += DE;
-  $E345 ($81A2) = HL;
-  $E348 POP HL
-  $E349 B--;
-  $E34A JP NZ,$E2C3
+  $E2C1 B = 32; // iterations // height? // self modified
+  $E2C3 do { bm0 = *bitmapptr++; // D
+  $E2C5 bm1 = *bitmapptr++; // E
+  $E2C7 mask0 = *maskptr++; // D'
+  $E2CB mask1 = *maskptr++; // E'
+  $E2CE if (flip_sprite & (1<<7)) flip_16_masked_pixels();
+; I'm assuming foremaskptr to be a foreground mask pointer based on it being
+; incremented by four each step, like a supertile wide thing.
+  $E2D5 foremaskptr = foreground_mask_pointer;  // observed: $8100 (mask buffer)
+;
+D $E2D8 Shift mask.
+;
+  $E2D8 mask2 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
+  $E2DA carry = 1; // mask OFF
+  $E2DB goto $E2DD; // self modified // jump table
+; RR = 9-bit rotation to the right
+  $E2DD RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
+  $E2DF RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
+  $E2E1 RR mask2      // new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry;
+  $E2E3 RR mask0 // 1
+  $E2E5 RR mask1
+  $E2E7 RR mask2
+  $E2E9 RR mask0 // 2
+  $E2EB RR mask1
+  $E2ED RR mask2
+;
+D $E2EF Shift bitmap.
+;
+  $E2EF bm2 = 0; // all bits clear => pixels OFF
+  $E2F2 A &= A; // I do not grok this. Setting carry flag?
+  $E2F3 goto $E2F5; // self modified // jump table
+  $E2F5 SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
+  $E2F7 RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
+  $E2F9 RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry;
+  $E2FB SRL bm0 // 1
+  $E2FD RR bm1
+  $E2FF RR bm2
+  $E301 SRL bm0 // 2
+  $E303 RR bm1
+  $E305 RR bm2
+;
+D $E307 Plot, using foreground mask.
+;
+  $E307 screenptr = ($81A2);
+  $E30A A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr); 
+  $E317 foremaskptr++;
+;
+  $E319 *screenptr++ = A; // entry point jump0
+  $E31B A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
+  $E328 foremaskptr++;
+;
+  $E32A *screenptr++ = A; // entry point jump2
+  $E32C A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
+  $E339 foremaskptr += 2;
+  $E33B foreground_mask_pointer = foremaskptr;
+;
+  $E340 *screenptr = A; // entry point jump4
+  $E341 screenptr += 22; // stride (24 - 2)
+  $E345 ($81A2) = screenptr;
+  $E348 } while (--B);
   $E34D return;
 
 ; ------------------------------------------------------------------------------
 
-c $E34E sub_E34E
-  $E34E SUB $04
-  $E350 A += A;
-  $E351 L = A;
-  $E352 A += A;
-  $E353 A += L;
-  $E354 ($E39A) = A;
-  $E357 ($E37D) = A;
-  $E35A EXX
-  $E35B HL = ($81AE);
-  $E35E EXX
-  $E35F HL = ($81AC);
-  $E362 B = 32;
+c $E34E masked_sprite_plotter_16_wide_case_2
+D $E34E Sprite plotter. Used for characters and objects.
+D $E34E Similar variant to above routine.
+  $E34E A = (A - 4) * 6; // jump table offset
+  $E354 ($E39A) = A; // self-modify - first jump
+  $E357 ($E37D) = A; // self-modify - second jump
+  $E35A maskptr = mask_pointer;
+  $E35E bitmapptr = bitmap_pointer;
 ;
-  $E364 D = *HL;
-  $E365 HL++;
-  $E366 E = *HL;
-  $E367 HL++;
-  $E368 PUSH HL
-  $E369 EXX
-  $E36A D = *HL;
-  $E36B HL++;
-  $E36C E = *HL;
-  $E36D HL++;
-  $E36E PUSH HL
-  $E36F A = ($81B7);
-  $E372 A &= A;
-  $E373 CALL M,$E40F
-  $E376 HL = ($81B0);
-  $E379 C = $FF;
-  $E37B SCF
-  $E37C goto $E37E;
- 
-  $E37E RL E
-  $E380 RL D
-  $E382 RL C
-  $E384 RL E
-  $E386 RL D
-  $E388 RL C
-  $E38A RL E
-  $E38C RL D
-  $E38E RL C
-  $E390 RL E
-  $E392 RL D
-  $E394 RL C
-  $E396 EXX
-  $E397 XA |= A;
-  $E398 C = A;
-  $E399 goto $E39B;
- 
-  $E39B SLA E
-  $E39D RL D
-  $E39F RL C
-  $E3A1 SLA E
-  $E3A3 RL D
-  $E3A5 RL C
-  $E3A7 SLA E
-  $E3A9 RL D
-  $E3AB RL C
-  $E3AD SLA E
-  $E3AF RL D
-  $E3B1 RL C
-  $E3B3 HL = ($81A2);
-  $E3B6 EXX
-  $E3B7 A = *HL;
-  $E3B8 CPL
-  $E3B9 A |= C;
-  $E3BA EXX
-  $E3BB A &= *HL;
-  $E3BC EX AF,AF'
-  $E3BD A = C;
-  $E3BE EXX
-  $E3BF A &= *HL;
-  $E3C0 C = A;
-  $E3C1 EX AF,AF'
-  $E3C2 A |= C;
-  $E3C3 L++;
-  $E3C4 EXX
-  $E3C5 *HL = A;
-  $E3C6 HL++;
-  $E3C7 EXX
-  $E3C8 A = *HL;
-  $E3C9 CPL
-  $E3CA A |= D;
-  $E3CB EXX
-  $E3CC A &= *HL;
-  $E3CD EX AF,AF'
-  $E3CE A = D;
-  $E3CF EXX
-  $E3D0 A &= *HL;
-  $E3D1 D = A;
-  $E3D2 EX AF,AF'
-  $E3D3 A |= D;
-  $E3D4 L++;
-  $E3D5 EXX
-  $E3D6 *HL = A;
-  $E3D7 HL++;
-  $E3D8 EXX
-  $E3D9 A = *HL;
-  $E3DA CPL
-  $E3DB A |= E;
-  $E3DC EXX
-  $E3DD A &= *HL;
-  $E3DE EX AF,AF'
-  $E3DF A = E;
-  $E3E0 EXX
-  $E3E1 A &= *HL;
-  $E3E2 E = A;
-  $E3E3 EX AF,AF'
-  $E3E4 A |= E;
-  $E3E5 L++;
-  $E3E6 L++;
-  $E3E7 ($81B0) = HL;
-  $E3EA POP HL
-  $E3EB EXX
-  $E3EC *HL = A;
-  $E3ED DE = $0016;
-  $E3F0 HL += DE;
-  $E3F1 ($81A2) = HL;
-  $E3F4 POP HL
-  $E3F5 B--;
-  $E3F6 JP NZ,$E364
+  $E362 B = 32; // iterations // height? // self modified
+  $E364 do { bm1 = *bitmapptr++; // numbering of the masks ... unsure
+  $E366 bm2 = *bitmapptr++;
+  $E368 mask1 = *maskptr++;
+  $E36C mask2 = *maskptr++;
+  $E36E if (flip_sprite & (1<<7)) flip_16_masked_pixels();
+  $E376 foremaskptr = foreground_mask_pointer;
+;
+D $E379 Shift mask.
+;
+  $E379 mask0 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
+  $E37B carry = 1; // mask OFF
+  $E37C goto $E37E; // self modified // jump table
+; RL = 9-bit rotation to the left
+  $E37E RL mask2 // 0 // new_carry = mask2 >> 7; mask2 = (mask2 << 1) | (carry << 0); carry = new_carry;
+  $E380 RL mask1      // new_carry = mask1 >> 7; mask1 = (mask1 << 1) | (carry << 0); carry = new_carry;
+  $E382 RL mask0      // new_carry = mask0 >> 7; mask0 = (mask0 << 1) | (carry << 0); carry = new_carry;
+  $E384 RL mask2 // 1
+  $E386 RL mask1
+  $E388 RL mask0
+  $E38A RL mask2 // 2
+  $E38C RL mask1
+  $E38E RL mask0
+  $E390 RL mask2 // 3 // four groups of shifting in this routine, compared to three above.
+  $E392 RL mask1
+  $E394 RL mask0
+;
+D $E396 Shift bitmap.
+;
+  $E396 bm0 = 0; // all bits clear => pixels OFF
+  $E399 goto $E39B; // self modified // jump table
+  $E39B SLA bm2 // 0 // carry = bm2 >> 7; bm2 <<= 1;
+  $E39D RL bm1       // new_carry = bm1 >> 7; bm1 = (bm1 << 1) | (carry << 0); carry = new_carry;
+  $E39F RL bm0       // new_carry = bm0 >> 7; bm0 = (bm0 << 1) | (carry << 0); carry = new_carry;
+  $E3A1 SLA bm2
+  $E3A3 RL bm1
+  $E3A5 RL bm0
+  $E3A7 SLA bm2
+  $E3A9 RL bm1
+  $E3AB RL bm0
+  $E3AD SLA bm2
+  $E3AF RL bm1
+  $E3B1 RL bm0
+;
+D $E3B3 Plot, using foreground mask.
+;
+  $E3B3 screenptr = ($81A2);
+  $E3B6 A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
+  $E3C3 foremaskptr++;
+;
+  $E3C5 *screenptr++ = A; // entry point jump1
+  $E3C7 A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
+  $E3D4 foremaskptr++;
+;
+  $E3D6 *screenptr++ = A; // entry point jump3
+  $E3D8 A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
+  $E3E5 foremaskptr += 2;
+  $E3E7 foreground_mask_pointer = foremaskptr;
+;
+  $E3EC *screenptr = A; // entry point jump5
+  $E3ED screenptr += 22; // stride (24 - 2)
+  $E3F1 ($81A2) = screenptr;
+  $E3F4 } while (--B);
   $E3F9 return;
 
 ; ------------------------------------------------------------------------------
@@ -9634,57 +9466,54 @@ D $E417 Roll the mask.
 
 ; ------------------------------------------------------------------------------
 
-c $E420 sub_E420
+c $E420 setup_sprite_plotting
+D $E420 Sets sprites up for plotting.
+R $E420 I:HL Pointer to ? // observed: always the same as IY
+R $E420 I:IY Pointer to ? // observed: $8000+
+;
   $E420 HL += 15;
   $E424 DE = &byte_81B2;
-  $E427 A = indoor_room_index;
-  $E42A if (A == 0) goto outdoors;
+  $E427 if (indoor_room_index) { // indoors
   $E42D *DE++ = *HL++;
   $E42F HL++;
   $E430 *DE++ = *HL++;
   $E432 HL++;
   $E433 *DE++ = *HL++;
   $E435 HL++;
-  $E436 goto $E44E;
- 
-  $E438 outdoors: A = *HL++;
+  $E436 } else { // outdoors
+  $E438 A = *HL++;
   $E43A C = *HL;
-  $E43B divide_AC_by_8_with_rounding();
+  $E43B divide_by_8_with_rounding(C,A);
   $E43E *DE++ = A;
   $E43F HL++;
   $E441 B = 2; // 2 iterations
   $E443 do { A = *HL++;
   $E445 C = *HL;
-  $E446 divide_AC_by_8();
+  $E446 divide_by_8(C,A);
   $E449 *DE++ = A;
   $E44A HL++;
-  $E44C } while (--B);
-;
+  $E44C } while (--B); }
   $E44E C = *HL++;
   $E450 B = *HL++;
   $E451 PUSH BC
-  $E453 A = *HL++;
-  $E454 byte_81B7 = A;
-  $E457 EX AF,AF'
+  $E453 flip_sprite = *HL++;  // set left/right flip flag
+  $E457 -
   $E459 B = 2; // 2 iterations
-  $E45B do { A = *HL++;
+  $E45B do { Adash = *HL++;
   $E45D C = *HL++;
-  $E45E divide_AC_by_8();
-  $E461 *DE++ = A;
+  $E45E divide_by_8(C,Adash);
+  $E461 *DE++ = Adash;
   $E464 } while (--B);
-;
-  $E466 EX AF,AF'
+  $E466 -
   $E467 POP DE
   $E468 DE += A * 6;
-;
   $E471 L += 2;
   $E473 EX DE,HL
-  $E474 *DE++ = *HL++;
-  $E476 *DE++ = *HL++;
-  $E478 memcpy(word_81AC, HL, 4);
+  $E474 *DE++ = *HL++; // width in bytes
+  $E476 *DE++ = *HL++; // height in rows
+  $E478 memcpy(bitmap_pointer, HL, 4); // copy bitmap pointer and mask pointer
   $E480 sub_BAF7();
   $E483 if (A) return;
-;
   $E485 PUSH BC
   $E486 PUSH DE
   $E487 A = IY[30];
@@ -9755,7 +9584,7 @@ c $E420 sub_E420
   $E50E POP DE
   $E50F PUSH DE
   $E510 L += D * 4 + (IY[26] & 7) * 4;
-  $E51E word_81B0 = HL;
+  $E51E foreground_mask_pointer = HL;
   $E521 POP DE
   $E522 A = D;
   $E523 if (A) {
@@ -9763,10 +9592,9 @@ c $E420 sub_E420
   $E527 A = 0;
   $E528 E = IY[30] - 1;
   $E52C do { A += E; } while (--D); }
-;
   $E531 E = A;
-  $E532 word_81AC += DE;
-  $E539 word_81AE += DE;
+  $E532 bitmap_pointer += DE;
+  $E539 mask_pointer += DE;
   $E540 POP BC
   $E541 return;
 
