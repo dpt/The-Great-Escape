@@ -5552,10 +5552,10 @@ D $B2FC Resets ... something.
 c $B32D indoors
 D $B32D [unsure]
   $B32D HL = &door_related;
-
+;
   $B330 for (;;) { A = *HL;
   $B331 if (A == 255) return;
-
+;
   $B334 EXX
   $B335 current_door = A;
   $B338 get_door_position();
@@ -5563,21 +5563,21 @@ D $B32D [unsure]
   $B33C C = A;
   $B33D B = A & 3;
   $B340 A = IY[14] & 3;
-  $B345 if (A != B) goto exx_continue;
-
+  $B345 if (A != B) goto next;
+;
   $B348 HL++;
   $B349 EX DE,HL
   $B34A HL = &word_81A4;
   $B34D B = 2; // 2 iterations
-
+;
   $B34F do { A = *DE - 3;
-  $B352 if (A >= *HL) goto exx_continue;
+  $B352 if (A >= *HL) goto next;
   $B355 A += 6;
-  $B357 if (A < *HL) goto exx_continue;
+  $B357 if (A < *HL) goto next;
   $B35A HL += 2;
   $B35C DE++;
   $B35D } while (--B);
-
+;
   $B35F DE++;
   $B360 EX DE,HL
   $B361 PUSH HL
@@ -5586,16 +5586,13 @@ D $B32D [unsure]
   $B366 POP BC
   $B367 POP HL
   $B368 if (NZ) return; // door was closed
-  $B369 A = C;
-  $B36A A >>= 2;
-  $B36C A &= 0x3F;
-  $B36E IY[28] = A;
+  $B369 IY[28] = (C >> 2) & 0x3F;
   $B371 HL++;
   $B372 A = current_door;
   $B375 if (A & (1<<7)) { HL -= 8; }
   $B380 sub_68A2(); return; // exit via
 
-  $B383 exx_continue: EXX
+  $B383 next: EXX
   $B384 HL++;
   $B385 }
 
