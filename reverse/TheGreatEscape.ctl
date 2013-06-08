@@ -7844,124 +7844,102 @@ R $CA49 O:HL Pointer to ?
 
 c $CA81 sub_CA81
 D $CA81 Bribes, solitary, food, 'character enters' sound.
+R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CA81 A = IY[1];
   $CA84 C = A;
-  $CA85 A &= 63;
+  $CA85 A &= vischar_BYTE1_MASK;
   $CA87 if (A) {
-  $CA89 if (A == 1) {
-
-  $CA8D A = bribed_character;
-  $CA90 if (A == [IY]) { use_bribe(); return; } // exit via
-  $CA96 else { solitary(); return; } } // exit via
-
-  $CA99 else if (A == 2 || A == 4) { return; }
-
-  $CA9F PUSH HL
-  $CAA0 HL = &itemstruct_7.item; // item_FOOD poisoned?
-  $CAA3 if ((*HL & itemfood_POISONED) == 0) A = 32; else A = 255;
-  $CAAB byte_C891 = A;
-  $CAAE POP HL
-  $CAAF HL -= 2;
-  $CAB1 *HL = 0;
-  $CAB3 goto sub_C918::C9F5; }
-
-  $CAB6 if ((C & (1<<6)) == 0) goto $CB13;
-
-  $CABA C = *--HL;
-  $CABC A = *--HL;
-  $CABE PUSH HL
-  $CABF element_A_of_table_7738();
-  $CAC2 POP HL
-  $CAC3 DE += C;
-  $CAC9 A = *DE;
-  $CACA if (*HL & (1<<7)) A ^= 0x80;
-
-  $CAD0 PUSH AF
-  $CAD1 A = *HL++;
-  $CAD3 if (A & (1<<7)) (*HL) -= 2;
-  $CAD9 (*HL)++;
-  $CADA POP AF
-  $CADB get_door_position(); // door related
-  $CADE A = *HL;
-  $CADF RRA
-  $CAE0 RRA
-  $CAE1 AND 63
-  $CAE3 IY[28] = A;
-  $CAE6 A = *HL & 3;
-  $CAE9 if (A < 2) HL += 5; else HL -= 3;
-  $CAF8 PUSH HL
-  $CAF9 HL = IY;
-  $CAFC A = L;
-  $CAFD if (A == 0) {
-  $CB01 HL++;
-  $CB02 *HL++ &= ~(1<<6);
-  $CB05 CALL $CB23 }
-
-  $CB08 POP HL
-  $CB09 sub_68A2();
-  $CB0C BC = sound_CHARACTER_ENTERS_1;
-  $CB0F play_speaker();
-  $CB12 return;
-
+  $CA89   if (A == 1) {
+  $CA8D     A = bribed_character;
+  $CA90     if (A == IY[0]) { use_bribe(); return; } // exit via
+  $CA96     else { solitary(); return; } } // exit via
+  $CA99   else if (A == 2 || A == 4) { return; }
+  $CA9F   PUSH HL
+  $CAA0   HL = &itemstruct_7.item; // item_FOOD poisoned?
+  $CAA3   if ((*HL & itemfood_POISONED) == 0) A = 32; else A = 255;
+  $CAAB   byte_C891 = A;
+  $CAAE   POP HL
+  $CAAF   HL -= 2;
+  $CAB1   *HL = 0;
+  $CAB3   goto sub_C918::C9F5; }
+;
+  $CAB6 if (C & vischar_BYTE1_BIT6) {
+  $CABA   C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location
+  $CABC   A = *--HL;
+  $CABE   PUSH HL
+  $CABF   element_A_of_table_7738();
+  $CAC2   POP HL
+  $CAC3   DE += C;
+  $CAC9   A = *DE;
+  $CACA   if (*HL & vischar_BYTE2_BIT7) A ^= 0x80;
+  $CAD0   PUSH AF
+  $CAD1   A = *HL++; // $8002, ...
+  $CAD3   if (A & vischar_BYTE2_BIT7) (*HL) -= 2; // $8003, ... // likely target location
+  $CAD9   (*HL)++; // likely target location
+  $CADA   POP AF
+  $CADB   get_door_position(); // door related
+  $CADE   A = (*HL >> 2) & 0x3F; // *HL = $790E, $7962, $795E => door position thingy
+  $CAE3   IY[28] = A; // IY=$8000 => $801C
+  $CAE6   A = *HL & 3; // door position thingy, lowest two bits -- index?
+  $CAE9   if (A < 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff?
+  $CAF8   PUSH HL
+  $CAF9   HL = IY;
+  $CAFC   if (L == 0) { // player's vischar only
+  $CB01     HL++; // $8000 -> $8001
+  $CB02     *HL++ &= ~vischar_BYTE1_BIT6;
+  $CB05     CALL $CB23 }
+  $CB08   POP HL
+  $CB09   sub_68A2();
+  $CB0C   BC = sound_CHARACTER_ENTERS_1;
+  $CB0F   play_speaker();
+  $CB12   return; }
+;
   $CB13 HL -= 2;
-  $CB15 A = *HL;
-  $CB16 if (A == 255) goto cb23;
-
+  $CB15 A = *HL; // $8002 etc. // likely target location
+  $CB16 if (A == 0xFF) goto CB23;
+;
   $CB1A HL++;
-  $CB1B if (A & (1<<7)) {
-  $CB1F (*HL) -= 2; }
+  $CB1B if (A & vischar_BYTE2_BIT7) {
+  $CB1F   (*HL) -= 2; } // $8003 etc.
   $CB21 else { (*HL)++;
-  $CB22 HL--; }
+  $CB22   HL--; }
 
 ; possibly a fallthrough here
 
 ; This entry point is used by the routines at #R$A3B3, #R$B107 and #R$C918.
+R $CB23 I:A Character index?
   $CB23 PUSH HL
   $CB24 sub_C651();
-  $CB27 if (A == 255)
-  $CB29 JP NZ,$CB61
-;
-  $CB2C POP HL
+  $CB27 if (A == 0xFF) {
+  $CB2C   POP HL
 ; This entry point is used by the routine at #R$C4E0.
-  $CB2D A = L;
-  $CB2E if (A == 2) goto $CB46;
-  $CB33 A = [IY] & 0x1F;
-  $CB38 JR NZ,$CB42
-
-  $CB3A A = *HL & 0x7F;
-  $CB3D CP 36
-  $CB3F JR Z,$CB46
-
-  $CB41 A = 0;
-  $CB42 CP 12
-  $CB44 JR C,$CB50
-
-  $CB46 PUSH HL
-  $CB47 character_event();
-  $CB4A POP HL
-  $CB4B A = *HL;
-  $CB4C if (A == 0) return;
-  $CB4E goto $CB23;
-
-  $CB50 *HL++ = *HL ^ 0x80;
-  $CB55 if (A & (1<<7)) {
-  $CB59 (*HL)--;
-  $CB5A (*HL)--; }
-
-  $CB5B (*HL)++
-  $CB5C HL--;
-  $CB5D A = 0;
-  $CB5E return;
-
+  $CB2D   if (L != 0x02) { // if not player's vischar
+  $CB33     A = IY[0] & vischar_BYTE0_MASK;
+  $CB38     if (A == 0) {
+  $CB3A       A = *HL & vischar_BYTE2_MASK;
+  $CB3D       if (A == 36) goto CB46; // character index
+  $CB41       A = 0; } // self modified? (suspect not - just countering next if statement)
+  $CB42     if (A == 12) goto CB50; }
+;        
+  $CB46   PUSH HL
+  $CB47   character_event();
+  $CB4A   POP HL
+  $CB4B   A = *HL;
+  $CB4C   if (A == 0) return;
+  $CB4E   goto CB23;
+         
+  $CB50   *HL++ = *HL ^ 0x80;
+  $CB55   if (A & (1<<7)) {
+  $CB59     (*HL) -= 2; }
+  $CB5B   (*HL)++
+  $CB5C   HL--;
+  $CB5D   A = 0;
+  $CB5E   return; } // strictly the terminating } is after the following unreferenced bytes
 U $CB5F,2 Unreferenced bytes.
-
   $CB61 if (A == 128) {
-  $CB66 IY[1] |= flag_8001_6; } // $8021
-
+  $CB66   IY[1] |= vischar_BYTE1_BIT6; }
   $CB6A POP DE
-  $CB6B DE += 2;
-  $CB6D BC = 2;
-  $CB70 LDIR
+  $CB6B memcpy(DE + 2, HL, 2);
   $CB72 A = 128;
   $CB74 return;
 
