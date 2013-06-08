@@ -8219,21 +8219,20 @@ R $CD31 I:C Item.
   $CD42 POP AF
   $CD43 A = item_location[A].room_and_flags;
   $CD4D EX DE,HL
-  $CD4E EX AF,AF'
-  $CD4F A = C;
+  $CD4E
+  $CD4F Adash = C; // bug? this is not masked with 0x0F so item_to_itemstruct generates out of range addresses and clears that flag
   $CD50 item_to_itemstruct();
-  $CD53 RES 7,*HL
+  $CD53 *HL &= ~itemstruct_ITEM_HELD; // clear which flag?
   $CD55 EX DE,HL
   $CD56 DE++;
-  $CD57 memcpy(DE, HL, 3); DE += 3; HL += 3;
+  $CD57 memcpy(DE, HL, 3); DE += 3; HL += 3; // reset location?
   $CD5C EX DE,HL
-  $CD5D EX AF,AF'
-  $CD5E if (A) goto cd65
+  $CD5D
+  $CD5E if (A == 0) {
   $CD61 *HL = A;
-  $CD62 JP $7BD0
-
+  $CD62 JP $7BD0 /* drop_item_A::7BD0 */ } else {
   $CD65 *HL = 5;
-  $CD67 JP $7BF2
+  $CD67 JP $7BF2 /* drop_item_A::7BF2 */ }
 
 ; ------------------------------------------------------------------------------
 
