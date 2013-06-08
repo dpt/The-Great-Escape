@@ -4114,32 +4114,17 @@ b $A7C7 plot_game_screen_x
 
 ; ------------------------------------------------------------------------------
 
-c $A7C9 sub_A7C9
-D $A7C9 resetish
-  $A7C9 A = map_position_maybe[1] & 0xFC;
-  $A7CE HL = A;
-  $A7D1 RRA
-  $A7D2 A &= 0x7F;
-  $A7D4 HL += A;
-  $A7D9 HL *= 9;
-  $A7DF DE = $BCB8; // &map_tiles[0] - some_amount
-  $A7E2 HL += DE;
-  $A7E3 A = map_position_maybe;
-  $A7E6 RRA
-  $A7E7 RRA
-  $A7E8 A &= 0x3F;
-  $A7EA DE = A;
-  $A7ED HL += DE;
-  $A7EE A = 5;
+c $A7C9 get_supertiles
+D $A7C9 Pulls supertiles out of the map.
+  $A7C9 A = (map_position >> 8) & 0xFC; // A = 0,4,8,12,...
+D $A7CE Get vertical offset. Multiply A by 13.5. (A is a multiple of 4, so this goes 0,54,108,162...)
+  $A7CE HL = $BCB8 + (A + (A >> 1)) * 9; // $BCB8 is &map_tiles[0] - 54 so it must be skipping the first row.
+  $A7E3 HL += (map_position & 0xFF) >> 2;
+D $A7EE Populate $FF58 with 7x5 array of supertile refs.
+  $A7EE A = 5; // 5 iterations
   $A7F0 DE = $FF58;
-  $A7F3 do { LDI
-  $A7F5 LDI
-  $A7F7 LDI
-  $A7F9 LDI
-  $A7FB LDI
-  $A7FD LDI
-  $A7FF LDI
-  $A801 HL += 0x2F;
+  $A7F3 do { memcpy(DE, HL, 7); DE += 7;
+  $A801 HL += 54; // stride - width of map
   $A805 } while (--A);
   $A809 return;
 
@@ -4410,7 +4395,7 @@ R $A9AD I:A  Tile index
 c $A9E4 map_shunt_1
   $A9E4 HL = &map_position;
   $A9E7 (*HL)++;
-  $A9E8 sub_A7C9();
+  $A9E8 get_supertiles();
   $A9EB HL = visible_tiles_start_address + 1;
   $A9EE DE = visible_tiles_start_address;
   $A9F1 BC = visible_tiles_length - 1;
@@ -4425,7 +4410,7 @@ c $A9E4 map_shunt_1
 c $AA05 map_unshunt_1
   $AA05 HL = &map_position;
   $AA08 (*HL)--;
-  $AA09 sub_A7C9();
+  $AA09 get_supertiles();
   $AA0C HL = visible_tiles_end_address - 1;
   $AA0F DE = visible_tiles_end_address;
   $AA12 BC = visible_tiles_length - 1;
@@ -4440,8 +4425,8 @@ c $AA05 map_unshunt_1
 c $AA26 map_shunt_2
   $AA26 L--;
   $AA27 H++;
-  $AA2B sub_A7C9();
   $AA28 map_position = HL;
+  $AA2B get_supertiles();
   $AA2E HL = visible_tiles_start_address + 24;
   $AA31 DE = visible_tiles_start_address + 1;
   $AA34 BC = visible_tiles_length - 24;
@@ -4457,7 +4442,7 @@ c $AA26 map_shunt_2
 c $AA4B map_unshunt_2
   $AA4B HL = &map_position[1];
   $AA4E (*HL)++;
-  $AA4F sub_A7C9();
+  $AA4F get_supertiles();
   $AA52 HL = visible_tiles_start_address + 24;
   $AA55 DE = visible_tiles_start_address;
   $AA58 BC = visible_tiles_length - 24;
@@ -4472,7 +4457,7 @@ c $AA4B map_unshunt_2
 c $AA6C map_shunt_3
   $AA6C HL = &map_position[1];
   $AA6F (*HL)--;
-  $AA70 sub_A7C9();
+  $AA70 get_supertiles();
   $AA73 HL = visible_tiles_end_address - 24;
   $AA76 DE = visible_tiles_end_address;
   $AA79 BC = visible_tiles_length - 24;
@@ -4487,8 +4472,8 @@ c $AA6C map_shunt_3
 c $AA8D map_unshunt_3
   $AA8D L++;
   $AA8E H--;
-  $AA92 sub_A7C9();
   $AA8F map_position = HL;
+  $AA92 get_supertiles();
   $AA95 HL = visible_tiles_end_address - 24;
   $AA98 DE = visible_tiles_end_address - 1;
   $AA9B BC = visible_tiles_length - 24 - 1;
@@ -5556,7 +5541,7 @@ D $B2FC Resets ... something.
   $B317 map_position[1] = A - 6;
 ;
   $B31C indoor_room_index = room_NONE;
-  $B320 sub_A7C9();
+  $B320 get_supertiles();
   $B323 sub_A8A2();
   $B326 setup_movable_items();
   $B329 zoombox();
