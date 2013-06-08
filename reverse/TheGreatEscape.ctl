@@ -8570,68 +8570,52 @@ D $DBC8 (A - 1 .. A + 16)
 ; ------------------------------------------------------------------------------
 
 c $DBEB sub_DBEB
-c $DBEB Uses BC_becomes_A_times_8.
-  $DBEB BC = $1007;
-  $DBEE HL = $76C9;
-  $DBF1 do { BIT 7,(HL)
-  $DBF3 JR Z,$DC38
-  $DBF5 BIT 6,(HL)
-  $DBF7 JR Z,$DC38
-  $DBF9 PUSH HL
-  $DBFA PUSH BC
-  $DBFB HL++;
-  $DBFC A = (HL);
-  $DBFD CALL $B1C7
-  $DC00 PUSH BC
-  $DC01 EXX
-  $DC02 POP HL
-  $DC03 A &= A;
-  $DC04 SBC HL,BC
-  $DC06 EXX
-  $DC07 JR Z,$DC36
-  $DC09 JR C,$DC36
-  $DC0B HL++;
-  $DC0C A = (HL);
-  $DC0D CALL $B1C7
-  $DC10 PUSH BC
-  $DC11 EXX
-  $DC12 POP HL
-  $DC13 SBC HL,DE
-  $DC15 EXX
-  $DC16 JR Z,$DC36
-  $DC18 JR C,$DC36
-  $DC1A PUSH HL
-  $DC1B EXX
-  $DC1C POP HL
-  $DC1D A = (HL);
-  $DC1E CALL $B1C7
-  $DC21 E = C;
-  $DC22 D = B;
-  $DC23 HL--;
-  $DC24 A = (HL);
-  $DC25 CALL $B1C7
-  $DC28 HL--;
-  $DC29 HL--;
-  $DC2A PUSH HL
-  $DC2B POP IY
-  $DC2D EXX
-  $DC2E POP BC
+D $DBEB Iterates over all items. Uses BC_becomes_A_times_8.
+R $DBEB O:IY Pointer to ? (result?)
+  $DBEB Outer_B = 16; Outer_C = 7; // iterations, stride
+  $DBEE Outer_HL = &itemstruct_0.room;
+  $DBF1 do { if ((*Outer_HL & (3<<6)) == (3<<6)) { // for items not in any room
+  $DBF9 HL = Outer_HL;
+  $DBFA
+  $DBFB HL++; // y position
+  $DBFC HLdash = *HL * 8;
+  $DC00
+  $DC01
+  $DC02
+  $DC03 A &= A; // clear carry?
+  $DC04 HLdash -= BCdash; // where is BCdash initialised?
+  $DC06
+  $DC07 if (HLdash <= 0) goto DC36;
+  $DC09 
+  $DC0B HL++; // x position
+  $DC0C HLdash = *HL * 8;
+  $DC10
+  $DC11
+  $DC12 // not clearing carry?
+  $DC13 HLdash -= BCdash; // where is BCdash initialised?
+  $DC15
+  $DC16 if (HLdash <= 0) goto DC36;
+  $DC18 
+  $DC1A HLdash = HL;
+  $DC1B
+  $DC1C
+  $DC1D DEdash = *HLdash-- * 8; // x position
+  $DC21
+  $DC23
+  $DC24 BCdash = *HLdash-- * 8; // y position
+  $DC28 HLdash--; // point to item
+  $DC2A IY = HLdash; // IY is not banked
+  $DC2B
+  $DC2D
+  $DC2E POP BC  // fetch Outer_B? (iter count)
   $DC2F PUSH BC
-  $DC30 A = $10;
-  $DC32 A -= B;
-  $DC33 A |= $40;
+  $DC30 A = (16 - B) | 0x40;
   $DC35 EX AF,AF'
 ;
-  $DC36 POP BC
-  $DC37 POP HL
-;
-  $DC38 A = C;
-  $DC39 A += L;
-  $DC3A L = A;
-  $DC3B JR NC,$DC3E
-  $DC3D H++;
-;
-  $DC3E } while (--B);
+  $DC36
+  $DC37
+  $DC38 } Outer_HL += Outer_C;
+  $DC3E } while (--Outer_B);
   $DC40 return;
 
 ; ------------------------------------------------------------------------------
@@ -8639,102 +8623,69 @@ c $DBEB Uses BC_becomes_A_times_8.
 c $DC41 sub_DC41
   $DC41 A &= 0x3F;
   $DC43 possibly_holds_an_item = A;
-  $DC46 HL = IY;
-  $DC49 HL += 2;
+  $DC46 HL = IY + 2;
   $DC4B DE = &byte_81B2;
   $DC4E BC = 5;
   $DC51 LDIR
   $DC53 EX DE,HL
-  $DC54 (HL) = B;
-  $DC55 HL = &item_definitions[0];
-  $DC58 A += A;
-  $DC59 C = A;
-  $DC5A A += A;
-  $DC5B A += C;
-  $DC5C C = A;
-  $DC5D HL += BC;
-  $DC5E HL++;
+  $DC54 *HL = B;
+  $DC55 HL = &item_definitions[A];
+  $DC5E HL++; // &item_definitions[A].second_member
   $DC5F A = (HL);
   $DC60 byte_8214 = A;
   $DC63 HL++;
-  $DC64 DE = $81AC;
-  $DC67 BC = $0004;
-  $DC6A LDIR
+  $DC64 memcpy(&bitmap_pointer, HL, 4); // copy bitmap and mask pointers
   $DC6C sub_DD02();
   $DC6F RET NZ
+;
   $DC70 PUSH BC
   $DC71 PUSH DE
   $DC72 A = E;
   $DC73 ($E2C2) = A; // self modify
   $DC76 A = B;
-  $DC77 A &= A;
-  $DC78 JP NZ,$DC81
-  $DC7B A = $77;
-  $DC7D EX AF,AF'
-  $DC7E A = C;
-  $DC7F goto $DC86;
-
+  $DC77 if (A == 0) {
+  $DC7B A = 0x77; // 0b01110111
+  $DC7D Adash = C;
+  $DC7F } else {
   $DC81 A = 0;
-  $DC82 EX AF,AF'
-  $DC83 A = $03;
-  $DC85 A -= C;
-;
-  $DC86 EXX
-  $DC87 C = A;
-  $DC88 EX AF,AF'
-  $DC89 HL = $E0E0;
-  $DC8C B = $03;
-;
-  $DC8E do { E = (HL);
-  $DC8F HL++;
-  $DC90 D = (HL);
-  $DC91 (DE) = A;
-  $DC92 HL++;
-  $DC93 E = (HL);
-  $DC94 HL++;
-  $DC95 D = (HL);
-  $DC96 HL++;
-  $DC97 (DE) = A;
-  $DC98 C--;
-  $DC99 JR NZ,$DC9D
-  $DC9B XA |= $77;
-;
-  $DC9D } while (--B);
-  $DC9F EXX
+  $DC82 Adash = 3 - C; }
+  $DC86
+  $DC87 Cdash = Adash;
+  $DC88
+  $DC89 HLdash = &masked_sprite_plotter_16_jump_table[0];
+  $DC8C Bdash = 3; // iterations
+  $DC8E do { Edash = *HLdash++;
+  $DC90 Ddash = *HLdash;
+  $DC91 *DEdash = A;
+  $DC92 HLdash++;
+  $DC93 Edash = *HLdash++;
+  $DC95 Ddash = *HLdash++;
+  $DC97 *DEdash = A;
+  $DC98 if (--Cdash == 0) A |= 0x77;
+  $DC9D } while (--Bdash);
+  $DC9F
   $DCA0 A = D;
   $DCA1 A &= A;
-  $DCA2 DE = $0000;
+  $DCA2 DE = 0;
   $DCA5 JR NZ,$DCBC
   $DCA7 HL = $81BC;
-  $DCAA A = ($81B6);
-  $DCAD A -= (HL);
-  $DCAE HL = A * 64;
-  $DCB7 E = L;
-  $DCB8 D = H;
-  $DCB9 HL += HL;
-  $DCBA HL += DE;
+  $DCAA A = ($81B6) - *HL;
+  $DCAE HL = A * 192;
   $DCBB EX DE,HL
 ;
-  $DCBC A = ($81B5);
-  $DCBF HL = $81BB;
-  $DCC2 A -= (HL);
-  $DCC3 L = A;
-  $DCC4 H = 0;
-  $DCC6 JR NC,$DCCA
-  $DCC8 H = $FF;
-;
+  $DCBC A = map_position_related_1;
+  $DCBF HL = $81BB; // &map_position;
+  $DCC2 A -= *HL;
+  $DCC3 HL = A;
+  $DCC6 if (carry) H = 0xFF;
   $DCCA HL += DE;
-  $DCCB DE = $F290;
+  $DCCB DE = $F290; // screen buf
   $DCCE HL += DE;
-  $DCCF ($81A2) = HL;
+  $DCCF ($81A2) = HL;  // screen buffer pointer
   $DCD2 HL = $8100;
   $DCD5 POP DE
   $DCD6 PUSH DE
-  $DCD7 A = D;
-  $DCD8 A += A;
-  $DCD9 A += A;
-  $DCDA A += L;
-  $DCDB L = A;
+  $DCD7 L += D * 4;
   $DCDC ($81B0) = HL;
   $DCDF POP DE
   $DCE0 PUSH DE
@@ -8743,7 +8694,7 @@ c $DC41 sub_DC41
   $DCE3 JR Z,$DCEF
   $DCE5 D = A;
   $DCE6 A = 0;
-  $DCE7 E = $03;
+  $DCE7 E = 3; // unusual (or self modified and i've not spotted the setter)
   $DCE9 E--;
 ;
   $DCEA A += E;
@@ -8761,68 +8712,53 @@ c $DC41 sub_DC41
 ; ------------------------------------------------------------------------------
 
 c $DD02 sub_DD02
-  $DD02 HL = $81B5;
-  $DD05 DE = ($81BB);
-  $DD09 A = E;
-  $DD0A A += $18;
-  $DD0C A -= (HL);
-  $DD0D JR Z,$DD66
+D $DD02 This is range checking seomthing.
+  $DD02 HL = &map_position_related_1;
+  $DD05 DE = map_position;
+  $DD09 A = E + 24 - *HL;
+  $DD0D JR Z,$DD66 // if (A <= 0) goto DD66; // check or maybe if (E + 24 <= *HL) goto DD66;
   $DD0F JR C,$DD66
-  $DD11 CP $03
+  $DD11 CP 3
   $DD13 JP NC,$DD1B
-  $DD16 B = 0;
-  $DD18 C = A;
+  $DD16 BC = A;
   $DD19 goto $DD33;
- 
-  $DD1B A = (HL);
-  $DD1C A += $03;
-  $DD1E A -= E;
+
+  $DD1B A = *HL + 3 - E;
   $DD1F JR Z,$DD66
   $DD21 JR C,$DD66
-  $DD23 CP $03
+  $DD23 CP 3
   $DD25 JP NC,$DD2F
   $DD28 C = A;
-  $DD29 A = $03;
-  $DD2B A -= C;
-  $DD2C B = A;
+  $DD29 B = 3 - C;
   $DD2D goto $DD33;
- 
-  $DD2F B = 0;
-  $DD31 C = $03;
+
+  $DD2F BC = 3;
 ;
-  $DD33 A = D;
-  $DD34 A += $11;
+  $DD33 A = D + 17;
   $DD36 HL++;
-  $DD37 A -= (HL);
+  $DD37 A -= *HL;
   $DD38 JR Z,$DD66
   $DD3A JR C,$DD66
-  $DD3C CP $02
+  $DD3C CP 2
   $DD3E JP NC,$DD47
-  $DD41 E = $08;
-  $DD43 D = 0;
+  $DD41 DE = 8;
   $DD45 goto $DD64;
- 
-  $DD47 A = (HL);
-  $DD48 A += $02;
-  $DD4A A -= D;
+
+  $DD47 A = *HL + 2 - D;
   $DD4B JR Z,$DD66
   $DD4D JR C,$DD66
-  $DD4F CP $02
+  $DD4F CP 2
   $DD51 JP NC,$DD5E
-  $DD54 A = ($8214);
-  $DD57 A -= $08;
-  $DD59 E = A;
-  $DD5A D = $08;
+  $DD54 E = byte_8214 - 8;
+  $DD5A D = 8;
   $DD5C goto $DD64;
- 
-  $DD5E D = 0;
-  $DD60 A = ($8214);
-  $DD63 E = A;
+
+  $DD5E DE = byte_8214;
 ;
   $DD64 A = 0;
   $DD65 return;
 ;
-  $DD66 A |= $01;
+  $DD66 A |= 1;
   $DD68 return;
 
 ; ------------------------------------------------------------------------------
