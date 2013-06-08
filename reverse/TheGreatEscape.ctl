@@ -9818,11 +9818,11 @@ D $EF9A Is the player within the roll call area bounds?
   $EFA3 if (A < D || A >= E) goto not_at_roll_call;
   $EFAA DE = $6A72; // Y bound
   $EFAD } while (--B);
-D $EFAF [unsure]
+D $EFAF All visible characters turn forward.
   $EFAF HL = $800D;
   $EFB2 B = 8; // iterations
   $EFB4 do { *HL++ = 0x80;
-  $EFB7 *HL = 0x03;
+  $EFB7 *HL = 0x03; // direction (3 => face bottom left)
   $EFB9 HL += 31;
   $EFBD } while (--B);
   $EFBF return;
