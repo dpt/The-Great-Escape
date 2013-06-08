@@ -9609,7 +9609,7 @@ R $E550 O:A Result.
 ;
 ; fallthrough
 
-c $E555 divide_CA_by_8
+c $E555 divide_by_8
   $E555 A = (A >> 3) | (C << 5); C >>= 3;
   $E55E return;
 
