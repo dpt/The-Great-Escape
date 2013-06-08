@@ -7667,32 +7667,31 @@ D $C8C5 Change '20' here to a higher number and prisoners will start following t
 
 c $C918 sub_C918
 D $C918 ...
-
-  $C918 A = IY[7];
+R $C918 I:IY Pointer to visible character block.
+  $C918 A = IY[7]; // $8007 etc.
   $C91B B = A;
-  $C91C A &= 0x0F;
+  $C91C A &= vischar_BYTE7_MASK;
   $C91E if (A) {
-  $C920 IY[7] = --B;
+  $C920 IY[7] = --B; // decrement but don't affect flags
   $C924 return; }
-
+;
   $C925 HL = IY;
   $C928 A = *++HL;
   $C92A if (A == 0) goto $C9BA;
-
+;
   $C92E if (A == 1) {
   $C932 PUSH HL
-  $C933 EXX
-  $C934 POP DE
-  $C935 DE += 3;
-  $C938 HL = 0x81B8; // player_map_position_perhapsX
-  $C93B *DE++ = *HL++;
-  $C93D *DE++ = *HL++;
-  $C93F EXX
+  $C933 -
+  $C934 POP DEdash
+  $C935 DEdash += 3;
+  $C938 HLdash = 0x81B8; // player_map_position_perhapsX
+  $C93B *DEdash++ = *HLdash++;
+  $C93D *DEdash++ = *HLdash++;
+  $C93F -
   $C940 JP $C9C0 }
-
+;
   $C943 if (A == 2) {
-  $C947 A = morale_related_also;
-  $C94A if (A) goto $C932;
+  $C947 if (morale_related_also) goto $C932;
   $C94D *HL++ = 0;
   $C950 JP $CB23 }
 
@@ -7705,8 +7704,7 @@ D $C918 ...
   $C965 *DE++ = *HL++;
   $C967 *DE++ = *HL++;
   $C969 POP HL
-  $C96A goto $C9C0 } else {;
-
+  $C96A goto $C9C0 } else {
   $C96C A = 0;
   $C96D *DE = A;
   $C96E EX DE,HL
@@ -7714,58 +7712,56 @@ D $C918 ...
   $C972 *++HL = 0;
   $C975 POP HL
   $C976 JP $CB23 } }
-
+;
   $C979 if (A == 4) {
   $C97D PUSH HL
   $C97E A = bribed_character;
   $C981 if (A != 0xFF) {
-  $C985 C = A;
+  $C985 -
   $C986 B = 7; // 7 iterations
   $C988 HL = $8020;
-  $C98B do { A = C;
-  $C98C CP *HL
-  $C98D JR Z,$C99C
+  $C98B do {
+  $C98C if (*HL == A) goto C99C;
   $C98F HL += 32;
   $C993 } while (--B); }
-
   $C995 POP HL
   $C996 *HL++ = 0;
   $C999 JP $CB23
 
+D $C99C Found bribed character.
   $C99C HL += 15;
   $C9A0 POP DE
   $C9A1 PUSH DE
   $C9A2 DE += 3;
   $C9A6 if (indoor_room_index) {
-  $C9AD divide_by_8_with_rounding(HL,DE);
+  $C9AD divide_array_by_8_with_rounding(HL,DE);
   $C9B0 } else {
   $C9B2 *DE++ = *HL++;
   $C9B4 HL++;
   $C9B5 *DE++ = *HL++; }
-
+;
   $C9B7 POP HL
   $C9B8 goto $C9C0 };
-
+;
   $C9BA A = *++HL;
   $C9BC HL--;
-  $C9BD if (A == 0) goto sub_C918::$C9F5;
-
+  $C9BD if (A == 0) goto sub_C918::C9F5;
+;
   $C9C0 A = *HL;
-  $C9C1 EXX
-  $C9C2 C = A;
-  $C9C3 A = indoor_room_index;
-  $C9C6 if (A) {
-  $C9C9 HL = &A_widened_to_BC;
+  $C9C1 -
+  $C9C2 Cdash = A;
+  $C9C3 if (indoor_room_index) {
+  $C9C9 HLdash = &A_widened_to_BC;
   $C9CC } else {
-  $C9CE if (C & (1<<6)) {
-  $C9D2 HL = &BC_becomes_A_times_4;
+  $C9CE if (Cdash & (1<<6)) {
+  $C9D2 HLdash = &BC_becomes_A_times_4;
   $C9D5 } else {
-  $C9D7 HL = &BC_becomes_A_times_8; } }
+  $C9D7 HLdash = &BC_becomes_A_times_8; } }
 
-  $C9DA ($CA13) = HL; // self-modify sub_CA11::CA13
-  $C9DD ($CA4B) = HL; // self-modify sub_CA11::CA4B
-  $C9E0 EXX
-  $C9E1 if (IY[7] & (1<<5)) goto $C9FF;
+  $C9DA ($CA13) = HLdash; // self-modify sub_CA11::CA13
+  $C9DD ($CA4B) = HLdash; // self-modify sub_CA11::CA4B
+  $C9E0 -
+  $C9E1 if (IY[7] & vischar_BYTE7_BIT5) goto $C9FF;
 
   $C9E7 HL += 3;
   $C9EA sub_CA11();
@@ -7778,7 +7774,7 @@ D $C918 ...
   $C9F5 if (IY[13] == 0)
   $C9F8 return;
 ;
-  $C9F9 IY[13] = A | 0x80;
+  $C9F9 IY[13] = A | (1<<7);
   $C9FE return;
 
   $C9FF L += 4;
