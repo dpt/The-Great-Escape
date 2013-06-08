@@ -7127,7 +7127,7 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4E7 -
   $C4EA -
   $C4EC B = 7; // 7 iterations
-  $C4EE do { if (*HL == flag_8000_EMPTY_SLOT) goto found; // empty slot found?
+  $C4EE do { if (*HL == vischar_BYTE0_EMPTY_SLOT) goto found; // empty slot found?
   $C4F1 HL += 32; // stride
   $C4F2 } while (--B);
   $C4F4 POP HL
@@ -7218,7 +7218,7 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C5B0 DE = HL + 2;
   $C5B4 goto $C592; }
 
-  $C5B6 if (A == 128) IY[1] |= flag_8001_6; // $8021
+  $C5B6 if (A == 128) IY[1] |= vischar_BYTE1_BIT6; // $8021
   $C5BE POP DE
   $C5BF memcpy(DE, HL, 3); }
 ;
