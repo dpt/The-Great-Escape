@@ -1552,7 +1552,8 @@ R $7BF2 I:HL Pointer to ? $77AE (odd - that's object tile refs...)
 ; ------------------------------------------------------------------------------
 
 c $7C26 item_to_itemstruct
-R $7C26 A Item index.
+R $7C26 I:A  Item index.
+R $7C26 O:HL Pointer to item_struct.
   $7C26 return &item_structs[A]; // $76C8 + A * 7
 
 ; ------------------------------------------------------------------------------
