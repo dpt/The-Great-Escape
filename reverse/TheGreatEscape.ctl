@@ -1695,8 +1695,8 @@ R $7CE9 O:HL Updated screen address.
 ; ------------------------------------------------------------------------------
 
 b $7CFC message_queue_stuff
-  $7CFC message_queue
 D $7CFC LIFO queue of message IDs.
+  $7CFC message_queue
   $7D0F message_display_counter
   $7D10 message_display_index
 D $7D10 If 128 then next_message. If > 128 then wipe message. Else ?
