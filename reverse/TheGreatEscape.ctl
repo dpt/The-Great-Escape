@@ -7115,12 +7115,12 @@ D $C47E Run through all visible characters, resetting them.
 ; -----------------------------------------------------------------------------
 
 c $C4E0 sub_C4E0
-D $C4E0 Spawns characters? / Adds characters to the active character list.
+D $C4E0 Spawns characters? / Adds characters to the visible character list.
 R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4E0 if (*HL & characterstruct_BYTE0_BIT6) return;
 ;
   $C4E3 PUSH HL
-  $C4E4 HL = $8020; // active character list
+  $C4E4 HL = $8020; // visible character list
   $C4E7 -
   $C4EA -
   $C4EC B = 7; // 7 iterations
@@ -7130,9 +7130,9 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4F4 POP HL
   $C4F5 return;
 
-  $C4F6 found: POP DE  // DE = HL (-> active character list)
+  $C4F6 found: POP DE  // DE = HL (-> visible character list)
   $C4F7 PUSH HL // resave
-  $C4F8 POP IY  // IY = HL (-> active character list)
+  $C4F8 POP IY  // IY = HL (-> visible character list)
   $C4FA PUSH HL // resave
   $C4FB PUSH DE
   $C4FC DE++; // $8021 etc.
