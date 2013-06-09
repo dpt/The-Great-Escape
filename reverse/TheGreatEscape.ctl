@@ -1110,7 +1110,7 @@ D $6B79 Note that the top hut has prisoners permanently in bed.
 ; ------------------------------------------------------------------------------
 
 b $6B85 four_byte_structures
-D $6B85,40,4 10x 4-byte structures which are ranged checked by routine at #R$B29F.
+D $6B85,40,4 10x 4-byte structures which are range checked by routine at #R$B29F.
 
 ; ------------------------------------------------------------------------------
 
