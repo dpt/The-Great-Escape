@@ -9978,6 +9978,22 @@ c $F257 wipe_full_screen_and_attributes
 ; ------------------------------------------------------------------------------
 
 c $F271 select_input_device
+  $F271 input_device_select_keyscan();
+  $F274 if (A == 0xFF) return; // nothing happened
+  $F277 if (A == 0) goto select; // zero pressed
+  $F27A A--; // 1..4 -> 0..3
+  $F27B PUSH AF
+  $F27C A = chosen_input_device;
+  $F27F set_menu_item_attributes(attribute_WHITE_OVER_BLACK);
+  $F284 POP AF
+  $F285 chosen_input_device = A;
+  $F288 set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);
+  $F28D return;
+
+  $F28E select: A = chosen_input_device;
+  $F292 memcpy($F075, inputroutine[A], 0x4A); // copy input routine to $F075
+  $F2A7 if (A == 0) goto choose_keys; // keyboard was selected
+  $F2AC return;
 
 ; ------------------------------------------------------------------------------
 
@@ -10024,6 +10040,7 @@ B $F2FD #CALL:decode_stringcounted($F2FD)
 ; ------------------------------------------------------------------------------
 
 b $F303 key_tables
+D $F303 Five bytes each.
 B $F303 table_12345
 B $F308 table_09876
 B $F30D table_QWERT
@@ -10057,6 +10074,105 @@ c $F335 wipe_game_screen
 ; ------------------------------------------------------------------------------
 
 c $F350 choose_keys
+  $F350 for (;;) { wipe_game_screen();
+  $F353   set_game_screen_attributes(attribute_WHITE_OVER_BLACK);
+  $F358   B = 6; // iterations
+  $F35A   HL = &key_choice_prompt_strings[0];
+  $F35D   do { PUSH BC
+  $F35E     E = *HL++;
+  $F360     D = *HL++;
+  $F362     B = *HL++; // iterations
+  $F364     do { PUSH BC
+  $F365       A = *HL;
+  $F366       plot_glyph();
+  $F369       HL++;
+  $F36A       POP BC
+  $F36B     } while (--B);
+  $F36D     POP BC
+  $F36E   } while (--B);
+D $F370 Wipe key_defs.
+  $F370   HL = &key_defs[0];
+  $F373   B = 10; // iterations
+  $F375   A = 0;
+  $F376   do { *HL++ = A;
+  $F378   } while (--B);
+  $F37A   B = 5; // iterations L/R/U/D/F
+  $F37C   HL = &key_name_screen_addrs[0];
+  $F37F   do { PUSH BC
+  $F380     E = *HL++;
+  $F382     D = *HL++;
+  $F384     PUSH HL
+  $F385     ($F3E9) = DE; // self modify screen addr
+  $F389     A = 0xFF;
+
+ *$F38B     -
+  $F38C     HL = 0xF2E1;
+  $F38F     D = 0xFF;
+  $F391     do { HL++;
+  $F392       D++;
+  $F393       Adash = *HL;
+  $F394       if (Adash == 0) goto $F38B;
+  $F397       B = Adash;
+  $F398       C = 0xFE;
+  $F39A       IN Adash,(C)
+  $F39C       Adash = ~Adash;
+  $F39D       E = Adash;
+  $F39E       C = 0x20;
+             
+ *$F3A0       C >>= 1;
+  $F3A2     } while (carry);  // not quite right
+  $F3A4     Adash = C & E;
+  $F3A6     if (Adash == 0) goto $F3A0;
+  $F3A8     -
+  $F3A9     if (A) goto $F38B;
+  $F3AC     A = D;
+  $F3AD     -
+  $F3AE     HL = 0xF06A;
+
+ *$F3B1     HL++;
+  $F3B2     Adash = *HL;
+  $F3B3     Adash |= Adash;
+  $F3B4     JR Z,$F3C1
+  $F3B6     if (A != B) ...
+  $F3B7     HL++; // interleaved
+  $F3B8     ... goto $F3B1;
+  $F3BA     Adash = *HL;
+  $F3BB     if (A != C) goto $F3B1;
+  $F3BE     goto $F38B;
+
+ *$F3C1     *HL++ = B;
+  $F3C3     *HL = C;
+  $F3C4     -
+  $F3C5     A *= 5;
+  $F3C9     HL = 0xF302;  // &key_tables[0] - 1 byte + A // strange: off by one
+  $F3CC     HL += A;
+
+ *$F3D1     HL++;
+  $F3D2     RR C
+  $F3D4     JR NC,$F3D1
+  $F3D6     B = 1;
+  $F3D8     A = *HL;
+  $F3D9     A |= A;
+  $F3DA     JP P,$F3E8
+  $F3DD     A &= 0x7F;
+  $F3DF     HL = &counted_strings[0] + A;
+  $F3E6     B = *HL++;
+
+ *$F3E8     DE = 0x40D5; // self modified // screen address
+  $F3EB     do { PUSH BC
+  $F3EC       A = *HL;
+  $F3ED       plot_glyph();
+  $F3F0       HL++;
+  $F3F1       POP BC
+  $F3F2     } while (--B);
+  $F3F4     POP HL
+  $F3F5     POP BC
+  $F3F6   } while (--B);
+  $F3F9   BC = 0xFFFF;
+  $F3FC   while (--BC); // delay loop
+  $F401   user_confirm();
+  $F404   if (Z) return;
+  $F405 }
 
 ; ------------------------------------------------------------------------------
 
@@ -10079,6 +10195,27 @@ D $F415 Draw.
 ; ------------------------------------------------------------------------------
 
 c $F41C input_device_select_keyscan
+  $F41C BC = port_KEYBOARD_12345;
+  $F41F E = 0;
+  $F421 IN A,(C)
+  $F423 A = ~A & 0x0F;
+  $F426 if (A == 0) goto higher;
+  $F428 B = 4; // iterations
+  $F42A do { A >>= 1;
+  $F42B E++;
+  $F42C if (C) goto found;
+  $F42E } while (--B);
+;
+  $F430 found: A = E;
+  $F431 return;
+
+  $F432 higher: B = 0xEF; // port_KEYBOARD_09876
+  $F434 IN A,(C)
+  $F436 A &= 1;
+  $F438 A = E; // interleaved
+  $F439 if (Z) return;
+  $F43A A = 0xFF; // no keypress
+  $F43C return;
 
 ; ------------------------------------------------------------------------------
 
@@ -10114,24 +10251,25 @@ B $F4A8 #CALL:decode_screenlocstring($F4A8)
 ; ------------------------------------------------------------------------------
 
 c $F4B7 menu_screen
+D $F4B7 Runs the menu screen: waiting for user to select an input device, waving the morale flag and playing the title tune.
   $F4B7 for (;;) { select_input_device();
   $F4BA   wave_morale_flag();
 D $F4BD Play music.
-  $F4BD   HL = music_ptr_0 + 1; // 16-bit read
-  $F4C1   for (;;) { music_ptr_0 = HL; // 16-bit write
-  $F4C4     A = music_data_maybe[HL];
+  $F4BD   HL = music_channel0_ptr + 1;
+  $F4C1   for (;;) { music_channel0_ptr = HL;
+  $F4C4     A = music_channel0_data[HL];
   $F4C9     if (A != 0xFF) break; // end marker
   $F4CD     HL = 0;
   $F4D0   }
   $F4D2   get_tuning();
   $F4D5   -
-  $F4D6   HLdash = music_ptr_1 + 1;
-  $F4DA   for (;;) { music_ptr_1 = HLdash;
-  $F4DD     A = music_data2_maybe[HLdash];
+  $F4D6   HLdash = music_channel1_ptr + 1;
+  $F4DA   for (;;) { music_channel1_ptr = HLdash;
+  $F4DD     A = music_channel1_data[HLdash];
   $F4E2     if (A != 0xFF) break; // end marker
   $F4E6     HLdash = 0;
   $F4E9   }
-  $F4EB   get_tuning();
+  $F4EB   get_tuning(); // using banked registers
   $F4EE   A = Bdash;
   $F4EF   -
   $F4F0   PUSH BC
@@ -10142,11 +10280,11 @@ D $F4BD Play music.
   $F4F9     -
   $F4FA   } else {
   $F4FC     POP BC }
-  $F4FD   A = 24; // 24 iterations
+  $F4FD   A = 24; // overall tune speed (lower => faster)
   $F4FF   do { -
-  $F500     H = 0xFF; // port hi
-  $F502     do { if (--B == 0) { // number of togglings
-  $F504         if (--C == 0) { // per-toggle delay
+  $F500     H = 0xFF; // iterations
+  $F502     do { if (--B == 0) { // big-endian counting down?
+  $F504         if (--C == 0) {
   $F508           L ^= 16;
   $F50C           OUT ($FE),L
   $F50E           BC = DE; } }
@@ -10171,16 +10309,16 @@ R $F52C O:DE ...
   $F52C BC = music_tuning_table[A];
   $F537 C++;
   $F538 B++;
-  $F539 if (B == 0) C++; // unusual 16-bit add?
+  $F539 if (B == 0) C++; // big-endian 16-bit add?
   $F53C L = 0;
   $F53E DE = BC;
   $F540 return;
 
-w $F541 music_ptr_0
-w $F543 music_ptr_1
+w $F541 music_channel0_ptr
+w $F543 music_channel1_ptr
 b $F545 unknown/unused
-b $F546 music_data_maybe
-b $F7C7 music_data2_maybe
+b $F546 music_channel0_data
+b $F7C7 music_channel1_data
 
 ; ------------------------------------------------------------------------------
 
