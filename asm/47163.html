@@ -41,132 +41,119 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="47163"></a>B83B</td>
 <td class="instruction">PUSH IY</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
 <td class="address"><a name="47165"></a>B83D</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47166"></a>B83E</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if (L) return; // skip non-player character</td>
 </tr>
 <tr>
 <td class="address"><a name="47167"></a>B83F</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47168"></a>B840</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47169"></a>B841</td>
 <td class="instruction">LD HL,$8131</td>
-<td class="transparentComment" />
+<td class="comment">HL = $8131;</td>
 </tr>
 <tr>
 <td class="address"><a name="47172"></a>B844</td>
 <td class="instruction">LD BC,$0804</td>
-<td class="transparentComment" />
+<td class="comment">BC = 0x0804; // 8 iterations, C is ?</td>
 </tr>
 <tr>
 <td class="address"><a name="47175"></a>B847</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="8">do { if (*HL != 0) goto $B860; } {  HL += 4; } while (--B);</td>
 </tr>
 <tr>
 <td class="label"><a name="47176"></a>B848</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47177"></a>B849</td>
 <td class="instruction">JR NZ,$B860</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47179"></a>B84B</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47180"></a>B84C</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47181"></a>B84D</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47182"></a>B84E</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47183"></a>B84F</td>
 <td class="instruction">DJNZ $B848</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47185"></a>B851</td>
 <td class="instruction">LD HL,$81BD</td>
-<td class="transparentComment" />
+<td class="comment">HL = &amp;searchlight_state;</td>
 </tr>
 <tr>
 <td class="address"><a name="47188"></a>B854</td>
 <td class="instruction">DEC (HL)</td>
-<td class="transparentComment" />
+<td class="comment">(*HL)--;</td>
 </tr>
 <tr>
 <td class="address"><a name="47189"></a>B855</td>
 <td class="instruction">LD A,$FF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if (0xFF != *HL) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="47191"></a>B857</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47192"></a>B858</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47193"></a>B859</td>
 <td class="instruction">CALL <a class="link" href="43883.html">$AB6B</a></td>
-<td class="transparentComment" />
+<td class="comment">choose_game_screen_attributes();</td>
 </tr>
 <tr>
 <td class="address"><a name="47196"></a>B85C</td>
 <td class="instruction">CALL <a class="link" href="41311.html">$A15F</a></td>
-<td class="transparentComment" />
+<td class="comment">set_game_screen_attributes();</td>
 </tr>
 <tr>
 <td class="address"><a name="47199"></a>B85F</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="47200"></a>B860</td>
 <td class="instruction">LD HL,$81BD</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">searchlight_state = searchlight_STATE_1F;</td>
 </tr>
 <tr>
 <td class="address"><a name="47203"></a>B863</td>
 <td class="instruction">LD (HL),$1F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="47205"></a>B865</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

@@ -35,77 +35,69 @@
 <tr>
 <td class="label"><a name="45319"></a>B107</td>
 <td class="instruction">CALL <a class="link" href="41193.html">$A0E9</a></td>
-<td class="transparentComment" />
+<td class="comment">increase_morale_by_10_score_by_50();</td>
 </tr>
 <tr>
 <td class="address"><a name="45322"></a>B10A</td>
 <td class="instruction">LD (IY+$01),$00</td>
-<td class="transparentComment" />
+<td class="comment">IY[1] = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="45326"></a>B10E</td>
 <td class="instruction">PUSH IY</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">HL = IY + 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="45328"></a>B110</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45329"></a>B111</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45330"></a>B112</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45331"></a>B113</td>
 <td class="instruction">CALL <a class="link" href="51841.html#52003">$CB23</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_CA81:$CB23();</td>
 </tr>
 <tr>
 <td class="address"><a name="45334"></a>B116</td>
 <td class="instruction">LD DE,$8215</td>
-<td class="transparentComment" />
+<td class="comment">DE = &amp;items_held[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="45337"></a>B119</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if (*DE != item_BRIBE) goto got_bribe;</td>
 </tr>
 <tr>
 <td class="address"><a name="45338"></a>B11A</td>
 <td class="instruction">CP $05</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45340"></a>B11C</td>
 <td class="instruction">JR Z,$B123</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45342"></a>B11E</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">if (*++DE != item_BRIBE) return; // have no bribes</td>
 </tr>
 <tr>
 <td class="address"><a name="45343"></a>B11F</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45344"></a>B120</td>
 <td class="instruction">CP $05</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45346"></a>B122</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -120,107 +112,95 @@ We have a bribe.
 <tr>
 <td class="label">B123</td>
 <td class="instruction">LD A,$FF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">got_bribe: *DE = item_NONE;</td>
 </tr>
 <tr>
 <td class="address"><a name="45349"></a>B125</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45350"></a>B126</td>
 <td class="instruction">AND $3F</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;</td>
 </tr>
 <tr>
 <td class="address"><a name="45352"></a>B128</td>
 <td class="instruction">LD ($76EC),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45355"></a>B12B</td>
 <td class="instruction">CALL <a class="link" href="31795.html">$7C33</a></td>
-<td class="transparentComment" />
+<td class="comment">draw_all_items();</td>
 </tr>
 <tr>
 <td class="address"><a name="45358"></a>B12E</td>
 <td class="instruction">LD B,$07</td>
-<td class="transparentComment" />
+<td class="comment">B = 7; // 7 iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="45360"></a>B130</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="transparentComment" />
+<td class="comment">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
 <td class="label"><a name="45363"></a>B133</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="10">do { if (HL[0] &lt; 20) { // likely character index. but why 20? } {    HL[1] = vischar_BYTE1_BIT2; } // character has taken bribe? } {  HL += 32; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="45364"></a>B134</td>
 <td class="instruction">CP $14</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45366"></a>B136</td>
 <td class="instruction">JR NC,$B13C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45368"></a>B138</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45369"></a>B139</td>
 <td class="instruction">LD (HL),$04</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45371"></a>B13B</td>
 <td class="instruction">DEC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="45372"></a>B13C</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45373"></a>B13D</td>
 <td class="instruction">ADD A,$20</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45375"></a>B13F</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45376"></a>B140</td>
 <td class="instruction">DJNZ $B133</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45378"></a>B142</td>
 <td class="instruction">LD B,$11</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">queue_message_for_display(message_HE_TAKES_THE_BRIBE);</td>
 </tr>
 <tr>
 <td class="address"><a name="45380"></a>B144</td>
 <td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="45383"></a>B147</td>
 <td class="instruction">LD B,$12</td>
-<td class="transparentComment" />
+<td class="comment">queue_message_for_display(message_AND_ACTS_AS_DECOY);</td>
 </tr>
 <tr>
 <td class="address"><a name="45385"></a>B149</td>
 <td class="instruction">JP <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

@@ -35,842 +35,769 @@ Walks the visible characters array doing ?
 <tr>
 <td class="label"><a name="48024"></a>BB98</td>
 <td class="instruction">LD B,$08</td>
-<td class="transparentComment" />
+<td class="comment">B = 8; // iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="48026"></a>BB9A</td>
 <td class="instruction">LD IY,$8000</td>
-<td class="transparentComment" />
+<td class="comment">IY = $8000;</td>
 </tr>
 <tr>
 <td class="label"><a name="48030"></a>BB9E</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="48031"></a>BB9F</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if (IY[1] == room_NONE) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="48034"></a>BBA2</td>
 <td class="instruction">CP $FF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48036"></a>BBA4</td>
 <td class="instruction">JP Z,$BC9F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48039"></a>BBA7</td>
 <td class="instruction">LD H,(IY+$1B)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="9">map_position_related_2 = (IY[26] &gt;&gt; 3) | (IY[27] &lt;&lt; 5); // divide by 8</td>
 </tr>
 <tr>
 <td class="address"><a name="48042"></a>BBAA</td>
 <td class="instruction">LD A,(IY+$1A)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48045"></a>BBAD</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48047"></a>BBAF</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48048"></a>BBB0</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48050"></a>BBB2</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48051"></a>BBB3</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48053"></a>BBB5</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48054"></a>BBB6</td>
 <td class="instruction">LD ($81B6),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48057"></a>BBB9</td>
 <td class="instruction">LD H,(IY+$19)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="9">map_position_related_1 = (IY[24] &gt;&gt; 3) | (IY[25] &lt;&lt; 5); // divide by 8</td>
 </tr>
 <tr>
 <td class="address"><a name="48060"></a>BBBC</td>
 <td class="instruction">LD A,(IY+$18)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48063"></a>BBBF</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48065"></a>BBC1</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48066"></a>BBC2</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48068"></a>BBC4</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48069"></a>BBC5</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48071"></a>BBC7</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48072"></a>BBC8</td>
 <td class="instruction">LD ($81B5),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48075"></a>BBCB</td>
 <td class="instruction">CALL <a class="link" href="47863.html">$BAF7</a></td>
-<td class="transparentComment" />
+<td class="comment">sub_BAF7();</td>
 </tr>
 <tr>
 <td class="address"><a name="48078"></a>BBCE</td>
 <td class="instruction">CP $FF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == 0xFF) goto next; // possibly not found case</td>
 </tr>
 <tr>
 <td class="address"><a name="48080"></a>BBD0</td>
 <td class="instruction">JP Z,$BC9F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48083"></a>BBD3</td>
 <td class="instruction">LD A,E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">A = ((E &gt;&gt; 3) &amp; 31) + 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="48084"></a>BBD4</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48085"></a>BBD5</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48086"></a>BBD6</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48087"></a>BBD7</td>
 <td class="instruction">AND $1F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48089"></a>BBD9</td>
 <td class="instruction">ADD A,$02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48091"></a>BBDB</td>
 <td class="instruction">PUSH AF</td>
-<td class="transparentComment" />
+<td class="comment">PUSH AF</td>
 </tr>
 <tr>
 <td class="address"><a name="48092"></a>BBDC</td>
 <td class="instruction">LD HL,$81B6</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">A += map_position_related_2 - ((map_position &amp; 0xFF00) &gt;&gt; 8);</td>
 </tr>
 <tr>
 <td class="address"><a name="48095"></a>BBDF</td>
 <td class="instruction">ADD A,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48096"></a>BBE0</td>
 <td class="instruction">LD HL,$81BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48099"></a>BBE3</td>
 <td class="instruction">SUB (HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48100"></a>BBE4</td>
 <td class="instruction">JR C,$BBF7</td>
-<td class="transparentComment" />
+<td class="comment">if (A &gt;= 0) {</td>
 </tr>
 <tr>
 <td class="address"><a name="48102"></a>BBE6</td>
 <td class="instruction">SUB $11</td>
-<td class="transparentComment" />
+<td class="comment">A -= 17;</td>
 </tr>
 <tr>
 <td class="address"><a name="48104"></a>BBE8</td>
 <td class="instruction">JR Z,$BBF7</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="8">if (A &gt; 0) } E = A; POP AF A -= E; if (carry) goto next; if (!Z) goto $BBF8; goto next; }</td>
 </tr>
 <tr>
 <td class="address"><a name="48106"></a>BBEA</td>
 <td class="instruction">JR C,$BBF7</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48108"></a>BBEC</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48109"></a>BBED</td>
 <td class="instruction">POP AF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48110"></a>BBEE</td>
 <td class="instruction">SUB E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48111"></a>BBEF</td>
 <td class="instruction">JP C,$BC9F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48114"></a>BBF2</td>
 <td class="instruction">JR NZ,$BBF8</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48116"></a>BBF4</td>
 <td class="instruction">JP $BC9F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="48119"></a>BBF7</td>
 <td class="instruction">POP AF</td>
-<td class="transparentComment" />
+<td class="comment">POP AF</td>
 </tr>
 <tr>
 <td class="label"><a name="48120"></a>BBF8</td>
 <td class="instruction">CP $05</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">if (A &gt; 5) A = 5;</td>
 </tr>
 <tr>
 <td class="address"><a name="48122"></a>BBFA</td>
 <td class="instruction">JP Z,$BC02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48125"></a>BBFD</td>
 <td class="instruction">JP C,$BC02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48128"></a>BC00</td>
 <td class="instruction">LD A,$05</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="48130"></a>BC02</td>
 <td class="instruction">LD ($BC5F),A</td>
-<td class="transparentComment" />
+<td class="comment">($BC5F) = A; // self modify</td>
 </tr>
 <tr>
 <td class="address"><a name="48133"></a>BC05</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
+<td class="comment">A = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="48134"></a>BC06</td>
 <td class="instruction">LD ($BC61),A</td>
-<td class="transparentComment" />
+<td class="comment">($BC61) = A; // self modify</td>
 </tr>
 <tr>
 <td class="address"><a name="48137"></a>BC09</td>
 <td class="instruction">LD ($BC89),A</td>
-<td class="transparentComment" />
+<td class="comment">($BC89) = A; // self modify</td>
 </tr>
 <tr>
 <td class="address"><a name="48140"></a>BC0C</td>
 <td class="instruction">LD A,$18</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = 24 - C;</td>
 </tr>
 <tr>
 <td class="address"><a name="48142"></a>BC0E</td>
 <td class="instruction">SUB C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48143"></a>BC0F</td>
 <td class="instruction">LD ($BC8E),A</td>
-<td class="transparentComment" />
+<td class="comment">($BC8E) = A; // self modify</td>
 </tr>
 <tr>
 <td class="address"><a name="48146"></a>BC12</td>
 <td class="instruction">ADD A,$A8</td>
-<td class="transparentComment" />
+<td class="comment">A += $A8;</td>
 </tr>
 <tr>
 <td class="address"><a name="48148"></a>BC14</td>
 <td class="instruction">LD ($BC95),A</td>
-<td class="transparentComment" />
+<td class="comment">($BC95) = A; // self modify</td>
 </tr>
 <tr>
 <td class="address"><a name="48151"></a>BC17</td>
 <td class="instruction">LD HL,$81BB</td>
-<td class="transparentComment" />
+<td class="comment">HL = &amp;map_position;</td>
 </tr>
 <tr>
 <td class="address"><a name="48154"></a>BC1A</td>
 <td class="instruction">LD A,B</td>
-<td class="transparentComment" />
+<td class="comment">A = B;</td>
 </tr>
 <tr>
 <td class="address"><a name="48155"></a>BC1B</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48156"></a>BC1C</td>
 <td class="instruction">LD A,$00</td>
-<td class="transparentComment" />
+<td class="comment">A = 0; // interleaved</td>
 </tr>
 <tr>
 <td class="address"><a name="48158"></a>BC1E</td>
 <td class="instruction">JR NZ,$BC24</td>
-<td class="transparentComment" />
+<td class="comment">if (Z) {</td>
 </tr>
 <tr>
 <td class="address"><a name="48160"></a>BC20</td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="transparentComment" />
+<td class="comment">A = ($81B5);</td>
 </tr>
 <tr>
 <td class="address"><a name="48163"></a>BC23</td>
 <td class="instruction">SUB (HL)</td>
-<td class="transparentComment" />
+<td class="comment">A -= *HL; }</td>
 </tr>
 <tr>
 <td class="label"><a name="48164"></a>BC24</td>
 <td class="instruction">LD B,A</td>
-<td class="transparentComment" />
+<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48165"></a>BC25</td>
 <td class="instruction">LD A,D</td>
-<td class="transparentComment" />
+<td class="comment">A = D;</td>
 </tr>
 <tr>
 <td class="address"><a name="48166"></a>BC26</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
+<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48167"></a>BC27</td>
 <td class="instruction">LD A,$00</td>
-<td class="transparentComment" />
+<td class="comment">A = 0; // interleaved</td>
 </tr>
 <tr>
 <td class="address"><a name="48169"></a>BC29</td>
 <td class="instruction">JR NZ,$BC30</td>
-<td class="transparentComment" />
+<td class="comment">if (Z) {</td>
 </tr>
 <tr>
 <td class="address"><a name="48171"></a>BC2B</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="48172"></a>BC2C</td>
 <td class="instruction">LD A,($81B6)</td>
-<td class="transparentComment" />
+<td class="comment">A = ($81B6);</td>
 </tr>
 <tr>
 <td class="address"><a name="48175"></a>BC2F</td>
 <td class="instruction">SUB (HL)</td>
-<td class="transparentComment" />
+<td class="comment">A -= *HL; }</td>
 </tr>
 <tr>
 <td class="label"><a name="48176"></a>BC30</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48177"></a>BC31</td>
 <td class="instruction">LD H,C</td>
-<td class="transparentComment" />
+<td class="comment">H = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="48178"></a>BC32</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="48179"></a>BC33</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
+<td class="comment">SRL H</td>
 </tr>
 <tr>
 <td class="address"><a name="48181"></a>BC35</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="48182"></a>BC36</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
+<td class="comment">E = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48183"></a>BC37</td>
 <td class="instruction">LD D,H</td>
-<td class="transparentComment" />
+<td class="comment">D = H;</td>
 </tr>
 <tr>
 <td class="address"><a name="48184"></a>BC38</td>
 <td class="instruction">SRL H</td>
-<td class="transparentComment" />
+<td class="comment">SRL H</td>
 </tr>
 <tr>
 <td class="address"><a name="48186"></a>BC3A</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
+<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="48187"></a>BC3B</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48188"></a>BC3C</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">HL += DE + B + $F290; // screen buffer start address</td>
 </tr>
 <tr>
 <td class="address"><a name="48189"></a>BC3D</td>
 <td class="instruction">LD E,B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48190"></a>BC3E</td>
 <td class="instruction">LD D,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48192"></a>BC40</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48193"></a>BC41</td>
 <td class="instruction">LD DE,$F290</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48196"></a>BC44</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48197"></a>BC45</td>
 <td class="instruction">EX DE,HL</td>
-<td class="transparentComment" />
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="48198"></a>BC46</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
+<td class="comment">PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="48199"></a>BC47</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="48200"></a>BC48</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">POP HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="48201"></a>BC49</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="48202"></a>BC4A</td>
 <td class="instruction">LD A,B</td>
-<td class="transparentComment" />
+<td class="comment">A = B;</td>
 </tr>
 <tr>
 <td class="address"><a name="48203"></a>BC4B</td>
 <td class="instruction">LD L,C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="14">HL = C * 24 + A + $F0F8; // visible tiles array</td>
 </tr>
 <tr>
 <td class="address"><a name="48204"></a>BC4C</td>
 <td class="instruction">LD H,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48206"></a>BC4E</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48207"></a>BC4F</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48208"></a>BC50</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48209"></a>BC51</td>
 <td class="instruction">LD C,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48210"></a>BC52</td>
 <td class="instruction">LD B,H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48211"></a>BC53</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48212"></a>BC54</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48213"></a>BC55</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48214"></a>BC56</td>
 <td class="instruction">LD B,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48216"></a>BC58</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48217"></a>BC59</td>
 <td class="instruction">LD BC,$F0F8</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48220"></a>BC5C</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48221"></a>BC5D</td>
 <td class="instruction">EX DE,HL</td>
-<td class="transparentComment" />
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="48222"></a>BC5E</td>
 <td class="instruction">LD C,$05</td>
-<td class="transparentComment" />
+<td class="comment">C = 5;  // self modified</td>
 </tr>
 <tr>
 <td class="label"><a name="48224"></a>BC60</td>
 <td class="instruction">LD B,$04</td>
-<td class="transparentComment" />
+<td class="comment">do { B = 4; // iterations // self modified</td>
 </tr>
 <tr>
 <td class="label"><a name="48226"></a>BC62</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">do { PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="48227"></a>BC63</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="48228"></a>BC64</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="48229"></a>BC65</td>
 <td class="instruction">POP DE</td>
-<td class="transparentComment" />
+<td class="comment">POP DEdash // visible tiles array pointer</td>
 </tr>
 <tr>
 <td class="address"><a name="48230"></a>BC66</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">PUSH HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="48231"></a>BC67</td>
 <td class="instruction">CALL <a class="link" href="48298.html">$BCAA</a></td>
-<td class="transparentComment" />
+<td class="comment">select_tile_set(); // call using banked registers</td>
 </tr>
 <tr>
 <td class="address"><a name="48234"></a>BC6A</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">HLdash = A * 8 + BCdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="48235"></a>BC6B</td>
 <td class="instruction">LD H,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48237"></a>BC6D</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48238"></a>BC6E</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48239"></a>BC6F</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48240"></a>BC70</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48241"></a>BC71</td>
 <td class="instruction">LD BC,$0818</td>
-<td class="transparentComment" />
+<td class="comment">Bdash, Cdash = 8, 24; // iterations, stride</td>
 </tr>
 <tr>
 <td class="label"><a name="48244"></a>BC74</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="9">do { *DEdash = *HLdash++; } {        DEdash += Cdash; } while (--Bdash);</td>
 </tr>
 <tr>
 <td class="address"><a name="48245"></a>BC75</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48246"></a>BC76</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48247"></a>BC77</td>
 <td class="instruction">ADD A,E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48248"></a>BC78</td>
 <td class="instruction">JR NC,$BC7B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48250"></a>BC7A</td>
 <td class="instruction">INC D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="48251"></a>BC7B</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48252"></a>BC7C</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48253"></a>BC7D</td>
 <td class="instruction">DJNZ $BC74</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48255"></a>BC7F</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">POP HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="48256"></a>BC80</td>
 <td class="instruction">INC H</td>
-<td class="transparentComment" />
+<td class="comment">Hdash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="48257"></a>BC81</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="48258"></a>BC82</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="48259"></a>BC83</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="48260"></a>BC84</td>
 <td class="instruction">DJNZ $BC62</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="48262"></a>BC86</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="48263"></a>BC87</td>
 <td class="instruction">LD A,H</td>
-<td class="transparentComment" />
+<td class="comment">A = Hdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="48264"></a>BC88</td>
 <td class="instruction">SUB $00</td>
-<td class="transparentComment" />
+<td class="comment">A -= 0; // self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="48266"></a>BC8A</td>
 <td class="instruction">LD H,A</td>
-<td class="transparentComment" />
+<td class="comment">Hdash = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48267"></a>BC8B</td>
 <td class="instruction">INC L</td>
-<td class="transparentComment" />
+<td class="comment">Ldash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="48268"></a>BC8C</td>
 <td class="instruction">EXX</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="48269"></a>BC8D</td>
 <td class="instruction">LD A,$14</td>
-<td class="transparentComment" />
+<td class="comment">A = 20; // self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="48271"></a>BC8F</td>
 <td class="instruction">ADD A,E</td>
-<td class="transparentComment" />
+<td class="comment">A += E;</td>
 </tr>
 <tr>
 <td class="address"><a name="48272"></a>BC90</td>
 <td class="instruction">JR NC,$BC93</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (carry) D++;</td>
 </tr>
 <tr>
 <td class="address"><a name="48274"></a>BC92</td>
 <td class="instruction">INC D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="48275"></a>BC93</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
+<td class="comment">E = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48276"></a>BC94</td>
 <td class="instruction">LD A,$BC</td>
-<td class="transparentComment" />
+<td class="comment">A = $BC; // self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="48278"></a>BC96</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
+<td class="comment">A += L;</td>
 </tr>
 <tr>
 <td class="address"><a name="48279"></a>BC97</td>
 <td class="instruction">JR NC,$BC9A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (carry) H++;</td>
 </tr>
 <tr>
 <td class="address"><a name="48281"></a>BC99</td>
 <td class="instruction">INC H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="48282"></a>BC9A</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
+<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="48283"></a>BC9B</td>
 <td class="instruction">DEC C</td>
-<td class="transparentComment" />
+<td class="comment">} while (--C);</td>
 </tr>
 <tr>
 <td class="address"><a name="48284"></a>BC9C</td>
 <td class="instruction">JP NZ,$BC60</td>
-<td class="transparentComment" />
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="48287"></a>BC9F</td>
 <td class="instruction">POP BC</td>
-<td class="transparentComment" />
+<td class="comment">next: POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="48288"></a>BCA0</td>
 <td class="instruction">LD DE,$0020</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">IY += 32; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="48291"></a>BCA3</td>
 <td class="instruction">ADD IY,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48293"></a>BCA5</td>
 <td class="instruction">DEC B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48294"></a>BCA6</td>
 <td class="instruction">JP NZ,$BB9E</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="48297"></a>BCA9</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

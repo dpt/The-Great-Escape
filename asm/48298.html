@@ -45,207 +45,169 @@ Turn a map ref? into a tile set pointer.
 <tr>
 <td class="label"><a name="48298"></a>BCAA</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="48299"></a>BCAB</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="6">if (indoor_room_index) } BC = &amp;interior_tiles[0]; - return;</td>
 </tr>
 <tr>
 <td class="address"><a name="48302"></a>BCAE</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48303"></a>BCAF</td>
 <td class="instruction">JR Z,$BCB6</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48305"></a>BCB1</td>
 <td class="instruction">LD BC,$9768</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48308"></a>BCB4</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48309"></a>BCB5</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="48310"></a>BCB6</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="34">else { Adash = (((map_position &gt;&gt; 8) &amp; 3) + L) &gt;&gt; 2; } {  L = (Adash &amp; 0x3F) * 7; } {  Adash = (((map_position &amp; 0xFF) &amp; 3) + H) &gt;&gt; 2; } {  Adash = (Adash &amp; 0x3F) + L; } {  Adash = $FF58[Adash]; // 7x5 supertile refs } BC = &amp;exterior_tiles_1[0]; {  if (Adash &gt;= 45) { } BC = &amp;exterior_tiles_2[0]; {    if (Adash &gt;= 139 &amp;&amp; Adash &lt; 204) { } BC = &amp;exterior_tiles_3[0]; } } - return;</td>
 </tr>
 <tr>
 <td class="address"><a name="48313"></a>BCB9</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48315"></a>BCBB</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48316"></a>BCBC</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48317"></a>BCBD</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48318"></a>BCBE</td>
 <td class="instruction">AND $3F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48320"></a>BCC0</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48321"></a>BCC1</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48322"></a>BCC2</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48323"></a>BCC3</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48324"></a>BCC4</td>
 <td class="instruction">SUB L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48325"></a>BCC5</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48326"></a>BCC6</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48329"></a>BCC9</td>
 <td class="instruction">AND $03</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48331"></a>BCCB</td>
 <td class="instruction">ADD A,H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48332"></a>BCCC</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48333"></a>BCCD</td>
 <td class="instruction">RRA</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48334"></a>BCCE</td>
 <td class="instruction">AND $3F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48336"></a>BCD0</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48337"></a>BCD1</td>
 <td class="instruction">LD HL,$FF58</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48340"></a>BCD4</td>
 <td class="instruction">ADD A,L</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48341"></a>BCD5</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48342"></a>BCD6</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48343"></a>BCD7</td>
 <td class="instruction">LD BC,$8590</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48346"></a>BCDA</td>
 <td class="instruction">CP $2D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48348"></a>BCDC</td>
 <td class="instruction">JR C,$BCEC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48350"></a>BCDE</td>
 <td class="instruction">LD BC,$8A18</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48353"></a>BCE1</td>
 <td class="instruction">CP $8B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48355"></a>BCE3</td>
 <td class="instruction">JR C,$BCEC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48357"></a>BCE5</td>
 <td class="instruction">CP $CC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48359"></a>BCE7</td>
 <td class="instruction">JR NC,$BCEC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48361"></a>BCE9</td>
 <td class="instruction">LD BC,$90F8</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="48364"></a>BCEC</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="48365"></a>BCED</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

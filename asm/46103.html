@@ -32,392 +32,362 @@
 <tr>
 <td class="label"><a name="46103"></a>B417</td>
 <td class="instruction">LD HL,$B589</td>
-<td class="transparentComment" />
+<td class="comment">HL = &amp;fences[0] + 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="46106"></a>B41A</td>
 <td class="instruction">LD DE,$81B9</td>
-<td class="transparentComment" />
+<td class="comment">DE = &amp;player_map_position_y;</td>
 </tr>
 <tr>
 <td class="address"><a name="46109"></a>B41D</td>
 <td class="instruction">LD B,$04</td>
-<td class="transparentComment" />
+<td class="comment">B = 4; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="46111"></a>B41F</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">do { ...</td>
 </tr>
 <tr>
 <td class="address"><a name="46112"></a>B420</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46113"></a>B421</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto continue;</td>
 </tr>
 <tr>
 <td class="address"><a name="46114"></a>B422</td>
 <td class="instruction">JR NC,$B433</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46116"></a>B424</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="46117"></a>B425</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &lt; *HL) goto continue;</td>
 </tr>
 <tr>
 <td class="address"><a name="46118"></a>B426</td>
 <td class="instruction">JR C,$B433</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46120"></a>B428</td>
 <td class="instruction">DEC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE--; // &amp;player_map_position_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="46121"></a>B429</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46122"></a>B42A</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="46123"></a>B42B</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46124"></a>B42C</td>
 <td class="instruction">JR Z,$B462</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46126"></a>B42E</td>
 <td class="instruction">DEC A</td>
-<td class="transparentComment" />
+<td class="comment">A--;</td>
 </tr>
 <tr>
 <td class="address"><a name="46127"></a>B42F</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_6;</td>
 </tr>
 <tr>
 <td class="address"><a name="46128"></a>B430</td>
 <td class="instruction">JR Z,$B46A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46130"></a>B432</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE++; // reset to Y</td>
 </tr>
 <tr>
 <td class="label"><a name="46131"></a>B433</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">continue: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="46132"></a>B434</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="5">HL += 6; // array stride</td>
 </tr>
 <tr>
 <td class="address"><a name="46133"></a>B435</td>
 <td class="instruction">ADD A,$06</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46135"></a>B437</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46136"></a>B438</td>
 <td class="instruction">JR NC,$B43B</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46138"></a>B43A</td>
 <td class="instruction">INC H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="46139"></a>B43B</td>
 <td class="instruction">DJNZ $B41F</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46141"></a>B43D</td>
 <td class="instruction">DEC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE--; // &amp;player_map_position_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="46142"></a>B43E</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">HL -= 3; // pointing to $B59E</td>
 </tr>
 <tr>
 <td class="address"><a name="46143"></a>B43F</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46144"></a>B440</td>
 <td class="instruction">DEC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46145"></a>B441</td>
 <td class="instruction">LD B,$03</td>
-<td class="transparentComment" />
+<td class="comment">B = 3; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="46147"></a>B443</td>
 <td class="instruction">PUSH HL</td>
-<td class="transparentComment" />
+<td class="comment">do { ...</td>
 </tr>
 <tr>
 <td class="address"><a name="46148"></a>B444</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46149"></a>B445</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &lt; *HL) goto continue2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46150"></a>B446</td>
 <td class="instruction">JR C,$B457</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46152"></a>B448</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46153"></a>B449</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto continue2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46154"></a>B44A</td>
 <td class="instruction">JR NC,$B457</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46156"></a>B44C</td>
 <td class="instruction">INC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46157"></a>B44D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
+<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46158"></a>B44E</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
+<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46159"></a>B44F</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_5;</td>
 </tr>
 <tr>
 <td class="address"><a name="46160"></a>B450</td>
 <td class="instruction">JR Z,$B466</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46162"></a>B452</td>
 <td class="instruction">DEC A</td>
-<td class="transparentComment" />
+<td class="comment">A--;</td>
 </tr>
 <tr>
 <td class="address"><a name="46163"></a>B453</td>
 <td class="instruction">CP (HL)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == *HL) goto set_to_7;</td>
 </tr>
 <tr>
 <td class="address"><a name="46164"></a>B454</td>
 <td class="instruction">JR Z,$B46E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46166"></a>B456</td>
 <td class="instruction">DEC DE</td>
-<td class="transparentComment" />
+<td class="comment">DE--;</td>
 </tr>
 <tr>
 <td class="label"><a name="46167"></a>B457</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">continue2: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="46168"></a>B458</td>
 <td class="instruction">LD A,L</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="5">HL += 6; // array stride</td>
 </tr>
 <tr>
 <td class="address"><a name="46169"></a>B459</td>
 <td class="instruction">ADD A,$06</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46171"></a>B45B</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46172"></a>B45C</td>
 <td class="instruction">JR NC,$B45F</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46174"></a>B45E</td>
 <td class="instruction">INC H</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="46175"></a>B45F</td>
 <td class="instruction">DJNZ $B443</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46177"></a>B461</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="46178"></a>B462</td>
 <td class="instruction">LD A,$04</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46180"></a>B464</td>
 <td class="instruction">JR $B470</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="46182"></a>B466</td>
 <td class="instruction">LD A,$05</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">set_to_5: A = 5; goto action_wiresnips_tail; // crawl TR</td>
 </tr>
 <tr>
 <td class="address"><a name="46184"></a>B468</td>
 <td class="instruction">JR $B470</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="46186"></a>B46A</td>
 <td class="instruction">LD A,$06</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">set_to_6: A = 6; goto action_wiresnips_tail; // crawl BR</td>
 </tr>
 <tr>
 <td class="address"><a name="46188"></a>B46C</td>
 <td class="instruction">JR $B470</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="46190"></a>B46E</td>
 <td class="instruction">LD A,$07</td>
-<td class="transparentComment" />
+<td class="comment">set_to_7: A = 7;                             // crawl BL</td>
 </tr>
 <tr>
 <td class="label"><a name="46192"></a>B470</td>
 <td class="instruction">POP HL</td>
-<td class="transparentComment" />
+<td class="comment">action_wiresnips_tail: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="46193"></a>B471</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">$800E = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46196"></a>B474</td>
 <td class="instruction">LD (HL),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46197"></a>B475</td>
 <td class="instruction">DEC L</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">$800D = 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46198"></a>B476</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46200"></a>B478</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">$8001 = 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46203"></a>B47B</td>
 <td class="instruction">LD (HL),$02</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46205"></a>B47D</td>
 <td class="instruction">LD A,$0C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">$8013 = 12; // set vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="46207"></a>B47F</td>
 <td class="instruction">LD ($8013),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46210"></a>B482</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">$8015 = sprite_prisoner_tl_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46213"></a>B485</td>
 <td class="instruction">LD ($8015),HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46216"></a>B488</td>
 <td class="instruction">LD A,($A12F)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">user_locked_out_until = game_counter + 96;</td>
 </tr>
 <tr>
 <td class="address"><a name="46219"></a>B48B</td>
 <td class="instruction">ADD A,$60</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46221"></a>B48D</td>
 <td class="instruction">LD ($A145),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46224"></a>B490</td>
 <td class="instruction">LD B,$0B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">queue_message_for_display(message_CUTTING_THE_WIRE);</td>
 </tr>
 <tr>
 <td class="address"><a name="46226"></a>B492</td>
 <td class="instruction">JP <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

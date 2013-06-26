@@ -32,52 +32,48 @@
 <tr>
 <td class="label"><a name="46229"></a>B495</td>
 <td class="instruction">CALL <a class="link" href="46288.html">$B4D0</a></td>
-<td class="transparentComment" />
+<td class="comment">open_door();</td>
 </tr>
 <tr>
 <td class="address"><a name="46232"></a>B498</td>
 <td class="instruction">RET NZ</td>
-<td class="transparentComment" />
+<td class="comment">if (!Z) return; // wrong door?</td>
 </tr>
 <tr>
 <td class="address"><a name="46233"></a>B499</td>
 <td class="instruction">LD ($A143),HL</td>
-<td class="transparentComment" />
+<td class="comment">ptr_to_door_being_lockpicked = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46236"></a>B49C</td>
 <td class="instruction">LD A,($A12F)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">user_locked_out_until = game_counter + 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46239"></a>B49F</td>
 <td class="instruction">ADD A,$FF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46241"></a>B4A1</td>
 <td class="instruction">LD ($A145),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46244"></a>B4A4</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">($8001) = vischar_BYTE1_PICKING_LOCK;</td>
 </tr>
 <tr>
 <td class="address"><a name="46247"></a>B4A7</td>
 <td class="instruction">LD (HL),$01</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46249"></a>B4A9</td>
 <td class="instruction">LD B,$0A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">queue_message_for_display(message_PICKING_THE_LOCK);</td>
 </tr>
 <tr>
 <td class="address"><a name="46251"></a>B4AB</td>
 <td class="instruction">JP <a class="link" href="32021.html">$7D15</a></td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

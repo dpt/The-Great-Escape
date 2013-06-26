@@ -38,142 +38,135 @@
 <tr>
 <td class="label"><a name="46938"></a>B75A</td>
 <td class="instruction">LD BC,$1000</td>
-<td class="transparentComment" />
+<td class="comment">BC = 0x1000; // B = 16, C = 0</td>
 </tr>
 <tr>
 <td class="label"><a name="46941"></a>B75D</td>
 <td class="instruction">PUSH BC</td>
-<td class="transparentComment" />
+<td class="comment">do { PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="46942"></a>B75E</td>
 <td class="instruction">CALL <a class="link" href="52529.html">$CD31</a></td>
-<td class="transparentComment" />
+<td class="comment">item_discovered();</td>
 </tr>
 <tr>
 <td class="address"><a name="46945"></a>B761</td>
 <td class="instruction">POP BC</td>
-<td class="transparentComment" />
+<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="46946"></a>B762</td>
 <td class="instruction">INC C</td>
-<td class="transparentComment" />
+<td class="comment">C++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46947"></a>B763</td>
 <td class="instruction">DJNZ $B75D</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46949"></a>B765</td>
 <td class="instruction">LD HL,$7CFE</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">message_queue_pointer = message_queue + 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46952"></a>B768</td>
 <td class="instruction">LD ($7D11),HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46955"></a>B76B</td>
 <td class="instruction">CALL <a class="link" href="47003.html">$B79B</a></td>
-<td class="transparentComment" />
+<td class="comment">reset_map_and_characters();</td>
 </tr>
 <tr>
 <td class="address"><a name="46958"></a>B76E</td>
 <td class="instruction">XOR A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">($8001) = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="46959"></a>B76F</td>
 <td class="instruction">LD ($8001),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46962"></a>B772</td>
 <td class="instruction">LD HL,$A132</td>
-<td class="transparentComment" />
+<td class="comment">HL = &amp;score_digits[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="46965"></a>B775</td>
 <td class="instruction">LD B,$0A</td>
-<td class="transparentComment" />
+<td class="comment">B = 10; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="46967"></a>B777</td>
 <td class="instruction">LD (HL),A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">do { *HL++ = 0; } while (--B); // could do a memset</td>
 </tr>
 <tr>
 <td class="address"><a name="46968"></a>B778</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46969"></a>B779</td>
 <td class="instruction">DJNZ $B777</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46971"></a>B77B</td>
 <td class="instruction">LD (HL),$70</td>
-<td class="transparentComment" />
+<td class="comment">morale = morale_MAX;</td>
 </tr>
 <tr>
 <td class="address"><a name="46973"></a>B77D</td>
 <td class="instruction">CALL <a class="link" href="41227.html">$A10B</a></td>
-<td class="transparentComment" />
+<td class="comment">plot_score();</td>
 </tr>
 <tr>
 <td class="address"><a name="46976"></a>B780</td>
 <td class="instruction">LD HL,$FFFF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">items_held = 0xFFFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46979"></a>B783</td>
 <td class="instruction">LD ($8215),HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46982"></a>B786</td>
 <td class="instruction">CALL <a class="link" href="31795.html">$7C33</a></td>
-<td class="transparentComment" />
+<td class="comment">draw_all_items();</td>
 </tr>
 <tr>
 <td class="address"><a name="46985"></a>B789</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">$8015 = sprite_prisoner_tl_4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46988"></a>B78C</td>
 <td class="instruction">LD ($8015),HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46991"></a>B78F</td>
 <td class="instruction">LD A,$02</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">indoor_room_index = room_2_hut2left;</td>
 </tr>
 <tr>
 <td class="address"><a name="46993"></a>B791</td>
 <td class="instruction">LD ($68A0),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46996"></a>B794</td>
 <td class="instruction">CALL <a class="link" href="42121.html">$A489</a></td>
-<td class="transparentComment" />
+<td class="comment">player_sleeps();</td>
 </tr>
 <tr>
 <td class="address"><a name="46999"></a>B797</td>
 <td class="instruction">CALL <a class="link" href="26868.html">$68F4</a></td>
-<td class="transparentComment" />
+<td class="comment">transition:$68F4();</td>
 </tr>
 <tr>
 <td class="address"><a name="47002"></a>B79A</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">

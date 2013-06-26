@@ -58,132 +58,119 @@ Gets called with successive bytes.
 <tr>
 <td class="label"><a name="51098"></a>C79A</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="51099"></a>C79B</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
+<td class="comment">C = Adash; // ie. banked A // some maximum value</td>
 </tr>
 <tr>
 <td class="address"><a name="51100"></a>C79C</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="51101"></a>C79D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">A = *DE - *HL; // delta</td>
 </tr>
 <tr>
 <td class="address"><a name="51102"></a>C79E</td>
 <td class="instruction">SUB (HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51103"></a>C79F</td>
 <td class="instruction">JR NZ,$C7A3</td>
-<td class="transparentComment" />
+<td class="comment">if (A == 0) {</td>
 </tr>
 <tr>
 <td class="address"><a name="51105"></a>C7A1</td>
 <td class="instruction">INC B</td>
-<td class="transparentComment" />
+<td class="comment">B++;</td>
 </tr>
 <tr>
 <td class="address"><a name="51106"></a>C7A2</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return; }</td>
 </tr>
 <tr>
 <td class="label"><a name="51107"></a>C7A3</td>
 <td class="instruction">JR NC,$C7B0</td>
-<td class="transparentComment" />
+<td class="comment">else if (A &lt; 0) {</td>
 </tr>
 <tr>
 <td class="address"><a name="51109"></a>C7A5</td>
 <td class="instruction">NEG</td>
-<td class="transparentComment" />
+<td class="comment">A = -A; // absolute</td>
 </tr>
 <tr>
 <td class="address"><a name="51111"></a>C7A7</td>
 <td class="instruction">CP C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="3">if (A &gt;= C) A = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="51112"></a>C7A8</td>
 <td class="instruction">JR C,$C7AB</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51114"></a>C7AA</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51115"></a>C7AB</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="4">*DE += A;</td>
 </tr>
 <tr>
 <td class="address"><a name="51116"></a>C7AC</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51117"></a>C7AD</td>
 <td class="instruction">ADD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51118"></a>C7AE</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51119"></a>C7AF</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return; }</td>
 </tr>
 <tr>
 <td class="label"><a name="51120"></a>C7B0</td>
 <td class="instruction">CP C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="8">else { if (A &gt;= C) A = C; } {  *DE -= A; } return;</td>
 </tr>
 <tr>
 <td class="address"><a name="51121"></a>C7B1</td>
 <td class="instruction">JR C,$C7B4</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51123"></a>C7B3</td>
 <td class="instruction">LD A,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51124"></a>C7B4</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51125"></a>C7B5</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51126"></a>C7B6</td>
 <td class="instruction">SUB C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51127"></a>C7B7</td>
 <td class="instruction">LD (DE),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51128"></a>C7B8</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">

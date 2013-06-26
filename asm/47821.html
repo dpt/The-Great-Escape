@@ -35,47 +35,46 @@ Tail end of above routine?
 <tr>
 <td class="label"><a name="47821"></a>BACD</td>
 <td class="instruction">LD B,$08</td>
-<td class="transparentComment" />
+<td class="comment">B = 8; // iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="47823"></a>BACF</td>
 <td class="instruction">LD HL,$0000</td>
-<td class="transparentComment" />
+<td class="comment">HL = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="47826"></a>BAD2</td>
 <td class="instruction">LD D,H</td>
-<td class="transparentComment" />
+<td class="comment">D = 0; // DE = 8; (unsure why this is reset)</td>
 </tr>
 <tr>
 <td class="label"><a name="47827"></a>BAD3</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="transparentComment" />
+<td class="comment">do { HL += HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="47828"></a>BAD4</td>
 <td class="instruction">RLA</td>
-<td class="transparentComment" />
+<td class="comment">RLA  // carry = (A &gt;&gt; 7); A &lt;&lt;= 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="47829"></a>BAD5</td>
 <td class="instruction">JP NC,$BAD9</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (carry) HL += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="47832"></a>BAD8</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="47833"></a>BAD9</td>
 <td class="instruction">DJNZ $BAD3</td>
-<td class="transparentComment" />
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="47835"></a>BADB</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">
