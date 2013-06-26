@@ -5113,7 +5113,7 @@ D $B016 --------
   $B029     if (HL > BC) goto pop_next;
   $B02C     BC -= 8;
   $B033     HL = word_81A6;
-  $B038     if (HL < BC) goto pop_next;
+  $B038     if (HL < BC) goto pop_next; }
   $B03B   EX DE,HL
   $B03C   HL++;
 D $B03D --------
@@ -7689,7 +7689,7 @@ R $CB23 I:A Character index?
   $CB5B   (*HL)++
   $CB5C   HL--;
   $CB5D   A = 0;
-  $CB5E   return; } // strictly the terminating } is after the following unreferenced bytes
+  $CB5E   return; } // strictly the terminating brace is after the following unreferenced bytes
 U $CB5F,2 Unreferenced bytes.
   $CB61 if (A == 128) {
   $CB66   IY[1] |= vischar_BYTE1_BIT6; }
