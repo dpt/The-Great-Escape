@@ -30,6 +30,12 @@
 Used by the routine at <a class="link" href="51346.html">C892</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">IY</td>
+<td class="registerContents">Pointer to vischar.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -84,17 +90,16 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="label"><a name="52294"></a>CC46</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
+<td class="comment" rowspan="2">A = HL[1]; // $8041 etc.</td>
 </tr>
 <tr>
 <td class="address"><a name="52295"></a>CC47</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="52296"></a>CC48</td>
 <td class="instruction">CP $04</td>
-<td class="comment" rowspan="2">if (A == 4) return;</td>
+<td class="comment" rowspan="2">if (A == vischar_BYTE1_BIT2) return; // 'gone mad' flag</td>
 </tr>
 <tr>
 <td class="address"><a name="52298"></a>CC4A</td>
@@ -103,7 +108,7 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52299"></a>CC4B</td>
 <td class="instruction">DEC L</td>
-<td class="comment">HL--;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="52300"></a>CC4C</td>
@@ -126,7 +131,7 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52307"></a>CC53</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="3">if (indoor_room_index) goto indoors;</td>
+<td class="comment" rowspan="3">if (indoor_room_index) goto end_bit;</td>
 </tr>
 <tr>
 <td class="address"><a name="52310"></a>CC56</td>
@@ -139,12 +144,12 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52314"></a>CC5A</td>
 <td class="instruction">CALL <a class="link" href="58690.html">$E542</a></td>
-<td class="comment">divide_3xAC_by_8_with_rounding();</td>
+<td class="comment">divide_array_by_8_with_rounding(HL,DE);</td>
 </tr>
 <tr>
 <td class="address"><a name="52317"></a>CC5D</td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="comment">HL = &amp;player_map_position_perhapsX;</td>
+<td class="comment">HL = &amp;player_map_position_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="52320"></a>CC60</td>
@@ -256,7 +261,7 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52350"></a>CC7E</td>
 <td class="instruction">JR $CC92</td>
-<td class="comment">goto indoors;</td>
+<td class="comment">goto end_bit;</td>
 </tr>
 <tr>
 <td class="label"><a name="52352"></a>CC80</td>
@@ -333,7 +338,7 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="label"><a name="52370"></a>CC92</td>
 <td class="instruction">LD A,($A138)</td>
-<td class="comment" rowspan="3">indoors: if (naughty_flag_perhaps) goto CCA3;</td>
+<td class="comment" rowspan="8">end_bit: if (!red_flag) } A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors {  if (A &lt; 32) } IY[1] = 2; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52373"></a>CC95</td>
@@ -346,12 +351,10 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52376"></a>CC98</td>
 <td class="instruction">LD A,(IY+$13)</td>
-<td class="comment">A = IY[19];</td>
 </tr>
 <tr>
 <td class="address"><a name="52379"></a>CC9B</td>
 <td class="instruction">CP $20</td>
-<td class="comment" rowspan="2">if (A &gt;= 32) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52381"></a>CC9D</td>
@@ -360,17 +363,15 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52382"></a>CC9E</td>
 <td class="instruction">LD (IY+$01),$02</td>
-<td class="comment">IY[1] = 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="52386"></a>CCA2</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="52387"></a>CCA3</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">bell = 0; // ring indefinitely</td>
+<td class="comment" rowspan="2">bell = bell_RING_PERPETUAL;</td>
 </tr>
 <tr>
 <td class="address"><a name="52388"></a>CCA4</td>
@@ -379,7 +380,7 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52391"></a>CCA7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
-<td class="comment">sub_CCAB();</td>
+<td class="comment">guards_persue_player();</td>
 </tr>
 <tr>
 <td class="address"><a name="52394"></a>CCAA</td>
@@ -395,9 +396,9 @@ Don't follow the player if he's dressed as a guard
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

@@ -21,15 +21,25 @@
 <td class="next">Next: <a class="link" href="58690.html">E542</a></td>
 </tr>
 </table>
-<div class="description">E420: sub_E420</div>
+<div class="description">E420: setup_sprite_plotting</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="47206.html">B866</a>.
+Sets sprites up for plotting.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to ? // observed: always the same as IY</td>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="registerContents">Pointer to ? // observed: $8000+</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -53,12 +63,11 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58407"></a>E427</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment" rowspan="9">if (indoor_room_index) { // indoors } *DE++ = *HL++; HL++; *DE++ = *HL++; HL++; *DE++ = *HL++; HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58410"></a>E42A</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto outdoors;</td>
 </tr>
 <tr>
 <td class="address"><a name="58411"></a>E42B</td>
@@ -67,42 +76,36 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58413"></a>E42D</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58415"></a>E42F</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58416"></a>E430</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58418"></a>E432</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58419"></a>E433</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58421"></a>E435</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58422"></a>E436</td>
 <td class="instruction">JR $E44E</td>
-<td class="comment">goto $E44E;</td>
+<td class="comment">else { // outdoors</td>
 </tr>
 <tr>
 <td class="label"><a name="58424"></a>E438</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">outdoors: A = *HL++;</td>
+<td class="comment" rowspan="2">A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="58425"></a>E439</td>
@@ -116,7 +119,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58427"></a>E43B</td>
 <td class="instruction">CALL <a class="link" href="58704.html">$E550</a></td>
-<td class="comment">divide_AC_by_8_with_rounding();</td>
+<td class="comment">divide_by_8_with_rounding(C,A);</td>
 </tr>
 <tr>
 <td class="address"><a name="58430"></a>E43E</td>
@@ -140,7 +143,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58435"></a>E443</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="8">do { A = *HL++; } C = *HL; divide_AC_by_8(); *DE++ = A; {HL++; } while (--B);</td>
+<td class="comment" rowspan="8">do { A = *HL++; } C = *HL; divide_by_8(C,A); *DE++ = A; {    HL++; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58436"></a>E444</td>
@@ -196,17 +199,16 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58451"></a>E453</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL++;</td>
+<td class="comment" rowspan="2">flip_sprite = *HL++;  // set left/right flip flag</td>
 </tr>
 <tr>
 <td class="address"><a name="58452"></a>E454</td>
 <td class="instruction">LD ($81B7),A</td>
-<td class="comment">byte_81B7 = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58455"></a>E457</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment" rowspan="2">EX AF,AF'</td>
+<td class="comment" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58456"></a>E458</td>
@@ -220,7 +222,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58459"></a>E45B</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="8">do { A = *HL++; } C = *HL++; divide_AC_by_8(); {*DE++ = A; } while (--B);</td>
+<td class="comment" rowspan="8">do { Adash = *HL++; } C = *HL++; divide_by_8(C,Adash); {  *DE++ = Adash; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58460"></a>E45C</td>
@@ -253,7 +255,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58470"></a>E466</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58471"></a>E467</td>
@@ -310,17 +312,17 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58484"></a>E474</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
+<td class="comment">*DE++ = *HL++; // width in bytes</td>
 </tr>
 <tr>
 <td class="address"><a name="58486"></a>E476</td>
 <td class="instruction">LDI</td>
-<td class="comment">*DE++ = *HL++;</td>
+<td class="comment">*DE++ = *HL++; // height in rows</td>
 </tr>
 <tr>
 <td class="address"><a name="58488"></a>E478</td>
 <td class="instruction">LD DE,$81AC</td>
-<td class="comment" rowspan="3">memcpy(word_81AC, HL, 4);</td>
+<td class="comment" rowspan="3">memcpy(bitmap_pointer, HL, 4); // copy bitmap pointer and mask pointer</td>
 </tr>
 <tr>
 <td class="address"><a name="58491"></a>E47B</td>
@@ -362,7 +364,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58506"></a>E48A</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="13">if (A - 3 == 0) } {($E2C2) = E; // self-modify } ($E363) = E; // self-modify A = 3; HL = pairs_of_offsets; } else { A = E; ($E121) = A; // self-modify ($E1E2) = A; // self-modify A = 4; HL = pairs_of_offsets2;</td>
+<td class="comment" rowspan="7">if (A == 3) { // 3 =&gt; 16 wide (4 =&gt; 24 wide) } {  ($E2C2) = E; // self-modify } ($E363) = E; // self-modify A = 3; HL = masked_sprite_plotter_16_jump_table;</td>
 </tr>
 <tr>
 <td class="address"><a name="58508"></a>E48C</td>
@@ -391,26 +393,32 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58522"></a>E49A</td>
 <td class="instruction">JR $E4A8</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="58524"></a>E49C</td>
 <td class="instruction">LD A,E</td>
+<td class="comment">A = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="58525"></a>E49D</td>
 <td class="instruction">LD ($E121),A</td>
+<td class="comment">($E121) = A; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58528"></a>E4A0</td>
 <td class="instruction">LD ($E1E2),A</td>
+<td class="comment">($E1E2) = A; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58531"></a>E4A3</td>
 <td class="instruction">LD A,$04</td>
+<td class="comment">A = 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="58533"></a>E4A5</td>
 <td class="instruction">LD HL,$E0EC</td>
+<td class="comment">HL = masked_sprite_plotter_24_jump_table; }</td>
 </tr>
 <tr>
 <td class="label"><a name="58536"></a>E4A8</td>
@@ -435,7 +443,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58542"></a>E4AE</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="10">if (A == 0) } A = 0x77; EX AF,AF' A = C; } else { A = 0; EX AF,AF' A = E; SUB C</td>
+<td class="comment" rowspan="5">if (A == 0) } A = 0x77; - Adash = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="58543"></a>E4AF</td>
@@ -456,52 +464,57 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58549"></a>E4B5</td>
 <td class="instruction">JR $E4BB</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="58551"></a>E4B7</td>
 <td class="instruction">XOR A</td>
+<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="58552"></a>E4B8</td>
 <td class="instruction">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58553"></a>E4B9</td>
 <td class="instruction">LD A,E</td>
+<td class="comment">Adash = E - C;</td>
 </tr>
 <tr>
 <td class="address"><a name="58554"></a>E4BA</td>
 <td class="instruction">SUB C</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="58555"></a>E4BB</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58556"></a>E4BC</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">POP HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="58557"></a>E4BD</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">C = A;</td>
+<td class="comment">Cdash = Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58558"></a>E4BE</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58559"></a>E4BF</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment">B = 3; // 3 iterations // self modified by $E4A9</td>
+<td class="comment">Bdash = 3; // 3 iterations // self modified by $E4A9</td>
 </tr>
 <tr>
 <td class="label"><a name="58561"></a>E4C1</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="14">do { E = *HL++; } D = *HL++; {*DE = A; } {E = *HL++; } {D = *HL++; } *DE = A; C--; {if (Z) A ^= 0x77; } while (--B);</td>
+<td class="comment" rowspan="14">do { Edash = *HLdash++; } Ddash = *HLdash++; {  *DEdash = A; } {  Edash = *HLdash++; } {  Ddash = *HLdash++; } *DEdash = A; Cdash--; {  if (Z) A ^= 0x77; } while (--Bdash);</td>
 </tr>
 <tr>
 <td class="address"><a name="58562"></a>E4C2</td>
@@ -558,7 +571,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58578"></a>E4D2</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58579"></a>E4D3</td>
@@ -667,22 +680,19 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="label"><a name="58613"></a>E4F5</td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="comment">A = map_position_related_1;</td>
+<td class="comment" rowspan="5">HL = map_position_related_1 - (map_position &amp; 0xFF); // ie. low byte of map_position</td>
 </tr>
 <tr>
 <td class="address"><a name="58616"></a>E4F8</td>
 <td class="instruction">LD HL,$81BB</td>
-<td class="comment">HL = &amp;map_position_maybe;</td>
 </tr>
 <tr>
 <td class="address"><a name="58619"></a>E4FB</td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment">A -= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="58620"></a>E4FC</td>
 <td class="instruction">LD L,A</td>
-<td class="comment" rowspan="2">HL = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="58621"></a>E4FD</td>
@@ -691,17 +701,16 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58623"></a>E4FF</td>
 <td class="instruction">JR NC,$E503</td>
-<td class="comment">JR NC,$E503</td>
+<td class="comment" rowspan="2">if (HL &lt; 0) H = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="58625"></a>E501</td>
 <td class="instruction">LD H,$FF</td>
-<td class="comment">H = 0xFF;</td>
 </tr>
 <tr>
 <td class="label"><a name="58627"></a>E503</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment" rowspan="3">HL += DE + 0xF290;</td>
+<td class="comment" rowspan="3">HL += DE + 0xF290; // screen buffer start address</td>
 </tr>
 <tr>
 <td class="address"><a name="58628"></a>E504</td>
@@ -779,7 +788,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58654"></a>E51E</td>
 <td class="instruction">LD ($81B0),HL</td>
-<td class="comment">word_81B0 = HL;</td>
+<td class="comment">foreground_mask_pointer = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="58657"></a>E521</td>
@@ -794,7 +803,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58659"></a>E523</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="9">if (A) } D = A; A = 0; {E = IY[30] - 1; } {do { A += E; } while (--D); }</td>
+<td class="comment" rowspan="9">if (A) } D = A; A = 0; {  E = IY[30] - 1; } {  do { A += E; } while (--D); }</td>
 </tr>
 <tr>
 <td class="address"><a name="58660"></a>E524</td>
@@ -836,7 +845,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58674"></a>E532</td>
 <td class="instruction">LD HL,($81AC)</td>
-<td class="comment" rowspan="3">word_81AC += DE;</td>
+<td class="comment" rowspan="3">bitmap_pointer += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="58677"></a>E535</td>
@@ -849,7 +858,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <tr>
 <td class="address"><a name="58681"></a>E539</td>
 <td class="instruction">LD HL,($81AE)</td>
-<td class="comment" rowspan="3">word_81AE += DE;</td>
+<td class="comment" rowspan="3">mask_pointer += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="58684"></a>E53C</td>
@@ -878,9 +887,9 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

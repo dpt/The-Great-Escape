@@ -48,12 +48,12 @@ Select a pick up radius.
 <tr>
 <td class="label"><a name="31874"></a>7C82</td>
 <td class="instruction">LD C,$01</td>
-<td class="comment">C = 1; // outside</td>
+<td class="comment">C = 1; // outdoors</td>
 </tr>
 <tr>
 <td class="address"><a name="31876"></a>7C84</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">if (indoor_room_index) C = 6; // inside</td>
+<td class="comment" rowspan="4">if (indoor_room_index) C = 6; // indoors</td>
 </tr>
 <tr>
 <td class="address"><a name="31879"></a>7C87</td>
@@ -75,12 +75,12 @@ Select a pick up radius.
 <tr>
 <td class="address"><a name="31886"></a>7C8E</td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment">HL = &amp;itemstruct_0.room;</td>
+<td class="comment">HL = &amp;item_structs[0].room;</td>
 </tr>
 <tr>
 <td class="label"><a name="31889"></a>7C91</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="31">do { if ((*HL &amp; (1&lt;&lt;7)) == 0) goto next; // item is not anywhere} PUSH BC PUSH HL HL++; DE = &amp;player_map_position_perhapsX; B = 2; // 2 iterations {do { A = *DE++; } {if (A - C &gt;= *HL || A + C &lt; *HL) goto popnext; } {HL++; } } while (--B); POP HL HL--; // compensate for overshoot POP BC A = 0; // set Z (found) return; popnext: POP HL POP BC {next: HL += 7; // stride } while (--B);</td>
+<td class="comment" rowspan="31">do { if (*HL &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) } PUSH BC PUSH HL HL++; // itemstruct.y DE = &amp;player_map_position_x; // this is probably 'Y' in this sense, but i'd need to rename all others to comply B = 2; // 2 iterations {    do { A = *DE++; // get player map position } {      if (A - C &gt;= *HL || A + C &lt; *HL) goto popnext; } {      HL++; } } while (--B); POP HL HL--; // compensate for overshoot POP BC A = 0; // set Z (found) return; popnext: POP HL POP BC } {  HL += 7; // stride } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="31891"></a>7C93</td>
@@ -241,9 +241,9 @@ The next instruction is written as RET Z but there's no need for it to be condit
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

@@ -21,16 +21,16 @@
 <td class="next">Next: <a class="link" href="52529.html">CD31</a></td>
 </tr>
 </table>
-<div class="description">CCFB: sub_CCFB</div>
+<div class="description">CCFB: is_item_discoverable_indoors</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Walks item_structs.
+Examines the specified room to see if it contains a discoverable item.
 </div>
 <div class="paragraph">
-This ignores red cross parcel. May decide which items are 'found'.
+A discoverable item is one moved away from its default room, and one that isn't the red cross parcel.
 </div>
 </div>
 <table class="input">
@@ -41,12 +41,12 @@ This ignores red cross parcel. May decide which items are 'found'.
 </table>
 <table class="output">
 <tr>
-<td class="register">A</td>
-<td class="registerContents">?</td>
+<td class="register">Flags</td>
+<td class="registerContents">Z => found, NZ => not found.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="registerContents">?</td>
+<td class="registerContents">Item (if found).</td>
 </tr>
 </table>
 </td>
@@ -59,24 +59,34 @@ This ignores red cross parcel. May decide which items are 'found'.
 <tr>
 <td class="address"><a name="52476"></a>CCFC</td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment">HL = item_structs + 1; // pointer to room ref</td>
+<td class="comment">HL = &amp;item_structs[0].room; // pointer to room ref</td>
 </tr>
 <tr>
 <td class="address"><a name="52479"></a>CCFF</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment">B = 16; // nitems</td>
+<td class="comment">B = 16; // items__LIMIT</td>
 </tr>
 <tr>
 <td class="label"><a name="52481"></a>CD01</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="22">do { A = *HL &amp; 63; // mask off flags [unsure, it's a bit suspect]} {if (A != C) goto skip; // check } PUSH HL {HL = &amp;item_location[HL[-1] &amp; 15]; // HL[-1] is item index [again, unsure why it's masked off] } A = *HL; // room_and_flags {if (A != C) goto rooms_dont_match; // item in wrong room?} POP HL {skip: HL += 7; // stride } while (--B);</td>
+<td class="comment" rowspan="22">do { A = *HL &amp; itemstruct_ROOM_MASK; } {  if (A == C) { // yes } - {    A = default_item_locations[HL[-1] &amp; itemstruct_ITEM_MASK].room_and_flags; // HL[-1] = itemstruct.item } {    if (A != C) goto not_in_default_room; } - } {  next: HL += 7; // stride } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="52482"></a>CD02</td>
 <td class="instruction">AND $3F</td>
 </tr>
 <tr>
-<td class="address"><a name="52484"></a>CD04</td>
+<td class="routineComment" colspan="3">
+<a name="52484"></a>
+<div class="comments">
+<div class="paragraph">
+Is the item in the specified room?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CD04</td>
 <td class="instruction">CP C</td>
 </tr>
 <tr>
@@ -88,7 +98,20 @@ This ignores red cross parcel. May decide which items are 'found'.
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
-<td class="address"><a name="52488"></a>CD08</td>
+<td class="routineComment" colspan="3">
+<a name="52488"></a>
+<div class="comments">
+<div class="paragraph">
+Has the item been moved to a different room?
+</div>
+<div class="paragraph">
+Note that room_and_flags doesn't get its flags masked off.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CD08</td>
 <td class="instruction">DEC HL</td>
 </tr>
 <tr>
@@ -158,31 +181,40 @@ This ignores red cross parcel. May decide which items are 'found'.
 <tr>
 <td class="address"><a name="52513"></a>CD21</td>
 <td class="instruction">RET</td>
-<td class="comment">return; // return with NZ?</td>
+<td class="comment">return; // return with NZ set</td>
 </tr>
 <tr>
 <td class="label"><a name="52514"></a>CD22</td>
 <td class="instruction">POP HL</td>
-<td class="comment">rooms_dont_match: POP HL</td>
+<td class="comment">not_in_default_room: -</td>
 </tr>
 <tr>
 <td class="address"><a name="52515"></a>CD23</td>
 <td class="instruction">DEC HL</td>
-<td class="comment">HL--; // point to item</td>
+<td class="comment" rowspan="3">A = HL[-1] &amp; itemstruct_ITEM_MASK; // itemstruct.item</td>
 </tr>
 <tr>
 <td class="address"><a name="52516"></a>CD24</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 0x0F; // does this always need masking? are there flags?</td>
 </tr>
 <tr>
 <td class="address"><a name="52517"></a>CD25</td>
 <td class="instruction">AND $0F</td>
 </tr>
 <tr>
-<td class="address"><a name="52519"></a>CD27</td>
+<td class="routineComment" colspan="3">
+<a name="52519"></a>
+<div class="comments">
+<div class="paragraph">
+Ignore red cross parcel.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CD27</td>
 <td class="instruction">CP $0C</td>
-<td class="comment" rowspan="2">if (A != item_RED_CROSS_PARCEL) goto exit;</td>
+<td class="comment" rowspan="4">if (A == item_RED_CROSS_PARCEL) } - goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="52521"></a>CD29</td>
@@ -191,17 +223,15 @@ This ignores red cross parcel. May decide which items are 'found'.
 <tr>
 <td class="address"><a name="52523"></a>CD2B</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52524"></a>CD2C</td>
 <td class="instruction">JR $CD1B</td>
-<td class="comment">goto skip;</td>
 </tr>
 <tr>
 <td class="label"><a name="52526"></a>CD2E</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">exit: C = A;</td>
+<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="52527"></a>CD2F</td>
@@ -222,9 +252,9 @@ This ignores red cross parcel. May decide which items are 'found'.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

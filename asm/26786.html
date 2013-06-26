@@ -18,18 +18,28 @@
 <tr>
 <td class="prev">Prev: <a class="link" href="26785.html">68A1</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26786">Map</a></td>
-<td class="next">Next: <a class="link" href="26912.html">6920</a></td>
+<td class="next">Next: <a class="link" href="26868.html">68F4</a></td>
 </tr>
 </table>
-<div class="description">68A2: sub_68A2</div>
+<div class="description">68A2: transition</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Looks like it's resetting stuff.
+Looks like it's called to transition to a new room.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to ?</td>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="registerContents">Pointer to vischar?</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -49,7 +59,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26790"></a>68A6</td>
 <td class="instruction">LD A,L</td>
-<td class="comment">A = L;</td>
+<td class="comment">A = L; // stash vischar index/offset</td>
 </tr>
 <tr>
 <td class="address"><a name="26791"></a>68A7</td>
@@ -59,7 +69,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26792"></a>68A8</td>
 <td class="instruction">ADD A,$0F</td>
-<td class="comment" rowspan="2">L = A + 15;</td>
+<td class="comment" rowspan="2">L = A + 15; // $8xxF (position on Y axis)</td>
 </tr>
 <tr>
 <td class="address"><a name="26794"></a>68AA</td>
@@ -68,12 +78,12 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26795"></a>68AB</td>
 <td class="instruction">LD A,(IY+$1C)</td>
-<td class="comment">A = IY[28];</td>
+<td class="comment">A = IY[28]; // $8x1C (likely room index)</td>
 </tr>
 <tr>
 <td class="address"><a name="26798"></a>68AE</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="22">if (A == 0) } B = 3; // 3 iterations do { PUSH BC A = *DE++; BC_becomes_A_times_4(); {*HL++ = C; } {*HL++ = B; } POP BC } while (--B); } else { B = 3; // 3 iterations {do { *HL++ = *DE++; } {*HL++ = 0; } while (--B);</td>
+<td class="comment" rowspan="13">if (A == 0) { // outdoors } B = 3; // 3 iterations do { PUSH BC A = *DE++; BC_becomes_A_times_4(); {    *HL++ = C; // $800F etc. } {    *HL++ = B; // $801F etc. } POP BC while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="26799"></a>68AF</td>
@@ -126,14 +136,17 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26817"></a>68C1</td>
 <td class="instruction">JR $68CE</td>
+<td class="comment">else { // indoors</td>
 </tr>
 <tr>
 <td class="label"><a name="26819"></a>68C3</td>
 <td class="instruction">LD B,$03</td>
+<td class="comment">B = 3; // 3 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="26821"></a>68C5</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment" rowspan="7">do { *HL++ = *DE++; // $800F etc. } {    *HL++ = 0; // $8010 etc. } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="26822"></a>68C6</td>
@@ -172,7 +185,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26832"></a>68D0</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="3">if (A) { reset_object(); return; } // exit via (check)</td>
+<td class="comment" rowspan="3">if (A) { reset_visible_character(); return; } // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="26833"></a>68D1</td>
@@ -183,9 +196,19 @@ Looks like it's resetting stuff.
 <td class="instruction">JP <a class="link" href="50643.html">$C5D3</a></td>
 </tr>
 <tr>
-<td class="label"><a name="26839"></a>68D7</td>
+<td class="routineComment" colspan="3">
+<a name="26839"></a>
+<div class="comments">
+<div class="paragraph">
+HL points to the player vischar at this point.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">68D7</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">*++HL &amp;= ~(1&lt;&lt;7);</td>
+<td class="comment" rowspan="2">*++HL &amp;= ~vischar_BYTE1_BIT7; // $8001</td>
 </tr>
 <tr>
 <td class="address"><a name="26840"></a>68D8</td>
@@ -194,7 +217,7 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26842"></a>68DA</td>
 <td class="instruction">LD A,($801C)</td>
-<td class="comment">A = ($801C); // suspected room index</td>
+<td class="comment">A = ($801C); // likely a room index</td>
 </tr>
 <tr>
 <td class="address"><a name="26845"></a>68DD</td>
@@ -204,16 +227,15 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26848"></a>68E0</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A) goto some_sort_of_initial_setup_maybe;</td>
+<td class="comment" rowspan="12">if (A == 0) } {  HL += 12; } {  *HL++ = 0x80; // $800D // likely a character direction} {  *HL &amp;= 3;     // $800E // likely a sprite direction } reset_B2FC(); goto squash_stack_goto_main;</td>
 </tr>
 <tr>
 <td class="address"><a name="26849"></a>68E1</td>
-<td class="instruction">JP NZ,$68F4</td>
+<td class="instruction">JP NZ,<a class="link" href="26868.html">$68F4</a></td>
 </tr>
 <tr>
 <td class="address"><a name="26852"></a>68E4</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment" rowspan="3">HL += 12;</td>
 </tr>
 <tr>
 <td class="address"><a name="26854"></a>68E6</td>
@@ -226,7 +248,6 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26856"></a>68E8</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment" rowspan="2">*HL++ = 128;</td>
 </tr>
 <tr>
 <td class="address"><a name="26858"></a>68EA</td>
@@ -235,7 +256,6 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26859"></a>68EB</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="3">*HL &amp;= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="26860"></a>68EC</td>
@@ -248,107 +268,23 @@ Looks like it's resetting stuff.
 <tr>
 <td class="address"><a name="26863"></a>68EF</td>
 <td class="instruction">CALL <a class="link" href="45820.html">$B2FC</a></td>
-<td class="comment">resetty1();</td>
 </tr>
 <tr>
 <td class="address"><a name="26866"></a>68F2</td>
-<td class="instruction">JR $691A</td>
-<td class="comment">goto exit;</td>
-</tr>
-<tr>
-<td class="routineComment" colspan="3">
-<a name="26868"></a>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a class="link" href="40312.html">9D78</a>, <a class="link" href="40421.html">9DE5</a> and <a class="link" href="46938.html">B75A</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="label">68F4</td>
-<td class="instruction">LD HL,$0000</td>
-<td class="comment" rowspan="2">plot_game_screen_x = 0;</td>
-</tr>
-<tr>
-<td class="address"><a name="26871"></a>68F7</td>
-<td class="instruction">LD ($A7C7),HL</td>
-</tr>
-<tr>
-<td class="address"><a name="26874"></a>68FA</td>
-<td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
-<td class="comment">select_room_maybe();</td>
-</tr>
-<tr>
-<td class="address"><a name="26877"></a>68FD</td>
-<td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
-<td class="comment">plot_indoor_tiles();</td>
-</tr>
-<tr>
-<td class="address"><a name="26880"></a>6900</td>
-<td class="instruction">LD HL,$EA74</td>
-<td class="comment" rowspan="2">map_position_maybe = 0xEA74;</td>
-</tr>
-<tr>
-<td class="address"><a name="26883"></a>6903</td>
-<td class="instruction">LD ($81BB),HL</td>
-</tr>
-<tr>
-<td class="address"><a name="26886"></a>6906</td>
-<td class="instruction">CALL <a class="link" href="26912.html">$6920</a></td>
-<td class="comment">tunnel_related();</td>
-</tr>
-<tr>
-<td class="address"><a name="26889"></a>6909</td>
-<td class="instruction">LD HL,$8000</td>
-<td class="comment">HL = $8000; // redundant? (reset_something sets HL to $8000 as its first instruction)</td>
-</tr>
-<tr>
-<td class="address"><a name="26892"></a>690C</td>
-<td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">reset_something();</td>
-</tr>
-<tr>
-<td class="address"><a name="26895"></a>690F</td>
-<td class="instruction">CALL <a class="link" href="26937.html">$6939</a></td>
-<td class="comment">setup_movable_items();</td>
-</tr>
-<tr>
-<td class="address"><a name="26898"></a>6912</td>
-<td class="instruction">CALL <a class="link" href="43936.html">$ABA0</a></td>
-<td class="comment">zoombox();</td>
-</tr>
-<tr>
-<td class="address"><a name="26901"></a>6915</td>
-<td class="instruction">LD B,$01</td>
-<td class="comment" rowspan="2">increase_score(1);</td>
-</tr>
-<tr>
-<td class="address"><a name="26903"></a>6917</td>
-<td class="instruction">CALL <a class="link" href="41209.html">$A0F9</a></td>
-</tr>
-<tr>
-<td class="label"><a name="26906"></a>691A</td>
-<td class="instruction">LD SP,$FFFF</td>
-<td class="comment">exit: SP = $FFFF;</td>
-</tr>
-<tr>
-<td class="address"><a name="26909"></a>691D</td>
-<td class="instruction">JP <a class="link" href="40312.html#40315">$9D7B</a></td>
-<td class="comment">goto main_loop;</td>
+<td class="instruction">JR <a class="link" href="26906.html">$691A</a></td>
 </tr>
 </table>
 <table class="prevNext">
 <tr>
 <td class="prev">Prev: <a class="link" href="26785.html">68A1</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26786">Map</a></td>
-<td class="next">Next: <a class="link" href="26912.html">6920</a></td>
+<td class="next">Next: <a class="link" href="26868.html">68F4</a></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

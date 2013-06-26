@@ -35,172 +35,152 @@ Used by the routine at <a class="link" href="62647.html">F4B7</a>.
 <tr>
 <td class="label"><a name="62065"></a>F271</td>
 <td class="instruction">CALL <a class="link" href="62492.html">$F41C</a></td>
-<td class="transparentComment" />
+<td class="comment">input_device_select_keyscan();</td>
 </tr>
 <tr>
 <td class="address"><a name="62068"></a>F274</td>
 <td class="instruction">CP $FF</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (A == 0xFF) return; // nothing happened</td>
 </tr>
 <tr>
 <td class="address"><a name="62070"></a>F276</td>
 <td class="instruction">RET Z</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62071"></a>F277</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="12">if (A) } A--; // 1..4 -&gt; 0..3 PUSH AF A = chosen_input_device; { set_menu_item_attributes(attribute_WHITE_OVER_BLACK);} POP AF chosen_input_device = A; { set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);} return;</td>
 </tr>
 <tr>
 <td class="address"><a name="62072"></a>F278</td>
 <td class="instruction">JR Z,$F28E</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62074"></a>F27A</td>
 <td class="instruction">DEC A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62075"></a>F27B</td>
 <td class="instruction">PUSH AF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62076"></a>F27C</td>
 <td class="instruction">LD A,($F445)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62079"></a>F27F</td>
 <td class="instruction">LD E,$07</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62081"></a>F281</td>
 <td class="instruction">CALL <a class="link" href="62472.html">$F408</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62084"></a>F284</td>
 <td class="instruction">POP AF</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62085"></a>F285</td>
 <td class="instruction">LD ($F445),A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62088"></a>F288</td>
 <td class="instruction">LD E,$46</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62090"></a>F28A</td>
 <td class="instruction">CALL <a class="link" href="62472.html">$F408</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62093"></a>F28D</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 <tr>
-<td class="label"><a name="62094"></a>F28E</td>
+<td class="routineComment" colspan="3">
+<a name="62094"></a>
+<div class="comments">
+<div class="paragraph">
+Zero pressed to start game.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">F28E</td>
 <td class="instruction">LD A,($F445)</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="19">else { A = chosen_input_device; } {  memcpy($F075, inputroutine[A], 0x4A); // copy input routine to $F075, length 0x4A } {  if (A == inputdevice_KEYBOARD) goto choose_keys; // keyboard was selected } return;</td>
 </tr>
 <tr>
 <td class="address"><a name="62097"></a>F291</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62098"></a>F292</td>
 <td class="instruction">LD C,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62099"></a>F293</td>
 <td class="instruction">LD B,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62101"></a>F295</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62102"></a>F296</td>
 <td class="instruction">LD HL,$F43D</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62105"></a>F299</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62106"></a>F29A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62107"></a>F29B</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62108"></a>F29C</td>
 <td class="instruction">LD H,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62109"></a>F29D</td>
 <td class="instruction">LD L,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62110"></a>F29E</td>
 <td class="instruction">LD DE,$F075</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62113"></a>F2A1</td>
 <td class="instruction">LD BC,$004A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62116"></a>F2A4</td>
 <td class="instruction">LDIR</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62118"></a>F2A6</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62119"></a>F2A7</td>
 <td class="instruction">AND A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62120"></a>F2A8</td>
 <td class="instruction">CALL Z,<a class="link" href="62288.html">$F350</a></td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62123"></a>F2AB</td>
 <td class="instruction">POP BC</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62124"></a>F2AC</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">
@@ -211,9 +191,9 @@ Used by the routine at <a class="link" href="62647.html">F4B7</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

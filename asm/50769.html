@@ -27,238 +27,291 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="41868.html">A38C</a>, <a class="link" href="50400.html">C4E0</a>, <a class="link" href="50848.html">C6A0</a> and <a class="link" href="51841.html">CA81</a>.
+...
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to characterstruct + 5. // sampled = $768E, 7695, 769C, 7617, 761E, 7625, 762C, 7633, 7656, 765D</td>
+</tr>
+</table>
+<table class="output">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">0/255</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to somewhere in word_783A.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="50769"></a>C651</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50770"></a>C652</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="11">if (A == 255) } {A = *++HL &amp; 0xF8; } *HL = A; get_A_indexed_by_C41A(); A &amp;= 7; A += *HL; {*HL = A; }</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50772"></a>C654</td>
 <td class="instruction">JR NZ,$C664</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50774"></a>C656</td>
 <td class="instruction">INC HL</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50775"></a>C657</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50776"></a>C658</td>
 <td class="instruction">AND $F8</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50778"></a>C65A</td>
 <td class="instruction">LD (HL),A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50779"></a>C65B</td>
 <td class="instruction">CALL <a class="link" href="52101.html">$CB85</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50782"></a>C65E</td>
 <td class="instruction">AND $07</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50784"></a>C660</td>
 <td class="instruction">ADD A,(HL)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50785"></a>C661</td>
 <td class="instruction">LD (HL),A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50786"></a>C662</td>
 <td class="instruction">JR $C692</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="50788"></a>C664</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">else { PUSH HL</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50789"></a>C665</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">C = *++HL;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50790"></a>C666</td>
 <td class="instruction">LD C,(HL)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50791"></a>C667</td>
 <td class="instruction">CALL <a class="link" href="52089.html">$CB79</a></td>
-<td class="comment">element_A_of_table_7738();</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50794"></a>C66A</td>
 <td class="instruction">LD H,$00</td>
-<td class="comment">H = 0;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50796"></a>C66C</td>
 <td class="instruction">LD A,C</td>
-<td class="comment">A = C;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50797"></a>C66D</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="3">if (A == 255) H--;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50799"></a>C66F</td>
 <td class="instruction">JR NZ,$C672</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50801"></a>C671</td>
 <td class="instruction">DEC H</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="50802"></a>C672</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50803"></a>C673</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += DE;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50804"></a>C674</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50805"></a>C675</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50806"></a>C676</td>
 <td class="instruction">CP $FF</td>
-<td class="comment">CP 255 // if (A == 255)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50808"></a>C678</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL // interleaved</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50809"></a>C679</td>
 <td class="instruction">JR Z,$C69D</td>
-<td class="comment">JR Z,$C69D</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50811"></a>C67B</td>
 <td class="instruction">AND $7F</td>
-<td class="comment">A &amp;= 0x7F;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50813"></a>C67D</td>
 <td class="instruction">CP $28</td>
-<td class="comment" rowspan="10">if (A &lt; 40) } A = *DE; {if (*HL &amp; (1&lt;&lt;7)) A ^= 0x80; } sub_68A2(); HL++; A = 128; return;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50815"></a>C67F</td>
 <td class="instruction">JR NC,$C68F</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50817"></a>C681</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50818"></a>C682</td>
 <td class="instruction">BIT 7,(HL)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50820"></a>C684</td>
 <td class="instruction">JR Z,$C688</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50822"></a>C686</td>
 <td class="instruction">XOR $80</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="50824"></a>C688</td>
 <td class="instruction">CALL <a class="link" href="27154.html">$6A12</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50827"></a>C68B</td>
 <td class="instruction">INC HL</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50828"></a>C68C</td>
 <td class="instruction">LD A,$80</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50830"></a>C68E</td>
 <td class="instruction">RET</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="50831"></a>C68F</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE - 40;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50832"></a>C690</td>
 <td class="instruction">SUB $28</td>
-<td class="comment">}</td>
+<td class="transparentComment" />
 </tr>
 <tr>
-<td class="label"><a name="50834"></a>C692</td>
+<td class="routineComment" colspan="3">
+<a name="50834"></a>
+<div class="comments">
+<div class="paragraph">
+sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">C692</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment" rowspan="6">HL = byte_783A + A * 2; // is table words?</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50835"></a>C693</td>
 <td class="instruction">LD HL,$783A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50838"></a>C696</td>
 <td class="instruction">ADD A,L</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50839"></a>C697</td>
 <td class="instruction">LD L,A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50840"></a>C698</td>
 <td class="instruction">JR NC,$C69B</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50842"></a>C69A</td>
 <td class="instruction">INC H</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="50843"></a>C69B</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50844"></a>C69C</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="50845"></a>C69D</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment">A = 255;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="50847"></a>C69F</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">
@@ -269,9 +322,9 @@ Used by the routines at <a class="link" href="41868.html">A38C</a>, <a class="li
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

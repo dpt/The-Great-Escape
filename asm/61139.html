@@ -45,7 +45,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61146"></a>EEDA</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A) goto $EF27; // unaligned?</td>
+<td class="comment" rowspan="2">if (A) goto unaligned;</td>
 </tr>
 <tr>
 <td class="address"><a name="61147"></a>EEDB</td>
@@ -79,17 +79,17 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61161"></a>EEE9</td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment">SP = game_screen_scanline_start_addresses;</td>
+<td class="comment">SP = game_screen_start_addresses;</td>
 </tr>
 <tr>
 <td class="address"><a name="61164"></a>EEEC</td>
 <td class="instruction">LD A,$80</td>
-<td class="comment">A = 128;</td>
+<td class="comment">A = 128; // 128 rows</td>
 </tr>
 <tr>
 <td class="label"><a name="61166"></a>EEEE</td>
 <td class="instruction">POP DE</td>
-<td class="comment">do { DE = *SP++;</td>
+<td class="comment">do { DE = *SP++; // output address</td>
 </tr>
 <tr>
 <td class="address"><a name="61167"></a>EEEF</td>
@@ -234,7 +234,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="label"><a name="61223"></a>EF27</td>
 <td class="instruction">LD HL,$F290</td>
-<td class="comment" rowspan="6">HL = $F290 + plot_game_screen_x;</td>
+<td class="comment" rowspan="6">unaligned: HL = $F290 + plot_game_screen_x; // screen buffer start address</td>
 </tr>
 <tr>
 <td class="address"><a name="61226"></a>EF2A</td>
@@ -259,7 +259,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61234"></a>EF32</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL++;</td>
+<td class="comment" rowspan="2">A = *HL++; // prime A</td>
 </tr>
 <tr>
 <td class="address"><a name="61235"></a>EF33</td>
@@ -268,17 +268,16 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61236"></a>EF34</td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment">SP = game_screen_scanline_start_addresses;</td>
+<td class="comment">SP = game_screen_start_addresses;</td>
 </tr>
 <tr>
 <td class="address"><a name="61239"></a>EF37</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment" rowspan="2">Bdash = 128; // 128 rows</td>
 </tr>
 <tr>
 <td class="address"><a name="61240"></a>EF38</td>
 <td class="instruction">LD B,$80</td>
-<td class="comment">Bdash = 128;</td>
 </tr>
 <tr>
 <td class="label"><a name="61242"></a>EF3A</td>
@@ -288,12 +287,12 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61243"></a>EF3B</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DE</td>
+<td class="comment">POP DE // output address</td>
 </tr>
 <tr>
 <td class="address"><a name="61244"></a>EF3C</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment">B = 4;</td>
+<td class="comment">B = 4; // 4 iterations of 5 plus 3 at the end == 23</td>
 </tr>
 <tr>
 <td class="label"><a name="61246"></a>EF3E</td>
@@ -303,7 +302,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61247"></a>EF3F</td>
 <td class="instruction">RRD</td>
-<td class="comment" rowspan="2">RRD</td>
+<td class="comment" rowspan="2">RRD             // tmp = *HL &amp; 0x0F; *HL = (*HL &gt;&gt; 4) | (A &lt;&lt; 4); A = (A &amp; 0xF0) | tmp;</td>
 </tr>
 <tr>
 <td class="address"><a name="61249"></a>EF41</td>
@@ -631,12 +630,11 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61328"></a>EF90</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment" rowspan="3">A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="61329"></a>EF91</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="61330"></a>EF92</td>
@@ -666,9 +664,9 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

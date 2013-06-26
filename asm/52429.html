@@ -21,16 +21,16 @@
 <td class="next">Next: <a class="link" href="52475.html">CCFB</a></td>
 </tr>
 </table>
-<div class="description">CCCD: sub_CCCD</div>
+<div class="description">CCCD: is_item_discoverable</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Walks item_characterstructs.
+Searches item_structs for items dropped nearby. If items are found the guards are made to persue the player.
 </div>
 <div class="paragraph">
-This ignores green key and food items. May decide which items are 'found'.
+Green key and food items are ignored.
 </div>
 </div>
 </td>
@@ -43,51 +43,67 @@ This ignores green key and food items. May decide which items are 'found'.
 <tr>
 <td class="address"><a name="52432"></a>CCD0</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto outside;</td>
+<td class="comment" rowspan="6">if (A != room_0_outdoors) } is_item_discoverable_indoors(A); // does this work only indoors? if (!Z) return; guards_persue_player(); return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52433"></a>CCD1</td>
 <td class="instruction">JR Z,$CCDB</td>
 </tr>
 <tr>
-<td class="address"><a name="52435"></a>CCD3</td>
+<td class="routineComment" colspan="3">
+<a name="52435"></a>
+<div class="comments">
+<div class="paragraph">
+Indoors.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CCD3</td>
 <td class="instruction">CALL <a class="link" href="52475.html">$CCFB</a></td>
-<td class="comment">sub_CCFB();</td>
 </tr>
 <tr>
 <td class="address"><a name="52438"></a>CCD6</td>
 <td class="instruction">RET NZ</td>
-<td class="comment">if (nonzero) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52439"></a>CCD7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
-<td class="comment">sub_CCAB();</td>
 </tr>
 <tr>
 <td class="address"><a name="52442"></a>CCDA</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
-<td class="label"><a name="52443"></a>CCDB</td>
+<td class="routineComment" colspan="3">
+<a name="52443"></a>
+<div class="comments">
+<div class="paragraph">
+Outdoors.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">CCDB</td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment">outside: HL = item_structs + 1;</td>
+<td class="comment">else { HL = &amp;item_structs[0].room;</td>
 </tr>
 <tr>
 <td class="address"><a name="52446"></a>CCDE</td>
 <td class="instruction">LD DE,$0007</td>
-<td class="comment">DE = 7; // stride</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="52449"></a>CCE1</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment">B = 16;</td>
+<td class="comment">B = 16; // iterations == n.itemstructs</td>
 </tr>
 <tr>
 <td class="label"><a name="52451"></a>CCE3</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="4">do { if (*HL &amp; (1&lt;&lt;7)) goto check; // flag means what? } next: HL += DE; while (--B);</td>
+<td class="comment" rowspan="4">do { if (HL[0] &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) goto nearby;} next: HL += 7; // stride while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="52453"></a>CCE5</td>
@@ -104,26 +120,46 @@ This ignores green key and food items. May decide which items are 'found'.
 <tr>
 <td class="address"><a name="52458"></a>CCEA</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">return; }</td>
 </tr>
 <tr>
-<td class="label"><a name="52459"></a>CCEB</td>
+<td class="routineComment" colspan="3">
+<a name="52459"></a>
+<div class="comments">
+<div class="paragraph">
+Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So it must be reading a byte early when iteration is resumed. Consequences? I think it'll screw up when multiple items are in range.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">CCEB</td>
 <td class="instruction">DEC HL</td>
-<td class="comment">check: HL--;</td>
+<td class="comment">nearby: HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="52460"></a>CCEC</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 0x0F;</td>
+<td class="comment" rowspan="2">A = *HL &amp; itemstruct_ITEM_MASK; // sampled HL = $772A (&amp;item_structs[item_PURSE].item)</td>
 </tr>
 <tr>
 <td class="address"><a name="52461"></a>CCED</td>
 <td class="instruction">AND $0F</td>
 </tr>
 <tr>
-<td class="address"><a name="52463"></a>CCEF</td>
+<td class="routineComment" colspan="3">
+<a name="52463"></a>
+<div class="comments">
+<div class="paragraph">
+The green key and food items are ignored.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CCEF</td>
 <td class="instruction">CP $0B</td>
-<td class="comment" rowspan="2">if (A == item_GREEN_KEY) goto next;</td>
+<td class="comment" rowspan="4">if (A == item_GREEN_KEY || A == item_FOOD) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="52465"></a>CCF1</td>
@@ -132,7 +168,6 @@ This ignores green key and food items. May decide which items are 'found'.
 <tr>
 <td class="address"><a name="52467"></a>CCF3</td>
 <td class="instruction">CP $07</td>
-<td class="comment" rowspan="2">if (A == item_FOOD) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="52469"></a>CCF5</td>
@@ -141,7 +176,7 @@ This ignores green key and food items. May decide which items are 'found'.
 <tr>
 <td class="address"><a name="52471"></a>CCF7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
-<td class="comment">sub_CCAB();</td>
+<td class="comment">guards_persue_player();</td>
 </tr>
 <tr>
 <td class="address"><a name="52474"></a>CCFA</td>
@@ -157,9 +192,9 @@ This ignores green key and food items. May decide which items are 'found'.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

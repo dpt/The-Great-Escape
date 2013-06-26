@@ -90,7 +90,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42296"></a>A538</td>
 <td class="instruction">CP $05</td>
-<td class="comment" rowspan="2">if (A == 5) goto success; // 1 + 4 == compass + purse</td>
+<td class="comment" rowspan="2">if (A == escapeitem_COMPASS + escapeitem_PURSE) goto success;</td>
 </tr>
 <tr>
 <td class="address"><a name="42298"></a>A53A</td>
@@ -99,7 +99,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42300"></a>A53C</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="2">else if (A != 3) goto captured; // 1 + 2 == compass + papers</td>
+<td class="comment" rowspan="2">else if (A != escapeitem_COMPASS + escapeitem_PAPERS) goto captured;</td>
 </tr>
 <tr>
 <td class="address"><a name="42302"></a>A53E</td>
@@ -163,7 +163,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42327"></a>A557</td>
 <td class="instruction">CP $08</td>
-<td class="comment" rowspan="2">if (A &gt;= 8) goto plot; // at least a uniform =&gt; 'but were recaptured'</td>
+<td class="comment" rowspan="2">if (A &gt;= escapeitem_UNIFORM) goto plot; // at least a uniform =&gt; 'but were recaptured'</td>
 </tr>
 <tr>
 <td class="address"><a name="42329"></a>A559</td>
@@ -191,7 +191,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42340"></a>A564</td>
 <td class="instruction">BIT 0,A</td>
-<td class="comment" rowspan="2">if ((A &amp; (1&lt;&lt;0)) == 0) goto plot; // no compass =&gt; 'totally lost'</td>
+<td class="comment" rowspan="2">if ((A &amp; escapeitem_COMPASS) == 0) goto plot; // no compass =&gt; 'totally lost'</td>
 </tr>
 <tr>
 <td class="address"><a name="42342"></a>A566</td>
@@ -218,9 +218,19 @@ Print 'well done' message then test to see if the right objects were used in the
 <td class="comment">screenlocstring_plot(); // PRESS ANY KEY</td>
 </tr>
 <tr>
-<td class="label"><a name="42356"></a>A574</td>
+<td class="routineComment" colspan="3">
+<a name="42356"></a>
+<div class="comments">
+<div class="paragraph">
+Wait for a keypress.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">A574</td>
 <td class="instruction">CALL <a class="link" href="42380.html">$A58C</a></td>
-<td class="comment" rowspan="2">do { keyscan_all(); } while (NZ); // wait for up-down keypress?</td>
+<td class="comment" rowspan="2">do { keyscan_all(); } while (!Z);</td>
 </tr>
 <tr>
 <td class="address"><a name="42359"></a>A577</td>
@@ -252,7 +262,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42372"></a>A584</td>
 <td class="instruction">CP $08</td>
-<td class="comment" rowspan="2">if (A &gt;= 8) looks_like_a_reset_fn(); return; // exit via</td>
+<td class="comment" rowspan="2">if (A &gt;= escapeitem_UNIFORM) looks_like_a_reset_fn(); return; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="42374"></a>A586</td>
@@ -272,9 +282,9 @@ Print 'well done' message then test to see if the right objects were used in the
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

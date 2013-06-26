@@ -16,7 +16,7 @@
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="43913.html">AB89</a></td>
+<td class="prev">Prev: <a class="link" href="43883.html">AB6B</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#43936">Map</a></td>
 <td class="next">Next: <a class="link" href="44329.html">AD29</a></td>
 </tr>
@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="link" href="42251.html">A50B</a> and <a class="link" href="45820.html">B2FC</a>.
+Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="link" href="42251.html">A50B</a> and <a class="link" href="45820.html">B2FC</a>.
 </div>
 </div>
 </td>
@@ -102,7 +102,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="43968"></a>ABC0</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="7">if (A != 1) } *HL--; A--; HL++; *HL++; HL--;</td>
+<td class="comment" rowspan="7">if (A != 1) } (*HL)--; A--; HL++; (*HL)++; HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="43970"></a>ABC2</td>
@@ -141,7 +141,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="43980"></a>ABCC</td>
 <td class="instruction">CP $16</td>
-<td class="comment" rowspan="3">if (A &lt; 22) *HL++;</td>
+<td class="comment" rowspan="3">if (A &lt; 22) (*HL)++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43982"></a>ABCE</td>
@@ -164,7 +164,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="43988"></a>ABD4</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="7">if (A != 1) } *HL--; A--; HL++; *HL++; HL--;</td>
+<td class="comment" rowspan="7">if (A != 1) } (*HL)--; A--; HL++; (*HL)++; HL--;</td>
 </tr>
 <tr>
 <td class="address"><a name="43990"></a>ABD6</td>
@@ -203,7 +203,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="44000"></a>ABE0</td>
 <td class="instruction">CP $0F</td>
-<td class="comment" rowspan="3">if (A &lt; 15) *HL++;</td>
+<td class="comment" rowspan="3">if (A &lt; 15) (*HL)++;</td>
 </tr>
 <tr>
 <td class="address"><a name="44002"></a>ABE2</td>
@@ -304,12 +304,11 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="44039"></a>AC07</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += DE;</td>
+<td class="comment" rowspan="6">HL += DE + zoombox_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="44040"></a>AC08</td>
 <td class="instruction">LD A,($AB66)</td>
-<td class="comment" rowspan="5">HL += zoombox_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="44043"></a>AC0B</td>
@@ -345,7 +344,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="44053"></a>AC15</td>
 <td class="instruction">LD A,($AB68)</td>
-<td class="comment" rowspan="14">HL = game_screen_scanline_start_addresses[zoombox_y * 8]; // ie. * 16</td>
+<td class="comment" rowspan="14">HL = game_screen_start_addresses[zoombox_y * 8]; // ie. * 16</td>
 </tr>
 <tr>
 <td class="address"><a name="44056"></a>AC18</td>
@@ -402,17 +401,15 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="44072"></a>AC28</td>
 <td class="instruction">LD A,($AB66)</td>
-<td class="comment">A = zoombox_x;</td>
+<td class="comment" rowspan="3">HL += zoombox_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="44075"></a>AC2B</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment">A += L;</td>
 </tr>
 <tr>
 <td class="address"><a name="44076"></a>AC2C</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="44077"></a>AC2D</td>
@@ -471,7 +468,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="label"><a name="44099"></a>AC43</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">do { EX AF,AF'</td>
+<td class="comment">do { -</td>
 </tr>
 <tr>
 <td class="address"><a name="44100"></a>AC44</td>
@@ -494,12 +491,12 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="44108"></a>AC4C</td>
 <td class="instruction">LD A,$00</td>
-<td class="comment">A = 0; // self modified</td>
+<td class="comment">Adash = 0; // self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="44110"></a>AC4E</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment" rowspan="4">HL += A;</td>
+<td class="comment" rowspan="4">HL += Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="44111"></a>AC4F</td>
@@ -516,17 +513,17 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="label"><a name="44115"></a>AC53</td>
 <td class="instruction">LD A,E</td>
-<td class="comment">A = E;</td>
+<td class="comment">Adash = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="44116"></a>AC54</td>
 <td class="instruction">SUB $00</td>
-<td class="comment">A -= 0; // self modified</td>
+<td class="comment">Adash -= 0; // self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="44118"></a>AC56</td>
 <td class="instruction">LD E,A</td>
-<td class="comment">E = A;</td>
+<td class="comment">E = Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="44119"></a>AC57</td>
@@ -536,7 +533,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="44120"></a>AC58</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="44121"></a>AC59</td>
@@ -608,7 +605,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="label"><a name="44143"></a>AC6F</td>
 <td class="instruction">LD A,($AB68)</td>
-<td class="comment" rowspan="15">HL = game_screen_scanline_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16</td>
+<td class="comment" rowspan="15">HL = game_screen_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16</td>
 </tr>
 <tr>
 <td class="address"><a name="44146"></a>AC72</td>
@@ -811,7 +808,7 @@ Vertical.
 <tr>
 <td class="label"><a name="44207"></a>ACAF</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment" rowspan="9">do { zoombox_draw_tile(zoombox_tile_VT); } DE = 32; {if (L &gt;= 224) D = 0x07; } HL += DE; while (--B);</td>
+<td class="comment" rowspan="9">do { zoombox_draw_tile(zoombox_tile_VT); } DE = 32; {  if (L &gt;= 224) D = 0x07; } HL += DE; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44209"></a>ACB1</td>
@@ -973,7 +970,7 @@ Vertical.
 <tr>
 <td class="label"><a name="44264"></a>ACE8</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment" rowspan="9">do { zoombox_draw_tile(zoombox_tile_VT); } DE = 0xFFE0; {if (L &lt; 32) DE = 0xF8E0; } HL += DE; while (--B);</td>
+<td class="comment" rowspan="9">do { zoombox_draw_tile(zoombox_tile_VT); } DE = 0xFFE0; {  if (L &lt; 32) DE = 0xF8E0; } HL += DE; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44266"></a>ACEA</td>
@@ -1069,7 +1066,7 @@ Vertical.
 <tr>
 <td class="label"><a name="44300"></a>AD0C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="5">do { *DE = *HL++; } {DE += 256; } while (--B);</td>
+<td class="comment" rowspan="5">do { *DE = *HL++; } {  DE += 256; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="44301"></a>AD0D</td>
@@ -1109,7 +1106,7 @@ Vertical.
 <tr>
 <td class="address"><a name="44311"></a>AD17</td>
 <td class="instruction">CP $48</td>
-<td class="comment" rowspan="6">if (A &gt;= 0x48) { H++; } {if (A &gt;= 0x50) H++; }</td>
+<td class="comment" rowspan="6">if (A &gt;= 0x48) { H++; } {  if (A &gt;= 0x50) H++; }</td>
 </tr>
 <tr>
 <td class="address"><a name="44313"></a>AD19</td>
@@ -1163,15 +1160,15 @@ Vertical.
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="43913.html">AB89</a></td>
+<td class="prev">Prev: <a class="link" href="43883.html">AB6B</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#43936">Map</a></td>
 <td class="next">Next: <a class="link" href="44329.html">AD29</a></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

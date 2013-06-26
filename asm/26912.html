@@ -16,18 +16,18 @@
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="26786.html">68A2</a></td>
+<td class="prev">Prev: <a class="link" href="26906.html">691A</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26912">Map</a></td>
 <td class="next">Next: <a class="link" href="26937.html">6939</a></td>
 </tr>
 </table>
-<div class="description">6920: tunnel_related</div>
+<div class="description">6920: changed_room</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Probably called when emerging from tunnel.
+Called when changing rooms.
 </div>
 <div class="paragraph">
 This is resetting the character sprite set to prisoner.
@@ -43,7 +43,7 @@ This is resetting the character sprite set to prisoner.
 <tr>
 <td class="address"><a name="26915"></a>6923</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment" rowspan="2">*HL++ = 128;</td>
+<td class="comment" rowspan="2">*HL++ = 0x80; // movement?</td>
 </tr>
 <tr>
 <td class="address"><a name="26917"></a>6925</td>
@@ -52,12 +52,11 @@ This is resetting the character sprite set to prisoner.
 <tr>
 <td class="address"><a name="26918"></a>6926</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment" rowspan="6">if (indoor_room_index &gt;= room_29_secondtunnelstart) } *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag {  $8015 = &amp;sprite_prisoner_tl_4; }</td>
 </tr>
 <tr>
 <td class="address"><a name="26921"></a>6929</td>
 <td class="instruction">CP $1D</td>
-<td class="comment" rowspan="7">if (A &gt;= room_29_secondtunnelstart) } *HL |= 1&lt;&lt;2; {$8015 = &amp;sprite_prisoner_tl_4; } } else { *HL &amp;= 1&lt;&lt;2;</td>
 </tr>
 <tr>
 <td class="address"><a name="26923"></a>692B</td>
@@ -78,10 +77,12 @@ This is resetting the character sprite set to prisoner.
 <tr>
 <td class="address"><a name="26933"></a>6935</td>
 <td class="instruction">RET</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="26934"></a>6936</td>
 <td class="instruction">RES 2,(HL)</td>
+<td class="comment">*HL &amp;= ~vischar_BYTE14_CRAWL; } // clear crawl flag</td>
 </tr>
 <tr>
 <td class="address"><a name="26936"></a>6938</td>
@@ -91,15 +92,15 @@ This is resetting the character sprite set to prisoner.
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="26786.html">68A2</a></td>
+<td class="prev">Prev: <a class="link" href="26906.html">691A</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26912">Map</a></td>
 <td class="next">Next: <a class="link" href="26937.html">6939</a></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

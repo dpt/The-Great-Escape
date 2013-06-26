@@ -47,7 +47,7 @@ Given a screen address, returns the same position on the previous scanline.
 <tr>
 <td class="label"><a name="41090"></a>A082</td>
 <td class="instruction">LD A,H</td>
-<td class="comment" rowspan="3">if ((H &amp; 7) != 0) // NNN bits</td>
+<td class="comment" rowspan="4">if ((H &amp; 7) != 0) { // NNN bits } HL -= 256; } // step back one scanline</td>
 </tr>
 <tr>
 <td class="address"><a name="41091"></a>A083</td>
@@ -60,37 +60,41 @@ Given a screen address, returns the same position on the previous scanline.
 <tr>
 <td class="address"><a name="41095"></a>A087</td>
 <td class="instruction">DEC H</td>
-<td class="comment">HL -= 256; // step back one scanline</td>
 </tr>
 <tr>
 <td class="address"><a name="41096"></a>A088</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="41097"></a>A089</td>
 <td class="instruction">LD DE,$06E0</td>
-<td class="comment" rowspan="6">if (L &lt; 32) HL -= 32; else HL += 0x06E0; // complicated</td>
+<td class="comment">if (L &lt; 32) HL -= 32; else HL += 0x06E0; } //</td>
 </tr>
 <tr>
 <td class="address"><a name="41100"></a>A08C</td>
 <td class="instruction">LD A,L</td>
+<td class="comment">complicated</td>
 </tr>
 <tr>
 <td class="address"><a name="41101"></a>A08D</td>
 <td class="instruction">CP $20</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="41103"></a>A08F</td>
 <td class="instruction">JR NC,$A093</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="41105"></a>A091</td>
 <td class="instruction">LD D,$FF</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="label"><a name="41107"></a>A093</td>
 <td class="instruction">ADD HL,DE</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="41108"></a>A094</td>
@@ -106,9 +110,9 @@ Given a screen address, returns the same position on the previous scanline.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

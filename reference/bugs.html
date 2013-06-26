@@ -15,15 +15,34 @@
 </tr>
 </table>
 <ul class="linkList">
+<li><a class="link" href="#bedROMwrite">Code which empties beds writes to ROM</a></li>
+<li><a class="link" href="#discoverOffByOne">Off-by-one in is_item_discoverable</a></li>
 <li><a class="link" href="#spotattr">Spotlight attribute</a></li>
 <li><a class="link" href="#pauseclear">Pause doesn't always clear the screen</a></li>
 <li><a class="link" href="#solitarymental">Player goes nuts in solitary</a></li>
 </ul>
+<div><a name="bedROMwrite"></a></div>
+<div class="box box1">
+<div class="boxTitle">Code which empties beds writes to ROM</div>
+<div class="paragraph">
+The routine at <a class="link" href="../asm/41447.html">A1E7</a>, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
+</div>
+</div>
+<div><a name="discoverOffByOne"></a></div>
+<div class="box box2">
+<div class="boxTitle">Off-by-one in is_item_discoverable</div>
+<div class="paragraph">
+The routine at <a class="link" href="../asm/51346.html">C892</a>, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
+</div>
+</div>
 <div><a name="spotattr"></a></div>
 <div class="box box1">
 <div class="boxTitle">Spotlight attribute</div>
 <div class="paragraph">
 Sometimes the nighttime spotlight will set the attributes of the barbed wire game screen border.
+</div>
+<div class="paragraph">
+Not yet located the faulty code.
 </div>
 </div>
 <div><a name="pauseclear"></a></div>
@@ -32,6 +51,9 @@ Sometimes the nighttime spotlight will set the attributes of the barbed wire gam
 <div class="paragraph">
 Pause doesn't always clear the full game screen. You get a two-row high sliver of pixels left behind.
 </div>
+<div class="paragraph">
+Not yet located the faulty code.
+</div>
 </div>
 <div><a name="solitarymental"></a></div>
 <div class="box box1">
@@ -39,11 +61,14 @@ Pause doesn't always clear the full game screen. You get a two-row high sliver o
 <div class="paragraph">
 Sometimes the player will go nuts when put in solitary. He'll run up against the topmost corner of the room and keep running.
 </div>
+<div class="paragraph">
+Not yet located the faulty code.
+</div>
 </div>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

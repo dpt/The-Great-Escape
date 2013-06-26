@@ -35,27 +35,27 @@ Causes some tile plotting.
 <tr>
 <td class="label"><a name="43033"></a>A819</td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="comment">DE = $F0F8;</td>
+<td class="comment">DE = $F0F8; // visible tiles array</td>
 </tr>
 <tr>
 <td class="address"><a name="43036"></a>A81C</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43037"></a>A81D</td>
 <td class="instruction">LD HL,$FF58</td>
-<td class="comment">HL = $FF58;</td>
+<td class="comment">HLdash = $FF58;</td>
 </tr>
 <tr>
 <td class="address"><a name="43040"></a>A820</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment">A = map_position_maybe[1]; // map_position_maybe hi</td>
+<td class="comment">A = map_position &gt;&gt; 8; // map_position hi</td>
 </tr>
 <tr>
 <td class="address"><a name="43043"></a>A823</td>
 <td class="instruction">LD DE,$F290</td>
-<td class="comment">DE = $F290;</td>
+<td class="comment">DEdash = $F290; // screen buffer start address</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -88,12 +88,12 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43053"></a>A82D</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">C = A;</td>
+<td class="comment">Cdash = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43054"></a>A82E</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="comment" rowspan="3">A = (map_position_maybe[0] &amp; 3) + C;</td>
+<td class="comment" rowspan="3">A = (map_position[0] &amp; 3) + Cdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43057"></a>A831</td>
@@ -106,22 +106,22 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43060"></a>A834</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43061"></a>A835</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">Adash = *HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43062"></a>A836</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43063"></a>A837</td>
 <td class="instruction">LD L,A</td>
-<td class="comment" rowspan="9">HL = 0x5B00 + A * 16;</td>
+<td class="comment" rowspan="9">HL = 0x5B00 + Adash * 16;</td>
 </tr>
 <tr>
 <td class="address"><a name="43064"></a>A838</td>
@@ -158,7 +158,7 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43074"></a>A842</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43075"></a>A843</td>
@@ -173,12 +173,11 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43077"></a>A845</td>
 <td class="instruction">NEG</td>
-<td class="comment">A = -A;</td>
+<td class="comment" rowspan="2">A = -A &amp; 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="43079"></a>A847</td>
 <td class="instruction">AND $03</td>
-<td class="comment">A &amp;= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="43081"></a>A849</td>
@@ -197,7 +196,7 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="label"><a name="43086"></a>A84E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">do { A = *HL;</td>
+<td class="comment">do { A = *HL; // A = tile index</td>
 </tr>
 <tr>
 <td class="address"><a name="43087"></a>A84F</td>
@@ -227,32 +226,32 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43095"></a>A857</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43096"></a>A858</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">HLdash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43097"></a>A859</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment">B = 5; // 5 iterations</td>
+<td class="comment">Bdash = 5; // 5 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="43099"></a>A85B</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do { PUSH BC</td>
+<td class="comment">do { PUSH BCdash</td>
 </tr>
 <tr>
 <td class="address"><a name="43100"></a>A85C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">A = *HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43101"></a>A85D</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43102"></a>A85E</td>
@@ -290,17 +289,16 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43113"></a>A869</td>
 <td class="instruction">LD A,$00</td>
-<td class="comment">A = 0; // must be self modified</td>
+<td class="comment">A = 0; // self modified by $A82A</td>
 </tr>
 <tr>
 <td class="address"><a name="43115"></a>A86B</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment">A += L; // looks odd</td>
+<td class="comment" rowspan="2">L += A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43116"></a>A86C</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43117"></a>A86D</td>
@@ -340,42 +338,42 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43128"></a>A878</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43129"></a>A879</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">HLdash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43130"></a>A87A</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
+<td class="comment">POP BCdash</td>
 </tr>
 <tr>
 <td class="address"><a name="43131"></a>A87B</td>
 <td class="instruction">DJNZ $A85B</td>
-<td class="comment">} while (--B);</td>
+<td class="comment">} while (--Bdash);</td>
 </tr>
 <tr>
 <td class="address"><a name="43133"></a>A87D</td>
 <td class="instruction">LD A,C</td>
-<td class="comment">A = C;</td>
+<td class="comment">A = Cdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43134"></a>A87E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">EX AF,AF' // unpaired?</td>
 </tr>
 <tr>
 <td class="address"><a name="43135"></a>A87F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">A = *HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43136"></a>A880</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43137"></a>A881</td>
@@ -418,22 +416,20 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 <tr>
 <td class="address"><a name="43151"></a>A88F</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment">A += L;</td>
+<td class="comment" rowspan="2">L += A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43152"></a>A890</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43153"></a>A891</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="comment">A = map_position_maybe[0]; // map_position_maybe lo</td>
+<td class="comment" rowspan="2">A = map_position[0] &amp; 3; // map_position lo</td>
 </tr>
 <tr>
 <td class="address"><a name="43156"></a>A894</td>
 <td class="instruction">AND $03</td>
-<td class="comment">A &amp;= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="43158"></a>A896</td>
@@ -489,9 +485,9 @@ This entry point is used by the routine at <a class="link" href="43018.html">A80
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

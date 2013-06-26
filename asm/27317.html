@@ -131,7 +131,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27333"></a>6AC5</td>
 <td class="instruction">LD A,B</td>
-<td class="comment" rowspan="2">LD ($6AE7),B    // self modify (== width)</td>
+<td class="comment" rowspan="2">($6AE7) = B; // self modify (== width)</td>
 </tr>
 <tr>
 <td class="address"><a name="27334"></a>6AC6</td>
@@ -145,7 +145,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27338"></a>6ACA</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A != objecttile_ESCAPE) goto $6ADE;</td>
+<td class="comment" rowspan="11">if (A == objecttile_ESCAPE) } HL++; A = *HL; {      if (A != objecttile_ESCAPE) { // FF FF =&gt; FF } A &amp;= 0xF0; // redundant? {        if (A &gt;= 128) goto $6AF4; } {        if (A == 64) goto $6B19; } }</td>
 </tr>
 <tr>
 <td class="address"><a name="27340"></a>6ACC</td>
@@ -154,17 +154,14 @@ Repeat:
 <tr>
 <td class="address"><a name="27342"></a>6ACE</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="27343"></a>6ACF</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="27344"></a>6AD0</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A == objecttile_ESCAPE) goto $6ADE;  // FF FF =&gt; FF</td>
 </tr>
 <tr>
 <td class="address"><a name="27346"></a>6AD2</td>
@@ -173,12 +170,10 @@ Repeat:
 <tr>
 <td class="address"><a name="27348"></a>6AD4</td>
 <td class="instruction">AND $F0</td>
-<td class="comment">A &amp;= 0xF0;      // redundant?</td>
 </tr>
 <tr>
 <td class="address"><a name="27350"></a>6AD6</td>
 <td class="instruction">CP $80</td>
-<td class="comment" rowspan="2">if (A &gt;= 128) goto $6AF4;</td>
 </tr>
 <tr>
 <td class="address"><a name="27352"></a>6AD8</td>
@@ -187,7 +182,6 @@ Repeat:
 <tr>
 <td class="address"><a name="27354"></a>6ADA</td>
 <td class="instruction">CP $40</td>
-<td class="comment" rowspan="2">if (A == 64) goto $6B19;</td>
 </tr>
 <tr>
 <td class="address"><a name="27356"></a>6ADC</td>
@@ -224,7 +218,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27366"></a>6AE6</td>
 <td class="instruction">LD B,$01</td>
-<td class="comment">B = 1;        // self modified</td>
+<td class="comment">B = 1; // self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="27368"></a>6AE8</td>
@@ -278,7 +272,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27383"></a>6AF7</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment" rowspan="2">EX AF,AF'</td>
+<td class="comment" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27384"></a>6AF8</td>
@@ -287,22 +281,22 @@ Repeat:
 <tr>
 <td class="address"><a name="27385"></a>6AF9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">Adash = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="27386"></a>6AFA</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="label"><a name="27387"></a>6AFB</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">do { EX AF,AF'</td>
+<td class="comment">do {</td>
 </tr>
 <tr>
 <td class="address"><a name="27388"></a>6AFC</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="3">if (A &gt; 0) *DE = A;</td>
+<td class="comment" rowspan="3">if (Adash &gt; 0) *DE = Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="27389"></a>6AFD</td>
@@ -325,7 +319,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27395"></a>6B03</td>
 <td class="instruction">LD A,($6AE7)</td>
-<td class="comment" rowspan="2">LD A,($6AE7)    // A = width</td>
+<td class="comment" rowspan="2">LD Adash,($6AE7)  // Adash = width</td>
 </tr>
 <tr>
 <td class="address"><a name="27398"></a>6B06</td>
@@ -334,7 +328,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27399"></a>6B07</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment" rowspan="6">DE += 24 - A;   // stride</td>
+<td class="comment" rowspan="6">DE += 24 -    Adash; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="27401"></a>6B09</td>
@@ -359,7 +353,7 @@ Repeat:
 <tr>
 <td class="label"><a name="27407"></a>6B0F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">Adash = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="27408"></a>6B10</td>
@@ -373,7 +367,7 @@ Repeat:
 <tr>
 <td class="label"><a name="27410"></a>6B12</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27411"></a>6B13</td>
@@ -398,12 +392,22 @@ Repeat:
 <tr>
 <td class="label"><a name="27417"></a>6B19</td>
 <td class="instruction">LD A,$3C</td>
-<td class="comment">A = 60;         // 'INC A'</td>
+<td class="comment">A = 60; // opcode of 'INC A'</td>
 </tr>
 <tr>
-<td class="address"><a name="27419"></a>6B1B</td>
+<td class="routineComment" colspan="3">
+<a name="27419"></a>
+<div class="comments">
+<div class="paragraph">
+Redundant: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">6B1B</td>
 <td class="instruction">LD ($6B28),A</td>
-<td class="comment">LD ($6B28),A    // self modify (but nothing else modifies it! possible evidence that other encodings with 'DEC A' were attempted)</td>
+<td class="comment">($6B28) = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="27422"></a>6B1E</td>
@@ -417,7 +421,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27425"></a>6B21</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment" rowspan="2">EX AF,AF'</td>
+<td class="comment" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27426"></a>6B22</td>
@@ -426,22 +430,22 @@ Repeat:
 <tr>
 <td class="address"><a name="27427"></a>6B23</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">Adash = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="27428"></a>6B24</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="label"><a name="27429"></a>6B25</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">do { EX AF,AF'</td>
+<td class="comment">do { -</td>
 </tr>
 <tr>
 <td class="address"><a name="27430"></a>6B26</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment" rowspan="2">*DE++ = A;</td>
+<td class="comment" rowspan="2">*DE++ = Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="27431"></a>6B27</td>
@@ -450,7 +454,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27432"></a>6B28</td>
 <td class="instruction">INC A</td>
-<td class="comment">INC A           // self modified</td>
+<td class="comment">INC Adash // self modified</td>
 </tr>
 <tr>
 <td class="address"><a name="27433"></a>6B29</td>
@@ -460,12 +464,12 @@ Repeat:
 <tr>
 <td class="address"><a name="27435"></a>6B2B</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment">PUSH AF</td>
+<td class="comment">PUSH AFdash</td>
 </tr>
 <tr>
 <td class="address"><a name="27436"></a>6B2C</td>
 <td class="instruction">LD A,($6AE7)</td>
-<td class="comment" rowspan="2">LD A,($6AE7)    // A = width</td>
+<td class="comment" rowspan="2">LD Adash,($6AE7)  // Adash = width</td>
 </tr>
 <tr>
 <td class="address"><a name="27439"></a>6B2F</td>
@@ -474,7 +478,7 @@ Repeat:
 <tr>
 <td class="address"><a name="27440"></a>6B30</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment" rowspan="6">DE += 24 - A;   // stride</td>
+<td class="comment" rowspan="6">DE += 24 - Adash; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="27442"></a>6B32</td>
@@ -499,7 +503,7 @@ Repeat:
 <tr>
 <td class="label"><a name="27448"></a>6B38</td>
 <td class="instruction">POP AF</td>
-<td class="comment" rowspan="2">POP AF</td>
+<td class="comment" rowspan="2">POP AFdash</td>
 </tr>
 <tr>
 <td class="address"><a name="27449"></a>6B39</td>
@@ -513,7 +517,7 @@ Repeat:
 <tr>
 <td class="label"><a name="27451"></a>6B3B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment" rowspan="2">EX AF,AF'</td>
+<td class="comment" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27452"></a>6B3C</td>
@@ -543,9 +547,9 @@ Repeat:
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

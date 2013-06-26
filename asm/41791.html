@@ -35,7 +35,7 @@ Used by the routines at <a class="link" href="40737.html">9F21</a>, <a class="li
 <tr>
 <td class="label"><a name="41791"></a>A33F</td>
 <td class="instruction">LD A,($A13A)</td>
-<td class="comment" rowspan="3">if (morale_related) return;</td>
+<td class="comment" rowspan="3">if (morale_1) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41794"></a>A342</td>
@@ -58,7 +58,7 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 <tr>
 <td class="label">A344</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment" rowspan="8">$8001 &amp;= ~(1&lt;&lt;6); $8002 = b; $8003 = c; return;</td>
+<td class="comment" rowspan="8">$8001 &amp;= ~vischar_BYTE1_BIT6; $8002 = b; $8003 = c; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41799"></a>A347</td>
@@ -97,9 +97,9 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

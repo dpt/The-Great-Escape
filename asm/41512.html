@@ -32,7 +32,7 @@
 <tr>
 <td class="label"><a name="41512"></a>A228</td>
 <td class="instruction">LD A,($771D)</td>
-<td class="comment" rowspan="2">A = itemstruct_12.room &amp; 0x3F;</td>
+<td class="comment" rowspan="4">if ((item_structs[item_RED_CROSS_PARCEL].room &amp; itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41515"></a>A22B</td>
@@ -41,7 +41,6 @@
 <tr>
 <td class="address"><a name="41517"></a>A22D</td>
 <td class="instruction">CP $3F</td>
-<td class="comment" rowspan="2">if (A != 0x3F) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41519"></a>A22F</td>
@@ -75,7 +74,7 @@
 <tr>
 <td class="address"><a name="41530"></a>A23A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="4">if ((*HL &amp; 0x3F) == 0x3F) goto found;</td>
+<td class="comment" rowspan="4">if ((*HL &amp; itemstruct_ROOM_MASK) == itemstruct_ROOM_MASK) goto found;</td>
 </tr>
 <tr>
 <td class="address"><a name="41531"></a>A23B</td>
@@ -116,7 +115,7 @@
 <tr>
 <td class="address"><a name="41545"></a>A249</td>
 <td class="instruction">LD DE,$771D</td>
-<td class="comment" rowspan="4">memcpy(&amp;itemstruct_12.room, red_cross_parcel_reset_data, 6);</td>
+<td class="comment" rowspan="4">memcpy(&amp;item_structs[item_RED_CROSS_PARCEL].room, red_cross_parcel_reset_data, 6);</td>
 </tr>
 <tr>
 <td class="address"><a name="41548"></a>A24C</td>
@@ -183,9 +182,9 @@ Data to set the parcel object up (room, y, x, ...).
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

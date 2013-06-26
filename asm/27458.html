@@ -48,19 +48,19 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <td class="registerContents">Corrupted.</td>
 </tr>
 <tr>
-<td class="register">A'</td>
+<td class="register">Adash</td>
 <td class="registerContents">Corrupted.</td>
 </tr>
 <tr>
-<td class="register">BC'</td>
+<td class="register">BCdash</td>
 <td class="registerContents">Corrupted.</td>
 </tr>
 <tr>
-<td class="register">DE'</td>
+<td class="register">DEdash</td>
 <td class="registerContents">Corrupted.</td>
 </tr>
 <tr>
-<td class="register">HL'</td>
+<td class="register">HLdash</td>
 <td class="registerContents">Corrupted.</td>
 </tr>
 </table>
@@ -69,12 +69,12 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="label"><a name="27458"></a>6B42</td>
 <td class="instruction">LD HL,$F290</td>
-<td class="comment">HL = $F290;  // screen buf</td>
+<td class="comment">HL = $F290;  // screen buffer start address</td>
 </tr>
 <tr>
 <td class="address"><a name="27461"></a>6B45</td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="comment">DE = $F0F8;  // tiles buf</td>
+<td class="comment">DE = $F0F8;  // visible tiles array</td>
 </tr>
 <tr>
 <td class="address"><a name="27464"></a>6B48</td>
@@ -89,12 +89,12 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="label"><a name="27468"></a>6B4C</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">do { PUSH HL</td>
+<td class="comment">do {</td>
 </tr>
 <tr>
 <td class="address"><a name="27469"></a>6B4D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="2">A = *DE;</td>
+<td class="comment" rowspan="9">tileptr = &amp;interior_tiles[*DE];</td>
 </tr>
 <tr>
 <td class="address"><a name="27470"></a>6B4E</td>
@@ -103,7 +103,6 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="address"><a name="27471"></a>6B4F</td>
 <td class="instruction">LD L,A</td>
-<td class="comment" rowspan="7">HL' = &amp;interior_tiles[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="27472"></a>6B50</td>
@@ -132,17 +131,17 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 <tr>
 <td class="address"><a name="27481"></a>6B59</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DE'</td>
+<td class="comment">screenptr = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="27482"></a>6B5A</td>
 <td class="instruction">LD BC,$0818</td>
-<td class="comment">B' = 8; C' = 24;</td>
+<td class="comment">iters = 8; stride = 24;</td>
 </tr>
 <tr>
 <td class="label"><a name="27485"></a>6B5D</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="10">do { *DE' = *HL'++; } {DE' += C'; } {} while (--B');</td>
+<td class="comment" rowspan="10">do { *screenptr = *tileptr++; } {      screenptr += stride; } {    } while (--iters);</td>
 </tr>
 <tr>
 <td class="address"><a name="27486"></a>6B5E</td>
@@ -240,9 +239,9 @@ Expand all of the tile indices in the tiles buffer to full tiles in the screen b
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

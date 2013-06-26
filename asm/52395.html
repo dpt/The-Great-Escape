@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="52429.html">CCCD</a></td>
 </tr>
 </table>
-<div class="description">CCAB: sub_CCAB</div>
+<div class="description">CCAB: guards_persue_player</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -38,7 +38,7 @@ If I nop this out then guards don't spot the items I drop.
 <tr>
 <td class="label"><a name="52395"></a>CCAB</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment" rowspan="2">HL = $8020;</td>
+<td class="comment" rowspan="2">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
 <td class="address"><a name="52398"></a>CCAE</td>
@@ -55,9 +55,19 @@ If I nop this out then guards don't spot the items I drop.
 <td class="comment">do {</td>
 </tr>
 <tr>
-<td class="address"><a name="52404"></a>CCB4</td>
+<td class="routineComment" colspan="3">
+<a name="52404"></a>
+<div class="comments">
+<div class="paragraph">
+HL[0x13] is the character's vertical offset, clearly this has some significance.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CCB4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="14">if (HL[0] &lt; character_20_prisoner &amp;&amp; HL[19] &lt; 0x20) HL[1] = 1; // set the flag [player taken to solitary]</td>
+<td class="comment" rowspan="14">if (HL[0] &lt; character_20_prisoner &amp;&amp; HL[0x13] &lt; 32) HL[1] = vischar_BYTE1_PERSUE;</td>
 </tr>
 <tr>
 <td class="address"><a name="52405"></a>CCB5</td>
@@ -114,7 +124,7 @@ If I nop this out then guards don't spot the items I drop.
 <tr>
 <td class="address"><a name="52425"></a>CCC9</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += 32; // step to next element</td>
+<td class="comment">HL += 32; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="52426"></a>CCCA</td>
@@ -135,9 +145,9 @@ If I nop this out then guards don't spot the items I drop.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="62785.html">F541</a></td>
 </tr>
 </table>
-<div class="description">F52C: get_tuning (music)</div>
+<div class="description">F52C: get_tuning</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -30,87 +30,94 @@
 Used by the routine at <a class="link" href="62647.html">F4B7</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Index.</td>
+</tr>
+</table>
+<table class="output">
+<tr>
+<td class="register">BC</td>
+<td class="registerContents">...</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="registerContents">...</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="62764"></a>F52C</td>
 <td class="instruction">ADD A,A</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="8">BC = music_tuning_table[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="62765"></a>F52D</td>
 <td class="instruction">LD HL,$FA48</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62768"></a>F530</td>
 <td class="instruction">LD E,A</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62769"></a>F531</td>
 <td class="instruction">LD D,$00</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62771"></a>F533</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62772"></a>F534</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62773"></a>F535</td>
 <td class="instruction">INC HL</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62774"></a>F536</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62775"></a>F537</td>
 <td class="instruction">INC C</td>
-<td class="transparentComment" />
+<td class="comment">C++;</td>
 </tr>
 <tr>
 <td class="address"><a name="62776"></a>F538</td>
 <td class="instruction">INC B</td>
-<td class="transparentComment" />
+<td class="comment">B++;</td>
 </tr>
 <tr>
 <td class="address"><a name="62777"></a>F539</td>
 <td class="instruction">JR NZ,$F53C</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">if (B == 0) C++; // big-endian 16-bit add?</td>
 </tr>
 <tr>
 <td class="address"><a name="62779"></a>F53B</td>
 <td class="instruction">INC C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="62780"></a>F53C</td>
 <td class="instruction">LD L,$00</td>
-<td class="transparentComment" />
+<td class="comment">L = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="62782"></a>F53E</td>
 <td class="instruction">LD D,B</td>
-<td class="transparentComment" />
+<td class="comment" rowspan="2">DE = BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="62783"></a>F53F</td>
 <td class="instruction">LD E,C</td>
-<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="62784"></a>F540</td>
 <td class="instruction">RET</td>
-<td class="transparentComment" />
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -121,9 +128,9 @@ Used by the routine at <a class="link" href="62647.html">F4B7</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

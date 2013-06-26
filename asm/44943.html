@@ -45,7 +45,7 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <tr>
 <td class="address"><a name="44947"></a>AF93</td>
 <td class="instruction">SET 6,(IY+$07)</td>
-<td class="comment" rowspan="2">IY[7] |= (1&lt;&lt;6)|(1&lt;&lt;7);</td>
+<td class="comment" rowspan="2">IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_BIT7;  // wild guess: clamp character in position?</td>
 </tr>
 <tr>
 <td class="address"><a name="44951"></a>AF97</td>
@@ -68,12 +68,11 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <tr>
 <td class="address"><a name="44959"></a>AF9F</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
+<td class="comment" rowspan="7">if (A == 0 &amp;&amp; automatic_player_counter &gt; 0) door_handling();</td>
 </tr>
 <tr>
 <td class="address"><a name="44960"></a>AFA0</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment" rowspan="6">if (A == 0 &amp;&amp; morale_related_also) door_handling();</td>
 </tr>
 <tr>
 <td class="address"><a name="44961"></a>AFA1</td>
@@ -98,7 +97,7 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <tr>
 <td class="address"><a name="44971"></a>AFAB</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="7">if (A || (($8001 &amp; 3) != 2)) { bounds_check(); return; }</td>
+<td class="comment" rowspan="7">if (A || (($8001 &amp; (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) { bounds_check(); return; }</td>
 </tr>
 <tr>
 <td class="address"><a name="44972"></a>AFAC</td>
@@ -129,7 +128,7 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <a name="44985"></a>
 <div class="comments">
 <div class="paragraph">
-Cutting wire?
+Cutting wire only from here onwards?
 </div>
 </div>
 </td>
@@ -137,37 +136,34 @@ Cutting wire?
 <tr>
 <td class="address">AFB9</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment">A = IY[0];</td>
+<td class="comment">A = IY[0]; // $8000,$8020,$8040,$8060</td>
 </tr>
 <tr>
 <td class="address"><a name="44988"></a>AFBC</td>
 <td class="instruction">CP $1A</td>
-<td class="comment">CP 26</td>
+<td class="comment" rowspan="4">if (A &lt; 26) { // a character index } sub_AFDF(); RET NZ</td>
 </tr>
 <tr>
 <td class="address"><a name="44990"></a>AFBE</td>
 <td class="instruction">JR NC,$AFC4</td>
-<td class="comment">JR NC,$AFC4</td>
 </tr>
 <tr>
 <td class="address"><a name="44992"></a>AFC0</td>
 <td class="instruction">CALL <a class="link" href="45023.html">$AFDF</a></td>
-<td class="comment">CALL $AFDF</td>
 </tr>
 <tr>
 <td class="address"><a name="44995"></a>AFC3</td>
 <td class="instruction">RET NZ</td>
-<td class="comment">RET NZ</td>
 </tr>
 <tr>
 <td class="label"><a name="44996"></a>AFC4</td>
 <td class="instruction">RES 6,(IY+$07)</td>
-<td class="comment">IY[7] &amp;= ~(1&lt;&lt;6);</td>
+<td class="comment">IY[7] &amp;= ~vischar_BYTE7_BIT6;</td>
 </tr>
 <tr>
 <td class="address"><a name="45000"></a>AFC8</td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment" rowspan="3">DE = IY;</td>
+<td class="comment" rowspan="8">memcpy(IY + 15, &amp;word_81A4, 6); // $800F // copy Y,X and vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="45003"></a>AFCB</td>
@@ -180,7 +176,6 @@ Cutting wire?
 <tr>
 <td class="address"><a name="45006"></a>AFCE</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment" rowspan="4">DE += 15;</td>
 </tr>
 <tr>
 <td class="address"><a name="45008"></a>AFD0</td>
@@ -197,7 +192,6 @@ Cutting wire?
 <tr>
 <td class="address"><a name="45013"></a>AFD5</td>
 <td class="instruction">LDIR</td>
-<td class="comment">memcpy(DE, &amp;word_81A4, 6);</td>
 </tr>
 <tr>
 <td class="address"><a name="45015"></a>AFD7</td>
@@ -227,9 +221,9 @@ Cutting wire?
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

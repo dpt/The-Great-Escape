@@ -33,7 +33,7 @@ Moves the map as the character walks.
 <table class="output">
 <tr>
 <td class="register">HL</td>
-<td class="registerContents">== map_position_maybe</td>
+<td class="registerContents">== map_position</td>
 </tr>
 </table>
 </td>
@@ -54,7 +54,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43703"></a>AAB7</td>
 <td class="instruction">LD HL,$8007</td>
-<td class="comment" rowspan="3">if ($8007 &amp; (1&lt;&lt;6)) return;</td>
+<td class="comment" rowspan="3">if ($8007 &amp; vischar_BYTE7_BIT6) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="43706"></a>AABA</td>
@@ -234,12 +234,12 @@ Moves the map as the character walks.
 <tr>
 <td class="label"><a name="43765"></a>AAF5</td>
 <td class="instruction">LD HL,($81BB)</td>
-<td class="comment">HL = map_position_maybe;</td>
+<td class="comment">HL = map_position;</td>
 </tr>
 <tr>
 <td class="address"><a name="43768"></a>AAF8</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="9">if (L == C || H == B) } popret: POP AF POP HL {return; }</td>
+<td class="comment" rowspan="9">if (L == C || H == B) } popret: POP AF POP HL {  return; }</td>
 </tr>
 <tr>
 <td class="address"><a name="43769"></a>AAF9</td>
@@ -286,7 +286,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43783"></a>AB07</td>
 <td class="instruction">CP $02</td>
-<td class="comment" rowspan="7">if (A &gt;= 2) } {A = *HL + 1; } } else { {A = *HL - 1; }</td>
+<td class="comment" rowspan="4">if (A &gt;= 2) } {  A = *HL + 1; }</td>
 </tr>
 <tr>
 <td class="address"><a name="43785"></a>AB09</td>
@@ -303,14 +303,17 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43789"></a>AB0D</td>
 <td class="instruction">JR $AB11</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="43791"></a>AB0F</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment">A = *HL - 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43792"></a>AB10</td>
 <td class="instruction">DEC A</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="43793"></a>AB11</td>
@@ -335,7 +338,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43800"></a>AB18</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto ab2a</td>
+<td class="comment" rowspan="2">if (A == 0) goto $AB2A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43801"></a>AB19</td>
@@ -349,7 +352,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43805"></a>AB1D</td>
 <td class="instruction">CP $02</td>
-<td class="comment" rowspan="2">if (A == 2) goto ab2a</td>
+<td class="comment" rowspan="2">if (A == 2) goto $AB2A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43807"></a>AB1F</td>
@@ -363,7 +366,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43812"></a>AB24</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="2">if (A == 1) goto ab2a</td>
+<td class="comment" rowspan="2">if (A == 1) goto $AB2A;</td>
 </tr>
 <tr>
 <td class="address"><a name="43814"></a>AB26</td>
@@ -382,7 +385,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43821"></a>AB2D</td>
 <td class="instruction">LD HL,($81BB)</td>
-<td class="comment">HL = map_position_maybe;</td>
+<td class="comment">HL = map_position;</td>
 </tr>
 <tr>
 <td class="address"><a name="43824"></a>AB30</td>
@@ -544,9 +547,9 @@ Moves the map as the character walks.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

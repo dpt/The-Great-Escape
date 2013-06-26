@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Plot static screen tiles.
+Plot static screen tiles horizontally.
 </div>
 </div>
 <table class="input">
@@ -70,12 +70,12 @@ This entry point is used by the routine at <a class="link" href="61920.html">F1E
 <tr>
 <td class="label"><a name="61963"></a>F20B</td>
 <td class="instruction">LD ($F075),A</td>
-<td class="comment">plot_static_tiles: plot_static_tiles_direction = A;</td>
+<td class="comment">plot_static_tiles: static_tiles_plot_direction = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="61966"></a>F20E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="4">B = *HL++ &amp; 0x7F; // loop iterations</td>
+<td class="comment" rowspan="4">B = *HL++ &amp; statictiles_COUNT_MASK; // loop iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="61967"></a>F20F</td>
@@ -97,17 +97,17 @@ This entry point is used by the routine at <a class="link" href="61920.html">F1E
 <tr>
 <td class="address"><a name="61972"></a>F214</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="61973"></a>F215</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DE</td>
+<td class="comment">POP DEdash</td>
 </tr>
 <tr>
 <td class="address"><a name="61974"></a>F216</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="label"><a name="61975"></a>F217</td>
@@ -117,12 +117,12 @@ This entry point is used by the routine at <a class="link" href="61920.html">F1E
 <tr>
 <td class="address"><a name="61976"></a>F218</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="61977"></a>F219</td>
 <td class="instruction">LD C,A</td>
-<td class="comment" rowspan="10">HL = &amp;static_tiles[A]; // elements: 9 bytes each</td>
+<td class="comment" rowspan="10">HLdash = &amp;static_tiles[A]; // elements: 9 bytes each</td>
 </tr>
 <tr>
 <td class="address"><a name="61978"></a>F21A</td>
@@ -163,7 +163,7 @@ This entry point is used by the routine at <a class="link" href="61920.html">F1E
 <tr>
 <td class="address"><a name="61991"></a>F227</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment">B = 8; // 8 iterations</td>
+<td class="comment">Bdash = 8; // 8 iterations</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -178,7 +178,7 @@ Plot a tile.
 <tr>
 <td class="label">F229</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="5">do { *DE = *HL++; } {DE += 256; // next row } while (--B);</td>
+<td class="comment" rowspan="5">do { *DEdash = *HLdash++; } {    DEdash += 256; // next row } while (--Bdash);</td>
 </tr>
 <tr>
 <td class="address"><a name="61994"></a>F22A</td>
@@ -199,12 +199,12 @@ Plot a tile.
 <tr>
 <td class="address"><a name="61999"></a>F22F</td>
 <td class="instruction">DEC D</td>
-<td class="comment">DE -= 256;</td>
+<td class="comment">DEdash -= 256;</td>
 </tr>
 <tr>
 <td class="address"><a name="62000"></a>F230</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment">PUSH DE</td>
+<td class="comment">PUSH DEdash</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -219,17 +219,17 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address">F231</td>
 <td class="instruction">LD A,D</td>
-<td class="comment">A = D;</td>
+<td class="comment">A = Ddash;</td>
 </tr>
 <tr>
 <td class="address"><a name="62002"></a>F232</td>
 <td class="instruction">LD D,$58</td>
-<td class="comment">D = 0x58; // screen attributes base</td>
+<td class="comment">Ddash = 0x58; // screen attributes base</td>
 </tr>
 <tr>
 <td class="address"><a name="62004"></a>F234</td>
 <td class="instruction">CP $48</td>
-<td class="comment" rowspan="3">if (A &gt;= 0x48) D++; // ie. DE += 256;</td>
+<td class="comment" rowspan="3">if (A &gt;= 0x48) DEdash += 256;</td>
 </tr>
 <tr>
 <td class="address"><a name="62006"></a>F236</td>
@@ -242,7 +242,7 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address"><a name="62009"></a>F239</td>
 <td class="instruction">CP $50</td>
-<td class="comment" rowspan="3">if (A &gt;= 0x50) D++;</td>
+<td class="comment" rowspan="3">if (A &gt;= 0x50) DEdash += 256;</td>
 </tr>
 <tr>
 <td class="address"><a name="62011"></a>F23B</td>
@@ -255,7 +255,7 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="label"><a name="62014"></a>F23E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">*DE = *HL; // copy attribute byte</td>
+<td class="comment" rowspan="2">*DEdash = *HLdash; // copy attribute byte</td>
 </tr>
 <tr>
 <td class="address"><a name="62015"></a>F23F</td>
@@ -264,17 +264,17 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address"><a name="62016"></a>F240</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">POP HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="62017"></a>F241</td>
 <td class="instruction">LD A,($F075)</td>
-<td class="comment">A = plot_static_tiles_direction;</td>
+<td class="comment">A = static_tiles_plot_direction;</td>
 </tr>
 <tr>
 <td class="address"><a name="62020"></a>F244</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="8">if (A == 0) { // horizontal } {H -= 7;  // HL -= 7*256; } L++; } else { // vertical get_next_scanline();</td>
+<td class="comment" rowspan="6">if (A == 0) { // horizontal } {    Hdash -= 7;  // HLdash -= 7 * 256; } Ldash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="62021"></a>F245</td>
@@ -299,20 +299,22 @@ Calculate screen attribute address of tile.
 <tr>
 <td class="address"><a name="62028"></a>F24C</td>
 <td class="instruction">JR $F251</td>
+<td class="comment">else { // vertical</td>
 </tr>
 <tr>
 <td class="label"><a name="62030"></a>F24E</td>
 <td class="instruction">CALL <a class="link" href="31977.html">$7CE9</a></td>
+<td class="comment">get_next_scanline(); }</td>
 </tr>
 <tr>
 <td class="label"><a name="62033"></a>F251</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">EX DEdash,HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="62034"></a>F252</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="62035"></a>F253</td>
@@ -338,9 +340,9 @@ Calculate screen attribute address of tile.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

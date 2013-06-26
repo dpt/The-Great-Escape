@@ -21,21 +21,47 @@
 <td class="next">Next: <a class="link" href="58383.html">E40F</a></td>
 </tr>
 </table>
-<div class="description">E3FA: sub_E3FA</div>
+<div class="description">E3FA: flip_24_masked_pixels</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-[leaf]
+Takes the 24 pixels in E,B,C and reverses them bitwise.
+</div>
+<div class="paragraph">
+Does the same for the mask pixels in E',B',C'.
+</div>
+<div class="paragraph">
+Roll the bitmap.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">E</td>
+<td class="registerContents">First 8 pixels.</td>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="registerContents">Second 16 pixels.</td>
+</tr>
+</table>
+<table class="output">
+<tr>
+<td class="register">E</td>
+<td class="registerContents">Reversed pixels.</td>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="registerContents">Reversed pixels.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="58362"></a>E3FA</td>
 <td class="instruction">LD H,$7F</td>
-<td class="comment">H = 0x7F;</td>
+<td class="comment">H = 0x7F;  // HL = 0x7F00 | (DE &amp; 0x00FF); // 0x7F00 -&gt; table of bit reversed bytes</td>
 </tr>
 <tr>
 <td class="address"><a name="58364"></a>E3FC</td>
@@ -45,82 +71,92 @@
 <tr>
 <td class="address"><a name="58365"></a>E3FD</td>
 <td class="instruction">LD E,B</td>
-<td class="comment">E = B;</td>
+<td class="comment">E = B;     // DE = (DE &amp; 0xFF00) | (BC &gt;&gt; 8);</td>
 </tr>
 <tr>
 <td class="address"><a name="58366"></a>E3FE</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment">B = *HL;</td>
+<td class="comment">B = *HL;   // BC = (*HL &lt;&lt; 8) | (BC &amp; 0xFF);</td>
 </tr>
 <tr>
 <td class="address"><a name="58367"></a>E3FF</td>
 <td class="instruction">LD L,E</td>
-<td class="comment">L = E;</td>
+<td class="comment">L = E;     // HL = (HL &amp; 0xFF00) | (DE &amp; 0xFF);</td>
 </tr>
 <tr>
 <td class="address"><a name="58368"></a>E400</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment">E = *HL;</td>
+<td class="comment">E = *HL;   // DE = (DE &amp; 0xFF00) | *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="58369"></a>E401</td>
 <td class="instruction">LD L,C</td>
-<td class="comment">L = C;</td>
+<td class="comment">L = C;     // HL = (HL &amp; 0xFF00) | (BC &amp; 0xFF);</td>
 </tr>
 <tr>
 <td class="address"><a name="58370"></a>E402</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL;</td>
+<td class="comment">C = *HL;   // BC = (BC &amp; 0xFF00) | *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="58371"></a>E403</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
-<td class="address"><a name="58372"></a>E404</td>
+<td class="routineComment" colspan="3">
+<a name="58372"></a>
+<div class="comments">
+<div class="paragraph">
+Roll the mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">E404</td>
 <td class="instruction">LD H,$7F</td>
-<td class="comment">H = 0x7F;</td>
+<td class="comment">Hdash = 0x7F;</td>
 </tr>
 <tr>
 <td class="address"><a name="58374"></a>E406</td>
 <td class="instruction">LD L,E</td>
-<td class="comment">L = E;</td>
+<td class="comment">Ldash = Edash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58375"></a>E407</td>
 <td class="instruction">LD E,B</td>
-<td class="comment">E = B;</td>
+<td class="comment">Edash = Bdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58376"></a>E408</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment">B = *HL;</td>
+<td class="comment">Bdash = *HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58377"></a>E409</td>
 <td class="instruction">LD L,E</td>
-<td class="comment">L = E;</td>
+<td class="comment">Ldash = Edash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58378"></a>E40A</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment">E = *HL;</td>
+<td class="comment">Edash = *HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58379"></a>E40B</td>
 <td class="instruction">LD L,C</td>
-<td class="comment">L = C;</td>
+<td class="comment">Ldash = Cdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58380"></a>E40C</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL;</td>
+<td class="comment">Cdash = *HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="58381"></a>E40D</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58382"></a>E40E</td>
@@ -136,9 +172,9 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

@@ -16,7 +16,7 @@
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="40540.html">9E5C</a></td>
+<td class="prev">Prev: <a class="link" href="40455.html">9E07</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40600">Map</a></td>
 <td class="next">Next: <a class="link" href="40626.html">9EB2</a></td>
 </tr>
@@ -52,7 +52,7 @@ Locks user out until lock is picked.
 <tr>
 <td class="address"><a name="40608"></a>9EA0</td>
 <td class="instruction">LD HL,($A143)</td>
-<td class="comment" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~(1 &lt;&lt; 7); // unlock</td>
+<td class="comment" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~gates_and_doors_LOCKED; // unlock</td>
 </tr>
 <tr>
 <td class="address"><a name="40611"></a>9EA3</td>
@@ -80,7 +80,7 @@ This entry point is used by the routine at <a class="link" href="40626.html">9EB
 <tr>
 <td class="label">9EAA</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment" rowspan="4">clear_lockpick_wirecut_flags_and_return: $8001 &amp;= ~3; // clear lock picking and wire snipping flags</td>
+<td class="comment" rowspan="4">clear_lockpick_wirecut_flags_and_return: $8001 &amp;= ~(vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);</td>
 </tr>
 <tr>
 <td class="address"><a name="40621"></a>9EAD</td>
@@ -102,15 +102,15 @@ This entry point is used by the routine at <a class="link" href="40626.html">9EB
 </table>
 <table class="prevNext">
 <tr>
-<td class="prev">Prev: <a class="link" href="40540.html">9E5C</a></td>
+<td class="prev">Prev: <a class="link" href="40455.html">9E07</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40600">Map</a></td>
 <td class="next">Next: <a class="link" href="40626.html">9EB2</a></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

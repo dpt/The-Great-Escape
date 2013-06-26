@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="27317.html">6AB5</a></td>
 </tr>
 </table>
-<div class="description">6A35: select_room_maybe</div>
+<div class="description">6A35: setup_room</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="link" href="31542.html">7B36</a>, <a class="link" href="40540.html">9E5C</a>, <a class="link" href="41609.html">A289</a>, <a class="link" href="41698.html">A2E2</a>, <a class="link" href="42016.html">A420</a> and <a class="link" href="46070.html">B3F6</a>.
+Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="link" href="31542.html">7B36</a>, <a class="link" href="40455.html">9E07</a>, <a class="link" href="41609.html">A289</a>, <a class="link" href="41698.html">A2E2</a>, <a class="link" href="42016.html">A420</a> and <a class="link" href="46070.html">B3F6</a>.
 </div>
 </div>
 </td>
@@ -130,12 +130,12 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27223"></a>6A57</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">HL++; }</td>
 </tr>
 <tr>
 <td class="address"><a name="27224"></a>6A58</td>
 <td class="instruction">JR $6A62</td>
-<td class="comment">} else {</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="27226"></a>6A5A</td>
@@ -305,7 +305,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="label"><a name="27276"></a>6A8C</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment">B = *HL; // count of objects</td>
+<td class="comment">B = *HL; // count of objects  // sample: HL -&gt; $6E25 (room16_corridor + 5)</td>
 </tr>
 <tr>
 <td class="address"><a name="27277"></a>6A8D</td>
@@ -356,7 +356,7 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="27287"></a>6A97</td>
 <td class="instruction">LD L,(HL)</td>
-<td class="comment" rowspan="15">HL = $F0F8 + *HL * 24 + A; // $F0F8 = visible_tiles_array (so *HL = row, A = column)</td>
+<td class="comment" rowspan="15">HL = $F0F8 + *HL * 24 + A; // $F0F8 = visible tiles array (so *HL = row, A = column)</td>
 </tr>
 <tr>
 <td class="address"><a name="27288"></a>6A98</td>
@@ -463,9 +463,9 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

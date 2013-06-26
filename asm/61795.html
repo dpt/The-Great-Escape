@@ -27,6 +27,9 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
+Main.
+</div>
+<div class="paragraph">
 Disable interrupts and set up stack pointer.
 </div>
 </div>
@@ -35,15 +38,24 @@ Disable interrupts and set up stack pointer.
 <tr>
 <td class="label"><a name="61795"></a>F163</td>
 <td class="instruction">DI</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="address"><a name="61796"></a>F164</td>
 <td class="instruction">LD SP,$FFFE</td>
-<td class="comment"></td>
 </tr>
 <tr>
-<td class="address"><a name="61799"></a>F167</td>
+<td class="routineComment" colspan="3">
+<a name="61799"></a>
+<div class="comments">
+<div class="paragraph">
+Set up screen.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">F167</td>
 <td class="instruction">CALL <a class="link" href="62039.html">$F257</a></td>
 <td class="comment">wipe_full_screen_and_attributes();</td>
 </tr>
@@ -148,7 +160,7 @@ Construct a table of 256 bit-reversed bytes at 0x7F00.
 <a name="61840"></a>
 <div class="comments">
 <div class="paragraph">
-... HL = $8000 ...
+Initialise visible characters (HL is $8000).
 </div>
 </div>
 </td>
@@ -156,7 +168,7 @@ Construct a table of 256 bit-reversed bytes at 0x7F00.
 <tr>
 <td class="address">F190</td>
 <td class="instruction">LD DE,$F1C9</td>
-<td class="comment">DE = &amp;twenty_three_bytes;</td>
+<td class="comment">DE = &amp;vischar_initial;</td>
 </tr>
 <tr>
 <td class="address"><a name="61843"></a>F193</td>
@@ -166,36 +178,34 @@ Construct a table of 256 bit-reversed bytes at 0x7F00.
 <tr>
 <td class="label"><a name="61845"></a>F195</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do {</td>
+<td class="comment">do { -</td>
 </tr>
 <tr>
 <td class="address"><a name="61846"></a>F196</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment"></td>
+<td class="comment" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="address"><a name="61847"></a>F197</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="61848"></a>F198</td>
 <td class="instruction">LD BC,$0017</td>
-<td class="comment"></td>
+<td class="comment" rowspan="3">memcpy(HL, DE, 23);</td>
 </tr>
 <tr>
 <td class="address"><a name="61851"></a>F19B</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="61852"></a>F19C</td>
 <td class="instruction">LDIR</td>
-<td class="comment" rowspan="2">memcpy(HL, DE, 23);</td>
 </tr>
 <tr>
 <td class="address"><a name="61854"></a>F19E</td>
 <td class="instruction">POP HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="61855"></a>F19F</td>
@@ -213,7 +223,7 @@ Construct a table of 256 bit-reversed bytes at 0x7F00.
 <tr>
 <td class="address"><a name="61859"></a>F1A3</td>
 <td class="instruction">POP DE</td>
-<td class="comment"></td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="61860"></a>F1A4</td>
@@ -230,7 +240,7 @@ Construct a table of 256 bit-reversed bytes at 0x7F00.
 <a name="61863"></a>
 <div class="comments">
 <div class="paragraph">
-... FF FF at 0x8020 and every 32 bytes after ...
+Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
 </div>
 </div>
 </td>
@@ -243,17 +253,17 @@ Construct a table of 256 bit-reversed bytes at 0x7F00.
 <tr>
 <td class="address"><a name="61865"></a>F1A9</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment">HL = 0x8020;</td>
+<td class="comment">HL = 0x8020; // iterate over non-player characters</td>
 </tr>
 <tr>
 <td class="address"><a name="61868"></a>F1AC</td>
 <td class="instruction">LD DE,$001F</td>
-<td class="comment"></td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="61871"></a>F1AF</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment"></td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="label"><a name="61873"></a>F1B1</td>
@@ -297,7 +307,7 @@ This is likely wiping everything up until the start of tiles ($8218).
 <tr>
 <td class="label"><a name="61882"></a>F1BA</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment" rowspan="6">do { *HL++ = 0; } {} while (--BC != 0);</td>
+<td class="comment" rowspan="6">do { *HL++ = 0; } while (--BC != 0); // turn into memset</td>
 </tr>
 <tr>
 <td class="address"><a name="61884"></a>F1BC</td>
@@ -338,9 +348,9 @@ This is likely wiping everything up until the start of tiles ($8218).
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

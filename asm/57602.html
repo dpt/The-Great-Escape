@@ -21,19 +21,19 @@
 <td class="next">Next: <a class="link" href="58015.html">E29F</a></td>
 </tr>
 </table>
-<div class="description">E102: masked_sprite_plotter</div>
+<div class="description">E102: masked_sprite_plotter_24_wide</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Called when moving between gates on the way to exercise? Perhaps when something's visible through the fence... e.g. dogs. AHA dogs are 24 wide...
+Sprite plotter. Used for characters and objects.
 </div>
 </div>
 <table class="input">
 <tr>
 <td class="register">IY</td>
-<td class="registerContents">...</td>
+<td class="registerContents">Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.</td>
 </tr>
 </table>
 </td>
@@ -41,7 +41,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="label"><a name="57602"></a>E102</td>
 <td class="instruction">LD A,(IY+$18)</td>
-<td class="comment" rowspan="2">A = IY[24] &amp; 7; // saw IY = 0x8020 =&gt; 0x8038, IY = 0x8040, IY = 0x80A0</td>
+<td class="comment" rowspan="4">if ((A = IY[24] &amp; 7) &gt;= 4) goto unaligned;</td>
 </tr>
 <tr>
 <td class="address"><a name="57605"></a>E105</td>
@@ -50,7 +50,6 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57607"></a>E107</td>
 <td class="instruction">CP $04</td>
-<td class="comment" rowspan="2">if (A &gt;= 4) goto unaligned;</td>
 </tr>
 <tr>
 <td class="address"><a name="57609"></a>E109</td>
@@ -59,7 +58,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57612"></a>E10C</td>
 <td class="instruction">CPL</td>
-<td class="comment" rowspan="5">A = (~A &amp; 3) * 8; // form jump table offset</td>
+<td class="comment" rowspan="5">A = (~A &amp; 3) * 8; // jump table offset</td>
 </tr>
 <tr>
 <td class="address"><a name="57613"></a>E10D</td>
@@ -80,47 +79,44 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57618"></a>E112</td>
 <td class="instruction">LD ($E161),A</td>
-<td class="comment">($E161) = A; // self-modify: set branch target</td>
+<td class="comment">($E161) = A; // self-modify // set branch target of second jump</td>
 </tr>
 <tr>
 <td class="address"><a name="57621"></a>E115</td>
 <td class="instruction">LD ($E143),A</td>
-<td class="comment">($E143) = A; // self-modify: set branch target</td>
+<td class="comment">($E143) = A; // self-modify // set branch target of first jump</td>
 </tr>
 <tr>
 <td class="address"><a name="57624"></a>E118</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment" rowspan="2">maskptr = mask_pointer; // mask pointer</td>
 </tr>
 <tr>
 <td class="address"><a name="57625"></a>E119</td>
 <td class="instruction">LD HL,($81AE)</td>
-<td class="comment">HL = word_81AE;</td>
 </tr>
 <tr>
 <td class="address"><a name="57628"></a>E11C</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment" rowspan="2">bitmapptr = bitmap_pointer; // bitmap pointer</td>
 </tr>
 <tr>
 <td class="address"><a name="57629"></a>E11D</td>
 <td class="instruction">LD HL,($81AC)</td>
-<td class="comment">HL = word_81AC;</td>
 </tr>
 <tr>
 <td class="address"><a name="57632"></a>E120</td>
 <td class="instruction">LD B,$20</td>
-<td class="comment">B = 32; // 32 iterations</td>
+<td class="comment">iters = 32; // iterations // height? // self modified</td>
 </tr>
 <tr>
 <td class="label"><a name="57634"></a>E122</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do { PUSH BC</td>
+<td class="comment" rowspan="127">do { bm0 = *bitmapptr++; // bitmap bytes } {  bm1 = *bitmapptr++; } {  bm2 = *bitmapptr++; } {  mask0 = *maskptr++; // mask bytes } {  mask1 = *maskptr++; } {  mask2 = *maskptr++; } {  if (flip_sprite &amp; (1&lt;&lt;7)) flip_24_masked_pixels(); } {  foremaskptr = foreground_mask_pointer; } screenptr = ($81A2); // screen ptr // moved compared to the other routines bm3 = 0; goto $E144; // self-modified // jump table SRL bm0 // 0 // carry = bm0 &amp; 1; bm0 &gt;&gt;= 1; RR bm1       // new_carry = bm1 &amp; 1; bm1 = (bm1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR bm2       // new_carry = bm2 &amp; 1; bm2 = (bm2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR bm3       // new_carry = bm3 &amp; 1; bm3 = (bm3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; SRL bm0 // 1 RR bm1 RR bm2 RR bm3 SRL bm0 // 2 RR bm1 RR bm2 {  RR bm3 } mask3 = 0xFF; carry = 1; goto $E162; // self-modified // jump table RR mask0 // 0 // new_carry = mask0 &amp; 1; mask0 = (mask0 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask1      // new_carry = mask1 &amp; 1; mask1 = (mask1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask2      // new_carry = mask2 &amp; 1; mask2 = (mask2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask3      // new_carry = mask3 &amp; 1; mask3 = (mask3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask0 RR mask1 RR mask2 RR mask3 RR mask0 RR mask1 RR mask2 RR mask3 {  A = ((~*foremaskptr | mask0) &amp; *screenptr) | (bm0 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 0 } {  A = ((~*foremaskptr | mask1) &amp; *screenptr) | (bm1 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 2 } {  A = ((~*foremaskptr | mask2) &amp; *screenptr) | (bm2 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 4 } {  A = ((~*foremaskptr | mask3) &amp; *screenptr) | (bm3 &amp; *foremaskptr); } foremaskptr++; foreground_mask_pointer = foremaskptr; {  *screenptr = A;            // jump target 6 } {  screenptr += 21; // stride (24 - 3) } {  ($81A2) = screenptr; } {} while (--iters);</td>
 </tr>
 <tr>
 <td class="address"><a name="57635"></a>E123</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment" rowspan="2">B = *HL++; // bitmap bytes</td>
 </tr>
 <tr>
 <td class="address"><a name="57636"></a>E124</td>
@@ -129,7 +125,6 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57637"></a>E125</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment" rowspan="2">C = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57638"></a>E126</td>
@@ -138,7 +133,6 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57639"></a>E127</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57640"></a>E128</td>
@@ -147,17 +141,14 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57641"></a>E129</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="57642"></a>E12A</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57643"></a>E12B</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment" rowspan="2">B = *HL++; // mask bytes</td>
 </tr>
 <tr>
 <td class="address"><a name="57644"></a>E12C</td>
@@ -166,7 +157,6 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57645"></a>E12D</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment" rowspan="2">C = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57646"></a>E12E</td>
@@ -175,7 +165,6 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57647"></a>E12F</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57648"></a>E130</td>
@@ -184,192 +173,184 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57649"></a>E131</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
 </tr>
 <tr>
 <td class="address"><a name="57650"></a>E132</td>
 <td class="instruction">LD A,($81B7)</td>
-<td class="comment">A = byte_81B7;</td>
 </tr>
 <tr>
 <td class="address"><a name="57653"></a>E135</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="57654"></a>E136</td>
 <td class="instruction">CALL M,<a class="link" href="58362.html">$E3FA</a></td>
-<td class="comment">CALL M,$E3FA</td>
 </tr>
 <tr>
 <td class="address"><a name="57657"></a>E139</td>
 <td class="instruction">LD HL,($81B0)</td>
-<td class="comment">HL = word_81B0;</td>
 </tr>
 <tr>
 <td class="address"><a name="57660"></a>E13C</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57661"></a>E13D</td>
 <td class="instruction">LD HL,($81A2)</td>
-<td class="comment">HL = ($81A2);</td>
 </tr>
 <tr>
-<td class="address"><a name="57664"></a>E140</td>
+<td class="routineComment" colspan="3">
+<a name="57664"></a>
+<div class="comments">
+<div class="paragraph">
+Shift bitmap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">E140</td>
 <td class="instruction">LD D,$00</td>
-<td class="comment">D = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="57666"></a>E142</td>
 <td class="instruction">JR $E144</td>
-<td class="comment">goto $E144 // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57668"></a>E144</td>
 <td class="instruction">SRL B</td>
-<td class="comment">SRL B</td>
 </tr>
 <tr>
 <td class="address"><a name="57670"></a>E146</td>
 <td class="instruction">RR C</td>
-<td class="comment">RR C</td>
 </tr>
 <tr>
 <td class="address"><a name="57672"></a>E148</td>
 <td class="instruction">RR E</td>
-<td class="comment">RR E</td>
 </tr>
 <tr>
 <td class="address"><a name="57674"></a>E14A</td>
 <td class="instruction">RR D</td>
-<td class="comment">RR D</td>
 </tr>
 <tr>
 <td class="address"><a name="57676"></a>E14C</td>
 <td class="instruction">SRL B</td>
-<td class="comment">SRL B</td>
 </tr>
 <tr>
 <td class="address"><a name="57678"></a>E14E</td>
 <td class="instruction">RR C</td>
-<td class="comment">RR C</td>
 </tr>
 <tr>
 <td class="address"><a name="57680"></a>E150</td>
 <td class="instruction">RR E</td>
-<td class="comment">RR E</td>
 </tr>
 <tr>
 <td class="address"><a name="57682"></a>E152</td>
 <td class="instruction">RR D</td>
-<td class="comment">RR D</td>
 </tr>
 <tr>
 <td class="address"><a name="57684"></a>E154</td>
 <td class="instruction">SRL B</td>
-<td class="comment">SRL B</td>
 </tr>
 <tr>
 <td class="address"><a name="57686"></a>E156</td>
 <td class="instruction">RR C</td>
-<td class="comment">RR C</td>
 </tr>
 <tr>
 <td class="address"><a name="57688"></a>E158</td>
 <td class="instruction">RR E</td>
-<td class="comment">RR E</td>
 </tr>
 <tr>
 <td class="address"><a name="57690"></a>E15A</td>
 <td class="instruction">RR D</td>
-<td class="comment">RR D</td>
 </tr>
 <tr>
 <td class="address"><a name="57692"></a>E15C</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
-<td class="address"><a name="57693"></a>E15D</td>
+<td class="routineComment" colspan="3">
+<a name="57693"></a>
+<div class="comments">
+<div class="paragraph">
+Shift mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">E15D</td>
 <td class="instruction">LD D,$FF</td>
-<td class="comment">D = 255;</td>
 </tr>
 <tr>
 <td class="address"><a name="57695"></a>E15F</td>
 <td class="instruction">SCF</td>
-<td class="comment">SCF</td>
 </tr>
 <tr>
 <td class="address"><a name="57696"></a>E160</td>
 <td class="instruction">JR $E162</td>
-<td class="comment">goto $E162 // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57698"></a>E162</td>
 <td class="instruction">RR B</td>
-<td class="comment">RR B</td>
 </tr>
 <tr>
 <td class="address"><a name="57700"></a>E164</td>
 <td class="instruction">RR C</td>
-<td class="comment">RR C</td>
 </tr>
 <tr>
 <td class="address"><a name="57702"></a>E166</td>
 <td class="instruction">RR E</td>
-<td class="comment">RR E</td>
 </tr>
 <tr>
 <td class="address"><a name="57704"></a>E168</td>
 <td class="instruction">RR D</td>
-<td class="comment">RR D</td>
 </tr>
 <tr>
 <td class="address"><a name="57706"></a>E16A</td>
 <td class="instruction">RR B</td>
-<td class="comment">RR B</td>
 </tr>
 <tr>
 <td class="address"><a name="57708"></a>E16C</td>
 <td class="instruction">RR C</td>
-<td class="comment">RR C</td>
 </tr>
 <tr>
 <td class="address"><a name="57710"></a>E16E</td>
 <td class="instruction">RR E</td>
-<td class="comment">RR E</td>
 </tr>
 <tr>
 <td class="address"><a name="57712"></a>E170</td>
 <td class="instruction">RR D</td>
-<td class="comment">RR D</td>
 </tr>
 <tr>
 <td class="address"><a name="57714"></a>E172</td>
 <td class="instruction">RR B</td>
-<td class="comment">RR B</td>
 </tr>
 <tr>
 <td class="address"><a name="57716"></a>E174</td>
 <td class="instruction">RR C</td>
-<td class="comment">RR C</td>
 </tr>
 <tr>
 <td class="address"><a name="57718"></a>E176</td>
 <td class="instruction">RR E</td>
-<td class="comment">RR E</td>
 </tr>
 <tr>
 <td class="address"><a name="57720"></a>E178</td>
 <td class="instruction">RR D</td>
-<td class="comment">RR D</td>
 </tr>
 <tr>
-<td class="address"><a name="57722"></a>E17A</td>
+<td class="routineComment" colspan="3">
+<a name="57722"></a>
+<div class="comments">
+<div class="paragraph">
+Plot, using foreground mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">E17A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="3">A = ~*HL | B;       // 1</td>
 </tr>
 <tr>
 <td class="address"><a name="57723"></a>E17B</td>
@@ -382,62 +363,50 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57725"></a>E17D</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57726"></a>E17E</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57727"></a>E17F</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57728"></a>E180</td>
 <td class="instruction">LD A,B</td>
-<td class="comment">A = B;</td>
 </tr>
 <tr>
 <td class="address"><a name="57729"></a>E181</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57730"></a>E182</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57731"></a>E183</td>
 <td class="instruction">LD B,A</td>
-<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="57732"></a>E184</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57733"></a>E185</td>
 <td class="instruction">OR B</td>
-<td class="comment">A |= B;</td>
 </tr>
 <tr>
 <td class="address"><a name="57734"></a>E186</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57735"></a>E187</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57736"></a>E188</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment" rowspan="2">*HL++ = A;          // jump target 0</td>
 </tr>
 <tr>
 <td class="address"><a name="57737"></a>E189</td>
@@ -446,12 +415,10 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57738"></a>E18A</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57739"></a>E18B</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="3">A = ~*HL | C;       // 2</td>
 </tr>
 <tr>
 <td class="address"><a name="57740"></a>E18C</td>
@@ -464,62 +431,50 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57742"></a>E18E</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57743"></a>E18F</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57744"></a>E190</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57745"></a>E191</td>
 <td class="instruction">LD A,C</td>
-<td class="comment">A = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="57746"></a>E192</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57747"></a>E193</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57748"></a>E194</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="57749"></a>E195</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57750"></a>E196</td>
 <td class="instruction">OR C</td>
-<td class="comment">A |= C;</td>
 </tr>
 <tr>
 <td class="address"><a name="57751"></a>E197</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57752"></a>E198</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57753"></a>E199</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment" rowspan="2">*HL++ = A;          // jump target 2</td>
 </tr>
 <tr>
 <td class="address"><a name="57754"></a>E19A</td>
@@ -528,12 +483,10 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57755"></a>E19B</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57756"></a>E19C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="3">A = ~*HL | E;       // 3</td>
 </tr>
 <tr>
 <td class="address"><a name="57757"></a>E19D</td>
@@ -546,62 +499,50 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57759"></a>E19F</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57760"></a>E1A0</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57761"></a>E1A1</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57762"></a>E1A2</td>
 <td class="instruction">LD A,E</td>
-<td class="comment">A = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="57763"></a>E1A3</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57764"></a>E1A4</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57765"></a>E1A5</td>
 <td class="instruction">LD E,A</td>
-<td class="comment">E = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="57766"></a>E1A6</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57767"></a>E1A7</td>
 <td class="instruction">OR E</td>
-<td class="comment">A |= E;</td>
 </tr>
 <tr>
 <td class="address"><a name="57768"></a>E1A8</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57769"></a>E1A9</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57770"></a>E1AA</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment" rowspan="2">*HL++ = A;          // jump target 4</td>
 </tr>
 <tr>
 <td class="address"><a name="57771"></a>E1AB</td>
@@ -610,12 +551,10 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57772"></a>E1AC</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57773"></a>E1AD</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="3">A = ~*HL | D;       // 4</td>
 </tr>
 <tr>
 <td class="address"><a name="57774"></a>E1AE</td>
@@ -628,77 +567,62 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57776"></a>E1B0</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57777"></a>E1B1</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57778"></a>E1B2</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57779"></a>E1B3</td>
 <td class="instruction">LD A,D</td>
-<td class="comment">A = D;</td>
 </tr>
 <tr>
 <td class="address"><a name="57780"></a>E1B4</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57781"></a>E1B5</td>
 <td class="instruction">AND (HL)</td>
-<td class="comment">A &amp;= *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57782"></a>E1B6</td>
 <td class="instruction">LD D,A</td>
-<td class="comment">D = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="57783"></a>E1B7</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="57784"></a>E1B8</td>
 <td class="instruction">OR D</td>
-<td class="comment">A |= D;</td>
 </tr>
 <tr>
 <td class="address"><a name="57785"></a>E1B9</td>
 <td class="instruction">INC L</td>
-<td class="comment">L++;</td>
 </tr>
 <tr>
 <td class="address"><a name="57786"></a>E1BA</td>
 <td class="instruction">LD ($81B0),HL</td>
-<td class="comment">word_81B0 = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57789"></a>E1BD</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="57790"></a>E1BE</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="57791"></a>E1BF</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment">*HL = A;            // jump target 6</td>
 </tr>
 <tr>
 <td class="address"><a name="57792"></a>E1C0</td>
 <td class="instruction">LD BC,$0015</td>
-<td class="comment" rowspan="2">HL += 21;</td>
 </tr>
 <tr>
 <td class="address"><a name="57795"></a>E1C3</td>
@@ -707,27 +631,22 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57796"></a>E1C4</td>
 <td class="instruction">LD ($81A2),HL</td>
-<td class="comment">($81A2) = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57799"></a>E1C7</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="57800"></a>E1C8</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="57801"></a>E1C9</td>
 <td class="instruction">DEC B</td>
-<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="57802"></a>E1CA</td>
 <td class="instruction">JP NZ,$E122</td>
-<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="57805"></a>E1CD</td>
@@ -757,32 +676,30 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57811"></a>E1D3</td>
 <td class="instruction">LD ($E22A),A</td>
-<td class="comment">($E22A) = A; // self-modify: set branch target</td>
+<td class="comment">($E22A) = A; // self-modify: set branch target - second jump</td>
 </tr>
 <tr>
 <td class="address"><a name="57814"></a>E1D6</td>
 <td class="instruction">LD ($E204),A</td>
-<td class="comment">($E204) = A; // self-modify: set branch target</td>
+<td class="comment">($E204) = A; // self-modify: set branch target - first jump</td>
 </tr>
 <tr>
 <td class="address"><a name="57817"></a>E1D9</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment" rowspan="2">HLdash = mask_pointer;</td>
 </tr>
 <tr>
 <td class="address"><a name="57818"></a>E1DA</td>
 <td class="instruction">LD HL,($81AE)</td>
-<td class="comment">HL = word_81AE;</td>
 </tr>
 <tr>
 <td class="address"><a name="57821"></a>E1DD</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment" rowspan="2">HL = bitmap_pointer;</td>
 </tr>
 <tr>
 <td class="address"><a name="57822"></a>E1DE</td>
 <td class="instruction">LD HL,($81AC)</td>
-<td class="comment">HL = word_81AC;</td>
 </tr>
 <tr>
 <td class="address"><a name="57825"></a>E1E1</td>
@@ -866,22 +783,20 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57843"></a>E1F3</td>
 <td class="instruction">LD A,($81B7)</td>
-<td class="comment">A = byte_81B7;</td>
+<td class="comment" rowspan="3">if (flip_sprite &amp; (1&lt;&lt;7)) flip_24_masked_pixels();</td>
 </tr>
 <tr>
 <td class="address"><a name="57846"></a>E1F6</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
 </tr>
 <tr>
 <td class="address"><a name="57847"></a>E1F7</td>
 <td class="instruction">CALL M,<a class="link" href="58362.html">$E3FA</a></td>
-<td class="comment">CALL M,$E3FA</td>
 </tr>
 <tr>
 <td class="address"><a name="57850"></a>E1FA</td>
 <td class="instruction">LD HL,($81B0)</td>
-<td class="comment">HL = word_81B0;</td>
+<td class="comment">HL = foreground_mask_pointer;</td>
 </tr>
 <tr>
 <td class="address"><a name="57853"></a>E1FD</td>
@@ -901,7 +816,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57859"></a>E203</td>
 <td class="instruction">JR $E205</td>
-<td class="comment">goto $E205 // self-modified to jump into ...;</td>
+<td class="comment">goto $E205; // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57861"></a>E205</td>
@@ -1001,7 +916,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57897"></a>E229</td>
 <td class="instruction">JR $E22B</td>
-<td class="comment">goto $E22B // self-modified to jump into ...;</td>
+<td class="comment">goto $E22B; // self-modified to jump into ...;</td>
 </tr>
 <tr>
 <td class="label"><a name="57899"></a>E22B</td>
@@ -1395,7 +1310,7 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 <tr>
 <td class="address"><a name="57995"></a>E28B</td>
 <td class="instruction">LD ($81B0),HL</td>
-<td class="comment">word_81B0 = HL;</td>
+<td class="comment">foreground_mask_pointer = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="57998"></a>E28E</td>
@@ -1460,9 +1375,9 @@ Called when moving between gates on the way to exercise? Perhaps when something'
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

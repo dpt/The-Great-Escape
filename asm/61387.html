@@ -26,29 +26,39 @@
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+Is the player within the main gate bounds?
+</div>
+<div class="paragraph">
+Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="61387"></a>EFCB</td>
 <td class="instruction">LD DE,$696D</td>
-<td class="comment" rowspan="11">[range checking business x in (0x69..0x6D) and y in (0x49..0x4B)]</td>
+<td class="comment">DE = map_MAIN_GATE_X;</td>
 </tr>
 <tr>
 <td class="address"><a name="61390"></a>EFCE</td>
 <td class="instruction">LD HL,$81B8</td>
+<td class="comment">HL = &amp;player_map_position_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="61393"></a>EFD1</td>
 <td class="instruction">LD B,$02</td>
+<td class="comment">B = 2; // iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="61395"></a>EFD3</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment">do { A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="61396"></a>EFD4</td>
 <td class="instruction">CP D</td>
+<td class="comment" rowspan="5">if (A &lt; D || A &gt;= E) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="61397"></a>EFD5</td>
@@ -69,15 +79,27 @@
 <tr>
 <td class="address"><a name="61401"></a>EFD9</td>
 <td class="instruction">LD DE,$494B</td>
+<td class="comment">DE = map_MAIN_GATE_Y;</td>
 </tr>
 <tr>
 <td class="address"><a name="61404"></a>EFDC</td>
 <td class="instruction">DJNZ $EFD3</td>
+<td class="comment">} while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="61406"></a>EFDE</td>
+<td class="routineComment" colspan="3">
+<a name="61406"></a>
+<div class="comments">
+<div class="paragraph">
+Using the papers at the main gate when not in uniform causes the player to be sent to solitary.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">EFDE</td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="comment" rowspan="4">if (*$8015 != sprite_guard_tl_4) goto solitary; // using the papers at the main gate when not in uniform =&gt; get sent to solitary</td>
+<td class="comment" rowspan="4">if ($8015 != sprite_guard_tl_4) goto solitary; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="61409"></a>EFE1</td>
@@ -94,7 +116,7 @@
 <tr>
 <td class="address"><a name="61416"></a>EFE8</td>
 <td class="instruction">CALL <a class="link" href="41193.html">$A0E9</a></td>
-<td class="comment">increase_morale_by_10_score_by_50</td>
+<td class="comment">increase_morale_by_10_score_by_50();</td>
 </tr>
 <tr>
 <td class="address"><a name="61419"></a>EFEB</td>
@@ -106,17 +128,29 @@
 <td class="instruction">LD ($801C),A</td>
 </tr>
 <tr>
-<td class="address"><a name="61423"></a>EFEF</td>
+<td class="routineComment" colspan="3">
+<a name="61423"></a>
+<div class="comments">
+<div class="paragraph">
+Transition to outside the main gate.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">EFEF</td>
 <td class="instruction">LD HL,$EFF9</td>
-<td class="comment" rowspan="3">... must be a transition to outside the gate ...</td>
+<td class="comment">HL = &amp;word_EFF9; // pointer to location?</td>
 </tr>
 <tr>
 <td class="address"><a name="61426"></a>EFF2</td>
 <td class="instruction">LD IY,$8000</td>
+<td class="comment">IY = $8000; // player character</td>
 </tr>
 <tr>
 <td class="address"><a name="61430"></a>EFF6</td>
 <td class="instruction">JP <a class="link" href="26786.html">$68A2</a></td>
+<td class="comment">transition(); return; // doesn't return: exits with goto main_loop</td>
 </tr>
 <tr>
 <td class="address"><a name="61433"></a>EFF9</td>
@@ -132,9 +166,9 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

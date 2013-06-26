@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="44477.html">ADBD</a></td>
 </tr>
 </table>
-<div class="description">AD59: sub_AD59</div>
+<div class="description">AD59: searchlight_AD59</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -30,6 +30,12 @@
 Used by nighttime.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to word_AD29_used_by_nighttime</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -53,12 +59,12 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44381"></a>AD5D</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment">*HL--;</td>
+<td class="comment">(*HL)--;</td>
 </tr>
 <tr>
 <td class="address"><a name="44382"></a>AD5E</td>
 <td class="instruction">JP NZ,$AD99</td>
-<td class="comment">JP NZ,$AD99</td>
+<td class="comment">if (Z) {</td>
 </tr>
 <tr>
 <td class="address"><a name="44385"></a>AD61</td>
@@ -72,52 +78,45 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44387"></a>AD63</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">A = *HL; // sampled HL = $AD3B, $AD34, $AD2D</td>
 </tr>
 <tr>
 <td class="address"><a name="44388"></a>AD64</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment">BIT 7,A</td>
+<td class="comment" rowspan="8">if (A &amp; (1&lt;&lt;7)) } A &amp;= 0x7F; if (A == 0) { *HL &amp;= ~(1&lt;&lt;7); } else { (*HL)--; A--; }</td>
 </tr>
 <tr>
 <td class="address"><a name="44390"></a>AD66</td>
 <td class="instruction">JP Z,$AD76</td>
-<td class="comment">JP Z,$AD76</td>
 </tr>
 <tr>
 <td class="address"><a name="44393"></a>AD69</td>
 <td class="instruction">AND $7F</td>
-<td class="comment">A &amp;= 0x7F;</td>
 </tr>
 <tr>
 <td class="address"><a name="44395"></a>AD6B</td>
 <td class="instruction">JP NZ,$AD72</td>
-<td class="comment">JP NZ,$AD72</td>
 </tr>
 <tr>
 <td class="address"><a name="44398"></a>AD6E</td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment">RES 7,*HL</td>
 </tr>
 <tr>
 <td class="address"><a name="44400"></a>AD70</td>
 <td class="instruction">JR $AD74</td>
-<td class="comment">goto $AD74 // JR-to-JR: Why not just jump direct?;</td>
 </tr>
 <tr>
 <td class="label"><a name="44402"></a>AD72</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment">(*HL)--;</td>
 </tr>
 <tr>
 <td class="address"><a name="44403"></a>AD73</td>
 <td class="instruction">DEC A</td>
-<td class="comment">A--;</td>
 </tr>
 <tr>
 <td class="label"><a name="44404"></a>AD74</td>
 <td class="instruction">JR $AD78</td>
-<td class="comment">goto $AD78;</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="44406"></a>AD76</td>
@@ -127,7 +126,7 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44407"></a>AD77</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment">*HL = A;</td>
+<td class="comment">*HL = A; }</td>
 </tr>
 <tr>
 <td class="label"><a name="44408"></a>AD78</td>
@@ -186,7 +185,7 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44421"></a>AD85</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A != 0xFF) goto ad90</td>
+<td class="comment" rowspan="7">if (A == 0xFF) } (*HL)--; *HL |= 1&lt;&lt;7; {    BC -= 2; } A = *BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="44423"></a>AD87</td>
@@ -195,17 +194,14 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44426"></a>AD8A</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment">(*HL)--;</td>
 </tr>
 <tr>
 <td class="address"><a name="44427"></a>AD8B</td>
 <td class="instruction">SET 7,(HL)</td>
-<td class="comment">*HL |= 1&lt;&lt;7;</td>
 </tr>
 <tr>
 <td class="address"><a name="44429"></a>AD8D</td>
 <td class="instruction">DEC BC</td>
-<td class="comment" rowspan="2">BC -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="44430"></a>AD8E</td>
@@ -214,7 +210,6 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44431"></a>AD8F</td>
 <td class="instruction">LD A,(BC)</td>
-<td class="comment">A = *BC;</td>
 </tr>
 <tr>
 <td class="label"><a name="44432"></a>AD90</td>
@@ -254,12 +249,12 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44440"></a>AD98</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">return; }</td>
 </tr>
 <tr>
 <td class="label"><a name="44441"></a>AD99</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">else { HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="44442"></a>AD9A</td>
@@ -273,17 +268,15 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44444"></a>AD9C</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment">BIT 7,*HL</td>
+<td class="comment" rowspan="3">if (*HL &amp; (1&lt;&lt;7)) A ^= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="44446"></a>AD9E</td>
 <td class="instruction">JR Z,$ADA2</td>
-<td class="comment">JR Z,$ADA2</td>
 </tr>
 <tr>
 <td class="address"><a name="44448"></a>ADA0</td>
 <td class="instruction">XOR $02</td>
-<td class="comment">A ^= 2;</td>
 </tr>
 <tr>
 <td class="label"><a name="44450"></a>ADA2</td>
@@ -374,7 +367,7 @@ Used by nighttime.
 <tr>
 <td class="address"><a name="44476"></a>ADBC</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">return; }</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -385,9 +378,9 @@ Used by nighttime.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

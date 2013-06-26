@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Turns the screen blue and tracks the player with a spotlight.
+Turns white screen elements light blue and tracks the player with a searchlight.
 </div>
 </div>
 </td>
@@ -35,17 +35,16 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="label"><a name="44477"></a>ADBD</td>
 <td class="instruction">LD HL,$81BD</td>
-<td class="comment">HL = &amp;spotlight_found_player; // suspected spotlight_found_player flag (possible states: 0, 31, 255)</td>
+<td class="comment">HL = &amp;searchlight_state;</td>
 </tr>
 <tr>
 <td class="address"><a name="44480"></a>ADC0</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment" rowspan="3">if (*HL == searchlight_STATE_OFF) goto not_tracking;</td>
 </tr>
 <tr>
 <td class="address"><a name="44481"></a>ADC1</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A == 0xFF) goto not_tracking;</td>
 </tr>
 <tr>
 <td class="address"><a name="44483"></a>ADC3</td>
@@ -54,36 +53,52 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44486"></a>ADC6</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment" rowspan="5">if (indoor_room_index) { // player is indoors } *HL = searchlight_STATE_OFF; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44489"></a>ADC9</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto outside;</td>
 </tr>
 <tr>
 <td class="address"><a name="44490"></a>ADCA</td>
 <td class="instruction">JR Z,$ADCF</td>
 </tr>
 <tr>
-<td class="address"><a name="44492"></a>ADCC</td>
+<td class="routineComment" colspan="3">
+<a name="44492"></a>
+<div class="comments">
+<div class="paragraph">
+If the player goes indoors the searchlight loses track.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">ADCC</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment">*HL = 0xFF; // if the player goes indoors the searchlight loses track</td>
 </tr>
 <tr>
 <td class="address"><a name="44494"></a>ADCE</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
-<td class="label"><a name="44495"></a>ADCF</td>
+<td class="routineComment" colspan="3">
+<a name="44495"></a>
+<div class="comments">
+<div class="paragraph">
+Player is outdoors.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">ADCF</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">outside: A = *HL; // get spotlight_found_player flag</td>
+<td class="comment" rowspan="30">if (*HL == searchlight_STATE_1F) } HL = map_position; {  E = L + 4; } D = H; HL = searchlight_coords; {  if (L == E) { } {    if (H == D) return; } // highlight doesn't need to move, so quit } else { if (L &lt; E) { L++; } else { L--; } } {  if (H != D) { } if (H &lt; D) { H++; } else { H--; } } searchlight_coords = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="44496"></a>ADD0</td>
 <td class="instruction">CP $1F</td>
-<td class="comment" rowspan="2">if (A != 0x1F) goto $AE00;</td>
 </tr>
 <tr>
 <td class="address"><a name="44498"></a>ADD2</td>
@@ -92,12 +107,10 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44501"></a>ADD5</td>
 <td class="instruction">LD HL,($81BB)</td>
-<td class="comment">HL = map_position_maybe;</td>
 </tr>
 <tr>
 <td class="address"><a name="44504"></a>ADD8</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="3">D = L + 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="44505"></a>ADD9</td>
@@ -110,22 +123,18 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44508"></a>ADDC</td>
 <td class="instruction">LD D,H</td>
-<td class="comment">D = H;</td>
 </tr>
 <tr>
 <td class="address"><a name="44509"></a>ADDD</td>
 <td class="instruction">LD HL,($AE76)</td>
-<td class="comment">HL = searchlight_coords;</td>
 </tr>
 <tr>
 <td class="address"><a name="44512"></a>ADE0</td>
 <td class="instruction">LD A,L</td>
-<td class="comment">A = L;</td>
 </tr>
 <tr>
 <td class="address"><a name="44513"></a>ADE1</td>
 <td class="instruction">CP E</td>
-<td class="comment" rowspan="2">if (A != E) goto $ADE9;</td>
 </tr>
 <tr>
 <td class="address"><a name="44514"></a>ADE2</td>
@@ -134,7 +143,6 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44516"></a>ADE4</td>
 <td class="instruction">LD A,H</td>
-<td class="comment" rowspan="3">if (H == D) return; // strongly suspect this case means: highlight doesn't need to move, so quit</td>
 </tr>
 <tr>
 <td class="address"><a name="44517"></a>ADE5</td>
@@ -147,42 +155,54 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44519"></a>ADE7</td>
 <td class="instruction">JR $ADF1</td>
-<td class="comment">goto $ADF1;</td>
 </tr>
 <tr>
-<td class="label"><a name="44521"></a>ADE9</td>
+<td class="routineComment" colspan="3">
+<a name="44521"></a>
+<div class="comments">
+<div class="paragraph">
+Move searchlight left/right to focus on player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">ADE9</td>
 <td class="instruction">JP NC,$ADEF</td>
-<td class="comment">if (A &gt;= E) goto $ADEF; // move highlight .. left? down?</td>
 </tr>
 <tr>
 <td class="address"><a name="44524"></a>ADEC</td>
 <td class="instruction">INC A</td>
-<td class="comment">A++; // move highlight right? up?</td>
 </tr>
 <tr>
 <td class="address"><a name="44525"></a>ADED</td>
 <td class="instruction">JR $ADF0</td>
-<td class="comment">goto $ADF0;</td>
 </tr>
 <tr>
 <td class="label"><a name="44527"></a>ADEF</td>
 <td class="instruction">DEC A</td>
-<td class="comment">A--;</td>
 </tr>
 <tr>
 <td class="label"><a name="44528"></a>ADF0</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A; // new coord</td>
 </tr>
 <tr>
-<td class="label"><a name="44529"></a>ADF1</td>
+<td class="routineComment" colspan="3">
+<a name="44529"></a>
+<div class="comments">
+<div class="paragraph">
+Move searchlight up/down to focus on player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">ADF1</td>
 <td class="instruction">LD A,H</td>
-<td class="comment">A = H;</td>
 </tr>
 <tr>
 <td class="address"><a name="44530"></a>ADF2</td>
 <td class="instruction">CP D</td>
-<td class="comment" rowspan="2">if (A == D) goto store;</td>
 </tr>
 <tr>
 <td class="address"><a name="44531"></a>ADF3</td>
@@ -191,42 +211,36 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44533"></a>ADF5</td>
 <td class="instruction">JP NC,$ADFB</td>
-<td class="comment">if (A &gt; D) goto $ADFB; // move highlight .. left? down?</td>
 </tr>
 <tr>
 <td class="address"><a name="44536"></a>ADF8</td>
 <td class="instruction">INC A</td>
-<td class="comment">A++;</td>
 </tr>
 <tr>
 <td class="address"><a name="44537"></a>ADF9</td>
 <td class="instruction">JR $ADFC</td>
-<td class="comment">goto $ADFC;</td>
 </tr>
 <tr>
 <td class="label"><a name="44539"></a>ADFB</td>
 <td class="instruction">DEC A</td>
-<td class="comment">A--;</td>
 </tr>
 <tr>
 <td class="label"><a name="44540"></a>ADFC</td>
 <td class="instruction">LD H,A</td>
-<td class="comment">H = A; // new coord</td>
 </tr>
 <tr>
 <td class="label"><a name="44541"></a>ADFD</td>
 <td class="instruction">LD ($AE76),HL</td>
-<td class="comment">store: searchlight_coords = HL;</td>
 </tr>
 <tr>
 <td class="label"><a name="44544"></a>AE00</td>
 <td class="instruction">LD DE,($81BB)</td>
-<td class="comment">DE = map_position_maybe;</td>
+<td class="comment">DE = map_position;</td>
 </tr>
 <tr>
 <td class="address"><a name="44548"></a>AE04</td>
 <td class="instruction">LD HL,$AE77</td>
-<td class="comment">HL = $AE77; // &amp;searchlight_coords + 1 byte;</td>
+<td class="comment">HL = $AE77; // &amp;searchlight_coords + 1 byte; // compensating for HL--; jumped into</td>
 </tr>
 <tr>
 <td class="address"><a name="44551"></a>AE07</td>
@@ -271,7 +285,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44564"></a>AE14</td>
 <td class="instruction">CALL <a class="link" href="44377.html">$AD59</a></td>
-<td class="comment">sub_AD59();</td>
+<td class="comment">searchlight_AD59();</td>
 </tr>
 <tr>
 <td class="address"><a name="44567"></a>AE17</td>
@@ -286,7 +300,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44569"></a>AE19</td>
 <td class="instruction">CALL <a class="link" href="44664.html">$AE78</a></td>
-<td class="comment">something_then_decrease_morale_10();</td>
+<td class="comment">searchlight_caught();</td>
 </tr>
 <tr>
 <td class="address"><a name="44572"></a>AE1C</td>
@@ -301,12 +315,12 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44574"></a>AE1E</td>
 <td class="instruction">LD DE,($81BB)</td>
-<td class="comment">DE = map_position_maybe;</td>
+<td class="comment">DE = map_position;</td>
 </tr>
 <tr>
 <td class="address"><a name="44578"></a>AE22</td>
 <td class="instruction">LD A,E</td>
-<td class="comment" rowspan="2">A = E + 23;</td>
+<td class="comment" rowspan="4">if (E + 23 &lt; *HL) goto next; // out of bounds maybe</td>
 </tr>
 <tr>
 <td class="address"><a name="44579"></a>AE23</td>
@@ -315,7 +329,6 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44581"></a>AE25</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; *HL) goto next; // out of bounds maybe</td>
 </tr>
 <tr>
 <td class="address"><a name="44582"></a>AE26</td>
@@ -324,7 +337,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44585"></a>AE29</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL + 16;</td>
+<td class="comment" rowspan="4">if (*HL + 16 &lt; E) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="44586"></a>AE2A</td>
@@ -333,7 +346,6 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44588"></a>AE2C</td>
 <td class="instruction">CP E</td>
-<td class="comment" rowspan="2">if (A &lt; E) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="44589"></a>AE2D</td>
@@ -347,7 +359,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44593"></a>AE31</td>
 <td class="instruction">LD A,D</td>
-<td class="comment" rowspan="2">A = D + 16;</td>
+<td class="comment" rowspan="4">if (D + 16 &lt; *HL) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="44594"></a>AE32</td>
@@ -356,7 +368,6 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44596"></a>AE34</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; *HL) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="44597"></a>AE35</td>
@@ -365,7 +376,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44600"></a>AE38</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL + 16;</td>
+<td class="comment" rowspan="4">if (*HL + 16 &lt; D) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="44601"></a>AE39</td>
@@ -374,7 +385,6 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44603"></a>AE3B</td>
 <td class="instruction">CP D</td>
-<td class="comment" rowspan="2">if (A &lt; D) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="44604"></a>AE3C</td>
@@ -388,7 +398,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44608"></a>AE40</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="44609"></a>AE41</td>
@@ -398,12 +408,12 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44610"></a>AE42</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment">B = 0;</td>
+<td class="comment">B = 0x00;</td>
 </tr>
 <tr>
 <td class="address"><a name="44612"></a>AE44</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL - E;</td>
+<td class="comment" rowspan="7">if (*HL - E &lt; 0) } B = 0xFF; - A = ~A; -</td>
 </tr>
 <tr>
 <td class="address"><a name="44613"></a>AE45</td>
@@ -412,57 +422,51 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44614"></a>AE46</td>
 <td class="instruction">JP NC,$AE4E</td>
-<td class="comment">if (A &gt;= 0) goto $AE4E;</td>
 </tr>
 <tr>
 <td class="address"><a name="44617"></a>AE49</td>
 <td class="instruction">LD B,$FF</td>
-<td class="comment">B = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="44619"></a>AE4B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="44620"></a>AE4C</td>
 <td class="instruction">CPL</td>
-<td class="comment">A = ~A;</td>
 </tr>
 <tr>
 <td class="address"><a name="44621"></a>AE4D</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="label"><a name="44622"></a>AE4E</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">C = A;</td>
+<td class="comment">C = Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="44623"></a>AE4F</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment" rowspan="2">Adash = *++HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="44624"></a>AE50</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="44625"></a>AE51</td>
 <td class="instruction">LD H,$00</td>
-<td class="comment">H = 0;</td>
+<td class="comment">H = 0x00;</td>
 </tr>
 <tr>
 <td class="address"><a name="44627"></a>AE53</td>
 <td class="instruction">SUB D</td>
-<td class="comment">A -= D;</td>
+<td class="comment">Adash -= D;</td>
 </tr>
 <tr>
 <td class="address"><a name="44628"></a>AE54</td>
 <td class="instruction">JP NC,$AE59</td>
-<td class="comment" rowspan="2">if (A &lt; 0) H = 0xFF;</td>
+<td class="comment" rowspan="2">if (Adash &lt; 0) H = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="44631"></a>AE57</td>
@@ -471,12 +475,12 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="label"><a name="44633"></a>AE59</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
+<td class="comment">L = Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="44634"></a>AE5A</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment" rowspan="5">HL *= 32; // attribute address?</td>
+<td class="comment" rowspan="5">HL *= 32;</td>
 </tr>
 <tr>
 <td class="address"><a name="44635"></a>AE5B</td>
@@ -516,7 +520,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44645"></a>AE65</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="44646"></a>AE66</td>
@@ -526,7 +530,7 @@ Turns the screen blue and tracks the player with a spotlight.
 <tr>
 <td class="address"><a name="44649"></a>AE69</td>
 <td class="instruction">CALL <a class="link" href="44728.html">$AEB8</a></td>
-<td class="comment">searchlight();</td>
+<td class="comment">searchlight_plot();</td>
 </tr>
 <tr>
 <td class="label"><a name="44652"></a>AE6C</td>
@@ -566,9 +570,9 @@ Turns the screen blue and tracks the player with a spotlight.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

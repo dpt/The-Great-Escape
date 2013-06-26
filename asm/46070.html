@@ -35,66 +35,72 @@ Player has tried to use the shovel item.
 <tr>
 <td class="label"><a name="46070"></a>B3F6</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="3">if (indoor_room_index != room_50_blocked_tunnel) return;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46073"></a>B3F9</td>
 <td class="instruction">CP $32</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46075"></a>B3FB</td>
 <td class="instruction">RET NZ</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46076"></a>B3FC</td>
 <td class="instruction">LD A,($7077)</td>
-<td class="comment" rowspan="3">if (roomdefn_50_blockage == 255) return; // blockage already cleared</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46079"></a>B3FF</td>
 <td class="instruction">CP $FF</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46081"></a>B401</td>
 <td class="instruction">RET Z</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46082"></a>B402</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">roomdefn_50_blockage = 255;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46084"></a>B404</td>
 <td class="instruction">LD ($7077),A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46087"></a>B407</td>
 <td class="instruction">INC A</td>
-<td class="comment" rowspan="2">roomdefn_50_collapsed_tunnel_obj = 0; // remove blockage graphic</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46088"></a>B408</td>
 <td class="instruction">LD ($708C),A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46091"></a>B40B</td>
 <td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
-<td class="comment">select_room_maybe();</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46094"></a>B40E</td>
 <td class="instruction">CALL <a class="link" href="43883.html">$AB6B</a></td>
-<td class="comment">choose_game_screen_attributes();</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46097"></a>B411</td>
 <td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
-<td class="comment">plot_indoor_tiles();</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="46100"></a>B414</td>
 <td class="instruction">JP <a class="link" href="41193.html">$A0E9</a></td>
-<td class="comment">increase_morale_by_10_score_by_50(); return; // exit via</td>
+<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">
@@ -105,9 +111,9 @@ Player has tried to use the shovel item.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

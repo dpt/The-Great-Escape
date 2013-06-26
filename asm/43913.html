@@ -35,55 +35,57 @@ Used by the routine at <a class="link" href="43883.html">AB6B</a>.
 <tr>
 <td class="label"><a name="43913"></a>AB89</td>
 <td class="instruction">LD C,$02</td>
-<td class="comment">C = attribute_RED_OVER_BLACK;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43915"></a>AB8B</td>
 <td class="instruction">LD HL,($8215)</td>
-<td class="comment">HL = (items_held);</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43918"></a>AB8E</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment">A = item_TORCH;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43920"></a>AB90</td>
 <td class="instruction">CP L</td>
-<td class="comment" rowspan="2">if (L == A) goto set_attribute_from_C;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43921"></a>AB91</td>
 <td class="instruction">JR Z,<a class="link" href="43883.html#43908">$AB84</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43923"></a>AB93</td>
 <td class="instruction">CP H</td>
-<td class="comment" rowspan="2">if (H == A) goto set_attribute_from_A;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43924"></a>AB94</td>
 <td class="instruction">JR Z,<a class="link" href="43883.html#43908">$AB84</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43926"></a>AB96</td>
 <td class="instruction">CALL <a class="link" href="27175.html">$6A27</a></td>
-<td class="comment">wipe_visible_tiles();</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43929"></a>AB99</td>
 <td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
-<td class="comment">plot_indoor_tiles();</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43932"></a>AB9C</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment">A = attribute_BLUE_OVER_BLACK;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="43934"></a>AB9E</td>
 <td class="instruction">JR <a class="link" href="43883.html#43909">$AB85</a></td>
-<td class="comment">goto set_attribute_from_A;</td>
+<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">
@@ -96,7 +98,7 @@ Used by the routine at <a class="link" href="43883.html">AB6B</a>.
 <div class="footer">
 <div class="release">The incomplete The Great Escape disassembly 20130101</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

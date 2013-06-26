@@ -35,7 +35,7 @@ Silence bell.
 <tr>
 <td class="label"><a name="52120"></a>CB98</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">bell = 255;</td>
+<td class="comment" rowspan="2">bell = bell_STOP;</td>
 </tr>
 <tr>
 <td class="address"><a name="52122"></a>CB9A</td>
@@ -46,7 +46,7 @@ Silence bell.
 <a name="52125"></a>
 <div class="comments">
 <div class="paragraph">
-Discover and lose held items.
+Seize player's held items.
 </div>
 </div>
 </td>
@@ -129,7 +129,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52152"></a>CBB8</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 0x3F;</td>
+<td class="comment" rowspan="2">A = *HL &amp; itemstruct_ROOM_MASK;</td>
 </tr>
 <tr>
 <td class="address"><a name="52153"></a>CBB9</td>
@@ -138,7 +138,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52155"></a>CBBB</td>
 <td class="instruction">JR NZ,$CBDC</td>
-<td class="comment">JR NZ,$CBDC</td>
+<td class="comment">if (A == room_0_outdoors) {</td>
 </tr>
 <tr>
 <td class="address"><a name="52157"></a>CBBD</td>
@@ -191,7 +191,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52169"></a>CBC9</td>
 <td class="instruction">JR Z,$CBD5</td>
-<td class="comment">JR Z,$CBD5</td>
+<td class="comment">if (Z) goto $CBD5;</td>
 </tr>
 <tr>
 <td class="address"><a name="52171"></a>CBCB</td>
@@ -221,7 +221,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52179"></a>CBD3</td>
 <td class="instruction">JR $CBDC</td>
-<td class="comment">goto $CBDC;</td>
+<td class="comment">goto next;</td>
 </tr>
 <tr>
 <td class="label"><a name="52181"></a>CBD5</td>
@@ -246,12 +246,12 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52185"></a>CBD9</td>
 <td class="instruction">CALL <a class="link" href="52529.html">$CD31</a></td>
-<td class="comment">item_discovered();</td>
+<td class="comment">item_discovered(); }</td>
 </tr>
 <tr>
 <td class="label"><a name="52188"></a>CBDC</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">next: POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="52189"></a>CBDD</td>
@@ -307,7 +307,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52214"></a>CBF6</td>
 <td class="instruction">LD DE,$7613</td>
-<td class="comment" rowspan="4">memcpy(&amp;character_structs[0].secondbyte, &amp;reset_data, 6);</td>
+<td class="comment" rowspan="4">memcpy(&amp;character_structs[0].secondbyte, &amp;solitary_player_reset_data, 6);</td>
 </tr>
 <tr>
 <td class="address"><a name="52217"></a>CBF9</td>
@@ -351,7 +351,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52240"></a>CC10</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">morale_related = 255;</td>
+<td class="comment" rowspan="2">morale_1 = 0xFF; // inhibit user input</td>
 </tr>
 <tr>
 <td class="address"><a name="52242"></a>CC12</td>
@@ -360,7 +360,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52245"></a>CC15</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">morale_related_also = 0;</td>
+<td class="comment" rowspan="2">automatic_player_counter = 0; // immediately take automatic control of player</td>
 </tr>
 <tr>
 <td class="address"><a name="52246"></a>CC16</td>
@@ -378,7 +378,7 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52255"></a>CC1F</td>
 <td class="instruction">LD HL,$7AC6</td>
-<td class="comment">HL = &amp;byte_7AC6;</td>
+<td class="comment">HL = &amp;solitary_transition_thing;</td>
 </tr>
 <tr>
 <td class="address"><a name="52258"></a>CC22</td>
@@ -388,22 +388,21 @@ Reset all items. [unsure]
 <tr>
 <td class="address"><a name="52262"></a>CC26</td>
 <td class="instruction">LD (IY+$0E),$03</td>
-<td class="comment">IY[14] = 3;</td>
+<td class="comment">IY[14] = 3; // character faces bottom left</td>
 </tr>
 <tr>
 <td class="address"><a name="52266"></a>CC2A</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0;</td>
+<td class="comment" rowspan="2">($8002) = 0; // target location - why is this storing a byte and not a word?</td>
 </tr>
 <tr>
 <td class="address"><a name="52267"></a>CC2B</td>
 <td class="instruction">LD ($8002),A</td>
-<td class="comment">($8002) = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="52270"></a>CC2E</td>
 <td class="instruction">JP <a class="link" href="26786.html">$68A2</a></td>
-<td class="comment">sub_68A2(); return; // exit via</td>
+<td class="comment">transition(); return; // exit via</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -414,9 +413,9 @@ Reset all items. [unsure]
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

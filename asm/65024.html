@@ -61,7 +61,17 @@ Input routine for keyboard.
 <td class="comment">C = 0xFE; // port 0xXXFE</td>
 </tr>
 <tr>
-<td class="address"><a name="65029"></a>FE05</td>
+<td class="routineComment" colspan="3">
+<a name="65029"></a>
+<div class="comments">
+<div class="paragraph">
+Left/right.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">FE05</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment" rowspan="2">B = *HL++;</td>
 </tr>
@@ -90,7 +100,7 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65036"></a>FE0C</td>
 <td class="instruction">JR Z,$FE14</td>
-<td class="comment">if (A == 0) goto not_left;</td>
+<td class="comment">if (A) {</td>
 </tr>
 <tr>
 <td class="address"><a name="65038"></a>FE0E</td>
@@ -109,12 +119,12 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65042"></a>FE12</td>
 <td class="instruction">JR $FE22</td>
-<td class="comment">goto up_or_down;</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="65044"></a>FE14</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment" rowspan="2">not_left: B = *HL++;</td>
+<td class="comment" rowspan="10">else { B = *HL++; } IN A,(C) {  A = ~A &amp; *HL++; } if (A) { E = input_RIGHT; } else { E = A; }</td>
 </tr>
 <tr>
 <td class="address"><a name="65045"></a>FE15</td>
@@ -123,12 +133,10 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65046"></a>FE16</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment">IN A,(C)</td>
 </tr>
 <tr>
 <td class="address"><a name="65048"></a>FE18</td>
 <td class="instruction">CPL</td>
-<td class="comment" rowspan="3">A = ~A &amp; *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="65049"></a>FE19</td>
@@ -141,27 +149,33 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65051"></a>FE1B</td>
 <td class="instruction">JR Z,$FE21</td>
-<td class="comment">if (A == 0) goto not_right;</td>
 </tr>
 <tr>
 <td class="address"><a name="65053"></a>FE1D</td>
 <td class="instruction">LD E,$06</td>
-<td class="comment">E = input_RIGHT;</td>
 </tr>
 <tr>
 <td class="address"><a name="65055"></a>FE1F</td>
 <td class="instruction">JR $FE22</td>
-<td class="comment">goto up_or_down;</td>
 </tr>
 <tr>
 <td class="label"><a name="65057"></a>FE21</td>
 <td class="instruction">LD E,A</td>
-<td class="comment">not_right: E = A;</td>
 </tr>
 <tr>
-<td class="label"><a name="65058"></a>FE22</td>
+<td class="routineComment" colspan="3">
+<a name="65058"></a>
+<div class="comments">
+<div class="paragraph">
+Up/down.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">FE22</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment" rowspan="2">up_or_down: B = *HL++;</td>
+<td class="comment" rowspan="2">B = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="65059"></a>FE23</td>
@@ -188,7 +202,7 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65065"></a>FE29</td>
 <td class="instruction">JR Z,$FE30</td>
-<td class="comment">if (A == 0) goto not_up;</td>
+<td class="comment">if (A) {</td>
 </tr>
 <tr>
 <td class="address"><a name="65067"></a>FE2B</td>
@@ -207,12 +221,12 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65070"></a>FE2E</td>
 <td class="instruction">JR $FE3B</td>
-<td class="comment">goto fire;</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="65072"></a>FE30</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment" rowspan="2">not_up: B = *HL++;</td>
+<td class="comment" rowspan="9">else { B = *HL++; } IN A,(C) {  A = ~A &amp; *HL++; } if (A) { {    E += input_DOWN; } }</td>
 </tr>
 <tr>
 <td class="address"><a name="65073"></a>FE31</td>
@@ -221,12 +235,10 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65074"></a>FE32</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment">IN A,(C)</td>
 </tr>
 <tr>
 <td class="address"><a name="65076"></a>FE34</td>
 <td class="instruction">CPL</td>
-<td class="comment" rowspan="3">A = ~A &amp; *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="65077"></a>FE35</td>
@@ -239,21 +251,29 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65079"></a>FE37</td>
 <td class="instruction">JR Z,$FE3B</td>
-<td class="comment">if (A == 0) goto fire;</td>
 </tr>
 <tr>
 <td class="address"><a name="65081"></a>FE39</td>
 <td class="instruction">INC E</td>
-<td class="comment" rowspan="2">E += input_DOWN;</td>
 </tr>
 <tr>
 <td class="address"><a name="65082"></a>FE3A</td>
 <td class="instruction">INC E</td>
 </tr>
 <tr>
-<td class="label"><a name="65083"></a>FE3B</td>
+<td class="routineComment" colspan="3">
+<a name="65083"></a>
+<div class="comments">
+<div class="paragraph">
+Fire.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">FE3B</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment" rowspan="2">fire: B = *HL++;</td>
+<td class="comment" rowspan="2">B = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="65084"></a>FE3C</td>
@@ -285,7 +305,7 @@ Input routine for keyboard.
 <tr>
 <td class="address"><a name="65091"></a>FE43</td>
 <td class="instruction">RET Z</td>
-<td class="comment">if (A == 0) return;</td>
+<td class="comment">if (A)</td>
 </tr>
 <tr>
 <td class="address"><a name="65092"></a>FE44</td>
@@ -306,9 +326,9 @@ Input routine for keyboard.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

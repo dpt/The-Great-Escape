@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 68F4</title>
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="26786.html">68A2</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#26868">Map</a></td>
+<td class="next">Next: <a class="link" href="26906.html">691A</a></td>
+</tr>
+</table>
+<div class="description">68F4: enter_room</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="link" href="40312.html">9D78</a>, <a class="link" href="40421.html">9DE5</a> and <a class="link" href="46938.html">B75A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="26868"></a>68F4</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment" rowspan="2">plot_game_screen_x = 0;</td>
+</tr>
+<tr>
+<td class="address"><a name="26871"></a>68F7</td>
+<td class="instruction">LD ($A7C7),HL</td>
+</tr>
+<tr>
+<td class="address"><a name="26874"></a>68FA</td>
+<td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
+<td class="comment">setup_room();</td>
+</tr>
+<tr>
+<td class="address"><a name="26877"></a>68FD</td>
+<td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
+<td class="comment">plot_indoor_tiles();</td>
+</tr>
+<tr>
+<td class="address"><a name="26880"></a>6900</td>
+<td class="instruction">LD HL,$EA74</td>
+<td class="comment" rowspan="2">map_position = 0xEA74;</td>
+</tr>
+<tr>
+<td class="address"><a name="26883"></a>6903</td>
+<td class="instruction">LD ($81BB),HL</td>
+</tr>
+<tr>
+<td class="address"><a name="26886"></a>6906</td>
+<td class="instruction">CALL <a class="link" href="26912.html">$6920</a></td>
+<td class="comment">changed_room();</td>
+</tr>
+<tr>
+<td class="routineComment" colspan="3">
+<a name="26889"></a>
+<div class="comments">
+<div class="paragraph">
+This assignment to HL is redundant: reset_something sets HL to $8000 as its first instruction.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">6909</td>
+<td class="instruction">LD HL,$8000</td>
+<td class="comment">HL = $8000;</td>
+</tr>
+<tr>
+<td class="address"><a name="26892"></a>690C</td>
+<td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
+<td class="comment">reset_something();</td>
+</tr>
+<tr>
+<td class="address"><a name="26895"></a>690F</td>
+<td class="instruction">CALL <a class="link" href="26937.html">$6939</a></td>
+<td class="comment">setup_movable_items();</td>
+</tr>
+<tr>
+<td class="address"><a name="26898"></a>6912</td>
+<td class="instruction">CALL <a class="link" href="43936.html">$ABA0</a></td>
+<td class="comment">zoombox();</td>
+</tr>
+<tr>
+<td class="address"><a name="26901"></a>6915</td>
+<td class="instruction">LD B,$01</td>
+<td class="comment" rowspan="2">increase_score(1);</td>
+</tr>
+<tr>
+<td class="address"><a name="26903"></a>6917</td>
+<td class="instruction">CALL <a class="link" href="41209.html">$A0F9</a></td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="26786.html">68A2</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#26868">Map</a></td>
+<td class="next">Next: <a class="link" href="26906.html">691A</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+</div>
+</body>
+</html>

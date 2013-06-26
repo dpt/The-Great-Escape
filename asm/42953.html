@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="43018.html">A80A</a></td>
 </tr>
 </table>
-<div class="description">A7C9: sub_A7C9</div>
+<div class="description">A7C9: get_supertiles</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-resetish
+Pulls supertiles out of the map.
 </div>
 </div>
 </td>
@@ -35,16 +35,26 @@ resetish
 <tr>
 <td class="label"><a name="42953"></a>A7C9</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment" rowspan="2">A = map_position_maybe[1] &amp; 0xFC;</td>
+<td class="comment" rowspan="2">A = (map_position &gt;&gt; 8) &amp; 0xFC; // A = 0,4,8,12,...</td>
 </tr>
 <tr>
 <td class="address"><a name="42956"></a>A7CC</td>
 <td class="instruction">AND $FC</td>
 </tr>
 <tr>
-<td class="address"><a name="42958"></a>A7CE</td>
+<td class="routineComment" colspan="3">
+<a name="42958"></a>
+<div class="comments">
+<div class="paragraph">
+Get vertical offset. Multiply A by 13.5. (A is a multiple of 4, so this goes 0,54,108,162...)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">A7CE</td>
 <td class="instruction">LD L,A</td>
-<td class="comment" rowspan="2">HL = A;</td>
+<td class="comment" rowspan="16">HL = $BCB8 + (A + (A &gt;&gt; 1)) * 9; // $BCB8 is &amp;map_tiles[0] - 54 so it must be skipping the first row.</td>
 </tr>
 <tr>
 <td class="address"><a name="42959"></a>A7CF</td>
@@ -53,17 +63,14 @@ resetish
 <tr>
 <td class="address"><a name="42961"></a>A7D1</td>
 <td class="instruction">RRA</td>
-<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="42962"></a>A7D2</td>
 <td class="instruction">AND $7F</td>
-<td class="comment">A &amp;= 0x7F;</td>
 </tr>
 <tr>
 <td class="address"><a name="42964"></a>A7D4</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment" rowspan="4">HL += A;</td>
 </tr>
 <tr>
 <td class="address"><a name="42965"></a>A7D5</td>
@@ -80,7 +87,6 @@ resetish
 <tr>
 <td class="label"><a name="42969"></a>A7D9</td>
 <td class="instruction">LD E,L</td>
-<td class="comment" rowspan="6">HL *= 9;</td>
 </tr>
 <tr>
 <td class="address"><a name="42970"></a>A7DA</td>
@@ -105,37 +111,31 @@ resetish
 <tr>
 <td class="address"><a name="42975"></a>A7DF</td>
 <td class="instruction">LD DE,$BCB8</td>
-<td class="comment">DE = $BCB8; // &amp;map_tiles[0] - some_amount</td>
 </tr>
 <tr>
 <td class="address"><a name="42978"></a>A7E2</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="42979"></a>A7E3</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="comment">A = map_position_maybe;</td>
+<td class="comment" rowspan="7">HL += (map_position &amp; 0xFF) &gt;&gt; 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="42982"></a>A7E6</td>
 <td class="instruction">RRA</td>
-<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="42983"></a>A7E7</td>
 <td class="instruction">RRA</td>
-<td class="comment">RRA</td>
 </tr>
 <tr>
 <td class="address"><a name="42984"></a>A7E8</td>
 <td class="instruction">AND $3F</td>
-<td class="comment">A &amp;= 0x3F;</td>
 </tr>
 <tr>
 <td class="address"><a name="42986"></a>A7EA</td>
 <td class="instruction">LD E,A</td>
-<td class="comment" rowspan="2">DE = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="42987"></a>A7EB</td>
@@ -144,12 +144,21 @@ resetish
 <tr>
 <td class="address"><a name="42989"></a>A7ED</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += DE;</td>
 </tr>
 <tr>
-<td class="address"><a name="42990"></a>A7EE</td>
+<td class="routineComment" colspan="3">
+<a name="42990"></a>
+<div class="comments">
+<div class="paragraph">
+Populate $FF58 with 7x5 array of supertile refs.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">A7EE</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment">A = 5;</td>
+<td class="comment">A = 5; // 5 iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="42992"></a>A7F0</td>
@@ -159,42 +168,35 @@ resetish
 <tr>
 <td class="label"><a name="42995"></a>A7F3</td>
 <td class="instruction">LDI</td>
-<td class="comment">do { LDI</td>
+<td class="comment" rowspan="11">do { memcpy(DE, HL, 7); DE += 7; } {  HL += 54; // stride - width of map } {} while (--A);</td>
 </tr>
 <tr>
 <td class="address"><a name="42997"></a>A7F5</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="42999"></a>A7F7</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="43001"></a>A7F9</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="43003"></a>A7FB</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="43005"></a>A7FD</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="43007"></a>A7FF</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI</td>
 </tr>
 <tr>
 <td class="address"><a name="43009"></a>A801</td>
 <td class="instruction">LD BC,$002F</td>
-<td class="comment" rowspan="2">HL += 0x2F;</td>
 </tr>
 <tr>
 <td class="address"><a name="43012"></a>A804</td>
@@ -203,12 +205,10 @@ resetish
 <tr>
 <td class="address"><a name="43013"></a>A805</td>
 <td class="instruction">DEC A</td>
-<td class="comment">} while (--A);</td>
 </tr>
 <tr>
 <td class="address"><a name="43014"></a>A806</td>
 <td class="instruction">JP NZ,$A7F3</td>
-<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="43017"></a>A809</td>
@@ -224,9 +224,9 @@ resetish
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

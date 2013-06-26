@@ -30,6 +30,12 @@
 Used by the routine at <a class="link" href="51142.html">C7C6</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Character.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -45,7 +51,7 @@ Used by the routine at <a class="link" href="51142.html">C7C6</a>.
 <tr>
 <td class="address"><a name="42018"></a>A422</td>
 <td class="instruction">SUB $12</td>
-<td class="comment">A -= character_18_prisoner;</td>
+<td class="comment">A -= character_18_prisoner; // first three characters</td>
 </tr>
 <tr>
 <td class="address"><a name="42020"></a>A424</td>
@@ -55,7 +61,7 @@ Used by the routine at <a class="link" href="51142.html">C7C6</a>.
 <tr>
 <td class="address"><a name="42023"></a>A427</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="2">if (A &lt; 3) goto poke_object; // first three characters</td>
+<td class="comment" rowspan="4">if (A &gt;= 3) { // second three characters } HL = &amp;room23_breakfast.bench_A; A -= 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="42025"></a>A429</td>
@@ -64,16 +70,25 @@ Used by the routine at <a class="link" href="51142.html">C7C6</a>.
 <tr>
 <td class="address"><a name="42027"></a>A42B</td>
 <td class="instruction">LD HL,$6F17</td>
-<td class="comment" rowspan="2">HL = &amp;room23_breakfast.bench_A;</td>
 </tr>
 <tr>
 <td class="address"><a name="42030"></a>A42E</td>
 <td class="instruction">SUB $03</td>
 </tr>
 <tr>
-<td class="label"><a name="42032"></a>A430</td>
+<td class="routineComment" colspan="3">
+<a name="42032"></a>
+<div class="comments">
+<div class="paragraph">
+Poke object.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">A430</td>
 <td class="instruction">LD C,A</td>
-<td class="comment" rowspan="6">poke_object: HL += A * 3;</td>
+<td class="comment" rowspan="6">HL += A * 3;</td>
 </tr>
 <tr>
 <td class="address"><a name="42033"></a>A431</td>
@@ -108,27 +123,25 @@ Used by the routine at <a class="link" href="51142.html">C7C6</a>.
 <tr>
 <td class="address"><a name="42042"></a>A43A</td>
 <td class="instruction">LD C,$19</td>
-<td class="comment">C = 25;</td>
+<td class="comment">C = room25_breakfast;</td>
 </tr>
 <tr>
 <td class="address"><a name="42044"></a>A43C</td>
 <td class="instruction">CP $15</td>
-<td class="comment">CP 21</td>
+<td class="comment" rowspan="3">if (A &gt;= character_21_prisoner) C = room24_breakfast;</td>
 </tr>
 <tr>
 <td class="address"><a name="42046"></a>A43E</td>
 <td class="instruction">JR C,$A462</td>
-<td class="comment">JR C,$A462</td>
 </tr>
 <tr>
 <td class="address"><a name="42048"></a>A440</td>
 <td class="instruction">LD C,$17</td>
-<td class="comment">C = 23;</td>
 </tr>
 <tr>
 <td class="address"><a name="42050"></a>A442</td>
 <td class="instruction">JR $A462</td>
-<td class="comment">goto $A462;</td>
+<td class="comment">goto character_sit_sleep_common;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -162,7 +175,7 @@ character_sleeps
 <tr>
 <td class="address"><a name="42057"></a>A449</td>
 <td class="instruction">LD C,A</td>
-<td class="comment" rowspan="4">HL = &amp;beds[A];</td>
+<td class="comment" rowspan="4">HL = &amp;beds[A];  // BC = beds[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="42058"></a>A44A</td>
@@ -193,12 +206,11 @@ character_sleeps
 <tr>
 <td class="address"><a name="42067"></a>A453</td>
 <td class="instruction">LD A,$17</td>
-<td class="comment">A = 23;</td>
+<td class="comment" rowspan="2">*BC = interiorobject_OCCUPIED_BED;</td>
 </tr>
 <tr>
 <td class="address"><a name="42069"></a>A455</td>
 <td class="instruction">LD (BC),A</td>
-<td class="comment">*BC = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="42070"></a>A456</td>
@@ -208,7 +220,7 @@ character_sleeps
 <tr>
 <td class="address"><a name="42071"></a>A457</td>
 <td class="instruction">CP $0A</td>
-<td class="comment" rowspan="5">if (A &lt; 10) } C = 3; } else { C = 5;</td>
+<td class="comment" rowspan="3">if (A &lt; character_10_prisoner) } C = room3_hut2_right;</td>
 </tr>
 <tr>
 <td class="address"><a name="42073"></a>A459</td>
@@ -221,10 +233,12 @@ character_sleeps
 <tr>
 <td class="address"><a name="42078"></a>A45E</td>
 <td class="instruction">JR $A462</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="42080"></a>A460</td>
 <td class="instruction">LD C,$05</td>
+<td class="comment">C = room5_hut3_right; }</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -244,7 +258,7 @@ character_sleeps
 <tr>
 <td class="address"><a name="42083"></a>A463</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment">*HL = 0;</td>
+<td class="comment">*HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)</td>
 </tr>
 <tr>
 <td class="address"><a name="42085"></a>A465</td>
@@ -254,12 +268,11 @@ character_sleeps
 <tr>
 <td class="address"><a name="42086"></a>A466</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment" rowspan="9">if (indoor_room_index != C) } {  HL -= 4; } *HL = 255; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="42089"></a>A469</td>
 <td class="instruction">CP C</td>
-<td class="comment" rowspan="2">if (A == C) goto A473; // force a refresh</td>
 </tr>
 <tr>
 <td class="address"><a name="42090"></a>A46A</td>
@@ -268,7 +281,6 @@ character_sleeps
 <tr>
 <td class="address"><a name="42092"></a>A46C</td>
 <td class="instruction">DEC HL</td>
-<td class="comment" rowspan="4">HL -= 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="42093"></a>A46D</td>
@@ -285,15 +297,23 @@ character_sleeps
 <tr>
 <td class="address"><a name="42096"></a>A470</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment">*HL = 255;</td>
 </tr>
 <tr>
 <td class="address"><a name="42098"></a>A472</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
-<td class="label"><a name="42099"></a>A473</td>
+<td class="routineComment" colspan="3">
+<a name="42099"></a>
+<div class="comments">
+<div class="paragraph">
+Force a refresh.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">A473</td>
 <td class="instruction">LD A,L</td>
 <td class="comment" rowspan="3">HL += 26;</td>
 </tr>
@@ -323,7 +343,7 @@ This entry point is used by the routine at <a class="link" href="42121.html">A48
 <tr>
 <td class="label">A479</td>
 <td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
-<td class="comment">select_room_and_plot: select_room_maybe();</td>
+<td class="comment">select_room_and_plot: setup_room();</td>
 </tr>
 <tr>
 <td class="address"><a name="42108"></a>A47C</td>
@@ -339,9 +359,9 @@ This entry point is used by the routine at <a class="link" href="42121.html">A48
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

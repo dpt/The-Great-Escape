@@ -77,7 +77,7 @@ This entry point is used by the routine at <a class="link" href="42195.html">A4D
 <tr>
 <td class="address"><a name="42215"></a>A4E7</td>
 <td class="instruction">CP $13</td>
-<td class="comment" rowspan="9">if (A &gt; 19) { // change this to 20 and character_21? stands in place of a guard } newA = A - 2; // seems to affect position at table } else { ... moved below ... newA = 24; // interleaved // guard character? {if (A &amp; (1&lt;&lt;0)) newA++; }</td>
+<td class="comment" rowspan="4">if (A &gt; 19) { // change this to 20 and character_21? stands in place of a guard } newA = A - 2; } // seems to affect position at table</td>
 </tr>
 <tr>
 <td class="address"><a name="42217"></a>A4E9</td>
@@ -94,22 +94,27 @@ This entry point is used by the routine at <a class="link" href="42195.html">A4D
 <tr>
 <td class="address"><a name="42225"></a>A4F1</td>
 <td class="instruction">JR $A4FA</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="42227"></a>A4F3</td>
 <td class="instruction">BIT 0,A</td>
+<td class="comment">... moved below ...</td>
 </tr>
 <tr>
 <td class="address"><a name="42229"></a>A4F5</td>
 <td class="instruction">LD A,$18</td>
+<td class="comment">newA = 24; // interleaved // guard character?</td>
 </tr>
 <tr>
 <td class="address"><a name="42231"></a>A4F7</td>
 <td class="instruction">JR Z,$A4FA</td>
+<td class="comment">if (A &amp; (1&lt;&lt;0)) newA++;</td>
 </tr>
 <tr>
 <td class="address"><a name="42233"></a>A4F9</td>
 <td class="instruction">INC A</td>
+<td class="comment">}</td>
 </tr>
 <tr>
 <td class="label"><a name="42234"></a>A4FA</td>
@@ -134,9 +139,9 @@ This entry point is used by the routine at <a class="link" href="42195.html">A4D
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

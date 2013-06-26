@@ -69,7 +69,7 @@ Check for 'game cancel' keypress.
 <tr>
 <td class="address"><a name="40436"></a>9DF4</td>
 <td class="instruction">CALL <a class="link" href="42251.html">$A50B</a></td>
-<td class="comment" rowspan="3">screen_reset_perhaps(); user_confirm(); if (confirmed) looks_like_a_reset_fn();</td>
+<td class="comment" rowspan="3">screen_reset(); user_confirm(); if (confirmed) looks_like_a_reset_fn();</td>
 </tr>
 <tr>
 <td class="address"><a name="40439"></a>9DF7</td>
@@ -82,7 +82,7 @@ Check for 'game cancel' keypress.
 <tr>
 <td class="address"><a name="40445"></a>9DFD</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">if (indoor_room_index == 0) loc_B2FC(); else some_sort_of_initial_setup_maybe(); // exit via</td>
+<td class="comment" rowspan="4">if (indoor_room_index == 0) loc_B2FC(); else goto enter_room; // exit via (jumps to main_loop)</td>
 </tr>
 <tr>
 <td class="address"><a name="40448"></a>9E00</td>
@@ -94,7 +94,7 @@ Check for 'game cancel' keypress.
 </tr>
 <tr>
 <td class="address"><a name="40452"></a>9E04</td>
-<td class="instruction">JP <a class="link" href="26786.html#26868">$68F4</a></td>
+<td class="instruction">JP <a class="link" href="26868.html">$68F4</a></td>
 </tr>
 </table>
 <table class="prevNext">
@@ -105,9 +105,9 @@ Check for 'game cancel' keypress.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

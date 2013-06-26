@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="51142.html">C7C6</a>.
+Gets hit when player enters hut at end of day.
 </div>
 </div>
 </td>
@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="51142.html">C7C6</a>.
 <tr>
 <td class="label"><a name="41976"></a>A3F8</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment">A = [IY];</td>
+<td class="comment">A = IY[0];  // IY=$8000</td>
 </tr>
 <tr>
 <td class="address"><a name="41979"></a>A3FB</td>
@@ -67,7 +67,7 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 <tr>
 <td class="label">A404</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">*++HL = 0;</td>
+<td class="comment" rowspan="2">*++HL = 0; // HL=$766B,$7672 charstruct + 5 (charstruct + 6 when zeroed)</td>
 </tr>
 <tr>
 <td class="address"><a name="41989"></a>A405</td>
@@ -76,7 +76,7 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 <tr>
 <td class="address"><a name="41991"></a>A407</td>
 <td class="instruction">CP $13</td>
-<td class="comment" rowspan="3">if (A &lt;= 19) goto $A413;</td>
+<td class="comment" rowspan="4">if (A &gt; 19) } A -= 13; } // 20.. =&gt; 7..</td>
 </tr>
 <tr>
 <td class="address"><a name="41993"></a>A409</td>
@@ -89,42 +89,37 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 <tr>
 <td class="address"><a name="41999"></a>A40F</td>
 <td class="instruction">SUB $0D</td>
-<td class="comment">A -= 13;</td>
 </tr>
 <tr>
 <td class="address"><a name="42001"></a>A411</td>
 <td class="instruction">JR $A41D</td>
-<td class="comment">goto $A41D;</td>
+<td class="comment">else {</td>
 </tr>
 <tr>
 <td class="label"><a name="42003"></a>A413</td>
 <td class="instruction">BIT 0,A</td>
-<td class="comment">BIT 0,A  // if (A &amp; (1&lt;&lt;0)) ...</td>
+<td class="comment" rowspan="5">tmp_A = A; A = 13; if (tmp_A &amp; (1&lt;&lt;0)) { // tmp introduced to avoid interleaving } *HL = 1; // HL=$7681,$7673 // characterstruct_N + 6 A |= 0x80; }</td>
 </tr>
 <tr>
 <td class="address"><a name="42005"></a>A415</td>
 <td class="instruction">LD A,$0D</td>
-<td class="comment">A = 13;</td>
 </tr>
 <tr>
 <td class="address"><a name="42007"></a>A417</td>
 <td class="instruction">JR Z,$A41D</td>
-<td class="comment">JR Z,$A41D  // goto A41D;</td>
 </tr>
 <tr>
 <td class="address"><a name="42009"></a>A419</td>
 <td class="instruction">LD (HL),$01</td>
-<td class="comment">*HL = 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="42011"></a>A41B</td>
 <td class="instruction">OR $80</td>
-<td class="comment">A |= 0x80;</td>
 </tr>
 <tr>
 <td class="label"><a name="42013"></a>A41D</td>
 <td class="instruction">DEC HL</td>
-<td class="comment" rowspan="2">*--HL = A;</td>
+<td class="comment" rowspan="2">*--HL = A; // characterstruct_N + 5</td>
 </tr>
 <tr>
 <td class="address"><a name="42014"></a>A41E</td>
@@ -144,9 +139,9 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

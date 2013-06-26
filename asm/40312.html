@@ -27,22 +27,22 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="61795.html">F163</a>.
+There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single caller might just as well goto enter_room instead of goto main_loop_setup.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="40312"></a>9D78</td>
-<td class="instruction">CALL <a class="link" href="26786.html#26868">$68F4</a></td>
-<td class="comment">some_sort_of_initial_setup_maybe();</td>
+<td class="instruction">CALL <a class="link" href="26868.html">$68F4</a></td>
+<td class="comment">enter_room(); // returns by goto main_loop</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
 <a name="40315"></a>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a class="link" href="26786.html">68A2</a>.
+This entry point is used by the routine at <a class="link" href="26906.html">691A</a>.
 </div>
 </div>
 </td>
@@ -85,7 +85,7 @@ This entry point is used by the routine at <a class="link" href="26786.html">68A
 <tr>
 <td class="address"><a name="40336"></a>9D90</td>
 <td class="instruction">CALL <a class="link" href="51346.html">$C892</a></td>
-<td class="comment">called_from_main_loop_5(); // [unknown]</td>
+<td class="comment">follow_suspicious_player();</td>
 </tr>
 <tr>
 <td class="address"><a name="40339"></a>9D93</td>
@@ -100,7 +100,7 @@ This entry point is used by the routine at <a class="link" href="26786.html">68A
 <tr>
 <td class="address"><a name="40345"></a>9D99</td>
 <td class="instruction">CALL <a class="link" href="56222.html">$DB9E</a></td>
-<td class="comment">called_from_main_loop_8(); // [unknown]</td>
+<td class="comment">mark_nearby_items();</td>
 </tr>
 <tr>
 <td class="address"><a name="40348"></a>9D9C</td>
@@ -130,7 +130,7 @@ This entry point is used by the routine at <a class="link" href="26786.html">68A
 <tr>
 <td class="address"><a name="40363"></a>9DAB</td>
 <td class="instruction">CALL <a class="link" href="47206.html">$B866</a></td>
-<td class="comment">called_from_main_loop_11(); // [unknown]</td>
+<td class="comment">searchlight();</td>
 </tr>
 <tr>
 <td class="address"><a name="40366"></a>9DAE</td>
@@ -200,9 +200,9 @@ This entry point is used by the routine at <a class="link" href="26786.html">68A
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

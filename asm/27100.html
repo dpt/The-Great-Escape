@@ -94,22 +94,22 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="address"><a name="27121"></a>69F1</td>
 <td class="instruction">LD HL,$78D6</td>
-<td class="comment">HL' = &amp;door_positions[0];</td>
+<td class="comment">HLdash = &amp;door_positions[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="27124"></a>69F4</td>
 <td class="instruction">LD B,$7C</td>
-<td class="comment">B' = 124; // length of (door_positions)</td>
+<td class="comment">Bdash = 124; // length of (door_positions)</td>
 </tr>
 <tr>
 <td class="address"><a name="27126"></a>69F6</td>
 <td class="instruction">LD DE,$0004</td>
-<td class="comment">DE' = 4; // stride</td>
+<td class="comment">DEdash = 4; // stride</td>
 </tr>
 <tr>
 <td class="label"><a name="27129"></a>69F9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="17">do { if (*HL' &amp; 0xFC == B) } {*DE++ = C ^ 0x80; } } {C ^= 0x80; } {if (C &gt;= 0) C++; // increment every two stops? } HL' += DE'; while (--B');</td>
+<td class="comment" rowspan="17">do { if (*HLdash &amp; 0xFC == B) } {    *DE++ = C ^ 0x80; } } {  C ^= 0x80; } {  if (C &gt;= 0) C++; // increment every two stops? } HLdash += DEdash; while (--Bdash);</td>
 </tr>
 <tr>
 <td class="address"><a name="27130"></a>69FA</td>
@@ -189,9 +189,9 @@ Wipe $81D6..$81D9 with 0xFF.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

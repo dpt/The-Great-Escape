@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Locks user out until wire is snipped.
+Locks player out until wire is snipped.
 </div>
 </div>
 </td>
@@ -48,7 +48,7 @@ Locks user out until wire is snipped.
 <tr>
 <td class="address"><a name="40633"></a>9EB9</td>
 <td class="instruction">JR Z,$9ED0</td>
-<td class="comment">if (A == 0) goto wire_successfully_snipped;</td>
+<td class="comment">if (A) {</td>
 </tr>
 <tr>
 <td class="address"><a name="40635"></a>9EBB</td>
@@ -62,7 +62,7 @@ Locks user out until wire is snipped.
 <tr>
 <td class="address"><a name="40638"></a>9EBE</td>
 <td class="instruction">LD A,($800E)</td>
-<td class="comment" rowspan="9">$800D = table_9EE0[$800E &amp; 3];</td>
+<td class="comment" rowspan="9">$800D = table_9EE0[$800E &amp; 3]; // new direction?</td>
 </tr>
 <tr>
 <td class="address"><a name="40641"></a>9EC1</td>
@@ -99,12 +99,12 @@ Locks user out until wire is snipped.
 <tr>
 <td class="address"><a name="40655"></a>9ECF</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">return; }</td>
 </tr>
 <tr>
 <td class="label"><a name="40656"></a>9ED0</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment" rowspan="3">wire_successfully_snipped: $800E = A &amp; 3; // walk/crawl flag?</td>
+<td class="comment" rowspan="8">else { $800E = A &amp; 3; // walk/crawl flag? } {  $800D = 0x80; } {  $8013 = 24; // set vertical offset } goto clear_lockpick_wirecut_flags_and_return;</td>
 </tr>
 <tr>
 <td class="address"><a name="40659"></a>9ED3</td>
@@ -117,7 +117,6 @@ Locks user out until wire is snipped.
 <tr>
 <td class="address"><a name="40662"></a>9ED6</td>
 <td class="instruction">DEC L</td>
-<td class="comment" rowspan="2">$800D = 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="40663"></a>9ED7</td>
@@ -126,7 +125,6 @@ Locks user out until wire is snipped.
 <tr>
 <td class="address"><a name="40665"></a>9ED9</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment" rowspan="2">$8013 = 24; // set vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="40667"></a>9EDB</td>
@@ -135,7 +133,6 @@ Locks user out until wire is snipped.
 <tr>
 <td class="address"><a name="40670"></a>9EDE</td>
 <td class="instruction">JR <a class="link" href="40600.html#40618">$9EAA</a></td>
-<td class="comment">goto clear_lockpick_wirecut_flags_and_return;</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -146,9 +143,9 @@ Locks user out until wire is snipped.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

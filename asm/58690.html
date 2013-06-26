@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="58704.html">E550</a></td>
 </tr>
 </table>
-<div class="description">E542: divide_3xAC_by_8_with_rounding</div>
+<div class="description">E542: divide_array_by_8_with_rounding</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -50,7 +50,7 @@ Divides 3 words by 8 with rounding to nearest.
 <tr>
 <td class="label"><a name="58692"></a>E544</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="8">do { A = *HL++; } C = *HL++; divide_AC_by_8_with_rounding(); {*DE++ = A; } while (--B);</td>
+<td class="comment" rowspan="8">do { A = *HL++; } C = *HL++; divide_by_8_with_rounding(C,A); {  *DE++ = A; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="58693"></a>E545</td>
@@ -94,9 +94,9 @@ Divides 3 words by 8 with rounding to nearest.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="41698.html">A2E2</a></td>
 </tr>
 </table>
-<div class="description">A289: sub_A289</div>
+<div class="description">A289: wake_up</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -193,7 +193,7 @@ Update all the bed objects to be empty.
 <a name="41670"></a>
 <div class="comments">
 <div class="paragraph">
-7 iterations BUT only six beds in the data structure. Likely bug resulting in write to $1A42.
+Bug: 7 iterations BUT only six beds in the data structure resulting in write to ROM location $1A42.
 </div>
 </div>
 </td>
@@ -206,7 +206,7 @@ Update all the bed objects to be empty.
 <tr>
 <td class="label"><a name="41672"></a>A2C8</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="6">do { E = *HL++; } {D = *HL++; } *DE = A; while (--B);</td>
+<td class="comment" rowspan="6">do { E = *HL++; } {  D = *HL++; } *DE = A; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="41673"></a>A2C9</td>
@@ -255,7 +255,7 @@ Update the player's bed object to be empty.
 <tr>
 <td class="address"><a name="41686"></a>A2D6</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="4">if (A == 0 || A &gt;= room_6_corridor) return;</td>
+<td class="comment" rowspan="4">if (A == room_0_outdoors || A &gt;= room_6_corridor) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41687"></a>A2D7</td>
@@ -272,7 +272,7 @@ Update the player's bed object to be empty.
 <tr>
 <td class="address"><a name="41691"></a>A2DB</td>
 <td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
-<td class="comment">select_room_maybe();</td>
+<td class="comment">setup_room();</td>
 </tr>
 <tr>
 <td class="address"><a name="41694"></a>A2DE</td>
@@ -293,9 +293,9 @@ Update the player's bed object to be empty.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

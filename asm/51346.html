@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="51480.html">C918</a></td>
 </tr>
 </table>
-<div class="description">C892: called_from_main_loop_5</div>
+<div class="description">C892: follow_suspicious_player</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Causes characters to follow the player if they're being suspicious. Poisoned food handling.
 </div>
 </div>
 </td>
@@ -35,257 +35,322 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <tr>
 <td class="label"><a name="51346"></a>C892</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">Clear byte_A13E.</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51347"></a>C893</td>
 <td class="instruction">LD ($A13E),A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51350"></a>C896</td>
 <td class="instruction">LD A,($A130)</td>
-<td class="comment" rowspan="3">if (bell) sub_CCAB();</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51353"></a>C899</td>
 <td class="instruction">AND A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51354"></a>C89A</td>
 <td class="instruction">CALL Z,<a class="link" href="52395.html">$CCAB</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51357"></a>C89D</td>
 <td class="instruction">LD HL,$C891</td>
-<td class="comment" rowspan="4">if (byte_C891 == 0) goto loc_C8B1;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51360"></a>C8A0</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51361"></a>C8A1</td>
 <td class="instruction">AND A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51362"></a>C8A2</td>
 <td class="instruction">JR Z,$C8B1</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51364"></a>C8A4</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment" rowspan="2">if (--byte_C891 == 0) goto loc_C8B1;</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51365"></a>C8A5</td>
 <td class="instruction">JR NZ,$C8B1</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51367"></a>C8A7</td>
 <td class="instruction">LD HL,$76F9</td>
-<td class="comment">(wipe a flag bit in character data?)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51370"></a>C8AA</td>
 <td class="instruction">RES 5,(HL)</td>
-<td class="comment" rowspan="3">(something gets discovered)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51372"></a>C8AC</td>
 <td class="instruction">LD C,$07</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51374"></a>C8AE</td>
 <td class="instruction">CALL <a class="link" href="52529.html">$CD31</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51377"></a>C8B1</td>
 <td class="instruction">LD IY,$8020</td>
-<td class="comment" rowspan="47">...</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51381"></a>C8B5</td>
 <td class="instruction">LD B,$07</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51383"></a>C8B7</td>
 <td class="instruction">PUSH BC</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51384"></a>C8B8</td>
 <td class="instruction">LD A,(IY+$01)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51387"></a>C8BB</td>
 <td class="instruction">CP $FF</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51389"></a>C8BD</td>
 <td class="instruction">JP Z,$C8F4</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51392"></a>C8C0</td>
 <td class="instruction">LD A,(IY+$00)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51395"></a>C8C3</td>
 <td class="instruction">AND $1F</td>
+<td class="transparentComment" />
 </tr>
 <tr>
-<td class="address"><a name="51397"></a>C8C5</td>
+<td class="routineComment" colspan="3">
+<a name="51397"></a>
+<div class="comments">
+<div class="paragraph">
+Change '20' here to a higher number and prisoners will start following the player too. The character numbers I've defined earlier and the ones used here (and observed) elsewhere are a different set where &lt; 20 is a guard.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C8C5</td>
 <td class="instruction">CP $14</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51399"></a>C8C7</td>
 <td class="instruction">JP NC,$C8F1</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51402"></a>C8CA</td>
 <td class="instruction">PUSH AF</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51403"></a>C8CB</td>
 <td class="instruction">CALL <a class="link" href="52429.html">$CCCD</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51406"></a>C8CE</td>
 <td class="instruction">LD A,($A138)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51409"></a>C8D1</td>
 <td class="instruction">AND A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51410"></a>C8D2</td>
 <td class="instruction">JR NZ,$C8D8</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51412"></a>C8D4</td>
 <td class="instruction">LD A,($A139)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51415"></a>C8D7</td>
 <td class="instruction">AND A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51416"></a>C8D8</td>
 <td class="instruction">CALL NZ,<a class="link" href="52279.html">$CC37</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51419"></a>C8DB</td>
 <td class="instruction">POP AF</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51420"></a>C8DC</td>
 <td class="instruction">CP $0F</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51422"></a>C8DE</td>
 <td class="instruction">JP Z,$C8F1</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51425"></a>C8E1</td>
 <td class="instruction">JP C,$C8F1</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51428"></a>C8E4</td>
 <td class="instruction">PUSH IY</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51430"></a>C8E6</td>
 <td class="instruction">POP HL</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51431"></a>C8E7</td>
 <td class="instruction">INC L</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51432"></a>C8E8</td>
 <td class="instruction">LD A,($76FA)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51435"></a>C8EB</td>
 <td class="instruction">BIT 7,A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51437"></a>C8ED</td>
 <td class="instruction">JR Z,$C8F1</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51439"></a>C8EF</td>
 <td class="instruction">LD (HL),$03</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51441"></a>C8F1</td>
 <td class="instruction">CALL <a class="link" href="51480.html">$C918</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51444"></a>C8F4</td>
 <td class="instruction">POP BC</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51445"></a>C8F5</td>
 <td class="instruction">LD DE,$0020</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51448"></a>C8F8</td>
 <td class="instruction">ADD IY,DE</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51450"></a>C8FA</td>
 <td class="instruction">DEC B</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51451"></a>C8FB</td>
 <td class="instruction">JP NZ,$C8B7</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51454"></a>C8FE</td>
 <td class="instruction">LD A,($A138)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51457"></a>C901</td>
 <td class="instruction">AND A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51458"></a>C902</td>
 <td class="instruction">JP NZ,$C917</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51461"></a>C905</td>
 <td class="instruction">LD A,($A13A)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51464"></a>C908</td>
 <td class="instruction">AND A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51465"></a>C909</td>
 <td class="instruction">JR NZ,$C910</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51467"></a>C90B</td>
 <td class="instruction">LD A,($A139)</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51470"></a>C90E</td>
 <td class="instruction">AND A</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51471"></a>C90F</td>
 <td class="instruction">RET NZ</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51472"></a>C910</td>
 <td class="instruction">LD IY,$8000</td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="address"><a name="51476"></a>C914</td>
 <td class="instruction">CALL <a class="link" href="51480.html">$C918</a></td>
+<td class="transparentComment" />
 </tr>
 <tr>
 <td class="label"><a name="51479"></a>C917</td>
 <td class="instruction">RET</td>
+<td class="transparentComment" />
 </tr>
 </table>
 <table class="prevNext">
@@ -296,9 +361,9 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

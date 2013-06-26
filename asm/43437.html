@@ -45,7 +45,7 @@ Plots a tile to the buffer.
 <tr>
 <td class="label"><a name="43437"></a>A9AD</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43438"></a>A9AE</td>
@@ -55,12 +55,12 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43439"></a>A9AF</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL; // get supertile index</td>
+<td class="comment">A = *HLdash; // get supertile index</td>
 </tr>
 <tr>
 <td class="address"><a name="43440"></a>A9B0</td>
 <td class="instruction">LD BC,$8590</td>
-<td class="comment" rowspan="4">if (A &lt; 45) { BC = exterior_tiles_1; }</td>
+<td class="comment" rowspan="4">if (A &lt; 45) { BCdash = exterior_tiles_1; }</td>
 </tr>
 <tr>
 <td class="address"><a name="43443"></a>A9B3</td>
@@ -77,7 +77,7 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43450"></a>A9BA</td>
 <td class="instruction">CP $8B</td>
-<td class="comment" rowspan="4">else if (A &lt; 139 || A &gt;= 204) { BC = exterior_tiles_2; }</td>
+<td class="comment" rowspan="4">else if (A &lt; 139 || A &gt;= 204) { BCdash = exterior_tiles_2; }</td>
 </tr>
 <tr>
 <td class="address"><a name="43452"></a>A9BC</td>
@@ -94,12 +94,12 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43458"></a>A9C2</td>
 <td class="instruction">LD BC,$90F8</td>
-<td class="comment">else { BC = exterior_tiles_3; }</td>
+<td class="comment">else { BCdash = exterior_tiles_3; }</td>
 </tr>
 <tr>
 <td class="label"><a name="43461"></a>A9C5</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">PUSH HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="43462"></a>A9C6</td>
@@ -109,7 +109,7 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43463"></a>A9C7</td>
 <td class="instruction">LD L,A</td>
-<td class="comment" rowspan="6">HL = A * 8 + BC;</td>
+<td class="comment" rowspan="6">HLdash = A * 8 + BCdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43464"></a>A9C8</td>
@@ -134,17 +134,17 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43470"></a>A9CE</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment">PUSH DE</td>
+<td class="comment">PUSH DEdash</td>
 </tr>
 <tr>
 <td class="address"><a name="43471"></a>A9CF</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">EX DEdash,HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="43472"></a>A9D0</td>
 <td class="instruction">LD BC,$0018</td>
-<td class="comment">BC = 24; // stride</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43475"></a>A9D3</td>
@@ -159,7 +159,7 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43478"></a>A9D6</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="2">*HL = *DE++;</td>
+<td class="comment" rowspan="2">*HLdash = *DEdash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43479"></a>A9D7</td>
@@ -168,7 +168,7 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43480"></a>A9D8</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment" rowspan="3">HL += BC;</td>
+<td class="comment" rowspan="3">HLdash += 24; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="43481"></a>A9D9</td>
@@ -191,22 +191,22 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43487"></a>A9DF</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DE</td>
+<td class="comment">POP DEdash</td>
 </tr>
 <tr>
 <td class="address"><a name="43488"></a>A9E0</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
+<td class="comment">DEdash++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43489"></a>A9E1</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">POP HLdash</td>
 </tr>
 <tr>
 <td class="address"><a name="43490"></a>A9E2</td>
 <td class="instruction">EXX</td>
-<td class="comment">EXX</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43491"></a>A9E3</td>
@@ -222,9 +222,9 @@ Plots a tile to the buffer.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

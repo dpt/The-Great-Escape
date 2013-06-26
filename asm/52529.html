@@ -55,12 +55,12 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52533"></a>CD35</td>
 <td class="instruction">AND $0F</td>
-<td class="comment">A &amp;= 0x0F;</td>
+<td class="comment">A &amp;= 0x0F; // likely this mask is itemstruct_ITEM_MASK</td>
 </tr>
 <tr>
 <td class="address"><a name="52535"></a>CD37</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment">PUSH AF</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="52536"></a>CD38</td>
@@ -83,12 +83,12 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52546"></a>CD42</td>
 <td class="instruction">POP AF</td>
-<td class="comment">POP AF</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="52547"></a>CD43</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment" rowspan="7">A = item_location[A].room_and_flags;</td>
+<td class="comment" rowspan="7">A = default_item_locations[A].room_and_flags;</td>
 </tr>
 <tr>
 <td class="address"><a name="52548"></a>CD44</td>
@@ -122,12 +122,22 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52558"></a>CD4E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment"></td>
 </tr>
 <tr>
-<td class="address"><a name="52559"></a>CD4F</td>
+<td class="routineComment" colspan="3">
+<a name="52559"></a>
+<div class="comments">
+<div class="paragraph">
+Bug: This is not masked with 0x0F so item_to_itemstruct generates out of range addresses.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">CD4F</td>
 <td class="instruction">LD A,C</td>
-<td class="comment">A = C;</td>
+<td class="comment">Adash = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="52560"></a>CD50</td>
@@ -137,7 +147,7 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52563"></a>CD53</td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment">RES 7,*HL</td>
+<td class="comment">*HL &amp;= ~itemstruct_ITEM_FLAG_HELD;</td>
 </tr>
 <tr>
 <td class="address"><a name="52565"></a>CD55</td>
@@ -152,7 +162,7 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52567"></a>CD57</td>
 <td class="instruction">LD BC,$0003</td>
-<td class="comment" rowspan="2">memcpy(DE, HL, 3); DE += 3; HL += 3;</td>
+<td class="comment" rowspan="2">memcpy(DE, HL, 3); DE += 3; HL += 3; // reset location?</td>
 </tr>
 <tr>
 <td class="address"><a name="52570"></a>CD5A</td>
@@ -166,12 +176,12 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52573"></a>CD5D</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="52574"></a>CD5E</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A) goto cd65</td>
+<td class="comment" rowspan="4">if (A == 0) } *HL = A; goto $7BD0; /* drop_item_A:$7BD0 */</td>
 </tr>
 <tr>
 <td class="address"><a name="52575"></a>CD5F</td>
@@ -180,22 +190,20 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52577"></a>CD61</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment">*HL = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="52578"></a>CD62</td>
 <td class="instruction">JP <a class="link" href="31669.html#31696">$7BD0</a></td>
-<td class="comment">JP $7BD0</td>
 </tr>
 <tr>
 <td class="label"><a name="52581"></a>CD65</td>
 <td class="instruction">LD (HL),$05</td>
-<td class="comment">*HL = 5;</td>
+<td class="comment">else { *HL = 5;</td>
 </tr>
 <tr>
 <td class="address"><a name="52583"></a>CD67</td>
 <td class="instruction">JP <a class="link" href="31669.html#31730">$7BF2</a></td>
-<td class="comment">JP $7BF2</td>
+<td class="comment">goto $7BF2; /* drop_item_A:$7BF2 */ }</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -206,9 +214,9 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

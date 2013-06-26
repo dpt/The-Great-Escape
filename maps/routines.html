@@ -21,11 +21,19 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26786" href="../asm/26786.html">68A2</a></td>
-<td class="routineDesc">sub_68A2</td>
+<td class="routineDesc">transition</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="26868" href="../asm/26868.html">68F4</a></td>
+<td class="routineDesc">enter_room</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="26906" href="../asm/26906.html">691A</a></td>
+<td class="routineDesc">squash_stack_goto_main</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26912" href="../asm/26912.html">6920</a></td>
-<td class="routineDesc">tunnel_related</td>
+<td class="routineDesc">changed_room</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26937" href="../asm/26937.html">6939</a></td>
@@ -33,7 +41,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27081" href="../asm/27081.html">69C9</a></td>
-<td class="routineDesc">reset_all_objects</td>
+<td class="routineDesc">reset_nonplayer_visible_characters</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27100" href="../asm/27100.html">69DC</a></td>
@@ -49,7 +57,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27189" href="../asm/27189.html">6A35</a></td>
-<td class="routineDesc">select_room_maybe</td>
+<td class="routineDesc">setup_room</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27317" href="../asm/27317.html">6AB5</a></td>
@@ -150,14 +158,6 @@
 <tr>
 <td class="routine"><a class="link" name="40455" href="../asm/40455.html">9E07</a></td>
 <td class="routineDesc">process_user_input</td>
-</tr>
-<tr>
-<td class="routine"><a class="link" name="40500" href="../asm/40500.html">9E34</a></td>
-<td class="routineDesc">user_input_super</td>
-</tr>
-<tr>
-<td class="routine"><a class="link" name="40540" href="../asm/40540.html">9E5C</a></td>
-<td class="routineDesc">user_input_was_in_bed_perhaps</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40600" href="../asm/40600.html">9E98</a></td>
@@ -281,11 +281,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41609" href="../asm/41609.html">A289</a></td>
-<td class="routineDesc">sub_A289</td>
+<td class="routineDesc">wake_up</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41698" href="../asm/41698.html">A2E2</a></td>
-<td class="routineDesc">sub_A2E2</td>
+<td class="routineDesc">breakfast_time</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41791" href="../asm/41791.html">A33F</a></td>
@@ -293,7 +293,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41809" href="../asm/41809.html">A351</a></td>
-<td class="routineDesc">sub_A351</td>
+<td class="routineDesc">go_to_time_for_bed</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41823" href="../asm/41823.html">A35F</a></td>
@@ -333,7 +333,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42153" href="../asm/42153.html">A4A9</a></td>
-<td class="routineDesc">set_location_0xE00</td>
+<td class="routineDesc">set_location_0x0E00</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42167" href="../asm/42167.html">A4B7</a></td>
@@ -353,7 +353,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42237" href="../asm/42237.html">A4FD</a></td>
-<td class="routineDesc">sub_A4FD</td>
+<td class="routineDesc">go_to_roll_call</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42251" href="../asm/42251.html">A50B</a></td>
@@ -381,7 +381,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42953" href="../asm/42953.html">A7C9</a></td>
-<td class="routineDesc">sub_A7C9</td>
+<td class="routineDesc">get_supertiles</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43018" href="../asm/43018.html">A80A</a></td>
@@ -444,16 +444,12 @@
 <td class="routineDesc">choose_game_screen_attributes</td>
 </tr>
 <tr>
-<td class="routine"><a class="link" name="43913" href="../asm/43913.html">AB89</a></td>
-<td class="routineDesc">choose_attribute_for_tunnel</td>
-</tr>
-<tr>
 <td class="routine"><a class="link" name="43936" href="../asm/43936.html">ABA0</a></td>
 <td class="routineDesc">zoombox</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="44377" href="../asm/44377.html">AD59</a></td>
-<td class="routineDesc">sub_AD59</td>
+<td class="routineDesc">searchlight_AD59</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="44477" href="../asm/44477.html">ADBD</a></td>
@@ -461,11 +457,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="44664" href="../asm/44664.html">AE78</a></td>
-<td class="routineDesc">something_then_decrease_morale_10</td>
+<td class="routineDesc">searchlight_caught</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="44728" href="../asm/44728.html">AEB8</a></td>
-<td class="routineDesc">searchlight</td>
+<td class="routineDesc">searchlight_plot</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="44943" href="../asm/44943.html">AF8F</a></td>
@@ -497,7 +493,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45650" href="../asm/45650.html">B252</a></td>
-<td class="routineDesc">sub_B252</td>
+<td class="routineDesc">door_in_range</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45717" href="../asm/45717.html">B295</a></td>
@@ -509,11 +505,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45820" href="../asm/45820.html">B2FC</a></td>
-<td class="routineDesc">resetty1</td>
+<td class="routineDesc">reset_B2FC</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45869" href="../asm/45869.html">B32D</a></td>
-<td class="routineDesc">indoors</td>
+<td class="routineDesc">door_handling_indoors</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45959" href="../asm/45959.html">B387</a></td>
@@ -581,11 +577,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47163" href="../asm/47163.html">B83B</a></td>
-<td class="routineDesc">spotlight_foo</td>
+<td class="routineDesc">searchlight_sub</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47206" href="../asm/47206.html">B866</a></td>
-<td class="routineDesc">called_from_main_loop_11</td>
+<td class="routineDesc">searchlight</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47260" href="../asm/47260.html">B89C</a></td>
@@ -593,7 +589,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47382" href="../asm/47382.html">B916</a></td>
-<td class="routineDesc">sub_B916</td>
+<td class="routineDesc">suspected_mask_stuff</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="47821" href="../asm/47821.html">BACD</a></td>
+<td class="routineDesc">sub_BACD</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47836" href="../asm/47836.html">BADC</a></td>
@@ -609,7 +609,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="48298" href="../asm/48298.html">BCAA</a></td>
-<td class="routineDesc">select_tiles</td>
+<td class="routineDesc">select_tile_set</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="50204" href="../asm/50204.html">C41C</a></td>
@@ -625,7 +625,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="50643" href="../asm/50643.html">C5D3</a></td>
-<td class="routineDesc">reset_object</td>
+<td class="routineDesc">reset_visible_character</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="50769" href="../asm/50769.html">C651</a></td>
@@ -637,7 +637,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51098" href="../asm/51098.html">C79A</a></td>
-<td class="routineDesc">sub_C79A</td>
+<td class="routineDesc">increment_DE_by_diff</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51129" href="../asm/51129.html">C7B9</a></td>
@@ -649,7 +649,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51346" href="../asm/51346.html">C892</a></td>
-<td class="routineDesc">called_from_main_loop_5</td>
+<td class="routineDesc">follow_suspicious_player</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51480" href="../asm/51480.html">C918</a></td>
@@ -689,15 +689,15 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52395" href="../asm/52395.html">CCAB</a></td>
-<td class="routineDesc">sub_CCAB</td>
+<td class="routineDesc">guards_persue_player</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52429" href="../asm/52429.html">CCCD</a></td>
-<td class="routineDesc">sub_CCCD</td>
+<td class="routineDesc">is_item_discoverable</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52475" href="../asm/52475.html">CCFB</a></td>
-<td class="routineDesc">sub_CCFB</td>
+<td class="routineDesc">is_item_discoverable_indoors</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52529" href="../asm/52529.html">CD31</a></td>
@@ -705,11 +705,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="56222" href="../asm/56222.html">DB9E</a></td>
-<td class="routineDesc">called_from_main_loop_8</td>
+<td class="routineDesc">mark_nearby_items</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="56299" href="../asm/56299.html">DBEB</a></td>
-<td class="routineDesc">Uses BC_becomes_A_times_8.</td>
+<td class="routineDesc">sub_DBEB</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="56385" href="../asm/56385.html">DC41</a></td>
@@ -721,43 +721,43 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="57602" href="../asm/57602.html">E102</a></td>
-<td class="routineDesc">masked_sprite_plotter</td>
+<td class="routineDesc">masked_sprite_plotter_24_wide</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58015" href="../asm/58015.html">E29F</a></td>
-<td class="routineDesc">sub_E29F</td>
+<td class="routineDesc">masked_sprite_plotter_16_wide_case_1_searchlight</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58018" href="../asm/58018.html">E2A2</a></td>
-<td class="routineDesc">sub_E2A2</td>
+<td class="routineDesc">masked_sprite_plotter_16_wide_case_1</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58190" href="../asm/58190.html">E34E</a></td>
-<td class="routineDesc">sub_E34E</td>
+<td class="routineDesc">masked_sprite_plotter_16_wide_case_2</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58362" href="../asm/58362.html">E3FA</a></td>
-<td class="routineDesc">sub_E3FA</td>
+<td class="routineDesc">flip_24_masked_pixels</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58383" href="../asm/58383.html">E40F</a></td>
-<td class="routineDesc">sub_E40F</td>
+<td class="routineDesc">flip_16_masked_pixels</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58400" href="../asm/58400.html">E420</a></td>
-<td class="routineDesc">sub_E420</td>
+<td class="routineDesc">setup_sprite_plotting</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58690" href="../asm/58690.html">E542</a></td>
-<td class="routineDesc">divide_3xAC_by_8_with_rounding</td>
+<td class="routineDesc">divide_array_by_8_with_rounding</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58704" href="../asm/58704.html">E550</a></td>
-<td class="routineDesc">divide_AC_by_8_with_rounding</td>
+<td class="routineDesc">divide_by_8_with_rounding</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58709" href="../asm/58709.html">E555</a></td>
-<td class="routineDesc">divide_AC_by_8</td>
+<td class="routineDesc">divide_by_8</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="61139" href="../asm/61139.html">EED3</a></td>
@@ -821,7 +821,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="62764" href="../asm/62764.html">F52C</a></td>
-<td class="routineDesc">get_tuning (music)</td>
+<td class="routineDesc">get_tuning</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="64992" href="../asm/64992.html">FDE0</a></td>
@@ -853,9 +853,9 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

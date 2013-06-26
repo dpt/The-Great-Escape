@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="27100.html">69DC</a></td>
 </tr>
 </table>
-<div class="description">69C9: reset_all_objects</div>
+<div class="description">69C9: reset_nonplayer_visible_characters</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="26937.html">6939</a>.
+Reset all non-player visible characters.
 </div>
 </div>
 </td>
@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="26937.html">6939</a>.
 <tr>
 <td class="label"><a name="27081"></a>69C9</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment">HL = $8020;</td>
+<td class="comment">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
 <td class="address"><a name="27084"></a>69CC</td>
@@ -55,7 +55,7 @@ Used by the routine at <a class="link" href="26937.html">6939</a>.
 <tr>
 <td class="address"><a name="27089"></a>69D1</td>
 <td class="instruction">CALL <a class="link" href="50643.html">$C5D3</a></td>
-<td class="comment">reset_object();</td>
+<td class="comment">reset_visible_character();</td>
 </tr>
 <tr>
 <td class="address"><a name="27092"></a>69D4</td>
@@ -99,9 +99,9 @@ Used by the routine at <a class="link" href="26937.html">6939</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>

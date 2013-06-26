@@ -45,7 +45,7 @@ Wave the flag every other turn.
 <tr>
 <td class="address"><a name="41017"></a>A039</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; 1;</td>
+<td class="comment" rowspan="3">if (*HL &amp; 1) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41018"></a>A03A</td>
@@ -54,7 +54,6 @@ Wave the flag every other turn.
 <tr>
 <td class="address"><a name="41020"></a>A03C</td>
 <td class="instruction">RET NZ</td>
-<td class="comment">if (A) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41021"></a>A03D</td>
@@ -74,7 +73,7 @@ Wave the flag every other turn.
 <tr>
 <td class="address"><a name="41028"></a>A044</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A == *HL) goto wiggle;</td>
+<td class="comment" rowspan="11">if (A != *HL) } if (A &lt; *HL) { (*HL)--; HL = moraleflag_screen_address; get_next_scanline(); } else { (*HL)++; HL = moraleflag_screen_address; get_prev_scanline(); } moraleflag_screen_address = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="41029"></a>A045</td>
@@ -83,7 +82,6 @@ Wave the flag every other turn.
 <tr>
 <td class="address"><a name="41031"></a>A047</td>
 <td class="instruction">JP NC,$A053</td>
-<td class="comment">if (A &gt;  *HL) goto increasing;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -98,47 +96,49 @@ Decreasing morale.
 <tr>
 <td class="address">A04A</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment">(*HL)--;</td>
 </tr>
 <tr>
 <td class="address"><a name="41035"></a>A04B</td>
 <td class="instruction">LD HL,($A141)</td>
-<td class="comment">HL = moraleflag_screen_address;</td>
 </tr>
 <tr>
 <td class="address"><a name="41038"></a>A04E</td>
 <td class="instruction">CALL <a class="link" href="31977.html">$7CE9</a></td>
-<td class="comment">get_next_scanline();</td>
 </tr>
 <tr>
 <td class="address"><a name="41041"></a>A051</td>
 <td class="instruction">JR $A05A</td>
-<td class="comment">goto move;</td>
 </tr>
 <tr>
-<td class="label"><a name="41043"></a>A053</td>
+<td class="routineComment" colspan="3">
+<a name="41043"></a>
+<div class="comments">
+<div class="paragraph">
+Increasing morale.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">A053</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment">increasing: (*HL)++;</td>
 </tr>
 <tr>
 <td class="address"><a name="41044"></a>A054</td>
 <td class="instruction">LD HL,($A141)</td>
-<td class="comment">HL = moraleflag_screen_address;</td>
 </tr>
 <tr>
 <td class="address"><a name="41047"></a>A057</td>
 <td class="instruction">CALL <a class="link" href="41090.html">$A082</a></td>
-<td class="comment">get_prev_scanline();</td>
 </tr>
 <tr>
 <td class="label"><a name="41050"></a>A05A</td>
 <td class="instruction">LD ($A141),HL</td>
-<td class="comment">move: moraleflag_screen_address = HL;</td>
 </tr>
 <tr>
 <td class="label"><a name="41053"></a>A05D</td>
 <td class="instruction">LD DE,$DA6B</td>
-<td class="comment">wiggle: DE = bitmap_flag_down;</td>
+<td class="comment">DE = bitmap_flag_down;</td>
 </tr>
 <tr>
 <td class="address"><a name="41056"></a>A060</td>
@@ -148,7 +148,7 @@ Decreasing morale.
 <tr>
 <td class="address"><a name="41057"></a>A061</td>
 <td class="instruction">BIT 1,(HL)</td>
-<td class="comment" rowspan="3">if ((*HL &amp; 1) != 0) DE = bitmap_flag_up;</td>
+<td class="comment" rowspan="3">if (*HL &amp; 2) DE = bitmap_flag_up;</td>
 </tr>
 <tr>
 <td class="address"><a name="41059"></a>A063</td>
@@ -161,7 +161,7 @@ Decreasing morale.
 <tr>
 <td class="label"><a name="41064"></a>A068</td>
 <td class="instruction">LD HL,($A141)</td>
-<td class="comment" rowspan="2">plot: HL = moraleflag_screen_address;</td>
+<td class="comment" rowspan="2">HL = moraleflag_screen_address;</td>
 </tr>
 <tr>
 <td class="address"><a name="41067"></a>A06B</td>
@@ -170,7 +170,7 @@ Decreasing morale.
 <tr>
 <td class="address"><a name="41070"></a>A06E</td>
 <td class="instruction">JP <a class="link" href="31934.html">$7CBE</a></td>
-<td class="comment">plot_bitmap(0x0319); // dimensions: 24 x 25 // args-BC // exit via</td>
+<td class="comment">plot_bitmap(0x0319); return; // dimensions: 24 x 25 // args-BC // exit via</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -181,9 +181,9 @@ Decreasing morale.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130101</div>
+<div class="release">The incomplete The Great Escape disassembly 20130626</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
 </body>
 </html>
