@@ -915,46 +915,35 @@ c $6939 setup_movable_items
 
   $696A setup_crate: HL = &crate;
   $696D A = character_28_crate;
-  $696F goto setup_movable_items;
-;
+  $696F goto setup_movable_items_common;
+
   $6971 setup_stove2: HL = &stove2;
   $6974 A = character_27_stove2;
-  $6976 goto setup_movable_items;
-;
+  $6976 goto setup_movable_items_common;
+
   $6978 setup_stove1: HL = &stove1;
-  $697B A = character_26_stove1; // then fallthrough to...
+  $697B A = character_26_stove1;
 ;
-  $697D setup_movable_items: $8020 = A; // character index
-  $6980 memcpy($802F, HL, 9); // character 0 is $8020..$803F
-  $6988 memcpy($8021, byte_69A0, 14);
+; fallthrough
+
+; movable item takes the first non-player vischar
+  $697D setup_movable_items_common: $8020 = A; // character index
+  $6980 memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F
+  $6988 memcpy($8021, movable_item_reset_data, 14);
   $6993 $803C = indoor_room_index;
   $6999 HL = $8020;
   $699C reset_something();
   $699F return;
 
 D $69A0 Fourteen bytes of reset data.
-B $69A0 byte_69A0
+B $69A0 movable_item_reset_data
 
 b $69AE movable_items
-D $69AE struct movable_item { word y_coord, x_coord; word vertical_offset; const sprite *; byte terminator; };
-
-W $69AE struct movable_item stove1 = { y_coord,
-W $69B0 x_coord,
-W $69B2 vertical_offset,
-W $69B4 &sprite_stove,
-  $69B6 0 };
-
-W $69B7 struct movable_item crate = { y_coord,
-W $69B9 x_coord,
-W $69BB vertical_offset,
-W $69BD &sprite_crate,
-  $69BF 0 };
-
-W $69C0 struct movable_item stove2 = { y_coord,
-W $69C2 x_coord,
-W $69C4 vertical_offset,
-W $69C6 &sprite_stove,
-  $69C8 0 };
+D $69AE struct movable_item { word y_coord, x_coord, vertical_offset; const sprite *; byte terminator; };
+D $69AE Sub-struct of vischar ($802F..$8038).
+  $69AE struct movable_item stove1 = { 62, 35, 16, &sprite_stove, 0 };
+  $69B7 struct movable_item crate  = { 55, 54, 14, &sprite_crate, 0 };
+  $69C0 struct movable_item stove2 = { 62, 35, 16, &sprite_stove, 0 };
 
 ; ------------------------------------------------------------------------------
 
