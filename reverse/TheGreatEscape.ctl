@@ -29,6 +29,24 @@
 ; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
 
 ; //////////////////////////////////////////////////////////////////////////////
+; STYLE
+; //////////////////////////////////////////////////////////////////////////////
+;
+; A single dash '-' indicates a statement has been omitted.
+;
+; Code broken by a single ';' indicates that control flow passes through that
+; point and that the subsequent instruction is a goto target.
+;
+; Pseudo-C code is formatted in a slightly odd way to best fit the lines to
+; which it is assigned. e.g.
+;     if (condition) {
+;         statement; }
+;     else { statement;
+;     }
+;
+; Omit variables when the value is used once (e.g. for strides).
+
+; //////////////////////////////////////////////////////////////////////////////
 ; ASSEMBLY PATTERNS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
