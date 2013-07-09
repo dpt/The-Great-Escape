@@ -950,13 +950,13 @@ D $69AE Sub-struct of vischar ($802F..$8038).
 c $69C9 reset_nonplayer_visible_characters
 D $69C9 Reset all non-player visible characters.
   $69C9 HL = $8020; // iterate over non-player characters
-  $69CC BC = 0x0720; // 7 iters, 32 stride
+  $69CC B = 7; // 7 iterations
   $69CF do { PUSH BC
   $69D0   PUSH HL
   $69D1   reset_visible_character();
   $69D4   POP HL
   $69D5   POP BC
-  $69D6   HL += C;
+  $69D6   HL += 32; // stride
   $69D9 } while (--B);
   $69DB return;
 
