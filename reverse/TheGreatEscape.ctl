@@ -145,7 +145,10 @@
 ; character_38 = 38
 ; character_39 = 39
 ; character_40 = 40
-; character_41 = 41                     ; where did i get this maximum character number from?
+; character_41 = 41
+; character_42 = 42
+; character_43 = 43
+; character_44 = 44                     ; suspected max
 ; character_NONE = 255
 
 ; ; enum room
