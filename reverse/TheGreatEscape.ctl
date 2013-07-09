@@ -449,7 +449,7 @@
 ; ; enum vischar
 ; ; $800x flags (and $802x, $804x, ...)
 ; vischar_BYTE0_EMPTY_SLOT   = 0xFF,
-; vischar_BYTE0_MASK         = 0x1F,
+; vischar_BYTE0_MASK         = 0x1F, // character index
 ; vischar_BYTE1_MASK         = 0x3F,
 ; vischar_BYTE1_PICKING_LOCK = 1<<0, // player only
 ; vischar_BYTE1_CUTTING_WIRE = 1<<1, // player only
