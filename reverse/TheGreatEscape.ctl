@@ -27,6 +27,8 @@
 ;   - Currently using (<- somefunc) to show a reference.
 ;
 ; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
+; - Fix axis described as Y/X to X/Y.
+; -
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; STYLE
@@ -551,7 +553,7 @@
 ;          0x05 .. 0x07 pattern continues
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_user_input)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_user_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; b $8013 character's vertical offset // set to 24 in process_user_input, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)
+; b $8013 character's vertical offset // set to 24 in process_user_input, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  suspect this is a word rather than a byte
 ; ? $8014
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 sub_AF8F sets this to byte_81AA
@@ -823,27 +825,29 @@ D $68A1 Index.
 
 c $68A2 transition
 D $68A2 Looks like it's called to transition to a new room.
-R $68A2 I:HL Pointer to ?
+R $68A2 I:HL Pointer to location?
 R $68A2 I:IY Pointer to vischar?
   $68A2 EX DE,HL
   $68A3 HL = IY;
   $68A6 A = L; // stash vischar index/offset
   $68A7 PUSH AF
-  $68A8 L = A + 15; // $8xxF (position on Y axis)
-  $68AB A = IY[28]; // $8x1C (likely room index)
+  $68A8 L = A + 0x0F; // $8xxF (position on Y axis)
+  $68AB A = IY[0x1C]; // $8x1C (likely room index)
   $68AE if (A == 0) { // outdoors
+D $68B2 Set position on Y axis, X axis and vertical offset (dividing by 4).
   $68B2   B = 3; // 3 iterations
   $68B4   do { PUSH BC
   $68B5     A = *DE++;
   $68B6     BC_becomes_A_times_4();
-  $68B9     *HL++ = C; // $800F etc.
-  $68BB     *HL++ = B; // $801F etc.
+  $68B9     *HL++ = C;
+  $68BB     *HL++ = B;
   $68BE     POP BC
   $68BF   } while (--B); }
   $68C1 else { // indoors
+D $68C3 Set position on Y axis, X axis and vertical offset (copying).
   $68C3   B = 3; // 3 iterations
-  $68C5   do { *HL++ = *DE++; // $800F etc.
-  $68C8     *HL++ = 0; // $8010 etc.
+  $68C5   do { *HL++ = *DE++;
+  $68C8     *HL++ = 0;
   $68CC   } while (--B); }
   $68CE POP AF
   $68CF L = A;
