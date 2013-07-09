@@ -178,9 +178,9 @@
 ; room_23_breakfast = 23
 ; room_24_solitary = 24
 ; room_25_breakfast = 25
-; room_26_hut1left = 26
-; room_27_hut1left = 27                ; mystery duplicate
-; room_28_hut1left = 28                ; mystery duplicate
+; room_26 = 26                         ; likely unused
+; room_27 = 27                         ; likely unused
+; room_28_hut1left = 28
 ; room_29_secondtunnelstart = 29       ; possibly the second tunnel start
 ;                                      ; many of the tunnels are displayed duplicated
 ; room_30 = 30
