@@ -871,7 +871,7 @@ c $68F4 enter_room
   $68FA setup_room();
   $68FD plot_indoor_tiles();
   $6900 map_position = 0xEA74;
-  $6906 changed_room();
+  $6906 set_player_sprite_for_room();
 D $6909 This assignment to HL is redundant: reset_something sets HL to $8000 as its first instruction.
   $6909 HL = $8000;
   $690C reset_something();
@@ -887,11 +887,11 @@ c $691A squash_stack_goto_main
 
 ; ------------------------------------------------------------------------------
 
-c $6920 changed_room
+c $6920 set_player_sprite_for_room
 D $6920 Called when changing rooms.
-D $6920 This is resetting the character sprite set to prisoner.
+D $6920 For tunnels this forces the player sprite to 'prisoner' and sets the crawl flag appropriately.
   $6920 HL = $800D;
-  $6923 *HL++ = 0x80; // movement?
+  $6923 *HL++ = 0x80; // likely a character direction
   $6926 if (indoor_room_index >= room_29_secondtunnelstart) {
   $692D   *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag
   $692F   $8015 = &sprite_prisoner_tl_4; }
