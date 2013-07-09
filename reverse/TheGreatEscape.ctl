@@ -557,7 +557,7 @@
 ; b $8017 sub_AF8F sets this to byte_81AA
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
-; b $801C cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by transition -- looks like a room index!
+; b $801C room index: cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by transition
 ; ? $801D
 ; ? $801E
 ; ? $801F (written by setup_sprite_plotting)
@@ -850,7 +850,7 @@ R $68A2 I:IY Pointer to vischar?
   $68D0 if (A) { reset_visible_character(); return; } // exit via
 D $68D7 HL points to the player vischar at this point.
   $68D7 *++HL &= ~vischar_BYTE1_BIT7; // $8001
-  $68DA A = ($801C); // likely a room index
+  $68DA A = ($801C); // room index
   $68DD indoor_room_index = A;
   $68E0 if (A == 0) {
   $68E4   HL += 12;
@@ -9423,7 +9423,7 @@ D $EFCB Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
 D $EFDE Using the papers at the main gate when not in uniform causes the player to be sent to solitary.
   $EFDE if ($8015 != sprite_guard_tl_4) goto solitary; // exit via
   $EFE8 increase_morale_by_10_score_by_50();
-  $EFEB $801C = 0; // clear stored room index?
+  $EFEB $801C = room_0_outdoors; // set room index
 D $EFEF Transition to outside the main gate.
   $EFEF HL = &word_EFF9; // pointer to location?
   $EFF2 IY = $8000; // player character
