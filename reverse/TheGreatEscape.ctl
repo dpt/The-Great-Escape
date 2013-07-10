@@ -463,7 +463,7 @@
 ; vischar_BYTE2_BIT7         = 1<<7,
 ; vischar_BYTE7_MASK         = 0x0F,
 ; vischar_BYTE7_MASK_HI      = 0xF0,
-; vischar_BYTE7_BIT5         = 1<<5,
+; vischar_BYTE7_BIT5         = 1<<5, // bounds related, perhaps stopping movement
 ; vischar_BYTE7_BIT6         = 1<<6,
 ; vischar_BYTE7_BIT7         = 1<<7,
 ; vischar_BYTE13_MASK        = 0x7F,
@@ -992,7 +992,7 @@ R $6A12 I:A  Index of ...
 R $6A12 O:HL Pointer to ...
 R $6A12 O:DE Corrupted.
   $6A12 HL = &door_positions[A * 2]; // are they pairs of doors?
-  $6A1D if (A & doorposition_BYTE0_BIT7) HL += 4;
+  $6A1D if (A & doorposition_BYTE0_BIT7) HL += 4; // flag might be wrong
   $6A26 return;
 
 ; ------------------------------------------------------------------------------
@@ -7904,7 +7904,7 @@ D $CBB1 Reset all items. [unsure]
   $CC19 $8015 = sprite_prisoner_tl_4;
   $CC1F HL = &solitary_transition_thing;
   $CC22 IY = $8000;
-  $CC26 IY[14] = 3; // character faces bottom left
+  $CC26 IY[0x0E] = 3; // character faces bottom left
   $CC2A ($8002) = 0; // target location - why is this storing a byte and not a word?
   $CC2E transition(); return; // exit via
 
