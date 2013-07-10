@@ -5998,7 +5998,7 @@ c $B5CE called_from_main_loop_9
   $B6B9 } while (--B);
   $B6BD return;
 
-  $B6BE IY[13] &= ~(1<<7);
+  $B6BE IY[13] &= ~vischar_BYTE13_BIT7; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,
 ;
   $B6C2 A = byte_CDAA[IY[14] * 9 + IY[13]];
   $B6D5 C = A;
