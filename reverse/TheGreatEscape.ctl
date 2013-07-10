@@ -7553,7 +7553,7 @@ D $C8C5 Change '20' here to a higher number and prisoners will start following t
   $C8CE       if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_player();
   $C8DB       -
   $C8DC       if (A > 15) { // 16,17,18,19  // could these be the dogs?
-  $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; } } // if food is nowhere assign it to room_3_hut2right? is IY[1] a room ref? check this
+  $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; } } // if food is nearby assign it to room_3_hut2right? is IY[1] a room ref? check this
   $C8F1     sub_C918(); }
   $C8F4   -
   $C8F5   IY += 32; // stride
