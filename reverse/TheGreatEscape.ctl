@@ -7527,8 +7527,8 @@ D $C88D charevnt_player_sleeps
 
 ; ------------------------------------------------------------------------------
 
-b $C891 suspicious_player_related
-D $C891 Guess: A countdown until any food item is discovered.
+b $C891 food_discovered_counter
+D $C891 Likely: A countdown until any food item is discovered.
 D $C891 (<- follow_suspicious_player, sub_CA81)
 
 ; ------------------------------------------------------------------------------
@@ -7536,8 +7536,8 @@ D $C891 (<- follow_suspicious_player, sub_CA81)
 c $C892 follow_suspicious_player
 D $C892 Causes characters to follow the player if they're being suspicious. Poisoned food handling.
   $C892 byte_A13E = 0;
-  $C89D if (suspicious_player_related != 0 && --suspicious_player_related != 0) {
   $C896 if (bell) guards_persue_prisoners();
+  $C89D if (food_discovered_counter != 0 && --food_discovered_counter == 0) {
   $C8A7   item_structs[item_FOOD].item &= ~itemfood_POISONED;
   $C8AC   C = item_FOOD;
   $C8AE   item_discovered(); }
@@ -7738,11 +7738,10 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CA90     if (A == IY[0]) { use_bribe(); return; } // exit via
   $CA96     else { solitary(); return; } } // exit via
   $CA99   else if (A == 2 || A == 4) { return; }
-  $CA9F   PUSH HL
-  $CAA0   HL = &item_structs[item_FOOD].item;
-  $CAA3   if ((*HL & itemfood_POISONED) == 0) A = 32; else A = 255;
-  $CAAB   suspicious_player_related = A;
-  $CAAE   POP HL
+  $CA9F   -
+  $CAA0   if ((item_structs[item_FOOD].item & itemfood_POISONED) == 0) A = 32; else A = 255;
+  $CAAB   food_discovered_counter = A;
+  $CAAE   -
   $CAAF   HL -= 2;
   $CAB1   *HL = 0;
   $CAB3   goto sub_C918:$C9F5; }
