@@ -7683,7 +7683,7 @@ R $CA11 I:IY Pointer to visible character block.
 R $CA11 O:A  8/4/0 .. meaning ?
 R $CA11 O:HL Pointer to ?
   $CA11 A = *HL; // sampled HL=$8004,$8044,$8064,$8084
-  $CA12 BC_becomes_A_times_8(); // self modified by R$C9DA
+  $CA12 BC_becomes_A_times_8(); // self modified by #R$C9DA
   $CA15 HL += 11; // -> position on Y axis ($800F etc.)
   $CA19 E = *HL++;
   $CA1B D = *HL;
@@ -7708,7 +7708,7 @@ R $CA49 I:IY Pointer to visible character block.
 R $CA49 O:A  5/7/0 .. meaning ?
 R $CA49 O:HL Pointer to ?
   $CA49 A = *HL; // sampled HL=$8025,$8065,$8005
-  $CA4A BC_becomes_A_times_8(); // self modified by $C9DD
+  $CA4A BC_becomes_A_times_8(); // self modified by #R$C9DD
   $CA4D HL += 12; // position on X axis ($8011 etc.)
   $CA51 E = *HL++;
   $CA53 D = *HL;
