@@ -7413,14 +7413,13 @@ R $C7B9 I:A Character index.
 ;
 c $C7C6 character_event
 D $C7C6 Makes characters sit, sleep or other things TBD.
-R $C7C6 I:HL Points to a byte holding character index (e.g. 0x76C6).
+R $C7C6 I:HL Points to character_struct first byte holding character index (e.g. 0x76C6).
   $C7C6 A = *HL;
-  $C7C7 if (A >= character_7_prisoner && A <= character_12_prisoner) goto character_sleeps;
+  $C7C7 if (A >= character_7_prisoner  && A <= character_12_prisoner) goto character_sleeps;
   $C7D0 if (A >= character_18_prisoner && A <= character_22_prisoner) goto character_sits;
-;
   $C7D9 PUSH HL
-  $C7DA HL = character_to_event_handler_index_map;
-  $C7DD B = 24; // 24 iterations
+  $C7DA HL = &character_to_event_handler_index_map;
+  $C7DD B = NELEMS(character_to_event_handler_index_map); // 24 iterations
 D $C7DF Locate the character in the map.
   $C7DF do { if (A == *HL) goto call_action;
   $C7E2   HL += 2;
@@ -7460,23 +7459,23 @@ W $C827 { character_37 | (0<<7),  4 }, // morale related
 
 D $C829 character_event_handlers
 D $C829 Array of pointers to character event handlers.
-W $C829 struct foo character_event_handlers[] = { &charevnt_pop_hl_and_write_08FF_to_it,
-W $C82B &charevnt_pop_hl_and_write_10FF_to_it,
-W $C82D &charevnt_pop_hl_and_write_38FF_to_it,
-W $C82F &charevnt_pop_hl_and_check_varA13E,
+W $C829 struct foo character_event_handlers[] = { &charevnt_08FF,
+W $C82B &charevnt_10FF,
+W $C82D &charevnt_38FF,
+W $C82F &charevnt_check_varA13E,
 W $C831 &charevnt_zero_morale_1,
-W $C833 &charevnt_pop_hl_and_check_varA13E_anotherone,
+W $C833 &charevnt_check_varA13E_anotherone,
 W $C835 &charevnt_C845,
-W $C837 &charevnt_pop_hl_and_write_0005_to_it,
-W $C839 &charevnt_pop_hl_and_player_sleeps,
-W $C83B &charevnt_pop_hl_and_player_sits,
+W $C837 &charevnt_0005,
+W $C839 &charevnt_player_sleeps,
+W $C83B &charevnt_player_sits,
 W $C83D &charevnt_released_from_solitary, };
 
 D $C83F charevnt_zero_morale_1
   $C83F morale_1 = 0;
-  $C843 goto charevnt_pop_hl_and_write_08FF_to_it;
+  $C843 goto charevnt_08FF;
 
-D $C845 charevnt_C845 -- saw a hit somewhere around (morning) roll call
+D $C845 charevnt_C845 -- saw this hit somewhere around (morning) roll call
   $C845 POP HL
   $C846 *HL++ = 0x03;
   $C849 *HL   = 0x15;
@@ -7486,43 +7485,43 @@ D $C84C charevnt_released_from_solitary
   $C84C POP HL
   $C84D *HL++ = 0xA4;
   $C850 *HL   = 0x03;
-  $C852 automatic_player_counter = 0; // automatic control
+  $C852 automatic_player_counter = 0; // force automatic control
   $C856 set_target_location(0x2500); return;
 
-D $C85C charevnt_pop_hl_and_write_10FF_to_it
+D $C85C charevnt_10FF
   $C85C C = 0x10;
   $C85E goto exit;
 
-D $C860 charevnt_pop_hl_and_write_38FF_to_it
+D $C860 charevnt_38FF
   $C860 C = 0x38;
   $C862 goto exit;
 
-D $C864 charevnt_pop_hl_and_write_08FF_to_it
-  $C864 C = 0x08;
+D $C864 charevnt_08FF
+  $C864 C = 0x08; // sampled HL=$8022,$8042,$8002,$8062,
   $C866 exit: POP HL
   $C867 *HL++ = 0xFF;
   $C86A *HL   = C;
   $C86B return;
 
-D $C86C charevnt_pop_hl_and_check_varA13E
+D $C86C charevnt_check_varA13E
   $C86C POP HL
   $C86D if (byte_A13E == 0) goto varA13E_is_zero; else goto sub_A3F3;
 
-D $C877 charevnt_pop_hl_and_check_varA13E_anotherone
+D $C877 charevnt_check_varA13E_anotherone
   $C877 POP HL
   $C878 if (byte_A13E == 0) goto varA13E_is_zero_anotherone; else goto sub_A4D3;
 
-D $C882 charevnt_pop_hl_and_write_0005_to_it
+D $C882 charevnt_0005
   $C882 POP HL
   $C883 *HL++ = 0x05;
   $C886 *HL   = 0x00;
   $C888 return;
 
-D $C889 charevnt_pop_hl_and_player_sits
+D $C889 charevnt_player_sits
   $C889 POP HL
   $C88A goto player_sits;
 
-D $C88D charevnt_pop_hl_and_player_sleeps
+D $C88D charevnt_player_sleeps
   $C88D POP HL
   $C88E goto player_sleeps;
 
