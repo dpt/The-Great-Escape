@@ -5339,15 +5339,15 @@ D $B0F8 (<- sub_AFDF)
 
 c $B107 use_bribe
 D $B107 'he takes the bribe' 'and acts as decoy'
+R $B107 I:IY Pointer to vischar.
   $B107 increase_morale_by_10_score_by_50();
   $B10A IY[1] = 0;
   $B10E HL = IY + 2;
   $B113 sub_CA81:$CB23();
   $B116 DE = &items_held[0];
-  $B119 if (*DE != item_BRIBE) goto got_bribe;
-  $B11E if (*++DE != item_BRIBE) return; // have no bribes
+  $B119 if (*DE != item_BRIBE && *++DE != item_BRIBE) return; // have no bribes
 D $B123 We have a bribe.
-  $B123 got_bribe: *DE = item_NONE;
+  $B123 *DE = item_NONE;
   $B126 item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;
   $B12B draw_all_items();
   $B12E B = 7; // 7 iterations
