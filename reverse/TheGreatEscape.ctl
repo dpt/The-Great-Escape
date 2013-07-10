@@ -3967,7 +3967,7 @@ D $A3A9 Unreferenced byte.
   $A3D4   IY = DE;
   $A3D7   EX DE,HL
   $A3D8   HL += 2;
-  $A3DA   CALL $CB23
+  $A3DA   sub_CB23();
   $A3DD   POP BC // could have just ended the block here
   $A3DE   return; }
   $A3DF else if (A == 128) {
@@ -5340,7 +5340,7 @@ R $B107 I:IY Pointer to vischar.
   $B107 increase_morale_by_10_score_by_50();
   $B10A IY[1] = 0;
   $B10E HL = IY + 2;
-  $B113 sub_CA81:$CB23();
+  $B113 sub_CB23();
   $B116 DE = &items_held[0];
   $B119 if (*DE != item_BRIBE && *++DE != item_BRIBE) return; // have no bribes
 D $B123 We have a bribe.
@@ -7592,7 +7592,7 @@ R $C918 I:IY Pointer to visible character block.
   $C943   else if (A == 2) {
   $C947     if (automatic_player_counter) goto $C932; // jump into case 1
   $C94D     *HL++ = 0;
-  $C950     goto $CB23; }
+  $C950     sub_CB23(); return; } // exit via
   $C953   else if (A == 3) {
   $C957     PUSH HL
   $C958     EX DE,HL
@@ -7609,7 +7609,7 @@ R $C918 I:IY Pointer to visible character block.
   $C96F       *++HL = 0xFF;
   $C972       *++HL = 0;
   $C975       POP HL
-  $C976       goto $CB23; } }
+  $C976       sub_CB23(); return; } } // exit via
   $C979   else if (A == 4) {
   $C97D     PUSH HL
   $C97E     A = bribed_character;
@@ -7623,9 +7623,10 @@ R $C918 I:IY Pointer to visible character block.
   $C993       } while (--B); }
   $C995     POP HL
   $C996     *HL++ = 0;
-  $C999     goto $CB23;
+  $C999     sub_CB23(); return; // exit via
 
 D $C99C Found bribed character.
+; indentation is wrong here, i think
   $C99C found_bribed: HL += 15;
   $C9A0     POP DE
   $C9A1     PUSH DE
@@ -7771,26 +7772,24 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CAFC   if (L == 0) { // player's vischar only
   $CB01     HL++; // $8000 -> $8001
   $CB02     *HL++ &= ~vischar_BYTE1_BIT6;
-  $CB05     CALL $CB23 }
+  $CB05     sub_CB23(); }
   $CB08   POP HL
   $CB09   transition();
   $CB0C   BC = sound_CHARACTER_ENTERS_1;
   $CB0F   play_speaker();
   $CB12   return; }
-;
   $CB13 HL -= 2;
   $CB15 A = *HL; // $8002 etc. // likely target location
-  $CB16 if (A == 0xFF) goto $CB23;
+  $CB16 if (A != 0xFF) {
+  $CB1A   HL++;
+  $CB1B   if (A & vischar_BYTE2_BIT7) {
+  $CB1F     (*HL) -= 2; } // $8003 etc.
+  $CB21   else { (*HL)++;
+  $CB22     HL--; } }
 ;
-  $CB1A HL++;
-  $CB1B if (A & vischar_BYTE2_BIT7) {
-  $CB1F   (*HL) -= 2; } // $8003 etc.
-  $CB21 else { (*HL)++;
-  $CB22   HL--; }
-;
-; possibly a fallthrough here
-; likely needs promoting to its own function
+; fallthrough
 
+c $CB23 sub_CB23
 ; This entry point is used by the routines at #R$A3B3, #R$B107 and #R$C918.
 R $CB23 I:A Character index?
   $CB23 PUSH HL
@@ -7799,8 +7798,7 @@ R $CB23 I:A Character index?
   $CB2C   POP HL
 ; This entry point is used by the routine at #R$C4E0.
   $CB2D   if (L != 0x02) { // if not player's vischar
-  $CB33     A = IY[0] & vischar_BYTE0_MASK;
-  $CB38     if (A == 0) {
+  $CB33     if (IY[0] & vischar_BYTE0_MASK == 0) {
   $CB3A       A = *HL & vischar_BYTE2_MASK;
   $CB3D       if (A == 36) goto $CB46; // character index
   $CB41       A = 0; } // self modified? (suspect not - just countering next if statement)
@@ -7811,7 +7809,7 @@ R $CB23 I:A Character index?
   $CB4A   POP HL
   $CB4B   A = *HL;
   $CB4C   if (A == 0) return;
-  $CB4E   goto $CB23;
+  $CB4E   sub_CB23(); return; // exit via
 
   $CB50   *HL++ = *HL ^ 0x80;
   $CB55   if (A & (1<<7)) { // which flag is this?
