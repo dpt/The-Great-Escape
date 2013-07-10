@@ -1013,42 +1013,41 @@ c $6A35 setup_room
   $6A4D DE = &first_byte_of_room_structure;
   $6A50 LDI // *DE++ = *HL++; BC--;
   $6A52 A = *HL;
-  $6A53 A &= A;
+  $6A53 -
   $6A54 *DE = A;
   $6A55 if (A == 0) {
   $6A57   HL++; }
   $6A58 else {
   $6A5A   memcpy(DE, HL, (A * 4) + 1); }
-  $6A62 DE = byte_81DA;
-  $6A65 A = *HL++;
+  $6A62 DE = &suspected_indoor_mask_data;
+  $6A65 A = *HL++; // sampled HL=$6E22,$6EF8,$6F38 (unique per room, but never when outside)
   $6A67 *DE = A;
-  $6A68 A &= A;
+  $6A68 -
   $6A69 if (A) {
   $6A6B   DE++;
   $6A6C   B = A;
-  $6A6D   do { PUSH BC
-  $6A6E     PUSH HL
-  $6A6F     memcpy(DE, &stru_EA7C[*HL], 7);
+  $6A6D   do { -
+  $6A6E     -
+  $6A6F     memcpy(DE, &stru_EA7C[*HL++], 7);
   $6A83     *DE++ = 32;
-  $6A87     POP HL
-  $6A88     HL++;
-  $6A89     POP BC
-  $6A8A   } while (--B); }
+  $6A87     -
+  $6A88     -
+  $6A89     - }
+  $6A8A   while (--B); }
+D $6A8C Plot all objects.
   $6A8C B = *HL; // count of objects  // sample: HL -> $6E25 (room16_corridor + 5)
   $6A8D if (B == 0) return;
   $6A90 HL++;
   $6A91 do { PUSH BC
   $6A92   C = *HL++; // object index
   $6A94   A = *HL++; // column
-  $6A96   PUSH HL
-  $6A97   HL = $F0F8 + *HL * 24 + A; // $F0F8 = visible tiles array (so *HL = row, A = column)
-  $6AAA   EX DE,HL
-  $6AAB   A = C;
-  $6AAC   expand_object();
-  $6AAF   POP HL
+  $6A96   -
+  $6A97   DE = $F0F8 + *HL * 24 + A; // $F0F8 = visible tiles array (so *HL = row, A = column)
+  $6AAB   expand_object(C); // pass C as A
+  $6AAF   -
   $6AB0   POP BC
-  $6AB1   HL++;
-  $6AB2   } while (--B);
+  $6AB1   HL++; }
+  $6AB2 while (--B);
   $6AB4 return;
 
 ; room format:
@@ -2190,7 +2189,7 @@ D $81D9 Final byte?
 
 ; ------------------------------------------------------------------------------
 
-b $81DA byte_81DA
+b $81DA suspected_indoor_mask_data
 D $81DA (<- setup_room, suspected_mask_stuff)
 
 ; ------------------------------------------------------------------------------
@@ -6281,29 +6280,27 @@ D $B916 Sets attr of something, checks indoor room index, ...
 D $B916 unpacks mask stuff
   $B916 memset($8100, 0xFF, 0xA0);
   $B923 if (indoor_room_index) {
-  $B929   HL = &byte_81DA;
+  $B929   HL = &suspected_indoor_mask_data;
   $B92C   A = *HL;
   $B92D   if (A == 0) return;
   $B92F   B = A; // iterations
   $B930   HL += 3; }
-  $B935 else { B = NELEMS(stru_EC01); // 59 iterations
-  $B937   HL = $EC03; // stru_EC01 + 2 bytes }
+  $B935 else { B = NELEMS(suspected_outdoor_mask_data); // 59 iterations
+  $B937   HL = $EC03; // suspected_outdoor_mask_data + 2 bytes }
 R $B93A I:B Iterations (outer loop);
   $B93A do { PUSH BC
   $B93B   PUSH HL
   $B93C   A = map_position_related_1 - 1;
-  $B940   if (A >= *HL) goto pop_next; // HL[2]
-  $B944   if (A + 4 < *--HL) goto pop_next; // HL[1]
-  $B94B   HL += 3;
+  $B940   if (A >= HL[0] || A + 4 < HL[-1]) goto pop_next;
+  $B94B   -
   $B94E   A = map_position_related_2 - 1;
-  $B952   if (A >= *HL) goto pop_next; // HL[4]
-  $B956   if (A + 5 < *--HL) goto pop_next; // HL[3]
-  $B95D   HL += 2;
-  $B95F   if (byte_81B2 <= *HL++) goto pop_next; // HL[5]
-  $B96A   if (byte_81B3 < *HL++) goto pop_next; // HL[6]
+  $B952   if (A >= HL[2] || A + 5 < HL[1]) goto pop_next;
+  $B95D   -
+  $B95F   if (byte_81B2 <= HL[3]) goto pop_next;
+  $B96A   if (byte_81B3 < HL[4]) goto pop_next;
   $B972   A = byte_81B4;
   $B975   if (A) A--;
-  $B979   if (A >= *HL) goto pop_next; // HL[7];
+  $B979   if (A >= HL[5]) goto pop_next;
   $B97D   HL -= 6;
   $B984   A = map_position_related_1;
   $B987   C = A;
@@ -9386,7 +9383,7 @@ D $EBC5 30 pointers to byte arrays -- probably masks.
 
 ; ------------------------------------------------------------------------------
 
-b $EC01 stru_EC01
+b $EC01 suspected_outdoor_mask_data
 D $EC01 58 8-byte structs.
 D $EC01 Used by suspected_mask_stuff. Used in outdoor mode only.
 D $EC01 struct { ?, lo, hi, lo, hi, ?, ?, ? };
