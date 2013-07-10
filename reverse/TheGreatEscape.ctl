@@ -7734,8 +7734,7 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CA85 A &= vischar_BYTE1_MASK;
   $CA87 if (A) {
   $CA89   if (A == 1) {
-  $CA8D     A = bribed_character;
-  $CA90     if (A == IY[0]) { use_bribe(); return; } // exit via
+  $CA8D     if (IY[0] == bribed_character) { use_bribe(); return; } // exit via
   $CA96     else { solitary(); return; } } // exit via
   $CA99   else if (A == 2 || A == 4) { return; }
   $CA9F   -
@@ -7745,7 +7744,6 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CAAF   HL -= 2;
   $CAB1   *HL = 0;
   $CAB3   goto sub_C918:$C9F5; }
-;
   $CAB6 if (C & vischar_BYTE1_BIT6) {
   $CABA   C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location
   $CABC   A = *--HL;
@@ -7761,8 +7759,7 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CAD9   (*HL)++; // likely target location
   $CADA   POP AF
   $CADB   get_door_position(); // door related
-  $CADE   A = (*HL >> 2) & 0x3F; // *HL = $790E, $7962, $795E => door position thingy
-  $CAE3   IY[28] = A; // IY=$8000 => $801C
+  $CADE   IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is door_positions[0] room mask shifted right 2
   $CAE6   A = *HL & 3; // door position thingy, lowest two bits -- index?
   $CAE9   if (A < 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff?
   $CAF8   PUSH HL
