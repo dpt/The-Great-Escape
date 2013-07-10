@@ -5367,29 +5367,28 @@ D $B14C Outdoor bounds detection?
   $B14C if (indoor_room_index) { indoor_bounds_check(); return; }
   $B153 B = 24; // 24 iterations (includes walls and fences)
   $B155 DE = &walls[0];
-  $B158 do { PUSH BC
+  $B158 do { -
   $B159   -
-  $B15A   BC = DE[0] * 8;
-  $B15E   if (word_81A4 < BC + 2) goto next;
-  $B167   BC = DE[1] * 8;
-  $B16C   if (word_81A4 >= BC + 4) goto next;
-  $B177   BC = DE[2] * 8;
-  $B17C   if (word_81A6 < BC) goto next;
-  $B183   BC = DE[3] * 8;
-  $B188   if (word_81A6 >= BC + 4) goto next;
-  $B193   BC = DE[4] * 8;
-  $B198   if (word_81A8 < BC) goto next;
-  $B19F   BC = DE[5] * 8;
-  $B1A4   if (word_81A8 >= BC + 2) goto next;
+  $B15A   -
+  $B15E   if ((word_81A4 >= DE[0] * 8 + 2) &&
+  $B167     -
+  $B16C       (word_81A4 <  DE[1] * 8 + 4) &&
+  $B177     -
+  $B17C       (word_81A6 >= DE[2] * 8)     &&
+  $B183     -
+  $B188       (word_81A6 <  DE[3] * 8 + 4) &&
+  $B193     -
+  $B198       (word_81A8 >= DE[4] * 8)     &&
+  $B19F     -
+  $B1A4       (word_81A8 <  DE[5] * 8 + 2)) {
 D $B1AD Found it.
-  $B1AD   -
-  $B1AE   POP BC
-  $B1AF   IY[7] ^= vischar_BYTE7_BIT5; // sampled IY = $80A0, $8080, $8060
-  $B1B7   A |= 1; // return NZ
-  $B1B9   return;
-
-  $B1BA   next: -
-  $B1BB   POP BC
+  $B1AD     -
+  $B1AE     -
+  $B1AF     IY[7] ^= vischar_BYTE7_BIT5; // sampled IY = $80A0, $8080, $8060
+  $B1B7     A |= 1; // return NZ
+  $B1B9     return; }
+  $B1BA   -
+  $B1BB   -
   $B1BC   DE += 6;
   $B1C1 } while (--B);
   $B1C5 A &= B; // return Z
