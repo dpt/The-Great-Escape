@@ -7921,62 +7921,51 @@ R $CC37 I:IY Pointer to vischar.
   $CC3A A = *HL;
 D $CC3B Don't follow the player if he's dressed as a guard
   $CC3B if (A && *$8015 == sprite_guard_tl_4) return;
-  $CC46 A = HL[1]; // $8041 etc.
-  $CC48 if (A == vischar_BYTE1_BIT2) return; // 'gone mad' flag
+  $CC46 if (HL[1] == vischar_BYTE1_BIT2) return; // $8041 etc. // 'gone mad' flag
   $CC4B -
   $CC4C HL += 15;
   $CC50 DE = &byte_81B2;
-  $CC53 if (indoor_room_index) goto end_bit;
-  $CC5A divide_array_by_8_with_rounding(HL,DE);
-  $CC5D HL = &player_map_position_x;
-  $CC60 DE = &byte_81B2;
-  $CC63 A = IY[14];
-  $CC66 RRA
-  $CC67 C = A;
-  $CC68 JR C,$CC80
-  $CC6A HL++;
-  $CC6B DE++;
+  $CC53 if (indoor_room_index == 0) {
+  $CC5A   divide_array_by_8_with_rounding(HL,DE);
+  $CC5D   HL = &player_map_position_x;
+  $CC60   DE = &byte_81B2;
+  $CC63   A = IY[0x0E]; // ?
+  $CC66   carry = A & 1; A >>= 1;
+  $CC67   C = A;
+  $CC68   if (!carry) {
+  $CC6A     HL++;
+  $CC6B     DE++;
 ; range check
-  $CC6C A = *DE - 1;
-  $CC6E if (A >= *HL) return;
-  $CC70 A += 2;
-  $CC72 if (A < *HL) return;
-  $CC74 HL--;
-  $CC75 DE--;
-  $CC76 A = *DE;
-  $CC77 CP *HL  // This is odd: Why CP then BIT?
-  $CC78 BIT 0,C
-  $CC7A JR NZ,$CC7D
-  $CC7C CCF  // invert carry
-
-  $CC7D RET C   // This is odd: CCF then RET C?
-  $CC7E goto end_bit;
+  $CC6C     A = *DE - 1;
+  $CC6E     if (A >= *HL || A + 2 < *HL) return; // *DE - 1 .. *DE + 1
+  $CC74     HL--;
+  $CC75     DE--;
+  $CC76     A = *DE;
+  $CC77     CP *HL  // TRICKY!
+  $CC78     BIT 0,C // if ((C & (1<<0)) == 0) carry = !carry;
+  $CC7D     RET C   // This is odd: CCF then RET C? // will need to fall into 'else' clause
+  $CC7E   }
 
 ; range check
-  $CC80 A = *DE - 1;
-  $CC82 if (A >= *HL) return;
-  $CC84 A += 2;
-  $CC86 if (A < *HL) return;
-  $CC88 HL++;
-  $CC89 DE++;
-  $CC8A A = *DE;  // more oddness
-  $CC8B CP *HL
-  $CC8C BIT 0,C
-  $CC8E JR NZ,$CC91
-  $CC90 CCF  // invert carry
-
-  $CC91 RET C
+  $CC80   else { A = *DE - 1;
+  $CC82     if (A >= *HL || A + 2 < *HL) return; // *DE - 1 .. *DE + 1
+  $CC88     HL++;
+  $CC89     DE++;
+  $CC8A     A = *DE;
+  $CC8B     CP *HL  // TRICKY!
+  $CC8C     BIT 0,C // if ((C & (1<<0)) == 0) carry = !carry;
+  $CC91     RET C } }
 ;
 ; fallthrough
 
-  $CC92 end_bit: if (!red_flag) {
-  $CC98   A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
-  $CC9B   if (A < 32)
-  $CC9E     IY[1] = 2;
-  $CCA2   return; }
-  $CCA3 bell = bell_RING_PERPETUAL;
-  $CCA7 guards_persue_player();
-  $CCAA return;
+  $CC92 else { if (!red_flag) {
+  $CC98      A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
+  $CC9B      if (A < 32) // vertical offset
+  $CC9E        IY[1] = 2; // cutting wire flag? or could this have different meaning for AI characters only?
+  $CCA2      return; }
+  $CCA3    bell = bell_RING_PERPETUAL;
+  $CCA7    guards_persue_prisoners();
+  $CCAA    return; }
 
 ; ------------------------------------------------------------------------------
 
