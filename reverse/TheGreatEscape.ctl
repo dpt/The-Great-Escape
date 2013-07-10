@@ -5252,26 +5252,22 @@ D $B016 --------
 D $B03D --------
   $B03D   C = *HL;
   $B03E   A = word_81A8 - C;
-  $B042   if (A >= 0) goto $B046;
-  $B044   A = -A;
+  $B042   if (A < 0) {
+  $B044     A = -A; }
   $B046   if (A >= 24) goto pop_next;
-  $B04B   A = IY[1] & 0x0F; // sampled IY=$8020, $8040, $8060, $8000 // but this is *not* vischar_BYTE1_MASK
+  $B04B   A = IY[1] & 0x0F; // sampled IY=$8020, $8040, $8060, $8000 // but this is *not* vischar_BYTE1_MASK, which is 0x1F
   $B050   if (A == 1) {
   $B054     POP HL
-  $B055     PUSH HL
+  $B055     PUSH HL // sampled HL=$8021, $8041, $8061, $80A1
   $B056     HL--;
-  $B057     A = L;
-  $B058     A &= A;
-  $B059     if (A == 0) {
-  $B05B       A = bribed_character;
-  $B05E       if (A == *IY) {
+  $B057     if ((HL & 0xFF) == 0) { // ie. $8000
+  $B05B       if (bribed_character == IY[0]) {
   $B063         use_bribe(); }
   $B066       else {
   $B068         POP HL
   $B069         POP BC
   $B06A         HL = IY + 1;
   $B06E         solitary(); return; // exit via } } }
-;
   $B071   POP HL
   $B072   HL--;
   $B073   A = *HL; // sampled HL = $80C0, $8040, $8000, $8020, $8060 // vischar_BYTE0
@@ -5280,18 +5276,17 @@ D $B03D --------
   $B079     -
   $B07A     HL += 17;
   $B07E     -
-  $B07F     BC = 0x0723;
-  $B082     CP 28       // if (A != 28) ...
+  $B07F     B = 7; C = 35;
+  $B082     tmpA = A;
   $B084     A = IY[14]; // interleaved
-  $B087     JR NZ,$B08F // ... goto $B08F;
-  $B089     L -= 2;
-  $B08B     C = 54;
-  $B08D     A ^= 1;
-;
+  $B087     if (tmpA == 28) {
+  $B089       L -= 2;
+  $B08B       C = 54;
+  $B08D       A ^= 1; }
   $B08F     if (A == 0) {
   $B092       A = *HL;
   $B093       if (A != C) {
-  $B096         if (A >= C) (*HL) -= 2;
+  $B096         if (A >= C) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch
   $B09A         (*HL)++; } }
   $B09B     else if (A == 1) {
   $B0A1       A = C + B;
