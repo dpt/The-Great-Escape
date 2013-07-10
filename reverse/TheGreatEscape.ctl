@@ -5203,13 +5203,11 @@ c $AF8F sub_AF8F
   $AF9E A = L;
   $AF9F if (A == 0 && automatic_player_counter > 0) door_handling();
   $AFAB if (A || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) { bounds_check(); return; }
-;
 D $AFB9 Cutting wire only from here onwards?
   $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
   $AFBC if (A < 26) { // a character index
   $AFC0   sub_AFDF();
   $AFC3   RET NZ }
-;
   $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
   $AFC8 memcpy(IY + 15, &word_81A4, 6); // $800F // copy Y,X and vertical offset
   $AFD7 IY[23] = byte_81AA;
