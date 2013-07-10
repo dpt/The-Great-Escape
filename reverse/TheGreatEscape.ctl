@@ -7437,31 +7437,31 @@ D $C7DF Locate the character in the map.
   $C7EA call_action: goto character_event_handlers[*++HL];
 
 D $C7F9 character_to_event_handler_index_map
-D $C7F9 Array of (character, character event handler index) mappings. (Some of the character indexes look too high though).
-W $C7F9 { 0xA6,  0 },
-W $C7FB { 0xA7,  0 },
-W $C7FD { 0xA8,  1 },
-W $C7FF { 0xA9,  1 },
-W $C801 { 0x05,  0 },
-W $C803 { 0x06,  1 },
-W $C805 { 0x85,  3 },
-W $C807 { 0x86,  3 },
-W $C809 { 0x0E,  2 },
-W $C80B { 0x0F,  2 },
-W $C80D { 0x8E,  0 },
-W $C80F { 0x8F,  1 },
-W $C811 { 0x10,  5 },
-W $C813 { 0x11,  5 },
-W $C815 { 0x90,  0 },
-W $C817 { 0x91,  1 },
-W $C819 { 0xA0,  0 },
-W $C81B { 0xA1,  1 },
-W $C81D { 0x2A,  7 },
-W $C81F { 0x2C,  8 }, // sleeps
-W $C821 { 0x2B,  9 }, // sits
-W $C823 { 0xA4,  6 },
-W $C825 { 0x24, 10 }, // released from solitary
-W $C827 { 0x25,  4 }, // morale related
+D $C7F9 Array of (character + flag, character event handler index) mappings.
+W $C7F9 { character_38 | (1<<7),  0 },
+W $C7FB { character_39 | (1<<7),  0 },
+W $C7FD { character_40 | (1<<7),  1 },
+W $C7FF { character_41 | (1<<7),  1 },
+W $C801 { character_5  | (0<<7),  0 },
+W $C803 { character_6  | (0<<7),  1 },
+W $C805 { character_5  | (1<<7),  3 },
+W $C807 { character_6  | (1<<7),  3 },
+W $C809 { character_14 | (0<<7),  2 },
+W $C80B { character_15 | (0<<7),  2 },
+W $C80D { character_14 | (1<<7),  0 },
+W $C80F { character_15 | (1<<7),  1 },
+W $C811 { character_16 | (0<<7),  5 },
+W $C813 { character_17 | (0<<7),  5 },
+W $C815 { character_16 | (1<<7),  0 },
+W $C817 { character_17 | (1<<7),  1 },
+W $C819 { character_32 | (1<<7),  0 },
+W $C81B { character_33 | (1<<7),  1 },
+W $C81D { character_42 | (0<<7),  7 },
+W $C81F { character_44 | (0<<7),  8 }, // sleeps
+W $C821 { character_43 | (0<<7),  9 }, // sits
+W $C823 { character_36 | (1<<7),  6 },
+W $C825 { character_36 | (0<<7), 10 }, // released from solitary
+W $C827 { character_37 | (0<<7),  4 }, // morale related
 
 D $C829 character_event_handlers
 D $C829 Array of pointers to character event handlers.
