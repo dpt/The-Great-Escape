@@ -962,30 +962,26 @@ D $69C9 Reset all non-player visible characters.
 
 ; ------------------------------------------------------------------------------
 
-; looks like it's filling door_related with stuff from the door_positions table
-;
-
-c $69DC sub_69DC
-D $69DC Wipe $81D6..$81D9 with 0xFF.
-  $69DC A = 0xFF;
+c $69DC door_stuff
+D $69DC Looks like it's filling door_related with stuff from the door_positions table.
+D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
+  $69DC -
   $69DE DE = door_related + 3;
   $69E1 B = 4;
-  $69E3 do { *DE-- = A;
+  $69E3 do { *DE-- = 0xFF;
   $69E5 } while (--B);
-;
-  $69E7 DE++; // DE = door_related
+  $69E7 DE++; // DE = &door_related[0];
   $69E8 B = indoor_room_index << 2;
   $69EE C = 0;
   $69F1 HLdash = &door_positions[0];
-  $69F4 Bdash = 124; // length of (door_positions)
-  $69F6 DEdash = 4; // stride
-  $69F9 do { if (*HLdash & 0xFC == B) {
+  $69F4 Bdash = 124; // length of door_positions
+  $69F6 -
+  $69F9 do { if (HLdash[0] & 0xFC == B) {
   $6A00     *DE++ = C ^ 0x80; }
   $6A05   C ^= 0x80;
   $6A08   if (C >= 0) C++; // increment every two stops?
-  $6A0E   HLdash += DEdash;
-  $6A0F } while (--Bdash);
-;
+  $6A0E   HLdash += 4; }
+  $6A0F while (--Bdash);
   $6A11 return;
 
 ; ------------------------------------------------------------------------------
