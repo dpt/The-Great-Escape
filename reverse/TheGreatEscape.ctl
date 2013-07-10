@@ -7537,8 +7537,8 @@ D $C891 (<- follow_suspicious_player, sub_CA81)
 c $C892 follow_suspicious_player
 D $C892 Causes characters to follow the player if they're being suspicious. Poisoned food handling.
   $C892 byte_A13E = 0;
-  $C896 if (bell) guards_persue_player();
   $C89D if (suspicious_player_related != 0 && --suspicious_player_related != 0) {
+  $C896 if (bell) guards_persue_prisoners();
   $C8A7   item_structs[item_FOOD].item &= ~itemfood_POISONED;
   $C8AC   C = item_FOOD;
   $C8AE   item_discovered(); }
@@ -7992,7 +7992,7 @@ D $CC3B Don't follow the player if he's dressed as a guard
 
 ; ------------------------------------------------------------------------------
 
-c $CCAB guards_persue_player
+c $CCAB guards_persue_prisoners
 D $CCAB Searches for a visible character and something else, sets a flag.
 D $CCAB If I nop this out then guards don't spot the items I drop.
   $CCAB HL = $8020; // iterate over non-player characters
@@ -8013,8 +8013,7 @@ D $CCCD Green key and food items are ignored.
   $CCD0 if (A != room_0_outdoors) {
 D $CCD3 Indoors.
   $CCD3   is_item_discoverable_indoors(A); // does this work only indoors?
-  $CCD6   if (!Z) return;
-  $CCD7   guards_persue_player();
+  $CCD6   if (Z) guards_persue_prisoners();
   $CCDA   return; }
 D $CCDB Outdoors.
   $CCDB else { HL = &item_structs[0].room;
@@ -8031,7 +8030,7 @@ D $CCEB Suspected bug: HL is decremented, but not re-incremented before 'goto ne
   $CCEC A = *HL & itemstruct_ITEM_MASK; // sampled HL = $772A (&item_structs[item_PURSE].item)
 D $CCEF The green key and food items are ignored.
   $CCEF if (A == item_GREEN_KEY || A == item_FOOD) goto next;
-  $CCF7 guards_persue_player();
+  $CCF7 guards_persue_prisoners();
   $CCFA return;
 
 ; ------------------------------------------------------------------------------
@@ -9510,7 +9509,7 @@ D $EFAF All visible characters turn forward.
 
   $EFC0 not_at_roll_call: bell = bell_RING_PERPETUAL;
   $EFC4 queue_message_for_display(message_MISSED_ROLL_CALL);
-  $EFC8 guards_persue_player(); // exit via
+  $EFC8 guards_persue_prisoners(); // exit via
 
 ; ------------------------------------------------------------------------------
 
