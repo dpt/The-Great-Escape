@@ -1008,7 +1008,7 @@ c $6A35 setup_room
   $6A35 wipe_visible_tiles();
   $6A38 HL = rooms_and_tunnels[indoor_room_index - 1];
   $6A48 PUSH HL
-  $6A49 sub_69DC();
+  $6A49 door_stuff();
   $6A4C POP HL
   $6A4D DE = &first_byte_of_room_structure;
   $6A50 LDI // *DE++ = *HL++; BC--;
