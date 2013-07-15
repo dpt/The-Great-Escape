@@ -1245,7 +1245,7 @@ D $6BE5 Array of pointers to tunnels.
   $6C13 &roomdef_40,
 
 b $6C15 room_defs
-D $6C15 room1_hut1_right
+D $6C15 roomdef_1_hut1_right
   $6C15,19 TBD: [0, 3, 54, 68, 23, 34, 54, 68, 39, 50, 54, 68, 55, 68, 4, 0, 1, 3, 10]
   $6C28,1 10 // nobjects 
   $6C29,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
@@ -1259,7 +1259,7 @@ D $6C15 room1_hut1_right
   $6C41,3 { interiorobject_EMPTY_BED,                   2,  9 },
   $6C44,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
-D $6C47 room2_hut2_left
+D $6C47 roomdef_2_hut2_left
   $6C47,13 TBD: [1, 2, 48, 64, 43, 56, 24, 38, 26, 40, 2, 13, 8]
   $6C54,1 8 // nobjects 
   $6C55,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1271,7 +1271,7 @@ D $6C47 room2_hut2_left
   $6C67,3 { interiorobject_TABLE_2,                    11, 12 },
   $6C6A,3 { interiorobject_SMALL_TUNNEL_ENTRANCE,       5,  9 },
 
-D $6C6D room3_hut2_right
+D $6C6D roomdef_3_hut2_right
   $6C6D,19 TBD: [0, 3, 54, 68, 23, 34, 54, 68, 39, 50, 54, 68, 55, 68, 4, 0, 1, 3, 10]
   $6C80,1 10 // nobjects 
   $6C81,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
@@ -1285,7 +1285,7 @@ D $6C6D room3_hut2_right
   $6C99,3 { interiorobject_SHORT_WARDROBE,             18,  5 },
   $6C9C,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
-D $6C9F room4_hut3_left
+D $6C9F roomdef_4_hut3_left
   $6C9F,14 TBD: [1, 2, 24, 40, 24, 42, 48, 64, 43, 56, 3, 18, 20, 8]
   $6CAD,1 9 // nobjects 
   $6CAE,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1298,7 +1298,7 @@ D $6C9F room4_hut3_left
   $6CC3,3 { interiorobject_CHAIR_POINTING_BOTTOM_LEFT, 13, 10 },
   $6CC6,3 { interiorobject_STUFF_31,                   14, 14 },
 
-D $6CC9 room5_hut3_right
+D $6CC9 roomdef_5_hut3_right
   $6CC9,19 TBD: [0, 3, 54, 68, 23, 34, 54, 68, 39, 50, 54, 68, 55, 68, 4, 0, 1, 3, 10]
   $6CDC,1 10 // nobjects 
   $6CDD,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
@@ -1312,7 +1312,7 @@ D $6CC9 room5_hut3_right
   $6CF5,3 { interiorobject_CHEST_OF_DRAWERS,           20,  7 },
   $6CF8,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
-D $6CFB room6_corridor
+D $6CFB roomdef_6_corridor
   $6CFB,4 TBD: [2, 0, 1, 9]
   $6CFF,1 5 // nobjects 
   $6D00,3 { interiorobject_ROOM_OUTLINE_46,             3,  6 },
@@ -1321,7 +1321,7 @@ D $6CFB room6_corridor
   $6D09,3 { interiorobject_DOOR_FRAME_16,               5, 10 },
   $6D0C,3 { interiorobject_SHORT_WARDROBE,             18,  6 },
 
-D $6D0F room9_crate
+D $6D0F roomdef_9_crate
   $6D0F,9 TBD: [1, 1, 58, 64, 28, 42, 2, 4, 21]
   $6D18,1 10 // nobjects 
   $6D19,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1335,7 +1335,7 @@ D $6D0F room9_crate
   $6D31,3 { interiorobject_SMALL_CRATE,                 6,  8 },
   $6D34,3 { interiorobject_SMALL_CRATE,                 4,  9 },
 
-D $6D37 room10_lockpick
+D $6D37 roomdef_10_lockpick
   $6D37,14 TBD: [4, 2, 69, 75, 32, 54, 36, 47, 48, 60, 3, 6, 14, 22]
   $6D45,1 14 // nobjects 
   $6D46,3 { interiorobject_ROOM_OUTLINE_47,             1,  4 },
@@ -1353,7 +1353,7 @@ D $6D37 room10_lockpick
   $6D6A,3 { interiorobject_SMALL_CRATE,                 6,  5 },
   $6D6D,3 { interiorobject_TABLE_2,                     2,  6 },
 
-D $6D70 room11_papers
+D $6D70 roomdef_11_papers
   $6D70,8 TBD: [4, 1, 27, 44, 36, 48, 1, 23]
   $6D78,1 9 // nobjects 
   $6D79,3 { interiorobject_ROOM_OUTLINE_47,             1,  4 },
@@ -1366,7 +1366,7 @@ D $6D70 room11_papers
   $6D8E,3 { interiorobject_DRAWERS_50,                 20,  8 },
   $6D91,3 { interiorobject_DESK,                       12, 10 },
 
-D $6D94 room12_corridor
+D $6D94 roomdef_12_corridor
   $6D94,5 TBD: [1, 0, 2, 4, 7]
   $6D99,1 4 // nobjects 
   $6D9A,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1374,7 +1374,7 @@ D $6D94 room12_corridor
   $6DA0,3 { interiorobject_DOOR_FRAME_16,               9, 10 },
   $6DA3,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
 
-D $6DA6 room13_corridor
+D $6DA6 roomdef_13_corridor
   $6DA6,5 TBD: [1, 0, 2, 4, 8]
   $6DAB,1 6 // nobjects 
   $6DAC,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1384,7 +1384,7 @@ D $6DA6 room13_corridor
   $6DB8,3 { interiorobject_DRAWERS_50,                 12,  5 },
   $6DBB,3 { interiorobject_CHEST_OF_DRAWERS,           14,  7 },
 
-D $6DBE room14_torch
+D $6DBE roomdef_14_torch
   $6DBE,16 TBD: [0, 3, 54, 68, 22, 32, 62, 68, 48, 58, 54, 68, 54, 68, 1, 1]
   $6DCE,1 9 // nobjects 
   $6DCF,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
@@ -1397,7 +1397,7 @@ D $6DBE room14_torch
   $6DE4,3 { interiorobject_SMALL_SHELF,                 2,  7 },
   $6DE7,3 { interiorobject_EMPTY_BED,                   2,  9 },
 
-D $6DEA room15_uniform
+D $6DEA roomdef_15_uniform
   $6DEA,23 TBD: [0, 4, 54, 68, 22, 32, 54, 68, 54, 68, 62, 68, 40, 58, 30, 40, 56, 67, 4, 1, 5, 10, 15]
   $6E01,1 10 // nobjects 
   $6E02,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
@@ -1411,7 +1411,7 @@ D $6DEA room15_uniform
   $6E1A,3 { interiorobject_DOOR_FRAME_15,              13,  9 },
   $6E1D,3 { interiorobject_TABLE_2,                    18,  8 },
 
-D $6E20 room16_corridor
+D $6E20 roomdef_16_corridor
   $6E20,5 TBD: [1, 0, 2, 4, 7]
   $6E25,1 4 // nobjects 
   $6E26,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1419,7 +1419,7 @@ D $6E20 room16_corridor
   $6E2C,3 { interiorobject_DOOR_FRAME_16,               9, 10 },
   $6E2F,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
 
-D $6E32 room7_corridor
+D $6E32 roomdef_7_corridor
   $6E32,4 TBD: [1, 0, 1, 4]
   $6E36,1 4 // nobjects 
   $6E37,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1427,7 +1427,7 @@ D $6E32 room7_corridor
   $6E3D,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
   $6E40,3 { interiorobject_TALL_WARDROBE,              12,  4 },
 
-D $6E43 room18_radio
+D $6E43 roomdef_18_radio
   $6E43,20 TBD: [4, 3, 38, 56, 48, 60, 38, 46, 39, 60, 22, 32, 48, 60, 5, 11, 17, 16, 24, 25]
   $6E57,1 10 // nobjects 
   $6E58,3 { interiorobject_ROOM_OUTLINE_47,             1,  4 },
@@ -1441,7 +1441,7 @@ D $6E43 room18_radio
   $6E70,3 { interiorobject_TINY_TABLE,                 16, 12 },
   $6E73,3 { interiorobject_DOOR_FRAME_16,               5,  7 },
 
-D $6E76 room19_food
+D $6E76 roomdef_19_food
   $6E76,8 TBD: [1, 1, 52, 64, 47, 56, 1, 7]
   $6E7E,1 11 // nobjects 
   $6E7F,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1456,7 +1456,7 @@ D $6E76 room19_food
   $6E9A,3 { interiorobject_DOOR_FRAME_40,              16,  5 },
   $6E9D,3 { interiorobject_DOOR_FRAME_16,               9, 10 },
 
-D $6EA0 room20_redcross
+D $6EA0 roomdef_20_redcross
   $6EA0,13 TBD: [1, 2, 58, 64, 26, 42, 50, 64, 46, 54, 2, 21, 4]
   $6EAD,1 11 // nobjects 
   $6EAE,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1471,7 +1471,7 @@ D $6EA0 room20_redcross
   $6EC9,3 { interiorobject_WARDROBE_WITH_KNOCKERS,     18,  8 },
   $6ECC,3 { interiorobject_TINY_TABLE,                 11,  8 },
 
-D $6ECF room22_red_key
+D $6ECF roomdef_22_red_key
   $6ECF,13 TBD: [3, 2, 54, 64, 46, 56, 58, 64, 36, 44, 2, 12, 21]
   $6EDC,1 7 // nobjects 
   $6EDD,3 { interiorobject_ROOM_OUTLINE_41,             5,  6 },
@@ -1482,7 +1482,7 @@ D $6ECF room22_red_key
   $6EEC,3 { interiorobject_TABLE_2,                     9,  6 },
   $6EEF,3 { interiorobject_DOOR_FRAME_40,              14,  4 },
 
-D $6EF2 room23_breakfast
+D $6EF2 roomdef_23_breakfast
   $6EF2,9 TBD: [0, 1, 54, 68, 34, 68, 2, 10, 3]
   $6EFB,1 12 // nobjects 
   $6EFC,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
@@ -1498,14 +1498,14 @@ D $6EF2 room23_breakfast
   $6F1A,3 { interiorobject_EMPTY_BENCH,                10,  6 },
   $6F1D,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
 
-D $6F20 room24_solitary
+D $6F20 roomdef_24_solitary
   $6F20,8 TBD: [3, 1, 48, 54, 38, 46, 1, 26]
   $6F28,1 3 // nobjects 
   $6F29,3 { interiorobject_ROOM_OUTLINE_41,             5,  6 },
   $6F2C,3 { interiorobject_DOOR_FRAME_40,              14,  4 },
   $6F2F,3 { interiorobject_TINY_TABLE,                 10,  9 },
 
-D $6F32 room25_breakfast
+D $6F32 roomdef_25_breakfast
   $6F32,7 TBD: [0, 1, 54, 68, 34, 68, 0]
   $6F39,1 11 // nobjects 
   $6F3A,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
@@ -1520,7 +1520,7 @@ D $6F32 room25_breakfast
   $6F55,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
   $6F58,3 { interiorobject_EMPTY_BENCH,                14,  4 },
 
-D $6F5B room26_hut1_left
+D $6F5B roomdef_26_hut1_left
   $6F5B,14 TBD: [1, 2, 28, 40, 28, 52, 48, 63, 44, 56, 3, 8, 13, 19]
   $6F69,1 8 // nobjects 
   $6F6A,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
@@ -1532,7 +1532,7 @@ D $6F5B room26_hut1_left
   $6F7C,3 { interiorobject_CHAIR_POINTING_BOTTOM_LEFT, 15, 10 },
   $6F7F,3 { interiorobject_TABLE_2,                    11, 12 },
 
-D $6F82 room29_second_tunnel_start
+D $6F82 roomdef_29_second_tunnel_start
   $6F82,9 TBD: [5, 0, 6, 30, 31, 32, 33, 34, 35]
   $6F8B,1 6 // nobjects 
   $6F8C,3 { interiorobject_TUNNEL_0,                   20,  0 },
@@ -1542,7 +1542,7 @@ D $6F82 room29_second_tunnel_start
   $6F98,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $6F9B,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
-D $6F9E room31
+D $6F9E roomdef_31
   $6F9E,9 TBD: [6, 0, 6, 36, 37, 38, 39, 40, 41]
   $6FA7,1 6 // nobjects 
   $6FA8,3 { interiorobject_TUNNEL_3,                    0,  0 },
@@ -1552,7 +1552,7 @@ D $6F9E room31
   $6FB4,3 { interiorobject_TUNNEL_3,                   16,  8 },
   $6FB7,3 { interiorobject_TUNNEL_3,                   20, 10 },
 
-D $6FBA room36
+D $6FBA roomdef_36
   $6FBA,9 TBD: [7, 0, 6, 31, 32, 33, 34, 35, 45]
   $6FC3,1 5 // nobjects 
   $6FC4,3 { interiorobject_TUNNEL_0,                   20,  0 },
@@ -1561,7 +1561,7 @@ D $6FBA room36
   $6FCD,3 { interiorobject_TUNNEL_0,                    8,  6 },
   $6FD0,3 { interiorobject_TUNNEL_14,                   4,  8 },
 
-D $6FD3 room32
+D $6FD3 roomdef_32
   $6FD3,9 TBD: [8, 0, 6, 36, 37, 38, 39, 40, 42]
   $6FDC,1 5 // nobjects 
   $6FDD,3 { interiorobject_TUNNEL_3,                    0,  0 },
@@ -1570,7 +1570,7 @@ D $6FD3 room32
   $6FE6,3 { interiorobject_TUNNEL_3,                   12,  6 },
   $6FE9,3 { interiorobject_TUNNEL_17,                  16,  8 },
 
-D $6FEC room34
+D $6FEC roomdef_34
   $6FEC,9 TBD: [6, 0, 6, 36, 37, 38, 39, 40, 46]
   $6FF5,1 6 // nobjects 
   $6FF6,3 { interiorobject_TUNNEL_3,                    0,  0 },
@@ -1580,7 +1580,7 @@ D $6FEC room34
   $7002,3 { interiorobject_TUNNEL_3,                   16,  8 },
   $7005,3 { interiorobject_TUNNEL_18,                  20, 10 },
 
-D $7008 room35
+D $7008 roomdef_35
   $7008,9 TBD: [6, 0, 6, 36, 37, 38, 39, 40, 41]
   $7011,1 6 // nobjects 
   $7012,3 { interiorobject_TUNNEL_3,                    0,  0 },
@@ -1590,7 +1590,7 @@ D $7008 room35
   $701E,3 { interiorobject_TUNNEL_3,                   16,  8 },
   $7021,3 { interiorobject_TUNNEL_3,                   20, 10 },
 
-D $7024 room30
+D $7024 roomdef_30
   $7024,10 TBD: [5, 0, 7, 30, 31, 32, 33, 34, 35, 44]
   $702E,1 6 // nobjects 
   $702F,3 { interiorobject_TUNNEL_0,                   20,  0 },
@@ -1600,7 +1600,7 @@ D $7024 room30
   $703B,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $703E,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
-D $7041 room40
+D $7041 roomdef_40
   $7041,9 TBD: [9, 0, 6, 30, 31, 32, 33, 34, 43]
   $704A,1 6 // nobjects 
   $704B,3 { interiorobject_TUNNEL_7,                   20,  0 },
@@ -1610,7 +1610,7 @@ D $7041 room40
   $7057,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $705A,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
-D $705D room44
+D $705D roomdef_44
   $705D,8 TBD: [8, 0, 5, 36, 37, 38, 39, 40]
   $7065,1 5 // nobjects 
   $7066,3 { interiorobject_TUNNEL_3,                    0,  0 },
@@ -1619,7 +1619,7 @@ D $705D room44
   $706F,3 { interiorobject_TUNNEL_3,                   12,  6 },
   $7072,3 { interiorobject_TUNNEL_12,                  16,  8 },
 
-D $7075 room50_blocked_tunnel
+D $7075 roomdef_50_blocked_tunnel
   $7075,13 TBD: [5, 1, 52, 58, 32, 54, 6, 30, 31, 32, 33, 34, 43]
   $7082,1 6 // nobjects 
   $7083,3 { interiorobject_TUNNEL_7,                   20,  0 },
