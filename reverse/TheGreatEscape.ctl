@@ -6554,9 +6554,7 @@ D $B7F2 Reset characters 12..15 and 20..25.
   $B7F2 DE = &character_structs[12].BYTE1;
   $B7F5 C = 10; // iterations
   $B7F7 HL = &character_reset_data[0];
-  $B7FA do { B = 3; // iterations
-  $B7FC   do { *DE++ = *HL++;
-  $B800   } while (--B);
+  $B7FA do { memcpy(DE, HL, 3); DE += 3; HL += 3;
   $B803   *DE++ = 0x12; // reset to 0x12 but the initial data is 0x18
   $B806   *DE++ = 0x00;
   $B809   DE += 2;
