@@ -4217,8 +4217,9 @@ D $A26E Common end of event_time_for_bed and event_search_light.
 ; ------------------------------------------------------------------------------
 
 b $A27F tenlong
-D $A27F Could be a list of character indexes.
+D $A27F Likely: a list of character indexes.
 D $A27F [unsure] (<- sub_A35F, sub_A373)
+  $A27F character_index tenlong[] = { character_12_prisoner, character_13, character_20_prisoner, character_21_prisoner, character_22_prisoner, character_14, character_15, character_23_prisoner, character_24, character_25 };
 
 ; ------------------------------------------------------------------------------
 
