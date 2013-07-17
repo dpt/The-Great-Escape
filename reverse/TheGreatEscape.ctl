@@ -4185,7 +4185,7 @@ D $A259 Data to set the parcel object up (room, y, x, ...).
 B $A259 { item_RED_CROSS_PARCEL, 44,44, 0x0C,0x80,0xF4 };
 
 B $A25F red_cross_parcel_contents_list
-D $A25F { item_PURSE, item_WIRESNIPS, item_BRIBE, item_COMPASS }
+B $A25F item_t red_cross_parcel_contents_list[] = { item_PURSE, item_WIRESNIPS, item_BRIBE, item_COMPASS };
 
 B $A263 red_cross_parcel_current_contents
 
