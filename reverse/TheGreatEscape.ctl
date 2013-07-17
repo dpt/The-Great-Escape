@@ -1797,22 +1797,22 @@ B $76C1 25:
 b $76C8 item_structs
 D $76C8 16 long array of 7-byte structures. These are 'characters' but seem to be the game items.
 D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; }
-B $76C8 0: wiresnips { item_WIRESNIPS, room_NONE, ... } (<- item_to_itemstruct, find_nearby_item)
-B $76CF 1: shovel { item_SHOVEL, room_9_crate, ... }
-B $76D6 2: lockpick { item_LOCKPICK, room_10_lockpick, ... }
-B $76DD 3: papers { item_PAPERS, room_11_papers, ... }
-B $76E4 4: torch { item_TORCH, room_14_torch, ... }
-B $76EB 5: bribe { item_BRIBE, room_NONE, ... } (<- use_bribe)
-B $76F2 6: uniform { item_UNIFORM, room_15_uniform, ... }
-B $76F9 7: food { item_FOOD, room_19_food, ... } (<- action_poison, called_from_main_loop)
-B $7700 8: poison { item_POISON, room_1_hut1right, ... }
-B $7707 9: red key { item_RED_KEY, room_22_redkey, ... }
-B $770E 10: yellow key { item_YELLOW_KEY, room_11_papers, ... }
-B $7715 11: green key { item_GREEN_KEY, room_0_outdoors, ... }
-B $771C 12: red cross parcel { item_RED_CROSS_PARCEL, room_NONE, ... } (<- event_new_red_cross_parcel, new_red_cross_parcel)
-B $7723 13: radio { item_RADIO, room_18_radio, ... }
-B $772A 14: purse { item_PURSE, room_NONE, ... }
-B $7731 15: compass { item_COMPASS, room_NONE, ... }
+  $76C8 { item_WIRESNIPS,        room_NONE,        64,32, 0x02, 0x78, 0xF4 }, // <- item_to_itemstruct, find_nearby_item
+  $76CF { item_SHOVEL,           room_9_crate,     62,48, 0x00, 0x7C, 0xF2 },
+  $76D6 { item_LOCKPICK,         room_10_lockpick, 73,36, 0x10, 0x77, 0xF0 },
+  $76DD { item_PAPERS,           room_11_papers,   42,58, 0x04, 0x84, 0xF3 },
+  $76E4 { item_TORCH,            room_14_torch,    34,24, 0x02, 0x7A, 0xF6 },
+  $76EB { item_BRIBE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4 }, // <- use_bribe
+  $76F2 { item_UNIFORM,          room_15_uniform,  44,65, 0x10, 0x87, 0xF1 },
+  $76F9 { item_FOOD,             room_19_food,     64,48, 0x10, 0x7E, 0xF0 }, // <- action_poison, called_from_main_loop
+  $7700 { item_POISON,           room_1_hut1right, 66,52, 0x04, 0x7C, 0xF1 },
+  $7707 { item_RED_KEY,          room_22_redkey,   60,42, 0x00, 0x7B, 0xF2 },
+  $770E { item_YELLOW_KEY,       room_11_papers,   28,34, 0x00, 0x81, 0xF8 },
+  $7715 { item_GREEN_KEY,        room_0_outdoors,  74,72, 0x00, 0x7A, 0x6E },
+  $771C { item_RED_CROSS_PARCEL, room_NONE,        28,50, 0x0C, 0x85, 0xF6 }, // <- event_new_red_cross_parcel, new_red_cross_parcel
+  $7723 { item_RADIO,            room_18_radio,    36,58, 0x08, 0x85, 0xF4 },
+  $772A { item_PURSE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4 },
+  $7731 { item_COMPASS,          room_NONE,        52,28, 0x04, 0x7E, 0xF4 },
 
 ; ------------------------------------------------------------------------------
 
