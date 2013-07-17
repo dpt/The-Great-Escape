@@ -4153,8 +4153,9 @@ D $A230 Select the next parcel contents -- the first item from the list which do
   $A249 memcpy(&item_structs[item_RED_CROSS_PARCEL].room, red_cross_parcel_reset_data, 6);
   $A254 queue_message_for_display(message_RED_CROSS_PARCEL); return; // exit via
 
-B $A259 red_cross_parcel_reset_data
+D $A259 red_cross_parcel_reset_data
 D $A259 Data to set the parcel object up (room, y, x, ...).
+B $A259 { item_RED_CROSS_PARCEL, 44,44, 0x0C,0x80,0xF4 };
 
 B $A25F red_cross_parcel_contents_list
 D $A25F { item_PURSE, item_WIRESNIPS, item_BRIBE, item_COMPASS }
