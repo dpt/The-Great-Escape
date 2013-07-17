@@ -1765,32 +1765,59 @@ B $75B0 Interior object tile refs 27
 ;
 b $7612 character_structs
 D $7612 Array, 26 long, of 7-byte structures.
-B $7612 0:
-B $7619 1:
-B $7620 2:
-B $7627 3:
-B $762E 4:
-B $7635 5:
-B $763C 6:
-B $7643 7: prisoner who sleeps at bed position A
-B $764A 8: prisoner who sleeps at bed position B
-B $7651 9: prisoner who sleeps at bed position C
-B $7658 10: prisoner who sleeps at bed position D
-B $765F 11: prisoner who sleeps at bed position E
-B $7666 12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
-B $766D 13:
-B $7674 14:
-B $767B 15:
-B $7682 16:
-B $7689 17:
-B $7690 18: prisoner who sits at bench position D
-B $7697 19: prisoner who sits at bench position E
-B $769E 20: prisoner who sits at bench position F (<- wake_up)
-B $76A5 21: prisoner who sits at bench position A
-B $76AC 22: prisoner who sits at bench position B
-B $76B3 23: prisoner who sits at bench position C
-B $76BA 24:
-B $76C1 25:
+D $7612 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; } // likely same struct type/layout as item_structs
+D $7612 0:
+D $7619 1:
+D $7620 2:
+D $7627 3:
+D $762E 4:
+D $7635 5:
+D $763C 6:
+D $7643 7: prisoner who sleeps at bed position A
+D $764A 8: prisoner who sleeps at bed position B
+D $7651 9: prisoner who sleeps at bed position C
+D $7658 10: prisoner who sleeps at bed position D
+D $765F 11: prisoner who sleeps at bed position E
+D $7666 12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
+D $766D 13:
+D $7674 14:
+D $767B 15:
+D $7682 16:
+D $7689 17:
+D $7690 18: prisoner who sits at bench position D
+D $7697 19: prisoner who sits at bench position E
+D $769E 20: prisoner who sits at bench position F (<- wake_up)
+D $76A5 21: prisoner who sits at bench position A
+D $76AC 22: prisoner who sits at bench position B
+D $76B3 23: prisoner who sits at bench position C
+D $76BA 24:
+D $76C1 25:
+  $7612,7 { character_0,           room_11_papers,    46, 46, 0x18, 0x03, 0x00 },
+  $7619,7 { character_1,           room_0_outdoors,  102, 68, 0x03, 0x01, 0x00 },
+  $7620,7 { character_2,           room_0_outdoors,   68,104, 0x03, 0x01, 0x02 },
+  $7627,7 { character_3,           room_16_corridor,  46, 46, 0x18, 0x03, 0x13 },
+  $762E,7 { character_4,           room_0_outdoors,   61,103, 0x03, 0x02, 0x04 },
+  $7635,7 { character_5,           room_0_outdoors,  106, 56, 0x0D, 0x00, 0x00 },
+  $763C,7 { character_6,           room_0_outdoors,   72, 94, 0x0D, 0x00, 0x00 },
+  $7643,7 { character_7_prisoner,  room_0_outdoors,   72, 70, 0x0D, 0x00, 0x00 },
+  $764A,7 { character_8_prisoner,  room_0_outdoors,   80, 46, 0x0D, 0x00, 0x00 },
+  $7651,7 { character_9_prisoner,  room_0_outdoors,  108, 71, 0x15, 0x04, 0x00 },
+  $7658,7 { character_10_prisoner, room_0_outdoors,   92, 52, 0x03, 0xFF, 0x38 },
+  $765F,7 { character_11_prisoner, room_0_outdoors,  109, 69, 0x03, 0x00, 0x00 },
+  $7666,7 { character_12_prisoner, room_3_hut2right,  40, 60, 0x18, 0x00, 0x08 },
+  $766D,7 { character_13,          room_2_hut2left,   36, 48, 0x18, 0x00, 0x08 },
+  $7674,7 { character_14,          room_5_hut3right,  40, 60, 0x18, 0x00, 0x10 },
+  $767B,7 { character_15,          room_5_hut3right,  36, 34, 0x18, 0x00, 0x10 },
+  $7682,7 { character_16,          room_0_outdoors,   68, 84, 0x01, 0xFF, 0x00 },
+  $7689,7 { character_17,          room_0_outdoors,   68,104, 0x01, 0xFF, 0x00 },
+  $7690,7 { character_18_prisoner, room_0_outdoors,  102, 68, 0x01, 0xFF, 0x18 },
+  $7697,7 { character_19_prisoner, room_0_outdoors,   88, 68, 0x01, 0xFF, 0x18 },
+  $769E,7 { character_20_prisoner, room_NONE,         52, 60, 0x18, 0x00, 0x08 },
+  $76A5,7 { character_21_prisoner, room_NONE,         52, 44, 0x18, 0x00, 0x08 },
+  $76AC,7 { character_22_prisoner, room_NONE,         52, 28, 0x18, 0x00, 0x08 },
+  $76B3,7 { character_23_prisoner, room_NONE,         52, 60, 0x18, 0x00, 0x10 },
+  $76BA,7 { character_24,          room_NONE,         52, 44, 0x18, 0x00, 0x10 },
+  $76C1,7 { character_25,          room_NONE,         52, 28, 0x18, 0x00, 0x10 },
 
 ; ------------------------------------------------------------------------------
 
