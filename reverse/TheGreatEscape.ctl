@@ -4136,7 +4136,9 @@ c $A219 event_go_to_time_for_bed
   $A225 go_to_time_for_bed(); return; // exit via
 
 c $A228 event_new_red_cross_parcel
+D $A228 Don't deliver a new red cross parcel while the previous one still exists.
   $A228 if ((item_structs[item_RED_CROSS_PARCEL].room & itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;
+D $A230 Select the next parcel contents -- the first item from the list which does not exist.
   $A230 DE = &red_cross_parcel_contents_list[0];
   $A233 B = 4; // length of above
   $A235 do { A = *DE;
