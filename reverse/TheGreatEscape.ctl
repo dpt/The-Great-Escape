@@ -4225,50 +4225,39 @@ D $A27F [unsure] (<- sub_A35F, sub_A373)
 
 c $A289 wake_up
 D $A289 Called by event_wake_up.
-  $A289 A = player_in_bed;
-  $A28C if (A == 0) goto $A299; // odd that this jumps into a point which sets player_in_bed to zero when it's already zero
-  $A290 HL = $800F; // player's Y position
-  $A293 *HL = 0x2E;
-  $A295 HL += 2; // player's X position
-  $A297 *HL = 0x2E;
-;
+  $A289 if (player_in_bed) { // odd that this jumps into a point which sets player_in_bed to zero when it's already zero
+  $A290   $800F = 46; // player's Y position
+  $A295   $8011 = 46; } // player's X position
   $A299 player_in_bed = 0;
   $A29D set_target_location(location_2A00);
   $A2A3 HL = &characterstruct_20.room;
-  $A2A6 DE = 7; // characterstruct stride
-;
-  $A2A9 A = room_3_hut2right;
+  $A2A6 -
+  $A2A9 -
   $A2AB B = 3; // 3 iterations
-  $A2AD do { *HL = A;
-  $A2AE   HL += DE;
+  $A2AD do { *HL = room_3_hut2right;
+  $A2AE   HL += 7; // characterstruct stride
   $A2AF } while (--B);
-;
-  $A2B1 A = room_5_hut3right;
+  $A2B1 -
   $A2B3 B = 3; // 3 iterations
-  $A2B5 do { *HL = A;
-  $A2B6   HL += DE;
+  $A2B5 do { *HL = room_5_hut3right;
+  $A2B6   HL += 7; // characterstruct stride
   $A2B7 } while (--B);
-;
   $A2B9 A = 5; // incremented by sub_A373
   $A2BB EX AF,AF'
   $A2BC C = 0; // BC = 0
   $A2BE sub_A373();
-;
 D $A2C1 Update all the bed objects to be empty.
-  $A2C1 A = interiorobject_EMPTY_BED;
+  $A2C1 -
   $A2C3 HL = &beds[0];
 D $A2C6 Bug: 7 iterations BUT only six beds in the data structure resulting in write to ROM location $1A42.
   $A2C6 B = 7; // 7 iterations
   $A2C8 do { E = *HL++;
   $A2CA   D = *HL++;
-  $A2CC   *DE = A;
+  $A2CC   *DE = interiorobject_EMPTY_BED;
   $A2CD } while (--B);
-;
 D $A2CF Update the player's bed object to be empty.
-  $A2CF room2_hut2_left.bed = A;
-;
-  $A2D3 A = indoor_room_index;
-  $A2D6 if (A == room_0_outdoors || A >= room_6) return;
+  $A2CF room2_hut2_left.bed = interiorobject_EMPTY_BED;
+  $A2D3 if (indoor_room_index == room_0_outdoors || indoor_room_index >= room_6) return;
   $A2DB setup_room();
   $A2DE plot_indoor_tiles();
   $A2E1 return;
@@ -4276,43 +4265,38 @@ D $A2CF Update the player's bed object to be empty.
 ; ------------------------------------------------------------------------------
 
 c $A2E2 breakfast_time
-  $A2E2 A = player_in_breakfast;
-  $A2E5 A &= A;
-  $A2E6 if (A) {
+  $A2E2 if (player_in_breakfast) {
   $A2E9   $800F = 52; // player Y position
   $A2EE   $8011 = 62; } // player X position
   $A2F2 player_in_breakfast = 0;
   $A2F6 set_target_location(location_9003);
-  $A2FC HL = $769F; // &characterstruct_20 + 1; // point to room refs?
-  $A2FF DE = 7; // stride
-  $A302 A = room_25_breakfast;
+  $A2FC HL = &characterstruct_20.room;
+  $A2FF -
+  $A302 -
   $A304 B = 3; // 3 iterations
-  $A306 do { *HL = A;
-  $A307   HL += DE;
+  $A306 do { *HL = room_25_breakfast;
+  $A307   HL += 7; // stride
   $A308 } while (--B);
-  $A30A A = room_23_breakfast;
+  $A30A -
   $A30C B = 3; // 3 iterations
-  $A30E do { *HL = A;
-  $A30F   HL += DE;
+  $A30E do { *HL = room_23_breakfast;
+  $A30F   HL += 7; // stride
   $A310 } while (--B);
-  $A312 A = 144;
+  $A312 A = 144; // incremented by sub_A373
   $A314 EX AF,AF'
   $A315 C = 3;
   $A317 sub_A373();
-  $A31A A = interiorobject_EMPTY_BENCH;
-  $A31C room23_breakfast.bench_A = A;
-  $A31F room23_breakfast.bench_B = A;
-  $A322 room23_breakfast.bench_C = A;
-  $A325 room23_breakfast.bench_D = A;
-  $A328 room23_breakfast.bench_E = A;
-  $A32B room23_breakfast.bench_F = A;
-  $A32E room23_breakfast.bench_G = A;
-  $A331 A = indoor_room_index;
-  $A334 A &= A;
-  $A335 if (A == 0) return;
-  $A336 if (A >= room_29_secondtunnelstart) return;
+  $A31A -
+  $A31C room23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
+  $A31F room23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
+  $A322 room23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
+  $A325 room23_breakfast.bench_D = interiorobject_EMPTY_BENCH;
+  $A328 room23_breakfast.bench_E = interiorobject_EMPTY_BENCH;
+  $A32B room23_breakfast.bench_F = interiorobject_EMPTY_BENCH;
+  $A32E room23_breakfast.bench_G = interiorobject_EMPTY_BENCH;
+  $A331 if (indoor_room_index == 0 || indoor_room_index >= room_29_secondtunnelstart) return;
   $A339 setup_room();
-  $A33C plot_indoor_tiles(); return; // exit via
+  $A33C plot_indoor_tiles(); return; // exit via // note that this differs to wake_up's ending
 
 ; ------------------------------------------------------------------------------
 
