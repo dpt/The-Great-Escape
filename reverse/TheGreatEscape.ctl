@@ -486,9 +486,9 @@
 
 ; characterstruct_BYTE0_BIT6    = 1<<6, // this disables the character
 ; characterstruct_BYTE0_MASK    = 0x1F,
-; characterstruct_BYTE5_BIT7    = 1<<7,
-; characterstruct_BYTE5_MASK_HI = 0xF8,
-; characterstruct_BYTE5_MASK_LO = 0x07,
+; characterstruct_BYTE5_MASK    = 0x7F,
+; characterstruct_BYTE6_MASK_HI = 0xF8,
+; characterstruct_BYTE6_MASK_LO = 0x07,
 
 ; doorposition_BYTE0_BIT7    = 1<<7, // means "use the next 4-byte struct"
 
@@ -7618,14 +7618,14 @@ R $C651 O:A  0/255
 R $C651 O:HL Pointer to somewhere in word_783A.
   $C651 A = *HL;
   $C652 if (A == 0xFF) {
-  $C656   A = *++HL & characterstruct_BYTE5_MASK_HI;
+  $C656   A = *++HL & characterstruct_BYTE6_MASK_HI;
   $C65A   *HL = A;
   $C65B   get_A_indexed_by_C41A();
-  $C65E   A &= characterstruct_BYTE5_MASK_LO;
+  $C65E   A &= characterstruct_BYTE6_MASK_LO;
   $C660   A += *HL;
   $C661   *HL = A; }
   $C664 else { PUSH HL
-  $C665   C = *++HL;
+  $C665   C = *++HL; // byte6
   $C667   element_A_of_table_7738();
   $C66A   H = 0;
   $C66C   A = C;
