@@ -524,8 +524,8 @@
 
 ; Key
 ;
-;   =  => door (up/down)
-;   '' => door (left/right)
+;   '' => door (up/down)
+;   =  => door (left/right)
 ;   in => entrance
 ;   [] => exit
 ;   ~  => void / ground
