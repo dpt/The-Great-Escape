@@ -6566,7 +6566,17 @@ D $B7F2 Reset characters 12..15 and 20..25.
 
 b $B819 character_reset_data
 D $B819 10 x 3-byte structs
-  $B819,30,3 ...
+D $B819 struct { byte room; byte y; byte x; }; // partial of character_struct
+  $B819,3 { room_3_hut2right, 40,60 }, // for character 12
+  $B81C,3 { room_3_hut2right, 36,48 }, // for character 13
+  $B81F,3 { room_5_hut3right, 40,60 }, // for character 14
+  $B822,3 { room_5_hut3right, 36,34 }, // for character 15
+  $B825,3 { room_NONE,        52,60 }, // for character 20
+  $B828,3 { room_NONE,        52,44 }, // for character 21
+  $B82B,3 { room_NONE,        52,28 }, // for character 22
+  $B82E,3 { room_NONE,        52,60 }, // for character 23
+  $B831,3 { room_NONE,        52,44 }, // for character 24
+  $B834,3 { room_NONE,        52,28 }, // for character 25
 
 ; $766E is 2, but reset_map_and_characters resets it to 3 (the only byte the
 ; differs between the default character data and the character_reset_data). Bug?
