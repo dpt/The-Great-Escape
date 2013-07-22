@@ -8082,6 +8082,7 @@ D $C8C5 Change '20' here to a higher number and prisoners will start following t
   $C8F5   IY += 32; // stride
   $C8FA } while (--B);
   $C8FE if (!red_flag && (morale_1 || automatic_player_counter == 0)) {
+D $C902 Pointless JP NZ (jumps to RET, RET NZ would do).
   $C910   IY = $8000;
   $C914   sub_C918(); }
   $C917 return;
