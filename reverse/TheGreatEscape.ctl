@@ -599,8 +599,8 @@
 ; $8000 seems to be an array of eight 32-wide visible character blocks. the first is likely the player character.
 
 ; b $8000 character index? (0xFF if no visible character)
-; b $8001 flags: bit 6 gets toggled in set_target_location /  bit 0: picking lock /  bit 1: cutting wire
-; w $8002 could be a target location (set in set_target_location, process_user_input)
+; b $8001 flags: bit 6 gets toggled in set_player_target_location /  bit 0: picking lock /  bit 1: cutting wire
+; w $8002 could be a target location (set in set_player_target_location, process_user_input)
 ; w $8004 (<- process_user_input) a coordinate? (i see it getting scaled in #R$CA11)
 ; ? $8006
 ; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too)
@@ -3767,7 +3767,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9FCF }
 
   $9FD1 set_target_then_set_flag_green: B = ($8002);
-  $9FD5 set_target_location(); // uses B, C
+  $9FD5 set_player_target_location(); // uses B, C
   $9FD8 goto set_flag_green;
 
   $9FDA pop_and_set_flag_red: POP BC
@@ -4009,13 +4009,15 @@ b $A139 automatic_player_counter
 D $A139 Countdown until CPU control of the player is assumed. When it becomes zero, control is assumed. It's usually set to 31 by input events.
 
 b $A13A morale_1
-D $A13A morale_1 + morale_2 treated as a word by process_user_input. Everything else treats this as a byte.
 D $A13A Inhibits user input when non-zero.
-D $A13A Something to do with flag colour. Stops set_target_location working.
+D $A13A Stops set_player_target_location working.
+D $A13A Used to set flag colour.
+D $A13A morale_1 + morale_2 treated as a word by process_user_input. Everything else treats this as a byte.
 
 b $A13B morale_2
 D $A13B Inhibits user input when non-zero.
-D $A13B Set by check_morale. Reset by looks_like_a_reset_fn.
+D $A13B Set by check_morale.
+D $A13B Reset by looks_like_a_reset_fn.
 
 b $A13C morale
 D $A13C Morale 'score'. Ranges morale_MIN .. morale_MAX.
@@ -4111,7 +4113,7 @@ D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll
   $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
-  $A1C3 if (player_in_bed == 0) set_target_location(location_2C01);
+  $A1C3 if (player_in_bed == 0) set_player_target_location(location_2C01);
   $A1CF A = 0xFF;
   $A1D1 goto set_attrs;
 
@@ -4229,7 +4231,7 @@ D $A289 Called by event_wake_up.
   $A290   $800F = 46; // player's Y position
   $A295   $8011 = 46; } // player's X position
   $A299 player_in_bed = 0;
-  $A29D set_target_location(location_2A00);
+  $A29D set_player_target_location(location_2A00);
   $A2A3 HL = &characterstruct_20.room;
   $A2A6 -
   $A2A9 -
@@ -4269,7 +4271,7 @@ c $A2E2 breakfast_time
   $A2E9   $800F = 52; // player Y position
   $A2EE   $8011 = 62; } // player X position
   $A2F2 player_in_breakfast = 0;
-  $A2F6 set_target_location(location_9003);
+  $A2F6 set_player_target_location(location_9003);
   $A2FC HL = &characterstruct_20.room;
   $A2FF -
   $A302 -
@@ -4300,14 +4302,14 @@ c $A2E2 breakfast_time
 
 ; ------------------------------------------------------------------------------
 
-c $A33F set_target_location
+c $A33F set_player_target_location
   $A33F if (morale_1) return;
   $A344 $8001 &= ~vischar_BYTE1_BIT6; $8002 = b; $8003 = c; return;
 
 ; ------------------------------------------------------------------------------
 
 c $A351 go_to_time_for_bed
-  $A351 set_target_location(location_8502);
+  $A351 set_player_target_location(location_8502);
   $A357 Adash = 133;
   $A35A C = 2;
   $A35C sub_A373(); return; // exit via
@@ -4513,7 +4515,7 @@ D $A498 Set player position to zero.
 ; ------------------------------------------------------------------------------
 
 c $A4A9 set_location_0x0E00
-  $A4A9 set_target_location(0x0E00);
+  $A4A9 set_player_target_location(0x0E00);
   $A4AF A = 0x0E;
   $A4B1 EX AF,AF'
   $A4B2 C = 0;
@@ -4522,7 +4524,7 @@ c $A4A9 set_location_0x0E00
 ; ------------------------------------------------------------------------------
 
 c $A4B7 set_location_0x8E04
-  $A4B7 set_target_location(0x8E04);
+  $A4B7 set_player_target_location(0x8E04);
   $A4BD A = 0x8E;
   $A4BF EX AF,AF'
   $A4C0 C = 4;
@@ -4531,7 +4533,7 @@ c $A4B7 set_location_0x8E04
 ; ------------------------------------------------------------------------------
 
 c $A4C5 set_location_0x1000
-  $A4C5 set_target_location(0x1000);
+  $A4C5 set_player_target_location(0x1000);
   $A4CB A = 0x10;
   $A4CD EX AF,AF'
   $A4CE C = 0;
@@ -4571,7 +4573,7 @@ c $A4FD go_to_roll_call
   $A4FF EX AF,AF'
   $A500 C = 0;
   $A502 sub_A35F();
-  $A505 set_target_location(location_2D00);
+  $A505 set_player_target_location(location_2D00);
 
 ; ------------------------------------------------------------------------------
 
@@ -7916,7 +7918,7 @@ D $C84C charevnt_released_from_solitary
   $C84D *HL++ = 0xA4;
   $C850 *HL   = 0x03;
   $C852 automatic_player_counter = 0; // force automatic control
-  $C856 set_target_location(0x2500); return;
+  $C856 set_player_target_location(0x2500); return;
 
 D $C85C charevnt_10FF
   $C85C C = 0x10;
