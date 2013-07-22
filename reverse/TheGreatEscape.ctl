@@ -4107,6 +4107,8 @@ b $A13D dispatch_counter
 ; ------------------------------------------------------------------------------
 
 b $A13E byte_A13E
+D $A13E Mystery.
+D $A13E In byte_A13E_is_nonzero etc.: when non-zero, character_index is valid. Else IY points to character_struct.
 
 ; ------------------------------------------------------------------------------
 
@@ -4493,27 +4495,27 @@ c $A3ED store_banked_A_then_C_at_HL
 
 ; ------------------------------------------------------------------------------
 
-c $A3F3 sub_A3F3
+c $A3F3 byte_A13E_is_nonzero
 D $A3F3 Checks character indexes, sets target locations, ...
 R $A3F3 I:HL -> charstruct?
   $A3F3 A = character_index;
   $A3F6 goto $A404;
 
-c $A3F8 varA13E_is_zero
+c $A3F8 byte_A13E_is_zero
 D $A3F8 Gets hit when player enters hut at end of day.
-  $A3F8 A = IY[0];  // IY=$8000
-  $A3FB if (A == 0) set_target_location(location_2C00);
+  $A3F8 A = IY[0]; // IY=$8000 // must be a character index
+  $A3FB if (A == 0) { set_player_target_location(location_2C00); return; } // exit via
 ;
 ; This entry point is used by the routine at #R$A3F3.
 R $A404 I:A Character index.
-  $A404 *++HL = 0; // HL=$766B,$7672 charstruct + 5 (charstruct + 6 when zeroed)
+  $A404 HL[1] = 0; // HL=$766B,$7672 charstruct + 5 (charstruct + 6 when zeroed)
   $A407 if (A > 19) {
   $A40F   A -= 13; } // 20.. => 7..
   $A411 else {
-  $A413   tmp_A = A; A = 13; if (tmp_A & (1<<0)) { // tmp introduced to avoid interleaving
-  $A419     *HL = 1; // HL=$7681,$7673 // characterstruct_N + 6
+  $A413   old_A = A; A = 13; if (old_A & (1<<0)) { // tmp introduced to avoid interleaving
+  $A419     HL[1] = 1; // HL=$7681,$7673 // characterstruct_N + 6
   $A41B     A |= 0x80; } }
-  $A41D *--HL = A; // characterstruct_N + 5
+  $A41D HL[0] = A; // characterstruct_N + 5
   $A41F return;
 
 ; ------------------------------------------------------------------------------
@@ -4619,28 +4621,26 @@ c $A4C5 set_location_0x1000
 
 ; ------------------------------------------------------------------------------
 
-c $A4D3 sub_A4D3
+c $A4D3 byte_A13E_is_nonzero_anotherone
 D $A4D3 Something character related [very similar to the routine at $A3F3].
   $A4D3 A = character_index;
   $A4D6 goto $A4E4;
 
-; ------------------------------------------------------------------------------
-
-c $A4D8 varA13E_is_zero_anotherone
-D $A4D8 sets a target location 2B00. seems to get hit around breakfasting time. if i nobble this it stops him sitting for breakfast.
-  $A4D8 A = *IY; // must be a character index
-  $A4DC if (A) goto $A4E4;
-  $A4DE set_target_location(location_2B00); return; // exit via
-
+c $A4D8 byte_A13E_is_zero_anotherone
+D $A4D8 Sets a target location 2B00. Seems to get hit around breakfasting time. If I nobble this it stops him sitting for breakfast.
+  $A4D8 A = IY[0]; // must be a character index
+  $A4DC if (A == 0) { set_player_target_location(location_2B00); return; } // exit via
+;
 ; This entry point is used by the routine at #R$A4D3.
+R $A4E4 I:A Character index.
   $A4E4 HL[1] = 0;
   $A4E7 if (A > 19) { // change this to 20 and character_21? stands in place of a guard
-  $A4EF   newA = A - 2; } // seems to affect position at table
+  $A4EF   tmp_A = A - 2; } // seems to affect position at table // 20.. => 18..
   $A4F1 else {
-  $A4F3   ... moved below ...
-  $A4F5   newA = 24; // interleaved // guard character?
-  $A4F7   if (A & (1<<0)) newA++; }
-  $A4FA HL[0] = newA;
+  $A4F3   -
+  $A4F5   tmp_A = 24; // interleaved // guard character?
+  $A4F7   if (A & (1<<0)) tmp_A++; }
+  $A4FA HL[0] = tmp_A;
   $A4FC return;
 ; is it all just working out positions where people sit / stand?
 
@@ -8015,11 +8015,11 @@ D $C864 charevnt_08FF
 
 D $C86C charevnt_check_varA13E
   $C86C POP HL
-  $C86D if (byte_A13E == 0) goto varA13E_is_zero; else goto sub_A3F3;
+  $C86D if (byte_A13E == 0) goto byte_A13E_is_zero; else goto byte_A13E_is_nonzero;
 
 D $C877 charevnt_check_varA13E_anotherone
   $C877 POP HL
-  $C878 if (byte_A13E == 0) goto varA13E_is_zero_anotherone; else goto sub_A4D3;
+  $C878 if (byte_A13E == 0) goto byte_A13E_is_zero_anotherone; else goto byte_A13E_is_nonzero_anotherone;
 
 D $C882 charevnt_0005
   $C882 POP HL
