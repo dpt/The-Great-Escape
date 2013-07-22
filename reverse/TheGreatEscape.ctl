@@ -1847,45 +1847,45 @@ D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk
 ;
 b $7738 more_object_tile_refs
 W $7738 46 long array of pointers to object tile refs.
-B $7794,1 could be a terminating $FF
-B $7795 Object tile refs
-B $7799 Object tile refs
-B $77A0 Object tile refs
-B $77CD Object tile refs
-B $77D0 Object tile refs
-B $77D4 Object tile refs
-B $77D8 Object tile refs
-B $77DA Object tile refs
-B $77DC Object tile refs
-B $77DE Object tile refs
-B $77E1 Object tile refs
-B $77E7 Object tile refs
-B $77EC Object tile refs
-B $77F1 Object tile refs
-B $77F3 Object tile refs
-B $77F5 Object tile refs
-B $77F7 Object tile refs
-B $77F9 Object tile refs
-B $77FB Object tile refs
-B $77FD Object tile refs
-B $77FF Object tile refs
-B $7801 Object tile refs
-B $7803 Object tile refs
-B $7805 Object tile refs
-B $7807 Object tile refs
-B $7809 Object tile refs
-B $780B Object tile refs
-B $780D Object tile refs
-B $780F Object tile refs
-B $7815 Object tile refs
-B $781A Object tile refs
-B $781F Object tile refs
-B $7825 Object tile refs
-B $782B Object tile refs
-B $7831 Object tile refs
-B $7833 Object tile refs
-B $7835 Object tile refs
-B $7838 Object tile refs
+  $7794,1 could be a terminating $FF
+  $7795 Object tile refs
+  $7799 Object tile refs
+  $77A0 Object tile refs
+  $77CD Object tile refs
+  $77D0 Object tile refs
+  $77D4 Object tile refs
+  $77D8 Object tile refs
+  $77DA Object tile refs
+  $77DC Object tile refs
+  $77DE Object tile refs
+  $77E1 Object tile refs
+  $77E7 Object tile refs
+  $77EC Object tile refs
+  $77F1 Object tile refs
+  $77F3 Object tile refs
+  $77F5 Object tile refs
+  $77F7 Object tile refs
+  $77F9 Object tile refs
+  $77FB Object tile refs
+  $77FD Object tile refs
+  $77FF Object tile refs
+  $7801 Object tile refs
+  $7803 Object tile refs
+  $7805 Object tile refs
+  $7807 Object tile refs
+  $7809 Object tile refs
+  $780B Object tile refs
+  $780D Object tile refs
+  $780F Object tile refs
+  $7815 Object tile refs
+  $781A Object tile refs
+  $781F Object tile refs
+  $7825 Object tile refs
+  $782B Object tile refs
+  $7831 Object tile refs
+  $7833 Object tile refs
+  $7835 Object tile refs
+  $7838 Object tile refs
 
 ; ------------------------------------------------------------------------------
 
