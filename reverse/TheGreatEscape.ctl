@@ -4397,7 +4397,7 @@ c $A351 go_to_time_for_bed
 c $A35F sub_A35F
 D $A35F Uses tenlong structure.
 R $A35F O:Adash Counter incremented.
-  $A35F HL = &tenlong;
+  $A35F HL = &tenlong[0];
   $A362 B = 10;
   $A364 do { PUSH HL
   $A365   PUSH BC
@@ -7928,7 +7928,7 @@ R $C7C6 I:HL Points to character_struct first byte holding character index (e.g.
   $C7C7 if (A >= character_7_prisoner  && A <= character_12_prisoner) goto character_sleeps;
   $C7D0 if (A >= character_18_prisoner && A <= character_22_prisoner) goto character_sits;
   $C7D9 PUSH HL
-  $C7DA HL = &character_to_event_handler_index_map;
+  $C7DA HL = &character_to_event_handler_index_map[0];
   $C7DD B = NELEMS(character_to_event_handler_index_map); // 24 iterations
 D $C7DF Locate the character in the map.
   $C7DF do { if (A == *HL) goto call_action;
