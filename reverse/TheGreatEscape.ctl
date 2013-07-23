@@ -624,7 +624,7 @@
 ;          0x05 .. 0x07 pattern continues
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_user_input)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_user_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; b $8013 character's vertical offset // set to 24 in process_user_input, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_something,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  suspect this is a word rather than a byte
+; b $8013 character's vertical offset // set to 24 in process_user_input, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  suspect this is a word rather than a byte
 ; ? $8014
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 sub_AF8F sets this to byte_81AA
@@ -943,9 +943,9 @@ c $68F4 enter_room
   $68FD plot_indoor_tiles();
   $6900 map_position = 0xEA74;
   $6906 set_player_sprite_for_room();
-D $6909 This assignment to HL is redundant: reset_something sets HL to $8000 as its first instruction.
+D $6909 This assignment to HL is redundant: reset_position sets HL to $8000 as its first instruction.
   $6909 HL = $8000;
-  $690C reset_something();
+  $690C reset_position(); // reset player
   $690F setup_movable_items();
   $6912 zoombox();
   $6915 increase_score(1);
@@ -1003,7 +1003,7 @@ c $6939 setup_movable_items
   $6988 memcpy($8021, movable_item_reset_data, 14);
   $6993 $803C = indoor_room_index;
   $6999 HL = $8020;
-  $699C reset_something();
+  $699C reset_position(); // reset item vischar
   $699F return;
 
 D $69A0 Fourteen bytes of reset data.
@@ -4589,7 +4589,7 @@ D $A498 Set player position to zero.
   $A49D do { *HL++ = A; // A is zero here
   $A49F } while (--B);
   $A4A1 HL = $8000;
-  $A4A4 reset_something();
+  $A4A4 reset_position(); // reset player
   $A4A7 goto select_room_and_plot;
 
 ; ------------------------------------------------------------------------------
@@ -6054,7 +6054,7 @@ D $B2FA Not found.
 c $B2FC reset_B2FC
 D $B2FC Resets ... something.
   $B2FC HL = $8000;
-  $B2FF reset_something();
+  $B2FF reset_position(); // reset player
 ;
   $B302 HL = $8018;
   $B305 A = *HL++;
@@ -6489,7 +6489,7 @@ c $B5CE called_from_main_loop_9
   $B69F   IY[12]++;
 ;
   $B6A2   HL = IY;
-  $B6A5   reset_something:$B729();
+  $B6A5   reset_position:$B729();
 ;
   $B6A8   POP BC
   $B6A9   A = IY[1]; // $8001
@@ -6540,9 +6540,9 @@ c $B5CE called_from_main_loop_9
 
 ; -----------------------------------------------------------------------------
 
-c $B71B reset_something
-D $B75A [unsure]
-R $B71B I:HL Pointer to ...
+c $B71B reset_position
+D $B71B Does this reset the vischar position, or save a copy of it?
+R $B71B I:HL Pointer to vischar.
   $B71B PUSH HL
   $B71C memcpy(&word_81A4, HL + 15, 6); // DE/HL updated CHECK
   $B728 POP HL
@@ -7653,7 +7653,7 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C5C6 DE -= 7;
   $C5CA EX DE,HL
   $C5CB PUSH HL
-  $C5CC reset_something();
+  $C5CC reset_position();
   $C5CF POP HL
   $C5D0 sub_C918(); return; // exit via
 
