@@ -627,7 +627,7 @@
 ; b $8013 character's vertical offset // set to 24 in process_user_input, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  suspect this is a word rather than a byte
 ; ? $8014
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
-; b $8017 sub_AF8F sets this to byte_81AA
+; b $8017 sub_AF8F sets this to stashed_A
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
 ; b $801C room index: cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by transition
@@ -2641,7 +2641,8 @@ w $81A8 word_81A8
 
 ; ------------------------------------------------------------------------------
 
-b $81AA byte_81AA
+b $81AA stashed_A
+D $81AA Used by sub_AF8F only.
 
 ; ------------------------------------------------------------------------------
 
@@ -5704,7 +5705,7 @@ b $AF8E bribed_character
 
 c $AF8F sub_AF8F
   $AF8F EX AF,AF'
-  $AF90 byte_81AA = A;
+  $AF90 stashed_A = A;
   $AF93 IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_BIT7;  // wild guess: clamp character in position?
   $AF9B HL = IY;
   $AF9E A = L;
@@ -5717,7 +5718,7 @@ D $AFB9 Cutting wire only from here onwards?
   $AFC3   RET NZ }
   $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
   $AFC8 memcpy(IY + 15, &word_81A4, 6); // $800F // copy Y,X and vertical offset
-  $AFD7 IY[23] = byte_81AA;
+  $AFD7 IY[0x17] = stashed_A;
   $AFDD A = 0;
   $AFDE return;
 
