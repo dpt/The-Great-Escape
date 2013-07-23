@@ -8294,8 +8294,7 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CB05     sub_CB23(); }
   $CB08   POP HL
   $CB09   transition();
-  $CB0C   BC = sound_CHARACTER_ENTERS_1;
-  $CB0F   play_speaker();
+  $CB0C   play_speaker(sound_CHARACTER_ENTERS_1);
   $CB12   return; }
   $CB13 HL -= 2;
   $CB15 A = *HL; // $8002 etc. // likely target location
