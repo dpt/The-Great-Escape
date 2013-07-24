@@ -490,6 +490,8 @@
 ; characterstruct_BYTE6_MASK_HI = 0xF8,
 ; characterstruct_BYTE6_MASK_LO = 0x07,
 
+; doorposition_BYTE0_MASK_LO = 0x03,
+; doorposition_BYTE0_MASK_HI = 0xFC,
 ; doorposition_BYTE0_BIT7    = 1<<7, // means "use the next 4-byte struct"
 
 ; searchlight_STATE_00       = 0x00,
@@ -7828,9 +7830,9 @@ U $C6FD,2 DEFB $18,$6F  ; UNUSED?
 ;
   $C739   DE -= 2;
   $C73B   HL--;
-  $C73C   *DE = (*HL & 0xFC) >> 2; // mask
+  $C73C   *DE = (*HL & doorposition_BYTE0_MASK_HI) >> 2; // mask
 D $C742 Stuff reading from door_positions.
-  $C742   if ((*HL & 3) < 2) { // mask  // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a => door_positions
+  $C742   if ((*HL & doorposition_BYTE0_MASK_LO) < 2) { // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a
   $C749     HL += 5; }
   $C74E   else {
   $C750     HL -= 3; }
@@ -8281,7 +8283,7 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CADA   POP AF
   $CADB   get_door_position(); // door related
   $CADE   IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is door_positions[0] room mask shifted right 2
-  $CAE6   A = *HL & 3; // door position thingy, lowest two bits -- index?
+  $CAE6   A = *HL & doorposition_BYTE0_MASK_LO; // door position thingy, lowest two bits -- index?
   $CAE9   if (A < 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff?
   $CAF8   PUSH HL
   $CAF9   HL = IY;
