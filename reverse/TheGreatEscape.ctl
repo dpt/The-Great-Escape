@@ -5710,14 +5710,15 @@ c $AF8F sub_AF8F
   $AF90 stashed_A = A;
   $AF93 IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_BIT7;  // wild guess: clamp character in position?
   $AF9B HL = IY;
-  $AF9E A = L;
-  $AF9F if (A == 0 && automatic_player_counter > 0) door_handling();
-  $AFAB if (A || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) { bounds_check(); return; }
+  $AF9E -
+  $AF9F if (L == 0 && automatic_player_counter > 0) door_handling(); // L == 0 => HL == 0x8000
+  $AFAB if (L || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) { bounds_check(); return; }
 D $AFB9 Cutting wire only from here onwards?
   $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
   $AFBC if (A < 26) { // a character index
   $AFC0   sub_AFDF();
-  $AFC3   RET NZ }
+  $AFC3   if (!Z) return; }
+; else object only from here on?
   $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
   $AFC8 memcpy(IY + 15, &saved_Y, 6); // $800F // copy Y,X and vertical offset
   $AFD7 IY[0x17] = stashed_A;
@@ -7599,20 +7600,19 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C534 *HL = 0;
   $C536 PUSH DE
   $C537 DE = &character_meta_data[0]; // commandant
-  $C53A if (A == 0) goto selected;
-  $C53D DE = &character_meta_data[1]; // guard
-  $C540 if (A < 16) goto selected;
-  $C544 DE = &character_meta_data[2]; // dog
-  $C547 if (A < 20) goto selected;
-  $C54B DE = &character_meta_data[3]; // prisoner
-;
-  $C54E selected: EX DE,HL
+  $C53A if (A) {
+  $C53D   DE = &character_meta_data[1]; // guard
+  $C540   if (A >= 16) {
+  $C544     DE = &character_meta_data[2]; // dog
+  $C547     if (A >= 20) {
+  $C54B       DE = &character_meta_data[3]; } } } // prisoner
+  $C54E EX DE,HL
   $C54F DE += 7;
-  $C553 LDI  // *DE++ = *HL++; B--;
-  $C555 LDI  // *DE++ = *HL++; B--;
+  $C553 *DE++ = *HL++;
+  $C555 *DE++ = *HL++;
   $C557 DE += 11;
-  $C55B LDI  // *DE++ = *HL++; B--;
-  $C55D LDI  // *DE++ = *HL++; B--;
+  $C55B *DE++ = *HL++;
+  $C55D *DE++ = *HL++;
   $C55F DE -= 8;
   $C563 memcpy(DE, &saved_Y, 6);
   $C56B POP HL
@@ -7620,18 +7620,15 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C571 DE += 7;
   $C575 A = indoor_room_index;
   $C578 *DE = A;
-  $C579 A &= A;
-  $C57A JR Z,$C588
-  $C57C play_speaker(sound_CHARACTER_ENTERS_2);
-  $C582 play_speaker(sound_CHARACTER_ENTERS_1);
-;
+  $C579 if (A) {
+  $C57C   play_speaker(sound_CHARACTER_ENTERS_2);
+  $C582   play_speaker(sound_CHARACTER_ENTERS_1); }
   $C588 DE -= 26;
-  $C58C LDI  // *DE++ = *HL++; B--;
-  $C58E LDI  // *DE++ = *HL++; B--;
+  $C58C *DE++ = *HL++;
+  $C58E *DE++ = *HL++;
   $C590 HL -= 2;
 ;
-  $C592 A = *HL;
-  $C593 if (A == 0) {
+  $C592 if (*HL == 0) {
   $C596   DE += 3; }
   $C59A else {
   $C59C   byte_A13E = 0;
@@ -7761,46 +7758,45 @@ D $C692 sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
 c $C6A0 move_characters
 D $C6A0 Moves characters around.
   $C6A0 byte_A13E = 0xFF;
-  $C6A5 A = character_index + 1;  // character_index = (character_index + 1) % character_26;
-  $C6A9 if (A == character_25 + 1) A = 0;  // 26 = highest + 1 character
-  $C6AE character_index = A;
-  $C6B1 get_character_struct();
+  $C6A5 character_index = (character_index + 1) % character_26; // 26 = highest + 1 character
+  $C6B1 get_character_struct(character_index); // pass character_index as A
   $C6B4 if (*HL & characterstruct_BYTE0_BIT6) return;
   $C6B7 PUSH HL
-  $C6B8 HL++;
-  $C6B9 A = *HL; // characterstruct byte1
-  $C6BA if (A) {
-  $C6BD   is_item_discoverable_indoors();
+  $C6B8 A = *++HL; // characterstruct byte1 == room
+  $C6BA if (A != room_0_outdoors) {
+  $C6BD   is_item_discoverable_indoors(A);
   $C6C0   if (Z) item_discovered(); }
   $C6C5 POP HL
-  $C6C6 HL += 2;
+  $C6C6 HL += 2; // point at charstruct y,x coords
   $C6C8 PUSH HL
-  $C6C9 HL += 3;
+  $C6C9 HL += 3; // point at charstruct byte2
   $C6CC A = *HL;
-  $C6CD if (A != 0) goto $C6D2;
-  $C6D0 POP HL
-  $C6D1 return;
-;
+  $C6CD if (A == 0) {
+  $C6D0   POP HL
+  $C6D1   return; }
   $C6D2 sub_C651();
-  $C6D5 if (A != 0xFF) goto $C6FF;
-  $C6DA A = character_index;
-  $C6DD if (A == character_0) goto char_is_zero; // player character?
-  $C6E0 if (A >= character_12_prisoner) goto char_ge_12;
+  $C6D5 if (A == 0xFF) {
+  $C6DA   A = character_index;
+; could re-cast this bit as:
+; if (A != character_0 && A < character_12_prisoner) {
+;   ...
+; } else ...
+  $C6DD   if (A == character_0) goto char_is_zero; // player character?
+  $C6E0   if (A >= character_12_prisoner) goto char_ge_12;
 ;
-  $C6E4 *HL++ ^= 0x80;
-  $C6E9 if (A & 7) (*HL) -= 2;
+  $C6E4   *HL++ ^= 0x80;
+  $C6E9   if (A & 7) (*HL) -= 2;
+  $C6EF   (*HL)++; // weird // i.e -1 or +1
+  $C6F0   POP HL
+  $C6F1   return;
 ;
-  $C6EF (*HL)++; // weird // i.e -1 or +1
-  $C6F0 POP HL
-  $C6F1 return;
+  $C6F2   char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5)
+  $C6F5   if (A != 36) goto $C6E4;
 ;
-  $C6F2 char_is_zero: A = *HL & 0x7F; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5)
-  $C6F5 if (A != 36) goto $C6E4;
+  $C6F9   char_ge_12: POP DE
+  $C6FA   goto character_event; // exit via
 ;
-  $C6F9 char_ge_12: POP DE
-  $C6FA goto character_event; // exit via
-;
-U $C6FD,2 DEFB $18,$6F  ; UNUSED?
+U $C6FD,2   DEFB $18,$6F  ; UNUSED? }
 ;
   $C6FF if (A == 0x80) {
   $C704   POP DE
@@ -7810,10 +7806,7 @@ U $C6FD,2 DEFB $18,$6F  ; UNUSED?
   $C70D     PUSH DE
   $C70E     DE = &saved_Y;
   $C711     B = 2; // 2 iters
-  $C713     do { A = *HL++;
-  $C714       A &= A; // clear flags // might not need to show
-  $C715       A >>= 1;
-  $C716       *DE++ = A;
+  $C713     do { *DE++ = *HL++ >> 1;
   $C719     } while (--B);
   $C71B     HL = &saved_Y;
   $C71E     POP DE }
@@ -7825,9 +7818,7 @@ U $C6FD,2 DEFB $18,$6F  ; UNUSED?
   $C730   HL++;
   $C731   increment_DE_by_diff();
   $C734   POP HL
-  $C735   A = B;
-  $C736   if (A != 2) return;
-;
+  $C735   if (B != 2) return;
   $C739   DE -= 2;
   $C73B   HL--;
   $C73C   *DE = (*HL & doorposition_BYTE0_MASK_HI) >> 2; // mask
@@ -7838,28 +7829,21 @@ D $C742 Stuff reading from door_positions.
   $C750     HL -= 3; }
   $C753   A = *DE++
   $C755   if (A) {
-  $C758     LDI
-  $C75A     LDI
-  $C75C     LDI
+  $C758     *DE++ = *HL++;
+  $C75A     *DE++ = *HL++;
+  $C75C     *DE++ = *HL++;
   $C75E     DE--; }
   $C75F   else {
   $C761     B = 3;
-  $C763     do { A = *HL;
-  $C764       A &= A; // clear flags
-  $C765       RRA
-  $C766       *DE = A;
-  $C767       HL++;
-  $C768       DE++;
+  $C763     do { *DE++ = *HL++ >> 1;
   $C769     } while (--B)
   $C76B     DE--; } }
   $C76C else {
   $C76E   POP DE
-  $C76F   A = DE[-1]
-  $C772   A &= A;     // if (A == 0) ...
-  $C773   A = 2;      // interleaving again
-  $C775   JR Z,$C779  // goto $C779;
-  $C777   A = 6;
-;
+  $C76F   tmpA = DE[-1];
+  $C772   -
+  $C773   A = 2;
+  $C775   if (tmpA) A = 6;
   $C779   EX AF,AF'
   $C77A   B = 0;
   $C77C   increment_DE_by_diff()
@@ -7867,14 +7851,11 @@ D $C742 Stuff reading from door_positions.
   $C780   DE++;
   $C781   increment_DE_by_diff()
   $C784   DE++;
-  $C785   A = B;
-  $C786   if (A != 2) return; }
-;
+  $C785   if (B != 2) return; }
   $C78B DE++;
   $C78C EX DE,HL
-  $C78D A = *HL;
+  $C78D A = *HL; // address? 761e 7625 768e 7695 7656 7695 7680 // => character struct entry + 5
   $C78E if (A == 0xFF) return;
-;
   $C791 if ((A & (1<<7)) != 0) ...
   $C793 HL++;       // interleaved
   $C794 ... goto exit;
@@ -8270,9 +8251,9 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CAB6 if (C & vischar_BYTE1_BIT6) {
   $CABA   C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location
   $CABC   A = *--HL;
-  $CABE   PUSH HL
+  $CABE   -
   $CABF   element_A_of_table_7738();
-  $CAC2   POP HL
+  $CAC2   -
   $CAC3   DE += C;
   $CAC9   A = *DE;
   $CACA   if (*HL & vischar_BYTE2_BIT7) A ^= 0x80;
