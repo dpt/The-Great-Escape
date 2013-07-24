@@ -8155,14 +8155,14 @@ D $C99C Found bribed character.
   $C9D2     HLdash = &BC_becomes_A_times_4; }
   $C9D5   else {
   $C9D7     HLdash = &BC_becomes_A_times_8; } }
-  $C9DA ($CA13) = HLdash; // self-modify sub_CA11:$CA13
-  $C9DD ($CA4B) = HLdash; // self-modify sub_CA49:$CA4B
+  $C9DA ($CA13) = HLdash; // self-modify move_character_Y:$CA13
+  $C9DD ($CA4B) = HLdash; // self-modify move_character_X:$CA4B
   $C9E0 -
   $C9E1 if (IY[7] & vischar_BYTE7_BIT5) goto bit5set; // I could 'else' this chunk.
   $C9E7 HL += 3;
-  $C9EA sub_CA11();
+  $C9EA move_character_Y();
   $C9ED if (Z) {
-  $C9EF   sub_CA49();
+  $C9EF   move_character_X();
   $C9F2   if (Z) goto $CA81; }
 
 ; This entry point is used by the routine at #R$CA81.
@@ -8172,29 +8172,31 @@ D $C99C Found bribed character.
   $C9FE return;
 
   $C9FF bit5set: L += 4;
-  $CA03 sub_CA49();
+  $CA03 move_character_X();
   $CA06 if (!Z) goto $C9F5;
-  $CA08 sub_CA11();
+  $CA08 move_character_Y();
   $CA0B if (!Z) goto $C9F5;
   $CA0D HL--;
   $CA0E sub_CA91(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
-c $CA11 sub_CA11
+c $CA11 move_character_Y
+R $CA11 vischar[15] - scalefn(vischar[4])
 R $CA11 I:HL Pointer to visible character block + 4.
 R $CA11 I:IY Pointer to visible character block.
 R $CA11 O:A  8/4/0 .. meaning ?
 R $CA11 O:HL Pointer to ?
   $CA11 A = *HL; // sampled HL=$8004,$8044,$8064,$8084
   $CA12 BC_becomes_A_times_8(); // self modified by #R$C9DA
-  $CA15 HL += 11; // -> position on Y axis ($800F etc.)
+  $CA15 HL += 11; // position on Y axis ($800F etc.)
   $CA19 E = *HL++;
   $CA1B D = *HL;
   $CA1C -
   $CA1D DE -= BC;
   $CA1F if (DE) {
   $CA21   if (DE > 0) { // +ve
+; possibly 'have reached target' flags
   $CA24     if (D != 0   || E >= 3)  { A = 8; return; } } else { // -ve
   $CA30     if (D != 255 || E < 254) { A = 4; return; } } }
   $CA3E -
@@ -8205,8 +8207,8 @@ R $CA11 O:HL Pointer to ?
 
 ; ------------------------------------------------------------------------------
 
-c $CA49 sub_CA49
-D $CA49 Nearly identical routine to sub_CA11 above.
+c $CA49 move_character_X
+D $CA49 Nearly identical routine to move_character_Y above.
 R $CA49 I:HL Pointer to visible character block + 5.
 R $CA49 I:IY Pointer to visible character block.
 R $CA49 O:A  5/7/0 .. meaning ?
@@ -8220,6 +8222,7 @@ R $CA49 O:HL Pointer to ?
   $CA55 DE -= BC;
   $CA57 if (DE) {
   $CA59   if (DE > 0) { // +ve
+; possibly 'have reached target' flags
   $CA5C     if (D != 0   || E >= 3)  { A = 5; return; } } else { // -ve
   $CA68     if (D != 255 || E < 254) { A = 7; return; } } }
   $CA76 -
