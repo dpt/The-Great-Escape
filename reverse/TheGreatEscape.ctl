@@ -2130,7 +2130,7 @@ c $7AFB use_item_common
   $7B05 L = *HL++;
   $7B07 H = *HL;
   $7B09 PUSH HL // exit via jump table entry
-  $7B0A memcpy(&word_81A4, $800F, 6); // copy Y,X and vertical offset
+  $7B0A memcpy(&saved_Y, $800F, 6); // copy Y,X and vertical offset
   $7B15 return;
 
 ; ------------------------------------------------------------------------------
@@ -2635,9 +2635,9 @@ D $81A3 Likely unreferenced byte.
 ; ------------------------------------------------------------------------------
 
 ; looks like these are Y,X and vertical offset
-w $81A4 word_81A4
-w $81A6 word_81A6
-w $81A8 word_81A8
+w $81A4 saved_Y
+w $81A6 saved_X
+w $81A8 saved_VO
 
 ; ------------------------------------------------------------------------------
 
@@ -5717,7 +5717,7 @@ D $AFB9 Cutting wire only from here onwards?
   $AFC0   sub_AFDF();
   $AFC3   RET NZ }
   $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
-  $AFC8 memcpy(IY + 15, &word_81A4, 6); // $800F // copy Y,X and vertical offset
+  $AFC8 memcpy(IY + 15, &saved_Y, 6); // $800F // copy Y,X and vertical offset
   $AFD7 IY[0x17] = stashed_A;
   $AFDD A = 0;
   $AFDE return;
@@ -5735,12 +5735,12 @@ D $AFEF --------
   $AFEF   C = *HL++;
   $AFF1   B = *HL;
   $AFF2   EX DE,HL
-  $AFF3   HL = word_81A4;
+  $AFF3   HL = saved_Y;
   $AFF6   BC += 4;
   $AFFE   if (HL != BC) {
   $B002     if (HL > BC) goto pop_next;
   $B005     BC -= 8; // ie -4 over original
-  $B00C     HL = word_81A4;
+  $B00C     HL = saved_Y;
   $B011     if (HL < BC) goto pop_next; }
   $B014   EX DE,HL
   $B015   HL++;
@@ -5748,18 +5748,18 @@ D $B016 --------
   $B016   C = *HL++;
   $B018   B = *HL;
   $B019   EX DE,HL
-  $B01A   HL = word_81A6;
+  $B01A   HL = saved_X;
   $B01D   BC += 4;
   $B025   if (HL != BC) {
   $B029     if (HL > BC) goto pop_next;
   $B02C     BC -= 8;
-  $B033     HL = word_81A6;
+  $B033     HL = saved_X;
   $B038     if (HL < BC) goto pop_next; }
   $B03B   EX DE,HL
   $B03C   HL++;
 D $B03D --------
   $B03D   C = *HL;
-  $B03E   A = word_81A8 - C;
+  $B03E   A = saved_VO - C;
   $B042   if (A < 0) {
   $B044     A = -A; }
   $B046   if (A >= 24) goto pop_next;
@@ -5870,17 +5870,17 @@ D $B14C Outdoor bounds detection?
   $B158 do { -
   $B159   -
   $B15A   -
-  $B15E   if ((word_81A4 >= DE[0] * 8 + 2) &&
+  $B15E   if ((saved_Y >= DE[0] * 8 + 2) &&
   $B167     -
-  $B16C       (word_81A4 <  DE[1] * 8 + 4) &&
+  $B16C       (saved_Y <  DE[1] * 8 + 4) &&
   $B177     -
-  $B17C       (word_81A6 >= DE[2] * 8)     &&
+  $B17C       (saved_X >= DE[2] * 8)     &&
   $B183     -
-  $B188       (word_81A6 <  DE[3] * 8 + 4) &&
+  $B188       (saved_X <  DE[3] * 8 + 4) &&
   $B193     -
-  $B198       (word_81A8 >= DE[4] * 8)     &&
+  $B198       (saved_VO >= DE[4] * 8)     &&
   $B19F     -
-  $B1A4       (word_81A8 <  DE[5] * 8 + 2)) {
+  $B1A4       (saved_VO <  DE[5] * 8 + 2)) {
 D $B1AD Found it.
   $B1AD     -
   $B1AE     -
@@ -5967,19 +5967,19 @@ c $B1F5 door_handling
 ; ------------------------------------------------------------------------------
 
 c $B252 door_in_range
-D $B252 (word_81A4, word_81A6) within (-3,+3) of HL[1..] scaled << 2
+D $B252 (saved_Y, saved_X) within (-3,+3) of HL[1..] scaled << 2
 R $B252 I:HL Pointer to (byte before) coord byte pair.
 R $B252 O:F  C/NC if match/nomatch.
   $B252 A = HL[1];
   $B254 -
   $B255 BC_becomes_A_times_4();
-  $B258 if (word_81A4 < BC - 3 || word_81A4 >= BC + 3) return; // with C set
+  $B258 if (saved_Y < BC - 3 || saved_Y >= BC + 3) return; // with C set
 ;
   $B273 -
   $B274 A = HL[2];
   $B276 BC_becomes_A_times_4();
   $B279 -
-  $B27A if (word_81A6 < BC - 3 || word_81A6 >= BC + 3) return; // with C set
+  $B27A if (saved_X < BC - 3 || saved_X >= BC + 3) return; // with C set
 ;
   $B294 return; // C not set
 
@@ -6004,7 +6004,7 @@ R $B29F O:AF Corrupted.
 R $B29F O:BC Corrupted.
 R $B29F O:HL Corrupted.
   $B29F BC = &four_byte_structures[first_byte_of_room_structure];
-  $B2AC HL = &word_81A4;
+  $B2AC HL = &saved_Y;
   $B2AF A = *BC;
   $B2B0 if (A < *HL) goto $B2E7;
   $B2B3 A = *++BC + 4;
@@ -6024,7 +6024,7 @@ R $B29F O:HL Corrupted.
   $B2D0 HL++;
   $B2D1 do { PUSH BC
   $B2D2     PUSH HL
-  $B2D3     DE = &word_81A4;
+  $B2D3     DE = &saved_Y;
   $B2D6     B = 2; // 2 iterations
   $B2D8     do { A = *DE;
   $B2D9     if (A < HL[0] || A >= HL[1]) goto $B2F2; // next outer loop iteration (eg break)
@@ -6092,7 +6092,7 @@ D $B32D Door related stuff.
   $B340   if (IY[14] & 3 != Bdash) goto next;
   $B348   HLdash++;
   $B349   - // registers renamed here
-  $B34A   DEdash = &word_81A4;
+  $B34A   DEdash = &saved_Y;
   $B34D   B = 2; // 2 iterations
   $B34F   do { A = *HLdash - 3;
   $B352     if (A >= *DEdash || A + 6 < *DEdash) goto next; // -3 .. +3
@@ -6341,7 +6341,7 @@ D $B506 Search door_related for C.
   $B521 HL++;
   $B522 EX DE,HL
 D $B523 Range check pattern (-3..+3).
-  $B523 HL = &word_81A4;
+  $B523 HL = &saved_Y;
   $B526 B = 2; // 2 iterations
   $B528 do { if (*HL <= *DE - 3 || *HL > *DE + 3) goto exx_next;
   $B533   HL += 2;
@@ -6417,7 +6417,7 @@ c $B5CE called_from_main_loop_9
   $B610   if (A) A = 0xFF;
   $B614   B = A;
   $B615   HL -= BC;
-  $B617   word_81A4 = HL;
+  $B617   saved_Y = HL;
 ;
   $B61A   DE++;
   $B61B   L = IY[17]; // X axis
@@ -6428,7 +6428,7 @@ c $B5CE called_from_main_loop_9
   $B625   if (A) A = 0xFF;
   $B629   B = A;
   $B62A   HL -= BC;
-  $B62C   word_81A6 = HL;
+  $B62C   saved_X = HL;
 ;
   $B62F   DE++;
   $B630   L = IY[19]; // vertical offset
@@ -6439,7 +6439,7 @@ c $B5CE called_from_main_loop_9
   $B63A   if (A) A = 0xFF;
   $B63E   B = A;
   $B63F   HL -= BC;
-  $B641   word_81A8 = HL;
+  $B641   saved_VO = HL;
 ;
   $B644   sub_AF8F();
   $B647   if (!Z) goto $B6A8;
@@ -6458,7 +6458,7 @@ c $B5CE called_from_main_loop_9
   $B664   C = IY[15]; // Y axis
   $B667   B = IY[16];
   $B66A   HL += BC;
-  $B66B   word_81A4 = HL;
+  $B66B   saved_Y = HL;
 ;
   $B66E   DE++;
   $B66F   A = *DE;
@@ -6469,7 +6469,7 @@ c $B5CE called_from_main_loop_9
   $B678   C = IY[17]; // X axis
   $B67B   B = IY[18];
   $B67E   HL += BC;
-  $B67F   word_81A6 = HL;
+  $B67F   saved_X = HL;
 ;
   $B682   DE++;
   $B683   A = *DE;
@@ -6480,7 +6480,7 @@ c $B5CE called_from_main_loop_9
   $B68C   C = IY[19]; // vertical offset
   $B68F   B = IY[20];
   $B692   HL += BC;
-  $B693   word_81A8 = HL;
+  $B693   saved_VO = HL;
 ;
   $B696   DE++;
   $B697   A = *DE;
@@ -6545,26 +6545,22 @@ c $B71B reset_position
 D $B71B Does this reset the vischar position, or save a copy of it?
 R $B71B I:HL Pointer to vischar.
   $B71B PUSH HL
-  $B71C memcpy(&word_81A4, HL + 15, 6); // DE/HL updated CHECK
+  $B71C memcpy(&saved_Y, HL + 0x0F, 6);
   $B728 POP HL
+
 ; This entry point is used by the routine at #R$B5CE.
-  $B729 EX DE,HL
-  $B72A DE += 24;
-  $B72E HL = word_81A6 + 0x0200;
-  $B735 //
-  $B739 A &= A; // reset carry before SBC
-  $B73A HL -= word_81A4;
-  $B73C HL += HL;
-  $B73D EX DE,HL
+  $B729 -
+  $B72A HL += 0x18;
+  $B72E DE = saved_X + 0x0200;
+  $B735 -
+  $B739 -
+  $B73A DE = (DE - saved_Y) * 2;
+  $B73D -
   $B73E *HL++ = E;
   $B740 *HL++ = D;
-  $B742 EX DE,HL
-  $B743 HL = 0x0800;
-  $B746 A &= A; // reset carry before SBC
-  $B747 HL -= word_81A4;
-  $B74D HL -= word_81A8;
-  $B753 HL -= word_81A6;
-  $B755 EX DE,HL
+  $B742 -
+  $B743 DE = 0x0800 - saved_Y - saved_VO - saved_X;
+  $B755 -
   $B756 *HL++ = E;
   $B758 *HL = D;
   $B759 return;
@@ -7570,7 +7566,7 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4FA PUSH HL // resave
   $C4FB PUSH DE
   $C4FC DE++; // $8021 etc.
-  $C4FD HL = &word_81A4;
+  $C4FD HL = &saved_Y;
   $C500 A = *DE++;
   $C502 A &= A;
   $C503 if (A == 0) {
@@ -7616,7 +7612,7 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C55B LDI  // *DE++ = *HL++; B--;
   $C55D LDI  // *DE++ = *HL++; B--;
   $C55F DE -= 8;
-  $C563 memcpy(DE, &word_81A4, 6);
+  $C563 memcpy(DE, &saved_Y, 6);
   $C56B POP HL
   $C56C HL += 5;
   $C571 DE += 7;
@@ -7810,14 +7806,14 @@ U $C6FD,2 DEFB $18,$6F  ; UNUSED?
   $C708   PUSH HL
   $C709   if (A == 0) {
   $C70D     PUSH DE
-  $C70E     DE = &word_81A4;
+  $C70E     DE = &saved_Y;
   $C711     B = 2; // 2 iters
   $C713     do { A = *HL++;
   $C714       A &= A; // clear flags // might not need to show
   $C715       A >>= 1;
   $C716       *DE++ = A;
   $C719     } while (--B);
-  $C71B     HL = &word_81A4;
+  $C71B     HL = &saved_Y;
   $C71E     POP DE }
   $C71F   if (DE[-1] == 0) A = 2; else A = 6;
   $C729   EX AF,AF'
