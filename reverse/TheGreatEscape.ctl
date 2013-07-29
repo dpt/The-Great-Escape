@@ -453,13 +453,14 @@
 ; ; $800x flags (and $802x, $804x, ...)
 ; vischar_BYTE0_EMPTY_SLOT   = 0xFF,
 ; vischar_BYTE0_MASK         = 0x1F, // character index
+; vischar_BYTE1_EMPTY_SLOT   = 0xFF,
 ; vischar_BYTE1_MASK         = 0x3F,
 ; vischar_BYTE1_PICKING_LOCK = 1<<0, // player only
 ; vischar_BYTE1_CUTTING_WIRE = 1<<1, // player only
 ; vischar_BYTE1_PERSUE       = 1<<0, // AI only
 ; vischar_BYTE1_BIT2         = 1<<2, // set when bribe taken ('gone mad' flag)
-; vischar_BYTE1_BIT6         = 1<<6,
-; vischar_BYTE1_BIT7         = 1<<7,
+; vischar_BYTE1_BIT6         = 1<<6, // seems to affect coordinate scaling
+; vischar_BYTE1_BIT7         = 1<<7, // set in called_from_main_loop_9
 ; vischar_BYTE2_MASK         = 0x7F,
 ; vischar_BYTE2_BIT7         = 1<<7,
 ; vischar_BYTE7_MASK         = 0x0F,
@@ -467,6 +468,7 @@
 ; vischar_BYTE7_BIT5         = 1<<5, // bounds related, perhaps stopping movement
 ; vischar_BYTE7_BIT6         = 1<<6,
 ; vischar_BYTE7_BIT7         = 1<<7,
+; vischar_BYTE12_MASK        = 0x7F,
 ; vischar_BYTE13_MASK        = 0x7F,
 ; vischar_BYTE13_BIT7        = 1<<7,
 ; vischar_BYTE14_CRAWL       = 1<<2,
@@ -601,29 +603,29 @@
 ; $8000 seems to be an array of eight 32-wide visible character blocks. the first is likely the player character.
 
 ; b $8000 character index? (0xFF if no visible character)
-; b $8001 flags: bit 6 gets toggled in set_player_target_location /  bit 0: picking lock /  bit 1: cutting wire
+; b $8001 flags: bit 6 gets toggled in set_player_target_location /  bit 0: picking lock /  bit 1: cutting wire  (0xFF when reset)
 ; w $8002 could be a target location (set in set_player_target_location, process_user_input)
 ; w $8004 (<- process_user_input) a coordinate? (i see it getting scaled in #R$CA11)
 ; ? $8006
-; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too)
-; ? $8008
-; ? $8009
-; ? $800A (written by called_from_main_loop_9)
-; ? $800B (written by called_from_main_loop_9)
-; ? $800C (written by called_from_main_loop_9)
+; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too) (0x00 when reset)
+; w $8008 (read by called_from_main_loop_9)
+; w $800A (read/written by called_from_main_loop_9)
+; b $800C (read/written by called_from_main_loop_9)
 ; b $800D tunnel related (<- process_user_input, wire_snipped, process_user_input) assigned from table at 9EE0.  causes movement when set. but not when in solitary.
 ;            0x81 -> move toward top left,
 ;            0x82 -> move toward bottom right,
 ;            0x83 -> move toward bottom left,
 ;            0x84 -> TL (again)
 ;            0x85 ->
-; b $800E tunnel related, direction (bottom 2 bits index $9EE0) bit 2 is walk/crawl flag
+; b $800E tunnel related, direction (bottom 2 bits index table_9EE0) bit 2 is walk/crawl flag
 ; set to - 0x00 -> character faces top left
 ;          0x01 -> character faces top right
 ;          0x02 -> character faces bottom right
 ;          0x03 -> character faces bottom left
-;          0x04 -> character faces top left (crawling)
-;          0x05 .. 0x07 pattern continues
+;          0x04 -> character faces top left     (crawling)
+;          0x05 -> character faces top right    (crawling)
+;          0x06 -> character faces bottom right (crawling)
+;          0x07 -> character faces bottom left  (crawling)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_user_input)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_user_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
 ; b $8013 character's vertical offset // set to 24 in process_user_input, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  suspect this is a word rather than a byte
@@ -3757,6 +3759,7 @@ D $9EB2 Locks player out until wire is snipped.
 
 b $9EE0 table_9EE0
 D $9EE0 Indexed by $800E.
+  $9EE0 direction_type table_9EE0[] = { 0x84, 0x87, 0x88, 0x85 };
 
 ; ------------------------------------------------------------------------------
 
@@ -6396,151 +6399,134 @@ D $B586 Boundaries.
 c $B5CE called_from_main_loop_9
   $B5CE B = 8;
   $B5D0 IY = $8000;
-  $B5D4 do { A = IY[1];
-  $B5D7   if (A == 0xFF) goto next;
+  $B5D4 do { if (IY[1] == vischar_BYTE1_EMPTY_SLOT) goto next; // flags
   $B5DC   PUSH BC
   $B5DD   IY[1] |= vischar_BYTE1_BIT7; // $8001
-  $B5E1   if (IY[13] & vischar_BYTE13_BIT7) goto $B6BE; // $800D
-  $B5E8   H = IY[11];
-  $B5EB   L = IY[10];
-  $B5EE   A = IY[12];
-  $B5F1   if (even_parity(A)) goto $B64F;
-  $B5F5   A &= 0x7F;
-  $B5F7   if (A == 0) goto $B6C2;
-  $B5FA   HL += (A + 1) * 4 - 1;
-  $B602   A = *HL++;
-  $B603   EX AF,AF'
+  $B5E1   if (IY[0x0D] & vischar_BYTE13_BIT7) goto byte13bit7set; // $800D
+  $B5E8   H = IY[0x0B];
+  $B5EB   L = IY[0x0A];
+  $B5EE   A = IY[0x0C]; // sampled IY = 8060, 8080, 80A0, ...
+  $B5F1   if (!even_parity(A)) {
+  $B5F5     A &= vischar_BYTE12_MASK;
+  $B5F7     if (A == 0) goto snozzle;
+  $B5FA     HL += (A + 1) * 4 - 1;
+  $B602     A = *HL++;
+  $B603     EX AF,AF'
 ;
-  $B605   EX DE,HL
-  $B606   L = IY[15]; // Y axis
-  $B609   H = IY[16];
-  $B60C   A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data)
-  $B60D   C = A;
-  $B60E   A &= 0x80;
-  $B610   if (A) A = 0xFF;
-  $B614   B = A;
-  $B615   HL -= BC;
-  $B617   saved_Y = HL;
+  $B605     resume1: EX DE,HL
+  $B606     L = IY[0x0F]; // Y axis
+  $B609     H = IY[0x10];
+  $B60C     A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data)
+  $B60D     C = A;
+  $B60E     A &= 0x80;
+  $B610     if (A) A = 0xFF;
+  $B614     B = A;
+  $B615     HL -= BC;
+  $B617     saved_Y = HL;
+  $B61A     DE++;
+  $B61B     L = IY[0x11]; // X axis
+  $B61E     H = IY[0x12];
+  $B621     A = *DE;
+  $B622     C = A;
+  $B623     A &= 0x80;
+  $B625     if (A) A = 0xFF;
+  $B629     B = A;
+  $B62A     HL -= BC;
+  $B62C     saved_X = HL;
+  $B62F     DE++;
+  $B630     L = IY[0x13]; // vertical offset
+  $B633     H = IY[0x14];
+  $B636     A = *DE;
+  $B637     C = A;
+  $B638     A &= 0x80;
+  $B63A     if (A) A = 0xFF;
+  $B63E     B = A;
+  $B63F     HL -= BC;
+  $B641     saved_VO = HL;
+  $B644     sub_AF8F();
+  $B647     if (!Z) goto pop_next;
+  $B64A     IY[0x0C]--;
+  $B64D   }
+  $B64F   else { if (A == *HL) goto snozzle;
+  $B653     HL += (A + 1) * 4;
 ;
-  $B61A   DE++;
-  $B61B   L = IY[17]; // X axis
-  $B61E   H = IY[18];
-  $B621   A = *DE;
-  $B622   C = A;
-  $B623   A &= 0x80;
-  $B625   if (A) A = 0xFF;
-  $B629   B = A;
-  $B62A   HL -= BC;
-  $B62C   saved_X = HL;
-;
-  $B62F   DE++;
-  $B630   L = IY[19]; // vertical offset
-  $B633   H = IY[20];
-  $B636   A = *DE;
-  $B637   C = A;
-  $B638   A &= 0x80;
-  $B63A   if (A) A = 0xFF;
-  $B63E   B = A;
-  $B63F   HL -= BC;
-  $B641   saved_VO = HL;
-;
-  $B644   sub_AF8F();
-  $B647   if (!Z) goto $B6A8;
-  $B64A   IY[12]--;
-  $B64D   goto $B6A2;
-
-  $B64F   if (A == *HL) goto $B6C2;
-  $B653   HL += (A + 1) * 4;
-;
-  $B65A   EX DE,HL
-  $B65B   A = *DE;
-  $B65C   L = A;
-  $B65D   A &= 0x80;
-  $B65F   if (A) A = 0xFF;
-  $B663   H = A;
-  $B664   C = IY[15]; // Y axis
-  $B667   B = IY[16];
-  $B66A   HL += BC;
-  $B66B   saved_Y = HL;
-;
-  $B66E   DE++;
-  $B66F   A = *DE;
-  $B670   L = A;
-  $B671   A &= 0x80;
-  $B673   if (A) A = 0xFF;
-  $B677   H = A;
-  $B678   C = IY[17]; // X axis
-  $B67B   B = IY[18];
-  $B67E   HL += BC;
-  $B67F   saved_X = HL;
-;
-  $B682   DE++;
-  $B683   A = *DE;
-  $B684   L = A;
-  $B685   A &= 0x80;
-  $B687   if (A) A = 0xFF;
-  $B68B   H = A;
-  $B68C   C = IY[19]; // vertical offset
-  $B68F   B = IY[20];
-  $B692   HL += BC;
-  $B693   saved_VO = HL;
-;
-  $B696   DE++;
-  $B697   A = *DE;
-  $B698   EX AF,AF'
-  $B699   sub_AF8F();
-  $B69C   if (!Z) goto $B6A8;
-  $B69F   IY[12]++;
-;
+  $B65A     resume2: EX DE,HL
+  $B65B     A = *DE;
+  $B65C     L = A;
+  $B65D     A &= 0x80;
+  $B65F     if (A) A = 0xFF;
+  $B663     H = A;
+  $B664     C = IY[0x0F]; // Y axis
+  $B667     B = IY[0x10];
+  $B66A     HL += BC;
+  $B66B     saved_Y = HL;
+  $B66E     DE++;
+  $B66F     A = *DE;
+  $B670     L = A;
+  $B671     A &= 0x80;
+  $B673     if (A) A = 0xFF;
+  $B677     H = A;
+  $B678     C = IY[0x11]; // X axis
+  $B67B     B = IY[0x12];
+  $B67E     HL += BC;
+  $B67F     saved_X = HL;
+  $B682     DE++;
+  $B683     A = *DE;
+  $B684     L = A;
+  $B685     A &= 0x80;
+  $B687     if (A) A = 0xFF;
+  $B68B     H = A;
+  $B68C     C = IY[0x13]; // vertical offset
+  $B68F     B = IY[0x14];
+  $B692     HL += BC;
+  $B693     saved_VO = HL;
+  $B696     DE++;
+  $B697     A = *DE;
+  $B698     EX AF,AF'
+  $B699     sub_AF8F();
+  $B69C     if (!Z) goto pop_next;
+  $B69F     IY[0x0C]++; }
   $B6A2   HL = IY;
   $B6A5   reset_position:$B729();
 ;
-  $B6A8   POP BC
-  $B6A9   A = IY[1]; // $8001
-  $B6AC   if (A != 0xFF) IY[1] &= ~vischar_BYTE1_BIT7;
+  $B6A8   pop_next: POP BC
+  $B6A9   if (IY[1] != vischar_BYTE1_EMPTY_SLOT) IY[1] &= ~vischar_BYTE1_BIT7; // $8001
 ;
   $B6B4   next: DE = 32; // stride
   $B6B7   IY += DE;
   $B6B9 } while (--B);
   $B6BD return;
 
-  $B6BE IY[13] &= ~vischar_BYTE13_BIT7; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,
+  $B6BE byte13bit7set: IY[0x0D] &= ~vischar_BYTE13_BIT7; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,
 ;
-  $B6C2 A = byte_CDAA[IY[14] * 9 + IY[13]];
+  $B6C2 snozzle: A = byte_CDAA[IY[0x0E] * 9 + IY[0x0D]];
   $B6D5 C = A;
-  $B6D6 L = IY[8];
-  $B6D9 H = IY[9];
-  $B6DC A += A;
-  $B6DD E = A;
-  $B6DE HL += DE;
-  $B6DF E = *HL;
-  $B6E0 HL++;
-  $B6E1 IY[10] = E;
+  $B6D6 L = IY[0x08];
+  $B6D9 H = IY[0x09];
+  $B6DC HL += A * 2;
+  $B6DF E = *HL++;
+  $B6E1 IY[0x0A] = E;
   $B6E4 D = *HL;
-  $B6E5 IY[11] = D;
+  $B6E5 IY[0x0B] = D;
   $B6E8 if ((C & (1<<7)) == 0) {
-  $B6EC   IY[12] = 0;
+  $B6EC   IY[0x0C] = 0;
   $B6F0   DE += 2;
-  $B6F2   A = *DE;
-  $B6F3   IY[14] = A;
+  $B6F2   IY[0x0E] = *DE;
   $B6F6   DE += 2;
   $B6F8   EX DE,HL
-  $B6F9   JP $B65A }
-
-  $B6FC A = *DE;
-  $B6FD C = A;
-  $B6FE A |= 0x80;
-  $B700 IY[12] = A;
-  $B703 A = *++DE;
-  $B705 IY[14] = A;
-  $B708 DE += 3;
-  $B70B PUSH DE
-  $B70C EX DE,HL
-  $B70D HL += C * 4 - 1;
-  $B715 A = *HL;
-  $B716 EX AF,AF'
-  $B717 POP HL
-  $B718 JP $B605
+  $B6F9   goto resume2; }
+  $B6FC else { A = *DE;
+  $B6FD   C = A;
+  $B6FE   IY[0x0C] = A | 0x80;
+  $B703   IY[0x0E] = *++DE;
+  $B708   DE += 3;
+  $B70B   PUSH DE
+  $B70C   EX DE,HL
+  $B70D   HL += C * 4 - 1;
+  $B715   A = *HL;
+  $B716   EX AF,AF'
+  $B717   POP HL
+  $B718   goto resume1; }
 
 ; -----------------------------------------------------------------------------
 
@@ -7658,55 +7644,51 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
 c $C5D3 reset_visible_character
 R $C5D3 I:HL Pointer to vischar.
   $C5D3 A = *HL;
-  $C5D4 if (A == character_NONE) return; // might need character_NONE
-  $C5D7 if (A < character_26_stove1) goto $C602; // non-object character
-  $C5DC *HL++ = 0xFF;
-  $C5DF *HL = 0xFF;
-  $C5E1 HL += 6;
-  $C5E5 *HL = 0;
-  $C5E7 HL += 8;
-  $C5EB DE = &movable_items[0]; // stove1
-  $C5EE if (A == character_26_stove1) goto $C5FC;
-  $C5F2 DE = &movable_items[2]; // stove2
-  $C5F5 if (A == character_27_stove2) goto $C5FC;
-  $C5F9 DE = &movable_items[1]; // crate
-;
-  $C5FC memcpy(DE, HL, 6);
-  $C601 return;
-;
-  $C602 EX DE,HL
-  $C603 get_character_struct();
-  $C606 *HL &= ~characterstruct_BYTE0_BIT6;
-  $C608 DE += 28;
-  $C60C A = *DE;
-  $C60D *++HL = A;
-  $C610 EX DE,HL
-  $C611 HL -= 21;
-  $C615 *HL = 0;
-  $C617 HL += 8;
-  $C61A DE++;
-  $C61C if (A == 0) {
-  $C61F   divide_array_by_8_with_rounding(HL,DE); }
-  $C622 else {
-;
-  $C624   B = 3;
-  $C626   do { *DE++ = *HL;
-  $C628   HL += 2;
-  $C62B } while (--B); }
-;
-  $C62D HL -= 21;
-  $C631 A = *HL;
-  $C632 *HL++ = 255;
-  $C635 *HL++ = 255;
-  $C638 if (A >= 16 && A < 20) { // likely character index
-  $C640   *HL++ = 255;
-  $C643   *HL = 0;
-  $C645   if (A >= 18) *HL = 24;
-  $C64B   HL--; }
-;
-  $C64C *DE++ = *HL++; BC--;
-  $C64E *DE++ = *HL++; BC--;
-  $C650 return;
+  $C5D4 if (A == character_NONE) return;
+  $C5D7 if (A >= character_26_stove1) {
+D $C5DC Object character.
+  $C5DC   *HL++ = 0xFF; // character_NONE
+  $C5DF   *HL = 0xFF;
+  $C5E1   HL += 6;
+  $C5E5   *HL = 0;
+  $C5E7   HL += 8;
+  $C5EB   DE = &movable_items[0]; // stove1
+  $C5EE   if (A != character_26_stove1) {
+  $C5F2     DE = &movable_items[2]; // stove2
+  $C5F5     if (A != character_27_stove2) {
+  $C5F9       DE = &movable_items[1]; } } // crate
+  $C5FC   memcpy(DE, HL, 6);
+  $C601   return; }
+D $C602 Non-object character.
+  $C602 else { -
+  $C603   DE = get_character_struct(A);
+  $C606   *DE &= ~characterstruct_BYTE0_BIT6;
+  $C608   -
+  $C60C   A = HL[0x1C]; // room index
+  $C60D   *++DE = A; // characterstruct.room = room index;
+  $C610   -
+  $C611   HL[7] = 0; // flags
+  $C617   HL += 0x0F; // vischar+0x0F
+  $C61A   DE++; // &characterstruct.y
+  $C61C   if (A == 0) { // outdoors
+  $C61F     divide_array3_by_8_with_rounding(HL,DE); } // HL,DE updated
+  $C622   else {
+  $C624     B = 3;
+  $C626     do { *DE++ = *HL;
+  $C628       HL += 2;
+  $C62B     } while (--B); }
+  $C62D   HL -= 21; // reset HL to point to original vischar
+  $C631   A = *HL; // HL points to vischar // sampled HL = $8040, $8020, $8080, $80A0
+  $C632   *HL++ = 255; // character_NONE
+  $C635   *HL++ = 255;
+  $C638   if (A >= character_16 && A < character_20_prisoner) { // likely character index
+  $C640     *HL++ = 255;
+  $C643     *HL = 0;
+  $C645     if (A >= 18) *HL = 24;
+  $C64B     HL--; }
+  $C64C   *DE++ = *HL++; BC--;
+  $C64E   *DE++ = *HL++; BC--;
+  $C650   return; }
 
 ; -----------------------------------------------------------------------------
 
@@ -8135,7 +8117,7 @@ D $C99C Found bribed character.
   $C9A1     PUSH DE
   $C9A2     DE += 3;
   $C9A6     if (indoor_room_index) {
-  $C9AD       divide_array_by_8_with_rounding(HL,DE); }
+  $C9AD       divide_array3_by_8_with_rounding(HL,DE); }
   $C9B0     else {
   $C9B2       *DE++ = *HL++;
   $C9B4       HL++;
@@ -8437,7 +8419,7 @@ D $CC3B Don't follow the player if he's dressed as a guard
   $CC4C HL += 15;
   $CC50 DE = &byte_81B2;
   $CC53 if (indoor_room_index == 0) {
-  $CC5A   divide_array_by_8_with_rounding(HL,DE);
+  $CC5A   divide_array3_by_8_with_rounding(HL,DE);
   $CC5D   HL = &player_map_position_x;
   $CC60   DE = &byte_81B2;
   $CC63   A = IY[0x0E]; // ?
@@ -9791,10 +9773,12 @@ R $E420 I:IY Pointer to ? // observed: $8000+
 
 ; ------------------------------------------------------------------------------
 
-c $E542 divide_array_by_8_with_rounding
+c $E542 divide_array3_by_8_with_rounding
 D $E542 Divides 3 words by 8 with rounding to nearest.
 R $E542 I:HL Pointer to input words
 R $E542 I:DE Pointer to output bytes
+R $E542 O:HL Updated.
+R $E542 O:DE Updated.
   $E542 B = 3;
   $E544 do { A = *HL++;
   $E546   C = *HL++;
