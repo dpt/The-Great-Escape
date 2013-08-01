@@ -2243,7 +2243,7 @@ D $7BC0 Outdoors.
   $7BC2   HL += 2;
   $7BC4   POP DE
   $7BC5   HL = $800F;
-  $7BC8   divide_array_by_8_with_rounding(HL,DE);
+  $7BC8   divide_array3_by_8_with_rounding(HL,DE);
   $7BCB   DE--;
   $7BCC   *DE = 0;
   $7BCF   EX DE,HL
@@ -3810,7 +3810,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F24 DE = &player_map_position_x; // x/y confusion here - mislabeling
   $9F27 A = indoor_room_index;
   $9F2A if (A == 0) { // outdoors
-  $9F2E   divide_array_by_8_with_rounding(HL,DE);
+  $9F2E   divide_array3_by_8_with_rounding(HL,DE);
   $9F31   if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped; }
   $9F47 else {
   $9F49   *DE++ = *HL++; // indoors
