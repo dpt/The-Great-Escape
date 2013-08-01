@@ -3686,7 +3686,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
 c $9DCF check_morale
 D $9DCF (<- main_loop)
   $9DCF if (morale >= 2) return;
-  $9DD5 queue_message_for_display(message_MORALE_IS_ZERO, 0);
+  $9DD5 queue_message_for_display(message_MORALE_IS_ZERO);
   $9DDB morale_2 = 0xFF; // inhibit user input
   $9DE0 automatic_player_counter = 0; // immediately take automatic control of player
   $9DE4 return;
