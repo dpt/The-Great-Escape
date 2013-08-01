@@ -82,7 +82,7 @@
 ;   POP anotherreg
 
 ; //////////////////////////////////////////////////////////////////////////////
-; CONSTANTS
+; ENUMERATIONS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
 ; These are here for information only and are not used by any of the control
@@ -423,6 +423,13 @@
 ; sound_3030 = $3030
 ; sound_DROP_ITEM = $3040
 
+; //////////////////////////////////////////////////////////////////////////////
+; FLAGS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; These are here for information only and are not used by any of the control
+; directives.
+
 ; ; enum input
 ; input_NONE = 0
 ; input_UP = 1
@@ -436,10 +443,14 @@
 ; input_RIGHT_FIRE = input_RIGHT + input_FIRE
 
 ; ; enum port_keyboard
-; port_KEYBOARD_12345 = $F7FE
-; port_KEYBOARD_POIUY = $DFFE
-; port_KEYBOARD_SPACESYMSHFTMNB = $7FFE
-; port_KEYBOARD_09876 = $EFFE
+; port_KEYBOARD_SHIFTZXCV       = 0xFEFE,
+; port_KEYBOARD_ASDFG           = 0xFDFE,
+; port_KEYBOARD_QWERT           = 0xFBFE,
+; port_KEYBOARD_12345           = 0xF7FE,
+; port_KEYBOARD_09876           = 0xEFFE,
+; port_KEYBOARD_POIUY           = 0xDFFE,
+; port_KEYBOARD_ENTERLKJH       = 0xBFFE,
+; port_KEYBOARD_SPACESYMSHFTMNB = 0x7FFE,
 
 ; ; enum interior_object_tile
 ; interiorobjecttile_MAX = 194,
@@ -473,38 +484,43 @@
 ; vischar_BYTE13_BIT7        = 1<<7,
 ; vischar_BYTE14_CRAWL       = 1<<2,
 
-; ; enum itemstruct
+; enum itemstructflags
 ; itemstruct_ITEM_MASK             = 0x0F,
 ; itemstruct_ITEM_FLAG_HELD        = 1<<7, // set when the item is picked up (maybe)
 ; itemstruct_ROOM_MASK             = 0x3F,
 ; itemstruct_ROOM_FLAG_BIT6        = 1<<6, // unknown
 ; itemstruct_ROOM_FLAG_ITEM_NEARBY = 1<<7, // set when the item is nearby
 
-; ; food item flags
+; enum fooditemflags
 ; itemfood_POISONED          = 1<<5,
 
+; enum gatesanddoorsflags
 ; gates_and_doors_MASK       = 0x7F,
 ; gates_and_doors_LOCKED     = 1<<7,
 
+; enum characterstructflags
 ; characterstruct_BYTE0_BIT6    = 1<<6, // this disables the character
 ; characterstruct_BYTE0_MASK    = 0x1F,
 ; characterstruct_BYTE5_MASK    = 0x7F,
 ; characterstruct_BYTE6_MASK_HI = 0xF8,
 ; characterstruct_BYTE6_MASK_LO = 0x07,
 
+; enum doorpositionflags
 ; doorposition_BYTE0_MASK_LO = 0x03,
 ; doorposition_BYTE0_MASK_HI = 0xFC,
 ; doorposition_BYTE0_BIT7    = 1<<7, // means "use the next 4-byte struct"
 
+; enum searchlightflags
 ; searchlight_STATE_00       = 0x00,
 ; searchlight_STATE_1F       = 0x1F,
 ; searchlight_STATE_OFF      = 0xFF, // likely: hunting for player
 
+; enum bellringflags
 ; bell_RING_PERPETUAL        = 0x00,
 ; bell_RING_40_TIMES         = 0x28,
 ; bell_STOP                  = 0xFF,
 
-; // items used during escape
+; enum escapeitemflags
 ; escapeitem_COMPASS         = 1,
 ; escapeitem_PAPERS          = 2,
 ; escapeitem_PURSE           = 4,
