@@ -3657,8 +3657,8 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9D78 enter_room(); // returns by goto main_loop
 
   $9D7B main_loop: for (;;) { check_morale();
-  $9D7E   keyscan_game_cancel();
-  $9D81   message_timer();
+  $9D7E   keyscan_cancel();
+  $9D81   message_display();
   $9D84   process_user_input();
   $9D87   in_permitted_area();
   $9D8A   called_from_main_loop_3(); // [unknown]
@@ -3670,7 +3670,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9D9C   ring_bell();
   $9D9F   called_from_main_loop_9(); // [unknown]
   $9DA2   move_map();
-  $9DA5   message_timer();
+  $9DA5   message_display();
   $9DA8   ring_bell();
   $9DAB   searchlight();
   $9DAE   plot_game_screen();
@@ -4117,7 +4117,7 @@ D $A13A morale_1 + morale_2 treated as a word by process_user_input. Everything 
 b $A13B morale_2
 D $A13B Inhibits user input when non-zero.
 D $A13B Set by check_morale.
-D $A13B Reset by looks_like_a_reset_fn.
+D $A13B Reset by reset_game.
 
 b $A13C morale
 D $A13C Morale 'score'. Ranges morale_MIN .. morale_MAX.
