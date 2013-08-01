@@ -3745,7 +3745,7 @@ D $9E5C Player was in bed.
   $9E86   if (A >= input_FIRE) {
   $9E8A     check_for_pick_up_keypress();
   $9E8D     A = 0x80; } }
-  $9E8F if (*$800D == A) return; // tunnel related?
+  $9E8F if ($800D == A) return; // tunnel related?
   $9E94 $800D = A | 0x80;
   $9E97 return;
 
