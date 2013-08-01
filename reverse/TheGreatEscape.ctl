@@ -3695,10 +3695,12 @@ D $9DCF (<- main_loop)
 
 c $9DE5 keyscan_cancel
 D $9DE5 Check for 'game cancel' keypress.
-  $9DE5 if (!shift_pressed) return;
-  $9DED if (!space_pressed) return;
-  $9DF4 screen_reset(); user_confirm(); if (confirmed) looks_like_a_reset_fn();
-  $9DFD if (indoor_room_index == 0) loc_B2FC(); else goto enter_room; // exit via (jumps to main_loop)
+  $9DE5 if (!(shift_pressed && space_pressed)) return;
+  $9DF4 screen_reset(); 
+  $9DF7 user_confirm();
+  $9DFA if (Z) reset_game();
+  $9DFD if (indoor_room_index == 0) { reset_B2FC(); return; } // exit via
+  $9E04 else enter_room(); // doesn't return (jumps to main_loop)
 
 ; ------------------------------------------------------------------------------
 
