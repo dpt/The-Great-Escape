@@ -650,7 +650,7 @@
 ; b $8017 sub_AF8F sets this to stashed_A
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
-; b $801C room index: cleared to zero by action_papers, set to room_24_solitary by solitary, copied to indoor_room_index by transition
+; b $801C room index: cleared to zero by action_papers, set to room_24_solitary by solitary, copied to room_index by transition
 ; ? $801D
 ; ? $801E
 ; ? $801F (written by setup_sprite_plotting)
@@ -904,7 +904,7 @@ B $6890,16,4 super_tile $D9 #CALL:supertile($6890)
 
 ; ------------------------------------------------------------------------------
 
-b $68A0 indoor_room_index
+b $68A0 room_index
 D $68A0 Zero if outdoors.
 
 ; ------------------------------------------------------------------------------
@@ -946,7 +946,7 @@ D $68C3 Set position on Y axis, X axis and vertical offset (copying).
 D $68D7 HL points to the player vischar at this point.
   $68D7 *++HL &= ~vischar_BYTE1_BIT7; // $8001
   $68DA A = ($801C); // room index
-  $68DD indoor_room_index = A;
+  $68DD room_index = A;
   $68E0 if (A == 0) {
   $68E4   HL += 12;
   $68E8   *HL++ = 0x80; // $800D // likely a character direction
@@ -983,7 +983,7 @@ D $6920 Called when changing rooms.
 D $6920 For tunnels this forces the player sprite to 'prisoner' and sets the crawl flag appropriately.
   $6920 HL = $800D;
   $6923 *HL++ = 0x80; // likely a character direction
-  $6926 if (indoor_room_index >= room_29_secondtunnelstart) {
+  $6926 if (room_index >= room_29_secondtunnelstart) {
   $692D   *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag
   $692F   $8015 = &sprite_prisoner_tl_4; }
   $6935 else {
@@ -994,7 +994,7 @@ D $6920 For tunnels this forces the player sprite to 'prisoner' and sets the cra
 
 c $6939 setup_movable_items
   $6939 reset_nonplayer_visible_characters();
-  $693C A = indoor_room_index;
+  $693C A = room_index;
   $693F      if (A == room_2_hut2left) setup_stove1();
   $6949 else if (A == room_4_hut3left) setup_stove2();
   $6953 else if (A == room_9_crate)    setup_crate();
@@ -1021,7 +1021,7 @@ c $6939 setup_movable_items
   $697D setup_movable_items_common: $8020 = A; // character index
   $6980 memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F
   $6988 memcpy($8021, movable_item_reset_data, 14);
-  $6993 $803C = indoor_room_index;
+  $6993 $803C = room_index;
   $6999 HL = $8020;
   $699C reset_position(); // reset item vischar
   $699F return;
@@ -1062,7 +1062,7 @@ D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
   $69E3 do { *DE-- = 0xFF;
   $69E5 } while (--B);
   $69E7 DE++; // DE = &door_related[0];
-  $69E8 B = indoor_room_index << 2;
+  $69E8 B = room_index << 2;
   $69EE C = 0;
   $69F1 HLdash = &door_positions[0];
   $69F4 Bdash = 124; // length of door_positions
@@ -1097,7 +1097,7 @@ D $6A27 Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
 
 c $6A35 setup_room
   $6A35 wipe_visible_tiles();
-  $6A38 HL = rooms_and_tunnels[indoor_room_index - 1];
+  $6A38 HL = rooms_and_tunnels[room_index - 1];
   $6A48 PUSH HL
   $6A49 door_stuff();
   $6A4C POP HL
@@ -2187,7 +2187,7 @@ D $7B44 Locate the empty item slot.
   $7B48 if (A != item_NONE) DE++;
   $7B4D *DE = *HL & 0x1F;
   $7B51 PUSH HL
-  $7B52 A = indoor_room_index;
+  $7B52 A = room_index;
   $7B55 if (A == 0) { // outdoors
   $7B5A   sub_A8A2();
   $7B5D }
@@ -2234,7 +2234,7 @@ c $7BB5 drop_item_A
 R $7BB5 I:A Item.
   $7BB5 item_to_itemstruct();
   $7BB8 HL++;
-  $7BB9 A = indoor_room_index;
+  $7BB9 A = room_index;
   $7BBC *HL = A; // set object's room index
   $7BBD if (A == 0) {
 D $7BC0 Outdoors.
@@ -2344,7 +2344,7 @@ R $7C82 O:AF Z set if item found.
 R $7C82 O:HL If found, pointer to item.
 D $7C82 Select a pick up radius.
   $7C82 C = 1; // outdoors
-  $7C84 if (indoor_room_index) C = 6; // indoors
+  $7C84 if (room_index) C = 6; // indoors
   $7C8C B = item__LIMIT; // 16 iterations
   $7C8E HL = &item_structs[0].room;
   $7C91 do { if (*HL & itemstruct_ROOM_FLAG_ITEM_NEARBY) {
@@ -3676,7 +3676,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9DAE   plot_game_screen();
   $9DB1   ring_bell();
   $9DB4   if (day_or_night != 0) nighttime();
-  $9DBB   if (indoor_room_index != 0) indoors_delay_loop();
+  $9DBB   if (room_index != 0) indoors_delay_loop();
   $9DC2   wave_morale_flag();
   $9DC5   if ((game_counter & 63) == 0) dispatch_table_thing();
   $9DCD }
@@ -3699,7 +3699,7 @@ D $9DE5 Check for 'game cancel' keypress.
   $9DF4 screen_reset(); 
   $9DF7 user_confirm();
   $9DFA if (Z) reset_game();
-  $9DFD if (indoor_room_index == 0) { reset_B2FC(); return; } // exit via
+  $9DFD if (room_index == 0) { reset_B2FC(); return; } // exit via
   $9E04 else enter_room(); // doesn't return (jumps to main_loop)
 
 ; ------------------------------------------------------------------------------
@@ -3810,7 +3810,7 @@ c $9F21 in_permitted_area
 D $9F21 [unsure] -- could be as general as bounds detection
   $9F21 HL = $800F; // position on Y axis
   $9F24 DE = &player_map_position_x; // x/y confusion here - mislabeling
-  $9F27 A = indoor_room_index;
+  $9F27 A = room_index;
   $9F2A if (A == 0) { // outdoors
   $9F2E   divide_array3_by_8_with_rounding(HL,DE);
   $9F31   if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped; }
@@ -3823,7 +3823,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F51 A = ($8001) & 3;
   $9F56 if (A) goto set_flag_red;
   $9F59 if (dispatch_counter >= 100) {
-  $9F60   if (indoor_room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }
+  $9F60   if (room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }
   $9F6B if (morale_1) goto set_flag_green;
   $9F72 HL = $8002; // target location
   $9F75 A = *HL++;
@@ -3901,7 +3901,7 @@ D $9FF8 Red flag code path.
 
 ; is this the end of in_permitted_area or a separate routine?
 c $A007 in_permitted_area_end_bit
-  $A007 HL = indoor_room_index;
+  $A007 HL = room_index;
   $A00A if (A & (1<<7)) return *HL == A & 0x7F; // return with flags
 ;
   $A012 if (*HL) return;
@@ -4363,7 +4363,7 @@ D $A2C6 Bug: 7 iterations BUT only six beds in the data structure resulting in w
   $A2CD } while (--B);
 D $A2CF Update the player's bed object to be empty.
   $A2CF room2_hut2_left.bed = interiorobject_EMPTY_BED;
-  $A2D3 if (indoor_room_index == room_0_outdoors || indoor_room_index >= room_6) return;
+  $A2D3 if (room_index == room_0_outdoors || room_index >= room_6) return;
   $A2DB setup_room();
   $A2DE plot_indoor_tiles();
   $A2E1 return;
@@ -4400,7 +4400,7 @@ c $A2E2 breakfast_time
   $A328 room23_breakfast.bench_E = interiorobject_EMPTY_BENCH;
   $A32B room23_breakfast.bench_F = interiorobject_EMPTY_BENCH;
   $A32E room23_breakfast.bench_G = interiorobject_EMPTY_BENCH;
-  $A331 if (indoor_room_index == 0 || indoor_room_index >= room_29_secondtunnelstart) return;
+  $A331 if (room_index == 0 || room_index >= room_29_secondtunnelstart) return;
   $A339 setup_room();
   $A33C plot_indoor_tiles(); return; // exit via // note that this differs to wake_up's ending
 
@@ -4581,7 +4581,7 @@ D $A462 (common end of above two routines)
   $A462 character_sit_sleep_common: EX DE,HL
   $A463 *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)
   $A465 EX AF,AF'
-  $A466 if (indoor_room_index != C) {
+  $A466 if (room_index != C) {
   $A46C   HL -= 4;
   $A470   *HL = 255;
   $A472   return; }
@@ -5189,7 +5189,7 @@ c $AA8D map_unshunt_3
 c $AAB2 move_map
 D $AAB2 Moves the map as the character walks.
 R $AAB2 O:HL == map_position
-  $AAB2 if (indoor_room_index) return; // outdoors only
+  $AAB2 if (room_index) return; // outdoors only
   $AAB7 if ($8007 & vischar_BYTE7_BIT6) return;
   $AABD HL = $800A;
   $AAC0 E = *HL++;
@@ -5291,11 +5291,11 @@ D $AB66 Zoombox stuff.
 
 c $AB6B choose_game_screen_attributes
 R $AB6B O:A Chosen attribute.
-  $AB6B if (indoor_room_index < room_29_secondtunnelstart) {
+  $AB6B if (room_index < room_29_secondtunnelstart) {
   $AB72   A = day_or_night;
   $AB75   C = attribute_WHITE_OVER_BLACK;
   $AB77   if (A == 0) goto set_attribute_from_C;
-  $AB7A   A = indoor_room_index;
+  $AB7A   A = room_index;
   $AB7D   C = attribute_BRIGHT_BLUE_OVER_BLACK;
   $AB7F   if (A == 0) goto set_attribute_from_C;
   $AB82   C = attribute_CYAN_OVER_BLACK;
@@ -5530,7 +5530,7 @@ D $ADBD Turns white screen elements light blue and tracks the player with a sear
   $ADBD HL = &searchlight_state;
   $ADC0 if (*HL == searchlight_STATE_OFF) goto not_tracking;
 ;
-  $ADC6 if (indoor_room_index) { // player is indoors
+  $ADC6 if (room_index) { // player is indoors
 D $ADCC If the player goes indoors the searchlight loses track.
   $ADCC   *HL = searchlight_STATE_OFF;
   $ADCE   return; }
@@ -5888,7 +5888,8 @@ D $B123 We have a bribe.
 
 c $B14C bounds_check
 D $B14C Outdoor bounds detection?
-  $B14C if (indoor_room_index) { indoor_bounds_check(); return; }
+R $B14C I:IY Pointer to visible character block.
+  $B14C if (room_index) { indoor_bounds_check(); return; }
   $B153 B = 24; // 24 iterations (includes walls and fences)
   $B155 DE = &walls[0];
   $B158 do { -
@@ -5953,7 +5954,7 @@ R $B1D4 O:F Z set if door open.
 ; ------------------------------------------------------------------------------
 
 c $B1F5 door_handling
-  $B1F5 A = indoor_room_index;
+  $B1F5 A = room_index;
   $B1F8 if (A) goto door_handling_indoors; // exit via?
   $B1FC HL = &door_positions[0];
   $B1FF E = IY[14];
@@ -6093,7 +6094,7 @@ D $B2FC Resets ... something.
   $B314 divide_by_8(C,A);
   $B317 map_position[1] = A - 6;
 ;
-  $B31C indoor_room_index = room_NONE;
+  $B31C room_index = room_NONE;
   $B320 get_supertiles();
   $B323 sub_A8A2();
   $B326 setup_movable_items();
@@ -6194,7 +6195,7 @@ c $B3E1 action_uniform
   $B3E1 HL = $8015; // current character sprite set
   $B3E4 DE = &sprite_guard_tl_4;
   $B3E7 if (*HL == E) return; // cheap equality test // already in uniform
-  $B3EA if (indoor_room_index >= room_29_secondtunnelstart) return; // can't don uniform when in a tunnel
+  $B3EA if (room_index >= room_29_secondtunnelstart) return; // can't don uniform when in a tunnel
   $B3F0 *HL++ = E;
   $B3F1 *HL = D;
   $B3F3 increase_morale_by_10_score_by_50(); return;
@@ -6203,7 +6204,7 @@ c $B3E1 action_uniform
 
 c $B3F6 action_shovel
 D $B3F6 Player has tried to use the shovel item.
-  $B3F6 if (indoor_room_index != room_50_blocked_tunnel) return;
+  $B3F6 if (room_index != room_50_blocked_tunnel) return;
   $B3FC if (roomdefn_50_blockage == 255) return; // blockage already cleared
   $B402 roomdefn_50_blockage = 255;
   $B407 roomdefn_50_collapsed_tunnel_obj = 0; // remove blockage graphic
@@ -6321,7 +6322,7 @@ R $B4B8 I:A Room number the key is for.
 ; -----------------------------------------------------------------------------
 
 c $B4D0 open_door
-  $B4D0 if (indoor_room_index == 0) goto outdoors; else goto indoors;
+  $B4D0 if (room_index == 0) goto outdoors; else goto indoors;
 
   $B4D9 outdoors: B = 5; // 5 iterations (they must overlap)
   $B4DB HL = &gates_flags;
@@ -6791,7 +6792,7 @@ c $B916 suspected_mask_stuff
 D $B916 Sets attr of something, checks indoor room index, ...
 D $B916 unpacks mask stuff
   $B916 memset($8100, 0xFF, 0xA0);
-  $B923 if (indoor_room_index) {
+  $B923 if (room_index) {
   $B929   HL = &suspected_indoor_mask_data;
   $B92C   A = *HL;
   $B92D   if (A == 0) return;
@@ -7152,7 +7153,7 @@ D $BCAA Turn a map ref? into a tile set pointer.
 R $BCAA O:BC Pointer to tile set.
 R $BCAA O:HL ?
   $BCAA -
-  $BCAB if (indoor_room_index) {
+  $BCAB if (room_index) {
   $BCB1   BC = &interior_tiles[0];
   $BCB4   -
   $BCB5   return; }
@@ -7465,7 +7466,7 @@ D $C42D Walk all character structs.
 ;
   $C436   (stash HL)
   $C437   HL++; // $7613
-  $C438   A = indoor_room_index;
+  $C438   A = room_index;
   $C43B   if (A != *HL) goto unstash_skip; // not in the visible room
   $C43E   if (A != 0) goto done_outdoors;
 ;
@@ -7520,7 +7521,7 @@ D $C47E Run through all visible characters, resetting them.
   $C495   if (A == 255) goto next; // no character?
   $C49A   PUSH HL
   $C49B   HL += 28;
-  $C49F   if (indoor_room_index != *HL) goto reset; // character not in room
+  $C49F   if (room_index != *HL) goto reset; // character not in room
 ;
   $C4A5   C = *--HL;
   $C4A7   A = *--HL;
@@ -7622,7 +7623,7 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C56B POP HL
   $C56C HL += 5;
   $C571 DE += 7;
-  $C575 A = indoor_room_index;
+  $C575 A = room_index;
   $C578 *DE = A;
   $C579 if (A) {
   $C57C   play_speaker(sound_CHARACTER_ENTERS_2);
@@ -8134,7 +8135,7 @@ D $C99C Found bribed character.
   $C9A0     POP DE
   $C9A1     PUSH DE
   $C9A2     DE += 3;
-  $C9A6     if (indoor_room_index) {
+  $C9A6     if (room_index) {
   $C9AD       divide_array3_by_8_with_rounding(HL,DE); }
   $C9B0     else {
   $C9B2       *DE++ = *HL++;
@@ -8148,7 +8149,7 @@ D $C99C Found bribed character.
   $C9C0 jump_c9c0: A = *HL; // HL is $8001
   $C9C1 -
   $C9C2 Cdash = A;
-  $C9C3 if (indoor_room_index) {
+  $C9C3 if (room_index) {
   $C9C9   HLdash = &A_widened_to_BC; }
   $C9CC else {
   $C9CE   if (Cdash & vischar_BYTE1_BIT6) {
@@ -8436,7 +8437,7 @@ D $CC3B Don't follow the player if he's dressed as a guard
   $CC4B -
   $CC4C HL += 15;
   $CC50 DE = &byte_81B2;
-  $CC53 if (indoor_room_index == 0) {
+  $CC53 if (room_index == 0) {
   $CC5A   divide_array3_by_8_with_rounding(HL,DE);
   $CC5D   HL = &player_map_position_x;
   $CC60   DE = &byte_81B2;
@@ -8497,7 +8498,7 @@ D $CCB4 HL[0x13] is the character's vertical offset, clearly this has some signi
 c $CCCD is_item_discoverable
 D $CCCD Searches item_structs for items dropped nearby. If items are found the guards are made to persue the player.
 D $CCCD Green key and food items are ignored.
-  $CCCD A = indoor_room_index;
+  $CCCD A = room_index;
   $CCD0 if (A != room_0_outdoors) {
 D $CCD3 Indoors.
   $CCD3   is_item_discoverable_indoors(A); // does this work only indoors?
@@ -8853,7 +8854,7 @@ D $DB72 #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16{0,0,64,88}(mask-stove)
 c $DB9E mark_nearby_items
 D $DB9E Iterates over item structs. Tests to see if items are within range (-2..23,-1..16) of the map position.
 D $DB9E This is similar to is_item_discoverable_indoors in that it iterates over item_structs.
-  $DB9E A = indoor_room_index;
+  $DB9E A = room_index;
   $DBA1 if (A == room_NONE) A = 0;
   $DBA6 C = A; // room ref
   $DBA7 DE = map_position;
@@ -9673,7 +9674,7 @@ R $E420 I:HL Pointer to ? // observed: always the same as IY
 R $E420 I:IY Pointer to ? // observed: $8000+
   $E420 HL += 15;
   $E424 DE = &byte_81B2;
-  $E427 if (indoor_room_index) { // indoors
+  $E427 if (room_index) { // indoors
   $E42D   *DE++ = *HL++;
   $E42F   HL++;
   $E430   *DE++ = *HL++;
