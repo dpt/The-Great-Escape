@@ -416,11 +416,11 @@
 ; location_8E04 = $8E04
 ; location_9003 = $9003
 
-; ; enum sound (width 2 bytes)
+; ; enum sound
 ; sound_CHARACTER_ENTERS_1 = $2030
 ; sound_CHARACTER_ENTERS_2 = $2040
 ; sound_BELL_RINGER = $2530
-; sound_3030 = $3030
+; sound_PICK_UP_ITEM = $3030
 ; sound_DROP_ITEM = $3040
 
 ; //////////////////////////////////////////////////////////////////////////////
@@ -2208,7 +2208,7 @@ D $7B44 Locate the empty item slot.
   $7B7E *HL++ = A;
   $7B80 *HL = A;
   $7B81 draw_all_items();
-  $7B84 play_speaker(sound_3030);
+  $7B84 play_speaker(sound_PICK_UP_ITEM);
   $7B8A return;
 
 ; ------------------------------------------------------------------------------
