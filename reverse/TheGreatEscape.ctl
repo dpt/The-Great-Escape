@@ -404,6 +404,10 @@
 ; interiorobject_KEY_RACK = 53
 ; interiorobject__LIMIT = 54
 
+; ; enum interior_object_tile
+; interiorobjecttile_MAX = 194,
+; interiorobjecttile_ESCAPE = 255              ; escape character
+
 ; ; enum location
 ; location_0E00 = $0E00
 ; location_1000 = $1000
@@ -451,14 +455,6 @@
 ; port_KEYBOARD_POIUY           = 0xDFFE,
 ; port_KEYBOARD_ENTERLKJH       = 0xBFFE,
 ; port_KEYBOARD_SPACESYMSHFTMNB = 0x7FFE,
-
-; ; enum interior_object_tile
-; interiorobjecttile_MAX = 194,
-; interiorobjecttile_ESCAPE = 255              ; escape character
-
-; ; enum morale
-; morale_MIN = 0x00
-; morale_MAX = 0x70
 
 ; ; enum vischar
 ; ; $800x flags (and $802x, $804x, ...)
@@ -537,6 +533,14 @@
 
 ; input device constants
 ; inputdevice_KEYBOARD       = 0,
+
+; //////////////////////////////////////////////////////////////////////////////
+; CONSTANTS
+; //////////////////////////////////////////////////////////////////////////////
+
+; ; enum morale
+; morale_MIN = 0x00
+; morale_MAX = 0x70
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; ROOMS
