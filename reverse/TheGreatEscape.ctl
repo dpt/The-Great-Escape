@@ -2245,7 +2245,7 @@ D $7BC0 Outdoors.
   $7BC2   HL += 2;
   $7BC4   POP DE
   $7BC5   HL = $800F;
-  $7BC8   divide_array3_by_8_with_rounding(HL,DE);
+  $7BC8   scale_pos(HL,DE);
   $7BCB   DE--;
   $7BCC   *DE = 0;
   $7BCF   EX DE,HL
@@ -3809,10 +3809,9 @@ D $9F15,12,4 three groups of four (<- in_permitted_area) possibly (un)permitted 
 c $9F21 in_permitted_area
 D $9F21 [unsure] -- could be as general as bounds detection
   $9F21 HL = $800F; // position on Y axis
-  $9F27 A = room_index;
-  $9F2A if (A == 0) { // outdoors
-  $9F2E   divide_array3_by_8_with_rounding(HL,DE);
   $9F24 DE = &player_map_position.y; // x/y confusion here - mislabeling
+  $9F27 if (room_index == 0) { // outdoors
+  $9F2E   scale_pos(HL,DE);
   $9F31   if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped; }
   $9F47 else {
   $9F49   *DE++ = *HL++; // indoors
@@ -7690,7 +7689,7 @@ D $C602 Non-object character.
   $C617   HL += 0x0F; // vischar+0x0F
   $C61A   DE++; // &characterstruct.y
   $C61C   if (A == 0) { // outdoors
-  $C61F     divide_array3_by_8_with_rounding(HL,DE); } // HL,DE updated
+  $C61F     scale_pos(HL,DE); } // HL,DE updated
   $C622   else {
   $C624     B = 3;
   $C626     do { *DE++ = *HL;
@@ -8136,7 +8135,7 @@ D $C99C Found bribed character.
   $C9A1     PUSH DE
   $C9A2     DE += 3;
   $C9A6     if (room_index) {
-  $C9AD       divide_array3_by_8_with_rounding(HL,DE); }
+  $C9AD       scale_pos(HL,DE); }
   $C9B0     else {
   $C9B2       *DE++ = *HL++;
   $C9B4       HL++;
@@ -8438,7 +8437,7 @@ D $CC3B Don't follow the player if he's dressed as a guard
   $CC4C HL += 15;
   $CC50 DE = &byte_81B2;
   $CC53 if (room_index == 0) {
-  $CC5A   divide_array3_by_8_with_rounding(HL,DE);
+  $CC5A   scale_pos(HL,DE);
   $CC5D   HL = &player_map_position.y;
   $CC60   DE = &byte_81B2;
   $CC63   A = IY[0x0E]; // ?
@@ -9792,7 +9791,8 @@ R $E420 I:IY Pointer to ? // observed: $8000+
 
 ; ------------------------------------------------------------------------------
 
-c $E542 divide_array3_by_8_with_rounding
+c $E542 scale_pos
+D $E542 Scale all three members of a 'pos_t'.
 D $E542 Divides 3 words by 8 with rounding to nearest.
 R $E542 I:HL Pointer to input words
 R $E542 I:DE Pointer to output bytes
@@ -9805,8 +9805,6 @@ R $E542 O:DE Updated.
   $E54A   *DE++ = A;
   $E54D } while (--B);
   $E54F return;
-
-; ------------------------------------------------------------------------------
 
 c $E550 divide_by_8_with_rounding
 D $E550 Divides AC by 8, with rounding to nearest.
