@@ -1404,7 +1404,7 @@ D $6CC9 roomdef_5_hut3_right
   $6CF5,3 { interiorobject_CHEST_OF_DRAWERS,           20,  7 },
   $6CF8,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
-D $6CFB roomdef_6_corridor
+D $6CFB roomdef_8_corridor
   $6CFB,4 TBD: [2, 0, 1, 9]
   $6CFF,1 5 // nobjects
   $6D00,3 { interiorobject_ROOM_OUTLINE_46,             3,  6 },
@@ -1586,7 +1586,7 @@ D $6EF2 roomdef_23_breakfast
   $6F0E,3 { interiorobject_DOOR_FRAME_40,              20,  4 },
   $6F11,3 { interiorobject_DOOR_FRAME_15,              15,  8 },
   $6F14,3 { interiorobject_MESS_BENCH,                  7,  6 },
-  $6F17,3 { interiorobject_EMPTY_BENCH,                12,  5 },
+  $6F17,3 { interiorobject_EMPTY_BENCH,                12,  5 }, // bench_A
   $6F1A,3 { interiorobject_EMPTY_BENCH,                10,  6 },
   $6F1D,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
 
@@ -1607,12 +1607,12 @@ D $6F32 roomdef_25_breakfast
   $6F46,3 { interiorobject_DOOR_FRAME_40,              18,  3 },
   $6F49,3 { interiorobject_MESS_TABLE,                  5,  4 },
   $6F4C,3 { interiorobject_MESS_BENCH,                  7,  6 },
-  $6F4F,3 { interiorobject_EMPTY_BENCH,                12,  5 },
+  $6F4F,3 { interiorobject_EMPTY_BENCH,                12,  5 }, // bench_D
   $6F52,3 { interiorobject_EMPTY_BENCH,                10,  6 },
   $6F55,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
   $6F58,3 { interiorobject_EMPTY_BENCH,                14,  4 },
 
-D $6F5B roomdef_26_hut1_left
+D $6F5B roomdef_28_hut1_left
   $6F5B,14 TBD: [1, 2, 28, 40, 28, 52, 48, 63, 44, 56, 3, 8, 13, 19]
   $6F69,1 8 // nobjects
   $6F6A,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
