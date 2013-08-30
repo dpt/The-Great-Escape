@@ -4734,8 +4734,7 @@ D $A574 Wait for a keypress.
   $A574 do { keyscan_all(); } while (!Z);
   $A579 do { keyscan_all(); } while (Z);
   $A57E POP AF
-  $A57F if (A == 0xFF) looks_like_a_reset_fn(); return; // exit via
-  $A584 if (A >= escapeitem_UNIFORM) looks_like_a_reset_fn(); return; // exit via
+  $A57F if (A == 0xFF || A >= escapeitem_UNIFORM) { reset_game(); return; } // exit via
   $A589 solitary(); return; // exit via
 
 ; ------------------------------------------------------------------------------
@@ -6571,29 +6570,34 @@ R $B71B I:HL Pointer to vischar.
 
 ; -----------------------------------------------------------------------------
 
-c $B75A looks_like_a_reset_function
-D $B75A [unsure]
-  $B75A BC = 0x1000; // B = 16, C = 0
-  $B75D do { PUSH BC
-  $B75E   item_discovered();
-  $B761   POP BC
+c $B75A reset_game
+D $B75A Discover all items.
+  $B75A B = 16; C = 0;
+  $B75D do { -
+  $B75E   item_discovered(C); // pass C as C
+  $B761   -
   $B762   C++;
   $B763 } while (--B);
+D $B765 Reset message queue.
   $B765 message_queue_pointer = message_queue + 2;
   $B76B reset_map_and_characters();
-  $B76E ($8001) = 0;
+  $B76E $8001 = 0;
+D $B772 Reset score.
   $B772 HL = &score_digits[0];
   $B775 B = 10; // iterations
   $B777 do { *HL++ = 0;
   $B779 } while (--B); // could do a memset
+D $B77B Reset morale.
   $B77B morale = morale_MAX;
   $B77D plot_score();
-  $B780 items_held = 0xFFFF;
+D $B780 Reset items.
+  $B780 items_held = (item_NONE) | (item_NONE << 8);
   $B786 draw_all_items();
+D $B789 Reset sprite.
   $B789 $8015 = sprite_prisoner_tl_4;
-  $B78F indoor_room_index = room_2_hut2left;
+  $B78F room_index = room_2_hut2left;
   $B794 player_sleeps();
-  $B797 transition:$68F4();
+  $B797 enter_room();
   $B79A return;
 
 ; -----------------------------------------------------------------------------
@@ -10153,7 +10157,7 @@ D $F1B7 Zero 0x118 bytes at HL (== $8100) onwards.
 D $F1B7 This is likely wiping everything up until the start of tiles ($8218).
   $F1B7 BC = 0x118;
   $F1BA do { *HL++ = 0; } while (--BC != 0); // turn into memset
-  $F1C3 looks_like_a_reset_fn();
+  $F1C3 reset_game();
   $F1C6 goto main_loop_setup;
 
 b $F1C9 vischar_initial
