@@ -482,13 +482,11 @@
 
 ; enum itemstructflags
 ; itemstruct_ITEM_MASK             = 0x0F,
+; itemstruct_ITEM_FLAG_POISONED    = 1<<5,
 ; itemstruct_ITEM_FLAG_HELD        = 1<<7, // set when the item is picked up (maybe)
 ; itemstruct_ROOM_MASK             = 0x3F,
 ; itemstruct_ROOM_FLAG_BIT6        = 1<<6, // unknown
 ; itemstruct_ROOM_FLAG_ITEM_NEARBY = 1<<7, // set when the item is nearby
-
-; enum fooditemflags
-; itemfood_POISONED          = 1<<5,
 
 ; enum gatesanddoorsflags
 ; gates_and_doors_MASK       = 0x7F,
@@ -8046,7 +8044,7 @@ D $C892 Causes characters to follow the player if they're being suspicious. Pois
   $C892 byte_A13E = 0;
   $C896 if (bell) guards_persue_prisoners();
   $C89D if (food_discovered_counter != 0 && --food_discovered_counter == 0) {
-  $C8A7   item_structs[item_FOOD].item &= ~itemfood_POISONED;
+  $C8A7   item_structs[item_FOOD].item &= ~itemstruct_ITEM_FLAG_POISONED;
   $C8AC   C = item_FOOD;
   $C8AE   item_discovered(); }
   $C8B1 IY = $8020; // iterate over non-player characters
@@ -8250,7 +8248,7 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CA96     else { solitary(); return; } } // exit via
   $CA99   else if (A == 2 || A == 4) { return; }
   $CA9F   -
-  $CAA0   if ((item_structs[item_FOOD].item & itemfood_POISONED) == 0) A = 32; else A = 255;
+  $CAA0   if ((item_structs[item_FOOD].item & itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;
   $CAAB   food_discovered_counter = A;
   $CAAE   -
   $CAAF   HL -= 2;
