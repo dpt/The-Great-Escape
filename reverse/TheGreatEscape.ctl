@@ -2353,7 +2353,7 @@ D $7C82 Select a pick up radius.
   $7C95     PUSH BC
   $7C96     PUSH HL
   $7C97     HL++; // itemstruct.y
-  $7C98     DE = &player_map_position_x; // this is probably 'Y' in this sense, but i'd need to rename all others to comply
+  $7C98     DE = &player_map_position.y; // this is probably 'Y' in this sense, but i'd need to rename all others to comply
   $7C9B     B = 2; // 2 iterations
 D $7C9D Range check.
   $7C9D     do { A = *DE++; // get player map position
@@ -2692,14 +2692,11 @@ D $81B7 Controls character left/right flipping.
 
 ; ------------------------------------------------------------------------------
 
-; these may be transposed compared to other x/y coords
-b $81B8 player_map_position_x
-b $81B9 player_map_position_y
-
-; ------------------------------------------------------------------------------
-
-u $81BA unused_81BA
-D $81BA Unreferenced byte.
+; a tinypos_t
+D $81B8 Player's map position.
+b $81B8 player_map_position.y
+b $81B9 player_map_position.x
+b $81BA player_map_position.vo
 
 ; ------------------------------------------------------------------------------
 
@@ -3811,10 +3808,10 @@ D $9F15,12,4 three groups of four (<- in_permitted_area) possibly (un)permitted 
 c $9F21 in_permitted_area
 D $9F21 [unsure] -- could be as general as bounds detection
   $9F21 HL = $800F; // position on Y axis
-  $9F24 DE = &player_map_position_x; // x/y confusion here - mislabeling
   $9F27 A = room_index;
   $9F2A if (A == 0) { // outdoors
   $9F2E   divide_array3_by_8_with_rounding(HL,DE);
+  $9F24 DE = &player_map_position.y; // x/y confusion here - mislabeling
   $9F31   if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped; }
   $9F47 else {
   $9F49   *DE++ = *HL++; // indoors
@@ -3907,7 +3904,7 @@ c $A007 in_permitted_area_end_bit
   $A00A if (A & (1<<7)) return *HL == A & 0x7F; // return with flags
 ;
   $A012 if (*HL) return;
-  $A016 DE = &player_map_position_x;
+  $A016 DE = &player_map_position.y;
 ;
 ; This entry point is used by the routine at #R$CB98.
   $A01A HL = &byte_9F15[A * 4];
@@ -6219,14 +6216,14 @@ D $B3F6 Player has tried to use the shovel item.
 
 c $B417 action_wiresnips
   $B417 HL = &fences[0] + 3;
-  $B41A DE = &player_map_position_y;
+  $B41A DE = &player_map_position.x;
   $B41D B = 4; // iterations
   $B41F do { ...
   $B420   A = *DE;
   $B421   if (A >= *HL) goto continue;
   $B424   HL--;
   $B425   if (A < *HL) goto continue;
-  $B428   DE--; // &player_map_position_x;
+  $B428   DE--; // &player_map_position.y;
   $B429   A = *DE;
   $B42A   HL--;
   $B42B   if (A == *HL) goto set_to_4;
@@ -6237,7 +6234,7 @@ c $B417 action_wiresnips
   $B434   HL += 6; // array stride
   $B43B } while (--B);
 ;
-  $B43D DE--; // &player_map_position_x;
+  $B43D DE--; // &player_map_position.y;
   $B43E HL -= 3; // pointing to $B59E
   $B441 B = 3; // iterations
   $B443 do { ...
@@ -8090,7 +8087,7 @@ R $C918 I:IY Pointer to visible character block.
   $C933     -
   $C934     POP DEdash
   $C935     DEdash += 3;
-  $C938     HLdash = &player_map_position_x;
+  $C938     HLdash = &player_map_position.y;
   $C93B     *DEdash++ = *HLdash++;
   $C93D     *DEdash++ = *HLdash++;
   $C93F     -
@@ -8441,7 +8438,7 @@ D $CC3B Don't follow the player if he's dressed as a guard
   $CC50 DE = &byte_81B2;
   $CC53 if (room_index == 0) {
   $CC5A   divide_array3_by_8_with_rounding(HL,DE);
-  $CC5D   HL = &player_map_position_x;
+  $CC5D   HL = &player_map_position.y;
   $CC60   DE = &byte_81B2;
   $CC63   A = IY[0x0E]; // ?
   $CC66   carry = A & 1; A >>= 1;
@@ -9985,7 +9982,7 @@ c $EF9A event_roll_call
 D $EF9A Is the player within the roll call area bounds?
 D $EF9A Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
   $EF9A DE = map_ROLL_CALL_X;
-  $EF9D HL = &player_map_position_x;
+  $EF9D HL = &player_map_position.y;
   $EFA0 B = 2; // iterations
   $EFA2 do { A = *HL++;
   $EFA3   if (A < D || A >= E) goto not_at_roll_call;
@@ -10015,7 +10012,7 @@ c $EFCB action_papers
 D $EFCB Is the player within the main gate bounds?
 D $EFCB Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
   $EFCB DE = map_MAIN_GATE_X;
-  $EFCE HL = &player_map_position_x;
+  $EFCE HL = &player_map_position.y;
   $EFD1 B = 2; // iterations
   $EFD3 do { A = *HL++;
   $EFD4   if (A < D || A >= E) return;
