@@ -1005,15 +1005,15 @@ c $6939 setup_movable_items
   $6964 move_map();
   $6967 searchlight(); return;
 
-  $696A setup_crate: HL = &crate;
+  $696A setup_crate: HL = &movable_items[movable_item_CRATE];
   $696D A = character_28_crate;
   $696F goto setup_movable_items_common;
 
-  $6971 setup_stove2: HL = &stove2;
+  $6971 setup_stove2: HL = &movable_items[movable_item_STOVE2];
   $6974 A = character_27_stove2;
   $6976 goto setup_movable_items_common;
 
-  $6978 setup_stove1: HL = &stove1;
+  $6978 setup_stove1: HL = &movable_items[movable_item_STOVE1];
   $697B A = character_26_stove1;
 ;
 ; fallthrough
@@ -1033,9 +1033,9 @@ B $69A0 movable_item_reset_data
 b $69AE movable_items
 D $69AE struct movable_item { word y_coord, x_coord, vertical_offset; const sprite *; byte terminator; };
 D $69AE Sub-struct of vischar ($802F..$8038).
-  $69AE struct movable_item stove1 = { 62, 35, 16, &sprite_stove, 0 };
-  $69B7 struct movable_item crate  = { 55, 54, 14, &sprite_crate, 0 };
-  $69C0 struct movable_item stove2 = { 62, 35, 16, &sprite_stove, 0 };
+  $69AE struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
+  $69B7 struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
+  $69C0 struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
 
 ; ------------------------------------------------------------------------------
 
