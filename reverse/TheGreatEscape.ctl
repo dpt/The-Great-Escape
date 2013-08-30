@@ -10439,10 +10439,12 @@ D $F370 Wipe key_defs.
   $F3F4     POP HL
   $F3F5     POP BC
   $F3F6   } while (--B);
+D $F3F9 Delay loop.
   $F3F9   BC = 0xFFFF;
-  $F3FC   while (--BC); // delay loop
+  $F3FC   while (--BC);
+D $F401 Wait for user's input.
   $F401   user_confirm();
-  $F404   if (Z) return;
+  $F404   if (Z) return; // confirmed
   $F405 }
 
 ; ------------------------------------------------------------------------------
