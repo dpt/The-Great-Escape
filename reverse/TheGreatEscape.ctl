@@ -622,14 +622,14 @@
 
 ; b $8000 character index? (0xFF if no visible character)
 ; b $8001 flags: bit 6 gets toggled in set_player_target_location /  bit 0: picking lock /  bit 1: cutting wire  (0xFF when reset)
-; w $8002 could be a target location (set in set_player_target_location, process_user_input)
-; w $8004 (<- process_user_input) a coordinate? (i see it getting scaled in #R$CA11)
+; w $8002 could be a target location (set in set_player_target_location, process_player_input)
+; w $8004 (<- process_player_input) a coordinate? (i see it getting scaled in #R$CA11)
 ; ? $8006
 ; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too) (0x00 when reset)
 ; w $8008 (read by called_from_main_loop_9)
 ; w $800A (read/written by called_from_main_loop_9)
 ; b $800C (read/written by called_from_main_loop_9)
-; b $800D tunnel related (<- process_user_input, wire_snipped, process_user_input) assigned from table at 9EE0.  causes movement when set. but not when in solitary.
+; b $800D tunnel related (<- process_player_input, snipping_wire, process_player_input) assigned from table at 9EE0.  causes movement when set. but not when in solitary.
 ;            0x81 -> move toward top left,
 ;            0x82 -> move toward bottom right,
 ;            0x83 -> move toward bottom left,
@@ -644,10 +644,9 @@
 ;          0x05 -> character faces top right    (crawling)
 ;          0x06 -> character faces bottom right (crawling)
 ;          0x07 -> character faces bottom left  (crawling)
-; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_user_input)
-; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_user_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; b $8013 character's vertical offset // set to 24 in process_user_input, wire_snipped,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  suspect this is a word rather than a byte
-; ? $8014
+; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_player_input)
+; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
+; w $8013 character's vertical offset // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), sub_B89C ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 sub_AF8F sets this to stashed_A
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
@@ -3658,7 +3657,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9D7B main_loop: for (;;) { check_morale();
   $9D7E   keyscan_cancel();
   $9D81   message_display();
-  $9D84   process_user_input();
+  $9D84   process_player_input();
   $9D87   in_permitted_area();
   $9D8A   called_from_main_loop_3(); // [unknown]
   $9D8D   move_characters();
@@ -3703,7 +3702,7 @@ D $9DE5 Check for 'game cancel' keypress.
 
 ; ------------------------------------------------------------------------------
 
-c $9E07 process_user_input
+c $9E07 process_player_input
   $9E07 if (morale_1 || morale_2) return; // inhibits user control when morale hits zero // reads morale_1 + morale_2 together as a word
   $9E0E if ($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) {
 D $9E15 Picking a lock, or cutting wire fence.
@@ -4113,7 +4112,7 @@ b $A13A morale_1
 D $A13A Inhibits user input when non-zero.
 D $A13A Stops set_player_target_location working.
 D $A13A Used to set flag colour.
-D $A13A morale_1 + morale_2 treated as a word by process_user_input. Everything else treats this as a byte.
+D $A13A morale_1 + morale_2 treated as a word by process_player_input. Everything else treats this as a byte.
 
 b $A13B morale_2
 D $A13B Inhibits user input when non-zero.
