@@ -1054,7 +1054,7 @@ D $69C9 Reset all non-player visible characters.
 
 ; ------------------------------------------------------------------------------
 
-c $69DC door_stuff
+c $69DC setup_doors
 D $69DC Looks like it's filling door_related with stuff from the door_positions table.
 D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
   $69DC -
@@ -1100,7 +1100,7 @@ c $6A35 setup_room
   $6A35 wipe_visible_tiles();
   $6A38 HL = rooms_and_tunnels[room_index - 1];
   $6A48 PUSH HL
-  $6A49 door_stuff();
+  $6A49 setup_doors();
   $6A4C POP HL
   $6A4D DE = &first_byte_of_room_structure;
   $6A50 LDI // *DE++ = *HL++; BC--;
