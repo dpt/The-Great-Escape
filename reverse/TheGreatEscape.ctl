@@ -502,7 +502,6 @@
 ; enum doorpositionflags
 ; doorposition_BYTE0_MASK_LO = 0x03,
 ; doorposition_BYTE0_MASK_HI = 0xFC,
-; doorposition_BYTE0_BIT7    = 1<<7, // means "use the next 4-byte struct"
 
 ; enum searchlightflags
 ; searchlight_STATE_00       = 0x00,
@@ -1083,8 +1082,8 @@ D $6A12 Index turns into door_position struct pointer.
 R $6A12 I:A  Index of ...
 R $6A12 O:HL Pointer to ...
 R $6A12 O:DE Corrupted.
-  $6A12 HL = &door_positions[A * 2]; // are they pairs of doors?
-  $6A1D if (A & doorposition_BYTE0_BIT7) HL += 4; // flag might be wrong
+  $6A12 HL = &door_positions[(A * 2) & 0xFF]; // are they pairs of doors?
+  $6A1D if (A & (1<<7)) HL += 4;
   $6A26 return;
 
 ; ------------------------------------------------------------------------------
