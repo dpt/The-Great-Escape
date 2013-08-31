@@ -1170,7 +1170,7 @@ R $6AB5 I:A  Object index.
 R $6AB5 I:DE Receives expanded tiles. Must point to correct x,y in tile buf.
 R $6AB5 O:BC Corrupted.
 R $6AB5 O:HL Corrupted.
-  $6AB5 HL = interior_object_tile_refs[A];
+  $6AB5 HL = interior_object_defs[A];
   $6AC1 B = *HL++; // width
   $6AC3 C = *HL++; // height
   $6AC5 ($6AE7) = B; // self modify (== width)
@@ -1728,10 +1728,10 @@ D $7075 roomdef_50_blocked_tunnel
 
 ; ------------------------------------------------------------------------------
 
-; Interior object tile refs.
+; Interior object definitions.
 ;
-b $7095 interior_object_tile_refs
-W $7095 Array of pointer to interior object tile refs, 54 entries long (== number of interior room objects).
+b $7095 interior_object_defs
+W $7095 Array of pointer to interior object definitions, 54 entries long (== number of interior rooms).
 D $7095 #CALL:decode_all_objects($7095, 54)
 ;
 B $7101 Interior object tile refs 0
