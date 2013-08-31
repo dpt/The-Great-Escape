@@ -1126,7 +1126,7 @@ c $6A35 setup_room
   $6A89     - }
   $6A8A   while (--B); }
 D $6A8C Plot all objects.
-  $6A8C B = *HL; // count of objects  // sample: HL -> $6E25 (room16_corridor + 5)
+  $6A8C B = *HL; // count of objects  // sample: HL -> $6E25 (room_16_corridor + 5)
   $6A8D if (B == 0) return;
   $6A90 HL++;
   $6A91 do { PUSH BC
@@ -3726,7 +3726,7 @@ R $9E34 I:HL Pointer to automatic_player_counter.
   $9E43     (word) $8002 = 0x002B; // set target location?
   $9E49     (word) $800F = 0x0034; // set Y pos
   $9E4E     (word) $8011 = 0x003E; // set X pos
-  $9E52     room25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
+  $9E52     roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
   $9E57     HL = &player_in_breakfast; }
   $9E5A   else {
 D $9E5C Player was in bed.
@@ -4360,7 +4360,7 @@ D $A2C6 Bug: 7 iterations BUT only six beds in the data structure resulting in w
   $A2CC   *DE = interiorobject_EMPTY_BED;
   $A2CD } while (--B);
 D $A2CF Update the player's bed object to be empty.
-  $A2CF room2_hut2_left.bed = interiorobject_EMPTY_BED;
+  $A2CF room_2_hut2_left.bed = interiorobject_EMPTY_BED;
   $A2D3 if (room_index == room_0_outdoors || room_index >= room_6) return;
   $A2DB setup_room();
   $A2DE plot_indoor_tiles();
@@ -4391,13 +4391,14 @@ c $A2E2 breakfast_time
   $A315 C = 3;
   $A317 sub_A373();
   $A31A -
-  $A31C room23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
-  $A31F room23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
-  $A322 room23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
-  $A325 room23_breakfast.bench_D = interiorobject_EMPTY_BENCH;
-  $A328 room23_breakfast.bench_E = interiorobject_EMPTY_BENCH;
-  $A32B room23_breakfast.bench_F = interiorobject_EMPTY_BENCH;
-  $A32E room23_breakfast.bench_G = interiorobject_EMPTY_BENCH;
+D $A31C Update all the benches to be empty.
+  $A31C roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
+  $A31F roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
+  $A322 roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
+  $A325 roomdef_25_breakfast.bench_D = interiorobject_EMPTY_BENCH;
+  $A328 roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
+  $A32B roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
+  $A32E roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
   $A331 if (room_index == 0 || room_index >= room_29_secondtunnelstart) return;
   $A339 setup_room();
   $A33C plot_indoor_tiles(); return; // exit via // note that this differs to wake_up's ending
@@ -4546,17 +4547,17 @@ c $A420 character_sits
 R $A420 I:A Character.
   $A420 PUSH AF
   $A421 EX DE,HL
-  $A422 A -= character_18_prisoner; // first three characters
-  $A424 HL = &room25_breakfast.bench_D;
+  $A422 A -= 18; // first three characters
+  $A424 HL = &roomdef_25_breakfast.bench_D;
   $A427 if (A >= 3) { // second three characters
-  $A42B   HL = &room23_breakfast.bench_A;
+  $A42B   HL = &roomdef_23_breakfast.bench_A;
   $A42E   A -= 3; }
 D $A430 Poke object.
   $A430 HL += A * 3;
   $A437 *HL = interiorobject_PRISONER_SAT_DOWN_MID_TABLE;
   $A439 POP AF
-  $A43A C = room25_breakfast;
-  $A43C if (A >= character_21_prisoner) C = room24_breakfast;
+  $A43A C = room_25_breakfast;
+  $A43C if (A >= character_21_prisoner) C = room_23_breakfast;
   $A442 goto character_sit_sleep_common;
 
 D $A444 character_sleeps
@@ -4568,10 +4569,10 @@ D $A444 character_sleeps
   $A452 B = *HL;
   $A453 *BC = interiorobject_OCCUPIED_BED;
   $A456 POP AF
-  $A457 if (A < character_10_prisoner) {
-  $A45C   C = room3_hut2_right; }
-  $A45E else {
-  $A460   C = room5_hut3_right; }
+  $A457 if (A < character_10_prisoner)
+  $A45C   C = room_3_hut2_right;
+  $A45E else
+  $A460   C = room_5_hut3_right;
 ;
 ; fallthrough
 
@@ -4592,12 +4593,12 @@ D $A473 Force a refresh.
 ; ------------------------------------------------------------------------------
 
 c $A47F player_sits
-  $A47F room25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
+  $A47F roomdef_25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
   $A484 HL = &player_in_breakfast;
   $A487 goto player_sits_sleeps_end;
 
 c $A489 player_sleeps
-  $A489 room2_hut2_left.bed = interiorobject_OCCUPIED_BED;
+  $A489 roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;
   $A48E HL = &player_in_bed;
 
 D $A491 (common end of the above two routines)
@@ -6626,13 +6627,13 @@ D $B7CD Reset all beds.
   $B7D8   *DE = interiorobject_OCCUPIED_BED;
   $B7D9 } while (--B);
 D $B7DB Clear the mess halls.
-  $B7DB bench_A = interiorobject_EMPTY_BENCH;
-  $B7E0 bench_B = interiorobject_EMPTY_BENCH;
-  $B7E3 bench_C = interiorobject_EMPTY_BENCH;
-  $B7E6 bench_D = interiorobject_EMPTY_BENCH;
-  $B7E9 bench_E = interiorobject_EMPTY_BENCH;
-  $B7EC bench_F = interiorobject_EMPTY_BENCH;
-  $B7EF bench_G = interiorobject_EMPTY_BENCH;
+  $B7DB roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
+  $B7E0 roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
+  $B7E3 roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
+  $B7E6 roomdef_25_breakfast.bench_D = interiorobject_EMPTY_BENCH;
+  $B7E9 roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
+  $B7EC roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
+  $B7EF roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
 D $B7F2 Reset characters 12..15 and 20..25.
   $B7F2 DE = &character_structs[12].BYTE1;
   $B7F5 C = 10; // iterations
