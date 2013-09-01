@@ -2243,7 +2243,7 @@ D $7B9D Shuffle items down.
 ; looks like it's converting character position + offset into object position + offset by dividing
 c $7BB5 drop_item_A
 R $7BB5 I:A Item.
-  $7BB5 item_to_itemstruct();
+  $7BB5 HL = item_to_itemstruct(A);
   $7BB8 HL++;
   $7BB9 A = room_index;
   $7BBC *HL = A; // set object's room index
@@ -4283,7 +4283,7 @@ D $A230 Select the next parcel contents -- the first item from the list which do
   $A230 DE = &red_cross_parcel_contents_list[0];
   $A233 B = 4; // length of above
   $A235 do { A = *DE;
-  $A236   item_to_itemstruct();
+  $A236   HL = item_to_itemstruct(A);
   $A239   HL++;
   $A23A   if ((*HL & itemstruct_ROOM_MASK) == itemstruct_ROOM_MASK) goto found;
   $A241   DE++;
@@ -7769,7 +7769,7 @@ c $C6A0 move_characters
 D $C6A0 Moves characters around.
   $C6A0 byte_A13E = 0xFF;
   $C6A5 character_index = (character_index + 1) % character_26; // 26 = highest + 1 character
-  $C6B1 get_character_struct(character_index); // pass character_index as A
+  $C6B1 HL = get_character_struct(character_index); // pass character_index as A
   $C6B4 if (*HL & characterstruct_BYTE0_BIT6) return;
   $C6B7 PUSH HL
   $C6B8 A = *++HL; // characterstruct byte1 == room
@@ -7903,7 +7903,8 @@ R $C79A O:B  ?
 ; -----------------------------------------------------------------------------
 
 c $C7B9 get_character_struct
-R $C7B9 I:A Character index.
+R $C7B9 I:A  Character index.
+R $C7B9 O:HL Character struct.
   $C7B9 HL = &character_structs[A];
   $C7C5 return;
 
@@ -8581,7 +8582,7 @@ R $CD31 I:C Item.
   $CD4E
 D $CD4F Bug: This is not masked with 0x0F so item_to_itemstruct generates out of range addresses.
   $CD4F Adash = C;
-  $CD50 item_to_itemstruct();
+  $CD50 HL = item_to_itemstruct(A);
   $CD53 *HL &= ~itemstruct_ITEM_FLAG_HELD;
   $CD55 EX DE,HL
   $CD56 DE++;
