@@ -2209,7 +2209,7 @@ D $7B44 Locate the empty item slot.
   $7B6C if ((*HL & itemstruct_ITEM_FLAG_HELD) == 0) {
   $7B70   *HL |= itemstruct_ITEM_FLAG_HELD;
   $7B72   PUSH HL
-  $7B73   increase_morale_by_5();
+  $7B73   increase_morale_by_5_score_by_5();
   $7B76   POP HL }
   $7B77 A = 0;
   $7B78 HL++;
@@ -4036,7 +4036,7 @@ D $A0E9 Increase morale by 10, score by 50.
   $A0E9 increase_morale(10);
   $A0EE increase_score(50); return; // exit via
 
-c $A0F2 increase_morale_by_5
+c $A0F2 increase_morale_by_5_score_by_5
 D $A0F2 Increase morale by 5, score by 5.
   $A0F2 increase_morale(5);
   $A0F7 increase_score(5); return; // exit via
