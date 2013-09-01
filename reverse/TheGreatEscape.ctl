@@ -2139,6 +2139,7 @@ D $7AC6 3 bytes long (<- solitary)
 
 c $7AC9 check_for_pick_up_keypress
 D $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
+R $7AC9 I:A Input event.
   $7AC9 if (A == input_UP_FIRE) pick_up_item();
   $7AD3 else if (A == input_DOWN_FIRE) drop_item();
   $7ADD else if (A == input_LEFT_FIRE) use_item_A();
