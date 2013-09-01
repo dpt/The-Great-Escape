@@ -2224,6 +2224,7 @@ D $7B44 Locate the empty item slot.
 ; ------------------------------------------------------------------------------
 
 c $7B8B drop_item
+D $7B8B Drop the first item.
   $7B8B A = items_held[0];
   $7B8E if (A == item_NONE) return;
   $7B91 if (A == item_UNIFORM) $8015 = sprite_prisoner_tl_4;
