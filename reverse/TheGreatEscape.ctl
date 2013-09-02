@@ -5315,7 +5315,10 @@ D $AB66 Zoombox stuff.
   $AB67 zoombox_horizontal_count
   $AB68 zoombox_y
   $AB69 zoombox_vertical_count
-  $AB6A game_screen_attribute
+
+; -----------------------------------------------------------------------------
+
+b $AB6A game_screen_attribute
 
 ; -----------------------------------------------------------------------------
 
