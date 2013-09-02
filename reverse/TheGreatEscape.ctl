@@ -2726,6 +2726,7 @@ D $81BB Map position. Used when drawing tiles.
 ; ------------------------------------------------------------------------------
 
 b $81BD searchlight_state
+D $81BD Searchlight state.
 D $81BD Suspect that this is a 'player has been found in searchlight' flag. (possible states: 0, 31, 255)
 D $81BD (<- nighttime, something_then_decrease_morale)
 
