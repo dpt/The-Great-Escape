@@ -5756,6 +5756,7 @@ b $AF8E bribed_character
 ; ------------------------------------------------------------------------------
 
 c $AF8F sub_AF8F
+R $AF8F I:IY Pointer to visible character block.
   $AF8F EX AF,AF'
   $AF90 stashed_A = A;
   $AF93 IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_BIT7;  // wild guess: clamp character in position?
