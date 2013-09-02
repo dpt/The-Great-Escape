@@ -3740,14 +3740,14 @@ D $9E1F Cutting wire fence.
   $9E25 - // subsumed into following code
   $9E2A if (A == input_NONE) {
   $9E2D   if (automatic_player_counter == 0) return;
-  $9E30   automatic_player_counter--; // no user input, count down
+  $9E30   automatic_player_counter--; // no user input: count down
   $9E31   A = 0; }
   $9E32 else {
 R $9E34 I:HL Pointer to automatic_player_counter.
-  $9E34   automatic_player_counter = 31; // 31 turns until automatic control
+  $9E34   automatic_player_counter = 31; // wait 31 turns until automatic control
   $9E36   ... (push af) ...
   $9E37   if (player_in_bed == 0) {
-  $9E3D     if (player_in_breakfast) goto user_input_was_having_breakfast_perhaps;
+  $9E3D     if (!player_in_breakfast) goto not_breakfast;
   $9E43     (word) $8002 = 0x002B; // set target location?
   $9E49     (word) $800F = 0x0034; // set Y pos
   $9E4E     (word) $8011 = 0x003E; // set X pos
@@ -3765,7 +3765,7 @@ D $9E5C Player was in bed.
   $9E7D   *HL = 0;
   $9E7F   setup_room();
   $9E82   plot_indoor_tiles();
-  $9E85 user_input_was_having_breakfast_perhaps: // ... (pop af -- restores user input value stored at $9E36)
+  $9E85 not_breakfast: // ... (pop af -- restores user input value stored at $9E36)
   $9E86   if (A >= input_FIRE) {
   $9E8A     check_for_pick_up_keypress();
   $9E8D     A = 0x80; } }
