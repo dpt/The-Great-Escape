@@ -3735,7 +3735,7 @@ D $9E15 Picking a lock, or cutting wire fence.
   $9E15   automatic_player_counter = 31; // 31 turns until automatic control
   $9E1A   if ($8001 == vischar_BYTE1_PICKING_LOCK) goto picking_a_lock;
 D $9E1F Cutting wire fence.
-  $9E1F   wire_snipped(); return; } // exit via
+  $9E1F   snipping_wire(); return; } // exit via
   $9E22 A = input_routine(); // lives at same address as static_tiles_plot_direction
   $9E25 - // subsumed into following code
   $9E2A if (A == input_NONE) {
