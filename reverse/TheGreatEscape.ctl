@@ -4163,7 +4163,7 @@ b $A13F player_in_bed
 ; ------------------------------------------------------------------------------
 
 b $A140 displayed_morale
-D $A140 Displayed morale lags behind actual morale, as the flag moves slowly to its target.
+D $A140 Displayed morale, which lags behind actual morale while the flag moves slowly to its target.
 
 ; ------------------------------------------------------------------------------
 
