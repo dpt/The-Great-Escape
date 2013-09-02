@@ -4168,6 +4168,7 @@ D $A140 Displayed morale, which lags behind actual morale while the flag moves s
 ; ------------------------------------------------------------------------------
 
 w $A141 moraleflag_screen_address
+D $A141 Pointer to the screen address where the morale flag was last plotted.
 
 ; ------------------------------------------------------------------------------
 
