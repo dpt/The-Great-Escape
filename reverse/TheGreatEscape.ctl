@@ -2389,9 +2389,9 @@ D $7CAF The next instruction is written as RET Z but there's no need for it to b
 
 c $7CBE plot_bitmap
 D $7CBE Straight bitmap plot without masking.
+R $7CBE I:BC Dimensions (w x h, where w is in bytes).
 R $7CBE I:DE Source address.
 R $7CBE I:HL Destination address.
-R $7CBE I:BC Dimensions (w x h, where w is in bytes).
   $7CBE A = B;
   $7CBF (loopcounter + 1) = A;   // self modifying
   $7CC2 do { loopcounter: B = 3; // modified
