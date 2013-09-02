@@ -3876,7 +3876,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9FB1 POP HL
   $9FB2 JR Z,set_flag_green;
 
-  $9FB4 A = ($8002);
+  $9FB4 A = $8002;
   $9FB7 if (A & vischar_BYTE2_BIT7) HL++;
   $9FBC BC = 0; // counter?
   $9FBF for (;;) { PUSH BC
@@ -3891,7 +3891,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9FCE   BC++;
   $9FCF }
 
-  $9FD1 set_target_then_set_flag_green: B = ($8002);
+  $9FD1 set_target_then_set_flag_green: B = $8002;
   $9FD5 set_player_target_location(); // uses B, C
   $9FD8 goto set_flag_green;
 
@@ -3924,7 +3924,7 @@ D $9FF8 Red flag code path.
 
 ; is this the end of in_permitted_area or a separate routine?
 c $A007 in_permitted_area_end_bit
-  $A007 HL = room_index;
+  $A007 HL = &room_index;
   $A00A if (A & (1<<7)) return *HL == A & 0x7F; // return with flags
 ;
   $A012 if (*HL) return;
