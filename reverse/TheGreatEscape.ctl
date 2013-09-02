@@ -8063,7 +8063,7 @@ D $C88D charevnt_handler_8_player_sleeps
 
 b $C891 food_discovered_counter
 D $C891 Likely: A countdown until any food item is discovered.
-D $C891 (<- follow_suspicious_player, sub_CA81)
+D $C891 (<- follow_suspicious_player, bribes_solitary_food)
 
 ; ------------------------------------------------------------------------------
 
@@ -8208,7 +8208,7 @@ D $C99C Found bribed character.
   $CA08 move_character_Y();
   $CA0B if (!Z) goto $C9F5;
   $CA0D HL--;
-  $CA0E sub_CA91(); return; // exit via
+  $CA0E bribes_solitary_food(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
@@ -8264,7 +8264,7 @@ R $CA49 O:HL Pointer to ?
 
 ; ------------------------------------------------------------------------------
 
-c $CA81 sub_CA81
+c $CA81 bribes_solitary_food
 D $CA81 Bribes, solitary, food, 'character enters' sound.
 R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CA81 A = IY[1];
@@ -8281,7 +8281,7 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CAAE   -
   $CAAF   HL -= 2;
   $CAB1   *HL = 0;
-  $CAB3   goto sub_C918:$C9F5; }
+  $CAB3   goto character_behaviour_stuff:$C9F5; }
   $CAB6 if (C & vischar_BYTE1_BIT6) {
   $CABA   C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location
   $CABC   A = *--HL;
