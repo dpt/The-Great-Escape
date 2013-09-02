@@ -6349,9 +6349,9 @@ R $B4B8 I:A Room number the key is for.
 c $B4D0 open_door
   $B4D0 if (room_index == 0) goto outdoors; else goto indoors;
 
+; needless jump here
   $B4D9 outdoors: B = 5; // 5 iterations (they must overlap)
   $B4DB HL = &gates_flags;
-
   $B4DE do { A = *HL & ~gates_and_doors_LOCKED;
   $B4E1   EXX
   $B4E2   get_door_position();
