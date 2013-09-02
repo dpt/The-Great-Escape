@@ -8531,7 +8531,7 @@ D $CCCD Green key and food items are ignored.
   $CCCD A = room_index;
   $CCD0 if (A != room_0_outdoors) {
 D $CCD3 Indoors.
-  $CCD3   is_item_discoverable_indoors(A); // does this work only indoors?
+  $CCD3   is_item_discoverable_indoors(A);
   $CCD6   if (Z) guards_persue_prisoners();
   $CCDA   return; }
 D $CCDB Outdoors.
