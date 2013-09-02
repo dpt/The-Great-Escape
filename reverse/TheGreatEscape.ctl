@@ -2764,6 +2764,7 @@ b $8214 item_def_2nd_memb_copy
 ; ------------------------------------------------------------------------------
 
 w $8215 items_held
+D $8215 Items which the player is holding.
 D $8215 Two byte slots. initialised to 0xFFFF meaning no item in either slot.
 
 ; ------------------------------------------------------------------------------
