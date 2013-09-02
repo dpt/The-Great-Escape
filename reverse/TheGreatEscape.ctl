@@ -6442,13 +6442,13 @@ D $B586 Boundaries.
 c $B5CE called_from_main_loop_9
   $B5CE B = 8;
   $B5D0 IY = $8000;
-  $B5D4 do { if (IY[1] == vischar_BYTE1_EMPTY_SLOT) goto next; // flags
+  $B5D4 do { if (IY[1] == vischar_BYTE1_EMPTY_SLOT) goto next; // $8001 flags
   $B5DC   PUSH BC
-  $B5DD   IY[1] |= vischar_BYTE1_BIT7; // $8001
+  $B5DD   IY[1] |= vischar_BYTE1_BIT7;
   $B5E1   if (IY[0x0D] & vischar_BYTE13_BIT7) goto byte13bit7set; // $800D
   $B5E8   H = IY[0x0B];
   $B5EB   L = IY[0x0A];
-  $B5EE   A = IY[0x0C]; // sampled IY = 8060, 8080, 80A0, ...
+  $B5EE   A = IY[0x0C];
   $B5F1   if (!even_parity(A)) {
   $B5F5     A &= vischar_BYTE12_MASK;
   $B5F7     if (A == 0) goto snozzle;
