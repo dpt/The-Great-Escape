@@ -2675,7 +2675,8 @@ D $81A3 Unreferenced byte.
 
 ; ------------------------------------------------------------------------------
 
-; looks like these are Y,X and vertical offset
+; a pos_t
+D $81A4 Saved position.
 w $81A4 saved_Y
 w $81A6 saved_X
 w $81A8 saved_VO
