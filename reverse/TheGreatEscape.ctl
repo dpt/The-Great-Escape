@@ -3843,7 +3843,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F4C   *DE++ = *HL++;
   $9F4E   HL++;
   $9F4F   *DE++ = *HL++; }
-  $9F51 A = ($8001) & 3;
+  $9F51 A = ($8001) & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);
   $9F56 if (A) goto set_flag_red;
   $9F59 if (clock >= 100) {
   $9F60   if (room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }
@@ -3852,7 +3852,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F75 A = *HL++;
   $9F77 C = *HL;
   $9F78 if (A & vischar_BYTE2_BIT7) C++;
-  $9F7D if (A == 255) {
+  $9F7D if (A == 0xFF) {
   $9F81   A = *HL & 0xF8;
   $9F84   if (A == 8) A = 1; else A = 2;
   $9F8C   in_permitted_area_end_bit();
