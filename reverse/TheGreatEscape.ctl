@@ -3948,7 +3948,6 @@ D $A035 Wave the flag every other turn.
   $A035 HL = &game_counter;
   $A038 (*HL)++;
   $A039 if (*HL & 1) return;
-;
   $A03D PUSH HL
   $A03E A = morale;
   $A041 HL = &displayed_morale;
@@ -7687,7 +7686,7 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C5CB PUSH HL
   $C5CC reset_position();
   $C5CF POP HL
-  $C5D0 sub_C918(); return; // exit via
+  $C5D0 character_behaviour_stuff(); return; // exit via
 
 ; -----------------------------------------------------------------------------
 
@@ -8090,25 +8089,25 @@ D $C8C5 Change '20' here to a higher number and prisoners will start following t
   $C8CE       if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_player();
   $C8DB       -
   $C8DC       if (A > 15) { // 16,17,18,19  // could these be the dogs?
-  $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; } } // if food is nearby assign it to room_3_hut2right? is IY[1] a room ref? check this
-  $C8F1     sub_C918(); }
+  $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; } }
+  $C8F1     character_behaviour_stuff(); }
   $C8F4   -
   $C8F5   IY += 32; // stride
   $C8FA } while (--B);
   $C8FE if (!red_flag && (morale_1 || automatic_player_counter == 0)) {
 D $C902 Pointless JP NZ (jumps to RET, RET NZ would do).
   $C910   IY = $8000;
-  $C914   sub_C918(); }
+  $C914   character_behaviour_stuff(); }
   $C917 return;
 
 ; ------------------------------------------------------------------------------
 
-c $C918 sub_C918
+c $C918 character_behaviour_stuff
 D $C918 Character behaviour?
 R $C918 I:IY Pointer to visible character block.
   $C918 A = IY[7]; // $8007 etc.
   $C91B B = A;
-  $C91C A &= vischar_BYTE7_MASK;
+  $C91C A &= vischar_BYTE7_MASK; // flags
   $C91E if (A) {
   $C920   IY[7] = --B; // decrement but don't affect flags
   $C924   return; }
@@ -8177,7 +8176,7 @@ D $C99C Found bribed character.
   $C9B7     POP HL
   $C9B8     goto jump_c9c0; } }
   $C9BA A = HL[1];
-  $C9BD if (A == 0) goto sub_C918:$C9F5;
+  $C9BD if (A == 0) goto gizzards;
 ;
   $C9C0 jump_c9c0: A = *HL; // HL is $8001
   $C9C1 -
@@ -8197,19 +8196,17 @@ D $C99C Found bribed character.
   $C9EA move_character_Y();
   $C9ED if (Z) {
   $C9EF   move_character_X();
-  $C9F2   if (Z) goto $CA81; }
+  $C9F2   if (Z) goto bribes_solitary_food; } // exit via
 
 ; This entry point is used by the routine at #R$CA81.
-  $C9F5 if (A == IY[13]) // sampled IY=$8040,$8020,$8000
-  $C9F8   return;
-  $C9F9 IY[13] = A | vischar_BYTE13_BIT7;
+; Calling this "gizzards", as unsure what it's doing.
+  $C9F5 gizzards: if (A != IY[13]) IY[13] = A | vischar_BYTE13_BIT7; // sampled IY=$8040,$8020,$8000
   $C9FE return;
 
   $C9FF bit5set: L += 4;
   $CA03 move_character_X();
-  $CA06 if (!Z) goto $C9F5;
-  $CA08 move_character_Y();
-  $CA0B if (!Z) goto $C9F5;
+  $CA06 if (Z) move_character_Y();
+  $CA0B if (!Z) goto gizzards; // keep trying to move?
   $CA0D HL--;
   $CA0E bribes_solitary_food(); return; // exit via
 
