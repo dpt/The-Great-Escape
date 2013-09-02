@@ -3927,14 +3927,14 @@ c $A007 in_permitted_area_end_bit
   $A007 HL = &room_index;
   $A00A if (A & (1<<7)) return *HL == A & 0x7F; // return with flags
 ;
-  $A012 if (*HL) return;
+  $A012 if (*HL) return; // return with flags NZ
   $A016 DE = &player_map_position.y;
 ;
 ; This entry point is used by the routine at #R$CB98.
   $A01A HL = &byte_9F15[A * 4];
   $A023 B = 2;
   $A025 do { A = *DE++;
-  $A026   if (A < HL[0]) return; // return with flags ?? (presumably NZ is set)
+  $A026   if (A < HL[0]) return; // return with flags NZ
   $A028   if (A >= HL[1]) { A |= 1; return; } // return with flags NZ
   $A030   HL += 2;
   $A031 } while (--B);
