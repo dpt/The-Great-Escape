@@ -3807,21 +3807,21 @@ D $9EE0 Indexed by $800E.
 
 b $9EE4 twentyonelong
 D $9EE4 7 structs, 3 wide. maps bytes to offsets.
-  $9EE4,3 byte_to_offset { 42, byte_9EF9 }
-  $9EE7,3 byte_to_offset {  5, byte_9EFC }
-  $9EEA,3 byte_to_offset { 14, byte_9F01 }
-  $9EED,3 byte_to_offset { 16, byte_9F08 }
-  $9EF0,3 byte_to_offset { 44, byte_9F0E }
-  $9EF3,3 byte_to_offset { 43, byte_9F11 }
-  $9EF6,3 byte_to_offset { 45, byte_9F13 }
+  $9EE4,3 byte_to_offset { 42, &byte_9EF9[0] }
+  $9EE7,3 byte_to_offset {  5, &byte_9EFC[0] }
+  $9EEA,3 byte_to_offset { 14, &byte_9F01[0] }
+  $9EED,3 byte_to_offset { 16, &byte_9F08[0] }
+  $9EF0,3 byte_to_offset { 44, &byte_9F0E[0] }
+  $9EF3,3 byte_to_offset { 43, &byte_9F11[0] }
+  $9EF6,3 byte_to_offset { 45, &byte_9F13[0] }
 D $9EF9 Data 0xFF terminated.
-  $9EF9 byte_9EF9
-  $9EFC byte_9EFC
-  $9F01 byte_9F01
-  $9F08 byte_9F08
-  $9F0E byte_9F0E
-  $9F11 byte_9F11
-  $9F13 byte_9F13
+  $9EF9 byte_9EF9 = { 0x82,0x82,0xFF                     }
+  $9EFC byte_9EFC = { 0x83,0x01,0x01,0x01,0xFF           }
+  $9F01 byte_9F01 = { 0x01,0x01,0x01,0x00,0x02,0x02,0xFF }
+  $9F08 byte_9F08 = { 0x01,0x01,0x95,0x97,0x99,0xFF      }
+  $9F0E byte_9F0E = { 0x83,0x82,0xFF                     }
+  $9F11 byte_9F11 = { 0x99,0xFF                          }
+  $9F13 byte_9F13 = { 0x01,0xFF                          }
 
 ; ------------------------------------------------------------------------------
 
