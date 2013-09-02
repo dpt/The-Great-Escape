@@ -4716,13 +4716,13 @@ c $A50B screen_reset
 ; ------------------------------------------------------------------------------
 
 c $A51C escaped
-D $A51C Print 'well done' message then test to see if the right objects were used in the escape attempt.
+D $A51C Print 'well done' message then test to see if the correct objects were used in the escape attempt.
   $A51C screen_reset();
-  $A51F HL = &screenlocstring_well_done;
+  $A51F HL = &escape_strings[0];
   $A522 screenlocstring_plot(); // WELL DONE
   $A525 screenlocstring_plot(); // YOU HAVE ESCAPED
   $A528 screenlocstring_plot(); // FROM THE CAMP
-  $A52B C = 0; // preserve A
+  $A52B C = 0; // zero flag
   $A52D HL = &items_held[0];
   $A530 have_required_items();
   $A533 HL++; // &items_held[1];
@@ -4733,7 +4733,7 @@ D $A51C Print 'well done' message then test to see if the right objects were use
 ;
 ; fallthrough
 
-  $A540 success: HL = &screenlocstring_and_will_cross_the;
+  $A540 success: HL = &escape_strings[3];
   $A543 screenlocstring_plot(); // AND WILL CROSS THE
   $A546 screenlocstring_plot(); // BORDER SUCCESSFULLY
   $A549 A = 0xFF; // success flag
@@ -4741,20 +4741,20 @@ D $A51C Print 'well done' message then test to see if the right objects were use
   $A54C goto press_any_key;
 
   $A54E captured: PUSH AF
-  $A54F HL = &screenlocstring_but_were_recaptured;
+  $A54F HL = &escape_strings[5];
   $A552 screenlocstring_plot(); // BUT WERE RECAPTURED
   $A555 POP AF
   $A556 PUSH AF
-  $A557 if (A >= escapeitem_UNIFORM) goto plot; // at least a uniform => 'but were recaptured'
-  $A55B HL = &screenlocstring_totally_unprepared;
+  $A557 if (A >= escapeitem_UNIFORM) goto plot; // at least a uniform => 'but were recaptured' // bug? plotting twice
+  $A55B HL = &escape_strings[7];
   $A55E if (A == 0) goto plot; // no objects => 'totally unprepared'
-  $A561 HL = &screenlocstring_totally_lost;
+  $A561 HL = &escape_strings[8];
   $A564 if ((A & escapeitem_COMPASS) == 0) goto plot; // no compass => 'totally lost'
-  $A568 HL = &screenlocstring_due_to_lack_of_papers;
+  $A568 HL = &escape_strings[9];
 ;
   $A56B plot: screenlocstring_plot();
 ;
-  $A56E press_any_key: HL = &screenlocstring_press_any_key;
+  $A56E press_any_key: HL = &escape_strings[10];
   $A571 screenlocstring_plot(); // PRESS ANY KEY
 D $A574 Wait for a keypress.
   $A574 do { keyscan_all(); } while (!Z);
@@ -4779,6 +4779,7 @@ R $A58C O:A Pressed key.
 ; ------------------------------------------------------------------------------
 
 c $A59C have_required_items
+D $A59C Return bitmask indicating the presence of required items.
 R $A59C I:HL Pointer to (single) item slot.
 R $A59C I:C  Previous return value.
 R $A59C O:C  Previous return value + escapeitem_ flag.
@@ -4788,6 +4789,9 @@ R $A59C O:C  Previous return value + escapeitem_ flag.
   $A5A2 return;
 
 c $A5A3 item_to_bitmask
+D $A5A3 Return a bitmask indicating the presence of required items.
+R $A5A3 I:A Item.
+R $A5A3 O:A Bitmask.
   $A5A3 if (A == item_COMPASS) { A = escapeitem_COMPASS; return; }
   $A5AA if (A == item_PAPERS)  { A = escapeitem_PAPERS;  return; }
   $A5B1 if (A == item_PURSE)   { A = escapeitem_PURSE;   return; }
@@ -4812,8 +4816,7 @@ R $A5BF O:HL Pointer to byte after screenlocstring.
 
 ; ------------------------------------------------------------------------------
 
-b $A5CE screenlocstrings
-D $A5CE Screen address + string.
+b $A5CE escape_strings
 D $A5CE "WELL DONE"
   $A5CE #CALL:decode_screenlocstring($A5CE)
 D $A5DA "YOU HAVE ESCAPED"
