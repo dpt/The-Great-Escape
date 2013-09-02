@@ -7941,16 +7941,17 @@ R $C7B9 O:HL Character struct.
 ;
 c $C7C6 character_event
 D $C7C6 Makes characters sit, sleep or other things TBD.
-R $C7C6 I:HL Points to character_struct first byte holding character index (e.g. 0x76C6).
+; sampled HL = 80a2, 80e2, 8042, 8062, 76b8, 76bf, 80c2, 80e2, 8022, 8002, 8082, 766b,  (vischar+2 OR charstruct+5)
+R $C7C6 I:HL Points to character_struct fifth byte (character index + top bit set) or vischar (straight char index).
   $C7C6 A = *HL;
   $C7C7 if (A >= character_7_prisoner  && A <= character_12_prisoner) goto character_sleeps;
   $C7D0 if (A >= character_18_prisoner && A <= character_22_prisoner) goto character_sits;
-  $C7D9 PUSH HL
-  $C7DA HL = &character_to_event_handler_index_map[0];
+  $C7D9 PUSH HL // POPped by handlers
+  $C7DA map = &character_to_event_handler_index_map[0];
   $C7DD B = NELEMS(character_to_event_handler_index_map); // 24 iterations
 D $C7DF Locate the character in the map.
-  $C7DF do { if (A == *HL) goto call_action;
-  $C7E2   HL += 2;
+  $C7DF do { if (A == map->character) goto call_action;
+  $C7E2   map += 2;
   $C7E4 } while (--B);
   $C7E6 POP HL
   $C7E7 *HL = 0; // no action
