@@ -7690,16 +7690,17 @@ R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
 ; -----------------------------------------------------------------------------
 
 c $C5D3 reset_visible_character
+D $C5D3 Reset a visible character (either a character or an object).
 R $C5D3 I:HL Pointer to vischar.
   $C5D3 A = *HL;
   $C5D4 if (A == character_NONE) return;
   $C5D7 if (A >= character_26_stove1) {
-D $C5DC Object character.
-  $C5DC   *HL++ = 0xFF; // character_NONE
-  $C5DF   *HL = 0xFF;
-  $C5E1   HL += 6;
-  $C5E5   *HL = 0;
-  $C5E7   HL += 8;
+D $C5DC A stove/crate character.
+  $C5DC   HL[0] = character_NONE
+  $C5DF   HL[1] = 0xFF; // flags
+  $C5E1   HL[7] = 0; // more flags
+  $C5E7   HL += 0x0F; // vischar + 0x0F
+D $C5EB Save the old position.
   $C5EB   DE = &movable_items[0]; // stove1
   $C5EE   if (A != character_26_stove1) {
   $C5F2     DE = &movable_items[2]; // stove2
@@ -7707,7 +7708,7 @@ D $C5DC Object character.
   $C5F9       DE = &movable_items[1]; } } // crate
   $C5FC   memcpy(DE, HL, 6);
   $C601   return; }
-D $C602 Non-object character.
+D $C602 A non-object character.
   $C602 else { -
   $C603   DE = get_character_struct(A);
   $C606   *DE &= ~characterstruct_BYTE0_BIT6;
@@ -7727,15 +7728,15 @@ D $C602 Non-object character.
   $C62B     } while (--B); }
   $C62D   HL -= 21; // reset HL to point to original vischar
   $C631   A = *HL; // HL points to vischar // sampled HL = $8040, $8020, $8080, $80A0
-  $C632   *HL++ = 255; // character_NONE
-  $C635   *HL++ = 255;
-  $C638   if (A >= character_16 && A < character_20_prisoner) { // likely character index
+  $C632   *HL++ = character_NONE;
+  $C635   *HL++ = 0xFF; // flags
+  $C638   if (A >= character_16 && A < character_20_prisoner) {
   $C640     *HL++ = 255;
   $C643     *HL = 0;
-  $C645     if (A >= 18) *HL = 24;
+  $C645     if (A >= character_18_prisoner) *HL = 24;
   $C64B     HL--; }
-  $C64C   *DE++ = *HL++; BC--;
-  $C64E   *DE++ = *HL++; BC--;
+  $C64C   *DE++ = *HL++; // copy target into charstruct
+  $C64E   *DE++ = *HL++;
   $C650   return; }
 
 ; -----------------------------------------------------------------------------
