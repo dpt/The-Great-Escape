@@ -6575,11 +6575,11 @@ c $B5CE called_from_main_loop_9
 ; -----------------------------------------------------------------------------
 
 c $B71B reset_position
-D $B71B Does this reset the vischar position, or save a copy of it?
+D $B71B Save a copy of the vischar's position + offset.
 R $B71B I:HL Pointer to vischar.
-  $B71B PUSH HL
+  $B71B -
   $B71C memcpy(&saved_Y, HL + 0x0F, 6);
-  $B728 POP HL
+  $B728 -
 
 ; This entry point is used by the routine at #R$B5CE.
   $B729 -
