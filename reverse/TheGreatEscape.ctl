@@ -4279,7 +4279,8 @@ c $A202 event_breakfast_time
 c $A206 event_go_to_exercise_time
   $A206 *BC = A; // bell = bell_RING_40_TIMES;
   $A207 queue_message_for_display(message_EXERCISE_TIME);
-  $A20C gates_and_doors[0] = 0x00; gates_and_doors[1] = 0x01; // unlock the gates
+D $A20C Unlock the gates.
+  $A20C gates_and_doors[0] = 0x00; gates_and_doors[1] = 0x01;
   $A212 set_location_0x0E00(); return; // exit via
 
 c $A215 event_exercise_time
@@ -4288,7 +4289,8 @@ c $A215 event_exercise_time
 
 c $A219 event_go_to_time_for_bed
   $A219 *BC = A; // bell = bell_RING_40_TIMES;
-  $A21A gates_and_doors[0] = 0x80; gates_and_doors[1] = 0x81; // lock the gates
+D $A21A Lock the gates.
+  $A21A gates_and_doors[0] = 0x80; gates_and_doors[1] = 0x81;
   $A220 queue_message_for_display(message_TIME_FOR_BED);
   $A225 go_to_time_for_bed(); return; // exit via
 
