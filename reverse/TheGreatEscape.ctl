@@ -2436,14 +2436,22 @@ R $7CE9 O:HL Updated screen address.
 ; ------------------------------------------------------------------------------
 
 b $7CFC message_queue_stuff
-D $7CFC LIFO queue of message IDs.
+
   $7CFC message_queue
+D $7CFC Queue of message indexes. (Pairs of bytes + terminator).
+
   $7D0F message_display_counter
+D $7D0F Decrementing counter. Shows next message when it hits zero.
+
   $7D10 message_display_index
-D $7D10 If 128 then next_message. If > 128 then wipe message. Else ?
+D $7D10 Index into the message we're displaying or wiping.
+D $7D10 If 128 then next_message. If > 128 then wipe message. Else display.
+
 W $7D11 message_queue_pointer
-D $7D11 Where to append new messages.
+D $7D11 Pointer to the head of the message queue.
+
 W $7D13 current_message_character
+D $7D13 Pointer to the next message character to be displayed.
 
 ; ------------------------------------------------------------------------------
 
