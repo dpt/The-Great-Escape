@@ -4334,7 +4334,7 @@ c $A26A event_search_light
 
 D $A26E Common end of event_time_for_bed and event_search_light.
   $A26E -
-  $A26F Adash = 0x0C;
+  $A26F Adash = 12;
   $A271 B = 4; // 4 iterations
   $A273 do { PUSH AF
   $A274   sub_A38C();
@@ -4479,7 +4479,7 @@ D $A373 Uses tenlong structure.
   $A37A   A = *HL;
   $A37B   sub_A38C();
   $A37E   POP BC
-  $A37F   if (B == 6) Adash++; // 6 is which character?
+  $A37F   if (B == 6) Adash++; // array index 6 is character 22
   $A387   POP HL
   $A388   HL++;
   $A389 } while (--B);
@@ -4489,7 +4489,7 @@ D $A373 Uses tenlong structure.
 
 c $A38C sub_A38C
 D $A38C Walk non-player visible characters, ...
-R $A38C I:A Character index.
+R $A38C I:A     Character index.
 R $A38C I:Adash ?
   $A38C HL = get_character_struct(A);
   $A38F if ((*HL & characterstruct_BYTE0_BIT6) == 0) goto not_set; // disabled?
@@ -4515,8 +4515,10 @@ D $A3A9 Unreferenced byte.
   $A3B4 HL++;
   $A3B5 *HL++ &= ~vischar_BYTE1_BIT6;
   $A3B8 store_banked_A_then_C_at_HL();
+;
+; fallthrough
 
-; This entry point is used by the routine at #R$A33F.
+c $A3BB sub_A3BB
   $A3BB byte_A13E = 0;
   $A3BF PUSH BC
   $A3C0 PUSH HL
@@ -4552,7 +4554,7 @@ c $A3ED store_banked_A_then_C_at_HL
 
 c $A3F3 byte_A13E_is_nonzero
 D $A3F3 Checks character indexes, sets target locations, ...
-R $A3F3 I:HL -> charstruct?
+R $A3F3 I:HL -> characterstruct?
   $A3F3 A = character_index;
   $A3F6 goto $A404;
 
@@ -4563,7 +4565,8 @@ D $A3F8 Gets hit when player enters hut at end of day.
 ;
 ; This entry point is used by the routine at #R$A3F3.
 R $A404 I:A Character index.
-  $A404 HL[1] = 0; // HL=$766B,$7672 charstruct + 5 (charstruct + 6 when zeroed)
+R $A404 I:HL Pointer to ...
+  $A404 HL[1] = 0; // HL=$766B,$7672 characterstruct + 5 (characterstruct + 6 when zeroed)
   $A407 if (A > 19) {
   $A40F   A -= 13; } // 20.. => 7..
   $A411 else {
@@ -4577,6 +4580,7 @@ R $A404 I:A Character index.
 
 c $A420 character_sits
 R $A420 I:A Character.
+R $A420 I:HL ?
   $A420 PUSH AF
   $A421 EX DE,HL
   $A422 A -= 18; // first three characters
@@ -4593,12 +4597,13 @@ D $A430 Poke object.
   $A442 goto character_sit_sleep_common;
 
 D $A444 character_sleeps
+R $A444 I:A Character.
+R $A444 I:HL ?
   $A444 PUSH AF
-  $A445 A = (A - 7) * 2
+  $A445 A -= 7;
   $A448 EX DE,HL
-  $A449 HL = &beds[A];  // BC = beds[A];
-  $A450 C = *HL++;
-  $A452 B = *HL;
+D $A449 Poke object.
+  $A449 BC = beds[A];
   $A453 *BC = interiorobject_OCCUPIED_BED;
   $A456 POP AF
   $A457 if (A < character_10_prisoner)
@@ -4609,6 +4614,8 @@ D $A444 character_sleeps
 ; fallthrough
 
 D $A462 (common end of above two routines)
+D $A462 I:C Character?
+D $A462 I:DE Pointer to ?
   $A462 character_sit_sleep_common: EX DE,HL
   $A463 *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)
   $A465 EX AF,AF'
@@ -4619,7 +4626,7 @@ D $A462 (common end of above two routines)
 D $A473 Force a refresh.
   $A473 HL += 26;
   $A477 *HL = 255;
-  $A479 select_room_and_plot: setup_room();
+  $A479 select_room_and_plot: setup_room(); // make this into its own function
   $A47C plot_indoor_tiles(); return;
 
 ; ------------------------------------------------------------------------------
@@ -4627,14 +4634,14 @@ D $A473 Force a refresh.
 c $A47F player_sits
   $A47F roomdef_25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
   $A484 HL = &player_in_breakfast;
-  $A487 goto player_sits_sleeps_end;
+  $A487 goto player_sit_sleep_common;
 
 c $A489 player_sleeps
   $A489 roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;
   $A48E HL = &player_in_bed;
 
 D $A491 (common end of the above two routines)
-  $A491 player_sits_sleeps_end: *HL = 0xFF; // set in breakfast, or in bed
+  $A491 player_sit_sleep_common: *HL = 0xFF; // set in breakfast, or in bed
   $A493 A = 0;
   $A494 $8002 = A; // target location? bottom byte only?
 D $A498 Set player position to zero.
@@ -7534,7 +7541,7 @@ D $C441   Outdoors.
 ;
   $C46A   done_outdoors: (unstash HL)
   $C46B   (stash HL, DE, BC)
-  $C46E   sub_C4E0();
+  $C46E   spawn_characters_maybe();
   $C471   (unstash BC, DE)
 ;
   $C473   unstash_skip: (unstash HL)
@@ -7587,22 +7594,25 @@ D $C47E Run through all visible characters, resetting them.
 
 ; -----------------------------------------------------------------------------
 
-c $C4E0 sub_C4E0
-D $C4E0 Spawns characters? / Adds characters to the visible character list.
+c $C4E0 spawn_characters_maybe
+D $C4E0 Adds characters to the visible character list.
 R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4E0 if (*HL & characterstruct_BYTE0_BIT6) return;
 ;
+D $C4E4 Find an empty visible character entry.
   $C4E3 PUSH HL
   $C4E4 HL = $8020; // iterate over non-player characters
   $C4E7 -
   $C4EA -
   $C4EC B = 7; // 7 iterations
-  $C4EE do { if (*HL == vischar_BYTE0_EMPTY_SLOT) goto found; // empty slot found?
+  $C4EE do { if (*HL == vischar_BYTE0_EMPTY_SLOT) goto found;
   $C4F1   HL += 32; // stride
   $C4F2 } while (--B);
   $C4F4 POP HL
   $C4F5 return;
 
+D $C4F6 Empty slot found.
+R $C4F6 I:HL Pointer to empty slot.
   $C4F6 found: POP DE  // DE = HL (-> visible character list)
   $C4F7 PUSH HL // resave
   $C4F8 POP IY  // IY = HL (-> visible character list)
@@ -7804,9 +7814,9 @@ D $C6A0 Moves characters around.
   $C6BD   is_item_discoverable_indoors(A);
   $C6C0   if (Z) item_discovered(); }
   $C6C5 POP HL
-  $C6C6 HL += 2; // point at charstruct y,x coords
+  $C6C6 HL += 2; // point at characterstruct y,x coords
   $C6C8 PUSH HL
-  $C6C9 HL += 3; // point at charstruct byte2
+  $C6C9 HL += 3; // point at characterstruct byte2
   $C6CC A = *HL;
   $C6CD if (A == 0) {
   $C6D0   POP HL
@@ -7818,17 +7828,20 @@ D $C6A0 Moves characters around.
 ; if (A != character_0 && A < character_12_prisoner) {
 ;   ...
 ; } else ...
-  $C6DD   if (A == character_0) goto char_is_zero; // player character?
-  $C6E0   if (A >= character_12_prisoner) goto char_ge_12;
+  $C6DD   if (A != character_0) {
+D $C6DD Not a player character.
+  $C6E0     if (A >= character_12_prisoner) goto char_ge_12;
+D $C6E4 Characters 1..11.
 ;
-  $C6E4   *HL++ ^= 0x80;
-  $C6E9   if (A & 7) (*HL) -= 2;
-  $C6EF   (*HL)++; // weird // i.e -1 or +1
-  $C6F0   POP HL
-  $C6F1   return;
-;
+  $C6E4     back: *HL++ ^= 0x80;
+  $C6E9     if (A & 7) (*HL) -= 2;
+  $C6EF     (*HL)++; // weird // i.e -1 or +1
+  $C6F0     POP HL
+  $C6F1     return; }
+
+D $C6F2 Player character.
   $C6F2   char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5)
-  $C6F5   if (A != 36) goto $C6E4;
+  $C6F5   if (A != 36) goto back;
 ;
   $C6F9   char_ge_12: POP DE
   $C6FA   goto character_event; // exit via
@@ -7907,10 +7920,11 @@ D $C742 Stuff reading from door_positions.
 c $C79A increment_DE_by_diff
 D $C79A [leaf] (<- move_characters)
 D $C79A Gets called with successive bytes.
-R $C79A I:B  ?
-R $C79A I:DE Pointer to bytes within character_structs. // 761b,761c, 7622,7623, 7629,762a, 7630,7631, 7653,...
-R $C79A I:HL Pointer to bytes within word_783A.         // 787a,787b, 787e,787f, 78b2,78b3, 7884,7885, 7892,...
-R $C79A O:B  ?
+R $C79A I:Adash Maximum value of delta?
+R $C79A I:B     Reset to zero.
+R $C79A I:DE    Pointer to bytes within character_structs. // 761b,761c, 7622,7623, 7629,762a, 7630,7631, 7653,...
+R $C79A I:HL    Pointer to bytes within word_783A.         // 787a,787b, 787e,787f, 78b2,78b3, 7884,7885, 7892,...
+R $C79A O:B     Incremented by one if no movement.
   $C79A -
   $C79B C = Adash; // ie. banked A // some maximum value
   $C79C -
@@ -8016,8 +8030,8 @@ D $C83F charevnt_handler_4_zero_morale_1
   $C83F morale_1 = 0;
   $C843 goto charevnt_handler_0;
 
-D $C845 charevnt_handler_6 -- saw this hit somewhere around (morning) roll call -- but hits are rare
-; suspicion that character_36 is commandant
+D $C845 charevnt_handler_6
+; saw this hit somewhere around (morning) roll call -- but hits are rare
   $C845 POP HL // (popped) sampled HL = $80C2 (x2), $8042  // likely target location
   $C846 *HL++ = 0x03;
   $C849 *HL   = 0x15;
@@ -8647,10 +8661,10 @@ D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
 ; ------------------------------------------------------------------------------
 
 b $CD9A character_meta_data
-  $CD9A { &character_related_pointers[0], &sprites[30] } // meta_commandant (<- sub_C4E0)
-  $CD9E { &character_related_pointers[0], &sprites[22] } // meta_guard (<- sub_C4E0)
-  $CDA2 { &character_related_pointers[0], &sprites[14] } // meta_dog (<- sub_C4E0)
-  $CDA6 { &character_related_pointers[0], &sprites[2]  } // meta_prisoner (<- sub_C4E0)
+  $CD9A { &character_related_pointers[0], &sprites[30] } // meta_commandant (<- spawn_characters_maybe)
+  $CD9E { &character_related_pointers[0], &sprites[22] } // meta_guard (<- spawn_characters_maybe)
+  $CDA2 { &character_related_pointers[0], &sprites[14] } // meta_dog (<- spawn_characters_maybe)
+  $CDA6 { &character_related_pointers[0], &sprites[2]  } // meta_prisoner (<- spawn_characters_maybe)
 
 ; ------------------------------------------------------------------------------
 
