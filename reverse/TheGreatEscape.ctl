@@ -10116,7 +10116,7 @@ D $F075 0 for horizontal, 255 for vertical.
 
 ; ------------------------------------------------------------------------------
 
-b $F076 tile_refs_for_statics
+b $F076 static_graphic_defs
 D $F076 struct: w(addr), flags+length, attrs[length]
   $F076 statics_flagpole
   $F08D statics_game_screen_left_border
@@ -10193,8 +10193,8 @@ D $F1C9 Initial state of a visible character.
 
 c $F1E0 plot_statics_and_menu_text
 D $F1E0 Plot statics and menu text.
-  $F1E0 HL = &tile_refs_for_statics[0];
-  $F1E3 B = NELEMS(tile_refs_for_statics); // 18 iterations
+  $F1E0 HL = &static_graphic_defs[0];
+  $F1E3 B = NELEMS(static_graphic_defs); // 18 iterations
   $F1E5 do { PUSH BC
 D $F1E6 Fetch screen address.
   $F1E6   E = *HL++;
