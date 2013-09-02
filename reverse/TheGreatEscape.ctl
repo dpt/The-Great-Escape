@@ -105,11 +105,11 @@
 ; attribute_BRIGHT_WHITE_OVER_BLACK = 71
 
 ; ; enum character
-; character_0 = 0                       ; ?
+; character_0 = 0                       ; ?      player?
 ; character_1 = 1                       ; guard
 ; character_2 = 2                       ; guard
 ; character_3 = 3                       ; guard
-; character_4 = 4                       ; guard
+; character_4 = 4                       ; guard  commandant?
 ; character_5 = 5                       ; ?
 ; character_6 = 6                       ; player?
 ; character_7_prisoner = 7              ; prisoner who sleeps at bed position A
