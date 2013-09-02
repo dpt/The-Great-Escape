@@ -10186,8 +10186,8 @@ D $F1A7 Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
   $F1A9 HL = 0x8020; // iterate over non-player characters
   $F1AC -
   $F1AF -
-  $F1B1 do { HL[0] = 0xFF;
-  $F1B3   HL[1] = 0xFF;
+  $F1B1 do { HL[0] = character_NONE;
+  $F1B3   HL[1] = 0xFF; // flags
   $F1B4   HL += 32;
   $F1B5 } while (--B);
 D $F1B7 Zero 0x118 bytes at HL (== $8100) onwards.
