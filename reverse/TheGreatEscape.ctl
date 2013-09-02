@@ -2770,6 +2770,7 @@ D $8215 Two byte slots. initialised to 0xFFFF meaning no item in either slot.
 ; ------------------------------------------------------------------------------
 
 b $8217 character_index
+D $8217 Character index.
 
 ; ------------------------------------------------------------------------------
 
