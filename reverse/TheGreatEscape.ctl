@@ -4434,7 +4434,11 @@ D $A31C Update all the benches to be empty.
 
 c $A33F set_player_target_location
   $A33F if (morale_1) return;
-  $A344 $8001 &= ~vischar_BYTE1_BIT6; $8002 = b; $8003 = c; return;
+  $A344 $8001 &= ~vischar_BYTE1_BIT6;
+  $A349 $8002 = B;
+  $A34B $8003 = C;
+  $A34D sub_A3BB();
+  $A350 return;
 
 ; ------------------------------------------------------------------------------
 
