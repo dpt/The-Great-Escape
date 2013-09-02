@@ -4858,8 +4858,9 @@ b $A7C7 plot_game_screen_x
 
 c $A7C9 get_supertiles
 D $A7C9 Pulls supertiles out of the map.
-  $A7C9 A = (map_position >> 8) & 0xFC; // A = 0,4,8,12,...
-D $A7CE Get vertical offset. Multiply A by 13.5. (A is a multiple of 4, so this goes 0,54,108,162...)
+D $A7C9 Get vertical offset.
+  $A7C9 A = (map_position >> 8) & 0xFC; // A = 0, 4, 8, 12, ...
+D $A7CE Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
   $A7CE HL = $BCB8 + (A + (A >> 1)) * 9; // $BCB8 is &map_tiles[0] - 54 so it must be skipping the first row.
   $A7E3 HL += (map_position & 0xFF) >> 2;
 D $A7EE Populate $FF58 with 7x5 array of supertile refs.
