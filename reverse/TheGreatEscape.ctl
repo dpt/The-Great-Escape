@@ -4173,7 +4173,7 @@ D $A141 Pointer to the screen address where the morale flag was last plotted.
 ; ------------------------------------------------------------------------------
 
 w $A143 ptr_to_door_being_lockpicked
-D $A143 Address of door (in gates_and_doors) in which bit 7 is cleared when picked.
+D $A143 Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.
 
 ; ------------------------------------------------------------------------------
 
