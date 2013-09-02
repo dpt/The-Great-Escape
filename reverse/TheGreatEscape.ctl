@@ -9108,7 +9108,7 @@ D $DD7D Item definitions:
 D $DD7D Array of "sprite" structures.
 ;
   $DD7D { 2, 11, wiresnips_data, wiresnips_mask },
-  $DD83 { 2, 13, shovel_data, shovel_key_mask },
+  $DD83 { 2, 13, shovel_data, shovelkey_mask },
   $DD89 { 2, 16, lockpick_data, lockpick_mask },
   $DD8F { 2, 15, papers_data, papers_mask },
   $DD95 { 2, 12, torch_data, torch_mask },
@@ -9116,9 +9116,9 @@ D $DD7D Array of "sprite" structures.
   $DDA1 { 2, 16, uniform_data, uniform_mask },
   $DDA7 { 2, 16, food_data, food_mask },
   $DDAD { 2, 16, poison_data, poison_mask },
-  $DDB3 { 2, 13, key_data, shovel_key_mask },
-  $DDB9 { 2, 13, key_data, shovel_key_mask },
-  $DDBF { 2, 13, key_data, shovel_key_mask },
+  $DDB3 { 2, 13, key_data, shovelkey_mask },
+  $DDB9 { 2, 13, key_data, shovelkey_mask },
+  $DDBF { 2, 13, key_data, shovelkey_mask },
   $DDC5 { 2, 16, parcel_data, parcel_mask },
   $DDCB { 2, 16, radio_data, radio_mask },
   $DDD1 { 2, 12, purse_data, purse_mask },
