@@ -2249,20 +2249,22 @@ R $7BB5 I:A Item.
   $7BBC *HL = A; // set object's room index
   $7BBD if (A == 0) {
 D $7BC0 Outdoors.
-  $7BC0   HL++;
+  $7BC0   HL++;    // -> .y
   $7BC1   PUSH HL
-  $7BC2   HL += 2;
+D $7BC2 HL is incremented here but then immediately overwritten by $7BC5.
+  $7BC2   HL += 2; // -> .unk1
   $7BC4   POP DE
   $7BC5   HL = $800F;
   $7BC8   scale_pos(HL,DE);
   $7BCB   DE--;
-  $7BCC   *DE = 0;
+  $7BCC   *DE = 0; // ->vo ?
   $7BCF   EX DE,HL
 ;
 ; This entry point is used by the routine at #R$CD31.
+; sampled HL = 7719, 7720,
 R $7BD0   I:HL Pointer to dropped itemstruct + 4.
-  $7BD0   C = (64 + HL[1] - HL[0]) * 2; // itemstruct.x, itemstruct.y;
-  $7BD8   B = 0 - HL[2] - HL[3] - HL[4]; HL += 5;
+  $7BD0   HL--; C = (0x40 + HL[1] - HL[0]) * 2; // itemstruct.x, itemstruct.y;
+  $7BD8   B = 0 - HL[0] - HL[1] - HL[2]; HL += 3; // itemstruct.y, .x, .vo
   $7BE0   *HL++ = C;
   $7BE2   *HL = B;
   $7BE3   return; }
