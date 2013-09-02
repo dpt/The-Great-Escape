@@ -44,7 +44,7 @@ Causes characters to follow the player if they're being suspicious. Poisoned foo
 <tr>
 <td class="address"><a name="51350"></a>C896</td>
 <td class="instruction">LD A,($A130)</td>
-<td class="comment" rowspan="3">if (bell) guards_persue_player();</td>
+<td class="comment" rowspan="3">if (bell) guards_persue_prisoners();</td>
 </tr>
 <tr>
 <td class="address"><a name="51353"></a>C899</td>
@@ -57,7 +57,7 @@ Causes characters to follow the player if they're being suspicious. Poisoned foo
 <tr>
 <td class="address"><a name="51357"></a>C89D</td>
 <td class="instruction">LD HL,$C891</td>
-<td class="comment" rowspan="10">if (suspicious_player_related != 0 &amp;&amp; --suspicious_player_related != 0) { } {  item_structs[item_FOOD].item &amp;= ~itemfood_POISONED; } C = item_FOOD; item_discovered();</td>
+<td class="comment" rowspan="10">if (food_discovered_counter != 0 &amp;&amp; --food_discovered_counter == 0) { } {  item_structs[item_FOOD].item &amp;= ~itemstruct_ITEM_FLAG_POISONED;} C = item_FOOD; item_discovered();</td>
 </tr>
 <tr>
 <td class="address"><a name="51360"></a>C8A0</td>
@@ -113,7 +113,7 @@ Causes characters to follow the player if they're being suspicious. Poisoned foo
 <tr>
 <td class="address"><a name="51384"></a>C8B8</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment" rowspan="27">if (IY[1] != room_NONE) { // likely a room index } {    A = IY[0] &amp; 31; // character index } {    if (A &lt; 20) { } - is_item_discoverable(); {      if (red_flag || automatic_player_counter &gt; 0) guards_follow_suspicious_player(); } - {      if (A &gt; 15) { // 16,17,18,19  // could these be the dogs? } {        if (item_structs[item_FOOD].room &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; } } // if food is nowhere assign it to room_3_hut2right? is IY[1] a room ref? check this } sub_C918();</td>
+<td class="comment" rowspan="27">if (IY[1] != 0) { // flags } {    A = IY[0] &amp; vischar_BYTE0_MASK; // character index } {    if (A &lt; 20) { } - is_item_discoverable(); {      if (red_flag || automatic_player_counter &gt; 0) guards_follow_suspicious_player(); } - {      if (A &gt; 15) { // 16,17,18,19  // could these be the dogs? } {        if (item_structs[item_FOOD].room &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; } } } character_behaviour_stuff();</td>
 </tr>
 <tr>
 <td class="address"><a name="51387"></a>C8BB</td>
@@ -256,14 +256,24 @@ Change '20' here to a higher number and prisoners will start following the playe
 <tr>
 <td class="address"><a name="51454"></a>C8FE</td>
 <td class="instruction">LD A,($A138)</td>
-<td class="comment" rowspan="11">if (!red_flag &amp;&amp; (morale_1 || automatic_player_counter == 0)) { } IY = $8000; sub_C918();</td>
+<td class="comment" rowspan="11">if (!red_flag &amp;&amp; (morale_1 || automatic_player_counter == 0)) {} IY = $8000; character_behaviour_stuff();</td>
 </tr>
 <tr>
 <td class="address"><a name="51457"></a>C901</td>
 <td class="instruction">AND A</td>
 </tr>
 <tr>
-<td class="address"><a name="51458"></a>C902</td>
+<td class="routineComment" colspan="3">
+<a name="51458"></a>
+<div class="comments">
+<div class="paragraph">
+Pointless JP NZ (jumps to RET, RET NZ would do).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C902</td>
 <td class="instruction">JP NZ,$C917</td>
 </tr>
 <tr>
@@ -312,7 +322,7 @@ Change '20' here to a higher number and prisoners will start following the playe
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

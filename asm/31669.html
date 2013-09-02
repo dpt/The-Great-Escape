@@ -41,7 +41,7 @@ Used by the routine at <a class="link" href="45959.html">B387</a>.
 <tr>
 <td class="label"><a name="31669"></a>7BB5</td>
 <td class="instruction">CALL <a class="link" href="31782.html">$7C26</a></td>
-<td class="comment">item_to_itemstruct();</td>
+<td class="comment">HL = item_to_itemstruct(A);</td>
 </tr>
 <tr>
 <td class="address"><a name="31672"></a>7BB8</td>
@@ -51,7 +51,7 @@ Used by the routine at <a class="link" href="45959.html">B387</a>.
 <tr>
 <td class="address"><a name="31673"></a>7BB9</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment">A = room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="31676"></a>7BBC</td>
@@ -61,7 +61,7 @@ Used by the routine at <a class="link" href="45959.html">B387</a>.
 <tr>
 <td class="address"><a name="31677"></a>7BBD</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="32">if (A == 0) } HL++; PUSH HL {  HL += 2; } POP DE HL = $800F; divide_array_by_8_with_rounding(HL,DE); DE--; {  *DE = 0; } EX DE,HL {  C = (64 + HL[1] - HL[0]) * 2; // itemstruct.x, itemstruct.y; } {  B = 0 - HL[2] - HL[3] - HL[4]; HL += 5; } {  *HL++ = C; } *HL = B; return;</td>
+<td class="comment" rowspan="32">if (A == 0) } HL++;    // -&gt; .y PUSH HL {  HL += 2; // -&gt; .unk1 } POP DE HL = $800F; scale_pos(HL,DE); DE--; {  *DE = 0; // -&gt;vo ? } EX DE,HL {  HL--; C = (0x40 + HL[1] - HL[0]) * 2; // itemstruct.x, itemstruct.y; } {  B = 0 - HL[0] - HL[1] - HL[2]; HL += 3; // itemstruct.y, .x, .vo } {  *HL++ = C; } *HL = B; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="31678"></a>7BBE</td>
@@ -86,7 +86,17 @@ Outdoors.
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
-<td class="address"><a name="31682"></a>7BC2</td>
+<td class="routineComment" colspan="3">
+<a name="31682"></a>
+<div class="comments">
+<div class="paragraph">
+HL is incremented here but then immediately overwritten by $7BC5.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">7BC2</td>
 <td class="instruction">INC HL</td>
 </tr>
 <tr>
@@ -456,7 +466,7 @@ This entry point is used by the routine at <a class="link" href="52529.html">CD3
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

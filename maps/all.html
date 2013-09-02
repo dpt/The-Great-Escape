@@ -37,7 +37,7 @@
 <td class="mapPage">104</td>
 <td class="mapByte">160</td>
 <td class="data"><a class="link" name="26784" href="../asm/26784.html">68A0</a></td>
-<td class="dataDesc">indoor_room_index</td>
+<td class="dataDesc">room_index</td>
 </tr>
 <tr>
 <td class="mapPage">104</td>
@@ -67,7 +67,7 @@
 <td class="mapPage">105</td>
 <td class="mapByte">32</td>
 <td class="routine"><a class="link" name="26912" href="../asm/26912.html">6920</a></td>
-<td class="routineDesc">changed_room</td>
+<td class="routineDesc">set_player_sprite_for_room</td>
 </tr>
 <tr>
 <td class="mapPage">105</td>
@@ -91,7 +91,7 @@
 <td class="mapPage">105</td>
 <td class="mapByte">220</td>
 <td class="routine"><a class="link" name="27100" href="../asm/27100.html">69DC</a></td>
-<td class="routineDesc">sub_69DC</td>
+<td class="routineDesc">setup_doors</td>
 </tr>
 <tr>
 <td class="mapPage">106</td>
@@ -133,7 +133,7 @@
 <td class="mapPage">107</td>
 <td class="mapByte">133</td>
 <td class="data"><a class="link" name="27525" href="../asm/27525.html">6B85</a></td>
-<td class="dataDesc">four_byte_structures</td>
+<td class="dataDesc">roomdef_bounds</td>
 </tr>
 <tr>
 <td class="mapPage">107</td>
@@ -142,10 +142,16 @@
 <td class="dataDesc">rooms_and_tunnels</td>
 </tr>
 <tr>
+<td class="mapPage">108</td>
+<td class="mapByte">21</td>
+<td class="data"><a class="link" name="27669" href="../asm/27669.html">6C15</a></td>
+<td class="dataDesc">room_defs</td>
+</tr>
+<tr>
 <td class="mapPage">112</td>
 <td class="mapByte">149</td>
 <td class="data"><a class="link" name="28821" href="../asm/28821.html">7095</a></td>
-<td class="dataDesc">interior_object_tile_refs</td>
+<td class="dataDesc">interior_object_defs</td>
 </tr>
 <tr>
 <td class="mapPage">118</td>
@@ -331,25 +337,25 @@
 <td class="mapPage">129</td>
 <td class="mapByte">164</td>
 <td class="data"><a class="link" name="33188" href="../asm/33188.html">81A4</a></td>
-<td class="dataDesc">word_81A4</td>
+<td class="dataDesc">saved_Y</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">166</td>
 <td class="data"><a class="link" name="33190" href="../asm/33190.html">81A6</a></td>
-<td class="dataDesc">word_81A6</td>
+<td class="dataDesc">saved_X</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">168</td>
 <td class="data"><a class="link" name="33192" href="../asm/33192.html">81A8</a></td>
-<td class="dataDesc">word_81A8</td>
+<td class="dataDesc">saved_VO</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">170</td>
 <td class="data"><a class="link" name="33194" href="../asm/33194.html">81AA</a></td>
-<td class="dataDesc">byte_81AA</td>
+<td class="dataDesc">stashed_A</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -415,19 +421,19 @@
 <td class="mapPage">129</td>
 <td class="mapByte">184</td>
 <td class="data"><a class="link" name="33208" href="../asm/33208.html">81B8</a></td>
-<td class="dataDesc">player_map_position_x</td>
+<td class="dataDesc">player_map_position.y</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">185</td>
 <td class="data"><a class="link" name="33209" href="../asm/33209.html">81B9</a></td>
-<td class="dataDesc">player_map_position_y</td>
+<td class="dataDesc">player_map_position.x</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">186</td>
-<td class="unused"><a class="link" name="33210" href="../asm/33210.html">81BA</a></td>
-<td class="unusedDesc">Unused (1 byte)</td>
+<td class="data"><a class="link" name="33210" href="../asm/33210.html">81BA</a></td>
+<td class="dataDesc">player_map_position.vo</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -445,13 +451,13 @@
 <td class="mapPage">129</td>
 <td class="mapByte">190</td>
 <td class="data"><a class="link" name="33214" href="../asm/33214.html">81BE</a></td>
-<td class="dataDesc">first_byte_of_room_structure</td>
+<td class="dataDesc">roomdef_bounds_index</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
 <td class="mapByte">191</td>
 <td class="data"><a class="link" name="33215" href="../asm/33215.html">81BF</a></td>
-<td class="dataDesc">byte_81BF</td>
+<td class="dataDesc">roomdef_object_bounds</td>
 </tr>
 <tr>
 <td class="mapPage">129</td>
@@ -463,7 +469,7 @@
 <td class="mapPage">129</td>
 <td class="mapByte">218</td>
 <td class="data"><a class="link" name="33242" href="../asm/33242.html">81DA</a></td>
-<td class="dataDesc">byte_81DA</td>
+<td class="dataDesc">suspected_indoor_mask_data</td>
 </tr>
 <tr>
 <td class="mapPage">130</td>
@@ -517,7 +523,7 @@
 <td class="mapPage">158</td>
 <td class="mapByte">7</td>
 <td class="routine"><a class="link" name="40455" href="../asm/40455.html">9E07</a></td>
-<td class="routineDesc">process_user_input</td>
+<td class="routineDesc">process_player_input</td>
 </tr>
 <tr>
 <td class="mapPage">158</td>
@@ -529,7 +535,7 @@
 <td class="mapPage">158</td>
 <td class="mapByte">178</td>
 <td class="routine"><a class="link" name="40626" href="../asm/40626.html">9EB2</a></td>
-<td class="routineDesc">wire_snipped</td>
+<td class="routineDesc">snipping_wire</td>
 </tr>
 <tr>
 <td class="mapPage">158</td>
@@ -613,7 +619,7 @@
 <td class="mapPage">160</td>
 <td class="mapByte">242</td>
 <td class="routine"><a class="link" name="41202" href="../asm/41202.html">A0F2</a></td>
-<td class="routineDesc">increase_morale_by_5</td>
+<td class="routineDesc">increase_morale_by_5_score_by_5</td>
 </tr>
 <tr>
 <td class="mapPage">160</td>
@@ -697,7 +703,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">61</td>
 <td class="data"><a class="link" name="41277" href="../asm/41277.html">A13D</a></td>
-<td class="dataDesc">dispatch_counter</td>
+<td class="dataDesc">clock</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -733,7 +739,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">69</td>
 <td class="data"><a class="link" name="41285" href="../asm/41285.html">A145</a></td>
-<td class="dataDesc">user_locked_out_until</td>
+<td class="dataDesc">player_locked_out_until</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -763,7 +769,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">160</td>
 <td class="routine"><a class="link" name="41376" href="../asm/41376.html">A1A0</a></td>
-<td class="routineDesc">dispatch_table_thing</td>
+<td class="routineDesc">dispatch_timed_event</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -859,7 +865,7 @@
 <td class="mapPage">163</td>
 <td class="mapByte">63</td>
 <td class="routine"><a class="link" name="41791" href="../asm/41791.html">A33F</a></td>
-<td class="routineDesc">set_target_location</td>
+<td class="routineDesc">set_player_target_location</td>
 </tr>
 <tr>
 <td class="mapPage">163</td>
@@ -887,6 +893,12 @@
 </tr>
 <tr>
 <td class="mapPage">163</td>
+<td class="mapByte">187</td>
+<td class="routine"><a class="link" name="41915" href="../asm/41915.html">A3BB</a></td>
+<td class="routineDesc">sub_A3BB</td>
+</tr>
+<tr>
+<td class="mapPage">163</td>
 <td class="mapByte">237</td>
 <td class="routine"><a class="link" name="41965" href="../asm/41965.html">A3ED</a></td>
 <td class="routineDesc">store_banked_A_then_C_at_HL</td>
@@ -895,13 +907,13 @@
 <td class="mapPage">163</td>
 <td class="mapByte">243</td>
 <td class="routine"><a class="link" name="41971" href="../asm/41971.html">A3F3</a></td>
-<td class="routineDesc">sub_A3F3</td>
+<td class="routineDesc">byte_A13E_is_nonzero</td>
 </tr>
 <tr>
 <td class="mapPage">163</td>
 <td class="mapByte">248</td>
 <td class="routine"><a class="link" name="41976" href="../asm/41976.html">A3F8</a></td>
-<td class="routineDesc">varA13E_is_zero</td>
+<td class="routineDesc">byte_A13E_is_zero</td>
 </tr>
 <tr>
 <td class="mapPage">164</td>
@@ -943,13 +955,13 @@
 <td class="mapPage">164</td>
 <td class="mapByte">211</td>
 <td class="routine"><a class="link" name="42195" href="../asm/42195.html">A4D3</a></td>
-<td class="routineDesc">sub_A4D3</td>
+<td class="routineDesc">byte_A13E_is_nonzero_anotherone</td>
 </tr>
 <tr>
 <td class="mapPage">164</td>
 <td class="mapByte">216</td>
 <td class="routine"><a class="link" name="42200" href="../asm/42200.html">A4D8</a></td>
-<td class="routineDesc">varA13E_is_zero_anotherone</td>
+<td class="routineDesc">byte_A13E_is_zero_anotherone</td>
 </tr>
 <tr>
 <td class="mapPage">164</td>
@@ -997,7 +1009,7 @@
 <td class="mapPage">165</td>
 <td class="mapByte">206</td>
 <td class="data"><a class="link" name="42446" href="../asm/42446.html">A5CE</a></td>
-<td class="dataDesc">screenlocstrings</td>
+<td class="dataDesc">escape_strings</td>
 </tr>
 <tr>
 <td class="mapPage">166</td>
@@ -1112,6 +1124,12 @@
 <td class="mapByte">102</td>
 <td class="data"><a class="link" name="43878" href="../asm/43878.html">AB66</a></td>
 <td class="dataDesc">zoombox_stuff</td>
+</tr>
+<tr>
+<td class="mapPage">171</td>
+<td class="mapByte">106</td>
+<td class="data"><a class="link" name="43882" href="../asm/43882.html">AB6A</a></td>
+<td class="dataDesc">game_screen_attribute</td>
 </tr>
 <tr>
 <td class="mapPage">171</td>
@@ -1345,13 +1363,13 @@
 <td class="mapPage">183</td>
 <td class="mapByte">27</td>
 <td class="routine"><a class="link" name="46875" href="../asm/46875.html">B71B</a></td>
-<td class="routineDesc">reset_something</td>
+<td class="routineDesc">reset_position</td>
 </tr>
 <tr>
 <td class="mapPage">183</td>
 <td class="mapByte">90</td>
 <td class="routine"><a class="link" name="46938" href="../asm/46938.html">B75A</a></td>
-<td class="routineDesc">looks_like_a_reset_function</td>
+<td class="routineDesc">reset_game</td>
 </tr>
 <tr>
 <td class="mapPage">183</td>
@@ -1465,7 +1483,7 @@
 <td class="mapPage">196</td>
 <td class="mapByte">224</td>
 <td class="routine"><a class="link" name="50400" href="../asm/50400.html">C4E0</a></td>
-<td class="routineDesc">sub_C4E0</td>
+<td class="routineDesc">spawn_characters_maybe</td>
 </tr>
 <tr>
 <td class="mapPage">197</td>
@@ -1507,7 +1525,7 @@
 <td class="mapPage">200</td>
 <td class="mapByte">145</td>
 <td class="data"><a class="link" name="51345" href="../asm/51345.html">C891</a></td>
-<td class="dataDesc">suspicious_player_related</td>
+<td class="dataDesc">food_discovered_counter</td>
 </tr>
 <tr>
 <td class="mapPage">200</td>
@@ -1519,25 +1537,31 @@
 <td class="mapPage">201</td>
 <td class="mapByte">24</td>
 <td class="routine"><a class="link" name="51480" href="../asm/51480.html">C918</a></td>
-<td class="routineDesc">sub_C918</td>
+<td class="routineDesc">character_behaviour_stuff</td>
 </tr>
 <tr>
 <td class="mapPage">202</td>
 <td class="mapByte">17</td>
 <td class="routine"><a class="link" name="51729" href="../asm/51729.html">CA11</a></td>
-<td class="routineDesc">sub_CA11</td>
+<td class="routineDesc">move_character_Y</td>
 </tr>
 <tr>
 <td class="mapPage">202</td>
 <td class="mapByte">73</td>
 <td class="routine"><a class="link" name="51785" href="../asm/51785.html">CA49</a></td>
-<td class="routineDesc">sub_CA49</td>
+<td class="routineDesc">move_character_X</td>
 </tr>
 <tr>
 <td class="mapPage">202</td>
 <td class="mapByte">129</td>
 <td class="routine"><a class="link" name="51841" href="../asm/51841.html">CA81</a></td>
-<td class="routineDesc">sub_CA81</td>
+<td class="routineDesc">bribes_solitary_food</td>
+</tr>
+<tr>
+<td class="mapPage">203</td>
+<td class="mapByte">35</td>
+<td class="routine"><a class="link" name="52003" href="../asm/52003.html">CB23</a></td>
+<td class="routineDesc">sub_CB23</td>
 </tr>
 <tr>
 <td class="mapPage">203</td>
@@ -1585,7 +1609,7 @@
 <td class="mapPage">204</td>
 <td class="mapByte">171</td>
 <td class="routine"><a class="link" name="52395" href="../asm/52395.html">CCAB</a></td>
-<td class="routineDesc">guards_persue_player</td>
+<td class="routineDesc">guards_persue_prisoners</td>
 </tr>
 <tr>
 <td class="mapPage">204</td>
@@ -1759,7 +1783,7 @@
 <td class="mapPage">229</td>
 <td class="mapByte">66</td>
 <td class="routine"><a class="link" name="58690" href="../asm/58690.html">E542</a></td>
-<td class="routineDesc">divide_array_by_8_with_rounding</td>
+<td class="routineDesc">scale_pos</td>
 </tr>
 <tr>
 <td class="mapPage">229</td>
@@ -1795,7 +1819,7 @@
 <td class="mapPage">236</td>
 <td class="mapByte">1</td>
 <td class="data"><a class="link" name="60417" href="../asm/60417.html">EC01</a></td>
-<td class="dataDesc">stru_EC01</td>
+<td class="dataDesc">suspected_outdoor_mask_data</td>
 </tr>
 <tr>
 <td class="mapPage">237</td>
@@ -1879,7 +1903,7 @@
 <td class="mapPage">240</td>
 <td class="mapByte">118</td>
 <td class="data"><a class="link" name="61558" href="../asm/61558.html">F076</a></td>
-<td class="dataDesc">tile_refs_for_statics</td>
+<td class="dataDesc">static_graphic_defs</td>
 </tr>
 <tr>
 <td class="mapPage">241</td>
@@ -2046,8 +2070,8 @@
 <tr>
 <td class="mapPage">253</td>
 <td class="mapByte">224</td>
-<td class="routine"><a class="link" name="64992" href="../asm/64992.html">FDE0</a></td>
-<td class="routineDesc">nop</td>
+<td class="unused"><a class="link" name="64992" href="../asm/64992.html">FDE0</a></td>
+<td class="unusedDesc">Unused (1 byte)</td>
 </tr>
 <tr>
 <td class="mapPage">253</td>
@@ -2099,7 +2123,7 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

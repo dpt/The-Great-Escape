@@ -56,7 +56,7 @@
 <tr>
 <td class="address"><a name="50770"></a>C652</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="11">if (A == 0xFF) } {  A = *++HL &amp; characterstruct_BYTE5_MASK_HI; } *HL = A; get_A_indexed_by_C41A(); A &amp;= characterstruct_BYTE5_MASK_LO; A += *HL; {  *HL = A; }</td>
+<td class="comment" rowspan="11">if (A == 0xFF) } {  A = *++HL &amp; characterstruct_BYTE6_MASK_HI; } *HL = A; get_A_indexed_by_C41A(); A &amp;= characterstruct_BYTE6_MASK_LO; A += *HL; {  *HL = A; }</td>
 </tr>
 <tr>
 <td class="address"><a name="50772"></a>C654</td>
@@ -106,7 +106,7 @@
 <tr>
 <td class="address"><a name="50789"></a>C665</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">C = *++HL;</td>
+<td class="comment" rowspan="2">C = *++HL; // byte6</td>
 </tr>
 <tr>
 <td class="address"><a name="50790"></a>C666</td>
@@ -295,7 +295,7 @@ sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

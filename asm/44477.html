@@ -53,7 +53,7 @@ Turns white screen elements light blue and tracks the player with a searchlight.
 <tr>
 <td class="address"><a name="44486"></a>ADC6</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="5">if (indoor_room_index) { // player is indoors } *HL = searchlight_STATE_OFF; return;</td>
+<td class="comment" rowspan="5">if (room_index) { // player is indoors } *HL = searchlight_STATE_OFF; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44489"></a>ADC9</td>
@@ -570,7 +570,7 @@ Move searchlight up/down to focus on player.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

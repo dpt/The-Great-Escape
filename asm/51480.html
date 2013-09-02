@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="51729.html">CA11</a></td>
 </tr>
 </table>
-<div class="description">C918: sub_C918</div>
+<div class="description">C918: character_behaviour_stuff</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -51,7 +51,7 @@ Character behaviour?
 <tr>
 <td class="address"><a name="51484"></a>C91C</td>
 <td class="instruction">AND $0F</td>
-<td class="comment">A &amp;= vischar_BYTE7_MASK;</td>
+<td class="comment">A &amp;= vischar_BYTE7_MASK; // flags</td>
 </tr>
 <tr>
 <td class="address"><a name="51486"></a>C91E</td>
@@ -93,7 +93,7 @@ Character behaviour?
 <tr>
 <td class="address"><a name="51498"></a>C92A</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="85">if (A != 0) } {  if (A == 1) { } PUSH HL - POP DEdash {    DEdash += 3; } HLdash = &amp;player_map_position_x; *DEdash++ = *HLdash++; *DEdash++ = *HLdash++; - goto jump_c9c0; } {  else if (A == 2) { } {    if (automatic_player_counter) goto $C932; // jump into case 1 } {    *HL++ = 0; } goto $CB23; } {  else if (A == 3) { } PUSH HL EX DE,HL {    if (item_structs[item_FOOD].room &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) { } HL++; {      DE += 3; } *DE++ = *HL++; *DE++ = *HL++; POP HL goto jump_c9c0; } else { A = 0; *DE = A; EX DE,HL {      *++HL = 0xFF; } {      *++HL = 0; } POP HL goto $CB23; } } {  else if (A == 4) { } PUSH HL A = bribed_character; {    if (A != 0xFF) { } - B = 7; // 7 iterations HL = $8020; // iterate over non-player characters do { {        if (*HL == A) goto found_bribed; } {        HL += 32; } } while (--B); } POP HL {    *HL++ = 0; } goto $CB23; {found_bribed: HL += 15; } POP DE PUSH DE {    DE += 3; } {    if (indoor_room_index) { } divide_array_by_8_with_rounding(HL,DE); } else { *DE++ = *HL++; HL++; *DE++ = *HL++; } POP HL goto jump_c9c0; }</td>
+<td class="comment" rowspan="85">if (A != 0) } {  if (A == 1) { } PUSH HL - POP DEdash {    DEdash += 3; } HLdash = &amp;player_map_position.y; *DEdash++ = *HLdash++; *DEdash++ = *HLdash++; - goto jump_c9c0; } {  else if (A == 2) { } {    if (automatic_player_counter) goto $C932; // jump into case 1 } {    *HL++ = 0; } sub_CB23(); return; } // exit via {  else if (A == 3) { } PUSH HL EX DE,HL {    if (item_structs[item_FOOD].room &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) { } HL++; {      DE += 3; } *DE++ = *HL++; *DE++ = *HL++; POP HL goto jump_c9c0; } else { A = 0; *DE = A; EX DE,HL {      *++HL = 0xFF; } {      *++HL = 0; } POP HL sub_CB23(); return; } } // exit via {  else if (A == 4) { } PUSH HL A = bribed_character; {    if (A != 0xFF) { } - B = 7; // 7 iterations HL = $8020; // iterate over non-player characters do { {        if (*HL == A) goto found_bribed; } {        HL += 32; } } while (--B); } POP HL {    *HL++ = 0; } sub_CB23(); return; // exit via {found_bribed: HL += 15; } POP DE PUSH DE {    DE += 3; } {    if (room_index) { } scale_pos(HL,DE); } else { *DE++ = *HL++; HL++; *DE++ = *HL++; } POP HL goto jump_c9c0; }</td>
 </tr>
 <tr>
 <td class="address"><a name="51499"></a>C92B</td>
@@ -181,7 +181,7 @@ Character behaviour?
 </tr>
 <tr>
 <td class="address"><a name="51536"></a>C950</td>
-<td class="instruction">JP <a class="link" href="51841.html#52003">$CB23</a></td>
+<td class="instruction">JP <a class="link" href="52003.html">$CB23</a></td>
 </tr>
 <tr>
 <td class="label"><a name="51539"></a>C953</td>
@@ -277,7 +277,7 @@ Character behaviour?
 </tr>
 <tr>
 <td class="address"><a name="51574"></a>C976</td>
-<td class="instruction">JP <a class="link" href="51841.html#52003">$CB23</a></td>
+<td class="instruction">JP <a class="link" href="52003.html">$CB23</a></td>
 </tr>
 <tr>
 <td class="label"><a name="51577"></a>C979</td>
@@ -357,7 +357,7 @@ Character behaviour?
 </tr>
 <tr>
 <td class="address"><a name="51609"></a>C999</td>
-<td class="instruction">JP <a class="link" href="51841.html#52003">$CB23</a></td>
+<td class="instruction">JP <a class="link" href="52003.html">$CB23</a></td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -457,7 +457,7 @@ Found bribed character.
 <tr>
 <td class="address"><a name="51645"></a>C9BD</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto sub_C918:$C9F5;</td>
+<td class="comment" rowspan="2">if (A == 0) goto gizzards;</td>
 </tr>
 <tr>
 <td class="address"><a name="51646"></a>C9BE</td>
@@ -481,7 +481,7 @@ Found bribed character.
 <tr>
 <td class="address"><a name="51651"></a>C9C3</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">if (indoor_room_index) } HLdash = &amp;A_widened_to_BC;</td>
+<td class="comment" rowspan="4">if (room_index) } HLdash = &amp;A_widened_to_BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="51654"></a>C9C6</td>
@@ -526,12 +526,12 @@ Found bribed character.
 <tr>
 <td class="label"><a name="51674"></a>C9DA</td>
 <td class="instruction">LD ($CA13),HL</td>
-<td class="comment">($CA13) = HLdash; // self-modify sub_CA11:$CA13</td>
+<td class="comment">($CA13) = HLdash; // self-modify move_character_Y:$CA13</td>
 </tr>
 <tr>
 <td class="address"><a name="51677"></a>C9DD</td>
 <td class="instruction">LD ($CA4B),HL</td>
-<td class="comment">($CA4B) = HLdash; // self-modify sub_CA49:$CA4B</td>
+<td class="comment">($CA4B) = HLdash; // self-modify move_character_X:$CA4B</td>
 </tr>
 <tr>
 <td class="address"><a name="51680"></a>C9E0</td>
@@ -563,7 +563,7 @@ Found bribed character.
 <tr>
 <td class="address"><a name="51690"></a>C9EA</td>
 <td class="instruction">CALL <a class="link" href="51729.html">$CA11</a></td>
-<td class="comment">sub_CA11();</td>
+<td class="comment">move_character_Y();</td>
 </tr>
 <tr>
 <td class="address"><a name="51693"></a>C9ED</td>
@@ -573,12 +573,12 @@ Found bribed character.
 <tr>
 <td class="address"><a name="51695"></a>C9EF</td>
 <td class="instruction">CALL <a class="link" href="51785.html">$CA49</a></td>
-<td class="comment">sub_CA49();</td>
+<td class="comment">move_character_X();</td>
 </tr>
 <tr>
 <td class="address"><a name="51698"></a>C9F2</td>
 <td class="instruction">JP Z,<a class="link" href="51841.html">$CA81</a></td>
-<td class="comment">if (Z) goto $CA81; }</td>
+<td class="comment">if (Z) goto bribes_solitary_food; } // exit via</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -593,17 +593,15 @@ This entry point is used by the routine at <a class="link" href="51841.html">CA8
 <tr>
 <td class="label">C9F5</td>
 <td class="instruction">CP (IY+$0D)</td>
-<td class="comment">if (A == IY[13]) // sampled IY=$8040,$8020,$8000</td>
+<td class="comment" rowspan="4">gizzards: if (A != IY[13]) IY[13] = A | vischar_BYTE13_BIT7; // sampled IY=$8040,$8020,$8000</td>
 </tr>
 <tr>
 <td class="address"><a name="51704"></a>C9F8</td>
 <td class="instruction">RET Z</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="address"><a name="51705"></a>C9F9</td>
 <td class="instruction">OR $80</td>
-<td class="comment" rowspan="2">IY[13] = A | vischar_BYTE13_BIT7;</td>
 </tr>
 <tr>
 <td class="address"><a name="51707"></a>C9FB</td>
@@ -630,22 +628,21 @@ This entry point is used by the routine at <a class="link" href="51841.html">CA8
 <tr>
 <td class="address"><a name="51715"></a>CA03</td>
 <td class="instruction">CALL <a class="link" href="51785.html">$CA49</a></td>
-<td class="comment">sub_CA49();</td>
+<td class="comment">move_character_X();</td>
 </tr>
 <tr>
 <td class="address"><a name="51718"></a>CA06</td>
 <td class="instruction">JR NZ,$C9F5</td>
-<td class="comment">if (!Z) goto $C9F5;</td>
+<td class="comment" rowspan="2">if (Z) move_character_Y();</td>
 </tr>
 <tr>
 <td class="address"><a name="51720"></a>CA08</td>
 <td class="instruction">CALL <a class="link" href="51729.html">$CA11</a></td>
-<td class="comment">sub_CA11();</td>
 </tr>
 <tr>
 <td class="address"><a name="51723"></a>CA0B</td>
 <td class="instruction">JR NZ,$C9F5</td>
-<td class="comment">if (!Z) goto $C9F5;</td>
+<td class="comment">if (!Z) goto gizzards; // keep trying to move?</td>
 </tr>
 <tr>
 <td class="address"><a name="51725"></a>CA0D</td>
@@ -655,7 +652,7 @@ This entry point is used by the routine at <a class="link" href="51841.html">CA8
 <tr>
 <td class="address"><a name="51726"></a>CA0E</td>
 <td class="instruction">JP <a class="link" href="51841.html">$CA81</a></td>
-<td class="comment">sub_CA91(); return; // exit via</td>
+<td class="comment">bribes_solitary_food(); return; // exit via</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -666,7 +663,7 @@ This entry point is used by the routine at <a class="link" href="51841.html">CA8
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

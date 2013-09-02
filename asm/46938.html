@@ -21,16 +21,13 @@
 <td class="next">Next: <a class="link" href="47003.html">B79B</a></td>
 </tr>
 </table>
-<div class="description">B75A: looks_like_a_reset_function</div>
+<div class="description">B75A: reset_game</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-[unsure]
-</div>
-<div class="paragraph">
-[unsure]
+Discover all items.
 </div>
 </div>
 </td>
@@ -38,22 +35,22 @@
 <tr>
 <td class="label"><a name="46938"></a>B75A</td>
 <td class="instruction">LD BC,$1000</td>
-<td class="comment">BC = 0x1000; // B = 16, C = 0</td>
+<td class="comment">B = 16; C = 0;</td>
 </tr>
 <tr>
 <td class="label"><a name="46941"></a>B75D</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do { PUSH BC</td>
+<td class="comment">do { -</td>
 </tr>
 <tr>
 <td class="address"><a name="46942"></a>B75E</td>
 <td class="instruction">CALL <a class="link" href="52529.html">$CD31</a></td>
-<td class="comment">item_discovered();</td>
+<td class="comment">item_discovered(C); // pass C as C</td>
 </tr>
 <tr>
 <td class="address"><a name="46945"></a>B761</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46946"></a>B762</td>
@@ -66,7 +63,17 @@
 <td class="comment">} while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="46949"></a>B765</td>
+<td class="routineComment" colspan="3">
+<a name="46949"></a>
+<div class="comments">
+<div class="paragraph">
+Reset message queue.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">B765</td>
 <td class="instruction">LD HL,$7CFE</td>
 <td class="comment" rowspan="2">message_queue_pointer = message_queue + 2;</td>
 </tr>
@@ -82,14 +89,24 @@
 <tr>
 <td class="address"><a name="46958"></a>B76E</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">($8001) = 0;</td>
+<td class="comment" rowspan="2">$8001 = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="46959"></a>B76F</td>
 <td class="instruction">LD ($8001),A</td>
 </tr>
 <tr>
-<td class="address"><a name="46962"></a>B772</td>
+<td class="routineComment" colspan="3">
+<a name="46962"></a>
+<div class="comments">
+<div class="paragraph">
+Reset score.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">B772</td>
 <td class="instruction">LD HL,$A132</td>
 <td class="comment">HL = &amp;score_digits[0];</td>
 </tr>
@@ -112,7 +129,17 @@
 <td class="instruction">DJNZ $B777</td>
 </tr>
 <tr>
-<td class="address"><a name="46971"></a>B77B</td>
+<td class="routineComment" colspan="3">
+<a name="46971"></a>
+<div class="comments">
+<div class="paragraph">
+Reset morale.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">B77B</td>
 <td class="instruction">LD (HL),$70</td>
 <td class="comment">morale = morale_MAX;</td>
 </tr>
@@ -122,9 +149,19 @@
 <td class="comment">plot_score();</td>
 </tr>
 <tr>
-<td class="address"><a name="46976"></a>B780</td>
+<td class="routineComment" colspan="3">
+<a name="46976"></a>
+<div class="comments">
+<div class="paragraph">
+Reset items.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">B780</td>
 <td class="instruction">LD HL,$FFFF</td>
-<td class="comment" rowspan="2">items_held = 0xFFFF;</td>
+<td class="comment" rowspan="2">items_held = (item_NONE) | (item_NONE &lt;&lt; 8);</td>
 </tr>
 <tr>
 <td class="address"><a name="46979"></a>B783</td>
@@ -136,7 +173,17 @@
 <td class="comment">draw_all_items();</td>
 </tr>
 <tr>
-<td class="address"><a name="46985"></a>B789</td>
+<td class="routineComment" colspan="3">
+<a name="46985"></a>
+<div class="comments">
+<div class="paragraph">
+Reset sprite.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">B789</td>
 <td class="instruction">LD HL,$CE2E</td>
 <td class="comment" rowspan="2">$8015 = sprite_prisoner_tl_4;</td>
 </tr>
@@ -147,7 +194,7 @@
 <tr>
 <td class="address"><a name="46991"></a>B78F</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment" rowspan="2">indoor_room_index = room_2_hut2left;</td>
+<td class="comment" rowspan="2">room_index = room_2_hut2left;</td>
 </tr>
 <tr>
 <td class="address"><a name="46993"></a>B791</td>
@@ -161,7 +208,7 @@
 <tr>
 <td class="address"><a name="46999"></a>B797</td>
 <td class="instruction">CALL <a class="link" href="26868.html">$68F4</a></td>
-<td class="comment">transition:$68F4();</td>
+<td class="comment">enter_room();</td>
 </tr>
 <tr>
 <td class="address"><a name="47002"></a>B79A</td>
@@ -177,7 +224,7 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

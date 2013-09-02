@@ -45,12 +45,11 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46548"></a>B5D4</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment">do { A = IY[1];</td>
+<td class="comment" rowspan="120">do { if (IY[1] == vischar_BYTE1_EMPTY_SLOT) goto next; // $8001 flags } PUSH BC IY[1] |= vischar_BYTE1_BIT7; {  if (IY[0x0D] &amp; vischar_BYTE13_BIT7) goto byte13bit7set; // $800D} H = IY[0x0B]; L = IY[0x0A]; A = IY[0x0C]; {  if (!even_parity(A)) { } A &amp;= vischar_BYTE12_MASK; if (A == 0) goto snozzle; {    HL += (A + 1) * 4 - 1; } A = *HL++; {    EX AF,AF' } resume1: EX DE,HL L = IY[0x0F]; // Y axis H = IY[0x10]; A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data) C = A; A &amp;= 0x80; {    if (A) A = 0xFF; } B = A; HL -= BC; saved_Y = HL; DE++; L = IY[0x11]; // X axis H = IY[0x12]; A = *DE; C = A; A &amp;= 0x80; {    if (A) A = 0xFF; } B = A; HL -= BC; saved_X = HL; DE++; L = IY[0x13]; // vertical offset H = IY[0x14]; A = *DE; C = A; A &amp;= 0x80; {    if (A) A = 0xFF; } B = A; HL -= BC; saved_VO = HL; sub_AF8F(); if (!Z) goto pop_next; IY[0x0C]--; } {  else { if (A == *HL) goto snozzle; } {    HL += (A + 1) * 4; } resume2: EX DE,HL A = *DE; L = A; A &amp;= 0x80; {    if (A) A = 0xFF; } H = A; C = IY[0x0F]; // Y axis B = IY[0x10]; HL += BC; saved_Y = HL; DE++; A = *DE; L = A; A &amp;= 0x80; {    if (A) A = 0xFF; } H = A; C = IY[0x11]; // X axis B = IY[0x12]; HL += BC; saved_X = HL; DE++; A = *DE; L = A; A &amp;= 0x80; {    if (A) A = 0xFF; } H = A; C = IY[0x13]; // vertical offset B = IY[0x14]; HL += BC; saved_VO = HL; DE++; A = *DE; EX AF,AF' sub_AF8F(); if (!Z) goto pop_next; IY[0x0C]++; } {  HL = IY; } reset_position:$B729(); pop_next: POP BC {  if (IY[1] != vischar_BYTE1_EMPTY_SLOT) IY[1] &amp;= ~vischar_BYTE1_BIT7; // $8001 } next: DE = 32; // stride IY += DE; {} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46551"></a>B5D7</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A == 0xFF) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="46553"></a>B5D9</td>
@@ -59,17 +58,14 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46556"></a>B5DC</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">PUSH BC</td>
 </tr>
 <tr>
 <td class="address"><a name="46557"></a>B5DD</td>
 <td class="instruction">SET 7,(IY+$01)</td>
-<td class="comment">IY[1] |= vischar_BYTE1_BIT7; // $8001</td>
 </tr>
 <tr>
 <td class="address"><a name="46561"></a>B5E1</td>
 <td class="instruction">BIT 7,(IY+$0D)</td>
-<td class="comment" rowspan="2">if (IY[13] &amp; vischar_BYTE13_BIT7) goto $B6BE; // $800D</td>
 </tr>
 <tr>
 <td class="address"><a name="46565"></a>B5E5</td>
@@ -78,22 +74,18 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46568"></a>B5E8</td>
 <td class="instruction">LD H,(IY+$0B)</td>
-<td class="comment">H = IY[11];</td>
 </tr>
 <tr>
 <td class="address"><a name="46571"></a>B5EB</td>
 <td class="instruction">LD L,(IY+$0A)</td>
-<td class="comment">L = IY[10];</td>
 </tr>
 <tr>
 <td class="address"><a name="46574"></a>B5EE</td>
 <td class="instruction">LD A,(IY+$0C)</td>
-<td class="comment">A = IY[12];</td>
 </tr>
 <tr>
 <td class="address"><a name="46577"></a>B5F1</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (even_parity(A)) goto $B64F;</td>
 </tr>
 <tr>
 <td class="address"><a name="46578"></a>B5F2</td>
@@ -102,17 +94,14 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46581"></a>B5F5</td>
 <td class="instruction">AND $7F</td>
-<td class="comment">A &amp;= 0x7F;</td>
 </tr>
 <tr>
 <td class="address"><a name="46583"></a>B5F7</td>
 <td class="instruction">JP Z,$B6C2</td>
-<td class="comment">if (A == 0) goto $B6C2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46586"></a>B5FA</td>
 <td class="instruction">INC A</td>
-<td class="comment" rowspan="7">HL += (A + 1) * 4 - 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="46587"></a>B5FB</td>
@@ -141,12 +130,10 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46594"></a>B602</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46595"></a>B603</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment" rowspan="2">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="46596"></a>B604</td>
@@ -155,37 +142,30 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46597"></a>B605</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="46598"></a>B606</td>
 <td class="instruction">LD L,(IY+$0F)</td>
-<td class="comment">L = IY[15]; // Y axis</td>
 </tr>
 <tr>
 <td class="address"><a name="46601"></a>B609</td>
 <td class="instruction">LD H,(IY+$10)</td>
-<td class="comment">H = IY[16];</td>
 </tr>
 <tr>
 <td class="address"><a name="46604"></a>B60C</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data)</td>
 </tr>
 <tr>
 <td class="address"><a name="46605"></a>B60D</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46606"></a>B60E</td>
 <td class="instruction">AND $80</td>
-<td class="comment">A &amp;= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46608"></a>B610</td>
 <td class="instruction">JR Z,$B614</td>
-<td class="comment" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46610"></a>B612</td>
@@ -194,52 +174,42 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46612"></a>B614</td>
 <td class="instruction">LD B,A</td>
-<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46613"></a>B615</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="46615"></a>B617</td>
 <td class="instruction">LD ($81A4),HL</td>
-<td class="comment">word_81A4 = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46618"></a>B61A</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46619"></a>B61B</td>
 <td class="instruction">LD L,(IY+$11)</td>
-<td class="comment">L = IY[17]; // X axis</td>
 </tr>
 <tr>
 <td class="address"><a name="46622"></a>B61E</td>
 <td class="instruction">LD H,(IY+$12)</td>
-<td class="comment">H = IY[18];</td>
 </tr>
 <tr>
 <td class="address"><a name="46625"></a>B621</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46626"></a>B622</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46627"></a>B623</td>
 <td class="instruction">AND $80</td>
-<td class="comment">A &amp;= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46629"></a>B625</td>
 <td class="instruction">JR Z,$B629</td>
-<td class="comment" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46631"></a>B627</td>
@@ -248,52 +218,42 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46633"></a>B629</td>
 <td class="instruction">LD B,A</td>
-<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46634"></a>B62A</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="46636"></a>B62C</td>
 <td class="instruction">LD ($81A6),HL</td>
-<td class="comment">word_81A6 = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46639"></a>B62F</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46640"></a>B630</td>
 <td class="instruction">LD L,(IY+$13)</td>
-<td class="comment">L = IY[19]; // vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="46643"></a>B633</td>
 <td class="instruction">LD H,(IY+$14)</td>
-<td class="comment">H = IY[20];</td>
 </tr>
 <tr>
 <td class="address"><a name="46646"></a>B636</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46647"></a>B637</td>
 <td class="instruction">LD C,A</td>
-<td class="comment">C = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46648"></a>B638</td>
 <td class="instruction">AND $80</td>
-<td class="comment">A &amp;= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46650"></a>B63A</td>
 <td class="instruction">JR Z,$B63E</td>
-<td class="comment" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46652"></a>B63C</td>
@@ -302,42 +262,34 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46654"></a>B63E</td>
 <td class="instruction">LD B,A</td>
-<td class="comment">B = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46655"></a>B63F</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">HL -= BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="46657"></a>B641</td>
 <td class="instruction">LD ($81A8),HL</td>
-<td class="comment">word_81A8 = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46660"></a>B644</td>
 <td class="instruction">CALL <a class="link" href="44943.html">$AF8F</a></td>
-<td class="comment">sub_AF8F();</td>
 </tr>
 <tr>
 <td class="address"><a name="46663"></a>B647</td>
 <td class="instruction">JP NZ,$B6A8</td>
-<td class="comment">if (!Z) goto $B6A8;</td>
 </tr>
 <tr>
 <td class="address"><a name="46666"></a>B64A</td>
 <td class="instruction">DEC (IY+$0C)</td>
-<td class="comment">IY[12]--;</td>
 </tr>
 <tr>
 <td class="address"><a name="46669"></a>B64D</td>
 <td class="instruction">JR $B6A2</td>
-<td class="comment">goto $B6A2;</td>
 </tr>
 <tr>
 <td class="label"><a name="46671"></a>B64F</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A == *HL) goto $B6C2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46672"></a>B650</td>
@@ -346,7 +298,6 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46675"></a>B653</td>
 <td class="instruction">INC A</td>
-<td class="comment" rowspan="6">HL += (A + 1) * 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46676"></a>B654</td>
@@ -371,27 +322,22 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46682"></a>B65A</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="46683"></a>B65B</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46684"></a>B65C</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46685"></a>B65D</td>
 <td class="instruction">AND $80</td>
-<td class="comment">A &amp;= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46687"></a>B65F</td>
 <td class="instruction">JR Z,$B663</td>
-<td class="comment" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46689"></a>B661</td>
@@ -400,52 +346,42 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46691"></a>B663</td>
 <td class="instruction">LD H,A</td>
-<td class="comment">H = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46692"></a>B664</td>
 <td class="instruction">LD C,(IY+$0F)</td>
-<td class="comment">C = IY[15]; // Y axis</td>
 </tr>
 <tr>
 <td class="address"><a name="46695"></a>B667</td>
 <td class="instruction">LD B,(IY+$10)</td>
-<td class="comment">B = IY[16];</td>
 </tr>
 <tr>
 <td class="address"><a name="46698"></a>B66A</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment">HL += BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="46699"></a>B66B</td>
 <td class="instruction">LD ($81A4),HL</td>
-<td class="comment">word_81A4 = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46702"></a>B66E</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46703"></a>B66F</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46704"></a>B670</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46705"></a>B671</td>
 <td class="instruction">AND $80</td>
-<td class="comment">A &amp;= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46707"></a>B673</td>
 <td class="instruction">JR Z,$B677</td>
-<td class="comment" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46709"></a>B675</td>
@@ -454,52 +390,42 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46711"></a>B677</td>
 <td class="instruction">LD H,A</td>
-<td class="comment">H = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46712"></a>B678</td>
 <td class="instruction">LD C,(IY+$11)</td>
-<td class="comment">C = IY[17]; // X axis</td>
 </tr>
 <tr>
 <td class="address"><a name="46715"></a>B67B</td>
 <td class="instruction">LD B,(IY+$12)</td>
-<td class="comment">B = IY[18];</td>
 </tr>
 <tr>
 <td class="address"><a name="46718"></a>B67E</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment">HL += BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="46719"></a>B67F</td>
 <td class="instruction">LD ($81A6),HL</td>
-<td class="comment">word_81A6 = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46722"></a>B682</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46723"></a>B683</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46724"></a>B684</td>
 <td class="instruction">LD L,A</td>
-<td class="comment">L = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46725"></a>B685</td>
 <td class="instruction">AND $80</td>
-<td class="comment">A &amp;= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46727"></a>B687</td>
 <td class="instruction">JR Z,$B68B</td>
-<td class="comment" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="address"><a name="46729"></a>B689</td>
@@ -508,62 +434,50 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46731"></a>B68B</td>
 <td class="instruction">LD H,A</td>
-<td class="comment">H = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46732"></a>B68C</td>
 <td class="instruction">LD C,(IY+$13)</td>
-<td class="comment">C = IY[19]; // vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="46735"></a>B68F</td>
 <td class="instruction">LD B,(IY+$14)</td>
-<td class="comment">B = IY[20];</td>
 </tr>
 <tr>
 <td class="address"><a name="46738"></a>B692</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment">HL += BC;</td>
 </tr>
 <tr>
 <td class="address"><a name="46739"></a>B693</td>
 <td class="instruction">LD ($81A8),HL</td>
-<td class="comment">word_81A8 = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46742"></a>B696</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46743"></a>B697</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46744"></a>B698</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">EX AF,AF'</td>
 </tr>
 <tr>
 <td class="address"><a name="46745"></a>B699</td>
 <td class="instruction">CALL <a class="link" href="44943.html">$AF8F</a></td>
-<td class="comment">sub_AF8F();</td>
 </tr>
 <tr>
 <td class="address"><a name="46748"></a>B69C</td>
 <td class="instruction">JP NZ,$B6A8</td>
-<td class="comment">if (!Z) goto $B6A8;</td>
 </tr>
 <tr>
 <td class="address"><a name="46751"></a>B69F</td>
 <td class="instruction">INC (IY+$0C)</td>
-<td class="comment">IY[12]++;</td>
 </tr>
 <tr>
 <td class="label"><a name="46754"></a>B6A2</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
 <td class="address"><a name="46756"></a>B6A4</td>
@@ -572,22 +486,18 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46757"></a>B6A5</td>
 <td class="instruction">CALL <a class="link" href="46875.html#46889">$B729</a></td>
-<td class="comment">reset_something:$B729();</td>
 </tr>
 <tr>
 <td class="label"><a name="46760"></a>B6A8</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
 </tr>
 <tr>
 <td class="address"><a name="46761"></a>B6A9</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment">A = IY[1]; // $8001</td>
 </tr>
 <tr>
 <td class="address"><a name="46764"></a>B6AC</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="3">if (A != 0xFF) IY[1] &amp;= ~vischar_BYTE1_BIT7;</td>
 </tr>
 <tr>
 <td class="address"><a name="46766"></a>B6AE</td>
@@ -600,22 +510,18 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46772"></a>B6B4</td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment">next: DE = 32; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="46775"></a>B6B7</td>
 <td class="instruction">ADD IY,DE</td>
-<td class="comment">IY += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46777"></a>B6B9</td>
 <td class="instruction">DEC B</td>
-<td class="comment">} while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46778"></a>B6BA</td>
 <td class="instruction">JP NZ,$B5D4</td>
-<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="46781"></a>B6BD</td>
@@ -625,12 +531,12 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46782"></a>B6BE</td>
 <td class="instruction">RES 7,(IY+$0D)</td>
-<td class="comment">IY[13] &amp;= ~(1&lt;&lt;7);</td>
+<td class="comment">byte13bit7set: IY[0x0D] &amp;= ~vischar_BYTE13_BIT7; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,</td>
 </tr>
 <tr>
 <td class="label"><a name="46786"></a>B6C2</td>
 <td class="instruction">LD A,(IY+$0E)</td>
-<td class="comment" rowspan="12">A = byte_CDAA[IY[14] * 9 + IY[13]];</td>
+<td class="comment" rowspan="12">snozzle: A = byte_CDAA[IY[0x0E] * 9 + IY[0x0D]];</td>
 </tr>
 <tr>
 <td class="address"><a name="46789"></a>B6C5</td>
@@ -684,42 +590,39 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46806"></a>B6D6</td>
 <td class="instruction">LD L,(IY+$08)</td>
-<td class="comment">L = IY[8];</td>
+<td class="comment">L = IY[0x08];</td>
 </tr>
 <tr>
 <td class="address"><a name="46809"></a>B6D9</td>
 <td class="instruction">LD H,(IY+$09)</td>
-<td class="comment">H = IY[9];</td>
+<td class="comment">H = IY[0x09];</td>
 </tr>
 <tr>
 <td class="address"><a name="46812"></a>B6DC</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment">A += A;</td>
+<td class="comment" rowspan="3">HL += A * 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46813"></a>B6DD</td>
 <td class="instruction">LD E,A</td>
-<td class="comment">E = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46814"></a>B6DE</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46815"></a>B6DF</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment">E = *HL;</td>
+<td class="comment" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46816"></a>B6E0</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="46817"></a>B6E1</td>
 <td class="instruction">LD (IY+$0A),E</td>
-<td class="comment">IY[10] = E;</td>
+<td class="comment">IY[0x0A] = E;</td>
 </tr>
 <tr>
 <td class="address"><a name="46820"></a>B6E4</td>
@@ -729,12 +632,12 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46821"></a>B6E5</td>
 <td class="instruction">LD (IY+$0B),D</td>
-<td class="comment">IY[11] = D;</td>
+<td class="comment">IY[0x0B] = D;</td>
 </tr>
 <tr>
 <td class="address"><a name="46824"></a>B6E8</td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment" rowspan="11">if ((C &amp; (1&lt;&lt;7)) == 0) } IY[12] = 0; {  DE += 2; } A = *DE; IY[14] = A; {  DE += 2; } EX DE,HL JP $B65A</td>
+<td class="comment" rowspan="11">if ((C &amp; (1&lt;&lt;7)) == 0) } IY[0x0C] = 0; {  DE += 2; } {  IY[0x0E] = *DE; } {  DE += 2; } EX DE,HL goto resume2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46826"></a>B6EA</td>
@@ -779,7 +682,7 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="label"><a name="46844"></a>B6FC</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">A = *DE;</td>
+<td class="comment">else { A = *DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46845"></a>B6FD</td>
@@ -789,17 +692,16 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46846"></a>B6FE</td>
 <td class="instruction">OR $80</td>
-<td class="comment">A |= 0x80;</td>
+<td class="comment" rowspan="2">IY[0x0C] = A | 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="46848"></a>B700</td>
 <td class="instruction">LD (IY+$0C),A</td>
-<td class="comment">IY[12] = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46851"></a>B703</td>
 <td class="instruction">INC DE</td>
-<td class="comment" rowspan="2">A = *++DE;</td>
+<td class="comment" rowspan="3">IY[0x0E] = *++DE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46852"></a>B704</td>
@@ -808,7 +710,6 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46853"></a>B705</td>
 <td class="instruction">LD (IY+$0E),A</td>
-<td class="comment">IY[14] = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="46856"></a>B708</td>
@@ -880,7 +781,7 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 <tr>
 <td class="address"><a name="46872"></a>B718</td>
 <td class="instruction">JP $B605</td>
-<td class="comment">JP $B605</td>
+<td class="comment">goto resume1; }</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -891,7 +792,7 @@ Used by the routines at <a class="link" href="26937.html">6939</a> and <a class=
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

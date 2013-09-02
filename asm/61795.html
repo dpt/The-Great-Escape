@@ -268,7 +268,7 @@ Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
 <tr>
 <td class="label"><a name="61873"></a>F1B1</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment" rowspan="5">do { HL[0] = 0xFF; } HL[1] = 0xFF; HL += 32; while (--B);</td>
+<td class="comment" rowspan="5">do { HL[0] = character_NONE; } HL[1] = 0xFF; // flags HL += 32; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="61874"></a>F1B2</td>
@@ -332,7 +332,7 @@ This is likely wiping everything up until the start of tiles ($8218).
 <tr>
 <td class="address"><a name="61891"></a>F1C3</td>
 <td class="instruction">CALL <a class="link" href="46938.html">$B75A</a></td>
-<td class="comment">looks_like_a_reset_fn();</td>
+<td class="comment">reset_game();</td>
 </tr>
 <tr>
 <td class="address"><a name="61894"></a>F1C6</td>
@@ -348,7 +348,7 @@ This is likely wiping everything up until the start of tiles ($8218).
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

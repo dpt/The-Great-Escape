@@ -21,13 +21,16 @@
 <td class="next">Next: <a class="link" href="27154.html">6A12</a></td>
 </tr>
 </table>
-<div class="description">69DC: sub_69DC</div>
+<div class="description">69DC: setup_doors</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Wipe $81D6..$81D9 with 0xFF.
+Looks like it's filling door_related with stuff from the door_positions table.
+</div>
+<div class="paragraph">
+Wipe $81D6..$81D9 (door_related) with 0xFF.
 </div>
 </div>
 </td>
@@ -35,7 +38,7 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="label"><a name="27100"></a>69DC</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment">A = 0xFF;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27102"></a>69DE</td>
@@ -50,7 +53,7 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="label"><a name="27107"></a>69E3</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment" rowspan="3">do { *DE-- = A; } while (--B);</td>
+<td class="comment" rowspan="3">do { *DE-- = 0xFF; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="27108"></a>69E4</td>
@@ -63,12 +66,12 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="address"><a name="27111"></a>69E7</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++; // DE = door_related</td>
+<td class="comment">DE++; // DE = &amp;door_related[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="27112"></a>69E8</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">B = indoor_room_index &lt;&lt; 2;</td>
+<td class="comment" rowspan="4">B = room_index &lt;&lt; 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="27115"></a>69EB</td>
@@ -99,17 +102,17 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="address"><a name="27124"></a>69F4</td>
 <td class="instruction">LD B,$7C</td>
-<td class="comment">Bdash = 124; // length of (door_positions)</td>
+<td class="comment">Bdash = 124; // length of door_positions</td>
 </tr>
 <tr>
 <td class="address"><a name="27126"></a>69F6</td>
 <td class="instruction">LD DE,$0004</td>
-<td class="comment">DEdash = 4; // stride</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="label"><a name="27129"></a>69F9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="17">do { if (*HLdash &amp; 0xFC == B) } {    *DE++ = C ^ 0x80; } } {  C ^= 0x80; } {  if (C &gt;= 0) C++; // increment every two stops? } HLdash += DEdash; while (--Bdash);</td>
+<td class="comment" rowspan="16">do { if (HLdash[0] &amp; 0xFC == B) } {    *DE++ = C ^ 0x80; } } {  C ^= 0x80; } {  if (C &gt;= 0) C++; // increment every two stops? } HLdash += 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="27130"></a>69FA</td>
@@ -174,6 +177,7 @@ Wipe $81D6..$81D9 with 0xFF.
 <tr>
 <td class="address"><a name="27151"></a>6A0F</td>
 <td class="instruction">DJNZ $69F9</td>
+<td class="comment">while (--Bdash);</td>
 </tr>
 <tr>
 <td class="address"><a name="27153"></a>6A11</td>
@@ -189,7 +193,7 @@ Wipe $81D6..$81D9 with 0xFF.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

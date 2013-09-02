@@ -26,6 +26,9 @@
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
+<div class="paragraph">
+Don't deliver a new red cross parcel while the previous one still exists.
+</div>
 </div>
 </td>
 </tr>
@@ -47,7 +50,17 @@
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
-<td class="address"><a name="41520"></a>A230</td>
+<td class="routineComment" colspan="3">
+<a name="41520"></a>
+<div class="comments">
+<div class="paragraph">
+Select the next parcel contents -- the first item from the list which does not exist.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">A230</td>
 <td class="instruction">LD DE,$A25F</td>
 <td class="comment">DE = &amp;red_cross_parcel_contents_list[0];</td>
 </tr>
@@ -64,7 +77,7 @@
 <tr>
 <td class="address"><a name="41526"></a>A236</td>
 <td class="instruction">CALL <a class="link" href="31782.html">$7C26</a></td>
-<td class="comment">item_to_itemstruct();</td>
+<td class="comment">HL = item_to_itemstruct(A);</td>
 </tr>
 <tr>
 <td class="address"><a name="41529"></a>A239</td>
@@ -143,6 +156,9 @@
 <a name="41561"></a>
 <div class="comments">
 <div class="paragraph">
+red_cross_parcel_reset_data
+</div>
+<div class="paragraph">
 Data to set the parcel object up (room, y, x, ...).
 </div>
 </div>
@@ -151,22 +167,12 @@ Data to set the parcel object up (room, y, x, ...).
 <tr>
 <td class="address">A259</td>
 <td class="instruction">DEFB $14,$2C,$2C,$0C,$80,$F4</td>
-<td class="comment">red_cross_parcel_reset_data</td>
+<td class="comment">item_RED_CROSS_PARCEL, 44,44, 0x0C,0x80,0xF4 };</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
-<a name="41567"></a>
-<div class="comments">
-<div class="paragraph">
-{ item_PURSE, item_WIRESNIPS, item_BRIBE, item_COMPASS }
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address">A25F</td>
+<td class="address"><a name="41567"></a>A25F</td>
 <td class="instruction">DEFB $0E,$00,$05,$0F</td>
-<td class="comment">red_cross_parcel_contents_list</td>
+<td class="comment">item_t red_cross_parcel_contents_list[] = { item_PURSE, item_WIRESNIPS, item_BRIBE, item_COMPASS };</td>
 </tr>
 <tr>
 <td class="address"><a name="41571"></a>A263</td>
@@ -182,7 +188,7 @@ Data to set the parcel object up (room, y, x, ...).
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

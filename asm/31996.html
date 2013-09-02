@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-LIFO queue of message IDs.
+Queue of message indexes. (Pairs of bytes + terminator).
 </div>
 </div>
 </td>
@@ -46,7 +46,17 @@ LIFO queue of message IDs.
 <td class="instruction">DEFB $00,$00,$FF</td>
 </tr>
 <tr>
-<td class="address"><a name="32015"></a>7D0F</td>
+<td class="routineComment" colspan="3">
+<a name="32015"></a>
+<div class="comments">
+<div class="paragraph">
+Decrementing counter. Shows next message when it hits zero.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">7D0F</td>
 <td class="instruction">DEFB $00</td>
 <td class="dataComment">message_display_counter</td>
 </tr>
@@ -55,7 +65,10 @@ LIFO queue of message IDs.
 <a name="32016"></a>
 <div class="comments">
 <div class="paragraph">
-If 128 then next_message. If &gt; 128 then wipe message. Else ?
+Index into the message we're displaying or wiping.
+</div>
+<div class="paragraph">
+If 128 then next_message. If &gt; 128 then wipe message. Else display.
 </div>
 </div>
 </td>
@@ -70,7 +83,7 @@ If 128 then next_message. If &gt; 128 then wipe message. Else ?
 <a name="32017"></a>
 <div class="comments">
 <div class="paragraph">
-Where to append new messages.
+Pointer to the head of the message queue.
 </div>
 </div>
 </td>
@@ -81,7 +94,17 @@ Where to append new messages.
 <td class="dataComment">message_queue_pointer</td>
 </tr>
 <tr>
-<td class="address"><a name="32019"></a>7D13</td>
+<td class="routineComment" colspan="3">
+<a name="32019"></a>
+<div class="comments">
+<div class="paragraph">
+Pointer to the next message character to be displayed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">7D13</td>
 <td class="instruction">DEFW $0000</td>
 <td class="dataComment">current_message_character</td>
 </tr>
@@ -94,7 +117,7 @@ Where to append new messages.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

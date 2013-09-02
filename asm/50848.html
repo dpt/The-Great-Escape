@@ -44,7 +44,7 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50853"></a>C6A5</td>
 <td class="instruction">LD A,($8217)</td>
-<td class="comment" rowspan="2">A = character_index + 1;  // character_index = (character_index + 1) % character_26;</td>
+<td class="comment" rowspan="6">character_index = (character_index + 1) % character_26; // 26 = highest + 1 character</td>
 </tr>
 <tr>
 <td class="address"><a name="50856"></a>C6A8</td>
@@ -53,7 +53,6 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50857"></a>C6A9</td>
 <td class="instruction">CP $1A</td>
-<td class="comment" rowspan="3">if (A == character_25 + 1) A = 0;  // 26 = highest + 1 character</td>
 </tr>
 <tr>
 <td class="address"><a name="50859"></a>C6AB</td>
@@ -66,12 +65,11 @@ Moves characters around.
 <tr>
 <td class="label"><a name="50862"></a>C6AE</td>
 <td class="instruction">LD ($8217),A</td>
-<td class="comment">character_index = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="50865"></a>C6B1</td>
 <td class="instruction">CALL <a class="link" href="51129.html">$C7B9</a></td>
-<td class="comment">get_character_struct();</td>
+<td class="comment">HL = get_character_struct(character_index); // pass character_index as A</td>
 </tr>
 <tr>
 <td class="address"><a name="50868"></a>C6B4</td>
@@ -90,17 +88,16 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50872"></a>C6B8</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment" rowspan="2">A = *++HL; // characterstruct byte1 == room</td>
 </tr>
 <tr>
 <td class="address"><a name="50873"></a>C6B9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL; // characterstruct byte1</td>
 </tr>
 <tr>
 <td class="address"><a name="50874"></a>C6BA</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="5">if (A) } is_item_discoverable_indoors(); {  if (Z) item_discovered(); }</td>
+<td class="comment" rowspan="5">if (A != room_0_outdoors) } is_item_discoverable_indoors(A); {  if (Z) item_discovered(); }</td>
 </tr>
 <tr>
 <td class="address"><a name="50875"></a>C6BB</td>
@@ -126,7 +123,7 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50886"></a>C6C6</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">HL += 2;</td>
+<td class="comment" rowspan="2">HL += 2; // point at characterstruct y,x coords</td>
 </tr>
 <tr>
 <td class="address"><a name="50887"></a>C6C7</td>
@@ -140,7 +137,7 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50889"></a>C6C9</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="3">HL += 3;</td>
+<td class="comment" rowspan="3">HL += 3; // point at characterstruct byte2</td>
 </tr>
 <tr>
 <td class="address"><a name="50890"></a>C6CA</td>
@@ -158,7 +155,7 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50893"></a>C6CD</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A != 0) goto $C6D2;</td>
+<td class="comment" rowspan="4">if (A == 0) } POP HL return;</td>
 </tr>
 <tr>
 <td class="address"><a name="50894"></a>C6CE</td>
@@ -167,12 +164,10 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50896"></a>C6D0</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="50897"></a>C6D1</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
 <td class="label"><a name="50898"></a>C6D2</td>
@@ -182,7 +177,7 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50901"></a>C6D5</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A != 0xFF) goto $C6FF;</td>
+<td class="comment" rowspan="25">if (A == 0xFF) } A = character_index; {  if (A != character_0) { } {    if (A &gt;= character_12_prisoner) goto char_ge_12; } {    back: *HL++ ^= 0x80; } {    if (A &amp; 7) (*HL) -= 2; } (*HL)++; // weird // i.e -1 or +1 POP HL return; } {  char_is_zero: A = *HL &amp; characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5)} {  if (A != 36) goto back; } char_ge_12: POP DE goto character_event; // exit via DEFB $18,$6F  ; UNUSED?</td>
 </tr>
 <tr>
 <td class="address"><a name="50903"></a>C6D7</td>
@@ -191,12 +186,20 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50906"></a>C6DA</td>
 <td class="instruction">LD A,($8217)</td>
-<td class="comment">A = character_index;</td>
 </tr>
 <tr>
-<td class="address"><a name="50909"></a>C6DD</td>
+<td class="routineComment" colspan="3">
+<a name="50909"></a>
+<div class="comments">
+<div class="paragraph">
+Not a player character.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C6DD</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == character_0) goto char_is_zero; // player character?</td>
 </tr>
 <tr>
 <td class="address"><a name="50910"></a>C6DE</td>
@@ -205,16 +208,24 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50912"></a>C6E0</td>
 <td class="instruction">CP $0C</td>
-<td class="comment" rowspan="2">if (A &gt;= character_12_prisoner) goto char_ge_12;</td>
 </tr>
 <tr>
 <td class="address"><a name="50914"></a>C6E2</td>
 <td class="instruction">JR NC,$C6F9</td>
 </tr>
 <tr>
-<td class="label"><a name="50916"></a>C6E4</td>
+<td class="routineComment" colspan="3">
+<a name="50916"></a>
+<div class="comments">
+<div class="paragraph">
+Characters 1..11.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">C6E4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="4">*HL++ ^= 0x80;</td>
 </tr>
 <tr>
 <td class="address"><a name="50917"></a>C6E5</td>
@@ -231,7 +242,6 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50921"></a>C6E9</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment" rowspan="4">if (A &amp; 7) (*HL) -= 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="50923"></a>C6EB</td>
@@ -248,22 +258,28 @@ Moves characters around.
 <tr>
 <td class="label"><a name="50927"></a>C6EF</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment">(*HL)++; // weird // i.e -1 or +1</td>
 </tr>
 <tr>
 <td class="address"><a name="50928"></a>C6F0</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="50929"></a>C6F1</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 <tr>
-<td class="label"><a name="50930"></a>C6F2</td>
+<td class="routineComment" colspan="3">
+<a name="50930"></a>
+<div class="comments">
+<div class="paragraph">
+Player character.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">C6F2</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">char_is_zero: A = *HL &amp; 0x7F; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5)</td>
 </tr>
 <tr>
 <td class="address"><a name="50931"></a>C6F3</td>
@@ -272,7 +288,6 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50933"></a>C6F5</td>
 <td class="instruction">CP $24</td>
-<td class="comment" rowspan="2">if (A != 36) goto $C6E4;</td>
 </tr>
 <tr>
 <td class="address"><a name="50935"></a>C6F7</td>
@@ -281,22 +296,19 @@ Moves characters around.
 <tr>
 <td class="label"><a name="50937"></a>C6F9</td>
 <td class="instruction">POP DE</td>
-<td class="comment">char_ge_12: POP DE</td>
 </tr>
 <tr>
 <td class="address"><a name="50938"></a>C6FA</td>
 <td class="instruction">JP <a class="link" href="51142.html">$C7C6</a></td>
-<td class="comment">goto character_event; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="50941"></a>C6FD</td>
 <td class="instruction">DEFB $18,$6F</td>
-<td class="comment">DEFB $18,$6F  ; UNUSED?</td>
 </tr>
 <tr>
 <td class="label"><a name="50943"></a>C6FF</td>
 <td class="instruction">CP $80</td>
-<td class="comment" rowspan="77">if (A == 0x80) } POP DE {  A = DE[-1]; } PUSH HL {  if (A == 0) { } PUSH DE DE = &amp;word_81A4; B = 2; // 2 iters do { A = *HL++; A &amp;= A; // clear flags // might not need to show A &gt;&gt;= 1; {      *DE++ = A; } } while (--B); HL = &amp;word_81A4; POP DE } {  if (DE[-1] == 0) A = 2; else A = 6; } EX AF,AF' B = 0; increment_DE_by_diff(); DE++; HL++; increment_DE_by_diff(); POP HL A = B; {  if (A != 2) return; } {  DE -= 2; } HL--; {  *DE = (*HL &amp; 0xFC) &gt;&gt; 2; // mask } {  if ((*HL &amp; 3) &lt; 2) { // mask  // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a =&gt; door_positions } {    HL += 5; } } else { {    HL -= 3; } } {  A = *DE++ } {  if (A) { } LDI LDI LDI DE--; } else { B = 3; do { A = *HL; A &amp;= A; // clear flags RRA *DE = A; HL++; DE++; } while (--B) DE--; }</td>
+<td class="comment" rowspan="77">if (A == 0x80) } POP DE {  A = DE[-1]; } PUSH HL {  if (A == 0) { } PUSH DE DE = &amp;saved_Y; B = 2; // 2 iters {    do { *DE++ = *HL++ &gt;&gt; 1; } } while (--B); HL = &amp;saved_Y; POP DE } {  if (DE[-1] == 0) A = 2; else A = 6; } EX AF,AF' B = 0; increment_DE_by_diff(); DE++; HL++; increment_DE_by_diff(); POP HL {  if (B != 2) return; } {  DE -= 2; } HL--; {  *DE = (*HL &amp; doorposition_BYTE0_MASK_HI) &gt;&gt; 2; // mask } {  if ((*HL &amp; doorposition_BYTE0_MASK_LO) &lt; 2) { // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a } {    HL += 5; } } else { {    HL -= 3; } } {  A = *DE++ } {  if (A) { } *DE++ = *HL++; *DE++ = *HL++; *DE++ = *HL++; DE--; } else { B = 3; {    do { *DE++ = *HL++ &gt;&gt; 1; } } while (--B) DE--; }</td>
 </tr>
 <tr>
 <td class="address"><a name="50945"></a>C701</td>
@@ -625,7 +637,7 @@ Stuff reading from door_positions.
 <tr>
 <td class="address"><a name="51055"></a>C76F</td>
 <td class="instruction">DEC DE</td>
-<td class="comment" rowspan="3">A = DE[-1]</td>
+<td class="comment" rowspan="3">tmpA = DE[-1];</td>
 </tr>
 <tr>
 <td class="address"><a name="51056"></a>C770</td>
@@ -638,22 +650,21 @@ Stuff reading from door_positions.
 <tr>
 <td class="address"><a name="51058"></a>C772</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;     // if (A == 0) ...</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="51059"></a>C773</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment">A = 2;      // interleaving again</td>
+<td class="comment">A = 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="51061"></a>C775</td>
 <td class="instruction">JR Z,$C779</td>
-<td class="comment">JR Z,$C779  // goto $C779;</td>
+<td class="comment" rowspan="2">if (tmpA) A = 6;</td>
 </tr>
 <tr>
 <td class="address"><a name="51063"></a>C777</td>
 <td class="instruction">LD A,$06</td>
-<td class="comment">A = 6;</td>
 </tr>
 <tr>
 <td class="label"><a name="51065"></a>C779</td>
@@ -693,12 +704,12 @@ Stuff reading from door_positions.
 <tr>
 <td class="address"><a name="51077"></a>C785</td>
 <td class="instruction">LD A,B</td>
-<td class="comment">A = B;</td>
+<td class="comment">if (B != 2) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="51078"></a>C786</td>
 <td class="instruction">CP $02</td>
-<td class="comment">if (A != 2) return;</td>
+<td class="comment"></td>
 </tr>
 <tr>
 <td class="address"><a name="51080"></a>C788</td>
@@ -723,7 +734,7 @@ Stuff reading from door_positions.
 <tr>
 <td class="address"><a name="51085"></a>C78D</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">A = *HL; // address? 761e 7625 768e 7695 7656 7695 7680 // =&gt; character struct entry + 5</td>
 </tr>
 <tr>
 <td class="address"><a name="51086"></a>C78E</td>
@@ -778,7 +789,7 @@ Stuff reading from door_positions.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

@@ -18,10 +18,10 @@
 <tr>
 <td class="prev">Prev: <a class="link" href="51785.html">CA49</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#51841">Map</a></td>
-<td class="next">Next: <a class="link" href="52085.html">CB75</a></td>
+<td class="next">Next: <a class="link" href="52003.html">CB23</a></td>
 </tr>
 </table>
-<div class="description">CA81: sub_CA81</div>
+<div class="description">CA81: bribes_solitary_food</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -61,7 +61,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51849"></a>CA89</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="6">if (A == 1) } A = bribed_character; {    if (A == IY[0]) { use_bribe(); return; } // exit via} else { solitary(); return; } } // exit via</td>
+<td class="comment" rowspan="6">if (A == 1) } {    if (IY[0] == bribed_character) { use_bribe(); return; } // exit via } else { solitary(); return; } } // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="51851"></a>CA8B</td>
@@ -103,17 +103,16 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51871"></a>CA9F</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="51872"></a>CAA0</td>
 <td class="instruction">LD HL,$76F9</td>
-<td class="comment">HL = &amp;item_structs[item_FOOD].item;</td>
+<td class="comment" rowspan="5">if ((item_structs[item_FOOD].item &amp; itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;</td>
 </tr>
 <tr>
 <td class="address"><a name="51875"></a>CAA3</td>
 <td class="instruction">BIT 5,(HL)</td>
-<td class="comment" rowspan="4">if ((*HL &amp; itemfood_POISONED) == 0) A = 32; else A = 255;</td>
 </tr>
 <tr>
 <td class="address"><a name="51877"></a>CAA5</td>
@@ -130,12 +129,12 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="label"><a name="51883"></a>CAAB</td>
 <td class="instruction">LD ($C891),A</td>
-<td class="comment">suspicious_player_related = A;</td>
+<td class="comment">food_discovered_counter = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="51886"></a>CAAE</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="51887"></a>CAAF</td>
@@ -158,12 +157,12 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51891"></a>CAB3</td>
 <td class="instruction">JP <a class="link" href="51480.html#51701">$C9F5</a></td>
-<td class="comment">goto sub_C918:$C9F5; }</td>
+<td class="comment">goto character_behaviour_stuff:$C9F5; }</td>
 </tr>
 <tr>
 <td class="label"><a name="51894"></a>CAB6</td>
 <td class="instruction">BIT 6,C</td>
-<td class="comment" rowspan="61">if (C &amp; vischar_BYTE1_BIT6) } {  C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location} {  A = *--HL; } PUSH HL element_A_of_table_7738(); POP HL {  DE += C; } A = *DE; {  if (*HL &amp; vischar_BYTE2_BIT7) A ^= 0x80; } PUSH AF {  A = *HL++; // $8002, ... } {  if (A &amp; vischar_BYTE2_BIT7) (*HL) -= 2; // $8003, ... // likely target location } (*HL)++; // likely target location POP AF get_door_position(); // door related {  A = (*HL &gt;&gt; 2) &amp; 0x3F; // *HL = $790E, $7962, $795E =&gt; door position thingy } IY[28] = A; // IY=$8000 =&gt; $801C {  A = *HL &amp; 3; // door position thingy, lowest two bits -- index?} {  if (A &lt; 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff? } PUSH HL {  HL = IY; } {  if (L == 0) { // player's vischar only } HL++; // $8000 -&gt; $8001 {    *HL++ &amp;= ~vischar_BYTE1_BIT6; } CALL $CB23 } POP HL transition(); BC = sound_CHARACTER_ENTERS_1; play_speaker(); return;</td>
+<td class="comment" rowspan="61">if (C &amp; vischar_BYTE1_BIT6) } {  C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location} {  A = *--HL; } - element_A_of_table_7738(); - {  DE += C; } A = *DE; {  if (*HL &amp; vischar_BYTE2_BIT7) A ^= 0x80; } PUSH AF {  A = *HL++; // $8002, ... } {  if (A &amp; vischar_BYTE2_BIT7) (*HL) -= 2; // $8003, ... // likely target location } (*HL)++; // likely target location POP AF get_door_position(); // door related {  IY[0x1C] = (*HL &gt;&gt; 2) &amp; 0x3F; // IY=$8000 =&gt; $801C (room index) // HL=$790E,$7962,$795E =&gt; door position thingy // 0x3F is door_positions[0] room mask shifted right 2 } {  A = *HL &amp; doorposition_BYTE0_MASK_LO; // door position thingy, lowest two bits -- index?} {  if (A &lt; 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff? } PUSH HL {  HL = IY; } {  if (L == 0) { // player's vischar only } HL++; // $8000 -&gt; $8001 {    *HL++ &amp;= ~vischar_BYTE1_BIT6; } sub_CB23(); } POP HL transition(); {  play_speaker(sound_CHARACTER_ENTERS_1); } return;</td>
 </tr>
 <tr>
 <td class="address"><a name="51896"></a>CAB8</td>
@@ -383,7 +382,7 @@ Bribes, solitary, food, 'character enters' sound.
 </tr>
 <tr>
 <td class="address"><a name="51973"></a>CB05</td>
-<td class="instruction">CALL $CB23</td>
+<td class="instruction">CALL <a class="link" href="52003.html">$CB23</a></td>
 </tr>
 <tr>
 <td class="label"><a name="51976"></a>CB08</td>
@@ -422,21 +421,19 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51990"></a>CB16</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A == 0xFF) goto $CB23;</td>
+<td class="comment" rowspan="9">if (A != 0xFF) } HL++; {  if (A &amp; vischar_BYTE2_BIT7) { } {    (*HL) -= 2; } // $8003 etc. } else { (*HL)++; HL--; }</td>
 </tr>
 <tr>
 <td class="address"><a name="51992"></a>CB18</td>
-<td class="instruction">JR Z,$CB23</td>
+<td class="instruction">JR Z,<a class="link" href="52003.html">$CB23</a></td>
 </tr>
 <tr>
 <td class="address"><a name="51994"></a>CB1A</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="51995"></a>CB1B</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment" rowspan="4">if (A &amp; vischar_BYTE2_BIT7) } {  (*HL) -= 2; } // $8003 etc.</td>
 </tr>
 <tr>
 <td class="address"><a name="51997"></a>CB1D</td>
@@ -453,244 +450,21 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="label"><a name="52001"></a>CB21</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment">else { (*HL)++;</td>
 </tr>
 <tr>
 <td class="address"><a name="52002"></a>CB22</td>
 <td class="instruction">DEC L</td>
-<td class="comment">HL--; }</td>
-</tr>
-<tr>
-<td class="routineComment" colspan="3">
-<a name="52003"></a>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a class="link" href="41868.html">A38C</a>, <a class="link" href="45319.html">B107</a> and <a class="link" href="51480.html">C918</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="label">CB23</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
-</tr>
-<tr>
-<td class="address"><a name="52004"></a>CB24</td>
-<td class="instruction">CALL <a class="link" href="50769.html">$C651</a></td>
-<td class="comment">sub_C651();</td>
-</tr>
-<tr>
-<td class="address"><a name="52007"></a>CB27</td>
-<td class="instruction">CP $FF</td>
-<td class="comment" rowspan="35">if (A == 0xFF) } POP HL {  if (L != 0x02) { // if not player's vischar } {    A = IY[0] &amp; vischar_BYTE0_MASK; } if (A == 0) { {      A = *HL &amp; vischar_BYTE2_MASK; } {      if (A == 36) goto $CB46; // character index } A = 0; } // self modified? (suspect not - just countering next if statement) {    if (A == 12) goto $CB50; } } PUSH HL character_event(); POP HL A = *HL; {  if (A == 0) return; } goto $CB23; {  *HL++ = *HL ^ 0x80; } {  if (A &amp; (1&lt;&lt;7)) { // which flag is this? } {    (*HL) -= 2; } } (*HL)++ HL--; A = 0; return; } // strictly the terminating brace is after the following unreferenced bytes</td>
-</tr>
-<tr>
-<td class="address"><a name="52009"></a>CB29</td>
-<td class="instruction">JP NZ,$CB61</td>
-</tr>
-<tr>
-<td class="address"><a name="52012"></a>CB2C</td>
-<td class="instruction">POP HL</td>
-</tr>
-<tr>
-<td class="routineComment" colspan="3">
-<a name="52013"></a>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a class="link" href="50400.html">C4E0</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="label">CB2D</td>
-<td class="instruction">LD A,L</td>
-</tr>
-<tr>
-<td class="address"><a name="52014"></a>CB2E</td>
-<td class="instruction">CP $02</td>
-</tr>
-<tr>
-<td class="address"><a name="52016"></a>CB30</td>
-<td class="instruction">JP Z,$CB46</td>
-</tr>
-<tr>
-<td class="address"><a name="52019"></a>CB33</td>
-<td class="instruction">LD A,(IY+$00)</td>
-</tr>
-<tr>
-<td class="address"><a name="52022"></a>CB36</td>
-<td class="instruction">AND $1F</td>
-</tr>
-<tr>
-<td class="address"><a name="52024"></a>CB38</td>
-<td class="instruction">JR NZ,$CB42</td>
-</tr>
-<tr>
-<td class="address"><a name="52026"></a>CB3A</td>
-<td class="instruction">LD A,(HL)</td>
-</tr>
-<tr>
-<td class="address"><a name="52027"></a>CB3B</td>
-<td class="instruction">AND $7F</td>
-</tr>
-<tr>
-<td class="address"><a name="52029"></a>CB3D</td>
-<td class="instruction">CP $24</td>
-</tr>
-<tr>
-<td class="address"><a name="52031"></a>CB3F</td>
-<td class="instruction">JR Z,$CB46</td>
-</tr>
-<tr>
-<td class="address"><a name="52033"></a>CB41</td>
-<td class="instruction">XOR A</td>
-</tr>
-<tr>
-<td class="label"><a name="52034"></a>CB42</td>
-<td class="instruction">CP $0C</td>
-</tr>
-<tr>
-<td class="address"><a name="52036"></a>CB44</td>
-<td class="instruction">JR C,$CB50</td>
-</tr>
-<tr>
-<td class="label"><a name="52038"></a>CB46</td>
-<td class="instruction">PUSH HL</td>
-</tr>
-<tr>
-<td class="address"><a name="52039"></a>CB47</td>
-<td class="instruction">CALL <a class="link" href="51142.html">$C7C6</a></td>
-</tr>
-<tr>
-<td class="address"><a name="52042"></a>CB4A</td>
-<td class="instruction">POP HL</td>
-</tr>
-<tr>
-<td class="address"><a name="52043"></a>CB4B</td>
-<td class="instruction">LD A,(HL)</td>
-</tr>
-<tr>
-<td class="address"><a name="52044"></a>CB4C</td>
-<td class="instruction">AND A</td>
-</tr>
-<tr>
-<td class="address"><a name="52045"></a>CB4D</td>
-<td class="instruction">RET Z</td>
-</tr>
-<tr>
-<td class="address"><a name="52046"></a>CB4E</td>
-<td class="instruction">JR $CB23</td>
-</tr>
-<tr>
-<td class="label"><a name="52048"></a>CB50</td>
-<td class="instruction">LD A,(HL)</td>
-</tr>
-<tr>
-<td class="address"><a name="52049"></a>CB51</td>
-<td class="instruction">XOR $80</td>
-</tr>
-<tr>
-<td class="address"><a name="52051"></a>CB53</td>
-<td class="instruction">LD (HL),A</td>
-</tr>
-<tr>
-<td class="address"><a name="52052"></a>CB54</td>
-<td class="instruction">INC HL</td>
-</tr>
-<tr>
-<td class="address"><a name="52053"></a>CB55</td>
-<td class="instruction">BIT 7,A</td>
-</tr>
-<tr>
-<td class="address"><a name="52055"></a>CB57</td>
-<td class="instruction">JR Z,$CB5B</td>
-</tr>
-<tr>
-<td class="address"><a name="52057"></a>CB59</td>
-<td class="instruction">DEC (HL)</td>
-</tr>
-<tr>
-<td class="address"><a name="52058"></a>CB5A</td>
-<td class="instruction">DEC (HL)</td>
-</tr>
-<tr>
-<td class="label"><a name="52059"></a>CB5B</td>
-<td class="instruction">INC (HL)</td>
-</tr>
-<tr>
-<td class="address"><a name="52060"></a>CB5C</td>
-<td class="instruction">DEC HL</td>
-</tr>
-<tr>
-<td class="address"><a name="52061"></a>CB5D</td>
-<td class="instruction">XOR A</td>
-</tr>
-<tr>
-<td class="address"><a name="52062"></a>CB5E</td>
-<td class="instruction">RET</td>
-</tr>
-<tr>
-<td class="address"><a name="52063"></a>CB5F</td>
-<td class="instruction">DEFB $18,$09</td>
-<td class="comment">Unreferenced bytes.</td>
-</tr>
-<tr>
-<td class="label"><a name="52065"></a>CB61</td>
-<td class="instruction">CP $80</td>
-<td class="comment" rowspan="3">if (A == 128) } IY[1] |= vischar_BYTE1_BIT6;</td>
-</tr>
-<tr>
-<td class="address"><a name="52067"></a>CB63</td>
-<td class="instruction">JP NZ,$CB6A</td>
-</tr>
-<tr>
-<td class="address"><a name="52070"></a>CB66</td>
-<td class="instruction">SET 6,(IY+$01)</td>
-</tr>
-<tr>
-<td class="label"><a name="52074"></a>CB6A</td>
-<td class="instruction">POP DE</td>
-<td class="comment">POP DE</td>
-</tr>
-<tr>
-<td class="address"><a name="52075"></a>CB6B</td>
-<td class="instruction">INC E</td>
-<td class="comment" rowspan="4">memcpy(DE + 2, HL, 2);</td>
-</tr>
-<tr>
-<td class="address"><a name="52076"></a>CB6C</td>
-<td class="instruction">INC E</td>
-</tr>
-<tr>
-<td class="address"><a name="52077"></a>CB6D</td>
-<td class="instruction">LD BC,$0002</td>
-</tr>
-<tr>
-<td class="address"><a name="52080"></a>CB70</td>
-<td class="instruction">LDIR</td>
-</tr>
-<tr>
-<td class="address"><a name="52082"></a>CB72</td>
-<td class="instruction">LD A,$80</td>
-<td class="comment">A = 128;</td>
-</tr>
-<tr>
-<td class="address"><a name="52084"></a>CB74</td>
-<td class="instruction">RET</td>
-<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">
 <tr>
 <td class="prev">Prev: <a class="link" href="51785.html">CA49</a></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#51841">Map</a></td>
-<td class="next">Next: <a class="link" href="52085.html">CB75</a></td>
+<td class="next">Next: <a class="link" href="52003.html">CB23</a></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

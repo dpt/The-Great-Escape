@@ -43,7 +43,7 @@ Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
 <tr>
 <td class="address"><a name="61390"></a>EFCE</td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="comment">HL = &amp;player_map_position_x;</td>
+<td class="comment">HL = &amp;player_map_position.y;</td>
 </tr>
 <tr>
 <td class="address"><a name="61393"></a>EFD1</td>
@@ -121,7 +121,7 @@ Using the papers at the main gate when not in uniform causes the player to be se
 <tr>
 <td class="address"><a name="61419"></a>EFEB</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">$801C = 0; // clear stored room index?</td>
+<td class="comment" rowspan="2">$801C = room_0_outdoors; // set room index</td>
 </tr>
 <tr>
 <td class="address"><a name="61420"></a>EFEC</td>
@@ -166,7 +166,7 @@ Transition to outside the main gate.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

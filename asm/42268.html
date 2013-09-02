@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Print 'well done' message then test to see if the right objects were used in the escape attempt.
+Print 'well done' message then test to see if the correct objects were used in the escape attempt.
 </div>
 </div>
 </td>
@@ -40,7 +40,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42271"></a>A51F</td>
 <td class="instruction">LD HL,$A5CE</td>
-<td class="comment">HL = &amp;screenlocstring_well_done;</td>
+<td class="comment">HL = &amp;escape_strings[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="42274"></a>A522</td>
@@ -60,7 +60,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42283"></a>A52B</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment">C = 0; // preserve A</td>
+<td class="comment">C = 0; // zero flag</td>
 </tr>
 <tr>
 <td class="address"><a name="42285"></a>A52D</td>
@@ -108,7 +108,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="label"><a name="42304"></a>A540</td>
 <td class="instruction">LD HL,$A5FD</td>
-<td class="comment">success: HL = &amp;screenlocstring_and_will_cross_the;</td>
+<td class="comment">success: HL = &amp;escape_strings[3];</td>
 </tr>
 <tr>
 <td class="address"><a name="42307"></a>A543</td>
@@ -143,7 +143,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42319"></a>A54F</td>
 <td class="instruction">LD HL,$A628</td>
-<td class="comment">HL = &amp;screenlocstring_but_were_recaptured;</td>
+<td class="comment">HL = &amp;escape_strings[5];</td>
 </tr>
 <tr>
 <td class="address"><a name="42322"></a>A552</td>
@@ -163,7 +163,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42327"></a>A557</td>
 <td class="instruction">CP $08</td>
-<td class="comment" rowspan="2">if (A &gt;= escapeitem_UNIFORM) goto plot; // at least a uniform =&gt; 'but were recaptured'</td>
+<td class="comment" rowspan="2">if (A &gt;= escapeitem_UNIFORM) goto plot; // at least a uniform =&gt; 'but were recaptured' // bug? plotting twice</td>
 </tr>
 <tr>
 <td class="address"><a name="42329"></a>A559</td>
@@ -172,7 +172,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42331"></a>A55B</td>
 <td class="instruction">LD HL,$A652</td>
-<td class="comment">HL = &amp;screenlocstring_totally_unprepared;</td>
+<td class="comment">HL = &amp;escape_strings[7];</td>
 </tr>
 <tr>
 <td class="address"><a name="42334"></a>A55E</td>
@@ -186,7 +186,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42337"></a>A561</td>
 <td class="instruction">LD HL,$A667</td>
-<td class="comment">HL = &amp;screenlocstring_totally_lost;</td>
+<td class="comment">HL = &amp;escape_strings[8];</td>
 </tr>
 <tr>
 <td class="address"><a name="42340"></a>A564</td>
@@ -200,7 +200,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="address"><a name="42344"></a>A568</td>
 <td class="instruction">LD HL,$A676</td>
-<td class="comment">HL = &amp;screenlocstring_due_to_lack_of_papers;</td>
+<td class="comment">HL = &amp;escape_strings[9];</td>
 </tr>
 <tr>
 <td class="label"><a name="42347"></a>A56B</td>
@@ -210,7 +210,7 @@ Print 'well done' message then test to see if the right objects were used in the
 <tr>
 <td class="label"><a name="42350"></a>A56E</td>
 <td class="instruction">LD HL,$A68E</td>
-<td class="comment">press_any_key: HL = &amp;screenlocstring_press_any_key;</td>
+<td class="comment">press_any_key: HL = &amp;escape_strings[10];</td>
 </tr>
 <tr>
 <td class="address"><a name="42353"></a>A571</td>
@@ -253,7 +253,7 @@ Wait for a keypress.
 <tr>
 <td class="address"><a name="42367"></a>A57F</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="2">if (A == 0xFF) looks_like_a_reset_fn(); return; // exit via</td>
+<td class="comment" rowspan="4">if (A == 0xFF || A &gt;= escapeitem_UNIFORM) reset_game(); return; } // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="42369"></a>A581</td>
@@ -262,7 +262,6 @@ Wait for a keypress.
 <tr>
 <td class="address"><a name="42372"></a>A584</td>
 <td class="instruction">CP $08</td>
-<td class="comment" rowspan="2">if (A &gt;= escapeitem_UNIFORM) looks_like_a_reset_fn(); return; // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="42374"></a>A586</td>
@@ -282,7 +281,7 @@ Wait for a keypress.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

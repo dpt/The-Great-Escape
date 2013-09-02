@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-(word_81A4, word_81A6) within (-3,+3) of HL[1..] scaled &lt;&lt; 2
+(saved_Y, saved_X) within (-3,+3) of HL[1..] scaled &lt;&lt; 2
 </div>
 </div>
 <table class="input">
@@ -66,7 +66,7 @@
 <tr>
 <td class="address"><a name="45656"></a>B258</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="17">if (word_81A4 &lt; BC - 3 || word_81A4 &gt;= BC + 3) return; // with C set</td>
+<td class="comment" rowspan="17">if (saved_Y &lt; BC - 3 || saved_Y &gt;= BC + 3) return; // with C set</td>
 </tr>
 <tr>
 <td class="address"><a name="45657"></a>B259</td>
@@ -159,7 +159,7 @@
 <tr>
 <td class="address"><a name="45690"></a>B27A</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="16">if (word_81A6 &lt; BC - 3 || word_81A6 &gt;= BC + 3) return; // with C set</td>
+<td class="comment" rowspan="16">if (saved_X &lt; BC - 3 || saved_X &gt;= BC + 3) return; // with C set</td>
 </tr>
 <tr>
 <td class="address"><a name="45691"></a>B27B</td>
@@ -235,7 +235,7 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

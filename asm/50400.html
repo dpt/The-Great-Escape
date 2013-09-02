@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="50643.html">C5D3</a></td>
 </tr>
 </table>
-<div class="description">C4E0: sub_C4E0</div>
+<div class="description">C4E0: spawn_characters_maybe</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Spawns characters? / Adds characters to the visible character list.
+Adds characters to the visible character list.
 </div>
 </div>
 <table class="input">
@@ -53,7 +53,17 @@ Spawns characters? / Adds characters to the visible character list.
 <td class="comment">PUSH HL</td>
 </tr>
 <tr>
-<td class="address"><a name="50404"></a>C4E4</td>
+<td class="routineComment" colspan="3">
+<a name="50404"></a>
+<div class="comments">
+<div class="paragraph">
+Find an empty visible character entry.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">C4E4</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment">HL = $8020; // iterate over non-player characters</td>
 </tr>
@@ -75,7 +85,7 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="label"><a name="50414"></a>C4EE</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="4">do { if (*HL == vischar_BYTE0_EMPTY_SLOT) goto found; // empty slot found?} HL += 32; // stride while (--B);</td>
+<td class="comment" rowspan="4">do { if (*HL == vischar_BYTE0_EMPTY_SLOT) goto found; } HL += 32; // stride while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="50415"></a>C4EF</td>
@@ -100,7 +110,17 @@ Spawns characters? / Adds characters to the visible character list.
 <td class="comment">return;</td>
 </tr>
 <tr>
-<td class="label"><a name="50422"></a>C4F6</td>
+<td class="routineComment" colspan="3">
+<a name="50422"></a>
+<div class="comments">
+<div class="paragraph">
+Empty slot found.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">C4F6</td>
 <td class="instruction">POP DE</td>
 <td class="comment">found: POP DE  // DE = HL (-&gt; visible character list)</td>
 </tr>
@@ -132,7 +152,7 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50429"></a>C4FD</td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment">HL = &amp;word_81A4;</td>
+<td class="comment">HL = &amp;saved_Y;</td>
 </tr>
 <tr>
 <td class="address"><a name="50432"></a>C500</td>
@@ -320,7 +340,7 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50490"></a>C53A</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto selected;</td>
+<td class="comment" rowspan="9">if (A) } DE = &amp;character_meta_data[1]; // guard {  if (A &gt;= 16) { } DE = &amp;character_meta_data[2]; // dog {    if (A &gt;= 20) { } DE = &amp;character_meta_data[3]; } } } // prisoner</td>
 </tr>
 <tr>
 <td class="address"><a name="50491"></a>C53B</td>
@@ -329,12 +349,10 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50493"></a>C53D</td>
 <td class="instruction">LD DE,$CD9E</td>
-<td class="comment">DE = &amp;character_meta_data[1]; // guard</td>
 </tr>
 <tr>
 <td class="address"><a name="50496"></a>C540</td>
 <td class="instruction">CP $10</td>
-<td class="comment" rowspan="2">if (A &lt; 16) goto selected;</td>
 </tr>
 <tr>
 <td class="address"><a name="50498"></a>C542</td>
@@ -343,12 +361,10 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50500"></a>C544</td>
 <td class="instruction">LD DE,$CDA2</td>
-<td class="comment">DE = &amp;character_meta_data[2]; // dog</td>
 </tr>
 <tr>
 <td class="address"><a name="50503"></a>C547</td>
 <td class="instruction">CP $14</td>
-<td class="comment" rowspan="2">if (A &lt; 20) goto selected;</td>
 </tr>
 <tr>
 <td class="address"><a name="50505"></a>C549</td>
@@ -357,12 +373,11 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50507"></a>C54B</td>
 <td class="instruction">LD DE,$CDA6</td>
-<td class="comment">DE = &amp;character_meta_data[3]; // prisoner</td>
 </tr>
 <tr>
 <td class="label"><a name="50510"></a>C54E</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">selected: EX DE,HL</td>
+<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="50511"></a>C54F</td>
@@ -380,12 +395,12 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50515"></a>C553</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI  // *DE++ = *HL++; B--;</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="50517"></a>C555</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI  // *DE++ = *HL++; B--;</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="50519"></a>C557</td>
@@ -403,12 +418,12 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50523"></a>C55B</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI  // *DE++ = *HL++; B--;</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="50525"></a>C55D</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI  // *DE++ = *HL++; B--;</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="50527"></a>C55F</td>
@@ -426,7 +441,7 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50531"></a>C563</td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment" rowspan="3">memcpy(DE, &amp;word_81A4, 6);</td>
+<td class="comment" rowspan="3">memcpy(DE, &amp;saved_Y, 6);</td>
 </tr>
 <tr>
 <td class="address"><a name="50534"></a>C566</td>
@@ -478,7 +493,7 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50549"></a>C575</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment">A = room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="50552"></a>C578</td>
@@ -488,17 +503,15 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50553"></a>C579</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
+<td class="comment" rowspan="6">if (A) } {  play_speaker(sound_CHARACTER_ENTERS_2); } {  play_speaker(sound_CHARACTER_ENTERS_1); }</td>
 </tr>
 <tr>
 <td class="address"><a name="50554"></a>C57A</td>
 <td class="instruction">JR Z,$C588</td>
-<td class="comment">JR Z,$C588</td>
 </tr>
 <tr>
 <td class="address"><a name="50556"></a>C57C</td>
 <td class="instruction">LD BC,$2040</td>
-<td class="comment" rowspan="2">play_speaker(sound_CHARACTER_ENTERS_2);</td>
 </tr>
 <tr>
 <td class="address"><a name="50559"></a>C57F</td>
@@ -507,7 +520,6 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50562"></a>C582</td>
 <td class="instruction">LD BC,$2030</td>
-<td class="comment" rowspan="2">play_speaker(sound_CHARACTER_ENTERS_1);</td>
 </tr>
 <tr>
 <td class="address"><a name="50565"></a>C585</td>
@@ -529,12 +541,12 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50572"></a>C58C</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI  // *DE++ = *HL++; B--;</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="50574"></a>C58E</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI  // *DE++ = *HL++; B--;</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="50576"></a>C590</td>
@@ -548,12 +560,11 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="label"><a name="50578"></a>C592</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment" rowspan="6">if (*HL == 0) } {  DE += 3; }</td>
 </tr>
 <tr>
 <td class="address"><a name="50579"></a>C593</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="5">if (A == 0) } {  DE += 3; }</td>
 </tr>
 <tr>
 <td class="address"><a name="50580"></a>C594</td>
@@ -622,7 +633,7 @@ Spawns characters? / Adds characters to the visible character list.
 </tr>
 <tr>
 <td class="address"><a name="50604"></a>C5AC</td>
-<td class="instruction">CALL <a class="link" href="51841.html#52013">$CB2D</a></td>
+<td class="instruction">CALL <a class="link" href="52003.html#52013">$CB2D</a></td>
 </tr>
 <tr>
 <td class="address"><a name="50607"></a>C5AF</td>
@@ -711,7 +722,7 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50636"></a>C5CC</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">reset_something();</td>
+<td class="comment">reset_position();</td>
 </tr>
 <tr>
 <td class="address"><a name="50639"></a>C5CF</td>
@@ -721,7 +732,7 @@ Spawns characters? / Adds characters to the visible character list.
 <tr>
 <td class="address"><a name="50640"></a>C5D0</td>
 <td class="instruction">JP <a class="link" href="51480.html">$C918</a></td>
-<td class="comment">sub_C918(); return; // exit via</td>
+<td class="comment">character_behaviour_stuff(); return; // exit via</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -732,7 +743,7 @@ Spawns characters? / Adds characters to the visible character list.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

@@ -33,7 +33,7 @@ Looks like it's called to transition to a new room.
 <table class="input">
 <tr>
 <td class="register">HL</td>
-<td class="registerContents">Pointer to ?</td>
+<td class="registerContents">Pointer to location?</td>
 </tr>
 <tr>
 <td class="register">IY</td>
@@ -69,7 +69,7 @@ Looks like it's called to transition to a new room.
 <tr>
 <td class="address"><a name="26792"></a>68A8</td>
 <td class="instruction">ADD A,$0F</td>
-<td class="comment" rowspan="2">L = A + 15; // $8xxF (position on Y axis)</td>
+<td class="comment" rowspan="2">L = A + 0x0F; // $8xxF (position on Y axis)</td>
 </tr>
 <tr>
 <td class="address"><a name="26794"></a>68AA</td>
@@ -78,19 +78,29 @@ Looks like it's called to transition to a new room.
 <tr>
 <td class="address"><a name="26795"></a>68AB</td>
 <td class="instruction">LD A,(IY+$1C)</td>
-<td class="comment">A = IY[28]; // $8x1C (likely room index)</td>
+<td class="comment">A = IY[0x1C]; // $8x1C (likely room index)</td>
 </tr>
 <tr>
 <td class="address"><a name="26798"></a>68AE</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="13">if (A == 0) { // outdoors } B = 3; // 3 iterations do { PUSH BC A = *DE++; BC_becomes_A_times_4(); {    *HL++ = C; // $800F etc. } {    *HL++ = B; // $801F etc. } POP BC while (--B);</td>
+<td class="comment" rowspan="13">if (A == 0) { // outdoors } B = 3; // 3 iterations do { PUSH BC A = *DE++; BC_becomes_A_times_4(); {    *HL++ = C; } {    *HL++ = B; } POP BC while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="26799"></a>68AF</td>
 <td class="instruction">JP NZ,$68C3</td>
 </tr>
 <tr>
-<td class="address"><a name="26802"></a>68B2</td>
+<td class="routineComment" colspan="3">
+<a name="26802"></a>
+<div class="comments">
+<div class="paragraph">
+Set position on Y axis, X axis and vertical offset (dividing by 4).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">68B2</td>
 <td class="instruction">LD B,$03</td>
 </tr>
 <tr>
@@ -139,14 +149,24 @@ Looks like it's called to transition to a new room.
 <td class="comment">else { // indoors</td>
 </tr>
 <tr>
-<td class="label"><a name="26819"></a>68C3</td>
+<td class="routineComment" colspan="3">
+<a name="26819"></a>
+<div class="comments">
+<div class="paragraph">
+Set position on Y axis, X axis and vertical offset (copying).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">68C3</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment">B = 3; // 3 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="26821"></a>68C5</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="7">do { *HL++ = *DE++; // $800F etc. } {    *HL++ = 0; // $8010 etc. } while (--B);</td>
+<td class="comment" rowspan="7">do { *HL++ = *DE++; } {    *HL++ = 0; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="26822"></a>68C6</td>
@@ -217,12 +237,12 @@ HL points to the player vischar at this point.
 <tr>
 <td class="address"><a name="26842"></a>68DA</td>
 <td class="instruction">LD A,($801C)</td>
-<td class="comment">A = ($801C); // likely a room index</td>
+<td class="comment">A = ($801C); // room index</td>
 </tr>
 <tr>
 <td class="address"><a name="26845"></a>68DD</td>
 <td class="instruction">LD ($68A0),A</td>
-<td class="comment">indoor_room_index = A;</td>
+<td class="comment">room_index = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="26848"></a>68E0</td>
@@ -282,7 +302,7 @@ HL points to the player vischar at this point.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

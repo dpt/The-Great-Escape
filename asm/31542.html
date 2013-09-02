@@ -123,7 +123,7 @@ Locate the empty item slot.
 <tr>
 <td class="address"><a name="31570"></a>7B52</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment">A = room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="31573"></a>7B55</td>
@@ -170,7 +170,7 @@ Locate the empty item slot.
 <tr>
 <td class="address"><a name="31596"></a>7B6C</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="6">if ((*HL &amp; itemstruct_ITEM_FLAG_HELD) == 0) } *HL |= itemstruct_ITEM_FLAG_HELD; PUSH HL increase_morale_by_5(); POP HL</td>
+<td class="comment" rowspan="6">if ((*HL &amp; itemstruct_ITEM_FLAG_HELD) == 0) } *HL |= itemstruct_ITEM_FLAG_HELD; PUSH HL increase_morale_by_5_score_by_5(); POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="31598"></a>7B6E</td>
@@ -246,7 +246,7 @@ Locate the empty item slot.
 <tr>
 <td class="address"><a name="31620"></a>7B84</td>
 <td class="instruction">LD BC,$3030</td>
-<td class="comment" rowspan="2">play_speaker(sound_3030);</td>
+<td class="comment" rowspan="2">play_speaker(sound_PICK_UP_ITEM);</td>
 </tr>
 <tr>
 <td class="address"><a name="31623"></a>7B87</td>
@@ -266,7 +266,7 @@ Locate the empty item slot.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

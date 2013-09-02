@@ -579,14 +579,24 @@ Wipe key_defs.
 <td class="comment">}</td>
 </tr>
 <tr>
-<td class="address"><a name="62457"></a>F3F9</td>
+<td class="routineComment" colspan="3">
+<a name="62457"></a>
+<div class="comments">
+<div class="paragraph">
+Delay loop.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">F3F9</td>
 <td class="instruction">LD BC,$FFFF</td>
 <td class="comment">BC = 0xFFFF;</td>
 </tr>
 <tr>
 <td class="label"><a name="62460"></a>F3FC</td>
 <td class="instruction">DEC BC</td>
-<td class="comment" rowspan="4">while (--BC); // delay loop</td>
+<td class="comment" rowspan="4">while (--BC);</td>
 </tr>
 <tr>
 <td class="address"><a name="62461"></a>F3FD</td>
@@ -601,14 +611,24 @@ Wipe key_defs.
 <td class="instruction">JR NZ,$F3FC</td>
 </tr>
 <tr>
-<td class="address"><a name="62465"></a>F401</td>
+<td class="routineComment" colspan="3">
+<a name="62465"></a>
+<div class="comments">
+<div class="paragraph">
+Wait for user's input.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">F401</td>
 <td class="instruction">CALL <a class="link" href="61436.html">$EFFC</a></td>
 <td class="comment">user_confirm();</td>
 </tr>
 <tr>
 <td class="address"><a name="62468"></a>F404</td>
 <td class="instruction">RET Z</td>
-<td class="comment">if (Z) return;</td>
+<td class="comment">if (Z) return; // confirmed</td>
 </tr>
 <tr>
 <td class="address"><a name="62469"></a>F405</td>
@@ -624,7 +644,7 @@ Wipe key_defs.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

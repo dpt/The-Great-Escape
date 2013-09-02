@@ -40,17 +40,16 @@
 <tr>
 <td class="address"><a name="40740"></a>9F24</td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment">DE = &amp;player_map_position_x; // x/y confusion here - mislabeling</td>
+<td class="comment">DE = &amp;player_map_position.y; // x/y confusion here - mislabeling</td>
 </tr>
 <tr>
 <td class="address"><a name="40743"></a>9F27</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment" rowspan="12">if (room_index == 0) { // outdoors } scale_pos(HL,DE); {  if (($8018) &gt;= 0x06C8 || ($801A) &gt;= 0x0448) goto escaped; }</td>
 </tr>
 <tr>
 <td class="address"><a name="40746"></a>9F2A</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="11">if (A == 0) { // outdoors } divide_array_by_8_with_rounding(HL,DE); {  if (($8018) &gt;= 0x06C8 || ($801A) &gt;= 0x0448) goto escaped; }</td>
 </tr>
 <tr>
 <td class="address"><a name="40747"></a>9F2B</td>
@@ -125,7 +124,7 @@
 <tr>
 <td class="label"><a name="40785"></a>9F51</td>
 <td class="instruction">LD A,($8001)</td>
-<td class="comment" rowspan="2">A = ($8001) &amp; 3;</td>
+<td class="comment" rowspan="2">A = ($8001) &amp; (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);</td>
 </tr>
 <tr>
 <td class="address"><a name="40788"></a>9F54</td>
@@ -139,7 +138,7 @@
 <tr>
 <td class="address"><a name="40793"></a>9F59</td>
 <td class="instruction">LD A,($A13D)</td>
-<td class="comment" rowspan="7">if (dispatch_counter &gt;= 100) } {  if (indoor_room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }</td>
+<td class="comment" rowspan="7">if (clock &gt;= 100) } {  if (room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }</td>
 </tr>
 <tr>
 <td class="address"><a name="40796"></a>9F5C</td>
@@ -213,7 +212,7 @@
 <tr>
 <td class="label"><a name="40829"></a>9F7D</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="11">if (A == 255) } {  A = *HL &amp; 0xF8; } {  if (A == 8) A = 1; else A = 2; } in_permitted_area_end_bit(); {  if (Z) goto set_flag_green; else goto set_flag_red;</td>
+<td class="comment" rowspan="11">if (A == 0xFF) } {  A = *HL &amp; 0xF8; } {  if (A == 8) A = 1; else A = 2; } in_permitted_area_end_bit(); {  if (Z) goto set_flag_green; else goto set_flag_red;</td>
 </tr>
 <tr>
 <td class="address"><a name="40831"></a>9F7F</td>
@@ -362,7 +361,7 @@
 <tr>
 <td class="address"><a name="40884"></a>9FB4</td>
 <td class="instruction">LD A,($8002)</td>
-<td class="comment">A = ($8002);</td>
+<td class="comment">A = $8002;</td>
 </tr>
 <tr>
 <td class="address"><a name="40887"></a>9FB7</td>
@@ -444,7 +443,7 @@
 <tr>
 <td class="label"><a name="40913"></a>9FD1</td>
 <td class="instruction">LD A,($8002)</td>
-<td class="comment" rowspan="2">set_target_then_set_flag_green: B = ($8002);</td>
+<td class="comment" rowspan="2">set_target_then_set_flag_green: B = $8002;</td>
 </tr>
 <tr>
 <td class="address"><a name="40916"></a>9FD4</td>
@@ -453,7 +452,7 @@
 <tr>
 <td class="address"><a name="40917"></a>9FD5</td>
 <td class="instruction">CALL <a class="link" href="41791.html">$A33F</a></td>
-<td class="comment">set_target_location(); // uses B, C</td>
+<td class="comment">set_player_target_location(); // uses B, C</td>
 </tr>
 <tr>
 <td class="address"><a name="40920"></a>9FD8</td>
@@ -513,7 +512,7 @@ Green flag code path.
 <tr>
 <td class="address"><a name="40936"></a>9FE8</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A == *HL) return; // flag already green</td>
+<td class="comment" rowspan="2">if (A == *HL) return; // flag already correct colour</td>
 </tr>
 <tr>
 <td class="address"><a name="40937"></a>9FE9</td>
@@ -602,7 +601,7 @@ Red flag code path.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

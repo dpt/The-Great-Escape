@@ -35,12 +35,11 @@ Called by event_wake_up.
 <tr>
 <td class="label"><a name="41609"></a>A289</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment">A = player_in_bed;</td>
+<td class="comment" rowspan="8">if (player_in_bed) { // odd that this jumps into a point which sets player_in_bed to zero when it's already zero} {  $800F = 46; // player's Y position } {  $8011 = 46; } // player's X position</td>
 </tr>
 <tr>
 <td class="address"><a name="41612"></a>A28C</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto $A299; // odd that this jumps into a point which sets player_in_bed to zero when it's already zero</td>
 </tr>
 <tr>
 <td class="address"><a name="41613"></a>A28D</td>
@@ -49,17 +48,14 @@ Called by event_wake_up.
 <tr>
 <td class="address"><a name="41616"></a>A290</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment">HL = $800F; // player's Y position</td>
 </tr>
 <tr>
 <td class="address"><a name="41619"></a>A293</td>
 <td class="instruction">LD (HL),$2E</td>
-<td class="comment">*HL = 0x2E;</td>
 </tr>
 <tr>
 <td class="address"><a name="41621"></a>A295</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">HL += 2; // player's X position</td>
 </tr>
 <tr>
 <td class="address"><a name="41622"></a>A296</td>
@@ -68,7 +64,6 @@ Called by event_wake_up.
 <tr>
 <td class="address"><a name="41623"></a>A297</td>
 <td class="instruction">LD (HL),$2E</td>
-<td class="comment">*HL = 0x2E;</td>
 </tr>
 <tr>
 <td class="label"><a name="41625"></a>A299</td>
@@ -82,7 +77,7 @@ Called by event_wake_up.
 <tr>
 <td class="address"><a name="41629"></a>A29D</td>
 <td class="instruction">LD BC,$2A00</td>
-<td class="comment" rowspan="2">set_target_location(location_2A00);</td>
+<td class="comment" rowspan="2">set_player_target_location(location_2A00);</td>
 </tr>
 <tr>
 <td class="address"><a name="41632"></a>A2A0</td>
@@ -96,12 +91,12 @@ Called by event_wake_up.
 <tr>
 <td class="address"><a name="41638"></a>A2A6</td>
 <td class="instruction">LD DE,$0007</td>
-<td class="comment">DE = 7; // characterstruct stride</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="41641"></a>A2A9</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment">A = room_3_hut2right;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="41643"></a>A2AB</td>
@@ -111,12 +106,12 @@ Called by event_wake_up.
 <tr>
 <td class="label"><a name="41645"></a>A2AD</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment">do { *HL = A;</td>
+<td class="comment">do { *HL = room_3_hut2right;</td>
 </tr>
 <tr>
 <td class="address"><a name="41646"></a>A2AE</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += DE;</td>
+<td class="comment">HL += 7; // characterstruct stride</td>
 </tr>
 <tr>
 <td class="address"><a name="41647"></a>A2AF</td>
@@ -126,7 +121,7 @@ Called by event_wake_up.
 <tr>
 <td class="address"><a name="41649"></a>A2B1</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment">A = room_5_hut3right;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="41651"></a>A2B3</td>
@@ -136,12 +131,12 @@ Called by event_wake_up.
 <tr>
 <td class="label"><a name="41653"></a>A2B5</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment">do { *HL = A;</td>
+<td class="comment">do { *HL = room_5_hut3right;</td>
 </tr>
 <tr>
 <td class="address"><a name="41654"></a>A2B6</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment">HL += DE;</td>
+<td class="comment">HL += 7; // characterstruct stride</td>
 </tr>
 <tr>
 <td class="address"><a name="41655"></a>A2B7</td>
@@ -181,7 +176,7 @@ Update all the bed objects to be empty.
 <tr>
 <td class="address">A2C1</td>
 <td class="instruction">LD A,$09</td>
-<td class="comment">A = interiorobject_EMPTY_BED;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="41667"></a>A2C3</td>
@@ -206,7 +201,7 @@ Bug: 7 iterations BUT only six beds in the data structure resulting in write to 
 <tr>
 <td class="label"><a name="41672"></a>A2C8</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment" rowspan="6">do { E = *HL++; } {  D = *HL++; } *DE = A; while (--B);</td>
+<td class="comment" rowspan="6">do { E = *HL++; } {  D = *HL++; } *DE = interiorobject_EMPTY_BED; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="41673"></a>A2C9</td>
@@ -241,7 +236,7 @@ Update the player's bed object to be empty.
 <tr>
 <td class="address">A2CF</td>
 <td class="instruction">LD HL,$6C61</td>
-<td class="comment" rowspan="2">room2_hut2_left.bed = A;</td>
+<td class="comment" rowspan="2">room_2_hut2_left.bed = interiorobject_EMPTY_BED;</td>
 </tr>
 <tr>
 <td class="address"><a name="41682"></a>A2D2</td>
@@ -250,12 +245,11 @@ Update the player's bed object to be empty.
 <tr>
 <td class="address"><a name="41683"></a>A2D3</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment" rowspan="5">if (room_index == room_0_outdoors || room_index &gt;= room_6) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41686"></a>A2D6</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="4">if (A == room_0_outdoors || A &gt;= room_6_corridor) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="41687"></a>A2D7</td>
@@ -293,7 +287,7 @@ Update the player's bed object to be empty.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

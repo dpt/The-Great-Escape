@@ -33,7 +33,7 @@ Makes characters sit, sleep or other things TBD.
 <table class="input">
 <tr>
 <td class="register">HL</td>
-<td class="registerContents">Points to a byte holding character index (e.g. 0x76C6).</td>
+<td class="registerContents">Points to character_struct fifth byte (character index + top bit set) or vischar (straight char index).</td>
 </tr>
 </table>
 </td>
@@ -46,7 +46,7 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="address"><a name="51143"></a>C7C7</td>
 <td class="instruction">CP $07</td>
-<td class="comment" rowspan="4">if (A &gt;= character_7_prisoner &amp;&amp; A &lt;= character_12_prisoner) goto character_sleeps;</td>
+<td class="comment" rowspan="4">if (A &gt;= character_7_prisoner  &amp;&amp; A &lt;= character_12_prisoner) goto character_sleeps;</td>
 </tr>
 <tr>
 <td class="address"><a name="51145"></a>C7C9</td>
@@ -80,17 +80,17 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="label"><a name="51161"></a>C7D9</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">PUSH HL // POPped by handlers</td>
 </tr>
 <tr>
 <td class="address"><a name="51162"></a>C7DA</td>
 <td class="instruction">LD HL,$C7F9</td>
-<td class="comment">HL = character_to_event_handler_index_map;</td>
+<td class="comment">map = &amp;character_to_event_handler_index_map[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="51165"></a>C7DD</td>
 <td class="instruction">LD B,$18</td>
-<td class="comment">B = 24; // 24 iterations</td>
+<td class="comment">B = NELEMS(character_to_event_handler_index_map); // 24 iterations</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -105,7 +105,7 @@ Locate the character in the map.
 <tr>
 <td class="label">C7DF</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="5">do { if (A == *HL) goto call_action; } {  HL += 2; } while (--B);</td>
+<td class="comment" rowspan="5">do { if (A == map-&gt;character) goto call_action; } {  map += 2; } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="51168"></a>C7E0</td>
@@ -195,7 +195,7 @@ Locate the character in the map.
 character_to_event_handler_index_map
 </div>
 <div class="paragraph">
-Array of (character, character event handler index) mappings. (Some of the character indexes look too high though).
+Array of (character + flags, character event handler index) mappings.
 </div>
 </div>
 </td>
@@ -203,122 +203,122 @@ Array of (character, character event handler index) mappings. (Some of the chara
 <tr>
 <td class="address">C7F9</td>
 <td class="instruction">DEFW $00A6</td>
-<td class="comment">0xA6,  0 },</td>
+<td class="comment">character_6  | 0b10100000, charevnt_0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51195"></a>C7FB</td>
 <td class="instruction">DEFW $00A7</td>
-<td class="comment">0xA7,  0 },</td>
+<td class="comment">character_7  | 0b10100000, charevnt_0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51197"></a>C7FD</td>
 <td class="instruction">DEFW $01A8</td>
-<td class="comment">0xA8,  1 },</td>
+<td class="comment">character_8  | 0b10100000, charevnt_1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51199"></a>C7FF</td>
 <td class="instruction">DEFW $01A9</td>
-<td class="comment">0xA9,  1 },</td>
+<td class="comment">character_9  | 0b10100000, charevnt_1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51201"></a>C801</td>
 <td class="instruction">DEFW $0005</td>
-<td class="comment">0x05,  0 },</td>
+<td class="comment">character_5  | 0b00000000, charevnt_0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51203"></a>C803</td>
 <td class="instruction">DEFW $0106</td>
-<td class="comment">0x06,  1 },</td>
+<td class="comment">character_6  | 0b00000000, charevnt_1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51205"></a>C805</td>
 <td class="instruction">DEFW $0385</td>
-<td class="comment">0x85,  3 },</td>
+<td class="comment">character_5  | 0b10000000, charevnt_3 }, // checks byte_A13E case 1</td>
 </tr>
 <tr>
 <td class="address"><a name="51207"></a>C807</td>
 <td class="instruction">DEFW $0386</td>
-<td class="comment">0x86,  3 },</td>
+<td class="comment">character_6  | 0b10000000, charevnt_3 }, // checks byte_A13E case 1</td>
 </tr>
 <tr>
 <td class="address"><a name="51209"></a>C809</td>
 <td class="instruction">DEFW $020E</td>
-<td class="comment">0x0E,  2 },</td>
+<td class="comment">character_14 | 0b00000000, charevnt_2 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51211"></a>C80B</td>
 <td class="instruction">DEFW $020F</td>
-<td class="comment">0x0F,  2 },</td>
+<td class="comment">character_15 | 0b00000000, charevnt_2 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51213"></a>C80D</td>
 <td class="instruction">DEFW $008E</td>
-<td class="comment">0x8E,  0 },</td>
+<td class="comment">character_14 | 0b10000000, charevnt_0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51215"></a>C80F</td>
 <td class="instruction">DEFW $018F</td>
-<td class="comment">0x8F,  1 },</td>
+<td class="comment">character_15 | 0b10000000, charevnt_1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51217"></a>C811</td>
 <td class="instruction">DEFW $0510</td>
-<td class="comment">0x10,  5 },</td>
+<td class="comment">character_16 | 0b00000000, charevnt_5 }, // checks byte_A13E case 2</td>
 </tr>
 <tr>
 <td class="address"><a name="51219"></a>C813</td>
 <td class="instruction">DEFW $0511</td>
-<td class="comment">0x11,  5 },</td>
+<td class="comment">character_17 | 0b00000000, charevnt_5 }, // checks byte_A13E case 2</td>
 </tr>
 <tr>
 <td class="address"><a name="51221"></a>C815</td>
 <td class="instruction">DEFW $0090</td>
-<td class="comment">0x90,  0 },</td>
+<td class="comment">character_16 | 0b10000000, charevnt_0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51223"></a>C817</td>
 <td class="instruction">DEFW $0191</td>
-<td class="comment">0x91,  1 },</td>
+<td class="comment">character_17 | 0b10000000, charevnt_1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51225"></a>C819</td>
 <td class="instruction">DEFW $00A0</td>
-<td class="comment">0xA0,  0 },</td>
+<td class="comment">character_0  | 0b10100000, charevnt_0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51227"></a>C81B</td>
 <td class="instruction">DEFW $01A1</td>
-<td class="comment">0xA1,  1 },</td>
+<td class="comment">character_1  | 0b10100000, charevnt_1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51229"></a>C81D</td>
 <td class="instruction">DEFW $072A</td>
-<td class="comment">0x2A,  7 },</td>
+<td class="comment">character_10 | 0b00100000, charevnt_7 },</td>
 </tr>
 <tr>
 <td class="address"><a name="51231"></a>C81F</td>
 <td class="instruction">DEFW $082C</td>
-<td class="comment">0x2C,  8 }, // sleeps</td>
+<td class="comment">character_12 | 0b00100000, charevnt_8 }, // player sleeps</td>
 </tr>
 <tr>
 <td class="address"><a name="51233"></a>C821</td>
 <td class="instruction">DEFW $092B</td>
-<td class="comment">0x2B,  9 }, // sits</td>
+<td class="comment">character_11 | 0b00100000, charevnt_9 }, // player sits</td>
 </tr>
 <tr>
 <td class="address"><a name="51235"></a>C823</td>
 <td class="instruction">DEFW $06A4</td>
-<td class="comment">0xA4,  6 },</td>
+<td class="comment">character_4  | 0b10100000, charevnt_6 }, // go to 0x0315</td>
 </tr>
 <tr>
 <td class="address"><a name="51237"></a>C825</td>
 <td class="instruction">DEFW $0A24</td>
-<td class="comment">0x24, 10 }, // released from solitary</td>
+<td class="comment">character_4  | 0b00100000, charevnt_10 },// released from solitary</td>
 </tr>
 <tr>
 <td class="address"><a name="51239"></a>C827</td>
 <td class="instruction">DEFW $0425</td>
-<td class="comment">0x25,  4 }, // morale related</td>
+<td class="comment">character_5  | 0b00100000, charevnt_4 }, // zero morale_1</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -336,64 +336,64 @@ Array of pointers to character event handlers.
 <tr>
 <td class="address">C829</td>
 <td class="instruction">DEFW $C864</td>
-<td class="comment">struct foo character_event_handlers[] = { &amp;charevnt_pop_hl_and_write_08FF_to_it,</td>
+<td class="comment">charevnt_handler *character_event_handlers[] = { &amp;charevnt_handler_0,</td>
 </tr>
 <tr>
 <td class="address"><a name="51243"></a>C82B</td>
 <td class="instruction">DEFW $C85C</td>
-<td class="comment">&amp;charevnt_pop_hl_and_write_10FF_to_it,</td>
+<td class="comment">&amp;charevnt_handler_1,</td>
 </tr>
 <tr>
 <td class="address"><a name="51245"></a>C82D</td>
 <td class="instruction">DEFW $C860</td>
-<td class="comment">&amp;charevnt_pop_hl_and_write_38FF_to_it,</td>
+<td class="comment">&amp;charevnt_handler_2,</td>
 </tr>
 <tr>
 <td class="address"><a name="51247"></a>C82F</td>
 <td class="instruction">DEFW $C86C</td>
-<td class="comment">&amp;charevnt_pop_hl_and_check_varA13E,</td>
+<td class="comment">&amp;charevnt_handler_3_check_var_A13E,</td>
 </tr>
 <tr>
 <td class="address"><a name="51249"></a>C831</td>
 <td class="instruction">DEFW $C83F</td>
-<td class="comment">&amp;charevnt_zero_morale_1,</td>
+<td class="comment">&amp;charevnt_handler_4_zero_morale_1,</td>
 </tr>
 <tr>
 <td class="address"><a name="51251"></a>C833</td>
 <td class="instruction">DEFW $C877</td>
-<td class="comment">&amp;charevnt_pop_hl_and_check_varA13E_anotherone,</td>
+<td class="comment">&amp;charevnt_handler_5_check_var_A13E_anotherone,</td>
 </tr>
 <tr>
 <td class="address"><a name="51253"></a>C835</td>
 <td class="instruction">DEFW $C845</td>
-<td class="comment">&amp;charevnt_C845,</td>
+<td class="comment">&amp;charevnt_handler_6,</td>
 </tr>
 <tr>
 <td class="address"><a name="51255"></a>C837</td>
 <td class="instruction">DEFW $C882</td>
-<td class="comment">&amp;charevnt_pop_hl_and_write_0005_to_it,</td>
+<td class="comment">&amp;charevnt_handler_7,</td>
 </tr>
 <tr>
 <td class="address"><a name="51257"></a>C839</td>
 <td class="instruction">DEFW $C88D</td>
-<td class="comment">&amp;charevnt_pop_hl_and_player_sleeps,</td>
+<td class="comment">&amp;charevnt_handler_8_player_sleeps,</td>
 </tr>
 <tr>
 <td class="address"><a name="51259"></a>C83B</td>
 <td class="instruction">DEFW $C889</td>
-<td class="comment">&amp;charevnt_pop_hl_and_player_sits,</td>
+<td class="comment">&amp;charevnt_handler_9_player_sits,</td>
 </tr>
 <tr>
 <td class="address"><a name="51261"></a>C83D</td>
 <td class="instruction">DEFW $C84C</td>
-<td class="comment">&amp;charevnt_released_from_solitary, };</td>
+<td class="comment">&amp;charevnt_handler_10_player_released_from_solitary, };</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
 <a name="51263"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_zero_morale_1
+charevnt_handler_4_zero_morale_1
 </div>
 </div>
 </td>
@@ -410,14 +410,14 @@ charevnt_zero_morale_1
 <tr>
 <td class="address"><a name="51267"></a>C843</td>
 <td class="instruction">JR $C864</td>
-<td class="comment">goto charevnt_pop_hl_and_write_08FF_to_it;</td>
+<td class="comment">goto charevnt_handler_0;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
 <a name="51269"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_C845 -- saw a hit somewhere around (morning) roll call
+charevnt_handler_6
 </div>
 </div>
 </td>
@@ -425,7 +425,7 @@ charevnt_C845 -- saw a hit somewhere around (morning) roll call
 <tr>
 <td class="address">C845</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">POP HL // (popped) sampled HL = $80C2 (x2), $8042  // likely target location</td>
 </tr>
 <tr>
 <td class="address"><a name="51270"></a>C846</td>
@@ -451,7 +451,7 @@ charevnt_C845 -- saw a hit somewhere around (morning) roll call
 <a name="51276"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_released_from_solitary
+charevnt_handler_10_player_released_from_solitary
 </div>
 </div>
 </td>
@@ -478,7 +478,7 @@ charevnt_released_from_solitary
 <tr>
 <td class="address"><a name="51282"></a>C852</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">automatic_player_counter = 0; // automatic control</td>
+<td class="comment" rowspan="2">automatic_player_counter = 0; // force automatic control</td>
 </tr>
 <tr>
 <td class="address"><a name="51283"></a>C853</td>
@@ -487,7 +487,7 @@ charevnt_released_from_solitary
 <tr>
 <td class="address"><a name="51286"></a>C856</td>
 <td class="instruction">LD BC,$2500</td>
-<td class="comment" rowspan="2">set_target_location(0x2500); return;</td>
+<td class="comment" rowspan="2">set_player_target_location(0x2500); return;</td>
 </tr>
 <tr>
 <td class="address"><a name="51289"></a>C859</td>
@@ -498,7 +498,7 @@ charevnt_released_from_solitary
 <a name="51292"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_write_10FF_to_it
+charevnt_handler_1
 </div>
 </div>
 </td>
@@ -506,7 +506,7 @@ charevnt_pop_hl_and_write_10FF_to_it
 <tr>
 <td class="address">C85C</td>
 <td class="instruction">LD C,$10</td>
-<td class="comment">C = 0x10;</td>
+<td class="comment">C = 0x10; // 0xFF10</td>
 </tr>
 <tr>
 <td class="address"><a name="51294"></a>C85E</td>
@@ -518,7 +518,7 @@ charevnt_pop_hl_and_write_10FF_to_it
 <a name="51296"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_write_38FF_to_it
+charevnt_handler_2
 </div>
 </div>
 </td>
@@ -526,7 +526,7 @@ charevnt_pop_hl_and_write_38FF_to_it
 <tr>
 <td class="address">C860</td>
 <td class="instruction">LD C,$38</td>
-<td class="comment">C = 0x38;</td>
+<td class="comment">C = 0x38; // 0xFF38</td>
 </tr>
 <tr>
 <td class="address"><a name="51298"></a>C862</td>
@@ -538,7 +538,7 @@ charevnt_pop_hl_and_write_38FF_to_it
 <a name="51300"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_write_08FF_to_it
+charevnt_handler_0
 </div>
 </div>
 </td>
@@ -546,7 +546,7 @@ charevnt_pop_hl_and_write_08FF_to_it
 <tr>
 <td class="label">C864</td>
 <td class="instruction">LD C,$08</td>
-<td class="comment">C = 0x08;</td>
+<td class="comment">C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062</td>
 </tr>
 <tr>
 <td class="label"><a name="51302"></a>C866</td>
@@ -577,7 +577,7 @@ charevnt_pop_hl_and_write_08FF_to_it
 <a name="51308"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_check_varA13E
+charevnt_handler_3_check_var_A13E
 </div>
 </div>
 </td>
@@ -590,7 +590,7 @@ charevnt_pop_hl_and_check_varA13E
 <tr>
 <td class="address"><a name="51309"></a>C86D</td>
 <td class="instruction">LD A,($A13E)</td>
-<td class="comment" rowspan="4">if (byte_A13E == 0) goto varA13E_is_zero; else goto sub_A3F3;</td>
+<td class="comment" rowspan="4">if (byte_A13E == 0) goto byte_A13E_is_zero; else goto byte_A13E_is_nonzero;</td>
 </tr>
 <tr>
 <td class="address"><a name="51312"></a>C870</td>
@@ -609,7 +609,7 @@ charevnt_pop_hl_and_check_varA13E
 <a name="51319"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_check_varA13E_anotherone
+charevnt_handler_5_check_var_A13E_anotherone
 </div>
 </div>
 </td>
@@ -622,7 +622,7 @@ charevnt_pop_hl_and_check_varA13E_anotherone
 <tr>
 <td class="address"><a name="51320"></a>C878</td>
 <td class="instruction">LD A,($A13E)</td>
-<td class="comment" rowspan="4">if (byte_A13E == 0) goto varA13E_is_zero_anotherone; else goto sub_A4D3;</td>
+<td class="comment" rowspan="4">if (byte_A13E == 0) goto byte_A13E_is_zero_anotherone; else goto byte_A13E_is_nonzero_anotherone;</td>
 </tr>
 <tr>
 <td class="address"><a name="51323"></a>C87B</td>
@@ -641,7 +641,7 @@ charevnt_pop_hl_and_check_varA13E_anotherone
 <a name="51330"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_write_0005_to_it
+charevnt_handler_7
 </div>
 </div>
 </td>
@@ -675,7 +675,7 @@ charevnt_pop_hl_and_write_0005_to_it
 <a name="51337"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_player_sits
+charevnt_handler_9_player_sits
 </div>
 </div>
 </td>
@@ -695,7 +695,7 @@ charevnt_pop_hl_and_player_sits
 <a name="51341"></a>
 <div class="comments">
 <div class="paragraph">
-charevnt_pop_hl_and_player_sleeps
+charevnt_handler_8_player_sleeps
 </div>
 </div>
 </td>
@@ -719,7 +719,7 @@ charevnt_pop_hl_and_player_sleeps
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

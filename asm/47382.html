@@ -59,7 +59,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47395"></a>B923</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="12">if (indoor_room_index) } HL = &amp;byte_81DA; A = *HL; {  if (A == 0) return; } B = A; // iterations {  HL += 3; }</td>
+<td class="comment" rowspan="12">if (room_index) } HL = &amp;suspected_indoor_mask_data; A = *HL; {  if (A == 0) return; } B = A; // iterations {  HL += 3; }</td>
 </tr>
 <tr>
 <td class="address"><a name="47398"></a>B926</td>
@@ -108,12 +108,12 @@ unpacks mask stuff
 <tr>
 <td class="label"><a name="47413"></a>B935</td>
 <td class="instruction">LD B,$3B</td>
-<td class="comment">else { B = NELEMS(stru_EC01); // 59 iterations</td>
+<td class="comment">else { B = NELEMS(suspected_outdoor_mask_data); // 59 iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="47415"></a>B937</td>
 <td class="instruction">LD HL,$EC03</td>
-<td class="comment">HL = $EC03; // stru_EC01 + 2 bytes }</td>
+<td class="comment">HL = $EC03; // suspected_outdoor_mask_data + 2 bytes }</td>
 </tr>
 <tr>
 <td class="label"><a name="47418"></a>B93A</td>
@@ -137,7 +137,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47424"></a>B940</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto pop_next; // HL[2]</td>
+<td class="comment" rowspan="6">if (A &gt;= HL[0] || A + 4 &lt; HL[-1]) goto pop_next;</td>
 </tr>
 <tr>
 <td class="address"><a name="47425"></a>B941</td>
@@ -146,7 +146,6 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47428"></a>B944</td>
 <td class="instruction">ADD A,$04</td>
-<td class="comment" rowspan="4">if (A + 4 &lt; *--HL) goto pop_next; // HL[1]</td>
 </tr>
 <tr>
 <td class="address"><a name="47430"></a>B946</td>
@@ -163,7 +162,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47435"></a>B94B</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="3">HL += 3;</td>
+<td class="comment" rowspan="3">-</td>
 </tr>
 <tr>
 <td class="address"><a name="47436"></a>B94C</td>
@@ -185,7 +184,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47442"></a>B952</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto pop_next; // HL[4]</td>
+<td class="comment" rowspan="6">if (A &gt;= HL[2] || A + 5 &lt; HL[1]) goto pop_next;</td>
 </tr>
 <tr>
 <td class="address"><a name="47443"></a>B953</td>
@@ -194,7 +193,6 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47446"></a>B956</td>
 <td class="instruction">ADD A,$05</td>
-<td class="comment" rowspan="4">if (A + 5 &lt; *--HL) goto pop_next; // HL[3]</td>
 </tr>
 <tr>
 <td class="address"><a name="47448"></a>B958</td>
@@ -211,7 +209,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47453"></a>B95D</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">HL += 2;</td>
+<td class="comment" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="address"><a name="47454"></a>B95E</td>
@@ -220,7 +218,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47455"></a>B95F</td>
 <td class="instruction">LD A,($81B2)</td>
-<td class="comment" rowspan="5">if (byte_81B2 &lt;= *HL++) goto pop_next; // HL[5]</td>
+<td class="comment" rowspan="5">if (byte_81B2 &lt;= HL[3]) goto pop_next;</td>
 </tr>
 <tr>
 <td class="address"><a name="47458"></a>B962</td>
@@ -241,7 +239,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47466"></a>B96A</td>
 <td class="instruction">LD A,($81B3)</td>
-<td class="comment" rowspan="4">if (byte_81B3 &lt; *HL++) goto pop_next; // HL[6]</td>
+<td class="comment" rowspan="4">if (byte_81B3 &lt; HL[4]) goto pop_next;</td>
 </tr>
 <tr>
 <td class="address"><a name="47469"></a>B96D</td>
@@ -276,7 +274,7 @@ unpacks mask stuff
 <tr>
 <td class="label"><a name="47481"></a>B979</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto pop_next; // HL[7];</td>
+<td class="comment" rowspan="2">if (A &gt;= HL[5]) goto pop_next;</td>
 </tr>
 <tr>
 <td class="address"><a name="47482"></a>B97A</td>
@@ -1258,7 +1256,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

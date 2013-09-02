@@ -37,7 +37,7 @@
 <tr>
 <td class="address"><a name="46106"></a>B41A</td>
 <td class="instruction">LD DE,$81B9</td>
-<td class="comment">DE = &amp;player_map_position_y;</td>
+<td class="comment">DE = &amp;player_map_position.x;</td>
 </tr>
 <tr>
 <td class="address"><a name="46109"></a>B41D</td>
@@ -80,7 +80,7 @@
 <tr>
 <td class="address"><a name="46120"></a>B428</td>
 <td class="instruction">DEC DE</td>
-<td class="comment">DE--; // &amp;player_map_position_x;</td>
+<td class="comment">DE--; // &amp;player_map_position.y;</td>
 </tr>
 <tr>
 <td class="address"><a name="46121"></a>B429</td>
@@ -154,7 +154,7 @@
 <tr>
 <td class="address"><a name="46141"></a>B43D</td>
 <td class="instruction">DEC DE</td>
-<td class="comment">DE--; // &amp;player_map_position_x;</td>
+<td class="comment">DE--; // &amp;player_map_position.y;</td>
 </tr>
 <tr>
 <td class="address"><a name="46142"></a>B43E</td>
@@ -370,7 +370,7 @@
 <tr>
 <td class="address"><a name="46216"></a>B488</td>
 <td class="instruction">LD A,($A12F)</td>
-<td class="comment" rowspan="3">user_locked_out_until = game_counter + 96;</td>
+<td class="comment" rowspan="3">player_locked_out_until = game_counter + 96;</td>
 </tr>
 <tr>
 <td class="address"><a name="46219"></a>B48B</td>
@@ -398,7 +398,7 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

@@ -30,6 +30,12 @@
 'he takes the bribe' 'and acts as decoy'
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">IY</td>
+<td class="registerContents">Pointer to vischar.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -61,8 +67,8 @@
 </tr>
 <tr>
 <td class="address"><a name="45331"></a>B113</td>
-<td class="instruction">CALL <a class="link" href="51841.html#52003">$CB23</a></td>
-<td class="comment">sub_CA81:$CB23();</td>
+<td class="instruction">CALL <a class="link" href="52003.html">$CB23</a></td>
+<td class="comment">sub_CB23();</td>
 </tr>
 <tr>
 <td class="address"><a name="45334"></a>B116</td>
@@ -72,7 +78,7 @@
 <tr>
 <td class="address"><a name="45337"></a>B119</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="3">if (*DE != item_BRIBE) goto got_bribe;</td>
+<td class="comment" rowspan="7">if (*DE != item_BRIBE &amp;&amp; *++DE != item_BRIBE) return; // have no bribes</td>
 </tr>
 <tr>
 <td class="address"><a name="45338"></a>B11A</td>
@@ -85,7 +91,6 @@
 <tr>
 <td class="address"><a name="45342"></a>B11E</td>
 <td class="instruction">INC DE</td>
-<td class="comment" rowspan="4">if (*++DE != item_BRIBE) return; // have no bribes</td>
 </tr>
 <tr>
 <td class="address"><a name="45343"></a>B11F</td>
@@ -112,7 +117,7 @@ We have a bribe.
 <tr>
 <td class="label">B123</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">got_bribe: *DE = item_NONE;</td>
+<td class="comment" rowspan="2">*DE = item_NONE;</td>
 </tr>
 <tr>
 <td class="address"><a name="45349"></a>B125</td>
@@ -211,7 +216,7 @@ We have a bribe.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

@@ -29,628 +29,631 @@
 <div class="paragraph">
 124 four-byte structs (&lt;- sub 69DC)
 </div>
+<div class="paragraph">
+#define BYTE0(room,other) ((room &lt;&lt; 2) | other)
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="address"><a name="30934"></a>78D6</td>
 <td class="instruction">DEFB $01,$B2,$8A,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           1), 0xB2, 0x8A,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30938"></a>78DA</td>
 <td class="instruction">DEFB $03,$B2,$8E,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0xB2, 0x8E,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30942"></a>78DE</td>
 <td class="instruction">DEFB $01,$B2,$7A,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           1), 0xB2, 0x7A,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30946"></a>78E2</td>
 <td class="instruction">DEFB $03,$B2,$7E,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0xB2, 0x7E,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30950"></a>78E6</td>
 <td class="instruction">DEFB $88,$8A,$B3,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_34,                   0), 0x8A, 0xB3,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30954"></a>78EA</td>
 <td class="instruction">DEFB $02,$10,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x10, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30958"></a>78EE</td>
 <td class="instruction">DEFB $C0,$CC,$79,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_48,                   0), 0xCC, 0x79,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30962"></a>78F2</td>
 <td class="instruction">DEFB $02,$10,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x10, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30966"></a>78F6</td>
 <td class="instruction">DEFB $71,$D9,$A3,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_28_hut1left,          1), 0xD9, 0xA3,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30970"></a>78FA</td>
 <td class="instruction">DEFB $03,$2A,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0x2A, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30974"></a>78FE</td>
 <td class="instruction">DEFB $04,$D4,$BD,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_1_hut1right,          0), 0xD4, 0xBD,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30978"></a>7902</td>
 <td class="instruction">DEFB $02,$1E,$2E,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x1E, 0x2E, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30982"></a>7906</td>
 <td class="instruction">DEFB $09,$C1,$A3,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_2_hut2left,           1), 0xC1, 0xA3,  6 }, // if i set the room number to $80 here i can't use the (left) door to exit, entering the door from the otherside puts me in a tunnel (i think)</td>
 </tr>
 <tr>
 <td class="address"><a name="30986"></a>790A</td>
 <td class="instruction">DEFB $03,$2A,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0x2A, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30990"></a>790E</td>
 <td class="instruction">DEFB $0C,$BC,$BD,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_3_hut2right,          0), 0xBC, 0xBD,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30994"></a>7912</td>
 <td class="instruction">DEFB $02,$20,$2E,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x20, 0x2E, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30998"></a>7916</td>
 <td class="instruction">DEFB $11,$A9,$A3,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_4_hut3left,           1), 0xA9, 0xA3,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31002"></a>791A</td>
 <td class="instruction">DEFB $03,$2A,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0x2A, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31006"></a>791E</td>
 <td class="instruction">DEFB $14,$A4,$BD,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_5_hut3right,          0), 0xA4, 0xBD,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31010"></a>7922</td>
 <td class="instruction">DEFB $02,$20,$2E,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x20, 0x2E, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31014"></a>7926</td>
 <td class="instruction">DEFB $54,$FC,$CA,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_21_corridor,          0), 0xFC, 0xCA,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31018"></a>792A</td>
 <td class="instruction">DEFB $02,$1C,$24,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x1C, 0x24, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31022"></a>792E</td>
 <td class="instruction">DEFB $50,$FC,$DA,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_20_redcross,          0), 0xFC, 0xDA,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31026"></a>7932</td>
 <td class="instruction">DEFB $02,$1A,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x1A, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31030"></a>7936</td>
 <td class="instruction">DEFB $3D,$F7,$E3,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_15_uniform,           1), 0xF7, 0xE3,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31034"></a>793A</td>
 <td class="instruction">DEFB $03,$26,$19,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0x26, 0x19, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31038"></a>793E</td>
 <td class="instruction">DEFB $35,$DF,$E3,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_13_corridor,          1), 0xDF, 0xE3,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31042"></a>7942</td>
 <td class="instruction">DEFB $03,$2A,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0x2A, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31046"></a>7946</td>
 <td class="instruction">DEFB $21,$97,$D3,$06</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_8_corridor,           1), 0x97, 0xD3,  6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31050"></a>794A</td>
 <td class="instruction">DEFB $03,$2A,$15,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0x2A, 0x15, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31054"></a>794E</td>
 <td class="instruction">DEFB $19,$00,$00,$00</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_6,                    1), 0x00, 0x00,  0 }, // intriguing</td>
 </tr>
 <tr>
 <td class="address"><a name="31058"></a>7952</td>
 <td class="instruction">DEFB $03,$22,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           3), 0x22, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31062"></a>7956</td>
 <td class="instruction">DEFB $05,$2C,$34,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_1_hut1right,          1), 0x2C, 0x34, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31066"></a>795A</td>
 <td class="instruction">DEFB $73,$26,$1A,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_28_hut1left,          3), 0x26, 0x1A, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31070"></a>795E</td>
 <td class="instruction">DEFB $0D,$24,$36,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_3_hut2right,          1), 0x24, 0x36, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31074"></a>7962</td>
 <td class="instruction">DEFB $0B,$26,$1A,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_2_hut2left,           3), 0x26, 0x1A, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31078"></a>7966</td>
 <td class="instruction">DEFB $15,$24,$36,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_5_hut3right,          1), 0x24, 0x36, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31082"></a>796A</td>
 <td class="instruction">DEFB $13,$26,$1A,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_4_hut3left,           3), 0x26, 0x1A, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31086"></a>796E</td>
 <td class="instruction">DEFB $5D,$28,$42,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_23_breakfast,         1), 0x28, 0x42, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31090"></a>7972</td>
 <td class="instruction">DEFB $67,$26,$18,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_25_breakfast,         3), 0x26, 0x18, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31094"></a>7976</td>
 <td class="instruction">DEFB $5C,$3E,$24,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_23_breakfast,         0), 0x3E, 0x24, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31098"></a>797A</td>
 <td class="instruction">DEFB $56,$20,$2E,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_21_corridor,          2), 0x20, 0x2E, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31102"></a>797E</td>
 <td class="instruction">DEFB $4D,$22,$42,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_19_food,              1), 0x22, 0x42, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31106"></a>7982</td>
 <td class="instruction">DEFB $5F,$22,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_23_breakfast,         3), 0x22, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31110"></a>7986</td>
 <td class="instruction">DEFB $49,$24,$36,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_18_radio,             1), 0x24, 0x36, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31114"></a>798A</td>
 <td class="instruction">DEFB $4F,$38,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_19_food,              3), 0x38, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31118"></a>798E</td>
 <td class="instruction">DEFB $55,$2C,$36,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_21_corridor,          1), 0x2C, 0x36, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31122"></a>7992</td>
 <td class="instruction">DEFB $5B,$22,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_22_redkey,            3), 0x22, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31126"></a>7996</td>
 <td class="instruction">DEFB $59,$2C,$36,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_22_redkey,            1), 0x2C, 0x36, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31130"></a>799A</td>
 <td class="instruction">DEFB $63,$2A,$26,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_24_solitary,          3), 0x2A, 0x26, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31134"></a>799E</td>
 <td class="instruction">DEFB $31,$42,$3A,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_12_corridor,          1), 0x42, 0x3A, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31138"></a>79A2</td>
 <td class="instruction">DEFB $4B,$22,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_18_radio,             3), 0x22, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31142"></a>79A6</td>
 <td class="instruction">DEFB $44,$3C,$24,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_17_corridor,          0), 0x3C, 0x24, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31146"></a>79AA</td>
 <td class="instruction">DEFB $1E,$1C,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_7_corridor,           2), 0x1C, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31150"></a>79AE</td>
 <td class="instruction">DEFB $3C,$40,$28,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_15_uniform,           0), 0x40, 0x28, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31154"></a>79B2</td>
 <td class="instruction">DEFB $3A,$1E,$28,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_14_torch,             2), 0x1E, 0x28, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31158"></a>79B6</td>
 <td class="instruction">DEFB $41,$22,$42,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_16_corridor,          1), 0x22, 0x42, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31162"></a>79BA</td>
 <td class="instruction">DEFB $3B,$22,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_14_torch,             3), 0x22, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31166"></a>79BE</td>
 <td class="instruction">DEFB $40,$3E,$2E,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_16_corridor,          0), 0x3E, 0x2E, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31170"></a>79C2</td>
 <td class="instruction">DEFB $36,$1A,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_13_corridor,          2), 0x1A, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31174"></a>79C6</td>
 <td class="instruction">DEFB $00,$44,$30,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           0), 0x44, 0x30, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31178"></a>79CA</td>
 <td class="instruction">DEFB $02,$20,$30,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_0_outdoors,           2), 0x20, 0x30, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31182"></a>79CE</td>
 <td class="instruction">DEFB $34,$4A,$28,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_13_corridor,          0), 0x4A, 0x28, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31186"></a>79D2</td>
 <td class="instruction">DEFB $2E,$1A,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_11_papers,            2), 0x1A, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31190"></a>79D6</td>
 <td class="instruction">DEFB $1C,$40,$24,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_7_corridor,           0), 0x40, 0x24, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31194"></a>79DA</td>
 <td class="instruction">DEFB $42,$1A,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_16_corridor,          2), 0x1A, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31198"></a>79DE</td>
 <td class="instruction">DEFB $28,$36,$35,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_10_lockpick,          0), 0x36, 0x35, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31202"></a>79E2</td>
 <td class="instruction">DEFB $22,$17,$26,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_8_corridor,           2), 0x17, 0x26, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31206"></a>79E6</td>
 <td class="instruction">DEFB $24,$36,$1C,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_9_crate,              0), 0x36, 0x1C, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31210"></a>79EA</td>
 <td class="instruction">DEFB $22,$1A,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_8_corridor,           2), 0x1A, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31214"></a>79EE</td>
 <td class="instruction">DEFB $30,$3E,$24,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_12_corridor,          0), 0x3E, 0x24, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31218"></a>79F2</td>
 <td class="instruction">DEFB $46,$1A,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_17_corridor,          2), 0x1A, 0x22, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31222"></a>79F6</td>
 <td class="instruction">DEFB $75,$36,$36,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_29_secondtunnelstart, 1), 0x36, 0x36, 24 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31226"></a>79FA</td>
 <td class="instruction">DEFB $27,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_9_crate,              3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31230"></a>79FE</td>
 <td class="instruction">DEFB $D1,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_52,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31234"></a>7A02</td>
 <td class="instruction">DEFB $7B,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_30,                   3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31238"></a>7A06</td>
 <td class="instruction">DEFB $78,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_30,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31242"></a>7A0A</td>
 <td class="instruction">DEFB $7E,$38,$26,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_31,                   2), 0x38, 0x26, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31246"></a>7A0E</td>
 <td class="instruction">DEFB $79,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_30,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31250"></a>7A12</td>
 <td class="instruction">DEFB $93,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_36,                   3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31254"></a>7A16</td>
 <td class="instruction">DEFB $7C,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_31,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31258"></a>7A1A</td>
 <td class="instruction">DEFB $82,$0A,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_32,                   2), 0x0A, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31262"></a>7A1E</td>
 <td class="instruction">DEFB $81,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_32,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31266"></a>7A22</td>
 <td class="instruction">DEFB $87,$20,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_33,                   3), 0x20, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31270"></a>7A26</td>
 <td class="instruction">DEFB $85,$40,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_33,                   1), 0x40, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31274"></a>7A2A</td>
 <td class="instruction">DEFB $8F,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_35,                   3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31278"></a>7A2E</td>
 <td class="instruction">DEFB $8C,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_35,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31282"></a>7A32</td>
 <td class="instruction">DEFB $8A,$0A,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_34,                   2), 0x0A, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31286"></a>7A36</td>
 <td class="instruction">DEFB $90,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_36,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31290"></a>7A3A</td>
 <td class="instruction">DEFB $8E,$38,$1C,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_35,                   2), 0x38, 0x1C, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31294"></a>7A3E</td>
 <td class="instruction">DEFB $94,$3E,$22,$18</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_37,                   0), 0x3E, 0x22, 24 }, // tunnel entrance</td>
 </tr>
 <tr>
 <td class="address"><a name="31298"></a>7A42</td>
 <td class="instruction">DEFB $0A,$10,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_2_hut2left,           2), 0x10, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31302"></a>7A46</td>
 <td class="instruction">DEFB $98,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_38,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31306"></a>7A4A</td>
 <td class="instruction">DEFB $96,$10,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_37,                   2), 0x10, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31310"></a>7A4E</td>
 <td class="instruction">DEFB $9D,$40,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_39,                   1), 0x40, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31314"></a>7A52</td>
 <td class="instruction">DEFB $9B,$20,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_38,                   3), 0x20, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31318"></a>7A56</td>
 <td class="instruction">DEFB $A0,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_40,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31322"></a>7A5A</td>
 <td class="instruction">DEFB $9A,$38,$54,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_38,                   2), 0x38, 0x54, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31326"></a>7A5E</td>
 <td class="instruction">DEFB $A1,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_40,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31330"></a>7A62</td>
 <td class="instruction">DEFB $A7,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_41,                   3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31334"></a>7A66</td>
 <td class="instruction">DEFB $A4,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_41,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31338"></a>7A6A</td>
 <td class="instruction">DEFB $AA,$38,$26,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_42,                   2), 0x38, 0x26, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31342"></a>7A6E</td>
 <td class="instruction">DEFB $A5,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_41,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31346"></a>7A72</td>
 <td class="instruction">DEFB $B7,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_45,                   3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31350"></a>7A76</td>
 <td class="instruction">DEFB $B4,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_45,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31354"></a>7A7A</td>
 <td class="instruction">DEFB $B2,$38,$1C,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_44,                   2), 0x38, 0x1C, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31358"></a>7A7E</td>
 <td class="instruction">DEFB $AD,$20,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_43,                   1), 0x20, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31362"></a>7A82</td>
 <td class="instruction">DEFB $B3,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_44,                   3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31366"></a>7A86</td>
 <td class="instruction">DEFB $A9,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_42,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31370"></a>7A8A</td>
 <td class="instruction">DEFB $AF,$20,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_43,                   3), 0x20, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31374"></a>7A8E</td>
 <td class="instruction">DEFB $B8,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_46,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31378"></a>7A92</td>
 <td class="instruction">DEFB $9E,$38,$1C,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_39,                   2), 0x38, 0x1C, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31382"></a>7A96</td>
 <td class="instruction">DEFB $BD,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_47,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31386"></a>7A9A</td>
 <td class="instruction">DEFB $BB,$20,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_46,                   3), 0x20, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31390"></a>7A9E</td>
 <td class="instruction">DEFB $C8,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_50_blocked_tunnel,    0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31394"></a>7AA2</td>
 <td class="instruction">DEFB $BE,$38,$56,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_47,                   2), 0x38, 0x56, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31398"></a>7AA6</td>
 <td class="instruction">DEFB $C9,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_50_blocked_tunnel,    1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31402"></a>7AAA</td>
 <td class="instruction">DEFB $C7,$38,$0A,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_49,                   3), 0x38, 0x0A, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31406"></a>7AAE</td>
 <td class="instruction">DEFB $C4,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_49,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31410"></a>7AB2</td>
 <td class="instruction">DEFB $C2,$38,$1C,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_48,                   2), 0x38, 0x1C, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31414"></a>7AB6</td>
 <td class="instruction">DEFB $CD,$38,$62,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_51,                   1), 0x38, 0x62, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31418"></a>7ABA</td>
 <td class="instruction">DEFB $77,$20,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_29_secondtunnelstart, 3), 0x20, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31422"></a>7ABE</td>
 <td class="instruction">DEFB $D0,$64,$34,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_52,                   0), 0x64, 0x34, 12 },</td>
 </tr>
 <tr>
 <td class="address"><a name="31426"></a>7AC2</td>
 <td class="instruction">DEFB $CE,$38,$54,$0C</td>
-<td class="transparentDataComment" />
+<td class="dataComment">BYTE0(room_51,                   2), 0x38, 0x54, 12 },</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -661,7 +664,7 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

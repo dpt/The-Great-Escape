@@ -38,82 +38,82 @@ struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; }
 <tr>
 <td class="address"><a name="30408"></a>76C8</td>
 <td class="instruction">DEFB $00,$FF,$40,$20,$02,$78,$F4</td>
-<td class="dataComment">0: wiresnips { item_WIRESNIPS, room_NONE, ... } (&lt;- item_to_itemstruct, find_nearby_item)</td>
+<td class="dataComment">item_WIRESNIPS,        room_NONE, 64,32, 0x02, 0x78, 0xF4 }, // &lt;- item_to_itemstruct, find_nearby_item</td>
 </tr>
 <tr>
 <td class="address"><a name="30415"></a>76CF</td>
 <td class="instruction">DEFB $01,$09,$3E,$30,$00,$7C,$F2</td>
-<td class="dataComment">1: shovel { item_SHOVEL, room_9_crate, ... }</td>
+<td class="dataComment">item_SHOVEL, room_9_crate,     62,48, 0x00, 0x7C, 0xF2 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30422"></a>76D6</td>
 <td class="instruction">DEFB $02,$0A,$49,$24,$10,$77,$F0</td>
-<td class="dataComment">2: lockpick { item_LOCKPICK, room_10_lockpick, ... }</td>
+<td class="dataComment">item_LOCKPICK, room_10_lockpick, 73,36, 0x10, 0x77, 0xF0 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30429"></a>76DD</td>
 <td class="instruction">DEFB $03,$0B,$2A,$3A,$04,$84,$F3</td>
-<td class="dataComment">3: papers { item_PAPERS, room_11_papers, ... }</td>
+<td class="dataComment">item_PAPERS, room_11_papers,   42,58, 0x04, 0x84, 0xF3 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30436"></a>76E4</td>
 <td class="instruction">DEFB $04,$0E,$32,$18,$02,$7A,$F6</td>
-<td class="dataComment">4: torch { item_TORCH, room_14_torch, ... }</td>
+<td class="dataComment">item_TORCH, room_14_torch,    34,24, 0x02, 0x7A, 0xF6 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30443"></a>76EB</td>
 <td class="instruction">DEFB $05,$FF,$24,$2C,$04,$7E,$F4</td>
-<td class="dataComment">5: bribe { item_BRIBE, room_NONE, ... } (&lt;- use_bribe)</td>
+<td class="dataComment">item_BRIBE,            room_NONE, 36,44, 0x04, 0x7E, 0xF4 }, // &lt;- use_bribe</td>
 </tr>
 <tr>
 <td class="address"><a name="30450"></a>76F2</td>
 <td class="instruction">DEFB $06,$0F,$2C,$41,$10,$87,$F1</td>
-<td class="dataComment">6: uniform { item_UNIFORM, room_15_uniform, ... }</td>
+<td class="dataComment">item_UNIFORM, room_15_uniform,  44,65, 0x10, 0x87, 0xF1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30457"></a>76F9</td>
 <td class="instruction">DEFB $07,$13,$40,$30,$10,$7E,$F0</td>
-<td class="dataComment">7: food { item_FOOD, room_19_food, ... } (&lt;- action_poison, called_from_main_loop)</td>
+<td class="dataComment">item_FOOD, room_19_food,     64,48, 0x10, 0x7E, 0xF0 }, // &lt;- action_poison, called_from_main_loop</td>
 </tr>
 <tr>
 <td class="address"><a name="30464"></a>7700</td>
 <td class="instruction">DEFB $08,$01,$42,$34,$04,$7C,$F1</td>
-<td class="dataComment">8: poison { item_POISON, room_1_hut1right, ... }</td>
+<td class="dataComment">item_POISON, room_1_hut1right, 66,52, 0x04, 0x7C, 0xF1 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30471"></a>7707</td>
 <td class="instruction">DEFB $09,$16,$3C,$2A,$00,$7B,$F2</td>
-<td class="dataComment">9: red key { item_RED_KEY, room_22_redkey, ... }</td>
+<td class="dataComment">item_RED_KEY, room_22_redkey,   60,42, 0x00, 0x7B, 0xF2 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30478"></a>770E</td>
 <td class="instruction">DEFB $0A,$0B,$1C,$22,$00,$81,$F8</td>
-<td class="dataComment">10: yellow key { item_YELLOW_KEY, room_11_papers, ... }</td>
+<td class="dataComment">item_YELLOW_KEY, room_11_papers,   28,34, 0x00, 0x81, 0xF8 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30485"></a>7715</td>
 <td class="instruction">DEFB $0B,$00,$4A,$48,$00,$7A,$6E</td>
-<td class="dataComment">11: green key { item_GREEN_KEY, room_0_outdoors, ... }</td>
+<td class="dataComment">item_GREEN_KEY, room_0_outdoors,  74,72, 0x00, 0x7A, 0x6E },</td>
 </tr>
 <tr>
 <td class="address"><a name="30492"></a>771C</td>
 <td class="instruction">DEFB $0C,$FF,$1C,$32,$0C,$85,$F6</td>
-<td class="dataComment">12: red cross parcel { item_RED_CROSS_PARCEL, room_NONE, ... } (&lt;- event_new_red_cross_parcel, new_red_cross_parcel)</td>
+<td class="dataComment">item_RED_CROSS_PARCEL, room_NONE, 28,50, 0x0C, 0x85, 0xF6 }, // &lt;- event_new_red_cross_parcel, new_red_cross_parcel</td>
 </tr>
 <tr>
 <td class="address"><a name="30499"></a>7723</td>
 <td class="instruction">DEFB $0D,$12,$24,$3A,$08,$85,$F4</td>
-<td class="dataComment">13: radio { item_RADIO, room_18_radio, ... }</td>
+<td class="dataComment">item_RADIO, room_18_radio,    36,58, 0x08, 0x85, 0xF4 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30506"></a>772A</td>
 <td class="instruction">DEFB $0E,$FF,$24,$2C,$04,$7E,$F4</td>
-<td class="dataComment">14: purse { item_PURSE, room_NONE, ... }</td>
+<td class="dataComment">item_PURSE,            room_NONE, 36,44, 0x04, 0x7E, 0xF4 },</td>
 </tr>
 <tr>
 <td class="address"><a name="30513"></a>7731</td>
 <td class="instruction">DEFB $0F,$FF,$34,$1C,$04,$7E,$F4</td>
-<td class="dataComment">15: compass { item_COMPASS, room_NONE, ... }</td>
+<td class="dataComment">item_COMPASS,          room_NONE, 52,28, 0x04, 0x7E, 0xF4 },</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -124,7 +124,7 @@ struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; }
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

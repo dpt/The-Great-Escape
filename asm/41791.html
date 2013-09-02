@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="41809.html">A351</a></td>
 </tr>
 </table>
-<div class="description">A33F: set_target_location</div>
+<div class="description">A33F: set_player_target_location</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -58,7 +58,7 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 <tr>
 <td class="label">A344</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment" rowspan="8">$8001 &amp;= ~vischar_BYTE1_BIT6; $8002 = b; $8003 = c; return;</td>
+<td class="comment" rowspan="2">$8001 &amp;= ~vischar_BYTE1_BIT6;</td>
 </tr>
 <tr>
 <td class="address"><a name="41799"></a>A347</td>
@@ -67,6 +67,7 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 <tr>
 <td class="address"><a name="41801"></a>A349</td>
 <td class="instruction">INC L</td>
+<td class="comment" rowspan="2">$8002 = B;</td>
 </tr>
 <tr>
 <td class="address"><a name="41802"></a>A34A</td>
@@ -75,6 +76,7 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 <tr>
 <td class="address"><a name="41803"></a>A34B</td>
 <td class="instruction">INC L</td>
+<td class="comment" rowspan="2">$8003 = C;</td>
 </tr>
 <tr>
 <td class="address"><a name="41804"></a>A34C</td>
@@ -82,11 +84,13 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 </tr>
 <tr>
 <td class="address"><a name="41805"></a>A34D</td>
-<td class="instruction">CALL <a class="link" href="41868.html#41915">$A3BB</a></td>
+<td class="instruction">CALL <a class="link" href="41915.html">$A3BB</a></td>
+<td class="comment">sub_A3BB();</td>
 </tr>
 <tr>
 <td class="address"><a name="41808"></a>A350</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -97,7 +101,7 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

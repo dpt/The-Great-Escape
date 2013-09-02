@@ -21,19 +21,19 @@
 <td class="next">Next: <a class="link" href="46938.html">B75A</a></td>
 </tr>
 </table>
-<div class="description">B71B: reset_something</div>
+<div class="description">B71B: reset_position</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="link" href="26937.html">6939</a>, <a class="link" href="42121.html">A489</a>, <a class="link" href="45820.html">B2FC</a> and <a class="link" href="50400.html">C4E0</a>.
+Save a copy of the vischar's position + offset.
 </div>
 </div>
 <table class="input">
 <tr>
 <td class="register">HL</td>
-<td class="registerContents">Pointer to ...</td>
+<td class="registerContents">Pointer to vischar.</td>
 </tr>
 </table>
 </td>
@@ -41,12 +41,12 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="label"><a name="46875"></a>B71B</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46876"></a>B71C</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment" rowspan="6">memcpy(&amp;word_81A4, HL + 15, 6); // DE/HL updated CHECK</td>
+<td class="comment" rowspan="6">memcpy(&amp;saved_Y, HL + 0x0F, 6);</td>
 </tr>
 <tr>
 <td class="address"><a name="46878"></a>B71E</td>
@@ -71,7 +71,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="46888"></a>B728</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -86,12 +86,12 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <tr>
 <td class="label">B729</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46890"></a>B72A</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment" rowspan="3">DE += 24;</td>
+<td class="comment" rowspan="3">HL += 0x18;</td>
 </tr>
 <tr>
 <td class="address"><a name="46892"></a>B72C</td>
@@ -104,7 +104,7 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <tr>
 <td class="address"><a name="46894"></a>B72E</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment" rowspan="3">HL = word_81A6 + 0x0200;</td>
+<td class="comment" rowspan="3">DE = saved_X + 0x0200;</td>
 </tr>
 <tr>
 <td class="address"><a name="46897"></a>B731</td>
@@ -117,27 +117,26 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <tr>
 <td class="address"><a name="46901"></a>B735</td>
 <td class="instruction">LD BC,($81A4)</td>
-<td class="comment">//</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46905"></a>B739</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A; // reset carry before SBC</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46906"></a>B73A</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">HL -= word_81A4;</td>
+<td class="comment" rowspan="2">DE = (DE - saved_Y) * 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46908"></a>B73C</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment">HL += HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="46909"></a>B73D</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46910"></a>B73E</td>
@@ -160,22 +159,20 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <tr>
 <td class="address"><a name="46914"></a>B742</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46915"></a>B743</td>
 <td class="instruction">LD HL,$0800</td>
-<td class="comment">HL = 0x0800;</td>
+<td class="comment" rowspan="7">DE = 0x0800 - saved_Y - saved_VO - saved_X;</td>
 </tr>
 <tr>
 <td class="address"><a name="46918"></a>B746</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A; // reset carry before SBC</td>
 </tr>
 <tr>
 <td class="address"><a name="46919"></a>B747</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment" rowspan="2">HL -= word_81A4;</td>
 </tr>
 <tr>
 <td class="address"><a name="46921"></a>B749</td>
@@ -184,7 +181,6 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <tr>
 <td class="address"><a name="46925"></a>B74D</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment" rowspan="2">HL -= word_81A8;</td>
 </tr>
 <tr>
 <td class="address"><a name="46927"></a>B74F</td>
@@ -193,12 +189,11 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <tr>
 <td class="address"><a name="46931"></a>B753</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment">HL -= word_81A6;</td>
 </tr>
 <tr>
 <td class="address"><a name="46933"></a>B755</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="46934"></a>B756</td>
@@ -228,7 +223,7 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

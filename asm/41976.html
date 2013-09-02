@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="42016.html">A420</a></td>
 </tr>
 </table>
-<div class="description">A3F8: varA13E_is_zero</div>
+<div class="description">A3F8: byte_A13E_is_zero</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -35,12 +35,12 @@ Gets hit when player enters hut at end of day.
 <tr>
 <td class="label"><a name="41976"></a>A3F8</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment">A = IY[0];  // IY=$8000</td>
+<td class="comment">A = IY[0]; // IY=$8000 // must be a character index</td>
 </tr>
 <tr>
 <td class="address"><a name="41979"></a>A3FB</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="4">if (A == 0) set_target_location(location_2C00);</td>
+<td class="comment" rowspan="4">if (A == 0) set_player_target_location(location_2C00); return; } // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="41980"></a>A3FC</td>
@@ -67,7 +67,7 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 <tr>
 <td class="label">A404</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="2">*++HL = 0; // HL=$766B,$7672 charstruct + 5 (charstruct + 6 when zeroed)</td>
+<td class="comment" rowspan="2">HL[1] = 0; // HL=$766B,$7672 characterstruct + 5 (characterstruct + 6 when zeroed)</td>
 </tr>
 <tr>
 <td class="address"><a name="41989"></a>A405</td>
@@ -98,7 +98,7 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 <tr>
 <td class="label"><a name="42003"></a>A413</td>
 <td class="instruction">BIT 0,A</td>
-<td class="comment" rowspan="5">tmp_A = A; A = 13; if (tmp_A &amp; (1&lt;&lt;0)) { // tmp introduced to avoid interleaving } *HL = 1; // HL=$7681,$7673 // characterstruct_N + 6 A |= 0x80; }</td>
+<td class="comment" rowspan="5">old_A = A; A = 13; if (old_A &amp; (1&lt;&lt;0)) { // tmp introduced to avoid interleaving } HL[1] = 1; // HL=$7681,$7673 // characterstruct_N + 6 A |= 0x80; }</td>
 </tr>
 <tr>
 <td class="address"><a name="42005"></a>A415</td>
@@ -119,7 +119,7 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 <tr>
 <td class="label"><a name="42013"></a>A41D</td>
 <td class="instruction">DEC HL</td>
-<td class="comment" rowspan="2">*--HL = A; // characterstruct_N + 5</td>
+<td class="comment" rowspan="2">HL[0] = A; // characterstruct_N + 5</td>
 </tr>
 <tr>
 <td class="address"><a name="42014"></a>A41E</td>
@@ -139,7 +139,7 @@ This entry point is used by the routine at <a class="link" href="41971.html">A3F
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

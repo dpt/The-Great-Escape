@@ -21,13 +21,13 @@
 <td class="next">Next: <a class="link" href="40672.html">9EE0</a></td>
 </tr>
 </table>
-<div class="description">9EB2: wire_snipped</div>
+<div class="description">9EB2: snipping_wire</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Locks player out until wire is snipped.
+Locks the player out until wire is snipped.
 </div>
 </div>
 </td>
@@ -35,7 +35,7 @@ Locks player out until wire is snipped.
 <tr>
 <td class="label"><a name="40626"></a>9EB2</td>
 <td class="instruction">LD HL,$A12F</td>
-<td class="comment" rowspan="3">A = user_locked_out_until - game_counter;</td>
+<td class="comment" rowspan="3">A = player_locked_out_until - game_counter;</td>
 </tr>
 <tr>
 <td class="address"><a name="40629"></a>9EB5</td>
@@ -53,7 +53,7 @@ Locks player out until wire is snipped.
 <tr>
 <td class="address"><a name="40635"></a>9EBB</td>
 <td class="instruction">CP $04</td>
-<td class="comment" rowspan="2">if (A &gt;= 4) return;</td>
+<td class="comment" rowspan="2">if (A &lt; 4)</td>
 </tr>
 <tr>
 <td class="address"><a name="40637"></a>9EBD</td>
@@ -143,7 +143,7 @@ Locks player out until wire is snipped.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

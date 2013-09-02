@@ -35,7 +35,7 @@ Check for 'game cancel' keypress.
 <tr>
 <td class="label"><a name="40421"></a>9DE5</td>
 <td class="instruction">LD BC,$FEFE</td>
-<td class="comment" rowspan="4">if (!shift_pressed) return;</td>
+<td class="comment" rowspan="8">if (!(shift_pressed &amp;&amp; space_pressed)) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="40424"></a>9DE8</td>
@@ -52,7 +52,6 @@ Check for 'game cancel' keypress.
 <tr>
 <td class="address"><a name="40429"></a>9DED</td>
 <td class="instruction">LD B,$7F</td>
-<td class="comment" rowspan="4">if (!space_pressed) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="40431"></a>9DEF</td>
@@ -69,20 +68,22 @@ Check for 'game cancel' keypress.
 <tr>
 <td class="address"><a name="40436"></a>9DF4</td>
 <td class="instruction">CALL <a class="link" href="42251.html">$A50B</a></td>
-<td class="comment" rowspan="3">screen_reset(); user_confirm(); if (confirmed) looks_like_a_reset_fn();</td>
+<td class="comment">screen_reset();</td>
 </tr>
 <tr>
 <td class="address"><a name="40439"></a>9DF7</td>
 <td class="instruction">CALL <a class="link" href="61436.html">$EFFC</a></td>
+<td class="comment">user_confirm();</td>
 </tr>
 <tr>
 <td class="address"><a name="40442"></a>9DFA</td>
 <td class="instruction">JP Z,<a class="link" href="46938.html">$B75A</a></td>
+<td class="comment">if (Z) reset_game();</td>
 </tr>
 <tr>
 <td class="address"><a name="40445"></a>9DFD</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">if (indoor_room_index == 0) loc_B2FC(); else goto enter_room; // exit via (jumps to main_loop)</td>
+<td class="comment" rowspan="3">if (room_index == 0) { reset_B2FC(); return; } // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="40448"></a>9E00</td>
@@ -95,6 +96,7 @@ Check for 'game cancel' keypress.
 <tr>
 <td class="address"><a name="40452"></a>9E04</td>
 <td class="instruction">JP <a class="link" href="26868.html">$68F4</a></td>
+<td class="comment">else enter_room(); // doesn't return (jumps to main_loop)</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -105,7 +107,7 @@ Check for 'game cancel' keypress.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

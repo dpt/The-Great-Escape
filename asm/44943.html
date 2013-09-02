@@ -30,6 +30,12 @@
 Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 </div>
 </div>
+<table class="input">
+<tr>
+<td class="register">IY</td>
+<td class="registerContents">Pointer to visible character block.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -40,7 +46,7 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <tr>
 <td class="address"><a name="44944"></a>AF90</td>
 <td class="instruction">LD ($81AA),A</td>
-<td class="comment">byte_81AA = A;</td>
+<td class="comment">stashed_A = A;</td>
 </tr>
 <tr>
 <td class="address"><a name="44947"></a>AF93</td>
@@ -63,12 +69,12 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <tr>
 <td class="address"><a name="44958"></a>AF9E</td>
 <td class="instruction">LD A,L</td>
-<td class="comment">A = L;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="44959"></a>AF9F</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="7">if (A == 0 &amp;&amp; automatic_player_counter &gt; 0) door_handling();</td>
+<td class="comment" rowspan="7">if (L == 0 &amp;&amp; automatic_player_counter &gt; 0) door_handling(); // L == 0 =&gt; HL == 0x8000</td>
 </tr>
 <tr>
 <td class="address"><a name="44960"></a>AFA0</td>
@@ -97,7 +103,7 @@ Used by the routine at <a class="link" href="46542.html">B5CE</a>.
 <tr>
 <td class="address"><a name="44971"></a>AFAB</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="7">if (A || (($8001 &amp; (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) { bounds_check(); return; }</td>
+<td class="comment" rowspan="7">if (L || (($8001 &amp; (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) { bounds_check(); return; }</td>
 </tr>
 <tr>
 <td class="address"><a name="44972"></a>AFAC</td>
@@ -141,7 +147,7 @@ Cutting wire only from here onwards?
 <tr>
 <td class="address"><a name="44988"></a>AFBC</td>
 <td class="instruction">CP $1A</td>
-<td class="comment" rowspan="4">if (A &lt; 26) { // a character index } sub_AFDF(); RET NZ</td>
+<td class="comment" rowspan="4">if (A &lt; 26) { // a character index } sub_AFDF(); if (!Z) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="44990"></a>AFBE</td>
@@ -163,7 +169,7 @@ Cutting wire only from here onwards?
 <tr>
 <td class="address"><a name="45000"></a>AFC8</td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment" rowspan="8">memcpy(IY + 15, &amp;word_81A4, 6); // $800F // copy Y,X and vertical offset</td>
+<td class="comment" rowspan="8">memcpy(IY + 15, &amp;saved_Y, 6); // $800F // copy Y,X and vertical offset</td>
 </tr>
 <tr>
 <td class="address"><a name="45003"></a>AFCB</td>
@@ -196,7 +202,7 @@ Cutting wire only from here onwards?
 <tr>
 <td class="address"><a name="45015"></a>AFD7</td>
 <td class="instruction">LD A,($81AA)</td>
-<td class="comment" rowspan="2">IY[23] = byte_81AA;</td>
+<td class="comment" rowspan="2">IY[0x17] = stashed_A;</td>
 </tr>
 <tr>
 <td class="address"><a name="45018"></a>AFDA</td>
@@ -221,7 +227,7 @@ Cutting wire only from here onwards?
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

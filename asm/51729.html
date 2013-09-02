@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="51785.html">CA49</a></td>
 </tr>
 </table>
-<div class="description">CA11: sub_CA11</div>
+<div class="description">CA11: move_character_Y</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -31,6 +31,10 @@ Used by the routine at <a class="link" href="51480.html">C918</a>.
 </div>
 </div>
 <table class="input">
+<tr>
+<td class="register">vischar[15]</td>
+<td class="registerContents">- scalefn(vischar[4])</td>
+</tr>
 <tr>
 <td class="register">HL</td>
 <td class="registerContents">Pointer to visible character block + 4.</td>
@@ -60,12 +64,12 @@ Used by the routine at <a class="link" href="51480.html">C918</a>.
 <tr>
 <td class="address"><a name="51730"></a>CA12</td>
 <td class="instruction">CALL <a class="link" href="45511.html">$B1C7</a></td>
-<td class="comment">BC_becomes_A_times_8(); // self modified by R$C9DA</td>
+<td class="comment">BC_becomes_A_times_8(); // self modified by <a class="link" href="51480.html#51674">C9DA</a></td>
 </tr>
 <tr>
 <td class="address"><a name="51733"></a>CA15</td>
 <td class="instruction">LD A,L</td>
-<td class="comment" rowspan="3">HL += 11; // -&gt; position on Y axis ($800F etc.)</td>
+<td class="comment" rowspan="3">HL += 11; // position on Y axis ($800F etc.)</td>
 </tr>
 <tr>
 <td class="address"><a name="51734"></a>CA16</td>
@@ -225,7 +229,7 @@ Used by the routine at <a class="link" href="51480.html">C918</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

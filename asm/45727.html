@@ -49,7 +49,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="label"><a name="45727"></a>B29F</td>
 <td class="instruction">LD A,($81BE)</td>
-<td class="comment" rowspan="8">BC = &amp;four_byte_structures[first_byte_of_room_structure];</td>
+<td class="comment" rowspan="8">BC = &amp;roomdef_bounds[roomdef_bounds_index];</td>
 </tr>
 <tr>
 <td class="address"><a name="45730"></a>B2A2</td>
@@ -82,7 +82,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="label"><a name="45740"></a>B2AC</td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment">HL = &amp;word_81A4;</td>
+<td class="comment">HL = &amp;saved_Y;</td>
 </tr>
 <tr>
 <td class="address"><a name="45743"></a>B2AF</td>
@@ -92,7 +92,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45744"></a>B2B0</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; *HL) goto $B2E7;</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) goto stop;</td>
 </tr>
 <tr>
 <td class="address"><a name="45745"></a>B2B1</td>
@@ -114,7 +114,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45751"></a>B2B7</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto $B2E7;</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto stop;</td>
 </tr>
 <tr>
 <td class="address"><a name="45752"></a>B2B8</td>
@@ -130,9 +130,19 @@ This is doing something like checking the bounds for an interior room.
 <td class="instruction">INC HL</td>
 </tr>
 <tr>
-<td class="address"><a name="45756"></a>B2BC</td>
+<td class="routineComment" colspan="3">
+<a name="45756"></a>
+<div class="comments">
+<div class="paragraph">
+This instruction is stray code. It's incremented but never used.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">B2BC</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++; // Stray code? DE is incremented but not used.</td>
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="45757"></a>B2BD</td>
@@ -150,7 +160,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45761"></a>B2C1</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; *HL) goto $B2E7;</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) goto stop;</td>
 </tr>
 <tr>
 <td class="address"><a name="45762"></a>B2C2</td>
@@ -168,7 +178,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45766"></a>B2C6</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto $B2E7;</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto stop;</td>
 </tr>
 <tr>
 <td class="address"><a name="45767"></a>B2C7</td>
@@ -177,7 +187,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45769"></a>B2C9</td>
 <td class="instruction">LD HL,$81BF</td>
-<td class="comment">HL = &amp;byte_81BF[0];</td>
+<td class="comment">HL = &amp;roomdef_object_bounds[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="45772"></a>B2CC</td>
@@ -215,7 +225,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45779"></a>B2D3</td>
 <td class="instruction">LD DE,$81A4</td>
-<td class="comment">DE = &amp;word_81A4;</td>
+<td class="comment">DE = &amp;saved_Y;</td>
 </tr>
 <tr>
 <td class="address"><a name="45782"></a>B2D6</td>
@@ -230,7 +240,7 @@ This is doing something like checking the bounds for an interior room.
 <tr>
 <td class="address"><a name="45785"></a>B2D9</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="5">if (A &lt; HL[0] || A &gt;= HL[1]) goto $B2F2; // next outer loop iteration (eg break)</td>
+<td class="comment" rowspan="5">if (A &lt; HL[0] || A &gt;= HL[1]) goto next; // next outer loop iteration</td>
 </tr>
 <tr>
 <td class="address"><a name="45786"></a>B2DA</td>
@@ -290,7 +300,7 @@ Found.
 <tr>
 <td class="label"><a name="45799"></a>B2E7</td>
 <td class="instruction">LD A,(IY+$07)</td>
-<td class="comment" rowspan="3">IY[7] ^= 0x20; // stop character?</td>
+<td class="comment" rowspan="3">stop: IY[7] ^= vischar_BYTE7_BIT5; // stop character?</td>
 </tr>
 <tr>
 <td class="address"><a name="45802"></a>B2EA</td>
@@ -323,7 +333,7 @@ Next iteration.
 <tr>
 <td class="label">B2F2</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">next:  POP HL</td>
 </tr>
 <tr>
 <td class="address"><a name="45811"></a>B2F3</td>
@@ -373,7 +383,7 @@ Not found.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

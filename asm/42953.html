@@ -29,13 +29,16 @@
 <div class="paragraph">
 Pulls supertiles out of the map.
 </div>
+<div class="paragraph">
+Get vertical offset.
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="42953"></a>A7C9</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment" rowspan="2">A = (map_position &gt;&gt; 8) &amp; 0xFC; // A = 0,4,8,12,...</td>
+<td class="comment" rowspan="2">A = (map_position &gt;&gt; 8) &amp; 0xFC; // A = 0, 4, 8, 12, ...</td>
 </tr>
 <tr>
 <td class="address"><a name="42956"></a>A7CC</td>
@@ -46,7 +49,7 @@ Pulls supertiles out of the map.
 <a name="42958"></a>
 <div class="comments">
 <div class="paragraph">
-Get vertical offset. Multiply A by 13.5. (A is a multiple of 4, so this goes 0,54,108,162...)
+Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 </div>
 </div>
 </td>
@@ -224,7 +227,7 @@ Populate $FF58 with 7x5 array of supertile refs.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

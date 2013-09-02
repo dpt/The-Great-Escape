@@ -27,7 +27,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Resets all visible characters, dispatch_counter, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
+Resets all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
 </div>
 </div>
 </td>
@@ -82,7 +82,7 @@ Resets all visible characters, dispatch_counter, day_or_night flag, general flag
 <tr>
 <td class="address"><a name="47021"></a>B7AD</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment" rowspan="2">dispatch_counter = 7;</td>
+<td class="comment" rowspan="2">clock = 7;</td>
 </tr>
 <tr>
 <td class="address"><a name="47023"></a>B7AF</td>
@@ -215,7 +215,7 @@ Clear the mess halls.
 <tr>
 <td class="address">B7DB</td>
 <td class="instruction">LD A,$0D</td>
-<td class="comment" rowspan="2">bench_A = interiorobject_EMPTY_BENCH;</td>
+<td class="comment" rowspan="2">roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
 <td class="address"><a name="47069"></a>B7DD</td>
@@ -224,32 +224,32 @@ Clear the mess halls.
 <tr>
 <td class="address"><a name="47072"></a>B7E0</td>
 <td class="instruction">LD ($6F1A),A</td>
-<td class="comment">bench_B = interiorobject_EMPTY_BENCH;</td>
+<td class="comment">roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
 <td class="address"><a name="47075"></a>B7E3</td>
 <td class="instruction">LD ($6F1D),A</td>
-<td class="comment">bench_C = interiorobject_EMPTY_BENCH;</td>
+<td class="comment">roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
 <td class="address"><a name="47078"></a>B7E6</td>
 <td class="instruction">LD ($6F4F),A</td>
-<td class="comment">bench_D = interiorobject_EMPTY_BENCH;</td>
+<td class="comment">roomdef_25_breakfast.bench_D = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
 <td class="address"><a name="47081"></a>B7E9</td>
 <td class="instruction">LD ($6F52),A</td>
-<td class="comment">bench_E = interiorobject_EMPTY_BENCH;</td>
+<td class="comment">roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
 <td class="address"><a name="47084"></a>B7EC</td>
 <td class="instruction">LD ($6F55),A</td>
-<td class="comment">bench_F = interiorobject_EMPTY_BENCH;</td>
+<td class="comment">roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
 <td class="address"><a name="47087"></a>B7EF</td>
 <td class="instruction">LD ($6F58),A</td>
-<td class="comment">bench_G = interiorobject_EMPTY_BENCH;</td>
+<td class="comment">roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
@@ -279,12 +279,11 @@ Reset characters 12..15 and 20..25.
 <tr>
 <td class="label"><a name="47098"></a>B7FA</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment">do { B = 3; // iterations</td>
+<td class="comment" rowspan="20">do { memcpy(DE, HL, 3); DE += 3; HL += 3; } {  *DE++ = 0x12; // reset to 0x12 but the initial data is 0x18} {  *DE++ = 0x00; } {  DE += 2; } {  if (C == 7) DE = &amp;character_structs[20].BYTE1; } {} while (--C);</td>
 </tr>
 <tr>
 <td class="label"><a name="47100"></a>B7FC</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="6">do { *DE++ = *HL++; } {  } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="47101"></a>B7FD</td>
@@ -309,7 +308,6 @@ Reset characters 12..15 and 20..25.
 <tr>
 <td class="address"><a name="47107"></a>B803</td>
 <td class="instruction">LD (HL),$12</td>
-<td class="comment" rowspan="2">*DE++ = 0x12; // reset to 0x12 but the initial data is 0x18</td>
 </tr>
 <tr>
 <td class="address"><a name="47109"></a>B805</td>
@@ -318,7 +316,6 @@ Reset characters 12..15 and 20..25.
 <tr>
 <td class="address"><a name="47110"></a>B806</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment" rowspan="2">*DE++ = 0x00;</td>
 </tr>
 <tr>
 <td class="address"><a name="47112"></a>B808</td>
@@ -327,7 +324,6 @@ Reset characters 12..15 and 20..25.
 <tr>
 <td class="address"><a name="47113"></a>B809</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="3">DE += 2;</td>
 </tr>
 <tr>
 <td class="address"><a name="47114"></a>B80A</td>
@@ -340,7 +336,6 @@ Reset characters 12..15 and 20..25.
 <tr>
 <td class="address"><a name="47116"></a>B80C</td>
 <td class="instruction">LD A,C</td>
-<td class="comment" rowspan="4">if (C == 7) DE = &amp;character_structs[20].BYTE1;</td>
 </tr>
 <tr>
 <td class="address"><a name="47117"></a>B80D</td>
@@ -357,12 +352,10 @@ Reset characters 12..15 and 20..25.
 <tr>
 <td class="label"><a name="47124"></a>B814</td>
 <td class="instruction">DEC C</td>
-<td class="comment">} while (--C);</td>
 </tr>
 <tr>
 <td class="address"><a name="47125"></a>B815</td>
 <td class="instruction">JP NZ,$B7FA</td>
-<td class="comment">}</td>
 </tr>
 <tr>
 <td class="address"><a name="47128"></a>B818</td>
@@ -378,7 +371,7 @@ Reset characters 12..15 and 20..25.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

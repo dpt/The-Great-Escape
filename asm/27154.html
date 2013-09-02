@@ -51,7 +51,7 @@ Index turns into door_position struct pointer.
 <tr>
 <td class="label"><a name="27154"></a>6A12</td>
 <td class="instruction">LD C,A</td>
-<td class="comment" rowspan="8">HL = &amp;door_positions[A * 2]; // are they pairs of doors?</td>
+<td class="comment" rowspan="8">HL = &amp;door_positions[(A * 2) &amp; 0xFF]; // are they pairs of doors?</td>
 </tr>
 <tr>
 <td class="address"><a name="27155"></a>6A13</td>
@@ -84,7 +84,7 @@ Index turns into door_position struct pointer.
 <tr>
 <td class="address"><a name="27165"></a>6A1D</td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment" rowspan="7">if (A &amp; doorposition_BYTE0_BIT7) HL += 4;</td>
+<td class="comment" rowspan="7">if (A &amp; (1&lt;&lt;7)) HL += 4;</td>
 </tr>
 <tr>
 <td class="address"><a name="27167"></a>6A1F</td>
@@ -124,7 +124,7 @@ Index turns into door_position struct pointer.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

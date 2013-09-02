@@ -33,7 +33,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26912" href="../asm/26912.html">6920</a></td>
-<td class="routineDesc">changed_room</td>
+<td class="routineDesc">set_player_sprite_for_room</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="26937" href="../asm/26937.html">6939</a></td>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27100" href="../asm/27100.html">69DC</a></td>
-<td class="routineDesc">sub_69DC</td>
+<td class="routineDesc">setup_doors</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27154" href="../asm/27154.html">6A12</a></td>
@@ -157,7 +157,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40455" href="../asm/40455.html">9E07</a></td>
-<td class="routineDesc">process_user_input</td>
+<td class="routineDesc">process_player_input</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40600" href="../asm/40600.html">9E98</a></td>
@@ -165,7 +165,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40626" href="../asm/40626.html">9EB2</a></td>
-<td class="routineDesc">wire_snipped</td>
+<td class="routineDesc">snipping_wire</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="40737" href="../asm/40737.html">9F21</a></td>
@@ -209,7 +209,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41202" href="../asm/41202.html">A0F2</a></td>
-<td class="routineDesc">increase_morale_by_5</td>
+<td class="routineDesc">increase_morale_by_5_score_by_5</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41209" href="../asm/41209.html">A0F9</a></td>
@@ -229,7 +229,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41376" href="../asm/41376.html">A1A0</a></td>
-<td class="routineDesc">dispatch_table_thing</td>
+<td class="routineDesc">dispatch_timed_event</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41411" href="../asm/41411.html">A1C3</a></td>
@@ -289,7 +289,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41791" href="../asm/41791.html">A33F</a></td>
-<td class="routineDesc">set_target_location</td>
+<td class="routineDesc">set_player_target_location</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41809" href="../asm/41809.html">A351</a></td>
@@ -308,16 +308,20 @@
 <td class="routineDesc">sub_A38C</td>
 </tr>
 <tr>
+<td class="routine"><a class="link" name="41915" href="../asm/41915.html">A3BB</a></td>
+<td class="routineDesc">sub_A3BB</td>
+</tr>
+<tr>
 <td class="routine"><a class="link" name="41965" href="../asm/41965.html">A3ED</a></td>
 <td class="routineDesc">store_banked_A_then_C_at_HL</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41971" href="../asm/41971.html">A3F3</a></td>
-<td class="routineDesc">sub_A3F3</td>
+<td class="routineDesc">byte_A13E_is_nonzero</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="41976" href="../asm/41976.html">A3F8</a></td>
-<td class="routineDesc">varA13E_is_zero</td>
+<td class="routineDesc">byte_A13E_is_zero</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42016" href="../asm/42016.html">A420</a></td>
@@ -345,11 +349,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42195" href="../asm/42195.html">A4D3</a></td>
-<td class="routineDesc">sub_A4D3</td>
+<td class="routineDesc">byte_A13E_is_nonzero_anotherone</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42200" href="../asm/42200.html">A4D8</a></td>
-<td class="routineDesc">varA13E_is_zero_anotherone</td>
+<td class="routineDesc">byte_A13E_is_zero_anotherone</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="42237" href="../asm/42237.html">A4FD</a></td>
@@ -565,11 +569,11 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="46875" href="../asm/46875.html">B71B</a></td>
-<td class="routineDesc">reset_something</td>
+<td class="routineDesc">reset_position</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="46938" href="../asm/46938.html">B75A</a></td>
-<td class="routineDesc">looks_like_a_reset_function</td>
+<td class="routineDesc">reset_game</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47003" href="../asm/47003.html">B79B</a></td>
@@ -621,7 +625,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="50400" href="../asm/50400.html">C4E0</a></td>
-<td class="routineDesc">sub_C4E0</td>
+<td class="routineDesc">spawn_characters_maybe</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="50643" href="../asm/50643.html">C5D3</a></td>
@@ -653,19 +657,23 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51480" href="../asm/51480.html">C918</a></td>
-<td class="routineDesc">sub_C918</td>
+<td class="routineDesc">character_behaviour_stuff</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51729" href="../asm/51729.html">CA11</a></td>
-<td class="routineDesc">sub_CA11</td>
+<td class="routineDesc">move_character_Y</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51785" href="../asm/51785.html">CA49</a></td>
-<td class="routineDesc">sub_CA49</td>
+<td class="routineDesc">move_character_X</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="51841" href="../asm/51841.html">CA81</a></td>
-<td class="routineDesc">sub_CA81</td>
+<td class="routineDesc">bribes_solitary_food</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="52003" href="../asm/52003.html">CB23</a></td>
+<td class="routineDesc">sub_CB23</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52085" href="../asm/52085.html">CB75</a></td>
@@ -689,7 +697,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52395" href="../asm/52395.html">CCAB</a></td>
-<td class="routineDesc">guards_persue_player</td>
+<td class="routineDesc">guards_persue_prisoners</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52429" href="../asm/52429.html">CCCD</a></td>
@@ -749,7 +757,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58690" href="../asm/58690.html">E542</a></td>
-<td class="routineDesc">divide_array_by_8_with_rounding</td>
+<td class="routineDesc">scale_pos</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="58704" href="../asm/58704.html">E550</a></td>
@@ -824,10 +832,6 @@
 <td class="routineDesc">get_tuning</td>
 </tr>
 <tr>
-<td class="routine"><a class="link" name="64992" href="../asm/64992.html">FDE0</a></td>
-<td class="routineDesc">nop</td>
-</tr>
-<tr>
 <td class="routine"><a class="link" name="64993" href="../asm/64993.html">FDE1</a></td>
 <td class="routineDesc">loaded</td>
 </tr>
@@ -853,7 +857,7 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

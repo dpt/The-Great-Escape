@@ -38,12 +38,12 @@ Green key and food items are ignored.
 <tr>
 <td class="label"><a name="52429"></a>CCCD</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment">A = room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="52432"></a>CCD0</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="6">if (A != room_0_outdoors) } is_item_discoverable_indoors(A); // does this work only indoors? if (!Z) return; guards_persue_player(); return;</td>
+<td class="comment" rowspan="6">if (A != room_0_outdoors) } is_item_discoverable_indoors(A); {  if (Z) guards_persue_prisoners(); } return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52433"></a>CCD1</td>
@@ -176,7 +176,7 @@ The green key and food items are ignored.
 <tr>
 <td class="address"><a name="52471"></a>CCF7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
-<td class="comment">guards_persue_player();</td>
+<td class="comment">guards_persue_prisoners();</td>
 </tr>
 <tr>
 <td class="address"><a name="52474"></a>CCFA</td>
@@ -192,7 +192,7 @@ The green key and food items are ignored.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

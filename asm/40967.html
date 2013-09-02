@@ -35,7 +35,7 @@ Used by the routine at <a class="link" href="40737.html">9F21</a>.
 <tr>
 <td class="label"><a name="40967"></a>A007</td>
 <td class="instruction">LD HL,$68A0</td>
-<td class="comment">HL = indoor_room_index;</td>
+<td class="comment">HL = &amp;room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="40970"></a>A00A</td>
@@ -61,7 +61,7 @@ Used by the routine at <a class="link" href="40737.html">9F21</a>.
 <tr>
 <td class="label"><a name="40978"></a>A012</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment" rowspan="4">if (*HL) return;</td>
+<td class="comment" rowspan="4">if (*HL) return; // return with flags NZ</td>
 </tr>
 <tr>
 <td class="address"><a name="40979"></a>A013</td>
@@ -78,7 +78,7 @@ Used by the routine at <a class="link" href="40737.html">9F21</a>.
 <tr>
 <td class="address"><a name="40982"></a>A016</td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment" rowspan="2">DE = &amp;player_map_position_x;</td>
+<td class="comment" rowspan="2">DE = &amp;player_map_position.y;</td>
 </tr>
 <tr>
 <td class="address"><a name="40985"></a>A019</td>
@@ -132,7 +132,7 @@ This entry point is used by the routine at <a class="link" href="52120.html">CB9
 <tr>
 <td class="address"><a name="40998"></a>A026</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; HL[0]) return; // return with flags ?? (presumably NZ is set)</td>
+<td class="comment" rowspan="2">if (A &lt; HL[0]) return; // return with flags NZ</td>
 </tr>
 <tr>
 <td class="address"><a name="40999"></a>A027</td>
@@ -192,7 +192,7 @@ This entry point is used by the routine at <a class="link" href="52120.html">CB9
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

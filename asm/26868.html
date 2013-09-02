@@ -63,14 +63,14 @@ Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="li
 <tr>
 <td class="address"><a name="26886"></a>6906</td>
 <td class="instruction">CALL <a class="link" href="26912.html">$6920</a></td>
-<td class="comment">changed_room();</td>
+<td class="comment">set_player_sprite_for_room();</td>
 </tr>
 <tr>
 <td class="routineComment" colspan="3">
 <a name="26889"></a>
 <div class="comments">
 <div class="paragraph">
-This assignment to HL is redundant: reset_something sets HL to $8000 as its first instruction.
+This assignment to HL is redundant: reset_position sets HL to $8000 as its first instruction.
 </div>
 </div>
 </td>
@@ -83,7 +83,7 @@ This assignment to HL is redundant: reset_something sets HL to $8000 as its firs
 <tr>
 <td class="address"><a name="26892"></a>690C</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">reset_something();</td>
+<td class="comment">reset_position(); // reset player</td>
 </tr>
 <tr>
 <td class="address"><a name="26895"></a>690F</td>
@@ -113,7 +113,7 @@ This assignment to HL is redundant: reset_something sets HL to $8000 as its firs
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

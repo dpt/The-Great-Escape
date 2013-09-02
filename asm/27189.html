@@ -40,7 +40,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27192"></a>6A38</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="11">HL = rooms_and_tunnels[indoor_room_index - 1];</td>
+<td class="comment" rowspan="11">HL = rooms_and_tunnels[room_index - 1];</td>
 </tr>
 <tr>
 <td class="address"><a name="27195"></a>6A3B</td>
@@ -90,7 +90,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27209"></a>6A49</td>
 <td class="instruction">CALL <a class="link" href="27100.html">$69DC</a></td>
-<td class="comment">sub_69DC();</td>
+<td class="comment">setup_doors();</td>
 </tr>
 <tr>
 <td class="address"><a name="27212"></a>6A4C</td>
@@ -100,12 +100,12 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27213"></a>6A4D</td>
 <td class="instruction">LD DE,$81BE</td>
-<td class="comment">DE = &amp;first_byte_of_room_structure;</td>
+<td class="comment">DE = &amp;roomdef_bounds_index; // room dimensions index</td>
 </tr>
 <tr>
 <td class="address"><a name="27216"></a>6A50</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI // *DE++ = *HL++; BC--;</td>
+<td class="comment">*DE++ = *HL++;</td>
 </tr>
 <tr>
 <td class="address"><a name="27218"></a>6A52</td>
@@ -115,7 +115,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27219"></a>6A53</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27220"></a>6A54</td>
@@ -125,7 +125,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27221"></a>6A55</td>
 <td class="instruction">JR NZ,$6A5A</td>
-<td class="comment">if (A == 0) {</td>
+<td class="comment">if (A == 0) { // no objects? (boundaries)</td>
 </tr>
 <tr>
 <td class="address"><a name="27223"></a>6A57</td>
@@ -140,7 +140,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="label"><a name="27226"></a>6A5A</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment">memcpy(DE, HL, (A * 4) + 1);</td>
+<td class="comment">memcpy(DE, HL, A * 4 + 1); HL += A * 4 + 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="27227"></a>6A5B</td>
@@ -170,12 +170,12 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="label"><a name="27234"></a>6A62</td>
 <td class="instruction">LD DE,$81DA</td>
-<td class="comment">DE = byte_81DA;</td>
+<td class="comment">DE = &amp;suspected_indoor_mask_data;</td>
 </tr>
 <tr>
 <td class="address"><a name="27237"></a>6A65</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL++;</td>
+<td class="comment" rowspan="2">A = *HL++; // sampled HL=$6E22,$6EF8,$6F38 (unique per room, but never when outside)</td>
 </tr>
 <tr>
 <td class="address"><a name="27238"></a>6A66</td>
@@ -189,7 +189,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27240"></a>6A68</td>
 <td class="instruction">AND A</td>
-<td class="comment">A &amp;= A;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27241"></a>6A69</td>
@@ -209,17 +209,17 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="label"><a name="27245"></a>6A6D</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">do { PUSH BC</td>
+<td class="comment">do { -</td>
 </tr>
 <tr>
 <td class="address"><a name="27246"></a>6A6E</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27247"></a>6A6F</td>
 <td class="instruction">LD L,(HL)</td>
-<td class="comment" rowspan="13">memcpy(DE, &amp;stru_EA7C[*HL], 7);</td>
+<td class="comment" rowspan="13">memcpy(DE, &amp;stru_EA7C[*HL++], 7);</td>
 </tr>
 <tr>
 <td class="address"><a name="27248"></a>6A70</td>
@@ -285,27 +285,37 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27271"></a>6A87</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27272"></a>6A88</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27273"></a>6A89</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
+<td class="comment">- }</td>
 </tr>
 <tr>
 <td class="address"><a name="27274"></a>6A8A</td>
 <td class="instruction">DJNZ $6A6D</td>
-<td class="comment">} while (--B); }</td>
+<td class="comment">while (--B); }</td>
 </tr>
 <tr>
-<td class="label"><a name="27276"></a>6A8C</td>
+<td class="routineComment" colspan="3">
+<a name="27276"></a>
+<div class="comments">
+<div class="paragraph">
+Plot all objects.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="label">6A8C</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment">B = *HL; // count of objects  // sample: HL -&gt; $6E25 (room16_corridor + 5)</td>
+<td class="comment">B = *HL; // count of objects  // sample: HL -&gt; $6E25 (room_16_corridor + 5)</td>
 </tr>
 <tr>
 <td class="address"><a name="27277"></a>6A8D</td>
@@ -351,12 +361,12 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27286"></a>6A96</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27287"></a>6A97</td>
 <td class="instruction">LD L,(HL)</td>
-<td class="comment" rowspan="15">HL = $F0F8 + *HL * 24 + A; // $F0F8 = visible tiles array (so *HL = row, A = column)</td>
+<td class="comment" rowspan="16">DE = $F0F8 + *HL * 24 + A; // $F0F8 = visible tiles array (so *HL = row, A = column)</td>
 </tr>
 <tr>
 <td class="address"><a name="27288"></a>6A98</td>
@@ -417,22 +427,20 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27306"></a>6AAA</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DE,HL</td>
 </tr>
 <tr>
 <td class="address"><a name="27307"></a>6AAB</td>
 <td class="instruction">LD A,C</td>
-<td class="comment">A = C;</td>
+<td class="comment" rowspan="2">expand_object(C); // pass C as A</td>
 </tr>
 <tr>
 <td class="address"><a name="27308"></a>6AAC</td>
 <td class="instruction">CALL <a class="link" href="27317.html">$6AB5</a></td>
-<td class="comment">expand_object();</td>
 </tr>
 <tr>
 <td class="address"><a name="27311"></a>6AAF</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HL</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="27312"></a>6AB0</td>
@@ -442,12 +450,12 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27313"></a>6AB1</td>
 <td class="instruction">INC HL</td>
-<td class="comment">HL++;</td>
+<td class="comment">HL++; }</td>
 </tr>
 <tr>
 <td class="address"><a name="27314"></a>6AB2</td>
 <td class="instruction">DJNZ $6A91</td>
-<td class="comment">} while (--B);</td>
+<td class="comment">while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="27316"></a>6AB4</td>
@@ -463,7 +471,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

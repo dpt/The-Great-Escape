@@ -35,7 +35,7 @@ Used by the routines at <a class="link" href="46938.html">B75A</a> and <a class=
 <tr>
 <td class="label"><a name="42121"></a>A489</td>
 <td class="instruction">LD HL,$6C61</td>
-<td class="comment" rowspan="2">room2_hut2_left.bed = interiorobject_OCCUPIED_BED;</td>
+<td class="comment" rowspan="2">roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;</td>
 </tr>
 <tr>
 <td class="address"><a name="42124"></a>A48C</td>
@@ -59,7 +59,7 @@ Used by the routines at <a class="link" href="46938.html">B75A</a> and <a class=
 <tr>
 <td class="label">A491</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment">player_sits_sleeps_end: *HL = 0xFF; // set in breakfast, or in bed</td>
+<td class="comment">player_sit_sleep_common: *HL = 0xFF; // set in breakfast, or in bed</td>
 </tr>
 <tr>
 <td class="address"><a name="42131"></a>A493</td>
@@ -88,17 +88,15 @@ Set player position to zero.
 <tr>
 <td class="address">A498</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment">HL = $800F;</td>
+<td class="comment" rowspan="5">memset($800F, 0, 4);</td>
 </tr>
 <tr>
 <td class="address"><a name="42139"></a>A49B</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment">B = 4; // 4 iterations</td>
 </tr>
 <tr>
 <td class="label"><a name="42141"></a>A49D</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment" rowspan="3">do { *HL++ = A; // A is zero here } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="42142"></a>A49E</td>
@@ -116,7 +114,7 @@ Set player position to zero.
 <tr>
 <td class="address"><a name="42148"></a>A4A4</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">reset_something();</td>
+<td class="comment">reset_position(); // reset player</td>
 </tr>
 <tr>
 <td class="address"><a name="42151"></a>A4A7</td>
@@ -132,7 +130,7 @@ Set player position to zero.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

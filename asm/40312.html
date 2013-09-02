@@ -55,17 +55,17 @@ This entry point is used by the routine at <a class="link" href="26906.html">691
 <tr>
 <td class="address"><a name="40318"></a>9D7E</td>
 <td class="instruction">CALL <a class="link" href="40421.html">$9DE5</a></td>
-<td class="comment">keyscan_game_cancel();</td>
+<td class="comment">keyscan_cancel();</td>
 </tr>
 <tr>
 <td class="address"><a name="40321"></a>9D81</td>
 <td class="instruction">CALL <a class="link" href="32072.html">$7D48</a></td>
-<td class="comment">message_timer();</td>
+<td class="comment">message_display();</td>
 </tr>
 <tr>
 <td class="address"><a name="40324"></a>9D84</td>
 <td class="instruction">CALL <a class="link" href="40455.html">$9E07</a></td>
-<td class="comment">process_user_input();</td>
+<td class="comment">process_player_input();</td>
 </tr>
 <tr>
 <td class="address"><a name="40327"></a>9D87</td>
@@ -120,7 +120,7 @@ This entry point is used by the routine at <a class="link" href="26906.html">691
 <tr>
 <td class="address"><a name="40357"></a>9DA5</td>
 <td class="instruction">CALL <a class="link" href="32072.html">$7D48</a></td>
-<td class="comment">message_timer();</td>
+<td class="comment">message_display();</td>
 </tr>
 <tr>
 <td class="address"><a name="40360"></a>9DA8</td>
@@ -158,7 +158,7 @@ This entry point is used by the routine at <a class="link" href="26906.html">691
 <tr>
 <td class="address"><a name="40379"></a>9DBB</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="3">if (indoor_room_index != 0) indoors_delay_loop();</td>
+<td class="comment" rowspan="3">if (room_index != 0) indoors_delay_loop();</td>
 </tr>
 <tr>
 <td class="address"><a name="40382"></a>9DBE</td>
@@ -176,7 +176,7 @@ This entry point is used by the routine at <a class="link" href="26906.html">691
 <tr>
 <td class="address"><a name="40389"></a>9DC5</td>
 <td class="instruction">LD A,($A12F)</td>
-<td class="comment" rowspan="3">if ((game_counter &amp; 63) == 0) dispatch_table_thing();</td>
+<td class="comment" rowspan="3">if ((game_counter &amp; 63) == 0) dispatch_timed_event();</td>
 </tr>
 <tr>
 <td class="address"><a name="40392"></a>9DC8</td>
@@ -200,7 +200,7 @@ This entry point is used by the routine at <a class="link" href="26906.html">691
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

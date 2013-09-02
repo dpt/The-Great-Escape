@@ -21,7 +21,7 @@
 <td class="next">Next: <a class="link" href="41411.html">A1C3</a></td>
 </tr>
 </table>
-<div class="description">A1A0: dispatch_table_thing</div>
+<div class="description">A1A0: dispatch_timed_event</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -29,13 +29,16 @@
 <div class="paragraph">
 Dispatches time-based game events like parcels, meals, exercise and roll calls.
 </div>
+<div class="paragraph">
+Increment the clock, wrapping at 140.
+</div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="label"><a name="41376"></a>A1A0</td>
 <td class="instruction">LD HL,$A13D</td>
-<td class="comment">HL = &amp;dispatch_counter;</td>
+<td class="comment">HL = &amp;clock;</td>
 </tr>
 <tr>
 <td class="address"><a name="41379"></a>A1A3</td>
@@ -65,7 +68,17 @@ Dispatches time-based game events like parcels, meals, exercise and roll calls.
 <td class="comment">*HL = A;</td>
 </tr>
 <tr>
-<td class="address"><a name="41387"></a>A1AB</td>
+<td class="routineComment" colspan="3">
+<a name="41387"></a>
+<div class="comments">
+<div class="paragraph">
+Dispatch the event for that time.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address">A1AB</td>
 <td class="instruction">LD HL,$A173</td>
 <td class="comment">HL = &amp;timed_events[0];</td>
 </tr>
@@ -146,7 +159,7 @@ Dispatches time-based game events like parcels, meals, exercise and roll calls.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>

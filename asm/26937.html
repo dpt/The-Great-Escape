@@ -40,7 +40,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="26940"></a>693C</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = indoor_room_index;</td>
+<td class="comment">A = room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="26943"></a>693F</td>
@@ -117,7 +117,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="label"><a name="26986"></a>696A</td>
 <td class="instruction">LD HL,$69B7</td>
-<td class="comment">setup_crate: HL = &amp;crate;</td>
+<td class="comment">setup_crate: HL = &amp;movable_items[movable_item_CRATE];</td>
 </tr>
 <tr>
 <td class="address"><a name="26989"></a>696D</td>
@@ -127,12 +127,12 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="26991"></a>696F</td>
 <td class="instruction">JR $697D</td>
-<td class="comment">goto setup_movable_items;</td>
+<td class="comment">goto setup_movable_items_common;</td>
 </tr>
 <tr>
 <td class="label"><a name="26993"></a>6971</td>
 <td class="instruction">LD HL,$69C0</td>
-<td class="comment">setup_stove2: HL = &amp;stove2;</td>
+<td class="comment">setup_stove2: HL = &amp;movable_items[movable_item_STOVE2];</td>
 </tr>
 <tr>
 <td class="address"><a name="26996"></a>6974</td>
@@ -142,27 +142,27 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="26998"></a>6976</td>
 <td class="instruction">JR $697D</td>
-<td class="comment">goto setup_movable_items;</td>
+<td class="comment">goto setup_movable_items_common;</td>
 </tr>
 <tr>
 <td class="label"><a name="27000"></a>6978</td>
 <td class="instruction">LD HL,$69AE</td>
-<td class="comment">setup_stove1: HL = &amp;stove1;</td>
+<td class="comment">setup_stove1: HL = &amp;movable_items[movable_item_STOVE1];</td>
 </tr>
 <tr>
 <td class="address"><a name="27003"></a>697B</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment">A = character_26_stove1; // then fallthrough to...</td>
+<td class="comment">A = character_26_stove1;</td>
 </tr>
 <tr>
 <td class="label"><a name="27005"></a>697D</td>
 <td class="instruction">LD ($8020),A</td>
-<td class="comment">setup_movable_items: $8020 = A; // character index</td>
+<td class="comment">setup_movable_items_common: $8020 = A; // character index</td>
 </tr>
 <tr>
 <td class="address"><a name="27008"></a>6980</td>
 <td class="instruction">LD BC,$0009</td>
-<td class="comment" rowspan="3">memcpy($802F, HL, 9); // character 0 is $8020..$803F</td>
+<td class="comment" rowspan="3">memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F</td>
 </tr>
 <tr>
 <td class="address"><a name="27011"></a>6983</td>
@@ -175,7 +175,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="27016"></a>6988</td>
 <td class="instruction">LD HL,$69A0</td>
-<td class="comment" rowspan="4">memcpy($8021, byte_69A0, 14);</td>
+<td class="comment" rowspan="4">memcpy($8021, movable_item_reset_data, 14);</td>
 </tr>
 <tr>
 <td class="address"><a name="27019"></a>698B</td>
@@ -192,7 +192,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="27027"></a>6993</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="2">$803C = indoor_room_index;</td>
+<td class="comment" rowspan="2">$803C = room_index;</td>
 </tr>
 <tr>
 <td class="address"><a name="27030"></a>6996</td>
@@ -206,7 +206,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="27036"></a>699C</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">reset_something();</td>
+<td class="comment">reset_position(); // reset item vischar</td>
 </tr>
 <tr>
 <td class="address"><a name="27039"></a>699F</td>
@@ -226,7 +226,7 @@ Fourteen bytes of reset data.
 <tr>
 <td class="address">69A0</td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$F2</td>
-<td class="comment" rowspan="2">byte_69A0</td>
+<td class="comment" rowspan="2">movable_item_reset_data</td>
 </tr>
 <tr>
 <td class="address"><a name="27048"></a>69A8</td>
@@ -241,7 +241,7 @@ Fourteen bytes of reset data.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130626</div>
+<div class="release">The incomplete The Great Escape disassembly 20130902</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
 <div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
 </div>
