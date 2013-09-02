@@ -3702,7 +3702,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9DB4   if (day_or_night != 0) nighttime();
   $9DBB   if (room_index != 0) indoors_delay_loop();
   $9DC2   wave_morale_flag();
-  $9DC5   if ((game_counter & 63) == 0) dispatch_table_thing();
+  $9DC5   if ((game_counter & 63) == 0) dispatch_timed_event();
   $9DCD }
 
 ; ------------------------------------------------------------------------------
@@ -3776,8 +3776,8 @@ D $9E5C Player was in bed.
 ; ------------------------------------------------------------------------------
 
 c $9E98 picking_a_lock
-D $9E98 Locks user out until lock is picked.
-  $9E98 if (user_locked_out_until != game_counter) return;
+D $9E98 Locks the player out until lock is picked.
+  $9E98 if (player_locked_out_until != game_counter) return;
   $9EA0 *ptr_to_door_being_lockpicked &= ~gates_and_doors_LOCKED; // unlock
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
   $9EAA clear_lockpick_wirecut_flags_and_return: $8001 &= ~(vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);
@@ -3785,12 +3785,12 @@ D $9E98 Locks user out until lock is picked.
 
 ; ------------------------------------------------------------------------------
 
-c $9EB2 wire_snipped
-D $9EB2 Locks player out until wire is snipped.
-  $9EB2 A = user_locked_out_until - game_counter;
+c $9EB2 snipping_wire
+D $9EB2 Locks the player out until wire is snipped.
+  $9EB2 A = player_locked_out_until - game_counter;
   $9EB9 if (A) {
-  $9EBB   if (A >= 4) return;
-  $9EBE   $800D = table_9EE0[$800E & 3]; // new direction?
+  $9EBB   if (A < 4)
+  $9EBE     $800D = table_9EE0[$800E & 3]; // new direction?
   $9ECF   return; }
   $9ED0 else { $800E = A & 3; // walk/crawl flag?
   $9ED6   $800D = 0x80;
@@ -3845,7 +3845,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F4F   *DE++ = *HL++; }
   $9F51 A = ($8001) & 3;
   $9F56 if (A) goto set_flag_red;
-  $9F59 if (dispatch_counter >= 100) {
+  $9F59 if (clock >= 100) {
   $9F60   if (room_index == room_2_hut2left) goto set_flag_green; else goto set_flag_red; }
   $9F6B if (morale_1) goto set_flag_green;
   $9F72 HL = $8002; // target location
@@ -4149,7 +4149,7 @@ D $A13C Morale 'score'. Ranges morale_MIN .. morale_MAX.
 
 ; ------------------------------------------------------------------------------
 
-b $A13D dispatch_counter
+b $A13D clock
 
 ; ------------------------------------------------------------------------------
 
@@ -4177,13 +4177,13 @@ D $A143 Address of door (in gates_and_doors) in which bit 7 is cleared when pick
 
 ; ------------------------------------------------------------------------------
 
-b $A145 user_locked_out_until
-D $A145 Game time until user control is restored (e.g. when picking a lock or cutting wire).
+b $A145 player_locked_out_until
+D $A145 Game time until player control is restored (e.g. when picking a lock or cutting wire).
 
 ; ------------------------------------------------------------------------------
 
 b $A146 day_or_night
-D $A146 $00 = daytime, $FF = nighttime.
+D $A146 Day or night time ($00 = daytime, $FF = nighttime).
 
 ; ------------------------------------------------------------------------------
 
@@ -4220,12 +4220,14 @@ D $A173 Array of 15 event structures.
 
 ; ------------------------------------------------------------------------------
 
-c $A1A0 dispatch_table_thing
+c $A1A0 dispatch_timed_event
 D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll calls.
-  $A1A0 HL = &dispatch_counter;
+D $A1A0 Increment the clock, wrapping at 140.
+  $A1A0 HL = &clock;
   $A1A3 A = *HL + 1;
   $A1A5 if (A == 140) A = 0;
   $A1AA *HL = A;
+D $A1AB Dispatch the event for that time.
   $A1AB HL = &timed_events[0];
   $A1AE B = 15; // 15 iterations
   $A1B0 do { if (A == *HL++) goto found;
@@ -6286,7 +6288,7 @@ c $B417 action_wiresnips
   $B478 $8001 = 2;
   $B47D $8013 = 12; // set vertical offset
   $B482 $8015 = sprite_prisoner_tl_4;
-  $B488 user_locked_out_until = game_counter + 96;
+  $B488 player_locked_out_until = game_counter + 96;
   $B490 queue_message_for_display(message_CUTTING_THE_WIRE);
 
 ; -----------------------------------------------------------------------------
@@ -6295,7 +6297,7 @@ c $B495 action_lockpick
   $B495 open_door();
   $B498 if (!Z) return; // wrong door?
   $B499 ptr_to_door_being_lockpicked = HL;
-  $B49C user_locked_out_until = game_counter + 0xFF;
+  $B49C player_locked_out_until = game_counter + 0xFF;
   $B4A4 ($8001) = vischar_BYTE1_PICKING_LOCK;
   $B4A9 queue_message_for_display(message_PICKING_THE_LOCK);
 
@@ -6627,14 +6629,14 @@ D $B789 Reset sprite.
 ; -----------------------------------------------------------------------------
 
 c $B79B reset_map_and_characters
-D $B79B Resets all visible characters, dispatch_counter, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
+D $B79B Resets all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
   $B79B B = 7; // iterations
   $B79D HL = $8020; // iterate over non-player characters
   $B7A0 do {
   $B7A2   reset_visible_character();
   $B7A6   HL += 32;
   $B7AB } while (--B);
-  $B7AD dispatch_counter = 7;
+  $B7AD clock = 7;
   $B7B2 day_or_night = 0;
   $B7B6 ($8001) = 0; // flags
   $B7B9 collapsed_tunnel_obj = interiorobject_COLLAPSED_TUNNEL;
