@@ -8101,7 +8101,7 @@ D $C892 Causes characters to follow the player if they're being suspicious. Pois
   $C8B1 IY = $8020; // iterate over non-player characters
   $C8B5 B = 7; // iterations
   $C8B7 do { -
-  $C8B8   if (IY[1] != room_NONE) { // unsure if a room index, more likely flags
+  $C8B8   if (IY[1] != 0) { // flags
   $C8C0     A = IY[0] & vischar_BYTE0_MASK; // character index
 D $C8C5 Change '20' here to a higher number and prisoners will start following the player too. The character numbers I've defined earlier and the ones used here (and observed) elsewhere are a different set where < 20 is a guard.
   $C8C5     if (A < 20) {
