@@ -10065,6 +10065,7 @@ D $EFFB Unreferenced byte.
 
 c $EFFC user_confirm
 D $EFFC Waits for the user to press Y or N.
+R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
   $EFFC HL = screenlocstring_confirm_y_or_n;
   $EFFF screenlocstring_plot();
   $F002 for (;;) { BC = port_KEYBOARD_POIUY;
