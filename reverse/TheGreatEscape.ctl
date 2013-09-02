@@ -7964,31 +7964,31 @@ D $C7DF Locate the character in the map.
 ; charevnt_10       ; released from solitary
 
 D $C7F9 character_to_event_handler_index_map
-D $C7F9 Array of (character + flag, character event handler index) mappings.
-W $C7F9 { character_38 | (1<<7), charevnt_0 },
-W $C7FB { character_39 | (1<<7), charevnt_0 },
-W $C7FD { character_40 | (1<<7), charevnt_1 },
-W $C7FF { character_41 | (1<<7), charevnt_1 },
-W $C801 { character_5  | (0<<7), charevnt_0 },
-W $C803 { character_6  | (0<<7), charevnt_1 },
-W $C805 { character_5  | (1<<7), charevnt_3 }, // checks byte_A13E case 1
-W $C807 { character_6  | (1<<7), charevnt_3 }, // checks byte_A13E case 1
-W $C809 { character_14 | (0<<7), charevnt_2 },
-W $C80B { character_15 | (0<<7), charevnt_2 },
-W $C80D { character_14 | (1<<7), charevnt_0 },
-W $C80F { character_15 | (1<<7), charevnt_1 },
-W $C811 { character_16 | (0<<7), charevnt_5 }, // checks byte_A13E case 2
-W $C813 { character_17 | (0<<7), charevnt_5 }, // checks byte_A13E case 2
-W $C815 { character_16 | (1<<7), charevnt_0 },
-W $C817 { character_17 | (1<<7), charevnt_1 },
-W $C819 { character_32 | (1<<7), charevnt_0 },
-W $C81B { character_33 | (1<<7), charevnt_1 },
-W $C81D { character_42 | (0<<7), charevnt_7 },
-W $C81F { character_44 | (0<<7), charevnt_8 }, // player sleeps
-W $C821 { character_43 | (0<<7), charevnt_9 }, // player sits
-W $C823 { character_36 | (1<<7), charevnt_6 },
-W $C825 { character_36 | (0<<7), charevnt_10 }, // released from solitary
-W $C827 { character_37 | (0<<7), charevnt_4 }, // morale related
+D $C7F9 Array of (character + flags, character event handler index) mappings.
+W $C7F9 { character_6  | 0b10100000, charevnt_0 },
+W $C7FB { character_7  | 0b10100000, charevnt_0 },
+W $C7FD { character_8  | 0b10100000, charevnt_1 },
+W $C7FF { character_9  | 0b10100000, charevnt_1 },
+W $C801 { character_5  | 0b00000000, charevnt_0 },
+W $C803 { character_6  | 0b00000000, charevnt_1 },
+W $C805 { character_5  | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
+W $C807 { character_6  | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
+W $C809 { character_14 | 0b00000000, charevnt_2 },
+W $C80B { character_15 | 0b00000000, charevnt_2 },
+W $C80D { character_14 | 0b10000000, charevnt_0 },
+W $C80F { character_15 | 0b10000000, charevnt_1 },
+W $C811 { character_16 | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
+W $C813 { character_17 | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
+W $C815 { character_16 | 0b10000000, charevnt_0 },
+W $C817 { character_17 | 0b10000000, charevnt_1 },
+W $C819 { character_0  | 0b10100000, charevnt_0 },
+W $C81B { character_1  | 0b10100000, charevnt_1 },
+W $C81D { character_10 | 0b00100000, charevnt_7 },
+W $C81F { character_12 | 0b00100000, charevnt_8 }, // player sleeps
+W $C821 { character_11 | 0b00100000, charevnt_9 }, // player sits
+W $C823 { character_4  | 0b10100000, charevnt_6 }, // go to 0x0315
+W $C825 { character_4  | 0b00100000, charevnt_10 },// released from solitary
+W $C827 { character_5  | 0b00100000, charevnt_4 }, // zero morale_1
 
 D $C829 character_event_handlers
 D $C829 Array of pointers to character event handlers.
