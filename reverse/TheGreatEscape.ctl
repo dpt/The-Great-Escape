@@ -3906,7 +3906,7 @@ D $9FDE Green flag code path.
   $9FE1 flag_select: red_flag = A;
   $9FE4 A = C;
   $9FE5 HL = $5842; // first morale flag attribute byte
-  $9FE8 if (A == *HL) return; // flag already green
+  $9FE8 if (A == *HL) return; // flag already correct colour
   $9FEA if (A == attribute_BRIGHT_GREEN_OVER_BLACK) {
   $9FEF   bell = bell_STOP; // silence bell
   $9FF4   A = C; }
