@@ -4632,12 +4632,8 @@ D $A491 (common end of the above two routines)
   $A491 player_sits_sleeps_end: *HL = 0xFF; // set in breakfast, or in bed
   $A493 A = 0;
   $A494 $8002 = A; // target location? bottom byte only?
-;
 D $A498 Set player position to zero.
-  $A498 HL = $800F;
-  $A49B B = 4; // 4 iterations
-  $A49D do { *HL++ = A; // A is zero here
-  $A49F } while (--B);
+  $A498 memset($800F, 0, 4);
   $A4A1 HL = $8000;
   $A4A4 reset_position(); // reset player
   $A4A7 goto select_room_and_plot;
