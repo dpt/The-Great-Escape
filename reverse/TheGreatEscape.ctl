@@ -8649,6 +8649,7 @@ b $CD9A character_meta_data
 ; ------------------------------------------------------------------------------
 
 b $CDAA byte_CDAA
+D $CDAA Likely direction transitions.
 D $CDAA,72,9 Groups of nine. (<- called_from_main_loop_9)
 
 ; ------------------------------------------------------------------------------
