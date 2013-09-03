@@ -6,7 +6,7 @@ Reverse engineering Denton Designs' classic ZX Spectrum 48K game [The Great Esca
 SkoolKit
 --------
 
-I'm reversing the game with the help of [SkoolKit](http://pyskool.ca/?page_id=177). This is the rather nice toolkit for disassembling ZX Spectrum software written by Richard Dymond.
+I'm reversing the game using [SkoolKit](http://pyskool.ca/?page_id=177), the rather nice toolkit for disassembling ZX Spectrum software written by Richard Dymond.
 
 View an aperiodically updated version of the HTML disassembly [here](http://dpt.github.com/The-Great-Escape/).
 
