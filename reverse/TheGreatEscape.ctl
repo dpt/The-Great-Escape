@@ -10247,8 +10247,8 @@ D $F014 "CONFIRM. Y OR N"
 
 ; ------------------------------------------------------------------------------
 
-b $F025 more_messages
-D $F025 More messages.
+b $F026 more_messages
+D $F026 More messages.
 D $F026 "HE TAKES THE BRIBE"
   $F026 #CALL:decode_stringFF($F026)
 D $F039 "AND ACTS AS DECOY"
