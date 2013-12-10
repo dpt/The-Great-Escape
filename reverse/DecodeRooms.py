@@ -100,11 +100,13 @@ roomdefs = [
 notes = {
     0x6C61: "player's bed",
     0x6C89: "bed_A",
-    0x6C8D: "bed_B",
     0x6C8A: "bed_C",
+    0x6C8D: "bed_B",
     0x6CE6: "bed_D",
     0x6CE9: "bed_E",
     0x6CEC: "bed_F",
+    0x6F17: "bench_A",
+    0x6F4F: "bench_D",
     0x708C: "collapsed_tunnel_obj",
 }
 
@@ -115,45 +117,43 @@ for room in roomdefs:
     name, base, roomdef = room[0], room[1], room[2]
     #print name, base, roomdef
 
-    nobjs = 0
-    objs = chunks(list("x" * (3 - len(roomdef) % 3)) + roomdef, 3) # pad then break into chunks
-    #print objs
-    for r in reversed(objs):
-        if r[0] <= 53 and r[1] <= 24 and r[2] <= 24:
-            nobjs += 1
-        else:
-            break
-    #print "%d possible objects" % nobjs
-    j = len(objs) - nobjs
-    if objs[j - 1][2] == nobjs:
-        #print "in sync"
-        pass
-    else:
-        #print "not in sync"
-        while objs[j][2] != nobjs - 1:
-            #print "skip"
-            j += 1
-            nobjs -= 1
-        j += 1
-        nobjs -= 1
-    #print objs[j:]
-
-    nunconsumed = len(roomdef) - nobjs * 3 - 1;
-    #print nunconsumed
-
     output = []
     output.append("D $%X %s" % (base, name))
-    output.append("  $%X,%d TBD: %s" % (base, nunconsumed, str(roomdef[:nunconsumed])))
-    output.append("  $%X,1 %d // nobjects " % (base + nunconsumed, nobjs))
-    for i in range(0, nobjs):
-        ob, x, y = objs[j + i]
-        addr = base + nunconsumed + 1 + i * 3
+
+    i = 0
+
+    output.append("  $%X,1 %d" % (base + i, roomdef[i]))
+    i += 1
+
+    nboundaries = roomdef[i]
+    output.append("  $%X,1 %d // count of boundaries" % (base + i, roomdef[i]))
+    i += 1
+    for n in range(nboundaries):
+        output.append("  $%X,4 { %d, %d, %d, %d }, // boundary" % (base + i, roomdef[i], roomdef[i + 1], roomdef[i + 2], roomdef[i + 3]))
+        i += 4
+
+    ntbd = roomdef[i]
+    output.append("  $%X,1 %d // count of TBD" % (base + i, roomdef[i]))
+    i += 1
+    output.append("  $%X,%d %s // data TBD" % (base + i, ntbd,
+        str(roomdef[i:i+ntbd])))
+    i += ntbd
+
+    nobjs = roomdef[i]
+    output.append("  $%X,1 %d // count of objects" % (base + i, roomdef[i]))
+    i += 1
+    for n in range(nobjs):
+        ob, x, y = roomdef[i:i+3]
         padding = " " * (42 - len(obstr[ob]))
+        addr = base + i
         if addr in notes:
             comment = " // %s" % notes[addr]
         else:
             comment = ""
         output.append("  $%X,3 { %s,%s%2d, %2d },%s" % (addr, obstr[ob], padding, x, y, comment))
+        i += 3
+
     print '\n'.join(output)
+
     print
 
