@@ -10660,7 +10660,7 @@ c $F41C input_device_select_keyscan
   $F428   B = 4; // iterations
   $F42A   do { A >>= 1;
   $F42B     E++;
-  $F42C     if (C) goto found;
+  $F42C     if (carry) goto found;
   $F42E   } while (--B);
   $F430   found: A = E;
   $F431   return; }
