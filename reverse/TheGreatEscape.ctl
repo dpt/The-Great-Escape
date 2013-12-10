@@ -6439,7 +6439,7 @@ c $B417 action_wiresnips
   $B470 action_wiresnips_tail: ...
   $B471 $800E = A;
   $B475 $800D = 0x80;
-  $B478 $8001 = 2;
+  $B478 $8001 = vischar_BYTE1_CUTTING_WIRE;
   $B47D $8013 = 12; // set vertical offset
   $B482 $8015 = sprite_prisoner_tl_4;
   $B488 player_locked_out_until = game_counter + 96;
@@ -7698,7 +7698,7 @@ D $C47E Run through all visible characters, resetting them.
   $C48F B = 7; // 7 iterations
   $C491 HL = $8020; // iterate over non-player characters
   $C494 do { A = *HL;
-  $C495   if (A == 255) goto next; // no character?
+  $C495   if (A == character_NONE) goto next;
   $C49A   PUSH HL
   $C49B   HL += 28;
   $C49F   if (room_index != *HL) goto reset; // character not in room
@@ -8307,7 +8307,7 @@ R $C918 I:IY Pointer to visible character block.
   $C979   else if (A == 4) {
   $C97D     PUSH HL
   $C97E     A = bribed_character;
-  $C981     if (A != 0xFF) {
+  $C981     if (A != character_NONE) {
   $C985       -
   $C986       B = 7; // 7 iterations
   $C988       HL = $8020; // iterate over non-player characters
@@ -8429,10 +8429,10 @@ R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
   $CA84 C = A;
   $CA85 A &= vischar_BYTE1_MASK;
   $CA87 if (A) {
-  $CA89   if (A == 1) {
+  $CA89   if (A == vischar_BYTE1_PERSUE) {
   $CA8D     if (IY[0] == bribed_character) { use_bribe(); return; } // exit via
   $CA96     else { solitary(); return; } } // exit via
-  $CA99   else if (A == 2 || A == 4) { return; }
+  $CA99   else if (A == vischar_BYTE1_BIT1 || A == vischar_BYTE1_BIT2) { return; }
   $CA9F   -
   $CAA0   if ((item_structs[item_FOOD].item & itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;
   $CAAB   food_discovered_counter = A;
