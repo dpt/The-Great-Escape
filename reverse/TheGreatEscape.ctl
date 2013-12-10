@@ -1119,7 +1119,7 @@ c $6A35 setup_room
   $6A6C   B = A;
   $6A6D   do { -
   $6A6E     -
-  $6A6F     memcpy(DE, &stru_EA7C[*HL++], 7);
+  $6A6F     memcpy(DE, &stru_EA7C[*HL++], 7); DE += 7;
   $6A83     *DE++ = 32;
   $6A87     -
   $6A88     -
