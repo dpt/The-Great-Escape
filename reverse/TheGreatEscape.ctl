@@ -6344,7 +6344,7 @@ D $B3A8 This searches visible characters only.
   $B3BC return;
 
   $B3BD found: bribed_character = A;
-  $B3C0 HL[1] = 1; // $8021 etc. // room index? room_1_hut1right
+  $B3C0 HL[1] = vischar_BYTE1_PERSUE; // $8021 etc. // flag
   $B3C3 return;
 
 ; -----------------------------------------------------------------------------
