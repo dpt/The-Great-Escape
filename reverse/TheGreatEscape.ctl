@@ -10458,15 +10458,15 @@ b $F2AD define_key_prompts
 D $F2AD Key choice prompt strings.
 D $F2AD "CHOOSE KEYS"
 B $F2AD #CALL:decode_screenlocstring($F2AD)
-D $F2BB "LEFT"
+D $F2BB "LEFT."
 B $F2BB #CALL:decode_screenlocstring($F2BB)
-D $F2C3 "RIGHT"
+D $F2C3 "RIGHT."
 B $F2C3 #CALL:decode_screenlocstring($F2C3)
-D $F2CC "UP"
+D $F2CC "UP."
 B $F2CC #CALL:decode_screenlocstring($F2CC)
-D $F2D2 "DOWN"
+D $F2D2 "DOWN."
 B $F2D2 #CALL:decode_screenlocstring($F2D2)
-D $F2DA "FIRE"
+D $F2DA "FIRE."
 B $F2DA #CALL:decode_screenlocstring($F2DA)
 
 ; ------------------------------------------------------------------------------
