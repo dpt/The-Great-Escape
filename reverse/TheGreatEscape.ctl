@@ -10714,16 +10714,16 @@ D $F4B7 Runs the menu screen: waiting for user to select an input device, waving
   $F4B7 for (;;) { select_input_device();
   $F4BA   wave_morale_flag();
 D $F4BD Play music.
-  $F4BD   HL = music_channel0_ptr + 1;
-  $F4C1   for (;;) { music_channel0_ptr = HL;
+  $F4BD   HL = music_channel0_index + 1;
+  $F4C1   for (;;) { music_channel0_index = HL;
   $F4C4     A = music_channel0_data[HL];
   $F4C9     if (A != 0xFF) break; // end marker
   $F4CD     HL = 0;
   $F4D0   }
   $F4D2   get_tuning();
   $F4D5   -
-  $F4D6   HLdash = music_channel1_ptr + 1;
-  $F4DA   for (;;) { music_channel1_ptr = HLdash;
+  $F4D6   HLdash = music_channel1_index + 1;
+  $F4DA   for (;;) { music_channel1_index = HLdash;
   $F4DD     A = music_channel1_data[HLdash];
   $F4E2     if (A != 0xFF) break; // end marker
   $F4E6     HLdash = 0;
@@ -10765,6 +10765,7 @@ c $F52C get_tuning
 R $F52C I:A  Index.
 R $F52C O:BC ...
 R $F52C O:DE ...
+R $F52C O:HL ...
   $F52C BC = music_tuning_table[A];
   $F537 C++;
   $F538 B++;
@@ -10773,14 +10774,11 @@ R $F52C O:DE ...
   $F53E DE = BC;
   $F540 return;
 
-w $F541 music_channel0_ptr
-w $F543 music_channel1_ptr
+w $F541 music_channel0_index
+w $F543 music_channel1_index
 b $F545 unknown/unused
 b $F546 music_channel0_data
 b $F7C7 music_channel1_data
-
-; ------------------------------------------------------------------------------
-
 w $FA48 music_tuning_table
 
 ; ------------------------------------------------------------------------------
