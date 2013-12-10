@@ -9041,27 +9041,27 @@ D $DB72 #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16{0,0,64,88}(mask-stove)
 ; ------------------------------------------------------------------------------
 
 c $DB9E mark_nearby_items
-D $DB9E Iterates over item structs. Tests to see if items are within range (-2..23,-1..16) of the map position.
+D $DB9E Iterates over item structs. Tests to see if items are within range (-1..22,0..15) of the map position.
 D $DB9E This is similar to is_item_discoverable_indoors in that it iterates over item_structs.
   $DB9E A = room_index;
   $DBA1 if (A == room_NONE) A = 0;
   $DBA6 C = A; // room ref
   $DBA7 DE = map_position;
-  $DBAB B = 16; // items__LIMIT
+  $DBAB B = item__LIMIT;
   $DBAD HL = &item_structs[0].room;
   $DBB0 do { -
-  $DBB1   if (HL[0] & itemstruct_ROOM_MASK == C) { // compare room ref
+  $DBB1   if (HL[0] & itemstruct_ROOM_MASK == C) { // compare room
   $DBB7     if (HL[4] > E - 2 && HL[4] < E + 23) { // itemstruct.unk2
   $DBC8       if (HL[5] > D - 1 && HL[5] < D + 16) { // itemstruct.unk3
   $DBD5         -
   $DBD6         *HL |= itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY; // sampled HL=$772B  &itemstruct_14.room
-  $DBDA         goto continue; } } }
+  $DBDA         goto next; } } }
 
 D $DBDC Reset.
   $DBDC   -
   $DBDD   *HL &= ~(itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY);
 ;
-  $DBE1   continue: HL += 7; // stride
+  $DBE1   next: HL += 7; // stride
   $DBE8 } while (--B);
   $DBEA return;
 
