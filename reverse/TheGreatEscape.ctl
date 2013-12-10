@@ -10242,7 +10242,7 @@ R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
 ; ------------------------------------------------------------------------------
 
 b $F014 screenlocstring_confirm_y_or_n
-D $F014 "CONFIRM Y OR N"
+D $F014 "CONFIRM. Y OR N"
   $F014 #CALL:decode_screenlocstring($F014)
 
 ; ------------------------------------------------------------------------------
