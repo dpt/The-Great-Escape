@@ -666,9 +666,9 @@
 
 ; $8100 mask buffer thing
 
-; $81A0 mystery (suspected_mask_stuff)
-
 ; $8131 <- searchlight_sub
+
+; $81A0 mystery (mask_stuff)
 
 ; w $81A2 (<- masked_sprite_plotter_*)  likely screen buffer pointer
 
@@ -1110,7 +1110,7 @@ c $6A35 setup_room
   $6A57   HL++; }
   $6A58 else {
   $6A5A   memcpy(DE, HL, A * 4 + 1); HL += A * 4 + 1; }
-  $6A62 DE = &suspected_indoor_mask_data;
+  $6A62 DE = &indoor_mask_data;
   $6A65 A = *HL++; // sampled HL=$6E22,$6EF8,$6F38 (unique per room, but never when outside)
   $6A67 *DE = A;
   $6A68 -
@@ -2886,8 +2886,8 @@ D $81D9 Final byte?
 
 ; ------------------------------------------------------------------------------
 
-b $81DA suspected_indoor_mask_data
-D $81DA (<- setup_room, suspected_mask_stuff)
+b $81DA indoor_mask_data
+D $81DA (<- setup_room, mask_stuff)
 
 ; ------------------------------------------------------------------------------
 
@@ -6884,7 +6884,7 @@ D $B866 searchlight related.
   $B86A if ((A & (1<<6)) == 0) {
   $B86E   setup_sprite_plotting();
   $B871   if (!Z) goto searchlight;
-  $B873   suspected_mask_stuff();
+  $B873   mask_stuff();
   $B876   if (searchlight_state != searchlight_STATE_OFF) searchlight_sub();
   $B87E   A = IY[0x1E];
   $B881   if (A != 3) {
@@ -6894,7 +6894,7 @@ D $B866 searchlight related.
   $B88D   goto searchlight; }
   $B88F else { sub_DC41();
   $B892   if (!Z) goto searchlight;
-  $B894   suspected_mask_stuff();
+  $B894   mask_stuff();
   $B897   masked_sprite_plotter_16_wide_case_1_searchlight();
   $B89A   goto searchlight; }
 
@@ -6968,18 +6968,18 @@ D $B89C ...
 
 ; -----------------------------------------------------------------------------
 
-c $B916 suspected_mask_stuff
+c $B916 mask_stuff
 D $B916 Sets attr of something, checks indoor room index, ...
 D $B916 unpacks mask stuff
   $B916 memset($8100, 0xFF, 0xA0);
   $B923 if (room_index) {
-  $B929   HL = &suspected_indoor_mask_data;
+  $B929   HL = &indoor_mask_data;
   $B92C   A = *HL;
   $B92D   if (A == 0) return;
   $B92F   B = A; // iterations
   $B930   HL += 3; }
-  $B935 else { B = NELEMS(suspected_outdoor_mask_data); // 59 iterations
-  $B937   HL = $EC03; // suspected_outdoor_mask_data + 2 bytes }
+  $B935 else { B = NELEMS(outdoor_mask_data); // 59 iterations
+  $B937   HL = $EC03; // outdoor_mask_data + 2 bytes }
 R $B93A I:B Iterations (outer loop);
   $B93A do { PUSH BC
   $B93B   PUSH HL
@@ -7041,7 +7041,7 @@ R $B93A I:B Iterations (outer loop);
   $BA18   ($81A0) = HL; // $81A0 is a mystery location
   $BA1B   -
 D $BA1C If I break this bit then the character gets drawn on top of *indoors* objects.
-  $BA1C   DE = probably_mask_data_pointers[A];
+  $BA1C   DE = outdoors_mask_data_pointers[A];
   $BA27   HL = word_B839;
   $BA2A   ($BA70) = L; // self modify
   $BA2E   ($BA72) = H; // self modify
@@ -7055,7 +7055,7 @@ D $BA1C If I break this bit then the character gets drawn on top of *indoors* ob
   $BA4A   HL += DE;
   $BA4B   POP DE
   $BA4C   HL++; // iterations
-  $BA4D   do { A = *DE; // DE -> $E560 upwards (in probably_mask_data)
+  $BA4D   do { A = *DE; // DE -> $E560 upwards (in outdoors_mask_data)
   $BA4E     if (!even_parity(A)) { // uneven number of bits set
   $BA52       A &= 0x7F;
   $BA54       DE++;
@@ -10013,38 +10013,38 @@ D $E555 Divides AC by 8.
 
 ; ------------------------------------------------------------------------------
 
-b $E55F probably_mask_data
+b $E55F outdoors_mask_data
 D $E55F { byte count+flags; ... }
-  $E55F probably_mask_0
-  $E5FF probably_mask_1
-  $E61E probably_mask_2
-  $E6CA probably_mask_3
-  $E74B probably_mask_4
-  $E758 probably_mask_5
-  $E77F probably_mask_6
-  $E796 probably_mask_7
-  $E7AF probably_mask_8
-  $E85C probably_mask_9
-  $E8A3 probably_mask_10
-  $E8F0 probably_mask_11
-  $E92F probably_mask_12
-  $E940 probably_mask_13
-  $E972 probably_mask_14
-  $E99A probably_mask_15
-  $E99F probably_mask_16
-  $E9B9 probably_mask_17
-  $E9C6 probably_mask_18
-  $E9CB probably_mask_19
-  $E9E6 probably_mask_20
-  $E9F5 probably_mask_21
-  $EA0E probably_mask_22
-  $EA2B probably_mask_23
-  $EA35 probably_mask_24
-  $EA43 probably_mask_25
-  $EA4A probably_mask_26
-  $EA53 probably_mask_27
-  $EA5D probably_mask_28
-  $EA67 probably_mask_29
+  $E55F outdoors_mask_0
+  $E5FF outdoors_mask_1
+  $E61E outdoors_mask_2
+  $E6CA outdoors_mask_3
+  $E74B outdoors_mask_4
+  $E758 outdoors_mask_5
+  $E77F outdoors_mask_6
+  $E796 outdoors_mask_7
+  $E7AF outdoors_mask_8
+  $E85C outdoors_mask_9
+  $E8A3 outdoors_mask_10
+  $E8F0 outdoors_mask_11
+  $E92F outdoors_mask_12
+  $E940 outdoors_mask_13
+  $E972 outdoors_mask_14
+  $E99A outdoors_mask_15
+  $E99F outdoors_mask_16
+  $E9B9 outdoors_mask_17
+  $E9C6 outdoors_mask_18
+  $E9CB outdoors_mask_19
+  $E9E6 outdoors_mask_20
+  $E9F5 outdoors_mask_21
+  $EA0E outdoors_mask_22
+  $EA2B outdoors_mask_23
+  $EA35 outdoors_mask_24
+  $EA43 outdoors_mask_25
+  $EA4A outdoors_mask_26
+  $EA53 outdoors_mask_27
+  $EA5D outdoors_mask_28
+  $EA67 outdoors_mask_29
 
 ; ------------------------------------------------------------------------------
 
@@ -10054,14 +10054,14 @@ D $EA7C 47 7-byte structs.
 
 ; ------------------------------------------------------------------------------
 
-w $EBC5 probably_mask_data_pointers
+w $EBC5 outdoors_mask_data_pointers
 D $EBC5 30 pointers to byte arrays -- probably masks.
 
 ; ------------------------------------------------------------------------------
 
-b $EC01 suspected_outdoor_mask_data
+b $EC01 outdoor_mask_data
 D $EC01 58 8-byte structs.
-D $EC01 Used by suspected_mask_stuff. Used in outdoor mode only.
+D $EC01 Used by mask_stuff. Used in outdoor mode only.
 D $EC01 struct { ?, lo, hi, lo, hi, ?, ?, ? };
 
 ; ------------------------------------------------------------------------------
