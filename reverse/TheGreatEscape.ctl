@@ -5241,28 +5241,36 @@ c $A9A0 call_plot_tile_inc_de
 
 c $A9AD plot_tile
 D $A9AD Plots a tile to the buffer.
-R $A9AD I:HL Pointer to supertile index (used to select the correct tile group).
-R $A9AD I:A  Tile index
+R $A9AD I:A      Tile index
+R $A9AD I:DEdash Output buffer start address.
+R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile group).
   $A9AD -
-  $A9AE tile_index = A;
-  $A9AF A = *HLdash; // get supertile index
-  $A9B0 if (A < 45) { BCdash = exterior_tiles_1; }
-  $A9BA else if (A < 139 || A >= 204) { BCdash = exterior_tiles_2; }
-  $A9C2 else { BCdash = exterior_tiles_3; }
-  $A9C5 PUSH HLdash
-  $A9C6 A = tile_index;
+  $A9AE -
+  $A9AF Adash = *HLdash; // get supertile index
+  $A9B0 BCdash = &exterior_tiles_1[0];
+  $A9B3 if (Adash < 45) goto chosen;
+  $A9B7 BCdash = &exterior_tiles_2[0];
+  $A9BA if (Adash < 139 || Adash >= 204) goto chosen;
+  $A9C2 BCdash = &exterior_tiles_3[0];
+;
+  $A9C5 chosen: PUSH HLdash;
+  $A9C6 -
   $A9C7 HLdash = A * 8 + BCdash;
-  $A9CE PUSH DEdash
-  $A9CF EX DEdash,HLdash
-  $A9D0 -
+  $A9CE PUSH DEdash;
+  $A9CF EX DEdash,HLdash;
+  $A9D0 BCdash = 24;
   $A9D3 A = 8; // 8 iterations
-  $A9D5 do {
-  $A9D6   *HLdash = *DEdash++;
-  $A9D8   HLdash += 24; // stride
-  $A9DB } while (--A);
-  $A9DF POP DEdash
+  $A9D5 do { -
+  $A9D6   Adash = *DEdash;
+  $A9D7   *HLdash = Adash;
+  $A9D8   HLdash += BCdash; // stride
+  $A9D9   E++;
+  $A9DA   -
+  $A9DB   A--;
+  $A9DC } while (A);
+  $A9DF POP DEdash;
   $A9E0 DEdash++;
-  $A9E1 POP HLdash
+  $A9E1 POP HLdash;
   $A9E2 -
   $A9E3 return;
 
