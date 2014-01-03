@@ -465,6 +465,7 @@
 ; vischar_BYTE1_PICKING_LOCK = 1<<0, // player only
 ; vischar_BYTE1_CUTTING_WIRE = 1<<1, // player only
 ; vischar_BYTE1_PERSUE       = 1<<0, // AI only
+; vischar_BYTE1_BIT1         = 1<<1, // AI only
 ; vischar_BYTE1_BIT2         = 1<<2, // set when bribe taken ('gone mad' flag)
 ; vischar_BYTE1_BIT6         = 1<<6, // seems to affect coordinate scaling
 ; vischar_BYTE1_BIT7         = 1<<7, // set in called_from_main_loop_9
@@ -8655,17 +8656,15 @@ D $CC3B Don't follow the player if he's dressed as a guard
   $CC8B     CP *HL  // TRICKY!
   $CC8C     BIT 0,C // if ((C & (1<<0)) == 0) carry = !carry;
   $CC91     RET C } }
-;
-; fallthrough
 
-  $CC92 else { if (!red_flag) {
-  $CC98      A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
-  $CC9B      if (A < 32) // vertical offset
-  $CC9E        IY[1] = 2; // cutting wire flag? or could this have different meaning for AI characters only?
-  $CCA2      return; }
-  $CCA3    bell = bell_RING_PERPETUAL;
-  $CCA7    guards_persue_prisoners();
-  $CCAA    return; }
+  $CC92 if (!red_flag) {
+  $CC98   A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
+  $CC9B   if (A < 32) // vertical offset
+  $CC9E     IY[1] = vischar_BYTE1_BIT1;
+  $CCA2   return; }
+  $CCA3 bell = bell_RING_PERPETUAL;
+  $CCA7 guards_persue_prisoners();
+  $CCAA return;
 
 ; ------------------------------------------------------------------------------
 
