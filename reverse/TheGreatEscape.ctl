@@ -10269,7 +10269,7 @@ c $F068 jump_to_main
 
 ; ------------------------------------------------------------------------------
 
-b $F06B key_defs
+b $F06B keydefs
 D $F06B,10,2 User-defined keys. Pairs of (port, key mask).
 
 ; ------------------------------------------------------------------------------
@@ -10549,8 +10549,8 @@ D $F358 Draw key choice prompt strings.
   $F36B     } while (--B);
   $F36D     POP BC
   $F36E   } while (--B);
-D $F370 Wipe key_defs.
-  $F370   HL = &key_defs[0];
+D $F370 Wipe keydefs.
+  $F370   HL = &keydefs[0];
   $F373   B = 10; // iterations
   $F375   A = 0;
   $F376   do { *HL++ = A;
@@ -10809,7 +10809,7 @@ D $FDF3 Unreferenced bytes.
 c $FE00 inputroutine_keyboard
 D $FE00 Input routine for keyboard.
 R $FE00 O:A Input value (as per enum input).
-  $FE00 HL = key_defs; // pairs of bytes (port high byte, key mask)
+  $FE00 HL = keydefs; // pairs of bytes (port high byte, key mask)
   $FE03 C = 0xFE; // port 0xXXFE
 D $FE05 Left/right.
   $FE05 B = *HL++;
