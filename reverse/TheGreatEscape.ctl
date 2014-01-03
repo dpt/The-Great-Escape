@@ -1006,11 +1006,11 @@ c $6939 setup_movable_items
 
   $696A setup_crate: HL = &movable_items[movable_item_CRATE];
   $696D A = character_28_crate;
-  $696F goto setup_movable_items_common;
+  $696F goto setup_movable_item;
 
   $6971 setup_stove2: HL = &movable_items[movable_item_STOVE2];
   $6974 A = character_27_stove2;
-  $6976 goto setup_movable_items_common;
+  $6976 goto setup_movable_item;
 
   $6978 setup_stove1: HL = &movable_items[movable_item_STOVE1];
   $697B A = character_26_stove1;
@@ -1018,7 +1018,7 @@ c $6939 setup_movable_items
 ; fallthrough
 
 ; movable item takes the first non-player vischar
-  $697D setup_movable_items_common: $8020 = A; // character index
+  $697D setup_movable_item: $8020 = A; // character index
   $6980 memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F
   $6988 memcpy($8021, movable_item_reset_data, 14);
   $6993 $803C = room_index;
