@@ -2837,9 +2837,11 @@ w $81B0 foreground_mask_pointer
 
 ; ------------------------------------------------------------------------------
 
+; these three are a tinypos_t
 b $81B2 byte_81B2
 b $81B3 byte_81B3
 b $81B4 byte_81B4
+
 b $81B5 map_position_related_1
 b $81B6 map_position_related_2
 
