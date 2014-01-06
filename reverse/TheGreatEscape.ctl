@@ -6182,9 +6182,10 @@ c $B1F5 door_handling
 ; ------------------------------------------------------------------------------
 
 c $B252 door_in_range
-D $B252 (saved_Y, saved_X) within (-3,+3) of HL[1..] scaled << 2
+D $B252 (saved_Y,saved_X) within (-3,+3) of HL[1..] scaled << 2
 R $B252 I:HL Pointer to (byte before) coord byte pair.
-R $B252 O:F  C/NC if match/nomatch.
+R $B252 O:HL Corrupted.
+R $B252 O:F  C/NC if nomatch/match.
   $B252 A = HL[1];
   $B254 -
   $B255 BC_becomes_A_times_4();
