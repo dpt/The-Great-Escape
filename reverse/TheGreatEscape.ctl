@@ -5636,8 +5636,8 @@ D $ACE4 Vertical.
   $ACF9 } while (--B);
   $ACFB return;
 
-C $ACFC zoombox_draw_tile
-R $ACFC I:AF Index of tile to draw.
+c $ACFC zoombox_draw_tile
+R $ACFC I:A Index of tile to draw.
 R $ACFC I:BC (preserved)
 R $ACFC I:HL Destination address.
   $ACFC PUSH BC
