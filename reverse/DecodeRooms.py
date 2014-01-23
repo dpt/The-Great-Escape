@@ -126,28 +126,28 @@ for room in roomdefs:
     i += 1
 
     nboundaries = roomdef[i]
-    output.append("  $%X,1 %d // count of boundaries" % (base + i, roomdef[i]))
+    output.append("  $%X,1 %d /* count of boundaries */" % (base + i, roomdef[i]))
     i += 1
     for n in range(nboundaries):
-        output.append("  $%X,4 { %d, %d, %d, %d }, // boundary" % (base + i, roomdef[i], roomdef[i + 1], roomdef[i + 2], roomdef[i + 3]))
+        output.append("  $%X,4 { %d, %d, %d, %d }, /* boundary */" % (base + i, roomdef[i], roomdef[i + 1], roomdef[i + 2], roomdef[i + 3]))
         i += 4
 
     ntbd = roomdef[i]
-    output.append("  $%X,1 %d // count of TBD" % (base + i, roomdef[i]))
+    output.append("  $%X,1 %d /* count of TBD */" % (base + i, roomdef[i]))
     i += 1
-    output.append("  $%X,%d %s // data TBD" % (base + i, ntbd,
+    output.append("  $%X,%d %s /* data TBD */" % (base + i, ntbd,
         str(roomdef[i:i+ntbd])))
     i += ntbd
 
     nobjs = roomdef[i]
-    output.append("  $%X,1 %d // count of objects" % (base + i, roomdef[i]))
+    output.append("  $%X,1 %d /* count of objects */" % (base + i, roomdef[i]))
     i += 1
     for n in range(nobjs):
         ob, x, y = roomdef[i:i+3]
         padding = " " * (42 - len(obstr[ob]))
         addr = base + i
         if addr in notes:
-            comment = " // %s" % notes[addr]
+            comment = " /* %s */" % notes[addr]
         else:
             comment = ""
         output.append("  $%X,3 { %s,%s%2d, %2d },%s" % (addr, obstr[ob], padding, x, y, comment))
