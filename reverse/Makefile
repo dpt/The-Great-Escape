@@ -13,7 +13,8 @@ usage:
 
 .PHONY: install
 install:
-	sudo cp TheGreatEscape.py /Library/Python/2.7/site-packages/skoolkit/
+	mkdir -p ~/.skoolkit
+	cp TheGreatEscape.py ~/.skoolkit
 
 TGE=TheGreatEscape
 .PHONY: tge

@@ -5,8 +5,8 @@
 
 import string
 
-from .skoolhtml import HtmlWriter, Udg
-from .skoolasm import AsmWriter
+from skoolkit.skoolhtml import HtmlWriter, Udg
+from skoolkit.skoolasm import AsmWriter
 
 class TheGreatEscapeHtmlWriter(HtmlWriter):
     def init(self):
