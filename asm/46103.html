@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B417</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -57,7 +58,7 @@
 <tr>
 <td class="address"><a name="46113"></a>B421</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto continue;</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="46114"></a>B422</td>
@@ -71,7 +72,7 @@
 <tr>
 <td class="address"><a name="46117"></a>B425</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; *HL) goto continue;</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) goto next;</td>
 </tr>
 <tr>
 <td class="address"><a name="46118"></a>B426</td>
@@ -123,7 +124,7 @@
 <tr>
 <td class="label"><a name="46131"></a>B433</td>
 <td class="instruction">POP HL</td>
-<td class="comment">continue: ...</td>
+<td class="comment">next: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="46132"></a>B434</td>
@@ -187,7 +188,7 @@
 <tr>
 <td class="address"><a name="46149"></a>B445</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &lt; *HL) goto continue2;</td>
+<td class="comment" rowspan="2">if (A &lt; *HL) goto next2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46150"></a>B446</td>
@@ -201,7 +202,7 @@
 <tr>
 <td class="address"><a name="46153"></a>B449</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="2">if (A &gt;= *HL) goto continue2;</td>
+<td class="comment" rowspan="2">if (A &gt;= *HL) goto next2;</td>
 </tr>
 <tr>
 <td class="address"><a name="46154"></a>B44A</td>
@@ -253,7 +254,7 @@
 <tr>
 <td class="label"><a name="46167"></a>B457</td>
 <td class="instruction">POP HL</td>
-<td class="comment">continue2: ...</td>
+<td class="comment">next2: ...</td>
 </tr>
 <tr>
 <td class="address"><a name="46168"></a>B458</td>
@@ -343,7 +344,7 @@
 <tr>
 <td class="address"><a name="46200"></a>B478</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment" rowspan="2">$8001 = 2;</td>
+<td class="comment" rowspan="2">$8001 = vischar_BYTE1_CUTTING_WIRE;</td>
 </tr>
 <tr>
 <td class="address"><a name="46203"></a>B47B</td>
@@ -398,9 +399,9 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

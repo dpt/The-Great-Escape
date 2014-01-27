@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at 6939</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -127,7 +128,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="26991"></a>696F</td>
 <td class="instruction">JR $697D</td>
-<td class="comment">goto setup_movable_items_common;</td>
+<td class="comment">goto setup_movable_item;</td>
 </tr>
 <tr>
 <td class="label"><a name="26993"></a>6971</td>
@@ -142,7 +143,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="address"><a name="26998"></a>6976</td>
 <td class="instruction">JR $697D</td>
-<td class="comment">goto setup_movable_items_common;</td>
+<td class="comment">goto setup_movable_item;</td>
 </tr>
 <tr>
 <td class="label"><a name="27000"></a>6978</td>
@@ -157,7 +158,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <tr>
 <td class="label"><a name="27005"></a>697D</td>
 <td class="instruction">LD ($8020),A</td>
-<td class="comment">setup_movable_items_common: $8020 = A; // character index</td>
+<td class="comment">setup_movable_item: $8020 = A; // character index</td>
 </tr>
 <tr>
 <td class="address"><a name="27008"></a>6980</td>
@@ -241,9 +242,9 @@ Fourteen bytes of reset data.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

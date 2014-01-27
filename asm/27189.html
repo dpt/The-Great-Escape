@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at 6A35</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -170,7 +171,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="label"><a name="27234"></a>6A62</td>
 <td class="instruction">LD DE,$81DA</td>
-<td class="comment">DE = &amp;suspected_indoor_mask_data;</td>
+<td class="comment">DE = &amp;indoor_mask_data;</td>
 </tr>
 <tr>
 <td class="address"><a name="27237"></a>6A65</td>
@@ -219,7 +220,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="li
 <tr>
 <td class="address"><a name="27247"></a>6A6F</td>
 <td class="instruction">LD L,(HL)</td>
-<td class="comment" rowspan="13">memcpy(DE, &amp;stru_EA7C[*HL++], 7);</td>
+<td class="comment" rowspan="13">memcpy(DE, &amp;stru_EA7C[*HL++], 7); DE += 7;</td>
 </tr>
 <tr>
 <td class="address"><a name="27248"></a>6A70</td>
@@ -471,9 +472,9 @@ Plot all objects.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at DB9E</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -27,10 +28,10 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Iterates over item structs. Tests to see if items are within range (-2..23,-1..16) of the map position.
+Iterates over item structs. Tests to see if items are within range (-1..22,0..15) of the map position.
 </div>
 <div class="paragraph">
-This is similar to is_item_discoverable_indoors in that it iterates over item_structs.
+This is similar to is_item_discoverable_interior in that it iterates over item_structs.
 </div>
 </div>
 </td>
@@ -66,7 +67,7 @@ This is similar to is_item_discoverable_indoors in that it iterates over item_st
 <tr>
 <td class="address"><a name="56235"></a>DBAB</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment">B = 16; // items__LIMIT</td>
+<td class="comment">B = item__LIMIT;</td>
 </tr>
 <tr>
 <td class="address"><a name="56237"></a>DBAD</td>
@@ -81,7 +82,7 @@ This is similar to is_item_discoverable_indoors in that it iterates over item_st
 <tr>
 <td class="address"><a name="56241"></a>DBB1</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="30">if (HL[0] &amp; itemstruct_ROOM_MASK == C) { // compare room ref } {    if (HL[4] &gt; E - 2 &amp;&amp; HL[4] &lt; E + 23) { // itemstruct.unk2 } {      if (HL[5] &gt; D - 1 &amp;&amp; HL[5] &lt; D + 16) { // itemstruct.unk3 } - {        *HL |= itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY; // sampled HL=$772B &amp;itemstruct_14.room} goto continue; } }</td>
+<td class="comment" rowspan="30">if (HL[0] &amp; itemstruct_ROOM_MASK == C) { // compare room } {    if (HL[4] &gt; E - 2 &amp;&amp; HL[4] &lt; E + 23) { // itemstruct.unk2 } {      if (HL[5] &gt; D - 1 &amp;&amp; HL[5] &lt; D + 16) { // itemstruct.unk3 } - {        *HL |= itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY; // sampled HL=$772B &amp;itemstruct_14.room} goto next; } }</td>
 </tr>
 <tr>
 <td class="address"><a name="56242"></a>DBB2</td>
@@ -226,7 +227,7 @@ Reset.
 <tr>
 <td class="label"><a name="56289"></a>DBE1</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment" rowspan="5">continue: HL += 7; // stride</td>
+<td class="comment" rowspan="5">next: HL += 7; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="56291"></a>DBE3</td>
@@ -263,9 +264,9 @@ Reset.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

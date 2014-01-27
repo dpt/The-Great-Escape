@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Memory map</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="map">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Memory map</td>
 </tr>
 </table>
@@ -121,7 +122,7 @@
 <td class="mapPage">107</td>
 <td class="mapByte">66</td>
 <td class="routine"><a class="link" name="27458" href="../asm/27458.html">6B42</a></td>
-<td class="routineDesc">plot_indoor_tiles</td>
+<td class="routineDesc">plot_interior_tiles</td>
 </tr>
 <tr>
 <td class="mapPage">107</td>
@@ -169,7 +170,7 @@
 <td class="mapPage">119</td>
 <td class="mapByte">56</td>
 <td class="data"><a class="link" name="30520" href="../asm/30520.html">7738</a></td>
-<td class="dataDesc">more_object_tile_refs</td>
+<td class="dataDesc">table_7738</td>
 </tr>
 <tr>
 <td class="mapPage">120</td>
@@ -469,7 +470,7 @@
 <td class="mapPage">129</td>
 <td class="mapByte">218</td>
 <td class="data"><a class="link" name="33242" href="../asm/33242.html">81DA</a></td>
-<td class="dataDesc">suspected_indoor_mask_data</td>
+<td class="dataDesc">indoor_mask_data</td>
 </tr>
 <tr>
 <td class="mapPage">130</td>
@@ -1039,13 +1040,19 @@
 <td class="mapPage">168</td>
 <td class="mapByte">10</td>
 <td class="routine"><a class="link" name="43018" href="../asm/43018.html">A80A</a></td>
-<td class="routineDesc">sub_A80A</td>
+<td class="routineDesc">supertile_plot_1</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">25</td>
 <td class="routine"><a class="link" name="43033" href="../asm/43033.html">A819</a></td>
-<td class="routineDesc">sub_A819</td>
+<td class="routineDesc">supertile_plot_2</td>
+</tr>
+<tr>
+<td class="mapPage">168</td>
+<td class="mapByte">38</td>
+<td class="routine"><a class="link" name="43046" href="../asm/43046.html">A826</a></td>
+<td class="routineDesc">supertile_plot_common</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
@@ -1057,13 +1064,19 @@
 <td class="mapPage">168</td>
 <td class="mapByte">207</td>
 <td class="routine"><a class="link" name="43215" href="../asm/43215.html">A8CF</a></td>
-<td class="routineDesc">sub_A8CF</td>
+<td class="routineDesc">supertile_plot_3</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">231</td>
 <td class="routine"><a class="link" name="43239" href="../asm/43239.html">A8E7</a></td>
-<td class="routineDesc">sub_A8E7</td>
+<td class="routineDesc">supertile_plot_4</td>
+</tr>
+<tr>
+<td class="mapPage">168</td>
+<td class="mapByte">244</td>
+<td class="routine"><a class="link" name="43252" href="../asm/43252.html">A8F4</a></td>
+<td class="routineDesc">supertile_plot_common_A8F4</td>
 </tr>
 <tr>
 <td class="mapPage">169</td>
@@ -1144,10 +1157,28 @@
 <td class="routineDesc">zoombox</td>
 </tr>
 <tr>
+<td class="mapPage">171</td>
+<td class="mapByte">249</td>
+<td class="routine"><a class="link" name="44025" href="../asm/44025.html">ABF9</a></td>
+<td class="routineDesc">zoombox_1</td>
+</tr>
+<tr>
+<td class="mapPage">172</td>
+<td class="mapByte">111</td>
+<td class="routine"><a class="link" name="44143" href="../asm/44143.html">AC6F</a></td>
+<td class="routineDesc">zoombox_2</td>
+</tr>
+<tr>
+<td class="mapPage">172</td>
+<td class="mapByte">252</td>
+<td class="routine"><a class="link" name="44284" href="../asm/44284.html">ACFC</a></td>
+<td class="routineDesc">zoombox_draw_tile</td>
+</tr>
+<tr>
 <td class="mapPage">173</td>
 <td class="mapByte">41</td>
 <td class="data"><a class="link" name="44329" href="../asm/44329.html">AD29</a></td>
-<td class="dataDesc">word_AD29_used_by_nighttime</td>
+<td class="dataDesc">spotlight_movement_data_maybe</td>
 </tr>
 <tr>
 <td class="mapPage">173</td>
@@ -1189,7 +1220,7 @@
 <td class="mapPage">175</td>
 <td class="mapByte">94</td>
 <td class="data"><a class="link" name="44894" href="../asm/44894.html">AF5E</a></td>
-<td class="dataDesc">zoombox tiles</td>
+<td class="dataDesc">zoombox_tiles</td>
 </tr>
 <tr>
 <td class="mapPage">175</td>
@@ -1255,7 +1286,7 @@
 <td class="mapPage">178</td>
 <td class="mapByte">159</td>
 <td class="routine"><a class="link" name="45727" href="../asm/45727.html">B29F</a></td>
-<td class="routineDesc">indoor_bounds_check</td>
+<td class="routineDesc">interior_bounds_check</td>
 </tr>
 <tr>
 <td class="mapPage">178</td>
@@ -1267,7 +1298,7 @@
 <td class="mapPage">179</td>
 <td class="mapByte">45</td>
 <td class="routine"><a class="link" name="45869" href="../asm/45869.html">B32D</a></td>
-<td class="routineDesc">door_handling_indoors</td>
+<td class="routineDesc">door_handling_interior</td>
 </tr>
 <tr>
 <td class="mapPage">179</td>
@@ -1423,7 +1454,7 @@
 <td class="mapPage">185</td>
 <td class="mapByte">22</td>
 <td class="routine"><a class="link" name="47382" href="../asm/47382.html">B916</a></td>
-<td class="routineDesc">suspected_mask_stuff</td>
+<td class="routineDesc">mask_stuff</td>
 </tr>
 <tr>
 <td class="mapPage">186</td>
@@ -1567,7 +1598,7 @@
 <td class="mapPage">203</td>
 <td class="mapByte">117</td>
 <td class="routine"><a class="link" name="52085" href="../asm/52085.html">CB75</a></td>
-<td class="routineDesc">A_widened_to_BC</td>
+<td class="routineDesc">BC_becomes_A</td>
 </tr>
 <tr>
 <td class="mapPage">203</td>
@@ -1621,7 +1652,7 @@
 <td class="mapPage">204</td>
 <td class="mapByte">251</td>
 <td class="routine"><a class="link" name="52475" href="../asm/52475.html">CCFB</a></td>
-<td class="routineDesc">is_item_discoverable_indoors</td>
+<td class="routineDesc">is_item_discoverable_interior</td>
 </tr>
 <tr>
 <td class="mapPage">205</td>
@@ -1801,7 +1832,7 @@
 <td class="mapPage">229</td>
 <td class="mapByte">95</td>
 <td class="data"><a class="link" name="58719" href="../asm/58719.html">E55F</a></td>
-<td class="dataDesc">probably_mask_data</td>
+<td class="dataDesc">outdoors_mask_data</td>
 </tr>
 <tr>
 <td class="mapPage">234</td>
@@ -1813,13 +1844,13 @@
 <td class="mapPage">235</td>
 <td class="mapByte">197</td>
 <td class="data"><a class="link" name="60357" href="../asm/60357.html">EBC5</a></td>
-<td class="dataDesc">probably_mask_data_pointers</td>
+<td class="dataDesc">exterior_mask_data_pointers</td>
 </tr>
 <tr>
 <td class="mapPage">236</td>
 <td class="mapByte">1</td>
 <td class="data"><a class="link" name="60417" href="../asm/60417.html">EC01</a></td>
-<td class="dataDesc">suspected_outdoor_mask_data</td>
+<td class="dataDesc">exterior_mask_data</td>
 </tr>
 <tr>
 <td class="mapPage">237</td>
@@ -1853,9 +1884,9 @@
 </tr>
 <tr>
 <td class="mapPage">239</td>
-<td class="mapByte">251</td>
-<td class="unused"><a class="link" name="61435" href="../asm/61435.html">EFFB</a></td>
-<td class="unusedDesc">Unused (1 byte)</td>
+<td class="mapByte">249</td>
+<td class="data"><a class="link" name="61433" href="../asm/61433.html">EFF9</a></td>
+<td class="dataDesc">word_EFF9 (&lt;- action_papers)</td>
 </tr>
 <tr>
 <td class="mapPage">239</td>
@@ -1871,8 +1902,8 @@
 </tr>
 <tr>
 <td class="mapPage">240</td>
-<td class="mapByte">37</td>
-<td class="data"><a class="link" name="61477" href="../asm/61477.html">F025</a></td>
+<td class="mapByte">38</td>
+<td class="data"><a class="link" name="61478" href="../asm/61478.html">F026</a></td>
 <td class="dataDesc">more_messages</td>
 </tr>
 <tr>
@@ -1891,7 +1922,7 @@
 <td class="mapPage">240</td>
 <td class="mapByte">107</td>
 <td class="data"><a class="link" name="61547" href="../asm/61547.html">F06B</a></td>
-<td class="dataDesc">key_defs</td>
+<td class="dataDesc">keydefs</td>
 </tr>
 <tr>
 <td class="mapPage">240</td>
@@ -2035,13 +2066,13 @@
 <td class="mapPage">245</td>
 <td class="mapByte">65</td>
 <td class="data"><a class="link" name="62785" href="../asm/62785.html">F541</a></td>
-<td class="dataDesc">music_channel0_ptr</td>
+<td class="dataDesc">music_channel0_index</td>
 </tr>
 <tr>
 <td class="mapPage">245</td>
 <td class="mapByte">67</td>
 <td class="data"><a class="link" name="62787" href="../asm/62787.html">F543</a></td>
-<td class="dataDesc">music_channel1_ptr</td>
+<td class="dataDesc">music_channel1_index</td>
 </tr>
 <tr>
 <td class="mapPage">245</td>
@@ -2123,9 +2154,9 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

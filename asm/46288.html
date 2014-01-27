@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B4D0</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -30,6 +31,12 @@
 Used by the routines at <a class="link" href="46229.html">B495</a> and <a class="link" href="46264.html">B4B8</a>.
 </div>
 </div>
+<table class="output">
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Likely a pointer to ?</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
@@ -62,7 +69,7 @@ Used by the routines at <a class="link" href="46229.html">B495</a> and <a class=
 <tr>
 <td class="label"><a name="46302"></a>B4DE</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="17">do { A = *HL &amp; ~gates_and_doors_LOCKED; } EXX get_door_position(); PUSH HL door_in_range(); POP HL if (!C) goto return_zero; // in range {  HL += 4; } door_in_range(); if (!C) goto return_zero; // in range EXX HL++; while (--B);</td>
+<td class="comment" rowspan="17">do { A = *HL &amp; ~gates_and_doors_LOCKED; } EXX get_door_position(); PUSH HL door_in_range(); POP HL if (!C) goto not_in_range; {  HL += 4; } door_in_range(); if (!C) goto not_in_range; EXX HL++; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46303"></a>B4DF</td>
@@ -136,12 +143,12 @@ Used by the routines at <a class="link" href="46229.html">B495</a> and <a class=
 <tr>
 <td class="label"><a name="46330"></a>B4FA</td>
 <td class="instruction">EXX</td>
-<td class="comment">return_zero: EXX</td>
+<td class="comment">not_in_range: EXX</td>
 </tr>
 <tr>
 <td class="address"><a name="46331"></a>B4FB</td>
 <td class="instruction">XOR A</td>
-<td class="comment">A = 0; // ok</td>
+<td class="comment">A = 0;</td>
 </tr>
 <tr>
 <td class="address"><a name="46332"></a>B4FC</td>
@@ -161,7 +168,7 @@ Used by the routines at <a class="link" href="46229.html">B495</a> and <a class=
 <tr>
 <td class="label"><a name="46338"></a>B502</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="14">do { C = *HL &amp; ~gates_and_doors_LOCKED; } DE = &amp;door_related; for (;;) { A = *DE; {    if (A != 0xFF) { } {      if ((A &amp; 0x7F) == C) goto found; // 0x7F is likely ~gates_and_doors_LOCKED but unsure } {      DE++; } } } HL++; while (--B);</td>
+<td class="comment" rowspan="14">do { C = *HL &amp; ~gates_and_doors_LOCKED; } DE = &amp;door_related; for (;;) { A = *DE; {    if (A != 0xFF) { } {      if ((A &amp; gates_and_doors_MASK) == C) goto found; } {      DE++; } } } next: HL++; while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="46339"></a>B503</td>
@@ -228,7 +235,7 @@ Search door_related for C.
 <tr>
 <td class="address"><a name="46361"></a>B519</td>
 <td class="instruction">OR $01</td>
-<td class="comment">A |= 1; // not ok</td>
+<td class="comment">A |= 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="46363"></a>B51B</td>
@@ -359,9 +366,9 @@ Range check pattern (-3..+3).
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

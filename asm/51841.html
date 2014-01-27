@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at CA81</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -34,6 +35,10 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="register">IY</td>
 <td class="registerContents">Pointer to $8000, $8020, $8040, $8060, $8080</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Pointer to $8004, $8024, $8044, $8064, $8084</td>
 </tr>
 </table>
 </td>
@@ -61,7 +66,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="address"><a name="51849"></a>CA89</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="6">if (A == 1) } {    if (IY[0] == bribed_character) { use_bribe(); return; } // exit via } else { solitary(); return; } } // exit via</td>
+<td class="comment" rowspan="6">if (A == vischar_BYTE1_PERSUE) } {    if (IY[0] == bribed_character) { use_bribe(); return; } // exit via } else { solitary(); return; } } // exit via</td>
 </tr>
 <tr>
 <td class="address"><a name="51851"></a>CA8B</td>
@@ -86,7 +91,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="label"><a name="51865"></a>CA99</td>
 <td class="instruction">CP $02</td>
-<td class="comment" rowspan="4">else if (A == 2 || A == 4) { return; }</td>
+<td class="comment" rowspan="4">else if (A == vischar_BYTE1_BIT1 || A == vischar_BYTE1_BIT2) { return; }</td>
 </tr>
 <tr>
 <td class="address"><a name="51867"></a>CA9B</td>
@@ -162,7 +167,7 @@ Bribes, solitary, food, 'character enters' sound.
 <tr>
 <td class="label"><a name="51894"></a>CAB6</td>
 <td class="instruction">BIT 6,C</td>
-<td class="comment" rowspan="61">if (C &amp; vischar_BYTE1_BIT6) } {  C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location} {  A = *--HL; } - element_A_of_table_7738(); - {  DE += C; } A = *DE; {  if (*HL &amp; vischar_BYTE2_BIT7) A ^= 0x80; } PUSH AF {  A = *HL++; // $8002, ... } {  if (A &amp; vischar_BYTE2_BIT7) (*HL) -= 2; // $8003, ... // likely target location } (*HL)++; // likely target location POP AF get_door_position(); // door related {  IY[0x1C] = (*HL &gt;&gt; 2) &amp; 0x3F; // IY=$8000 =&gt; $801C (room index) // HL=$790E,$7962,$795E =&gt; door position thingy // 0x3F is door_positions[0] room mask shifted right 2 } {  A = *HL &amp; doorposition_BYTE0_MASK_LO; // door position thingy, lowest two bits -- index?} {  if (A &lt; 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff? } PUSH HL {  HL = IY; } {  if (L == 0) { // player's vischar only } HL++; // $8000 -&gt; $8001 {    *HL++ &amp;= ~vischar_BYTE1_BIT6; } sub_CB23(); } POP HL transition(); {  play_speaker(sound_CHARACTER_ENTERS_1); } return;</td>
+<td class="comment" rowspan="61">if (C &amp; vischar_BYTE1_BIT6) } {  C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location} {  A = *--HL; } - DE = element_A_of_table_7738(A); - {  DE += C; } A = *DE; {  if (*HL &amp; vischar_BYTE2_BIT7) A ^= 0x80; } PUSH AF {  A = *HL++; // $8002, ... } {  if (A &amp; vischar_BYTE2_BIT7) (*HL) -= 2; // $8003, ... // likely target location } (*HL)++; // likely target location POP AF get_door_position(); // door related {  IY[0x1C] = (*HL &gt;&gt; 2) &amp; 0x3F; // IY=$8000 =&gt; $801C (room index) // HL=$790E,$7962,$795E =&gt; door position thingy // 0x3F is door_positions[0] room mask shifted right 2 } {  A = *HL &amp; doorposition_BYTE0_MASK_LO; // door position thingy, lowest two bits -- index?} {  if (A &lt; 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff? } PUSH HL {  HL = IY; } {  if (L == 0) { // player's vischar only } HL++; // $8000 -&gt; $8001 {    *HL++ &amp;= ~vischar_BYTE1_BIT6; } sub_CB23(); } POP HL transition(); {  play_speaker(sound_CHARACTER_ENTERS_1); } return;</td>
 </tr>
 <tr>
 <td class="address"><a name="51896"></a>CAB8</td>
@@ -464,9 +469,9 @@ Bribes, solitary, food, 'character enters' sound.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

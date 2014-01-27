@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>The Great Escape: Routine at ACFC</title>
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+</head>
+<body class="disassembly">
+<table class="header">
+<tr>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="headerText">Routines</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="44143.html">AC6F</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#44284">Map</a></td>
+<td class="next">Next: <a class="link" href="44329.html">AD29</a></td>
+</tr>
+</table>
+<div class="description">ACFC: zoombox_draw_tile</div>
+<table class="disassembly">
+<tr>
+<td class="routineComment" colspan="3">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="44143.html">AC6F</a>.
+</div>
+</div>
+<table class="input">
+<tr>
+<td class="register">A</td>
+<td class="registerContents">Index of tile to draw.</td>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="registerContents">(preserved)</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="registerContents">Destination address.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="label"><a name="44284"></a>ACFC</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment">PUSH BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44285"></a>ACFD</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment">PUSH AF</td>
+</tr>
+<tr>
+<td class="address"><a name="44286"></a>ACFE</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment">PUSH HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44287"></a>ACFF</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44288"></a>AD00</td>
+<td class="instruction">LD L,A</td>
+<td class="comment" rowspan="7">HL = &amp;zoombox_tiles[A];</td>
+</tr>
+<tr>
+<td class="address"><a name="44289"></a>AD01</td>
+<td class="instruction">LD H,$00</td>
+</tr>
+<tr>
+<td class="address"><a name="44291"></a>AD03</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44292"></a>AD04</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44293"></a>AD05</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44294"></a>AD06</td>
+<td class="instruction">LD BC,$AF5E</td>
+</tr>
+<tr>
+<td class="address"><a name="44297"></a>AD09</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44298"></a>AD0A</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment">B = 8; // 8 iterations</td>
+</tr>
+<tr>
+<td class="label"><a name="44300"></a>AD0C</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment" rowspan="5">do { *DE = *HL++; } {  DE += 256; } while (--B);</td>
+</tr>
+<tr>
+<td class="address"><a name="44301"></a>AD0D</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="address"><a name="44302"></a>AD0E</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="address"><a name="44303"></a>AD0F</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44304"></a>AD10</td>
+<td class="instruction">DJNZ $AD0C</td>
+</tr>
+<tr>
+<td class="address"><a name="44306"></a>AD12</td>
+<td class="instruction">LD A,D</td>
+<td class="comment" rowspan="2">A = D - 1; // ie. (DE - 256) &gt;&gt; 8</td>
+</tr>
+<tr>
+<td class="address"><a name="44307"></a>AD13</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address"><a name="44308"></a>AD14</td>
+<td class="instruction">LD H,$58</td>
+<td class="comment">H = 0x58; // attributes</td>
+</tr>
+<tr>
+<td class="address"><a name="44310"></a>AD16</td>
+<td class="instruction">LD L,E</td>
+<td class="comment">L = E;</td>
+</tr>
+<tr>
+<td class="address"><a name="44311"></a>AD17</td>
+<td class="instruction">CP $48</td>
+<td class="comment" rowspan="6">if (A &gt;= 0x48) { H++; } {  if (A &gt;= 0x50) H++; }</td>
+</tr>
+<tr>
+<td class="address"><a name="44313"></a>AD19</td>
+<td class="instruction">JR C,$AD21</td>
+</tr>
+<tr>
+<td class="address"><a name="44315"></a>AD1B</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="address"><a name="44316"></a>AD1C</td>
+<td class="instruction">CP $50</td>
+</tr>
+<tr>
+<td class="address"><a name="44318"></a>AD1E</td>
+<td class="instruction">JR C,$AD21</td>
+</tr>
+<tr>
+<td class="address"><a name="44320"></a>AD20</td>
+<td class="instruction">INC H</td>
+</tr>
+<tr>
+<td class="label"><a name="44321"></a>AD21</td>
+<td class="instruction">LD A,($AB6A)</td>
+<td class="comment" rowspan="2">*HL = game_screen_attribute;</td>
+</tr>
+<tr>
+<td class="address"><a name="44324"></a>AD24</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address"><a name="44325"></a>AD25</td>
+<td class="instruction">POP HL</td>
+<td class="comment">POP HL</td>
+</tr>
+<tr>
+<td class="address"><a name="44326"></a>AD26</td>
+<td class="instruction">POP AF</td>
+<td class="comment">POP AF</td>
+</tr>
+<tr>
+<td class="address"><a name="44327"></a>AD27</td>
+<td class="instruction">POP BC</td>
+<td class="comment">POP BC</td>
+</tr>
+<tr>
+<td class="address"><a name="44328"></a>AD28</td>
+<td class="instruction">RET</td>
+<td class="comment">return;</td>
+</tr>
+</table>
+<table class="prevNext">
+<tr>
+<td class="prev">Prev: <a class="link" href="44143.html">AC6F</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#44284">Map</a></td>
+<td class="next">Next: <a class="link" href="44329.html">AD29</a></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+</div>
+</body>
+</html>

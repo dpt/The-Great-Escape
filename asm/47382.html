@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B916</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -21,7 +22,7 @@
 <td class="next">Next: <a class="link" href="47821.html">BACD</a></td>
 </tr>
 </table>
-<div class="description">B916: suspected_mask_stuff</div>
+<div class="description">B916: mask_stuff</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -59,7 +60,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47395"></a>B923</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="12">if (room_index) } HL = &amp;suspected_indoor_mask_data; A = *HL; {  if (A == 0) return; } B = A; // iterations {  HL += 3; }</td>
+<td class="comment" rowspan="12">if (room_index) } HL = &amp;indoor_mask_data; A = *HL; {  if (A == 0) return; } B = A; // iterations {  HL += 3; }</td>
 </tr>
 <tr>
 <td class="address"><a name="47398"></a>B926</td>
@@ -108,12 +109,12 @@ unpacks mask stuff
 <tr>
 <td class="label"><a name="47413"></a>B935</td>
 <td class="instruction">LD B,$3B</td>
-<td class="comment">else { B = NELEMS(suspected_outdoor_mask_data); // 59 iterations</td>
+<td class="comment">else { B = NELEMS(exterior_mask_data); // 59 iterations</td>
 </tr>
 <tr>
 <td class="address"><a name="47415"></a>B937</td>
 <td class="instruction">LD HL,$EC03</td>
-<td class="comment">HL = $EC03; // suspected_outdoor_mask_data + 2 bytes }</td>
+<td class="comment">HL = $EC03; // exterior_mask_data + 2 bytes }</td>
 </tr>
 <tr>
 <td class="label"><a name="47418"></a>B93A</td>
@@ -314,7 +315,7 @@ unpacks mask stuff
 <tr>
 <td class="address"><a name="47496"></a>B988</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment" rowspan="12">if (A &gt;= *HL) } A -= *HL; byte_B837 = A; HL++; {    A = *HL - C; } {    if (A &gt;= 3) A = 3; } {    ($B83A) = ++A; // word_B839 + 1 }</td>
+<td class="comment" rowspan="12">if (A &gt;= *HL) } A -= *HL; // sampled HL points to $81EC $81F4 $EC12 byte_B837 = A; HL++; {    A = *HL - C; } {    if (A &gt;= 3) A = 3; } {    ($B83A) = ++A; // word_B839 + 1 }</td>
 </tr>
 <tr>
 <td class="address"><a name="47497"></a>B989</td>
@@ -739,7 +740,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <tr>
 <td class="address">BA1C</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment" rowspan="8">DE = probably_mask_data_pointers[A];</td>
+<td class="comment" rowspan="8">DE = exterior_mask_data_pointers[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="47645"></a>BA1D</td>
@@ -869,7 +870,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <tr>
 <td class="label"><a name="47693"></a>BA4D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment">do { A = *DE; // DE -&gt; $E560 upwards (in probably_mask_data)</td>
+<td class="comment">do { A = *DE; // DE -&gt; $E560 upwards (in outdoors_mask_data)</td>
 </tr>
 <tr>
 <td class="address"><a name="47694"></a>BA4E</td>
@@ -1256,9 +1257,9 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

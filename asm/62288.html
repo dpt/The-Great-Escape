@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at F350</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -106,7 +107,7 @@ Draw key choice prompt strings.
 <tr>
 <td class="address"><a name="62309"></a>F365</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment">A = *HL; // redundant</td>
 </tr>
 <tr>
 <td class="address"><a name="62310"></a>F366</td>
@@ -143,7 +144,7 @@ Draw key choice prompt strings.
 <a name="62320"></a>
 <div class="comments">
 <div class="paragraph">
-Wipe key_defs.
+Wipe keydefs.
 </div>
 </div>
 </td>
@@ -151,7 +152,7 @@ Wipe key_defs.
 <tr>
 <td class="address">F370</td>
 <td class="instruction">LD HL,$F06B</td>
-<td class="comment">HL = &amp;key_defs[0];</td>
+<td class="comment">HL = &amp;keydefs[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="62323"></a>F373</td>
@@ -644,9 +645,9 @@ Wait for user's input.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

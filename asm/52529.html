@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at CD31</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -88,7 +89,7 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52547"></a>CD43</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment" rowspan="7">A = default_item_locations[A].room_and_flags;</td>
+<td class="comment" rowspan="6">HL = &amp;default_item_locations[A];</td>
 </tr>
 <tr>
 <td class="address"><a name="52548"></a>CD44</td>
@@ -113,6 +114,7 @@ Used by the routines at <a class="link" href="46938.html">B75A</a>, <a class="li
 <tr>
 <td class="address"><a name="52556"></a>CD4C</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment">A = HL-&gt;room_and_flags;</td>
 </tr>
 <tr>
 <td class="address"><a name="52557"></a>CD4D</td>
@@ -142,7 +144,7 @@ Bug: This is not masked with 0x0F so item_to_itemstruct generates out of range a
 <tr>
 <td class="address"><a name="52560"></a>CD50</td>
 <td class="instruction">CALL <a class="link" href="31782.html">$7C26</a></td>
-<td class="comment">HL = item_to_itemstruct(A);</td>
+<td class="comment">HL = item_to_itemstruct(Adash);</td>
 </tr>
 <tr>
 <td class="address"><a name="52563"></a>CD53</td>
@@ -181,7 +183,7 @@ Bug: This is not masked with 0x0F so item_to_itemstruct generates out of range a
 <tr>
 <td class="address"><a name="52574"></a>CD5E</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="4">if (A == 0) } *HL = A; goto $7BD0; /* drop_item_A:$7BD0 */</td>
+<td class="comment" rowspan="4">if (A == 0) { // outside } *HL = A; goto $7BD0; /* drop_item_A:$7BD0 */</td>
 </tr>
 <tr>
 <td class="address"><a name="52575"></a>CD5F</td>
@@ -214,9 +216,9 @@ Bug: This is not masked with 0x0F so item_to_itemstruct generates out of range a
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at AAB2</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -27,7 +28,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Moves the map as the character walks.
+Moves the map when the character walks.
 </div>
 </div>
 <table class="output">
@@ -390,7 +391,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43824"></a>AB30</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment">return; // pops and calls map_move_* routine pushed at $AAE0</td>
 </tr>
 <tr>
 <td class="address"><a name="43825"></a>AB31</td>
@@ -442,7 +443,7 @@ Moves the map as the character walks.
 <tr>
 <td class="address"><a name="43838"></a>AB3E</td>
 <td class="instruction">BIT 0,A</td>
-<td class="comment" rowspan="2">if ((A &amp; (1&lt;&lt;0)) == 0) return;</td>
+<td class="comment" rowspan="2">if ((A &amp; 1) == 0) return;</td>
 </tr>
 <tr>
 <td class="address"><a name="43840"></a>AB40</td>
@@ -547,9 +548,9 @@ Moves the map as the character walks.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

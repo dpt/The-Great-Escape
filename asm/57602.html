@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at E102</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -112,7 +113,7 @@ Sprite plotter. Used for characters and objects.
 <tr>
 <td class="label"><a name="57634"></a>E122</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment" rowspan="127">do { bm0 = *bitmapptr++; // bitmap bytes } {  bm1 = *bitmapptr++; } {  bm2 = *bitmapptr++; } {  mask0 = *maskptr++; // mask bytes } {  mask1 = *maskptr++; } {  mask2 = *maskptr++; } {  if (flip_sprite &amp; (1&lt;&lt;7)) flip_24_masked_pixels(); } {  foremaskptr = foreground_mask_pointer; } screenptr = ($81A2); // screen ptr // moved compared to the other routines bm3 = 0; goto $E144; // self-modified // jump table SRL bm0 // 0 // carry = bm0 &amp; 1; bm0 &gt;&gt;= 1; RR bm1       // new_carry = bm1 &amp; 1; bm1 = (bm1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR bm2       // new_carry = bm2 &amp; 1; bm2 = (bm2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR bm3       // new_carry = bm3 &amp; 1; bm3 = (bm3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; SRL bm0 // 1 RR bm1 RR bm2 RR bm3 SRL bm0 // 2 RR bm1 RR bm2 {  RR bm3 } mask3 = 0xFF; carry = 1; goto $E162; // self-modified // jump table RR mask0 // 0 // new_carry = mask0 &amp; 1; mask0 = (mask0 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask1      // new_carry = mask1 &amp; 1; mask1 = (mask1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask2      // new_carry = mask2 &amp; 1; mask2 = (mask2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask3      // new_carry = mask3 &amp; 1; mask3 = (mask3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask0 RR mask1 RR mask2 RR mask3 RR mask0 RR mask1 RR mask2 RR mask3 {  A = ((~*foremaskptr | mask0) &amp; *screenptr) | (bm0 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 0 } {  A = ((~*foremaskptr | mask1) &amp; *screenptr) | (bm1 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 2 } {  A = ((~*foremaskptr | mask2) &amp; *screenptr) | (bm2 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 4 } {  A = ((~*foremaskptr | mask3) &amp; *screenptr) | (bm3 &amp; *foremaskptr); } foremaskptr++; foreground_mask_pointer = foremaskptr; {  *screenptr = A;            // jump target 6 } {  screenptr += 21; // stride (24 - 3) } {  ($81A2) = screenptr; } {} while (--iters);</td>
+<td class="comment" rowspan="127">do { bm0 = *bitmapptr++; // bitmap bytes } {  bm1 = *bitmapptr++; } {  bm2 = *bitmapptr++; } {  mask0 = *maskptr++; // mask bytes } {  mask1 = *maskptr++; } {  mask2 = *maskptr++; } {  if (flip_sprite &amp; (1&lt;&lt;7)) flip_24_masked_pixels(); } {  foremaskptr = foreground_mask_pointer; } screenptr = ($81A2); // screen ptr // moved compared to the other routines bm3 = 0; goto $E144; // self-modified // jump table SRL bm0 // 0 // carry = bm0 &amp; 1; bm0 &gt;&gt;= 1; RR bm1       // new_carry = bm1 &amp; 1; bm1 = (bm1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR bm2       // new_carry = bm2 &amp; 1; bm2 = (bm2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR bm3       // new_carry = bm3 &amp; 1; bm3 = (bm3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; SRL bm0 // 1 RR bm1 RR bm2 RR bm3 SRL bm0 // 2 RR bm1 RR bm2 {  RR bm3 } mask3 = 0xFF; carry = 1; goto $E162; // self-modified // jump table RR mask0 // 0 // new_carry = mask0 &amp; 1; mask0 = (mask0 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask1      // new_carry = mask1 &amp; 1; mask1 = (mask1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask2      // new_carry = mask2 &amp; 1; mask2 = (mask2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask3      // new_carry = mask3 &amp; 1; mask3 = (mask3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry; RR mask0 // 1 RR mask1 RR mask2 RR mask3 RR mask0 // 2 RR mask1 RR mask2 RR mask3 {  A = ((~*foremaskptr | mask0) &amp; *screenptr) | (bm0 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 0 } {  A = ((~*foremaskptr | mask1) &amp; *screenptr) | (bm1 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 2 } {  A = ((~*foremaskptr | mask2) &amp; *screenptr) | (bm2 &amp; *foremaskptr); } {  foremaskptr++; } {  *screenptr++ = A;          // jump target 4 } {  A = ((~*foremaskptr | mask3) &amp; *screenptr) | (bm3 &amp; *foremaskptr); } foremaskptr++; foreground_mask_pointer = foremaskptr; {  *screenptr = A;            // jump target 6 } {  screenptr += 21; // stride (24 - 3) } {  ($81A2) = screenptr; } {} while (--iters);</td>
 </tr>
 <tr>
 <td class="address"><a name="57635"></a>E123</td>
@@ -1375,9 +1376,9 @@ Plot, using foreground mask.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

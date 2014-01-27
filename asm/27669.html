@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Data at 6C15</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Data</td>
 </tr>
 </table>
@@ -34,21 +35,43 @@ roomdef_1_hut1_right
 </tr>
 <tr>
 <td class="address"><a name="27669"></a>6C15</td>
-<td class="instruction">DEFB $00,$03,$36,$44,$17,$22,$36,$44</td>
-<td class="dataComment" rowspan="3">TBD: [0, 3, 54, 68, 23, 34, 54, 68, 39, 50, 54, 68, 55, 68, 4, 0, 1, 3, 10]</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0</td>
 </tr>
 <tr>
-<td class="address"><a name="27677"></a>6C1D</td>
-<td class="instruction">DEFB $27,$32,$36,$44,$37,$44,$04,$00</td>
+<td class="address"><a name="27670"></a>6C16</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of boundaries</td>
 </tr>
 <tr>
-<td class="address"><a name="27685"></a>6C25</td>
-<td class="instruction">DEFB $01,$03,$0A</td>
+<td class="address"><a name="27671"></a>6C17</td>
+<td class="instruction">DEFB $36,$44,$17,$22</td>
+<td class="dataComment">54, 68, 23, 34 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27675"></a>6C1B</td>
+<td class="instruction">DEFB $36,$44,$27,$32</td>
+<td class="dataComment">54, 68, 39, 50 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27679"></a>6C1F</td>
+<td class="instruction">DEFB $36,$44,$37,$44</td>
+<td class="dataComment">54, 68, 55, 68 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27683"></a>6C23</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27684"></a>6C24</td>
+<td class="instruction">DEFB $00,$01,$03,$0A</td>
+<td class="dataComment">[0, 1, 3, 10] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27688"></a>6C28</td>
 <td class="instruction">DEFB $0A</td>
-<td class="dataComment">10 // nobjects</td>
+<td class="dataComment">10 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27689"></a>6C29</td>
@@ -112,17 +135,38 @@ roomdef_2_hut2_left
 </tr>
 <tr>
 <td class="address">6C47</td>
-<td class="instruction">DEFB $01,$02,$30,$40,$2B,$38,$18,$26</td>
-<td class="dataComment" rowspan="2">TBD: [1, 2, 48, 64, 43, 56, 24, 38, 26, 40, 2, 13, 8]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
 </tr>
 <tr>
-<td class="address"><a name="27727"></a>6C4F</td>
-<td class="instruction">DEFB $1A,$28,$02,$0D,$08</td>
+<td class="address"><a name="27720"></a>6C48</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="27721"></a>6C49</td>
+<td class="instruction">DEFB $30,$40,$2B,$38</td>
+<td class="dataComment">48, 64, 43, 56 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27725"></a>6C4D</td>
+<td class="instruction">DEFB $18,$26,$1A,$28</td>
+<td class="dataComment">24, 38, 26, 40 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27729"></a>6C51</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27730"></a>6C52</td>
+<td class="instruction">DEFB $0D,$08</td>
+<td class="dataComment">[13, 8] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27732"></a>6C54</td>
 <td class="instruction">DEFB $08</td>
-<td class="dataComment">8 // nobjects</td>
+<td class="dataComment">8 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27733"></a>6C55</td>
@@ -176,21 +220,43 @@ roomdef_3_hut2_right
 </tr>
 <tr>
 <td class="address">6C6D</td>
-<td class="instruction">DEFB $00,$03,$36,$44,$17,$22,$36,$44</td>
-<td class="dataComment" rowspan="3">TBD: [0, 3, 54, 68, 23, 34, 54, 68, 39, 50, 54, 68, 55, 68, 4, 0, 1, 3, 10]</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0</td>
 </tr>
 <tr>
-<td class="address"><a name="27765"></a>6C75</td>
-<td class="instruction">DEFB $27,$32,$36,$44,$37,$44,$04,$00</td>
+<td class="address"><a name="27758"></a>6C6E</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of boundaries</td>
 </tr>
 <tr>
-<td class="address"><a name="27773"></a>6C7D</td>
-<td class="instruction">DEFB $01,$03,$0A</td>
+<td class="address"><a name="27759"></a>6C6F</td>
+<td class="instruction">DEFB $36,$44,$17,$22</td>
+<td class="dataComment">54, 68, 23, 34 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27763"></a>6C73</td>
+<td class="instruction">DEFB $36,$44,$27,$32</td>
+<td class="dataComment">54, 68, 39, 50 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27767"></a>6C77</td>
+<td class="instruction">DEFB $36,$44,$37,$44</td>
+<td class="dataComment">54, 68, 55, 68 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27771"></a>6C7B</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27772"></a>6C7C</td>
+<td class="instruction">DEFB $00,$01,$03,$0A</td>
+<td class="dataComment">[0, 1, 3, 10] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27776"></a>6C80</td>
 <td class="instruction">DEFB $0A</td>
-<td class="dataComment">10 // nobjects</td>
+<td class="dataComment">10 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27777"></a>6C81</td>
@@ -254,17 +320,38 @@ roomdef_4_hut3_left
 </tr>
 <tr>
 <td class="address">6C9F</td>
-<td class="instruction">DEFB $01,$02,$18,$28,$18,$2A,$30,$40</td>
-<td class="dataComment" rowspan="2">TBD: [1, 2, 24, 40, 24, 42, 48, 64, 43, 56, 3, 18, 20, 8]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
 </tr>
 <tr>
-<td class="address"><a name="27815"></a>6CA7</td>
-<td class="instruction">DEFB $2B,$38,$03,$12,$14,$08</td>
+<td class="address"><a name="27808"></a>6CA0</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="27809"></a>6CA1</td>
+<td class="instruction">DEFB $18,$28,$18,$2A</td>
+<td class="dataComment">24, 40, 24, 42 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27813"></a>6CA5</td>
+<td class="instruction">DEFB $30,$40,$2B,$38</td>
+<td class="dataComment">48, 64, 43, 56 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27817"></a>6CA9</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27818"></a>6CAA</td>
+<td class="instruction">DEFB $12,$14,$08</td>
+<td class="dataComment">[18, 20, 8] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27821"></a>6CAD</td>
 <td class="instruction">DEFB $09</td>
-<td class="dataComment">9 // nobjects</td>
+<td class="dataComment">9 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27822"></a>6CAE</td>
@@ -323,21 +410,43 @@ roomdef_5_hut3_right
 </tr>
 <tr>
 <td class="address">6CC9</td>
-<td class="instruction">DEFB $00,$03,$36,$44,$17,$22,$36,$44</td>
-<td class="dataComment" rowspan="3">TBD: [0, 3, 54, 68, 23, 34, 54, 68, 39, 50, 54, 68, 55, 68, 4, 0, 1, 3, 10]</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0</td>
 </tr>
 <tr>
-<td class="address"><a name="27857"></a>6CD1</td>
-<td class="instruction">DEFB $27,$32,$36,$44,$37,$44,$04,$00</td>
+<td class="address"><a name="27850"></a>6CCA</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of boundaries</td>
 </tr>
 <tr>
-<td class="address"><a name="27865"></a>6CD9</td>
-<td class="instruction">DEFB $01,$03,$0A</td>
+<td class="address"><a name="27851"></a>6CCB</td>
+<td class="instruction">DEFB $36,$44,$17,$22</td>
+<td class="dataComment">54, 68, 23, 34 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27855"></a>6CCF</td>
+<td class="instruction">DEFB $36,$44,$27,$32</td>
+<td class="dataComment">54, 68, 39, 50 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27859"></a>6CD3</td>
+<td class="instruction">DEFB $36,$44,$37,$44</td>
+<td class="dataComment">54, 68, 55, 68 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27863"></a>6CD7</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27864"></a>6CD8</td>
+<td class="instruction">DEFB $00,$01,$03,$0A</td>
+<td class="dataComment">[0, 1, 3, 10] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27868"></a>6CDC</td>
 <td class="instruction">DEFB $0A</td>
-<td class="dataComment">10 // nobjects</td>
+<td class="dataComment">10 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27869"></a>6CDD</td>
@@ -394,20 +503,35 @@ roomdef_5_hut3_right
 <a name="27899"></a>
 <div class="comments">
 <div class="paragraph">
-roomdef_8_corridor
+roomdef_6_corridor
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="address">6CFB</td>
-<td class="instruction">DEFB $02,$00,$01,$09</td>
-<td class="dataComment">TBD: [2, 0, 1, 9]</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2</td>
+</tr>
+<tr>
+<td class="address"><a name="27900"></a>6CFC</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="27901"></a>6CFD</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27902"></a>6CFE</td>
+<td class="instruction">DEFB $09</td>
+<td class="dataComment">[9] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27903"></a>6CFF</td>
 <td class="instruction">DEFB $05</td>
-<td class="dataComment">5 // nobjects</td>
+<td class="dataComment">5 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27904"></a>6D00</td>
@@ -446,17 +570,33 @@ roomdef_9_crate
 </tr>
 <tr>
 <td class="address">6D0F</td>
-<td class="instruction">DEFB $01,$01,$3A,$40,$1C,$2A,$02,$04</td>
-<td class="dataComment" rowspan="2">TBD: [1, 1, 58, 64, 28, 42, 2, 4, 21]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
 </tr>
 <tr>
-<td class="address"><a name="27927"></a>6D17</td>
-<td class="instruction">DEFB $15</td>
+<td class="address"><a name="27920"></a>6D10</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="27921"></a>6D11</td>
+<td class="instruction">DEFB $3A,$40,$1C,$2A</td>
+<td class="dataComment">58, 64, 28, 42 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27925"></a>6D15</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27926"></a>6D16</td>
+<td class="instruction">DEFB $04,$15</td>
+<td class="dataComment">[4, 21] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27928"></a>6D18</td>
 <td class="instruction">DEFB $0A</td>
-<td class="dataComment">10 // nobjects</td>
+<td class="dataComment">10 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27929"></a>6D19</td>
@@ -520,17 +660,38 @@ roomdef_10_lockpick
 </tr>
 <tr>
 <td class="address">6D37</td>
-<td class="instruction">DEFB $04,$02,$45,$4B,$20,$36,$24,$2F</td>
-<td class="dataComment" rowspan="2">TBD: [4, 2, 69, 75, 32, 54, 36, 47, 48, 60, 3, 6, 14, 22]</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4</td>
 </tr>
 <tr>
-<td class="address"><a name="27967"></a>6D3F</td>
-<td class="instruction">DEFB $30,$3C,$03,$06,$0E,$16</td>
+<td class="address"><a name="27960"></a>6D38</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="27961"></a>6D39</td>
+<td class="instruction">DEFB $45,$4B,$20,$36</td>
+<td class="dataComment">69, 75, 32, 54 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27965"></a>6D3D</td>
+<td class="instruction">DEFB $24,$2F,$30,$3C</td>
+<td class="dataComment">36, 47, 48, 60 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="27969"></a>6D41</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="27970"></a>6D42</td>
+<td class="instruction">DEFB $06,$0E,$16</td>
+<td class="dataComment">[6, 14, 22] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="27973"></a>6D45</td>
 <td class="instruction">DEFB $0E</td>
-<td class="dataComment">14 // nobjects</td>
+<td class="dataComment">14 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="27974"></a>6D46</td>
@@ -614,13 +775,33 @@ roomdef_11_papers
 </tr>
 <tr>
 <td class="address">6D70</td>
-<td class="instruction">DEFB $04,$01,$1B,$2C,$24,$30,$01,$17</td>
-<td class="dataComment">TBD: [4, 1, 27, 44, 36, 48, 1, 23]</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4</td>
+</tr>
+<tr>
+<td class="address"><a name="28017"></a>6D71</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28018"></a>6D72</td>
+<td class="instruction">DEFB $1B,$2C,$24,$30</td>
+<td class="dataComment">27, 44, 36, 48 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28022"></a>6D76</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28023"></a>6D77</td>
+<td class="instruction">DEFB $17</td>
+<td class="dataComment">[23] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28024"></a>6D78</td>
 <td class="instruction">DEFB $09</td>
-<td class="dataComment">9 // nobjects</td>
+<td class="dataComment">9 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28025"></a>6D79</td>
@@ -679,13 +860,28 @@ roomdef_12_corridor
 </tr>
 <tr>
 <td class="address">6D94</td>
-<td class="instruction">DEFB $01,$00,$02,$04,$07</td>
-<td class="dataComment">TBD: [1, 0, 2, 4, 7]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
+</tr>
+<tr>
+<td class="address"><a name="28053"></a>6D95</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28054"></a>6D96</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28055"></a>6D97</td>
+<td class="instruction">DEFB $04,$07</td>
+<td class="dataComment">[4, 7] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28057"></a>6D99</td>
 <td class="instruction">DEFB $04</td>
-<td class="dataComment">4 // nobjects</td>
+<td class="dataComment">4 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28058"></a>6D9A</td>
@@ -719,13 +915,28 @@ roomdef_13_corridor
 </tr>
 <tr>
 <td class="address">6DA6</td>
-<td class="instruction">DEFB $01,$00,$02,$04,$08</td>
-<td class="dataComment">TBD: [1, 0, 2, 4, 8]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
+</tr>
+<tr>
+<td class="address"><a name="28071"></a>6DA7</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28072"></a>6DA8</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28073"></a>6DA9</td>
+<td class="instruction">DEFB $04,$08</td>
+<td class="dataComment">[4, 8] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28075"></a>6DAB</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28076"></a>6DAC</td>
@@ -769,17 +980,43 @@ roomdef_14_torch
 </tr>
 <tr>
 <td class="address">6DBE</td>
-<td class="instruction">DEFB $00,$03,$36,$44,$16,$20,$3E,$44</td>
-<td class="dataComment" rowspan="2">TBD: [0, 3, 54, 68, 22, 32, 62, 68, 48, 58, 54, 68, 54, 68, 1, 1]</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0</td>
 </tr>
 <tr>
-<td class="address"><a name="28102"></a>6DC6</td>
-<td class="instruction">DEFB $30,$3A,$36,$44,$36,$44,$01,$01</td>
+<td class="address"><a name="28095"></a>6DBF</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28096"></a>6DC0</td>
+<td class="instruction">DEFB $36,$44,$16,$20</td>
+<td class="dataComment">54, 68, 22, 32 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28100"></a>6DC4</td>
+<td class="instruction">DEFB $3E,$44,$30,$3A</td>
+<td class="dataComment">62, 68, 48, 58 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28104"></a>6DC8</td>
+<td class="instruction">DEFB $36,$44,$36,$44</td>
+<td class="dataComment">54, 68, 54, 68 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28108"></a>6DCC</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28109"></a>6DCD</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">[1] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28110"></a>6DCE</td>
 <td class="instruction">DEFB $09</td>
-<td class="dataComment">9 // nobjects</td>
+<td class="dataComment">9 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28111"></a>6DCF</td>
@@ -838,21 +1075,48 @@ roomdef_15_uniform
 </tr>
 <tr>
 <td class="address">6DEA</td>
-<td class="instruction">DEFB $00,$04,$36,$44,$16,$20,$36,$44</td>
-<td class="dataComment" rowspan="3">TBD: [0, 4, 54, 68, 22, 32, 54, 68, 54, 68, 62, 68, 40, 58, 30, 40, 56, 67, 4, 1, 5, 10, 15]</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0</td>
 </tr>
 <tr>
-<td class="address"><a name="28146"></a>6DF2</td>
-<td class="instruction">DEFB $36,$44,$3E,$44,$28,$3A,$1E,$28</td>
+<td class="address"><a name="28139"></a>6DEB</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4 // count of boundaries</td>
 </tr>
 <tr>
-<td class="address"><a name="28154"></a>6DFA</td>
-<td class="instruction">DEFB $38,$43,$04,$01,$05,$0A,$0F</td>
+<td class="address"><a name="28140"></a>6DEC</td>
+<td class="instruction">DEFB $36,$44,$16,$20</td>
+<td class="dataComment">54, 68, 22, 32 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28144"></a>6DF0</td>
+<td class="instruction">DEFB $36,$44,$36,$44</td>
+<td class="dataComment">54, 68, 54, 68 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28148"></a>6DF4</td>
+<td class="instruction">DEFB $3E,$44,$28,$3A</td>
+<td class="dataComment">62, 68, 40, 58 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28152"></a>6DF8</td>
+<td class="instruction">DEFB $1E,$28,$38,$43</td>
+<td class="dataComment">30, 40, 56, 67 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28156"></a>6DFC</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28157"></a>6DFD</td>
+<td class="instruction">DEFB $01,$05,$0A,$0F</td>
+<td class="dataComment">[1, 5, 10, 15] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28161"></a>6E01</td>
 <td class="instruction">DEFB $0A</td>
-<td class="dataComment">10 // nobjects</td>
+<td class="dataComment">10 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28162"></a>6E02</td>
@@ -916,13 +1180,28 @@ roomdef_16_corridor
 </tr>
 <tr>
 <td class="address">6E20</td>
-<td class="instruction">DEFB $01,$00,$02,$04,$07</td>
-<td class="dataComment">TBD: [1, 0, 2, 4, 7]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
+</tr>
+<tr>
+<td class="address"><a name="28193"></a>6E21</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28194"></a>6E22</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28195"></a>6E23</td>
+<td class="instruction">DEFB $04,$07</td>
+<td class="dataComment">[4, 7] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28197"></a>6E25</td>
 <td class="instruction">DEFB $04</td>
-<td class="dataComment">4 // nobjects</td>
+<td class="dataComment">4 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28198"></a>6E26</td>
@@ -956,13 +1235,28 @@ roomdef_7_corridor
 </tr>
 <tr>
 <td class="address">6E32</td>
-<td class="instruction">DEFB $01,$00,$01,$04</td>
-<td class="dataComment">TBD: [1, 0, 1, 4]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
+</tr>
+<tr>
+<td class="address"><a name="28211"></a>6E33</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28212"></a>6E34</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28213"></a>6E35</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">[4] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28214"></a>6E36</td>
 <td class="instruction">DEFB $04</td>
-<td class="dataComment">4 // nobjects</td>
+<td class="dataComment">4 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28215"></a>6E37</td>
@@ -996,21 +1290,43 @@ roomdef_18_radio
 </tr>
 <tr>
 <td class="address">6E43</td>
-<td class="instruction">DEFB $04,$03,$26,$38,$30,$3C,$26,$2E</td>
-<td class="dataComment" rowspan="3">TBD: [4, 3, 38, 56, 48, 60, 38, 46, 39, 60, 22, 32, 48, 60, 5, 11, 17, 16, 24, 25]</td>
+<td class="instruction">DEFB $04</td>
+<td class="dataComment">4</td>
 </tr>
 <tr>
-<td class="address"><a name="28235"></a>6E4B</td>
-<td class="instruction">DEFB $27,$3C,$16,$20,$30,$3C,$05,$0B</td>
+<td class="address"><a name="28228"></a>6E44</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of boundaries</td>
 </tr>
 <tr>
-<td class="address"><a name="28243"></a>6E53</td>
-<td class="instruction">DEFB $11,$10,$18,$19</td>
+<td class="address"><a name="28229"></a>6E45</td>
+<td class="instruction">DEFB $26,$38,$30,$3C</td>
+<td class="dataComment">38, 56, 48, 60 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28233"></a>6E49</td>
+<td class="instruction">DEFB $26,$2E,$27,$3C</td>
+<td class="dataComment">38, 46, 39, 60 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28237"></a>6E4D</td>
+<td class="instruction">DEFB $16,$20,$30,$3C</td>
+<td class="dataComment">22, 32, 48, 60 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28241"></a>6E51</td>
+<td class="instruction">DEFB $05</td>
+<td class="dataComment">5 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28242"></a>6E52</td>
+<td class="instruction">DEFB $0B,$11,$10,$18,$19</td>
+<td class="dataComment">[11, 17, 16, 24, 25] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28247"></a>6E57</td>
 <td class="instruction">DEFB $0A</td>
-<td class="dataComment">10 // nobjects</td>
+<td class="dataComment">10 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28248"></a>6E58</td>
@@ -1074,13 +1390,33 @@ roomdef_19_food
 </tr>
 <tr>
 <td class="address">6E76</td>
-<td class="instruction">DEFB $01,$01,$34,$40,$2F,$38,$01,$07</td>
-<td class="dataComment">TBD: [1, 1, 52, 64, 47, 56, 1, 7]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
+</tr>
+<tr>
+<td class="address"><a name="28279"></a>6E77</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28280"></a>6E78</td>
+<td class="instruction">DEFB $34,$40,$2F,$38</td>
+<td class="dataComment">52, 64, 47, 56 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28284"></a>6E7C</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28285"></a>6E7D</td>
+<td class="instruction">DEFB $07</td>
+<td class="dataComment">[7] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28286"></a>6E7E</td>
 <td class="instruction">DEFB $0B</td>
-<td class="dataComment">11 // nobjects</td>
+<td class="dataComment">11 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28287"></a>6E7F</td>
@@ -1149,17 +1485,38 @@ roomdef_20_redcross
 </tr>
 <tr>
 <td class="address">6EA0</td>
-<td class="instruction">DEFB $01,$02,$3A,$40,$1A,$2A,$32,$40</td>
-<td class="dataComment" rowspan="2">TBD: [1, 2, 58, 64, 26, 42, 50, 64, 46, 54, 2, 21, 4]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
 </tr>
 <tr>
-<td class="address"><a name="28328"></a>6EA8</td>
-<td class="instruction">DEFB $2E,$36,$02,$15,$04</td>
+<td class="address"><a name="28321"></a>6EA1</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28322"></a>6EA2</td>
+<td class="instruction">DEFB $3A,$40,$1A,$2A</td>
+<td class="dataComment">58, 64, 26, 42 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28326"></a>6EA6</td>
+<td class="instruction">DEFB $32,$40,$2E,$36</td>
+<td class="dataComment">50, 64, 46, 54 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28330"></a>6EAA</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28331"></a>6EAB</td>
+<td class="instruction">DEFB $15,$04</td>
+<td class="dataComment">[21, 4] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28333"></a>6EAD</td>
 <td class="instruction">DEFB $0B</td>
-<td class="dataComment">11 // nobjects</td>
+<td class="dataComment">11 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28334"></a>6EAE</td>
@@ -1228,17 +1585,38 @@ roomdef_22_red_key
 </tr>
 <tr>
 <td class="address">6ECF</td>
-<td class="instruction">DEFB $03,$02,$36,$40,$2E,$38,$3A,$40</td>
-<td class="dataComment" rowspan="2">TBD: [3, 2, 54, 64, 46, 56, 58, 64, 36, 44, 2, 12, 21]</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3</td>
 </tr>
 <tr>
-<td class="address"><a name="28375"></a>6ED7</td>
-<td class="instruction">DEFB $24,$2C,$02,$0C,$15</td>
+<td class="address"><a name="28368"></a>6ED0</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28369"></a>6ED1</td>
+<td class="instruction">DEFB $36,$40,$2E,$38</td>
+<td class="dataComment">54, 64, 46, 56 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28373"></a>6ED5</td>
+<td class="instruction">DEFB $3A,$40,$24,$2C</td>
+<td class="dataComment">58, 64, 36, 44 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28377"></a>6ED9</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28378"></a>6EDA</td>
+<td class="instruction">DEFB $0C,$15</td>
+<td class="dataComment">[12, 21] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28380"></a>6EDC</td>
 <td class="instruction">DEFB $07</td>
-<td class="dataComment">7 // nobjects</td>
+<td class="dataComment">7 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28381"></a>6EDD</td>
@@ -1287,17 +1665,33 @@ roomdef_23_breakfast
 </tr>
 <tr>
 <td class="address">6EF2</td>
-<td class="instruction">DEFB $00,$01,$36,$44,$22,$44,$02,$0A</td>
-<td class="dataComment" rowspan="2">TBD: [0, 1, 54, 68, 34, 68, 2, 10, 3]</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0</td>
 </tr>
 <tr>
-<td class="address"><a name="28410"></a>6EFA</td>
-<td class="instruction">DEFB $03</td>
+<td class="address"><a name="28403"></a>6EF3</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28404"></a>6EF4</td>
+<td class="instruction">DEFB $36,$44,$22,$44</td>
+<td class="dataComment">54, 68, 34, 68 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28408"></a>6EF8</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28409"></a>6EF9</td>
+<td class="instruction">DEFB $0A,$03</td>
+<td class="dataComment">[10, 3] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28411"></a>6EFB</td>
 <td class="instruction">DEFB $0C</td>
-<td class="dataComment">12 // nobjects</td>
+<td class="dataComment">12 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28412"></a>6EFC</td>
@@ -1371,13 +1765,33 @@ roomdef_24_solitary
 </tr>
 <tr>
 <td class="address">6F20</td>
-<td class="instruction">DEFB $03,$01,$30,$36,$26,$2E,$01,$1A</td>
-<td class="dataComment">TBD: [3, 1, 48, 54, 38, 46, 1, 26]</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3</td>
+</tr>
+<tr>
+<td class="address"><a name="28449"></a>6F21</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28450"></a>6F22</td>
+<td class="instruction">DEFB $30,$36,$26,$2E</td>
+<td class="dataComment">48, 54, 38, 46 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28454"></a>6F26</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28455"></a>6F27</td>
+<td class="instruction">DEFB $1A</td>
+<td class="dataComment">[26] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28456"></a>6F28</td>
 <td class="instruction">DEFB $03</td>
-<td class="dataComment">3 // nobjects</td>
+<td class="dataComment">3 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28457"></a>6F29</td>
@@ -1406,13 +1820,28 @@ roomdef_25_breakfast
 </tr>
 <tr>
 <td class="address">6F32</td>
-<td class="instruction">DEFB $00,$01,$36,$44,$22,$44,$00</td>
-<td class="dataComment">TBD: [0, 1, 54, 68, 34, 68, 0]</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0</td>
+</tr>
+<tr>
+<td class="address"><a name="28467"></a>6F33</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28468"></a>6F34</td>
+<td class="instruction">DEFB $36,$44,$22,$44</td>
+<td class="dataComment">54, 68, 34, 68 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28472"></a>6F38</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28473"></a>6F39</td>
 <td class="instruction">DEFB $0B</td>
-<td class="dataComment">11 // nobjects</td>
+<td class="dataComment">11 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28474"></a>6F3A</td>
@@ -1481,17 +1910,38 @@ roomdef_28_hut1_left
 </tr>
 <tr>
 <td class="address">6F5B</td>
-<td class="instruction">DEFB $01,$02,$1C,$28,$1C,$34,$30,$3F</td>
-<td class="dataComment" rowspan="2">TBD: [1, 2, 28, 40, 28, 52, 48, 63, 44, 56, 3, 8, 13, 19]</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1</td>
 </tr>
 <tr>
-<td class="address"><a name="28515"></a>6F63</td>
-<td class="instruction">DEFB $2C,$38,$03,$08,$0D,$13</td>
+<td class="address"><a name="28508"></a>6F5C</td>
+<td class="instruction">DEFB $02</td>
+<td class="dataComment">2 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28509"></a>6F5D</td>
+<td class="instruction">DEFB $1C,$28,$1C,$34</td>
+<td class="dataComment">28, 40, 28, 52 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28513"></a>6F61</td>
+<td class="instruction">DEFB $30,$3F,$2C,$38</td>
+<td class="dataComment">48, 63, 44, 56 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28517"></a>6F65</td>
+<td class="instruction">DEFB $03</td>
+<td class="dataComment">3 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28518"></a>6F66</td>
+<td class="instruction">DEFB $08,$0D,$13</td>
+<td class="dataComment">[8, 13, 19] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28521"></a>6F69</td>
 <td class="instruction">DEFB $08</td>
-<td class="dataComment">8 // nobjects</td>
+<td class="dataComment">8 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28522"></a>6F6A</td>
@@ -1545,17 +1995,28 @@ roomdef_29_second_tunnel_start
 </tr>
 <tr>
 <td class="address">6F82</td>
-<td class="instruction">DEFB $05,$00,$06,$1E,$1F,$20,$21,$22</td>
-<td class="dataComment" rowspan="2">TBD: [5, 0, 6, 30, 31, 32, 33, 34, 35]</td>
+<td class="instruction">DEFB $05</td>
+<td class="dataComment">5</td>
 </tr>
 <tr>
-<td class="address"><a name="28554"></a>6F8A</td>
-<td class="instruction">DEFB $23</td>
+<td class="address"><a name="28547"></a>6F83</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28548"></a>6F84</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28549"></a>6F85</td>
+<td class="instruction">DEFB $1E,$1F,$20,$21,$22,$23</td>
+<td class="dataComment">[30, 31, 32, 33, 34, 35] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28555"></a>6F8B</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28556"></a>6F8C</td>
@@ -1599,17 +2060,28 @@ roomdef_31
 </tr>
 <tr>
 <td class="address">6F9E</td>
-<td class="instruction">DEFB $06,$00,$06,$24,$25,$26,$27,$28</td>
-<td class="dataComment" rowspan="2">TBD: [6, 0, 6, 36, 37, 38, 39, 40, 41]</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6</td>
 </tr>
 <tr>
-<td class="address"><a name="28582"></a>6FA6</td>
-<td class="instruction">DEFB $29</td>
+<td class="address"><a name="28575"></a>6F9F</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28576"></a>6FA0</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28577"></a>6FA1</td>
+<td class="instruction">DEFB $24,$25,$26,$27,$28,$29</td>
+<td class="dataComment">[36, 37, 38, 39, 40, 41] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28583"></a>6FA7</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28584"></a>6FA8</td>
@@ -1653,17 +2125,28 @@ roomdef_36
 </tr>
 <tr>
 <td class="address">6FBA</td>
-<td class="instruction">DEFB $07,$00,$06,$1F,$20,$21,$22,$23</td>
-<td class="dataComment" rowspan="2">TBD: [7, 0, 6, 31, 32, 33, 34, 35, 45]</td>
+<td class="instruction">DEFB $07</td>
+<td class="dataComment">7</td>
 </tr>
 <tr>
-<td class="address"><a name="28610"></a>6FC2</td>
-<td class="instruction">DEFB $2D</td>
+<td class="address"><a name="28603"></a>6FBB</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28604"></a>6FBC</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28605"></a>6FBD</td>
+<td class="instruction">DEFB $1F,$20,$21,$22,$23,$2D</td>
+<td class="dataComment">[31, 32, 33, 34, 35, 45] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28611"></a>6FC3</td>
 <td class="instruction">DEFB $05</td>
-<td class="dataComment">5 // nobjects</td>
+<td class="dataComment">5 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28612"></a>6FC4</td>
@@ -1702,17 +2185,28 @@ roomdef_32
 </tr>
 <tr>
 <td class="address">6FD3</td>
-<td class="instruction">DEFB $08,$00,$06,$24,$25,$26,$27,$28</td>
-<td class="dataComment" rowspan="2">TBD: [8, 0, 6, 36, 37, 38, 39, 40, 42]</td>
+<td class="instruction">DEFB $08</td>
+<td class="dataComment">8</td>
 </tr>
 <tr>
-<td class="address"><a name="28635"></a>6FDB</td>
-<td class="instruction">DEFB $2A</td>
+<td class="address"><a name="28628"></a>6FD4</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28629"></a>6FD5</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28630"></a>6FD6</td>
+<td class="instruction">DEFB $24,$25,$26,$27,$28,$2A</td>
+<td class="dataComment">[36, 37, 38, 39, 40, 42] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28636"></a>6FDC</td>
 <td class="instruction">DEFB $05</td>
-<td class="dataComment">5 // nobjects</td>
+<td class="dataComment">5 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28637"></a>6FDD</td>
@@ -1751,17 +2245,28 @@ roomdef_34
 </tr>
 <tr>
 <td class="address">6FEC</td>
-<td class="instruction">DEFB $06,$00,$06,$24,$25,$26,$27,$28</td>
-<td class="dataComment" rowspan="2">TBD: [6, 0, 6, 36, 37, 38, 39, 40, 46]</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6</td>
 </tr>
 <tr>
-<td class="address"><a name="28660"></a>6FF4</td>
-<td class="instruction">DEFB $2E</td>
+<td class="address"><a name="28653"></a>6FED</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28654"></a>6FEE</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28655"></a>6FEF</td>
+<td class="instruction">DEFB $24,$25,$26,$27,$28,$2E</td>
+<td class="dataComment">[36, 37, 38, 39, 40, 46] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28661"></a>6FF5</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28662"></a>6FF6</td>
@@ -1805,17 +2310,28 @@ roomdef_35
 </tr>
 <tr>
 <td class="address">7008</td>
-<td class="instruction">DEFB $06,$00,$06,$24,$25,$26,$27,$28</td>
-<td class="dataComment" rowspan="2">TBD: [6, 0, 6, 36, 37, 38, 39, 40, 41]</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6</td>
 </tr>
 <tr>
-<td class="address"><a name="28688"></a>7010</td>
-<td class="instruction">DEFB $29</td>
+<td class="address"><a name="28681"></a>7009</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28682"></a>700A</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28683"></a>700B</td>
+<td class="instruction">DEFB $24,$25,$26,$27,$28,$29</td>
+<td class="dataComment">[36, 37, 38, 39, 40, 41] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28689"></a>7011</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28690"></a>7012</td>
@@ -1859,17 +2375,28 @@ roomdef_30
 </tr>
 <tr>
 <td class="address">7024</td>
-<td class="instruction">DEFB $05,$00,$07,$1E,$1F,$20,$21,$22</td>
-<td class="dataComment" rowspan="2">TBD: [5, 0, 7, 30, 31, 32, 33, 34, 35, 44]</td>
+<td class="instruction">DEFB $05</td>
+<td class="dataComment">5</td>
 </tr>
 <tr>
-<td class="address"><a name="28716"></a>702C</td>
-<td class="instruction">DEFB $23,$2C</td>
+<td class="address"><a name="28709"></a>7025</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28710"></a>7026</td>
+<td class="instruction">DEFB $07</td>
+<td class="dataComment">7 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28711"></a>7027</td>
+<td class="instruction">DEFB $1E,$1F,$20,$21,$22,$23,$2C</td>
+<td class="dataComment">[30, 31, 32, 33, 34, 35, 44] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28718"></a>702E</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28719"></a>702F</td>
@@ -1913,17 +2440,28 @@ roomdef_40
 </tr>
 <tr>
 <td class="address">7041</td>
-<td class="instruction">DEFB $09,$00,$06,$1E,$1F,$20,$21,$22</td>
-<td class="dataComment" rowspan="2">TBD: [9, 0, 6, 30, 31, 32, 33, 34, 43]</td>
+<td class="instruction">DEFB $09</td>
+<td class="dataComment">9</td>
 </tr>
 <tr>
-<td class="address"><a name="28745"></a>7049</td>
-<td class="instruction">DEFB $2B</td>
+<td class="address"><a name="28738"></a>7042</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28739"></a>7043</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28740"></a>7044</td>
+<td class="instruction">DEFB $1E,$1F,$20,$21,$22,$2B</td>
+<td class="dataComment">[30, 31, 32, 33, 34, 43] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28746"></a>704A</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28747"></a>704B</td>
@@ -1967,13 +2505,28 @@ roomdef_44
 </tr>
 <tr>
 <td class="address">705D</td>
-<td class="instruction">DEFB $08,$00,$05,$24,$25,$26,$27,$28</td>
-<td class="dataComment">TBD: [8, 0, 5, 36, 37, 38, 39, 40]</td>
+<td class="instruction">DEFB $08</td>
+<td class="dataComment">8</td>
+</tr>
+<tr>
+<td class="address"><a name="28766"></a>705E</td>
+<td class="instruction">DEFB $00</td>
+<td class="dataComment">0 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28767"></a>705F</td>
+<td class="instruction">DEFB $05</td>
+<td class="dataComment">5 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28768"></a>7060</td>
+<td class="instruction">DEFB $24,$25,$26,$27,$28</td>
+<td class="dataComment">[36, 37, 38, 39, 40] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28773"></a>7065</td>
 <td class="instruction">DEFB $05</td>
-<td class="dataComment">5 // nobjects</td>
+<td class="dataComment">5 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28774"></a>7066</td>
@@ -2012,17 +2565,33 @@ roomdef_50_blocked_tunnel
 </tr>
 <tr>
 <td class="address">7075</td>
-<td class="instruction">DEFB $05,$01,$34,$3A,$20,$36,$06,$1E</td>
-<td class="dataComment" rowspan="2">TBD: [5, 1, 52, 58, 32, 54, 6, 30, 31, 32, 33, 34, 43]</td>
+<td class="instruction">DEFB $05</td>
+<td class="dataComment">5</td>
 </tr>
 <tr>
-<td class="address"><a name="28797"></a>707D</td>
-<td class="instruction">DEFB $1F,$20,$21,$22,$2B</td>
+<td class="address"><a name="28790"></a>7076</td>
+<td class="instruction">DEFB $01</td>
+<td class="dataComment">1 // count of boundaries</td>
+</tr>
+<tr>
+<td class="address"><a name="28791"></a>7077</td>
+<td class="instruction">DEFB $34,$3A,$20,$36</td>
+<td class="dataComment">52, 58, 32, 54 }, // boundary</td>
+</tr>
+<tr>
+<td class="address"><a name="28795"></a>707B</td>
+<td class="instruction">DEFB $06</td>
+<td class="dataComment">6 // count of TBD</td>
+</tr>
+<tr>
+<td class="address"><a name="28796"></a>707C</td>
+<td class="instruction">DEFB $1E,$1F,$20,$21,$22,$2B</td>
+<td class="dataComment">[30, 31, 32, 33, 34, 43] // data TBD</td>
 </tr>
 <tr>
 <td class="address"><a name="28802"></a>7082</td>
 <td class="instruction">DEFB $06</td>
-<td class="dataComment">6 // nobjects</td>
+<td class="dataComment">6 // count of objects</td>
 </tr>
 <tr>
 <td class="address"><a name="28803"></a>7083</td>
@@ -2063,9 +2632,9 @@ roomdef_50_blocked_tunnel
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

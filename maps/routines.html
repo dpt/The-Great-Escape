@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routines</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="map">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -65,7 +66,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="27458" href="../asm/27458.html">6B42</a></td>
-<td class="routineDesc">plot_indoor_tiles</td>
+<td class="routineDesc">plot_interior_tiles</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="31433" href="../asm/31433.html">7AC9</a></td>
@@ -389,11 +390,15 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43018" href="../asm/43018.html">A80A</a></td>
-<td class="routineDesc">sub_A80A</td>
+<td class="routineDesc">supertile_plot_1</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43033" href="../asm/43033.html">A819</a></td>
-<td class="routineDesc">sub_A819</td>
+<td class="routineDesc">supertile_plot_2</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="43046" href="../asm/43046.html">A826</a></td>
+<td class="routineDesc">supertile_plot_common</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43170" href="../asm/43170.html">A8A2</a></td>
@@ -401,11 +406,15 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43215" href="../asm/43215.html">A8CF</a></td>
-<td class="routineDesc">sub_A8CF</td>
+<td class="routineDesc">supertile_plot_3</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43239" href="../asm/43239.html">A8E7</a></td>
-<td class="routineDesc">sub_A8E7</td>
+<td class="routineDesc">supertile_plot_4</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="43252" href="../asm/43252.html">A8F4</a></td>
+<td class="routineDesc">supertile_plot_common_A8F4</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="43424" href="../asm/43424.html">A9A0</a></td>
@@ -450,6 +459,18 @@
 <tr>
 <td class="routine"><a class="link" name="43936" href="../asm/43936.html">ABA0</a></td>
 <td class="routineDesc">zoombox</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="44025" href="../asm/44025.html">ABF9</a></td>
+<td class="routineDesc">zoombox_1</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="44143" href="../asm/44143.html">AC6F</a></td>
+<td class="routineDesc">zoombox_2</td>
+</tr>
+<tr>
+<td class="routine"><a class="link" name="44284" href="../asm/44284.html">ACFC</a></td>
+<td class="routineDesc">zoombox_draw_tile</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="44377" href="../asm/44377.html">AD59</a></td>
@@ -505,7 +526,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45727" href="../asm/45727.html">B29F</a></td>
-<td class="routineDesc">indoor_bounds_check</td>
+<td class="routineDesc">interior_bounds_check</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45820" href="../asm/45820.html">B2FC</a></td>
@@ -513,7 +534,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45869" href="../asm/45869.html">B32D</a></td>
-<td class="routineDesc">door_handling_indoors</td>
+<td class="routineDesc">door_handling_interior</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="45959" href="../asm/45959.html">B387</a></td>
@@ -593,7 +614,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47382" href="../asm/47382.html">B916</a></td>
-<td class="routineDesc">suspected_mask_stuff</td>
+<td class="routineDesc">mask_stuff</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="47821" href="../asm/47821.html">BACD</a></td>
@@ -677,7 +698,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52085" href="../asm/52085.html">CB75</a></td>
-<td class="routineDesc">A_widened_to_BC</td>
+<td class="routineDesc">BC_becomes_A</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52089" href="../asm/52089.html">CB79</a></td>
@@ -705,7 +726,7 @@
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52475" href="../asm/52475.html">CCFB</a></td>
-<td class="routineDesc">is_item_discoverable_indoors</td>
+<td class="routineDesc">is_item_discoverable_interior</td>
 </tr>
 <tr>
 <td class="routine"><a class="link" name="52529" href="../asm/52529.html">CD31</a></td>
@@ -857,9 +878,9 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

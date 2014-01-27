@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at C6A0</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -97,7 +98,7 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50874"></a>C6BA</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="5">if (A != room_0_outdoors) } is_item_discoverable_indoors(A); {  if (Z) item_discovered(); }</td>
+<td class="comment" rowspan="5">if (A != room_0_outdoors) } is_item_discoverable_interior(A); {  if (Z) item_discovered(); }</td>
 </tr>
 <tr>
 <td class="address"><a name="50875"></a>C6BB</td>
@@ -177,7 +178,7 @@ Moves characters around.
 <tr>
 <td class="address"><a name="50901"></a>C6D5</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="25">if (A == 0xFF) } A = character_index; {  if (A != character_0) { } {    if (A &gt;= character_12_prisoner) goto char_ge_12; } {    back: *HL++ ^= 0x80; } {    if (A &amp; 7) (*HL) -= 2; } (*HL)++; // weird // i.e -1 or +1 POP HL return; } {  char_is_zero: A = *HL &amp; characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5)} {  if (A != 36) goto back; } char_ge_12: POP DE goto character_event; // exit via DEFB $18,$6F  ; UNUSED?</td>
+<td class="comment" rowspan="25">if (A == 0xFF) } A = character_index; {  if (A != character_0) { } {    if (A &gt;= character_12_prisoner) goto char_ge_12; } {    back: *HL++ ^= 0x80; } {    if (A &amp; 7) (*HL) -= 2; } (*HL)++; // weird // i.e -1 or +1 POP HL return; } {  char_is_zero: A = *HL &amp; characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5) // location} {  if (A != 36) goto back; } char_ge_12: POP DE goto character_event; // exit via DEFB $18,$6F  ; UNUSED?</td>
 </tr>
 <tr>
 <td class="address"><a name="50903"></a>C6D7</td>
@@ -308,7 +309,7 @@ Player character.
 <tr>
 <td class="label"><a name="50943"></a>C6FF</td>
 <td class="instruction">CP $80</td>
-<td class="comment" rowspan="77">if (A == 0x80) } POP DE {  A = DE[-1]; } PUSH HL {  if (A == 0) { } PUSH DE DE = &amp;saved_Y; B = 2; // 2 iters {    do { *DE++ = *HL++ &gt;&gt; 1; } } while (--B); HL = &amp;saved_Y; POP DE } {  if (DE[-1] == 0) A = 2; else A = 6; } EX AF,AF' B = 0; increment_DE_by_diff(); DE++; HL++; increment_DE_by_diff(); POP HL {  if (B != 2) return; } {  DE -= 2; } HL--; {  *DE = (*HL &amp; doorposition_BYTE0_MASK_HI) &gt;&gt; 2; // mask } {  if ((*HL &amp; doorposition_BYTE0_MASK_LO) &lt; 2) { // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a } {    HL += 5; } } else { {    HL -= 3; } } {  A = *DE++ } {  if (A) { } *DE++ = *HL++; *DE++ = *HL++; *DE++ = *HL++; DE--; } else { B = 3; {    do { *DE++ = *HL++ &gt;&gt; 1; } } while (--B) DE--; }</td>
+<td class="comment" rowspan="77">if (A == 0x80) } POP DE {  A = DE[-1]; } PUSH HL {  if (A == 0) { } PUSH DE DE = &amp;saved_Y; B = 2; // 2 iters {    do { *DE++ = *HL++ &gt;&gt; 1; } } while (--B); HL = &amp;saved_Y; POP DE } {  if (DE[-1] == 0) A = 2; else A = 6; } EX AF,AF' B = 0; increment_DE_by_diff(A, B, HL, DE); DE++; HL++; increment_DE_by_diff(A, B, HL, DE); POP HL {  if (B != 2) return; // managed to move } {  DE -= 2; } HL--; {  *DE = (*HL &amp; doorposition_BYTE0_MASK_HI) &gt;&gt; 2; // mask } {  if ((*HL &amp; doorposition_BYTE0_MASK_LO) &lt; 2) { // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a } {    HL += 5; } } else { {    HL -= 3; } } {  A = *DE++ } {  if (A) { } *DE++ = *HL++; *DE++ = *HL++; *DE++ = *HL++; DE--; } else { B = 3; {    do { *DE++ = *HL++ &gt;&gt; 1; } } while (--B) DE--; }</td>
 </tr>
 <tr>
 <td class="address"><a name="50945"></a>C701</td>
@@ -789,9 +790,9 @@ Stuff reading from door_positions.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

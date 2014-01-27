@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at F4B7</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -55,7 +56,7 @@ Play music.
 <tr>
 <td class="address">F4BD</td>
 <td class="instruction">LD HL,($F541)</td>
-<td class="comment" rowspan="2">HL = music_channel0_ptr + 1;</td>
+<td class="comment" rowspan="2">HL = music_channel0_index + 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="62656"></a>F4C0</td>
@@ -64,7 +65,7 @@ Play music.
 <tr>
 <td class="label"><a name="62657"></a>F4C1</td>
 <td class="instruction">LD ($F541),HL</td>
-<td class="comment">for (;;) { music_channel0_ptr = HL;</td>
+<td class="comment">for (;;) { music_channel0_index = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="62660"></a>F4C4</td>
@@ -111,7 +112,7 @@ Play music.
 <tr>
 <td class="address"><a name="62678"></a>F4D6</td>
 <td class="instruction">LD HL,($F543)</td>
-<td class="comment" rowspan="2">HLdash = music_channel1_ptr + 1;</td>
+<td class="comment" rowspan="2">HLdash = music_channel1_index + 1;</td>
 </tr>
 <tr>
 <td class="address"><a name="62681"></a>F4D9</td>
@@ -120,7 +121,7 @@ Play music.
 <tr>
 <td class="label"><a name="62682"></a>F4DA</td>
 <td class="instruction">LD ($F543),HL</td>
-<td class="comment">for (;;) { music_channel1_ptr = HLdash;</td>
+<td class="comment">for (;;) { music_channel1_index = HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="62685"></a>F4DD</td>
@@ -355,9 +356,9 @@ Play music.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

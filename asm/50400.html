@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at C4E0</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -122,7 +123,7 @@ Empty slot found.
 <tr>
 <td class="label">C4F6</td>
 <td class="instruction">POP DE</td>
-<td class="comment">found: POP DE  // DE = HL (-&gt; visible character list)</td>
+<td class="comment">found: POP DE  // DE = HL (-&gt; character struct)</td>
 </tr>
 <tr>
 <td class="address"><a name="50423"></a>C4F7</td>
@@ -132,7 +133,7 @@ Empty slot found.
 <tr>
 <td class="address"><a name="50424"></a>C4F8</td>
 <td class="instruction">POP IY</td>
-<td class="comment">POP IY  // IY = HL (-&gt; visible character list)</td>
+<td class="comment">POP IY  // IY = HL (-&gt; empty slot in visible character list)</td>
 </tr>
 <tr>
 <td class="address"><a name="50426"></a>C4FA</td>
@@ -147,7 +148,7 @@ Empty slot found.
 <tr>
 <td class="address"><a name="50428"></a>C4FC</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++; // $8021 etc.</td>
+<td class="comment">DE++;</td>
 </tr>
 <tr>
 <td class="address"><a name="50429"></a>C4FD</td>
@@ -743,9 +744,9 @@ Empty slot found.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

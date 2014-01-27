@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at A9AD</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -32,12 +33,16 @@ Plots a tile to the buffer.
 </div>
 <table class="input">
 <tr>
-<td class="register">HL</td>
-<td class="registerContents">Pointer to supertile index (used to select the correct tile group).</td>
-</tr>
-<tr>
 <td class="register">A</td>
 <td class="registerContents">Tile index</td>
+</tr>
+<tr>
+<td class="register">DEdash</td>
+<td class="registerContents">Output buffer start address.</td>
+</tr>
+<tr>
+<td class="register">HLdash</td>
+<td class="registerContents">Pointer to supertile index (used to select the correct tile group).</td>
 </tr>
 </table>
 </td>
@@ -50,21 +55,22 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43438"></a>A9AE</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">tile_index = A;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43439"></a>A9AF</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HLdash; // get supertile index</td>
+<td class="comment">Adash = *HLdash; // get supertile index</td>
 </tr>
 <tr>
 <td class="address"><a name="43440"></a>A9B0</td>
 <td class="instruction">LD BC,$8590</td>
-<td class="comment" rowspan="4">if (A &lt; 45) { BCdash = exterior_tiles_1; }</td>
+<td class="comment">BCdash = &amp;exterior_tiles_1[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="43443"></a>A9B3</td>
 <td class="instruction">CP $2D</td>
+<td class="comment" rowspan="2">if (Adash &lt; 45) goto chosen;</td>
 </tr>
 <tr>
 <td class="address"><a name="43445"></a>A9B5</td>
@@ -73,11 +79,12 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43447"></a>A9B7</td>
 <td class="instruction">LD BC,$8A18</td>
+<td class="comment">BCdash = &amp;exterior_tiles_2[0];</td>
 </tr>
 <tr>
 <td class="address"><a name="43450"></a>A9BA</td>
 <td class="instruction">CP $8B</td>
-<td class="comment" rowspan="4">else if (A &lt; 139 || A &gt;= 204) { BCdash = exterior_tiles_2; }</td>
+<td class="comment" rowspan="4">if (Adash &lt; 139 || Adash &gt;= 204) goto chosen;</td>
 </tr>
 <tr>
 <td class="address"><a name="43452"></a>A9BC</td>
@@ -94,17 +101,17 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43458"></a>A9C2</td>
 <td class="instruction">LD BC,$90F8</td>
-<td class="comment">else { BCdash = exterior_tiles_3; }</td>
+<td class="comment">BCdash = &amp;exterior_tiles_3[0];</td>
 </tr>
 <tr>
 <td class="label"><a name="43461"></a>A9C5</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HLdash</td>
+<td class="comment">chosen: PUSH HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43462"></a>A9C6</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">A = tile_index;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43463"></a>A9C7</td>
@@ -134,17 +141,17 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43470"></a>A9CE</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment">PUSH DEdash</td>
+<td class="comment">PUSH DEdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43471"></a>A9CF</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment">EX DEdash,HLdash</td>
+<td class="comment">EX DEdash,HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43472"></a>A9D0</td>
 <td class="instruction">LD BC,$0018</td>
-<td class="comment">-</td>
+<td class="comment">BCdash = 24;</td>
 </tr>
 <tr>
 <td class="address"><a name="43475"></a>A9D3</td>
@@ -154,44 +161,47 @@ Plots a tile to the buffer.
 <tr>
 <td class="label"><a name="43477"></a>A9D5</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">do {</td>
+<td class="comment">do { -</td>
 </tr>
 <tr>
 <td class="address"><a name="43478"></a>A9D6</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="2">*HLdash = *DEdash++;</td>
+<td class="comment">Adash = *DEdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43479"></a>A9D7</td>
 <td class="instruction">LD (HL),A</td>
+<td class="comment">*HLdash = Adash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43480"></a>A9D8</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment" rowspan="3">HLdash += 24; // stride</td>
+<td class="comment">HLdash += BCdash; // stride</td>
 </tr>
 <tr>
 <td class="address"><a name="43481"></a>A9D9</td>
 <td class="instruction">INC E</td>
+<td class="comment">E++;</td>
 </tr>
 <tr>
 <td class="address"><a name="43482"></a>A9DA</td>
 <td class="instruction">EX AF,AF'</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="43483"></a>A9DB</td>
 <td class="instruction">DEC A</td>
-<td class="comment">} while (--A);</td>
+<td class="comment">A--;</td>
 </tr>
 <tr>
 <td class="address"><a name="43484"></a>A9DC</td>
 <td class="instruction">JP NZ,$A9D5</td>
-<td class="comment">}</td>
+<td class="comment">} while (A);</td>
 </tr>
 <tr>
 <td class="address"><a name="43487"></a>A9DF</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DEdash</td>
+<td class="comment">POP DEdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43488"></a>A9E0</td>
@@ -201,7 +211,7 @@ Plots a tile to the buffer.
 <tr>
 <td class="address"><a name="43489"></a>A9E1</td>
 <td class="instruction">POP HL</td>
-<td class="comment">POP HLdash</td>
+<td class="comment">POP HLdash;</td>
 </tr>
 <tr>
 <td class="address"><a name="43490"></a>A9E2</td>
@@ -222,9 +232,9 @@ Plots a tile to the buffer.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

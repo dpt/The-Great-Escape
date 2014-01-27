@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B866</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -45,7 +46,7 @@ searchlight related.
 <tr>
 <td class="address"><a name="47210"></a>B86A</td>
 <td class="instruction">BIT 6,A</td>
-<td class="comment" rowspan="15">if ((A &amp; (1&lt;&lt;6)) == 0) } setup_sprite_plotting(); if (!Z) goto searchlight; suspected_mask_stuff(); {  if (searchlight_state != searchlight_STATE_OFF) searchlight_sub(); } A = IY[0x1E]; {  if (A != 3) { } masked_sprite_plotter_24_wide(); goto searchlight; } if (Z) masked_sprite_plotter_16_wide_case_1(); // odd to test for Z since it's always set goto searchlight;</td>
+<td class="comment" rowspan="15">if ((A &amp; (1&lt;&lt;6)) == 0) } setup_sprite_plotting(); if (!Z) goto searchlight; mask_stuff(); {  if (searchlight_state != searchlight_STATE_OFF) searchlight_sub(); } A = IY[0x1E]; {  if (A != 3) { } masked_sprite_plotter_24_wide(); goto searchlight; } if (Z) masked_sprite_plotter_16_wide_case_1(); // odd to test for Z since it's always set goto searchlight;</td>
 </tr>
 <tr>
 <td class="address"><a name="47212"></a>B86C</td>
@@ -116,7 +117,7 @@ searchlight related.
 <tr>
 <td class="address"><a name="47252"></a>B894</td>
 <td class="instruction">CALL <a class="link" href="47382.html">$B916</a></td>
-<td class="comment">suspected_mask_stuff();</td>
+<td class="comment">mask_stuff();</td>
 </tr>
 <tr>
 <td class="address"><a name="47255"></a>B897</td>
@@ -137,9 +138,9 @@ searchlight related.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>

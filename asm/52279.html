@@ -4,13 +4,14 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at CC37</title>
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 </head>
 <body class="disassembly">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img src="../images/logo.png" alt="The Great Escape" /></a></td>
+<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="headerText">Routines</td>
 </tr>
 </table>
@@ -57,7 +58,7 @@ Used by the routine at <a class="link" href="51346.html">C892</a>.
 <a name="52283"></a>
 <div class="comments">
 <div class="paragraph">
-Don't follow the player if he's dressed as a guard
+Don't follow non-players dressed as guards.
 </div>
 </div>
 </td>
@@ -303,7 +304,7 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="label"><a name="52370"></a>CC92</td>
 <td class="instruction">LD A,($A138)</td>
-<td class="comment" rowspan="12">else { if (!red_flag) } A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors {     if (A &lt; 32) // vertical offset } IY[1] = 2; // cutting wire flag? or could this have different meaning for AI characters only? return; } {   bell = bell_RING_PERPETUAL; } guards_persue_prisoners(); return;</td>
+<td class="comment" rowspan="8">if (!red_flag) } A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors {  if (A &lt; 32) // vertical offset } IY[1] = vischar_BYTE1_BIT1; return;</td>
 </tr>
 <tr>
 <td class="address"><a name="52373"></a>CC95</td>
@@ -336,6 +337,7 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="label"><a name="52387"></a>CCA3</td>
 <td class="instruction">XOR A</td>
+<td class="comment" rowspan="2">bell = bell_RING_PERPETUAL;</td>
 </tr>
 <tr>
 <td class="address"><a name="52388"></a>CCA4</td>
@@ -344,10 +346,12 @@ Don't follow the player if he's dressed as a guard
 <tr>
 <td class="address"><a name="52391"></a>CCA7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
+<td class="comment">guards_persue_prisoners();</td>
 </tr>
 <tr>
 <td class="address"><a name="52394"></a>CCAA</td>
 <td class="instruction">RET</td>
+<td class="comment">return;</td>
 </tr>
 </table>
 <table class="prevNext">
@@ -358,9 +362,9 @@ Don't follow the player if he's dressed as a guard
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20130902</div>
+<div class="release">The incomplete The Great Escape disassembly 20140126</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.3.2.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
 </div>
 </body>
 </html>
