@@ -167,7 +167,7 @@ Cutting wire fence.
 <tr>
 <td class="address"><a name="40503"></a>9E37</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment" rowspan="16">if (player_in_bed == 0) } {    if (!player_in_breakfast) goto not_breakfast; } {    (word) $8002 = 0x002B; // set target location? } {    (word) $800F = 0x0034; // set Y pos } {    (word) $8011 = 0x003E; // set X pos } {    roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;} HL = &amp;player_in_breakfast;</td>
+<td class="comment" rowspan="16">if (player_in_bed == 0) } {    if (!player_in_breakfast) goto not_bed_or_breakfast; } {    (word) $8002 = 0x002B; // set target location? } {    (word) $800F = 0x0034; // set Y pos } {    (word) $8011 = 0x003E; // set X pos } {    roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;} HL = &amp;player_in_breakfast;</td>
 </tr>
 <tr>
 <td class="address"><a name="40506"></a>9E3A</td>
@@ -317,7 +317,7 @@ Player was in bed.
 <tr>
 <td class="label"><a name="40581"></a>9E85</td>
 <td class="instruction">POP AF</td>
-<td class="comment">not_breakfast: // ... (pop af -- restores user input value stored at $9E36)</td>
+<td class="comment">not_bed_or_breakfast: // ... (pop af -- restores user input value stored at $9E36)</td>
 </tr>
 <tr>
 <td class="address"><a name="40582"></a>9E86</td>

@@ -758,7 +758,7 @@
 <td class="mapPage">161</td>
 <td class="mapByte">95</td>
 <td class="routine"><a class="link" name="41311" href="../asm/41311.html">A15F</a></td>
-<td class="routineDesc">set_game_screen_attributes</td>
+<td class="routineDesc">set_game_window_attributes</td>
 </tr>
 <tr>
 <td class="mapPage">161</td>
@@ -878,13 +878,13 @@
 <td class="mapPage">163</td>
 <td class="mapByte">95</td>
 <td class="routine"><a class="link" name="41823" href="../asm/41823.html">A35F</a></td>
-<td class="routineDesc">sub_A35F</td>
+<td class="routineDesc">set_location_A35F</td>
 </tr>
 <tr>
 <td class="mapPage">163</td>
 <td class="mapByte">115</td>
 <td class="routine"><a class="link" name="41843" href="../asm/41843.html">A373</a></td>
-<td class="routineDesc">sub_A373</td>
+<td class="routineDesc">set_location_A373</td>
 </tr>
 <tr>
 <td class="mapPage">163</td>
@@ -1028,7 +1028,7 @@
 <td class="mapPage">167</td>
 <td class="mapByte">199</td>
 <td class="data"><a class="link" name="42951" href="../asm/42951.html">A7C7</a></td>
-<td class="dataDesc">plot_game_screen_x</td>
+<td class="dataDesc">plot_game_window_x</td>
 </tr>
 <tr>
 <td class="mapPage">167</td>
@@ -1040,49 +1040,49 @@
 <td class="mapPage">168</td>
 <td class="mapByte">10</td>
 <td class="routine"><a class="link" name="43018" href="../asm/43018.html">A80A</a></td>
-<td class="routineDesc">supertile_plot_1</td>
+<td class="routineDesc">supertile_plot_horizontal_1</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">25</td>
 <td class="routine"><a class="link" name="43033" href="../asm/43033.html">A819</a></td>
-<td class="routineDesc">supertile_plot_2</td>
+<td class="routineDesc">supertile_plot_horizontal_2</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">38</td>
 <td class="routine"><a class="link" name="43046" href="../asm/43046.html">A826</a></td>
-<td class="routineDesc">supertile_plot_common</td>
+<td class="routineDesc">supertile_plot_horizontal_common</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">162</td>
 <td class="routine"><a class="link" name="43170" href="../asm/43170.html">A8A2</a></td>
-<td class="routineDesc">sub_A8A2</td>
+<td class="routineDesc">supertile_plot_all</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">207</td>
 <td class="routine"><a class="link" name="43215" href="../asm/43215.html">A8CF</a></td>
-<td class="routineDesc">supertile_plot_3</td>
+<td class="routineDesc">supertile_plot_vertical_1</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">231</td>
 <td class="routine"><a class="link" name="43239" href="../asm/43239.html">A8E7</a></td>
-<td class="routineDesc">supertile_plot_4</td>
+<td class="routineDesc">supertile_plot_vertical_2</td>
 </tr>
 <tr>
 <td class="mapPage">168</td>
 <td class="mapByte">244</td>
 <td class="routine"><a class="link" name="43252" href="../asm/43252.html">A8F4</a></td>
-<td class="routineDesc">supertile_plot_common_A8F4</td>
+<td class="routineDesc">supertile_plot_vertical_common</td>
 </tr>
 <tr>
 <td class="mapPage">169</td>
 <td class="mapByte">160</td>
 <td class="routine"><a class="link" name="43424" href="../asm/43424.html">A9A0</a></td>
-<td class="routineDesc">call_plot_tile_inc_de</td>
+<td class="routineDesc">plot_tile_then_advance</td>
 </tr>
 <tr>
 <td class="mapPage">169</td>
@@ -1094,37 +1094,37 @@
 <td class="mapPage">169</td>
 <td class="mapByte">228</td>
 <td class="routine"><a class="link" name="43492" href="../asm/43492.html">A9E4</a></td>
-<td class="routineDesc">map_shunt_1</td>
+<td class="routineDesc">map_shunt_horizontal_1</td>
 </tr>
 <tr>
 <td class="mapPage">170</td>
 <td class="mapByte">5</td>
 <td class="routine"><a class="link" name="43525" href="../asm/43525.html">AA05</a></td>
-<td class="routineDesc">map_unshunt_1</td>
+<td class="routineDesc">map_shunt_horizontal_2</td>
 </tr>
 <tr>
 <td class="mapPage">170</td>
 <td class="mapByte">38</td>
 <td class="routine"><a class="link" name="43558" href="../asm/43558.html">AA26</a></td>
-<td class="routineDesc">map_shunt_2</td>
+<td class="routineDesc">map_shunt_diagonal_1_2</td>
 </tr>
 <tr>
 <td class="mapPage">170</td>
 <td class="mapByte">75</td>
 <td class="routine"><a class="link" name="43595" href="../asm/43595.html">AA4B</a></td>
-<td class="routineDesc">map_unshunt_2</td>
+<td class="routineDesc">map_shunt_vertical_1</td>
 </tr>
 <tr>
 <td class="mapPage">170</td>
 <td class="mapByte">108</td>
 <td class="routine"><a class="link" name="43628" href="../asm/43628.html">AA6C</a></td>
-<td class="routineDesc">map_shunt_3</td>
+<td class="routineDesc">map_shunt_vertical_2</td>
 </tr>
 <tr>
 <td class="mapPage">170</td>
 <td class="mapByte">141</td>
 <td class="routine"><a class="link" name="43661" href="../asm/43661.html">AA8D</a></td>
-<td class="routineDesc">map_unshunt_3</td>
+<td class="routineDesc">map_shunt_diagonal_2_1</td>
 </tr>
 <tr>
 <td class="mapPage">170</td>
@@ -1142,13 +1142,13 @@
 <td class="mapPage">171</td>
 <td class="mapByte">106</td>
 <td class="data"><a class="link" name="43882" href="../asm/43882.html">AB6A</a></td>
-<td class="dataDesc">game_screen_attribute</td>
+<td class="dataDesc">game_window_attribute</td>
 </tr>
 <tr>
 <td class="mapPage">171</td>
 <td class="mapByte">107</td>
 <td class="routine"><a class="link" name="43883" href="../asm/43883.html">AB6B</a></td>
-<td class="routineDesc">choose_game_screen_attributes</td>
+<td class="routineDesc">choose_game_window_attributes</td>
 </tr>
 <tr>
 <td class="mapPage">171</td>
@@ -1256,7 +1256,7 @@
 <td class="mapPage">177</td>
 <td class="mapByte">199</td>
 <td class="routine"><a class="link" name="45511" href="../asm/45511.html">B1C7</a></td>
-<td class="routineDesc">BC_becomes_A_times_8</td>
+<td class="routineDesc">multiply_by_8</td>
 </tr>
 <tr>
 <td class="mapPage">177</td>
@@ -1280,7 +1280,7 @@
 <td class="mapPage">178</td>
 <td class="mapByte">149</td>
 <td class="routine"><a class="link" name="45717" href="../asm/45717.html">B295</a></td>
-<td class="routineDesc">BC_becomes_A_times_4</td>
+<td class="routineDesc">multiply_by_4</td>
 </tr>
 <tr>
 <td class="mapPage">178</td>
@@ -1460,7 +1460,7 @@
 <td class="mapPage">186</td>
 <td class="mapByte">205</td>
 <td class="routine"><a class="link" name="47821" href="../asm/47821.html">BACD</a></td>
-<td class="routineDesc">sub_BACD</td>
+<td class="routineDesc">scale_val</td>
 </tr>
 <tr>
 <td class="mapPage">186</td>
@@ -1598,7 +1598,7 @@
 <td class="mapPage">203</td>
 <td class="mapByte">117</td>
 <td class="routine"><a class="link" name="52085" href="../asm/52085.html">CB75</a></td>
-<td class="routineDesc">BC_becomes_A</td>
+<td class="routineDesc">multiply_by_1</td>
 </tr>
 <tr>
 <td class="mapPage">203</td>
@@ -1718,7 +1718,7 @@
 <td class="mapPage">220</td>
 <td class="mapByte">65</td>
 <td class="routine"><a class="link" name="56385" href="../asm/56385.html">DC41</a></td>
-<td class="routineDesc">sub_DC41</td>
+<td class="routineDesc">setup_item_plotting</td>
 </tr>
 <tr>
 <td class="mapPage">221</td>
@@ -1754,13 +1754,13 @@
 <td class="mapPage">224</td>
 <td class="mapByte">224</td>
 <td class="data"><a class="link" name="57568" href="../asm/57568.html">E0E0</a></td>
-<td class="dataDesc">masked_sprite_plotter_16_jump_table</td>
+<td class="dataDesc">masked_sprite_plotter_16_enables</td>
 </tr>
 <tr>
 <td class="mapPage">224</td>
 <td class="mapByte">236</td>
 <td class="data"><a class="link" name="57580" href="../asm/57580.html">E0EC</a></td>
-<td class="dataDesc">masked_sprite_plotter_24_jump_table</td>
+<td class="dataDesc">masked_sprite_plotter_24_enables</td>
 </tr>
 <tr>
 <td class="mapPage">225</td>
@@ -1862,13 +1862,13 @@
 <td class="mapPage">237</td>
 <td class="mapByte">211</td>
 <td class="data"><a class="link" name="60883" href="../asm/60883.html">EDD3</a></td>
-<td class="dataDesc">game_screen_start_addresses</td>
+<td class="dataDesc">game_window_start_addresses</td>
 </tr>
 <tr>
 <td class="mapPage">238</td>
 <td class="mapByte">211</td>
 <td class="routine"><a class="link" name="61139" href="../asm/61139.html">EED3</a></td>
-<td class="routineDesc">plot_game_screen</td>
+<td class="routineDesc">plot_game_window</td>
 </tr>
 <tr>
 <td class="mapPage">239</td>
@@ -2012,7 +2012,7 @@
 <td class="mapPage">243</td>
 <td class="mapByte">53</td>
 <td class="routine"><a class="link" name="62261" href="../asm/62261.html">F335</a></td>
-<td class="routineDesc">wipe_game_screen</td>
+<td class="routineDesc">wipe_game_window</td>
 </tr>
 <tr>
 <td class="mapPage">243</td>

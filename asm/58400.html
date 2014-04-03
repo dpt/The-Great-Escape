@@ -365,7 +365,7 @@ Sets sprites up for plotting.
 <tr>
 <td class="address"><a name="58506"></a>E48A</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="7">if (A == 3) { // 3 =&gt; 16 wide (4 =&gt; 24 wide) } {  ($E2C2) = E; // self-modify } ($E363) = E; // self-modify A = 3; HL = masked_sprite_plotter_16_jump_table;</td>
+<td class="comment" rowspan="7">if (A == 3) { // 3 =&gt; 16 wide (4 =&gt; 24 wide) } {  ($E2C2) = E; // self-modify } ($E363) = E; // self-modify A = 3; HL = masked_sprite_plotter_16_enables;</td>
 </tr>
 <tr>
 <td class="address"><a name="58508"></a>E48C</td>
@@ -399,17 +399,17 @@ Sets sprites up for plotting.
 <tr>
 <td class="label"><a name="58524"></a>E49C</td>
 <td class="instruction">LD A,E</td>
-<td class="comment">A = E;</td>
+<td class="comment">-</td>
 </tr>
 <tr>
 <td class="address"><a name="58525"></a>E49D</td>
 <td class="instruction">LD ($E121),A</td>
-<td class="comment">($E121) = A; // self-modify</td>
+<td class="comment">($E121) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58528"></a>E4A0</td>
 <td class="instruction">LD ($E1E2),A</td>
-<td class="comment">($E1E2) = A; // self-modify</td>
+<td class="comment">($E1E2) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="address"><a name="58531"></a>E4A3</td>
@@ -419,7 +419,7 @@ Sets sprites up for plotting.
 <tr>
 <td class="address"><a name="58533"></a>E4A5</td>
 <td class="instruction">LD HL,$E0EC</td>
-<td class="comment">HL = masked_sprite_plotter_24_jump_table; }</td>
+<td class="comment">HL = masked_sprite_plotter_24_enables; }</td>
 </tr>
 <tr>
 <td class="label"><a name="58536"></a>E4A8</td>

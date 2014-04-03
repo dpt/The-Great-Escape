@@ -381,7 +381,7 @@ Moves the map when the character walks.
 <tr>
 <td class="label"><a name="43818"></a>AB2A</td>
 <td class="instruction">LD ($A7C7),HL</td>
-<td class="comment">plot_game_screen_x = HL;</td>
+<td class="comment">plot_game_window_x = HL;</td>
 </tr>
 <tr>
 <td class="address"><a name="43821"></a>AB2D</td>
@@ -434,7 +434,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43834"></a>AB3A</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto map_unshunt_2;</td>
+<td class="comment" rowspan="2">if (A == 0) goto map_shunt_vertical_1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43835"></a>AB3B</td>
@@ -452,7 +452,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43841"></a>AB41</td>
 <td class="instruction">JP <a class="link" href="43492.html">$A9E4</a></td>
-<td class="comment">goto map_shunt_1;</td>
+<td class="comment">goto map_shunt_horizontal_1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43844"></a>AB44</td>
@@ -462,7 +462,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43845"></a>AB45</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="2">if (A == 0) goto map_shunt_2;</td>
+<td class="comment" rowspan="2">if (A == 0) goto map_shunt_diagonal_1_2;</td>
 </tr>
 <tr>
 <td class="address"><a name="43846"></a>AB46</td>
@@ -480,7 +480,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43852"></a>AB4C</td>
 <td class="instruction">JP <a class="link" href="43525.html">$AA05</a></td>
-<td class="comment">goto map_unshunt_1;</td>
+<td class="comment">goto map_shunt_horizontal_2;</td>
 </tr>
 <tr>
 <td class="address"><a name="43855"></a>AB4F</td>
@@ -490,7 +490,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43856"></a>AB50</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="2">if (A == 3) goto map_shunt_3;</td>
+<td class="comment" rowspan="2">if (A == 3) goto map_shunt_vertical_2;</td>
 </tr>
 <tr>
 <td class="address"><a name="43858"></a>AB52</td>
@@ -504,7 +504,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43862"></a>AB56</td>
 <td class="instruction">JP NC,<a class="link" href="43525.html">$AA05</a></td>
-<td class="comment">JP NC,map_unshunt_1;</td>
+<td class="comment">JP NC,map_shunt_horizontal_2;</td>
 </tr>
 <tr>
 <td class="address"><a name="43865"></a>AB59</td>
@@ -519,7 +519,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43867"></a>AB5B</td>
 <td class="instruction">CP $01</td>
-<td class="comment" rowspan="2">if (A == 1) goto map_shunt_1;</td>
+<td class="comment" rowspan="2">if (A == 1) goto map_shunt_horizontal_1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43869"></a>AB5D</td>
@@ -528,7 +528,7 @@ Moves the map when the character walks.
 <tr>
 <td class="address"><a name="43872"></a>AB60</td>
 <td class="instruction">CP $03</td>
-<td class="comment" rowspan="2">if (A == 3) goto map_unshunt_3;</td>
+<td class="comment" rowspan="2">if (A == 3) goto map_shunt_diagonal_2_1;</td>
 </tr>
 <tr>
 <td class="address"><a name="43874"></a>AB62</td>

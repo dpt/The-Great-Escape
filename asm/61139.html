@@ -22,7 +22,7 @@
 <td class="next">Next: <a class="link" href="61338.html">EF9A</a></td>
 </tr>
 </table>
-<div class="description">EED3: plot_game_screen</div>
+<div class="description">EED3: plot_game_window</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -41,7 +41,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61143"></a>EED7</td>
 <td class="instruction">LD A,($A7C8)</td>
-<td class="comment">A = *(&amp;plot_game_screen_x + 1);</td>
+<td class="comment">A = *(&amp;plot_game_window_x + 1);</td>
 </tr>
 <tr>
 <td class="address"><a name="61146"></a>EEDA</td>
@@ -55,7 +55,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61150"></a>EEDE</td>
 <td class="instruction">LD HL,$F291</td>
-<td class="comment" rowspan="6">HL = $F291 + plot_game_screen_x;</td>
+<td class="comment" rowspan="6">HL = $F291 + plot_game_window_x;</td>
 </tr>
 <tr>
 <td class="address"><a name="61153"></a>EEE1</td>
@@ -80,7 +80,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61161"></a>EEE9</td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment">SP = game_screen_start_addresses;</td>
+<td class="comment">SP = game_window_start_addresses;</td>
 </tr>
 <tr>
 <td class="address"><a name="61164"></a>EEEC</td>
@@ -235,7 +235,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="label"><a name="61223"></a>EF27</td>
 <td class="instruction">LD HL,$F290</td>
-<td class="comment" rowspan="6">unaligned: HL = $F290 + plot_game_screen_x; // screen buffer start address</td>
+<td class="comment" rowspan="6">unaligned: HL = $F290 + plot_game_window_x; // screen buffer start address</td>
 </tr>
 <tr>
 <td class="address"><a name="61226"></a>EF2A</td>
@@ -269,7 +269,7 @@ Used by the routines at <a class="link" href="40312.html">9D78</a> and <a class=
 <tr>
 <td class="address"><a name="61236"></a>EF34</td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment">SP = game_screen_start_addresses;</td>
+<td class="comment">SP = game_window_start_addresses;</td>
 </tr>
 <tr>
 <td class="address"><a name="61239"></a>EF37</td>

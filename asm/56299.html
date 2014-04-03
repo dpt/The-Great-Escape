@@ -28,7 +28,7 @@
 <td class="routineComment" colspan="3">
 <div class="details">
 <div class="paragraph">
-Iterates over all items. Uses BC_becomes_A_times_8.
+Iterates over all items. Uses multiply_by_8.
 </div>
 </div>
 <table class="output">
@@ -56,7 +56,7 @@ Iterates over all items. Uses BC_becomes_A_times_8.
 <tr>
 <td class="label"><a name="56305"></a>DBF1</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="56">do { if ((*Outer_HL &amp; (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) == (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) {} HL = Outer_HL; - {  HLdash = *++HL * 8; // y position } A &amp;= A; // clear carry? HLdash -= BCdash; // where is BCdash initialised? {  if (HLdash &gt; 0) { } HL++; // x position {    HLdash = *HL * 8; } - - // not clearing carry? HLdash -= BCdash; // where is BCdash initialised? {    if (HLdash &gt; 0) { } {      HLdash = HL; } {      DEdash = *HLdash-- * 8; // x position } {      BCdash = *HLdash-- * 8; // y position } {      HLdash--; // point to item } {      IY = HLdash; // IY is not banked } - // fetch iter count - {      A = (16 - B) | (1&lt;&lt;6); } EX AF,AF' } } // unpaired // returns the value in Adash - - {  } Outer_HL += 7; // stride } while (--B);</td>
+<td class="comment" rowspan="56">do { if ((*Outer_HL &amp; (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) == (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) {} HL = Outer_HL; - {  HLdash = *++HL * 8; // y position } A &amp;= A; // clear carry? HLdash -= BCdash; // where is BCdash initialised? {  if (HLdash &gt; 0) { } HL++; // x position {    HLdash = *HL * 8; } - - // not clearing carry? HLdash -= BCdash; // where is BCdash initialised? {    if (HLdash &gt; 0) { } {      HLdash = HL; } {      DEdash = *HLdash-- * 8; // x position } {      BCdash = *HLdash-- * 8; // y position } {      HLdash--; // point to item } {      IY = HLdash; // IY is not banked // sampled IY = $771C,7715 (pointing into item_structs)} - // fetch iter count - {      A = (16 - B) | (1&lt;&lt;6); } EX AF,AF' } } // unpaired // returns the value in Adash - - {  } Outer_HL += 7; // stride } while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="56307"></a>DBF3</td>

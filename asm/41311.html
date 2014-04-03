@@ -22,7 +22,7 @@
 <td class="next">Next: <a class="link" href="41331.html">A173</a></td>
 </tr>
 </table>
-<div class="description">A15F: set_game_screen_attributes</div>
+<div class="description">A15F: set_game_window_attributes</div>
 <table class="disassembly">
 <tr>
 <td class="routineComment" colspan="3">
@@ -42,7 +42,7 @@ Starting at $5847, set 23 columns of 16 rows to A.
 <tr>
 <td class="label"><a name="41311"></a>A15F</td>
 <td class="instruction">LD HL,$5847</td>
-<td class="comment" rowspan="11">memset($5847, A, 23 * 16);</td>
+<td class="comment" rowspan="11">memset($5847, A, 23 * 16); // WRONG! FIXME</td>
 </tr>
 <tr>
 <td class="address"><a name="41314"></a>A162</td>

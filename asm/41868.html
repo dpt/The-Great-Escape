@@ -40,6 +40,10 @@ Walk non-player visible characters, ...
 <td class="register">Adash</td>
 <td class="registerContents">?</td>
 </tr>
+<tr>
+<td class="register">C</td>
+<td class="registerContents">?</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -131,7 +135,7 @@ Unreferenced byte.
 <tr>
 <td class="label"><a name="41898"></a>A3AA</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="5">not_set: HL += 5; // $8005 etc.</td>
+<td class="comment" rowspan="5">not_set: HL += 5; // HL = charstruct-&gt;target</td>
 </tr>
 <tr>
 <td class="address"><a name="41899"></a>A3AB</td>
@@ -181,7 +185,7 @@ Unreferenced byte.
 <tr>
 <td class="address"><a name="41912"></a>A3B8</td>
 <td class="instruction">CALL <a class="link" href="41965.html">$A3ED</a></td>
-<td class="comment">store_banked_A_then_C_at_HL();</td>
+<td class="comment">store_banked_A_then_C_at_HL(); // HL = vischar-&gt;target</td>
 </tr>
 </table>
 <table class="prevNext">

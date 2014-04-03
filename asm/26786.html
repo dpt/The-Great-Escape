@@ -84,7 +84,7 @@ Looks like it's called to transition to a new room.
 <tr>
 <td class="address"><a name="26798"></a>68AE</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="13">if (A == 0) { // outdoors } B = 3; // 3 iterations do { PUSH BC A = *DE++; BC_becomes_A_times_4(); {    *HL++ = C; } {    *HL++ = B; } POP BC while (--B);</td>
+<td class="comment" rowspan="13">if (A == 0) { // outdoors } B = 3; // 3 iterations do { PUSH BC A = *DE++; multiply_by_4(); {    *HL++ = C; } {    *HL++ = B; } POP BC while (--B);</td>
 </tr>
 <tr>
 <td class="address"><a name="26799"></a>68AF</td>
