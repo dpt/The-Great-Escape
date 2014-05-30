@@ -5399,7 +5399,7 @@ R $AAB2 O:HL == map_position
   $AAE1 PUSH AF
   $AAE2 BC = 0x7C00;
   $AAE5 if (A >= 2) B = 0x00;
-  $AAEB else if (A != 1 && A != 2) C = 0xC0;
+  $AAEB if (A != 1 && A != 2) C = 0xC0;
   $AAF5 HL = map_position;
   $AAF8 if (L == C || H == B) {
   $AAFC   popret: POP AF
