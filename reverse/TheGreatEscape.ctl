@@ -1,7 +1,7 @@
 ;
 ; SkoolKit control file for The Great Escape by Denton Designs.
 ;
-; This disassembly copyright (c) David Thomas, 2012-2013. <dave@davespace.co.uk>
+; This disassembly copyright (c) David Thomas, 2012-2014. <dave@davespace.co.uk>
 ;
 ; To build the HTML disassembly, create a z80 snapshot of The Great Escape
 ; named TheGreatEscape.z80, and run these commands from the top-level SkoolKit
