@@ -4647,8 +4647,7 @@ R $A38C I:C     ?
   $A3A6 POP BC
   $A3A7 goto exit;
 
-U $A3A9,1 unused_A3A9
-D $A3A9 Unreferenced byte.
+B $A3A9 Unreferenced byte.
 
   $A3AA not_set: HL += 5; // HL = charstruct->target
   $A3AF store_banked_A_then_C_at_HL();
@@ -8006,7 +8005,8 @@ D $C6F2 Player character.
   $C6F9   char_ge_12: POP DE
   $C6FA   goto character_event; // exit via
 ;
-U $C6FD,2   DEFB $18,$6F  ; UNUSED? }
+D $C6FD   Two unused bytes.
+B $C6FD,2   }
 ;
   $C6FF if (A == 0x80) {
   $C704   POP DE
@@ -8118,7 +8118,7 @@ D $C7C6 Makes characters sit, sleep or other things TBD.
 ; sampled HL = 80a2, 80e2, 8042, 8062, 76b8, 76bf, 80c2, 80e2, 8022, 8002, 8082, 766b,  (vischar+2 OR charstruct+5)
 R $C7C6 I:HL Points to character_struct.unk2 or vischar.target.
 
-// something isn't right here. i've sampled HL at this point and we're receiving a location structure, either from character_struct or vischar. next we're comparing the first byte /as if/ it's a character. this was decided in some very early investigations so could be wrong.
+; something isn't right here. i've sampled HL at this point and we're receiving a location structure, either from character_struct or vischar. next we're comparing the first byte /as if/ it's a character. this was decided in some very early investigations so could be wrong.
 
   $C7C6 A = *HL;
   $C7C7 if (A >= character_7_prisoner  && A <= character_12_prisoner) goto character_sleeps;
@@ -8535,7 +8535,7 @@ R $CB23 I:HL ?
   $CB5C   HL--;
   $CB5D   A = 0;
   $CB5E   return; } // strictly the terminating brace is after the following unreferenced bytes
-U $CB5F,2 Unreferenced bytes.
+B $CB5F Unreferenced bytes.
   $CB61 if (A == 128) {
   $CB66   IY[1] |= vischar_BYTE1_BIT6; }
   $CB6A POP DE
@@ -9401,7 +9401,7 @@ D $E0B7 #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food)
 
 ; ------------------------------------------------------------------------------
 
-z $E0D7 unused_E0D7
+s $E0D7 unused_E0D7
 D $E0D7 Unreferenced byte.
 
 ; ------------------------------------------------------------------------------
@@ -10819,7 +10819,7 @@ D $FDE1 Very first entry point used to shunt the game image down into its proper
 
 ; ------------------------------------------------------------------------------
 
-z $FDF3 unused_FDF3
+s $FDF3 unused_FDF3
 D $FDF3 Unreferenced bytes.
 
 ; ------------------------------------------------------------------------------
