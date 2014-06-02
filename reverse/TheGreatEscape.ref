@@ -11,12 +11,12 @@ GameDir=build/TheGreatEscape
 
 [Game]
 Game=The Great Escape
-Copyright=&copy; Denton Designs. Ocean. David Thomas.
-Release=The incomplete The Great Escape disassembly 20140530
-TitlePrefix=The incomplete
-TitleSuffix=disassembly
 Logo=#SCR,6,6,20,8(/images/logo)
 StyleSheet=TheGreatEscape.css
+Release=The incomplete The Great Escape disassembly 20140530
+Copyright=&copy; Denton Designs. Ocean. David Thomas.
+TitlePrefix=The incomplete
+TitleSuffix=disassembly
 
 [Links]
 DataMap=[Data] (just the data)
@@ -25,44 +25,7 @@ MemoryMap=[Everything] (routines, data, text and unused addresses)
 MessagesMap=[Messages] (just the text)
 RoutinesMap=[Routines] (just the routines)
 
-[Glossary:Super tiles]
-4x4 group of tile refs of which the main map is constructed.
-
-[Fact:unusedSupertiles:Unused super tiles]
-There are two unused supertiles. $4F and $9A.
-
-[Bug:bedROMwrite:Code which empties beds writes to ROM]
-The #REFS$A289, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
-
-[Bug:discoverOffByOne:Off-by-one in is_item_discoverable]
-The #REFS$CCCD, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
-
-[Bug:spotattr:Spotlight attribute]
-Sometimes the nighttime spotlight will set the attributes of the barbed wire game screen border.
-
-Not yet located the faulty code.
-
-[Bug:pauseclear:Pause doesn't always clear the screen]
-Pause doesn't always clear the full game screen. You get a two-row high sliver of pixels left behind.
-
-Not yet located the faulty code.
-
-[Bug:solitarymental:Player goes nuts in solitary]
-Sometimes the player will go nuts when put in solitary. He'll run up against the topmost corner of the room and keep running.
-
-Not yet located the faulty code.
-
-[Bug:bribePrisonerInLowerHut:Bribe prisoner and he turns into a boiler]
-"If you try and bribe a prisoner with the chocolate when you are in the lower of the 3 prisoner huts, he will walk towards you and as he does he will flash alternately as himself and a boiler." (zx1)
-
-Similarly (or possibly the exact same case): you can bribe boilers and crates. They change into characters and start walking around.
-
-[Bug:moreBugsFromWOS:More bugs mentioned on WOS]
-http://www.worldofspectrum.org/forums/showthread.php?t=38349
-"When the hero then moves through the fence automatically after cutting the wire, he can go garbled momentarily." (Bandit)
-"The dog sprite when walking down and right has one frame of incorrect height, 15 pixels instead of 14. This means that if you look closely below the dogs' rear legs, you should see 2 pixels from the next frame." (Bandit)
-"I got the lockpick and went to the solitary cell and picked the lock, i left an object in the cell (the radio) just to see what would happen. I was caught later somewhere i shouldn't and was sent to solitary. When the Commandant came to collect me he just stopped when he entered the room and everything stopped, obviously the programmers never thought anyone would so this!" (zx1)
-"the position of the moveable objects (stoves/crate) don't reset when starting a new game" (jp)
-"a0b8: jp $a0bb		;unnecessary instruction ($a0bb follows)" (bandit)
-"c902: jp nz, $c917	;jump if red (unnecessary jump, ret nz enough)" (bandit)
+[Index:Graphics:Graphics]
+Graphics
+GraphicGlitches
 
