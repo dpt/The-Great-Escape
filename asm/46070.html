@@ -4,111 +4,144 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B3F6</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="46049.html">B3E1</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="46049.html">B3E1</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#46070">Map</a></td>
-<td class="next">Next: <a class="link" href="46103.html">B417</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="46103.html">B417</a></span></td>
 </tr>
 </table>
 <div class="description">B3F6: action_shovel</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Player has tried to use the shovel item.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="46070"></a>B3F6</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46070"></a>B3F6</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="3">if (room_index != room_50_blocked_tunnel) return;</td>
+<td class="comment-11" rowspan="3">if (room_index != room_50_blocked_tunnel) return;</td>
 </tr>
 <tr>
-<td class="address"><a name="46073"></a>B3F9</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46073"></a>B3F9</td>
 <td class="instruction">CP $32</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46075"></a>B3FB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46075"></a>B3FB</td>
 <td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46076"></a>B3FC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46076"></a>B3FC</td>
 <td class="instruction">LD A,($7077)</td>
-<td class="comment" rowspan="3">if (roomdefn_50_blockage == 255) return; // blockage already cleared</td>
+<td class="comment-11" rowspan="3">if (roomdefn_50_blockage == 255) return; // blockage already cleared</td>
 </tr>
 <tr>
-<td class="address"><a name="46079"></a>B3FF</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46079"></a>B3FF</td>
 <td class="instruction">CP $FF</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46081"></a>B401</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46081"></a>B401</td>
 <td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46082"></a>B402</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46082"></a>B402</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">roomdefn_50_blockage = 255;</td>
+<td class="comment-11" rowspan="2">roomdefn_50_blockage = 255;</td>
 </tr>
 <tr>
-<td class="address"><a name="46084"></a>B404</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46084"></a>B404</td>
 <td class="instruction">LD ($7077),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46087"></a>B407</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46087"></a>B407</td>
 <td class="instruction">INC A</td>
-<td class="comment" rowspan="2">roomdefn_50_collapsed_tunnel_obj = 0; // remove blockage graphic</td>
+<td class="comment-11" rowspan="2">roomdefn_50_collapsed_tunnel_obj = 0; // remove blockage graphic</td>
 </tr>
 <tr>
-<td class="address"><a name="46088"></a>B408</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46088"></a>B408</td>
 <td class="instruction">LD ($708C),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46091"></a>B40B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46091"></a>B40B</td>
 <td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
-<td class="comment">setup_room();</td>
+<td class="comment-11" rowspan="1">setup_room();</td>
 </tr>
 <tr>
-<td class="address"><a name="46094"></a>B40E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46094"></a>B40E</td>
 <td class="instruction">CALL <a class="link" href="43883.html">$AB6B</a></td>
-<td class="comment">choose_game_window_attributes();</td>
+<td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
 </tr>
 <tr>
-<td class="address"><a name="46097"></a>B411</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46097"></a>B411</td>
 <td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
-<td class="comment">plot_interior_tiles();</td>
+<td class="comment-11" rowspan="1">plot_interior_tiles();</td>
 </tr>
 <tr>
-<td class="address"><a name="46100"></a>B414</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46100"></a>B414</td>
 <td class="instruction">JP <a class="link" href="41193.html">$A0E9</a></td>
-<td class="comment">increase_morale_by_10_score_by_50(); return; // exit via</td>
+<td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50(); return; // exit via</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="46049.html">B3E1</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="46049.html">B3E1</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#46070">Map</a></td>
-<td class="next">Next: <a class="link" href="46103.html">B417</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="46103.html">B417</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

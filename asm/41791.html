@@ -4,50 +4,68 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at A33F</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="41698.html">A2E2</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41698.html">A2E2</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41791">Map</a></td>
-<td class="next">Next: <a class="link" href="41809.html">A351</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41809.html">A351</a></span></td>
 </tr>
 </table>
 <div class="description">A33F: set_player_target_location</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a class="link" href="40737.html">9F21</a>, <a class="link" href="41411.html">A1C3</a>, <a class="link" href="41609.html">A289</a>, <a class="link" href="41698.html">A2E2</a>, <a class="link" href="41809.html">A351</a>, <a class="link" href="41976.html">A3F8</a>, <a class="link" href="42153.html">A4A9</a>, <a class="link" href="42167.html">A4B7</a>, <a class="link" href="42181.html">A4C5</a>, <a class="link" href="42200.html">A4D8</a> and <a class="link" href="42237.html">A4FD</a>.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="41791"></a>A33F</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41791"></a>A33F</td>
 <td class="instruction">LD A,($A13A)</td>
-<td class="comment" rowspan="3">if (morale_1) return;</td>
+<td class="comment-11" rowspan="3">if (morale_1) return;</td>
 </tr>
 <tr>
-<td class="address"><a name="41794"></a>A342</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41794"></a>A342</td>
 <td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41795"></a>A343</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41795"></a>A343</td>
 <td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="41796"></a>
 <div class="comments">
 <div class="paragraph">
@@ -57,54 +75,65 @@ This entry point is used by the routine at <a class="link" href="51142.html">C7C
 </td>
 </tr>
 <tr>
-<td class="label">A344</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41796"></a>A344</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment" rowspan="2">$8001 &amp;= ~vischar_BYTE1_BIT6;</td>
+<td class="comment-11" rowspan="2">$8001 &amp;= ~vischar_BYTE1_BIT6;</td>
 </tr>
 <tr>
-<td class="address"><a name="41799"></a>A347</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41799"></a>A347</td>
 <td class="instruction">RES 6,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41801"></a>A349</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41801"></a>A349</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">$8002 = B;</td>
+<td class="comment-11" rowspan="2">$8002 = B;</td>
 </tr>
 <tr>
-<td class="address"><a name="41802"></a>A34A</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41802"></a>A34A</td>
 <td class="instruction">LD (HL),B</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41803"></a>A34B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41803"></a>A34B</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">$8003 = C;</td>
+<td class="comment-11" rowspan="2">$8003 = C;</td>
 </tr>
 <tr>
-<td class="address"><a name="41804"></a>A34C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41804"></a>A34C</td>
 <td class="instruction">LD (HL),C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41805"></a>A34D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41805"></a>A34D</td>
 <td class="instruction">CALL <a class="link" href="41915.html">$A3BB</a></td>
-<td class="comment">sub_A3BB();</td>
+<td class="comment-11" rowspan="1">sub_A3BB();</td>
 </tr>
 <tr>
-<td class="address"><a name="41808"></a>A350</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41808"></a>A350</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="41698.html">A2E2</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41698.html">A2E2</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41791">Map</a></td>
-<td class="next">Next: <a class="link" href="41809.html">A351</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41809.html">A351</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

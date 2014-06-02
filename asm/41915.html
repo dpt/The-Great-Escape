@@ -4,188 +4,252 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at A3BB</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="41868.html">A38C</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41868.html">A38C</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41915">Map</a></td>
-<td class="next">Next: <a class="link" href="41965.html">A3ED</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41965.html">A3ED</a></span></td>
 </tr>
 </table>
 <div class="description">A3BB: sub_A3BB</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a class="link" href="41791.html">A33F</a>.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="41915"></a>A3BB</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41915"></a>A3BB</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">byte_A13E = 0;</td>
+<td class="comment-11" rowspan="2">byte_A13E = 0;</td>
 </tr>
 <tr>
-<td class="address"><a name="41916"></a>A3BC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41916"></a>A3BC</td>
 <td class="instruction">LD ($A13E),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41919"></a>A3BF</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41919"></a>A3BF</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment">PUSH BC</td>
+<td class="comment-11" rowspan="1">PUSH BC</td>
 </tr>
 <tr>
-<td class="address"><a name="41920"></a>A3C0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41920"></a>A3C0</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
 </tr>
 <tr>
-<td class="address"><a name="41921"></a>A3C1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41921"></a>A3C1</td>
 <td class="instruction">DEC L</td>
-<td class="comment">HL--;</td>
+<td class="comment-11" rowspan="1">HL--;</td>
 </tr>
 <tr>
-<td class="address"><a name="41922"></a>A3C2</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41922"></a>A3C2</td>
 <td class="instruction">CALL <a class="link" href="50769.html">$C651</a></td>
-<td class="comment">sub_C651();</td>
+<td class="comment-11" rowspan="1">sub_C651();</td>
 </tr>
 <tr>
-<td class="address"><a name="41925"></a>A3C5</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41925"></a>A3C5</td>
 <td class="instruction">POP DE</td>
-<td class="comment">POP DE  // DE = the HL stored at $A3C0</td>
+<td class="comment-11" rowspan="1">POP DE  // DE = the HL stored at $A3C0</td>
 </tr>
 <tr>
-<td class="address"><a name="41926"></a>A3C6</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41926"></a>A3C6</td>
 <td class="instruction">INC E</td>
-<td class="comment">DE++;</td>
+<td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="address"><a name="41927"></a>A3C7</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41927"></a>A3C7</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI // *DE++ = *HL++; BC--;</td>
+<td class="comment-11" rowspan="1">LDI // *DE++ = *HL++; BC--;</td>
 </tr>
 <tr>
-<td class="address"><a name="41929"></a>A3C9</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41929"></a>A3C9</td>
 <td class="instruction">LDI</td>
-<td class="comment">LDI // *DE++ = *HL++; BC--;</td>
+<td class="comment-11" rowspan="1">LDI // *DE++ = *HL++; BC--;</td>
 </tr>
 <tr>
-<td class="address"><a name="41931"></a>A3CB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41931"></a>A3CB</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="13">if (A == 255) } {  DE -= 6; } {  IY = DE; } EX DE,HL {  HL += 2; } sub_CB23(); POP BC // could have just ended the block here return;</td>
+<td class="comment-11" rowspan="13">if (A == 255) } {  DE -= 6; } {  IY = DE; } EX DE,HL {  HL += 2; } sub_CB23(); POP BC // could have just ended the block here return;</td>
 </tr>
 <tr>
-<td class="address"><a name="41933"></a>A3CD</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41933"></a>A3CD</td>
 <td class="instruction">JP NZ,$A3DF</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41936"></a>A3D0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41936"></a>A3D0</td>
 <td class="instruction">LD A,E</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41937"></a>A3D1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41937"></a>A3D1</td>
 <td class="instruction">SUB $06</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41939"></a>A3D3</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41939"></a>A3D3</td>
 <td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41940"></a>A3D4</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41940"></a>A3D4</td>
 <td class="instruction">PUSH DE</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41941"></a>A3D5</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41941"></a>A3D5</td>
 <td class="instruction">POP IY</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41943"></a>A3D7</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41943"></a>A3D7</td>
 <td class="instruction">EX DE,HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41944"></a>A3D8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41944"></a>A3D8</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41945"></a>A3D9</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41945"></a>A3D9</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41946"></a>A3DA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41946"></a>A3DA</td>
 <td class="instruction">CALL <a class="link" href="52003.html">$CB23</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41949"></a>A3DD</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41949"></a>A3DD</td>
 <td class="instruction">POP BC</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41950"></a>A3DE</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41950"></a>A3DE</td>
 <td class="instruction">RET</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="41951"></a>A3DF</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41951"></a>A3DF</td>
 <td class="instruction">CP $80</td>
-<td class="comment" rowspan="7">else if (A == 128) } {  DE -= 5; } EX DE,HL *HL |= vischar_BYTE1_BIT6; } // sample = HL = $8001</td>
+<td class="comment-11" rowspan="7">else if (A == 128) } {  DE -= 5; } EX DE,HL *HL |= vischar_BYTE1_BIT6; } // sample = HL = $8001</td>
 </tr>
 <tr>
-<td class="address"><a name="41953"></a>A3E1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41953"></a>A3E1</td>
 <td class="instruction">JP NZ,$A3EB</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41956"></a>A3E4</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41956"></a>A3E4</td>
 <td class="instruction">LD A,E</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41957"></a>A3E5</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41957"></a>A3E5</td>
 <td class="instruction">SUB $05</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41959"></a>A3E7</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41959"></a>A3E7</td>
 <td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41960"></a>A3E8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41960"></a>A3E8</td>
 <td class="instruction">EX DE,HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="41961"></a>A3E9</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41961"></a>A3E9</td>
 <td class="instruction">SET 6,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="41963"></a>A3EB</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41963"></a>A3EB</td>
 <td class="instruction">POP BC</td>
-<td class="comment">POP BC</td>
+<td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
-<td class="address"><a name="41964"></a>A3EC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41964"></a>A3EC</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="41868.html">A38C</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41868.html">A38C</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41915">Map</a></td>
-<td class="next">Next: <a class="link" href="41965.html">A3ED</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41965.html">A3ED</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

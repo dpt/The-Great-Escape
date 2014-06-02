@@ -37,10 +37,10 @@ table.header td {
   padding-top: 0px;
   padding-bottom: 0px;
 }
-td.headerText {
+td.page-header {
   white-space: nowrap;
 }
-div.headerText {
+div.section-header {
   font-weight: bold;
   font-size: 125%;
 }
@@ -52,7 +52,7 @@ div.footer {
 td.transparent {
   background-color: #ddeeff !important;
 }
-ul.linkList {
+ul.contents {
   list-style-type: none;
   margin-left: 0px;
   padding-left: 0px;
@@ -69,17 +69,17 @@ div.box {
   -khtml-border-radius: 10px;
   border-radius: 10px;
 }
-div.boxTitle {
+div.box-title {
   font-size: 150%;
   font-weight: bold;
 }
 div.box p {
   margin-bottom: 0px;
 }
-div.box1 {
+div.box-1 {
   background-color: #14284b;
 }
-div.box2 {
+div.box-2 {
   background-color: #194798;
 }
 div.paragraph {
@@ -98,7 +98,7 @@ td.centre {
 }
 
 /* Home page */
-ul.indexList {
+ul.index-list {
   list-style-type: none;
   margin-top: 0px;
   margin-left: 0px;
@@ -106,30 +106,30 @@ ul.indexList {
 }
 
 /* Disassembly pages */
-table.prevNext {
+table.asm-navigation {
   margin-top: 10px;
   border-collapse: collapse;
   width: 100%;
 }
-table.prevNext td {
+table.asm-navigation td {
   background-color: #4b3914;
 }
-table.prevNext td.prev {
+table.asm-navigation td.prev {
   width: 30%;
   text-align: left;
 }
-table.prevNext td.up {
+table.asm-navigation td.up {
   width: 40%;
   text-align: center;
 }
-table.prevNext td.next {
+table.asm-navigation td.next {
   width: 30%;
   text-align: right;
 }
 table.disassembly {
   width: 100%;
 }
-table.dataDisassembly {
+table.disassembly {
   width: 100%;
 }
 div.description {
@@ -143,19 +143,19 @@ div.comments {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-table.input, table.output {
+table.input-1, table.output-1 {
   margin-bottom: 10px;
 }
-table.input td {
+table.input-1 td {
   background-color: #14284B;
 }
-table.output td {
+table.output-1 td {
   background-color: #14284B;
 }
-table.input th {
+table.input-1 th {
   background-color: #385A98;
 }
-table.output th {
+table.output-1 th {
   background-color: #385A98;
 }
 td.register {
@@ -163,11 +163,11 @@ td.register {
   width: 20px;
   text-align: center;
 }
-td.label {
+td.address-2 {
   color: #986a0a;
   padding-right: 10px;
 }
-td.address {
+td.address-1 {
   color: #385a98;
   padding-right: 10px;
   font-weight: 300;
@@ -179,21 +179,21 @@ td.instruction {
   padding-right: 10px;
   font-weight: 400;
 }
-td.comment {
+td.comment-11 {
   background-color: #14284B;
   width: 100%;
 }
-td.dataComment {
+td.comment-11 {
   background-color: #14284B;
   width: 100%;
 }
-td.routineComment {
+td.map-c-comment {
   padding-left: 0px;
 }
-td.transparentComment {
+td.comment-10 {
   width: 100%;
 }
-td.transparentDataComment {
+td.comment-10 {
   width: 100%;
 }
 
@@ -206,40 +206,31 @@ table.map th {
 table.map td {
   background-color: #060C17;
 }
-div.mapIntro {
+div.map-intro {
   margin-bottom: 10px;
 }
-table.map td.mapPage, table.map td.mapByte, table.map td.data, table.map td.routine, table.map td.gbuffer, table.map td.message, table.map td.unused {
+table.map td.map-page-1, table.map td.map-byte-1, table.map td.map-b, td.map-w, table.map td.map-c, table.map td.map-g, table.map td.map-t, table.map td.map-s, td.map-u {
   text-align: right;
   padding: 0 0.25em;
 }
-table.map td.mapPage, table.map td.mapByte {
+table.map td.map-page-1, table.map td.map-byte-1 {
   background-color: transparent;
 }
-table.map td.data, table.map td.routine, table.map td.gbuffer, table.map td.message, table.map td.unused {
+table.map td.map-b, td.map-w, table.map td.map-c, table.map td.map-g, table.map td.map-t, table.map td.map-s, td.map-u {
   background-color: #060C17;
 }
-table.map td.routineDesc, table.map td.dataDesc, table.map td.gbufferDesc, table.map td.messageDesc, table.map td.unusedDesc {
+table.map td.map-c-desc, table.map td.map-b-desc, td.map-w-desc, table.map td.map-g-desc, table.map td.map-t-desc, table.map td.map-s-desc, td.map-u-desc {
   background-color: #14284B;
 }
-table.map td.routineDesc {
+table.map td.map-c-desc {
   font-style: italic;
 }
 
 /* Game status buffer */
-table.gbuffer th {
-  background-color: #88aacc;
-}
-table.gbuffer td {
-  background-color: #bbddff;
-}
-td.gbufAddress {
+td.map-length-1 {
   text-align: center;
 }
-td.gbufLength {
-  text-align: center;
-}
-div.gbufDesc {
+div.map-entry-title-11 {
   font-weight: bold;
 }
 
@@ -265,20 +256,25 @@ div.changelog {
   -khtml-border-radius: 10px;
   border-radius: 10px;
 }
-div.changelog1 {
+div.changelog-1 {
   background-color: #14284B;
 }
-div.changelog2 {
+div.changelog-2 {
   background-color: #bbddff;
 }
-div.changelogTitle {
+div.changelog-title {
   font-size: 150%;
   font-weight: bold;
 }
-div.changelogDesc {
+div.changelog-desc {
   margin-top: 5px;
 }
 ul.changelog {
   margin-top: 5px;
   margin-bottom: 0px;
 }
+
+tr.asm-input-header, tr.asm-output-header {display: none;}
+
+.gallery TD { vertical-align: top; }
+

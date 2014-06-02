@@ -4,28 +4,29 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at 69DC</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="27081.html">69C9</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="27081.html">69C9</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#27100">Map</a></td>
-<td class="next">Next: <a class="link" href="27154.html">6A12</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="27154.html">6A12</a></span></td>
 </tr>
 </table>
 <div class="description">69DC: setup_doors</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Looks like it's filling door_related with stuff from the door_positions table.
@@ -34,169 +35,236 @@ Looks like it's filling door_related with stuff from the door_positions table.
 Wipe $81D6..$81D9 (door_related) with 0xFF.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="27100"></a>69DC</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="27100"></a>69DC</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment">-</td>
+<td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
-<td class="address"><a name="27102"></a>69DE</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27102"></a>69DE</td>
 <td class="instruction">LD DE,$81D9</td>
-<td class="comment">DE = door_related + 3;</td>
+<td class="comment-11" rowspan="1">DE = door_related + 3;</td>
 </tr>
 <tr>
-<td class="address"><a name="27105"></a>69E1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27105"></a>69E1</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment">B = 4;</td>
+<td class="comment-11" rowspan="1">B = 4;</td>
 </tr>
 <tr>
-<td class="label"><a name="27107"></a>69E3</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="27107"></a>69E3</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment" rowspan="3">do { *DE-- = 0xFF; } while (--B);</td>
+<td class="comment-11" rowspan="3">do { *DE-- = 0xFF; } while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="27108"></a>69E4</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27108"></a>69E4</td>
 <td class="instruction">DEC DE</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27109"></a>69E5</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27109"></a>69E5</td>
 <td class="instruction">DJNZ $69E3</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27111"></a>69E7</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27111"></a>69E7</td>
 <td class="instruction">INC DE</td>
-<td class="comment">DE++; // DE = &amp;door_related[0];</td>
+<td class="comment-11" rowspan="1">DE++; // DE = &amp;door_related[0];</td>
 </tr>
 <tr>
-<td class="address"><a name="27112"></a>69E8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27112"></a>69E8</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="4">B = room_index &lt;&lt; 2;</td>
+<td class="comment-11" rowspan="4">B = room_index &lt;&lt; 2;</td>
 </tr>
 <tr>
-<td class="address"><a name="27115"></a>69EB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27115"></a>69EB</td>
 <td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27116"></a>69EC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27116"></a>69EC</td>
 <td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27117"></a>69ED</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27117"></a>69ED</td>
 <td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27118"></a>69EE</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27118"></a>69EE</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment" rowspan="2">C = 0;</td>
+<td class="comment-11" rowspan="2">C = 0;</td>
 </tr>
 <tr>
-<td class="address"><a name="27120"></a>69F0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27120"></a>69F0</td>
 <td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27121"></a>69F1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27121"></a>69F1</td>
 <td class="instruction">LD HL,$78D6</td>
-<td class="comment">HLdash = &amp;door_positions[0];</td>
+<td class="comment-11" rowspan="1">HLdash = &amp;door_positions[0];</td>
 </tr>
 <tr>
-<td class="address"><a name="27124"></a>69F4</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27124"></a>69F4</td>
 <td class="instruction">LD B,$7C</td>
-<td class="comment">Bdash = 124; // length of door_positions</td>
+<td class="comment-11" rowspan="1">Bdash = 124; // length of door_positions</td>
 </tr>
 <tr>
-<td class="address"><a name="27126"></a>69F6</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27126"></a>69F6</td>
 <td class="instruction">LD DE,$0004</td>
-<td class="comment">-</td>
+<td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
-<td class="label"><a name="27129"></a>69F9</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="27129"></a>69F9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="16">do { if (HLdash[0] &amp; 0xFC == B) } {    *DE++ = C ^ 0x80; } } {  C ^= 0x80; } {  if (C &gt;= 0) C++; // increment every two stops? } HLdash += 4;</td>
+<td class="comment-11" rowspan="16">do { if (HLdash[0] &amp; 0xFC == B) } {    *DE++ = C ^ 0x80; } } {  C ^= 0x80; } {  if (C &gt;= 0) C++; // increment every two stops? } HLdash += 4;</td>
 </tr>
 <tr>
-<td class="address"><a name="27130"></a>69FA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27130"></a>69FA</td>
 <td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27131"></a>69FB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27131"></a>69FB</td>
 <td class="instruction">AND $FC</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27133"></a>69FD</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27133"></a>69FD</td>
 <td class="instruction">CP B</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27134"></a>69FE</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27134"></a>69FE</td>
 <td class="instruction">JR NZ,$6A05</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27136"></a>6A00</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27136"></a>6A00</td>
 <td class="instruction">LD A,C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27137"></a>6A01</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27137"></a>6A01</td>
 <td class="instruction">XOR $80</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27139"></a>6A03</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27139"></a>6A03</td>
 <td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27140"></a>6A04</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27140"></a>6A04</td>
 <td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="27141"></a>6A05</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="27141"></a>6A05</td>
 <td class="instruction">LD A,C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27142"></a>6A06</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27142"></a>6A06</td>
 <td class="instruction">XOR $80</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27144"></a>6A08</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27144"></a>6A08</td>
 <td class="instruction">JP M,$6A0C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27147"></a>6A0B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27147"></a>6A0B</td>
 <td class="instruction">INC A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="27148"></a>6A0C</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="27148"></a>6A0C</td>
 <td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27149"></a>6A0D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27149"></a>6A0D</td>
 <td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27150"></a>6A0E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27150"></a>6A0E</td>
 <td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27151"></a>6A0F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27151"></a>6A0F</td>
 <td class="instruction">DJNZ $69F9</td>
-<td class="comment">while (--Bdash);</td>
+<td class="comment-11" rowspan="1">while (--Bdash);</td>
 </tr>
 <tr>
-<td class="address"><a name="27153"></a>6A11</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27153"></a>6A11</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="27081.html">69C9</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="27081.html">69C9</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#27100">Map</a></td>
-<td class="next">Next: <a class="link" href="27154.html">6A12</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="27154.html">6A12</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

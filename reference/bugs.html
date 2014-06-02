@@ -4,43 +4,44 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Bugs</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="bugs">
+<body class="Bugs">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Bugs</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Bugs</td>
 </tr>
 </table>
-<ul class="linkList">
-<li><a class="link" href="#bedROMwrite">Code which empties beds writes to ROM</a></li>
-<li><a class="link" href="#discoverOffByOne">Off-by-one in is_item_discoverable</a></li>
-<li><a class="link" href="#spotattr">Spotlight attribute</a></li>
-<li><a class="link" href="#pauseclear">Pause doesn't always clear the screen</a></li>
-<li><a class="link" href="#solitarymental">Player goes nuts in solitary</a></li>
-<li><a class="link" href="#bribePrisonerInLowerHut">Bribe prisoner and he turns into a boiler</a></li>
+<ul class="contents">
+<li><a class="link" href="#writesToROM">Code which empties beds writes to ROM</a></li>
+<li><a class="link" href="#offByOne">Off-by-one in is_item_discoverable</a></li>
+<li><a class="link" href="#spotlightBleed">Spotlight attribute</a></li>
+<li><a class="link" href="#pauseDoesntClear§">Pause doesn't always clear the screen</a></li>
+<li><a class="link" href="#nutsInSolitary">Player goes nuts in solitary</a></li>
+<li><a class="link" href="#walkingStove">Bribe prisoner and he turns into a boiler</a></li>
 <li><a class="link" href="#moreBugsFromWOS">More bugs mentioned on WOS</a></li>
 </ul>
-<div><a name="bedROMwrite"></a></div>
-<div class="box box1">
-<div class="boxTitle">Code which empties beds writes to ROM</div>
+<div><a name="writesToROM"></a></div>
+<div class="box box-1">
+<div class="box-title">Code which empties beds writes to ROM</div>
 <div class="paragraph">
 The routine at <a class="link" href="../asm/41447.html">A1E7</a>, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
 </div>
 </div>
-<div><a name="discoverOffByOne"></a></div>
-<div class="box box2">
-<div class="boxTitle">Off-by-one in is_item_discoverable</div>
+<div><a name="offByOne"></a></div>
+<div class="box box-2">
+<div class="box-title">Off-by-one in is_item_discoverable</div>
 <div class="paragraph">
 The routine at <a class="link" href="../asm/51346.html">C892</a>, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
 </div>
 </div>
-<div><a name="spotattr"></a></div>
-<div class="box box1">
-<div class="boxTitle">Spotlight attribute</div>
+<div><a name="spotlightBleed"></a></div>
+<div class="box box-1">
+<div class="box-title">Spotlight attribute</div>
 <div class="paragraph">
 Sometimes the nighttime spotlight will set the attributes of the barbed wire game screen border.
 </div>
@@ -48,9 +49,9 @@ Sometimes the nighttime spotlight will set the attributes of the barbed wire gam
 Not yet located the faulty code.
 </div>
 </div>
-<div><a name="pauseclear"></a></div>
-<div class="box box2">
-<div class="boxTitle">Pause doesn't always clear the screen</div>
+<div><a name="pauseDoesntClear§"></a></div>
+<div class="box box-2">
+<div class="box-title">Pause doesn't always clear the screen</div>
 <div class="paragraph">
 Pause doesn't always clear the full game screen. You get a two-row high sliver of pixels left behind.
 </div>
@@ -58,9 +59,9 @@ Pause doesn't always clear the full game screen. You get a two-row high sliver o
 Not yet located the faulty code.
 </div>
 </div>
-<div><a name="solitarymental"></a></div>
-<div class="box box1">
-<div class="boxTitle">Player goes nuts in solitary</div>
+<div><a name="nutsInSolitary"></a></div>
+<div class="box box-1">
+<div class="box-title">Player goes nuts in solitary</div>
 <div class="paragraph">
 Sometimes the player will go nuts when put in solitary. He'll run up against the topmost corner of the room and keep running.
 </div>
@@ -68,9 +69,9 @@ Sometimes the player will go nuts when put in solitary. He'll run up against the
 Not yet located the faulty code.
 </div>
 </div>
-<div><a name="bribePrisonerInLowerHut"></a></div>
-<div class="box box2">
-<div class="boxTitle">Bribe prisoner and he turns into a boiler</div>
+<div><a name="walkingStove"></a></div>
+<div class="box box-2">
+<div class="box-title">Bribe prisoner and he turns into a boiler</div>
 <div class="paragraph">
 "If you try and bribe a prisoner with the chocolate when you are in the lower of the 3 prisoner huts, he will walk towards you and as he does he will flash alternately as himself and a boiler." (zx1)
 </div>
@@ -79,8 +80,8 @@ Similarly (or possibly the exact same case): you can bribe boilers and crates. T
 </div>
 </div>
 <div><a name="moreBugsFromWOS"></a></div>
-<div class="box box1">
-<div class="boxTitle">More bugs mentioned on WOS</div>
+<div class="box box-1">
+<div class="box-title">More bugs mentioned on WOS</div>
 <div class="paragraph">
 http://www.worldofspectrum.org/forums/showthread.php?t=38349
 "When the hero then moves through the fence automatically after cutting the wire, he can go garbled momentarily." (Bandit)
@@ -92,9 +93,9 @@ http://www.worldofspectrum.org/forums/showthread.php?t=38349
 </div>
 </div>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

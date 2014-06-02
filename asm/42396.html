@@ -4,87 +4,100 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at A59C</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="42380.html">A58C</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="42380.html">A58C</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#42396">Map</a></td>
-<td class="next">Next: <a class="link" href="42403.html">A5A3</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="42403.html">A5A3</a></span></td>
 </tr>
 </table>
 <div class="description">A59C: have_required_items</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Return bitmask indicating the presence of required items.
 </div>
 </div>
-<table class="input">
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
 <tr>
 <td class="register">HL</td>
-<td class="registerContents">Pointer to (single) item slot.</td>
+<td class="register-desc">Pointer to (single) item slot.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="registerContents">Previous return value.</td>
+<td class="register-desc">Previous return value.</td>
 </tr>
 </table>
-<table class="output">
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
 <tr>
 <td class="register">C</td>
-<td class="registerContents">Previous return value + escapeitem_ flag.</td>
+<td class="register-desc">Previous return value + escapeitem_ flag.</td>
 </tr>
 </table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="42396"></a>A59C</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42396"></a>A59C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">A = *HL;</td>
+<td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
-<td class="address"><a name="42397"></a>A59D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42397"></a>A59D</td>
 <td class="instruction">CALL <a class="link" href="42403.html">$A5A3</a></td>
-<td class="comment">item_to_bitmask();</td>
+<td class="comment-11" rowspan="1">item_to_bitmask();</td>
 </tr>
 <tr>
-<td class="address"><a name="42400"></a>A5A0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42400"></a>A5A0</td>
 <td class="instruction">ADD A,C</td>
-<td class="comment" rowspan="2">C += A;</td>
+<td class="comment-11" rowspan="2">C += A;</td>
 </tr>
 <tr>
-<td class="address"><a name="42401"></a>A5A1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42401"></a>A5A1</td>
 <td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="42402"></a>A5A2</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42402"></a>A5A2</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="42380.html">A58C</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="42380.html">A58C</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#42396">Map</a></td>
-<td class="next">Next: <a class="link" href="42403.html">A5A3</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="42403.html">A5A3</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

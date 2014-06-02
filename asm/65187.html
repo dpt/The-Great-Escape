@@ -4,158 +4,204 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at FEA3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="65150.html">FE7E</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="65150.html">FE7E</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#65187">Map</a></td>
-<td class="next">Next: <a class="link" href="65229.html">FECD</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="65229.html">FECD</a></span></td>
 </tr>
 </table>
 <div class="description">FEA3: inputroutine_fuller</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Input routine for Fuller joystick. (Unused).
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="65187"></a>FEA3</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="65187"></a>FEA3</td>
 <td class="instruction">LD BC,$007F</td>
-<td class="comment">BC = 0x007F;</td>
+<td class="comment-11" rowspan="1">BC = 0x007F;</td>
 </tr>
 <tr>
-<td class="address"><a name="65190"></a>FEA6</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65190"></a>FEA6</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment">IN A,(C)</td>
+<td class="comment-11" rowspan="1">IN A,(C)</td>
 </tr>
 <tr>
-<td class="address"><a name="65192"></a>FEA8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65192"></a>FEA8</td>
 <td class="instruction">LD BC,$0000</td>
-<td class="comment">BC = 0;</td>
+<td class="comment-11" rowspan="1">BC = 0;</td>
 </tr>
 <tr>
-<td class="address"><a name="65195"></a>FEAB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65195"></a>FEAB</td>
 <td class="instruction">BIT 4,A</td>
-<td class="comment" rowspan="3">if (A &amp; (1&lt;&lt;4)) A = ~A;</td>
+<td class="comment-11" rowspan="3">if (A &amp; (1&lt;&lt;4)) A = ~A;</td>
 </tr>
 <tr>
-<td class="address"><a name="65197"></a>FEAD</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65197"></a>FEAD</td>
 <td class="instruction">JR Z,$FEB0</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="65199"></a>FEAF</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65199"></a>FEAF</td>
 <td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="65200"></a>FEB0</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="65200"></a>FEB0</td>
 <td class="instruction">RRA</td>
-<td class="comment">carry = A &amp; 1; A &gt;&gt;= 1;</td>
+<td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="address"><a name="65201"></a>FEB1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65201"></a>FEB1</td>
 <td class="instruction">JR NC,$FEB5</td>
-<td class="comment" rowspan="2">if (carry) C = input_UP;</td>
+<td class="comment-11" rowspan="2">if (carry) C = input_UP;</td>
 </tr>
 <tr>
-<td class="address"><a name="65203"></a>FEB3</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65203"></a>FEB3</td>
 <td class="instruction">LD C,$01</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="65205"></a>FEB5</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="65205"></a>FEB5</td>
 <td class="instruction">RRA</td>
-<td class="comment">carry = A &amp; 1; A &gt;&gt;= 1;</td>
+<td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="address"><a name="65206"></a>FEB6</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65206"></a>FEB6</td>
 <td class="instruction">JR NC,$FEBA</td>
-<td class="comment" rowspan="2">if (carry) C = input_DOWN;</td>
+<td class="comment-11" rowspan="2">if (carry) C = input_DOWN;</td>
 </tr>
 <tr>
-<td class="address"><a name="65208"></a>FEB8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65208"></a>FEB8</td>
 <td class="instruction">LD C,$02</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="65210"></a>FEBA</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="65210"></a>FEBA</td>
 <td class="instruction">RRA</td>
-<td class="comment">carry = A &amp; 1; A &gt;&gt;= 1;</td>
+<td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="address"><a name="65211"></a>FEBB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65211"></a>FEBB</td>
 <td class="instruction">JR NC,$FEBF</td>
-<td class="comment" rowspan="2">if (carry) B = input_LEFT;</td>
+<td class="comment-11" rowspan="2">if (carry) B = input_LEFT;</td>
 </tr>
 <tr>
-<td class="address"><a name="65213"></a>FEBD</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65213"></a>FEBD</td>
 <td class="instruction">LD B,$03</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="65215"></a>FEBF</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="65215"></a>FEBF</td>
 <td class="instruction">RRA</td>
-<td class="comment">carry = A &amp; 1; A &gt;&gt;= 1;</td>
+<td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="address"><a name="65216"></a>FEC0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65216"></a>FEC0</td>
 <td class="instruction">JR NC,$FEC4</td>
-<td class="comment" rowspan="2">if (carry) B = input_RIGHT;</td>
+<td class="comment-11" rowspan="2">if (carry) B = input_RIGHT;</td>
 </tr>
 <tr>
-<td class="address"><a name="65218"></a>FEC2</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65218"></a>FEC2</td>
 <td class="instruction">LD B,$06</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="65220"></a>FEC4</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="65220"></a>FEC4</td>
 <td class="instruction">AND $08</td>
-<td class="comment" rowspan="3">if (A &amp; (1&lt;&lt;3)) A = input_FIRE; // otherwise A is zero</td>
+<td class="comment-11" rowspan="3">if (A &amp; (1&lt;&lt;3)) A = input_FIRE; // otherwise A is zero</td>
 </tr>
 <tr>
-<td class="address"><a name="65222"></a>FEC6</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65222"></a>FEC6</td>
 <td class="instruction">JR Z,$FECA</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="65224"></a>FEC8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65224"></a>FEC8</td>
 <td class="instruction">LD A,$09</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="65226"></a>FECA</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="65226"></a>FECA</td>
 <td class="instruction">ADD A,B</td>
-<td class="comment" rowspan="2">A += B + C;</td>
+<td class="comment-11" rowspan="2">A += B + C;</td>
 </tr>
 <tr>
-<td class="address"><a name="65227"></a>FECB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65227"></a>FECB</td>
 <td class="instruction">ADD A,C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="65228"></a>FECC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="65228"></a>FECC</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="65150.html">FE7E</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="65150.html">FE7E</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#65187">Map</a></td>
-<td class="next">Next: <a class="link" href="65229.html">FECD</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="65229.html">FECD</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

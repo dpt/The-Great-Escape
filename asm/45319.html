@@ -4,109 +4,143 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B107</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="45023.html">AFDF</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="45023.html">AFDF</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#45319">Map</a></td>
-<td class="next">Next: <a class="link" href="45388.html">B14C</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="45388.html">B14C</a></span></td>
 </tr>
 </table>
 <div class="description">B107: use_bribe</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 'he takes the bribe' 'and acts as decoy'
 </div>
 </div>
-<table class="input">
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
 <tr>
 <td class="register">IY</td>
-<td class="registerContents">Pointer to vischar.</td>
+<td class="register-desc">Pointer to vischar.</td>
 </tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
 </table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="45319"></a>B107</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="45319"></a>B107</td>
 <td class="instruction">CALL <a class="link" href="41193.html">$A0E9</a></td>
-<td class="comment">increase_morale_by_10_score_by_50();</td>
+<td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50();</td>
 </tr>
 <tr>
-<td class="address"><a name="45322"></a>B10A</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45322"></a>B10A</td>
 <td class="instruction">LD (IY+$01),$00</td>
-<td class="comment">IY[1] = 0;</td>
+<td class="comment-11" rowspan="1">IY[1] = 0;</td>
 </tr>
 <tr>
-<td class="address"><a name="45326"></a>B10E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45326"></a>B10E</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment" rowspan="4">HL = IY + 2;</td>
+<td class="comment-11" rowspan="4">HL = IY + 2;</td>
 </tr>
 <tr>
-<td class="address"><a name="45328"></a>B110</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45328"></a>B110</td>
 <td class="instruction">POP HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45329"></a>B111</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45329"></a>B111</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45330"></a>B112</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45330"></a>B112</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45331"></a>B113</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45331"></a>B113</td>
 <td class="instruction">CALL <a class="link" href="52003.html">$CB23</a></td>
-<td class="comment">sub_CB23();</td>
+<td class="comment-11" rowspan="1">sub_CB23();</td>
 </tr>
 <tr>
-<td class="address"><a name="45334"></a>B116</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45334"></a>B116</td>
 <td class="instruction">LD DE,$8215</td>
-<td class="comment">DE = &amp;items_held[0];</td>
+<td class="comment-11" rowspan="1">DE = &amp;items_held[0];</td>
 </tr>
 <tr>
-<td class="address"><a name="45337"></a>B119</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45337"></a>B119</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment" rowspan="7">if (*DE != item_BRIBE &amp;&amp; *++DE != item_BRIBE) return; // have no bribes</td>
+<td class="comment-11" rowspan="7">if (*DE != item_BRIBE &amp;&amp; *++DE != item_BRIBE) return; // have no bribes</td>
 </tr>
 <tr>
-<td class="address"><a name="45338"></a>B11A</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45338"></a>B11A</td>
 <td class="instruction">CP $05</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45340"></a>B11C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45340"></a>B11C</td>
 <td class="instruction">JR Z,$B123</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45342"></a>B11E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45342"></a>B11E</td>
 <td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45343"></a>B11F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45343"></a>B11F</td>
 <td class="instruction">LD A,(DE)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45344"></a>B120</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45344"></a>B120</td>
 <td class="instruction">CP $05</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45346"></a>B122</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45346"></a>B122</td>
 <td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="45347"></a>
 <div class="comments">
 <div class="paragraph">
@@ -116,110 +150,143 @@ We have a bribe.
 </td>
 </tr>
 <tr>
-<td class="label">B123</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="45347"></a>B123</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment" rowspan="2">*DE = item_NONE;</td>
+<td class="comment-11" rowspan="2">*DE = item_NONE;</td>
 </tr>
 <tr>
-<td class="address"><a name="45349"></a>B125</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45349"></a>B125</td>
 <td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45350"></a>B126</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45350"></a>B126</td>
 <td class="instruction">AND $3F</td>
-<td class="comment" rowspan="2">item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;</td>
+<td class="comment-11" rowspan="2">item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;</td>
 </tr>
 <tr>
-<td class="address"><a name="45352"></a>B128</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45352"></a>B128</td>
 <td class="instruction">LD ($76EC),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45355"></a>B12B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45355"></a>B12B</td>
 <td class="instruction">CALL <a class="link" href="31795.html">$7C33</a></td>
-<td class="comment">draw_all_items();</td>
+<td class="comment-11" rowspan="1">draw_all_items();</td>
 </tr>
 <tr>
-<td class="address"><a name="45358"></a>B12E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45358"></a>B12E</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment">B = 7; // 7 iterations</td>
+<td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
-<td class="address"><a name="45360"></a>B130</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45360"></a>B130</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment">HL = $8020; // iterate over non-player characters</td>
+<td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
-<td class="label"><a name="45363"></a>B133</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="45363"></a>B133</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="10">do { if (HL[0] &lt; 20) { // likely character index. but why 20? } {    HL[1] = vischar_BYTE1_BIT2; } // character has taken bribe? } {  HL += 32; } while (--B);</td>
+<td class="comment-11" rowspan="10">do { if (HL[0] &lt; 20) { // likely character index. but why 20? } {    HL[1] = vischar_BYTE1_BIT2; } // character has taken bribe? } {  HL += 32; } while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="45364"></a>B134</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45364"></a>B134</td>
 <td class="instruction">CP $14</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45366"></a>B136</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45366"></a>B136</td>
 <td class="instruction">JR NC,$B13C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45368"></a>B138</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45368"></a>B138</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45369"></a>B139</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45369"></a>B139</td>
 <td class="instruction">LD (HL),$04</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45371"></a>B13B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45371"></a>B13B</td>
 <td class="instruction">DEC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="45372"></a>B13C</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="45372"></a>B13C</td>
 <td class="instruction">LD A,L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45373"></a>B13D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45373"></a>B13D</td>
 <td class="instruction">ADD A,$20</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45375"></a>B13F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45375"></a>B13F</td>
 <td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45376"></a>B140</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45376"></a>B140</td>
 <td class="instruction">DJNZ $B133</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45378"></a>B142</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45378"></a>B142</td>
 <td class="instruction">LD B,$11</td>
-<td class="comment" rowspan="2">queue_message_for_display(message_HE_TAKES_THE_BRIBE);</td>
+<td class="comment-11" rowspan="2">queue_message_for_display(message_HE_TAKES_THE_BRIBE);</td>
 </tr>
 <tr>
-<td class="address"><a name="45380"></a>B144</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45380"></a>B144</td>
 <td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45383"></a>B147</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45383"></a>B147</td>
 <td class="instruction">LD B,$12</td>
-<td class="comment">queue_message_for_display(message_AND_ACTS_AS_DECOY);</td>
+<td class="comment-11" rowspan="1">queue_message_for_display(message_AND_ACTS_AS_DECOY);</td>
 </tr>
 <tr>
-<td class="address"><a name="45385"></a>B149</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45385"></a>B149</td>
 <td class="instruction">JP <a class="link" href="32021.html">$7D15</a></td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="45023.html">AFDF</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="45023.html">AFDF</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#45319">Map</a></td>
-<td class="next">Next: <a class="link" href="45388.html">B14C</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="45388.html">B14C</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

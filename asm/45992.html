@@ -4,28 +4,29 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B3A8</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="45959.html">B387</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="45959.html">B387</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#45992">Map</a></td>
-<td class="next">Next: <a class="link" href="46020.html">B3C4</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="46020.html">B3C4</a></span></td>
 </tr>
 </table>
 <div class="description">B3A8: action_bribe</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Player has tried to bribe a prisoner.
@@ -34,94 +35,128 @@ Player has tried to bribe a prisoner.
 This searches visible characters only.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="45992"></a>B3A8</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="45992"></a>B3A8</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment">HL = $8020; // iterate over non-player characters</td>
+<td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
-<td class="address"><a name="45995"></a>B3AB</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45995"></a>B3AB</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment">B = 7; // 7 iterations</td>
+<td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
-<td class="label"><a name="45997"></a>B3AD</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="45997"></a>B3AD</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment">do { A = *HL;</td>
+<td class="comment-11" rowspan="1">do { A = *HL;</td>
 </tr>
 <tr>
-<td class="address"><a name="45998"></a>B3AE</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45998"></a>B3AE</td>
 <td class="instruction">CP $FF</td>
-<td class="comment" rowspan="4">if ((A != character_NONE) &amp;&amp; (A &gt;= character_20_prisoner)) goto found;</td>
+<td class="comment-11" rowspan="4">if ((A != character_NONE) &amp;&amp; (A &gt;= character_20_prisoner)) goto found;</td>
 </tr>
 <tr>
-<td class="address"><a name="46000"></a>B3B0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46000"></a>B3B0</td>
 <td class="instruction">JR Z,$B3B6</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46002"></a>B3B2</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46002"></a>B3B2</td>
 <td class="instruction">CP $14</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46004"></a>B3B4</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46004"></a>B3B4</td>
 <td class="instruction">JR NC,$B3BD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="46006"></a>B3B6</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46006"></a>B3B6</td>
 <td class="instruction">LD A,$20</td>
-<td class="comment" rowspan="3">HL += 32; // sizeof a character struct</td>
+<td class="comment-11" rowspan="3">HL += 32; // sizeof a character struct</td>
 </tr>
 <tr>
-<td class="address"><a name="46008"></a>B3B8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46008"></a>B3B8</td>
 <td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46009"></a>B3B9</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46009"></a>B3B9</td>
 <td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46010"></a>B3BA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46010"></a>B3BA</td>
 <td class="instruction">DJNZ $B3AD</td>
-<td class="comment">} while (--B);</td>
+<td class="comment-11" rowspan="1">} while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="46012"></a>B3BC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46012"></a>B3BC</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="label"><a name="46013"></a>B3BD</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46013"></a>B3BD</td>
 <td class="instruction">LD ($AF8E),A</td>
-<td class="comment">found: bribed_character = A;</td>
+<td class="comment-11" rowspan="1">found: bribed_character = A;</td>
 </tr>
 <tr>
-<td class="address"><a name="46016"></a>B3C0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46016"></a>B3C0</td>
 <td class="instruction">INC L</td>
-<td class="comment" rowspan="2">HL[1] = vischar_BYTE1_PERSUE; // $8021 etc. // flag</td>
+<td class="comment-11" rowspan="2">HL[1] = vischar_BYTE1_PERSUE; // $8021 etc. // flag</td>
 </tr>
 <tr>
-<td class="address"><a name="46017"></a>B3C1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46017"></a>B3C1</td>
 <td class="instruction">LD (HL),$01</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="46019"></a>B3C3</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46019"></a>B3C3</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="45959.html">B387</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="45959.html">B387</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#45992">Map</a></td>
-<td class="next">Next: <a class="link" href="46020.html">B3C4</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="46020.html">B3C4</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

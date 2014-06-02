@@ -4,157 +4,198 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at B2FC</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="45727.html">B29F</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="45727.html">B29F</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#45820">Map</a></td>
-<td class="next">Next: <a class="link" href="45869.html">B32D</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="45869.html">B32D</a></span></td>
 </tr>
 </table>
 <div class="description">B2FC: reset_B2FC</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Resets ... something.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="45820"></a>B2FC</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="45820"></a>B2FC</td>
 <td class="instruction">LD HL,$8000</td>
-<td class="comment">HL = $8000;</td>
+<td class="comment-11" rowspan="1">HL = $8000;</td>
 </tr>
 <tr>
-<td class="address"><a name="45823"></a>B2FF</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45823"></a>B2FF</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">reset_position(); // reset player</td>
+<td class="comment-11" rowspan="1">reset_position(); // reset player</td>
 </tr>
 <tr>
-<td class="address"><a name="45826"></a>B302</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45826"></a>B302</td>
 <td class="instruction">LD HL,$8018</td>
-<td class="comment">HL = $8018;</td>
+<td class="comment-11" rowspan="1">HL = $8018;</td>
 </tr>
 <tr>
-<td class="address"><a name="45829"></a>B305</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45829"></a>B305</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL++;</td>
+<td class="comment-11" rowspan="2">A = *HL++;</td>
 </tr>
 <tr>
-<td class="address"><a name="45830"></a>B306</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45830"></a>B306</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45831"></a>B307</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45831"></a>B307</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL;</td>
+<td class="comment-11" rowspan="1">C = *HL;</td>
 </tr>
 <tr>
-<td class="address"><a name="45832"></a>B308</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45832"></a>B308</td>
 <td class="instruction">CALL <a class="link" href="58709.html">$E555</a></td>
-<td class="comment">divide_by_8(C,A);</td>
+<td class="comment-11" rowspan="1">divide_by_8(C,A);</td>
 </tr>
 <tr>
-<td class="address"><a name="45835"></a>B30B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45835"></a>B30B</td>
 <td class="instruction">SUB $0B</td>
-<td class="comment" rowspan="2">map_position[0] = A - 11;</td>
+<td class="comment-11" rowspan="2">map_position[0] = A - 11;</td>
 </tr>
 <tr>
-<td class="address"><a name="45837"></a>B30D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45837"></a>B30D</td>
 <td class="instruction">LD ($81BB),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45840"></a>B310</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45840"></a>B310</td>
 <td class="instruction">INC L</td>
-<td class="comment">HL++;</td>
+<td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="address"><a name="45841"></a>B311</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45841"></a>B311</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL++;</td>
+<td class="comment-11" rowspan="2">A = *HL++;</td>
 </tr>
 <tr>
-<td class="address"><a name="45842"></a>B312</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45842"></a>B312</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45843"></a>B313</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45843"></a>B313</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment">C = *HL;</td>
+<td class="comment-11" rowspan="1">C = *HL;</td>
 </tr>
 <tr>
-<td class="address"><a name="45844"></a>B314</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45844"></a>B314</td>
 <td class="instruction">CALL <a class="link" href="58709.html">$E555</a></td>
-<td class="comment">divide_by_8(C,A);</td>
+<td class="comment-11" rowspan="1">divide_by_8(C,A);</td>
 </tr>
 <tr>
-<td class="address"><a name="45847"></a>B317</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45847"></a>B317</td>
 <td class="instruction">SUB $06</td>
-<td class="comment" rowspan="2">map_position[1] = A - 6;</td>
+<td class="comment-11" rowspan="2">map_position[1] = A - 6;</td>
 </tr>
 <tr>
-<td class="address"><a name="45849"></a>B319</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45849"></a>B319</td>
 <td class="instruction">LD ($81BC),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45852"></a>B31C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45852"></a>B31C</td>
 <td class="instruction">XOR A</td>
-<td class="comment" rowspan="2">room_index = room_NONE;</td>
+<td class="comment-11" rowspan="2">room_index = room_NONE;</td>
 </tr>
 <tr>
-<td class="address"><a name="45853"></a>B31D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45853"></a>B31D</td>
 <td class="instruction">LD ($68A0),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="45856"></a>B320</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45856"></a>B320</td>
 <td class="instruction">CALL <a class="link" href="42953.html">$A7C9</a></td>
-<td class="comment">get_supertiles();</td>
+<td class="comment-11" rowspan="1">get_supertiles();</td>
 </tr>
 <tr>
-<td class="address"><a name="45859"></a>B323</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45859"></a>B323</td>
 <td class="instruction">CALL <a class="link" href="43170.html">$A8A2</a></td>
-<td class="comment">supertile_plot_all();</td>
+<td class="comment-11" rowspan="1">supertile_plot_all();</td>
 </tr>
 <tr>
-<td class="address"><a name="45862"></a>B326</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45862"></a>B326</td>
 <td class="instruction">CALL <a class="link" href="26937.html">$6939</a></td>
-<td class="comment">setup_movable_items();</td>
+<td class="comment-11" rowspan="1">setup_movable_items();</td>
 </tr>
 <tr>
-<td class="address"><a name="45865"></a>B329</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45865"></a>B329</td>
 <td class="instruction">CALL <a class="link" href="43936.html">$ABA0</a></td>
-<td class="comment">zoombox();</td>
+<td class="comment-11" rowspan="1">zoombox();</td>
 </tr>
 <tr>
-<td class="address"><a name="45868"></a>B32C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="45868"></a>B32C</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="45727.html">B29F</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="45727.html">B29F</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#45820">Map</a></td>
-<td class="next">Next: <a class="link" href="45869.html">B32D</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="45869.html">B32D</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

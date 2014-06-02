@@ -4,28 +4,29 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at 6920</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="26906.html">691A</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="26906.html">691A</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26912">Map</a></td>
-<td class="next">Next: <a class="link" href="26937.html">6939</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="26937.html">6939</a></span></td>
 </tr>
 </table>
 <div class="description">6920: set_player_sprite_for_room</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Called when changing rooms.
@@ -34,74 +35,104 @@ Called when changing rooms.
 For tunnels this forces the player sprite to 'prisoner' and sets the crawl flag appropriately.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="26912"></a>6920</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26912"></a>6920</td>
 <td class="instruction">LD HL,$800D</td>
-<td class="comment">HL = $800D;</td>
+<td class="comment-11" rowspan="1">HL = $800D;</td>
 </tr>
 <tr>
-<td class="address"><a name="26915"></a>6923</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26915"></a>6923</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment" rowspan="2">*HL++ = 0x80; // likely a character direction</td>
+<td class="comment-11" rowspan="2">*HL++ = 0x80; // likely a character direction</td>
 </tr>
 <tr>
-<td class="address"><a name="26917"></a>6925</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26917"></a>6925</td>
 <td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26918"></a>6926</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26918"></a>6926</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="6">if (room_index &gt;= room_29_secondtunnelstart) } *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag {  $8015 = &amp;sprite_prisoner_tl_4; }</td>
+<td class="comment-11" rowspan="6">if (room_index &gt;= room_29_secondtunnelstart) } *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag {  $8015 = &amp;sprite_prisoner_tl_4; }</td>
 </tr>
 <tr>
-<td class="address"><a name="26921"></a>6929</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26921"></a>6929</td>
 <td class="instruction">CP $1D</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26923"></a>692B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26923"></a>692B</td>
 <td class="instruction">JR C,$6936</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26925"></a>692D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26925"></a>692D</td>
 <td class="instruction">SET 2,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26927"></a>692F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26927"></a>692F</td>
 <td class="instruction">LD HL,$CE2E</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26930"></a>6932</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26930"></a>6932</td>
 <td class="instruction">LD ($8015),HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26933"></a>6935</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26933"></a>6935</td>
 <td class="instruction">RET</td>
-<td class="comment">else {</td>
+<td class="comment-11" rowspan="1">else {</td>
 </tr>
 <tr>
-<td class="label"><a name="26934"></a>6936</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26934"></a>6936</td>
 <td class="instruction">RES 2,(HL)</td>
-<td class="comment">*HL &amp;= ~vischar_BYTE14_CRAWL; } // clear crawl flag</td>
+<td class="comment-11" rowspan="1">*HL &amp;= ~vischar_BYTE14_CRAWL; } // clear crawl flag</td>
 </tr>
 <tr>
-<td class="address"><a name="26936"></a>6938</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26936"></a>6938</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="26906.html">691A</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="26906.html">691A</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26912">Map</a></td>
-<td class="next">Next: <a class="link" href="26937.html">6939</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="26937.html">6939</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

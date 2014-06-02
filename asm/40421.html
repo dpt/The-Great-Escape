@@ -4,113 +4,150 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at 9DE5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="40399.html">9DCF</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40399.html">9DCF</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40421">Map</a></td>
-<td class="next">Next: <a class="link" href="40455.html">9E07</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40455.html">9E07</a></span></td>
 </tr>
 </table>
 <div class="description">9DE5: keyscan_cancel</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Check for 'game cancel' keypress.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="40421"></a>9DE5</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="40421"></a>9DE5</td>
 <td class="instruction">LD BC,$FEFE</td>
-<td class="comment" rowspan="8">if (!(shift_pressed &amp;&amp; space_pressed)) return;</td>
+<td class="comment-11" rowspan="8">if (!(shift_pressed &amp;&amp; space_pressed)) return;</td>
 </tr>
 <tr>
-<td class="address"><a name="40424"></a>9DE8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40424"></a>9DE8</td>
 <td class="instruction">IN A,(C)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40426"></a>9DEA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40426"></a>9DEA</td>
 <td class="instruction">AND $01</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40428"></a>9DEC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40428"></a>9DEC</td>
 <td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40429"></a>9DED</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40429"></a>9DED</td>
 <td class="instruction">LD B,$7F</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40431"></a>9DEF</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40431"></a>9DEF</td>
 <td class="instruction">IN A,(C)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40433"></a>9DF1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40433"></a>9DF1</td>
 <td class="instruction">AND $01</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40435"></a>9DF3</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40435"></a>9DF3</td>
 <td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40436"></a>9DF4</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40436"></a>9DF4</td>
 <td class="instruction">CALL <a class="link" href="42251.html">$A50B</a></td>
-<td class="comment">screen_reset();</td>
+<td class="comment-11" rowspan="1">screen_reset();</td>
 </tr>
 <tr>
-<td class="address"><a name="40439"></a>9DF7</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40439"></a>9DF7</td>
 <td class="instruction">CALL <a class="link" href="61436.html">$EFFC</a></td>
-<td class="comment">user_confirm();</td>
+<td class="comment-11" rowspan="1">user_confirm();</td>
 </tr>
 <tr>
-<td class="address"><a name="40442"></a>9DFA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40442"></a>9DFA</td>
 <td class="instruction">JP Z,<a class="link" href="46938.html">$B75A</a></td>
-<td class="comment">if (Z) reset_game();</td>
+<td class="comment-11" rowspan="1">if (Z) reset_game();</td>
 </tr>
 <tr>
-<td class="address"><a name="40445"></a>9DFD</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40445"></a>9DFD</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="3">if (room_index == 0) { reset_B2FC(); return; } // exit via</td>
+<td class="comment-11" rowspan="3">if (room_index == 0) { reset_B2FC(); return; } // exit via</td>
 </tr>
 <tr>
-<td class="address"><a name="40448"></a>9E00</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40448"></a>9E00</td>
 <td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40449"></a>9E01</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40449"></a>9E01</td>
 <td class="instruction">JP Z,<a class="link" href="45820.html">$B2FC</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="40452"></a>9E04</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40452"></a>9E04</td>
 <td class="instruction">JP <a class="link" href="26868.html">$68F4</a></td>
-<td class="comment">else enter_room(); // doesn't return (jumps to main_loop)</td>
+<td class="comment-11" rowspan="1">else enter_room(); // doesn't return (jumps to main_loop)</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="40399.html">9DCF</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40399.html">9DCF</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40421">Map</a></td>
-<td class="next">Next: <a class="link" href="40455.html">9E07</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40455.html">9E07</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

@@ -4,50 +4,68 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Data at 7CFC</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-b">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Data</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Data</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="31977.html">7CE9</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31977.html">7CE9</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#31996">Map</a></td>
-<td class="next">Next: <a class="link" href="32021.html">7D15</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="32021.html">7D15</a></span></td>
 </tr>
 </table>
 <div class="description">7CFC: message_queue_stuff</div>
-<table class="dataDisassembly">
+<table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Queue of message indexes. (Pairs of bytes + terminator).
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="address"><a name="31996"></a>7CFC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31996"></a>7CFC</td>
 <td class="instruction">DEFB $FF,$FF,$00,$00,$00,$00,$00,$00</td>
-<td class="dataComment" rowspan="3">message_queue</td>
+<td class="comment-11" rowspan="3">message_queue</td>
 </tr>
 <tr>
-<td class="address"><a name="32004"></a>7D04</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32004"></a>7D04</td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32012"></a>7D0C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32012"></a>7D0C</td>
 <td class="instruction">DEFB $00,$00,$FF</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="32015"></a>
 <div class="comments">
 <div class="paragraph">
@@ -57,12 +75,13 @@ Decrementing counter. Shows next message when it hits zero.
 </td>
 </tr>
 <tr>
-<td class="address">7D0F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32015"></a>7D0F</td>
 <td class="instruction">DEFB $00</td>
-<td class="dataComment">message_display_counter</td>
+<td class="comment-11" rowspan="1">message_display_counter</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="32016"></a>
 <div class="comments">
 <div class="paragraph">
@@ -75,12 +94,13 @@ If 128 then next_message. If &gt; 128 then wipe message. Else display.
 </td>
 </tr>
 <tr>
-<td class="address">7D10</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32016"></a>7D10</td>
 <td class="instruction">DEFB $80</td>
-<td class="dataComment">message_display_index</td>
+<td class="comment-11" rowspan="1">message_display_index</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="32017"></a>
 <div class="comments">
 <div class="paragraph">
@@ -90,12 +110,13 @@ Pointer to the head of the message queue.
 </td>
 </tr>
 <tr>
-<td class="address">7D11</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32017"></a>7D11</td>
 <td class="instruction">DEFW $7CFE</td>
-<td class="dataComment">message_queue_pointer</td>
+<td class="comment-11" rowspan="1">message_queue_pointer</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="32019"></a>
 <div class="comments">
 <div class="paragraph">
@@ -105,22 +126,23 @@ Pointer to the next message character to be displayed.
 </td>
 </tr>
 <tr>
-<td class="address">7D13</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32019"></a>7D13</td>
 <td class="instruction">DEFW $0000</td>
-<td class="dataComment">current_message_character</td>
+<td class="comment-11" rowspan="1">current_message_character</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="31977.html">7CE9</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31977.html">7CE9</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#31996">Map</a></td>
-<td class="next">Next: <a class="link" href="32021.html">7D15</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="32021.html">7D15</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

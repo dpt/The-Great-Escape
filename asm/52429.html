@@ -4,28 +4,29 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at CCCD</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="52395.html">CCAB</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="52395.html">CCAB</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#52429">Map</a></td>
-<td class="next">Next: <a class="link" href="52475.html">CCFB</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="52475.html">CCFB</a></span></td>
 </tr>
 </table>
 <div class="description">CCCD: is_item_discoverable</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Searches item_structs for items dropped nearby. If items are found the guards are made to persue the player.
@@ -34,24 +35,40 @@ Searches item_structs for items dropped nearby. If items are found the guards ar
 Green key and food items are ignored.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="52429"></a>CCCD</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52429"></a>CCCD</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = room_index;</td>
+<td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
-<td class="address"><a name="52432"></a>CCD0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52432"></a>CCD0</td>
 <td class="instruction">AND A</td>
-<td class="comment" rowspan="6">if (A != room_0_outdoors) } is_item_discoverable_interior(A); {  if (Z) guards_persue_prisoners(); } return;</td>
+<td class="comment-11" rowspan="6">if (A != room_0_outdoors) } is_item_discoverable_interior(A); {  if (Z) guards_persue_prisoners(); } return;</td>
 </tr>
 <tr>
-<td class="address"><a name="52433"></a>CCD1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52433"></a>CCD1</td>
 <td class="instruction">JR Z,$CCDB</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="52435"></a>
 <div class="comments">
 <div class="paragraph">
@@ -61,23 +78,31 @@ Indoors.
 </td>
 </tr>
 <tr>
-<td class="address">CCD3</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52435"></a>CCD3</td>
 <td class="instruction">CALL <a class="link" href="52475.html">$CCFB</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52438"></a>CCD6</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52438"></a>CCD6</td>
 <td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52439"></a>CCD7</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52439"></a>CCD7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52442"></a>CCDA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52442"></a>CCDA</td>
 <td class="instruction">RET</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="52443"></a>
 <div class="comments">
 <div class="paragraph">
@@ -87,44 +112,55 @@ Outdoors.
 </td>
 </tr>
 <tr>
-<td class="label">CCDB</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52443"></a>CCDB</td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment">else { HL = &amp;item_structs[0].room;</td>
+<td class="comment-11" rowspan="1">else { HL = &amp;item_structs[0].room;</td>
 </tr>
 <tr>
-<td class="address"><a name="52446"></a>CCDE</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52446"></a>CCDE</td>
 <td class="instruction">LD DE,$0007</td>
-<td class="comment">-</td>
+<td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
-<td class="address"><a name="52449"></a>CCE1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52449"></a>CCE1</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment">B = 16; // iterations == n.itemstructs</td>
+<td class="comment-11" rowspan="1">B = 16; // iterations == n.itemstructs</td>
 </tr>
 <tr>
-<td class="label"><a name="52451"></a>CCE3</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52451"></a>CCE3</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment" rowspan="4">do { if (HL[0] &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) goto nearby;} next: HL += 7; // stride while (--B);</td>
+<td class="comment-11" rowspan="4">do { if (HL[0] &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY) goto nearby;} next: HL += 7; // stride while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="52453"></a>CCE5</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52453"></a>CCE5</td>
 <td class="instruction">JR NZ,$CCEB</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="52455"></a>CCE7</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52455"></a>CCE7</td>
 <td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52456"></a>CCE8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52456"></a>CCE8</td>
 <td class="instruction">DJNZ $CCE3</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52458"></a>CCEA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52458"></a>CCEA</td>
 <td class="instruction">RET</td>
-<td class="comment">return; }</td>
+<td class="comment-11" rowspan="1">return; }</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="52459"></a>
 <div class="comments">
 <div class="paragraph">
@@ -134,21 +170,25 @@ Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So 
 </td>
 </tr>
 <tr>
-<td class="label">CCEB</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52459"></a>CCEB</td>
 <td class="instruction">DEC HL</td>
-<td class="comment">nearby: HL--;</td>
+<td class="comment-11" rowspan="1">nearby: HL--;</td>
 </tr>
 <tr>
-<td class="address"><a name="52460"></a>CCEC</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52460"></a>CCEC</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="2">A = *HL &amp; itemstruct_ITEM_MASK; // sampled HL = $772A (&amp;item_structs[item_PURSE].item)</td>
+<td class="comment-11" rowspan="2">A = *HL &amp; itemstruct_ITEM_MASK; // sampled HL = $772A (&amp;item_structs[item_PURSE].item)</td>
 </tr>
 <tr>
-<td class="address"><a name="52461"></a>CCED</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52461"></a>CCED</td>
 <td class="instruction">AND $0F</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="52463"></a>
 <div class="comments">
 <div class="paragraph">
@@ -158,44 +198,53 @@ The green key and food items are ignored.
 </td>
 </tr>
 <tr>
-<td class="address">CCEF</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52463"></a>CCEF</td>
 <td class="instruction">CP $0B</td>
-<td class="comment" rowspan="4">if (A == item_GREEN_KEY || A == item_FOOD) goto next;</td>
+<td class="comment-11" rowspan="4">if (A == item_GREEN_KEY || A == item_FOOD) goto next;</td>
 </tr>
 <tr>
-<td class="address"><a name="52465"></a>CCF1</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52465"></a>CCF1</td>
 <td class="instruction">JR Z,$CCE7</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52467"></a>CCF3</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52467"></a>CCF3</td>
 <td class="instruction">CP $07</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52469"></a>CCF5</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52469"></a>CCF5</td>
 <td class="instruction">JR Z,$CCE7</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="52471"></a>CCF7</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52471"></a>CCF7</td>
 <td class="instruction">CALL <a class="link" href="52395.html">$CCAB</a></td>
-<td class="comment">guards_persue_prisoners();</td>
+<td class="comment-11" rowspan="1">guards_persue_prisoners();</td>
 </tr>
 <tr>
-<td class="address"><a name="52474"></a>CCFA</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52474"></a>CCFA</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="52395.html">CCAB</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="52395.html">CCAB</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#52429">Map</a></td>
-<td class="next">Next: <a class="link" href="52475.html">CCFB</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="52475.html">CCFB</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

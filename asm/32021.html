@@ -4,28 +4,29 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at 7D15</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="31996.html">7CFC</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31996.html">7CFC</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#32021">Map</a></td>
-<td class="next">Next: <a class="link" href="32047.html">7D2F</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="32047.html">7D2F</a></span></td>
 </tr>
 </table>
 <div class="description">7D15: queue_message_for_display</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Add the specified message to the queue of pending messages.
@@ -34,37 +35,53 @@ Add the specified message to the queue of pending messages.
 The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
 </div>
 </div>
-<table class="input">
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
 <tr>
 <td class="register">B</td>
-<td class="registerContents">message_* index.</td>
+<td class="register-desc">message_* index.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="registerContents">Possibly a second message index.</td>
+<td class="register-desc">Possibly a second message index.</td>
 </tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
 </table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="32021"></a>7D15</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="32021"></a>7D15</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment" rowspan="4">if (*(HL = message_queue_pointer) == message_NONE) return;</td>
+<td class="comment-11" rowspan="4">if (*(HL = message_queue_pointer) == message_NONE) return;</td>
 </tr>
 <tr>
-<td class="address"><a name="32024"></a>7D18</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32024"></a>7D18</td>
 <td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32026"></a>7D1A</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32026"></a>7D1A</td>
 <td class="instruction">CP (HL)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32027"></a>7D1B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32027"></a>7D1B</td>
 <td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="32028"></a>
 <div class="comments">
 <div class="paragraph">
@@ -74,45 +91,61 @@ Are we already about to show this message?
 </td>
 </tr>
 <tr>
-<td class="address">7D1C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32028"></a>7D1C</td>
 <td class="instruction">DEC HL</td>
-<td class="comment" rowspan="2">HL -= 2;</td>
+<td class="comment-11" rowspan="2">HL -= 2;</td>
 </tr>
 <tr>
-<td class="address"><a name="32029"></a>7D1D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32029"></a>7D1D</td>
 <td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32030"></a>7D1E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32030"></a>7D1E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment" rowspan="7">if (*HL++ == B &amp;&amp; *HL++ == C) return;</td>
+<td class="comment-11" rowspan="7">if (*HL++ == B &amp;&amp; *HL++ == C) return;</td>
 </tr>
 <tr>
-<td class="address"><a name="32031"></a>7D1F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32031"></a>7D1F</td>
 <td class="instruction">CP B</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32032"></a>7D20</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32032"></a>7D20</td>
 <td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32033"></a>7D21</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32033"></a>7D21</td>
 <td class="instruction">JR NZ,$7D26</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32035"></a>7D23</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32035"></a>7D23</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32036"></a>7D24</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32036"></a>7D24</td>
 <td class="instruction">CP C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32037"></a>7D25</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32037"></a>7D25</td>
 <td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="32038"></a>
 <div class="comments">
 <div class="paragraph">
@@ -122,48 +155,59 @@ Add it to the queue.
 </td>
 </tr>
 <tr>
-<td class="label">7D26</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="32038"></a>7D26</td>
 <td class="instruction">INC HL</td>
-<td class="comment" rowspan="5">*HL++ = B; *HL++ = C;</td>
+<td class="comment-11" rowspan="5">*HL++ = B; *HL++ = C;</td>
 </tr>
 <tr>
-<td class="address"><a name="32039"></a>7D27</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32039"></a>7D27</td>
 <td class="instruction">LD (HL),B</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32040"></a>7D28</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32040"></a>7D28</td>
 <td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32041"></a>7D29</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32041"></a>7D29</td>
 <td class="instruction">LD (HL),C</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32042"></a>7D2A</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32042"></a>7D2A</td>
 <td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="32043"></a>7D2B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32043"></a>7D2B</td>
 <td class="instruction">LD ($7D11),HL</td>
-<td class="comment">message_queue_pointer = HL;</td>
+<td class="comment-11" rowspan="1">message_queue_pointer = HL;</td>
 </tr>
 <tr>
-<td class="address"><a name="32046"></a>7D2E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="32046"></a>7D2E</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="31996.html">7CFC</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31996.html">7CFC</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#32021">Map</a></td>
-<td class="next">Next: <a class="link" href="32047.html">7D2F</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="32047.html">7D2F</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

@@ -4,218 +4,284 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at 6939</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="26912.html">6920</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="26912.html">6920</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26937">Map</a></td>
-<td class="next">Next: <a class="link" href="27054.html">69AE</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="27054.html">69AE</a></span></td>
 </tr>
 </table>
 <div class="description">6939: setup_movable_items</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class="link" href="45820.html">B2FC</a>.
 </div>
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="26937"></a>6939</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26937"></a>6939</td>
 <td class="instruction">CALL <a class="link" href="27081.html">$69C9</a></td>
-<td class="comment">reset_nonplayer_visible_characters();</td>
+<td class="comment-11" rowspan="1">reset_nonplayer_visible_characters();</td>
 </tr>
 <tr>
-<td class="address"><a name="26940"></a>693C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26940"></a>693C</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment">A = room_index;</td>
+<td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
-<td class="address"><a name="26943"></a>693F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26943"></a>693F</td>
 <td class="instruction">CP $02</td>
-<td class="comment" rowspan="4">if (A == room_2_hut2left) setup_stove1();</td>
+<td class="comment-11" rowspan="4">if (A == room_2_hut2left) setup_stove1();</td>
 </tr>
 <tr>
-<td class="address"><a name="26945"></a>6941</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26945"></a>6941</td>
 <td class="instruction">JP NZ,$6949</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26948"></a>6944</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26948"></a>6944</td>
 <td class="instruction">CALL $6978</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26951"></a>6947</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26951"></a>6947</td>
 <td class="instruction">JR $695B</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="26953"></a>6949</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26953"></a>6949</td>
 <td class="instruction">CP $04</td>
-<td class="comment" rowspan="4">else if (A == room_4_hut3left) setup_stove2();</td>
+<td class="comment-11" rowspan="4">else if (A == room_4_hut3left) setup_stove2();</td>
 </tr>
 <tr>
-<td class="address"><a name="26955"></a>694B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26955"></a>694B</td>
 <td class="instruction">JP NZ,$6953</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26958"></a>694E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26958"></a>694E</td>
 <td class="instruction">CALL $6971</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26961"></a>6951</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26961"></a>6951</td>
 <td class="instruction">JR $695B</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="26963"></a>6953</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26963"></a>6953</td>
 <td class="instruction">CP $09</td>
-<td class="comment" rowspan="3">else if (A == room_9_crate) setup_crate();</td>
+<td class="comment-11" rowspan="3">else if (A == room_9_crate) setup_crate();</td>
 </tr>
 <tr>
-<td class="address"><a name="26965"></a>6955</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26965"></a>6955</td>
 <td class="instruction">JP NZ,$695B</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="26968"></a>6958</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26968"></a>6958</td>
 <td class="instruction">CALL $696A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="label"><a name="26971"></a>695B</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26971"></a>695B</td>
 <td class="instruction">CALL <a class="link" href="50204.html">$C41C</a></td>
-<td class="comment">called_from_main_loop_7();</td>
+<td class="comment-11" rowspan="1">called_from_main_loop_7();</td>
 </tr>
 <tr>
-<td class="address"><a name="26974"></a>695E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26974"></a>695E</td>
 <td class="instruction">CALL <a class="link" href="56222.html">$DB9E</a></td>
-<td class="comment">mark_nearby_items();</td>
+<td class="comment-11" rowspan="1">mark_nearby_items();</td>
 </tr>
 <tr>
-<td class="address"><a name="26977"></a>6961</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26977"></a>6961</td>
 <td class="instruction">CALL <a class="link" href="46542.html">$B5CE</a></td>
-<td class="comment">called_from_main_loop_9();</td>
+<td class="comment-11" rowspan="1">called_from_main_loop_9();</td>
 </tr>
 <tr>
-<td class="address"><a name="26980"></a>6964</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26980"></a>6964</td>
 <td class="instruction">CALL <a class="link" href="43698.html">$AAB2</a></td>
-<td class="comment">move_map();</td>
+<td class="comment-11" rowspan="1">move_map();</td>
 </tr>
 <tr>
-<td class="address"><a name="26983"></a>6967</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26983"></a>6967</td>
 <td class="instruction">JP <a class="link" href="47206.html">$B866</a></td>
-<td class="comment">searchlight(); return;</td>
+<td class="comment-11" rowspan="1">searchlight(); return;</td>
 </tr>
 <tr>
-<td class="label"><a name="26986"></a>696A</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26986"></a>696A</td>
 <td class="instruction">LD HL,$69B7</td>
-<td class="comment">setup_crate: HL = &amp;movable_items[movable_item_CRATE];</td>
+<td class="comment-11" rowspan="1">setup_crate: HL = &amp;movable_items[movable_item_CRATE];</td>
 </tr>
 <tr>
-<td class="address"><a name="26989"></a>696D</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26989"></a>696D</td>
 <td class="instruction">LD A,$1C</td>
-<td class="comment">A = character_28_crate;</td>
+<td class="comment-11" rowspan="1">A = character_28_crate;</td>
 </tr>
 <tr>
-<td class="address"><a name="26991"></a>696F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26991"></a>696F</td>
 <td class="instruction">JR $697D</td>
-<td class="comment">goto setup_movable_item;</td>
+<td class="comment-11" rowspan="1">goto setup_movable_item;</td>
 </tr>
 <tr>
-<td class="label"><a name="26993"></a>6971</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26993"></a>6971</td>
 <td class="instruction">LD HL,$69C0</td>
-<td class="comment">setup_stove2: HL = &amp;movable_items[movable_item_STOVE2];</td>
+<td class="comment-11" rowspan="1">setup_stove2: HL = &amp;movable_items[movable_item_STOVE2];</td>
 </tr>
 <tr>
-<td class="address"><a name="26996"></a>6974</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26996"></a>6974</td>
 <td class="instruction">LD A,$1B</td>
-<td class="comment">A = character_27_stove2;</td>
+<td class="comment-11" rowspan="1">A = character_27_stove2;</td>
 </tr>
 <tr>
-<td class="address"><a name="26998"></a>6976</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26998"></a>6976</td>
 <td class="instruction">JR $697D</td>
-<td class="comment">goto setup_movable_item;</td>
+<td class="comment-11" rowspan="1">goto setup_movable_item;</td>
 </tr>
 <tr>
-<td class="label"><a name="27000"></a>6978</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="27000"></a>6978</td>
 <td class="instruction">LD HL,$69AE</td>
-<td class="comment">setup_stove1: HL = &amp;movable_items[movable_item_STOVE1];</td>
+<td class="comment-11" rowspan="1">setup_stove1: HL = &amp;movable_items[movable_item_STOVE1];</td>
 </tr>
 <tr>
-<td class="address"><a name="27003"></a>697B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27003"></a>697B</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment">A = character_26_stove1;</td>
+<td class="comment-11" rowspan="1">A = character_26_stove1;</td>
 </tr>
 <tr>
-<td class="label"><a name="27005"></a>697D</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="27005"></a>697D</td>
 <td class="instruction">LD ($8020),A</td>
-<td class="comment">setup_movable_item: $8020 = A; // character index</td>
+<td class="comment-11" rowspan="1">setup_movable_item: $8020 = A; // character index</td>
 </tr>
 <tr>
-<td class="address"><a name="27008"></a>6980</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27008"></a>6980</td>
 <td class="instruction">LD BC,$0009</td>
-<td class="comment" rowspan="3">memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F</td>
+<td class="comment-11" rowspan="3">memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F</td>
 </tr>
 <tr>
-<td class="address"><a name="27011"></a>6983</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27011"></a>6983</td>
 <td class="instruction">LD DE,$802F</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27014"></a>6986</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27014"></a>6986</td>
 <td class="instruction">LDIR</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27016"></a>6988</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27016"></a>6988</td>
 <td class="instruction">LD HL,$69A0</td>
-<td class="comment" rowspan="4">memcpy($8021, movable_item_reset_data, 14);</td>
+<td class="comment-11" rowspan="4">memcpy($8021, movable_item_reset_data, 14);</td>
 </tr>
 <tr>
-<td class="address"><a name="27019"></a>698B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27019"></a>698B</td>
 <td class="instruction">LD DE,$8021</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27022"></a>698E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27022"></a>698E</td>
 <td class="instruction">LD BC,$000E</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27025"></a>6991</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27025"></a>6991</td>
 <td class="instruction">LDIR</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27027"></a>6993</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27027"></a>6993</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment" rowspan="2">$803C = room_index;</td>
+<td class="comment-11" rowspan="2">$803C = room_index;</td>
 </tr>
 <tr>
-<td class="address"><a name="27030"></a>6996</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27030"></a>6996</td>
 <td class="instruction">LD ($803C),A</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address"><a name="27033"></a>6999</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27033"></a>6999</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment">HL = $8020;</td>
+<td class="comment-11" rowspan="1">HL = $8020;</td>
 </tr>
 <tr>
-<td class="address"><a name="27036"></a>699C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27036"></a>699C</td>
 <td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
-<td class="comment">reset_position(); // reset item vischar</td>
+<td class="comment-11" rowspan="1">reset_position(); // reset item vischar</td>
 </tr>
 <tr>
-<td class="address"><a name="27039"></a>699F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27039"></a>699F</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="27040"></a>
 <div class="comments">
 <div class="paragraph">
@@ -225,26 +291,29 @@ Fourteen bytes of reset data.
 </td>
 </tr>
 <tr>
-<td class="address">69A0</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27040"></a>69A0</td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$F2</td>
-<td class="comment" rowspan="2">movable_item_reset_data</td>
+<td class="comment-11" rowspan="2">movable_item_reset_data</td>
 </tr>
 <tr>
-<td class="address"><a name="27048"></a>69A8</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27048"></a>69A8</td>
 <td class="instruction">DEFB $CD,$76,$CF,$00,$00,$00</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="26912.html">6920</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="26912.html">6920</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#26937">Map</a></td>
-<td class="next">Next: <a class="link" href="27054.html">69AE</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="27054.html">69AE</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>

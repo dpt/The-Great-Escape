@@ -4,44 +4,60 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>The Great Escape: Routine at A26A</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
 </head>
-<body class="disassembly">
+<body class="Asm-c">
 <table class="header">
 <tr>
-<td class="headerLogo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="headerText">Routines</td>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="41572.html">A264</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41572.html">A264</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41578">Map</a></td>
-<td class="next">Next: <a class="link" href="41599.html">A27F</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41599.html">A27F</a></span></td>
 </tr>
 </table>
 <div class="description">A26A: event_search_light</div>
 <table class="disassembly">
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <div class="details">
+
 </div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
 </td>
 </tr>
 <tr>
-<td class="label"><a name="41578"></a>A26A</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41578"></a>A26A</td>
 <td class="instruction">LD A,$26</td>
-<td class="comment">A = 0x26;</td>
+<td class="comment-11" rowspan="1">A = 0x26;</td>
 </tr>
 <tr>
-<td class="address"><a name="41580"></a>A26C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41580"></a>A26C</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment">C = 0;</td>
+<td class="comment-11" rowspan="1">C = 0;</td>
 </tr>
 <tr>
-<td class="routineComment" colspan="3">
+<td class="routine-comment" colspan="4">
 <a name="41582"></a>
 <div class="comments">
 <div class="paragraph">
@@ -51,77 +67,89 @@ Common end of event_time_for_bed and event_search_light.
 </td>
 </tr>
 <tr>
-<td class="label">A26E</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41582"></a>A26E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">-</td>
+<td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
-<td class="address"><a name="41583"></a>A26F</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41583"></a>A26F</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment">Adash = 12;</td>
+<td class="comment-11" rowspan="1">Adash = 12;</td>
 </tr>
 <tr>
-<td class="address"><a name="41585"></a>A271</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41585"></a>A271</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment">B = 4; // 4 iterations</td>
+<td class="comment-11" rowspan="1">B = 4; // 4 iterations</td>
 </tr>
 <tr>
-<td class="label"><a name="41587"></a>A273</td>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41587"></a>A273</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment">do { PUSH AF</td>
+<td class="comment-11" rowspan="1">do { PUSH AF</td>
 </tr>
 <tr>
-<td class="address"><a name="41588"></a>A274</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41588"></a>A274</td>
 <td class="instruction">CALL <a class="link" href="41868.html">$A38C</a></td>
-<td class="comment">sub_A38C();</td>
+<td class="comment-11" rowspan="1">sub_A38C();</td>
 </tr>
 <tr>
-<td class="address"><a name="41591"></a>A277</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41591"></a>A277</td>
 <td class="instruction">POP AF</td>
-<td class="comment">POP AF</td>
+<td class="comment-11" rowspan="1">POP AF</td>
 </tr>
 <tr>
-<td class="address"><a name="41592"></a>A278</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41592"></a>A278</td>
 <td class="instruction">INC A</td>
-<td class="comment">Adash++;</td>
+<td class="comment-11" rowspan="1">Adash++;</td>
 </tr>
 <tr>
-<td class="address"><a name="41593"></a>A279</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41593"></a>A279</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">-</td>
+<td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
-<td class="address"><a name="41594"></a>A27A</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41594"></a>A27A</td>
 <td class="instruction">INC A</td>
-<td class="comment">A++;</td>
+<td class="comment-11" rowspan="1">A++;</td>
 </tr>
 <tr>
-<td class="address"><a name="41595"></a>A27B</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41595"></a>A27B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment">-</td>
+<td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
-<td class="address"><a name="41596"></a>A27C</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41596"></a>A27C</td>
 <td class="instruction">DJNZ $A273</td>
-<td class="comment">} while (--B);</td>
+<td class="comment-11" rowspan="1">} while (--B);</td>
 </tr>
 <tr>
-<td class="address"><a name="41598"></a>A27E</td>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41598"></a>A27E</td>
 <td class="instruction">RET</td>
-<td class="comment">return;</td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
-<table class="prevNext">
+<table class="asm-navigation">
 <tr>
-<td class="prev">Prev: <a class="link" href="41572.html">A264</a></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41572.html">A264</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41578">Map</a></td>
-<td class="next">Next: <a class="link" href="41599.html">A27F</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41599.html">A27F</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20140126</div>
+<div class="release">The incomplete The Great Escape disassembly 20140530</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 3.6.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
 </div>
 </body>
 </html>
