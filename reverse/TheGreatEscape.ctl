@@ -8869,6 +8869,7 @@ D $CE22 'br' => character faces bottom right of the screen
   $CE88 { 4, 15, &bitmap_dog_tl_4       , &mask_dog_tl       } // (24x15,$D8F4,$D921)
   $CE8E { 4, 14, &bitmap_dog_br_1       , &mask_dog_br       } // (24x14,$D951,$D9F9)
   $CE94 { 4, 15, &bitmap_dog_br_2       , &mask_dog_br       } // (24x15,$D97B,$D9F9)
+D $CE9A Height of following sprite is one row too high.
   $CE9A { 4, 15, &bitmap_dog_br_3       , &mask_dog_br       } // (24x15,$D9A8,$D9F9)
   $CEA0 { 4, 14, &bitmap_dog_br_4       , &mask_dog_br       } // (24x14,$D9CF,$D9F9)
   $CEA6 { 3, 27, &bitmap_guard_tl_4     , &mask_various_tl_4 } // (16x27,$D74D,$D545)
@@ -8992,12 +8993,12 @@ B $DB46 bitmap: STOVE
 B $DB72 mask: STOVE
 
 ;
-; UDGs for above
+; Images for above
 ;
 
 D $D026 #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1)
 D $D060 #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2)
-D $D09A #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-3)
+D $D09A #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,120}(bitmap-commandant-facing-top-left-3)
 D $D0D6 #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-top-left-4)
 ;
 D $D10E #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-1)
@@ -9015,54 +9016,54 @@ D $D2F4 #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-bot
 D $D32C #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-3)
 D $D362 #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-4)
 ;
-D $D398 #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-left-1)
-D $D3C5 #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-left-2)
+D $D398 #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-left-1)
+D $D3C5 #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-left-2)
 D $D3F5 #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-1)
 D $D425 #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-2)
 D $D455 #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left)
 ;
-D $D485 #UDGARRAY2,7,4,2;$D485-$D4C4-1-16{0,0,64,116}(mask-various-facing-top-left-1)
-D $D4C5 #UDGARRAY2,7,4,2;$D4C5-$D504-1-16{0,0,64,116}(mask-various-facing-top-left-2)
-D $D505 #UDGARRAY2,7,4,2;$D505-$D544-1-16{0,0,64,116}(mask-various-facing-top-left-3)
-D $D545 #UDGARRAY2,7,4,2;$D545-$D584-1-16{0,0,64,112}(mask-various-facing-top-left-4)
+D $D485 #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-top-left-1)
+D $D4C5 #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-top-left-2)
+D $D505 #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-top-left-3)
+D $D545 #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-top-left-4)
 ;
-D $D585 #UDGARRAY2,7,4,2;$D585-$D5C4-1-16{0,0,64,108}(mask-various-facing-top-right-1)
-D $D5C5 #UDGARRAY2,7,4,2;$D5C5-$D604-1-16{0,0,64,112}(mask-various-facing-top-right-2)
-D $D605 #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,108}(mask-various-facing-top-right-3)
-D $D63D #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,112}(mask-various-facing-top-right-4)
-D $D677 #UDGARRAY3,7,4,3;$D677-$D6A6-1-24{0,0,96,64}(mask-crawl-facing-bottom-left)
+D $D585 #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-top-right-1)
+D $D5C5 #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-top-right-2)
+D $D605 #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,112}(mask-various-facing-top-right-3)
+D $D63D #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,116}(mask-various-facing-top-right-4)
+D $D677 #UDGARRAY3,7,4,3;$D677-$D6A6-1-24(mask-crawl-facing-bottom-left)
 ;
-D $D6A7 #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(mask-guard-facing-top-left-1)
-D $D6DD #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(mask-guard-facing-top-left-2)
-D $D713 #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(mask-guard-facing-top-left-3)
-D $D74D #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(mask-guard-facing-top-left-4)
+D $D6A7 #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(bitmap-guard-facing-top-left-1)
+D $D6DD #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(bitmap-guard-facing-top-left-2)
+D $D713 #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(bitmap-guard-facing-top-left-3)
+D $D74D #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(bitmap-guard-facing-top-left-4)
 ;
-D $D783 #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(mask-guard-facing-bottom-right-1)
-D $D7BD #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(mask-guard-facing-bottom-right-2)
-D $D7F7 #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(mask-guard-facing-bottom-right-3)
-D $D82F #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(mask-guard-facing-bottom-right-4)
+D $D783 #UDGARRAY2,7,4,2;$D783-$D7BC-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-1)
+D $D7BD #UDGARRAY2,7,4,2;$D7BD-$D7F6-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-2)
+D $D7F7 #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-3)
+D $D82F #UDGARRAY2,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4)
 ;
 D $D867 #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1)
 D $D897 #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2)
 D $D8C7 #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3)
 D $D8F4 #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4)
-D $D921 #UDGARRAY3,7,4,3;$D921-$D950-1-24{0,0,96,64}(mask-dog-facing-top-left)
+D $D921 #UDGARRAY3,7,4,3;$D921-$D950-1-24(mask-dog-facing-top-left)
 ;
-D $D951 #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-1)
+D $D951 #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-1)
 D $D97B #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-2)
-D $D9A8 #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,52}(bitmap-dog-facing-bottom-right-3)
+D $D9A8 #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-3)
 D $D9CF #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-4)
-D $D9F9 #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24{0,0,96,64}(mask-dog-facing-bottom-right)
+D $D9F9 #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24(mask-dog-facing-bottom-right)
 ;
 ; I'm currently unsure of the exact dimensions of the following flag graphics.
 D $DA29 #UDGARRAY3,7,4,3;$DA29-$DA6A-1-24{0,0,96,96}(flag-up)
 D $DA6B #UDGARRAY3,7,4,3;$DA6B-$DAB5-1-24{0,0,96,96}(flag-down)
 ;
 D $DAB6 #UDGARRAY3,7,4,3;$DAB6-$DAFD-1-24{0,0,96,96}(bitmap-crate)
-D $DAFE #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24{0,0,96,96}(mask-crate)
+D $DAFE #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24(mask-crate)
 ;
-D $DB46 #UDGARRAY2,7,4,2;$DB46-$DB72-1-16{0,0,64,88}(bitmap-stove)
-D $DB72 #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16{0,0,64,88}(mask-stove)
+D $DB46 #UDGARRAY2,7,4,2;$DB46-$DB71-1-16{0,0,64,88}(bitmap-stove)
+D $DB72 #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove)
 
 ; ------------------------------------------------------------------------------
 
