@@ -2676,7 +2676,7 @@ D $7D99 Looks like message_queue is poked with the index of the message to displ
 
 ; Messages - messages printed at the bottom of the screen when things happen.
 ;
-b $7DCD messages_table
+t $7DCD messages_table
 D $7DCD Non-ASCII: encoded to match the font; FF terminated.
 W $7DCD Array of pointers to messages.
 D $7DF5 "MISSED ROLL CALL"
@@ -4966,7 +4966,7 @@ R $A5BF O:HL Pointer to byte after screenlocstring.
 
 ; ------------------------------------------------------------------------------
 
-b $A5CE escape_strings
+t $A5CE escape_strings
 D $A5CE "WELL DONE"
   $A5CE #CALL:decode_screenlocstring($A5CE)
 D $A5DA "YOU HAVE ESCAPED"
@@ -10262,13 +10262,13 @@ R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
 
 ; ------------------------------------------------------------------------------
 
-b $F014 screenlocstring_confirm_y_or_n
+t $F014 screenlocstring_confirm_y_or_n
 D $F014 "CONFIRM. Y OR N"
   $F014 #CALL:decode_screenlocstring($F014)
 
 ; ------------------------------------------------------------------------------
 
-b $F026 more_messages
+t $F026 more_messages
 D $F026 More messages.
 D $F026 "HE TAKES THE BRIBE"
   $F026 #CALL:decode_stringFF($F026)
@@ -10475,20 +10475,20 @@ D $F28E Zero pressed to start game.
 
 ; ------------------------------------------------------------------------------
 
-b $F2AD define_key_prompts
+t $F2AD define_key_prompts
 D $F2AD Key choice prompt strings.
 D $F2AD "CHOOSE KEYS"
-B $F2AD #CALL:decode_screenlocstring($F2AD)
+  $F2AD #CALL:decode_screenlocstring($F2AD)
 D $F2BB "LEFT."
-B $F2BB #CALL:decode_screenlocstring($F2BB)
+  $F2BB #CALL:decode_screenlocstring($F2BB)
 D $F2C3 "RIGHT."
-B $F2C3 #CALL:decode_screenlocstring($F2C3)
+  $F2C3 #CALL:decode_screenlocstring($F2C3)
 D $F2CC "UP."
-B $F2CC #CALL:decode_screenlocstring($F2CC)
+  $F2CC #CALL:decode_screenlocstring($F2CC)
 D $F2D2 "DOWN."
-B $F2D2 #CALL:decode_screenlocstring($F2D2)
+  $F2D2 #CALL:decode_screenlocstring($F2D2)
 D $F2DA "FIRE."
-B $F2DA #CALL:decode_screenlocstring($F2DA)
+  $F2DA #CALL:decode_screenlocstring($F2DA)
 
 ; ------------------------------------------------------------------------------
 
@@ -10504,16 +10504,16 @@ D $F2E2 (<- choose_keys)
 
 ; Counted strings.
 ;
-b $F2EB counted_strings
+t $F2EB counted_strings
 D $F2EB Counted strings (encoded to match font; first byte is count).
 D $F2EB "ENTER"
-B $F2EB #CALL:decode_stringcounted($F2EB)
+  $F2EB #CALL:decode_stringcounted($F2EB)
 D $F2F1 "CAPS"
-B $F2F1 #CALL:decode_stringcounted($F2F1)
+  $F2F1 #CALL:decode_stringcounted($F2F1)
 D $F2F6 "SYMBOL"
-B $F2F6 #CALL:decode_stringcounted($F2F6)
+  $F2F6 #CALL:decode_stringcounted($F2F6)
 D $F2FD "SPACE"
-B $F2FD #CALL:decode_stringcounted($F2FD)
+  $F2FD #CALL:decode_stringcounted($F2FD)
 
 ; ------------------------------------------------------------------------------
 
@@ -10709,24 +10709,24 @@ D $F445 0/1/2/3 keyboard/kempston/sinclair/protek
 
 ; ------------------------------------------------------------------------------
 
-b $F446 key_choice_screenlocstrings
+t $F446 key_choice_screenlocstrings
 D $F446 Key choice screenlocstrings.
 D $F446 "CONTROLS"
-B $F446 #CALL:decode_screenlocstring($F446)
+  $F446 #CALL:decode_screenlocstring($F446)
 D $F451 "0 SELECT"
-B $F451 #CALL:decode_screenlocstring($F451)
+  $F451 #CALL:decode_screenlocstring($F451)
 D $F45C "1 KEYBOARD"
-B $F45C #CALL:decode_screenlocstring($F45C)
+  $F45C #CALL:decode_screenlocstring($F45C)
 D $F469 "2 KEMPSTON"
-B $F469 #CALL:decode_screenlocstring($F469)
+  $F469 #CALL:decode_screenlocstring($F469)
 D $F476 "3 SINCLAIR"
-B $F476 #CALL:decode_screenlocstring($F476)
+  $F476 #CALL:decode_screenlocstring($F476)
 D $F483 "4 PROTEK"
-B $F483 #CALL:decode_screenlocstring($F483)
+  $F483 #CALL:decode_screenlocstring($F483)
 D $F48E "BREAK OR CAPS AND SPACE"
-B $F48E #CALL:decode_screenlocstring($F48E)
+  $F48E #CALL:decode_screenlocstring($F48E)
 D $F4A8 "FOR NEW GAME"
-B $F4A8 #CALL:decode_screenlocstring($F4A8)
+  $F4A8 #CALL:decode_screenlocstring($F4A8)
 
 ; ------------------------------------------------------------------------------
 
