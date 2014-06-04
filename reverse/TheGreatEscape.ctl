@@ -1869,7 +1869,6 @@ D $7075 roomdef_50_blocked_tunnel
 ;
 b $7095 interior_object_defs
 W $7095 Array of pointer to interior object definitions, 54 entries long (== number of interior rooms).
-D $7095 #CALL:decode_all_objects($7095, 54)
 ;
 B $7101 Interior object tile refs 0
 B $711B Interior object tile refs 1

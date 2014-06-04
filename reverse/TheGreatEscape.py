@@ -120,7 +120,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         s = ""
         for index,i in enumerate(range(base, base + ents * 2, 2)):
             addr = self.snapshot[i + 0] + self.snapshot[i + 1] * 256
-            s += self.decode_object(cwd, addr, index) + "<br/>"
+            s += "<h3>$%.4x</h3>" % addr 
+            s += "<p>" + self.decode_object(cwd, addr, index) + "</p>"
         return s
 
     def decode_object(self, cwd, addr, index):
