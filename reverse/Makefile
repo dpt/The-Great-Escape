@@ -4,9 +4,10 @@ OPTIONS=-H
 .PHONY: usage
 usage:
 	@echo "Supported targets:"
-	@echo "  usage		show this help"
-	@echo "  install	install the The Great Escape support"
-	@echo "  tge		build the The Great Escape disassembly"
+	@echo "  usage		Show this help"
+	@echo "  install	Install the The Great Escape support"
+	@echo "  tge		Build the The Great Escape disassembly"
+	@echo "  clean		Clean a previous build"
 	@echo ""
 	@echo "Environment variables:"
 	@echo "  BUILD          directory in which to build the disassemblies (default: build)"
@@ -22,3 +23,9 @@ tge:
 	mkdir -p $(BUILD)
 	sna2skool.py $(OPTIONS) -c $(TGE).ctl $(TGE).z80 > $(BUILD)/$(TGE).skool 
 	skool2html.py $(OPTIONS) -o $(BUILD)/$(TGE).skool
+
+.PHONY: clean
+clean:
+	@echo 'Cleaning...'
+	-rm -rf $(BUILD)
+
