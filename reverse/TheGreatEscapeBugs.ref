@@ -5,10 +5,10 @@
 ;
 
 [Bug:writesToROM:Code which empties beds writes to ROM]
-The #REFS$A289, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
+The #R$A289, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
 
 [Bug:offByOne:Off-by-one in is_item_discoverable]
-The #REFS$CCCD, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
+The #R$CCCD, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
 
 [Bug:spotlightBleed:Spotlight attribute]
 Sometimes the nighttime spotlight will set the attributes of the barbed wire game screen border.
