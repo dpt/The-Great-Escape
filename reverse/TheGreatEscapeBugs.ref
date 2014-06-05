@@ -4,38 +4,44 @@
 ; This disassembly copyright (c) David Thomas, 2012-2014. <dave@davespace.co.uk>
 ;
 
-[Bug:writesToROM:Code which empties beds writes to ROM]
-The #R$A289, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
+[Bug:writesToROM:The routine which empties beds writes to ROM]
+The routine #R$A289, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
 
 [Bug:offByOne:Off-by-one in is_item_discoverable]
-The #R$CCCD, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
+The routine #R$CCCD, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
 
-[Bug:spotlightBleed:Spotlight attribute]
+[Bug:spotlightBleed:Spotlight attributes go into border]
 Sometimes the nighttime spotlight will set the attributes of the barbed wire game screen border.
 
-Not yet located the faulty code.
+I've not yet located the faulty code.
 
-[Bug:pauseDoesntClear§:Pause doesn't always clear the screen]
-Pause doesn't always clear the full game screen. You get a two-row high sliver of pixels left behind.
+[Bug:pauseDoesntClear:Pause doesn't always clear the screen]
+Pause doesn't always clear the full game screen. You may see a two-row high sliver of pixels left behind.
 
-Not yet located the faulty code.
+I've not yet located the faulty code.
 
-[Bug:nutsInSolitary:Player goes nuts in solitary]
-Sometimes the player will go nuts when put in solitary. He'll run up against the topmost corner of the room and keep running.
+[Bug:nutsInSolitary:Hero goes nuts in solitary]
+Sometimes out hero will go nuts when put in solitary. He'll run up against the topmost corner of the room and keep running, moving left-right all the while.
 
-Not yet located the faulty code.
+I've not yet located the faulty code.
 
-[Bug:walkingStove:Bribe prisoner and he turns into a boiler]
+[Bug:walkingStove:You can bribe boilers and crates]
 "If you try and bribe a prisoner with the chocolate when you are in the lower of the 3 prisoner huts, he will walk towards you and as he does he will flash alternately as himself and a boiler." (zx1)
 
-Similarly (or possibly the exact same case): you can bribe boilers and crates. They change into characters and start walking around.
+Similarly (or possibly the exact same case): you can bribe boilers and crates. They will change into characters and start walking around.
 
-[Bug:moreBugsFromWOS:More bugs mentioned on WOS]
-http://www.worldofspectrum.org/forums/showthread.php?t=38349
+[Bug:moreBugsFromWOS:More bugs mentioned on World of Spectrum forums]
+The original thread is <a href="http://www.worldofspectrum.org/forums/showthread.php?t=38349">here</a>.
+
 "When the hero then moves through the fence automatically after cutting the wire, he can go garbled momentarily." (Bandit)
+
 "The dog sprite when walking down and right has one frame of incorrect height, 15 pixels instead of 14. This means that if you look closely below the dogs' rear legs, you should see 2 pixels from the next frame." (Bandit)
+
 "I got the lockpick and went to the solitary cell and picked the lock, i left an object in the cell (the radio) just to see what would happen. I was caught later somewhere i shouldn't and was sent to solitary. When the Commandant came to collect me he just stopped when he entered the room and everything stopped, obviously the programmers never thought anyone would so this!" (zx1)
+
 "the position of the moveable objects (stoves/crate) don't reset when starting a new game" (jp)
+
 "a0b8: jp $a0bb		;unnecessary instruction ($a0bb follows)" (bandit)
+
 "c902: jp nz, $c917	;jump if red (unnecessary jump, ret nz enough)" (bandit)
 
