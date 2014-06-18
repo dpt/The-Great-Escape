@@ -1269,12 +1269,12 @@ R $6B42 O:HLdash Corrupted.
 w $6B79 beds
 D $6B79 6x pointers to bed. These are the beds of active prisoners.
 D $6B79 Note that the top hut has prisoners permanently in bed.
-  $6B79 { &roomdef_3_hut2_right[29],
-  $6B7B   &roomdef_3_hut2_right[32],
-  $6B7D   &roomdef_3_hut2_right[35],
-  $6B7F   &roomdef_5_hut3_right[29],
-  $6B81   &roomdef_5_hut3_right[32],
-  $6B83   &roomdef_5_hut3_right[35], };
+  $6B79 &roomdef_3_hut2_right[29]
+  $6B7B &roomdef_3_hut2_right[32]
+  $6B7D &roomdef_3_hut2_right[35]
+  $6B7F &roomdef_5_hut3_right[29]
+  $6B81 &roomdef_5_hut3_right[32]
+  $6B83 &roomdef_5_hut3_right[35]
 
 ; ------------------------------------------------------------------------------
 
