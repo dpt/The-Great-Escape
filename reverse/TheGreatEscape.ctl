@@ -6204,6 +6204,8 @@ R $B252 O:F  C/NC if nomatch/match.
 ; ------------------------------------------------------------------------------
 
 c $B295 multiply_by_4
+D $B295 Multiplies A by 4, returning the result in BC.
+D $B295 Used by the routines at #R$68A2, #R$B252 and #R$C918.
 R $B295 I:A  Argument.
 R $B295 O:BC Result of (A << 2).
   $B295 B = 0;
