@@ -959,7 +959,6 @@ D $68D7 HL points to the player vischar at this point.
 ; fallthrough
 
 c $68F4 enter_room
-; This entry point is used by the routines at #R$9D78, #R$9DE5 and #R$B75A.
   $68F4 plot_game_window_x = 0;
   $68FA setup_room();
   $68FD plot_interior_tiles();
