@@ -56,14 +56,14 @@
 ; Multiply A by 2^N:
 ;   ADD A,A ; A += A (N times)
 ;
-; Increment HL by 8-bit increment:
+; Increment HL by 8-bit delta:
 ;   A = L
-;   A += increment
+;   A += delta
 ;   L = A
 ;   JR NC,skip
 ;   H++
 ;   skip:
-; does this only work for HL?
+; Q: Does this only work for HL?
 ;
 ; if-else:
 ;   CP <value>
