@@ -3930,9 +3930,9 @@ D $9EB2 Locks the player out until wire is snipped.
   $9EB2 A = player_locked_out_until - game_counter;
   $9EB9 if (A) {
   $9EBB   if (A < 4)
-  $9EBE     $800D = table_9EE0[$800E & 3]; // new direction?
+  $9EBE     $800D = table_9EE0[$800E & 3]; // change direction
   $9ECF   return; }
-  $9ED0 else { $800E = A & 3; // walk/crawl flag?
+  $9ED0 else { $800E = A & 3; // set direction // Bug: But A is always zero here! $800E &= 3;
   $9ED6   $800D = 0x80;
   $9ED9   $8013 = 24; // set vertical offset
   $9EDE   goto clear_lockpick_wirecut_flags_and_return; }
