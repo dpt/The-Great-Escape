@@ -8396,7 +8396,7 @@ D $C99C Found bribed character.
 ; ------------------------------------------------------------------------------
 
 c $CA11 move_character_Y
-R $CA11 vischar[15] - scalefn(vischar[4])
+D $CA11 Returns vischar[15] - scalefn(vischar[4])
 R $CA11 I:HL Pointer to visible character block + 4.
 R $CA11 I:IY Pointer to visible character block.
 R $CA11 O:A  8/4/0 .. meaning ?
