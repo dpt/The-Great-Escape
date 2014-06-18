@@ -37,11 +37,11 @@
 ;
 ; A single dash '-' indicates a statement has been omitted.
 ;
-; Code broken by a single ';' indicates that control flow passes through that
-; point and that the subsequent instruction is a goto target.
+; Code separated by a single ';' line indicates that control flow passes
+; through that point and that the subsequent instruction is a goto/jump target.
 ;
-; Pseudo-C code is formatted in a slightly odd way to best fit the lines to
-; which it is assigned. e.g.
+; Pseudo-C code is formatted in an uneven way to best fit the lines to which it
+; is assigned. e.g.
 ;     if (condition) {
 ;         statement; }
 ;     else { statement;
