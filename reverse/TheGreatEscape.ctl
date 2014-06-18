@@ -28,7 +28,8 @@
 ;
 ; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
 ; - Fix axis described as Y/X to X/Y.
-; -
+;
+; - 'Vertical offset' could be renamed 'height'.
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; STYLE
