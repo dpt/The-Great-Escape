@@ -687,7 +687,9 @@ D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 ; ------------------------------------------------------------------------------
 
 b $5B00 super_tiles
-D $5B00 Super tiles. 4x4 array of tile refs. The game map (at $BCEE) is constructed of (indices of) these.
+D $5B00 Super tiles.
+D $5B00 The game's exterior map (at $BCEE) is constructed of references to these.
+D $5B00 Each super tile is a 4x4 array of tile indices.
 B $5B00,16,4 super_tile $00 #CALL:supertile($5B00)
 B $5B10,16,4 super_tile $01 #CALL:supertile($5B10)
 B $5B20,16,4 super_tile $02 #CALL:supertile($5B20)
@@ -2722,7 +2724,8 @@ D $7EEE "ITEM DISCOVERED"
 ; Static tiles.
 ;
 b $7F00 static_tiles
-D $7F00 Tiles used on-screen for medals, etc. 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
+D $7F00 These tiles are used to draw fixed screen elements such as medals.
+D $7F00 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
 D $7F00 #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles)
 B $7F00,9 blank
 ;
@@ -10306,6 +10309,8 @@ D $F075 0 for horizontal, 255 for vertical.
 ; ------------------------------------------------------------------------------
 
 b $F076 static_graphic_defs
+D $F076 Definitions of fixed graphic elements.
+D $F076 Only used by #R$F1E0.
 D $F076 struct: w(addr), flags+length, attrs[length]
   $F076 statics_flagpole
   $F08D statics_game_window_left_border
@@ -10460,9 +10465,12 @@ c $F257 wipe_full_screen_and_attributes
 
 ; ------------------------------------------------------------------------------
 
-c $F271 select_input_device
-  $F271 input_device_select_keyscan();
-  $F274 if (A == 0xFF) return; // nothing happened
+c $F271 check_menu_keys
+D $F271 Menu screen key handling.
+D $F271 Scan for a keypress which either starts the game or selects an input device. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
+D $F271 If the game is started then copy the input routine to $F075. If the chosen input device is keyboard, then exit via choose_keys.
+  $F271 A = menu_keyscan();
+  $F274 if (A == 0xFF) return; /* no keypress */
   $F277 if (A) <%
   $F27A   A--; // 1..4 -> 0..3
   $F27B   PUSH AF
@@ -10624,6 +10632,7 @@ D $F370 Wipe keydefs.
   $F3BB       if (A != C) goto $F3B1;
   $F3BE     %>
 
+D $F3C1 Assign key def.
   $F3C1     *HL++ = B;
   $F3C3     *HL = C;
   $F3C4     -
@@ -10644,7 +10653,7 @@ D $F370 Wipe keydefs.
 ;
   $F3E8     DE = 0x40D5; // self modified // screen address
   $F3EB     do <% PUSH BC
-  $F3EC       A = *HL;
+  $F3EC       A = *HL; // Bug: Redundant.
   $F3ED       plot_glyph();
   $F3F0       HL++;
   $F3F1       POP BC
@@ -10663,13 +10672,14 @@ D $F401 Wait for user's input.
 ; ------------------------------------------------------------------------------
 
 c $F408 set_menu_item_attributes
+D $F408 Set the screen attributes of the specified menu item.
 R $F408 I:A Item index.
 R $F408 I:E Attributes.
   $F408 HL = 0x590D; // initial screen attribute address
 D $F40B Skip to the item's row.
   $F40B if (A) <%
   $F40E   B = A;
-  $F40F   do <% L += 64; %> while (--B); %> // skip two rows per iteration
+  $F40F   do <% L += 32 * 2; %> while (--B); %> // skip two rows per iteration
 D $F415 Draw.
   $F415 B = 10;
   $F417 do <% *HL++ = E; %> while (--B);
@@ -10677,7 +10687,9 @@ D $F415 Draw.
 
 ; ------------------------------------------------------------------------------
 
-c $F41C input_device_select_keyscan
+c $F41C menu_keyscan
+D $F41C Scan for keys to select an input device.
+R $F41C O:A 0/1/2/3/4 = keypress, or 255 = no keypress.
   $F41C BC = port_KEYBOARD_12345;
   $F41F E = 0;
   $F421 IN A,(C)
@@ -10689,12 +10701,12 @@ c $F41C input_device_select_keyscan
   $F42C     if (carry) goto found;
   $F42E   %> while (--B);
   $F430   found: A = E;
-  $F431   return; %>
+  $F431   return; %> // 1..4
   $F432 else <% B = 0xEF; // port_KEYBOARD_09876
   $F434   IN A,(C)
   $F436   A &= 1;
   $F438   A = E; // interleaved
-  $F439   if (Z) return;
+  $F439   if (Z) return; // always zero
   $F43A   A = 0xFF; // no keypress
   $F43C   return; %>
 
@@ -10736,8 +10748,9 @@ D $F4A8 "FOR NEW GAME"
 ; ------------------------------------------------------------------------------
 
 c $F4B7 menu_screen
-D $F4B7 Runs the menu screen: waiting for user to select an input device, waving the morale flag and playing the title tune.
-  $F4B7 for (;;) <% select_input_device();
+D $F4B7 Runs the menu screen.
+D $F4B7 Waits for user to select an input device, waves the morale flag and plays the title tune.
+  $F4B7 for (;;) <% check_menu_keys();
   $F4BA   wave_morale_flag();
 D $F4BD Play music.
   $F4BD   HL = music_channel0_index + 1;
