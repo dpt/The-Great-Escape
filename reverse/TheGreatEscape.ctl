@@ -6620,7 +6620,7 @@ c $B5CE called_from_main_loop_9
   $B5E8   H = IY[0x0B];
   $B5EB   L = IY[0x0A];
   $B5EE   A = IY[0x0C];
-  $B5F1   if (!even_parity(A)) <%
+  $B5F1   if (A >= 128) <%
   $B5F5     A &= vischar_BYTE12_MASK;
   $B5F7     if (A == 0) goto snozzle;
   $B5FA     HL += (A + 1) * 4 - 1;
@@ -7077,7 +7077,7 @@ D $BA1C If I break this bit then the character gets drawn on top of *indoors* ob
   $BA4B   POP DE
   $BA4C   HL++; // iterations
   $BA4D   do <% A = *DE; // DE -> $E560 upwards (in outdoors_mask_data)
-  $BA4E     if (!even_parity(A)) <% // uneven number of bits set
+  $BA4E     if (A >= 128) <%
   $BA52       A &= 0x7F;
   $BA54       DE++;
   $BA55       HL -= A;
@@ -7121,7 +7121,7 @@ R $BA6F I:C Iterations (inner loop);
   $BA98       if (A) goto $BAA3;
 ;
   $BA9B       do <% A = *DE;
-  $BA9C         if (!even_parity(A)) <%
+  $BA9C         if (A >= 128) <%
   $BAA0         A &= 0x7F;
   $BAA2         DE++;
 ;
