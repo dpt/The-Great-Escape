@@ -24,7 +24,7 @@ Note that currently the disassembly is contained in a  _control_ file rather tha
 ### Building the Disassembly
 
 * Make a local clone of this repository.
-* `cd reverse`.
+* `cd <the repo>`.
 * Drop a Z80 format snapshot of the game into the project directory. Call it `TheGreatEscape.z80`.
 * `make install`. This will install TheGreatEscape.py into your ~/.skoolkit directory. You only have to do this once. (Note: If you wish to install into a different location you may have to customise the path inside `Makefile`).
 * `make tge`.
@@ -61,5 +61,5 @@ As work progresses on the reimplementation many of the mysteries of the original
 Goal Two - Reimplement
 ----------------------
 
-The reimplementation is discussed in the 'reimplement' directory [here](reimplement/).
+The reimplementation is discussed in the 'reimplement' repository [here](https://github.com/dpt/The-Great-Escape-in-C).
 
