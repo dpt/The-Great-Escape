@@ -10340,7 +10340,7 @@ D $F163 Disable interrupts and set up stack pointer.
 D $F167 Set up screen.
   $F167 wipe_full_screen_and_attributes();
   $F16A set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
-  $F16F set_menu_item_attributes(attribute_YELLOW_OVER_BLACK);
+  $F16F set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);
   $F174 plot_statics_and_menu_text();
   $F177 plot_score();
   $F17A menu_screen();
