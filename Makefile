@@ -21,7 +21,7 @@ TGE=TheGreatEscape
 .PHONY: tge
 tge:
 	mkdir -p $(BUILD)
-	sna2skool.py $(OPTIONS) -c $(TGE).ctl $(TGE).z80 > $(BUILD)/$(TGE).skool 
+	sna2skool.py $(OPTIONS) -R -c $(TGE).ctl $(TGE).z80 > $(BUILD)/$(TGE).skool 
 	skool2html.py $(OPTIONS) -o $(BUILD)/$(TGE).skool
 
 .PHONY: asm
