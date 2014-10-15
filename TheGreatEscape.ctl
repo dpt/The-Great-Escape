@@ -7931,7 +7931,7 @@ R $C651 O:HL Pointer to somewhere in word_783A.
   $C652 if (A == 0xFF) <%
   $C656   A = *++HL & characterstruct_BYTE6_MASK_HI;
   $C65A   *HL = A;
-  $C65B   get_A_indexed_by_C41A();
+  $C65B   random_nibble();
   $C65E   A &= characterstruct_BYTE6_MASK_LO;
   $C660   A += *HL;
   $C661   *HL = A; %>
@@ -8564,12 +8564,14 @@ R $CB79 O:DE Element.
 
 ; ------------------------------------------------------------------------------
 
-c $CB85 get_A_indexed_by_C41A
+c $CB85 random_nibble
+D $CB85 Pseudo random number generator.
+R $CB85 O:A Pseudo-random number from 0..15.
   $CB85 PUSH HL
-  $CB86 HL = word_C41A + 1;
+  $CB86 HL = prng_pointer + 1;
 D $CB8A sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's fetching exterior tiles
   $CB8A A = *HL & 0x0F;
-  $CB8D word_C41A = HL;
+  $CB8D prng_pointer = HL;
   $CB90 POP HL
   $CB91 return;
 
