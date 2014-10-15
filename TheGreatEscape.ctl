@@ -10891,7 +10891,7 @@ D $FE3B Fire.
 
 c $FE47 inputroutine_protek
 D $FE47 Input routine for Protek (cursor) joystick.
-R $FE00 O:A Input value (as per enum input).
+R $FE47 O:A Input value (as per enum input).
   $FE47 BC = port_KEYBOARD_12345;
   $FE4A IN A,(C)
   $FE4C A = ~A & (1<<4); // 5 == left
@@ -10926,7 +10926,7 @@ R $FE00 O:A Input value (as per enum input).
 c $FE7E inputroutine_kempston
 D $FE7E Input routine for Kempston joystick.
 ; "#1F Kempston (000FUDLR, active high)"
-R $FE00 O:A Input value (as per enum input).
+R $FE7E O:A Input value (as per enum input).
   $FE7E BC = 0x001F;
   $FE81 IN A,(C)
   $FE83 BC = 0;
@@ -10949,7 +10949,7 @@ R $FE00 O:A Input value (as per enum input).
 c $FEA3 inputroutine_fuller
 D $FEA3 Input routine for Fuller joystick. (Unused).
 ; "#7F Fuller Box (FxxxRLDU, active low)"
-R $FE00 O:A Input value (as per enum input).
+R $FEA3 O:A Input value (as per enum input).
   $FEA3 BC = 0x007F;
   $FEA6 IN A,(C)
   $FEA8 BC = 0;
