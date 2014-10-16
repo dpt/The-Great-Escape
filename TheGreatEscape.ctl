@@ -109,52 +109,36 @@
 ; attribute_BRIGHT_WHITE_OVER_BLACK = 71
 
 ; ; enum character
-; character_0 = 0                       ; ?      player?
-; character_1 = 1                       ; guard
-; character_2 = 2                       ; guard
-; character_3 = 3                       ; guard
-; character_4 = 4                       ; guard  commandant?
-; character_5 = 5                       ; ?
-; character_6 = 6                       ; player?
-; character_7_prisoner = 7              ; prisoner who sleeps at bed position A
-; character_8_prisoner = 8              ; prisoner who sleeps at bed position B
-; character_9_prisoner = 9              ; prisoner who sleeps at bed position C
-; character_10_prisoner = 10            ; prisoner who sleeps at bed position D
-; character_11_prisoner = 11            ; prisoner who sleeps at bed position E
-; character_12_prisoner = 12            ; prisoner who sleeps at bed position F
-; character_13 = 13                     ; guard
-; character_14 = 14                     ; ?
-; character_15 = 15                     ; ?
-; character_16 = 16                     ; ?
-; character_17 = 17                     ; ?
-; character_18_prisoner = 18            ; prisoner who sits at bench position D
-; character_19_prisoner = 19            ; prisoner who sits at bench position E
-; character_20_prisoner = 20            ; prisoner who sits at bench position F
-; character_21_prisoner = 21            ; prisoner who sits at bench position A
-; character_22_prisoner = 22            ; prisoner who sits at bench position B
-; character_23_prisoner = 23            ; prisoner who sits at bench position C
-; character_24 = 24                     ; breakfast guard?
-; character_25 = 25                     ; breakfast guard?
+; character_0_COMMANDANT = 0            ; commandant
+; character_1_GUARD_1 = 1               ; guard
+; character_2_GUARD_2 = 2               ; guard
+; character_3_GUARD_3 = 3               ; guard
+; character_4_GUARD_4 = 4               ; guard
+; character_5_GUARD_5 = 5               ; guard
+; character_6_GUARD_6 = 6               ; guard
+; character_7_GUARD_7 = 7               ; guard
+; character_8_GUARD_8 = 8               ; guard
+; character_9_GUARD_9 = 9               ; guard
+; character_10_GUARD_10 = 10            ; guard
+; character_11_GUARD_11 = 11            ; guard
+; character_12_GUARD_12 = 12            ; guard
+; character_13_GUARD_13 = 13            ; guard
+; character_14_GUARD_14 = 14            ; guard
+; character_15_GUARD_15 = 15            ; guard
+; character_16_GUARD_DOG_1 = 16         ; guard dog
+; character_16_GUARD_DOG_2 = 17         ; guard dog
+; character_18_GUARD_DOG_3 = 18         ; guard dog
+; character_19_GUARD_DOG_4 = 19         ; guard dog
+; character_20_PRISONER_1 = 20          ; prisoner
+; character_21_PRISONER_2 = 21          ; prisoner
+; character_22_PRISONER_3 = 22          ; prisoner
+; character_23_PRISONER_4 = 23          ; prisoner
+; character_24_PRISONER_5 = 24          ; prisoner
+; character_25_PRISONER_6 = 25          ; prisoner
 ; Non-character characters start here.
-; character_26_stove1 = 26              ; stove1
-; character_27_stove2 = 27              ; stove2
-; character_28_crate = 28               ; crate
-; character_29 = 29                     ; are any of these later characters used?
-; character_30 = 30
-; character_31 = 31
-; character_32 = 32
-; character_33 = 33
-; character_34 = 34
-; character_35 = 35
-; character_36 = 36
-; character_37 = 37
-; character_38 = 38
-; character_39 = 39
-; character_40 = 40
-; character_41 = 41
-; character_42 = 42
-; character_43 = 43
-; character_44 = 44                     ; suspected max
+; character_26_STOVE_1 = 26             ; stove 1
+; character_27_STOVE_2 = 27             ; stove 2
+; character_28_CRATE = 28               ; crate
 ; character_NONE = 255
 
 ; ; enum room
@@ -1010,15 +994,15 @@ c $6939 setup_movable_items
   $6967 searchlight(); return;
 
   $696A setup_crate: HL = &movable_items[movable_item_CRATE];
-  $696D A = character_28_crate;
+  $696D A = character_28_CRATE;
   $696F goto setup_movable_item;
 
   $6971 setup_stove2: HL = &movable_items[movable_item_STOVE2];
-  $6974 A = character_27_stove2;
+  $6974 A = character_27_STOVE_2;
   $6976 goto setup_movable_item;
 
   $6978 setup_stove1: HL = &movable_items[movable_item_STOVE1];
-  $697B A = character_26_stove1;
+  $697B A = character_26_STOVE_1;
 ;
 ; fallthrough
 
@@ -1960,32 +1944,32 @@ D $76AC 22: prisoner who sits at bench position B
 D $76B3 23: prisoner who sits at bench position C
 D $76BA 24:
 D $76C1 25:
-  $7612,7 { character_0,           room_11_papers,    46, 46, 0x18, 0x03, 0x00 },
-  $7619,7 { character_1,           room_0_outdoors,  102, 68, 0x03, 0x01, 0x00 },
-  $7620,7 { character_2,           room_0_outdoors,   68,104, 0x03, 0x01, 0x02 },
-  $7627,7 { character_3,           room_16_corridor,  46, 46, 0x18, 0x03, 0x13 },
-  $762E,7 { character_4,           room_0_outdoors,   61,103, 0x03, 0x02, 0x04 },
-  $7635,7 { character_5,           room_0_outdoors,  106, 56, 0x0D, 0x00, 0x00 },
-  $763C,7 { character_6,           room_0_outdoors,   72, 94, 0x0D, 0x00, 0x00 },
-  $7643,7 { character_7_prisoner,  room_0_outdoors,   72, 70, 0x0D, 0x00, 0x00 },
-  $764A,7 { character_8_prisoner,  room_0_outdoors,   80, 46, 0x0D, 0x00, 0x00 },
-  $7651,7 { character_9_prisoner,  room_0_outdoors,  108, 71, 0x15, 0x04, 0x00 },
-  $7658,7 { character_10_prisoner, room_0_outdoors,   92, 52, 0x03, 0xFF, 0x38 },
-  $765F,7 { character_11_prisoner, room_0_outdoors,  109, 69, 0x03, 0x00, 0x00 },
-  $7666,7 { character_12_prisoner, room_3_hut2right,  40, 60, 0x18, 0x00, 0x08 },
-  $766D,7 { character_13,          room_2_hut2left,   36, 48, 0x18, 0x00, 0x08 },
-  $7674,7 { character_14,          room_5_hut3right,  40, 60, 0x18, 0x00, 0x10 },
-  $767B,7 { character_15,          room_5_hut3right,  36, 34, 0x18, 0x00, 0x10 },
-  $7682,7 { character_16,          room_0_outdoors,   68, 84, 0x01, 0xFF, 0x00 },
-  $7689,7 { character_17,          room_0_outdoors,   68,104, 0x01, 0xFF, 0x00 },
-  $7690,7 { character_18_prisoner, room_0_outdoors,  102, 68, 0x01, 0xFF, 0x18 },
-  $7697,7 { character_19_prisoner, room_0_outdoors,   88, 68, 0x01, 0xFF, 0x18 },
-  $769E,7 { character_20_prisoner, room_NONE,         52, 60, 0x18, 0x00, 0x08 },
-  $76A5,7 { character_21_prisoner, room_NONE,         52, 44, 0x18, 0x00, 0x08 },
-  $76AC,7 { character_22_prisoner, room_NONE,         52, 28, 0x18, 0x00, 0x08 },
-  $76B3,7 { character_23_prisoner, room_NONE,         52, 60, 0x18, 0x00, 0x10 },
-  $76BA,7 { character_24,          room_NONE,         52, 44, 0x18, 0x00, 0x10 },
-  $76C1,7 { character_25,          room_NONE,         52, 28, 0x18, 0x00, 0x10 },
+  $7612,7 { character_0_COMMANDANT,     room_11_papers,    46, 46, 0x18, 0x03, 0x00 },
+  $7619,7 { character_1_GUARD_1,        room_0_outdoors,  102, 68, 0x03, 0x01, 0x00 },
+  $7620,7 { character_2_GUARD_2,        room_0_outdoors,   68,104, 0x03, 0x01, 0x02 },
+  $7627,7 { character_3_GUARD_3,        room_16_corridor,  46, 46, 0x18, 0x03, 0x13 },
+  $762E,7 { character_4_GUARD_4,        room_0_outdoors,   61,103, 0x03, 0x02, 0x04 },
+  $7635,7 { character_5_GUARD_5,        room_0_outdoors,  106, 56, 0x0D, 0x00, 0x00 },
+  $763C,7 { character_6_GUARD_6,        room_0_outdoors,   72, 94, 0x0D, 0x00, 0x00 },
+  $7643,7 { character_7_GUARD_7,        room_0_outdoors,   72, 70, 0x0D, 0x00, 0x00 },
+  $764A,7 { character_8_GUARD_8,        room_0_outdoors,   80, 46, 0x0D, 0x00, 0x00 },
+  $7651,7 { character_9_GUARD_9,        room_0_outdoors,  108, 71, 0x15, 0x04, 0x00 },
+  $7658,7 { character_10_GUARD_10,      room_0_outdoors,   92, 52, 0x03, 0xFF, 0x38 },
+  $765F,7 { character_11_GUARD_11,      room_0_outdoors,  109, 69, 0x03, 0x00, 0x00 },
+  $7666,7 { character_12_GUARD_12,      room_3_hut2right,  40, 60, 0x18, 0x00, 0x08 },
+  $766D,7 { character_13_GUARD_13,      room_2_hut2left,   36, 48, 0x18, 0x00, 0x08 },
+  $7674,7 { character_14_GUARD_14,      room_5_hut3right,  40, 60, 0x18, 0x00, 0x10 },
+  $767B,7 { character_15_GUARD_15,      room_5_hut3right,  36, 34, 0x18, 0x00, 0x10 },
+  $7682,7 { character_16_GUARD_DOG_1,   room_0_outdoors,   68, 84, 0x01, 0xFF, 0x00 },
+  $7689,7 { character_16_GUARD_DOG_2,   room_0_outdoors,   68,104, 0x01, 0xFF, 0x00 },
+  $7690,7 { character_18_GUARD_DOG_3,   room_0_outdoors,  102, 68, 0x01, 0xFF, 0x18 },
+  $7697,7 { character_19_GUARD_DOG_4,   room_0_outdoors,   88, 68, 0x01, 0xFF, 0x18 },
+  $769E,7 { character_20_PRISONER_1,    room_NONE,         52, 60, 0x18, 0x00, 0x08 },
+  $76A5,7 { character_21_PRISONER_2,    room_NONE,         52, 44, 0x18, 0x00, 0x08 },
+  $76AC,7 { character_22_PRISONER_3,    room_NONE,         52, 28, 0x18, 0x00, 0x08 },
+  $76B3,7 { character_23_PRISONER_4,    room_NONE,         52, 60, 0x18, 0x00, 0x10 },
+  $76BA,7 { character_24_PRISONER_5,    room_NONE,         52, 44, 0x18, 0x00, 0x10 },
+  $76C1,7 { character_25_PRISONER_6,    room_NONE,         52, 28, 0x18, 0x00, 0x10 },
 
 ; ------------------------------------------------------------------------------
 
@@ -4495,10 +4479,10 @@ D $A26E Common end of event_time_for_bed and event_search_light.
 
 ; ------------------------------------------------------------------------------
 
-b $A27F tenlong
-D $A27F Likely: a list of character indexes.
-D $A27F [unsure] (<- set_location_A35F, set_location_A373)
-  $A27F character_t tenlong[] = { character_12_prisoner, character_13, character_20_prisoner, character_21_prisoner, character_22_prisoner, character_14, character_15, character_23_prisoner, character_24, character_25 };
+b $A27F prisoners_and_guards
+D $A27F List of non-player characters: six prisoners and four guards.
+D $A27F [unsure] (<- set_prisoners_and_guards_location, set_prisoners_and_guards_location_B)
+  $A27F character_t prisoners_and_guards[] = { character_12_GUARD_12, character_13_GUARD_13, character_20_PRISONER_1, character_21_PRISONER_2, character_22_PRISONER_3, character_14_GUARD_14, character_15_GUARD_15, character_23_PRISONER_4, character_24_PRISONER_5, character_25_PRISONER_6 };
 
 ; ------------------------------------------------------------------------------
 
@@ -4521,10 +4505,10 @@ D $A289 Called by event_wake_up.
   $A2B5 do <% *HL = room_5_hut3right;
   $A2B6   HL += 7; // characterstruct stride
   $A2B7 %> while (--B);
-  $A2B9 A = 5; // incremented by set_location_A373
+  $A2B9 A = 5; // incremented by set_prisoners_and_guards_location_B
   $A2BB EX AF,AF'
   $A2BC C = 0; // BC = 0
-  $A2BE set_location_A373();
+  $A2BE set_prisoners_and_guards_location_B();
 D $A2C1 Update all the bed objects to be empty.
   $A2C1 -
   $A2C3 HL = &beds[0];
@@ -4549,7 +4533,7 @@ c $A2E2 breakfast_time
   $A2EE   $8011 = 62; %> // player X position
   $A2F2 player_in_breakfast = 0;
   $A2F6 set_player_target_location(location_9003);
-  $A2FC HL = &characterstruct_20.room;
+  $A2FC HL = &characterstruct_20.room; // character_20_PRISONER_1
   $A2FF -
   $A302 -
   $A304 B = 3; // 3 iterations
@@ -4561,10 +4545,10 @@ c $A2E2 breakfast_time
   $A30E do <% *HL = room_23_breakfast;
   $A30F   HL += 7; // stride
   $A310 %> while (--B);
-  $A312 A = 144; // incremented by set_location_A373
+  $A312 A = 144; // incremented by set_prisoners_and_guards_location_B
   $A314 EX AF,AF'
   $A315 C = 3;
-  $A317 set_location_A373();
+  $A317 set_prisoners_and_guards_location_B();
   $A31A -
 D $A31C Update all the benches to be empty.
   $A31C roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
@@ -4594,14 +4578,14 @@ c $A351 go_to_time_for_bed
   $A351 set_player_target_location(location_8502);
   $A357 Adash = 133;
   $A35A C = 2;
-  $A35C set_location_A373(); return; // exit via
+  $A35C set_prisoners_and_guards_location_B(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
-c $A35F set_location_A35F
-D $A35F Uses tenlong structure.
+c $A35F set_prisoners_and_guards_location
+D $A35F Uses prisoners_and_guards structure.
 R $A35F O:Adash Counter incremented.
-  $A35F HL = &tenlong[0];
+  $A35F HL = &prisoners_and_guards[0];
   $A362 B = 10;
   $A364 do <% PUSH HL
   $A365   PUSH BC
@@ -4616,10 +4600,10 @@ R $A35F O:Adash Counter incremented.
 
 ; ------------------------------------------------------------------------------
 
-c $A373 set_location_A373
+c $A373 set_prisoners_and_guards_location_B
 R $A373 O:Adash Counter incremented.
-D $A373 Uses tenlong structure.
-  $A373 HL = &tenlong[0];
+D $A373 Uses prisoners_and_guards structure.
+  $A373 HL = &prisoners_and_guards[0];
   $A376 B = 10;
   $A378 do <% PUSH HL
   $A379   PUSH BC
@@ -4741,7 +4725,7 @@ D $A430 Poke object.
   $A437 *HL = interiorobject_PRISONER_SAT_DOWN_MID_TABLE;
   $A439 POP AF
   $A43A C = room_25_breakfast;
-  $A43C if (A >= character_21_prisoner) C = room_23_breakfast;
+  $A43C if (A >= character_21_PRISONER_2) C = room_23_breakfast;
   $A442 goto character_sit_sleep_common;
 
 D $A444 character_sleeps
@@ -4754,7 +4738,7 @@ D $A449 Poke object.
   $A449 BC = beds[A];
   $A453 *BC = interiorobject_OCCUPIED_BED;
   $A456 POP AF
-  $A457 if (A < character_10_prisoner)
+  $A457 if (A < character_10_GUARD_10)
   $A45C   C = room_3_hut2_right;
   $A45E else
   $A460   C = room_5_hut3_right;
@@ -4805,7 +4789,7 @@ c $A4A9 set_location_0x0E00
   $A4AF A = 0x0E;
   $A4B1 EX AF,AF'
   $A4B2 C = 0;
-  $A4B4 set_location_A373(); return; // exit via
+  $A4B4 set_prisoners_and_guards_location_B(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
@@ -4814,7 +4798,7 @@ c $A4B7 set_location_0x8E04
   $A4BD A = 0x8E;
   $A4BF EX AF,AF'
   $A4C0 C = 4;
-  $A4C2 set_location_A373(); return; // exit via
+  $A4C2 set_prisoners_and_guards_location_B(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
@@ -4823,7 +4807,7 @@ c $A4C5 set_location_0x1000
   $A4CB A = 0x10;
   $A4CD EX AF,AF'
   $A4CE C = 0;
-  $A4D0 set_location_A373(); return; // exit via
+  $A4D0 set_prisoners_and_guards_location_B(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
@@ -5934,7 +5918,7 @@ R $AF8F I:IY Pointer to visible character block.
   $AFAB if (L || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) <% bounds_check(); return; %>
 D $AFB9 Cutting wire only from here onwards?
   $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
-  $AFBC if (A < 26) <% // a character index
+  $AFBC if (A <= character_25_PRISONER_6) <% // a character index
   $AFC0   sub_AFDF();
   $AFC3   if (!Z) return; %>
 ; else object only from here on?
@@ -6074,7 +6058,7 @@ D $B123 We have a bribe.
   $B12B draw_all_items();
   $B12E B = 7; // 7 iterations
   $B130 HL = $8020; // iterate over non-player characters
-  $B133 do <% if (HL[0] < 20) <% // likely character index. but why 20?
+  $B133 do <% if (HL[0] <= character_19_GUARD_DOG_4) <% // Hostile characters only.
   $B138     HL[1] = vischar_BYTE1_BIT2; %> // character has taken bribe?
   $B13C   HL += 32;
   $B140 %> while (--B);
@@ -6360,7 +6344,7 @@ D $B3A8 This searches visible characters only.
   $B3A8 HL = $8020; // iterate over non-player characters
   $B3AB B = 7; // 7 iterations
   $B3AD do <% A = *HL;
-  $B3AE   if ((A != character_NONE) && (A >= character_20_prisoner)) goto found;
+  $B3AE   if ((A != character_NONE) && (A >= character_20_PRISONER_1)) goto found;
   $B3B6   HL += 32; // sizeof a character struct
   $B3BA %> while (--B);
   $B3BC return;
@@ -7668,7 +7652,7 @@ D $C41C Form a map position in DE.
 ;
 D $C42D Walk all character structs.
   $C42D HL = &character_structs[0];
-  $C430 B = character_26_stove1; // the 26 'real' characters
+  $C430 B = character_26_STOVE_1; // the 26 'real' characters
   $C432 do <% if (*HL & characterstruct_BYTE0_BIT6) goto skip;
 ;
   $C436   (stash HL)
@@ -7875,7 +7859,7 @@ D $C5D3 Reset a visible character (either a character or an object).
 R $C5D3 I:HL Pointer to vischar.
   $C5D3 A = *HL;
   $C5D4 if (A == character_NONE) return;
-  $C5D7 if (A >= character_26_stove1) <%
+  $C5D7 if (A >= character_26_STOVE_1) <%
 D $C5DC A stove/crate character.
   $C5DC   HL[0] = character_NONE
   $C5DF   HL[1] = 0xFF; // flags
@@ -7883,9 +7867,9 @@ D $C5DC A stove/crate character.
   $C5E7   HL += 0x0F; // vischar + 0x0F
 D $C5EB Save the old position.
   $C5EB   DE = &movable_items[0]; // stove1
-  $C5EE   if (A != character_26_stove1) <%
+  $C5EE   if (A != character_26_STOVE_1) <%
   $C5F2     DE = &movable_items[2]; // stove2
-  $C5F5     if (A != character_27_stove2) <%
+  $C5F5     if (A != character_27_STOVE_2) <%
   $C5F9       DE = &movable_items[1]; %> %> // crate
   $C5FC   memcpy(DE, HL, 6);
   $C601   return; %>
@@ -7911,10 +7895,10 @@ D $C602 A non-object character.
   $C631   A = *HL; // HL points to vischar // sampled HL = $8040, $8020, $8080, $80A0
   $C632   *HL++ = character_NONE;
   $C635   *HL++ = 0xFF; // flags
-  $C638   if (A >= character_16 && A < character_20_prisoner) <%
+  $C638   if (A >= character_16_GUARD_DOG_1 && A <= character_19_GUARD_DOG_4) <%
   $C640     *HL++ = 255;
   $C643     *HL = 0;
-  $C645     if (A >= character_18_prisoner) *HL = 24;
+  $C645     if (A >= character_18_GUARD_DOG_3) *HL = 24;
   $C64B     HL--; %>
   $C64C   *DE++ = *HL++; // copy target into charstruct
   $C64E   *DE++ = *HL++;
@@ -7990,12 +7974,12 @@ D $C6A0 Moves characters around.
   $C6D5 if (A == 0xFF) <%
   $C6DA   A = character_index;
 ; could re-cast this bit as:
-; if (A != character_0 && A < character_12_prisoner) <%
+; if (A != character_0_COMMANDANT && A < character_12_GUARD_12) <%
 ;   ...
 ; %> else ...
-  $C6DD   if (A != character_0) <%
+  $C6DD   if (A != character_0_COMMANDANT) <%
 D $C6DD Not a player character.
-  $C6E0     if (A >= character_12_prisoner) goto char_ge_12;
+  $C6E0     if (A >= character_12_GUARD_12) goto char_ge_12;
 D $C6E4 Characters 1..11.
 ;
   $C6E4     back: *HL++ ^= 0x80;
@@ -8127,8 +8111,8 @@ R $C7C6 I:HL Points to character_struct.unk2 or vischar.target.
 ; something isn't right here. i've sampled HL at this point and we're receiving a location structure, either from character_struct or vischar. next we're comparing the first byte /as if/ it's a character. this was decided in some very early investigations so could be wrong.
 
   $C7C6 A = *HL;
-  $C7C7 if (A >= character_7_prisoner  && A <= character_12_prisoner) goto character_sleeps;
-  $C7D0 if (A >= character_18_prisoner && A <= character_22_prisoner) goto character_sits;
+  $C7C7 if (A >= character_7_GUARD_7  && A <= character_12_GUARD_12) goto character_sleeps;
+  $C7D0 if (A >= character_18_GUARD_DOG_3 && A <= character_22_PRISONER_3) goto character_sits;
   $C7D9 PUSH HL // POPped by handlers
   $C7DA map = &character_to_event_handler_index_map[0];
   $C7DD B = NELEMS(character_to_event_handler_index_map); // 24 iterations
@@ -8156,30 +8140,30 @@ D $C7DF Locate the character in the map.
 
 D $C7F9 character_to_event_handler_index_map
 D $C7F9 Array of (character + flags, character event handler index) mappings.
-W $C7F9 { character_6  | 0b10100000, charevnt_0 },
-W $C7FB { character_7  | 0b10100000, charevnt_0 },
-W $C7FD { character_8  | 0b10100000, charevnt_1 },
-W $C7FF { character_9  | 0b10100000, charevnt_1 },
-W $C801 { character_5  | 0b00000000, charevnt_0 },
-W $C803 { character_6  | 0b00000000, charevnt_1 },
-W $C805 { character_5  | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
-W $C807 { character_6  | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
-W $C809 { character_14 | 0b00000000, charevnt_2 },
-W $C80B { character_15 | 0b00000000, charevnt_2 },
-W $C80D { character_14 | 0b10000000, charevnt_0 },
-W $C80F { character_15 | 0b10000000, charevnt_1 },
-W $C811 { character_16 | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
-W $C813 { character_17 | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
-W $C815 { character_16 | 0b10000000, charevnt_0 },
-W $C817 { character_17 | 0b10000000, charevnt_1 },
-W $C819 { character_0  | 0b10100000, charevnt_0 },
-W $C81B { character_1  | 0b10100000, charevnt_1 },
-W $C81D { character_10 | 0b00100000, charevnt_7 },
-W $C81F { character_12 | 0b00100000, charevnt_8 }, // player sleeps
-W $C821 { character_11 | 0b00100000, charevnt_9 }, // player sits
-W $C823 { character_4  | 0b10100000, charevnt_6 }, // go to 0x0315
-W $C825 { character_4  | 0b00100000, charevnt_10 },// released from solitary
-W $C827 { character_5  | 0b00100000, charevnt_4 }, // zero morale_1
+W $C7F9 { character_6_GUARD_6       | 0b10100000, charevnt_0 },
+W $C7FB { character_7_GUARD_7       | 0b10100000, charevnt_0 },
+W $C7FD { character_8_GUARD_8       | 0b10100000, charevnt_1 },
+W $C7FF { character_9_GUARD_9       | 0b10100000, charevnt_1 },
+W $C801 { character_5_GUARD_5       | 0b00000000, charevnt_0 },
+W $C803 { character_6_GUARD_6       | 0b00000000, charevnt_1 },
+W $C805 { character_5_GUARD_5       | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
+W $C807 { character_6_GUARD_6       | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
+W $C809 { character_14_GUARD_14     | 0b00000000, charevnt_2 },
+W $C80B { character_15_GUARD_15     | 0b00000000, charevnt_2 },
+W $C80D { character_14_GUARD_14     | 0b10000000, charevnt_0 },
+W $C80F { character_15_GUARD_15     | 0b10000000, charevnt_1 },
+W $C811 { character_16_GUARD_DOG_1  | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
+W $C813 { character_16_GUARD_DOG_2  | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
+W $C815 { character_16_GUARD_DOG_1  | 0b10000000, charevnt_0 },
+W $C817 { character_16_GUARD_DOG_2  | 0b10000000, charevnt_1 },
+W $C819 { character_0_COMMANDANT    | 0b10100000, charevnt_0 },
+W $C81B { character_1_GUARD_1       | 0b10100000, charevnt_1 },
+W $C81D { character_10_GUARD_10     | 0b00100000, charevnt_7 },
+W $C81F { character_12_GUARD_12     | 0b00100000, charevnt_8 }, // player sleeps
+W $C821 { character_11_GUARD_11     | 0b00100000, charevnt_9 }, // player sits
+W $C823 { character_4_GUARD_4       | 0b10100000, charevnt_6 }, // go to 0x0315
+W $C825 { character_4_GUARD_4       | 0b00100000, charevnt_10 },// released from solitary
+W $C827 { character_5_GUARD_5       | 0b00100000, charevnt_4 }, // zero morale_1
 
 D $C829 character_event_handlers
 D $C829 Array of pointers to character event handlers.
@@ -8708,8 +8692,8 @@ D $CCAB If I nop this out then guards don't spot the items I drop.
   $CCAB HL = $8020; // iterate over non-player characters
   $CCB1 B = 7; // iterations
   $CCB3 do <%
-D $CCB4 HL[0x13] is the character's vertical offset, clearly this has some significance.
-  $CCB4   if (HL[0] < character_20_prisoner && HL[0x13] < 32) HL[1] = vischar_BYTE1_PERSUE;
+D $CCB4 HL[0x13] is the character's height, testing this excludes the guards in the towers.
+  $CCB4   if (HL[0] <= character_19_GUARD_DOG_4 && HL[0x13] < 32) HL[1] = vischar_BYTE1_PERSUE;
   $CCC9   HL += 32; // stride
   $CCCA %> while (--B);
   $CCCC return;
