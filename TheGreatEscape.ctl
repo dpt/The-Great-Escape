@@ -609,8 +609,8 @@
 ; $8000 seems to be an array of eight 32-wide visible character blocks. the first is likely the player character.
 
 ; b $8000 character index? (0xFF if no visible character)
-; b $8001 flags: bit 6 gets toggled in set_player_target_location /  bit 0: picking lock /  bit 1: cutting wire  (0xFF when reset)
-; w $8002 could be a target location (set in set_player_target_location, process_player_input)
+; b $8001 flags: bit 6 gets toggled in set_hero_target_location /  bit 0: picking lock /  bit 1: cutting wire  (0xFF when reset)
+; w $8002 could be a target location (set in set_hero_target_location, process_player_input)
 ; w $8004 (<- process_player_input) a coordinate? (i see it getting scaled in #R$CA11)
 ; ? $8006
 ; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too) (0x00 when reset)
@@ -4022,7 +4022,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9FCF %>
 
   $9FD1 set_target_then_set_flag_green: B = $8002;
-  $9FD5 set_player_target_location(); // uses B, C
+  $9FD5 set_hero_target_location(); // uses B, C
   $9FD8 goto set_flag_green;
 
   $9FDA pop_and_set_flag_red: POP BC
@@ -4264,7 +4264,7 @@ D $A139 Countdown until CPU control of the player is assumed. When it becomes ze
 
 b $A13A morale_1
 D $A13A Inhibits user input when non-zero.
-D $A13A Stops set_player_target_location working.
+D $A13A Stops set_hero_target_location working.
 D $A13A Used to set flag colour.
 D $A13A morale_1 + morale_2 treated as a word by process_player_input. Everything else treats this as a byte.
 
@@ -4372,7 +4372,7 @@ D $A1AB Dispatch the event for that time.
   $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
-  $A1C3 if (player_in_bed == 0) set_player_target_location(location_2C01);
+  $A1C3 if (player_in_bed == 0) set_hero_target_location(location_2C01);
   $A1CF A = 0xFF;
   $A1D1 goto set_attrs;
 
@@ -4492,7 +4492,7 @@ D $A289 Called by event_wake_up.
   $A290   $800F = 46; // player's Y position
   $A295   $8011 = 46; %> // player's X position
   $A299 player_in_bed = 0;
-  $A29D set_player_target_location(location_2A00);
+  $A29D set_hero_target_location(location_2A00);
   $A2A3 HL = &characterstruct_20.room;
   $A2A6 -
   $A2A9 -
@@ -4532,7 +4532,7 @@ c $A2E2 breakfast_time
   $A2E9   $800F = 52; // player Y position
   $A2EE   $8011 = 62; %> // player X position
   $A2F2 player_in_breakfast = 0;
-  $A2F6 set_player_target_location(location_9003);
+  $A2F6 set_hero_target_location(location_9003);
   $A2FC HL = &characterstruct_20.room; // character_20_PRISONER_1
   $A2FF -
   $A302 -
@@ -4564,7 +4564,7 @@ D $A31C Update all the benches to be empty.
 
 ; ------------------------------------------------------------------------------
 
-c $A33F set_player_target_location
+c $A33F set_hero_target_location
   $A33F if (morale_1) return;
   $A344 $8001 &= ~vischar_BYTE1_BIT6;
   $A349 $8002 = B;
@@ -4575,7 +4575,7 @@ c $A33F set_player_target_location
 ; ------------------------------------------------------------------------------
 
 c $A351 go_to_time_for_bed
-  $A351 set_player_target_location(location_8502);
+  $A351 set_hero_target_location(location_8502);
   $A357 Adash = 133;
   $A35A C = 2;
   $A35C set_prisoners_and_guards_location_B(); return; // exit via
@@ -4693,7 +4693,7 @@ R $A3F3 I:HL -> characterstruct?
 c $A3F8 byte_A13E_is_zero
 D $A3F8 Gets hit when player enters hut at end of day.
   $A3F8 A = IY[0]; // IY=$8000 // must be a character index
-  $A3FB if (A == 0) <% set_player_target_location(location_2C00); return; %> // exit via
+  $A3FB if (A == 0) <% set_hero_target_location(location_2C00); return; %> // exit via
 ;
 ; This entry point is used by the routine at #R$A3F3.
 R $A404 I:A Character index.
@@ -4763,12 +4763,12 @@ D $A473 Force a refresh.
 
 ; ------------------------------------------------------------------------------
 
-c $A47F player_sits
+c $A47F hero_sits
   $A47F roomdef_25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
   $A484 HL = &player_in_breakfast;
-  $A487 goto player_sit_sleep_common;
+  $A487 goto hero_sit_sleep_common;
 
-c $A489 player_sleeps
+c $A489 hero_sleeps
   $A489 roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;
   $A48E HL = &player_in_bed;
 
@@ -8195,7 +8195,7 @@ D $C84C charevnt_handler_10_player_released_from_solitary
   $C84D *HL++ = 0xA4;
   $C850 *HL   = 0x03;
   $C852 automatic_player_counter = 0; // force automatic control
-  $C856 set_player_target_location(0x2500); return;
+  $C856 set_hero_target_location(0x2500); return;
 
 D $C85C charevnt_handler_1
   $C85C C = 0x10; // 0xFF10
@@ -8228,11 +8228,11 @@ D $C882 charevnt_handler_7
 
 D $C889 charevnt_handler_9_player_sits
   $C889 POP HL
-  $C88A goto player_sits;
+  $C88A goto hero_sits;
 
 D $C88D charevnt_handler_8_player_sleeps
   $C88D POP HL
-  $C88E goto player_sleeps;
+  $C88E goto hero_sleeps;
 
 ; ------------------------------------------------------------------------------
 
