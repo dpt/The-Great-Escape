@@ -7636,8 +7636,9 @@ D $BCEE Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
 
 ; ------------------------------------------------------------------------------
 
-w $C41A word_C41A
-D $C41A [unknown] (<- get_A_indexed_by_C41A)
+w $C41A prng_pointer
+D $C41A Pointer to bytes to output as pseudo-random data.
+D $C41A Initially set to $9000. Wraps around after $90FF.
 
 ; -----------------------------------------------------------------------------
 
