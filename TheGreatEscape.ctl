@@ -3821,7 +3821,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9D8A   called_from_main_loop_3(); // [unknown]
   $9D8D   move_characters();
   $9D90   follow_suspicious_player();
-  $9D93   called_from_main_loop_6(); // [unknown]
+  $9D93   purge_visible_characters();
   $9D96   spawn_characters();
   $9D99   mark_nearby_items();
   $9D9C   ring_bell();
@@ -7706,7 +7706,7 @@ D $C441   Outdoors.
 
 ; -----------------------------------------------------------------------------
 
-c $C47E called_from_main_loop_6
+c $C47E purge_visible_characters
 D $C47E Run through all visible characters, resetting them.
   $C47E HL = &map_position;
   $C481 E = MAX(L - 9, 0);
