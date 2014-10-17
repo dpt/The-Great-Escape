@@ -4787,7 +4787,7 @@ D $A498 Set player position to zero.
 ; ------------------------------------------------------------------------------
 
 c $A4A9 set_location_0x000E
-  $A4A9 set_hero_target_location(0x0E00);
+  $A4A9 set_hero_target_location(0x000E);
   $A4AF A = 0x0E;
   $A4B1 EX AF,AF'
   $A4B2 C = 0;
@@ -4796,7 +4796,7 @@ c $A4A9 set_location_0x000E
 ; ------------------------------------------------------------------------------
 
 c $A4B7 set_location_0x048E
-  $A4B7 set_hero_target_location(0x8E04);
+  $A4B7 set_hero_target_location(0x048E);
   $A4BD A = 0x8E;
   $A4BF EX AF,AF'
   $A4C0 C = 4;
@@ -4805,7 +4805,7 @@ c $A4B7 set_location_0x048E
 ; ------------------------------------------------------------------------------
 
 c $A4C5 set_location_0x0010
-  $A4C5 set_hero_target_location(0x1000);
+  $A4C5 set_hero_target_location(0x0010);
   $A4CB A = 0x10;
   $A4CD EX AF,AF'
   $A4CE C = 0;
@@ -4819,7 +4819,7 @@ D $A4D3 Something character related [very similar to the routine at $A3F3].
   $A4D6 goto $A4E4;
 
 c $A4D8 byte_A13E_is_zero_anotherone
-D $A4D8 Sets a target location 2B00. Seems to get hit around breakfasting time. If I nobble this it stops him sitting for breakfast.
+D $A4D8 Sets a target location 0x002B. Seems to get hit around breakfasting time. If I nobble this it stops him sitting for breakfast.
   $A4D8 A = IY[0]; // must be a character index
   $A4DC if (A == 0) <% set_hero_target_location(location_002B); return; %> // exit via
 ;
@@ -8201,7 +8201,7 @@ D $C84C charevnt_handler_10_player_released_from_solitary
   $C84D *HL++ = 0xA4;
   $C850 *HL   = 0x03;
   $C852 automatic_player_counter = 0; // force automatic control
-  $C856 set_hero_target_location(0x2500); return;
+  $C856 set_hero_target_location(0x0025); return;
 
 D $C85C charevnt_handler_1
   $C85C C = 0x10; // 0xFF10
