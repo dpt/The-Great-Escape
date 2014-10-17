@@ -987,7 +987,7 @@ c $6939 setup_movable_items
   $693F      if (A == room_2_hut2left) setup_stove1();
   $6949 else if (A == room_4_hut3left) setup_stove2();
   $6953 else if (A == room_9_crate)    setup_crate();
-  $695B called_from_main_loop_7();
+  $695B spawn_characters();
   $695E mark_nearby_items();
   $6961 called_from_main_loop_9();
   $6964 move_map();
@@ -3822,7 +3822,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9D8D   move_characters();
   $9D90   follow_suspicious_player();
   $9D93   called_from_main_loop_6(); // [unknown]
-  $9D96   called_from_main_loop_7(); // [unknown]
+  $9D96   spawn_characters();
   $9D99   mark_nearby_items();
   $9D9C   ring_bell();
   $9D9F   called_from_main_loop_9(); // [unknown]
@@ -7648,9 +7648,8 @@ D $C41A Initially set to $9000. Wraps around after $90FF.
 
 ; -----------------------------------------------------------------------------
 
-; seems to move characters around, or perhaps just spawn them
-
-c $C41C called_from_main_loop_7
+c $C41C spawn_characters
+D $C41C seems to move characters around, or perhaps just spawn them
 ;
 D $C41C Form a map position in DE.
   $C41C HL = map_position;
