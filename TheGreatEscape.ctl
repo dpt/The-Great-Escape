@@ -6356,6 +6356,8 @@ D $B3A8 This searches visible characters only.
 
 ; -----------------------------------------------------------------------------
 
+; This function described in non pseudocode style...
+
 c $B3C4 action_poison
   $B3C4 Load items_held.
   $B3C7 Load item_FOOD.
