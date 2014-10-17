@@ -5923,7 +5923,7 @@ R $AF8F I:IY Pointer to visible character block.
 D $AFB9 Cutting wire only from here onwards?
   $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
   $AFBC if (A <= character_25_PRISONER_6) <% // a character index
-  $AFC0   sub_AFDF();
+  $AFC0   collision();
   $AFC3   if (!Z) return; %>
 ; else object only from here on?
   $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
@@ -5934,7 +5934,7 @@ D $AFB9 Cutting wire only from here onwards?
 
 ; ------------------------------------------------------------------------------
 
-c $AFDF sub_AFDF
+c $AFDF collision
   $AFDF HL = $8001; // &vischar[0].byte1;
   $AFE2 B = 8; // 8 iterations
   $AFE4 do <% if (*HL & vischar_BYTE1_BIT7) goto next; // $8001, $8021, ...
@@ -6037,7 +6037,7 @@ D $B03D --------
   $B0F6     goto $B0D0; %>
 
 B $B0F8,4 four_bytes_B0F8
-D $B0F8 (<- sub_AFDF)
+D $B0F8 (<- collision)
 
   $B0FC   pop_next: POP HL
   $B0FD   POP BC
@@ -7793,7 +7793,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C51E   *HL++ = 0;
   $C521 %> while (--B); %>
 ;
-  $C523 sub_AFDF();
+  $C523 collision();
   $C526 if (Z) bounds_check();
   $C529 POP DE
   $C52A POP HL
