@@ -4856,6 +4856,7 @@ c $A50B screen_reset
 ; ------------------------------------------------------------------------------
 
 c $A51C escaped
+D $A51C Hero has escaped.
 D $A51C Print 'well done' message then test to see if the correct objects were used in the escape attempt.
   $A51C screen_reset();
   $A51F HL = &escape_strings[0];
@@ -4864,9 +4865,9 @@ D $A51C Print 'well done' message then test to see if the correct objects were u
   $A528 screenlocstring_plot(); // FROM THE CAMP
   $A52B C = 0; // zero flag
   $A52D HL = &items_held[0];
-  $A530 have_required_items();
+  $A530 join_item_to_escapeitem();
   $A533 HL++; // &items_held[1];
-  $A534 have_required_items();
+  $A534 join_item_to_escapeitem();
   $A537 A = C;
   $A538 if (A == escapeitem_COMPASS + escapeitem_PURSE) goto success;
   $A53C else if (A != escapeitem_COMPASS + escapeitem_PAPERS) goto captured;
@@ -4918,20 +4919,20 @@ R $A58C O:A Pressed key.
 
 ; ------------------------------------------------------------------------------
 
-c $A59C have_required_items
-D $A59C Return bitmask indicating the presence of required items.
-R $A59C I:HL Pointer to (single) item slot.
+c $A59C join_item_to_escapeitem
+D $A59C Call item_to_escapeitem then merge result with a previous escapeitem.
 R $A59C I:C  Previous return value.
+R $A59C I:HL Pointer to (single) item slot.
 R $A59C O:C  Previous return value + escapeitem_ flag.
   $A59C A = *HL;
-  $A59D item_to_bitmask();
+  $A59D item_to_escapeitem();
   $A5A0 C += A;
   $A5A2 return;
 
-c $A5A3 item_to_bitmask
-D $A5A3 Return a bitmask indicating the presence of required items.
+c $A5A3 item_to_escapeitem
+D $A5A3 Return a bitfield indicating the presence of required items.
 R $A5A3 I:A Item.
-R $A5A3 O:A Bitmask.
+R $A5A3 O:A Bitfield.
   $A5A3 if (A == item_COMPASS) <% A = escapeitem_COMPASS; return; %>
   $A5AA if (A == item_PAPERS)  <% A = escapeitem_PAPERS;  return; %>
   $A5B1 if (A == item_PURSE)   <% A = escapeitem_PURSE;   return; %>
