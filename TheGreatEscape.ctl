@@ -942,7 +942,7 @@ D $68D7 HL points to the player vischar at this point.
   $68E4   HL += 12;
   $68E8   *HL++ = 0x80; // $800D // likely a character direction
   $68EB   *HL &= 3;     // $800E // likely a sprite direction
-  $68EF   reset_B2FC();
+  $68EF   reset_outdoors();
   $68F2   goto squash_stack_goto_main; %>
 ;
 ; fallthrough
@@ -3856,7 +3856,7 @@ D $9DE5 Check for 'game cancel' keypress.
   $9DF4 screen_reset();
   $9DF7 user_confirm();
   $9DFA if (Z) reset_game();
-  $9DFD if (room_index == 0) <% reset_B2FC(); return; %> // exit via
+  $9DFD if (room_index == 0) <% reset_outdoors(); return; %> // exit via
   $9E04 else enter_room(); // doesn't return (jumps to main_loop)
 
 ; ------------------------------------------------------------------------------
@@ -6262,8 +6262,8 @@ D $B2FA Not found.
 
 ; ------------------------------------------------------------------------------
 
-c $B2FC reset_B2FC
-D $B2FC Resets ... something.
+c $B2FC reset_outdoors
+D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the screen.
   $B2FC HL = $8000;
   $B2FF reset_position(); // reset player
 ;
