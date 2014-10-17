@@ -3814,7 +3814,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9D78 enter_room(); // returns by goto main_loop
 
   $9D7B main_loop: for (;;) <% check_morale();
-  $9D7E   keyscan_cancel();
+  $9D7E   keyscan_break();
   $9D81   message_display();
   $9D84   process_player_input();
   $9D87   in_permitted_area();
@@ -3850,7 +3850,7 @@ D $9DCF (<- main_loop)
 
 ; ------------------------------------------------------------------------------
 
-c $9DE5 keyscan_cancel
+c $9DE5 keyscan_break
 D $9DE5 Check for 'game cancel' keypress.
   $9DE5 if (!(shift_pressed && space_pressed)) return;
   $9DF4 screen_reset();
