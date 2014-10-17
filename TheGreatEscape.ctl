@@ -397,16 +397,16 @@
 ; interiorobjecttile_ESCAPE = 255              ; escape character
 
 ; ; enum location
-; location_0E00 = $0E00
-; location_1000 = $1000
-; location_2A00 = $2A00
-; location_2B00 = $2B00
-; location_2C00 = $2C00
-; location_2C01 = $2C01
-; location_2D00 = $2D00
-; location_8502 = $8502
-; location_8E04 = $8E04
-; location_9003 = $9003
+; location_000E = $000E
+; location_0010 = $0010
+; location_002A = $002A
+; location_002B = $002B
+; location_002C = $002C
+; location_002D = $002D
+; location_012C = $012C
+; location_0285 = $0285
+; location_0390 = $0390
+; location_048E = $048E
 
 ; ; enum sound
 ; sound_CHARACTER_ENTERS_1 = $2030
@@ -4372,7 +4372,7 @@ D $A1AB Dispatch the event for that time.
   $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
-  $A1C3 if (player_in_bed == 0) set_hero_target_location(location_2C01);
+  $A1C3 if (player_in_bed == 0) set_hero_target_location(location_012C);
   $A1CF A = 0xFF;
   $A1D1 goto set_attrs;
 
@@ -4401,7 +4401,7 @@ c $A1F0 event_go_to_roll_call
 c $A1F9 event_go_to_breakfast_time
   $A1F9 *BC = A; // bell = bell_RING_40_TIMES;
   $A1FA queue_message_for_display(message_BREAKFAST_TIME);
-  $A1FF set_location_0x1000(); return; // exit via
+  $A1FF set_location_0x0010(); return; // exit via
 
 c $A202 event_breakfast_time
   $A202 *BC = A; // bell = bell_RING_40_TIMES;
@@ -4412,11 +4412,11 @@ c $A206 event_go_to_exercise_time
   $A207 queue_message_for_display(message_EXERCISE_TIME);
 D $A20C Unlock the gates.
   $A20C gates_and_doors[0] = 0x00; gates_and_doors[1] = 0x01;
-  $A212 set_location_0x0E00(); return; // exit via
+  $A212 set_location_0x000E(); return; // exit via
 
 c $A215 event_exercise_time
   $A215 *BC = A; // bell = bell_RING_40_TIMES;
-  $A216 set_location_0x8E04(); return; // exit via
+  $A216 set_location_0x048E(); return; // exit via
 
 c $A219 event_go_to_time_for_bed
   $A219 *BC = A; // bell = bell_RING_40_TIMES;
@@ -4492,7 +4492,7 @@ D $A289 Called by event_wake_up.
   $A290   $800F = 46; // player's Y position
   $A295   $8011 = 46; %> // player's X position
   $A299 player_in_bed = 0;
-  $A29D set_hero_target_location(location_2A00);
+  $A29D set_hero_target_location(location_002A);
   $A2A3 HL = &characterstruct_20.room;
   $A2A6 -
   $A2A9 -
@@ -4532,7 +4532,7 @@ c $A2E2 breakfast_time
   $A2E9   $800F = 52; // player Y position
   $A2EE   $8011 = 62; %> // player X position
   $A2F2 player_in_breakfast = 0;
-  $A2F6 set_hero_target_location(location_9003);
+  $A2F6 set_hero_target_location(location_0390);
   $A2FC HL = &characterstruct_20.room; // character_20_PRISONER_1
   $A2FF -
   $A302 -
@@ -4575,7 +4575,7 @@ c $A33F set_hero_target_location
 ; ------------------------------------------------------------------------------
 
 c $A351 go_to_time_for_bed
-  $A351 set_hero_target_location(location_8502);
+  $A351 set_hero_target_location(location_0285);
   $A357 Adash = 133;
   $A35A C = 2;
   $A35C set_prisoners_and_guards_location_B(); return; // exit via
@@ -4693,7 +4693,7 @@ R $A3F3 I:HL -> characterstruct?
 c $A3F8 byte_A13E_is_zero
 D $A3F8 Gets hit when player enters hut at end of day.
   $A3F8 A = IY[0]; // IY=$8000 // must be a character index
-  $A3FB if (A == 0) <% set_hero_target_location(location_2C00); return; %> // exit via
+  $A3FB if (A == 0) <% set_hero_target_location(location_002C); return; %> // exit via
 ;
 ; This entry point is used by the routine at #R$A3F3.
 R $A404 I:A Character index.
@@ -4784,8 +4784,8 @@ D $A498 Set player position to zero.
 
 ; ------------------------------------------------------------------------------
 
-c $A4A9 set_location_0x0E00
-  $A4A9 set_player_target_location(0x0E00);
+c $A4A9 set_location_0x000E
+  $A4A9 set_hero_target_location(0x0E00);
   $A4AF A = 0x0E;
   $A4B1 EX AF,AF'
   $A4B2 C = 0;
@@ -4793,8 +4793,8 @@ c $A4A9 set_location_0x0E00
 
 ; ------------------------------------------------------------------------------
 
-c $A4B7 set_location_0x8E04
-  $A4B7 set_player_target_location(0x8E04);
+c $A4B7 set_location_0x048E
+  $A4B7 set_hero_target_location(0x8E04);
   $A4BD A = 0x8E;
   $A4BF EX AF,AF'
   $A4C0 C = 4;
@@ -4802,8 +4802,8 @@ c $A4B7 set_location_0x8E04
 
 ; ------------------------------------------------------------------------------
 
-c $A4C5 set_location_0x1000
-  $A4C5 set_player_target_location(0x1000);
+c $A4C5 set_location_0x0010
+  $A4C5 set_hero_target_location(0x1000);
   $A4CB A = 0x10;
   $A4CD EX AF,AF'
   $A4CE C = 0;
@@ -4819,7 +4819,7 @@ D $A4D3 Something character related [very similar to the routine at $A3F3].
 c $A4D8 byte_A13E_is_zero_anotherone
 D $A4D8 Sets a target location 2B00. Seems to get hit around breakfasting time. If I nobble this it stops him sitting for breakfast.
   $A4D8 A = IY[0]; // must be a character index
-  $A4DC if (A == 0) <% set_player_target_location(location_2B00); return; %> // exit via
+  $A4DC if (A == 0) <% set_hero_target_location(location_002B); return; %> // exit via
 ;
 ; This entry point is used by the routine at #R$A4D3.
 R $A4E4 I:A Character index.
@@ -4840,8 +4840,8 @@ c $A4FD go_to_roll_call
   $A4FD A = 26;
   $A4FF EX AF,AF'
   $A500 C = 0;
-  $A502 set_location_A35F();
-  $A505 set_player_target_location(location_2D00);
+  $A502 set_prisoners_and_guards_location();
+  $A505 set_hero_target_location(location_002D);
 
 ; ------------------------------------------------------------------------------
 
