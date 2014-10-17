@@ -2381,7 +2381,7 @@ D $7BC2 HL is incremented here but then immediately overwritten by $7BC5.
   $7BC2   HL += 2; // -> .unk1
   $7BC4   POP DE
   $7BC5   HL = $800F;
-  $7BC8   scale_pos(HL,DE);
+  $7BC8   pos_to_tinypos(HL,DE);
   $7BCB   DE--;
   $7BCC   *DE = 0; // ->vo ?
   $7BCF   EX DE,HL
@@ -3967,7 +3967,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F21 HL = $800F; // position on Y axis
   $9F24 DE = &player_map_position.y; // x/y confusion here - mislabeling
   $9F27 if (room_index == 0) <% // outdoors
-  $9F2E   scale_pos(HL,DE);
+  $9F2E   pos_to_tinypos(HL,DE);
   $9F31   if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped; %>
   $9F47 else <%
   $9F49   *DE++ = *HL++; // indoors
@@ -7891,7 +7891,7 @@ D $C602 A non-object character.
   $C617   HL += 0x0F; // vischar+0x0F
   $C61A   DE++; // &characterstruct.y
   $C61C   if (A == 0) <% // outdoors
-  $C61F     scale_pos(HL,DE); %> // HL,DE updated
+  $C61F     pos_to_tinypos(HL,DE); %> // HL,DE updated
   $C622   else <%
   $C624     B = 3;
   $C626     do <% *DE++ = *HL;
@@ -8347,7 +8347,7 @@ D $C99C Found bribed character.
   $C9A1     PUSH DE
   $C9A2     DE += 3;
   $C9A6     if (room_index) <%
-  $C9AD       scale_pos(HL,DE); %>
+  $C9AD       pos_to_tinypos(HL,DE); %>
   $C9B0     else <%
   $C9B2       *DE++ = *HL++;
   $C9B4       HL++;
@@ -8651,7 +8651,7 @@ D $CC3B Don't follow non-players dressed as guards.
   $CC4C HL += 15;
   $CC50 DE = &byte_81B2;
   $CC53 if (room_index == 0) <%
-  $CC5A   scale_pos(HL,DE);
+  $CC5A   pos_to_tinypos(HL,DE);
   $CC5D   HL = &player_map_position.y;
   $CC60   DE = &byte_81B2;
   $CC63   A = IY[0x0E]; // ?
@@ -10008,9 +10008,9 @@ R $E420 I:IY Pointer to ? // observed: $8000+
 
 ; ------------------------------------------------------------------------------
 
-c $E542 scale_pos
-D $E542 Scale all three members of a 'pos_t'.
-D $E542 Divides 3 words by 8 with rounding to nearest.
+c $E542 pos_to_tinypos
+D $E542 Scale down a pos_t and assign result to a tinypos_t.
+D $E542 Divides the three input 16-bit words by 8, with rounding to nearest, storing the result as bytes.
 R $E542 I:HL Pointer to input words
 R $E542 I:DE Pointer to output bytes
 R $E542 O:HL Updated.
