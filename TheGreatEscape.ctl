@@ -2796,6 +2796,8 @@ B $8188,9 bell_top_right
 B $8191,9 bell_middle_left
 B $819A,9 bell_middle_middle
 
+;; The following vars are shared with the last of the bell graphics.
+
 ; ------------------------------------------------------------------------------
 
 u $81A3 unused_81A3
