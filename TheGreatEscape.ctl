@@ -3938,7 +3938,7 @@ D $9EE0 Indexed by $800E.
 
 ; ------------------------------------------------------------------------------
 
-b $9EE4 twentyonelong
+b $9EE4 byte_to_pointer
 D $9EE4 7 structs, 3 wide. maps bytes to offsets.
   $9EE4,3 byte_to_offset { 42, &byte_9EF9[0] }
   $9EE7,3 byte_to_offset {  5, &byte_9EFC[0] }
@@ -3991,7 +3991,7 @@ D $9F21 [unsure] -- could be as general as bounds detection
   $9F8C   in_permitted_area_end_bit();
   $9F8F   if (Z) goto set_flag_green; else goto set_flag_red; %>
   $9F93 else <% A &= 0x7F;
-  $9F95   HL = &twentyonelong[0]; // table mapping bytes to offsets
+  $9F95   HL = &byte_to_pointer[0]; // table mapping bytes to offsets
   $9F98   B = 7; // 7 iterations
   $9F9A   do <% if (A == *HL++) goto found;
   $9F9E     HL += 2;
