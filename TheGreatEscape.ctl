@@ -8255,7 +8255,7 @@ D $C891 (<- follow_suspicious_character, bribes_solitary_food)
 c $C892 follow_suspicious_character
 D $C892 Causes characters to follow the player if they're being suspicious. Poisoned food handling.
   $C892 byte_A13E = 0;
-  $C896 if (bell) guards_persue_prisoners();
+  $C896 if (bell) hostiles_persue();
   $C89D if (food_discovered_counter != 0 && --food_discovered_counter == 0) <%
   $C8A7   item_structs[item_FOOD].item &= ~itemstruct_ITEM_FLAG_POISONED;
   $C8AC   C = item_FOOD;
@@ -8691,14 +8691,14 @@ D $CC3B Don't follow non-players dressed as guards.
   $CC9E     IY[1] = vischar_BYTE1_BIT1;
   $CCA2   return; %>
   $CCA3 bell = bell_RING_PERPETUAL;
-  $CCA7 guards_persue_prisoners();
+  $CCA7 hostiles_persue();
   $CCAA return;
 
 ; ------------------------------------------------------------------------------
 
-c $CCAB guards_persue_prisoners
-D $CCAB Searches for a visible character and something else, sets a flag.
-D $CCAB If I nop this out then guards don't spot the items I drop.
+c $CCAB hostiles_persue
+D $CCAB For all visible, hostile characters, at height < 32, set the bribed/persue flag.
+D $CCAB Research: If I nop this out then guards don't spot the items I drop.
   $CCAB HL = $8020; // iterate over non-player characters
   $CCB1 B = 7; // iterations
   $CCB3 do <%
@@ -8711,13 +8711,13 @@ D $CCB4 HL[0x13] is the character's height, testing this excludes the guards in 
 ; ------------------------------------------------------------------------------
 
 c $CCCD is_item_discoverable
-D $CCCD Searches item_structs for items dropped nearby. If items are found the guards are made to persue the player.
+D $CCCD Searches item_structs for items dropped nearby. If items are found the hostiles are made to persue the player.
 D $CCCD Green key and food items are ignored.
   $CCCD A = room_index;
   $CCD0 if (A != room_0_outdoors) <%
 D $CCD3 Indoors.
   $CCD3   is_item_discoverable_interior(A);
-  $CCD6   if (Z) guards_persue_prisoners();
+  $CCD6   if (Z) hostiles_persue();
   $CCDA   return; %>
 D $CCDB Outdoors.
   $CCDB else <% HL = &item_structs[0].room;
@@ -8734,7 +8734,7 @@ D $CCEB Suspected bug: HL is decremented, but not re-incremented before 'goto ne
   $CCEC A = *HL & itemstruct_ITEM_MASK; // sampled HL = $772A (&item_structs[item_PURSE].item)
 D $CCEF The green key and food items are ignored.
   $CCEF if (A == item_GREEN_KEY || A == item_FOOD) goto next;
-  $CCF7 guards_persue_prisoners();
+  $CCF7 hostiles_persue();
   $CCFA return;
 
 ; ------------------------------------------------------------------------------
@@ -10217,7 +10217,7 @@ D $EFAF All visible characters turn forward.
 
   $EFC0 not_at_roll_call: bell = bell_RING_PERPETUAL;
   $EFC4 queue_message_for_display(message_MISSED_ROLL_CALL);
-  $EFC8 guards_persue_prisoners(); // exit via
+  $EFC8 hostiles_persue(); // exit via
 
 ; ------------------------------------------------------------------------------
 
