@@ -482,7 +482,7 @@
 ; gates_and_doors_LOCKED     = 1<<7,
 
 ; enum characterstructflags
-; characterstruct_BYTE0_BIT6    = 1<<6, // this disables the character
+; characterstruct_FLAG_DISABLED  = 1<<6, // this disables the character
 ; characterstruct_BYTE0_MASK    = 0x1F,
 ; characterstruct_BYTE5_MASK    = 0x7F,
 ; characterstruct_BYTE6_MASK_HI = 0xF8,
@@ -4471,7 +4471,7 @@ D $A26E Common end of event_time_for_bed and event_search_light.
   $A26F Adash = 12;
   $A271 B = 4; // 4 iterations
   $A273 do <% PUSH AF
-  $A274   sub_A38C();
+  $A274   set_character_location();
   $A277   POP AF
   $A278   Adash++;
   $A279   -
@@ -4593,7 +4593,7 @@ R $A35F O:Adash Counter incremented.
   $A364 do <% PUSH HL
   $A365   PUSH BC
   $A366   A = *HL;
-  $A367   sub_A38C();
+  $A367   set_character_location();
   $A36A   Adash++;
   $A36D   POP BC
   $A36E   POP HL
@@ -4611,7 +4611,7 @@ D $A373 Uses prisoners_and_guards structure.
   $A378 do <% PUSH HL
   $A379   PUSH BC
   $A37A   A = *HL;
-  $A37B   sub_A38C();
+  $A37B   set_character_location();
   $A37E   POP BC
   $A37F   if (B == 6) Adash++; // array index 6 is character 22
   $A387   POP HL
@@ -4621,13 +4621,13 @@ D $A373 Uses prisoners_and_guards structure.
 
 ; ------------------------------------------------------------------------------
 
-c $A38C sub_A38C
+c $A38C set_character_location
 D $A38C Walk non-player visible characters, ...
 R $A38C I:A     Character index.
 R $A38C I:Adash ?
 R $A38C I:C     ?
   $A38C HL = get_character_struct(A);
-  $A38F if ((*HL & characterstruct_BYTE0_BIT6) == 0) goto not_set; // disabled?
+  $A38F if ((*HL & characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?
   $A394 PUSH BC
   $A395 A = *HL & characterstruct_BYTE0_MASK;
   $A398 B = 7; // 7 iterations
@@ -4642,13 +4642,13 @@ R $A38C I:C     ?
 B $A3A9 Unreferenced byte.
 
   $A3AA not_set: HL += 5; // HL = charstruct->target
-  $A3AF store_banked_A_then_C_at_HL();
+  $A3AF store_location();
   $A3B2 exit: return;
 
   $A3B3 found: POP BC
   $A3B4 HL++;
   $A3B5 *HL++ &= ~vischar_BYTE1_BIT6;
-  $A3B8 store_banked_A_then_C_at_HL(); // HL = vischar->target
+  $A3B8 store_location(); // HL = vischar->target
 ;
 ; fallthrough
 
@@ -4679,7 +4679,7 @@ c $A3BB sub_A3BB
 
 ; ------------------------------------------------------------------------------
 
-c $A3ED store_banked_A_then_C_at_HL
+c $A3ED store_location
 ; sampled HL = $8022 $8042 $76A3 $76AA $76B1 $7679 $7680 $76B8 $76BF $76C6 $766B $8022 $8042 $8082 $80C2 $80E2 $80A2 $8062 $76BF
   $A3ED *HL++ = Adash;
   $A3F1 *HL = C;
@@ -7659,7 +7659,7 @@ D $C41C Form a map position in DE.
 D $C42D Walk all character structs.
   $C42D HL = &character_structs[0];
   $C430 B = character_26_STOVE_1; // the 26 'real' characters
-  $C432 do <% if (*HL & characterstruct_BYTE0_BIT6) goto skip;
+  $C432 do <% if (*HL & characterstruct_FLAG_DISABLED) goto skip;
 ;
   $C436   (stash HL)
   $C437   HL++; // $7613
@@ -7752,7 +7752,7 @@ D $C47E Run through all visible characters, resetting them.
 c $C4E0 spawn_characters_maybe
 D $C4E0 Adds characters to the visible character list.
 R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
-  $C4E0 if (*HL & characterstruct_BYTE0_BIT6) return;
+  $C4E0 if (*HL & characterstruct_FLAG_DISABLED) return;
 ;
 D $C4E4 Find an empty visible character entry.
   $C4E3 PUSH HL
@@ -7798,7 +7798,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C52A POP HL
   $C52B RET NZ
 ;
-  $C52C A = *DE | characterstruct_BYTE0_BIT6; // likely: disable character
+  $C52C A = *DE | characterstruct_FLAG_DISABLED;
   $C52F *DE = A;
   $C530 A &= characterstruct_BYTE0_MASK;
   $C532 *HL++ = A;
@@ -7882,7 +7882,7 @@ D $C5EB Save the old position.
 D $C602 A non-object character.
   $C602 else <% -
   $C603   DE = get_character_struct(A);
-  $C606   *DE &= ~characterstruct_BYTE0_BIT6;
+  $C606   *DE &= ~characterstruct_FLAG_DISABLED;
   $C608   -
   $C60C   A = HL[0x1C]; // room index
   $C60D   *++DE = A; // characterstruct.room = room index;
@@ -7962,7 +7962,7 @@ D $C6A0 Moves characters around.
   $C6A0 byte_A13E = 0xFF;
   $C6A5 character_index = (character_index + 1) % character_26; // 26 = highest + 1 character
   $C6B1 HL = get_character_struct(character_index); // pass character_index as A
-  $C6B4 if (*HL & characterstruct_BYTE0_BIT6) return;
+  $C6B4 if (*HL & characterstruct_FLAG_DISABLED) return;
   $C6B7 PUSH HL
   $C6B8 A = *++HL; // characterstruct byte1 == room
   $C6BA if (A != room_0_outdoors) <%
