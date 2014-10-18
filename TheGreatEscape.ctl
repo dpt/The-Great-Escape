@@ -4562,7 +4562,7 @@ D $A31C Update all the benches to be empty.
   $A328 roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
   $A32B roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
   $A32E roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
-  $A331 if (room_index == 0 || room_index >= room_29_secondtunnelstart) return;
+  $A331 if (room_index == room_0_outdoors || room_index >= room_29_secondtunnelstart) return;
   $A339 setup_room();
   $A33C plot_interior_tiles(); return; // exit via // note that this differs to wake_up's ending
 
