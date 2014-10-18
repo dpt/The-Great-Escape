@@ -6215,9 +6215,11 @@ R $B295 O:BC Result of (A << 2).
 ; ------------------------------------------------------------------------------
 
 c $B29F interior_bounds_check
-D $B29F This is doing something like checking the bounds for an interior room.
-R $B29F O:AF Corrupted.
+D $B29F Check the character is inside of bounds, when indoors.
+R $B29F I:IY Pointer to visible character.
+R $B29F O:A  Corrupted.
 R $B29F O:BC Corrupted.
+R $B29F O:F  Z clear if boundary hit, set otherwise.
 R $B29F O:HL Corrupted.
   $B29F BC = &roomdef_bounds[roomdef_bounds_index];
   $B2AC HL = &saved_Y;
@@ -6226,7 +6228,7 @@ R $B29F O:HL Corrupted.
   $B2B3 A = *++BC + 4;
   $B2B7 if (A >= *HL) goto stop;
   $B2BA HL += 2;
-D $B2BC This instruction is stray code. It's incremented but never used.
+D $B2BC Bug: This instruction is stray code. It's incremented but never used.
   $B2BC DE++;
   $B2BD A = *++BC - 4;
   $B2C1 if (A < *HL) goto stop;
