@@ -6306,7 +6306,7 @@ R $B32D I:IY Pointer to visible character.
   $B33D   Bdash = A & 3;
   $B340   if (IY[14] & 3 != Bdash) goto next;
   $B348   HLdash++;
-  $B349   - // EX DE,HL
+  $B349   -
   $B34A   DEdash = &saved_Y;
   $B34D   Bdash = 2; // 2 iterations
   $B34F   do <% A = *HLdash - 3;
