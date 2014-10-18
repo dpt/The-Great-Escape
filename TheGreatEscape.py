@@ -26,7 +26,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             except IndexError:
                 s += "[%d]" % (self.snapshot[i])
         return s
-    
+
     def decode_stringterminated(self, cwd, addr, terminator):
         """ Decode a string with the specified terminator. """
         nbytes = 0
@@ -41,13 +41,13 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
     def decode_stringcounted(self, cwd, addr):
         """ Decode a counted string (first byte of string is length). """
         return self.decode_string(cwd, addr + 1, self.snapshot[addr])
-    
+
     def decode_screenlocstring(self, cwd, addr):
         """ Decode a screenlocstring. """
         scraddr = self.snapshot[addr] + self.snapshot[addr + 1] * 256
         nbytes  = self.snapshot[addr + 2]
         str     = self.decode_string(cwd, addr + 3, nbytes)
-        return "screen address $%x, length $%x, string='%s'" % (scraddr, nbytes, str)
+        return "screen address $%X, length $%X, string='%s'" % (scraddr, nbytes, str)
 
     def tile(self, cwd, tile_index, supertile_index):
         """ Tile and supertile index -> Udg. """
@@ -77,7 +77,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             udg_array[-1].append(self.tile(cwd, self.snapshot[addr + i], stile))
 
         img_path_id = 'ScreenshotImagePath'
-        fname = 'supertile-%x' % stile
+        fname = 'supertile-%X' % stile
         img_path = self.image_path(fname, img_path_id)
         self.write_image(img_path, udg_array)
 
@@ -104,7 +104,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         img_path_id = 'ScreenshotImagePath'
         fname = 'map'
         img_path = self.image_path(fname, img_path_id)
-        self.write_image(img_path, udg_array)
+        self.write_image(img_path, udg_array, scale=1)
 
         return self.img_element(cwd, img_path)
 
@@ -120,7 +120,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         s = ""
         for index,i in enumerate(range(base, base + ents * 2, 2)):
             addr = self.snapshot[i + 0] + self.snapshot[i + 1] * 256
-            s += "<h3>$%.4x</h3>" % addr 
+            s += "<h3>$%.4x</h3>" % addr
             s += "<p>" + self.decode_object(cwd, addr, index) + "</p>"
         return s
 
@@ -182,6 +182,53 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 iters = iters - 1
 
         return (width, height, s)
+
+    def decode_all_rooms(self, cwd, base):
+        data = self.snapshot[base:base + 52 * 2]
+        rooms = []
+        for lo, hi in zip(data[0::2], data[1::2]):
+            rooms.append(lo + hi * 256)
+
+        s = ""
+        for addr in rooms:
+            s += self.decode_room(cwd, addr)
+
+        return s
+
+    def decode_room(self, cwd, roomdef_addr):
+        s = "<h3>Room at $%X</h3>" % roomdef_addr
+
+        # Decode all room dimensions
+        p = 0x6B85
+        dims = []
+        for i in range(10):
+            dims.append((self.snapshot[p + 0], self.snapshot[p + 1], self.snapshot[p + 2], self.snapshot[p + 3]))
+            p += 4
+
+        p = roomdef_addr
+        dimensions_index = self.snapshot[p]
+        room_dims = dims[dimensions_index]
+        p += 1
+
+        s += "<ul>"
+
+        s += "<li>" + "Dimensions: " + str(room_dims)
+
+        nboundaries = self.snapshot[p]
+        s += "<li>" + "Number of boundaries: %d" % nboundaries
+        p += 1 + nboundaries * 4
+
+        ntbd = self.snapshot[p]
+        s += "<li>" + "Number of TBD: %d" % ntbd
+        p += 1 + ntbd
+
+        nobjs = self.snapshot[p]
+        s += "<li>" + "Number of objects: %d" % nobjs
+        p += 1
+
+        s += "</ul>"
+
+        return s
 
 class TheGreatEscapeAsmWriter(AsmWriter):
     pass
