@@ -3820,7 +3820,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9D87   in_permitted_area();
   $9D8A   called_from_main_loop_3(); // [unknown]
   $9D8D   move_characters();
-  $9D90   follow_suspicious_player();
+  $9D90   follow_suspicious_character();
   $9D93   purge_visible_characters();
   $9D96   spawn_characters();
   $9D99   mark_nearby_items();
@@ -8244,11 +8244,11 @@ D $C88D charevnt_handler_8_player_sleeps
 
 b $C891 food_discovered_counter
 D $C891 Likely: A countdown until any food item is discovered.
-D $C891 (<- follow_suspicious_player, bribes_solitary_food)
+D $C891 (<- follow_suspicious_character, bribes_solitary_food)
 
 ; ------------------------------------------------------------------------------
 
-c $C892 follow_suspicious_player
+c $C892 follow_suspicious_character
 D $C892 Causes characters to follow the player if they're being suspicious. Poisoned food handling.
   $C892 byte_A13E = 0;
   $C896 if (bell) guards_persue_prisoners();
@@ -8265,7 +8265,7 @@ D $C8C5 Change '20' here to a higher number and prisoners will start following t
   $C8C5     if (A < 20) <%
   $C8CA       -
   $C8CB       is_item_discoverable();
-  $C8CE       if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_player();
+  $C8CE       if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_character();
   $C8DB       -
   $C8DC       if (A > 15) <% // 16,17,18,19  // could these be the dogs?
   $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; %> %>
@@ -8640,8 +8640,8 @@ D $CC31 (<- solitary)
 
 ; ------------------------------------------------------------------------------
 
-c $CC37 guards_follow_suspicious_player
-R $CC37 I:IY Pointer to vischar.
+c $CC37 guards_follow_suspicious_character
+R $CC37 I:IY Pointer to visible character.
   $CC37 HL = IY;
   $CC3A A = *HL;
 D $CC3B Don't follow non-players dressed as guards.
