@@ -1981,7 +1981,7 @@ D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk
   $76D6 { item_LOCKPICK,         room_10_lockpick, 73,36, 0x10, 0x77, 0xF0 },
   $76DD { item_PAPERS,           room_11_papers,   42,58, 0x04, 0x84, 0xF3 },
   $76E4 { item_TORCH,            room_14_torch,    34,24, 0x02, 0x7A, 0xF6 },
-  $76EB { item_BRIBE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4 }, // <- use_bribe
+  $76EB { item_BRIBE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4 }, // <- accept_bribe
   $76F2 { item_UNIFORM,          room_15_uniform,  44,65, 0x10, 0x87, 0xF1 },
   $76F9 { item_FOOD,             room_19_food,     64,48, 0x10, 0x7E, 0xF0 }, // <- action_poison, called_from_main_loop
   $7700 { item_POISON,           room_1_hut1right, 66,52, 0x04, 0x7C, 0xF1 },
@@ -5980,7 +5980,7 @@ D $B03D --------
   $B056     HL--;
   $B057     if ((HL & 0xFF) == 0) <% // ie. $8000
   $B05B       if (bribed_character == IY[0]) <%
-  $B063         use_bribe(); %>
+  $B063         accept_bribe(); %>
   $B066       else <%
   $B068         POP HL
   $B069         POP BC
@@ -6047,9 +6047,9 @@ D $B0F8 (<- collision)
 
 ; ------------------------------------------------------------------------------
 
-c $B107 use_bribe
-D $B107 'he takes the bribe' 'and acts as decoy'
-R $B107 I:IY Pointer to vischar.
+c $B107 accept_bribe
+D $B107 Character accepts the bribe.
+R $B107 I:IY Pointer to visible character.
   $B107 increase_morale_by_10_score_by_50();
   $B10A IY[1] = 0;
   $B10E HL = IY + 2;
@@ -8452,7 +8452,7 @@ R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
   $CA85 A &= vischar_BYTE1_MASK;
   $CA87 if (A) <%
   $CA89   if (A == vischar_BYTE1_PERSUE) <%
-  $CA8D     if (IY[0] == bribed_character) <% use_bribe(); return; %> // exit via
+  $CA8D     if (IY[0] == bribed_character) <% accept_bribe(); return; %> // exit via
   $CA96     else <% solitary(); return; %> %> // exit via
   $CA99   else if (A == vischar_BYTE1_BIT1 || A == vischar_BYTE1_BIT2) <% return; %>
   $CA9F   -
