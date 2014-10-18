@@ -5913,6 +5913,7 @@ b $AF8E bribed_character
 ; ------------------------------------------------------------------------------
 
 c $AF8F sub_AF8F
+D $AF8F Door handling, bounds checking,
 R $AF8F I:IY Pointer to visible character block.
   $AF8F EX AF,AF'
   $AF90 stashed_A = A;
@@ -5920,7 +5921,7 @@ R $AF8F I:IY Pointer to visible character block.
   $AF9B HL = IY;
   $AF9E -
   $AF9F if (L == 0 && automatic_player_counter > 0) door_handling(); // L == 0 => HL == 0x8000
-  $AFAB if (L || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) <% bounds_check(); return; %>
+  $AFAB if (L || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) <% if (bounds_check()) return 1; %>
 D $AFB9 Cutting wire only from here onwards?
   $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
   $AFBC if (A <= character_25_PRISONER_6) <% // a character index
@@ -5931,7 +5932,7 @@ D $AFB9 Cutting wire only from here onwards?
   $AFC8 memcpy(IY + 15, &saved_Y, 6); // $800F // copy Y,X and vertical offset
   $AFD7 IY[0x17] = stashed_A;
   $AFDD A = 0;
-  $AFDE return;
+  $AFDE return 0;
 
 ; ------------------------------------------------------------------------------
 
