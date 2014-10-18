@@ -8827,10 +8827,10 @@ D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
 ; ------------------------------------------------------------------------------
 
 b $CD9A character_meta_data
-  $CD9A { &character_related_pointers[0], &sprites[30] } // meta_commandant (<- spawn_characters_maybe)
-  $CD9E { &character_related_pointers[0], &sprites[22] } // meta_guard (<- spawn_characters_maybe)
-  $CDA2 { &character_related_pointers[0], &sprites[14] } // meta_dog (<- spawn_characters_maybe)
-  $CDA6 { &character_related_pointers[0], &sprites[2]  } // meta_prisoner (<- spawn_characters_maybe)
+  $CD9A { &character_related_pointers[0], &sprites[30] } // meta_commandant (<- spawn_character)
+  $CD9E { &character_related_pointers[0], &sprites[22] } // meta_guard (<- spawn_character)
+  $CDA2 { &character_related_pointers[0], &sprites[14] } // meta_dog (<- spawn_character)
+  $CDA6 { &character_related_pointers[0], &sprites[2]  } // meta_prisoner (<- spawn_character)
 
 ; ------------------------------------------------------------------------------
 
