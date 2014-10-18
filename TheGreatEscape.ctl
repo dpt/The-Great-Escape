@@ -7830,7 +7830,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C56C HL += 5;
   $C571 DE += 7;
   $C575 A = room_index;
-  $C578 *DE = A;
+  $C578 *DE = A; // sampled DE = $803C (vischar->room)
   $C579 if (A) <%
   $C57C   play_speaker(sound_CHARACTER_ENTERS_2);
   $C582   play_speaker(sound_CHARACTER_ENTERS_1); %>
@@ -9142,6 +9142,8 @@ R $DBEB O:Adash result?
 ; ------------------------------------------------------------------------------
 
 c $DC41 setup_item_plotting
+R $DC41 I:A  ?
+R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
   $DC41 A &= 0x3F;
   $DC43 possibly_holds_an_item = A;
   $DC46 HL = IY + 2;
