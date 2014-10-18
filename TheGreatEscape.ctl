@@ -7182,10 +7182,12 @@ R $BADC I:HL Pointer to destination.
 
 ; -----------------------------------------------------------------------------
 
-c $BAF7 sub_BAF7
-D $BAF7 Sets the flags for return but looks like caller never uses them.
+c $BAF7 vischar_visible
+D $BAF7 Clipping vischars to the game window.
 R $BAF7 O:A  0 or 0xFF
-R $BAF7 O:DE Return value ?
+R $BAF7 O:BC Clipped width.
+R $BAF7 O:DE Clipped height.
+R $BAF7 O:IY Pointer to visible character.
   $BAF7 HL = &map_position_related_1;
   $BAFA A = map_position[0] + 24;
   $BAFF A -= *HL;
@@ -7247,7 +7249,7 @@ D $BB98 Walks the visible characters array doing ?
   $BB9F   if (IY[1] == room_NONE) goto next;
   $BBA7   map_position_related_2 = (IY[26] >> 3) | (IY[27] << 5); // divide by 8
   $BBB9   map_position_related_1 = (IY[24] >> 3) | (IY[25] << 5); // divide by 8
-  $BBCB   sub_BAF7();
+  $BBCB   vischar_visible();
   $BBCE   if (A == 0xFF) goto next; // possibly not found case
   $BBD3   A = ((E >> 3) & 31) + 2;
   $BBDB   PUSH AF
@@ -9931,7 +9933,7 @@ R $E420 I:IY Pointer to ? // observed: $8000+
   $E474 *DE++ = *HL++; // width in bytes
   $E476 *DE++ = *HL++; // height in rows
   $E478 memcpy(bitmap_pointer, HL, 4); // copy bitmap pointer and mask pointer
-  $E480 sub_BAF7();
+  $E480 vischar_visible();
   $E483 if (A) return;
   $E485 PUSH BC
   $E486 PUSH DE
