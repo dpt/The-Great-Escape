@@ -7362,8 +7362,7 @@ R $BCAA O:HL ?
   $BCB1   BC = &interior_tiles[0];
   $BCB4   -
   $BCB5   return; %>
-
-; likely just converts map pos -> index into 7x5 supertile refs array
+D $BCB6 Convert map position to an index into 7x5 supertile refs array.
   $BCB6 else <% Adash = (((map_position >> 8) & 3) + L) >> 2;
   $BCBE   L = (Adash & 0x3F) * 7;
   $BCC6   Adash = (((map_position & 0xFF) & 3) + H) >> 2;
