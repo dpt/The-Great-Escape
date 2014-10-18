@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7C26</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31669.html">7BB5</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31782">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="31795.html">7C33</a></span></td>
+</tr>
+</table>
+<div class="description">7C26: item_to_itemstruct</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="31669.html">7BB5</a>, <a class="link" href="41512.html">A228</a> and <a class="link" href="52529.html">CD31</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Item index.</td>
+</tr>
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer to itemstruct.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="31782"></a>7C26</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="11">return &amp;item_structs[A]; // $76C8 + A * 7</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31783"></a>7C27</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31784"></a>7C28</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31785"></a>7C29</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31786"></a>7C2A</td>
+<td class="instruction">SUB L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31787"></a>7C2B</td>
+<td class="instruction">LD HL,$76C8</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31790"></a>7C2E</td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31791"></a>7C2F</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31792"></a>7C30</td>
+<td class="instruction">RET NC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31793"></a>7C31</td>
+<td class="instruction">INC H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31794"></a>7C32</td>
+<td class="instruction">RET</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31669.html">7BB5</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31782">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="31795.html">7C33</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

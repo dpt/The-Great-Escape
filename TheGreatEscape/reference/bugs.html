@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Bugs</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Bugs">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Bugs</td>
+</tr>
+</table>
+<ul class="contents">
+<li><a class="link" href="#writesToROM">The routine which empties beds writes to ROM</a></li>
+<li><a class="link" href="#offByOne">Off-by-one in is_item_discoverable</a></li>
+<li><a class="link" href="#spotlightBleed">Spotlight attributes go into border</a></li>
+<li><a class="link" href="#pauseDoesntClear">Pause doesn't always clear the screen</a></li>
+<li><a class="link" href="#nutsInSolitary">Hero goes nuts in solitary</a></li>
+<li><a class="link" href="#walkingStove">You can bribe boilers and crates</a></li>
+<li><a class="link" href="#moreBugsFromWOS">More bugs mentioned on World of Spectrum forums</a></li>
+</ul>
+<div><a name="writesToROM"></a></div>
+<div class="box box-1">
+<div class="box-title">The routine which empties beds writes to ROM</div>
+<div class="paragraph">
+The routine <a class="link" href="../asm/41609.html">A289</a>, which empties beds, has seven iterations but iterates over a list which is only six items long. The final write performs a write to ROM location $1A42.
+</div>
+</div>
+<div><a name="offByOne"></a></div>
+<div class="box box-2">
+<div class="box-title">Off-by-one in is_item_discoverable</div>
+<div class="paragraph">
+The routine <a class="link" href="../asm/52429.html">CCCD</a>, which searches for items dropped nearby, decrements HL when it finds a nearby item. However, it doesn't restore it when it resumes iterating, meaning that subsequent iterations will search the wrong structure member.
+</div>
+</div>
+<div><a name="spotlightBleed"></a></div>
+<div class="box box-1">
+<div class="box-title">Spotlight attributes go into border</div>
+<div class="paragraph">
+Sometimes the nighttime spotlight will set the attributes of the barbed wire game screen border.
+</div>
+<div class="paragraph">
+I've not yet located the faulty code.
+</div>
+</div>
+<div><a name="pauseDoesntClear"></a></div>
+<div class="box box-2">
+<div class="box-title">Pause doesn't always clear the screen</div>
+<div class="paragraph">
+Pause doesn't always clear the full game screen. You may see a two-row high sliver of pixels left behind.
+</div>
+<div class="paragraph">
+I've not yet located the faulty code.
+</div>
+</div>
+<div><a name="nutsInSolitary"></a></div>
+<div class="box box-1">
+<div class="box-title">Hero goes nuts in solitary</div>
+<div class="paragraph">
+Sometimes out hero will go nuts when put in solitary. He'll run up against the topmost corner of the room and keep running, moving left-right all the while.
+</div>
+<div class="paragraph">
+I've not yet located the faulty code.
+</div>
+</div>
+<div><a name="walkingStove"></a></div>
+<div class="box box-2">
+<div class="box-title">You can bribe boilers and crates</div>
+<div class="paragraph">
+"If you try and bribe a prisoner with the chocolate when you are in the lower of the 3 prisoner huts, he will walk towards you and as he does he will flash alternately as himself and a boiler." (zx1)
+</div>
+<div class="paragraph">
+Similarly (or possibly the exact same case): you can bribe boilers and crates. They will change into characters and start walking around.
+</div>
+</div>
+<div><a name="moreBugsFromWOS"></a></div>
+<div class="box box-1">
+<div class="box-title">More bugs mentioned on World of Spectrum forums</div>
+<div class="paragraph">
+The original thread is <a href="http://www.worldofspectrum.org/forums/showthread.php?t=38349">here</a>.
+</div>
+<div class="paragraph">
+"When the hero then moves through the fence automatically after cutting the wire, he can go garbled momentarily." (Bandit)
+</div>
+<div class="paragraph">
+"The dog sprite when walking down and right has one frame of incorrect height, 15 pixels instead of 14. This means that if you look closely below the dogs' rear legs, you should see 2 pixels from the next frame." (Bandit)
+</div>
+<div class="paragraph">
+"I got the lockpick and went to the solitary cell and picked the lock, i left an object in the cell (the radio) just to see what would happen. I was caught later somewhere i shouldn't and was sent to solitary. When the Commandant came to collect me he just stopped when he entered the room and everything stopped, obviously the programmers never thought anyone would so this!" (zx1)
+</div>
+<div class="paragraph">
+"the position of the moveable objects (stoves/crate) don't reset when starting a new game" (jp)
+</div>
+<div class="paragraph">
+"a0b8: jp $a0bb		;unnecessary instruction ($a0bb follows)" (bandit)
+</div>
+<div class="paragraph">
+"c902: jp nz, $c917	;jump if red (unnecessary jump, ret nz enough)" (bandit)
+</div>
+</div>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

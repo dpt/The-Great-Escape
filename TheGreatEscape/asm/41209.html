@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A0F9</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41202.html">A0F2</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41209">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41227.html">A10B</a></span></td>
+</tr>
+</table>
+<div class="description">A0F9: increase_score</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="26868.html">68F4</a>, <a class="link" href="41193.html">A0E9</a> and <a class="link" href="41202.html">A0F2</a>.
+</div>
+<div class="paragraph">
+Increases the score then plots it.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Amount to increase score by.</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41209"></a>A0F9</td>
+<td class="instruction">LD A,$0A</td>
+<td class="comment-11" rowspan="1">A = 10;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41211"></a>A0FB</td>
+<td class="instruction">LD HL,$A136</td>
+<td class="comment-11" rowspan="1">HL = &amp;score_digits + 4;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41214"></a>A0FE</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">do &lt;% tmp = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41215"></a>A0FF</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment-11" rowspan="1">increment_score: (*HL)++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41216"></a>A100</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-11" rowspan="5">if (*HL == A) &lt;% *HL-- = 0; goto increment_score; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41217"></a>A101</td>
+<td class="instruction">JR NZ,$A108</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41219"></a>A103</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41221"></a>A105</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41222"></a>A106</td>
+<td class="instruction">JR $A0FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="41224"></a>A108</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">HL = tmp;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="41225"></a>A109</td>
+<td class="instruction">DJNZ $A0FE</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+
+<div class="comments">
+<div class="paragraph">
+FALL THROUGH into plot_score.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41202.html">A0F2</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#41209">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41227.html">A10B</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

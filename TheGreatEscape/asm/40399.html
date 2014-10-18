@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 9DCF</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40312.html">9D78</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40399">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40421.html">9DE5</a></span></td>
+</tr>
+</table>
+<div class="description">9DCF: check_morale</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40312.html">9D78</a>.
+</div>
+<div class="paragraph">
+(&lt;- main_loop)
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="40399"></a>9DCF</td>
+<td class="instruction">LD A,($A13C)</td>
+<td class="comment-11" rowspan="3">if (morale &gt;= 2) return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40402"></a>9DD2</td>
+<td class="instruction">CP $02</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40404"></a>9DD4</td>
+<td class="instruction">RET NC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40405"></a>9DD5</td>
+<td class="instruction">LD BC,$0F00</td>
+<td class="comment-11" rowspan="2">queue_message_for_display(message_MORALE_IS_ZERO);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40408"></a>9DD8</td>
+<td class="instruction">CALL <a class="link" href="32021.html">$7D15</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40411"></a>9DDB</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-11" rowspan="2">morale_2 = 0xFF; // inhibit user input</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40413"></a>9DDD</td>
+<td class="instruction">LD ($A13B),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40416"></a>9DE0</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="2">automatic_player_counter = 0; // immediately take automatic control of player</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40417"></a>9DE1</td>
+<td class="instruction">LD ($A139),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40420"></a>9DE4</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40312.html">9D78</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40399">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40421.html">9DE5</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

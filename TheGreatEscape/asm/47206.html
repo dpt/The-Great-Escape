@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B866</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="47163.html">B83B</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#47206">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="47260.html">B89C</a></span></td>
+</tr>
+</table>
+<div class="description">B866: locate_thing_to_plot_then_plot</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="26937.html">6939</a> and <a class="link" href="40312.html">9D78</a>.
+</div>
+<div class="paragraph">
+searchlight related.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="47206"></a>B866</td>
+<td class="instruction">CALL <a class="link" href="47260.html">$B89C</a></td>
+<td class="comment-11" rowspan="1">locate_thing_to_plot();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47209"></a>B869</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-11" rowspan="1">if (!Z) return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47210"></a>B86A</td>
+<td class="instruction">BIT 6,A</td>
+<td class="comment-11" rowspan="2">if ((A &amp; (1&lt;&lt;6)) == 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47212"></a>B86C</td>
+<td class="instruction">JR NZ,$B88F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47214"></a>B86E</td>
+<td class="instruction">CALL <a class="link" href="58400.html">$E420</a></td>
+<td class="comment-11" rowspan="1">setup_sprite_plotting();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47217"></a>B871</td>
+<td class="instruction">JR NZ,$B866</td>
+<td class="comment-11" rowspan="1">if (!Z) goto locate_thing_to_plot_then_plot;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47219"></a>B873</td>
+<td class="instruction">CALL <a class="link" href="47382.html">$B916</a></td>
+<td class="comment-11" rowspan="1">mask_stuff();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47222"></a>B876</td>
+<td class="instruction">LD A,($81BD)</td>
+<td class="comment-11" rowspan="3">if (searchlight_state != searchlight_STATE_OFF) searchlight_sub();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47225"></a>B879</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47227"></a>B87B</td>
+<td class="instruction">CALL NZ,<a class="link" href="47163.html">$B83B</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47230"></a>B87E</td>
+<td class="instruction">LD A,(IY+$1E)</td>
+<td class="comment-11" rowspan="1">A = IY[0x1E];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47233"></a>B881</td>
+<td class="instruction">CP $03</td>
+<td class="comment-11" rowspan="2">if (A != 3) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47235"></a>B883</td>
+<td class="instruction">JR Z,$B88A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47237"></a>B885</td>
+<td class="instruction">CALL <a class="link" href="57602.html">$E102</a></td>
+<td class="comment-11" rowspan="1">masked_sprite_plotter_24_wide();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47240"></a>B888</td>
+<td class="instruction">JR $B866</td>
+<td class="comment-11" rowspan="1">goto locate_thing_to_plot_then_plot; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="47242"></a>B88A</td>
+<td class="instruction">CALL Z,<a class="link" href="58018.html">$E2A2</a></td>
+<td class="comment-11" rowspan="1">if (Z) masked_sprite_plotter_16_wide_case_1(); // odd to test for Z since it's always set</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47245"></a>B88D</td>
+<td class="instruction">JR $B866</td>
+<td class="comment-11" rowspan="1">goto locate_thing_to_plot_then_plot; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="47247"></a>B88F</td>
+<td class="instruction">CALL <a class="link" href="56385.html">$DC41</a></td>
+<td class="comment-11" rowspan="1">else &lt;% setup_item_plotting();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47250"></a>B892</td>
+<td class="instruction">JR NZ,$B866</td>
+<td class="comment-11" rowspan="1">if (!Z) goto locate_thing_to_plot_then_plot;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47252"></a>B894</td>
+<td class="instruction">CALL <a class="link" href="47382.html">$B916</a></td>
+<td class="comment-11" rowspan="1">mask_stuff();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47255"></a>B897</td>
+<td class="instruction">CALL <a class="link" href="58015.html">$E29F</a></td>
+<td class="comment-11" rowspan="1">masked_sprite_plotter_16_wide_case_1_searchlight();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="47258"></a>B89A</td>
+<td class="instruction">JR $B866</td>
+<td class="comment-11" rowspan="1">goto locate_thing_to_plot_then_plot; %&gt;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="47163.html">B83B</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#47206">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="47260.html">B89C</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 68F4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="26786.html">68A2</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#26868">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="26906.html">691A</a></span></td>
+</tr>
+</table>
+<div class="description">68F4: enter_room</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="26786.html">68A2</a>, <a class="link" href="40312.html">9D78</a>, <a class="link" href="40421.html">9DE5</a> and <a class="link" href="46938.html">B75A</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="26868"></a>68F4</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment-11" rowspan="2">plot_game_window_x = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26871"></a>68F7</td>
+<td class="instruction">LD ($A7C7),HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26874"></a>68FA</td>
+<td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
+<td class="comment-11" rowspan="1">setup_room();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26877"></a>68FD</td>
+<td class="instruction">CALL <a class="link" href="27458.html">$6B42</a></td>
+<td class="comment-11" rowspan="1">plot_interior_tiles();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26880"></a>6900</td>
+<td class="instruction">LD HL,$EA74</td>
+<td class="comment-11" rowspan="2">map_position = 0xEA74;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26883"></a>6903</td>
+<td class="instruction">LD ($81BB),HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26886"></a>6906</td>
+<td class="instruction">CALL <a class="link" href="26912.html">$6920</a></td>
+<td class="comment-11" rowspan="1">set_player_sprite_for_room();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26889"></a>6909</td>
+<td class="instruction">LD HL,$8000</td>
+<td class="comment-11" rowspan="1">HL = $8000;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26892"></a>690C</td>
+<td class="instruction">CALL <a class="link" href="46875.html">$B71B</a></td>
+<td class="comment-11" rowspan="1">reset_position(); // reset player</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26895"></a>690F</td>
+<td class="instruction">CALL <a class="link" href="26937.html">$6939</a></td>
+<td class="comment-11" rowspan="1">setup_movable_items();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26898"></a>6912</td>
+<td class="instruction">CALL <a class="link" href="43936.html">$ABA0</a></td>
+<td class="comment-11" rowspan="1">zoombox();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26901"></a>6915</td>
+<td class="instruction">LD B,$01</td>
+<td class="comment-11" rowspan="2">increase_score(1);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="26903"></a>6917</td>
+<td class="instruction">CALL <a class="link" href="41209.html">$A0F9</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="26786.html">68A2</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#26868">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="26906.html">691A</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 9EB2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40600.html">9E98</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40626">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40672.html">9EE0</a></span></td>
+</tr>
+</table>
+<div class="description">9EB2: snipping_wire</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40455.html">9E07</a>.
+</div>
+<div class="paragraph">
+Locks the player out until wire is snipped.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="40626"></a>9EB2</td>
+<td class="instruction">LD HL,$A12F</td>
+<td class="comment-11" rowspan="3">A = player_locked_out_until - game_counter;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40629"></a>9EB5</td>
+<td class="instruction">LD A,($A145)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40632"></a>9EB8</td>
+<td class="instruction">SUB (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40633"></a>9EB9</td>
+<td class="instruction">JR Z,$9ED0</td>
+<td class="comment-11" rowspan="1">if (A) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40635"></a>9EBB</td>
+<td class="instruction">CP $04</td>
+<td class="comment-11" rowspan="2">if (A &lt; 4)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40637"></a>9EBD</td>
+<td class="instruction">RET NC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40638"></a>9EBE</td>
+<td class="instruction">LD A,($800E)</td>
+<td class="comment-11" rowspan="9">$800D = table_9EE0[$800E &amp; 3]; // change direction</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40641"></a>9EC1</td>
+<td class="instruction">LD HL,$9EE0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40644"></a>9EC4</td>
+<td class="instruction">AND $03</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40646"></a>9EC6</td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40647"></a>9EC7</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40648"></a>9EC8</td>
+<td class="instruction">JR NC,$9ECB</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40650"></a>9ECA</td>
+<td class="instruction">INC H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="40651"></a>9ECB</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40652"></a>9ECC</td>
+<td class="instruction">LD ($800D),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40655"></a>9ECF</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="40656"></a>9ED0</td>
+<td class="instruction">LD HL,$800E</td>
+<td class="comment-11" rowspan="3">else &lt;% $800E = A &amp; 3; // set direction // Bug: But A is always zero here! $800E &amp;= 3;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40659"></a>9ED3</td>
+<td class="instruction">AND $03</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40661"></a>9ED5</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40662"></a>9ED6</td>
+<td class="instruction">DEC L</td>
+<td class="comment-11" rowspan="2">$800D = 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40663"></a>9ED7</td>
+<td class="instruction">LD (HL),$80</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40665"></a>9ED9</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment-11" rowspan="2">$8013 = 24; // set vertical offset</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40667"></a>9EDB</td>
+<td class="instruction">LD ($8013),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40670"></a>9EDE</td>
+<td class="instruction">JR <a class="link" href="40600.html#40618">$9EAA</a></td>
+<td class="comment-11" rowspan="1">goto clear_lockpick_wirecut_flags_and_return; %&gt;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40600.html">9E98</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40626">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40672.html">9EE0</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

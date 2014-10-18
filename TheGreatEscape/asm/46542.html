@@ -1,0 +1,1150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B5CE</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="46470.html">B586</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#46542">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="46875.html">B71B</a></span></td>
+</tr>
+</table>
+<div class="description">B5CE: called_from_main_loop_9</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="26937.html">6939</a> and <a class="link" href="40312.html">9D78</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46542"></a>B5CE</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-11" rowspan="1">B = 8;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46544"></a>B5D0</td>
+<td class="instruction">LD IY,$8000</td>
+<td class="comment-11" rowspan="1">IY = $8000;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46548"></a>B5D4</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-11" rowspan="3">do &lt;% if (IY[1] == vischar_BYTE1_EMPTY_SLOT) goto next; // $8001 flags</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46551"></a>B5D7</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46553"></a>B5D9</td>
+<td class="instruction">JP Z,$B6B4</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46556"></a>B5DC</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46557"></a>B5DD</td>
+<td class="instruction">SET 7,(IY+$01)</td>
+<td class="comment-11" rowspan="1">IY[1] |= vischar_BYTE1_BIT7;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46561"></a>B5E1</td>
+<td class="instruction">BIT 7,(IY+$0D)</td>
+<td class="comment-11" rowspan="2">if (IY[0x0D] &amp; vischar_BYTE13_BIT7) goto byte13bit7set; // $800D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46565"></a>B5E5</td>
+<td class="instruction">JP NZ,$B6BE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46568"></a>B5E8</td>
+<td class="instruction">LD H,(IY+$0B)</td>
+<td class="comment-11" rowspan="1">H = IY[0x0B];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46571"></a>B5EB</td>
+<td class="instruction">LD L,(IY+$0A)</td>
+<td class="comment-11" rowspan="1">L = IY[0x0A];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46574"></a>B5EE</td>
+<td class="instruction">LD A,(IY+$0C)</td>
+<td class="comment-11" rowspan="1">A = IY[0x0C];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46577"></a>B5F1</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="2">if (A &gt;= 128) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46578"></a>B5F2</td>
+<td class="instruction">JP P,$B64F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46581"></a>B5F5</td>
+<td class="instruction">AND $7F</td>
+<td class="comment-11" rowspan="1">A &amp;= vischar_BYTE12_MASK;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46583"></a>B5F7</td>
+<td class="instruction">JP Z,$B6C2</td>
+<td class="comment-11" rowspan="1">if (A == 0) goto snozzle;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46586"></a>B5FA</td>
+<td class="instruction">INC A</td>
+<td class="comment-11" rowspan="7">HL += (A + 1) * 4 - 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46587"></a>B5FB</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46588"></a>B5FC</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46589"></a>B5FD</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46590"></a>B5FE</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46592"></a>B600</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46593"></a>B601</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46594"></a>B602</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">A = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46595"></a>B603</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="2">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46596"></a>B604</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46597"></a>B605</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">resume1: EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46598"></a>B606</td>
+<td class="instruction">LD L,(IY+$0F)</td>
+<td class="comment-11" rowspan="1">L = IY[0x0F]; // Y axis</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46601"></a>B609</td>
+<td class="instruction">LD H,(IY+$10)</td>
+<td class="comment-11" rowspan="1">H = IY[0x10];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46604"></a>B60C</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46605"></a>B60D</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46606"></a>B60E</td>
+<td class="instruction">AND $80</td>
+<td class="comment-11" rowspan="1">A &amp;= 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46608"></a>B610</td>
+<td class="instruction">JR Z,$B614</td>
+<td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46610"></a>B612</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46612"></a>B614</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-11" rowspan="1">B = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46613"></a>B615</td>
+<td class="instruction">SBC HL,BC</td>
+<td class="comment-11" rowspan="1">HL -= BC;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46615"></a>B617</td>
+<td class="instruction">LD ($81A4),HL</td>
+<td class="comment-11" rowspan="1">saved_Y = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46618"></a>B61A</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46619"></a>B61B</td>
+<td class="instruction">LD L,(IY+$11)</td>
+<td class="comment-11" rowspan="1">L = IY[0x11]; // X axis</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46622"></a>B61E</td>
+<td class="instruction">LD H,(IY+$12)</td>
+<td class="comment-11" rowspan="1">H = IY[0x12];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46625"></a>B621</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46626"></a>B622</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46627"></a>B623</td>
+<td class="instruction">AND $80</td>
+<td class="comment-11" rowspan="1">A &amp;= 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46629"></a>B625</td>
+<td class="instruction">JR Z,$B629</td>
+<td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46631"></a>B627</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46633"></a>B629</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-11" rowspan="1">B = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46634"></a>B62A</td>
+<td class="instruction">SBC HL,BC</td>
+<td class="comment-11" rowspan="1">HL -= BC;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46636"></a>B62C</td>
+<td class="instruction">LD ($81A6),HL</td>
+<td class="comment-11" rowspan="1">saved_X = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46639"></a>B62F</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46640"></a>B630</td>
+<td class="instruction">LD L,(IY+$13)</td>
+<td class="comment-11" rowspan="1">L = IY[0x13]; // vertical offset</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46643"></a>B633</td>
+<td class="instruction">LD H,(IY+$14)</td>
+<td class="comment-11" rowspan="1">H = IY[0x14];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46646"></a>B636</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46647"></a>B637</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46648"></a>B638</td>
+<td class="instruction">AND $80</td>
+<td class="comment-11" rowspan="1">A &amp;= 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46650"></a>B63A</td>
+<td class="instruction">JR Z,$B63E</td>
+<td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46652"></a>B63C</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46654"></a>B63E</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-11" rowspan="1">B = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46655"></a>B63F</td>
+<td class="instruction">SBC HL,BC</td>
+<td class="comment-11" rowspan="1">HL -= BC;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46657"></a>B641</td>
+<td class="instruction">LD ($81A8),HL</td>
+<td class="comment-11" rowspan="1">saved_VO = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46660"></a>B644</td>
+<td class="instruction">CALL <a class="link" href="44943.html">$AF8F</a></td>
+<td class="comment-11" rowspan="1">sub_AF8F();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46663"></a>B647</td>
+<td class="instruction">JP NZ,$B6A8</td>
+<td class="comment-11" rowspan="1">if (!Z) goto pop_next;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46666"></a>B64A</td>
+<td class="instruction">DEC (IY+$0C)</td>
+<td class="comment-11" rowspan="1">IY[0x0C]--;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46669"></a>B64D</td>
+<td class="instruction">JR $B6A2</td>
+<td class="comment-11" rowspan="1">%&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46671"></a>B64F</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-11" rowspan="2">else &lt;% if (A == *HL) goto snozzle;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46672"></a>B650</td>
+<td class="instruction">JP Z,$B6C2</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46675"></a>B653</td>
+<td class="instruction">INC A</td>
+<td class="comment-11" rowspan="6">HL += (A + 1) * 4;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46676"></a>B654</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46677"></a>B655</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46678"></a>B656</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46679"></a>B657</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46681"></a>B659</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46682"></a>B65A</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">resume2: EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46683"></a>B65B</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46684"></a>B65C</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="1">L = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46685"></a>B65D</td>
+<td class="instruction">AND $80</td>
+<td class="comment-11" rowspan="1">A &amp;= 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46687"></a>B65F</td>
+<td class="instruction">JR Z,$B663</td>
+<td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46689"></a>B661</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46691"></a>B663</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-11" rowspan="1">H = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46692"></a>B664</td>
+<td class="instruction">LD C,(IY+$0F)</td>
+<td class="comment-11" rowspan="1">C = IY[0x0F]; // Y axis</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46695"></a>B667</td>
+<td class="instruction">LD B,(IY+$10)</td>
+<td class="comment-11" rowspan="1">B = IY[0x10];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46698"></a>B66A</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-11" rowspan="1">HL += BC;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46699"></a>B66B</td>
+<td class="instruction">LD ($81A4),HL</td>
+<td class="comment-11" rowspan="1">saved_Y = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46702"></a>B66E</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46703"></a>B66F</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46704"></a>B670</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="1">L = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46705"></a>B671</td>
+<td class="instruction">AND $80</td>
+<td class="comment-11" rowspan="1">A &amp;= 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46707"></a>B673</td>
+<td class="instruction">JR Z,$B677</td>
+<td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46709"></a>B675</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46711"></a>B677</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-11" rowspan="1">H = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46712"></a>B678</td>
+<td class="instruction">LD C,(IY+$11)</td>
+<td class="comment-11" rowspan="1">C = IY[0x11]; // X axis</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46715"></a>B67B</td>
+<td class="instruction">LD B,(IY+$12)</td>
+<td class="comment-11" rowspan="1">B = IY[0x12];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46718"></a>B67E</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-11" rowspan="1">HL += BC;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46719"></a>B67F</td>
+<td class="instruction">LD ($81A6),HL</td>
+<td class="comment-11" rowspan="1">saved_X = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46722"></a>B682</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46723"></a>B683</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46724"></a>B684</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="1">L = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46725"></a>B685</td>
+<td class="instruction">AND $80</td>
+<td class="comment-11" rowspan="1">A &amp;= 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46727"></a>B687</td>
+<td class="instruction">JR Z,$B68B</td>
+<td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46729"></a>B689</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46731"></a>B68B</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-11" rowspan="1">H = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46732"></a>B68C</td>
+<td class="instruction">LD C,(IY+$13)</td>
+<td class="comment-11" rowspan="1">C = IY[0x13]; // vertical offset</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46735"></a>B68F</td>
+<td class="instruction">LD B,(IY+$14)</td>
+<td class="comment-11" rowspan="1">B = IY[0x14];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46738"></a>B692</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-11" rowspan="1">HL += BC;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46739"></a>B693</td>
+<td class="instruction">LD ($81A8),HL</td>
+<td class="comment-11" rowspan="1">saved_VO = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46742"></a>B696</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46743"></a>B697</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46744"></a>B698</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46745"></a>B699</td>
+<td class="instruction">CALL <a class="link" href="44943.html">$AF8F</a></td>
+<td class="comment-11" rowspan="1">sub_AF8F();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46748"></a>B69C</td>
+<td class="instruction">JP NZ,$B6A8</td>
+<td class="comment-11" rowspan="1">if (!Z) goto pop_next;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46751"></a>B69F</td>
+<td class="instruction">INC (IY+$0C)</td>
+<td class="comment-11" rowspan="1">IY[0x0C]++; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46754"></a>B6A2</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-11" rowspan="2">HL = IY;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46756"></a>B6A4</td>
+<td class="instruction">POP HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46757"></a>B6A5</td>
+<td class="instruction">CALL <a class="link" href="46875.html#46889">$B729</a></td>
+<td class="comment-11" rowspan="1">reset_position:$B729();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46760"></a>B6A8</td>
+<td class="instruction">POP BC</td>
+<td class="comment-11" rowspan="1">pop_next: POP BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46761"></a>B6A9</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-11" rowspan="4">if (IY[1] != vischar_BYTE1_EMPTY_SLOT) IY[1] &amp;= ~vischar_BYTE1_BIT7; // $8001</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46764"></a>B6AC</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46766"></a>B6AE</td>
+<td class="instruction">JR Z,$B6B4</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46768"></a>B6B0</td>
+<td class="instruction">RES 7,(IY+$01)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46772"></a>B6B4</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-11" rowspan="1">next: DE = 32; // stride</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46775"></a>B6B7</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-11" rowspan="1">IY += DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46777"></a>B6B9</td>
+<td class="instruction">DEC B</td>
+<td class="comment-11" rowspan="2">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46778"></a>B6BA</td>
+<td class="instruction">JP NZ,$B5D4</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46781"></a>B6BD</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46782"></a>B6BE</td>
+<td class="instruction">RES 7,(IY+$0D)</td>
+<td class="comment-11" rowspan="1">byte13bit7set: IY[0x0D] &amp;= ~vischar_BYTE13_BIT7; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46786"></a>B6C2</td>
+<td class="instruction">LD A,(IY+$0E)</td>
+<td class="comment-11" rowspan="12">snozzle: A = byte_CDAA[IY[0x0E] * 9 + IY[0x0D]];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46789"></a>B6C5</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46790"></a>B6C6</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46791"></a>B6C7</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46792"></a>B6C8</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46793"></a>B6C9</td>
+<td class="instruction">ADD A,D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46794"></a>B6CA</td>
+<td class="instruction">ADD A,(IY+$0D)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46797"></a>B6CD</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46798"></a>B6CE</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46800"></a>B6D0</td>
+<td class="instruction">LD HL,$CDAA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46803"></a>B6D3</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46804"></a>B6D4</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46805"></a>B6D5</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46806"></a>B6D6</td>
+<td class="instruction">LD L,(IY+$08)</td>
+<td class="comment-11" rowspan="1">L = IY[0x08];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46809"></a>B6D9</td>
+<td class="instruction">LD H,(IY+$09)</td>
+<td class="comment-11" rowspan="1">H = IY[0x09];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46812"></a>B6DC</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-11" rowspan="3">HL += A * 2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46813"></a>B6DD</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46814"></a>B6DE</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46815"></a>B6DF</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-11" rowspan="2">E = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46816"></a>B6E0</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46817"></a>B6E1</td>
+<td class="instruction">LD (IY+$0A),E</td>
+<td class="comment-11" rowspan="1">IY[0x0A] = E;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46820"></a>B6E4</td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment-11" rowspan="1">D = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46821"></a>B6E5</td>
+<td class="instruction">LD (IY+$0B),D</td>
+<td class="comment-11" rowspan="1">IY[0x0B] = D;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46824"></a>B6E8</td>
+<td class="instruction">BIT 7,C</td>
+<td class="comment-11" rowspan="2">if ((C &amp; (1&lt;&lt;7)) == 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46826"></a>B6EA</td>
+<td class="instruction">JR NZ,$B6FC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46828"></a>B6EC</td>
+<td class="instruction">LD (IY+$0C),$00</td>
+<td class="comment-11" rowspan="1">IY[0x0C] = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46832"></a>B6F0</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="2">DE += 2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46833"></a>B6F1</td>
+<td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46834"></a>B6F2</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="2">IY[0x0E] = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46835"></a>B6F3</td>
+<td class="instruction">LD (IY+$0E),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46838"></a>B6F6</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="2">DE += 2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46839"></a>B6F7</td>
+<td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46840"></a>B6F8</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46841"></a>B6F9</td>
+<td class="instruction">JP $B65A</td>
+<td class="comment-11" rowspan="1">goto resume2; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="46844"></a>B6FC</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">else &lt;% A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46845"></a>B6FD</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46846"></a>B6FE</td>
+<td class="instruction">OR $80</td>
+<td class="comment-11" rowspan="2">IY[0x0C] = A | 0x80;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46848"></a>B700</td>
+<td class="instruction">LD (IY+$0C),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46851"></a>B703</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="3">IY[0x0E] = *++DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46852"></a>B704</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46853"></a>B705</td>
+<td class="instruction">LD (IY+$0E),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46856"></a>B708</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="3">DE += 3;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46857"></a>B709</td>
+<td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46858"></a>B70A</td>
+<td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46859"></a>B70B</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-11" rowspan="1">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46860"></a>B70C</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46861"></a>B70D</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-11" rowspan="7">HL += C * 4 - 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46862"></a>B70E</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46863"></a>B70F</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46864"></a>B710</td>
+<td class="instruction">DEC A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46865"></a>B711</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46867"></a>B713</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46868"></a>B714</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46869"></a>B715</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">A = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46870"></a>B716</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46871"></a>B717</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="46872"></a>B718</td>
+<td class="instruction">JP $B605</td>
+<td class="comment-11" rowspan="1">goto resume1; %&gt;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="46470.html">B586</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#46542">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="46875.html">B71B</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at AC6F</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="44025.html">ABF9</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#44143">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="44284.html">ACFC</a></span></td>
+</tr>
+</table>
+<div class="description">AC6F: zoombox_draw</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="43936.html">ABA0</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44143"></a>AC6F</td>
+<td class="instruction">LD A,($AB68)</td>
+<td class="comment-11" rowspan="15">HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44146"></a>AC72</td>
+<td class="instruction">DEC A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44147"></a>AC73</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44148"></a>AC74</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44149"></a>AC75</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44150"></a>AC76</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44151"></a>AC77</td>
+<td class="instruction">LD HL,$EDD3</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44154"></a>AC7A</td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44155"></a>AC7B</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44156"></a>AC7C</td>
+<td class="instruction">JR NC,$AC7F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44158"></a>AC7E</td>
+<td class="instruction">INC H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44159"></a>AC7F</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44160"></a>AC80</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44161"></a>AC81</td>
+<td class="instruction">LD H,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44162"></a>AC82</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44163"></a>
+<div class="comments">
+<div class="paragraph">
+Top left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44163"></a>AC83</td>
+<td class="instruction">LD A,($AB66)</td>
+<td class="comment-11" rowspan="4">HL += zoombox_x - 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44166"></a>AC86</td>
+<td class="instruction">DEC A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44167"></a>AC87</td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44168"></a>AC88</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44169"></a>AC89</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_TL);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44171"></a>AC8B</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44174"></a>AC8E</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44175"></a>
+<div class="comments">
+<div class="paragraph">
+Horizontal.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44175"></a>AC8F</td>
+<td class="instruction">LD A,($AB67)</td>
+<td class="comment-11" rowspan="2">B = zoombox_horizontal_count; // iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44178"></a>AC92</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44179"></a>AC93</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_HZ);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44181"></a>AC95</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44184"></a>AC98</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44185"></a>AC99</td>
+<td class="instruction">DJNZ $AC93</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44187"></a>
+<div class="comments">
+<div class="paragraph">
+Top right.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44187"></a>AC9B</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_TR);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44189"></a>AC9D</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44192"></a>ACA0</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-11" rowspan="1">DE = 32;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44195"></a>ACA3</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="4">if (L &gt;= 224) D = 0x07;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44196"></a>ACA4</td>
+<td class="instruction">CP $E0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44198"></a>ACA6</td>
+<td class="instruction">JR C,$ACAA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44200"></a>ACA8</td>
+<td class="instruction">LD D,$07</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44202"></a>ACAA</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-11" rowspan="1">HL += DE;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44203"></a>
+<div class="comments">
+<div class="paragraph">
+Vertical.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44203"></a>ACAB</td>
+<td class="instruction">LD A,($AB69)</td>
+<td class="comment-11" rowspan="2">B = zoombox_vertical_count; // iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44206"></a>ACAE</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44207"></a>ACAF</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_VT);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44209"></a>ACB1</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44212"></a>ACB4</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-11" rowspan="1">DE = 32;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44215"></a>ACB7</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="4">if (L &gt;= 224) D = 0x07;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44216"></a>ACB8</td>
+<td class="instruction">CP $E0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44218"></a>ACBA</td>
+<td class="instruction">JR C,$ACBE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44220"></a>ACBC</td>
+<td class="instruction">LD D,$07</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44222"></a>ACBE</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-11" rowspan="1">HL += DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44223"></a>ACBF</td>
+<td class="instruction">DJNZ $ACAF</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44225"></a>
+<div class="comments">
+<div class="paragraph">
+Bottom right.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44225"></a>ACC1</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_BR);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44227"></a>ACC3</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44230"></a>ACC6</td>
+<td class="instruction">DEC L</td>
+<td class="comment-11" rowspan="1">HL--;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44231"></a>
+<div class="comments">
+<div class="paragraph">
+Horizontal.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44231"></a>ACC7</td>
+<td class="instruction">LD A,($AB67)</td>
+<td class="comment-11" rowspan="2">B = zoombox_horizontal_count; // iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44234"></a>ACCA</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44235"></a>ACCB</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_HZ);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44237"></a>ACCD</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44240"></a>ACD0</td>
+<td class="instruction">DEC L</td>
+<td class="comment-11" rowspan="1">HL--;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44241"></a>ACD1</td>
+<td class="instruction">DJNZ $ACCB</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44243"></a>
+<div class="comments">
+<div class="paragraph">
+Bottom left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44243"></a>ACD3</td>
+<td class="instruction">LD A,$05</td>
+<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_BL);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44245"></a>ACD5</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44248"></a>ACD8</td>
+<td class="instruction">LD DE,$FFE0</td>
+<td class="comment-11" rowspan="1">DE = 0xFFE0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44251"></a>ACDB</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="4">if (L &lt; 32) DE = 0xF8E0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44252"></a>ACDC</td>
+<td class="instruction">CP $20</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44254"></a>ACDE</td>
+<td class="instruction">JR NC,$ACE3</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44256"></a>ACE0</td>
+<td class="instruction">LD DE,$F8E0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44259"></a>ACE3</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-11" rowspan="1">HL += DE;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44260"></a>
+<div class="comments">
+<div class="paragraph">
+Vertical.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44260"></a>ACE4</td>
+<td class="instruction">LD A,($AB69)</td>
+<td class="comment-11" rowspan="2">B = zoombox_vertical_count; // iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44263"></a>ACE7</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44264"></a>ACE8</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_VT);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44266"></a>ACEA</td>
+<td class="instruction">CALL <a class="link" href="44284.html">$ACFC</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44269"></a>ACED</td>
+<td class="instruction">LD DE,$FFE0</td>
+<td class="comment-11" rowspan="1">DE = 0xFFE0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44272"></a>ACF0</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="4">if (L &lt; 32) DE = 0xF8E0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44273"></a>ACF1</td>
+<td class="instruction">CP $20</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44275"></a>ACF3</td>
+<td class="instruction">JR NC,$ACF8</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44277"></a>ACF5</td>
+<td class="instruction">LD DE,$F8E0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44280"></a>ACF8</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-11" rowspan="1">HL += DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44281"></a>ACF9</td>
+<td class="instruction">DJNZ $ACE8</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44283"></a>ACFB</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="44025.html">ABF9</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#44143">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="44284.html">ACFC</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

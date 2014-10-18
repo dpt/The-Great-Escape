@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7AFB</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31477.html">7AF5</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31483">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="31510.html">7B16</a></span></td>
+</tr>
+</table>
+<div class="description">7AFB: use_item_common</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="31483"></a>7AFB</td>
+<td class="instruction">JR $7AFD</td>
+<td class="comment-11" rowspan="1">(pointless_jump)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="31485"></a>7AFD</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-11" rowspan="5">HL = &amp;item_actions_jump_table[A];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31486"></a>7AFE</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31487"></a>7AFF</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31489"></a>7B01</td>
+<td class="instruction">LD HL,$7B16</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31492"></a>7B04</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31493"></a>7B05</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">L = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31494"></a>7B06</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31495"></a>7B07</td>
+<td class="instruction">LD H,(HL)</td>
+<td class="comment-11" rowspan="2">H = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31496"></a>7B08</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31497"></a>7B09</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL // exit via jump table entry</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31498"></a>7B0A</td>
+<td class="instruction">LD DE,$81A4</td>
+<td class="comment-11" rowspan="4">memcpy(&amp;saved_Y, $800F, 6); // copy Y,X and vertical offset</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31501"></a>7B0D</td>
+<td class="instruction">LD HL,$800F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31504"></a>7B10</td>
+<td class="instruction">LD BC,$0006</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31507"></a>7B13</td>
+<td class="instruction">LDIR</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31509"></a>7B15</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="31477.html">7AF5</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31483">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="31510.html">7B16</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

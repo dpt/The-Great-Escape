@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at CB85</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="52089.html">CB79</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#52101">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="52114.html">CB92</a></span></td>
+</tr>
+</table>
+<div class="description">CB85: random_nibble</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="50769.html">C651</a>.
+</div>
+<div class="paragraph">
+Pseudo random number generator.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Pseudo-random number from 0..15.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52101"></a>CB85</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52102"></a>CB86</td>
+<td class="instruction">LD HL,($C41A)</td>
+<td class="comment-11" rowspan="2">HL = prng_pointer + 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52105"></a>CB89</td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="52106"></a>
+<div class="comments">
+<div class="paragraph">
+sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's fetching exterior tiles
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52106"></a>CB8A</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">A = *HL &amp; 0x0F;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52107"></a>CB8B</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52109"></a>CB8D</td>
+<td class="instruction">LD ($C41A),HL</td>
+<td class="comment-11" rowspan="1">prng_pointer = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52112"></a>CB90</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52113"></a>CB91</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="52089.html">CB79</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#52101">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="52114.html">CB92</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

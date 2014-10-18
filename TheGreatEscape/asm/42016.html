@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A420</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41976.html">A3F8</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#42016">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="42111.html">A47F</a></span></td>
+</tr>
+</table>
+<div class="description">A420: character_sits</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="51142.html">C7C6</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Character.</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">?</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42016"></a>A420</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-11" rowspan="1">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42017"></a>A421</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42018"></a>A422</td>
+<td class="instruction">SUB $12</td>
+<td class="comment-11" rowspan="1">A -= 18; // first three characters</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42020"></a>A424</td>
+<td class="instruction">LD HL,$6F4F</td>
+<td class="comment-11" rowspan="1">HL = &amp;roomdef_25_breakfast.bench_D;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42023"></a>A427</td>
+<td class="instruction">CP $03</td>
+<td class="comment-11" rowspan="2">if (A &gt;= 3) &lt;% // second three characters</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42025"></a>A429</td>
+<td class="instruction">JR C,$A430</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42027"></a>A42B</td>
+<td class="instruction">LD HL,$6F17</td>
+<td class="comment-11" rowspan="1">HL = &amp;roomdef_23_breakfast.bench_A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42030"></a>A42E</td>
+<td class="instruction">SUB $03</td>
+<td class="comment-11" rowspan="1">A -= 3; %&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="42032"></a>
+<div class="comments">
+<div class="paragraph">
+Poke object.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42032"></a>A430</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="6">HL += A * 3;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42033"></a>A431</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42034"></a>A432</td>
+<td class="instruction">ADD A,C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42035"></a>A433</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42037"></a>A435</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42038"></a>A436</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42039"></a>A437</td>
+<td class="instruction">LD (HL),$05</td>
+<td class="comment-11" rowspan="1">*HL = interiorobject_PRISONER_SAT_DOWN_MID_TABLE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42041"></a>A439</td>
+<td class="instruction">POP AF</td>
+<td class="comment-11" rowspan="1">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42042"></a>A43A</td>
+<td class="instruction">LD C,$19</td>
+<td class="comment-11" rowspan="1">C = room_25_breakfast;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42044"></a>A43C</td>
+<td class="instruction">CP $15</td>
+<td class="comment-11" rowspan="3">if (A &gt;= character_21_PRISONER_2) C = room_23_breakfast;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42046"></a>A43E</td>
+<td class="instruction">JR C,$A462</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42048"></a>A440</td>
+<td class="instruction">LD C,$17</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42050"></a>A442</td>
+<td class="instruction">JR $A462</td>
+<td class="comment-11" rowspan="1">goto character_sit_sleep_common;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="42052"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="51142.html">C7C6</a>.
+</div>
+<div class="paragraph">
+character_sleeps
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42052"></a>A444</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-11" rowspan="1">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42053"></a>A445</td>
+<td class="instruction">SUB $07</td>
+<td class="comment-11" rowspan="2">A -= 7;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42055"></a>A447</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42056"></a>A448</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="42057"></a>
+<div class="comments">
+<div class="paragraph">
+Poke object.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42057"></a>A449</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="7">BC = beds[A];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42058"></a>A44A</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42060"></a>A44C</td>
+<td class="instruction">LD HL,$6B79</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42063"></a>A44F</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42064"></a>A450</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42065"></a>A451</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42066"></a>A452</td>
+<td class="instruction">LD B,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42067"></a>A453</td>
+<td class="instruction">LD A,$17</td>
+<td class="comment-11" rowspan="2">*BC = interiorobject_OCCUPIED_BED;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42069"></a>A455</td>
+<td class="instruction">LD (BC),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42070"></a>A456</td>
+<td class="instruction">POP AF</td>
+<td class="comment-11" rowspan="1">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42071"></a>A457</td>
+<td class="instruction">CP $0A</td>
+<td class="comment-11" rowspan="2">if (A &lt; character_10_GUARD_10)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42073"></a>A459</td>
+<td class="instruction">JP NC,$A460</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42076"></a>A45C</td>
+<td class="instruction">LD C,$03</td>
+<td class="comment-11" rowspan="1">C = room_3_hut2_right;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42078"></a>A45E</td>
+<td class="instruction">JR $A462</td>
+<td class="comment-11" rowspan="1">else</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42080"></a>A460</td>
+<td class="instruction">LD C,$05</td>
+<td class="comment-11" rowspan="1">C = room_5_hut3_right;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="42082"></a>
+<div class="comments">
+<div class="paragraph">
+(common end of above two routines)
+</div>
+<div class="paragraph">
+I:C Character?
+</div>
+<div class="paragraph">
+I:DE Pointer to ?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42082"></a>A462</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">character_sit_sleep_common: EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42083"></a>A463</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment-11" rowspan="1">*HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42085"></a>A465</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42086"></a>A466</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment-11" rowspan="3">if (room_index != C) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42089"></a>A469</td>
+<td class="instruction">CP C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42090"></a>A46A</td>
+<td class="instruction">JR Z,$A473</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42092"></a>A46C</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-11" rowspan="4">HL -= 4;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42093"></a>A46D</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42094"></a>A46E</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42095"></a>A46F</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42096"></a>A470</td>
+<td class="instruction">LD (HL),$FF</td>
+<td class="comment-11" rowspan="1">*HL = 255;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42098"></a>A472</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="42099"></a>
+<div class="comments">
+<div class="paragraph">
+Force a refresh.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42099"></a>A473</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="3">HL += 26;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42100"></a>A474</td>
+<td class="instruction">ADD A,$1A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42102"></a>A476</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42103"></a>A477</td>
+<td class="instruction">LD (HL),$FF</td>
+<td class="comment-11" rowspan="1">*HL = 255;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="42105"></a>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a class="link" href="42121.html">A489</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="42105"></a>A479</td>
+<td class="instruction">CALL <a class="link" href="27189.html">$6A35</a></td>
+<td class="comment-11" rowspan="1">select_room_and_plot: setup_room(); // make this into its own function</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="42108"></a>A47C</td>
+<td class="instruction">JP <a class="link" href="27458.html">$6B42</a></td>
+<td class="comment-11" rowspan="1">plot_interior_tiles(); return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="41976.html">A3F8</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#42016">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="42111.html">A47F</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

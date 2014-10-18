@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at CCFB</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="52429.html">CCCD</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#52475">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="52529.html">CD31</a></span></td>
+</tr>
+</table>
+<div class="description">CCFB: is_item_discoverable_interior</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="50848.html">C6A0</a> and <a class="link" href="52429.html">CCCD</a>.
+</div>
+<div class="paragraph">
+Examines the specified room to see if it contains a discoverable item.
+</div>
+<div class="paragraph">
+A discoverable item is one moved away from its default room, and one that isn't the red cross parcel.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Room ref.</td>
+</tr>
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">Flags</td>
+<td class="register-desc">Z => found, NZ => not found.</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Item (if found).</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52475"></a>CCFB</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A; // room ref</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52476"></a>CCFC</td>
+<td class="instruction">LD HL,$76C9</td>
+<td class="comment-11" rowspan="1">HL = &amp;item_structs[0].room; // pointer to room ref</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52479"></a>CCFF</td>
+<td class="instruction">LD B,$10</td>
+<td class="comment-11" rowspan="1">B = 16; // items__LIMIT</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52481"></a>CD01</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">do &lt;% A = *HL &amp; itemstruct_ROOM_MASK;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52482"></a>CD02</td>
+<td class="instruction">AND $3F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="52484"></a>
+<div class="comments">
+<div class="paragraph">
+Is the item in the specified room?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52484"></a>CD04</td>
+<td class="instruction">CP C</td>
+<td class="comment-11" rowspan="2">if (A == C) &lt;% // yes</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52485"></a>CD05</td>
+<td class="instruction">JR NZ,$CD1B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52487"></a>CD07</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="52488"></a>
+<div class="comments">
+<div class="paragraph">
+Has the item been moved to a different room?
+</div>
+<div class="paragraph">
+Note that room_and_flags doesn't get its flags masked off.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52488"></a>CD08</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-11" rowspan="11">A = default_item_locations[HL[-1] &amp; itemstruct_ITEM_MASK].room_and_flags; // HL[-1] = itemstruct.item</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52489"></a>CD09</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52490"></a>CD0A</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52492"></a>CD0C</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52493"></a>CD0D</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52494"></a>CD0E</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52495"></a>CD0F</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52496"></a>CD10</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52498"></a>CD12</td>
+<td class="instruction">LD HL,$CD6A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52501"></a>CD15</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52502"></a>CD16</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52503"></a>CD17</td>
+<td class="instruction">CP C</td>
+<td class="comment-11" rowspan="2">if (A != C) goto not_in_default_room;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52504"></a>CD18</td>
+<td class="instruction">JR NZ,$CD22</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52506"></a>CD1A</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">- %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52507"></a>CD1B</td>
+<td class="instruction">LD DE,$0007</td>
+<td class="comment-11" rowspan="2">next: HL += 7; // stride</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52510"></a>CD1E</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52511"></a>CD1F</td>
+<td class="instruction">DJNZ $CD01</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52513"></a>CD21</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; // return with NZ set</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52514"></a>CD22</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">not_in_default_room: -</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52515"></a>CD23</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-11" rowspan="3">A = HL[-1] &amp; itemstruct_ITEM_MASK; // itemstruct.item</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52516"></a>CD24</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52517"></a>CD25</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="52519"></a>
+<div class="comments">
+<div class="paragraph">
+Ignore red cross parcel.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52519"></a>CD27</td>
+<td class="instruction">CP $0C</td>
+<td class="comment-11" rowspan="2">if (A == item_RED_CROSS_PARCEL) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52521"></a>CD29</td>
+<td class="instruction">JR NZ,$CD2E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52523"></a>CD2B</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52524"></a>CD2C</td>
+<td class="instruction">JR $CD1B</td>
+<td class="comment-11" rowspan="1">goto next; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="52526"></a>CD2E</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52527"></a>CD2F</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="1">A = 0; // set Z</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="52528"></a>CD30</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="52429.html">CCCD</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#52475">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="52529.html">CD31</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at ADBD</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="44377.html">AD59</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#44477">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="44661.html">AE75</a></span></td>
+</tr>
+</table>
+<div class="description">ADBD: nighttime</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="40312.html">9D78</a>.
+</div>
+<div class="paragraph">
+Turns white screen elements light blue and tracks the player with a searchlight.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44477"></a>ADBD</td>
+<td class="instruction">LD HL,$81BD</td>
+<td class="comment-11" rowspan="1">HL = &amp;searchlight_state;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44480"></a>ADC0</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">if (*HL == searchlight_STATE_OFF) goto not_tracking;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44481"></a>ADC1</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44483"></a>ADC3</td>
+<td class="instruction">JP Z,$AE0D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44486"></a>ADC6</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment-11" rowspan="3">if (room_index) &lt;% // player is indoors</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44489"></a>ADC9</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44490"></a>ADCA</td>
+<td class="instruction">JR Z,$ADCF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44492"></a>
+<div class="comments">
+<div class="paragraph">
+If the player goes indoors the searchlight loses track.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44492"></a>ADCC</td>
+<td class="instruction">LD (HL),$FF</td>
+<td class="comment-11" rowspan="1">*HL = searchlight_STATE_OFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44494"></a>ADCE</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44495"></a>
+<div class="comments">
+<div class="paragraph">
+Player is outdoors.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44495"></a>ADCF</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">if (*HL == searchlight_STATE_1F) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44496"></a>ADD0</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44498"></a>ADD2</td>
+<td class="instruction">JP NZ,$AE00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44501"></a>ADD5</td>
+<td class="instruction">LD HL,($81BB)</td>
+<td class="comment-11" rowspan="1">HL = map_position;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44504"></a>ADD8</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="3">E = L + 4;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44505"></a>ADD9</td>
+<td class="instruction">ADD A,$04</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44507"></a>ADDB</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44508"></a>ADDC</td>
+<td class="instruction">LD D,H</td>
+<td class="comment-11" rowspan="1">D = H;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44509"></a>ADDD</td>
+<td class="instruction">LD HL,($AE76)</td>
+<td class="comment-11" rowspan="1">HL = searchlight_coords;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44512"></a>ADE0</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="3">if (L == E) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44513"></a>ADE1</td>
+<td class="instruction">CP E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44514"></a>ADE2</td>
+<td class="instruction">JR NZ,$ADE9</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44516"></a>ADE4</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-11" rowspan="3">if (H == D) return; %&gt; // highlight doesn't need to move, so quit</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44517"></a>ADE5</td>
+<td class="instruction">CP D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44518"></a>ADE6</td>
+<td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44519"></a>ADE7</td>
+<td class="instruction">JR $ADF1</td>
+<td class="comment-11" rowspan="1">else &lt;%</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44521"></a>
+<div class="comments">
+<div class="paragraph">
+Move searchlight left/right to focus on player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44521"></a>ADE9</td>
+<td class="instruction">JP NC,$ADEF</td>
+<td class="comment-11" rowspan="1">if (L &lt; E) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44524"></a>ADEC</td>
+<td class="instruction">INC A</td>
+<td class="comment-11" rowspan="1">L++; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44525"></a>ADED</td>
+<td class="instruction">JR $ADF0</td>
+<td class="comment-11" rowspan="1">else &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44527"></a>ADEF</td>
+<td class="instruction">DEC A</td>
+<td class="comment-11" rowspan="1">L--; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44528"></a>ADF0</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="1">%&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="44529"></a>
+<div class="comments">
+<div class="paragraph">
+Move searchlight up/down to focus on player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44529"></a>ADF1</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-11" rowspan="3">if (H != D) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44530"></a>ADF2</td>
+<td class="instruction">CP D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44531"></a>ADF3</td>
+<td class="instruction">JR Z,$ADFD</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44533"></a>ADF5</td>
+<td class="instruction">JP NC,$ADFB</td>
+<td class="comment-11" rowspan="1">if (H &lt; D) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44536"></a>ADF8</td>
+<td class="instruction">INC A</td>
+<td class="comment-11" rowspan="1">H++; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44537"></a>ADF9</td>
+<td class="instruction">JR $ADFC</td>
+<td class="comment-11" rowspan="1">else &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44539"></a>ADFB</td>
+<td class="instruction">DEC A</td>
+<td class="comment-11" rowspan="1">H--; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44540"></a>ADFC</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-11" rowspan="1">%&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44541"></a>ADFD</td>
+<td class="instruction">LD ($AE76),HL</td>
+<td class="comment-11" rowspan="1">searchlight_coords = HL; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44544"></a>AE00</td>
+<td class="instruction">LD DE,($81BB)</td>
+<td class="comment-11" rowspan="1">DE = map_position;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44548"></a>AE04</td>
+<td class="instruction">LD HL,$AE77</td>
+<td class="comment-11" rowspan="1">HL = $AE77; // &amp;searchlight_coords + 1 byte; // compensating for HL--; jumped into</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44551"></a>AE07</td>
+<td class="instruction">LD B,$01</td>
+<td class="comment-11" rowspan="1">B = 1; // 1 iteration</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44553"></a>AE09</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44554"></a>AE0A</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44555"></a>AE0B</td>
+<td class="instruction">JR $AE3F</td>
+<td class="comment-11" rowspan="1">goto $AE3F;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44557"></a>AE0D</td>
+<td class="instruction">LD HL,$AD29</td>
+<td class="comment-11" rowspan="1">not_tracking: HL = &amp;spotlight_movement_data_maybe[0];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44560"></a>AE10</td>
+<td class="instruction">LD B,$03</td>
+<td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44562"></a>AE12</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44563"></a>AE13</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44564"></a>AE14</td>
+<td class="instruction">CALL <a class="link" href="44377.html">$AD59</a></td>
+<td class="comment-11" rowspan="1">searchlight_AD59();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44567"></a>AE17</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44568"></a>AE18</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44569"></a>AE19</td>
+<td class="instruction">CALL <a class="link" href="44664.html">$AE78</a></td>
+<td class="comment-11" rowspan="1">searchlight_caught();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44572"></a>AE1C</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44573"></a>AE1D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44574"></a>AE1E</td>
+<td class="instruction">LD DE,($81BB)</td>
+<td class="comment-11" rowspan="1">DE = map_position;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44578"></a>AE22</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-11" rowspan="4">if (E + 23 &lt; *HL) goto next; // out of bounds maybe</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44579"></a>AE23</td>
+<td class="instruction">ADD A,$17</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44581"></a>AE25</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44582"></a>AE26</td>
+<td class="instruction">JP C,$AE6C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44585"></a>AE29</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="4">if (*HL + 16 &lt; E) goto next;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44586"></a>AE2A</td>
+<td class="instruction">ADD A,$10</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44588"></a>AE2C</td>
+<td class="instruction">CP E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44589"></a>AE2D</td>
+<td class="instruction">JP C,$AE6C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44592"></a>AE30</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44593"></a>AE31</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-11" rowspan="4">if (D + 16 &lt; *HL) goto next;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44594"></a>AE32</td>
+<td class="instruction">ADD A,$10</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44596"></a>AE34</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44597"></a>AE35</td>
+<td class="instruction">JP C,$AE6C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44600"></a>AE38</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="4">if (*HL + 16 &lt; D) goto next;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44601"></a>AE39</td>
+<td class="instruction">ADD A,$10</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44603"></a>AE3B</td>
+<td class="instruction">CP D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44604"></a>AE3C</td>
+<td class="instruction">JP C,$AE6C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44607"></a>AE3F</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="1">A = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44608"></a>AE40</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44609"></a>AE41</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-11" rowspan="1">HL--;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44610"></a>AE42</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-11" rowspan="1">B = 0x00;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44612"></a>AE44</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">if (*HL - E &lt; 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44613"></a>AE45</td>
+<td class="instruction">SUB E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44614"></a>AE46</td>
+<td class="instruction">JP NC,$AE4E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44617"></a>AE49</td>
+<td class="instruction">LD B,$FF</td>
+<td class="comment-11" rowspan="1">B = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44619"></a>AE4B</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44620"></a>AE4C</td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="1">A = ~A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44621"></a>AE4D</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">- %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44622"></a>AE4E</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = Adash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44623"></a>AE4F</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="2">Adash = *++HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44624"></a>AE50</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44625"></a>AE51</td>
+<td class="instruction">LD H,$00</td>
+<td class="comment-11" rowspan="1">H = 0x00;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44627"></a>AE53</td>
+<td class="instruction">SUB D</td>
+<td class="comment-11" rowspan="1">Adash -= D;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44628"></a>AE54</td>
+<td class="instruction">JP NC,$AE59</td>
+<td class="comment-11" rowspan="2">if (Adash &lt; 0) H = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44631"></a>AE57</td>
+<td class="instruction">LD H,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44633"></a>AE59</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="1">L = Adash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44634"></a>AE5A</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-11" rowspan="5">HL *= 32;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44635"></a>AE5B</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44636"></a>AE5C</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44637"></a>AE5D</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44638"></a>AE5E</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44639"></a>AE5F</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-11" rowspan="1">HL += BC;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44640"></a>AE60</td>
+<td class="instruction">LD BC,$5846</td>
+<td class="comment-11" rowspan="2">HL += 0x5846; // screen attribute address of top-left game window attribute</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44643"></a>AE63</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44644"></a>AE64</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44645"></a>AE65</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44646"></a>AE66</td>
+<td class="instruction">LD ($AE75),A</td>
+<td class="comment-11" rowspan="1">searchlight_related = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44649"></a>AE69</td>
+<td class="instruction">CALL <a class="link" href="44728.html">$AEB8</a></td>
+<td class="comment-11" rowspan="1">searchlight_plot();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="44652"></a>AE6C</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">next: POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44653"></a>AE6D</td>
+<td class="instruction">POP BC</td>
+<td class="comment-11" rowspan="1">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44654"></a>AE6E</td>
+<td class="instruction">LD DE,$0007</td>
+<td class="comment-11" rowspan="2">HL += 7;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44657"></a>AE71</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44658"></a>AE72</td>
+<td class="instruction">DJNZ $AE12</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="44660"></a>AE74</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="44377.html">AD59</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#44477">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="44661.html">AE75</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+</div>
+</body>
+</html>
