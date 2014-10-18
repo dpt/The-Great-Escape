@@ -7700,7 +7700,7 @@ D $C441   Outdoors.
 ;
   $C46A indoors: (unstash HL)
   $C46B   (stash HL, DE, BC)
-  $C46E   spawn_characters_maybe();
+  $C46E   spawn_character();
   $C471   (unstash BC, DE)
 ;
   $C473 unstash_skip: (unstash HL)
@@ -7753,7 +7753,7 @@ D $C47E Run through all visible characters, resetting them.
 
 ; -----------------------------------------------------------------------------
 
-c $C4E0 spawn_characters_maybe
+c $C4E0 spawn_character
 D $C4E0 Adds characters to the visible character list.
 R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4E0 if (*HL & characterstruct_FLAG_DISABLED) return;
