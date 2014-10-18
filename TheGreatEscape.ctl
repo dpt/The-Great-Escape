@@ -7764,7 +7764,7 @@ D $C4E4 Find an empty visible character entry.
   $C4E7 -
   $C4EA -
   $C4EC B = 7; // 7 iterations
-  $C4EE do <% if (*HL == vischar_BYTE0_EMPTY_SLOT) goto found;
+  $C4EE do <% if (*HL == vischar_BYTE0_EMPTY_SLOT) goto found_empty_slot;
   $C4F1   HL += 32; // stride
   $C4F2 %> while (--B);
   $C4F4 POP HL
@@ -7772,7 +7772,7 @@ D $C4E4 Find an empty visible character entry.
 
 D $C4F6 Empty slot found.
 R $C4F6 I:HL Pointer to empty slot.
-  $C4F6 found: POP DE  // DE = HL (-> character struct)
+  $C4F6 found_empty_slot: POP DE  // DE = HL (-> character struct)
   $C4F7 PUSH HL // resave
   $C4F8 POP IY  // IY = HL (-> empty slot in visible character list)
   $C4FA PUSH HL // resave
