@@ -4111,6 +4111,7 @@ R $A071 I:A Attributes to use.
   $A077 B  = $13;
   $A079 do <% *HL++ = A;
   $A07B   *HL++ = A;
+  $A07B   *HL = A;
   $A07E   HL += DE;
   $A07F %> while (--B);
   $A081 return;
