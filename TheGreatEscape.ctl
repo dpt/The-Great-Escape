@@ -908,7 +908,7 @@ D $68A1 Holds current door.
 c $68A2 transition
 D $68A2 Looks like it's called to transition to a new room.
 R $68A2 I:HL Pointer to location?
-R $68A2 I:IY Pointer to vischar?
+R $68A2 I:IY Pointer to visible character?
   $68A2 EX DE,HL
   $68A3 HL = IY;
   $68A6 A = L; // stash vischar index/offset
@@ -2425,7 +2425,7 @@ R $7BF2   I:HL Pointer to ? $77AE (odd - that's object tile refs...) // i doubt 
 
 c $7C26 item_to_itemstruct
 R $7C26 I:A  Item index.
-R $7C26 O:HL Pointer to item_struct.
+R $7C26 O:HL Pointer to itemstruct.
   $7C26 return &item_structs[A]; // $76C8 + A * 7
 
 ; ------------------------------------------------------------------------------
@@ -6291,6 +6291,7 @@ D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the sc
 
 c $B32D door_handling_interior
 D $B32D Door related stuff.
+R $B32D I:IY Pointer to visible character.
   $B32D HL = &door_related;
   $B330 for (;;) <% A = *HL;
   $B331   if (A == 255) return;
@@ -6740,7 +6741,7 @@ c $B5CE called_from_main_loop_9
 
 c $B71B reset_position
 D $B71B Save a copy of the vischar's position + offset.
-R $B71B I:HL Pointer to vischar.
+R $B71B I:HL Pointer to visible character.
   $B71B -
   $B71C memcpy(&saved_Y, HL + 0x0F, 6);
   $B728 -
@@ -6872,7 +6873,7 @@ w $B839 word_B839
 ; -----------------------------------------------------------------------------
 
 c $B83B searchlight_sub
-R $B83B I:IY Pointer to vischar?
+R $B83B I:IY Pointer to visible character?
   $B83B HL = IY;
   $B83E if (L) return; // skip non-player character
   $B841 HL = $8131;
@@ -7863,7 +7864,7 @@ R $C4F6 I:HL Pointer to empty slot.
 
 c $C5D3 reset_visible_character
 D $C5D3 Reset a visible character (either a character or an object).
-R $C5D3 I:HL Pointer to vischar.
+R $C5D3 I:HL Pointer to visible character.
   $C5D3 A = *HL;
   $C5D4 if (A == character_NONE) return;
   $C5D7 if (A >= character_26_STOVE_1) <%
