@@ -4776,7 +4776,7 @@ c $A489 hero_sleeps
   $A48E HL = &player_in_bed;
 
 D $A491 (common end of the above two routines)
-  $A491 player_sit_sleep_common: *HL = 0xFF; // set in breakfast, or in bed
+  $A491 hero_sit_sleep_common: *HL = 0xFF; // set in breakfast, or in bed
   $A493 A = 0;
   $A494 $8002 = A; // target location? bottom byte only?
 D $A498 Set player position to zero.
@@ -6790,7 +6790,7 @@ D $B789 Reset sprite.
   $B789 $8015 = sprite_prisoner_tl_4;
   $B78F room_index = room_2_hut2left;
 D $B794 Put player to bed.
-  $B794 player_sleeps();
+  $B794 hero_sleeps();
   $B797 enter_room();
   $B79A return;
 
