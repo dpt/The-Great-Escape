@@ -7860,7 +7860,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C5CB PUSH HL
   $C5CC reset_position();
   $C5CF POP HL
-  $C5D0 character_behaviour_stuff(); return; // exit via
+  $C5D0 character_behaviour(); return; // exit via
 
 ; -----------------------------------------------------------------------------
 
@@ -8273,19 +8273,19 @@ D $C8C5 Change '20' here to a higher number and prisoners will start following t
   $C8DB       -
   $C8DC       if (A > 15) <% // 16,17,18,19  // could these be the dogs?
   $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; %> %>
-  $C8F1     character_behaviour_stuff(); %>
+  $C8F1     character_behaviour(); %>
   $C8F4   -
   $C8F5   IY += 32; // stride
   $C8FA %> while (--B);
   $C8FE if (!red_flag && (morale_1 || automatic_player_counter == 0)) <%
 D $C902 Pointless JP NZ (jumps to RET, RET NZ would do).
   $C910   IY = $8000;
-  $C914   character_behaviour_stuff(); %>
+  $C914   character_behaviour(); %>
   $C917 return;
 
 ; ------------------------------------------------------------------------------
 
-c $C918 character_behaviour_stuff
+c $C918 character_behaviour
 D $C918 Character behaviour?
 R $C918 I:IY Pointer to visible character block.
   $C918 A = IY[7]; // $8007 etc. // more flags
@@ -8465,7 +8465,7 @@ R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
   $CAAE   -
   $CAAF   HL -= 2;
   $CAB1   *HL = 0;
-  $CAB3   goto character_behaviour_stuff:$C9F5; %>
+  $CAB3   goto character_behaviour:$C9F5; %>
   $CAB6 if (C & vischar_BYTE1_BIT6) <%
   $CABA   C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location
   $CABC   A = *--HL;
