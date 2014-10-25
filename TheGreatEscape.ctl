@@ -10482,8 +10482,10 @@ D $F271 If the game is started then copy the input routine to $F075. If the chos
   $F28D   return; %>
 D $F28E Zero pressed to start game.
   $F28E else <% A = chosen_input_device;
+D $F292 This is tricky. A' is left with the low byte of the inputroutine address. In the case of the keyboard, it's zero. choose_keys relies on that in a nonobvious way.
   $F292   memcpy($F075, inputroutine[A], 0x4A); // copy input routine to $F075, length 0x4A
-  $F2A7   if (A == inputdevice_KEYBOARD) goto choose_keys; // keyboard was selected
+  $F2A7   if (A == inputdevice_KEYBOARD) { choose_keys(); }
+  $F2AB   /* Discard previous frame and resume at main:$F17D. */
   $F2AC   return; %>
 
 ; ------------------------------------------------------------------------------
