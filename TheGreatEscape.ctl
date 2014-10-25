@@ -1168,7 +1168,7 @@ R $6AB5 O:HL Corrupted.
   $6ACE       HL++;
   $6ACF       A = *HL;
   $6AD0       if (A != objecttile_ESCAPE) <% // FF FF => FF
-  $6AD4         A &= 0xF0; // redundant?
+  $6AD4         A &= 0xF0;
   $6AD6         if (A >= 128) goto $6AF4;
   $6ADA         if (A == 64) goto $6B19; %> %>
   $6ADE     if (A) *DE = A;
@@ -1191,7 +1191,8 @@ R $6AB5 O:HL Corrupted.
   $6B01   DJNZ $6B12
 ; ran out of width
   $6B03   LD Adash,($6AE7)  // Adash = width
-  $6B07   DE += 24 -    Adash; // stride
+  $6B06   B = Adash;
+  $6B07   DE += 24 - B; // stride
   $6B0F   Adash = *HL;
   $6B10   if (--C == 0) return;
 ;
