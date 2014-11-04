@@ -9159,7 +9159,7 @@ R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
   $DC60 item_def_2nd_memb_copy = A;
   $DC63 HL++;
   $DC64 memcpy(&bitmap_pointer, HL, 4); // copy bitmap and mask pointers
-  $DC6C sub_DD02();
+  $DC6C item_visible();
   $DC6F if (!Z) return;
 ;
   $DC70 PUSH BC
@@ -9231,7 +9231,7 @@ R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
 
 ; ------------------------------------------------------------------------------
 
-c $DD02 sub_DD02
+c $DD02 item_visible
 D $DD02 This is range checking something.
 R $DD02 O:AF Z => ?, !Z => ?
 R $DD02 O:BC
