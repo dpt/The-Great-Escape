@@ -634,7 +634,7 @@
 ;          0x07 -> character faces bottom left  (crawling)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's vertical offset // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_thing_to_plot ($B8DE), setup_sprite_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's vertical offset // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_thing_to_plot ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 sub_AF8F sets this to stashed_A
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
@@ -642,7 +642,7 @@
 ; b $801C room index: cleared to zero by action_papers, set to room_24_solitary by solitary, copied to room_index by transition
 ; ? $801D
 ; ? $801E
-; ? $801F (written by setup_sprite_plotting)
+; ? $801F (written by setup_vischar_plotting)
 
 ; $8020 visible character blocks. 7 sets of 32 bytes, one per visible character. can there be >7 characters on-screen/visible at once? or is it prisoners only?
 
@@ -6902,7 +6902,7 @@ D $B866 searchlight related.
   $B866 locate_thing_to_plot();
   $B869 if (!Z) return;
   $B86A if ((A & (1<<6)) == 0) <%
-  $B86E   setup_sprite_plotting();
+  $B86E   setup_vischar_plotting();
   $B871   if (!Z) goto locate_thing_to_plot_then_plot;
   $B873   mask_stuff();
   $B876   if (searchlight_state != searchlight_STATE_OFF) searchlight_sub();
@@ -9415,7 +9415,7 @@ D $E0D7 Unreferenced byte.
 ; ------------------------------------------------------------------------------
 
 w $E0E0 masked_sprite_plotter_16_enables
-D $E0E0 (<- setup_item_plotting, setup_sprite_plotting)
+D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
   $E0E0 masked_sprite_plotter_16_wide_case_1:jump0
   $E0E2 masked_sprite_plotter_16_wide_case_2:jump1
   $E0E4 masked_sprite_plotter_16_wide_case_1:jump2
@@ -9426,7 +9426,7 @@ D $E0E0 (<- setup_item_plotting, setup_sprite_plotting)
 ; ------------------------------------------------------------------------------
 
 w $E0EC masked_sprite_plotter_24_enables
-D $E0EC (<- setup_sprite_plotting)
+D $E0EC (<- setup_vischar_plotting)
   $E0EC masked_sprite_plotter_24_wide:E188
   $E0EE masked_sprite_plotter_24_wide:E259
   $E0F0 masked_sprite_plotter_24_wide:E199
@@ -9893,7 +9893,7 @@ D $E417 Roll the mask.
 
 ; ------------------------------------------------------------------------------
 
-c $E420 setup_sprite_plotting
+c $E420 setup_vischar_plotting
 D $E420 Sets sprites up for plotting.
 R $E420 I:HL Pointer to ? // observed: always the same as IY
 R $E420 I:IY Pointer to ? // observed: $8000+
