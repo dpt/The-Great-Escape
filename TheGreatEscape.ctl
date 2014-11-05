@@ -450,8 +450,8 @@
 ; vischar_BYTE0_MASK         = 0x1F, // character index
 ; vischar_BYTE1_EMPTY_SLOT   = 0xFF,
 ; vischar_BYTE1_MASK         = 0x3F,
-; vischar_BYTE1_PICKING_LOCK = 1<<0, // player only
-; vischar_BYTE1_CUTTING_WIRE = 1<<1, // player only
+; vischar_BYTE1_PICKING_LOCK = 1<<0, // hero only
+; vischar_BYTE1_CUTTING_WIRE = 1<<1, // hero only
 ; vischar_BYTE1_PERSUE       = 1<<0, // AI only
 ; vischar_BYTE1_BIT1         = 1<<1, // AI only
 ; vischar_BYTE1_BIT2         = 1<<2, // set when bribe taken ('gone mad' flag)
@@ -495,7 +495,7 @@
 ; enum searchlightflags
 ; searchlight_STATE_00       = 0x00,
 ; searchlight_STATE_1F       = 0x1F,
-; searchlight_STATE_OFF      = 0xFF, // likely: hunting for player
+; searchlight_STATE_OFF      = 0xFF, // likely: hunting for hero
 
 ; enum bellringflags
 ; bell_RING_PERPETUAL        = 0x00,
@@ -606,7 +606,7 @@
 ;
 ; vars referenced as $8015 etc.
 ;
-; $8000 seems to be an array of eight 32-wide visible character blocks. the first is likely the player character.
+; $8000 seems to be an array of eight 32-wide visible character blocks. the first is likely the hero character.
 
 ; b $8000 character index? (0xFF if no visible character)
 ; b $8001 flags: bit 6 gets toggled in set_hero_target_location /  bit 0: picking lock /  bit 1: cutting wire  (0xFF when reset)
@@ -934,7 +934,7 @@ D $68C3 Set position on Y axis, X axis and vertical offset (copying).
   $68CE POP AF
   $68CF L = A;
   $68D0 if (A) <% reset_visible_character(); return; %> // exit via
-D $68D7 HL points to the player vischar at this point.
+D $68D7 HL points to the hero vischar at this point.
   $68D7 *++HL &= ~vischar_BYTE1_BIT7; // $8001
   $68DA A = ($801C); // room index
   $68DD room_index = A;
@@ -952,9 +952,9 @@ c $68F4 enter_room
   $68FA setup_room();
   $68FD plot_interior_tiles();
   $6900 map_position = 0xEA74;
-  $6906 set_player_sprite_for_room();
+  $6906 set_hero_sprite_for_room();
   $6909 HL = $8000;
-  $690C reset_position(); // reset player
+  $690C reset_position(); // reset hero
   $690F setup_movable_items();
   $6912 zoombox();
   $6915 increase_score(1);
@@ -967,9 +967,9 @@ c $691A squash_stack_goto_main
 
 ; ------------------------------------------------------------------------------
 
-c $6920 set_player_sprite_for_room
+c $6920 set_hero_sprite_for_room
 D $6920 Called when changing rooms.
-D $6920 For tunnels this forces the player sprite to 'prisoner' and sets the crawl flag appropriately.
+D $6920 For tunnels this forces the hero sprite to 'prisoner' and sets the crawl flag appropriately.
   $6920 HL = $800D;
   $6923 *HL++ = 0x80; // likely a character direction
   $6926 if (room_index >= room_29_secondtunnelstart) <%
@@ -1364,7 +1364,7 @@ D $6C47 roomdef_2_hut2_left
   $6C58,3 { interiorobject_WIDE_WINDOW,                 6,  2 },
   $6C5B,3 { interiorobject_DOOR_FRAME_40,              16,  5 },
   $6C5E,3 { interiorobject_STOVE_PIPE,                  4,  5 },
-  $6C61,3 { interiorobject_OCCUPIED_BED,                8,  7 }, // player's bed
+  $6C61,3 { interiorobject_OCCUPIED_BED,                8,  7 }, // hero's bed
   $6C64,3 { interiorobject_DOOR_FRAME_16,               7,  9 },
   $6C67,3 { interiorobject_TABLE_2,                    11, 12 },
   $6C6A,3 { interiorobject_SMALL_TUNNEL_ENTRANCE,       5,  9 },
@@ -2480,7 +2480,7 @@ D $7C6B Plot bitmap.
 ; ------------------------------------------------------------------------------
 
 c $7C82 find_nearby_item
-D $7C82 Returns an item within range of the player.
+D $7C82 Returns an item within range of the hero.
 R $7C82 O:AF Z set if item found.
 R $7C82 O:HL If found, pointer to item.
 D $7C82 Select a pick up radius.
@@ -2492,10 +2492,10 @@ D $7C82 Select a pick up radius.
   $7C95     PUSH BC
   $7C96     PUSH HL
   $7C97     HL++; // itemstruct.y
-  $7C98     DE = &player_map_position.y; // this is probably 'Y' in this sense, but i'd need to rename all others to comply
+  $7C98     DE = &hero_map_position.y; // this is probably 'Y' in this sense, but i'd need to rename all others to comply
   $7C9B     B = 2; // 2 iterations
 D $7C9D Range check.
-  $7C9D     do <% A = *DE++; // get player map position
+  $7C9D     do <% A = *DE++; // get hero map position
   $7C9F       if (A - C >= *HL || A + C < *HL) goto popnext;
   $7CA7       HL++;
   $7CA9     %> while (--B);
@@ -2846,10 +2846,10 @@ D $81B7 Controls character left/right flipping.
 ; ------------------------------------------------------------------------------
 
 ; a tinypos_t
-D $81B8 Player's map position.
-b $81B8 player_map_position.y
-b $81B9 player_map_position.x
-b $81BA player_map_position.vo
+D $81B8 Hero's map position.
+b $81B8 hero_map_position.y
+b $81B9 hero_map_position.x
+b $81BA hero_map_position.vo
 
 ; ------------------------------------------------------------------------------
 
@@ -2860,7 +2860,7 @@ D $81BB Map position. Used when drawing tiles.
 
 b $81BD searchlight_state
 D $81BD Searchlight state.
-D $81BD Suspect that this is a 'player has been found in searchlight' flag. (possible states: 0, 31, 255)
+D $81BD Suspect that this is a 'hero has been found in searchlight' flag. (possible states: 0, 31, 255)
 D $81BD (<- nighttime, something_then_decrease_morale)
 
 ; ------------------------------------------------------------------------------
@@ -2898,7 +2898,7 @@ b $8214 item_def_2nd_memb_copy
 ; ------------------------------------------------------------------------------
 
 w $8215 items_held
-D $8215 Items which the player is holding.
+D $8215 Items which the hero is holding.
 D $8215 Two byte slots. initialised to 0xFFFF meaning no item in either slot.
 
 ; ------------------------------------------------------------------------------
@@ -3846,7 +3846,7 @@ D $9DCF (<- main_loop)
   $9DCF if (morale >= 2) return;
   $9DD5 queue_message_for_display(message_MORALE_IS_ZERO);
   $9DDB morale_2 = 0xFF; // inhibit user input
-  $9DE0 automatic_player_counter = 0; // immediately take automatic control of player
+  $9DE0 automatic_player_counter = 0; // immediately take automatic control of hero
   $9DE4 return;
 
 ; ------------------------------------------------------------------------------
@@ -3880,22 +3880,22 @@ D $9E1F Cutting wire fence.
 R $9E34 I:HL Pointer to automatic_player_counter.
   $9E34   automatic_player_counter = 31; // wait 31 turns until automatic control
   $9E36   ... (push af) ...
-  $9E37   if (player_in_bed == 0) <%
-  $9E3D     if (!player_in_breakfast) goto not_bed_or_breakfast;
+  $9E37   if (hero_in_bed == 0) <%
+  $9E3D     if (!hero_in_breakfast) goto not_bed_or_breakfast;
   $9E43     (word) $8002 = 0x002B; // set target location?
   $9E49     (word) $800F = 0x0034; // set Y pos
   $9E4E     (word) $8011 = 0x003E; // set X pos
   $9E52     roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
-  $9E57     HL = &player_in_breakfast; %>
+  $9E57     HL = &hero_in_breakfast; %>
   $9E5A   else <%
-D $9E5C Player was in bed.
+D $9E5C Hero was in bed.
   $9E5C     (word) $8002 = 0x012C; // set target location?
   $9E62     (word) $8004 = 0x2E2E; // another position?
   $9E68     (word) $800F = 0x002E; // set Y pos
   $9E6D     (word) $8011 = 0x002E; // set X pos
   $9E70     $8013 = 24; // set vertical offset
-  $9E75     player_bed = interiorobject_EMPTY_BED;
-  $9E7A     HL = &player_in_bed; %>
+  $9E75     roomdef_2_hut2_left.bed = interiorobject_EMPTY_BED;
+  $9E7A     HL = &hero_in_bed; %>
   $9E7D   *HL = 0;
   $9E7F   setup_room();
   $9E82   plot_interior_tiles();
@@ -3967,7 +3967,7 @@ D $9F15,12,4 three groups of four (<- in_permitted_area) possibly (un)permitted 
 c $9F21 in_permitted_area
 D $9F21 [unsure] -- could be as general as bounds detection
   $9F21 HL = $800F; // position on Y axis
-  $9F24 DE = &player_map_position.y; // x/y confusion here - mislabeling
+  $9F24 DE = &hero_map_position.y; // x/y confusion here - mislabeling
   $9F27 if (room_index == 0) <% // outdoors
   $9F2E   pos_to_tinypos(HL,DE);
   $9F31   if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped; %>
@@ -4062,7 +4062,7 @@ c $A007 in_permitted_area_end_bit
   $A00A if (A & (1<<7)) return *HL == A & 0x7F; // return with flags
 ;
   $A012 if (*HL) return; // return with flags NZ
-  $A016 DE = &player_map_position.y;
+  $A016 DE = &hero_map_position.y;
 ;
 ; This entry point is used by the routine at #R$CB98.
   $A01A HL = &byte_9F15[A * 4];
@@ -4255,7 +4255,7 @@ b $A132 score_digits
 
 ; ------------------------------------------------------------------------------
 
-b $A137 player_in_breakfast
+b $A137 hero_in_breakfast
 
 ; ------------------------------------------------------------------------------
 
@@ -4293,7 +4293,7 @@ D $A13E In byte_A13E_is_nonzero etc.: when non-zero, character_index is valid. E
 
 ; ------------------------------------------------------------------------------
 
-b $A13F player_in_bed
+b $A13F hero_in_bed
 
 ; ------------------------------------------------------------------------------
 
@@ -4377,7 +4377,7 @@ D $A1AB Dispatch the event for that time.
   $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
-  $A1C3 if (player_in_bed == 0) set_hero_target_location(location_012C);
+  $A1C3 if (hero_in_bed == 0) set_hero_target_location(location_012C);
   $A1CF A = 0xFF;
   $A1D1 goto set_attrs;
 
@@ -4493,10 +4493,10 @@ D $A27F [unsure] (<- set_prisoners_and_guards_location, set_prisoners_and_guards
 
 c $A289 wake_up
 D $A289 Called by event_wake_up.
-  $A289 if (player_in_bed) <% // odd that this jumps into a point which sets player_in_bed to zero when it's already zero
-  $A290   $800F = 46; // player's Y position
-  $A295   $8011 = 46; %> // player's X position
-  $A299 player_in_bed = 0;
+  $A289 if (hero_in_bed) <% // odd that this jumps into a point which sets hero_in_bed to zero when it's already zero
+  $A290   $800F = 46; // hero's Y position
+  $A295   $8011 = 46; %> // hero's X position
+  $A299 hero_in_bed = 0;
   $A29D set_hero_target_location(location_002A);
   $A2A3 HL = &characterstruct_20.room;
   $A2A6 -
@@ -4523,7 +4523,7 @@ D $A2C6 Bug: 7 iterations BUT only six beds in the data structure resulting in w
   $A2CA   D = *HL++;
   $A2CC   *DE = interiorobject_EMPTY_BED;
   $A2CD %> while (--B);
-D $A2CF Update the player's bed object to be empty.
+D $A2CF Update the hero's bed object to be empty.
   $A2CF room_2_hut2_left.bed = interiorobject_EMPTY_BED;
   $A2D3 if (room_index == room_0_outdoors || room_index >= room_6) return;
   $A2DB setup_room();
@@ -4533,10 +4533,10 @@ D $A2CF Update the player's bed object to be empty.
 ; ------------------------------------------------------------------------------
 
 c $A2E2 breakfast_time
-  $A2E2 if (player_in_breakfast) <%
-  $A2E9   $800F = 52; // player Y position
-  $A2EE   $8011 = 62; %> // player X position
-  $A2F2 player_in_breakfast = 0;
+  $A2E2 if (hero_in_breakfast) <%
+  $A2E9   $800F = 52; // hero Y position
+  $A2EE   $8011 = 62; %> // hero X position
+  $A2F2 hero_in_breakfast = 0;
   $A2F6 set_hero_target_location(location_0390);
   $A2FC HL = &characterstruct_20.room; // character_20_PRISONER_1
   $A2FF -
@@ -4696,7 +4696,7 @@ R $A3F3 I:HL -> characterstruct?
   $A3F6 goto $A404;
 
 c $A3F8 byte_A13E_is_zero
-D $A3F8 Gets hit when player enters hut at end of day.
+D $A3F8 Gets hit when hero enters hut at end of day.
   $A3F8 A = IY[0]; // IY=$8000 // must be a character index
   $A3FB if (A == 0) <% set_hero_target_location(location_002C); return; %> // exit via
 ;
@@ -4770,21 +4770,21 @@ D $A473 Force a refresh.
 
 c $A47F hero_sits
   $A47F roomdef_25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
-  $A484 HL = &player_in_breakfast;
+  $A484 HL = &hero_in_breakfast;
   $A487 goto hero_sit_sleep_common;
 
 c $A489 hero_sleeps
   $A489 roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;
-  $A48E HL = &player_in_bed;
+  $A48E HL = &hero_in_bed;
 
 D $A491 (common end of the above two routines)
   $A491 hero_sit_sleep_common: *HL = 0xFF; // set in breakfast, or in bed
   $A493 A = 0;
   $A494 $8002 = A; // target location? bottom byte only?
-D $A498 Set player position to zero.
+D $A498 Set hero's position to zero.
   $A498 memset($800F, 0, 4);
   $A4A1 HL = $8000;
-  $A4A4 reset_position(); // reset player
+  $A4A4 reset_position(); // reset hero
   $A4A7 goto select_room_and_plot;
 
 ; ------------------------------------------------------------------------------
@@ -5713,16 +5713,16 @@ R $AD59 I:HL Pointer to spotlight_movement_data_maybe
 ; ------------------------------------------------------------------------------
 
 c $ADBD nighttime
-D $ADBD Turns white screen elements light blue and tracks the player with a searchlight.
+D $ADBD Turns white screen elements light blue and tracks the hero with a searchlight.
   $ADBD HL = &searchlight_state;
   $ADC0 if (*HL == searchlight_STATE_OFF) goto not_tracking;
 ;
-  $ADC6 if (room_index) <% // player is indoors
-D $ADCC If the player goes indoors the searchlight loses track.
+  $ADC6 if (room_index) <% // hero is indoors
+D $ADCC If the hero goes indoors the searchlight loses track.
   $ADCC   *HL = searchlight_STATE_OFF;
   $ADCE   return; %>
 ;
-D $ADCF Player is outdoors.
+D $ADCF Hero is outdoors.
   $ADCF if (*HL == searchlight_STATE_1F) <%
   $ADD5   HL = map_position;
   $ADD8   E = L + 4;
@@ -5731,13 +5731,13 @@ D $ADCF Player is outdoors.
   $ADE0   if (L == E) <%
   $ADE4     if (H == D) return; %> // highlight doesn't need to move, so quit
   $ADE7   else <%
-D $ADE9 Move searchlight left/right to focus on player.
+D $ADE9 Move searchlight left/right to focus on hero.
   $ADE9     if (L < E) <%
   $ADEC       L++; %>
   $ADED     else <%
   $ADEF       L--; %>
   $ADF0   %>
-D $ADF1 Move searchlight up/down to focus on player.
+D $ADF1 Move searchlight up/down to focus on hero.
   $ADF1   if (H != D) <%
   $ADF5     if (H < D) <%
   $ADF8       H++; %>
@@ -5812,7 +5812,7 @@ D $AE76 (<- nighttime)
 ; ------------------------------------------------------------------------------
 
 c $AE78 searchlight_caught
-D $AE78 Suspect this is when the player is caught in the spotlight.
+D $AE78 Suspect this is when the hero is caught in the spotlight.
 R $AE78 I:HL Pointer to spotlight_movement_data_maybe
   $AE78 DE = map_position;
   $AE7C if (HL[0] + 5 >= E + 12 || HL[0] + 10 < E + 10) return;
@@ -6270,7 +6270,7 @@ D $B2FA Not found.
 c $B2FC reset_outdoors
 D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the screen.
   $B2FC HL = $8000;
-  $B2FF reset_position(); // reset player
+  $B2FF reset_position(); // reset hero
 ;
   $B302 HL = $8018;
   $B305 A = *HL++;
@@ -6410,14 +6410,14 @@ D $B3F6 Player has tried to use the shovel item.
 
 c $B417 action_wiresnips
   $B417 HL = &fences[0] + 3;
-  $B41A DE = &player_map_position.x;
+  $B41A DE = &hero_map_position.x;
   $B41D B = 4; // iterations
   $B41F do <% ...
   $B420   A = *DE;
   $B421   if (A >= *HL) goto next;
   $B424   HL--;
   $B425   if (A < *HL) goto next;
-  $B428   DE--; // &player_map_position.y;
+  $B428   DE--; // &hero_map_position.y;
   $B429   A = *DE;
   $B42A   HL--;
   $B42B   if (A == *HL) goto set_to_4;
@@ -6428,7 +6428,7 @@ c $B417 action_wiresnips
   $B434   HL += 6; // array stride
   $B43B %> while (--B);
 ;
-  $B43D DE--; // &player_map_position.y;
+  $B43D DE--; // &hero_map_position.y;
   $B43E HL -= 3; // pointing to $B59E
   $B441 B = 3; // iterations
   $B443 do <% ...
@@ -6795,7 +6795,7 @@ D $B780 Reset items.
 D $B789 Reset sprite.
   $B789 $8015 = sprite_prisoner_tl_4;
   $B78F room_index = room_2_hut2left;
-D $B794 Put player to bed.
+D $B794 Put hero to bed.
   $B794 hero_sleeps();
   $B797 enter_room();
   $B79A return;
@@ -8001,7 +8001,7 @@ D $C6E4 Characters 1..11.
   $C6F0     POP HL
   $C6F1     return; %>
 
-D $C6F2 Player character.
+D $C6F2 Hero character.
   $C6F2   char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5) // location
   $C6F5   if (A != 36) goto back;
 ;
@@ -8147,8 +8147,8 @@ D $C7DF Locate the character in the map.
 ; charevnt_5        ; checks byte_A13E case 2
 ; charevnt_6        ;
 ; charevnt_7        ;
-; charevnt_8        ; player sleeps
-; charevnt_9        ; player sits
+; charevnt_8        ; hero sleeps
+; charevnt_9        ; hero sits
 ; charevnt_10       ; released from solitary
 
 D $C7F9 character_to_event_handler_index_map
@@ -8172,8 +8172,8 @@ W $C817 { character_16_GUARD_DOG_2  | 0b10000000, charevnt_1 },
 W $C819 { character_0_COMMANDANT    | 0b10100000, charevnt_0 },
 W $C81B { character_1_GUARD_1       | 0b10100000, charevnt_1 },
 W $C81D { character_10_GUARD_10     | 0b00100000, charevnt_7 },
-W $C81F { character_12_GUARD_12     | 0b00100000, charevnt_8 }, // player sleeps
-W $C821 { character_11_GUARD_11     | 0b00100000, charevnt_9 }, // player sits
+W $C81F { character_12_GUARD_12     | 0b00100000, charevnt_8 }, // hero sleeps
+W $C821 { character_11_GUARD_11     | 0b00100000, charevnt_9 }, // hero sits
 W $C823 { character_4_GUARD_4       | 0b10100000, charevnt_6 }, // go to 0x0315
 W $C825 { character_4_GUARD_4       | 0b00100000, charevnt_10 },// released from solitary
 W $C827 { character_5_GUARD_5       | 0b00100000, charevnt_4 }, // zero morale_1
@@ -8188,9 +8188,9 @@ W $C831   &charevnt_handler_4_zero_morale_1,
 W $C833   &charevnt_handler_5_check_var_A13E_anotherone,
 W $C835   &charevnt_handler_6,
 W $C837   &charevnt_handler_7,
-W $C839   &charevnt_handler_8_player_sleeps,
-W $C83B   &charevnt_handler_9_player_sits,
-W $C83D   &charevnt_handler_10_player_released_from_solitary, };
+W $C839   &charevnt_handler_8_hero_sleeps,
+W $C83B   &charevnt_handler_9_hero_sits,
+W $C83D   &charevnt_handler_10_hero_released_from_solitary, };
 
 D $C83F charevnt_handler_4_zero_morale_1
   $C83F morale_1 = 0;
@@ -8203,7 +8203,7 @@ D $C845 charevnt_handler_6
   $C849 *HL   = 0x15;
   $C84B return;
 
-D $C84C charevnt_handler_10_player_released_from_solitary
+D $C84C charevnt_handler_10_hero_released_from_solitary
   $C84C POP HL
   $C84D *HL++ = 0xA4;
   $C850 *HL   = 0x03;
@@ -8239,11 +8239,11 @@ D $C882 charevnt_handler_7
   $C886 *HL   = 0x00;
   $C888 return;
 
-D $C889 charevnt_handler_9_player_sits
+D $C889 charevnt_handler_9_hero_sits
   $C889 POP HL
   $C88A goto hero_sits;
 
-D $C88D charevnt_handler_8_player_sleeps
+D $C88D charevnt_handler_8_hero_sleeps
   $C88D POP HL
   $C88E goto hero_sleeps;
 
@@ -8306,7 +8306,7 @@ R $C918 I:IY Pointer to visible character block.
   $C933     -
   $C934     POP DEdash // ie. DEdash = HL
   $C935     DEdash += 3;
-  $C938     HLdash = &player_map_position.y;
+  $C938     HLdash = &hero_map_position.y;
   $C93B     *DEdash++ = *HLdash++;
   $C93D     *DEdash++ = *HLdash++;
   $C93F     -
@@ -8489,7 +8489,7 @@ R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
   $CAE9   if (A < 2) HL += 5; else HL -= 3; // delta of 8 - related to door stride stuff?
   $CAF8   PUSH HL
   $CAF9   HL = IY;
-  $CAFC   if (L == 0) <% // player's vischar only
+  $CAFC   if (L == 0) <% // hero's vischar only
   $CB01     HL++; // $8000 -> $8001
   $CB02     *HL++ &= ~vischar_BYTE1_BIT6;
   $CB05     sub_CB23(); %>
@@ -8517,7 +8517,7 @@ R $CB23 I:HL ?
   $CB27 if (A == 0xFF) <%
   $CB2C   POP HL
 ; This entry point is used by the routine at #R$C4E0.
-  $CB2D   if (L != 0x02) <% // if not player's vischar
+  $CB2D   if (L != 0x02) <% // if not hero's vischar
   $CB33     if (IY[0] & vischar_BYTE0_MASK == 0) <%
   $CB3A       A = *HL & vischar_BYTE2_MASK;
   $CB3D       if (A == 36) goto $CB46; // character index
@@ -8582,7 +8582,7 @@ D $CB92 Unreferenced bytes.
 c $CB98 solitary
 D $CB98 Silence bell.
   $CB98 bell = bell_STOP;
-D $CB9D Seize player's held items.
+D $CB9D Seize hero's held items.
   $CB9D HL = &items_held[0];
   $CBA0 C = *HL;
   $CBA1 *HL = item_NONE;
@@ -8627,12 +8627,12 @@ D $CBB1 Reset all items. [unsure]
   $CBE9 current_door = 20;
   $CBEE decrease_morale(35);
   $CBF3 reset_map_and_characters();
-  $CBF6 memcpy(&character_structs[0].secondbyte, &solitary_player_reset_data, 6);
+  $CBF6 memcpy(&character_structs[0].secondbyte, &solitary_hero_reset_data, 6);
   $CC01 queue_message_for_display(message_YOU_ARE_IN_SOLITARY);
   $CC06 queue_message_for_display(message_WAIT_FOR_RELEASE);
   $CC0B queue_message_for_display(message_ANOTHER_DAY_DAWNS);
   $CC10 morale_1 = 0xFF; // inhibit user input
-  $CC15 automatic_player_counter = 0; // immediately take automatic control of player
+  $CC15 automatic_player_counter = 0; // immediately take automatic control of hero
   $CC19 $8015 = sprite_prisoner_tl_4;
   $CC1F HL = &solitary_transition_thing;
   $CC22 IY = $8000;
@@ -8642,7 +8642,7 @@ D $CBB1 Reset all items. [unsure]
 
 ; ------------------------------------------------------------------------------
 
-b $CC31 solitary_player_reset_data
+b $CC31 solitary_hero_reset_data
 D $CC31 (<- solitary)
 
 ; ------------------------------------------------------------------------------
@@ -8659,7 +8659,7 @@ D $CC3B Don't follow non-players dressed as guards.
   $CC50 DE = &byte_81B2;
   $CC53 if (room_index == 0) <%
   $CC5A   pos_to_tinypos(HL,DE);
-  $CC5D   HL = &player_map_position.y;
+  $CC5D   HL = &hero_map_position.y;
   $CC60   DE = &byte_81B2;
   $CC63   A = IY[0x0E]; // ?
   $CC66   carry = A & 1; A >>= 1;
@@ -8714,7 +8714,7 @@ D $CCB4 HL[0x13] is the character's height, testing this excludes the guards in 
 ; ------------------------------------------------------------------------------
 
 c $CCCD is_item_discoverable
-D $CCCD Searches item_structs for items dropped nearby. If items are found the hostiles are made to persue the player.
+D $CCCD Searches item_structs for items dropped nearby. If items are found the hostiles are made to persue the hero.
 D $CCCD Green key and food items are ignored.
   $CCCD A = room_index;
   $CCD0 if (A != room_0_outdoors) <%
@@ -10202,10 +10202,10 @@ c $EED3 plot_game_window
 ; ------------------------------------------------------------------------------
 
 c $EF9A event_roll_call
-D $EF9A Is the player within the roll call area bounds?
+D $EF9A Is the hero within the roll call area bounds?
 D $EF9A Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
   $EF9A DE = map_ROLL_CALL_X;
-  $EF9D HL = &player_map_position.y;
+  $EF9D HL = &hero_map_position.y;
   $EFA0 B = 2; // iterations
   $EFA2 do <% A = *HL++;
   $EFA3   if (A < D || A >= E) goto not_at_roll_call;
@@ -10232,22 +10232,22 @@ D $EFAF All visible characters turn forward.
 ; I NEVER KNEW THAT!
 
 c $EFCB action_papers
-D $EFCB Is the player within the main gate bounds?
+D $EFCB Is the hero within the main gate bounds?
 D $EFCB Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
   $EFCB DE = map_MAIN_GATE_X;
-  $EFCE HL = &player_map_position.y;
+  $EFCE HL = &hero_map_position.y;
   $EFD1 B = 2; // iterations
   $EFD3 do <% A = *HL++;
   $EFD4   if (A < D || A >= E) return;
   $EFD9   DE = map_MAIN_GATE_Y;
   $EFDC %> while (--B);
-D $EFDE Using the papers at the main gate when not in uniform causes the player to be sent to solitary.
+D $EFDE Using the papers at the main gate when not in uniform causes the hero to be sent to solitary.
   $EFDE if ($8015 != sprite_guard_tl_4) goto solitary; // exit via
   $EFE8 increase_morale_by_10_score_by_50();
   $EFEB $801C = room_0_outdoors; // set room index
 D $EFEF Transition to outside the main gate.
   $EFEF HL = &word_EFF9; // pointer to location?
-  $EFF2 IY = $8000; // player character
+  $EFF2 IY = $8000; // hero character
   $EFF6 transition(); return; // doesn't return: exits with goto main_loop
 
 b $EFF9 word_EFF9 (<- action_papers)
