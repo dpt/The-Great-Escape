@@ -8265,32 +8265,39 @@ D $C891 (<- follow_suspicious_character, bribes_solitary_food)
 ; ------------------------------------------------------------------------------
 
 c $C892 follow_suspicious_character
-D $C892 Causes characters to follow the player if they're being suspicious. Poisoned food handling.
+D $C892 Causes characters to follow the hero if he's being suspicious.
+D $C892 Also: Food item discovery.
+D $C892 Also: Automatic hero behaviour.
   $C892 byte_A13E = 0;
   $C896 if (bell) hostiles_persue();
   $C89D if (food_discovered_counter != 0 && --food_discovered_counter == 0) <%
+D $C8A7 De-poison the food.
   $C8A7   item_structs[item_FOOD].item &= ~itemstruct_ITEM_FLAG_POISONED;
   $C8AC   C = item_FOOD;
   $C8AE   item_discovered(); %>
+D $C8B1 Make supporting characters react.
   $C8B1 IY = $8020; // iterate over non-player characters
   $C8B5 B = 7; // iterations
   $C8B7 do <% -
   $C8B8   if (IY[1] != 0) <% // flags
   $C8C0     A = IY[0] & vischar_BYTE0_MASK; // character index
-D $C8C5 Change '20' here to a higher number and prisoners will start following the player too. The character numbers I've defined earlier and the ones used here (and observed) elsewhere are a different set where < 20 is a guard.
-  $C8C5     if (A < 20) <%
+  $C8C5     if (A <= character_19_GUARD_DOG_4) <% // Hostile characters only.
+D $C8CA Characters 0..19.
   $C8CA       -
   $C8CB       is_item_discoverable();
   $C8CE       if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_character();
   $C8DB       -
-  $C8DC       if (A > 15) <% // 16,17,18,19  // could these be the dogs?
+D $C8DC Guard dogs 1..4 (characters 16..19). 
+  $C8DC       if (A >= character_16_GUARD_DOG_1) <%
+D $C8E4 Is the food nearby?
   $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; %> %>
   $C8F1     character_behaviour(); %>
   $C8F4   -
   $C8F5   IY += 32; // stride
   $C8FA %> while (--B);
+D $C8FE Inhibit hero automatic behaviour when the flag is red, or otherwise inhibited.
   $C8FE if (!red_flag && (morale_1 || automatic_player_counter == 0)) <%
-D $C902 Pointless JP NZ (jumps to RET, RET NZ would do).
+D $C902 Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
   $C910   IY = $8000;
   $C914   character_behaviour(); %>
   $C917 return;
