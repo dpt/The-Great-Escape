@@ -3966,7 +3966,7 @@ D $9EF9 Data 0xFF terminated.
 
 ; ------------------------------------------------------------------------------
 
-b $9F15 byte_9F15
+b $9F15 permitted_bounds
 D $9F15,12,4 three groups of four (<- in_permitted_area) possibly (un)permitted area bounds
 
 ; ------------------------------------------------------------------------------
@@ -4071,8 +4071,10 @@ c $A007 in_permitted_area_end_bit
   $A012 if (*HL) return; // return with flags NZ
   $A016 DE = &hero_map_position.y;
 ;
-; This entry point is used by the routine at #R$CB98.
-  $A01A HL = &byte_9F15[A * 4];
+; fallthrough
+
+c $A01A within_camp_bounds
+  $A01A HL = &permitted_bounds[A * 4];
   $A023 B = 2;
   $A025 do <% A = *DE++;
   $A026   if (A < HL[0]) return; // return with flags NZ
@@ -8613,7 +8615,7 @@ D $CBB1 Reset all items. [unsure]
   $CBC3     A = 0;
   $CBC4     do <% PUSH AF
   $CBC5       PUSH DE
-  $CBC6       CALL $A01A // end of in_permitted_area
+  $CBC6       within_camp_bounds();
   $CBC9       if (Z) goto $CBD5;
   $CBCB       POP DE
   $CBCC       POP AF
