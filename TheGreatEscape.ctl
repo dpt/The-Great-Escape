@@ -3841,7 +3841,7 @@ D $9D78 There seems to be litle point in this: enter_room terminates with 'goto 
   $9DAE   plot_game_window();
   $9DB1   ring_bell();
   $9DB4   if (day_or_night != 0) nighttime();
-  $9DBB   if (room_index != 0) indoors_delay_loop();
+  $9DBB   if (room_index != 0) interior_delay_loop();
   $9DC2   wave_morale_flag();
   $9DC5   if ((game_counter & 63) == 0) dispatch_timed_event();
   $9DCD %>
@@ -4139,8 +4139,8 @@ R $A082 O:HL Updated screen address.
 
 ; ------------------------------------------------------------------------------
 
-c $A095 indoors_delay_loop
-D $A095 Delay loop called when the player is indoors.
+c $A095 interior_delay_loop
+D $A095 Delay loop called only when the hero is indoors.
   $A095 BC = 0xFFF;
   $A098 while (--BC) ;
   $A09D return;
