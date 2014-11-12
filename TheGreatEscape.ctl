@@ -9194,7 +9194,7 @@ R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
   $DC93   Edash = *HLdash++;
   $DC95   Ddash = *HLdash++;
   $DC97   *DEdash = A;
-  $DC98   if (--Cdash == 0) A |= 0x77;
+  $DC98   if (--Cdash == 0) A ^= 0x77;
   $DC9D %> while (--Bdash);
   $DC9F
   $DCA0 A = D;
