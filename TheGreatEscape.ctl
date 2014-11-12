@@ -7082,7 +7082,7 @@ D $BA1C If I break this bit then the character gets drawn on top of *indoors* ob
   $BA4A   HL += DE;
   $BA4B   POP DE
   $BA4C   HL++; // iterations
-  $BA4D   do <% A = *DE; // DE -> $E560 upwards (in outdoors_mask_data)
+  $BA4D   do <% A = *DE; // DE -> $E560 upwards (in exterior_mask_data)
   $BA4E     if (A >= 128) <%
   $BA52       A &= 0x7F;
   $BA54       DE++;
@@ -10056,38 +10056,38 @@ D $E555 Divides AC by 8.
 
 ; ------------------------------------------------------------------------------
 
-b $E55F outdoors_mask_data
+b $E55F exterior_mask_data
 D $E55F { byte count+flags; ... }
-  $E55F outdoors_mask_0
-  $E5FF outdoors_mask_1
-  $E61E outdoors_mask_2
-  $E6CA outdoors_mask_3
-  $E74B outdoors_mask_4
-  $E758 outdoors_mask_5
-  $E77F outdoors_mask_6
-  $E796 outdoors_mask_7
-  $E7AF outdoors_mask_8
-  $E85C outdoors_mask_9
-  $E8A3 outdoors_mask_10
-  $E8F0 outdoors_mask_11
-  $E92F outdoors_mask_12
-  $E940 outdoors_mask_13
-  $E972 outdoors_mask_14
-  $E99A outdoors_mask_15
-  $E99F outdoors_mask_16
-  $E9B9 outdoors_mask_17
-  $E9C6 outdoors_mask_18
-  $E9CB outdoors_mask_19
-  $E9E6 outdoors_mask_20
-  $E9F5 outdoors_mask_21
-  $EA0E outdoors_mask_22
-  $EA2B outdoors_mask_23
-  $EA35 outdoors_mask_24
-  $EA43 outdoors_mask_25
-  $EA4A outdoors_mask_26
-  $EA53 outdoors_mask_27
-  $EA5D outdoors_mask_28
-  $EA67 outdoors_mask_29
+  $E55F exterior_mask_0
+  $E5FF exterior_mask_1
+  $E61E exterior_mask_2
+  $E6CA exterior_mask_3
+  $E74B exterior_mask_4
+  $E758 exterior_mask_5
+  $E77F exterior_mask_6
+  $E796 exterior_mask_7
+  $E7AF exterior_mask_8
+  $E85C exterior_mask_9
+  $E8A3 exterior_mask_10
+  $E8F0 exterior_mask_11
+  $E92F exterior_mask_12
+  $E940 exterior_mask_13
+  $E972 exterior_mask_14
+  $E99A exterior_mask_15
+  $E99F exterior_mask_16
+  $E9B9 exterior_mask_17
+  $E9C6 exterior_mask_18
+  $E9CB exterior_mask_19
+  $E9E6 exterior_mask_20
+  $E9F5 exterior_mask_21
+  $EA0E exterior_mask_22
+  $EA2B exterior_mask_23
+  $EA35 exterior_mask_24
+  $EA43 exterior_mask_25
+  $EA4A exterior_mask_26
+  $EA53 exterior_mask_27
+  $EA5D exterior_mask_28
+  $EA67 exterior_mask_29
 
 ; ------------------------------------------------------------------------------
 
