@@ -2869,10 +2869,17 @@ b $81BE roomdef_bounds_index
 D $81BE Index into roomdef_bounds[].
 D $81BE Copy of first byte of current room def.
 
+b $81BF roomdef_object_bounds_count
+D $81BF Count of object bounds.
+
+b $81C0 roomdef_object_bounds
+D $81C0 Copy of current room def's additional bounds (allows for four room objects).
+
 ; ------------------------------------------------------------------------------
 
-b $81BF roomdef_object_bounds
-D $81BF Copy of current room def's additional bounds (ie. room objects).
+u $81D0 unused_81D0
+D $81D0 Unreferenced bytes.
+D $81D0 These are possibly spare object bounds bytes, but not ever used.
 
 ; ------------------------------------------------------------------------------
 
