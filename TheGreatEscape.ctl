@@ -674,224 +674,224 @@ b $5B00 super_tiles
 D $5B00 Super tiles.
 D $5B00 The game's exterior map (at $BCEE) is constructed of references to these.
 D $5B00 Each super tile is a 4x4 array of tile indices.
-B $5B00,16,4 super_tile $00 #CALL:supertile($5B00)
-B $5B10,16,4 super_tile $01 #CALL:supertile($5B10)
-B $5B20,16,4 super_tile $02 #CALL:supertile($5B20)
-B $5B30,16,4 super_tile $03 #CALL:supertile($5B30)
-B $5B40,16,4 super_tile $04 #CALL:supertile($5B40)
-B $5B50,16,4 super_tile $05 #CALL:supertile($5B50)
-B $5B60,16,4 super_tile $06 #CALL:supertile($5B60)
-B $5B70,16,4 super_tile $07 #CALL:supertile($5B70)
-B $5B80,16,4 super_tile $08 #CALL:supertile($5B80)
-B $5B90,16,4 super_tile $09 #CALL:supertile($5B90)
-B $5BA0,16,4 super_tile $0A #CALL:supertile($5BA0)
-B $5BB0,16,4 super_tile $0B #CALL:supertile($5BB0)
-B $5BC0,16,4 super_tile $0C #CALL:supertile($5BC0)
-B $5BD0,16,4 super_tile $0D #CALL:supertile($5BD0)
-B $5BE0,16,4 super_tile $0E #CALL:supertile($5BE0)
-B $5BF0,16,4 super_tile $0F #CALL:supertile($5BF0)
-B $5C00,16,4 super_tile $10 #CALL:supertile($5C00)
-B $5C10,16,4 super_tile $11 #CALL:supertile($5C10)
-B $5C20,16,4 super_tile $12 #CALL:supertile($5C20)
-B $5C30,16,4 super_tile $13 #CALL:supertile($5C30)
-B $5C40,16,4 super_tile $14 #CALL:supertile($5C40)
-B $5C50,16,4 super_tile $15 #CALL:supertile($5C50)
-B $5C60,16,4 super_tile $16 #CALL:supertile($5C60)
-B $5C70,16,4 super_tile $17 #CALL:supertile($5C70)
-B $5C80,16,4 super_tile $18 #CALL:supertile($5C80)
-B $5C90,16,4 super_tile $19 #CALL:supertile($5C90)
-B $5CA0,16,4 super_tile $1A #CALL:supertile($5CA0)
-B $5CB0,16,4 super_tile $1B #CALL:supertile($5CB0)
-B $5CC0,16,4 super_tile $1C #CALL:supertile($5CC0)
-B $5CD0,16,4 super_tile $1D #CALL:supertile($5CD0)
-B $5CE0,16,4 super_tile $1E #CALL:supertile($5CE0)
-B $5CF0,16,4 super_tile $1F #CALL:supertile($5CF0)
-B $5D00,16,4 super_tile $20 #CALL:supertile($5D00)
-B $5D10,16,4 super_tile $21 #CALL:supertile($5D10)
-B $5D20,16,4 super_tile $22 #CALL:supertile($5D20)
-B $5D30,16,4 super_tile $23 #CALL:supertile($5D30)
-B $5D40,16,4 super_tile $24 #CALL:supertile($5D40)
-B $5D50,16,4 super_tile $25 #CALL:supertile($5D50)
-B $5D60,16,4 super_tile $26 #CALL:supertile($5D60)
-B $5D70,16,4 super_tile $27 #CALL:supertile($5D70)
-B $5D80,16,4 super_tile $28 #CALL:supertile($5D80)
-B $5D90,16,4 super_tile $29 #CALL:supertile($5D90)
-B $5DA0,16,4 super_tile $2A #CALL:supertile($5DA0)
-B $5DB0,16,4 super_tile $2B #CALL:supertile($5DB0)
-B $5DC0,16,4 super_tile $2C #CALL:supertile($5DC0)
-B $5DD0,16,4 super_tile $2D #CALL:supertile($5DD0)
-B $5DE0,16,4 super_tile $2E #CALL:supertile($5DE0)
-B $5DF0,16,4 super_tile $2F #CALL:supertile($5DF0)
-B $5E00,16,4 super_tile $30 #CALL:supertile($5E00)
-B $5E10,16,4 super_tile $31 #CALL:supertile($5E10)
-B $5E20,16,4 super_tile $32 #CALL:supertile($5E20)
-B $5E30,16,4 super_tile $33 #CALL:supertile($5E30)
-B $5E40,16,4 super_tile $34 #CALL:supertile($5E40)
-B $5E50,16,4 super_tile $35 #CALL:supertile($5E50)
-B $5E60,16,4 super_tile $36 #CALL:supertile($5E60)
-B $5E70,16,4 super_tile $37 #CALL:supertile($5E70)
-B $5E80,16,4 super_tile $38 #CALL:supertile($5E80)
-B $5E90,16,4 super_tile $39 #CALL:supertile($5E90)
-B $5EA0,16,4 super_tile $3A #CALL:supertile($5EA0)
-B $5EB0,16,4 super_tile $3B #CALL:supertile($5EB0)
-B $5EC0,16,4 super_tile $3C #CALL:supertile($5EC0)
-B $5ED0,16,4 super_tile $3D #CALL:supertile($5ED0)
-B $5EE0,16,4 super_tile $3E #CALL:supertile($5EE0)
-B $5EF0,16,4 super_tile $3F #CALL:supertile($5EF0)
-B $5F00,16,4 super_tile $40 #CALL:supertile($5F00)
-B $5F10,16,4 super_tile $41 #CALL:supertile($5F10)
-B $5F20,16,4 super_tile $42 #CALL:supertile($5F20)
-B $5F30,16,4 super_tile $43 #CALL:supertile($5F30)
-B $5F40,16,4 super_tile $44 #CALL:supertile($5F40)
-B $5F50,16,4 super_tile $45 #CALL:supertile($5F50)
-B $5F60,16,4 super_tile $46 #CALL:supertile($5F60)
-B $5F70,16,4 super_tile $47 #CALL:supertile($5F70)
-B $5F80,16,4 super_tile $48 #CALL:supertile($5F80)
-B $5F90,16,4 super_tile $49 #CALL:supertile($5F90)
-B $5FA0,16,4 super_tile $4A #CALL:supertile($5FA0)
-B $5FB0,16,4 super_tile $4B #CALL:supertile($5FB0)
-B $5FC0,16,4 super_tile $4C #CALL:supertile($5FC0)
-B $5FD0,16,4 super_tile $4D #CALL:supertile($5FD0)
-B $5FE0,16,4 super_tile $4E #CALL:supertile($5FE0)
-B $5FF0,16,4 super_tile $4F #CALL:supertile($5FF0) [unused by map]
-B $6000,16,4 super_tile $50 #CALL:supertile($6000)
-B $6010,16,4 super_tile $51 #CALL:supertile($6010)
-B $6020,16,4 super_tile $52 #CALL:supertile($6020)
-B $6030,16,4 super_tile $53 #CALL:supertile($6030)
-B $6040,16,4 super_tile $54 #CALL:supertile($6040)
-B $6050,16,4 super_tile $55 #CALL:supertile($6050)
-B $6060,16,4 super_tile $56 #CALL:supertile($6060)
-B $6070,16,4 super_tile $57 #CALL:supertile($6070)
-B $6080,16,4 super_tile $58 #CALL:supertile($6080)
-B $6090,16,4 super_tile $59 #CALL:supertile($6090)
-B $60A0,16,4 super_tile $5A #CALL:supertile($60A0)
-B $60B0,16,4 super_tile $5B #CALL:supertile($60B0)
-B $60C0,16,4 super_tile $5C #CALL:supertile($60C0)
-B $60D0,16,4 super_tile $5D #CALL:supertile($60D0)
-B $60E0,16,4 super_tile $5E #CALL:supertile($60E0)
-B $60F0,16,4 super_tile $5F #CALL:supertile($60F0)
-B $6100,16,4 super_tile $60 #CALL:supertile($6100)
-B $6110,16,4 super_tile $61 #CALL:supertile($6110)
-B $6120,16,4 super_tile $62 #CALL:supertile($6120)
-B $6130,16,4 super_tile $63 #CALL:supertile($6130)
-B $6140,16,4 super_tile $64 #CALL:supertile($6140)
-B $6150,16,4 super_tile $65 #CALL:supertile($6150)
-B $6160,16,4 super_tile $66 #CALL:supertile($6160)
-B $6170,16,4 super_tile $67 #CALL:supertile($6170)
-B $6180,16,4 super_tile $68 #CALL:supertile($6180)
-B $6190,16,4 super_tile $69 #CALL:supertile($6190)
-B $61A0,16,4 super_tile $6A #CALL:supertile($61A0)
-B $61B0,16,4 super_tile $6B #CALL:supertile($61B0)
-B $61C0,16,4 super_tile $6C #CALL:supertile($61C0)
-B $61D0,16,4 super_tile $6D #CALL:supertile($61D0)
-B $61E0,16,4 super_tile $6E #CALL:supertile($61E0)
-B $61F0,16,4 super_tile $6F #CALL:supertile($61F0)
-B $6200,16,4 super_tile $70 #CALL:supertile($6200)
-B $6210,16,4 super_tile $71 #CALL:supertile($6210)
-B $6220,16,4 super_tile $72 #CALL:supertile($6220)
-B $6230,16,4 super_tile $73 #CALL:supertile($6230)
-B $6240,16,4 super_tile $74 #CALL:supertile($6240)
-B $6250,16,4 super_tile $75 #CALL:supertile($6250)
-B $6260,16,4 super_tile $76 #CALL:supertile($6260)
-B $6270,16,4 super_tile $77 #CALL:supertile($6270)
-B $6280,16,4 super_tile $78 #CALL:supertile($6280)
-B $6290,16,4 super_tile $79 #CALL:supertile($6290)
-B $62A0,16,4 super_tile $7A #CALL:supertile($62A0)
-B $62B0,16,4 super_tile $7B #CALL:supertile($62B0)
-B $62C0,16,4 super_tile $7C #CALL:supertile($62C0)
-B $62D0,16,4 super_tile $7D #CALL:supertile($62D0)
-B $62E0,16,4 super_tile $7E #CALL:supertile($62E0)
-B $62F0,16,4 super_tile $7F #CALL:supertile($62F0)
-B $6300,16,4 super_tile $80 #CALL:supertile($6300)
-B $6310,16,4 super_tile $81 #CALL:supertile($6310)
-B $6320,16,4 super_tile $82 #CALL:supertile($6320)
-B $6330,16,4 super_tile $83 #CALL:supertile($6330)
-B $6340,16,4 super_tile $84 #CALL:supertile($6340)
-B $6350,16,4 super_tile $85 #CALL:supertile($6350)
-B $6360,16,4 super_tile $86 #CALL:supertile($6360)
-B $6370,16,4 super_tile $87 #CALL:supertile($6370)
-B $6380,16,4 super_tile $88 #CALL:supertile($6380)
-B $6390,16,4 super_tile $89 #CALL:supertile($6390)
-B $63A0,16,4 super_tile $8A #CALL:supertile($63A0)
-B $63B0,16,4 super_tile $8B #CALL:supertile($63B0)
-B $63C0,16,4 super_tile $8C #CALL:supertile($63C0)
-B $63D0,16,4 super_tile $8D #CALL:supertile($63D0)
-B $63E0,16,4 super_tile $8E #CALL:supertile($63E0)
-B $63F0,16,4 super_tile $8F #CALL:supertile($63F0)
-B $6400,16,4 super_tile $90 #CALL:supertile($6400)
-B $6410,16,4 super_tile $91 #CALL:supertile($6410)
-B $6420,16,4 super_tile $92 #CALL:supertile($6420)
-B $6430,16,4 super_tile $93 #CALL:supertile($6430)
-B $6440,16,4 super_tile $94 #CALL:supertile($6440)
-B $6450,16,4 super_tile $95 #CALL:supertile($6450)
-B $6460,16,4 super_tile $96 #CALL:supertile($6460)
-B $6470,16,4 super_tile $97 #CALL:supertile($6470)
-B $6480,16,4 super_tile $98 #CALL:supertile($6480)
-B $6490,16,4 super_tile $99 #CALL:supertile($6490)
-B $64A0,16,4 super_tile $9A #CALL:supertile($64A0) [unused by map]
-B $64B0,16,4 super_tile $9B #CALL:supertile($64B0)
-B $64C0,16,4 super_tile $9C #CALL:supertile($64C0)
-B $64D0,16,4 super_tile $9D #CALL:supertile($64D0)
-B $64E0,16,4 super_tile $9E #CALL:supertile($64E0)
-B $64F0,16,4 super_tile $9F #CALL:supertile($64F0)
-B $6500,16,4 super_tile $A0 #CALL:supertile($6500)
-B $6510,16,4 super_tile $A1 #CALL:supertile($6510)
-B $6520,16,4 super_tile $A2 #CALL:supertile($6520)
-B $6530,16,4 super_tile $A3 #CALL:supertile($6530)
-B $6540,16,4 super_tile $A4 #CALL:supertile($6540)
-B $6550,16,4 super_tile $A5 #CALL:supertile($6550)
-B $6560,16,4 super_tile $A6 #CALL:supertile($6560)
-B $6570,16,4 super_tile $A7 #CALL:supertile($6570)
-B $6580,16,4 super_tile $A8 #CALL:supertile($6580)
-B $6590,16,4 super_tile $A9 #CALL:supertile($6590)
-B $65A0,16,4 super_tile $AA #CALL:supertile($65A0)
-B $65B0,16,4 super_tile $AB #CALL:supertile($65B0)
-B $65C0,16,4 super_tile $AC #CALL:supertile($65C0)
-B $65D0,16,4 super_tile $AD #CALL:supertile($65D0)
-B $65E0,16,4 super_tile $AE #CALL:supertile($65E0)
-B $65F0,16,4 super_tile $AF #CALL:supertile($65F0)
-B $6600,16,4 super_tile $B0 #CALL:supertile($6600)
-B $6610,16,4 super_tile $B1 #CALL:supertile($6610)
-B $6620,16,4 super_tile $B2 #CALL:supertile($6620)
-B $6630,16,4 super_tile $B3 #CALL:supertile($6630)
-B $6640,16,4 super_tile $B4 #CALL:supertile($6640)
-B $6650,16,4 super_tile $B5 #CALL:supertile($6650)
-B $6660,16,4 super_tile $B6 #CALL:supertile($6660)
-B $6670,16,4 super_tile $B7 #CALL:supertile($6670)
-B $6680,16,4 super_tile $B8 #CALL:supertile($6680)
-B $6690,16,4 super_tile $B9 #CALL:supertile($6690)
-B $66A0,16,4 super_tile $BA #CALL:supertile($66A0)
-B $66B0,16,4 super_tile $BB #CALL:supertile($66B0)
-B $66C0,16,4 super_tile $BC #CALL:supertile($66C0)
-B $66D0,16,4 super_tile $BD #CALL:supertile($66D0)
-B $66E0,16,4 super_tile $BE #CALL:supertile($66E0)
-B $66F0,16,4 super_tile $BF #CALL:supertile($66F0)
-B $6700,16,4 super_tile $C0 #CALL:supertile($6700)
-B $6710,16,4 super_tile $C1 #CALL:supertile($6710)
-B $6720,16,4 super_tile $C2 #CALL:supertile($6720)
-B $6730,16,4 super_tile $C3 #CALL:supertile($6730)
-B $6740,16,4 super_tile $C4 #CALL:supertile($6740)
-B $6750,16,4 super_tile $C5 #CALL:supertile($6750)
-B $6760,16,4 super_tile $C6 #CALL:supertile($6760)
-B $6770,16,4 super_tile $C7 #CALL:supertile($6770)
-B $6780,16,4 super_tile $C8 #CALL:supertile($6780)
-B $6790,16,4 super_tile $C9 #CALL:supertile($6790)
-B $67A0,16,4 super_tile $CA #CALL:supertile($67A0)
-B $67B0,16,4 super_tile $CB #CALL:supertile($67B0)
-B $67C0,16,4 super_tile $CC #CALL:supertile($67C0)
-B $67D0,16,4 super_tile $CD #CALL:supertile($67D0)
-B $67E0,16,4 super_tile $CE #CALL:supertile($67E0)
-B $67F0,16,4 super_tile $CF #CALL:supertile($67F0)
-B $6800,16,4 super_tile $D0 #CALL:supertile($6800)
-B $6810,16,4 super_tile $D1 #CALL:supertile($6810)
-B $6820,16,4 super_tile $D2 #CALL:supertile($6820)
-B $6830,16,4 super_tile $D3 #CALL:supertile($6830)
-B $6840,16,4 super_tile $D4 #CALL:supertile($6840)
-B $6850,16,4 super_tile $D5 #CALL:supertile($6850)
-B $6860,16,4 super_tile $D6 #CALL:supertile($6860)
-B $6870,16,4 super_tile $D7 #CALL:supertile($6870)
-B $6880,16,4 super_tile $D8 #CALL:supertile($6880)
-B $6890,16,4 super_tile $D9 #CALL:supertile($6890)
+B $5B00,16,4 super_tile $00 #HTML[#CALL:supertile($5B00)] 
+B $5B10,16,4 super_tile $01 #HTML[#CALL:supertile($5B10)] 
+B $5B20,16,4 super_tile $02 #HTML[#CALL:supertile($5B20)] 
+B $5B30,16,4 super_tile $03 #HTML[#CALL:supertile($5B30)] 
+B $5B40,16,4 super_tile $04 #HTML[#CALL:supertile($5B40)] 
+B $5B50,16,4 super_tile $05 #HTML[#CALL:supertile($5B50)] 
+B $5B60,16,4 super_tile $06 #HTML[#CALL:supertile($5B60)] 
+B $5B70,16,4 super_tile $07 #HTML[#CALL:supertile($5B70)] 
+B $5B80,16,4 super_tile $08 #HTML[#CALL:supertile($5B80)] 
+B $5B90,16,4 super_tile $09 #HTML[#CALL:supertile($5B90)] 
+B $5BA0,16,4 super_tile $0A #HTML[#CALL:supertile($5BA0)] 
+B $5BB0,16,4 super_tile $0B #HTML[#CALL:supertile($5BB0)] 
+B $5BC0,16,4 super_tile $0C #HTML[#CALL:supertile($5BC0)] 
+B $5BD0,16,4 super_tile $0D #HTML[#CALL:supertile($5BD0)] 
+B $5BE0,16,4 super_tile $0E #HTML[#CALL:supertile($5BE0)] 
+B $5BF0,16,4 super_tile $0F #HTML[#CALL:supertile($5BF0)] 
+B $5C00,16,4 super_tile $10 #HTML[#CALL:supertile($5C00)] 
+B $5C10,16,4 super_tile $11 #HTML[#CALL:supertile($5C10)] 
+B $5C20,16,4 super_tile $12 #HTML[#CALL:supertile($5C20)] 
+B $5C30,16,4 super_tile $13 #HTML[#CALL:supertile($5C30)] 
+B $5C40,16,4 super_tile $14 #HTML[#CALL:supertile($5C40)] 
+B $5C50,16,4 super_tile $15 #HTML[#CALL:supertile($5C50)] 
+B $5C60,16,4 super_tile $16 #HTML[#CALL:supertile($5C60)] 
+B $5C70,16,4 super_tile $17 #HTML[#CALL:supertile($5C70)] 
+B $5C80,16,4 super_tile $18 #HTML[#CALL:supertile($5C80)] 
+B $5C90,16,4 super_tile $19 #HTML[#CALL:supertile($5C90)] 
+B $5CA0,16,4 super_tile $1A #HTML[#CALL:supertile($5CA0)] 
+B $5CB0,16,4 super_tile $1B #HTML[#CALL:supertile($5CB0)] 
+B $5CC0,16,4 super_tile $1C #HTML[#CALL:supertile($5CC0)] 
+B $5CD0,16,4 super_tile $1D #HTML[#CALL:supertile($5CD0)] 
+B $5CE0,16,4 super_tile $1E #HTML[#CALL:supertile($5CE0)] 
+B $5CF0,16,4 super_tile $1F #HTML[#CALL:supertile($5CF0)] 
+B $5D00,16,4 super_tile $20 #HTML[#CALL:supertile($5D00)] 
+B $5D10,16,4 super_tile $21 #HTML[#CALL:supertile($5D10)] 
+B $5D20,16,4 super_tile $22 #HTML[#CALL:supertile($5D20)] 
+B $5D30,16,4 super_tile $23 #HTML[#CALL:supertile($5D30)] 
+B $5D40,16,4 super_tile $24 #HTML[#CALL:supertile($5D40)] 
+B $5D50,16,4 super_tile $25 #HTML[#CALL:supertile($5D50)] 
+B $5D60,16,4 super_tile $26 #HTML[#CALL:supertile($5D60)] 
+B $5D70,16,4 super_tile $27 #HTML[#CALL:supertile($5D70)] 
+B $5D80,16,4 super_tile $28 #HTML[#CALL:supertile($5D80)] 
+B $5D90,16,4 super_tile $29 #HTML[#CALL:supertile($5D90)] 
+B $5DA0,16,4 super_tile $2A #HTML[#CALL:supertile($5DA0)] 
+B $5DB0,16,4 super_tile $2B #HTML[#CALL:supertile($5DB0)] 
+B $5DC0,16,4 super_tile $2C #HTML[#CALL:supertile($5DC0)] 
+B $5DD0,16,4 super_tile $2D #HTML[#CALL:supertile($5DD0)] 
+B $5DE0,16,4 super_tile $2E #HTML[#CALL:supertile($5DE0)] 
+B $5DF0,16,4 super_tile $2F #HTML[#CALL:supertile($5DF0)] 
+B $5E00,16,4 super_tile $30 #HTML[#CALL:supertile($5E00)] 
+B $5E10,16,4 super_tile $31 #HTML[#CALL:supertile($5E10)] 
+B $5E20,16,4 super_tile $32 #HTML[#CALL:supertile($5E20)] 
+B $5E30,16,4 super_tile $33 #HTML[#CALL:supertile($5E30)] 
+B $5E40,16,4 super_tile $34 #HTML[#CALL:supertile($5E40)] 
+B $5E50,16,4 super_tile $35 #HTML[#CALL:supertile($5E50)] 
+B $5E60,16,4 super_tile $36 #HTML[#CALL:supertile($5E60)] 
+B $5E70,16,4 super_tile $37 #HTML[#CALL:supertile($5E70)] 
+B $5E80,16,4 super_tile $38 #HTML[#CALL:supertile($5E80)] 
+B $5E90,16,4 super_tile $39 #HTML[#CALL:supertile($5E90)] 
+B $5EA0,16,4 super_tile $3A #HTML[#CALL:supertile($5EA0)] 
+B $5EB0,16,4 super_tile $3B #HTML[#CALL:supertile($5EB0)] 
+B $5EC0,16,4 super_tile $3C #HTML[#CALL:supertile($5EC0)] 
+B $5ED0,16,4 super_tile $3D #HTML[#CALL:supertile($5ED0)] 
+B $5EE0,16,4 super_tile $3E #HTML[#CALL:supertile($5EE0)] 
+B $5EF0,16,4 super_tile $3F #HTML[#CALL:supertile($5EF0)] 
+B $5F00,16,4 super_tile $40 #HTML[#CALL:supertile($5F00)] 
+B $5F10,16,4 super_tile $41 #HTML[#CALL:supertile($5F10)] 
+B $5F20,16,4 super_tile $42 #HTML[#CALL:supertile($5F20)] 
+B $5F30,16,4 super_tile $43 #HTML[#CALL:supertile($5F30)] 
+B $5F40,16,4 super_tile $44 #HTML[#CALL:supertile($5F40)] 
+B $5F50,16,4 super_tile $45 #HTML[#CALL:supertile($5F50)] 
+B $5F60,16,4 super_tile $46 #HTML[#CALL:supertile($5F60)] 
+B $5F70,16,4 super_tile $47 #HTML[#CALL:supertile($5F70)] 
+B $5F80,16,4 super_tile $48 #HTML[#CALL:supertile($5F80)] 
+B $5F90,16,4 super_tile $49 #HTML[#CALL:supertile($5F90)] 
+B $5FA0,16,4 super_tile $4A #HTML[#CALL:supertile($5FA0)] 
+B $5FB0,16,4 super_tile $4B #HTML[#CALL:supertile($5FB0)] 
+B $5FC0,16,4 super_tile $4C #HTML[#CALL:supertile($5FC0)] 
+B $5FD0,16,4 super_tile $4D #HTML[#CALL:supertile($5FD0)] 
+B $5FE0,16,4 super_tile $4E #HTML[#CALL:supertile($5FE0)] 
+B $5FF0,16,4 super_tile $4F #HTML[#CALL:supertile($5FF0)] [unused by map] 
+B $6000,16,4 super_tile $50 #HTML[#CALL:supertile($6000)] 
+B $6010,16,4 super_tile $51 #HTML[#CALL:supertile($6010)] 
+B $6020,16,4 super_tile $52 #HTML[#CALL:supertile($6020)] 
+B $6030,16,4 super_tile $53 #HTML[#CALL:supertile($6030)] 
+B $6040,16,4 super_tile $54 #HTML[#CALL:supertile($6040)] 
+B $6050,16,4 super_tile $55 #HTML[#CALL:supertile($6050)] 
+B $6060,16,4 super_tile $56 #HTML[#CALL:supertile($6060)] 
+B $6070,16,4 super_tile $57 #HTML[#CALL:supertile($6070)] 
+B $6080,16,4 super_tile $58 #HTML[#CALL:supertile($6080)] 
+B $6090,16,4 super_tile $59 #HTML[#CALL:supertile($6090)] 
+B $60A0,16,4 super_tile $5A #HTML[#CALL:supertile($60A0)] 
+B $60B0,16,4 super_tile $5B #HTML[#CALL:supertile($60B0)] 
+B $60C0,16,4 super_tile $5C #HTML[#CALL:supertile($60C0)] 
+B $60D0,16,4 super_tile $5D #HTML[#CALL:supertile($60D0)] 
+B $60E0,16,4 super_tile $5E #HTML[#CALL:supertile($60E0)] 
+B $60F0,16,4 super_tile $5F #HTML[#CALL:supertile($60F0)] 
+B $6100,16,4 super_tile $60 #HTML[#CALL:supertile($6100)] 
+B $6110,16,4 super_tile $61 #HTML[#CALL:supertile($6110)] 
+B $6120,16,4 super_tile $62 #HTML[#CALL:supertile($6120)] 
+B $6130,16,4 super_tile $63 #HTML[#CALL:supertile($6130)] 
+B $6140,16,4 super_tile $64 #HTML[#CALL:supertile($6140)] 
+B $6150,16,4 super_tile $65 #HTML[#CALL:supertile($6150)] 
+B $6160,16,4 super_tile $66 #HTML[#CALL:supertile($6160)] 
+B $6170,16,4 super_tile $67 #HTML[#CALL:supertile($6170)] 
+B $6180,16,4 super_tile $68 #HTML[#CALL:supertile($6180)] 
+B $6190,16,4 super_tile $69 #HTML[#CALL:supertile($6190)] 
+B $61A0,16,4 super_tile $6A #HTML[#CALL:supertile($61A0)] 
+B $61B0,16,4 super_tile $6B #HTML[#CALL:supertile($61B0)] 
+B $61C0,16,4 super_tile $6C #HTML[#CALL:supertile($61C0)] 
+B $61D0,16,4 super_tile $6D #HTML[#CALL:supertile($61D0)] 
+B $61E0,16,4 super_tile $6E #HTML[#CALL:supertile($61E0)] 
+B $61F0,16,4 super_tile $6F #HTML[#CALL:supertile($61F0)] 
+B $6200,16,4 super_tile $70 #HTML[#CALL:supertile($6200)] 
+B $6210,16,4 super_tile $71 #HTML[#CALL:supertile($6210)] 
+B $6220,16,4 super_tile $72 #HTML[#CALL:supertile($6220)] 
+B $6230,16,4 super_tile $73 #HTML[#CALL:supertile($6230)] 
+B $6240,16,4 super_tile $74 #HTML[#CALL:supertile($6240)] 
+B $6250,16,4 super_tile $75 #HTML[#CALL:supertile($6250)] 
+B $6260,16,4 super_tile $76 #HTML[#CALL:supertile($6260)] 
+B $6270,16,4 super_tile $77 #HTML[#CALL:supertile($6270)] 
+B $6280,16,4 super_tile $78 #HTML[#CALL:supertile($6280)] 
+B $6290,16,4 super_tile $79 #HTML[#CALL:supertile($6290)] 
+B $62A0,16,4 super_tile $7A #HTML[#CALL:supertile($62A0)] 
+B $62B0,16,4 super_tile $7B #HTML[#CALL:supertile($62B0)] 
+B $62C0,16,4 super_tile $7C #HTML[#CALL:supertile($62C0)] 
+B $62D0,16,4 super_tile $7D #HTML[#CALL:supertile($62D0)] 
+B $62E0,16,4 super_tile $7E #HTML[#CALL:supertile($62E0)] 
+B $62F0,16,4 super_tile $7F #HTML[#CALL:supertile($62F0)] 
+B $6300,16,4 super_tile $80 #HTML[#CALL:supertile($6300)] 
+B $6310,16,4 super_tile $81 #HTML[#CALL:supertile($6310)] 
+B $6320,16,4 super_tile $82 #HTML[#CALL:supertile($6320)] 
+B $6330,16,4 super_tile $83 #HTML[#CALL:supertile($6330)] 
+B $6340,16,4 super_tile $84 #HTML[#CALL:supertile($6340)] 
+B $6350,16,4 super_tile $85 #HTML[#CALL:supertile($6350)] 
+B $6360,16,4 super_tile $86 #HTML[#CALL:supertile($6360)] 
+B $6370,16,4 super_tile $87 #HTML[#CALL:supertile($6370)] 
+B $6380,16,4 super_tile $88 #HTML[#CALL:supertile($6380)] 
+B $6390,16,4 super_tile $89 #HTML[#CALL:supertile($6390)] 
+B $63A0,16,4 super_tile $8A #HTML[#CALL:supertile($63A0)] 
+B $63B0,16,4 super_tile $8B #HTML[#CALL:supertile($63B0)] 
+B $63C0,16,4 super_tile $8C #HTML[#CALL:supertile($63C0)] 
+B $63D0,16,4 super_tile $8D #HTML[#CALL:supertile($63D0)] 
+B $63E0,16,4 super_tile $8E #HTML[#CALL:supertile($63E0)] 
+B $63F0,16,4 super_tile $8F #HTML[#CALL:supertile($63F0)] 
+B $6400,16,4 super_tile $90 #HTML[#CALL:supertile($6400)] 
+B $6410,16,4 super_tile $91 #HTML[#CALL:supertile($6410)] 
+B $6420,16,4 super_tile $92 #HTML[#CALL:supertile($6420)] 
+B $6430,16,4 super_tile $93 #HTML[#CALL:supertile($6430)] 
+B $6440,16,4 super_tile $94 #HTML[#CALL:supertile($6440)] 
+B $6450,16,4 super_tile $95 #HTML[#CALL:supertile($6450)] 
+B $6460,16,4 super_tile $96 #HTML[#CALL:supertile($6460)] 
+B $6470,16,4 super_tile $97 #HTML[#CALL:supertile($6470)] 
+B $6480,16,4 super_tile $98 #HTML[#CALL:supertile($6480)] 
+B $6490,16,4 super_tile $99 #HTML[#CALL:supertile($6490)] 
+B $64A0,16,4 super_tile $9A #HTML[#CALL:supertile($64A0)] [unused by map] 
+B $64B0,16,4 super_tile $9B #HTML[#CALL:supertile($64B0)] 
+B $64C0,16,4 super_tile $9C #HTML[#CALL:supertile($64C0)] 
+B $64D0,16,4 super_tile $9D #HTML[#CALL:supertile($64D0)] 
+B $64E0,16,4 super_tile $9E #HTML[#CALL:supertile($64E0)] 
+B $64F0,16,4 super_tile $9F #HTML[#CALL:supertile($64F0)] 
+B $6500,16,4 super_tile $A0 #HTML[#CALL:supertile($6500)] 
+B $6510,16,4 super_tile $A1 #HTML[#CALL:supertile($6510)] 
+B $6520,16,4 super_tile $A2 #HTML[#CALL:supertile($6520)] 
+B $6530,16,4 super_tile $A3 #HTML[#CALL:supertile($6530)] 
+B $6540,16,4 super_tile $A4 #HTML[#CALL:supertile($6540)] 
+B $6550,16,4 super_tile $A5 #HTML[#CALL:supertile($6550)] 
+B $6560,16,4 super_tile $A6 #HTML[#CALL:supertile($6560)] 
+B $6570,16,4 super_tile $A7 #HTML[#CALL:supertile($6570)] 
+B $6580,16,4 super_tile $A8 #HTML[#CALL:supertile($6580)] 
+B $6590,16,4 super_tile $A9 #HTML[#CALL:supertile($6590)] 
+B $65A0,16,4 super_tile $AA #HTML[#CALL:supertile($65A0)] 
+B $65B0,16,4 super_tile $AB #HTML[#CALL:supertile($65B0)] 
+B $65C0,16,4 super_tile $AC #HTML[#CALL:supertile($65C0)] 
+B $65D0,16,4 super_tile $AD #HTML[#CALL:supertile($65D0)] 
+B $65E0,16,4 super_tile $AE #HTML[#CALL:supertile($65E0)] 
+B $65F0,16,4 super_tile $AF #HTML[#CALL:supertile($65F0)] 
+B $6600,16,4 super_tile $B0 #HTML[#CALL:supertile($6600)] 
+B $6610,16,4 super_tile $B1 #HTML[#CALL:supertile($6610)] 
+B $6620,16,4 super_tile $B2 #HTML[#CALL:supertile($6620)] 
+B $6630,16,4 super_tile $B3 #HTML[#CALL:supertile($6630)] 
+B $6640,16,4 super_tile $B4 #HTML[#CALL:supertile($6640)] 
+B $6650,16,4 super_tile $B5 #HTML[#CALL:supertile($6650)] 
+B $6660,16,4 super_tile $B6 #HTML[#CALL:supertile($6660)] 
+B $6670,16,4 super_tile $B7 #HTML[#CALL:supertile($6670)] 
+B $6680,16,4 super_tile $B8 #HTML[#CALL:supertile($6680)] 
+B $6690,16,4 super_tile $B9 #HTML[#CALL:supertile($6690)] 
+B $66A0,16,4 super_tile $BA #HTML[#CALL:supertile($66A0)] 
+B $66B0,16,4 super_tile $BB #HTML[#CALL:supertile($66B0)] 
+B $66C0,16,4 super_tile $BC #HTML[#CALL:supertile($66C0)] 
+B $66D0,16,4 super_tile $BD #HTML[#CALL:supertile($66D0)] 
+B $66E0,16,4 super_tile $BE #HTML[#CALL:supertile($66E0)] 
+B $66F0,16,4 super_tile $BF #HTML[#CALL:supertile($66F0)] 
+B $6700,16,4 super_tile $C0 #HTML[#CALL:supertile($6700)] 
+B $6710,16,4 super_tile $C1 #HTML[#CALL:supertile($6710)] 
+B $6720,16,4 super_tile $C2 #HTML[#CALL:supertile($6720)] 
+B $6730,16,4 super_tile $C3 #HTML[#CALL:supertile($6730)] 
+B $6740,16,4 super_tile $C4 #HTML[#CALL:supertile($6740)] 
+B $6750,16,4 super_tile $C5 #HTML[#CALL:supertile($6750)] 
+B $6760,16,4 super_tile $C6 #HTML[#CALL:supertile($6760)] 
+B $6770,16,4 super_tile $C7 #HTML[#CALL:supertile($6770)] 
+B $6780,16,4 super_tile $C8 #HTML[#CALL:supertile($6780)] 
+B $6790,16,4 super_tile $C9 #HTML[#CALL:supertile($6790)] 
+B $67A0,16,4 super_tile $CA #HTML[#CALL:supertile($67A0)] 
+B $67B0,16,4 super_tile $CB #HTML[#CALL:supertile($67B0)] 
+B $67C0,16,4 super_tile $CC #HTML[#CALL:supertile($67C0)] 
+B $67D0,16,4 super_tile $CD #HTML[#CALL:supertile($67D0)] 
+B $67E0,16,4 super_tile $CE #HTML[#CALL:supertile($67E0)] 
+B $67F0,16,4 super_tile $CF #HTML[#CALL:supertile($67F0)] 
+B $6800,16,4 super_tile $D0 #HTML[#CALL:supertile($6800)] 
+B $6810,16,4 super_tile $D1 #HTML[#CALL:supertile($6810)] 
+B $6820,16,4 super_tile $D2 #HTML[#CALL:supertile($6820)] 
+B $6830,16,4 super_tile $D3 #HTML[#CALL:supertile($6830)] 
+B $6840,16,4 super_tile $D4 #HTML[#CALL:supertile($6840)] 
+B $6850,16,4 super_tile $D5 #HTML[#CALL:supertile($6850)] 
+B $6860,16,4 super_tile $D6 #HTML[#CALL:supertile($6860)] 
+B $6870,16,4 super_tile $D7 #HTML[#CALL:supertile($6870)] 
+B $6880,16,4 super_tile $D8 #HTML[#CALL:supertile($6880)] 
+B $6890,16,4 super_tile $D9 #HTML[#CALL:supertile($6890)] 
 
 ; ------------------------------------------------------------------------------
 
@@ -2711,7 +2711,7 @@ D $7EEE "ITEM DISCOVERED"
 b $7F00 static_tiles
 D $7F00 These tiles are used to draw fixed screen elements such as medals.
 D $7F00 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
-D $7F00 #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles)
+D $7F00 #UDGTABLE { #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles) } TABLE#
 B $7F00,9 blank
 ;
 B $7F09,9 speaker_tl_tl
@@ -2938,882 +2938,882 @@ D $9768 Interior tiles. 194 tiles.
 ;
 ;D $9768,8 empty tile (<- plot_interior_tiles, select_tile_set)
 
-B $8218 #UDGARRAY1,7,4,1;$8218-$821F-8(exterior-tiles0-000)
-B $8220 #UDGARRAY1,7,4,1;$8220-$8227-8(exterior-tiles0-001)
-B $8228 #UDGARRAY1,7,4,1;$8228-$822F-8(exterior-tiles0-002)
-B $8230 #UDGARRAY1,7,4,1;$8230-$8237-8(exterior-tiles0-003)
-B $8238 #UDGARRAY1,7,4,1;$8238-$823F-8(exterior-tiles0-004)
-B $8240 #UDGARRAY1,7,4,1;$8240-$8247-8(exterior-tiles0-005)
-B $8248 #UDGARRAY1,7,4,1;$8248-$824F-8(exterior-tiles0-006)
-B $8250 #UDGARRAY1,7,4,1;$8250-$8257-8(exterior-tiles0-007)
-B $8258 #UDGARRAY1,7,4,1;$8258-$825F-8(exterior-tiles0-008)
-B $8260 #UDGARRAY1,7,4,1;$8260-$8267-8(exterior-tiles0-009)
-B $8268 #UDGARRAY1,7,4,1;$8268-$826F-8(exterior-tiles0-010)
-B $8270 #UDGARRAY1,7,4,1;$8270-$8277-8(exterior-tiles0-011)
-B $8278 #UDGARRAY1,7,4,1;$8278-$827F-8(exterior-tiles0-012)
-B $8280 #UDGARRAY1,7,4,1;$8280-$8287-8(exterior-tiles0-013)
-B $8288 #UDGARRAY1,7,4,1;$8288-$828F-8(exterior-tiles0-014)
-B $8290 #UDGARRAY1,7,4,1;$8290-$8297-8(exterior-tiles0-015)
-B $8298 #UDGARRAY1,7,4,1;$8298-$829F-8(exterior-tiles0-016)
-B $82A0 #UDGARRAY1,7,4,1;$82A0-$82A7-8(exterior-tiles0-017)
-B $82A8 #UDGARRAY1,7,4,1;$82A8-$82AF-8(exterior-tiles0-018)
-B $82B0 #UDGARRAY1,7,4,1;$82B0-$82B7-8(exterior-tiles0-019)
-B $82B8 #UDGARRAY1,7,4,1;$82B8-$82BF-8(exterior-tiles0-020)
-B $82C0 #UDGARRAY1,7,4,1;$82C0-$82C7-8(exterior-tiles0-021)
-B $82C8 #UDGARRAY1,7,4,1;$82C8-$82CF-8(exterior-tiles0-022)
-B $82D0 #UDGARRAY1,7,4,1;$82D0-$82D7-8(exterior-tiles0-023)
-B $82D8 #UDGARRAY1,7,4,1;$82D8-$82DF-8(exterior-tiles0-024)
-B $82E0 #UDGARRAY1,7,4,1;$82E0-$82E7-8(exterior-tiles0-025)
-B $82E8 #UDGARRAY1,7,4,1;$82E8-$82EF-8(exterior-tiles0-026)
-B $82F0 #UDGARRAY1,7,4,1;$82F0-$82F7-8(exterior-tiles0-027)
-B $82F8 #UDGARRAY1,7,4,1;$82F8-$82FF-8(exterior-tiles0-028)
-B $8300 #UDGARRAY1,7,4,1;$8300-$8307-8(exterior-tiles0-029)
-B $8308 #UDGARRAY1,7,4,1;$8308-$830F-8(exterior-tiles0-030)
-B $8310 #UDGARRAY1,7,4,1;$8310-$8317-8(exterior-tiles0-031)
-B $8318 #UDGARRAY1,7,4,1;$8318-$831F-8(exterior-tiles0-032)
-B $8320 #UDGARRAY1,7,4,1;$8320-$8327-8(exterior-tiles0-033)
-B $8328 #UDGARRAY1,7,4,1;$8328-$832F-8(exterior-tiles0-034)
-B $8330 #UDGARRAY1,7,4,1;$8330-$8337-8(exterior-tiles0-035)
-B $8338 #UDGARRAY1,7,4,1;$8338-$833F-8(exterior-tiles0-036)
-B $8340 #UDGARRAY1,7,4,1;$8340-$8347-8(exterior-tiles0-037)
-B $8348 #UDGARRAY1,7,4,1;$8348-$834F-8(exterior-tiles0-038)
-B $8350 #UDGARRAY1,7,4,1;$8350-$8357-8(exterior-tiles0-039)
-B $8358 #UDGARRAY1,7,4,1;$8358-$835F-8(exterior-tiles0-040)
-B $8360 #UDGARRAY1,7,4,1;$8360-$8367-8(exterior-tiles0-041)
-B $8368 #UDGARRAY1,7,4,1;$8368-$836F-8(exterior-tiles0-042)
-B $8370 #UDGARRAY1,7,4,1;$8370-$8377-8(exterior-tiles0-043)
-B $8378 #UDGARRAY1,7,4,1;$8378-$837F-8(exterior-tiles0-044)
-B $8380 #UDGARRAY1,7,4,1;$8380-$8387-8(exterior-tiles0-045)
-B $8388 #UDGARRAY1,7,4,1;$8388-$838F-8(exterior-tiles0-046)
-B $8390 #UDGARRAY1,7,4,1;$8390-$8397-8(exterior-tiles0-047)
-B $8398 #UDGARRAY1,7,4,1;$8398-$839F-8(exterior-tiles0-048)
-B $83A0 #UDGARRAY1,7,4,1;$83A0-$83A7-8(exterior-tiles0-049)
-B $83A8 #UDGARRAY1,7,4,1;$83A8-$83AF-8(exterior-tiles0-050)
-B $83B0 #UDGARRAY1,7,4,1;$83B0-$83B7-8(exterior-tiles0-051)
-B $83B8 #UDGARRAY1,7,4,1;$83B8-$83BF-8(exterior-tiles0-052)
-B $83C0 #UDGARRAY1,7,4,1;$83C0-$83C7-8(exterior-tiles0-053)
-B $83C8 #UDGARRAY1,7,4,1;$83C8-$83CF-8(exterior-tiles0-054)
-B $83D0 #UDGARRAY1,7,4,1;$83D0-$83D7-8(exterior-tiles0-055)
-B $83D8 #UDGARRAY1,7,4,1;$83D8-$83DF-8(exterior-tiles0-056)
-B $83E0 #UDGARRAY1,7,4,1;$83E0-$83E7-8(exterior-tiles0-057)
-B $83E8 #UDGARRAY1,7,4,1;$83E8-$83EF-8(exterior-tiles0-058)
-B $83F0 #UDGARRAY1,7,4,1;$83F0-$83F7-8(exterior-tiles0-059)
-B $83F8 #UDGARRAY1,7,4,1;$83F8-$83FF-8(exterior-tiles0-060)
-B $8400 #UDGARRAY1,7,4,1;$8400-$8407-8(exterior-tiles0-061)
-B $8408 #UDGARRAY1,7,4,1;$8408-$840F-8(exterior-tiles0-062)
-B $8410 #UDGARRAY1,7,4,1;$8410-$8417-8(exterior-tiles0-063)
-B $8418 #UDGARRAY1,7,4,1;$8418-$841F-8(exterior-tiles0-064)
-B $8420 #UDGARRAY1,7,4,1;$8420-$8427-8(exterior-tiles0-065)
-B $8428 #UDGARRAY1,7,4,1;$8428-$842F-8(exterior-tiles0-066)
-B $8430 #UDGARRAY1,7,4,1;$8430-$8437-8(exterior-tiles0-067)
-B $8438 #UDGARRAY1,7,4,1;$8438-$843F-8(exterior-tiles0-068)
-B $8440 #UDGARRAY1,7,4,1;$8440-$8447-8(exterior-tiles0-069)
-B $8448 #UDGARRAY1,7,4,1;$8448-$844F-8(exterior-tiles0-070)
-B $8450 #UDGARRAY1,7,4,1;$8450-$8457-8(exterior-tiles0-071)
-B $8458 #UDGARRAY1,7,4,1;$8458-$845F-8(exterior-tiles0-072)
-B $8460 #UDGARRAY1,7,4,1;$8460-$8467-8(exterior-tiles0-073)
-B $8468 #UDGARRAY1,7,4,1;$8468-$846F-8(exterior-tiles0-074)
-B $8470 #UDGARRAY1,7,4,1;$8470-$8477-8(exterior-tiles0-075)
-B $8478 #UDGARRAY1,7,4,1;$8478-$847F-8(exterior-tiles0-076)
-B $8480 #UDGARRAY1,7,4,1;$8480-$8487-8(exterior-tiles0-077)
-B $8488 #UDGARRAY1,7,4,1;$8488-$848F-8(exterior-tiles0-078)
-B $8490 #UDGARRAY1,7,4,1;$8490-$8497-8(exterior-tiles0-079)
-B $8498 #UDGARRAY1,7,4,1;$8498-$849F-8(exterior-tiles0-080)
-B $84A0 #UDGARRAY1,7,4,1;$84A0-$84A7-8(exterior-tiles0-081)
-B $84A8 #UDGARRAY1,7,4,1;$84A8-$84AF-8(exterior-tiles0-082)
-B $84B0 #UDGARRAY1,7,4,1;$84B0-$84B7-8(exterior-tiles0-083)
-B $84B8 #UDGARRAY1,7,4,1;$84B8-$84BF-8(exterior-tiles0-084)
-B $84C0 #UDGARRAY1,7,4,1;$84C0-$84C7-8(exterior-tiles0-085)
-B $84C8 #UDGARRAY1,7,4,1;$84C8-$84CF-8(exterior-tiles0-086)
-B $84D0 #UDGARRAY1,7,4,1;$84D0-$84D7-8(exterior-tiles0-087)
-B $84D8 #UDGARRAY1,7,4,1;$84D8-$84DF-8(exterior-tiles0-088)
-B $84E0 #UDGARRAY1,7,4,1;$84E0-$84E7-8(exterior-tiles0-089)
-B $84E8 #UDGARRAY1,7,4,1;$84E8-$84EF-8(exterior-tiles0-090)
-B $84F0 #UDGARRAY1,7,4,1;$84F0-$84F7-8(exterior-tiles0-091)
-B $84F8 #UDGARRAY1,7,4,1;$84F8-$84FF-8(exterior-tiles0-092)
-B $8500 #UDGARRAY1,7,4,1;$8500-$8507-8(exterior-tiles0-093)
-B $8508 #UDGARRAY1,7,4,1;$8508-$850F-8(exterior-tiles0-094)
-B $8510 #UDGARRAY1,7,4,1;$8510-$8517-8(exterior-tiles0-095)
-B $8518 #UDGARRAY1,7,4,1;$8518-$851F-8(exterior-tiles0-096)
-B $8520 #UDGARRAY1,7,4,1;$8520-$8527-8(exterior-tiles0-097)
-B $8528 #UDGARRAY1,7,4,1;$8528-$852F-8(exterior-tiles0-098)
-B $8530 #UDGARRAY1,7,4,1;$8530-$8537-8(exterior-tiles0-099)
-B $8538 #UDGARRAY1,7,4,1;$8538-$853F-8(exterior-tiles0-100)
-B $8540 #UDGARRAY1,7,4,1;$8540-$8547-8(exterior-tiles0-101)
-B $8548 #UDGARRAY1,7,4,1;$8548-$854F-8(exterior-tiles0-102)
-B $8550 #UDGARRAY1,7,4,1;$8550-$8557-8(exterior-tiles0-103)
-B $8558 #UDGARRAY1,7,4,1;$8558-$855F-8(exterior-tiles0-104)
-B $8560 #UDGARRAY1,7,4,1;$8560-$8567-8(exterior-tiles0-105)
-B $8568 #UDGARRAY1,7,4,1;$8568-$856F-8(exterior-tiles0-106)
-B $8570 #UDGARRAY1,7,4,1;$8570-$8577-8(exterior-tiles0-107)
-B $8578 #UDGARRAY1,7,4,1;$8578-$857F-8(exterior-tiles0-108)
-B $8580 #UDGARRAY1,7,4,1;$8580-$8587-8(exterior-tiles0-109)
-B $8588 #UDGARRAY1,7,4,1;$8588-$858F-8(exterior-tiles0-110)
-B $8590 #UDGARRAY1,7,4,1;$8590-$8597-8(exterior-tiles1-000)
-B $8598 #UDGARRAY1,7,4,1;$8598-$859F-8(exterior-tiles1-001)
-B $85A0 #UDGARRAY1,7,4,1;$85A0-$85A7-8(exterior-tiles1-002)
-B $85A8 #UDGARRAY1,7,4,1;$85A8-$85AF-8(exterior-tiles1-003)
-B $85B0 #UDGARRAY1,7,4,1;$85B0-$85B7-8(exterior-tiles1-004)
-B $85B8 #UDGARRAY1,7,4,1;$85B8-$85BF-8(exterior-tiles1-005)
-B $85C0 #UDGARRAY1,7,4,1;$85C0-$85C7-8(exterior-tiles1-006)
-B $85C8 #UDGARRAY1,7,4,1;$85C8-$85CF-8(exterior-tiles1-007)
-B $85D0 #UDGARRAY1,7,4,1;$85D0-$85D7-8(exterior-tiles1-008)
-B $85D8 #UDGARRAY1,7,4,1;$85D8-$85DF-8(exterior-tiles1-009)
-B $85E0 #UDGARRAY1,7,4,1;$85E0-$85E7-8(exterior-tiles1-010)
-B $85E8 #UDGARRAY1,7,4,1;$85E8-$85EF-8(exterior-tiles1-011)
-B $85F0 #UDGARRAY1,7,4,1;$85F0-$85F7-8(exterior-tiles1-012)
-B $85F8 #UDGARRAY1,7,4,1;$85F8-$85FF-8(exterior-tiles1-013)
-B $8600 #UDGARRAY1,7,4,1;$8600-$8607-8(exterior-tiles1-014)
-B $8608 #UDGARRAY1,7,4,1;$8608-$860F-8(exterior-tiles1-015)
-B $8610 #UDGARRAY1,7,4,1;$8610-$8617-8(exterior-tiles1-016)
-B $8618 #UDGARRAY1,7,4,1;$8618-$861F-8(exterior-tiles1-017)
-B $8620 #UDGARRAY1,7,4,1;$8620-$8627-8(exterior-tiles1-018)
-B $8628 #UDGARRAY1,7,4,1;$8628-$862F-8(exterior-tiles1-019)
-B $8630 #UDGARRAY1,7,4,1;$8630-$8637-8(exterior-tiles1-020)
-B $8638 #UDGARRAY1,7,4,1;$8638-$863F-8(exterior-tiles1-021)
-B $8640 #UDGARRAY1,7,4,1;$8640-$8647-8(exterior-tiles1-022)
-B $8648 #UDGARRAY1,7,4,1;$8648-$864F-8(exterior-tiles1-023)
-B $8650 #UDGARRAY1,7,4,1;$8650-$8657-8(exterior-tiles1-024)
-B $8658 #UDGARRAY1,7,4,1;$8658-$865F-8(exterior-tiles1-025)
-B $8660 #UDGARRAY1,7,4,1;$8660-$8667-8(exterior-tiles1-026)
-B $8668 #UDGARRAY1,7,4,1;$8668-$866F-8(exterior-tiles1-027)
-B $8670 #UDGARRAY1,7,4,1;$8670-$8677-8(exterior-tiles1-028)
-B $8678 #UDGARRAY1,7,4,1;$8678-$867F-8(exterior-tiles1-029)
-B $8680 #UDGARRAY1,7,4,1;$8680-$8687-8(exterior-tiles1-030)
-B $8688 #UDGARRAY1,7,4,1;$8688-$868F-8(exterior-tiles1-031)
-B $8690 #UDGARRAY1,7,4,1;$8690-$8697-8(exterior-tiles1-032)
-B $8698 #UDGARRAY1,7,4,1;$8698-$869F-8(exterior-tiles1-033)
-B $86A0 #UDGARRAY1,7,4,1;$86A0-$86A7-8(exterior-tiles1-034)
-B $86A8 #UDGARRAY1,7,4,1;$86A8-$86AF-8(exterior-tiles1-035)
-B $86B0 #UDGARRAY1,7,4,1;$86B0-$86B7-8(exterior-tiles1-036)
-B $86B8 #UDGARRAY1,7,4,1;$86B8-$86BF-8(exterior-tiles1-037)
-B $86C0 #UDGARRAY1,7,4,1;$86C0-$86C7-8(exterior-tiles1-038)
-B $86C8 #UDGARRAY1,7,4,1;$86C8-$86CF-8(exterior-tiles1-039)
-B $86D0 #UDGARRAY1,7,4,1;$86D0-$86D7-8(exterior-tiles1-040)
-B $86D8 #UDGARRAY1,7,4,1;$86D8-$86DF-8(exterior-tiles1-041)
-B $86E0 #UDGARRAY1,7,4,1;$86E0-$86E7-8(exterior-tiles1-042)
-B $86E8 #UDGARRAY1,7,4,1;$86E8-$86EF-8(exterior-tiles1-043)
-B $86F0 #UDGARRAY1,7,4,1;$86F0-$86F7-8(exterior-tiles1-044)
-B $86F8 #UDGARRAY1,7,4,1;$86F8-$86FF-8(exterior-tiles1-045)
-B $8700 #UDGARRAY1,7,4,1;$8700-$8707-8(exterior-tiles1-046)
-B $8708 #UDGARRAY1,7,4,1;$8708-$870F-8(exterior-tiles1-047)
-B $8710 #UDGARRAY1,7,4,1;$8710-$8717-8(exterior-tiles1-048)
-B $8718 #UDGARRAY1,7,4,1;$8718-$871F-8(exterior-tiles1-049)
-B $8720 #UDGARRAY1,7,4,1;$8720-$8727-8(exterior-tiles1-050)
-B $8728 #UDGARRAY1,7,4,1;$8728-$872F-8(exterior-tiles1-051)
-B $8730 #UDGARRAY1,7,4,1;$8730-$8737-8(exterior-tiles1-052)
-B $8738 #UDGARRAY1,7,4,1;$8738-$873F-8(exterior-tiles1-053)
-B $8740 #UDGARRAY1,7,4,1;$8740-$8747-8(exterior-tiles1-054)
-B $8748 #UDGARRAY1,7,4,1;$8748-$874F-8(exterior-tiles1-055)
-B $8750 #UDGARRAY1,7,4,1;$8750-$8757-8(exterior-tiles1-056)
-B $8758 #UDGARRAY1,7,4,1;$8758-$875F-8(exterior-tiles1-057)
-B $8760 #UDGARRAY1,7,4,1;$8760-$8767-8(exterior-tiles1-058)
-B $8768 #UDGARRAY1,7,4,1;$8768-$876F-8(exterior-tiles1-059)
-B $8770 #UDGARRAY1,7,4,1;$8770-$8777-8(exterior-tiles1-060)
-B $8778 #UDGARRAY1,7,4,1;$8778-$877F-8(exterior-tiles1-061)
-B $8780 #UDGARRAY1,7,4,1;$8780-$8787-8(exterior-tiles1-062)
-B $8788 #UDGARRAY1,7,4,1;$8788-$878F-8(exterior-tiles1-063)
-B $8790 #UDGARRAY1,7,4,1;$8790-$8797-8(exterior-tiles1-064)
-B $8798 #UDGARRAY1,7,4,1;$8798-$879F-8(exterior-tiles1-065)
-B $87A0 #UDGARRAY1,7,4,1;$87A0-$87A7-8(exterior-tiles1-066)
-B $87A8 #UDGARRAY1,7,4,1;$87A8-$87AF-8(exterior-tiles1-067)
-B $87B0 #UDGARRAY1,7,4,1;$87B0-$87B7-8(exterior-tiles1-068)
-B $87B8 #UDGARRAY1,7,4,1;$87B8-$87BF-8(exterior-tiles1-069)
-B $87C0 #UDGARRAY1,7,4,1;$87C0-$87C7-8(exterior-tiles1-070)
-B $87C8 #UDGARRAY1,7,4,1;$87C8-$87CF-8(exterior-tiles1-071)
-B $87D0 #UDGARRAY1,7,4,1;$87D0-$87D7-8(exterior-tiles1-072)
-B $87D8 #UDGARRAY1,7,4,1;$87D8-$87DF-8(exterior-tiles1-073)
-B $87E0 #UDGARRAY1,7,4,1;$87E0-$87E7-8(exterior-tiles1-074)
-B $87E8 #UDGARRAY1,7,4,1;$87E8-$87EF-8(exterior-tiles1-075)
-B $87F0 #UDGARRAY1,7,4,1;$87F0-$87F7-8(exterior-tiles1-076)
-B $87F8 #UDGARRAY1,7,4,1;$87F8-$87FF-8(exterior-tiles1-077)
-B $8800 #UDGARRAY1,7,4,1;$8800-$8807-8(exterior-tiles1-078)
-B $8808 #UDGARRAY1,7,4,1;$8808-$880F-8(exterior-tiles1-079)
-B $8810 #UDGARRAY1,7,4,1;$8810-$8817-8(exterior-tiles1-080)
-B $8818 #UDGARRAY1,7,4,1;$8818-$881F-8(exterior-tiles1-081)
-B $8820 #UDGARRAY1,7,4,1;$8820-$8827-8(exterior-tiles1-082)
-B $8828 #UDGARRAY1,7,4,1;$8828-$882F-8(exterior-tiles1-083)
-B $8830 #UDGARRAY1,7,4,1;$8830-$8837-8(exterior-tiles1-084)
-B $8838 #UDGARRAY1,7,4,1;$8838-$883F-8(exterior-tiles1-085)
-B $8840 #UDGARRAY1,7,4,1;$8840-$8847-8(exterior-tiles1-086)
-B $8848 #UDGARRAY1,7,4,1;$8848-$884F-8(exterior-tiles1-087)
-B $8850 #UDGARRAY1,7,4,1;$8850-$8857-8(exterior-tiles1-088)
-B $8858 #UDGARRAY1,7,4,1;$8858-$885F-8(exterior-tiles1-089)
-B $8860 #UDGARRAY1,7,4,1;$8860-$8867-8(exterior-tiles1-090)
-B $8868 #UDGARRAY1,7,4,1;$8868-$886F-8(exterior-tiles1-091)
-B $8870 #UDGARRAY1,7,4,1;$8870-$8877-8(exterior-tiles1-092)
-B $8878 #UDGARRAY1,7,4,1;$8878-$887F-8(exterior-tiles1-093)
-B $8880 #UDGARRAY1,7,4,1;$8880-$8887-8(exterior-tiles1-094)
-B $8888 #UDGARRAY1,7,4,1;$8888-$888F-8(exterior-tiles1-095)
-B $8890 #UDGARRAY1,7,4,1;$8890-$8897-8(exterior-tiles1-096)
-B $8898 #UDGARRAY1,7,4,1;$8898-$889F-8(exterior-tiles1-097)
-B $88A0 #UDGARRAY1,7,4,1;$88A0-$88A7-8(exterior-tiles1-098)
-B $88A8 #UDGARRAY1,7,4,1;$88A8-$88AF-8(exterior-tiles1-099)
-B $88B0 #UDGARRAY1,7,4,1;$88B0-$88B7-8(exterior-tiles1-100)
-B $88B8 #UDGARRAY1,7,4,1;$88B8-$88BF-8(exterior-tiles1-101)
-B $88C0 #UDGARRAY1,7,4,1;$88C0-$88C7-8(exterior-tiles1-102)
-B $88C8 #UDGARRAY1,7,4,1;$88C8-$88CF-8(exterior-tiles1-103)
-B $88D0 #UDGARRAY1,7,4,1;$88D0-$88D7-8(exterior-tiles1-104)
-B $88D8 #UDGARRAY1,7,4,1;$88D8-$88DF-8(exterior-tiles1-105)
-B $88E0 #UDGARRAY1,7,4,1;$88E0-$88E7-8(exterior-tiles1-106)
-B $88E8 #UDGARRAY1,7,4,1;$88E8-$88EF-8(exterior-tiles1-107)
-B $88F0 #UDGARRAY1,7,4,1;$88F0-$88F7-8(exterior-tiles1-108)
-B $88F8 #UDGARRAY1,7,4,1;$88F8-$88FF-8(exterior-tiles1-109)
-B $8900 #UDGARRAY1,7,4,1;$8900-$8907-8(exterior-tiles1-110)
-B $8908 #UDGARRAY1,7,4,1;$8908-$890F-8(exterior-tiles1-111)
-B $8910 #UDGARRAY1,7,4,1;$8910-$8917-8(exterior-tiles1-112)
-B $8918 #UDGARRAY1,7,4,1;$8918-$891F-8(exterior-tiles1-113)
-B $8920 #UDGARRAY1,7,4,1;$8920-$8927-8(exterior-tiles1-114)
-B $8928 #UDGARRAY1,7,4,1;$8928-$892F-8(exterior-tiles1-115)
-B $8930 #UDGARRAY1,7,4,1;$8930-$8937-8(exterior-tiles1-116)
-B $8938 #UDGARRAY1,7,4,1;$8938-$893F-8(exterior-tiles1-117)
-B $8940 #UDGARRAY1,7,4,1;$8940-$8947-8(exterior-tiles1-118)
-B $8948 #UDGARRAY1,7,4,1;$8948-$894F-8(exterior-tiles1-119)
-B $8950 #UDGARRAY1,7,4,1;$8950-$8957-8(exterior-tiles1-120)
-B $8958 #UDGARRAY1,7,4,1;$8958-$895F-8(exterior-tiles1-121)
-B $8960 #UDGARRAY1,7,4,1;$8960-$8967-8(exterior-tiles1-122)
-B $8968 #UDGARRAY1,7,4,1;$8968-$896F-8(exterior-tiles1-123)
-B $8970 #UDGARRAY1,7,4,1;$8970-$8977-8(exterior-tiles1-124)
-B $8978 #UDGARRAY1,7,4,1;$8978-$897F-8(exterior-tiles1-125)
-B $8980 #UDGARRAY1,7,4,1;$8980-$8987-8(exterior-tiles1-126)
-B $8988 #UDGARRAY1,7,4,1;$8988-$898F-8(exterior-tiles1-127)
-B $8990 #UDGARRAY1,7,4,1;$8990-$8997-8(exterior-tiles1-128)
-B $8998 #UDGARRAY1,7,4,1;$8998-$899F-8(exterior-tiles1-129)
-B $89A0 #UDGARRAY1,7,4,1;$89A0-$89A7-8(exterior-tiles1-130)
-B $89A8 #UDGARRAY1,7,4,1;$89A8-$89AF-8(exterior-tiles1-131)
-B $89B0 #UDGARRAY1,7,4,1;$89B0-$89B7-8(exterior-tiles1-132)
-B $89B8 #UDGARRAY1,7,4,1;$89B8-$89BF-8(exterior-tiles1-133)
-B $89C0 #UDGARRAY1,7,4,1;$89C0-$89C7-8(exterior-tiles1-134)
-B $89C8 #UDGARRAY1,7,4,1;$89C8-$89CF-8(exterior-tiles1-135)
-B $89D0 #UDGARRAY1,7,4,1;$89D0-$89D7-8(exterior-tiles1-136)
-B $89D8 #UDGARRAY1,7,4,1;$89D8-$89DF-8(exterior-tiles1-137)
-B $89E0 #UDGARRAY1,7,4,1;$89E0-$89E7-8(exterior-tiles1-138)
-B $89E8 #UDGARRAY1,7,4,1;$89E8-$89EF-8(exterior-tiles1-139)
-B $89F0 #UDGARRAY1,7,4,1;$89F0-$89F7-8(exterior-tiles1-140)
-B $89F8 #UDGARRAY1,7,4,1;$89F8-$89FF-8(exterior-tiles1-141)
-B $8A00 #UDGARRAY1,7,4,1;$8A00-$8A07-8(exterior-tiles1-142)
-B $8A08 #UDGARRAY1,7,4,1;$8A08-$8A0F-8(exterior-tiles1-143)
-B $8A10 #UDGARRAY1,7,4,1;$8A10-$8A17-8(exterior-tiles1-144)
-B $8A18 #UDGARRAY1,7,4,1;$8A18-$8A1F-8(exterior-tiles2-000)
-B $8A20 #UDGARRAY1,7,4,1;$8A20-$8A27-8(exterior-tiles2-001)
-B $8A28 #UDGARRAY1,7,4,1;$8A28-$8A2F-8(exterior-tiles2-002)
-B $8A30 #UDGARRAY1,7,4,1;$8A30-$8A37-8(exterior-tiles2-003)
-B $8A38 #UDGARRAY1,7,4,1;$8A38-$8A3F-8(exterior-tiles2-004)
-B $8A40 #UDGARRAY1,7,4,1;$8A40-$8A47-8(exterior-tiles2-005)
-B $8A48 #UDGARRAY1,7,4,1;$8A48-$8A4F-8(exterior-tiles2-006)
-B $8A50 #UDGARRAY1,7,4,1;$8A50-$8A57-8(exterior-tiles2-007)
-B $8A58 #UDGARRAY1,7,4,1;$8A58-$8A5F-8(exterior-tiles2-008)
-B $8A60 #UDGARRAY1,7,4,1;$8A60-$8A67-8(exterior-tiles2-009)
-B $8A68 #UDGARRAY1,7,4,1;$8A68-$8A6F-8(exterior-tiles2-010)
-B $8A70 #UDGARRAY1,7,4,1;$8A70-$8A77-8(exterior-tiles2-011)
-B $8A78 #UDGARRAY1,7,4,1;$8A78-$8A7F-8(exterior-tiles2-012)
-B $8A80 #UDGARRAY1,7,4,1;$8A80-$8A87-8(exterior-tiles2-013)
-B $8A88 #UDGARRAY1,7,4,1;$8A88-$8A8F-8(exterior-tiles2-014)
-B $8A90 #UDGARRAY1,7,4,1;$8A90-$8A97-8(exterior-tiles2-015)
-B $8A98 #UDGARRAY1,7,4,1;$8A98-$8A9F-8(exterior-tiles2-016)
-B $8AA0 #UDGARRAY1,7,4,1;$8AA0-$8AA7-8(exterior-tiles2-017)
-B $8AA8 #UDGARRAY1,7,4,1;$8AA8-$8AAF-8(exterior-tiles2-018)
-B $8AB0 #UDGARRAY1,7,4,1;$8AB0-$8AB7-8(exterior-tiles2-019)
-B $8AB8 #UDGARRAY1,7,4,1;$8AB8-$8ABF-8(exterior-tiles2-020)
-B $8AC0 #UDGARRAY1,7,4,1;$8AC0-$8AC7-8(exterior-tiles2-021)
-B $8AC8 #UDGARRAY1,7,4,1;$8AC8-$8ACF-8(exterior-tiles2-022)
-B $8AD0 #UDGARRAY1,7,4,1;$8AD0-$8AD7-8(exterior-tiles2-023)
-B $8AD8 #UDGARRAY1,7,4,1;$8AD8-$8ADF-8(exterior-tiles2-024)
-B $8AE0 #UDGARRAY1,7,4,1;$8AE0-$8AE7-8(exterior-tiles2-025)
-B $8AE8 #UDGARRAY1,7,4,1;$8AE8-$8AEF-8(exterior-tiles2-026)
-B $8AF0 #UDGARRAY1,7,4,1;$8AF0-$8AF7-8(exterior-tiles2-027)
-B $8AF8 #UDGARRAY1,7,4,1;$8AF8-$8AFF-8(exterior-tiles2-028)
-B $8B00 #UDGARRAY1,7,4,1;$8B00-$8B07-8(exterior-tiles2-029)
-B $8B08 #UDGARRAY1,7,4,1;$8B08-$8B0F-8(exterior-tiles2-030)
-B $8B10 #UDGARRAY1,7,4,1;$8B10-$8B17-8(exterior-tiles2-031)
-B $8B18 #UDGARRAY1,7,4,1;$8B18-$8B1F-8(exterior-tiles2-032)
-B $8B20 #UDGARRAY1,7,4,1;$8B20-$8B27-8(exterior-tiles2-033)
-B $8B28 #UDGARRAY1,7,4,1;$8B28-$8B2F-8(exterior-tiles2-034)
-B $8B30 #UDGARRAY1,7,4,1;$8B30-$8B37-8(exterior-tiles2-035)
-B $8B38 #UDGARRAY1,7,4,1;$8B38-$8B3F-8(exterior-tiles2-036)
-B $8B40 #UDGARRAY1,7,4,1;$8B40-$8B47-8(exterior-tiles2-037)
-B $8B48 #UDGARRAY1,7,4,1;$8B48-$8B4F-8(exterior-tiles2-038)
-B $8B50 #UDGARRAY1,7,4,1;$8B50-$8B57-8(exterior-tiles2-039)
-B $8B58 #UDGARRAY1,7,4,1;$8B58-$8B5F-8(exterior-tiles2-040)
-B $8B60 #UDGARRAY1,7,4,1;$8B60-$8B67-8(exterior-tiles2-041)
-B $8B68 #UDGARRAY1,7,4,1;$8B68-$8B6F-8(exterior-tiles2-042)
-B $8B70 #UDGARRAY1,7,4,1;$8B70-$8B77-8(exterior-tiles2-043)
-B $8B78 #UDGARRAY1,7,4,1;$8B78-$8B7F-8(exterior-tiles2-044)
-B $8B80 #UDGARRAY1,7,4,1;$8B80-$8B87-8(exterior-tiles2-045)
-B $8B88 #UDGARRAY1,7,4,1;$8B88-$8B8F-8(exterior-tiles2-046)
-B $8B90 #UDGARRAY1,7,4,1;$8B90-$8B97-8(exterior-tiles2-047)
-B $8B98 #UDGARRAY1,7,4,1;$8B98-$8B9F-8(exterior-tiles2-048)
-B $8BA0 #UDGARRAY1,7,4,1;$8BA0-$8BA7-8(exterior-tiles2-049)
-B $8BA8 #UDGARRAY1,7,4,1;$8BA8-$8BAF-8(exterior-tiles2-050)
-B $8BB0 #UDGARRAY1,7,4,1;$8BB0-$8BB7-8(exterior-tiles2-051)
-B $8BB8 #UDGARRAY1,7,4,1;$8BB8-$8BBF-8(exterior-tiles2-052)
-B $8BC0 #UDGARRAY1,7,4,1;$8BC0-$8BC7-8(exterior-tiles2-053)
-B $8BC8 #UDGARRAY1,7,4,1;$8BC8-$8BCF-8(exterior-tiles2-054)
-B $8BD0 #UDGARRAY1,7,4,1;$8BD0-$8BD7-8(exterior-tiles2-055)
-B $8BD8 #UDGARRAY1,7,4,1;$8BD8-$8BDF-8(exterior-tiles2-056)
-B $8BE0 #UDGARRAY1,7,4,1;$8BE0-$8BE7-8(exterior-tiles2-057)
-B $8BE8 #UDGARRAY1,7,4,1;$8BE8-$8BEF-8(exterior-tiles2-058)
-B $8BF0 #UDGARRAY1,7,4,1;$8BF0-$8BF7-8(exterior-tiles2-059)
-B $8BF8 #UDGARRAY1,7,4,1;$8BF8-$8BFF-8(exterior-tiles2-060)
-B $8C00 #UDGARRAY1,7,4,1;$8C00-$8C07-8(exterior-tiles2-061)
-B $8C08 #UDGARRAY1,7,4,1;$8C08-$8C0F-8(exterior-tiles2-062)
-B $8C10 #UDGARRAY1,7,4,1;$8C10-$8C17-8(exterior-tiles2-063)
-B $8C18 #UDGARRAY1,7,4,1;$8C18-$8C1F-8(exterior-tiles2-064)
-B $8C20 #UDGARRAY1,7,4,1;$8C20-$8C27-8(exterior-tiles2-065)
-B $8C28 #UDGARRAY1,7,4,1;$8C28-$8C2F-8(exterior-tiles2-066)
-B $8C30 #UDGARRAY1,7,4,1;$8C30-$8C37-8(exterior-tiles2-067)
-B $8C38 #UDGARRAY1,7,4,1;$8C38-$8C3F-8(exterior-tiles2-068)
-B $8C40 #UDGARRAY1,7,4,1;$8C40-$8C47-8(exterior-tiles2-069)
-B $8C48 #UDGARRAY1,7,4,1;$8C48-$8C4F-8(exterior-tiles2-070)
-B $8C50 #UDGARRAY1,7,4,1;$8C50-$8C57-8(exterior-tiles2-071)
-B $8C58 #UDGARRAY1,7,4,1;$8C58-$8C5F-8(exterior-tiles2-072)
-B $8C60 #UDGARRAY1,7,4,1;$8C60-$8C67-8(exterior-tiles2-073)
-B $8C68 #UDGARRAY1,7,4,1;$8C68-$8C6F-8(exterior-tiles2-074)
-B $8C70 #UDGARRAY1,7,4,1;$8C70-$8C77-8(exterior-tiles2-075)
-B $8C78 #UDGARRAY1,7,4,1;$8C78-$8C7F-8(exterior-tiles2-076)
-B $8C80 #UDGARRAY1,7,4,1;$8C80-$8C87-8(exterior-tiles2-077)
-B $8C88 #UDGARRAY1,7,4,1;$8C88-$8C8F-8(exterior-tiles2-078)
-B $8C90 #UDGARRAY1,7,4,1;$8C90-$8C97-8(exterior-tiles2-079)
-B $8C98 #UDGARRAY1,7,4,1;$8C98-$8C9F-8(exterior-tiles2-080)
-B $8CA0 #UDGARRAY1,7,4,1;$8CA0-$8CA7-8(exterior-tiles2-081)
-B $8CA8 #UDGARRAY1,7,4,1;$8CA8-$8CAF-8(exterior-tiles2-082)
-B $8CB0 #UDGARRAY1,7,4,1;$8CB0-$8CB7-8(exterior-tiles2-083)
-B $8CB8 #UDGARRAY1,7,4,1;$8CB8-$8CBF-8(exterior-tiles2-084)
-B $8CC0 #UDGARRAY1,7,4,1;$8CC0-$8CC7-8(exterior-tiles2-085)
-B $8CC8 #UDGARRAY1,7,4,1;$8CC8-$8CCF-8(exterior-tiles2-086)
-B $8CD0 #UDGARRAY1,7,4,1;$8CD0-$8CD7-8(exterior-tiles2-087)
-B $8CD8 #UDGARRAY1,7,4,1;$8CD8-$8CDF-8(exterior-tiles2-088)
-B $8CE0 #UDGARRAY1,7,4,1;$8CE0-$8CE7-8(exterior-tiles2-089)
-B $8CE8 #UDGARRAY1,7,4,1;$8CE8-$8CEF-8(exterior-tiles2-090)
-B $8CF0 #UDGARRAY1,7,4,1;$8CF0-$8CF7-8(exterior-tiles2-091)
-B $8CF8 #UDGARRAY1,7,4,1;$8CF8-$8CFF-8(exterior-tiles2-092)
-B $8D00 #UDGARRAY1,7,4,1;$8D00-$8D07-8(exterior-tiles2-093)
-B $8D08 #UDGARRAY1,7,4,1;$8D08-$8D0F-8(exterior-tiles2-094)
-B $8D10 #UDGARRAY1,7,4,1;$8D10-$8D17-8(exterior-tiles2-095)
-B $8D18 #UDGARRAY1,7,4,1;$8D18-$8D1F-8(exterior-tiles2-096)
-B $8D20 #UDGARRAY1,7,4,1;$8D20-$8D27-8(exterior-tiles2-097)
-B $8D28 #UDGARRAY1,7,4,1;$8D28-$8D2F-8(exterior-tiles2-098)
-B $8D30 #UDGARRAY1,7,4,1;$8D30-$8D37-8(exterior-tiles2-099)
-B $8D38 #UDGARRAY1,7,4,1;$8D38-$8D3F-8(exterior-tiles2-100)
-B $8D40 #UDGARRAY1,7,4,1;$8D40-$8D47-8(exterior-tiles2-101)
-B $8D48 #UDGARRAY1,7,4,1;$8D48-$8D4F-8(exterior-tiles2-102)
-B $8D50 #UDGARRAY1,7,4,1;$8D50-$8D57-8(exterior-tiles2-103)
-B $8D58 #UDGARRAY1,7,4,1;$8D58-$8D5F-8(exterior-tiles2-104)
-B $8D60 #UDGARRAY1,7,4,1;$8D60-$8D67-8(exterior-tiles2-105)
-B $8D68 #UDGARRAY1,7,4,1;$8D68-$8D6F-8(exterior-tiles2-106)
-B $8D70 #UDGARRAY1,7,4,1;$8D70-$8D77-8(exterior-tiles2-107)
-B $8D78 #UDGARRAY1,7,4,1;$8D78-$8D7F-8(exterior-tiles2-108)
-B $8D80 #UDGARRAY1,7,4,1;$8D80-$8D87-8(exterior-tiles2-109)
-B $8D88 #UDGARRAY1,7,4,1;$8D88-$8D8F-8(exterior-tiles2-110)
-B $8D90 #UDGARRAY1,7,4,1;$8D90-$8D97-8(exterior-tiles2-111)
-B $8D98 #UDGARRAY1,7,4,1;$8D98-$8D9F-8(exterior-tiles2-112)
-B $8DA0 #UDGARRAY1,7,4,1;$8DA0-$8DA7-8(exterior-tiles2-113)
-B $8DA8 #UDGARRAY1,7,4,1;$8DA8-$8DAF-8(exterior-tiles2-114)
-B $8DB0 #UDGARRAY1,7,4,1;$8DB0-$8DB7-8(exterior-tiles2-115)
-B $8DB8 #UDGARRAY1,7,4,1;$8DB8-$8DBF-8(exterior-tiles2-116)
-B $8DC0 #UDGARRAY1,7,4,1;$8DC0-$8DC7-8(exterior-tiles2-117)
-B $8DC8 #UDGARRAY1,7,4,1;$8DC8-$8DCF-8(exterior-tiles2-118)
-B $8DD0 #UDGARRAY1,7,4,1;$8DD0-$8DD7-8(exterior-tiles2-119)
-B $8DD8 #UDGARRAY1,7,4,1;$8DD8-$8DDF-8(exterior-tiles2-120)
-B $8DE0 #UDGARRAY1,7,4,1;$8DE0-$8DE7-8(exterior-tiles2-121)
-B $8DE8 #UDGARRAY1,7,4,1;$8DE8-$8DEF-8(exterior-tiles2-122)
-B $8DF0 #UDGARRAY1,7,4,1;$8DF0-$8DF7-8(exterior-tiles2-123)
-B $8DF8 #UDGARRAY1,7,4,1;$8DF8-$8DFF-8(exterior-tiles2-124)
-B $8E00 #UDGARRAY1,7,4,1;$8E00-$8E07-8(exterior-tiles2-125)
-B $8E08 #UDGARRAY1,7,4,1;$8E08-$8E0F-8(exterior-tiles2-126)
-B $8E10 #UDGARRAY1,7,4,1;$8E10-$8E17-8(exterior-tiles2-127)
-B $8E18 #UDGARRAY1,7,4,1;$8E18-$8E1F-8(exterior-tiles2-128)
-B $8E20 #UDGARRAY1,7,4,1;$8E20-$8E27-8(exterior-tiles2-129)
-B $8E28 #UDGARRAY1,7,4,1;$8E28-$8E2F-8(exterior-tiles2-130)
-B $8E30 #UDGARRAY1,7,4,1;$8E30-$8E37-8(exterior-tiles2-131)
-B $8E38 #UDGARRAY1,7,4,1;$8E38-$8E3F-8(exterior-tiles2-132)
-B $8E40 #UDGARRAY1,7,4,1;$8E40-$8E47-8(exterior-tiles2-133)
-B $8E48 #UDGARRAY1,7,4,1;$8E48-$8E4F-8(exterior-tiles2-134)
-B $8E50 #UDGARRAY1,7,4,1;$8E50-$8E57-8(exterior-tiles2-135)
-B $8E58 #UDGARRAY1,7,4,1;$8E58-$8E5F-8(exterior-tiles2-136)
-B $8E60 #UDGARRAY1,7,4,1;$8E60-$8E67-8(exterior-tiles2-137)
-B $8E68 #UDGARRAY1,7,4,1;$8E68-$8E6F-8(exterior-tiles2-138)
-B $8E70 #UDGARRAY1,7,4,1;$8E70-$8E77-8(exterior-tiles2-139)
-B $8E78 #UDGARRAY1,7,4,1;$8E78-$8E7F-8(exterior-tiles2-140)
-B $8E80 #UDGARRAY1,7,4,1;$8E80-$8E87-8(exterior-tiles2-141)
-B $8E88 #UDGARRAY1,7,4,1;$8E88-$8E8F-8(exterior-tiles2-142)
-B $8E90 #UDGARRAY1,7,4,1;$8E90-$8E97-8(exterior-tiles2-143)
-B $8E98 #UDGARRAY1,7,4,1;$8E98-$8E9F-8(exterior-tiles2-144)
-B $8EA0 #UDGARRAY1,7,4,1;$8EA0-$8EA7-8(exterior-tiles2-145)
-B $8EA8 #UDGARRAY1,7,4,1;$8EA8-$8EAF-8(exterior-tiles2-146)
-B $8EB0 #UDGARRAY1,7,4,1;$8EB0-$8EB7-8(exterior-tiles2-147)
-B $8EB8 #UDGARRAY1,7,4,1;$8EB8-$8EBF-8(exterior-tiles2-148)
-B $8EC0 #UDGARRAY1,7,4,1;$8EC0-$8EC7-8(exterior-tiles2-149)
-B $8EC8 #UDGARRAY1,7,4,1;$8EC8-$8ECF-8(exterior-tiles2-150)
-B $8ED0 #UDGARRAY1,7,4,1;$8ED0-$8ED7-8(exterior-tiles2-151)
-B $8ED8 #UDGARRAY1,7,4,1;$8ED8-$8EDF-8(exterior-tiles2-152)
-B $8EE0 #UDGARRAY1,7,4,1;$8EE0-$8EE7-8(exterior-tiles2-153)
-B $8EE8 #UDGARRAY1,7,4,1;$8EE8-$8EEF-8(exterior-tiles2-154)
-B $8EF0 #UDGARRAY1,7,4,1;$8EF0-$8EF7-8(exterior-tiles2-155)
-B $8EF8 #UDGARRAY1,7,4,1;$8EF8-$8EFF-8(exterior-tiles2-156)
-B $8F00 #UDGARRAY1,7,4,1;$8F00-$8F07-8(exterior-tiles2-157)
-B $8F08 #UDGARRAY1,7,4,1;$8F08-$8F0F-8(exterior-tiles2-158)
-B $8F10 #UDGARRAY1,7,4,1;$8F10-$8F17-8(exterior-tiles2-159)
-B $8F18 #UDGARRAY1,7,4,1;$8F18-$8F1F-8(exterior-tiles2-160)
-B $8F20 #UDGARRAY1,7,4,1;$8F20-$8F27-8(exterior-tiles2-161)
-B $8F28 #UDGARRAY1,7,4,1;$8F28-$8F2F-8(exterior-tiles2-162)
-B $8F30 #UDGARRAY1,7,4,1;$8F30-$8F37-8(exterior-tiles2-163)
-B $8F38 #UDGARRAY1,7,4,1;$8F38-$8F3F-8(exterior-tiles2-164)
-B $8F40 #UDGARRAY1,7,4,1;$8F40-$8F47-8(exterior-tiles2-165)
-B $8F48 #UDGARRAY1,7,4,1;$8F48-$8F4F-8(exterior-tiles2-166)
-B $8F50 #UDGARRAY1,7,4,1;$8F50-$8F57-8(exterior-tiles2-167)
-B $8F58 #UDGARRAY1,7,4,1;$8F58-$8F5F-8(exterior-tiles2-168)
-B $8F60 #UDGARRAY1,7,4,1;$8F60-$8F67-8(exterior-tiles2-169)
-B $8F68 #UDGARRAY1,7,4,1;$8F68-$8F6F-8(exterior-tiles2-170)
-B $8F70 #UDGARRAY1,7,4,1;$8F70-$8F77-8(exterior-tiles2-171)
-B $8F78 #UDGARRAY1,7,4,1;$8F78-$8F7F-8(exterior-tiles2-172)
-B $8F80 #UDGARRAY1,7,4,1;$8F80-$8F87-8(exterior-tiles2-173)
-B $8F88 #UDGARRAY1,7,4,1;$8F88-$8F8F-8(exterior-tiles2-174)
-B $8F90 #UDGARRAY1,7,4,1;$8F90-$8F97-8(exterior-tiles2-175)
-B $8F98 #UDGARRAY1,7,4,1;$8F98-$8F9F-8(exterior-tiles2-176)
-B $8FA0 #UDGARRAY1,7,4,1;$8FA0-$8FA7-8(exterior-tiles2-177)
-B $8FA8 #UDGARRAY1,7,4,1;$8FA8-$8FAF-8(exterior-tiles2-178)
-B $8FB0 #UDGARRAY1,7,4,1;$8FB0-$8FB7-8(exterior-tiles2-179)
-B $8FB8 #UDGARRAY1,7,4,1;$8FB8-$8FBF-8(exterior-tiles2-180)
-B $8FC0 #UDGARRAY1,7,4,1;$8FC0-$8FC7-8(exterior-tiles2-181)
-B $8FC8 #UDGARRAY1,7,4,1;$8FC8-$8FCF-8(exterior-tiles2-182)
-B $8FD0 #UDGARRAY1,7,4,1;$8FD0-$8FD7-8(exterior-tiles2-183)
-B $8FD8 #UDGARRAY1,7,4,1;$8FD8-$8FDF-8(exterior-tiles2-184)
-B $8FE0 #UDGARRAY1,7,4,1;$8FE0-$8FE7-8(exterior-tiles2-185)
-B $8FE8 #UDGARRAY1,7,4,1;$8FE8-$8FEF-8(exterior-tiles2-186)
-B $8FF0 #UDGARRAY1,7,4,1;$8FF0-$8FF7-8(exterior-tiles2-187)
-B $8FF8 #UDGARRAY1,7,4,1;$8FF8-$8FFF-8(exterior-tiles2-188)
-B $9000 #UDGARRAY1,7,4,1;$9000-$9007-8(exterior-tiles2-189)
-B $9008 #UDGARRAY1,7,4,1;$9008-$900F-8(exterior-tiles2-190)
-B $9010 #UDGARRAY1,7,4,1;$9010-$9017-8(exterior-tiles2-191)
-B $9018 #UDGARRAY1,7,4,1;$9018-$901F-8(exterior-tiles2-192)
-B $9020 #UDGARRAY1,7,4,1;$9020-$9027-8(exterior-tiles2-193)
-B $9028 #UDGARRAY1,7,4,1;$9028-$902F-8(exterior-tiles2-194)
-B $9030 #UDGARRAY1,7,4,1;$9030-$9037-8(exterior-tiles2-195)
-B $9038 #UDGARRAY1,7,4,1;$9038-$903F-8(exterior-tiles2-196)
-B $9040 #UDGARRAY1,7,4,1;$9040-$9047-8(exterior-tiles2-197)
-B $9048 #UDGARRAY1,7,4,1;$9048-$904F-8(exterior-tiles2-198)
-B $9050 #UDGARRAY1,7,4,1;$9050-$9057-8(exterior-tiles2-199)
-B $9058 #UDGARRAY1,7,4,1;$9058-$905F-8(exterior-tiles2-200)
-B $9060 #UDGARRAY1,7,4,1;$9060-$9067-8(exterior-tiles2-201)
-B $9068 #UDGARRAY1,7,4,1;$9068-$906F-8(exterior-tiles2-202)
-B $9070 #UDGARRAY1,7,4,1;$9070-$9077-8(exterior-tiles2-203)
-B $9078 #UDGARRAY1,7,4,1;$9078-$907F-8(exterior-tiles2-204)
-B $9080 #UDGARRAY1,7,4,1;$9080-$9087-8(exterior-tiles2-205)
-B $9088 #UDGARRAY1,7,4,1;$9088-$908F-8(exterior-tiles2-206)
-B $9090 #UDGARRAY1,7,4,1;$9090-$9097-8(exterior-tiles2-207)
-B $9098 #UDGARRAY1,7,4,1;$9098-$909F-8(exterior-tiles2-208)
-B $90A0 #UDGARRAY1,7,4,1;$90A0-$90A7-8(exterior-tiles2-209)
-B $90A8 #UDGARRAY1,7,4,1;$90A8-$90AF-8(exterior-tiles2-210)
-B $90B0 #UDGARRAY1,7,4,1;$90B0-$90B7-8(exterior-tiles2-211)
-B $90B8 #UDGARRAY1,7,4,1;$90B8-$90BF-8(exterior-tiles2-212)
-B $90C0 #UDGARRAY1,7,4,1;$90C0-$90C7-8(exterior-tiles2-213)
-B $90C8 #UDGARRAY1,7,4,1;$90C8-$90CF-8(exterior-tiles2-214)
-B $90D0 #UDGARRAY1,7,4,1;$90D0-$90D7-8(exterior-tiles2-215)
-B $90D8 #UDGARRAY1,7,4,1;$90D8-$90DF-8(exterior-tiles2-216)
-B $90E0 #UDGARRAY1,7,4,1;$90E0-$90E7-8(exterior-tiles2-217)
-B $90E8 #UDGARRAY1,7,4,1;$90E8-$90EF-8(exterior-tiles2-218)
-B $90F0 #UDGARRAY1,7,4,1;$90F0-$90F7-8(exterior-tiles2-219)
-B $90F8 #UDGARRAY1,7,4,1;$90F8-$90FF-8(exterior-tiles3-000)
-B $9100 #UDGARRAY1,7,4,1;$9100-$9107-8(exterior-tiles3-001)
-B $9108 #UDGARRAY1,7,4,1;$9108-$910F-8(exterior-tiles3-002)
-B $9110 #UDGARRAY1,7,4,1;$9110-$9117-8(exterior-tiles3-003)
-B $9118 #UDGARRAY1,7,4,1;$9118-$911F-8(exterior-tiles3-004)
-B $9120 #UDGARRAY1,7,4,1;$9120-$9127-8(exterior-tiles3-005)
-B $9128 #UDGARRAY1,7,4,1;$9128-$912F-8(exterior-tiles3-006)
-B $9130 #UDGARRAY1,7,4,1;$9130-$9137-8(exterior-tiles3-007)
-B $9138 #UDGARRAY1,7,4,1;$9138-$913F-8(exterior-tiles3-008)
-B $9140 #UDGARRAY1,7,4,1;$9140-$9147-8(exterior-tiles3-009)
-B $9148 #UDGARRAY1,7,4,1;$9148-$914F-8(exterior-tiles3-010)
-B $9150 #UDGARRAY1,7,4,1;$9150-$9157-8(exterior-tiles3-011)
-B $9158 #UDGARRAY1,7,4,1;$9158-$915F-8(exterior-tiles3-012)
-B $9160 #UDGARRAY1,7,4,1;$9160-$9167-8(exterior-tiles3-013)
-B $9168 #UDGARRAY1,7,4,1;$9168-$916F-8(exterior-tiles3-014)
-B $9170 #UDGARRAY1,7,4,1;$9170-$9177-8(exterior-tiles3-015)
-B $9178 #UDGARRAY1,7,4,1;$9178-$917F-8(exterior-tiles3-016)
-B $9180 #UDGARRAY1,7,4,1;$9180-$9187-8(exterior-tiles3-017)
-B $9188 #UDGARRAY1,7,4,1;$9188-$918F-8(exterior-tiles3-018)
-B $9190 #UDGARRAY1,7,4,1;$9190-$9197-8(exterior-tiles3-019)
-B $9198 #UDGARRAY1,7,4,1;$9198-$919F-8(exterior-tiles3-020)
-B $91A0 #UDGARRAY1,7,4,1;$91A0-$91A7-8(exterior-tiles3-021)
-B $91A8 #UDGARRAY1,7,4,1;$91A8-$91AF-8(exterior-tiles3-022)
-B $91B0 #UDGARRAY1,7,4,1;$91B0-$91B7-8(exterior-tiles3-023)
-B $91B8 #UDGARRAY1,7,4,1;$91B8-$91BF-8(exterior-tiles3-024)
-B $91C0 #UDGARRAY1,7,4,1;$91C0-$91C7-8(exterior-tiles3-025)
-B $91C8 #UDGARRAY1,7,4,1;$91C8-$91CF-8(exterior-tiles3-026)
-B $91D0 #UDGARRAY1,7,4,1;$91D0-$91D7-8(exterior-tiles3-027)
-B $91D8 #UDGARRAY1,7,4,1;$91D8-$91DF-8(exterior-tiles3-028)
-B $91E0 #UDGARRAY1,7,4,1;$91E0-$91E7-8(exterior-tiles3-029)
-B $91E8 #UDGARRAY1,7,4,1;$91E8-$91EF-8(exterior-tiles3-030)
-B $91F0 #UDGARRAY1,7,4,1;$91F0-$91F7-8(exterior-tiles3-031)
-B $91F8 #UDGARRAY1,7,4,1;$91F8-$91FF-8(exterior-tiles3-032)
-B $9200 #UDGARRAY1,7,4,1;$9200-$9207-8(exterior-tiles3-033)
-B $9208 #UDGARRAY1,7,4,1;$9208-$920F-8(exterior-tiles3-034)
-B $9210 #UDGARRAY1,7,4,1;$9210-$9217-8(exterior-tiles3-035)
-B $9218 #UDGARRAY1,7,4,1;$9218-$921F-8(exterior-tiles3-036)
-B $9220 #UDGARRAY1,7,4,1;$9220-$9227-8(exterior-tiles3-037)
-B $9228 #UDGARRAY1,7,4,1;$9228-$922F-8(exterior-tiles3-038)
-B $9230 #UDGARRAY1,7,4,1;$9230-$9237-8(exterior-tiles3-039)
-B $9238 #UDGARRAY1,7,4,1;$9238-$923F-8(exterior-tiles3-040)
-B $9240 #UDGARRAY1,7,4,1;$9240-$9247-8(exterior-tiles3-041)
-B $9248 #UDGARRAY1,7,4,1;$9248-$924F-8(exterior-tiles3-042)
-B $9250 #UDGARRAY1,7,4,1;$9250-$9257-8(exterior-tiles3-043)
-B $9258 #UDGARRAY1,7,4,1;$9258-$925F-8(exterior-tiles3-044)
-B $9260 #UDGARRAY1,7,4,1;$9260-$9267-8(exterior-tiles3-045)
-B $9268 #UDGARRAY1,7,4,1;$9268-$926F-8(exterior-tiles3-046)
-B $9270 #UDGARRAY1,7,4,1;$9270-$9277-8(exterior-tiles3-047)
-B $9278 #UDGARRAY1,7,4,1;$9278-$927F-8(exterior-tiles3-048)
-B $9280 #UDGARRAY1,7,4,1;$9280-$9287-8(exterior-tiles3-049)
-B $9288 #UDGARRAY1,7,4,1;$9288-$928F-8(exterior-tiles3-050)
-B $9290 #UDGARRAY1,7,4,1;$9290-$9297-8(exterior-tiles3-051)
-B $9298 #UDGARRAY1,7,4,1;$9298-$929F-8(exterior-tiles3-052)
-B $92A0 #UDGARRAY1,7,4,1;$92A0-$92A7-8(exterior-tiles3-053)
-B $92A8 #UDGARRAY1,7,4,1;$92A8-$92AF-8(exterior-tiles3-054)
-B $92B0 #UDGARRAY1,7,4,1;$92B0-$92B7-8(exterior-tiles3-055)
-B $92B8 #UDGARRAY1,7,4,1;$92B8-$92BF-8(exterior-tiles3-056)
-B $92C0 #UDGARRAY1,7,4,1;$92C0-$92C7-8(exterior-tiles3-057)
-B $92C8 #UDGARRAY1,7,4,1;$92C8-$92CF-8(exterior-tiles3-058)
-B $92D0 #UDGARRAY1,7,4,1;$92D0-$92D7-8(exterior-tiles3-059)
-B $92D8 #UDGARRAY1,7,4,1;$92D8-$92DF-8(exterior-tiles3-060)
-B $92E0 #UDGARRAY1,7,4,1;$92E0-$92E7-8(exterior-tiles3-061)
-B $92E8 #UDGARRAY1,7,4,1;$92E8-$92EF-8(exterior-tiles3-062)
-B $92F0 #UDGARRAY1,7,4,1;$92F0-$92F7-8(exterior-tiles3-063)
-B $92F8 #UDGARRAY1,7,4,1;$92F8-$92FF-8(exterior-tiles3-064)
-B $9300 #UDGARRAY1,7,4,1;$9300-$9307-8(exterior-tiles3-065)
-B $9308 #UDGARRAY1,7,4,1;$9308-$930F-8(exterior-tiles3-066)
-B $9310 #UDGARRAY1,7,4,1;$9310-$9317-8(exterior-tiles3-067)
-B $9318 #UDGARRAY1,7,4,1;$9318-$931F-8(exterior-tiles3-068)
-B $9320 #UDGARRAY1,7,4,1;$9320-$9327-8(exterior-tiles3-069)
-B $9328 #UDGARRAY1,7,4,1;$9328-$932F-8(exterior-tiles3-070)
-B $9330 #UDGARRAY1,7,4,1;$9330-$9337-8(exterior-tiles3-071)
-B $9338 #UDGARRAY1,7,4,1;$9338-$933F-8(exterior-tiles3-072)
-B $9340 #UDGARRAY1,7,4,1;$9340-$9347-8(exterior-tiles3-073)
-B $9348 #UDGARRAY1,7,4,1;$9348-$934F-8(exterior-tiles3-074)
-B $9350 #UDGARRAY1,7,4,1;$9350-$9357-8(exterior-tiles3-075)
-B $9358 #UDGARRAY1,7,4,1;$9358-$935F-8(exterior-tiles3-076)
-B $9360 #UDGARRAY1,7,4,1;$9360-$9367-8(exterior-tiles3-077)
-B $9368 #UDGARRAY1,7,4,1;$9368-$936F-8(exterior-tiles3-078)
-B $9370 #UDGARRAY1,7,4,1;$9370-$9377-8(exterior-tiles3-079)
-B $9378 #UDGARRAY1,7,4,1;$9378-$937F-8(exterior-tiles3-080)
-B $9380 #UDGARRAY1,7,4,1;$9380-$9387-8(exterior-tiles3-081)
-B $9388 #UDGARRAY1,7,4,1;$9388-$938F-8(exterior-tiles3-082)
-B $9390 #UDGARRAY1,7,4,1;$9390-$9397-8(exterior-tiles3-083)
-B $9398 #UDGARRAY1,7,4,1;$9398-$939F-8(exterior-tiles3-084)
-B $93A0 #UDGARRAY1,7,4,1;$93A0-$93A7-8(exterior-tiles3-085)
-B $93A8 #UDGARRAY1,7,4,1;$93A8-$93AF-8(exterior-tiles3-086)
-B $93B0 #UDGARRAY1,7,4,1;$93B0-$93B7-8(exterior-tiles3-087)
-B $93B8 #UDGARRAY1,7,4,1;$93B8-$93BF-8(exterior-tiles3-088)
-B $93C0 #UDGARRAY1,7,4,1;$93C0-$93C7-8(exterior-tiles3-089)
-B $93C8 #UDGARRAY1,7,4,1;$93C8-$93CF-8(exterior-tiles3-090)
-B $93D0 #UDGARRAY1,7,4,1;$93D0-$93D7-8(exterior-tiles3-091)
-B $93D8 #UDGARRAY1,7,4,1;$93D8-$93DF-8(exterior-tiles3-092)
-B $93E0 #UDGARRAY1,7,4,1;$93E0-$93E7-8(exterior-tiles3-093)
-B $93E8 #UDGARRAY1,7,4,1;$93E8-$93EF-8(exterior-tiles3-094)
-B $93F0 #UDGARRAY1,7,4,1;$93F0-$93F7-8(exterior-tiles3-095)
-B $93F8 #UDGARRAY1,7,4,1;$93F8-$93FF-8(exterior-tiles3-096)
-B $9400 #UDGARRAY1,7,4,1;$9400-$9407-8(exterior-tiles3-097)
-B $9408 #UDGARRAY1,7,4,1;$9408-$940F-8(exterior-tiles3-098)
-B $9410 #UDGARRAY1,7,4,1;$9410-$9417-8(exterior-tiles3-099)
-B $9418 #UDGARRAY1,7,4,1;$9418-$941F-8(exterior-tiles3-100)
-B $9420 #UDGARRAY1,7,4,1;$9420-$9427-8(exterior-tiles3-101)
-B $9428 #UDGARRAY1,7,4,1;$9428-$942F-8(exterior-tiles3-102)
-B $9430 #UDGARRAY1,7,4,1;$9430-$9437-8(exterior-tiles3-103)
-B $9438 #UDGARRAY1,7,4,1;$9438-$943F-8(exterior-tiles3-104)
-B $9440 #UDGARRAY1,7,4,1;$9440-$9447-8(exterior-tiles3-105)
-B $9448 #UDGARRAY1,7,4,1;$9448-$944F-8(exterior-tiles3-106)
-B $9450 #UDGARRAY1,7,4,1;$9450-$9457-8(exterior-tiles3-107)
-B $9458 #UDGARRAY1,7,4,1;$9458-$945F-8(exterior-tiles3-108)
-B $9460 #UDGARRAY1,7,4,1;$9460-$9467-8(exterior-tiles3-109)
-B $9468 #UDGARRAY1,7,4,1;$9468-$946F-8(exterior-tiles3-110)
-B $9470 #UDGARRAY1,7,4,1;$9470-$9477-8(exterior-tiles3-111)
-B $9478 #UDGARRAY1,7,4,1;$9478-$947F-8(exterior-tiles3-112)
-B $9480 #UDGARRAY1,7,4,1;$9480-$9487-8(exterior-tiles3-113)
-B $9488 #UDGARRAY1,7,4,1;$9488-$948F-8(exterior-tiles3-114)
-B $9490 #UDGARRAY1,7,4,1;$9490-$9497-8(exterior-tiles3-115)
-B $9498 #UDGARRAY1,7,4,1;$9498-$949F-8(exterior-tiles3-116)
-B $94A0 #UDGARRAY1,7,4,1;$94A0-$94A7-8(exterior-tiles3-117)
-B $94A8 #UDGARRAY1,7,4,1;$94A8-$94AF-8(exterior-tiles3-118)
-B $94B0 #UDGARRAY1,7,4,1;$94B0-$94B7-8(exterior-tiles3-119)
-B $94B8 #UDGARRAY1,7,4,1;$94B8-$94BF-8(exterior-tiles3-120)
-B $94C0 #UDGARRAY1,7,4,1;$94C0-$94C7-8(exterior-tiles3-121)
-B $94C8 #UDGARRAY1,7,4,1;$94C8-$94CF-8(exterior-tiles3-122)
-B $94D0 #UDGARRAY1,7,4,1;$94D0-$94D7-8(exterior-tiles3-123)
-B $94D8 #UDGARRAY1,7,4,1;$94D8-$94DF-8(exterior-tiles3-124)
-B $94E0 #UDGARRAY1,7,4,1;$94E0-$94E7-8(exterior-tiles3-125)
-B $94E8 #UDGARRAY1,7,4,1;$94E8-$94EF-8(exterior-tiles3-126)
-B $94F0 #UDGARRAY1,7,4,1;$94F0-$94F7-8(exterior-tiles3-127)
-B $94F8 #UDGARRAY1,7,4,1;$94F8-$94FF-8(exterior-tiles3-128)
-B $9500 #UDGARRAY1,7,4,1;$9500-$9507-8(exterior-tiles3-129)
-B $9508 #UDGARRAY1,7,4,1;$9508-$950F-8(exterior-tiles3-130)
-B $9510 #UDGARRAY1,7,4,1;$9510-$9517-8(exterior-tiles3-131)
-B $9518 #UDGARRAY1,7,4,1;$9518-$951F-8(exterior-tiles3-132)
-B $9520 #UDGARRAY1,7,4,1;$9520-$9527-8(exterior-tiles3-133)
-B $9528 #UDGARRAY1,7,4,1;$9528-$952F-8(exterior-tiles3-134)
-B $9530 #UDGARRAY1,7,4,1;$9530-$9537-8(exterior-tiles3-135)
-B $9538 #UDGARRAY1,7,4,1;$9538-$953F-8(exterior-tiles3-136)
-B $9540 #UDGARRAY1,7,4,1;$9540-$9547-8(exterior-tiles3-137)
-B $9548 #UDGARRAY1,7,4,1;$9548-$954F-8(exterior-tiles3-138)
-B $9550 #UDGARRAY1,7,4,1;$9550-$9557-8(exterior-tiles3-139)
-B $9558 #UDGARRAY1,7,4,1;$9558-$955F-8(exterior-tiles3-140)
-B $9560 #UDGARRAY1,7,4,1;$9560-$9567-8(exterior-tiles3-141)
-B $9568 #UDGARRAY1,7,4,1;$9568-$956F-8(exterior-tiles3-142)
-B $9570 #UDGARRAY1,7,4,1;$9570-$9577-8(exterior-tiles3-143)
-B $9578 #UDGARRAY1,7,4,1;$9578-$957F-8(exterior-tiles3-144)
-B $9580 #UDGARRAY1,7,4,1;$9580-$9587-8(exterior-tiles3-145)
-B $9588 #UDGARRAY1,7,4,1;$9588-$958F-8(exterior-tiles3-146)
-B $9590 #UDGARRAY1,7,4,1;$9590-$9597-8(exterior-tiles3-147)
-B $9598 #UDGARRAY1,7,4,1;$9598-$959F-8(exterior-tiles3-148)
-B $95A0 #UDGARRAY1,7,4,1;$95A0-$95A7-8(exterior-tiles3-149)
-B $95A8 #UDGARRAY1,7,4,1;$95A8-$95AF-8(exterior-tiles3-150)
-B $95B0 #UDGARRAY1,7,4,1;$95B0-$95B7-8(exterior-tiles3-151)
-B $95B8 #UDGARRAY1,7,4,1;$95B8-$95BF-8(exterior-tiles3-152)
-B $95C0 #UDGARRAY1,7,4,1;$95C0-$95C7-8(exterior-tiles3-153)
-B $95C8 #UDGARRAY1,7,4,1;$95C8-$95CF-8(exterior-tiles3-154)
-B $95D0 #UDGARRAY1,7,4,1;$95D0-$95D7-8(exterior-tiles3-155)
-B $95D8 #UDGARRAY1,7,4,1;$95D8-$95DF-8(exterior-tiles3-156)
-B $95E0 #UDGARRAY1,7,4,1;$95E0-$95E7-8(exterior-tiles3-157)
-B $95E8 #UDGARRAY1,7,4,1;$95E8-$95EF-8(exterior-tiles3-158)
-B $95F0 #UDGARRAY1,7,4,1;$95F0-$95F7-8(exterior-tiles3-159)
-B $95F8 #UDGARRAY1,7,4,1;$95F8-$95FF-8(exterior-tiles3-160)
-B $9600 #UDGARRAY1,7,4,1;$9600-$9607-8(exterior-tiles3-161)
-B $9608 #UDGARRAY1,7,4,1;$9608-$960F-8(exterior-tiles3-162)
-B $9610 #UDGARRAY1,7,4,1;$9610-$9617-8(exterior-tiles3-163)
-B $9618 #UDGARRAY1,7,4,1;$9618-$961F-8(exterior-tiles3-164)
-B $9620 #UDGARRAY1,7,4,1;$9620-$9627-8(exterior-tiles3-165)
-B $9628 #UDGARRAY1,7,4,1;$9628-$962F-8(exterior-tiles3-166)
-B $9630 #UDGARRAY1,7,4,1;$9630-$9637-8(exterior-tiles3-167)
-B $9638 #UDGARRAY1,7,4,1;$9638-$963F-8(exterior-tiles3-168)
-B $9640 #UDGARRAY1,7,4,1;$9640-$9647-8(exterior-tiles3-169)
-B $9648 #UDGARRAY1,7,4,1;$9648-$964F-8(exterior-tiles3-170)
-B $9650 #UDGARRAY1,7,4,1;$9650-$9657-8(exterior-tiles3-171)
-B $9658 #UDGARRAY1,7,4,1;$9658-$965F-8(exterior-tiles3-172)
-B $9660 #UDGARRAY1,7,4,1;$9660-$9667-8(exterior-tiles3-173)
-B $9668 #UDGARRAY1,7,4,1;$9668-$966F-8(exterior-tiles3-174)
-B $9670 #UDGARRAY1,7,4,1;$9670-$9677-8(exterior-tiles3-175)
-B $9678 #UDGARRAY1,7,4,1;$9678-$967F-8(exterior-tiles3-176)
-B $9680 #UDGARRAY1,7,4,1;$9680-$9687-8(exterior-tiles3-177)
-B $9688 #UDGARRAY1,7,4,1;$9688-$968F-8(exterior-tiles3-178)
-B $9690 #UDGARRAY1,7,4,1;$9690-$9697-8(exterior-tiles3-179)
-B $9698 #UDGARRAY1,7,4,1;$9698-$969F-8(exterior-tiles3-180)
-B $96A0 #UDGARRAY1,7,4,1;$96A0-$96A7-8(exterior-tiles3-181)
-B $96A8 #UDGARRAY1,7,4,1;$96A8-$96AF-8(exterior-tiles3-182)
-B $96B0 #UDGARRAY1,7,4,1;$96B0-$96B7-8(exterior-tiles3-183)
-B $96B8 #UDGARRAY1,7,4,1;$96B8-$96BF-8(exterior-tiles3-184)
-B $96C0 #UDGARRAY1,7,4,1;$96C0-$96C7-8(exterior-tiles3-185)
-B $96C8 #UDGARRAY1,7,4,1;$96C8-$96CF-8(exterior-tiles3-186)
-B $96D0 #UDGARRAY1,7,4,1;$96D0-$96D7-8(exterior-tiles3-187)
-B $96D8 #UDGARRAY1,7,4,1;$96D8-$96DF-8(exterior-tiles3-188)
-B $96E0 #UDGARRAY1,7,4,1;$96E0-$96E7-8(exterior-tiles3-189)
-B $96E8 #UDGARRAY1,7,4,1;$96E8-$96EF-8(exterior-tiles3-190)
-B $96F0 #UDGARRAY1,7,4,1;$96F0-$96F7-8(exterior-tiles3-191)
-B $96F8 #UDGARRAY1,7,4,1;$96F8-$96FF-8(exterior-tiles3-192)
-B $9700 #UDGARRAY1,7,4,1;$9700-$9707-8(exterior-tiles3-193)
-B $9708 #UDGARRAY1,7,4,1;$9708-$970F-8(exterior-tiles3-194)
-B $9710 #UDGARRAY1,7,4,1;$9710-$9717-8(exterior-tiles3-195)
-B $9718 #UDGARRAY1,7,4,1;$9718-$971F-8(exterior-tiles3-196)
-B $9720 #UDGARRAY1,7,4,1;$9720-$9727-8(exterior-tiles3-197)
-B $9728 #UDGARRAY1,7,4,1;$9728-$972F-8(exterior-tiles3-198)
-B $9730 #UDGARRAY1,7,4,1;$9730-$9737-8(exterior-tiles3-199)
-B $9738 #UDGARRAY1,7,4,1;$9738-$973F-8(exterior-tiles3-200)
-B $9740 #UDGARRAY1,7,4,1;$9740-$9747-8(exterior-tiles3-201)
-B $9748 #UDGARRAY1,7,4,1;$9748-$974F-8(exterior-tiles3-202)
-B $9750 #UDGARRAY1,7,4,1;$9750-$9757-8(exterior-tiles3-203)
-B $9758 #UDGARRAY1,7,4,1;$9758-$975F-8(exterior-tiles3-204)
-B $9760 #UDGARRAY1,7,4,1;$9760-$9767-8(exterior-tiles3-205)
-B $9768 #UDGARRAY1,7,4,1;$9768-$976F-8(interior-tiles-000)
-B $9770 #UDGARRAY1,7,4,1;$9770-$9777-8(interior-tiles-001)
-B $9778 #UDGARRAY1,7,4,1;$9778-$977F-8(interior-tiles-002)
-B $9780 #UDGARRAY1,7,4,1;$9780-$9787-8(interior-tiles-003)
-B $9788 #UDGARRAY1,7,4,1;$9788-$978F-8(interior-tiles-004)
-B $9790 #UDGARRAY1,7,4,1;$9790-$9797-8(interior-tiles-005)
-B $9798 #UDGARRAY1,7,4,1;$9798-$979F-8(interior-tiles-006)
-B $97A0 #UDGARRAY1,7,4,1;$97A0-$97A7-8(interior-tiles-007)
-B $97A8 #UDGARRAY1,7,4,1;$97A8-$97AF-8(interior-tiles-008)
-B $97B0 #UDGARRAY1,7,4,1;$97B0-$97B7-8(interior-tiles-009)
-B $97B8 #UDGARRAY1,7,4,1;$97B8-$97BF-8(interior-tiles-010)
-B $97C0 #UDGARRAY1,7,4,1;$97C0-$97C7-8(interior-tiles-011)
-B $97C8 #UDGARRAY1,7,4,1;$97C8-$97CF-8(interior-tiles-012)
-B $97D0 #UDGARRAY1,7,4,1;$97D0-$97D7-8(interior-tiles-013)
-B $97D8 #UDGARRAY1,7,4,1;$97D8-$97DF-8(interior-tiles-014)
-B $97E0 #UDGARRAY1,7,4,1;$97E0-$97E7-8(interior-tiles-015)
-B $97E8 #UDGARRAY1,7,4,1;$97E8-$97EF-8(interior-tiles-016)
-B $97F0 #UDGARRAY1,7,4,1;$97F0-$97F7-8(interior-tiles-017)
-B $97F8 #UDGARRAY1,7,4,1;$97F8-$97FF-8(interior-tiles-018)
-B $9800 #UDGARRAY1,7,4,1;$9800-$9807-8(interior-tiles-019)
-B $9808 #UDGARRAY1,7,4,1;$9808-$980F-8(interior-tiles-020)
-B $9810 #UDGARRAY1,7,4,1;$9810-$9817-8(interior-tiles-021)
-B $9818 #UDGARRAY1,7,4,1;$9818-$981F-8(interior-tiles-022)
-B $9820 #UDGARRAY1,7,4,1;$9820-$9827-8(interior-tiles-023)
-B $9828 #UDGARRAY1,7,4,1;$9828-$982F-8(interior-tiles-024)
-B $9830 #UDGARRAY1,7,4,1;$9830-$9837-8(interior-tiles-025)
-B $9838 #UDGARRAY1,7,4,1;$9838-$983F-8(interior-tiles-026)
-B $9840 #UDGARRAY1,7,4,1;$9840-$9847-8(interior-tiles-027)
-B $9848 #UDGARRAY1,7,4,1;$9848-$984F-8(interior-tiles-028)
-B $9850 #UDGARRAY1,7,4,1;$9850-$9857-8(interior-tiles-029)
-B $9858 #UDGARRAY1,7,4,1;$9858-$985F-8(interior-tiles-030)
-B $9860 #UDGARRAY1,7,4,1;$9860-$9867-8(interior-tiles-031)
-B $9868 #UDGARRAY1,7,4,1;$9868-$986F-8(interior-tiles-032)
-B $9870 #UDGARRAY1,7,4,1;$9870-$9877-8(interior-tiles-033)
-B $9878 #UDGARRAY1,7,4,1;$9878-$987F-8(interior-tiles-034)
-B $9880 #UDGARRAY1,7,4,1;$9880-$9887-8(interior-tiles-035)
-B $9888 #UDGARRAY1,7,4,1;$9888-$988F-8(interior-tiles-036)
-B $9890 #UDGARRAY1,7,4,1;$9890-$9897-8(interior-tiles-037)
-B $9898 #UDGARRAY1,7,4,1;$9898-$989F-8(interior-tiles-038)
-B $98A0 #UDGARRAY1,7,4,1;$98A0-$98A7-8(interior-tiles-039)
-B $98A8 #UDGARRAY1,7,4,1;$98A8-$98AF-8(interior-tiles-040)
-B $98B0 #UDGARRAY1,7,4,1;$98B0-$98B7-8(interior-tiles-041)
-B $98B8 #UDGARRAY1,7,4,1;$98B8-$98BF-8(interior-tiles-042)
-B $98C0 #UDGARRAY1,7,4,1;$98C0-$98C7-8(interior-tiles-043)
-B $98C8 #UDGARRAY1,7,4,1;$98C8-$98CF-8(interior-tiles-044)
-B $98D0 #UDGARRAY1,7,4,1;$98D0-$98D7-8(interior-tiles-045)
-B $98D8 #UDGARRAY1,7,4,1;$98D8-$98DF-8(interior-tiles-046)
-B $98E0 #UDGARRAY1,7,4,1;$98E0-$98E7-8(interior-tiles-047)
-B $98E8 #UDGARRAY1,7,4,1;$98E8-$98EF-8(interior-tiles-048)
-B $98F0 #UDGARRAY1,7,4,1;$98F0-$98F7-8(interior-tiles-049)
-B $98F8 #UDGARRAY1,7,4,1;$98F8-$98FF-8(interior-tiles-050)
-B $9900 #UDGARRAY1,7,4,1;$9900-$9907-8(interior-tiles-051)
-B $9908 #UDGARRAY1,7,4,1;$9908-$990F-8(interior-tiles-052)
-B $9910 #UDGARRAY1,7,4,1;$9910-$9917-8(interior-tiles-053)
-B $9918 #UDGARRAY1,7,4,1;$9918-$991F-8(interior-tiles-054)
-B $9920 #UDGARRAY1,7,4,1;$9920-$9927-8(interior-tiles-055)
-B $9928 #UDGARRAY1,7,4,1;$9928-$992F-8(interior-tiles-056)
-B $9930 #UDGARRAY1,7,4,1;$9930-$9937-8(interior-tiles-057)
-B $9938 #UDGARRAY1,7,4,1;$9938-$993F-8(interior-tiles-058)
-B $9940 #UDGARRAY1,7,4,1;$9940-$9947-8(interior-tiles-059)
-B $9948 #UDGARRAY1,7,4,1;$9948-$994F-8(interior-tiles-060)
-B $9950 #UDGARRAY1,7,4,1;$9950-$9957-8(interior-tiles-061)
-B $9958 #UDGARRAY1,7,4,1;$9958-$995F-8(interior-tiles-062)
-B $9960 #UDGARRAY1,7,4,1;$9960-$9967-8(interior-tiles-063)
-B $9968 #UDGARRAY1,7,4,1;$9968-$996F-8(interior-tiles-064)
-B $9970 #UDGARRAY1,7,4,1;$9970-$9977-8(interior-tiles-065)
-B $9978 #UDGARRAY1,7,4,1;$9978-$997F-8(interior-tiles-066)
-B $9980 #UDGARRAY1,7,4,1;$9980-$9987-8(interior-tiles-067)
-B $9988 #UDGARRAY1,7,4,1;$9988-$998F-8(interior-tiles-068)
-B $9990 #UDGARRAY1,7,4,1;$9990-$9997-8(interior-tiles-069)
-B $9998 #UDGARRAY1,7,4,1;$9998-$999F-8(interior-tiles-070)
-B $99A0 #UDGARRAY1,7,4,1;$99A0-$99A7-8(interior-tiles-071)
-B $99A8 #UDGARRAY1,7,4,1;$99A8-$99AF-8(interior-tiles-072)
-B $99B0 #UDGARRAY1,7,4,1;$99B0-$99B7-8(interior-tiles-073)
-B $99B8 #UDGARRAY1,7,4,1;$99B8-$99BF-8(interior-tiles-074)
-B $99C0 #UDGARRAY1,7,4,1;$99C0-$99C7-8(interior-tiles-075)
-B $99C8 #UDGARRAY1,7,4,1;$99C8-$99CF-8(interior-tiles-076)
-B $99D0 #UDGARRAY1,7,4,1;$99D0-$99D7-8(interior-tiles-077)
-B $99D8 #UDGARRAY1,7,4,1;$99D8-$99DF-8(interior-tiles-078)
-B $99E0 #UDGARRAY1,7,4,1;$99E0-$99E7-8(interior-tiles-079)
-B $99E8 #UDGARRAY1,7,4,1;$99E8-$99EF-8(interior-tiles-080)
-B $99F0 #UDGARRAY1,7,4,1;$99F0-$99F7-8(interior-tiles-081)
-B $99F8 #UDGARRAY1,7,4,1;$99F8-$99FF-8(interior-tiles-082)
-B $9A00 #UDGARRAY1,7,4,1;$9A00-$9A07-8(interior-tiles-083)
-B $9A08 #UDGARRAY1,7,4,1;$9A08-$9A0F-8(interior-tiles-084)
-B $9A10 #UDGARRAY1,7,4,1;$9A10-$9A17-8(interior-tiles-085)
-B $9A18 #UDGARRAY1,7,4,1;$9A18-$9A1F-8(interior-tiles-086)
-B $9A20 #UDGARRAY1,7,4,1;$9A20-$9A27-8(interior-tiles-087)
-B $9A28 #UDGARRAY1,7,4,1;$9A28-$9A2F-8(interior-tiles-088)
-B $9A30 #UDGARRAY1,7,4,1;$9A30-$9A37-8(interior-tiles-089)
-B $9A38 #UDGARRAY1,7,4,1;$9A38-$9A3F-8(interior-tiles-090)
-B $9A40 #UDGARRAY1,7,4,1;$9A40-$9A47-8(interior-tiles-091)
-B $9A48 #UDGARRAY1,7,4,1;$9A48-$9A4F-8(interior-tiles-092)
-B $9A50 #UDGARRAY1,7,4,1;$9A50-$9A57-8(interior-tiles-093)
-B $9A58 #UDGARRAY1,7,4,1;$9A58-$9A5F-8(interior-tiles-094)
-B $9A60 #UDGARRAY1,7,4,1;$9A60-$9A67-8(interior-tiles-095)
-B $9A68 #UDGARRAY1,7,4,1;$9A68-$9A6F-8(interior-tiles-096)
-B $9A70 #UDGARRAY1,7,4,1;$9A70-$9A77-8(interior-tiles-097)
-B $9A78 #UDGARRAY1,7,4,1;$9A78-$9A7F-8(interior-tiles-098)
-B $9A80 #UDGARRAY1,7,4,1;$9A80-$9A87-8(interior-tiles-099)
-B $9A88 #UDGARRAY1,7,4,1;$9A88-$9A8F-8(interior-tiles-100)
-B $9A90 #UDGARRAY1,7,4,1;$9A90-$9A97-8(interior-tiles-101)
-B $9A98 #UDGARRAY1,7,4,1;$9A98-$9A9F-8(interior-tiles-102)
-B $9AA0 #UDGARRAY1,7,4,1;$9AA0-$9AA7-8(interior-tiles-103)
-B $9AA8 #UDGARRAY1,7,4,1;$9AA8-$9AAF-8(interior-tiles-104)
-B $9AB0 #UDGARRAY1,7,4,1;$9AB0-$9AB7-8(interior-tiles-105)
-B $9AB8 #UDGARRAY1,7,4,1;$9AB8-$9ABF-8(interior-tiles-106)
-B $9AC0 #UDGARRAY1,7,4,1;$9AC0-$9AC7-8(interior-tiles-107)
-B $9AC8 #UDGARRAY1,7,4,1;$9AC8-$9ACF-8(interior-tiles-108)
-B $9AD0 #UDGARRAY1,7,4,1;$9AD0-$9AD7-8(interior-tiles-109)
-B $9AD8 #UDGARRAY1,7,4,1;$9AD8-$9ADF-8(interior-tiles-110)
-B $9AE0 #UDGARRAY1,7,4,1;$9AE0-$9AE7-8(interior-tiles-111)
-B $9AE8 #UDGARRAY1,7,4,1;$9AE8-$9AEF-8(interior-tiles-112)
-B $9AF0 #UDGARRAY1,7,4,1;$9AF0-$9AF7-8(interior-tiles-113)
-B $9AF8 #UDGARRAY1,7,4,1;$9AF8-$9AFF-8(interior-tiles-114)
-B $9B00 #UDGARRAY1,7,4,1;$9B00-$9B07-8(interior-tiles-115)
-B $9B08 #UDGARRAY1,7,4,1;$9B08-$9B0F-8(interior-tiles-116)
-B $9B10 #UDGARRAY1,7,4,1;$9B10-$9B17-8(interior-tiles-117)
-B $9B18 #UDGARRAY1,7,4,1;$9B18-$9B1F-8(interior-tiles-118)
-B $9B20 #UDGARRAY1,7,4,1;$9B20-$9B27-8(interior-tiles-119)
-B $9B28 #UDGARRAY1,7,4,1;$9B28-$9B2F-8(interior-tiles-120)
-B $9B30 #UDGARRAY1,7,4,1;$9B30-$9B37-8(interior-tiles-121)
-B $9B38 #UDGARRAY1,7,4,1;$9B38-$9B3F-8(interior-tiles-122)
-B $9B40 #UDGARRAY1,7,4,1;$9B40-$9B47-8(interior-tiles-123)
-B $9B48 #UDGARRAY1,7,4,1;$9B48-$9B4F-8(interior-tiles-124)
-B $9B50 #UDGARRAY1,7,4,1;$9B50-$9B57-8(interior-tiles-125)
-B $9B58 #UDGARRAY1,7,4,1;$9B58-$9B5F-8(interior-tiles-126)
-B $9B60 #UDGARRAY1,7,4,1;$9B60-$9B67-8(interior-tiles-127)
-B $9B68 #UDGARRAY1,7,4,1;$9B68-$9B6F-8(interior-tiles-128)
-B $9B70 #UDGARRAY1,7,4,1;$9B70-$9B77-8(interior-tiles-129)
-B $9B78 #UDGARRAY1,7,4,1;$9B78-$9B7F-8(interior-tiles-130)
-B $9B80 #UDGARRAY1,7,4,1;$9B80-$9B87-8(interior-tiles-131)
-B $9B88 #UDGARRAY1,7,4,1;$9B88-$9B8F-8(interior-tiles-132)
-B $9B90 #UDGARRAY1,7,4,1;$9B90-$9B97-8(interior-tiles-133)
-B $9B98 #UDGARRAY1,7,4,1;$9B98-$9B9F-8(interior-tiles-134)
-B $9BA0 #UDGARRAY1,7,4,1;$9BA0-$9BA7-8(interior-tiles-135)
-B $9BA8 #UDGARRAY1,7,4,1;$9BA8-$9BAF-8(interior-tiles-136)
-B $9BB0 #UDGARRAY1,7,4,1;$9BB0-$9BB7-8(interior-tiles-137)
-B $9BB8 #UDGARRAY1,7,4,1;$9BB8-$9BBF-8(interior-tiles-138)
-B $9BC0 #UDGARRAY1,7,4,1;$9BC0-$9BC7-8(interior-tiles-139)
-B $9BC8 #UDGARRAY1,7,4,1;$9BC8-$9BCF-8(interior-tiles-140)
-B $9BD0 #UDGARRAY1,7,4,1;$9BD0-$9BD7-8(interior-tiles-141)
-B $9BD8 #UDGARRAY1,7,4,1;$9BD8-$9BDF-8(interior-tiles-142)
-B $9BE0 #UDGARRAY1,7,4,1;$9BE0-$9BE7-8(interior-tiles-143)
-B $9BE8 #UDGARRAY1,7,4,1;$9BE8-$9BEF-8(interior-tiles-144)
-B $9BF0 #UDGARRAY1,7,4,1;$9BF0-$9BF7-8(interior-tiles-145)
-B $9BF8 #UDGARRAY1,7,4,1;$9BF8-$9BFF-8(interior-tiles-146)
-B $9C00 #UDGARRAY1,7,4,1;$9C00-$9C07-8(interior-tiles-147)
-B $9C08 #UDGARRAY1,7,4,1;$9C08-$9C0F-8(interior-tiles-148)
-B $9C10 #UDGARRAY1,7,4,1;$9C10-$9C17-8(interior-tiles-149)
-B $9C18 #UDGARRAY1,7,4,1;$9C18-$9C1F-8(interior-tiles-150)
-B $9C20 #UDGARRAY1,7,4,1;$9C20-$9C27-8(interior-tiles-151)
-B $9C28 #UDGARRAY1,7,4,1;$9C28-$9C2F-8(interior-tiles-152)
-B $9C30 #UDGARRAY1,7,4,1;$9C30-$9C37-8(interior-tiles-153)
-B $9C38 #UDGARRAY1,7,4,1;$9C38-$9C3F-8(interior-tiles-154)
-B $9C40 #UDGARRAY1,7,4,1;$9C40-$9C47-8(interior-tiles-155)
-B $9C48 #UDGARRAY1,7,4,1;$9C48-$9C4F-8(interior-tiles-156)
-B $9C50 #UDGARRAY1,7,4,1;$9C50-$9C57-8(interior-tiles-157)
-B $9C58 #UDGARRAY1,7,4,1;$9C58-$9C5F-8(interior-tiles-158)
-B $9C60 #UDGARRAY1,7,4,1;$9C60-$9C67-8(interior-tiles-159)
-B $9C68 #UDGARRAY1,7,4,1;$9C68-$9C6F-8(interior-tiles-160)
-B $9C70 #UDGARRAY1,7,4,1;$9C70-$9C77-8(interior-tiles-161)
-B $9C78 #UDGARRAY1,7,4,1;$9C78-$9C7F-8(interior-tiles-162)
-B $9C80 #UDGARRAY1,7,4,1;$9C80-$9C87-8(interior-tiles-163)
-B $9C88 #UDGARRAY1,7,4,1;$9C88-$9C8F-8(interior-tiles-164)
-B $9C90 #UDGARRAY1,7,4,1;$9C90-$9C97-8(interior-tiles-165)
-B $9C98 #UDGARRAY1,7,4,1;$9C98-$9C9F-8(interior-tiles-166)
-B $9CA0 #UDGARRAY1,7,4,1;$9CA0-$9CA7-8(interior-tiles-167)
-B $9CA8 #UDGARRAY1,7,4,1;$9CA8-$9CAF-8(interior-tiles-168)
-B $9CB0 #UDGARRAY1,7,4,1;$9CB0-$9CB7-8(interior-tiles-169)
-B $9CB8 #UDGARRAY1,7,4,1;$9CB8-$9CBF-8(interior-tiles-170)
-B $9CC0 #UDGARRAY1,7,4,1;$9CC0-$9CC7-8(interior-tiles-171)
-B $9CC8 #UDGARRAY1,7,4,1;$9CC8-$9CCF-8(interior-tiles-172)
-B $9CD0 #UDGARRAY1,7,4,1;$9CD0-$9CD7-8(interior-tiles-173)
-B $9CD8 #UDGARRAY1,7,4,1;$9CD8-$9CDF-8(interior-tiles-174)
-B $9CE0 #UDGARRAY1,7,4,1;$9CE0-$9CE7-8(interior-tiles-175)
-B $9CE8 #UDGARRAY1,7,4,1;$9CE8-$9CEF-8(interior-tiles-176)
-B $9CF0 #UDGARRAY1,7,4,1;$9CF0-$9CF7-8(interior-tiles-177)
-B $9CF8 #UDGARRAY1,7,4,1;$9CF8-$9CFF-8(interior-tiles-178)
-B $9D00 #UDGARRAY1,7,4,1;$9D00-$9D07-8(interior-tiles-179)
-B $9D08 #UDGARRAY1,7,4,1;$9D08-$9D0F-8(interior-tiles-180)
-B $9D10 #UDGARRAY1,7,4,1;$9D10-$9D17-8(interior-tiles-181)
-B $9D18 #UDGARRAY1,7,4,1;$9D18-$9D1F-8(interior-tiles-182)
-B $9D20 #UDGARRAY1,7,4,1;$9D20-$9D27-8(interior-tiles-183)
-B $9D28 #UDGARRAY1,7,4,1;$9D28-$9D2F-8(interior-tiles-184)
-B $9D30 #UDGARRAY1,7,4,1;$9D30-$9D37-8(interior-tiles-185)
-B $9D38 #UDGARRAY1,7,4,1;$9D38-$9D3F-8(interior-tiles-186)
-B $9D40 #UDGARRAY1,7,4,1;$9D40-$9D47-8(interior-tiles-187)
-B $9D48 #UDGARRAY1,7,4,1;$9D48-$9D4F-8(interior-tiles-188)
-B $9D50 #UDGARRAY1,7,4,1;$9D50-$9D57-8(interior-tiles-189)
-B $9D58 #UDGARRAY1,7,4,1;$9D58-$9D5F-8(interior-tiles-190)
-B $9D60 #UDGARRAY1,7,4,1;$9D60-$9D67-8(interior-tiles-191)
-B $9D68 #UDGARRAY1,7,4,1;$9D68-$9D6F-8(interior-tiles-192)
-B $9D70 #UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)
+B $8218 #HTML[#UDGARRAY1,7,4,1;$8218-$821F-8(exterior-tiles0-000)]
+B $8220 #HTML[#UDGARRAY1,7,4,1;$8220-$8227-8(exterior-tiles0-001)]
+B $8228 #HTML[#UDGARRAY1,7,4,1;$8228-$822F-8(exterior-tiles0-002)]
+B $8230 #HTML[#UDGARRAY1,7,4,1;$8230-$8237-8(exterior-tiles0-003)]
+B $8238 #HTML[#UDGARRAY1,7,4,1;$8238-$823F-8(exterior-tiles0-004)]
+B $8240 #HTML[#UDGARRAY1,7,4,1;$8240-$8247-8(exterior-tiles0-005)]
+B $8248 #HTML[#UDGARRAY1,7,4,1;$8248-$824F-8(exterior-tiles0-006)]
+B $8250 #HTML[#UDGARRAY1,7,4,1;$8250-$8257-8(exterior-tiles0-007)]
+B $8258 #HTML[#UDGARRAY1,7,4,1;$8258-$825F-8(exterior-tiles0-008)]
+B $8260 #HTML[#UDGARRAY1,7,4,1;$8260-$8267-8(exterior-tiles0-009)]
+B $8268 #HTML[#UDGARRAY1,7,4,1;$8268-$826F-8(exterior-tiles0-010)]
+B $8270 #HTML[#UDGARRAY1,7,4,1;$8270-$8277-8(exterior-tiles0-011)]
+B $8278 #HTML[#UDGARRAY1,7,4,1;$8278-$827F-8(exterior-tiles0-012)]
+B $8280 #HTML[#UDGARRAY1,7,4,1;$8280-$8287-8(exterior-tiles0-013)]
+B $8288 #HTML[#UDGARRAY1,7,4,1;$8288-$828F-8(exterior-tiles0-014)]
+B $8290 #HTML[#UDGARRAY1,7,4,1;$8290-$8297-8(exterior-tiles0-015)]
+B $8298 #HTML[#UDGARRAY1,7,4,1;$8298-$829F-8(exterior-tiles0-016)]
+B $82A0 #HTML[#UDGARRAY1,7,4,1;$82A0-$82A7-8(exterior-tiles0-017)]
+B $82A8 #HTML[#UDGARRAY1,7,4,1;$82A8-$82AF-8(exterior-tiles0-018)]
+B $82B0 #HTML[#UDGARRAY1,7,4,1;$82B0-$82B7-8(exterior-tiles0-019)]
+B $82B8 #HTML[#UDGARRAY1,7,4,1;$82B8-$82BF-8(exterior-tiles0-020)]
+B $82C0 #HTML[#UDGARRAY1,7,4,1;$82C0-$82C7-8(exterior-tiles0-021)]
+B $82C8 #HTML[#UDGARRAY1,7,4,1;$82C8-$82CF-8(exterior-tiles0-022)]
+B $82D0 #HTML[#UDGARRAY1,7,4,1;$82D0-$82D7-8(exterior-tiles0-023)]
+B $82D8 #HTML[#UDGARRAY1,7,4,1;$82D8-$82DF-8(exterior-tiles0-024)]
+B $82E0 #HTML[#UDGARRAY1,7,4,1;$82E0-$82E7-8(exterior-tiles0-025)]
+B $82E8 #HTML[#UDGARRAY1,7,4,1;$82E8-$82EF-8(exterior-tiles0-026)]
+B $82F0 #HTML[#UDGARRAY1,7,4,1;$82F0-$82F7-8(exterior-tiles0-027)]
+B $82F8 #HTML[#UDGARRAY1,7,4,1;$82F8-$82FF-8(exterior-tiles0-028)]
+B $8300 #HTML[#UDGARRAY1,7,4,1;$8300-$8307-8(exterior-tiles0-029)]
+B $8308 #HTML[#UDGARRAY1,7,4,1;$8308-$830F-8(exterior-tiles0-030)]
+B $8310 #HTML[#UDGARRAY1,7,4,1;$8310-$8317-8(exterior-tiles0-031)]
+B $8318 #HTML[#UDGARRAY1,7,4,1;$8318-$831F-8(exterior-tiles0-032)]
+B $8320 #HTML[#UDGARRAY1,7,4,1;$8320-$8327-8(exterior-tiles0-033)]
+B $8328 #HTML[#UDGARRAY1,7,4,1;$8328-$832F-8(exterior-tiles0-034)]
+B $8330 #HTML[#UDGARRAY1,7,4,1;$8330-$8337-8(exterior-tiles0-035)]
+B $8338 #HTML[#UDGARRAY1,7,4,1;$8338-$833F-8(exterior-tiles0-036)]
+B $8340 #HTML[#UDGARRAY1,7,4,1;$8340-$8347-8(exterior-tiles0-037)]
+B $8348 #HTML[#UDGARRAY1,7,4,1;$8348-$834F-8(exterior-tiles0-038)]
+B $8350 #HTML[#UDGARRAY1,7,4,1;$8350-$8357-8(exterior-tiles0-039)]
+B $8358 #HTML[#UDGARRAY1,7,4,1;$8358-$835F-8(exterior-tiles0-040)]
+B $8360 #HTML[#UDGARRAY1,7,4,1;$8360-$8367-8(exterior-tiles0-041)]
+B $8368 #HTML[#UDGARRAY1,7,4,1;$8368-$836F-8(exterior-tiles0-042)]
+B $8370 #HTML[#UDGARRAY1,7,4,1;$8370-$8377-8(exterior-tiles0-043)]
+B $8378 #HTML[#UDGARRAY1,7,4,1;$8378-$837F-8(exterior-tiles0-044)]
+B $8380 #HTML[#UDGARRAY1,7,4,1;$8380-$8387-8(exterior-tiles0-045)]
+B $8388 #HTML[#UDGARRAY1,7,4,1;$8388-$838F-8(exterior-tiles0-046)]
+B $8390 #HTML[#UDGARRAY1,7,4,1;$8390-$8397-8(exterior-tiles0-047)]
+B $8398 #HTML[#UDGARRAY1,7,4,1;$8398-$839F-8(exterior-tiles0-048)]
+B $83A0 #HTML[#UDGARRAY1,7,4,1;$83A0-$83A7-8(exterior-tiles0-049)]
+B $83A8 #HTML[#UDGARRAY1,7,4,1;$83A8-$83AF-8(exterior-tiles0-050)]
+B $83B0 #HTML[#UDGARRAY1,7,4,1;$83B0-$83B7-8(exterior-tiles0-051)]
+B $83B8 #HTML[#UDGARRAY1,7,4,1;$83B8-$83BF-8(exterior-tiles0-052)]
+B $83C0 #HTML[#UDGARRAY1,7,4,1;$83C0-$83C7-8(exterior-tiles0-053)]
+B $83C8 #HTML[#UDGARRAY1,7,4,1;$83C8-$83CF-8(exterior-tiles0-054)]
+B $83D0 #HTML[#UDGARRAY1,7,4,1;$83D0-$83D7-8(exterior-tiles0-055)]
+B $83D8 #HTML[#UDGARRAY1,7,4,1;$83D8-$83DF-8(exterior-tiles0-056)]
+B $83E0 #HTML[#UDGARRAY1,7,4,1;$83E0-$83E7-8(exterior-tiles0-057)]
+B $83E8 #HTML[#UDGARRAY1,7,4,1;$83E8-$83EF-8(exterior-tiles0-058)]
+B $83F0 #HTML[#UDGARRAY1,7,4,1;$83F0-$83F7-8(exterior-tiles0-059)]
+B $83F8 #HTML[#UDGARRAY1,7,4,1;$83F8-$83FF-8(exterior-tiles0-060)]
+B $8400 #HTML[#UDGARRAY1,7,4,1;$8400-$8407-8(exterior-tiles0-061)]
+B $8408 #HTML[#UDGARRAY1,7,4,1;$8408-$840F-8(exterior-tiles0-062)]
+B $8410 #HTML[#UDGARRAY1,7,4,1;$8410-$8417-8(exterior-tiles0-063)]
+B $8418 #HTML[#UDGARRAY1,7,4,1;$8418-$841F-8(exterior-tiles0-064)]
+B $8420 #HTML[#UDGARRAY1,7,4,1;$8420-$8427-8(exterior-tiles0-065)]
+B $8428 #HTML[#UDGARRAY1,7,4,1;$8428-$842F-8(exterior-tiles0-066)]
+B $8430 #HTML[#UDGARRAY1,7,4,1;$8430-$8437-8(exterior-tiles0-067)]
+B $8438 #HTML[#UDGARRAY1,7,4,1;$8438-$843F-8(exterior-tiles0-068)]
+B $8440 #HTML[#UDGARRAY1,7,4,1;$8440-$8447-8(exterior-tiles0-069)]
+B $8448 #HTML[#UDGARRAY1,7,4,1;$8448-$844F-8(exterior-tiles0-070)]
+B $8450 #HTML[#UDGARRAY1,7,4,1;$8450-$8457-8(exterior-tiles0-071)]
+B $8458 #HTML[#UDGARRAY1,7,4,1;$8458-$845F-8(exterior-tiles0-072)]
+B $8460 #HTML[#UDGARRAY1,7,4,1;$8460-$8467-8(exterior-tiles0-073)]
+B $8468 #HTML[#UDGARRAY1,7,4,1;$8468-$846F-8(exterior-tiles0-074)]
+B $8470 #HTML[#UDGARRAY1,7,4,1;$8470-$8477-8(exterior-tiles0-075)]
+B $8478 #HTML[#UDGARRAY1,7,4,1;$8478-$847F-8(exterior-tiles0-076)]
+B $8480 #HTML[#UDGARRAY1,7,4,1;$8480-$8487-8(exterior-tiles0-077)]
+B $8488 #HTML[#UDGARRAY1,7,4,1;$8488-$848F-8(exterior-tiles0-078)]
+B $8490 #HTML[#UDGARRAY1,7,4,1;$8490-$8497-8(exterior-tiles0-079)]
+B $8498 #HTML[#UDGARRAY1,7,4,1;$8498-$849F-8(exterior-tiles0-080)]
+B $84A0 #HTML[#UDGARRAY1,7,4,1;$84A0-$84A7-8(exterior-tiles0-081)]
+B $84A8 #HTML[#UDGARRAY1,7,4,1;$84A8-$84AF-8(exterior-tiles0-082)]
+B $84B0 #HTML[#UDGARRAY1,7,4,1;$84B0-$84B7-8(exterior-tiles0-083)]
+B $84B8 #HTML[#UDGARRAY1,7,4,1;$84B8-$84BF-8(exterior-tiles0-084)]
+B $84C0 #HTML[#UDGARRAY1,7,4,1;$84C0-$84C7-8(exterior-tiles0-085)]
+B $84C8 #HTML[#UDGARRAY1,7,4,1;$84C8-$84CF-8(exterior-tiles0-086)]
+B $84D0 #HTML[#UDGARRAY1,7,4,1;$84D0-$84D7-8(exterior-tiles0-087)]
+B $84D8 #HTML[#UDGARRAY1,7,4,1;$84D8-$84DF-8(exterior-tiles0-088)]
+B $84E0 #HTML[#UDGARRAY1,7,4,1;$84E0-$84E7-8(exterior-tiles0-089)]
+B $84E8 #HTML[#UDGARRAY1,7,4,1;$84E8-$84EF-8(exterior-tiles0-090)]
+B $84F0 #HTML[#UDGARRAY1,7,4,1;$84F0-$84F7-8(exterior-tiles0-091)]
+B $84F8 #HTML[#UDGARRAY1,7,4,1;$84F8-$84FF-8(exterior-tiles0-092)]
+B $8500 #HTML[#UDGARRAY1,7,4,1;$8500-$8507-8(exterior-tiles0-093)]
+B $8508 #HTML[#UDGARRAY1,7,4,1;$8508-$850F-8(exterior-tiles0-094)]
+B $8510 #HTML[#UDGARRAY1,7,4,1;$8510-$8517-8(exterior-tiles0-095)]
+B $8518 #HTML[#UDGARRAY1,7,4,1;$8518-$851F-8(exterior-tiles0-096)]
+B $8520 #HTML[#UDGARRAY1,7,4,1;$8520-$8527-8(exterior-tiles0-097)]
+B $8528 #HTML[#UDGARRAY1,7,4,1;$8528-$852F-8(exterior-tiles0-098)]
+B $8530 #HTML[#UDGARRAY1,7,4,1;$8530-$8537-8(exterior-tiles0-099)]
+B $8538 #HTML[#UDGARRAY1,7,4,1;$8538-$853F-8(exterior-tiles0-100)]
+B $8540 #HTML[#UDGARRAY1,7,4,1;$8540-$8547-8(exterior-tiles0-101)]
+B $8548 #HTML[#UDGARRAY1,7,4,1;$8548-$854F-8(exterior-tiles0-102)]
+B $8550 #HTML[#UDGARRAY1,7,4,1;$8550-$8557-8(exterior-tiles0-103)]
+B $8558 #HTML[#UDGARRAY1,7,4,1;$8558-$855F-8(exterior-tiles0-104)]
+B $8560 #HTML[#UDGARRAY1,7,4,1;$8560-$8567-8(exterior-tiles0-105)]
+B $8568 #HTML[#UDGARRAY1,7,4,1;$8568-$856F-8(exterior-tiles0-106)]
+B $8570 #HTML[#UDGARRAY1,7,4,1;$8570-$8577-8(exterior-tiles0-107)]
+B $8578 #HTML[#UDGARRAY1,7,4,1;$8578-$857F-8(exterior-tiles0-108)]
+B $8580 #HTML[#UDGARRAY1,7,4,1;$8580-$8587-8(exterior-tiles0-109)]
+B $8588 #HTML[#UDGARRAY1,7,4,1;$8588-$858F-8(exterior-tiles0-110)]
+B $8590 #HTML[#UDGARRAY1,7,4,1;$8590-$8597-8(exterior-tiles1-000)]
+B $8598 #HTML[#UDGARRAY1,7,4,1;$8598-$859F-8(exterior-tiles1-001)]
+B $85A0 #HTML[#UDGARRAY1,7,4,1;$85A0-$85A7-8(exterior-tiles1-002)]
+B $85A8 #HTML[#UDGARRAY1,7,4,1;$85A8-$85AF-8(exterior-tiles1-003)]
+B $85B0 #HTML[#UDGARRAY1,7,4,1;$85B0-$85B7-8(exterior-tiles1-004)]
+B $85B8 #HTML[#UDGARRAY1,7,4,1;$85B8-$85BF-8(exterior-tiles1-005)]
+B $85C0 #HTML[#UDGARRAY1,7,4,1;$85C0-$85C7-8(exterior-tiles1-006)]
+B $85C8 #HTML[#UDGARRAY1,7,4,1;$85C8-$85CF-8(exterior-tiles1-007)]
+B $85D0 #HTML[#UDGARRAY1,7,4,1;$85D0-$85D7-8(exterior-tiles1-008)]
+B $85D8 #HTML[#UDGARRAY1,7,4,1;$85D8-$85DF-8(exterior-tiles1-009)]
+B $85E0 #HTML[#UDGARRAY1,7,4,1;$85E0-$85E7-8(exterior-tiles1-010)]
+B $85E8 #HTML[#UDGARRAY1,7,4,1;$85E8-$85EF-8(exterior-tiles1-011)]
+B $85F0 #HTML[#UDGARRAY1,7,4,1;$85F0-$85F7-8(exterior-tiles1-012)]
+B $85F8 #HTML[#UDGARRAY1,7,4,1;$85F8-$85FF-8(exterior-tiles1-013)]
+B $8600 #HTML[#UDGARRAY1,7,4,1;$8600-$8607-8(exterior-tiles1-014)]
+B $8608 #HTML[#UDGARRAY1,7,4,1;$8608-$860F-8(exterior-tiles1-015)]
+B $8610 #HTML[#UDGARRAY1,7,4,1;$8610-$8617-8(exterior-tiles1-016)]
+B $8618 #HTML[#UDGARRAY1,7,4,1;$8618-$861F-8(exterior-tiles1-017)]
+B $8620 #HTML[#UDGARRAY1,7,4,1;$8620-$8627-8(exterior-tiles1-018)]
+B $8628 #HTML[#UDGARRAY1,7,4,1;$8628-$862F-8(exterior-tiles1-019)]
+B $8630 #HTML[#UDGARRAY1,7,4,1;$8630-$8637-8(exterior-tiles1-020)]
+B $8638 #HTML[#UDGARRAY1,7,4,1;$8638-$863F-8(exterior-tiles1-021)]
+B $8640 #HTML[#UDGARRAY1,7,4,1;$8640-$8647-8(exterior-tiles1-022)]
+B $8648 #HTML[#UDGARRAY1,7,4,1;$8648-$864F-8(exterior-tiles1-023)]
+B $8650 #HTML[#UDGARRAY1,7,4,1;$8650-$8657-8(exterior-tiles1-024)]
+B $8658 #HTML[#UDGARRAY1,7,4,1;$8658-$865F-8(exterior-tiles1-025)]
+B $8660 #HTML[#UDGARRAY1,7,4,1;$8660-$8667-8(exterior-tiles1-026)]
+B $8668 #HTML[#UDGARRAY1,7,4,1;$8668-$866F-8(exterior-tiles1-027)]
+B $8670 #HTML[#UDGARRAY1,7,4,1;$8670-$8677-8(exterior-tiles1-028)]
+B $8678 #HTML[#UDGARRAY1,7,4,1;$8678-$867F-8(exterior-tiles1-029)]
+B $8680 #HTML[#UDGARRAY1,7,4,1;$8680-$8687-8(exterior-tiles1-030)]
+B $8688 #HTML[#UDGARRAY1,7,4,1;$8688-$868F-8(exterior-tiles1-031)]
+B $8690 #HTML[#UDGARRAY1,7,4,1;$8690-$8697-8(exterior-tiles1-032)]
+B $8698 #HTML[#UDGARRAY1,7,4,1;$8698-$869F-8(exterior-tiles1-033)]
+B $86A0 #HTML[#UDGARRAY1,7,4,1;$86A0-$86A7-8(exterior-tiles1-034)]
+B $86A8 #HTML[#UDGARRAY1,7,4,1;$86A8-$86AF-8(exterior-tiles1-035)]
+B $86B0 #HTML[#UDGARRAY1,7,4,1;$86B0-$86B7-8(exterior-tiles1-036)]
+B $86B8 #HTML[#UDGARRAY1,7,4,1;$86B8-$86BF-8(exterior-tiles1-037)]
+B $86C0 #HTML[#UDGARRAY1,7,4,1;$86C0-$86C7-8(exterior-tiles1-038)]
+B $86C8 #HTML[#UDGARRAY1,7,4,1;$86C8-$86CF-8(exterior-tiles1-039)]
+B $86D0 #HTML[#UDGARRAY1,7,4,1;$86D0-$86D7-8(exterior-tiles1-040)]
+B $86D8 #HTML[#UDGARRAY1,7,4,1;$86D8-$86DF-8(exterior-tiles1-041)]
+B $86E0 #HTML[#UDGARRAY1,7,4,1;$86E0-$86E7-8(exterior-tiles1-042)]
+B $86E8 #HTML[#UDGARRAY1,7,4,1;$86E8-$86EF-8(exterior-tiles1-043)]
+B $86F0 #HTML[#UDGARRAY1,7,4,1;$86F0-$86F7-8(exterior-tiles1-044)]
+B $86F8 #HTML[#UDGARRAY1,7,4,1;$86F8-$86FF-8(exterior-tiles1-045)]
+B $8700 #HTML[#UDGARRAY1,7,4,1;$8700-$8707-8(exterior-tiles1-046)]
+B $8708 #HTML[#UDGARRAY1,7,4,1;$8708-$870F-8(exterior-tiles1-047)]
+B $8710 #HTML[#UDGARRAY1,7,4,1;$8710-$8717-8(exterior-tiles1-048)]
+B $8718 #HTML[#UDGARRAY1,7,4,1;$8718-$871F-8(exterior-tiles1-049)]
+B $8720 #HTML[#UDGARRAY1,7,4,1;$8720-$8727-8(exterior-tiles1-050)]
+B $8728 #HTML[#UDGARRAY1,7,4,1;$8728-$872F-8(exterior-tiles1-051)]
+B $8730 #HTML[#UDGARRAY1,7,4,1;$8730-$8737-8(exterior-tiles1-052)]
+B $8738 #HTML[#UDGARRAY1,7,4,1;$8738-$873F-8(exterior-tiles1-053)]
+B $8740 #HTML[#UDGARRAY1,7,4,1;$8740-$8747-8(exterior-tiles1-054)]
+B $8748 #HTML[#UDGARRAY1,7,4,1;$8748-$874F-8(exterior-tiles1-055)]
+B $8750 #HTML[#UDGARRAY1,7,4,1;$8750-$8757-8(exterior-tiles1-056)]
+B $8758 #HTML[#UDGARRAY1,7,4,1;$8758-$875F-8(exterior-tiles1-057)]
+B $8760 #HTML[#UDGARRAY1,7,4,1;$8760-$8767-8(exterior-tiles1-058)]
+B $8768 #HTML[#UDGARRAY1,7,4,1;$8768-$876F-8(exterior-tiles1-059)]
+B $8770 #HTML[#UDGARRAY1,7,4,1;$8770-$8777-8(exterior-tiles1-060)]
+B $8778 #HTML[#UDGARRAY1,7,4,1;$8778-$877F-8(exterior-tiles1-061)]
+B $8780 #HTML[#UDGARRAY1,7,4,1;$8780-$8787-8(exterior-tiles1-062)]
+B $8788 #HTML[#UDGARRAY1,7,4,1;$8788-$878F-8(exterior-tiles1-063)]
+B $8790 #HTML[#UDGARRAY1,7,4,1;$8790-$8797-8(exterior-tiles1-064)]
+B $8798 #HTML[#UDGARRAY1,7,4,1;$8798-$879F-8(exterior-tiles1-065)]
+B $87A0 #HTML[#UDGARRAY1,7,4,1;$87A0-$87A7-8(exterior-tiles1-066)]
+B $87A8 #HTML[#UDGARRAY1,7,4,1;$87A8-$87AF-8(exterior-tiles1-067)]
+B $87B0 #HTML[#UDGARRAY1,7,4,1;$87B0-$87B7-8(exterior-tiles1-068)]
+B $87B8 #HTML[#UDGARRAY1,7,4,1;$87B8-$87BF-8(exterior-tiles1-069)]
+B $87C0 #HTML[#UDGARRAY1,7,4,1;$87C0-$87C7-8(exterior-tiles1-070)]
+B $87C8 #HTML[#UDGARRAY1,7,4,1;$87C8-$87CF-8(exterior-tiles1-071)]
+B $87D0 #HTML[#UDGARRAY1,7,4,1;$87D0-$87D7-8(exterior-tiles1-072)]
+B $87D8 #HTML[#UDGARRAY1,7,4,1;$87D8-$87DF-8(exterior-tiles1-073)]
+B $87E0 #HTML[#UDGARRAY1,7,4,1;$87E0-$87E7-8(exterior-tiles1-074)]
+B $87E8 #HTML[#UDGARRAY1,7,4,1;$87E8-$87EF-8(exterior-tiles1-075)]
+B $87F0 #HTML[#UDGARRAY1,7,4,1;$87F0-$87F7-8(exterior-tiles1-076)]
+B $87F8 #HTML[#UDGARRAY1,7,4,1;$87F8-$87FF-8(exterior-tiles1-077)]
+B $8800 #HTML[#UDGARRAY1,7,4,1;$8800-$8807-8(exterior-tiles1-078)]
+B $8808 #HTML[#UDGARRAY1,7,4,1;$8808-$880F-8(exterior-tiles1-079)]
+B $8810 #HTML[#UDGARRAY1,7,4,1;$8810-$8817-8(exterior-tiles1-080)]
+B $8818 #HTML[#UDGARRAY1,7,4,1;$8818-$881F-8(exterior-tiles1-081)]
+B $8820 #HTML[#UDGARRAY1,7,4,1;$8820-$8827-8(exterior-tiles1-082)]
+B $8828 #HTML[#UDGARRAY1,7,4,1;$8828-$882F-8(exterior-tiles1-083)]
+B $8830 #HTML[#UDGARRAY1,7,4,1;$8830-$8837-8(exterior-tiles1-084)]
+B $8838 #HTML[#UDGARRAY1,7,4,1;$8838-$883F-8(exterior-tiles1-085)]
+B $8840 #HTML[#UDGARRAY1,7,4,1;$8840-$8847-8(exterior-tiles1-086)]
+B $8848 #HTML[#UDGARRAY1,7,4,1;$8848-$884F-8(exterior-tiles1-087)]
+B $8850 #HTML[#UDGARRAY1,7,4,1;$8850-$8857-8(exterior-tiles1-088)]
+B $8858 #HTML[#UDGARRAY1,7,4,1;$8858-$885F-8(exterior-tiles1-089)]
+B $8860 #HTML[#UDGARRAY1,7,4,1;$8860-$8867-8(exterior-tiles1-090)]
+B $8868 #HTML[#UDGARRAY1,7,4,1;$8868-$886F-8(exterior-tiles1-091)]
+B $8870 #HTML[#UDGARRAY1,7,4,1;$8870-$8877-8(exterior-tiles1-092)]
+B $8878 #HTML[#UDGARRAY1,7,4,1;$8878-$887F-8(exterior-tiles1-093)]
+B $8880 #HTML[#UDGARRAY1,7,4,1;$8880-$8887-8(exterior-tiles1-094)]
+B $8888 #HTML[#UDGARRAY1,7,4,1;$8888-$888F-8(exterior-tiles1-095)]
+B $8890 #HTML[#UDGARRAY1,7,4,1;$8890-$8897-8(exterior-tiles1-096)]
+B $8898 #HTML[#UDGARRAY1,7,4,1;$8898-$889F-8(exterior-tiles1-097)]
+B $88A0 #HTML[#UDGARRAY1,7,4,1;$88A0-$88A7-8(exterior-tiles1-098)]
+B $88A8 #HTML[#UDGARRAY1,7,4,1;$88A8-$88AF-8(exterior-tiles1-099)]
+B $88B0 #HTML[#UDGARRAY1,7,4,1;$88B0-$88B7-8(exterior-tiles1-100)]
+B $88B8 #HTML[#UDGARRAY1,7,4,1;$88B8-$88BF-8(exterior-tiles1-101)]
+B $88C0 #HTML[#UDGARRAY1,7,4,1;$88C0-$88C7-8(exterior-tiles1-102)]
+B $88C8 #HTML[#UDGARRAY1,7,4,1;$88C8-$88CF-8(exterior-tiles1-103)]
+B $88D0 #HTML[#UDGARRAY1,7,4,1;$88D0-$88D7-8(exterior-tiles1-104)]
+B $88D8 #HTML[#UDGARRAY1,7,4,1;$88D8-$88DF-8(exterior-tiles1-105)]
+B $88E0 #HTML[#UDGARRAY1,7,4,1;$88E0-$88E7-8(exterior-tiles1-106)]
+B $88E8 #HTML[#UDGARRAY1,7,4,1;$88E8-$88EF-8(exterior-tiles1-107)]
+B $88F0 #HTML[#UDGARRAY1,7,4,1;$88F0-$88F7-8(exterior-tiles1-108)]
+B $88F8 #HTML[#UDGARRAY1,7,4,1;$88F8-$88FF-8(exterior-tiles1-109)]
+B $8900 #HTML[#UDGARRAY1,7,4,1;$8900-$8907-8(exterior-tiles1-110)]
+B $8908 #HTML[#UDGARRAY1,7,4,1;$8908-$890F-8(exterior-tiles1-111)]
+B $8910 #HTML[#UDGARRAY1,7,4,1;$8910-$8917-8(exterior-tiles1-112)]
+B $8918 #HTML[#UDGARRAY1,7,4,1;$8918-$891F-8(exterior-tiles1-113)]
+B $8920 #HTML[#UDGARRAY1,7,4,1;$8920-$8927-8(exterior-tiles1-114)]
+B $8928 #HTML[#UDGARRAY1,7,4,1;$8928-$892F-8(exterior-tiles1-115)]
+B $8930 #HTML[#UDGARRAY1,7,4,1;$8930-$8937-8(exterior-tiles1-116)]
+B $8938 #HTML[#UDGARRAY1,7,4,1;$8938-$893F-8(exterior-tiles1-117)]
+B $8940 #HTML[#UDGARRAY1,7,4,1;$8940-$8947-8(exterior-tiles1-118)]
+B $8948 #HTML[#UDGARRAY1,7,4,1;$8948-$894F-8(exterior-tiles1-119)]
+B $8950 #HTML[#UDGARRAY1,7,4,1;$8950-$8957-8(exterior-tiles1-120)]
+B $8958 #HTML[#UDGARRAY1,7,4,1;$8958-$895F-8(exterior-tiles1-121)]
+B $8960 #HTML[#UDGARRAY1,7,4,1;$8960-$8967-8(exterior-tiles1-122)]
+B $8968 #HTML[#UDGARRAY1,7,4,1;$8968-$896F-8(exterior-tiles1-123)]
+B $8970 #HTML[#UDGARRAY1,7,4,1;$8970-$8977-8(exterior-tiles1-124)]
+B $8978 #HTML[#UDGARRAY1,7,4,1;$8978-$897F-8(exterior-tiles1-125)]
+B $8980 #HTML[#UDGARRAY1,7,4,1;$8980-$8987-8(exterior-tiles1-126)]
+B $8988 #HTML[#UDGARRAY1,7,4,1;$8988-$898F-8(exterior-tiles1-127)]
+B $8990 #HTML[#UDGARRAY1,7,4,1;$8990-$8997-8(exterior-tiles1-128)]
+B $8998 #HTML[#UDGARRAY1,7,4,1;$8998-$899F-8(exterior-tiles1-129)]
+B $89A0 #HTML[#UDGARRAY1,7,4,1;$89A0-$89A7-8(exterior-tiles1-130)]
+B $89A8 #HTML[#UDGARRAY1,7,4,1;$89A8-$89AF-8(exterior-tiles1-131)]
+B $89B0 #HTML[#UDGARRAY1,7,4,1;$89B0-$89B7-8(exterior-tiles1-132)]
+B $89B8 #HTML[#UDGARRAY1,7,4,1;$89B8-$89BF-8(exterior-tiles1-133)]
+B $89C0 #HTML[#UDGARRAY1,7,4,1;$89C0-$89C7-8(exterior-tiles1-134)]
+B $89C8 #HTML[#UDGARRAY1,7,4,1;$89C8-$89CF-8(exterior-tiles1-135)]
+B $89D0 #HTML[#UDGARRAY1,7,4,1;$89D0-$89D7-8(exterior-tiles1-136)]
+B $89D8 #HTML[#UDGARRAY1,7,4,1;$89D8-$89DF-8(exterior-tiles1-137)]
+B $89E0 #HTML[#UDGARRAY1,7,4,1;$89E0-$89E7-8(exterior-tiles1-138)]
+B $89E8 #HTML[#UDGARRAY1,7,4,1;$89E8-$89EF-8(exterior-tiles1-139)]
+B $89F0 #HTML[#UDGARRAY1,7,4,1;$89F0-$89F7-8(exterior-tiles1-140)]
+B $89F8 #HTML[#UDGARRAY1,7,4,1;$89F8-$89FF-8(exterior-tiles1-141)]
+B $8A00 #HTML[#UDGARRAY1,7,4,1;$8A00-$8A07-8(exterior-tiles1-142)]
+B $8A08 #HTML[#UDGARRAY1,7,4,1;$8A08-$8A0F-8(exterior-tiles1-143)]
+B $8A10 #HTML[#UDGARRAY1,7,4,1;$8A10-$8A17-8(exterior-tiles1-144)]
+B $8A18 #HTML[#UDGARRAY1,7,4,1;$8A18-$8A1F-8(exterior-tiles2-000)]
+B $8A20 #HTML[#UDGARRAY1,7,4,1;$8A20-$8A27-8(exterior-tiles2-001)]
+B $8A28 #HTML[#UDGARRAY1,7,4,1;$8A28-$8A2F-8(exterior-tiles2-002)]
+B $8A30 #HTML[#UDGARRAY1,7,4,1;$8A30-$8A37-8(exterior-tiles2-003)]
+B $8A38 #HTML[#UDGARRAY1,7,4,1;$8A38-$8A3F-8(exterior-tiles2-004)]
+B $8A40 #HTML[#UDGARRAY1,7,4,1;$8A40-$8A47-8(exterior-tiles2-005)]
+B $8A48 #HTML[#UDGARRAY1,7,4,1;$8A48-$8A4F-8(exterior-tiles2-006)]
+B $8A50 #HTML[#UDGARRAY1,7,4,1;$8A50-$8A57-8(exterior-tiles2-007)]
+B $8A58 #HTML[#UDGARRAY1,7,4,1;$8A58-$8A5F-8(exterior-tiles2-008)]
+B $8A60 #HTML[#UDGARRAY1,7,4,1;$8A60-$8A67-8(exterior-tiles2-009)]
+B $8A68 #HTML[#UDGARRAY1,7,4,1;$8A68-$8A6F-8(exterior-tiles2-010)]
+B $8A70 #HTML[#UDGARRAY1,7,4,1;$8A70-$8A77-8(exterior-tiles2-011)]
+B $8A78 #HTML[#UDGARRAY1,7,4,1;$8A78-$8A7F-8(exterior-tiles2-012)]
+B $8A80 #HTML[#UDGARRAY1,7,4,1;$8A80-$8A87-8(exterior-tiles2-013)]
+B $8A88 #HTML[#UDGARRAY1,7,4,1;$8A88-$8A8F-8(exterior-tiles2-014)]
+B $8A90 #HTML[#UDGARRAY1,7,4,1;$8A90-$8A97-8(exterior-tiles2-015)]
+B $8A98 #HTML[#UDGARRAY1,7,4,1;$8A98-$8A9F-8(exterior-tiles2-016)]
+B $8AA0 #HTML[#UDGARRAY1,7,4,1;$8AA0-$8AA7-8(exterior-tiles2-017)]
+B $8AA8 #HTML[#UDGARRAY1,7,4,1;$8AA8-$8AAF-8(exterior-tiles2-018)]
+B $8AB0 #HTML[#UDGARRAY1,7,4,1;$8AB0-$8AB7-8(exterior-tiles2-019)]
+B $8AB8 #HTML[#UDGARRAY1,7,4,1;$8AB8-$8ABF-8(exterior-tiles2-020)]
+B $8AC0 #HTML[#UDGARRAY1,7,4,1;$8AC0-$8AC7-8(exterior-tiles2-021)]
+B $8AC8 #HTML[#UDGARRAY1,7,4,1;$8AC8-$8ACF-8(exterior-tiles2-022)]
+B $8AD0 #HTML[#UDGARRAY1,7,4,1;$8AD0-$8AD7-8(exterior-tiles2-023)]
+B $8AD8 #HTML[#UDGARRAY1,7,4,1;$8AD8-$8ADF-8(exterior-tiles2-024)]
+B $8AE0 #HTML[#UDGARRAY1,7,4,1;$8AE0-$8AE7-8(exterior-tiles2-025)]
+B $8AE8 #HTML[#UDGARRAY1,7,4,1;$8AE8-$8AEF-8(exterior-tiles2-026)]
+B $8AF0 #HTML[#UDGARRAY1,7,4,1;$8AF0-$8AF7-8(exterior-tiles2-027)]
+B $8AF8 #HTML[#UDGARRAY1,7,4,1;$8AF8-$8AFF-8(exterior-tiles2-028)]
+B $8B00 #HTML[#UDGARRAY1,7,4,1;$8B00-$8B07-8(exterior-tiles2-029)]
+B $8B08 #HTML[#UDGARRAY1,7,4,1;$8B08-$8B0F-8(exterior-tiles2-030)]
+B $8B10 #HTML[#UDGARRAY1,7,4,1;$8B10-$8B17-8(exterior-tiles2-031)]
+B $8B18 #HTML[#UDGARRAY1,7,4,1;$8B18-$8B1F-8(exterior-tiles2-032)]
+B $8B20 #HTML[#UDGARRAY1,7,4,1;$8B20-$8B27-8(exterior-tiles2-033)]
+B $8B28 #HTML[#UDGARRAY1,7,4,1;$8B28-$8B2F-8(exterior-tiles2-034)]
+B $8B30 #HTML[#UDGARRAY1,7,4,1;$8B30-$8B37-8(exterior-tiles2-035)]
+B $8B38 #HTML[#UDGARRAY1,7,4,1;$8B38-$8B3F-8(exterior-tiles2-036)]
+B $8B40 #HTML[#UDGARRAY1,7,4,1;$8B40-$8B47-8(exterior-tiles2-037)]
+B $8B48 #HTML[#UDGARRAY1,7,4,1;$8B48-$8B4F-8(exterior-tiles2-038)]
+B $8B50 #HTML[#UDGARRAY1,7,4,1;$8B50-$8B57-8(exterior-tiles2-039)]
+B $8B58 #HTML[#UDGARRAY1,7,4,1;$8B58-$8B5F-8(exterior-tiles2-040)]
+B $8B60 #HTML[#UDGARRAY1,7,4,1;$8B60-$8B67-8(exterior-tiles2-041)]
+B $8B68 #HTML[#UDGARRAY1,7,4,1;$8B68-$8B6F-8(exterior-tiles2-042)]
+B $8B70 #HTML[#UDGARRAY1,7,4,1;$8B70-$8B77-8(exterior-tiles2-043)]
+B $8B78 #HTML[#UDGARRAY1,7,4,1;$8B78-$8B7F-8(exterior-tiles2-044)]
+B $8B80 #HTML[#UDGARRAY1,7,4,1;$8B80-$8B87-8(exterior-tiles2-045)]
+B $8B88 #HTML[#UDGARRAY1,7,4,1;$8B88-$8B8F-8(exterior-tiles2-046)]
+B $8B90 #HTML[#UDGARRAY1,7,4,1;$8B90-$8B97-8(exterior-tiles2-047)]
+B $8B98 #HTML[#UDGARRAY1,7,4,1;$8B98-$8B9F-8(exterior-tiles2-048)]
+B $8BA0 #HTML[#UDGARRAY1,7,4,1;$8BA0-$8BA7-8(exterior-tiles2-049)]
+B $8BA8 #HTML[#UDGARRAY1,7,4,1;$8BA8-$8BAF-8(exterior-tiles2-050)]
+B $8BB0 #HTML[#UDGARRAY1,7,4,1;$8BB0-$8BB7-8(exterior-tiles2-051)]
+B $8BB8 #HTML[#UDGARRAY1,7,4,1;$8BB8-$8BBF-8(exterior-tiles2-052)]
+B $8BC0 #HTML[#UDGARRAY1,7,4,1;$8BC0-$8BC7-8(exterior-tiles2-053)]
+B $8BC8 #HTML[#UDGARRAY1,7,4,1;$8BC8-$8BCF-8(exterior-tiles2-054)]
+B $8BD0 #HTML[#UDGARRAY1,7,4,1;$8BD0-$8BD7-8(exterior-tiles2-055)]
+B $8BD8 #HTML[#UDGARRAY1,7,4,1;$8BD8-$8BDF-8(exterior-tiles2-056)]
+B $8BE0 #HTML[#UDGARRAY1,7,4,1;$8BE0-$8BE7-8(exterior-tiles2-057)]
+B $8BE8 #HTML[#UDGARRAY1,7,4,1;$8BE8-$8BEF-8(exterior-tiles2-058)]
+B $8BF0 #HTML[#UDGARRAY1,7,4,1;$8BF0-$8BF7-8(exterior-tiles2-059)]
+B $8BF8 #HTML[#UDGARRAY1,7,4,1;$8BF8-$8BFF-8(exterior-tiles2-060)]
+B $8C00 #HTML[#UDGARRAY1,7,4,1;$8C00-$8C07-8(exterior-tiles2-061)]
+B $8C08 #HTML[#UDGARRAY1,7,4,1;$8C08-$8C0F-8(exterior-tiles2-062)]
+B $8C10 #HTML[#UDGARRAY1,7,4,1;$8C10-$8C17-8(exterior-tiles2-063)]
+B $8C18 #HTML[#UDGARRAY1,7,4,1;$8C18-$8C1F-8(exterior-tiles2-064)]
+B $8C20 #HTML[#UDGARRAY1,7,4,1;$8C20-$8C27-8(exterior-tiles2-065)]
+B $8C28 #HTML[#UDGARRAY1,7,4,1;$8C28-$8C2F-8(exterior-tiles2-066)]
+B $8C30 #HTML[#UDGARRAY1,7,4,1;$8C30-$8C37-8(exterior-tiles2-067)]
+B $8C38 #HTML[#UDGARRAY1,7,4,1;$8C38-$8C3F-8(exterior-tiles2-068)]
+B $8C40 #HTML[#UDGARRAY1,7,4,1;$8C40-$8C47-8(exterior-tiles2-069)]
+B $8C48 #HTML[#UDGARRAY1,7,4,1;$8C48-$8C4F-8(exterior-tiles2-070)]
+B $8C50 #HTML[#UDGARRAY1,7,4,1;$8C50-$8C57-8(exterior-tiles2-071)]
+B $8C58 #HTML[#UDGARRAY1,7,4,1;$8C58-$8C5F-8(exterior-tiles2-072)]
+B $8C60 #HTML[#UDGARRAY1,7,4,1;$8C60-$8C67-8(exterior-tiles2-073)]
+B $8C68 #HTML[#UDGARRAY1,7,4,1;$8C68-$8C6F-8(exterior-tiles2-074)]
+B $8C70 #HTML[#UDGARRAY1,7,4,1;$8C70-$8C77-8(exterior-tiles2-075)]
+B $8C78 #HTML[#UDGARRAY1,7,4,1;$8C78-$8C7F-8(exterior-tiles2-076)]
+B $8C80 #HTML[#UDGARRAY1,7,4,1;$8C80-$8C87-8(exterior-tiles2-077)]
+B $8C88 #HTML[#UDGARRAY1,7,4,1;$8C88-$8C8F-8(exterior-tiles2-078)]
+B $8C90 #HTML[#UDGARRAY1,7,4,1;$8C90-$8C97-8(exterior-tiles2-079)]
+B $8C98 #HTML[#UDGARRAY1,7,4,1;$8C98-$8C9F-8(exterior-tiles2-080)]
+B $8CA0 #HTML[#UDGARRAY1,7,4,1;$8CA0-$8CA7-8(exterior-tiles2-081)]
+B $8CA8 #HTML[#UDGARRAY1,7,4,1;$8CA8-$8CAF-8(exterior-tiles2-082)]
+B $8CB0 #HTML[#UDGARRAY1,7,4,1;$8CB0-$8CB7-8(exterior-tiles2-083)]
+B $8CB8 #HTML[#UDGARRAY1,7,4,1;$8CB8-$8CBF-8(exterior-tiles2-084)]
+B $8CC0 #HTML[#UDGARRAY1,7,4,1;$8CC0-$8CC7-8(exterior-tiles2-085)]
+B $8CC8 #HTML[#UDGARRAY1,7,4,1;$8CC8-$8CCF-8(exterior-tiles2-086)]
+B $8CD0 #HTML[#UDGARRAY1,7,4,1;$8CD0-$8CD7-8(exterior-tiles2-087)]
+B $8CD8 #HTML[#UDGARRAY1,7,4,1;$8CD8-$8CDF-8(exterior-tiles2-088)]
+B $8CE0 #HTML[#UDGARRAY1,7,4,1;$8CE0-$8CE7-8(exterior-tiles2-089)]
+B $8CE8 #HTML[#UDGARRAY1,7,4,1;$8CE8-$8CEF-8(exterior-tiles2-090)]
+B $8CF0 #HTML[#UDGARRAY1,7,4,1;$8CF0-$8CF7-8(exterior-tiles2-091)]
+B $8CF8 #HTML[#UDGARRAY1,7,4,1;$8CF8-$8CFF-8(exterior-tiles2-092)]
+B $8D00 #HTML[#UDGARRAY1,7,4,1;$8D00-$8D07-8(exterior-tiles2-093)]
+B $8D08 #HTML[#UDGARRAY1,7,4,1;$8D08-$8D0F-8(exterior-tiles2-094)]
+B $8D10 #HTML[#UDGARRAY1,7,4,1;$8D10-$8D17-8(exterior-tiles2-095)]
+B $8D18 #HTML[#UDGARRAY1,7,4,1;$8D18-$8D1F-8(exterior-tiles2-096)]
+B $8D20 #HTML[#UDGARRAY1,7,4,1;$8D20-$8D27-8(exterior-tiles2-097)]
+B $8D28 #HTML[#UDGARRAY1,7,4,1;$8D28-$8D2F-8(exterior-tiles2-098)]
+B $8D30 #HTML[#UDGARRAY1,7,4,1;$8D30-$8D37-8(exterior-tiles2-099)]
+B $8D38 #HTML[#UDGARRAY1,7,4,1;$8D38-$8D3F-8(exterior-tiles2-100)]
+B $8D40 #HTML[#UDGARRAY1,7,4,1;$8D40-$8D47-8(exterior-tiles2-101)]
+B $8D48 #HTML[#UDGARRAY1,7,4,1;$8D48-$8D4F-8(exterior-tiles2-102)]
+B $8D50 #HTML[#UDGARRAY1,7,4,1;$8D50-$8D57-8(exterior-tiles2-103)]
+B $8D58 #HTML[#UDGARRAY1,7,4,1;$8D58-$8D5F-8(exterior-tiles2-104)]
+B $8D60 #HTML[#UDGARRAY1,7,4,1;$8D60-$8D67-8(exterior-tiles2-105)]
+B $8D68 #HTML[#UDGARRAY1,7,4,1;$8D68-$8D6F-8(exterior-tiles2-106)]
+B $8D70 #HTML[#UDGARRAY1,7,4,1;$8D70-$8D77-8(exterior-tiles2-107)]
+B $8D78 #HTML[#UDGARRAY1,7,4,1;$8D78-$8D7F-8(exterior-tiles2-108)]
+B $8D80 #HTML[#UDGARRAY1,7,4,1;$8D80-$8D87-8(exterior-tiles2-109)]
+B $8D88 #HTML[#UDGARRAY1,7,4,1;$8D88-$8D8F-8(exterior-tiles2-110)]
+B $8D90 #HTML[#UDGARRAY1,7,4,1;$8D90-$8D97-8(exterior-tiles2-111)]
+B $8D98 #HTML[#UDGARRAY1,7,4,1;$8D98-$8D9F-8(exterior-tiles2-112)]
+B $8DA0 #HTML[#UDGARRAY1,7,4,1;$8DA0-$8DA7-8(exterior-tiles2-113)]
+B $8DA8 #HTML[#UDGARRAY1,7,4,1;$8DA8-$8DAF-8(exterior-tiles2-114)]
+B $8DB0 #HTML[#UDGARRAY1,7,4,1;$8DB0-$8DB7-8(exterior-tiles2-115)]
+B $8DB8 #HTML[#UDGARRAY1,7,4,1;$8DB8-$8DBF-8(exterior-tiles2-116)]
+B $8DC0 #HTML[#UDGARRAY1,7,4,1;$8DC0-$8DC7-8(exterior-tiles2-117)]
+B $8DC8 #HTML[#UDGARRAY1,7,4,1;$8DC8-$8DCF-8(exterior-tiles2-118)]
+B $8DD0 #HTML[#UDGARRAY1,7,4,1;$8DD0-$8DD7-8(exterior-tiles2-119)]
+B $8DD8 #HTML[#UDGARRAY1,7,4,1;$8DD8-$8DDF-8(exterior-tiles2-120)]
+B $8DE0 #HTML[#UDGARRAY1,7,4,1;$8DE0-$8DE7-8(exterior-tiles2-121)]
+B $8DE8 #HTML[#UDGARRAY1,7,4,1;$8DE8-$8DEF-8(exterior-tiles2-122)]
+B $8DF0 #HTML[#UDGARRAY1,7,4,1;$8DF0-$8DF7-8(exterior-tiles2-123)]
+B $8DF8 #HTML[#UDGARRAY1,7,4,1;$8DF8-$8DFF-8(exterior-tiles2-124)]
+B $8E00 #HTML[#UDGARRAY1,7,4,1;$8E00-$8E07-8(exterior-tiles2-125)]
+B $8E08 #HTML[#UDGARRAY1,7,4,1;$8E08-$8E0F-8(exterior-tiles2-126)]
+B $8E10 #HTML[#UDGARRAY1,7,4,1;$8E10-$8E17-8(exterior-tiles2-127)]
+B $8E18 #HTML[#UDGARRAY1,7,4,1;$8E18-$8E1F-8(exterior-tiles2-128)]
+B $8E20 #HTML[#UDGARRAY1,7,4,1;$8E20-$8E27-8(exterior-tiles2-129)]
+B $8E28 #HTML[#UDGARRAY1,7,4,1;$8E28-$8E2F-8(exterior-tiles2-130)]
+B $8E30 #HTML[#UDGARRAY1,7,4,1;$8E30-$8E37-8(exterior-tiles2-131)]
+B $8E38 #HTML[#UDGARRAY1,7,4,1;$8E38-$8E3F-8(exterior-tiles2-132)]
+B $8E40 #HTML[#UDGARRAY1,7,4,1;$8E40-$8E47-8(exterior-tiles2-133)]
+B $8E48 #HTML[#UDGARRAY1,7,4,1;$8E48-$8E4F-8(exterior-tiles2-134)]
+B $8E50 #HTML[#UDGARRAY1,7,4,1;$8E50-$8E57-8(exterior-tiles2-135)]
+B $8E58 #HTML[#UDGARRAY1,7,4,1;$8E58-$8E5F-8(exterior-tiles2-136)]
+B $8E60 #HTML[#UDGARRAY1,7,4,1;$8E60-$8E67-8(exterior-tiles2-137)]
+B $8E68 #HTML[#UDGARRAY1,7,4,1;$8E68-$8E6F-8(exterior-tiles2-138)]
+B $8E70 #HTML[#UDGARRAY1,7,4,1;$8E70-$8E77-8(exterior-tiles2-139)]
+B $8E78 #HTML[#UDGARRAY1,7,4,1;$8E78-$8E7F-8(exterior-tiles2-140)]
+B $8E80 #HTML[#UDGARRAY1,7,4,1;$8E80-$8E87-8(exterior-tiles2-141)]
+B $8E88 #HTML[#UDGARRAY1,7,4,1;$8E88-$8E8F-8(exterior-tiles2-142)]
+B $8E90 #HTML[#UDGARRAY1,7,4,1;$8E90-$8E97-8(exterior-tiles2-143)]
+B $8E98 #HTML[#UDGARRAY1,7,4,1;$8E98-$8E9F-8(exterior-tiles2-144)]
+B $8EA0 #HTML[#UDGARRAY1,7,4,1;$8EA0-$8EA7-8(exterior-tiles2-145)]
+B $8EA8 #HTML[#UDGARRAY1,7,4,1;$8EA8-$8EAF-8(exterior-tiles2-146)]
+B $8EB0 #HTML[#UDGARRAY1,7,4,1;$8EB0-$8EB7-8(exterior-tiles2-147)]
+B $8EB8 #HTML[#UDGARRAY1,7,4,1;$8EB8-$8EBF-8(exterior-tiles2-148)]
+B $8EC0 #HTML[#UDGARRAY1,7,4,1;$8EC0-$8EC7-8(exterior-tiles2-149)]
+B $8EC8 #HTML[#UDGARRAY1,7,4,1;$8EC8-$8ECF-8(exterior-tiles2-150)]
+B $8ED0 #HTML[#UDGARRAY1,7,4,1;$8ED0-$8ED7-8(exterior-tiles2-151)]
+B $8ED8 #HTML[#UDGARRAY1,7,4,1;$8ED8-$8EDF-8(exterior-tiles2-152)]
+B $8EE0 #HTML[#UDGARRAY1,7,4,1;$8EE0-$8EE7-8(exterior-tiles2-153)]
+B $8EE8 #HTML[#UDGARRAY1,7,4,1;$8EE8-$8EEF-8(exterior-tiles2-154)]
+B $8EF0 #HTML[#UDGARRAY1,7,4,1;$8EF0-$8EF7-8(exterior-tiles2-155)]
+B $8EF8 #HTML[#UDGARRAY1,7,4,1;$8EF8-$8EFF-8(exterior-tiles2-156)]
+B $8F00 #HTML[#UDGARRAY1,7,4,1;$8F00-$8F07-8(exterior-tiles2-157)]
+B $8F08 #HTML[#UDGARRAY1,7,4,1;$8F08-$8F0F-8(exterior-tiles2-158)]
+B $8F10 #HTML[#UDGARRAY1,7,4,1;$8F10-$8F17-8(exterior-tiles2-159)]
+B $8F18 #HTML[#UDGARRAY1,7,4,1;$8F18-$8F1F-8(exterior-tiles2-160)]
+B $8F20 #HTML[#UDGARRAY1,7,4,1;$8F20-$8F27-8(exterior-tiles2-161)]
+B $8F28 #HTML[#UDGARRAY1,7,4,1;$8F28-$8F2F-8(exterior-tiles2-162)]
+B $8F30 #HTML[#UDGARRAY1,7,4,1;$8F30-$8F37-8(exterior-tiles2-163)]
+B $8F38 #HTML[#UDGARRAY1,7,4,1;$8F38-$8F3F-8(exterior-tiles2-164)]
+B $8F40 #HTML[#UDGARRAY1,7,4,1;$8F40-$8F47-8(exterior-tiles2-165)]
+B $8F48 #HTML[#UDGARRAY1,7,4,1;$8F48-$8F4F-8(exterior-tiles2-166)]
+B $8F50 #HTML[#UDGARRAY1,7,4,1;$8F50-$8F57-8(exterior-tiles2-167)]
+B $8F58 #HTML[#UDGARRAY1,7,4,1;$8F58-$8F5F-8(exterior-tiles2-168)]
+B $8F60 #HTML[#UDGARRAY1,7,4,1;$8F60-$8F67-8(exterior-tiles2-169)]
+B $8F68 #HTML[#UDGARRAY1,7,4,1;$8F68-$8F6F-8(exterior-tiles2-170)]
+B $8F70 #HTML[#UDGARRAY1,7,4,1;$8F70-$8F77-8(exterior-tiles2-171)]
+B $8F78 #HTML[#UDGARRAY1,7,4,1;$8F78-$8F7F-8(exterior-tiles2-172)]
+B $8F80 #HTML[#UDGARRAY1,7,4,1;$8F80-$8F87-8(exterior-tiles2-173)]
+B $8F88 #HTML[#UDGARRAY1,7,4,1;$8F88-$8F8F-8(exterior-tiles2-174)]
+B $8F90 #HTML[#UDGARRAY1,7,4,1;$8F90-$8F97-8(exterior-tiles2-175)]
+B $8F98 #HTML[#UDGARRAY1,7,4,1;$8F98-$8F9F-8(exterior-tiles2-176)]
+B $8FA0 #HTML[#UDGARRAY1,7,4,1;$8FA0-$8FA7-8(exterior-tiles2-177)]
+B $8FA8 #HTML[#UDGARRAY1,7,4,1;$8FA8-$8FAF-8(exterior-tiles2-178)]
+B $8FB0 #HTML[#UDGARRAY1,7,4,1;$8FB0-$8FB7-8(exterior-tiles2-179)]
+B $8FB8 #HTML[#UDGARRAY1,7,4,1;$8FB8-$8FBF-8(exterior-tiles2-180)]
+B $8FC0 #HTML[#UDGARRAY1,7,4,1;$8FC0-$8FC7-8(exterior-tiles2-181)]
+B $8FC8 #HTML[#UDGARRAY1,7,4,1;$8FC8-$8FCF-8(exterior-tiles2-182)]
+B $8FD0 #HTML[#UDGARRAY1,7,4,1;$8FD0-$8FD7-8(exterior-tiles2-183)]
+B $8FD8 #HTML[#UDGARRAY1,7,4,1;$8FD8-$8FDF-8(exterior-tiles2-184)]
+B $8FE0 #HTML[#UDGARRAY1,7,4,1;$8FE0-$8FE7-8(exterior-tiles2-185)]
+B $8FE8 #HTML[#UDGARRAY1,7,4,1;$8FE8-$8FEF-8(exterior-tiles2-186)]
+B $8FF0 #HTML[#UDGARRAY1,7,4,1;$8FF0-$8FF7-8(exterior-tiles2-187)]
+B $8FF8 #HTML[#UDGARRAY1,7,4,1;$8FF8-$8FFF-8(exterior-tiles2-188)]
+B $9000 #HTML[#UDGARRAY1,7,4,1;$9000-$9007-8(exterior-tiles2-189)]
+B $9008 #HTML[#UDGARRAY1,7,4,1;$9008-$900F-8(exterior-tiles2-190)]
+B $9010 #HTML[#UDGARRAY1,7,4,1;$9010-$9017-8(exterior-tiles2-191)]
+B $9018 #HTML[#UDGARRAY1,7,4,1;$9018-$901F-8(exterior-tiles2-192)]
+B $9020 #HTML[#UDGARRAY1,7,4,1;$9020-$9027-8(exterior-tiles2-193)]
+B $9028 #HTML[#UDGARRAY1,7,4,1;$9028-$902F-8(exterior-tiles2-194)]
+B $9030 #HTML[#UDGARRAY1,7,4,1;$9030-$9037-8(exterior-tiles2-195)]
+B $9038 #HTML[#UDGARRAY1,7,4,1;$9038-$903F-8(exterior-tiles2-196)]
+B $9040 #HTML[#UDGARRAY1,7,4,1;$9040-$9047-8(exterior-tiles2-197)]
+B $9048 #HTML[#UDGARRAY1,7,4,1;$9048-$904F-8(exterior-tiles2-198)]
+B $9050 #HTML[#UDGARRAY1,7,4,1;$9050-$9057-8(exterior-tiles2-199)]
+B $9058 #HTML[#UDGARRAY1,7,4,1;$9058-$905F-8(exterior-tiles2-200)]
+B $9060 #HTML[#UDGARRAY1,7,4,1;$9060-$9067-8(exterior-tiles2-201)]
+B $9068 #HTML[#UDGARRAY1,7,4,1;$9068-$906F-8(exterior-tiles2-202)]
+B $9070 #HTML[#UDGARRAY1,7,4,1;$9070-$9077-8(exterior-tiles2-203)]
+B $9078 #HTML[#UDGARRAY1,7,4,1;$9078-$907F-8(exterior-tiles2-204)]
+B $9080 #HTML[#UDGARRAY1,7,4,1;$9080-$9087-8(exterior-tiles2-205)]
+B $9088 #HTML[#UDGARRAY1,7,4,1;$9088-$908F-8(exterior-tiles2-206)]
+B $9090 #HTML[#UDGARRAY1,7,4,1;$9090-$9097-8(exterior-tiles2-207)]
+B $9098 #HTML[#UDGARRAY1,7,4,1;$9098-$909F-8(exterior-tiles2-208)]
+B $90A0 #HTML[#UDGARRAY1,7,4,1;$90A0-$90A7-8(exterior-tiles2-209)]
+B $90A8 #HTML[#UDGARRAY1,7,4,1;$90A8-$90AF-8(exterior-tiles2-210)]
+B $90B0 #HTML[#UDGARRAY1,7,4,1;$90B0-$90B7-8(exterior-tiles2-211)]
+B $90B8 #HTML[#UDGARRAY1,7,4,1;$90B8-$90BF-8(exterior-tiles2-212)]
+B $90C0 #HTML[#UDGARRAY1,7,4,1;$90C0-$90C7-8(exterior-tiles2-213)]
+B $90C8 #HTML[#UDGARRAY1,7,4,1;$90C8-$90CF-8(exterior-tiles2-214)]
+B $90D0 #HTML[#UDGARRAY1,7,4,1;$90D0-$90D7-8(exterior-tiles2-215)]
+B $90D8 #HTML[#UDGARRAY1,7,4,1;$90D8-$90DF-8(exterior-tiles2-216)]
+B $90E0 #HTML[#UDGARRAY1,7,4,1;$90E0-$90E7-8(exterior-tiles2-217)]
+B $90E8 #HTML[#UDGARRAY1,7,4,1;$90E8-$90EF-8(exterior-tiles2-218)]
+B $90F0 #HTML[#UDGARRAY1,7,4,1;$90F0-$90F7-8(exterior-tiles2-219)]
+B $90F8 #HTML[#UDGARRAY1,7,4,1;$90F8-$90FF-8(exterior-tiles3-000)]
+B $9100 #HTML[#UDGARRAY1,7,4,1;$9100-$9107-8(exterior-tiles3-001)]
+B $9108 #HTML[#UDGARRAY1,7,4,1;$9108-$910F-8(exterior-tiles3-002)]
+B $9110 #HTML[#UDGARRAY1,7,4,1;$9110-$9117-8(exterior-tiles3-003)]
+B $9118 #HTML[#UDGARRAY1,7,4,1;$9118-$911F-8(exterior-tiles3-004)]
+B $9120 #HTML[#UDGARRAY1,7,4,1;$9120-$9127-8(exterior-tiles3-005)]
+B $9128 #HTML[#UDGARRAY1,7,4,1;$9128-$912F-8(exterior-tiles3-006)]
+B $9130 #HTML[#UDGARRAY1,7,4,1;$9130-$9137-8(exterior-tiles3-007)]
+B $9138 #HTML[#UDGARRAY1,7,4,1;$9138-$913F-8(exterior-tiles3-008)]
+B $9140 #HTML[#UDGARRAY1,7,4,1;$9140-$9147-8(exterior-tiles3-009)]
+B $9148 #HTML[#UDGARRAY1,7,4,1;$9148-$914F-8(exterior-tiles3-010)]
+B $9150 #HTML[#UDGARRAY1,7,4,1;$9150-$9157-8(exterior-tiles3-011)]
+B $9158 #HTML[#UDGARRAY1,7,4,1;$9158-$915F-8(exterior-tiles3-012)]
+B $9160 #HTML[#UDGARRAY1,7,4,1;$9160-$9167-8(exterior-tiles3-013)]
+B $9168 #HTML[#UDGARRAY1,7,4,1;$9168-$916F-8(exterior-tiles3-014)]
+B $9170 #HTML[#UDGARRAY1,7,4,1;$9170-$9177-8(exterior-tiles3-015)]
+B $9178 #HTML[#UDGARRAY1,7,4,1;$9178-$917F-8(exterior-tiles3-016)]
+B $9180 #HTML[#UDGARRAY1,7,4,1;$9180-$9187-8(exterior-tiles3-017)]
+B $9188 #HTML[#UDGARRAY1,7,4,1;$9188-$918F-8(exterior-tiles3-018)]
+B $9190 #HTML[#UDGARRAY1,7,4,1;$9190-$9197-8(exterior-tiles3-019)]
+B $9198 #HTML[#UDGARRAY1,7,4,1;$9198-$919F-8(exterior-tiles3-020)]
+B $91A0 #HTML[#UDGARRAY1,7,4,1;$91A0-$91A7-8(exterior-tiles3-021)]
+B $91A8 #HTML[#UDGARRAY1,7,4,1;$91A8-$91AF-8(exterior-tiles3-022)]
+B $91B0 #HTML[#UDGARRAY1,7,4,1;$91B0-$91B7-8(exterior-tiles3-023)]
+B $91B8 #HTML[#UDGARRAY1,7,4,1;$91B8-$91BF-8(exterior-tiles3-024)]
+B $91C0 #HTML[#UDGARRAY1,7,4,1;$91C0-$91C7-8(exterior-tiles3-025)]
+B $91C8 #HTML[#UDGARRAY1,7,4,1;$91C8-$91CF-8(exterior-tiles3-026)]
+B $91D0 #HTML[#UDGARRAY1,7,4,1;$91D0-$91D7-8(exterior-tiles3-027)]
+B $91D8 #HTML[#UDGARRAY1,7,4,1;$91D8-$91DF-8(exterior-tiles3-028)]
+B $91E0 #HTML[#UDGARRAY1,7,4,1;$91E0-$91E7-8(exterior-tiles3-029)]
+B $91E8 #HTML[#UDGARRAY1,7,4,1;$91E8-$91EF-8(exterior-tiles3-030)]
+B $91F0 #HTML[#UDGARRAY1,7,4,1;$91F0-$91F7-8(exterior-tiles3-031)]
+B $91F8 #HTML[#UDGARRAY1,7,4,1;$91F8-$91FF-8(exterior-tiles3-032)]
+B $9200 #HTML[#UDGARRAY1,7,4,1;$9200-$9207-8(exterior-tiles3-033)]
+B $9208 #HTML[#UDGARRAY1,7,4,1;$9208-$920F-8(exterior-tiles3-034)]
+B $9210 #HTML[#UDGARRAY1,7,4,1;$9210-$9217-8(exterior-tiles3-035)]
+B $9218 #HTML[#UDGARRAY1,7,4,1;$9218-$921F-8(exterior-tiles3-036)]
+B $9220 #HTML[#UDGARRAY1,7,4,1;$9220-$9227-8(exterior-tiles3-037)]
+B $9228 #HTML[#UDGARRAY1,7,4,1;$9228-$922F-8(exterior-tiles3-038)]
+B $9230 #HTML[#UDGARRAY1,7,4,1;$9230-$9237-8(exterior-tiles3-039)]
+B $9238 #HTML[#UDGARRAY1,7,4,1;$9238-$923F-8(exterior-tiles3-040)]
+B $9240 #HTML[#UDGARRAY1,7,4,1;$9240-$9247-8(exterior-tiles3-041)]
+B $9248 #HTML[#UDGARRAY1,7,4,1;$9248-$924F-8(exterior-tiles3-042)]
+B $9250 #HTML[#UDGARRAY1,7,4,1;$9250-$9257-8(exterior-tiles3-043)]
+B $9258 #HTML[#UDGARRAY1,7,4,1;$9258-$925F-8(exterior-tiles3-044)]
+B $9260 #HTML[#UDGARRAY1,7,4,1;$9260-$9267-8(exterior-tiles3-045)]
+B $9268 #HTML[#UDGARRAY1,7,4,1;$9268-$926F-8(exterior-tiles3-046)]
+B $9270 #HTML[#UDGARRAY1,7,4,1;$9270-$9277-8(exterior-tiles3-047)]
+B $9278 #HTML[#UDGARRAY1,7,4,1;$9278-$927F-8(exterior-tiles3-048)]
+B $9280 #HTML[#UDGARRAY1,7,4,1;$9280-$9287-8(exterior-tiles3-049)]
+B $9288 #HTML[#UDGARRAY1,7,4,1;$9288-$928F-8(exterior-tiles3-050)]
+B $9290 #HTML[#UDGARRAY1,7,4,1;$9290-$9297-8(exterior-tiles3-051)]
+B $9298 #HTML[#UDGARRAY1,7,4,1;$9298-$929F-8(exterior-tiles3-052)]
+B $92A0 #HTML[#UDGARRAY1,7,4,1;$92A0-$92A7-8(exterior-tiles3-053)]
+B $92A8 #HTML[#UDGARRAY1,7,4,1;$92A8-$92AF-8(exterior-tiles3-054)]
+B $92B0 #HTML[#UDGARRAY1,7,4,1;$92B0-$92B7-8(exterior-tiles3-055)]
+B $92B8 #HTML[#UDGARRAY1,7,4,1;$92B8-$92BF-8(exterior-tiles3-056)]
+B $92C0 #HTML[#UDGARRAY1,7,4,1;$92C0-$92C7-8(exterior-tiles3-057)]
+B $92C8 #HTML[#UDGARRAY1,7,4,1;$92C8-$92CF-8(exterior-tiles3-058)]
+B $92D0 #HTML[#UDGARRAY1,7,4,1;$92D0-$92D7-8(exterior-tiles3-059)]
+B $92D8 #HTML[#UDGARRAY1,7,4,1;$92D8-$92DF-8(exterior-tiles3-060)]
+B $92E0 #HTML[#UDGARRAY1,7,4,1;$92E0-$92E7-8(exterior-tiles3-061)]
+B $92E8 #HTML[#UDGARRAY1,7,4,1;$92E8-$92EF-8(exterior-tiles3-062)]
+B $92F0 #HTML[#UDGARRAY1,7,4,1;$92F0-$92F7-8(exterior-tiles3-063)]
+B $92F8 #HTML[#UDGARRAY1,7,4,1;$92F8-$92FF-8(exterior-tiles3-064)]
+B $9300 #HTML[#UDGARRAY1,7,4,1;$9300-$9307-8(exterior-tiles3-065)]
+B $9308 #HTML[#UDGARRAY1,7,4,1;$9308-$930F-8(exterior-tiles3-066)]
+B $9310 #HTML[#UDGARRAY1,7,4,1;$9310-$9317-8(exterior-tiles3-067)]
+B $9318 #HTML[#UDGARRAY1,7,4,1;$9318-$931F-8(exterior-tiles3-068)]
+B $9320 #HTML[#UDGARRAY1,7,4,1;$9320-$9327-8(exterior-tiles3-069)]
+B $9328 #HTML[#UDGARRAY1,7,4,1;$9328-$932F-8(exterior-tiles3-070)]
+B $9330 #HTML[#UDGARRAY1,7,4,1;$9330-$9337-8(exterior-tiles3-071)]
+B $9338 #HTML[#UDGARRAY1,7,4,1;$9338-$933F-8(exterior-tiles3-072)]
+B $9340 #HTML[#UDGARRAY1,7,4,1;$9340-$9347-8(exterior-tiles3-073)]
+B $9348 #HTML[#UDGARRAY1,7,4,1;$9348-$934F-8(exterior-tiles3-074)]
+B $9350 #HTML[#UDGARRAY1,7,4,1;$9350-$9357-8(exterior-tiles3-075)]
+B $9358 #HTML[#UDGARRAY1,7,4,1;$9358-$935F-8(exterior-tiles3-076)]
+B $9360 #HTML[#UDGARRAY1,7,4,1;$9360-$9367-8(exterior-tiles3-077)]
+B $9368 #HTML[#UDGARRAY1,7,4,1;$9368-$936F-8(exterior-tiles3-078)]
+B $9370 #HTML[#UDGARRAY1,7,4,1;$9370-$9377-8(exterior-tiles3-079)]
+B $9378 #HTML[#UDGARRAY1,7,4,1;$9378-$937F-8(exterior-tiles3-080)]
+B $9380 #HTML[#UDGARRAY1,7,4,1;$9380-$9387-8(exterior-tiles3-081)]
+B $9388 #HTML[#UDGARRAY1,7,4,1;$9388-$938F-8(exterior-tiles3-082)]
+B $9390 #HTML[#UDGARRAY1,7,4,1;$9390-$9397-8(exterior-tiles3-083)]
+B $9398 #HTML[#UDGARRAY1,7,4,1;$9398-$939F-8(exterior-tiles3-084)]
+B $93A0 #HTML[#UDGARRAY1,7,4,1;$93A0-$93A7-8(exterior-tiles3-085)]
+B $93A8 #HTML[#UDGARRAY1,7,4,1;$93A8-$93AF-8(exterior-tiles3-086)]
+B $93B0 #HTML[#UDGARRAY1,7,4,1;$93B0-$93B7-8(exterior-tiles3-087)]
+B $93B8 #HTML[#UDGARRAY1,7,4,1;$93B8-$93BF-8(exterior-tiles3-088)]
+B $93C0 #HTML[#UDGARRAY1,7,4,1;$93C0-$93C7-8(exterior-tiles3-089)]
+B $93C8 #HTML[#UDGARRAY1,7,4,1;$93C8-$93CF-8(exterior-tiles3-090)]
+B $93D0 #HTML[#UDGARRAY1,7,4,1;$93D0-$93D7-8(exterior-tiles3-091)]
+B $93D8 #HTML[#UDGARRAY1,7,4,1;$93D8-$93DF-8(exterior-tiles3-092)]
+B $93E0 #HTML[#UDGARRAY1,7,4,1;$93E0-$93E7-8(exterior-tiles3-093)]
+B $93E8 #HTML[#UDGARRAY1,7,4,1;$93E8-$93EF-8(exterior-tiles3-094)]
+B $93F0 #HTML[#UDGARRAY1,7,4,1;$93F0-$93F7-8(exterior-tiles3-095)]
+B $93F8 #HTML[#UDGARRAY1,7,4,1;$93F8-$93FF-8(exterior-tiles3-096)]
+B $9400 #HTML[#UDGARRAY1,7,4,1;$9400-$9407-8(exterior-tiles3-097)]
+B $9408 #HTML[#UDGARRAY1,7,4,1;$9408-$940F-8(exterior-tiles3-098)]
+B $9410 #HTML[#UDGARRAY1,7,4,1;$9410-$9417-8(exterior-tiles3-099)]
+B $9418 #HTML[#UDGARRAY1,7,4,1;$9418-$941F-8(exterior-tiles3-100)]
+B $9420 #HTML[#UDGARRAY1,7,4,1;$9420-$9427-8(exterior-tiles3-101)]
+B $9428 #HTML[#UDGARRAY1,7,4,1;$9428-$942F-8(exterior-tiles3-102)]
+B $9430 #HTML[#UDGARRAY1,7,4,1;$9430-$9437-8(exterior-tiles3-103)]
+B $9438 #HTML[#UDGARRAY1,7,4,1;$9438-$943F-8(exterior-tiles3-104)]
+B $9440 #HTML[#UDGARRAY1,7,4,1;$9440-$9447-8(exterior-tiles3-105)]
+B $9448 #HTML[#UDGARRAY1,7,4,1;$9448-$944F-8(exterior-tiles3-106)]
+B $9450 #HTML[#UDGARRAY1,7,4,1;$9450-$9457-8(exterior-tiles3-107)]
+B $9458 #HTML[#UDGARRAY1,7,4,1;$9458-$945F-8(exterior-tiles3-108)]
+B $9460 #HTML[#UDGARRAY1,7,4,1;$9460-$9467-8(exterior-tiles3-109)]
+B $9468 #HTML[#UDGARRAY1,7,4,1;$9468-$946F-8(exterior-tiles3-110)]
+B $9470 #HTML[#UDGARRAY1,7,4,1;$9470-$9477-8(exterior-tiles3-111)]
+B $9478 #HTML[#UDGARRAY1,7,4,1;$9478-$947F-8(exterior-tiles3-112)]
+B $9480 #HTML[#UDGARRAY1,7,4,1;$9480-$9487-8(exterior-tiles3-113)]
+B $9488 #HTML[#UDGARRAY1,7,4,1;$9488-$948F-8(exterior-tiles3-114)]
+B $9490 #HTML[#UDGARRAY1,7,4,1;$9490-$9497-8(exterior-tiles3-115)]
+B $9498 #HTML[#UDGARRAY1,7,4,1;$9498-$949F-8(exterior-tiles3-116)]
+B $94A0 #HTML[#UDGARRAY1,7,4,1;$94A0-$94A7-8(exterior-tiles3-117)]
+B $94A8 #HTML[#UDGARRAY1,7,4,1;$94A8-$94AF-8(exterior-tiles3-118)]
+B $94B0 #HTML[#UDGARRAY1,7,4,1;$94B0-$94B7-8(exterior-tiles3-119)]
+B $94B8 #HTML[#UDGARRAY1,7,4,1;$94B8-$94BF-8(exterior-tiles3-120)]
+B $94C0 #HTML[#UDGARRAY1,7,4,1;$94C0-$94C7-8(exterior-tiles3-121)]
+B $94C8 #HTML[#UDGARRAY1,7,4,1;$94C8-$94CF-8(exterior-tiles3-122)]
+B $94D0 #HTML[#UDGARRAY1,7,4,1;$94D0-$94D7-8(exterior-tiles3-123)]
+B $94D8 #HTML[#UDGARRAY1,7,4,1;$94D8-$94DF-8(exterior-tiles3-124)]
+B $94E0 #HTML[#UDGARRAY1,7,4,1;$94E0-$94E7-8(exterior-tiles3-125)]
+B $94E8 #HTML[#UDGARRAY1,7,4,1;$94E8-$94EF-8(exterior-tiles3-126)]
+B $94F0 #HTML[#UDGARRAY1,7,4,1;$94F0-$94F7-8(exterior-tiles3-127)]
+B $94F8 #HTML[#UDGARRAY1,7,4,1;$94F8-$94FF-8(exterior-tiles3-128)]
+B $9500 #HTML[#UDGARRAY1,7,4,1;$9500-$9507-8(exterior-tiles3-129)]
+B $9508 #HTML[#UDGARRAY1,7,4,1;$9508-$950F-8(exterior-tiles3-130)]
+B $9510 #HTML[#UDGARRAY1,7,4,1;$9510-$9517-8(exterior-tiles3-131)]
+B $9518 #HTML[#UDGARRAY1,7,4,1;$9518-$951F-8(exterior-tiles3-132)]
+B $9520 #HTML[#UDGARRAY1,7,4,1;$9520-$9527-8(exterior-tiles3-133)]
+B $9528 #HTML[#UDGARRAY1,7,4,1;$9528-$952F-8(exterior-tiles3-134)]
+B $9530 #HTML[#UDGARRAY1,7,4,1;$9530-$9537-8(exterior-tiles3-135)]
+B $9538 #HTML[#UDGARRAY1,7,4,1;$9538-$953F-8(exterior-tiles3-136)]
+B $9540 #HTML[#UDGARRAY1,7,4,1;$9540-$9547-8(exterior-tiles3-137)]
+B $9548 #HTML[#UDGARRAY1,7,4,1;$9548-$954F-8(exterior-tiles3-138)]
+B $9550 #HTML[#UDGARRAY1,7,4,1;$9550-$9557-8(exterior-tiles3-139)]
+B $9558 #HTML[#UDGARRAY1,7,4,1;$9558-$955F-8(exterior-tiles3-140)]
+B $9560 #HTML[#UDGARRAY1,7,4,1;$9560-$9567-8(exterior-tiles3-141)]
+B $9568 #HTML[#UDGARRAY1,7,4,1;$9568-$956F-8(exterior-tiles3-142)]
+B $9570 #HTML[#UDGARRAY1,7,4,1;$9570-$9577-8(exterior-tiles3-143)]
+B $9578 #HTML[#UDGARRAY1,7,4,1;$9578-$957F-8(exterior-tiles3-144)]
+B $9580 #HTML[#UDGARRAY1,7,4,1;$9580-$9587-8(exterior-tiles3-145)]
+B $9588 #HTML[#UDGARRAY1,7,4,1;$9588-$958F-8(exterior-tiles3-146)]
+B $9590 #HTML[#UDGARRAY1,7,4,1;$9590-$9597-8(exterior-tiles3-147)]
+B $9598 #HTML[#UDGARRAY1,7,4,1;$9598-$959F-8(exterior-tiles3-148)]
+B $95A0 #HTML[#UDGARRAY1,7,4,1;$95A0-$95A7-8(exterior-tiles3-149)]
+B $95A8 #HTML[#UDGARRAY1,7,4,1;$95A8-$95AF-8(exterior-tiles3-150)]
+B $95B0 #HTML[#UDGARRAY1,7,4,1;$95B0-$95B7-8(exterior-tiles3-151)]
+B $95B8 #HTML[#UDGARRAY1,7,4,1;$95B8-$95BF-8(exterior-tiles3-152)]
+B $95C0 #HTML[#UDGARRAY1,7,4,1;$95C0-$95C7-8(exterior-tiles3-153)]
+B $95C8 #HTML[#UDGARRAY1,7,4,1;$95C8-$95CF-8(exterior-tiles3-154)]
+B $95D0 #HTML[#UDGARRAY1,7,4,1;$95D0-$95D7-8(exterior-tiles3-155)]
+B $95D8 #HTML[#UDGARRAY1,7,4,1;$95D8-$95DF-8(exterior-tiles3-156)]
+B $95E0 #HTML[#UDGARRAY1,7,4,1;$95E0-$95E7-8(exterior-tiles3-157)]
+B $95E8 #HTML[#UDGARRAY1,7,4,1;$95E8-$95EF-8(exterior-tiles3-158)]
+B $95F0 #HTML[#UDGARRAY1,7,4,1;$95F0-$95F7-8(exterior-tiles3-159)]
+B $95F8 #HTML[#UDGARRAY1,7,4,1;$95F8-$95FF-8(exterior-tiles3-160)]
+B $9600 #HTML[#UDGARRAY1,7,4,1;$9600-$9607-8(exterior-tiles3-161)]
+B $9608 #HTML[#UDGARRAY1,7,4,1;$9608-$960F-8(exterior-tiles3-162)]
+B $9610 #HTML[#UDGARRAY1,7,4,1;$9610-$9617-8(exterior-tiles3-163)]
+B $9618 #HTML[#UDGARRAY1,7,4,1;$9618-$961F-8(exterior-tiles3-164)]
+B $9620 #HTML[#UDGARRAY1,7,4,1;$9620-$9627-8(exterior-tiles3-165)]
+B $9628 #HTML[#UDGARRAY1,7,4,1;$9628-$962F-8(exterior-tiles3-166)]
+B $9630 #HTML[#UDGARRAY1,7,4,1;$9630-$9637-8(exterior-tiles3-167)]
+B $9638 #HTML[#UDGARRAY1,7,4,1;$9638-$963F-8(exterior-tiles3-168)]
+B $9640 #HTML[#UDGARRAY1,7,4,1;$9640-$9647-8(exterior-tiles3-169)]
+B $9648 #HTML[#UDGARRAY1,7,4,1;$9648-$964F-8(exterior-tiles3-170)]
+B $9650 #HTML[#UDGARRAY1,7,4,1;$9650-$9657-8(exterior-tiles3-171)]
+B $9658 #HTML[#UDGARRAY1,7,4,1;$9658-$965F-8(exterior-tiles3-172)]
+B $9660 #HTML[#UDGARRAY1,7,4,1;$9660-$9667-8(exterior-tiles3-173)]
+B $9668 #HTML[#UDGARRAY1,7,4,1;$9668-$966F-8(exterior-tiles3-174)]
+B $9670 #HTML[#UDGARRAY1,7,4,1;$9670-$9677-8(exterior-tiles3-175)]
+B $9678 #HTML[#UDGARRAY1,7,4,1;$9678-$967F-8(exterior-tiles3-176)]
+B $9680 #HTML[#UDGARRAY1,7,4,1;$9680-$9687-8(exterior-tiles3-177)]
+B $9688 #HTML[#UDGARRAY1,7,4,1;$9688-$968F-8(exterior-tiles3-178)]
+B $9690 #HTML[#UDGARRAY1,7,4,1;$9690-$9697-8(exterior-tiles3-179)]
+B $9698 #HTML[#UDGARRAY1,7,4,1;$9698-$969F-8(exterior-tiles3-180)]
+B $96A0 #HTML[#UDGARRAY1,7,4,1;$96A0-$96A7-8(exterior-tiles3-181)]
+B $96A8 #HTML[#UDGARRAY1,7,4,1;$96A8-$96AF-8(exterior-tiles3-182)]
+B $96B0 #HTML[#UDGARRAY1,7,4,1;$96B0-$96B7-8(exterior-tiles3-183)]
+B $96B8 #HTML[#UDGARRAY1,7,4,1;$96B8-$96BF-8(exterior-tiles3-184)]
+B $96C0 #HTML[#UDGARRAY1,7,4,1;$96C0-$96C7-8(exterior-tiles3-185)]
+B $96C8 #HTML[#UDGARRAY1,7,4,1;$96C8-$96CF-8(exterior-tiles3-186)]
+B $96D0 #HTML[#UDGARRAY1,7,4,1;$96D0-$96D7-8(exterior-tiles3-187)]
+B $96D8 #HTML[#UDGARRAY1,7,4,1;$96D8-$96DF-8(exterior-tiles3-188)]
+B $96E0 #HTML[#UDGARRAY1,7,4,1;$96E0-$96E7-8(exterior-tiles3-189)]
+B $96E8 #HTML[#UDGARRAY1,7,4,1;$96E8-$96EF-8(exterior-tiles3-190)]
+B $96F0 #HTML[#UDGARRAY1,7,4,1;$96F0-$96F7-8(exterior-tiles3-191)]
+B $96F8 #HTML[#UDGARRAY1,7,4,1;$96F8-$96FF-8(exterior-tiles3-192)]
+B $9700 #HTML[#UDGARRAY1,7,4,1;$9700-$9707-8(exterior-tiles3-193)]
+B $9708 #HTML[#UDGARRAY1,7,4,1;$9708-$970F-8(exterior-tiles3-194)]
+B $9710 #HTML[#UDGARRAY1,7,4,1;$9710-$9717-8(exterior-tiles3-195)]
+B $9718 #HTML[#UDGARRAY1,7,4,1;$9718-$971F-8(exterior-tiles3-196)]
+B $9720 #HTML[#UDGARRAY1,7,4,1;$9720-$9727-8(exterior-tiles3-197)]
+B $9728 #HTML[#UDGARRAY1,7,4,1;$9728-$972F-8(exterior-tiles3-198)]
+B $9730 #HTML[#UDGARRAY1,7,4,1;$9730-$9737-8(exterior-tiles3-199)]
+B $9738 #HTML[#UDGARRAY1,7,4,1;$9738-$973F-8(exterior-tiles3-200)]
+B $9740 #HTML[#UDGARRAY1,7,4,1;$9740-$9747-8(exterior-tiles3-201)]
+B $9748 #HTML[#UDGARRAY1,7,4,1;$9748-$974F-8(exterior-tiles3-202)]
+B $9750 #HTML[#UDGARRAY1,7,4,1;$9750-$9757-8(exterior-tiles3-203)]
+B $9758 #HTML[#UDGARRAY1,7,4,1;$9758-$975F-8(exterior-tiles3-204)]
+B $9760 #HTML[#UDGARRAY1,7,4,1;$9760-$9767-8(exterior-tiles3-205)]
+B $9768 #HTML[#UDGARRAY1,7,4,1;$9768-$976F-8(interior-tiles-000)]
+B $9770 #HTML[#UDGARRAY1,7,4,1;$9770-$9777-8(interior-tiles-001)]
+B $9778 #HTML[#UDGARRAY1,7,4,1;$9778-$977F-8(interior-tiles-002)]
+B $9780 #HTML[#UDGARRAY1,7,4,1;$9780-$9787-8(interior-tiles-003)]
+B $9788 #HTML[#UDGARRAY1,7,4,1;$9788-$978F-8(interior-tiles-004)]
+B $9790 #HTML[#UDGARRAY1,7,4,1;$9790-$9797-8(interior-tiles-005)]
+B $9798 #HTML[#UDGARRAY1,7,4,1;$9798-$979F-8(interior-tiles-006)]
+B $97A0 #HTML[#UDGARRAY1,7,4,1;$97A0-$97A7-8(interior-tiles-007)]
+B $97A8 #HTML[#UDGARRAY1,7,4,1;$97A8-$97AF-8(interior-tiles-008)]
+B $97B0 #HTML[#UDGARRAY1,7,4,1;$97B0-$97B7-8(interior-tiles-009)]
+B $97B8 #HTML[#UDGARRAY1,7,4,1;$97B8-$97BF-8(interior-tiles-010)]
+B $97C0 #HTML[#UDGARRAY1,7,4,1;$97C0-$97C7-8(interior-tiles-011)]
+B $97C8 #HTML[#UDGARRAY1,7,4,1;$97C8-$97CF-8(interior-tiles-012)]
+B $97D0 #HTML[#UDGARRAY1,7,4,1;$97D0-$97D7-8(interior-tiles-013)]
+B $97D8 #HTML[#UDGARRAY1,7,4,1;$97D8-$97DF-8(interior-tiles-014)]
+B $97E0 #HTML[#UDGARRAY1,7,4,1;$97E0-$97E7-8(interior-tiles-015)]
+B $97E8 #HTML[#UDGARRAY1,7,4,1;$97E8-$97EF-8(interior-tiles-016)]
+B $97F0 #HTML[#UDGARRAY1,7,4,1;$97F0-$97F7-8(interior-tiles-017)]
+B $97F8 #HTML[#UDGARRAY1,7,4,1;$97F8-$97FF-8(interior-tiles-018)]
+B $9800 #HTML[#UDGARRAY1,7,4,1;$9800-$9807-8(interior-tiles-019)]
+B $9808 #HTML[#UDGARRAY1,7,4,1;$9808-$980F-8(interior-tiles-020)]
+B $9810 #HTML[#UDGARRAY1,7,4,1;$9810-$9817-8(interior-tiles-021)]
+B $9818 #HTML[#UDGARRAY1,7,4,1;$9818-$981F-8(interior-tiles-022)]
+B $9820 #HTML[#UDGARRAY1,7,4,1;$9820-$9827-8(interior-tiles-023)]
+B $9828 #HTML[#UDGARRAY1,7,4,1;$9828-$982F-8(interior-tiles-024)]
+B $9830 #HTML[#UDGARRAY1,7,4,1;$9830-$9837-8(interior-tiles-025)]
+B $9838 #HTML[#UDGARRAY1,7,4,1;$9838-$983F-8(interior-tiles-026)]
+B $9840 #HTML[#UDGARRAY1,7,4,1;$9840-$9847-8(interior-tiles-027)]
+B $9848 #HTML[#UDGARRAY1,7,4,1;$9848-$984F-8(interior-tiles-028)]
+B $9850 #HTML[#UDGARRAY1,7,4,1;$9850-$9857-8(interior-tiles-029)]
+B $9858 #HTML[#UDGARRAY1,7,4,1;$9858-$985F-8(interior-tiles-030)]
+B $9860 #HTML[#UDGARRAY1,7,4,1;$9860-$9867-8(interior-tiles-031)]
+B $9868 #HTML[#UDGARRAY1,7,4,1;$9868-$986F-8(interior-tiles-032)]
+B $9870 #HTML[#UDGARRAY1,7,4,1;$9870-$9877-8(interior-tiles-033)]
+B $9878 #HTML[#UDGARRAY1,7,4,1;$9878-$987F-8(interior-tiles-034)]
+B $9880 #HTML[#UDGARRAY1,7,4,1;$9880-$9887-8(interior-tiles-035)]
+B $9888 #HTML[#UDGARRAY1,7,4,1;$9888-$988F-8(interior-tiles-036)]
+B $9890 #HTML[#UDGARRAY1,7,4,1;$9890-$9897-8(interior-tiles-037)]
+B $9898 #HTML[#UDGARRAY1,7,4,1;$9898-$989F-8(interior-tiles-038)]
+B $98A0 #HTML[#UDGARRAY1,7,4,1;$98A0-$98A7-8(interior-tiles-039)]
+B $98A8 #HTML[#UDGARRAY1,7,4,1;$98A8-$98AF-8(interior-tiles-040)]
+B $98B0 #HTML[#UDGARRAY1,7,4,1;$98B0-$98B7-8(interior-tiles-041)]
+B $98B8 #HTML[#UDGARRAY1,7,4,1;$98B8-$98BF-8(interior-tiles-042)]
+B $98C0 #HTML[#UDGARRAY1,7,4,1;$98C0-$98C7-8(interior-tiles-043)]
+B $98C8 #HTML[#UDGARRAY1,7,4,1;$98C8-$98CF-8(interior-tiles-044)]
+B $98D0 #HTML[#UDGARRAY1,7,4,1;$98D0-$98D7-8(interior-tiles-045)]
+B $98D8 #HTML[#UDGARRAY1,7,4,1;$98D8-$98DF-8(interior-tiles-046)]
+B $98E0 #HTML[#UDGARRAY1,7,4,1;$98E0-$98E7-8(interior-tiles-047)]
+B $98E8 #HTML[#UDGARRAY1,7,4,1;$98E8-$98EF-8(interior-tiles-048)]
+B $98F0 #HTML[#UDGARRAY1,7,4,1;$98F0-$98F7-8(interior-tiles-049)]
+B $98F8 #HTML[#UDGARRAY1,7,4,1;$98F8-$98FF-8(interior-tiles-050)]
+B $9900 #HTML[#UDGARRAY1,7,4,1;$9900-$9907-8(interior-tiles-051)]
+B $9908 #HTML[#UDGARRAY1,7,4,1;$9908-$990F-8(interior-tiles-052)]
+B $9910 #HTML[#UDGARRAY1,7,4,1;$9910-$9917-8(interior-tiles-053)]
+B $9918 #HTML[#UDGARRAY1,7,4,1;$9918-$991F-8(interior-tiles-054)]
+B $9920 #HTML[#UDGARRAY1,7,4,1;$9920-$9927-8(interior-tiles-055)]
+B $9928 #HTML[#UDGARRAY1,7,4,1;$9928-$992F-8(interior-tiles-056)]
+B $9930 #HTML[#UDGARRAY1,7,4,1;$9930-$9937-8(interior-tiles-057)]
+B $9938 #HTML[#UDGARRAY1,7,4,1;$9938-$993F-8(interior-tiles-058)]
+B $9940 #HTML[#UDGARRAY1,7,4,1;$9940-$9947-8(interior-tiles-059)]
+B $9948 #HTML[#UDGARRAY1,7,4,1;$9948-$994F-8(interior-tiles-060)]
+B $9950 #HTML[#UDGARRAY1,7,4,1;$9950-$9957-8(interior-tiles-061)]
+B $9958 #HTML[#UDGARRAY1,7,4,1;$9958-$995F-8(interior-tiles-062)]
+B $9960 #HTML[#UDGARRAY1,7,4,1;$9960-$9967-8(interior-tiles-063)]
+B $9968 #HTML[#UDGARRAY1,7,4,1;$9968-$996F-8(interior-tiles-064)]
+B $9970 #HTML[#UDGARRAY1,7,4,1;$9970-$9977-8(interior-tiles-065)]
+B $9978 #HTML[#UDGARRAY1,7,4,1;$9978-$997F-8(interior-tiles-066)]
+B $9980 #HTML[#UDGARRAY1,7,4,1;$9980-$9987-8(interior-tiles-067)]
+B $9988 #HTML[#UDGARRAY1,7,4,1;$9988-$998F-8(interior-tiles-068)]
+B $9990 #HTML[#UDGARRAY1,7,4,1;$9990-$9997-8(interior-tiles-069)]
+B $9998 #HTML[#UDGARRAY1,7,4,1;$9998-$999F-8(interior-tiles-070)]
+B $99A0 #HTML[#UDGARRAY1,7,4,1;$99A0-$99A7-8(interior-tiles-071)]
+B $99A8 #HTML[#UDGARRAY1,7,4,1;$99A8-$99AF-8(interior-tiles-072)]
+B $99B0 #HTML[#UDGARRAY1,7,4,1;$99B0-$99B7-8(interior-tiles-073)]
+B $99B8 #HTML[#UDGARRAY1,7,4,1;$99B8-$99BF-8(interior-tiles-074)]
+B $99C0 #HTML[#UDGARRAY1,7,4,1;$99C0-$99C7-8(interior-tiles-075)]
+B $99C8 #HTML[#UDGARRAY1,7,4,1;$99C8-$99CF-8(interior-tiles-076)]
+B $99D0 #HTML[#UDGARRAY1,7,4,1;$99D0-$99D7-8(interior-tiles-077)]
+B $99D8 #HTML[#UDGARRAY1,7,4,1;$99D8-$99DF-8(interior-tiles-078)]
+B $99E0 #HTML[#UDGARRAY1,7,4,1;$99E0-$99E7-8(interior-tiles-079)]
+B $99E8 #HTML[#UDGARRAY1,7,4,1;$99E8-$99EF-8(interior-tiles-080)]
+B $99F0 #HTML[#UDGARRAY1,7,4,1;$99F0-$99F7-8(interior-tiles-081)]
+B $99F8 #HTML[#UDGARRAY1,7,4,1;$99F8-$99FF-8(interior-tiles-082)]
+B $9A00 #HTML[#UDGARRAY1,7,4,1;$9A00-$9A07-8(interior-tiles-083)]
+B $9A08 #HTML[#UDGARRAY1,7,4,1;$9A08-$9A0F-8(interior-tiles-084)]
+B $9A10 #HTML[#UDGARRAY1,7,4,1;$9A10-$9A17-8(interior-tiles-085)]
+B $9A18 #HTML[#UDGARRAY1,7,4,1;$9A18-$9A1F-8(interior-tiles-086)]
+B $9A20 #HTML[#UDGARRAY1,7,4,1;$9A20-$9A27-8(interior-tiles-087)]
+B $9A28 #HTML[#UDGARRAY1,7,4,1;$9A28-$9A2F-8(interior-tiles-088)]
+B $9A30 #HTML[#UDGARRAY1,7,4,1;$9A30-$9A37-8(interior-tiles-089)]
+B $9A38 #HTML[#UDGARRAY1,7,4,1;$9A38-$9A3F-8(interior-tiles-090)]
+B $9A40 #HTML[#UDGARRAY1,7,4,1;$9A40-$9A47-8(interior-tiles-091)]
+B $9A48 #HTML[#UDGARRAY1,7,4,1;$9A48-$9A4F-8(interior-tiles-092)]
+B $9A50 #HTML[#UDGARRAY1,7,4,1;$9A50-$9A57-8(interior-tiles-093)]
+B $9A58 #HTML[#UDGARRAY1,7,4,1;$9A58-$9A5F-8(interior-tiles-094)]
+B $9A60 #HTML[#UDGARRAY1,7,4,1;$9A60-$9A67-8(interior-tiles-095)]
+B $9A68 #HTML[#UDGARRAY1,7,4,1;$9A68-$9A6F-8(interior-tiles-096)]
+B $9A70 #HTML[#UDGARRAY1,7,4,1;$9A70-$9A77-8(interior-tiles-097)]
+B $9A78 #HTML[#UDGARRAY1,7,4,1;$9A78-$9A7F-8(interior-tiles-098)]
+B $9A80 #HTML[#UDGARRAY1,7,4,1;$9A80-$9A87-8(interior-tiles-099)]
+B $9A88 #HTML[#UDGARRAY1,7,4,1;$9A88-$9A8F-8(interior-tiles-100)]
+B $9A90 #HTML[#UDGARRAY1,7,4,1;$9A90-$9A97-8(interior-tiles-101)]
+B $9A98 #HTML[#UDGARRAY1,7,4,1;$9A98-$9A9F-8(interior-tiles-102)]
+B $9AA0 #HTML[#UDGARRAY1,7,4,1;$9AA0-$9AA7-8(interior-tiles-103)]
+B $9AA8 #HTML[#UDGARRAY1,7,4,1;$9AA8-$9AAF-8(interior-tiles-104)]
+B $9AB0 #HTML[#UDGARRAY1,7,4,1;$9AB0-$9AB7-8(interior-tiles-105)]
+B $9AB8 #HTML[#UDGARRAY1,7,4,1;$9AB8-$9ABF-8(interior-tiles-106)]
+B $9AC0 #HTML[#UDGARRAY1,7,4,1;$9AC0-$9AC7-8(interior-tiles-107)]
+B $9AC8 #HTML[#UDGARRAY1,7,4,1;$9AC8-$9ACF-8(interior-tiles-108)]
+B $9AD0 #HTML[#UDGARRAY1,7,4,1;$9AD0-$9AD7-8(interior-tiles-109)]
+B $9AD8 #HTML[#UDGARRAY1,7,4,1;$9AD8-$9ADF-8(interior-tiles-110)]
+B $9AE0 #HTML[#UDGARRAY1,7,4,1;$9AE0-$9AE7-8(interior-tiles-111)]
+B $9AE8 #HTML[#UDGARRAY1,7,4,1;$9AE8-$9AEF-8(interior-tiles-112)]
+B $9AF0 #HTML[#UDGARRAY1,7,4,1;$9AF0-$9AF7-8(interior-tiles-113)]
+B $9AF8 #HTML[#UDGARRAY1,7,4,1;$9AF8-$9AFF-8(interior-tiles-114)]
+B $9B00 #HTML[#UDGARRAY1,7,4,1;$9B00-$9B07-8(interior-tiles-115)]
+B $9B08 #HTML[#UDGARRAY1,7,4,1;$9B08-$9B0F-8(interior-tiles-116)]
+B $9B10 #HTML[#UDGARRAY1,7,4,1;$9B10-$9B17-8(interior-tiles-117)]
+B $9B18 #HTML[#UDGARRAY1,7,4,1;$9B18-$9B1F-8(interior-tiles-118)]
+B $9B20 #HTML[#UDGARRAY1,7,4,1;$9B20-$9B27-8(interior-tiles-119)]
+B $9B28 #HTML[#UDGARRAY1,7,4,1;$9B28-$9B2F-8(interior-tiles-120)]
+B $9B30 #HTML[#UDGARRAY1,7,4,1;$9B30-$9B37-8(interior-tiles-121)]
+B $9B38 #HTML[#UDGARRAY1,7,4,1;$9B38-$9B3F-8(interior-tiles-122)]
+B $9B40 #HTML[#UDGARRAY1,7,4,1;$9B40-$9B47-8(interior-tiles-123)]
+B $9B48 #HTML[#UDGARRAY1,7,4,1;$9B48-$9B4F-8(interior-tiles-124)]
+B $9B50 #HTML[#UDGARRAY1,7,4,1;$9B50-$9B57-8(interior-tiles-125)]
+B $9B58 #HTML[#UDGARRAY1,7,4,1;$9B58-$9B5F-8(interior-tiles-126)]
+B $9B60 #HTML[#UDGARRAY1,7,4,1;$9B60-$9B67-8(interior-tiles-127)]
+B $9B68 #HTML[#UDGARRAY1,7,4,1;$9B68-$9B6F-8(interior-tiles-128)]
+B $9B70 #HTML[#UDGARRAY1,7,4,1;$9B70-$9B77-8(interior-tiles-129)]
+B $9B78 #HTML[#UDGARRAY1,7,4,1;$9B78-$9B7F-8(interior-tiles-130)]
+B $9B80 #HTML[#UDGARRAY1,7,4,1;$9B80-$9B87-8(interior-tiles-131)]
+B $9B88 #HTML[#UDGARRAY1,7,4,1;$9B88-$9B8F-8(interior-tiles-132)]
+B $9B90 #HTML[#UDGARRAY1,7,4,1;$9B90-$9B97-8(interior-tiles-133)]
+B $9B98 #HTML[#UDGARRAY1,7,4,1;$9B98-$9B9F-8(interior-tiles-134)]
+B $9BA0 #HTML[#UDGARRAY1,7,4,1;$9BA0-$9BA7-8(interior-tiles-135)]
+B $9BA8 #HTML[#UDGARRAY1,7,4,1;$9BA8-$9BAF-8(interior-tiles-136)]
+B $9BB0 #HTML[#UDGARRAY1,7,4,1;$9BB0-$9BB7-8(interior-tiles-137)]
+B $9BB8 #HTML[#UDGARRAY1,7,4,1;$9BB8-$9BBF-8(interior-tiles-138)]
+B $9BC0 #HTML[#UDGARRAY1,7,4,1;$9BC0-$9BC7-8(interior-tiles-139)]
+B $9BC8 #HTML[#UDGARRAY1,7,4,1;$9BC8-$9BCF-8(interior-tiles-140)]
+B $9BD0 #HTML[#UDGARRAY1,7,4,1;$9BD0-$9BD7-8(interior-tiles-141)]
+B $9BD8 #HTML[#UDGARRAY1,7,4,1;$9BD8-$9BDF-8(interior-tiles-142)]
+B $9BE0 #HTML[#UDGARRAY1,7,4,1;$9BE0-$9BE7-8(interior-tiles-143)]
+B $9BE8 #HTML[#UDGARRAY1,7,4,1;$9BE8-$9BEF-8(interior-tiles-144)]
+B $9BF0 #HTML[#UDGARRAY1,7,4,1;$9BF0-$9BF7-8(interior-tiles-145)]
+B $9BF8 #HTML[#UDGARRAY1,7,4,1;$9BF8-$9BFF-8(interior-tiles-146)]
+B $9C00 #HTML[#UDGARRAY1,7,4,1;$9C00-$9C07-8(interior-tiles-147)]
+B $9C08 #HTML[#UDGARRAY1,7,4,1;$9C08-$9C0F-8(interior-tiles-148)]
+B $9C10 #HTML[#UDGARRAY1,7,4,1;$9C10-$9C17-8(interior-tiles-149)]
+B $9C18 #HTML[#UDGARRAY1,7,4,1;$9C18-$9C1F-8(interior-tiles-150)]
+B $9C20 #HTML[#UDGARRAY1,7,4,1;$9C20-$9C27-8(interior-tiles-151)]
+B $9C28 #HTML[#UDGARRAY1,7,4,1;$9C28-$9C2F-8(interior-tiles-152)]
+B $9C30 #HTML[#UDGARRAY1,7,4,1;$9C30-$9C37-8(interior-tiles-153)]
+B $9C38 #HTML[#UDGARRAY1,7,4,1;$9C38-$9C3F-8(interior-tiles-154)]
+B $9C40 #HTML[#UDGARRAY1,7,4,1;$9C40-$9C47-8(interior-tiles-155)]
+B $9C48 #HTML[#UDGARRAY1,7,4,1;$9C48-$9C4F-8(interior-tiles-156)]
+B $9C50 #HTML[#UDGARRAY1,7,4,1;$9C50-$9C57-8(interior-tiles-157)]
+B $9C58 #HTML[#UDGARRAY1,7,4,1;$9C58-$9C5F-8(interior-tiles-158)]
+B $9C60 #HTML[#UDGARRAY1,7,4,1;$9C60-$9C67-8(interior-tiles-159)]
+B $9C68 #HTML[#UDGARRAY1,7,4,1;$9C68-$9C6F-8(interior-tiles-160)]
+B $9C70 #HTML[#UDGARRAY1,7,4,1;$9C70-$9C77-8(interior-tiles-161)]
+B $9C78 #HTML[#UDGARRAY1,7,4,1;$9C78-$9C7F-8(interior-tiles-162)]
+B $9C80 #HTML[#UDGARRAY1,7,4,1;$9C80-$9C87-8(interior-tiles-163)]
+B $9C88 #HTML[#UDGARRAY1,7,4,1;$9C88-$9C8F-8(interior-tiles-164)]
+B $9C90 #HTML[#UDGARRAY1,7,4,1;$9C90-$9C97-8(interior-tiles-165)]
+B $9C98 #HTML[#UDGARRAY1,7,4,1;$9C98-$9C9F-8(interior-tiles-166)]
+B $9CA0 #HTML[#UDGARRAY1,7,4,1;$9CA0-$9CA7-8(interior-tiles-167)]
+B $9CA8 #HTML[#UDGARRAY1,7,4,1;$9CA8-$9CAF-8(interior-tiles-168)]
+B $9CB0 #HTML[#UDGARRAY1,7,4,1;$9CB0-$9CB7-8(interior-tiles-169)]
+B $9CB8 #HTML[#UDGARRAY1,7,4,1;$9CB8-$9CBF-8(interior-tiles-170)]
+B $9CC0 #HTML[#UDGARRAY1,7,4,1;$9CC0-$9CC7-8(interior-tiles-171)]
+B $9CC8 #HTML[#UDGARRAY1,7,4,1;$9CC8-$9CCF-8(interior-tiles-172)]
+B $9CD0 #HTML[#UDGARRAY1,7,4,1;$9CD0-$9CD7-8(interior-tiles-173)]
+B $9CD8 #HTML[#UDGARRAY1,7,4,1;$9CD8-$9CDF-8(interior-tiles-174)]
+B $9CE0 #HTML[#UDGARRAY1,7,4,1;$9CE0-$9CE7-8(interior-tiles-175)]
+B $9CE8 #HTML[#UDGARRAY1,7,4,1;$9CE8-$9CEF-8(interior-tiles-176)]
+B $9CF0 #HTML[#UDGARRAY1,7,4,1;$9CF0-$9CF7-8(interior-tiles-177)]
+B $9CF8 #HTML[#UDGARRAY1,7,4,1;$9CF8-$9CFF-8(interior-tiles-178)]
+B $9D00 #HTML[#UDGARRAY1,7,4,1;$9D00-$9D07-8(interior-tiles-179)]
+B $9D08 #HTML[#UDGARRAY1,7,4,1;$9D08-$9D0F-8(interior-tiles-180)]
+B $9D10 #HTML[#UDGARRAY1,7,4,1;$9D10-$9D17-8(interior-tiles-181)]
+B $9D18 #HTML[#UDGARRAY1,7,4,1;$9D18-$9D1F-8(interior-tiles-182)]
+B $9D20 #HTML[#UDGARRAY1,7,4,1;$9D20-$9D27-8(interior-tiles-183)]
+B $9D28 #HTML[#UDGARRAY1,7,4,1;$9D28-$9D2F-8(interior-tiles-184)]
+B $9D30 #HTML[#UDGARRAY1,7,4,1;$9D30-$9D37-8(interior-tiles-185)]
+B $9D38 #HTML[#UDGARRAY1,7,4,1;$9D38-$9D3F-8(interior-tiles-186)]
+B $9D40 #HTML[#UDGARRAY1,7,4,1;$9D40-$9D47-8(interior-tiles-187)]
+B $9D48 #HTML[#UDGARRAY1,7,4,1;$9D48-$9D4F-8(interior-tiles-188)]
+B $9D50 #HTML[#UDGARRAY1,7,4,1;$9D50-$9D57-8(interior-tiles-189)]
+B $9D58 #HTML[#UDGARRAY1,7,4,1;$9D58-$9D5F-8(interior-tiles-190)]
+B $9D60 #HTML[#UDGARRAY1,7,4,1;$9D60-$9D67-8(interior-tiles-191)]
+B $9D68 #HTML[#UDGARRAY1,7,4,1;$9D68-$9D6F-8(interior-tiles-192)]
+B $9D70 #HTML[#UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)]
 
 ; ------------------------------------------------------------------------------
 
@@ -4999,7 +4999,7 @@ D $A68E "PRESS ANY KEY"
 
 b $A69E bitmap_font
 D $A69E 0..9, A..Z (omitting O), space, full stop
-D $A69E #FONT$A69E,35,7,2{0,0,560,16}(font)
+D $A69E #UDGTABLE { #FONT$A69E,35,7,2{0,0,560,16}(font) } TABLE#
 
 ; ------------------------------------------------------------------------------
 
@@ -9017,74 +9017,74 @@ B $DB72 mask: STOVE
 ; Images for above
 ;
 
-D $D026 #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1)
-D $D060 #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2)
-D $D09A #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,120}(bitmap-commandant-facing-top-left-3)
-D $D0D6 #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-top-left-4)
+D $D026 #UDGTABLE { #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1) } TABLE#
+D $D060 #UDGTABLE { #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2) } TABLE#
+D $D09A #UDGTABLE { #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,120}(bitmap-commandant-facing-top-left-3) } TABLE#
+D $D0D6 #UDGTABLE { #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-top-left-4) } TABLE#
 ;
-D $D10E #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-1)
-D $D144 #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-2)
-D $D17C #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-3)
-D $D1B2 #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-4)
+D $D10E #UDGTABLE { #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-1) } TABLE#
+D $D144 #UDGTABLE { #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-2) } TABLE#
+D $D17C #UDGTABLE { #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-3) } TABLE#
+D $D1B2 #UDGTABLE { #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-4) } TABLE#
 ;
-D $D1EA #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-1)
-D $D220 #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-2)
-D $D256 #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-3)
-D $D28C #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(bitmap-prisoner-facing-top-left-4)
+D $D1EA #UDGTABLE { #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-1) } TABLE#
+D $D220 #UDGTABLE { #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-2) } TABLE#
+D $D256 #UDGTABLE { #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-3) } TABLE#
+D $D28C #UDGTABLE { #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(bitmap-prisoner-facing-top-left-4) } TABLE#
 ;
-D $D2C0 #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(bitmap-prisoner-facing-bottom-right-1)
-D $D2F4 #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-bottom-right-2)
-D $D32C #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-3)
-D $D362 #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-4)
+D $D2C0 #UDGTABLE { #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(bitmap-prisoner-facing-bottom-right-1) } TABLE#
+D $D2F4 #UDGTABLE { #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-bottom-right-2) } TABLE#
+D $D32C #UDGTABLE { #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-3) } TABLE#
+D $D362 #UDGTABLE { #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-4) } TABLE#
 ;
-D $D398 #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-left-1)
-D $D3C5 #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-left-2)
-D $D3F5 #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-1)
-D $D425 #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-2)
-D $D455 #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left)
+D $D398 #UDGTABLE { #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-left-1) } TABLE#
+D $D3C5 #UDGTABLE { #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-left-2) } TABLE#
+D $D3F5 #UDGTABLE { #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-1) } TABLE#
+D $D425 #UDGTABLE { #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-2) } TABLE#
+D $D455 #UDGTABLE { #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left) } TABLE#
 ;
-D $D485 #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-top-left-1)
-D $D4C5 #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-top-left-2)
-D $D505 #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-top-left-3)
-D $D545 #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-top-left-4)
+D $D485 #UDGTABLE { #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-top-left-1) } TABLE#
+D $D4C5 #UDGTABLE { #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-top-left-2) } TABLE#
+D $D505 #UDGTABLE { #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-top-left-3) } TABLE#
+D $D545 #UDGTABLE { #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-top-left-4) } TABLE#
 ;
-D $D585 #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-top-right-1)
-D $D5C5 #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-top-right-2)
-D $D605 #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,112}(mask-various-facing-top-right-3)
-D $D63D #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,116}(mask-various-facing-top-right-4)
-D $D677 #UDGARRAY3,7,4,3;$D677-$D6A6-1-24(mask-crawl-facing-bottom-left)
+D $D585 #UDGTABLE { #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-top-right-1) } TABLE#
+D $D5C5 #UDGTABLE { #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-top-right-2) } TABLE#
+D $D605 #UDGTABLE { #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,112}(mask-various-facing-top-right-3) } TABLE#
+D $D63D #UDGTABLE { #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,116}(mask-various-facing-top-right-4) } TABLE#
+D $D677 #UDGTABLE { #UDGARRAY3,7,4,3;$D677-$D6A6-1-24(mask-crawl-facing-bottom-left) } TABLE#
 ;
-D $D6A7 #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(bitmap-guard-facing-top-left-1)
-D $D6DD #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(bitmap-guard-facing-top-left-2)
-D $D713 #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(bitmap-guard-facing-top-left-3)
-D $D74D #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(bitmap-guard-facing-top-left-4)
+D $D6A7 #UDGTABLE { #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(bitmap-guard-facing-top-left-1) } TABLE#
+D $D6DD #UDGTABLE { #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(bitmap-guard-facing-top-left-2) } TABLE#
+D $D713 #UDGTABLE { #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(bitmap-guard-facing-top-left-3) } TABLE#
+D $D74D #UDGTABLE { #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(bitmap-guard-facing-top-left-4) } TABLE#
 ;
-D $D783 #UDGARRAY2,7,4,2;$D783-$D7BC-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-1)
-D $D7BD #UDGARRAY2,7,4,2;$D7BD-$D7F6-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-2)
-D $D7F7 #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-3)
-D $D82F #UDGARRAY2,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4)
+D $D783 #UDGTABLE { #UDGARRAY2,7,4,2;$D783-$D7BC-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-1) } TABLE#
+D $D7BD #UDGTABLE { #UDGARRAY2,7,4,2;$D7BD-$D7F6-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-2) } TABLE#
+D $D7F7 #UDGTABLE { #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-3) } TABLE#
+D $D82F #UDGTABLE { #UDGARRAY2,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4) } TABLE#
 ;
-D $D867 #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1)
-D $D897 #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2)
-D $D8C7 #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3)
-D $D8F4 #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4)
-D $D921 #UDGARRAY3,7,4,3;$D921-$D950-1-24(mask-dog-facing-top-left)
+D $D867 #UDGTABLE { #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1) } TABLE#
+D $D897 #UDGTABLE { #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2) } TABLE#
+D $D8C7 #UDGTABLE { #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3) } TABLE#
+D $D8F4 #UDGTABLE { #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4) } TABLE#
+D $D921 #UDGTABLE { #UDGARRAY3,7,4,3;$D921-$D950-1-24(mask-dog-facing-top-left) } TABLE#
 ;
-D $D951 #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-1)
-D $D97B #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-2)
-D $D9A8 #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-3)
-D $D9CF #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-4)
-D $D9F9 #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24(mask-dog-facing-bottom-right)
+D $D951 #UDGTABLE { #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-1) } TABLE#
+D $D97B #UDGTABLE { #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-2) } TABLE#
+D $D9A8 #UDGTABLE { #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-3) } TABLE#
+D $D9CF #UDGTABLE { #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-4) } TABLE#
+D $D9F9 #UDGTABLE { #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24(mask-dog-facing-bottom-right) } TABLE#
 ;
 ; I'm currently unsure of the exact dimensions of the following flag graphics.
-D $DA29 #UDGARRAY3,7,4,3;$DA29-$DA6A-1-24{0,0,96,96}(flag-up)
-D $DA6B #UDGARRAY3,7,4,3;$DA6B-$DAB5-1-24{0,0,96,96}(flag-down)
+D $DA29 #UDGTABLE { #UDGARRAY3,7,4,3;$DA29-$DA6A-1-24{0,0,96,96}(flag-up) } TABLE#
+D $DA6B #UDGTABLE { #UDGARRAY3,7,4,3;$DA6B-$DAB5-1-24{0,0,96,96}(flag-down) } TABLE#
 ;
-D $DAB6 #UDGARRAY3,7,4,3;$DAB6-$DAFD-1-24{0,0,96,96}(bitmap-crate)
-D $DAFE #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24(mask-crate)
+D $DAB6 #UDGTABLE { #UDGARRAY3,7,4,3;$DAB6-$DAFD-1-24{0,0,96,96}(bitmap-crate) } TABLE#
+D $DAFE #UDGTABLE { #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24(mask-crate) } TABLE#
 ;
-D $DB46 #UDGARRAY2,7,4,2;$DB46-$DB71-1-16{0,0,64,88}(bitmap-stove)
-D $DB72 #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove)
+D $DB46 #UDGTABLE { #UDGARRAY2,7,4,2;$DB46-$DB71-1-16{0,0,64,88}(bitmap-stove) } TABLE#
+D $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) } TABLE#
 
 ; ------------------------------------------------------------------------------
 
@@ -9343,85 +9343,85 @@ D $DDDD Item bitmaps and masks.
 D $DDDD Raw data.
 ;
 B $DDDD item_bitmap: SHOVEL
-D $DDDD #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel)
+D $DDDD #UDGTABLE { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) } TABLE#
 ;
 B $DDF7 item_bitmap: KEY (shared for all keys)
-D $DDF7 #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key)
+D $DDF7 #UDGTABLE { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) } TABLE#
 ;
 B $DE11 item_bitmap: LOCKPICK
-D $DE11 #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick)
+D $DE11 #UDGTABLE { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) } TABLE#
 ;
 B $DE31 item_bitmap: COMPASS
-D $DE31 #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass)
+D $DE31 #UDGTABLE { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) } TABLE#
 ;
 B $DE49 item_bitmap: PURSE
-D $DE49 #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse)
+D $DE49 #UDGTABLE { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) } TABLE#
 ;
 B $DE61 item_bitmap: PAPERS
-D $DE61 #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers)
+D $DE61 #UDGTABLE { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) } TABLE#
 ;
 B $DE7F item_bitmap: WIRESNIPS
-D $DE7F #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips)
+D $DE7F #UDGTABLE { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) } TABLE#
 ;
 B $DE95 item_mask: SHOVEL or KEY (shared)
-D $DE95 #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey)
+D $DE95 #UDGTABLE { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) } TABLE#
 ;
 B $DEAF item_mask: LOCKPICK
-D $DEAF #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick)
+D $DEAF #UDGTABLE { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) } TABLE#
 ;
 B $DECF item_mask: COMPASS
-D $DECF #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass)
+D $DECF #UDGTABLE { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) } TABLE#
 ;
 B $DEE7 item_mask: PURSE
-D $DEE7 #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse)
+D $DEE7 #UDGTABLE { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) } TABLE#
 ;
 B $DEFF item_mask: PAPERS
-D $DEFF #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers)
+D $DEFF #UDGTABLE { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) } TABLE#
 ;
 B $DF1D item_mask: WIRESNIPS
-D $DF1D #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips)
+D $DF1D #UDGTABLE { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) } TABLE#
 ;
 B $DF33 item_bitmap: FOOD
-D $DF33 #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food)
+D $DF33 #UDGTABLE { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) } TABLE#
 ;
 B $DF53 item_bitmap: POISON
-D $DF53 #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison)
+D $DF53 #UDGTABLE { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) } TABLE#
 ;
 B $DF73 item_bitmap: TORCH
-D $DF73 #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch)
+D $DF73 #UDGTABLE { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) } TABLE#
 ;
 B $DF8B item_bitmap: UNIFORM
-D $DF8B #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform)
+D $DF8B #UDGTABLE { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) } TABLE#
 ;
 B $DFAB item_bitmap: BRIBE
-D $DFAB #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe)
+D $DFAB #UDGTABLE { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) } TABLE#
 ;
 B $DFC5 item_bitmap: RADIO
-D $DFC5 #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio)
+D $DFC5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) } TABLE#
 ;
 B $DFE5 item_bitmap: PARCEL
-D $DFE5 #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel)
+D $DFE5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) } TABLE#
 ;
 B $E005 item_mask: BRIBE
-D $E005 #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe)
+D $E005 #UDGTABLE { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) } TABLE#
 ;
 B $E01F item_mask: UNIFORM
-D $E01F #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,48}(item-mask-uniform)
+D $E01F #UDGTABLE { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,48}(item-mask-uniform) } TABLE#
 ;
 B $E03F item_mask: PARCEL
-D $E03F #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel)
+D $E03F #UDGTABLE { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) } TABLE#
 ;
 B $E05F item_mask: POISON
-D $E05F #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison)
+D $E05F #UDGTABLE { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) } TABLE#
 ;
 B $E07F item_mask: TORCH
-D $E07F #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch)
+D $E07F #UDGTABLE { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) } TABLE#
 ;
 B $E097 item_mask: RADIO
-D $E097 #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio)
+D $E097 #UDGTABLE { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) } TABLE#
 ;
 B $E0B7 item_mask: FOOD
-D $E0B7 #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food)
+D $E0B7 #UDGTABLE { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) } TABLE#
 
 ; ------------------------------------------------------------------------------
 
