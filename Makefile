@@ -11,6 +11,8 @@ usage:
 	@echo "  skool		Build the $(NAME) skool file"
 	@echo "  disasm	Build the $(NAME) disassembly"
 	@echo "  asm		Build the $(NAME) assembly"
+	@echo "  bin		Build the $(NAME) binary image"
+	@echo "  tap		Build the $(NAME) tape image"
 	@echo "  clean		Clean a previous build"
 	@echo ""
 	@echo "Environment variables:"
@@ -33,6 +35,14 @@ disasm: skool
 .PHONY: asm
 asm: skool
 	skool2asm.py -H -c $(BUILD)/$(GAME).skool > $(BUILD)/$(GAME).asm
+
+.PHONY: bin
+bin: asm
+	pasmo -v --bin $(BUILD)/$(GAME).asm $(BUILD)/$(GAME).bin
+
+.PHONY: tap
+tap: bin
+	bin2tap.py --org 16384 --stack 65535 --start 61795 $(BUILD)/$(GAME).bin
 
 .PHONY: clean
 clean:
