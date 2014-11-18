@@ -5544,13 +5544,13 @@ c $ABA0 zoombox
   $ABDE   HL++;
   $ABDF   A += *HL;
   $ABE0   if (A < 15) (*HL)++;
-  $ABE6   zoombox_1();
+  $ABE6   zoombox_fill();
   $ABE9   zoombox_draw();
   $ABEC   A = zoombox_vertical_count + zoombox_horizontal_count;
   $ABF3 %> while (A < 35);
   $ABF8 return;
 
-c $ABF9 zoombox_1
+c $ABF9 zoombox_fill
   $ABF9 A = zoombox_y;
   $ABFC H = A;
   $ABFD A = 0;
