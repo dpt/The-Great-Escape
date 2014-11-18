@@ -1026,13 +1026,16 @@ c $6939 setup_movable_items
 
 D $69A0 Fourteen bytes of reset data.
 B $69A0 movable_item_reset_data
+; @label:$69A0=movable_item_reset_data
 
 b $69AE movable_items
-; @label:$69AE=movable_items
 D $69AE struct movable_item { word y_coord, x_coord, vertical_offset; const sprite *; byte terminator; };
 D $69AE Sub-struct of vischar ($802F..$8038).
+; @label:$69AE=movable_item_stove1
   $69AE struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
+; @label:$69B7=movable_item_crate
   $69B7 struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
+; @label:$69C0=movable_item_stove2
   $69C0 struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
 
 ; ------------------------------------------------------------------------------
@@ -1914,57 +1917,108 @@ b $7095 interior_object_defs
 ; @label:$7095=interior_object_defs
 W $7095 Array of pointer to interior object definitions, 54 entries long (== number of interior rooms).
 ;
-B $7101 Interior object tile refs 0
-B $711B Interior object tile refs 1
-B $7121 Interior object tile refs 3
-B $713B Interior object tile refs 4
-B $7155 Interior object tile refs 5
-B $715A Interior object tile refs 6
-B $7174 Interior object tile refs 7
-B $718E Interior object tile refs 12
-B $71A6 Interior object tile refs 13
-B $71AB Interior object tile refs 14
-B $71C4 Interior object tile refs 17
-B $71DE Interior object tile refs 18
-B $71F8 Interior object tile refs 19
-B $7200 Interior object tile refs 20
-B $721A Interior object tile refs 2
-B $728E Interior object tile refs 8
-B $72AE Interior object tile refs 9
-B $72C1 Interior object tile refs 10
-B $72CC Interior object tile refs 11
-B $72D1 Interior object tile refs 15
-B $72EB Interior object tile refs 16
-B $7305 Interior object tile refs 22
-B $730F Interior object tile refs 23
-B $7325 Interior object tile refs 24
-B $7333 Interior object tile refs 25
-B $733C Interior object tile refs 26
-B $7342 Interior object tile refs 28
-B $734B Interior object tile refs 30
-B $7359 Interior object tile refs 31
-B $735C Interior object tile refs 32
-B $736A Interior object tile refs 33
-B $736F Interior object tile refs 34
-B $7374 Interior object tile refs 35
-B $7385 Interior object tile refs 36
-B $7393 Interior object tile refs 37
-B $73A5 Interior object tile refs 38
-B $73BF Interior object tile refs 39
-B $73D9 Interior object tile refs 41
-B $7425 Interior object tile refs 42
-B $742D Interior object tile refs 43
-B $7452 Interior object tile refs 44
-B $7482 Interior object tile refs 45
-B $7493 Interior object tile refs 46
-B $74F5 Interior object tile refs 47
-B $7570 Interior object tile refs 48
-B $7576 Interior object tile refs 49
-B $757E Interior object tile refs 50
-B $7588 Interior object tile refs 51
-B $75A2 Interior object tile refs 52
-B $75AA Interior object tile refs 53
-B $75B0 Interior object tile refs 27
+B $7101 interior_object_tile_refs_0
+; @label:$7101=interior_object_tile_refs_0
+B $711B interior_object_tile_refs_1
+; @label:$711B=interior_object_tile_refs_1
+B $7121 interior_object_tile_refs_3
+; @label:$7121=interior_object_tile_refs_3
+B $713B interior_object_tile_refs_4
+; @label:$713B=interior_object_tile_refs_4
+B $7155 interior_object_tile_refs_5
+; @label:$7155=interior_object_tile_refs_5
+B $715A interior_object_tile_refs_6
+; @label:$715A=interior_object_tile_refs_6
+B $7174 interior_object_tile_refs_7
+; @label:$7174=interior_object_tile_refs_7
+B $718E interior_object_tile_refs_12
+; @label:$718E=interior_object_tile_refs_12
+B $71A6 interior_object_tile_refs_13
+; @label:$71A6=interior_object_tile_refs_13
+B $71AB interior_object_tile_refs_14
+; @label:$71AB=interior_object_tile_refs_14
+B $71C4 interior_object_tile_refs_17
+; @label:$71C4=interior_object_tile_refs_17
+B $71DE interior_object_tile_refs_18
+; @label:$71DE=interior_object_tile_refs_18
+B $71F8 interior_object_tile_refs_19
+; @label:$71F8=interior_object_tile_refs_19
+B $7200 interior_object_tile_refs_20
+; @label:$7200=interior_object_tile_refs_20
+B $721A interior_object_tile_refs_2
+; @label:$721A=interior_object_tile_refs_2
+B $728E interior_object_tile_refs_8
+; @label:$728E=interior_object_tile_refs_8
+B $72AE interior_object_tile_refs_9
+; @label:$72AE=interior_object_tile_refs_9
+B $72C1 interior_object_tile_refs_10
+; @label:$72C1=interior_object_tile_refs_10
+B $72CC interior_object_tile_refs_11
+; @label:$72CC=interior_object_tile_refs_11
+B $72D1 interior_object_tile_refs_15
+; @label:$72D1=interior_object_tile_refs_15
+B $72EB interior_object_tile_refs_16
+; @label:$72EB=interior_object_tile_refs_16
+B $7305 interior_object_tile_refs_22
+; @label:$7305=interior_object_tile_refs_22
+B $730F interior_object_tile_refs_23
+; @label:$730F=interior_object_tile_refs_23
+B $7325 interior_object_tile_refs_24
+; @label:$7325=interior_object_tile_refs_24
+B $7333 interior_object_tile_refs_25
+; @label:$7333=interior_object_tile_refs_25
+B $733C interior_object_tile_refs_26
+; @label:$733C=interior_object_tile_refs_26
+B $7342 interior_object_tile_refs_28
+; @label:$7342=interior_object_tile_refs_28
+B $734B interior_object_tile_refs_30
+; @label:$734B=interior_object_tile_refs_30
+B $7359 interior_object_tile_refs_31
+; @label:$7359=interior_object_tile_refs_31
+B $735C interior_object_tile_refs_32
+; @label:$735C=interior_object_tile_refs_32
+B $736A interior_object_tile_refs_33
+; @label:$736A=interior_object_tile_refs_33
+B $736F interior_object_tile_refs_34
+; @label:$736F=interior_object_tile_refs_34
+B $7374 interior_object_tile_refs_35
+; @label:$7374=interior_object_tile_refs_35
+B $7385 interior_object_tile_refs_36
+; @label:$7385=interior_object_tile_refs_36
+B $7393 interior_object_tile_refs_37
+; @label:$7393=interior_object_tile_refs_37
+B $73A5 interior_object_tile_refs_38
+; @label:$73A5=interior_object_tile_refs_38
+B $73BF interior_object_tile_refs_39
+; @label:$73BF=interior_object_tile_refs_39
+B $73D9 interior_object_tile_refs_41
+; @label:$73D9=interior_object_tile_refs_41
+B $7425 interior_object_tile_refs_42
+; @label:$7425=interior_object_tile_refs_42
+B $742D interior_object_tile_refs_43
+; @label:$742D=interior_object_tile_refs_43
+B $7452 interior_object_tile_refs_44
+; @label:$7452=interior_object_tile_refs_44
+B $7482 interior_object_tile_refs_45
+; @label:$7482=interior_object_tile_refs_45
+B $7493 interior_object_tile_refs_46
+; @label:$7493=interior_object_tile_refs_46
+B $74F5 interior_object_tile_refs_47
+; @label:$74F5=interior_object_tile_refs_47
+B $7570 interior_object_tile_refs_48
+; @label:$7570=interior_object_tile_refs_48
+B $7576 interior_object_tile_refs_49
+; @label:$7576=interior_object_tile_refs_49
+B $757E interior_object_tile_refs_50
+; @label:$757E=interior_object_tile_refs_50
+B $7588 interior_object_tile_refs_51
+; @label:$7588=interior_object_tile_refs_51
+B $75A2 interior_object_tile_refs_52
+; @label:$75A2=interior_object_tile_refs_52
+B $75AA interior_object_tile_refs_53
+; @label:$75AA=interior_object_tile_refs_53
+B $75B0 interior_object_tile_refs_27
+; @label:$75B0=interior_object_tile_refs_27
 
 ; ------------------------------------------------------------------------------
 
@@ -2059,44 +2113,82 @@ b $7738 table_7738
 ; @label:$7738=table_7738
 W $7738 46 long array of pointers to object tile refs.
   $7794,1 could be a terminating $FF
-  $7795 Object tile refs
-  $7799 Object tile refs
-  $77A0 Object tile refs
-  $77CD Object tile refs
-  $77D0 Object tile refs
-  $77D4 Object tile refs
-  $77D8 Object tile refs
-  $77DA Object tile refs
-  $77DC Object tile refs
-  $77DE Object tile refs
-  $77E1 Object tile refs
-  $77E7 Object tile refs
-  $77EC Object tile refs
-  $77F1 Object tile refs
-  $77F3 Object tile refs
-  $77F5 Object tile refs
-  $77F7 Object tile refs
-  $77F9 Object tile refs
-  $77FB Object tile refs
-  $77FD Object tile refs
-  $77FF Object tile refs
-  $7801 Object tile refs
-  $7803 Object tile refs
-  $7805 Object tile refs
-  $7807 Object tile refs
-  $7809 Object tile refs
-  $780B Object tile refs
-  $780D Object tile refs
-  $780F Object tile refs
-  $7815 Object tile refs
-  $781A Object tile refs
-  $781F Object tile refs
-  $7825 Object tile refs
-  $782B Object tile refs
-  $7831 Object tile refs
-  $7833 Object tile refs
-  $7835 Object tile refs
-  $7838 Object tile refs
+  $7795 byte_7738_0
+; @label:$7795=byte_7738_0
+  $7799 byte_7738_1
+; @label:$7799=byte_7738_1
+  $77A0 byte_7738_2
+; @label:$77A0=byte_7738_2
+  $77CD byte_7738_3
+; @label:$77CD=byte_7738_3
+  $77D0 byte_7738_4
+; @label:$77D0=byte_7738_4
+  $77D4 byte_7738_5
+; @label:$77D4=byte_7738_5
+  $77D8 byte_7738_6
+; @label:$77D8=byte_7738_6
+  $77DA byte_7738_7
+; @label:$77DA=byte_7738_7
+  $77DC byte_7738_8
+; @label:$77DC=byte_7738_8
+  $77DE byte_7738_9
+; @label:$77DE=byte_7738_9
+  $77E1 byte_7738_10
+; @label:$77E1=byte_7738_10
+  $77E7 byte_7738_11
+; @label:$77E7=byte_7738_11
+  $77EC byte_7738_12
+; @label:$77EC=byte_7738_12
+  $77F1 byte_7738_13
+; @label:$77F1=byte_7738_13
+  $77F3 byte_7738_14
+; @label:$77F3=byte_7738_14
+  $77F5 byte_7738_15
+; @label:$77F5=byte_7738_15
+  $77F7 byte_7738_16
+; @label:$77F7=byte_7738_16
+  $77F9 byte_7738_17
+; @label:$77F9=byte_7738_17
+  $77FB byte_7738_18
+; @label:$77FB=byte_7738_18
+  $77FD byte_7738_19
+; @label:$77FD=byte_7738_19
+  $77FF byte_7738_20
+; @label:$77FF=byte_7738_20
+  $7801 byte_7738_21
+; @label:$7801=byte_7738_21
+  $7803 byte_7738_22
+; @label:$7803=byte_7738_22
+  $7805 byte_7738_23
+; @label:$7805=byte_7738_23
+  $7807 byte_7738_24
+; @label:$7807=byte_7738_24
+  $7809 byte_7738_25
+; @label:$7809=byte_7738_25
+  $780B byte_7738_26
+; @label:$780B=byte_7738_26
+  $780D byte_7738_27
+; @label:$780D=byte_7738_27
+  $780F byte_7738_28
+; @label:$780F=byte_7738_28
+  $7815 byte_7738_29
+; @label:$7815=byte_7738_29
+  $781A byte_7738_30
+; @label:$781A=byte_7738_30
+  $781F byte_7738_31
+; @label:$781F=byte_7738_31
+  $7825 byte_7738_32
+; @label:$7825=byte_7738_32
+  $782B byte_7738_33
+; @label:$782B=byte_7738_33
+  $7831 byte_7738_34
+; @label:$7831=byte_7738_34
+  $7833 byte_7738_35
+; @label:$7833=byte_7738_35
+  $7835 byte_7738_36
+; @label:$7835=byte_7738_36
+  $7838 byte_7738_37
+; @label:$7838=byte_7738_37
 
 ; ------------------------------------------------------------------------------
 
