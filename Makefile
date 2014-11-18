@@ -8,6 +8,7 @@ usage:
 	@echo "Supported targets:"
 	@echo "  usage		Show this help"
 	@echo "  install	Install the $(NAME) support script"
+	@echo "  all		Build everything"
 	@echo "  skool		Build the $(NAME) skool file"
 	@echo "  disasm	Build the $(NAME) disassembly"
 	@echo "  asm		Build the $(NAME) assembly"
@@ -24,6 +25,9 @@ usage:
 install:
 	mkdir -p ~/.skoolkit
 	cp $(GAME).py ~/.skoolkit
+
+.PHONY: all
+all: disasm tap
 
 .PHONY: skool
 skool: $(BUILD)/$(GAME).skool
