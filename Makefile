@@ -30,7 +30,7 @@ skool: $(BUILD)/$(GAME).skool
 
 $(BUILD)/$(GAME).skool: $(GAME).ctl $(GAME).z80
 	mkdir -p $(BUILD)
-	sna2skool.py $(OPTIONS) -R -c $(GAME).ctl $(GAME).z80 > $(BUILD)/$(GAME).skool 
+	sna2skool.py $(OPTIONS) -R -c $(GAME).ctl $(GAME).z80 > $@
 
 .PHONY: disasm
 disasm: skool
@@ -39,20 +39,20 @@ disasm: skool
 .PHONY: asm
 asm: $(BUILD)/$(GAME).asm
 
-$(BUILD)/$(GAME).asm: $(BUILD)/$(GAME).skool
-	skool2asm.py -H -c $(BUILD)/$(GAME).skool > $(BUILD)/$(GAME).asm
+%.asm: %.skool
+	skool2asm.py -H -c $< > $@
 
 .PHONY: bin
 bin: $(BUILD)/$(GAME).asm
 
-$(BUILD)/$(GAME).bin: $(BUILD)/$(GAME).asm
-	pasmo -v --bin $(BUILD)/$(GAME).asm $(BUILD)/$(GAME).bin
+%.bin: %.asm
+	pasmo -v --bin $< $@
 
 .PHONY: tap
 tap: $(BUILD)/$(GAME).tap
 
-$(BUILD)/$(GAME).tap: $(BUILD)/$(GAME).bin
-	bin2tap.py --org 16384 --stack 65535 --start 61795 $(BUILD)/$(GAME).bin
+%.tap: %.bin
+	bin2tap.py --org 16384 --stack 65535 --start 61795 $<
 
 .PHONY: clean
 clean:
