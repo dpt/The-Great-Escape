@@ -1352,8 +1352,8 @@ D $6BE5 Array of pointers to tunnels.
   $6C13 &roomdef_40,
 
 b $6C15 room_defs
-; @label:$6C15=room_defs
 D $6C15 roomdef_1_hut1_right
+; @label:$6C15=roomdef_1_hut1_right
   $6C15,1 0
   $6C16,1 3 // count of boundaries
   $6C17,4 { 54, 68, 23, 34 }, // boundary
@@ -1374,6 +1374,7 @@ D $6C15 roomdef_1_hut1_right
   $6C44,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
 D $6C47 roomdef_2_hut2_left
+; @label:$6C47=roomdef_2_hut2_left
   $6C47,1 1
   $6C48,1 2 // count of boundaries
   $6C49,4 { 48, 64, 43, 56 }, // boundary
@@ -1391,6 +1392,7 @@ D $6C47 roomdef_2_hut2_left
   $6C6A,3 { interiorobject_SMALL_TUNNEL_ENTRANCE,       5,  9 },
 
 D $6C6D roomdef_3_hut2_right
+; @label:$6C6D=roomdef_3_hut2_right
   $6C6D,1 0
   $6C6E,1 3 // count of boundaries
   $6C6F,4 { 54, 68, 23, 34 }, // boundary
@@ -1411,6 +1413,7 @@ D $6C6D roomdef_3_hut2_right
   $6C9C,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
 D $6C9F roomdef_4_hut3_left
+; @label:$6C9F=roomdef_4_hut3_left
   $6C9F,1 1
   $6CA0,1 2 // count of boundaries
   $6CA1,4 { 24, 40, 24, 42 }, // boundary
@@ -1429,6 +1432,7 @@ D $6C9F roomdef_4_hut3_left
   $6CC6,3 { interiorobject_STUFF_31,                   14, 14 },
 
 D $6CC9 roomdef_5_hut3_right
+; @label:$6CC9=roomdef_5_hut3_right
   $6CC9,1 0
   $6CCA,1 3 // count of boundaries
   $6CCB,4 { 54, 68, 23, 34 }, // boundary
@@ -1449,6 +1453,7 @@ D $6CC9 roomdef_5_hut3_right
   $6CF8,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
 D $6CFB roomdef_6_corridor
+; @label:$6CFB=roomdef_6_corridor
   $6CFB,1 2
   $6CFC,1 0 // count of boundaries
   $6CFD,1 1 // count of TBD
@@ -1461,6 +1466,7 @@ D $6CFB roomdef_6_corridor
   $6D0C,3 { interiorobject_SHORT_WARDROBE,             18,  6 },
 
 D $6D0F roomdef_9_crate
+; @label:$6D0F=roomdef_9_crate
   $6D0F,1 1
   $6D10,1 1 // count of boundaries
   $6D11,4 { 58, 64, 28, 42 }, // boundary
@@ -1479,6 +1485,7 @@ D $6D0F roomdef_9_crate
   $6D34,3 { interiorobject_SMALL_CRATE,                 4,  9 },
 
 D $6D37 roomdef_10_lockpick
+; @label:$6D37=roomdef_10_lockpick
   $6D37,1 4
   $6D38,1 2 // count of boundaries
   $6D39,4 { 69, 75, 32, 54 }, // boundary
@@ -1502,6 +1509,7 @@ D $6D37 roomdef_10_lockpick
   $6D6D,3 { interiorobject_TABLE_2,                     2,  6 },
 
 D $6D70 roomdef_11_papers
+; @label:$6D70=roomdef_11_papers
   $6D70,1 4
   $6D71,1 1 // count of boundaries
   $6D72,4 { 27, 44, 36, 48 }, // boundary
@@ -1519,6 +1527,7 @@ D $6D70 roomdef_11_papers
   $6D91,3 { interiorobject_DESK,                       12, 10 },
 
 D $6D94 roomdef_12_corridor
+; @label:$6D94=roomdef_12_corridor
   $6D94,1 1
   $6D95,1 0 // count of boundaries
   $6D96,1 2 // count of TBD
@@ -1530,6 +1539,7 @@ D $6D94 roomdef_12_corridor
   $6DA3,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
 
 D $6DA6 roomdef_13_corridor
+; @label:$6DA6=roomdef_13_corridor
   $6DA6,1 1
   $6DA7,1 0 // count of boundaries
   $6DA8,1 2 // count of TBD
@@ -1543,6 +1553,7 @@ D $6DA6 roomdef_13_corridor
   $6DBB,3 { interiorobject_CHEST_OF_DRAWERS,           14,  7 },
 
 D $6DBE roomdef_14_torch
+; @label:$6DBE=roomdef_14_torch
   $6DBE,1 0
   $6DBF,1 3 // count of boundaries
   $6DC0,4 { 54, 68, 22, 32 }, // boundary
@@ -1562,6 +1573,7 @@ D $6DBE roomdef_14_torch
   $6DE7,3 { interiorobject_EMPTY_BED,                   2,  9 },
 
 D $6DEA roomdef_15_uniform
+; @label:$6DEA=roomdef_15_uniform
   $6DEA,1 0
   $6DEB,1 4 // count of boundaries
   $6DEC,4 { 54, 68, 22, 32 }, // boundary
@@ -1583,6 +1595,7 @@ D $6DEA roomdef_15_uniform
   $6E1D,3 { interiorobject_TABLE_2,                    18,  8 },
 
 D $6E20 roomdef_16_corridor
+; @label:$6E20=roomdef_16_corridor
   $6E20,1 1
   $6E21,1 0 // count of boundaries
   $6E22,1 2 // count of TBD
@@ -1594,6 +1607,7 @@ D $6E20 roomdef_16_corridor
   $6E2F,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
 
 D $6E32 roomdef_7_corridor
+; @label:$6E32=roomdef_7_corridor
   $6E32,1 1
   $6E33,1 0 // count of boundaries
   $6E34,1 1 // count of TBD
@@ -1605,6 +1619,7 @@ D $6E32 roomdef_7_corridor
   $6E40,3 { interiorobject_TALL_WARDROBE,              12,  4 },
 
 D $6E43 roomdef_18_radio
+; @label:$6E43=roomdef_18_radio
   $6E43,1 4
   $6E44,1 3 // count of boundaries
   $6E45,4 { 38, 56, 48, 60 }, // boundary
@@ -1625,6 +1640,7 @@ D $6E43 roomdef_18_radio
   $6E73,3 { interiorobject_DOOR_FRAME_16,               5,  7 },
 
 D $6E76 roomdef_19_food
+; @label:$6E76=roomdef_19_food
   $6E76,1 1
   $6E77,1 1 // count of boundaries
   $6E78,4 { 52, 64, 47, 56 }, // boundary
@@ -1644,6 +1660,7 @@ D $6E76 roomdef_19_food
   $6E9D,3 { interiorobject_DOOR_FRAME_16,               9, 10 },
 
 D $6EA0 roomdef_20_redcross
+; @label:$6EA0=roomdef_20_redcross
   $6EA0,1 1
   $6EA1,1 2 // count of boundaries
   $6EA2,4 { 58, 64, 26, 42 }, // boundary
@@ -1664,6 +1681,7 @@ D $6EA0 roomdef_20_redcross
   $6ECC,3 { interiorobject_TINY_TABLE,                 11,  8 },
 
 D $6ECF roomdef_22_red_key
+; @label:$6ECF=roomdef_22_red_key
   $6ECF,1 3
   $6ED0,1 2 // count of boundaries
   $6ED1,4 { 54, 64, 46, 56 }, // boundary
@@ -1680,6 +1698,7 @@ D $6ECF roomdef_22_red_key
   $6EEF,3 { interiorobject_DOOR_FRAME_40,              14,  4 },
 
 D $6EF2 roomdef_23_breakfast
+; @label:$6EF2=roomdef_23_breakfast
   $6EF2,1 0
   $6EF3,1 1 // count of boundaries
   $6EF4,4 { 54, 68, 34, 68 }, // boundary
@@ -1700,6 +1719,7 @@ D $6EF2 roomdef_23_breakfast
   $6F1D,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
 
 D $6F20 roomdef_24_solitary
+; @label:$6F20=roomdef_24_solitary
   $6F20,1 3
   $6F21,1 1 // count of boundaries
   $6F22,4 { 48, 54, 38, 46 }, // boundary
@@ -1711,6 +1731,7 @@ D $6F20 roomdef_24_solitary
   $6F2F,3 { interiorobject_TINY_TABLE,                 10,  9 },
 
 D $6F32 roomdef_25_breakfast
+; @label:$6F32=roomdef_25_breakfast
   $6F32,1 0
   $6F33,1 1 // count of boundaries
   $6F34,4 { 54, 68, 34, 68 }, // boundary
@@ -1730,6 +1751,7 @@ D $6F32 roomdef_25_breakfast
   $6F58,3 { interiorobject_EMPTY_BENCH,                14,  4 },
 
 D $6F5B roomdef_28_hut1_left
+; @label:$6F5B=roomdef_28_hut1_left
   $6F5B,1 1
   $6F5C,1 2 // count of boundaries
   $6F5D,4 { 28, 40, 28, 52 }, // boundary
@@ -1747,6 +1769,7 @@ D $6F5B roomdef_28_hut1_left
   $6F7F,3 { interiorobject_TABLE_2,                    11, 12 },
 
 D $6F82 roomdef_29_second_tunnel_start
+; @label:$6F82=roomdef_29_second_tunnel_start
   $6F82,1 5
   $6F83,1 0 // count of boundaries
   $6F84,1 6 // count of TBD
@@ -1760,6 +1783,7 @@ D $6F82 roomdef_29_second_tunnel_start
   $6F9B,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
 D $6F9E roomdef_31
+; @label:$6F9E=roomdef_31
   $6F9E,1 6
   $6F9F,1 0 // count of boundaries
   $6FA0,1 6 // count of TBD
@@ -1773,6 +1797,7 @@ D $6F9E roomdef_31
   $6FB7,3 { interiorobject_TUNNEL_3,                   20, 10 },
 
 D $6FBA roomdef_36
+; @label:$6FBA=roomdef_36
   $6FBA,1 7
   $6FBB,1 0 // count of boundaries
   $6FBC,1 6 // count of TBD
@@ -1785,6 +1810,7 @@ D $6FBA roomdef_36
   $6FD0,3 { interiorobject_TUNNEL_14,                   4,  8 },
 
 D $6FD3 roomdef_32
+; @label:$6FD3=roomdef_32
   $6FD3,1 8
   $6FD4,1 0 // count of boundaries
   $6FD5,1 6 // count of TBD
@@ -1797,6 +1823,7 @@ D $6FD3 roomdef_32
   $6FE9,3 { interiorobject_TUNNEL_17,                  16,  8 },
 
 D $6FEC roomdef_34
+; @label:$6FEC=roomdef_34
   $6FEC,1 6
   $6FED,1 0 // count of boundaries
   $6FEE,1 6 // count of TBD
@@ -1810,6 +1837,7 @@ D $6FEC roomdef_34
   $7005,3 { interiorobject_TUNNEL_18,                  20, 10 },
 
 D $7008 roomdef_35
+; @label:$7008=roomdef_35
   $7008,1 6
   $7009,1 0 // count of boundaries
   $700A,1 6 // count of TBD
@@ -1823,6 +1851,7 @@ D $7008 roomdef_35
   $7021,3 { interiorobject_TUNNEL_3,                   20, 10 },
 
 D $7024 roomdef_30
+; @label:$7024=roomdef_30
   $7024,1 5
   $7025,1 0 // count of boundaries
   $7026,1 7 // count of TBD
@@ -1836,6 +1865,7 @@ D $7024 roomdef_30
   $703E,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
 D $7041 roomdef_40
+; @label:$7041=roomdef_40
   $7041,1 9
   $7042,1 0 // count of boundaries
   $7043,1 6 // count of TBD
@@ -1849,6 +1879,7 @@ D $7041 roomdef_40
   $705A,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
 D $705D roomdef_44
+; @label:$705D=roomdef_44
   $705D,1 8
   $705E,1 0 // count of boundaries
   $705F,1 5 // count of TBD
@@ -1861,6 +1892,7 @@ D $705D roomdef_44
   $7072,3 { interiorobject_TUNNEL_12,                  16,  8 },
 
 D $7075 roomdef_50_blocked_tunnel
+; @label:$7075=roomdef_50_blocked_tunnel
   $7075,1 5
   $7076,1 1 // count of boundaries
   $7077,4 { 52, 58, 32, 54 }, // boundary
@@ -11166,7 +11198,6 @@ w $F541 music_channel0_index
 w $F543 music_channel1_index
 ; @label:$F543=music_channel1_index
 b $F545 unknown/unused
-; @label:$F545=unknown/unused
 b $F546 music_channel0_data
 ; @label:$F546=music_channel0_data
 b $F7C7 music_channel1_data
