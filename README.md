@@ -1,59 +1,78 @@
 The Great Escape
 ================
 
-Reverse engineering Denton Designs' classic ZX Spectrum 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) using [SkoolKit](http://skoolkit.ca/).
+Reverse engineering [Denton Designs'](http://en.wikipedia.org/wiki/Denton_Designs) classic [ZX Spectrum](http://en.wikipedia.org/wiki/ZX_Spectrum) 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) using [SkoolKit](http://skoolkit.ca/).
 
 Goals
 -----
 
-**Goal one** is to build a complete documented disassembly of the game. SkoolKit enables us to generate both an HTML format cross-referenced disassembly and an assembly listing suitable for rebuilding the original game image.
+**Goal one** is to build a fully documented disassembly of the game. SkoolKit enables us to generate both a detailed HTML format cross-referenced disassembly and an assembly listing suitable for rebuilding an image of the original game.
 
-**Goal two** is to transform that C-style pseudocode into real C source code which behaves exactly like the original game. The reimplementation lives in [this repository](https://github.com/dpt/The-Great-Escape-in-C).
+**Goal two** is to transform that C-style pseudocode into real C source code which behaves exactly like the original game. The work-in-progress reimplementation project lives in [this repository](https://github.com/dpt/The-Great-Escape-in-C).
 
-Goal One - Reverse Engineer
----------------------------
-
-### SkoolKit
+SkoolKit
+--------
 
 I'm reversing the game with the help of [SkoolKit](http://skoolkit.ca/), the rather nice toolkit for disassembling ZX Spectrum software written by Richard Dymond.
 
-I've chosen to use a C-style pseudocode and Z80 fragments where C syntax cannot cope.
+You can view the HTML disassembly [here](http://dpt.github.com/The-Great-Escape/). Note that this often lags behind the current head of the source tree.
 
-You can view an aperiodically updated version of the HTML disassembly [here](http://dpt.github.com/The-Great-Escape/).
+You can also disassemble and reassemble the game, resulting in a .TAP file which you can load into an emulator. (e.g. you can fix bugs!)
 
-You can also disassemble and reassemble the game to a .TAP file, and load it into the emulator. (e.g. you can fix bugs!)
+SkoolKit disassemblies are normally written in a plain text comment style but I've chosen to use a C-style pseudocode and Z80 fragments where C syntax cannot cope. Wise decision? Time will tell.
 
-Note that currently the disassembly is contained in a  _control_ file rather than a _skool_ file.
+Also note that currently the disassembly is contained in a  _control_ file rather than a _skool_ file.
 
-### Building the Disassembly
 
-* Make a local clone of this repository: `git clone https://github.com/dpt/The-Great-Escape.git`
+Building the Disassembly
+------------------------
+
+* First, make a local clone of this repository: `git clone https://github.com/dpt/The-Great-Escape.git`
 * `cd <the cloned repo>`.
 * Drop a Z80 format snapshot of the game into the project directory. Call it `TheGreatEscape.z80`.
-* `make install`. This will install TheGreatEscape.py into your ~/.skoolkit directory. You only have to do this once. (Note: If you wish to install into a different location you may have to customise the path inside `Makefile`).
+* `make install`. This will install TheGreatEscape.py into your `~/.skoolkit` directory. You only have to do this once. (Note: If you wish to install into a different location you may have to customise the path inside `Makefile`).
 * `make disasm`. To build the HTML format disassembly.
 
-You will see:
+If all's well you will see:
 
     $ make disasm
-    Using skool file: TheGreatEscape.skool
-    Using ref file: TheGreatEscape.ref
-    Parsing TheGreatEscape.skool
-      Wrote TheGreatEscape/images/logo.png
-      Writing disassembly files in TheGreatEscape/asm
-      Writing TheGreatEscape/maps/all.html
-      Writing TheGreatEscape/maps/routines.html
-      Writing TheGreatEscape/maps/data.html
-      Writing TheGreatEscape/maps/unused.html
-      Writing TheGreatEscape/reference/bugs.html
-      Writing TheGreatEscape/reference/facts.html
-      Writing TheGreatEscape/reference/glossary.html
-      Writing TheGreatEscape/index.html
+    mkdir -p build
+    sna2skool.py -H -R -c TheGreatEscape.ctl TheGreatEscape.z80 > build/TheGreatEscape.skool
+    skool2html.py -H -o build/TheGreatEscape.skool
+    Using skool file: build/TheGreatEscape.skool
+    Using ref files: TheGreatEscape.ref, TheGreatEscapeBugs.ref, TheGreatEscapeFacts.ref, TheGreatEscapeGlossary.ref, TheGreatEscapeGraphics.ref
+    Parsing build/TheGreatEscape.skool
+    Creating directory build/TheGreatEscape
+    Copying /Library/Python/2.7/site-packages/skoolkit/resources/skoolkit.css to build/TheGreatEscape/skoolkit.css
+    Copying TheGreatEscape.css to build/TheGreatEscape/TheGreatEscape.css
+      Writing disassembly files in build/TheGreatEscape/asm
+      Writing build/TheGreatEscape/maps/all.html
+      Writing build/TheGreatEscape/maps/routines.html
+      Writing build/TheGreatEscape/maps/data.html
+      Writing build/TheGreatEscape/maps/messages.html
+      Writing build/TheGreatEscape/maps/unused.html
+      Writing build/TheGreatEscape/Characters.html
+      Writing build/TheGreatEscape/Items.html
+      Writing build/TheGreatEscape/RoomObjects.html
+      Writing build/TheGreatEscape/Rooms.html
+      Writing build/TheGreatEscape/Map.html
+      Writing build/TheGreatEscape/graphics/glitches.html
+      Writing build/TheGreatEscape/reference/bugs.html
+      Writing build/TheGreatEscape/reference/facts.html
+      Writing build/TheGreatEscape/reference/glossary.html
+      Writing build/TheGreatEscape/index.html
 
-* Open up `build/TheGreatEscape/index.html` in your browser.
-* `make tap`. To build assembly, binary and .tap file for loading into an emulator.
+* Open up `build/TheGreatEscape/index.html` in your browser and peruse
 
-### Currrent State
+Building the Reassembly
+-----------------------
+
+* `make asm` to build just the assembly source.
+* `make bin` to build assembly and binary. This step depends on the [Pasmo](http://pasmo.speccy.org/) assembler.
+* `make tap` to build assembly, binary and .tap file for loading into an emulator.
+
+Currrent State
+--------------
 
 I don't grok all the code yet, so I have to be vague when naming symbols. You will notice stuff like:
 
