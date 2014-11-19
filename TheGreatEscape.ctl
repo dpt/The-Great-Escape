@@ -9346,72 +9346,127 @@ D $D026 Sprite bitmaps and masks.
 B $D026 Raw data.
 ;
 B $D026 bitmap: COMMANDANT FACING TOP LEFT 1
+; @label:$D026=bitmap_commandant_facing_top_left_1
 B $D060 bitmap: COMMANDANT FACING TOP LEFT 2
+; @label:$D060=bitmap_commandant_facing_top_left_2
 B $D09A bitmap: COMMANDANT FACING TOP LEFT 3
+; @label:$D09A=bitmap_commandant_facing_top_left_3
 B $D0D6 bitmap: COMMANDANT FACING TOP LEFT 4
+; @label:$D0D6=bitmap_commandant_facing_top_left_4
 ;
 B $D10E bitmap: COMMANDANT FACING BOTTOM RIGHT 1
+; @label:$D10E=bitmap_commandant_facing_bottom_right_1
 B $D144 bitmap: COMMANDANT FACING BOTTOM RIGHT 2
+; @label:$D144=bitmap_commandant_facing_bottom_right_2
 B $D17C bitmap: COMMANDANT FACING BOTTOM RIGHT 3
+; @label:$D17C=bitmap_commandant_facing_bottom_right_3
 B $D1B2 bitmap: COMMANDANT FACING BOTTOM RIGHT 4
+; @label:$D1B2=bitmap_commandant_facing_bottom_right_4
 ;
 B $D1EA bitmap: PRISONER FACING TOP LEFT 1
+; @label:$D1EA=bitmap_prisoner_facing_top_left_1
 B $D220 bitmap: PRISONER FACING TOP LEFT 2
+; @label:$D220=bitmap_prisoner_facing_top_left_2
 B $D256 bitmap: PRISONER FACING TOP LEFT 3
+; @label:$D256=bitmap_prisoner_facing_top_left_3
 B $D28C bitmap: PRISONER FACING TOP LEFT 4
+; @label:$D28C=bitmap_prisoner_facing_top_left_4
 ;
 B $D2C0 bitmap: PRISONER FACING BOTTOM RIGHT 1
+; @label:$D2C0=bitmap_prisoner_facing_bottom_right_1
 B $D2F4 bitmap: PRISONER FACING BOTTOM RIGHT 2
+; @label:$D2F4=bitmap_prisoner_facing_bottom_right_2
 B $D32C bitmap: PRISONER FACING BOTTOM RIGHT 3
+; @label:$D32C=bitmap_prisoner_facing_bottom_right_3
 B $D362 bitmap: PRISONER FACING BOTTOM RIGHT 4
+; @label:$D362=bitmap_prisoner_facing_bottom_right_4
 ;
 B $D398 bitmap: CRAWL FACING BOTTOM LEFT 1
+; @label:$D398=bitmap_crawl_facing_bottom_left_1
 B $D3C5 bitmap: CRAWL FACING BOTTOM LEFT 2
+; @label:$D3C5=bitmap_crawl_facing_bottom_left_2
 B $D3F5 bitmap: CRAWL FACING TOP LEFT 1
+; @label:$D3F5=bitmap_crawl_facing_top_left_1
 B $D425 bitmap: CRAWL FACING TOP LEFT 2
+; @label:$D425=bitmap_crawl_facing_top_left_2
 B $D455 mask: CRAWL FACING TOP LEFT (shared)
+; @label:$D455=mask_crawl_facing_top_left_shared
 ;
 B $D485 mask: VARIOUS FACING TOP LEFT 1
+; @label:$D485=mask_various_facing_top_left_1
 B $D4C5 mask: VARIOUS FACING TOP LEFT 2
+; @label:$D4C5=mask_various_facing_top_left_2
 B $D505 mask: VARIOUS FACING TOP LEFT 3
+; @label:$D505=mask_various_facing_top_left_3
 B $D545 mask: VARIOUS FACING TOP LEFT 4
+; @label:$D545=mask_various_facing_top_left_4
 ;
 B $D585 mask: VARIOUS FACING BOTTOM RIGHT 1
+; @label:$D585=mask_various_facing_bottom_right_1
 B $D5C5 mask: VARIOUS FACING BOTTOM RIGHT 2
+; @label:$D5C5=mask_various_facing_bottom_right_2
 B $D605 mask: VARIOUS FACING BOTTOM RIGHT 3
+; @label:$D605=mask_various_facing_bottom_right_3
 B $D63D mask: VARIOUS FACING BOTTOM RIGHT 4
+; @label:$D63D=mask_various_facing_bottom_right_4
+;
 B $D677 mask: CRAWL FACING BOTTOM LEFT (shared)
+; @label:$D677=mask_crawl_facing_bottom_left_shared
 ;
 B $D6A7 bitmap: GUARD FACING TOP LEFT 1
+; @label:$D6A7=bitmap_guard_facing_top_left_1
 B $D6DD bitmap: GUARD FACING TOP LEFT 2
+; @label:$D6DD=bitmap_guard_facing_top_left_2
 B $D713 bitmap: GUARD FACING TOP LEFT 3
+; @label:$D713=bitmap_guard_facing_top_left_3
 B $D74D bitmap: GUARD FACING TOP LEFT 4
+; @label:$D74D=bitmap_guard_facing_top_left_4
 ;
 B $D783 bitmap: GUARD FACING BOTTOM RIGHT 1
+; @label:$D783=bitmap_guard_facing_bottom_right_1
 B $D7BD bitmap: GUARD FACING BOTTOM RIGHT 2
+; @label:$D7BD=bitmap_guard_facing_bottom_right_2
 B $D7F7 bitmap: GUARD FACING BOTTOM RIGHT 3
+; @label:$D7F7=bitmap_guard_facing_bottom_right_3
 B $D82F bitmap: GUARD FACING BOTTOM RIGHT 4
+; @label:$D82F=bitmap_guard_facing_bottom_right_4
 ;
 B $D867 bitmap: DOG FACING TOP LEFT 1
+; @label:$D867=bitmap_dog_facing_top_left_1
 B $D897 bitmap: DOG FACING TOP LEFT 2
+; @label:$D897=bitmap_dog_facing_top_left_2
 B $D8C7 bitmap: DOG FACING TOP LEFT 3
+; @label:$D8C7=bitmap_dog_facing_top_left_3
 B $D8F4 bitmap: DOG FACING TOP LEFT 4
+; @label:$D8F4=bitmap_dog_facing_top_left_4
 B $D921 mask: DOG FACING TOP LEFT (shared)
+; @label:$D921=mask_dog_facing_top_left_shared
 ;
 B $D951 bitmap: DOG FACING BOTTOM RIGHT 1
+; @label:$D951=bitmap_dog_facing_bottom_right_1
 B $D97B bitmap: DOG FACING BOTTOM RIGHT 2
+; @label:$D97B=bitmap_dog_facing_bottom_right_2
 B $D9A8 bitmap: DOG FACING BOTTOM RIGHT 3
+; @label:$D9A8=bitmap_dog_facing_bottom_right_3
 B $D9CF bitmap: DOG FACING BOTTOM RIGHT 4
+; @label:$D9CF=bitmap_dog_facing_bottom_right_4
 B $D9F9 mask: DOG FACING BOTTOM RIGHT (shared)
+; @label:$D9F9=mask_dog_facing_bottom_right_shared
 ;
 B $DA29 bitmap: FLAG UP
+; @label:$DA29=bitmap_flag_up
 B $DA6B bitmap: FLAG DOWN
+; @label:$DA6B=bitmap_flag_down
 ;
 B $DAB6 bitmap: CRATE
+; @label:$DAB6=bitmap_crate
 B $DAFE mask: CRATE
+; @label:$DAFE=mask_crate
 ;
 B $DB46 bitmap: STOVE
+; @label:$DB46=bitmap_stove
 B $DB72 mask: STOVE
+; @label:$DB72=mask_stove
 
 ;
 ; Images for above
@@ -9722,112 +9777,217 @@ D $DD70 Food turns purple/black when it's poisoned.
 
 b $DD7D item_definitions
 ; @label:$DD7D=item_definitions
-D $DD7D Item definitions:
+D $DD7D Item definitions.
 D $DD7D Array of "sprite" structures.
 ;
-  $DD7D { 2, 11, wiresnips_data, wiresnips_mask },
-  $DD83 { 2, 13, shovel_data, shovelkey_mask },
-  $DD89 { 2, 16, lockpick_data, lockpick_mask },
-  $DD8F { 2, 15, papers_data, papers_mask },
-  $DD95 { 2, 12, torch_data, torch_mask },
-  $DD9B { 2, 13, bribe_data, bribe_mask },
-  $DDA1 { 2, 16, uniform_data, uniform_mask },
-  $DDA7 { 2, 16, food_data, food_mask },
-  $DDAD { 2, 16, poison_data, poison_mask },
-  $DDB3 { 2, 13, key_data, shovelkey_mask },
-  $DDB9 { 2, 13, key_data, shovelkey_mask },
-  $DDBF { 2, 13, key_data, shovelkey_mask },
-  $DDC5 { 2, 16, parcel_data, parcel_mask },
-  $DDCB { 2, 16, radio_data, radio_mask },
-  $DDD1 { 2, 12, purse_data, purse_mask },
-  $DDD7 { 2, 12, compass_data, compass_mask },
+D $DD7D item_definition: WIRESNIPS
+B $DD7D,1 width
+B $DD7E,1 height
+W $DD7F,2 bitmap pointer
+W $DD81,2 mask pointer
+;
+D $DD83 item_definition: SHOVEL
+B $DD83,1 width
+B $DD84,1 height
+W $DD85,2 bitmap pointer
+W $DD87,2 mask pointer
+;
+D $DD89 item_definition: LOCKPICK
+B $DD89,1 width
+B $DD8A,1 height
+W $DD8B,2 bitmap pointer
+W $DD8D,2 mask pointer
+;
+D $DD8F item_definition: PAPERS
+B $DD8F,1 width
+B $DD90,1 height
+W $DD91,2 bitmap pointer
+W $DD93,2 mask pointer
+;
+D $DD95 item_definition: TORCH
+B $DD95,1 width
+B $DD96,1 height
+W $DD97,2 bitmap pointer
+W $DD99,2 mask pointer
+;
+D $DD9B item_definition: BRIBE
+B $DD9B,1 width
+B $DD9C,1 height
+W $DD9D,2 bitmap pointer
+W $DD9F,2 mask pointer
+;
+D $DDA1 item_definition: UNIFORM
+B $DDA1,1 width
+B $DDA2,1 height
+W $DDA3,2 bitmap pointer
+W $DDA5,2 mask pointer
+;
+D $DDA7 item_definition: FOOD
+B $DDA7,1 width
+B $DDA8,1 height
+W $DDA9,2 bitmap pointer
+W $DDAB,2 mask pointer
+;
+D $DDAD item_definition: POISON
+B $DDAD,1 width
+B $DDAE,1 height
+W $DDAF,2 bitmap pointer
+W $DDB1,2 mask pointer
+;
+D $DDB3 item_definition: RED_KEY
+B $DDB3,1 width
+B $DDB4,1 height
+W $DDB5,2 bitmap pointer
+W $DDB7,2 mask pointer
+;
+D $DDB9 item_definition: YELLOW_KEY
+B $DDB9,1 width
+B $DDBA,1 height
+W $DDBB,2 bitmap pointer
+W $DDBD,2 mask pointer
+;
+D $DDBF item_definition: GREEN_KEY
+B $DDBF,1 width
+B $DDC0,1 height
+W $DDC1,2 bitmap pointer
+W $DDC3,2 mask pointer
+;
+D $DDC5 item_definition: PARCEL
+B $DDC5,1 width
+B $DDC6,1 height
+W $DDC7,2 bitmap pointer
+W $DDC9,2 mask pointer
+;
+D $DDCB item_definition: RADIO
+B $DDCB,1 width
+B $DDCC,1 height
+W $DDCD,2 bitmap pointer
+W $DDCF,2 mask pointer
+;
+D $DDD1 item_definition: PURSE
+B $DDD1,1 width
+B $DDD2,1 height
+W $DDD3,2 bitmap pointer
+W $DDD5,2 mask pointer
+;
+D $DDD7 item_definition: COMPASS
+B $DDD7,1 width
+B $DDD8,1 height
+W $DDD9,2 bitmap pointer
+W $DDDB,2 mask pointer
 
 ; ------------------------------------------------------------------------------
 
 b $DDDD item_bitmaps_and_masks
-; @label:$DDDD=item_bitmaps_and_masks
-D $DDDD Item bitmaps and masks.
+D $DDDD Item definitions.
 D $DDDD Raw data.
 ;
 B $DDDD item_bitmap: SHOVEL
+; @label:$DDDD=bitmap_shovel
 D $DDDD #UDGTABLE { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) } TABLE#
 ;
 B $DDF7 item_bitmap: KEY (shared for all keys)
+; @label:$DDF7=bitmap_key
 D $DDF7 #UDGTABLE { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) } TABLE#
 ;
 B $DE11 item_bitmap: LOCKPICK
+; @label:$DE11=bitmap_lockpick
 D $DE11 #UDGTABLE { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) } TABLE#
 ;
 B $DE31 item_bitmap: COMPASS
+; @label:$DE31=bitmap_compass
 D $DE31 #UDGTABLE { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) } TABLE#
 ;
 B $DE49 item_bitmap: PURSE
+; @label:$DE49=bitmap_purse
 D $DE49 #UDGTABLE { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) } TABLE#
 ;
 B $DE61 item_bitmap: PAPERS
+; @label:$DE61=bitmap_papers
 D $DE61 #UDGTABLE { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) } TABLE#
 ;
 B $DE7F item_bitmap: WIRESNIPS
+; @label:$DE7F=bitmap_wiresnips
 D $DE7F #UDGTABLE { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) } TABLE#
 ;
 B $DE95 item_mask: SHOVEL or KEY (shared)
+; @label:$DE95=mask_shovel_key
 D $DE95 #UDGTABLE { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) } TABLE#
 ;
 B $DEAF item_mask: LOCKPICK
+; @label:$DEAF=mask_lockpick
 D $DEAF #UDGTABLE { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) } TABLE#
 ;
 B $DECF item_mask: COMPASS
+; @label:$DECF=mask_compass
 D $DECF #UDGTABLE { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) } TABLE#
 ;
 B $DEE7 item_mask: PURSE
+; @label:$DEE7=mask_purse
 D $DEE7 #UDGTABLE { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) } TABLE#
 ;
 B $DEFF item_mask: PAPERS
+; @label:$DEFF=mask_papers
 D $DEFF #UDGTABLE { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) } TABLE#
 ;
 B $DF1D item_mask: WIRESNIPS
+; @label:$DF1D=mask_wiresnips
 D $DF1D #UDGTABLE { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) } TABLE#
 ;
 B $DF33 item_bitmap: FOOD
+; @label:$DF33=bitmap_food
 D $DF33 #UDGTABLE { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) } TABLE#
 ;
 B $DF53 item_bitmap: POISON
+; @label:$DF53=bitmap_poison
 D $DF53 #UDGTABLE { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) } TABLE#
 ;
 B $DF73 item_bitmap: TORCH
+; @label:$DF73=bitmap_torch
 D $DF73 #UDGTABLE { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) } TABLE#
 ;
 B $DF8B item_bitmap: UNIFORM
+; @label:$DF8B=bitmap_uniform
 D $DF8B #UDGTABLE { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) } TABLE#
 ;
 B $DFAB item_bitmap: BRIBE
+; @label:$DFAB=bitmap_bribe
 D $DFAB #UDGTABLE { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) } TABLE#
 ;
 B $DFC5 item_bitmap: RADIO
+; @label:$DFC5=bitmap_radio
 D $DFC5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) } TABLE#
 ;
 B $DFE5 item_bitmap: PARCEL
+; @label:$DFE5=bitmap_parcel
 D $DFE5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) } TABLE#
 ;
 B $E005 item_mask: BRIBE
+; @label:$E005=mask_bribe
 D $E005 #UDGTABLE { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) } TABLE#
 ;
 B $E01F item_mask: UNIFORM
+; @label:$E01F=mask_uniform
 D $E01F #UDGTABLE { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,48}(item-mask-uniform) } TABLE#
 ;
 B $E03F item_mask: PARCEL
+; @label:$E03F=mask_parcel
 D $E03F #UDGTABLE { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) } TABLE#
 ;
 B $E05F item_mask: POISON
+; @label:$E05F=mask_poison
 D $E05F #UDGTABLE { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) } TABLE#
 ;
 B $E07F item_mask: TORCH
+; @label:$E07F=mask_torch
 D $E07F #UDGTABLE { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) } TABLE#
 ;
 B $E097 item_mask: RADIO
+; @label:$E097=mask_radio
 D $E097 #UDGTABLE { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) } TABLE#
 ;
 B $E0B7 item_mask: FOOD
+; @label:$E0B7=mask_food
 D $E0B7 #UDGTABLE { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) } TABLE#
 
 ; ------------------------------------------------------------------------------
