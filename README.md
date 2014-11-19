@@ -1,37 +1,41 @@
 The Great Escape
 ================
 
-Reverse engineering Denton Designs' classic ZX Spectrum 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) and rebuilding it in portable C.
+Reverse engineering Denton Designs' classic ZX Spectrum 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) using [SkoolKit](http://skoolkit.ca/).
 
 Goals
 -----
 
-**Goal one** is to build a complete disassembly of the game using a C-style pseudocode (and Z80 fragments where C syntax cannot cope).
+**Goal one** is to build a complete documented disassembly of the game. SkoolKit enables us to generate both an HTML format cross-referenced disassembly and an assembly listing suitable for rebuilding the original game image.
 
-**Goal two** is to transform that C-style pseudocode into real C source code which behaves exactly like the original game.
+**Goal two** is to transform that C-style pseudocode into real C source code which behaves exactly like the original game. The reimplementation lives in [this repository](https://github.com/dpt/The-Great-Escape-in-C).
 
-Goal One - Reverse
-------------------
+Goal One - Reverse Engineer
+---------------------------
 
 ### SkoolKit
 
-I'm reversing the game with the help of [SkoolKit](http://pyskool.ca/?page_id=177), the rather nice toolkit for disassembling ZX Spectrum software written by Richard Dymond.
+I'm reversing the game with the help of [SkoolKit](http://skoolkit.ca/), the rather nice toolkit for disassembling ZX Spectrum software written by Richard Dymond.
 
-View an aperiodically updated version of the HTML disassembly [here](http://dpt.github.com/The-Great-Escape/).
+I've chosen to use a C-style pseudocode and Z80 fragments where C syntax cannot cope.
+
+You can view an aperiodically updated version of the HTML disassembly [here](http://dpt.github.com/The-Great-Escape/).
+
+You can also disassemble and reassemble the game to a .TAP file, and load it into the emulator. (e.g. you can fix bugs!)
 
 Note that currently the disassembly is contained in a  _control_ file rather than a _skool_ file.
 
 ### Building the Disassembly
 
-* Make a local clone of this repository.
-* `cd <the repo>`.
+* Make a local clone of this repository: `git clone https://github.com/dpt/The-Great-Escape.git`
+* `cd <the cloned repo>`.
 * Drop a Z80 format snapshot of the game into the project directory. Call it `TheGreatEscape.z80`.
 * `make install`. This will install TheGreatEscape.py into your ~/.skoolkit directory. You only have to do this once. (Note: If you wish to install into a different location you may have to customise the path inside `Makefile`).
-* `make tge`.
+* `make disasm`. To build the HTML format disassembly.
 
 You will see:
 
-    $ make tge
+    $ make disasm
     Using skool file: TheGreatEscape.skool
     Using ref file: TheGreatEscape.ref
     Parsing TheGreatEscape.skool
@@ -47,6 +51,7 @@ You will see:
       Writing TheGreatEscape/index.html
 
 * Open up `build/TheGreatEscape/index.html` in your browser.
+* `make tap`. To build assembly, binary and .tap file for loading into an emulator.
 
 ### Currrent State
 
@@ -57,9 +62,3 @@ I don't grok all the code yet, so I have to be vague when naming symbols. You wi
 * Vague tokens like 'maybe', 'mystery', 'unsure' or 'possibly' indicate that I'm not quite sure of something.
 
 As work progresses on the reimplementation many of the mysteries of the original will be revealed.
-
-Goal Two - Reimplement
-----------------------
-
-The reimplementation is discussed in the 'reimplement' repository [here](https://github.com/dpt/The-Great-Escape-in-C).
-
