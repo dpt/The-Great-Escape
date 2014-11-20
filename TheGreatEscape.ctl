@@ -9882,111 +9882,111 @@ b $DDDD item_bitmaps_and_masks
 D $DDDD Item definitions.
 D $DDDD Raw data.
 ;
-B $DDDD item_bitmap: SHOVEL
+B $DDDD,26,2 item_bitmap: SHOVEL
 ; @label:$DDDD=bitmap_shovel
 D $DDDD #UDGTABLE { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) } TABLE#
 ;
-B $DDF7 item_bitmap: KEY (shared for all keys)
+B $DDF7,26,2 item_bitmap: KEY (shared for all keys)
 ; @label:$DDF7=bitmap_key
 D $DDF7 #UDGTABLE { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) } TABLE#
 ;
-B $DE11 item_bitmap: LOCKPICK
+B $DE11,32,2 item_bitmap: LOCKPICK
 ; @label:$DE11=bitmap_lockpick
 D $DE11 #UDGTABLE { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) } TABLE#
 ;
-B $DE31 item_bitmap: COMPASS
+B $DE31,24,2 item_bitmap: COMPASS
 ; @label:$DE31=bitmap_compass
 D $DE31 #UDGTABLE { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) } TABLE#
 ;
-B $DE49 item_bitmap: PURSE
+B $DE49,24,2 item_bitmap: PURSE
 ; @label:$DE49=bitmap_purse
 D $DE49 #UDGTABLE { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) } TABLE#
 ;
-B $DE61 item_bitmap: PAPERS
+B $DE61,30,2 item_bitmap: PAPERS
 ; @label:$DE61=bitmap_papers
 D $DE61 #UDGTABLE { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) } TABLE#
 ;
-B $DE7F item_bitmap: WIRESNIPS
+B $DE7F,22,2 item_bitmap: WIRESNIPS
 ; @label:$DE7F=bitmap_wiresnips
 D $DE7F #UDGTABLE { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) } TABLE#
 ;
-B $DE95 item_mask: SHOVEL or KEY (shared)
+B $DE95,26,2 item_mask: SHOVEL or KEY (shared)
 ; @label:$DE95=mask_shovel_key
 D $DE95 #UDGTABLE { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) } TABLE#
 ;
-B $DEAF item_mask: LOCKPICK
+B $DEAF,32,2 item_mask: LOCKPICK
 ; @label:$DEAF=mask_lockpick
 D $DEAF #UDGTABLE { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) } TABLE#
 ;
-B $DECF item_mask: COMPASS
+B $DECF,24,2 item_mask: COMPASS
 ; @label:$DECF=mask_compass
 D $DECF #UDGTABLE { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) } TABLE#
 ;
-B $DEE7 item_mask: PURSE
+B $DEE7,24,2 item_mask: PURSE
 ; @label:$DEE7=mask_purse
 D $DEE7 #UDGTABLE { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) } TABLE#
 ;
-B $DEFF item_mask: PAPERS
+B $DEFF,30,2 item_mask: PAPERS
 ; @label:$DEFF=mask_papers
 D $DEFF #UDGTABLE { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) } TABLE#
 ;
-B $DF1D item_mask: WIRESNIPS
+B $DF1D,22,2 item_mask: WIRESNIPS
 ; @label:$DF1D=mask_wiresnips
 D $DF1D #UDGTABLE { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) } TABLE#
 ;
-B $DF33 item_bitmap: FOOD
+B $DF33,32,2 item_bitmap: FOOD
 ; @label:$DF33=bitmap_food
 D $DF33 #UDGTABLE { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) } TABLE#
 ;
-B $DF53 item_bitmap: POISON
+B $DF53,32,2 item_bitmap: POISON
 ; @label:$DF53=bitmap_poison
 D $DF53 #UDGTABLE { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) } TABLE#
 ;
-B $DF73 item_bitmap: TORCH
+B $DF73,24,2 item_bitmap: TORCH
 ; @label:$DF73=bitmap_torch
 D $DF73 #UDGTABLE { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) } TABLE#
 ;
-B $DF8B item_bitmap: UNIFORM
+B $DF8B,32,2 item_bitmap: UNIFORM
 ; @label:$DF8B=bitmap_uniform
 D $DF8B #UDGTABLE { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) } TABLE#
 ;
-B $DFAB item_bitmap: BRIBE
+B $DFAB,26,2 item_bitmap: BRIBE
 ; @label:$DFAB=bitmap_bribe
 D $DFAB #UDGTABLE { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) } TABLE#
 ;
-B $DFC5 item_bitmap: RADIO
+B $DFC5,32,2 item_bitmap: RADIO
 ; @label:$DFC5=bitmap_radio
 D $DFC5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) } TABLE#
 ;
-B $DFE5 item_bitmap: PARCEL
+B $DFE5,32,2 item_bitmap: PARCEL
 ; @label:$DFE5=bitmap_parcel
 D $DFE5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) } TABLE#
 ;
-B $E005 item_mask: BRIBE
+B $E005,26,2 item_mask: BRIBE
 ; @label:$E005=mask_bribe
 D $E005 #UDGTABLE { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) } TABLE#
 ;
-B $E01F item_mask: UNIFORM
+B $E01F,32,2 item_mask: UNIFORM
 ; @label:$E01F=mask_uniform
-D $E01F #UDGTABLE { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,48}(item-mask-uniform) } TABLE#
+D $E01F #UDGTABLE { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,64}(item-mask-uniform) } TABLE#
 ;
-B $E03F item_mask: PARCEL
+B $E03F,32,2 item_mask: PARCEL
 ; @label:$E03F=mask_parcel
 D $E03F #UDGTABLE { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) } TABLE#
 ;
-B $E05F item_mask: POISON
+B $E05F,32,2 item_mask: POISON
 ; @label:$E05F=mask_poison
 D $E05F #UDGTABLE { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) } TABLE#
 ;
-B $E07F item_mask: TORCH
+B $E07F,24,2 item_mask: TORCH
 ; @label:$E07F=mask_torch
 D $E07F #UDGTABLE { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) } TABLE#
 ;
-B $E097 item_mask: RADIO
+B $E097,32,2 item_mask: RADIO
 ; @label:$E097=mask_radio
 D $E097 #UDGTABLE { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) } TABLE#
 ;
-B $E0B7 item_mask: FOOD
+B $E0B7,32,2 item_mask: FOOD
 ; @label:$E0B7=mask_food
 D $E0B7 #UDGTABLE { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) } TABLE#
 
