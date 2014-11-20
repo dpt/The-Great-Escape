@@ -10000,26 +10000,26 @@ D $E0D7 Unreferenced byte.
 w $E0E0 masked_sprite_plotter_16_enables
 ; @label:$E0E0=masked_sprite_plotter_16_enables
 D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
-  $E0E0 masked_sprite_plotter_16_wide_case_1:jump0
-  $E0E2 masked_sprite_plotter_16_wide_case_2:jump1
-  $E0E4 masked_sprite_plotter_16_wide_case_1:jump2
-  $E0E6 masked_sprite_plotter_16_wide_case_2:jump3
-  $E0E8 masked_sprite_plotter_16_wide_case_1:jump4
-  $E0EA masked_sprite_plotter_16_wide_case_2:jump5
+  $E0E0 masked_sprite_plotter_16_wide_case_1_enable0
+  $E0E2 masked_sprite_plotter_16_wide_case_2_enable1
+  $E0E4 masked_sprite_plotter_16_wide_case_1_enable2
+  $E0E6 masked_sprite_plotter_16_wide_case_2_enable3
+  $E0E8 masked_sprite_plotter_16_wide_case_1_enable4
+  $E0EA masked_sprite_plotter_16_wide_case_2_enable5
 
 ; ------------------------------------------------------------------------------
 
 w $E0EC masked_sprite_plotter_24_enables
 ; @label:$E0EC=masked_sprite_plotter_24_enables
 D $E0EC (<- setup_vischar_plotting)
-  $E0EC masked_sprite_plotter_24_wide:E188
-  $E0EE masked_sprite_plotter_24_wide:E259
-  $E0F0 masked_sprite_plotter_24_wide:E199
-  $E0F2 masked_sprite_plotter_24_wide:E26A
-  $E0F4 masked_sprite_plotter_24_wide:E1AA
-  $E0F6 masked_sprite_plotter_24_wide:E27B
-  $E0F8 masked_sprite_plotter_24_wide:E1BF
-  $E0FA masked_sprite_plotter_24_wide:E290
+  $E0EC masked_sprite_plotter_24_wide_enable0
+  $E0EE masked_sprite_plotter_24_wide_enable1
+  $E0F0 masked_sprite_plotter_24_wide_enable2
+  $E0F2 masked_sprite_plotter_24_wide_enable3
+  $E0F4 masked_sprite_plotter_24_wide_enable4
+  $E0F6 masked_sprite_plotter_24_wide_enable5
+  $E0F8 masked_sprite_plotter_24_wide_enable6
+  $E0FA masked_sprite_plotter_24_wide_enable7
 
 ; these two look different. unused?
   $E0FC masked_sprite_plotter_16_wide_case_1
@@ -10101,20 +10101,25 @@ D $E17A   Plot, using foreground mask.
   $E17A   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E186   foremaskptr++;
 ;
-  $E188   *screenptr++ = A;          // jump target 0
+; @label:$E188=masked_sprite_plotter_24_wide_enable0
+  $E188   *screenptr++ = A;          // enable/disable 0
   $E18B   A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
   $E197   foremaskptr++;
 ;
-  $E199   *screenptr++ = A;          // jump target 2
+; @label:$E199=masked_sprite_plotter_24_wide_enable2
+  $E199   *screenptr++ = A;          // enable/disable 2
   $E19C   A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
   $E1A8   foremaskptr++;
 ;
-  $E1AA   *screenptr++ = A;          // jump target 4
+; @label:$E1AA=masked_sprite_plotter_24_wide_enable4
+  $E1AA   *screenptr++ = A;          // enable/disable 4
   $E1AD   A = ((~*foremaskptr | mask3) & *screenptr) | (bm3 & *foremaskptr);
   $E1B9   foremaskptr++;
+;
   $E1BA   foreground_mask_pointer = foremaskptr;
 ;
-  $E1BD   *screenptr = A;            // jump target 6
+; @label:$E1BF=masked_sprite_plotter_24_wide_enable6
+  $E1BF   *screenptr = A;            // enable/disable 6
   $E1C0   screenptr += 21; // stride (24 - 3)
   $E1C4   ($81A2) = screenptr;
   $E1C8 %> while (--iters);
@@ -10195,7 +10200,8 @@ D $E17A   Plot, using foreground mask.
   $E256   A |= D;
   $E257   L++;
   $E258   EXX
-  $E259   *HL++ = A;          // jump target 1
+; @label:$E259=masked_sprite_plotter_24_wide_enable1
+  $E259   *HL++ = A;          // enable/disable 1
   $E25B   EXX
   $E25C   A = ~*HL | B;       // 2
   $E25F   EXX
@@ -10209,7 +10215,8 @@ D $E17A   Plot, using foreground mask.
   $E267   A |= B;
   $E268   L++;
   $E269   EXX
-  $E26A   *HL++ = A;          // jump target 3
+; @label:$E26A=masked_sprite_plotter_24_wide_enable3
+  $E26A   *HL++ = A;          // enable/disable 3
   $E26C   EXX
   $E26D   A = ~*HL | C;       // 3
   $E270   EXX
@@ -10223,7 +10230,8 @@ D $E17A   Plot, using foreground mask.
   $E278   A |= C;
   $E279   L++;
   $E27A   EXX
-  $E27B   *HL++ = A;          // jump target 5
+; @label:$E27B=masked_sprite_plotter_24_wide_enable5
+  $E27B   *HL++ = A;          // enable/disable 5
   $E27D   EXX
   $E27E   A = ~*HL | E;       // 4
   $E281   EXX
@@ -10239,7 +10247,8 @@ D $E17A   Plot, using foreground mask.
   $E28B   foreground_mask_pointer = HL;
   $E28E   POP HL
   $E28F   EXX
-  $E290   *HL = A;            // jump target 7
+; @label:$E290=masked_sprite_plotter_24_wide_enable7
+  $E290   *HL = A;            // enable/disable 7
   $E291   HL += 21;
   $E295   ($81A2) = HL;
   $E298   POP HL
@@ -10326,15 +10335,18 @@ D $E307 Plot, using foreground mask.
   $E30A   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E317   foremaskptr++;
 ;
+; @label:$E319=masked_sprite_plotter_16_wide_case_1_enable0
   $E319   *screenptr++ = A; // entry point jump0
   $E31B   A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
   $E328   foremaskptr++;
 ;
+; @label:$E32A=masked_sprite_plotter_16_wide_case_1_enable2
   $E32A   *screenptr++ = A; // entry point jump2
   $E32C   A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
   $E339   foremaskptr += 2;
   $E33B   foreground_mask_pointer = foremaskptr;
 ;
+; @label:$E340=masked_sprite_plotter_16_wide_case_1_enable4
   $E340   *screenptr = A; // entry point jump4
   $E341   screenptr += 22; // stride (24 - 2)
   $E345   ($81A2) = screenptr;
@@ -10403,15 +10415,18 @@ D $E3B3 Plot, using foreground mask.
   $E3B6   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E3C3   foremaskptr++;
 ;
+; @label:$E3C5=masked_sprite_plotter_16_wide_case_2_enable1
   $E3C5   *screenptr++ = A; // entry point jump1
   $E3C7   A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
   $E3D4   foremaskptr++;
 ;
+; @label:$E3D6=masked_sprite_plotter_16_wide_case_2_enable3
   $E3D6   *screenptr++ = A; // entry point jump3
   $E3D8   A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
   $E3E5   foremaskptr += 2;
   $E3E7   foreground_mask_pointer = foremaskptr;
 ;
+; @label:$E3EC=masked_sprite_plotter_16_wide_case_2_enable5
   $E3EC   *screenptr = A; // entry point jump5
   $E3ED   screenptr += 22; // stride (24 - 2)
   $E3F1   ($81A2) = screenptr;
