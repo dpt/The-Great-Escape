@@ -9639,7 +9639,7 @@ R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
   $DC70 PUSH BC
   $DC71 PUSH DE
   $DC72 A = E;
-  $DC73 ($E2C2) = A; // self modify
+  $DC73 ($E2C1 + 1) = A; // self modify
   $DC76 A = B;
   $DC77 if (A == 0) <%
   $DC7B   A = 0x77; // 0b01110111
@@ -10046,10 +10046,11 @@ R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
   $E102 if ((A = IY[24] & 7) >= 4) goto unaligned;
 ;
   $E10C A = (~A & 3) * 8; // jump table offset
-  $E112 ($E161) = A; // self-modify // set branch target of second jump
-  $E115 ($E143) = A; // self-modify // set branch target of first jump
+  $E112 ($E160 + 1) = A; // self-modify // set branch target of second jump
+  $E115 ($E142 + 1) = A; // self-modify // set branch target of first jump
   $E118 maskptr = mask_pointer; // mask pointer
   $E11C bitmapptr = bitmap_pointer; // bitmap pointer
+; @label:$E120=masked_sprite_plotter_24_wide_height_iters
   $E120 iters = 32; // iterations // height? // self modified
   $E122 do <% bm0 = *bitmapptr++; // bitmap bytes
   $E125   bm1 = *bitmapptr++;
@@ -10064,6 +10065,7 @@ R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
 D $E140 Shift bitmap.
 ;
   $E140   bm3 = 0;
+; @label:$E142=masked_sprite_plotter_24_wide_jump0
   $E142   goto $E144; // self-modified // jump table
   $E144   SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
   $E146   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
@@ -10082,6 +10084,7 @@ D $E15D Shift mask.
 ;
   $E15D   mask3 = 0xFF;
   $E15F   carry = 1;
+; @label:$E160=masked_sprite_plotter_24_wide_jump1
   $E160   goto $E162; // self-modified // jump table
   $E162   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
   $E164   RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
@@ -10126,14 +10129,16 @@ D $E17A   Plot, using foreground mask.
   $E1CD return;
 
 
+; @label:$E1CE=masked_sprite_plotter_24_wide_unaligned
   $E1CE unaligned: A -= 4;
   $E1D0 RLCA
   $E1D1 RLCA
   $E1D2 RLCA
-  $E1D3 ($E22A) = A; // self-modify: set branch target - second jump
-  $E1D6 ($E204) = A; // self-modify: set branch target - first jump
+  $E1D3 ($E229 + 1) = A; // self-modify: set branch target - second jump
+  $E1D6 ($E203 + 1) = A; // self-modify: set branch target - first jump
   $E1D9 HLdash = mask_pointer;
   $E1DD HL = bitmap_pointer;
+; @label:$E1E1=masked_sprite_plotter_24_wide_unaligned_height_iters
   $E1E1 B = 32;
   $E1E3 do <% PUSH BC
   $E1E4   B = *HL++;
@@ -10150,6 +10155,7 @@ D $E17A   Plot, using foreground mask.
   $E1FD   EXX
   $E1FE   HL = ($81A2);
   $E201   D = 0;
+; @label:$E203=masked_sprite_plotter_24_wide_jump2
   $E203   goto $E205; // self-modified to jump into ...;
   $E205   SLA E
   $E207   RL C
@@ -10170,6 +10176,7 @@ D $E17A   Plot, using foreground mask.
   $E225   EXX
   $E226   D = 255;
   $E228   SCF
+; @label:$E229=masked_sprite_plotter_24_wide_jump3
   $E229   goto $E22B; // self-modified to jump into ...;
   $E22B   RL E
   $E22D   RL C
@@ -10283,11 +10290,12 @@ D $E2A2 Looks like it plots a two byte-wide sprite with mask into a three byte-w
 ; This entry point is used by the routine at #R$E29F.
 ;
   $E2AC A = (~A & 3) * 6; // jump table offset
-  $E2B3 ($E2DC) = A; // self-modify - first jump
-  $E2B6 ($E2F4) = A; // self-modify - second jump
+  $E2B3 ($E2DB + 1) = A; // self-modify - first jump
+  $E2B6 ($E2F3 + 1) = A; // self-modify - second jump
   $E2B9 maskptr = mask_pointer; // maskptr = HL'  // observed: $D505 (a mask)
   $E2BE bitmapptr = bitmap_pointer; // bitmapptr = HL  // observed: $D256 (a bitmap)
 ;
+; @label:$E2C1=masked_sprite_plotter_16_wide_case_1_height_iters
   $E2C1 B = 32; // iterations // height? // self modified
   $E2C3 do <% bm0 = *bitmapptr++; // D
   $E2C5   bm1 = *bitmapptr++; // E
@@ -10302,6 +10310,7 @@ D $E2D8 Shift mask.
 ;
   $E2D8   mask2 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
   $E2DA   carry = 1; // mask OFF
+; @label:$E2DB=masked_sprite_plotter_16_wide_case_1_jump0
   $E2DB   goto $E2DD; // self modified // jump table
 ; RR = 9-bit rotation to the right
   $E2DD   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
@@ -10318,6 +10327,7 @@ D $E2EF Shift bitmap.
 ;
   $E2EF   bm2 = 0; // all bits clear => pixels OFF
   $E2F2   A &= A; // I do not grok this. Setting carry flag?
+; @label:$E2F3=masked_sprite_plotter_16_wide_case_1_jump1
   $E2F3   goto $E2F5; // self modified // jump table
   $E2F5   SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
   $E2F7   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
@@ -10360,11 +10370,12 @@ c $E34E masked_sprite_plotter_16_wide_case_2
 D $E34E Sprite plotter. Used for characters and objects.
 D $E34E Similar variant to above routine.
   $E34E A = (A - 4) * 6; // jump table offset
-  $E354 ($E39A) = A; // self-modify - first jump
-  $E357 ($E37D) = A; // self-modify - second jump
+  $E354 ($E399 + 1) = A; // self-modify - first jump
+  $E357 ($E37C + 1) = A; // self-modify - second jump
   $E35A maskptr = mask_pointer;
   $E35E bitmapptr = bitmap_pointer;
 ;
+; @label:$E362=masked_sprite_plotter_16_wide_case_2_height_iters
   $E362 B = 32; // iterations // height? // self modified
   $E364 do <% bm1 = *bitmapptr++; // numbering of the masks ... unsure
   $E366   bm2 = *bitmapptr++;
@@ -10377,6 +10388,7 @@ D $E379   Shift mask.
 ;
   $E379   mask0 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
   $E37B   carry = 1; // mask OFF
+; @label:$E37C=masked_sprite_plotter_16_wide_case_2_jump0
   $E37C   goto $E37E; // self modified // jump table
 ; RL = 9-bit rotation to the left
   $E37E   RL mask2 // 0 // new_carry = mask2 >> 7; mask2 = (mask2 << 1) | (carry << 0); carry = new_carry;
@@ -10395,6 +10407,7 @@ D $E379   Shift mask.
 D $E396 Shift bitmap.
 ;
   $E396   bm0 = 0; // all bits clear => pixels OFF
+; @label:$E399=masked_sprite_plotter_16_wide_case_2_jump1
   $E399   goto $E39B; // self modified // jump table
   $E39B   SLA bm2 // 0 // carry = bm2 >> 7; bm2 <<= 1;
   $E39D   RL bm1       // new_carry = bm1 >> 7; bm1 = (bm1 << 1) | (carry << 0); carry = new_carry;
@@ -10551,18 +10564,18 @@ R $E420 I:IY Pointer to ? // observed: $8000+
   $E486 PUSH DE
   $E487 A = IY[30];
   $E48A if (A == 3) <% // 3 => 16 wide (4 => 24 wide)
-  $E48E   ($E2C2) = E; // self-modify
-  $E492   ($E363) = E; // self-modify
+  $E48E   ($E2C1 + 1) = E; // self-modify
+  $E492   ($E362 + 1) = E; // self-modify
   $E495   A = 3;
   $E497   HL = masked_sprite_plotter_16_enables; %>
   $E49A else <%
   $E49C   -
-  $E49D   ($E121) = E; // self-modify
-  $E4A0   ($E1E2) = E; // self-modify
+  $E49D   ($E120 + 1) = E; // self-modify
+  $E4A0   ($E1E1 + 1) = E; // self-modify
   $E4A3   A = 4;
   $E4A5   HL = masked_sprite_plotter_24_enables; %>
   $E4A8 PUSH HL
-  $E4A9 ($E4C0) = A; // self-modify
+  $E4A9 ($E4BF + 1) = A; // self-modify
   $E4AC E = A;
   $E4AD A = B;
   $E4AE if (A == 0) <%
@@ -10577,6 +10590,7 @@ R $E420 I:IY Pointer to ? // observed: $8000+
   $E4BC POP HLdash
   $E4BD Cdash = Adash;
   $E4BE -
+; @label:$E4BF=setup_vischar_plotting_enables_iters
   $E4BF Bdash = 3; // 3 iterations // self modified by $E4A9
   $E4C1 do <% Edash = *HLdash++;
   $E4C3   Ddash = *HLdash++;
