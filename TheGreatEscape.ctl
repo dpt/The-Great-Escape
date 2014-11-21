@@ -1032,11 +1032,22 @@ b $69AE movable_items
 D $69AE struct movable_item { word y_coord, x_coord, vertical_offset; const sprite *; byte terminator; };
 D $69AE Sub-struct of vischar ($802F..$8038).
 ; @label:$69AE=movable_item_stove1
-  $69AE struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
+W $69AE,6,6 pos: 62, 35, 16
+W $69B4 sprite: sprite_stove
+B $69B6 b17: 0
+D $69AE struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
+
 ; @label:$69B7=movable_item_crate
-  $69B7 struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
+D $69B7 struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
+W $69B7,6,6 pos: 55, 54, 14
+W $69BD sprite: sprite_crate
+B $69BF b17: 0
+
 ; @label:$69C0=movable_item_stove2
-  $69C0 struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
+D $69C0 struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
+W $69C0,6,6 pos: 62, 35, 16
+W $69C6 sprite: sprite_stove
+B $69C8 b17: 0
 
 ; ------------------------------------------------------------------------------
 
