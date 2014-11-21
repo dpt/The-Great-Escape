@@ -1025,8 +1025,16 @@ c $6939 setup_movable_items
   $699F return;
 
 D $69A0 Fourteen bytes of reset data.
-B $69A0 movable_item_reset_data
 ; @label:$69A0=movable_item_reset_data
+B $69A0 flags
+W $69A1 target
+B $69A3,3,3 p04
+B $69A6 b07
+W $69A7 w08
+W $69A9 w0A
+B $69AB b0C
+B $69AC b0D
+B $69AD b0E
 
 b $69AE movable_items
 D $69AE struct movable_item { word y_coord, x_coord, vertical_offset; const sprite *; byte terminator; };
