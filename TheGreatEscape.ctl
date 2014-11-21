@@ -10984,23 +10984,41 @@ D $F076 Definitions of fixed graphic elements.
 D $F076 Only used by #R$F1E0.
 D $F076 struct: w(addr), flags+length, attrs[length]
   $F076 statics_flagpole
+; @label:$F076=statics_flagpole
   $F08D statics_game_window_left_border
+; @label:$F08D=statics_game_window_left_border
   $F0A4 statics_game_window_right_border
+; @label:$F0A4=statics_game_window_right_border
   $F0BB statics_game_window_top_border
+; @label:$F0BB=statics_game_window_top_border
   $F0D5 statics_game_window_bottom
+; @label:$F0D5=statics_game_window_bottom
   $F0EF statics_flagpole_grass
+; @label:$F0EF=statics_flagpole_grass
   $F0F7 statics_medals_row0
+; @label:$F0F7=statics_medals_row0
   $F107 statics_medals_row1
+; @label:$F107=statics_medals_row1
   $F115 statics_medals_row2
+; @label:$F115=statics_medals_row2
   $F123 statics_medals_row3
+; @label:$F123=statics_medals_row3
   $F131 statics_medals_row4
+; @label:$F131=statics_medals_row4
   $F13E statics_bell_row0
+; @label:$F13E=statics_bell_row0
   $F144 statics_bell_row1
+; @label:$F144=statics_bell_row1
   $F14A statics_bell_row2
+; @label:$F14A=statics_bell_row2
   $F14F statics_corner_tl
+; @label:$F14F=statics_corner_tl
   $F154 statics_corner_tr
+; @label:$F154=statics_corner_tr
   $F159 statics_corner_bl
+; @label:$F159=statics_corner_bl
   $F15E statics_corner_br
+; @label:$F15E=statics_corner_br
 
 ; ------------------------------------------------------------------------------
 
