@@ -9370,30 +9370,53 @@ D $CE9A Height of following sprite is one row too high.
 b $CF06 character_related_data
 ; @label:$CF06=character_related_data
 D $CF06 [unknown] character related stuff? read by routine around $b64f (called_from_main_loop_9)
-  $CF06
+; @label:$CF06=character_related_data_0
   $CF0E
+; @label:$CF0E=character_related_data_1
   $CF16
+; @label:$CF16=character_related_data_2
   $CF1E
+; @label:$CF1E=character_related_data_3
   $CF26
+; @label:$CF26=character_related_data_4
   $CF3A
+; @label:$CF3A=character_related_data_5
   $CF4E
+; @label:$CF4E=character_related_data_6
   $CF62
+; @label:$CF62=character_related_data_7
   $CF76
+; @label:$CF76=character_related_data_8
   $CF7E
+; @label:$CF7E=character_related_data_9
   $CF86
+; @label:$CF86=character_related_data_10
   $CF8E
+; @label:$CF8E=character_related_data_11
   $CF96
+; @label:$CF96=character_related_data_12
   $CFA2
+; @label:$CFA2=character_related_data_13
   $CFAE
+; @label:$CFAE=character_related_data_14
   $CFBA
+; @label:$CFBA=character_related_data_15
   $CFC6
+; @label:$CFC6=character_related_data_16
   $CFD2
+; @label:$CFD2=character_related_data_17
   $CFDE
+; @label:$CFDE=character_related_data_18
   $CFEA
+; @label:$CFEA=character_related_data_19
   $CFF6
+; @label:$CFF6=character_related_data_20
   $D002
+; @label:$D002=character_related_data_21
   $D00E
+; @label:$D00E=character_related_data_22
   $D01A
+; @label:$D01A=character_related_data_23
 
 ; ------------------------------------------------------------------------------
 
