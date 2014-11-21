@@ -9268,44 +9268,82 @@ D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 D $CE22 Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
 D $CE22 'tl' => character faces top left of the screen
 D $CE22 'br' => character faces bottom right of the screen
+; @label:$CE22=sprite_stove
   $CE22 { 3, 22, &bitmap_stove          , &mask_stove        } // (16x22,$DB46,$DB72)
+; @label:$CE28=sprite_crate
   $CE28 { 4, 24, &bitmap_crate          , &mask_crate        } // (24x24,$DAB6,$DAFE)
+; @label:$CE2E=sprite_prisoner_tl_4
   $CE2E { 3, 27, &bitmap_prisoner_tl_4  , &mask_various_tl_4 } // (16x27,$D28C,$D545)
+; @label:$CE34=sprite_prisoner_tl_3
   $CE34 { 3, 28, &bitmap_prisoner_tl_3  , &mask_various_tl_3 } // (16x28,$D256,$D505)
+; @label:$CE3A=sprite_prisoner_tl_2
   $CE3A { 3, 28, &bitmap_prisoner_tl_2  , &mask_various_tl_2 } // (16x28,$D220,$D4C5)
+; @label:$CE40=sprite_prisoner_tl_1
   $CE40 { 3, 28, &bitmap_prisoner_tl_1  , &mask_various_tl_1 } // (16x28,$D1EA,$D485)
+; @label:$CE46=sprite_prisoner_br_1
   $CE46 { 3, 27, &bitmap_prisoner_br_1  , &mask_various_br_1 } // (16x27,$D2C0,$D585)
+; @label:$CE4C=sprite_prisoner_br_2
   $CE4C { 3, 29, &bitmap_prisoner_br_2  , &mask_various_br_2 } // (16x29,$D2F4,$D5C5)
+; @label:$CE52=sprite_prisoner_br_3
   $CE52 { 3, 28, &bitmap_prisoner_br_3  , &mask_various_br_3 } // (16x28,$D32C,$D605)
+; @label:$CE58=sprite_prisoner_br_4
   $CE58 { 3, 28, &bitmap_prisoner_br_4  , &mask_various_br_4 } // (16x28,$D362,$D63D)
+; @label:$CE5E=sprite_crawl_bl_2
   $CE5E { 4, 16, &bitmap_crawl_bl_2     , &mask_crawl_bl     } // (24x16,$D3C5,$D677)
+; @label:$CE64=sprite_crawl_bl_1
   $CE64 { 4, 15, &bitmap_crawl_bl_1     , &mask_crawl_bl     } // (24x15,$D398,$D677)
+; @label:$CE6A=sprite_crawl_tl_1
   $CE6A { 4, 16, &bitmap_crawl_tl_1     , &mask_crawl_bl     } // (24x16,$D3F5,$D455)
+; @label:$CE70=sprite_crawl_tl_2
   $CE70 { 4, 16, &bitmap_crawl_tl_2     , &mask_crawl_bl     } // (24x16,$D425,$D455)
+; @label:$CE76=sprite_dog_tl_1
   $CE76 { 4, 16, &bitmap_dog_tl_1       , &mask_dog_tl       } // (24x16,$D867,$D921)
+; @label:$CE7C=sprite_dog_tl_2
   $CE7C { 4, 16, &bitmap_dog_tl_2       , &mask_dog_tl       } // (24x16,$D897,$D921)
+; @label:$CE82=sprite_dog_tl_3
   $CE82 { 4, 15, &bitmap_dog_tl_3       , &mask_dog_tl       } // (24x15,$D8C7,$D921)
+; @label:$CE88=sprite_dog_tl_4
   $CE88 { 4, 15, &bitmap_dog_tl_4       , &mask_dog_tl       } // (24x15,$D8F4,$D921)
+; @label:$CE8E=sprite_dog_br_1
   $CE8E { 4, 14, &bitmap_dog_br_1       , &mask_dog_br       } // (24x14,$D951,$D9F9)
+; @label:$CE94=sprite_dog_br_2
   $CE94 { 4, 15, &bitmap_dog_br_2       , &mask_dog_br       } // (24x15,$D97B,$D9F9)
 D $CE9A Height of following sprite is one row too high.
+; @label:$CE9A=sprite_dog_br_3
   $CE9A { 4, 15, &bitmap_dog_br_3       , &mask_dog_br       } // (24x15,$D9A8,$D9F9)
+; @label:$CEA0=sprite_dog_br_4
   $CEA0 { 4, 14, &bitmap_dog_br_4       , &mask_dog_br       } // (24x14,$D9CF,$D9F9)
+; @label:$CEA6=sprite_guard_tl_4
   $CEA6 { 3, 27, &bitmap_guard_tl_4     , &mask_various_tl_4 } // (16x27,$D74D,$D545)
+; @label:$CEAC=sprite_guard_tl_3
   $CEAC { 3, 29, &bitmap_guard_tl_3     , &mask_various_tl_3 } // (16x29,$D713,$D505)
+; @label:$CEB2=sprite_guard_tl_2
   $CEB2 { 3, 27, &bitmap_guard_tl_2     , &mask_various_tl_2 } // (16x27,$D6DD,$D4C5)
+; @label:$CEB8=sprite_guard_tl_1
   $CEB8 { 3, 27, &bitmap_guard_tl_1     , &mask_various_tl_1 } // (16x27,$D6A7,$D485)
+; @label:$CEBE=sprite_guard_br_1
   $CEBE { 3, 29, &bitmap_guard_br_1     , &mask_various_br_1 } // (16x29,$D783,$D585)
+; @label:$CEC4=sprite_guard_br_2
   $CEC4 { 3, 29, &bitmap_guard_br_2     , &mask_various_br_2 } // (16x29,$D7BD,$D5C5)
+; @label:$CECA=sprite_guard_br_3
   $CECA { 3, 28, &bitmap_guard_br_3     , &mask_various_br_3 } // (16x28,$D7F7,$D605)
+; @label:$CED0=sprite_guard_br_4
   $CED0 { 3, 28, &bitmap_guard_br_4     , &mask_various_br_4 } // (16x28,$D82F,$D63D)
+; @label:$CED6=sprite_commandant_tl_4
   $CED6 { 3, 28, &bitmap_commandant_tl_4, &mask_various_tl_4 } // (16x28,$D0D6,$D545)
+; @label:$CEDC=sprite_commandant_tl_3
   $CEDC { 3, 30, &bitmap_commandant_tl_3, &mask_various_tl_3 } // (16x30,$D09A,$D505)
+; @label:$CEE2=sprite_commandant_tl_2
   $CEE2 { 3, 29, &bitmap_commandant_tl_2, &mask_various_tl_2 } // (16x29,$D060,$D4C5)
+; @label:$CEE8=sprite_commandant_tl_1
   $CEE8 { 3, 29, &bitmap_commandant_tl_1, &mask_various_tl_1 } // (16x29,$D026,$D485)
+; @label:$CEEE=sprite_commandant_br_1
   $CEEE { 3, 27, &bitmap_commandant_br_1, &mask_various_br_1 } // (16x27,$D10E,$D585)
+; @label:$CEF4=sprite_commandant_br_2
   $CEF4 { 3, 28, &bitmap_commandant_br_2, &mask_various_br_2 } // (16x28,$D144,$D5C5)
+; @label:$CEFA=sprite_commandant_br_3
   $CEFA { 3, 27, &bitmap_commandant_br_3, &mask_various_br_3 } // (16x27,$D17C,$D605)
+; @label:$CF00=sprite_commandant_br_4
   $CF00 { 3, 28, &bitmap_commandant_br_4, &mask_various_br_4 } // (16x28,$D1B2,$D63D)
 
 ; ------------------------------------------------------------------------------
