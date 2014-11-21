@@ -11111,6 +11111,18 @@ D $F1B7 This is likely wiping everything up until the start of tiles ($8218).
 b $F1C9 vischar_initial
 ; @label:$F1C9=vischar_initial
 D $F1C9 Initial state of a visible character.
+B $F1C9 character
+B $F1CA flags
+W $F1CB target
+B $F1CD,3,3 p04
+B $F1D0 b07
+W $F1D1 w08
+W $F1D3 w0A
+B $F1D5 b0C
+B $F1D6 b0D
+B $F1D7 b0E
+W $F1D8,6,6 mi.pos
+W $F1DE mi.spriteset
 
 ; ------------------------------------------------------------------------------
 
