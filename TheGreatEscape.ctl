@@ -2878,42 +2878,79 @@ D $7DB5 Remove first element.
 
 ; Messages - messages printed at the bottom of the screen when things happen.
 ;
-t $7DCD messages_table
-D $7DCD Non-ASCII: encoded to match the font; FF terminated.
-W $7DCD Array of pointers to messages.
+w $7DCD messages_table
+; @label:$7DCD=messages_table
+  $7DCD Array of pointers to messages.
+
+t $7DF5 messages
+D $7DF5 Non-ASCII: encoded to match the font; FF terminated.
+;
 D $7DF5 "MISSED ROLL CALL"
+; @label:$7DF5=messages_missed_roll_call
   $7DF5 #CALL:decode_stringFF($7DF5)
+;
 D $7E06 "TIME TO WAKE UP"
+; @label:$7E06=messages_time_to_wake_up
   $7E06 #CALL:decode_stringFF($7E06)
+;
 D $7E16 "BREAKFAST TIME"
+; @label:$7E16=messages_breakfast_time
   $7E16 #CALL:decode_stringFF($7E16)
+;
 D $7E25 "EXERCISE TIME"
+; @label:$7E25=messages_exercise_time
   $7E25 #CALL:decode_stringFF($7E25)
+;
 D $7E33 "TIME FOR BED"
+; @label:$7E33=messages_time_for_bed
   $7E33 #CALL:decode_stringFF($7E33)
+;
 D $7E40 "THE DOOR IS LOCKED"
+; @label:$7E40=messages_the_door_is_locked
   $7E40 #CALL:decode_stringFF($7E40)
+;
 D $7E53 "IT IS OPEN"
+; @label:$7E53=messages_it_is_open
   $7E53 #CALL:decode_stringFF($7E53)
+;
 D $7E5E "INCORRECT KEY"
+; @label:$7E5E=messages_incorrect_key
   $7E5E #CALL:decode_stringFF($7E5E)
+;
 D $7E6C "ROLL CALL"
+; @label:$7E6C=messages_roll_call
   $7E6C #CALL:decode_stringFF($7E6C)
+;
 D $7E76 "RED CROSS PARCEL"
+; @label:$7E76=messages_red_cross_parcel
   $7E76 #CALL:decode_stringFF($7E76)
+;
 D $7E87 "PICKING THE LOCK"
+; @label:$7E87=messages_picking_the_lock
   $7E87 #CALL:decode_stringFF($7E87)
+;
 D $7E98 "CUTTING THE WIRE"
+; @label:$7E98=messages_cutting_the_wire
   $7E98 #CALL:decode_stringFF($7E98)
+;
 D $7EA9 "YOU OPEN THE BOX"
+; @label:$7EA9=messages_you_open_the_box
   $7EA9 #CALL:decode_stringFF($7EA9)
+;
 D $7EBA "YOU ARE IN SOLITARY"
+; @label:$7EBA=messages_you_are_in_solitary
   $7EBA #CALL:decode_stringFF($7EBA)
+;
 D $7ECE "WAIT FOR RELEASE"
+; @label:$7ECE=messages_wait_for_release
   $7ECE #CALL:decode_stringFF($7ECE)
+;
 D $7EDF "MORALE IS ZERO"
+; @label:$7EDF=messages_morale_is_zero
   $7EDF #CALL:decode_stringFF($7EDF)
+;
 D $7EEE "ITEM DISCOVERED"
+; @label:$7EEE=messages_item_discovered
   $7EEE #CALL:decode_stringFF($7EEE)
 
 ; ------------------------------------------------------------------------------
@@ -11046,10 +11083,13 @@ D $F014 "CONFIRM. Y OR N"
 t $F026 more_messages
 D $F026 More messages.
 D $F026 "HE TAKES THE BRIBE"
+; @label:$F026=more_messages_he_takes_the_bribe
   $F026 #CALL:decode_stringFF($F026)
 D $F039 "AND ACTS AS DECOY"
+; @label:$F039=more_messages_and_acts_as_decoy
   $F039 #CALL:decode_stringFF($F039)
 D $F04B "ANOTHER DAY DAWNS"
+; @label:$F04B=more_messages_another_day_dawns
   $F04B #CALL:decode_stringFF($F04B)
 
 ; ------------------------------------------------------------------------------
