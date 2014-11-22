@@ -1316,7 +1316,7 @@ D $6B79 Note that the top hut has prisoners permanently in bed.
 
 b $6B85 roomdef_bounds
 ; @label:$6B85=roomdef_bounds
-D $6B85 Suspect these are room dimensions.
+D $6B85 Room dimensions. Pairs of min, max.
 D $6B85,40,4 10x 4-byte structures which are range checked by routine at #R$B29F.
 
 ; ------------------------------------------------------------------------------
