@@ -2435,9 +2435,10 @@ D $78D6 #define BYTE0(room,other) ((room << 2) | other)
 
 ; ------------------------------------------------------------------------------
 
-b $7AC6 solitary_transition_thing
-; @label:$7AC6=solitary_transition_thing
+b $7AC6 solitary_pos
+; @label:$7AC6=solitary_pos
 D $7AC6 3 bytes long (<- solitary)
+B $7AC6 58, 42, 24
 
 ; ------------------------------------------------------------------------------
 
@@ -9066,7 +9067,7 @@ D $CBB1 Reset all items. [unsure]
   $CC10 morale_1 = 0xFF; // inhibit user input
   $CC15 automatic_player_counter = 0; // immediately take automatic control of hero
   $CC19 $8015 = sprite_prisoner_tl_4;
-  $CC1F HL = &solitary_transition_thing;
+  $CC1F HL = &solitary_pos;
   $CC22 IY = $8000;
   $CC26 IY[0x0E] = 3; // character faces bottom left
   $CC2A ($8002) = 0; // target location - why is this storing a byte and not a word?
