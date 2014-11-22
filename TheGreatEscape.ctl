@@ -2822,10 +2822,12 @@ R $7D2F O:DE Points to next character.
 
 c $7D48 message_display
 ; @label:$7D48=message_display
+D $7D48 Proceed only if message_display_counter is zero.
   $7D48 if (message_display_counter > 0) <%
   $7D50   message_display_counter--;
   $7D53   return; %>
 ;
+D $7D54 message_display_counter reached zero.
   $7D54 A = message_display_index;
   $7D57 if (A == 128) goto next_message; // exit via
   $7D5B else if (A > 128) goto wipe_message; // exit via
@@ -2835,10 +2837,13 @@ c $7D48 message_display
   $7D68   message_display_index = E & 31;
   $7D6E   A = *++HL;
   $7D70   if (A != 255) goto not_eol;
-  $7D75   message_display_counter = 31; // leave the message for 31 turns
-  $7D7A   message_display_index |= 128; // then wipe it
+D $7D75 Leave the message for 31 turns.
+  $7D75   message_display_counter = 31;
+D $7D7A Then wipe it.
+  $7D7A   message_display_index |= 128;
   $7D82   return;
 ;
+; @label:$7D83=message_display_not_eol
   $7D83   not_eol: current_message_character = HL;
   $7D86   return; %>
 
@@ -2847,7 +2852,8 @@ c $7D87 wipe_message
   $7D87 A = message_display_index;
   $7D8A message_display_index = --A;
   $7D8E DE = screen_text_start_address + A;
-  $7D93 plot_single_glyph(35); // plot a SPACE character
+D $7D93 Plot a space character.
+  $7D93 plot_single_glyph(35);
   $7D98 return;
 
 c $7D99 next_message
@@ -2858,10 +2864,12 @@ D $7D99 Looks like message_queue is poked with the index of the message to displ
   $7D9F if (L == E) return; // cheap test -- no more messages?
 ;
   $7DA3 A = *DE++;
-  $7DA5 C = *DE; // C is loaded here but not used. This could be a hangover from 16-bit message IDs.
+D $7DA5 C is loaded here but not used. This could be a hangover from 16-bit message IDs.
+  $7DA5 C = *DE;
   $7DA6 HL = messages_table[A];
   $7DB2 current_message_character = HL;
-  $7DB5 memmove(message_queue, message_queue + 2, 16); // drop first element
+D $7DB5 Remove first element.
+  $7DB5 memmove(message_queue, message_queue + 2, 16);
   $7DC0 message_queue_pointer -= 2;
   $7DC8 message_display_index = 0;
   $7DCC return;
