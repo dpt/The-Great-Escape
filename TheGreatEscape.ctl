@@ -28,8 +28,6 @@
 ;
 ; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
 ; - Fix axis described as Y/X to X/Y.
-;
-; - 'Vertical offset' could be renamed 'height'.
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; STYLE
@@ -634,7 +632,7 @@
 ;          0x07 -> character faces bottom left  (crawling)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's vertical offset // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_thing_to_plot ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_thing_to_plot ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 sub_AF8F sets this to stashed_A
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
@@ -923,7 +921,7 @@ R $68A2 I:IY Pointer to visible character?
   $68A8 L = A + 0x0F; // $8xxF (position on Y axis)
   $68AB A = IY[0x1C]; // $8x1C (likely room index)
   $68AE if (A == 0) <% // outdoors
-D $68B2 Set position on Y axis, X axis and vertical offset (dividing by 4).
+D $68B2 Set position on Y axis, X axis and height (dividing by 4).
   $68B2   B = 3; // 3 iterations
   $68B4   do <% PUSH BC
   $68B5     A = *DE++;
@@ -933,7 +931,7 @@ D $68B2 Set position on Y axis, X axis and vertical offset (dividing by 4).
   $68BE     POP BC
   $68BF   %> while (--B); %>
   $68C1 else <% // indoors
-D $68C3 Set position on Y axis, X axis and vertical offset (copying).
+D $68C3 Set position on Y axis, X axis and height (copying).
   $68C3   B = 3; // 3 iterations
   $68C5   do <% *HL++ = *DE++;
   $68C8     *HL++ = 0;
@@ -2470,7 +2468,7 @@ c $7AFB use_item_common
   $7B05 L = *HL++;
   $7B07 H = *HL;
   $7B09 PUSH HL // exit via jump table entry
-  $7B0A memcpy(&saved_Y, $800F, 6); // copy Y,X and vertical offset
+  $7B0A memcpy(&saved_y, $800F, 6); // copy Y,X and height
   $7B15 return;
 
 ; ------------------------------------------------------------------------------
@@ -2579,7 +2577,7 @@ D $7BC2 HL is incremented here but then immediately overwritten by $7BC5.
 R $7BD0   I:HL Pointer to dropped itemstruct + 4.
 ; have i over-simplified here?
   $7BD0   HL--; C = (0x40 + HL[1] - HL[0]) * 2; // itemstruct.x, itemstruct.y;
-  $7BD8   B = 0 - HL[0] - HL[1] - HL[2]; HL += 3; // itemstruct.y, .x, .vo
+  $7BD8   B = 0 - HL[0] - HL[1] - HL[2]; HL += 3; // itemstruct.y, .x, .height
   $7BE0   *HL++ = C;
   $7BE2   *HL = B;
   $7BE3   return; %>
@@ -3058,12 +3056,12 @@ D $81A3 Unreferenced byte.
 
 ; a pos_t
 D $81A4 Saved position.
-w $81A4 saved_Y
-; @label:$81A4=saved_Y
-w $81A6 saved_X
-; @label:$81A6=saved_X
-w $81A8 saved_VO
-; @label:$81A8=saved_VO
+w $81A4 saved_y
+; @label:$81A4=saved_y
+w $81A6 saved_x
+; @label:$81A6=saved_x
+w $81A8 saved_height
+; @label:$81A8=saved_height
 
 ; ------------------------------------------------------------------------------
 
@@ -3114,8 +3112,8 @@ b $81B8 hero_map_position.y
 ; @label:$81B8=hero_map_position.y
 b $81B9 hero_map_position.x
 ; @label:$81B9=hero_map_position.x
-b $81BA hero_map_position.vo
-; @label:$81BA=hero_map_position.vo
+b $81BA hero_map_position.height
+; @label:$81BA=hero_map_position.height
 
 ; ------------------------------------------------------------------------------
 
@@ -4183,7 +4181,7 @@ D $9E5C Hero was in bed.
   $9E62     (word) $8004 = 0x2E2E; // another position?
   $9E68     (word) $800F = 0x002E; // set Y pos
   $9E6D     (word) $8011 = 0x002E; // set X pos
-  $9E70     $8013 = 24; // set vertical offset
+  $9E70     $8013 = 24; // set height
   $9E75     roomdef_2_hut2_left.bed = interiorobject_EMPTY_BED;
   $9E7A     HL = &hero_in_bed; %>
   $9E7D   *HL = 0;
@@ -4220,7 +4218,7 @@ D $9EB2 Locks the player out until wire is snipped.
   $9ECF   return; %>
   $9ED0 else <% $800E = A & 3; // set direction // Bug: But A is always zero here! $800E &= 3;
   $9ED6   $800D = 0x80;
-  $9ED9   $8013 = 24; // set vertical offset
+  $9ED9   $8013 = 24; // set height
   $9EDE   goto clear_lockpick_wirecut_flags_and_return; %>
 
 ; ------------------------------------------------------------------------------
@@ -5380,7 +5378,7 @@ w $A7C7 plot_game_window_x
 c $A7C9 get_supertiles
 ; @label:$A7C9=get_supertiles
 D $A7C9 Pulls supertiles out of the map.
-D $A7C9 Get vertical offset.
+D $A7C9 Get height.
   $A7C9 A = (map_position >> 8) & 0xFC; // A = 0, 4, 8, 12, ...
 D $A7CE Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
   $A7CE HL = $BCB8 + (A + (A >> 1)) * 9; // $BCB8 is &map_tiles[0] - 54 so it must be skipping the first row.
@@ -6339,7 +6337,7 @@ D $AFB9 Cutting wire only from here onwards?
   $AFC3   if (!Z) return; %>
 ; else object only from here on?
   $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
-  $AFC8 memcpy(IY + 15, &saved_Y, 6); // $800F // copy Y,X and vertical offset
+  $AFC8 memcpy(IY + 15, &saved_y, 6); // $800F // copy Y,X and height
   $AFD7 IY[0x17] = stashed_A;
   $AFDD A = 0;
   $AFDE return 0;
@@ -6358,12 +6356,12 @@ D $AFEF --------
   $AFEF   C = *HL++;
   $AFF1   B = *HL;
   $AFF2   EX DE,HL
-  $AFF3   HL = saved_Y;
+  $AFF3   HL = saved_y;
   $AFF6   BC += 4;
   $AFFE   if (HL != BC) <%
   $B002     if (HL > BC) goto pop_next;
   $B005     BC -= 8; // ie -4 over original
-  $B00C     HL = saved_Y;
+  $B00C     HL = saved_y;
   $B011     if (HL < BC) goto pop_next; %>
   $B014   EX DE,HL
   $B015   HL++;
@@ -6371,18 +6369,18 @@ D $B016 --------
   $B016   C = *HL++;
   $B018   B = *HL;
   $B019   EX DE,HL
-  $B01A   HL = saved_X;
+  $B01A   HL = saved_x;
   $B01D   BC += 4;
   $B025   if (HL != BC) <%
   $B029     if (HL > BC) goto pop_next;
   $B02C     BC -= 8;
-  $B033     HL = saved_X;
+  $B033     HL = saved_x;
   $B038     if (HL < BC) goto pop_next; %>
   $B03B   EX DE,HL
   $B03C   HL++;
 D $B03D --------
   $B03D   C = *HL;
-  $B03E   A = saved_VO - C;
+  $B03E   A = saved_height - C;
   $B042   if (A < 0) <%
   $B044     A = -A; %>
   $B046   if (A >= 24) goto pop_next;
@@ -6496,17 +6494,17 @@ R $B14C I:IY Pointer to visible character block.
   $B158 do <% -
   $B159   -
   $B15A   -
-  $B15E   if ((saved_Y >= DE[0] * 8 + 2) &&
+  $B15E   if ((saved_y >= DE[0] * 8 + 2) &&
   $B167     -
-  $B16C       (saved_Y <  DE[1] * 8 + 4) &&
+  $B16C       (saved_y <  DE[1] * 8 + 4) &&
   $B177     -
-  $B17C       (saved_X >= DE[2] * 8)     &&
+  $B17C       (saved_x >= DE[2] * 8)     &&
   $B183     -
-  $B188       (saved_X <  DE[3] * 8 + 4) &&
+  $B188       (saved_x <  DE[3] * 8 + 4) &&
   $B193     -
-  $B198       (saved_VO >= DE[4] * 8)     &&
+  $B198       (saved_height >= DE[4] * 8)     &&
   $B19F     -
-  $B1A4       (saved_VO <  DE[5] * 8 + 2)) <%
+  $B1A4       (saved_height <  DE[5] * 8 + 2)) <%
 D $B1AD Found it.
   $B1AD     -
   $B1AE     -
@@ -6597,20 +6595,20 @@ c $B1F5 door_handling
 
 c $B252 door_in_range
 ; @label:$B252=door_in_range
-D $B252 (saved_Y,saved_X) within (-3,+3) of HL[1..] scaled << 2
+D $B252 (saved_y,saved_x) within (-3,+3) of HL[1..] scaled << 2
 R $B252 I:HL Pointer to (byte before) coord byte pair.
 R $B252 O:HL Corrupted.
 R $B252 O:F  C/NC if nomatch/match.
   $B252 A = HL[1];
   $B254 -
   $B255 multiply_by_4();
-  $B258 if (saved_Y < BC - 3 || saved_Y >= BC + 3) return; // with C set
+  $B258 if (saved_y < BC - 3 || saved_y >= BC + 3) return; // with C set
 ;
   $B273 -
   $B274 A = HL[2];
   $B276 multiply_by_4();
   $B279 -
-  $B27A if (saved_X < BC - 3 || saved_X >= BC + 3) return; // with C set
+  $B27A if (saved_x < BC - 3 || saved_x >= BC + 3) return; // with C set
 ;
   $B294 return; // C not set
 
@@ -6641,7 +6639,7 @@ R $B29F O:BC Corrupted.
 R $B29F O:F  Z clear if boundary hit, set otherwise.
 R $B29F O:HL Corrupted.
   $B29F BC = &roomdef_bounds[roomdef_bounds_index];
-  $B2AC HL = &saved_Y;
+  $B2AC HL = &saved_y;
   $B2AF A = *BC;
   $B2B0 if (A < *HL) goto stop;
   $B2B3 A = *++BC + 4;
@@ -6659,7 +6657,7 @@ D $B2BC Bug: This instruction is stray code. It's incremented but never used.
   $B2D0 HL++;
   $B2D1 do <% PUSH BC
   $B2D2     PUSH HL
-  $B2D3     DE = &saved_Y;
+  $B2D3     DE = &saved_y;
   $B2D6     B = 2; // 2 iterations
   $B2D8     do <% A = *DE;
   $B2D9     if (A < HL[0] || A >= HL[1]) goto next; // next outer loop iteration
@@ -6728,7 +6726,7 @@ R $B32D I:IY Pointer to visible character.
   $B340   if (IY[14] & 3 != Bdash) goto next;
   $B348   HLdash++;
   $B349   -
-  $B34A   DEdash = &saved_Y;
+  $B34A   DEdash = &saved_y;
   $B34D   Bdash = 2; // 2 iterations
   $B34F   do <% A = *HLdash - 3;
   $B352     if (A >= *DEdash || A + 6 < *DEdash) goto next; // -3 .. +3
@@ -6884,7 +6882,7 @@ c $B417 action_wiresnips
   $B471 $800E = A;
   $B475 $800D = 0x80;
   $B478 $8001 = vischar_BYTE1_CUTTING_WIRE;
-  $B47D $8013 = 12; // set vertical offset
+  $B47D $8013 = 12; // set height
   $B482 $8015 = sprite_prisoner_tl_4;
   $B488 player_locked_out_until = game_counter + 96;
   $B490 queue_message_for_display(message_CUTTING_THE_WIRE);
@@ -6992,7 +6990,7 @@ D $B506 Search door_related for C.
   $B521 HL++;
   $B522 EX DE,HL
 D $B523 Range check pattern (-3..+3).
-  $B523 HL = &saved_Y;
+  $B523 HL = &saved_y;
   $B526 B = 2; // 2 iterations
   $B528 do <% if (*HL <= *DE - 3 || *HL > *DE + 3) goto exx_next;
   $B533   HL += 2;
@@ -7070,7 +7068,7 @@ c $B5CE called_from_main_loop_9
   $B610     if (A) A = 0xFF;
   $B614     B = A;
   $B615     HL -= BC;
-  $B617     saved_Y = HL;
+  $B617     saved_y = HL;
   $B61A     DE++;
   $B61B     L = IY[0x11]; // X axis
   $B61E     H = IY[0x12];
@@ -7080,9 +7078,9 @@ c $B5CE called_from_main_loop_9
   $B625     if (A) A = 0xFF;
   $B629     B = A;
   $B62A     HL -= BC;
-  $B62C     saved_X = HL;
+  $B62C     saved_x = HL;
   $B62F     DE++;
-  $B630     L = IY[0x13]; // vertical offset
+  $B630     L = IY[0x13]; // height
   $B633     H = IY[0x14];
   $B636     A = *DE;
   $B637     C = A;
@@ -7090,7 +7088,7 @@ c $B5CE called_from_main_loop_9
   $B63A     if (A) A = 0xFF;
   $B63E     B = A;
   $B63F     HL -= BC;
-  $B641     saved_VO = HL;
+  $B641     saved_height = HL;
   $B644     sub_AF8F();
   $B647     if (!Z) goto pop_next;
   $B64A     IY[0x0C]--;
@@ -7107,7 +7105,7 @@ c $B5CE called_from_main_loop_9
   $B664     C = IY[0x0F]; // Y axis
   $B667     B = IY[0x10];
   $B66A     HL += BC;
-  $B66B     saved_Y = HL;
+  $B66B     saved_y = HL;
   $B66E     DE++;
   $B66F     A = *DE;
   $B670     L = A;
@@ -7117,17 +7115,17 @@ c $B5CE called_from_main_loop_9
   $B678     C = IY[0x11]; // X axis
   $B67B     B = IY[0x12];
   $B67E     HL += BC;
-  $B67F     saved_X = HL;
+  $B67F     saved_x = HL;
   $B682     DE++;
   $B683     A = *DE;
   $B684     L = A;
   $B685     A &= 0x80;
   $B687     if (A) A = 0xFF;
   $B68B     H = A;
-  $B68C     C = IY[0x13]; // vertical offset
+  $B68C     C = IY[0x13]; // height
   $B68F     B = IY[0x14];
   $B692     HL += BC;
-  $B693     saved_VO = HL;
+  $B693     saved_height = HL;
   $B696     DE++;
   $B697     A = *DE;
   $B698     EX AF,AF'
@@ -7183,21 +7181,21 @@ c $B71B reset_position
 D $B71B Save a copy of the vischar's position + offset.
 R $B71B I:HL Pointer to visible character.
   $B71B -
-  $B71C memcpy(&saved_Y, HL + 0x0F, 6);
+  $B71C memcpy(&saved_y, HL + 0x0F, 6);
   $B728 -
 
 ; This entry point is used by the routine at #R$B5CE.
   $B729 -
   $B72A HL += 0x18;
-  $B72E DE = saved_X + 0x0200;
+  $B72E DE = saved_x + 0x0200;
   $B735 -
   $B739 -
-  $B73A DE = (DE - saved_Y) * 2;
+  $B73A DE = (DE - saved_y) * 2;
   $B73D -
   $B73E *HL++ = E;
   $B740 *HL++ = D;
   $B742 -
-  $B743 DE = 0x0800 - saved_Y - saved_VO - saved_X;
+  $B743 DE = 0x0800 - saved_y - saved_height - saved_x;
   $B755 -
   $B756 *HL++ = E;
   $B758 *HL = D;
@@ -8237,7 +8235,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C4FA PUSH HL // resave
   $C4FB PUSH DE
   $C4FC DE++;
-  $C4FD HL = &saved_Y;
+  $C4FD HL = &saved_y;
   $C500 A = *DE++;
   $C502 A &= A;
   $C503 if (A == 0) <%
@@ -8282,7 +8280,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C55B *DE++ = *HL++;
   $C55D *DE++ = *HL++;
   $C55F DE -= 8;
-  $C563 memcpy(DE, &saved_Y, 6);
+  $C563 memcpy(DE, &saved_y, 6);
   $C56B POP HL
   $C56C HL += 5;
   $C571 DE += 7;
@@ -8476,11 +8474,11 @@ B $C6FD,2   %>
   $C708   PUSH HL
   $C709   if (A == 0) <%
   $C70D     PUSH DE
-  $C70E     DE = &saved_Y;
+  $C70E     DE = &saved_y;
   $C711     B = 2; // 2 iters
   $C713     do <% *DE++ = *HL++ >> 1;
   $C719     %> while (--B);
-  $C71B     HL = &saved_Y;
+  $C71B     HL = &saved_y;
   $C71E     POP DE %>
   $C71F   if (DE[-1] == 0) A = 2; else A = 6;
   $C729   EX AF,AF'
@@ -9172,7 +9170,7 @@ D $CC3B Don't follow non-players dressed as guards.
 
   $CC92 if (!red_flag) <%
   $CC98   A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
-  $CC9B   if (A < 32) // vertical offset
+  $CC9B   if (A < 32) // height
   $CC9E     IY[1] = vischar_BYTE1_BIT1;
   $CCA2   return; %>
   $CCA3 bell = bell_RING_PERPETUAL;
