@@ -2450,6 +2450,7 @@ R $7AC9 I:A Input event.
   $7AD3 else if (A == input_DOWN_FIRE) drop_item();
   $7ADD else if (A == input_LEFT_FIRE) use_item_A();
   $7AE7 else if (A == input_RIGHT_FIRE) use_item_B();
+; @label:$7AEF=check_for_pick_up_keypress_exit
   $7AEF return;
 
 c $7AF0 use_item_B
