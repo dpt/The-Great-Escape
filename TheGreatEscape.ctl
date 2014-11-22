@@ -3112,6 +3112,7 @@ D $81D0 These are possibly spare object bounds bytes, but not ever used.
 b $81D6 door_related
 ; @label:$81D6=door_related
 D $81D6 (<- indoors maybe, <- open door)
+; @label:$81D9=door_related_end
 D $81D9 Final byte?
 
 ; ------------------------------------------------------------------------------
