@@ -1202,7 +1202,7 @@ R $6AB5 O:HL Corrupted.
   $6AB5 HL = interior_object_defs[A];
   $6AC1 B = *HL++; // width
   $6AC3 C = *HL++; // height
-  $6AC5 ($6AE7) = B; // self modify (== width)
+  $6AC5 ($6AE6 + 1) = B; // self modify (== width)
   $6AC9 do <% do <% expand: A = *HL;
   $6ACA     if (A == objecttile_ESCAPE) <%
   $6ACE       HL++;
@@ -1215,12 +1215,14 @@ R $6AB5 O:HL Corrupted.
   $6AE2     HL++;
   $6AE3     DE++;
   $6AE4   %> while (--B);
+; @label:$6AE6=expand_object_width
   $6AE6   B = 1; // self modified
   $6AE8   DE += 24 - B;
   $6AF0 %> while (--C); // for each row
   $6AF3 return;
 ;
 ; 128..255 case
+; @label:$6AF4=expand_object_128_to_255
   $6AF4 A = *HL++ & 0x7F;
   $6AF7 -
   $6AF9 Adash = *HL;
@@ -1242,6 +1244,7 @@ R $6AB5 O:HL Corrupted.
   $6B17 goto expand;
 ;
 ; 64..127 case
+; @label:$6B19=expand_object_64_to_127
   $6B19 A = 60; // opcode of 'INC A'
 D $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
   $6B1B ($6B28) = A;
@@ -1251,10 +1254,11 @@ D $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence 
   $6B24 -
   $6B25 do <% -
   $6B26   *DE++ = Adash;
+; @label:$6B28=expand_object_increment
   $6B28   INC Adash // self modified
   $6B29   DJNZ $6B3B
   $6B2B   PUSH AFdash
-  $6B2C   LD Adash,($6AE7)  // Adash = width
+  $6B2C   LD Adash,($6AE6 + 1)  // Adash = width
   $6B30   DE += 24 - Adash; // stride
   $6B38   POP AFdash
   $6B3A   if (--C == 0) return;
