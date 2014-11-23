@@ -4256,7 +4256,10 @@ D $9EF9 Data 0xFF terminated.
 
 b $9F15 permitted_bounds
 ; @label:$9F15=permitted_bounds
-D $9F15,12,4 three groups of four (<- in_permitted_area) possibly (un)permitted area bounds
+D $9F15 Pairs of low-high bounds.
+  $9F15,4 Corridor to yard.
+  $9F19,4 Hut area.
+  $9F1D,4 Yard area.
 
 ; ------------------------------------------------------------------------------
 
