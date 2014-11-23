@@ -4099,19 +4099,22 @@ c $9D78 main_loop_setup
 D $9D78 There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single caller might just as well goto enter_room instead of goto main_loop_setup.
   $9D78 enter_room(); // returns by goto main_loop
 
+c $9D7B main_loop
+; @label:$9D7B=main_loop
+D $9D7B Main game loop.
   $9D7B main_loop: for (;;) <% check_morale();
   $9D7E   keyscan_break();
   $9D81   message_display();
   $9D84   process_player_input();
   $9D87   in_permitted_area();
-  $9D8A   called_from_main_loop_3(); // [unknown]
+  $9D8A   called_from_main_loop_3();
   $9D8D   move_characters();
   $9D90   follow_suspicious_character();
   $9D93   purge_visible_characters();
   $9D96   spawn_characters();
   $9D99   mark_nearby_items();
   $9D9C   ring_bell();
-  $9D9F   called_from_main_loop_9(); // [unknown]
+  $9D9F   called_from_main_loop_9();
   $9DA2   move_map();
   $9DA5   message_display();
   $9DA8   ring_bell();
