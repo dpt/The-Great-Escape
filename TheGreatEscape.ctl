@@ -4869,8 +4869,17 @@ D $A26E Common end of event_time_for_bed and event_search_light.
 b $A27F prisoners_and_guards
 ; @label:$A27F=prisoners_and_guards
 D $A27F List of non-player characters: six prisoners and four guards.
-D $A27F [unsure] (<- set_prisoners_and_guards_location, set_prisoners_and_guards_location_B)
-  $A27F character_t prisoners_and_guards[] = { character_12_GUARD_12, character_13_GUARD_13, character_20_PRISONER_1, character_21_PRISONER_2, character_22_PRISONER_3, character_14_GUARD_14, character_15_GUARD_15, character_23_PRISONER_4, character_24_PRISONER_5, character_25_PRISONER_6 };
+D $A27F Read-only by set_prisoners_and_guards_location, set_prisoners_and_guards_location_B.
+B $A27F,1 character_12_GUARD_12
+B $A280,1 character_13_GUARD_13
+B $A281,1 character_20_PRISONER_1
+B $A282,1 character_21_PRISONER_2
+B $A283,1 character_22_PRISONER_3
+B $A284,1 character_14_GUARD_14
+B $A285,1 character_15_GUARD_15
+B $A286,1 character_23_PRISONER_4
+B $A287,1 character_24_PRISONER_5
+B $A288,1 character_25_PRISONER_6
 
 ; ------------------------------------------------------------------------------
 
