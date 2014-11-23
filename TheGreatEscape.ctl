@@ -4548,12 +4548,16 @@ R $A11D I:C Delay inbetween each iteration.
 
 b $A12F game_counter
 ; @label:$A12F=game_counter
+D $A12F Read-only by main_loop, picking_a_lock, snipping_wire, action_wiresnips, action_lockpick.
+D $A12F Write/read-write by wave_morale_flag.
 D $A12F Counts 00..FF then wraps.
 
 ; ------------------------------------------------------------------------------
 
 b $A130 bell
 ; @label:$A130=bell
+D $A130 Read-only by follow_suspicious_character.
+D $A130 Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_roll_call, event_go_to_breakfast_time, event_breakfast_time, event_go_to_exercise_time, event_exercise_time, event_go_to_time_for_bed, searchlight_caught, solitary, guards_follow_suspicious_character, event_roll_call.
 D $A130 0 => ring indefinitely; 255 => don't ring; N => ring for N calls
 
 ; ------------------------------------------------------------------------------
@@ -4565,16 +4569,21 @@ D $A131 Unreferenced byte.
 
 b $A132 score_digits
 ; @label:$A132=score_digits
+D $A132 Read-only by plot_score.
+D $A132 Write/read-write by increase_score, reset_game.
 
 ; ------------------------------------------------------------------------------
 
 b $A137 hero_in_breakfast
 ; @label:$A137=hero_in_breakfast
+D $A137 Write/read-write by process_player_input, breakfast_time, hero_sit_sleep_common.
 
 ; ------------------------------------------------------------------------------
 
 b $A138 red_flag
 ; @label:$A138=red_flag
+D $A138 Read-only by follow_suspicious_character, guards_follow_suspicious_character.
+D $A138 Write/read-write by in_permitted_area.
 D $A138 0 => not naughty, 0xFF => naughty
 
 ; ------------------------------------------------------------------------------
@@ -4582,28 +4591,39 @@ D $A138 0 => not naughty, 0xFF => naughty
 b $A139 automatic_player_counter
 ; @label:$A139=automatic_player_counter
 D $A139 Countdown until CPU control of the player is assumed. When it becomes zero, control is assumed. It's usually set to 31 by input events.
+D $A139 Read-only by touch, follow_suspicious_character, character_behaviour.
+D $A139 Write/read-write by check_morale, process_player_input, charevnt_handler_10_hero_released_from_solitary, solitary.
 
 b $A13A morale_1
 ; @label:$A13A=morale_1
 D $A13A Inhibits user input when non-zero.
 D $A13A Stops set_hero_target_location working.
 D $A13A Used to set flag colour.
-D $A13A morale_1 + morale_2 treated as a word by process_player_input. Everything else treats this as a byte.
+D $A13A morale_1 and morale_2 are treated as a word by process_player_input. Everything else treats them as bytes.
+D $A13A Read-only by process_player_input, in_permitted_area, set_hero_target_location, follow_suspicious_character.
+D $A13A Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
 
 b $A13B morale_2
 ; @label:$A13B=morale_2
 D $A13B Inhibits user input when non-zero.
 D $A13B Set by check_morale.
 D $A13B Reset by reset_game.
+D $A13B Read-only by process_player_input.
+D $A13B Write/read-write by check_morale.
 
 b $A13C morale
 ; @label:$A13C=morale
 D $A13C Morale 'score'. Ranges morale_MIN .. morale_MAX.
+D $A13C Read-only by check_morale, wave_morale_flag.
+D $A13C Write/read-write by increase_morale, decrease_morale, reset_game.
 
 ; ------------------------------------------------------------------------------
 
 b $A13D clock
 ; @label:$A13D=clock
+D $A13D Game clock. Goes 0..139.
+D $A13D Read-only by in_permitted_area.
+D $A13D Write/read-write by dispatch_timed_event, reset_map_and_characters.
 
 ; ------------------------------------------------------------------------------
 
@@ -4611,41 +4631,53 @@ b $A13E byte_A13E
 ; @label:$A13E=byte_A13E
 D $A13E Mystery.
 D $A13E In byte_A13E_is_nonzero etc.: when non-zero, character_index is valid. Else IY points to character_struct.
+D $A13E Read-only by charevnt_handler_3_check_var_A13E, charevnt_handler_5_check_var_A13E_anotherone.
+D $A13E Write/read-write by sub_A3BB, spawn_character, move_characters, follow_suspicious_character, sub_A3BB.
 
 ; ------------------------------------------------------------------------------
 
 b $A13F hero_in_bed
 ; @label:$A13F=hero_in_bed
+D $A13F Read-only by event_night_time, 
+D $A13F Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
 
 ; ------------------------------------------------------------------------------
 
 b $A140 displayed_morale
 ; @label:$A140=displayed_morale
 D $A140 Displayed morale, which lags behind actual morale while the flag moves slowly to its target.
+D $A140 Write/read-write by wave_morale_flag.
 
 ; ------------------------------------------------------------------------------
 
 w $A141 moraleflag_screen_address
 ; @label:$A141=moraleflag_screen_address
 D $A141 Pointer to the screen address where the morale flag was last plotted.
+D $A141 Write/read-write by wave_morale_flag.
 
 ; ------------------------------------------------------------------------------
 
 w $A143 ptr_to_door_being_lockpicked
 ; @label:$A143=ptr_to_door_being_lockpicked
 D $A143 Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.
+D $A143 Read-only by picking_a_lock.
+D $A143 Write/read-write by action_lockpick.
 
 ; ------------------------------------------------------------------------------
 
 b $A145 player_locked_out_until
 ; @label:$A145=player_locked_out_until
 D $A145 Game time until player control is restored (e.g. when picking a lock or cutting wire).
+D $A145 Read-only by picking_a_lock, snipping_wire.
+D $A145 Write/read-write by action_wiresnips, action_lockpick.
 
 ; ------------------------------------------------------------------------------
 
 b $A146 day_or_night
 ; @label:$A146=day_or_night
 D $A146 Day or night time ($00 = daytime, $FF = nighttime).
+D $A146 Read-only by main_loop, choose_game_window_attributes.
+D $A146 Write/read-write by set_day_or_night, reset_map_and_characters.
 
 ; ------------------------------------------------------------------------------
 
