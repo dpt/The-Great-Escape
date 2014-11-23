@@ -4688,9 +4688,10 @@ D $A146 Write/read-write by set_day_or_night, reset_map_and_characters.
 ; ------------------------------------------------------------------------------
 
 b $A147 bell_ringer_bitmaps
-; @label:$A147=bell_ringer_bitmaps
-B $A147 bell_ringer_bitmap_off
-B $A153 bell_ringer_bitmap_on
+B $A147,12,1 bell_ringer_bitmap_off
+; @label:$A147=bell_ringer_bitmap_off
+B $A153,12,1 bell_ringer_bitmap_on
+; @label:$A153=bell_ringer_bitmap_on
 
 ; ------------------------------------------------------------------------------
 
