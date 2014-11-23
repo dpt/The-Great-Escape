@@ -4828,14 +4828,22 @@ D $A230 Select the next parcel contents -- the first item from the list which do
   $A249 memcpy(&item_structs[item_RED_CROSS_PARCEL].room, red_cross_parcel_reset_data, 6);
   $A254 queue_message_for_display(message_RED_CROSS_PARCEL); return; // exit via
 
-D $A259 red_cross_parcel_reset_data
-D $A259 Data to set the parcel object up (room, y, x, ...).
-B $A259 { item_RED_CROSS_PARCEL, 44,44, 0x0C,0x80,0xF4 };
+b $A259 red_cross_parcel_reset_data
+; @label:$A259=red_cross_parcel_reset_data
+D $A259 Data to set the parcel object up (room, tinypos, target).
+B $A259,1 item_RED_CROSS_PARCEL
+B $A25A,3 44,44,12
+W $A25D,2 0xF480
 
-B $A25F red_cross_parcel_contents_list
-B $A25F item_t red_cross_parcel_contents_list[] = { item_PURSE, item_WIRESNIPS, item_BRIBE, item_COMPASS };
+b $A25F red_cross_parcel_contents_list
+; @label:$A25F=red_cross_parcel_contents_list
+B $A25F item_PURSE
+B $A260 item_WIRESNIPS
+B $A261 item_BRIBE
+B $A262 item_COMPASS
 
-B $A263 red_cross_parcel_current_contents
+b $A263 red_cross_parcel_current_contents
+; @label:$A263=red_cross_parcel_current_contents
 
 c $A264 event_time_for_bed
 ; @label:$A264=event_time_for_bed
