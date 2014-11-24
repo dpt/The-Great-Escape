@@ -4488,7 +4488,12 @@ D $A0BB Plot ringer "on".
 D $A0C6 Plot ringer "off".
   $A0C6 else <% DE = bell_ringer_bitmap_off;
 ;
-  $A0C9   plot_ringer: HL = screenaddr_bell_ringer;
+; fallthrough
+
+c $A0C9 plot_ringer
+; @label:$A0C9=plot_ringer
+D $A0C9 Plot ringer.
+  $A0C9   HL = screenaddr_bell_ringer;
   $A0CC   plot_bitmap(0x010C); return; %> // dimensions: 8 x 12 // args=BC // exit via
 
 ; ------------------------------------------------------------------------------
