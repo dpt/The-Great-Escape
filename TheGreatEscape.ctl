@@ -4131,11 +4131,13 @@ D $9D7B Main game loop.
 
 c $9DCF check_morale
 ; @label:$9DCF=check_morale
-D $9DCF (<- main_loop)
+D $9DCF Check morale level, report if (near) zero and inhibit player control.
   $9DCF if (morale >= 2) return;
   $9DD5 queue_message_for_display(message_MORALE_IS_ZERO);
-  $9DDB morale_2 = 0xFF; // inhibit user input
-  $9DE0 automatic_player_counter = 0; // immediately take automatic control of hero
+D $9DDB Inhibit user input.
+  $9DDB morale_2 = 0xFF;
+D $9DE0 Immediately take automatic control of hero.
+  $9DE0 automatic_player_counter = 0;
   $9DE4 return;
 
 ; ------------------------------------------------------------------------------
@@ -4154,10 +4156,13 @@ D $9DE5 Check for 'game cancel' keypress.
 
 c $9E07 process_player_input
 ; @label:$9E07=process_player_input
-  $9E07 if (morale_1 || morale_2) return; // inhibits user control when morale hits zero // reads morale_1 + morale_2 together as a word
+D $9E07 Process player input.
+D $9E07 Inhibit user control when morale hits zero.
+  $9E07 if (morale_1 || morale_2) return; // reads morale_1 + morale_2 together as a word
   $9E0E if ($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) <%
 D $9E15 Picking a lock, or cutting wire fence.
-  $9E15   automatic_player_counter = 31; // 31 turns until automatic control
+D $9E15 Set 31 turns until automatic control.
+  $9E15   automatic_player_counter = 31;
   $9E1A   if ($8001 == vischar_BYTE1_PICKING_LOCK) goto picking_a_lock;
 D $9E1F Cutting wire fence.
   $9E1F   snipping_wire(); return; %> // exit via
@@ -4165,11 +4170,13 @@ D $9E1F Cutting wire fence.
   $9E25 - // subsumed into following code
   $9E2A if (A == input_NONE) <%
   $9E2D   if (automatic_player_counter == 0) return;
-  $9E30   automatic_player_counter--; // no user input: count down
+D $9E30 No user input: count down.
+  $9E30   automatic_player_counter--;
   $9E31   A = 0; %>
   $9E32 else <%
 R $9E34 I:HL Pointer to automatic_player_counter.
-  $9E34   automatic_player_counter = 31; // wait 31 turns until automatic control
+D $9E34 Wait 31 turns until automatic control.
+  $9E34   automatic_player_counter = 31;
   $9E36   ... (push af) ...
   $9E37   if (hero_in_bed == 0) <%
   $9E3D     if (!hero_in_breakfast) goto not_bed_or_breakfast;
@@ -4202,9 +4209,10 @@ D $9E5C Hero was in bed.
 
 c $9E98 picking_a_lock
 ; @label:$9E98=picking_a_lock
-D $9E98 Locks the player out until lock is picked.
+D $9E98 Locks the player out until the lock is picked.
   $9E98 if (player_locked_out_until != game_counter) return;
-  $9EA0 *ptr_to_door_being_lockpicked &= ~gates_and_doors_LOCKED; // unlock
+D $9EA0 Countdown reached: Unlock the door.
+  $9EA0 *ptr_to_door_being_lockpicked &= ~gates_and_doors_LOCKED;
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
   $9EAA clear_lockpick_wirecut_flags_and_return: $8001 &= ~(vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);
   $9EB1 return;
@@ -4213,13 +4221,15 @@ D $9E98 Locks the player out until lock is picked.
 
 c $9EB2 snipping_wire
 ; @label:$9EB2=snipping_wire
-D $9EB2 Locks the player out until wire is snipped.
+D $9EB2 Locks the player out until the wire is snipped.
   $9EB2 A = player_locked_out_until - game_counter;
   $9EB9 if (A) <%
   $9EBB   if (A < 4)
   $9EBE     $800D = table_9EE0[$800E & 3]; // change direction
   $9ECF   return; %>
-  $9ED0 else <% $800E = A & 3; // set direction // Bug: But A is always zero here! $800E &= 3;
+D $9ED0 Countdown reached: Snip the wire.
+D $9ED0 Bug: A is always zero here, so $800E is always set to zero.
+  $9ED0 else <% $800E = A & 3; // set direction
   $9ED6   $800D = 0x80;
   $9ED9   $8013 = 24; // set height
   $9EDE   goto clear_lockpick_wirecut_flags_and_return; %>
@@ -4228,6 +4238,7 @@ D $9EB2 Locks the player out until wire is snipped.
 
 b $9EE0 table_9EE0
 ; @label:$9EE0=table_9EE0
+D $9EE0 Change of direction table used when wire is snipped?
 D $9EE0 Indexed by $800E.
   $9EE0 direction_type table_9EE0[] = { 0x84, 0x87, 0x88, 0x85 };
 
@@ -4383,9 +4394,10 @@ c $A01A within_camp_bounds
 
 c $A035 wave_morale_flag
 ; @label:$A035=wave_morale_flag
-D $A035 Wave the flag every other turn.
+D $A035 Wave the morale flag.
   $A035 HL = &game_counter;
   $A038 (*HL)++;
+D $A039 Wave the flag on every other turn.
   $A039 if (*HL & 1) return;
   $A03D PUSH HL
   $A03E A = morale;
@@ -4430,11 +4442,13 @@ c $A082 get_prev_scanline
 D $A082 Given a screen address, returns the same position on the previous scanline.
 R $A082 I:HL Original screen address.
 R $A082 O:HL Updated screen address.
-;
-  $A082 if ((H & 7) != 0) <% // NNN bits
-  $A087   HL -= 256; %> // step back one scanline
+  $A082 if ((H & 7) != 0) <%
+D $A087 NNN bits.
+D $A087 Step back one scanline.
+  $A087   HL -= 256; %>
   $A088 else <%
-  $A089   if (L < 32) HL -= 32; else HL += 0x06E0; %> // complicated
+D $A089 Complicated.
+  $A089   if (L < 32) HL -= 32; else HL += 0x06E0; %>
   $A094 return;
 
 ; ------------------------------------------------------------------------------
@@ -4459,11 +4473,13 @@ D $A09E Called three times from main_loop.
 D $A0A8 Decrement the ring counter.
   $A0A8   *HL = --A;
   $A0AA   if (A == 0) <%
-  $A0AC     *HL = bell_STOP; // counter hit zero - stop ringing
+D $A0AC Counter hit zero - stop ringing.
+  $A0AC     *HL = bell_STOP;
   $A0AF     return; %> %>
-  $A0B0 A = screenaddr_bell_ringer; // fetch visible state of bell
+D $A0B0 Fetch visible state of bell.
+  $A0B0 A = screenaddr_bell_ringer;
   $A0B3 if (A != 63) <%
-D $A0B8 Redundant jump.
+D $A0B8 Bug: Needless jump.
   $A0B8 -
 D $A0BB Plot ringer "on".
   $A0BB   DE = bell_ringer_bitmap_on;
