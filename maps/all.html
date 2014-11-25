@@ -116,7 +116,7 @@
 <td class="map-c"><a name="26912"></a><a class="link" href="../asm/26912.html">6920</a></td>
 <td class="map-length-0">25</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">set_player_sprite_for_room</div>
+<div class="map-entry-title-10">set_hero_sprite_for_room</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -356,7 +356,7 @@
 <td class="map-b"><a name="31430"></a><a class="link" href="../asm/31430.html">7AC6</a></td>
 <td class="map-length-0">3</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">solitary_transition_thing</div>
+<div class="map-entry-title-10">solitary_pos</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -617,10 +617,22 @@
 <tr>
 <td class="map-page-1">125</td>
 <td class="map-byte-1">205</td>
-<td class="map-t"><a name="32205"></a><a class="link" href="../asm/32205.html">7DCD</a></td>
-<td class="map-length-0">307</td>
-<td class="map-t-desc">
+<td class="map-w"><a name="32205"></a><a class="link" href="../asm/32205.html">7DCD</a></td>
+<td class="map-length-0">40</td>
+<td class="map-w-desc">
 <div class="map-entry-title-10">messages_table</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">125</td>
+<td class="map-byte-1">245</td>
+<td class="map-t"><a name="32245"></a><a class="link" href="../asm/32245.html">7DF5</a></td>
+<td class="map-length-0">267</td>
+<td class="map-t-desc">
+<div class="map-entry-title-10">messages</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -656,7 +668,7 @@
 <td class="map-w"><a name="33188"></a><a class="link" href="../asm/33188.html">81A4</a></td>
 <td class="map-length-0">2</td>
 <td class="map-w-desc">
-<div class="map-entry-title-10">saved_Y</div>
+<div class="map-entry-title-10">saved_y</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -668,7 +680,7 @@
 <td class="map-w"><a name="33190"></a><a class="link" href="../asm/33190.html">81A6</a></td>
 <td class="map-length-0">2</td>
 <td class="map-w-desc">
-<div class="map-entry-title-10">saved_X</div>
+<div class="map-entry-title-10">saved_x</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -680,7 +692,7 @@
 <td class="map-w"><a name="33192"></a><a class="link" href="../asm/33192.html">81A8</a></td>
 <td class="map-length-0">2</td>
 <td class="map-w-desc">
-<div class="map-entry-title-10">saved_VO</div>
+<div class="map-entry-title-10">saved_height</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -824,7 +836,7 @@
 <td class="map-b"><a name="33208"></a><a class="link" href="../asm/33208.html">81B8</a></td>
 <td class="map-length-0">1</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">player_map_position.y</div>
+<div class="map-entry-title-10">hero_map_position.y</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -836,7 +848,7 @@
 <td class="map-b"><a name="33209"></a><a class="link" href="../asm/33209.html">81B9</a></td>
 <td class="map-length-0">1</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">player_map_position.x</div>
+<div class="map-entry-title-10">hero_map_position.x</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -848,7 +860,7 @@
 <td class="map-b"><a name="33210"></a><a class="link" href="../asm/33210.html">81BA</a></td>
 <td class="map-length-0">1</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">player_map_position.vo</div>
+<div class="map-entry-title-10">hero_map_position.height</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -894,9 +906,33 @@
 <td class="map-page-1">129</td>
 <td class="map-byte-1">191</td>
 <td class="map-b"><a name="33215"></a><a class="link" href="../asm/33215.html">81BF</a></td>
-<td class="map-length-0">23</td>
+<td class="map-length-0">1</td>
+<td class="map-b-desc">
+<div class="map-entry-title-10">roomdef_object_bounds_count</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">129</td>
+<td class="map-byte-1">192</td>
+<td class="map-b"><a name="33216"></a><a class="link" href="../asm/33216.html">81C0</a></td>
+<td class="map-length-0">16</td>
 <td class="map-b-desc">
 <div class="map-entry-title-10">roomdef_object_bounds</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">129</td>
+<td class="map-byte-1">208</td>
+<td class="map-u"><a name="33232"></a><a class="link" href="../asm/33232.html">81D0</a></td>
+<td class="map-length-0">6</td>
+<td class="map-u-desc">
+<div class="map-entry-title-10">unused_81D0</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -990,9 +1026,21 @@
 <td class="map-page-1">157</td>
 <td class="map-byte-1">120</td>
 <td class="map-c"><a name="40312"></a><a class="link" href="../asm/40312.html">9D78</a></td>
-<td class="map-length-0">87</td>
+<td class="map-length-0">3</td>
 <td class="map-c-desc">
 <div class="map-entry-title-10">main_loop_setup</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">157</td>
+<td class="map-byte-1">123</td>
+<td class="map-c"><a name="40315"></a><a class="link" href="../asm/40315.html">9D7B</a></td>
+<td class="map-length-0">84</td>
+<td class="map-c-desc">
+<div class="map-entry-title-10">main_loop</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1088,7 +1136,7 @@
 <td class="map-b"><a name="40725"></a><a class="link" href="../asm/40725.html">9F15</a></td>
 <td class="map-length-0">12</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">byte_9F15</div>
+<div class="map-entry-title-10">permitted_bounds</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1110,9 +1158,21 @@
 <td class="map-page-1">160</td>
 <td class="map-byte-1">7</td>
 <td class="map-c"><a name="40967"></a><a class="link" href="../asm/40967.html">A007</a></td>
-<td class="map-length-0">46</td>
+<td class="map-length-0">19</td>
 <td class="map-c-desc">
 <div class="map-entry-title-10">in_permitted_area_end_bit</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">160</td>
+<td class="map-byte-1">26</td>
+<td class="map-c"><a name="40986"></a><a class="link" href="../asm/40986.html">A01A</a></td>
+<td class="map-length-0">27</td>
+<td class="map-c-desc">
+<div class="map-entry-title-10">within_camp_bounds</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1160,7 +1220,7 @@
 <td class="map-c"><a name="41109"></a><a class="link" href="../asm/41109.html">A095</a></td>
 <td class="map-length-0">9</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">indoors_delay_loop</div>
+<div class="map-entry-title-10">interior_delay_loop</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1170,7 +1230,7 @@
 <td class="map-page-1">160</td>
 <td class="map-byte-1">158</td>
 <td class="map-c"><a name="41118"></a><a class="link" href="../asm/41118.html">A09E</a></td>
-<td class="map-length-0">52</td>
+<td class="map-length-0">43</td>
 <td class="map-c-desc">
 <div class="map-entry-title-10">ring_bell</div>
 <div class="map-entry-desc-0">
@@ -1180,11 +1240,35 @@
 </tr>
 <tr>
 <td class="map-page-1">160</td>
+<td class="map-byte-1">201</td>
+<td class="map-c"><a name="41161"></a><a class="link" href="../asm/41161.html">A0C9</a></td>
+<td class="map-length-0">9</td>
+<td class="map-c-desc">
+<div class="map-entry-title-10">plot_ringer</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">160</td>
 <td class="map-byte-1">210</td>
 <td class="map-c"><a name="41170"></a><a class="link" href="../asm/41170.html">A0D2</a></td>
-<td class="map-length-0">14</td>
+<td class="map-length-0">10</td>
 <td class="map-c-desc">
 <div class="map-entry-title-10">increase_morale</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">160</td>
+<td class="map-byte-1">220</td>
+<td class="map-c"><a name="41180"></a><a class="link" href="../asm/41180.html">A0DC</a></td>
+<td class="map-length-0">4</td>
+<td class="map-c-desc">
+<div class="map-entry-title-10">set_morale_from_A</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1316,7 +1400,7 @@
 <td class="map-b"><a name="41271"></a><a class="link" href="../asm/41271.html">A137</a></td>
 <td class="map-length-0">1</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">player_in_breakfast</div>
+<div class="map-entry-title-10">hero_in_breakfast</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1412,7 +1496,7 @@
 <td class="map-b"><a name="41279"></a><a class="link" href="../asm/41279.html">A13F</a></td>
 <td class="map-length-0">1</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">player_in_bed</div>
+<div class="map-entry-title-10">hero_in_bed</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1638,9 +1722,45 @@
 <td class="map-page-1">162</td>
 <td class="map-byte-1">40</td>
 <td class="map-c"><a name="41512"></a><a class="link" href="../asm/41512.html">A228</a></td>
-<td class="map-length-0">60</td>
+<td class="map-length-0">49</td>
 <td class="map-c-desc">
 <div class="map-entry-title-10">event_new_red_cross_parcel</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">162</td>
+<td class="map-byte-1">89</td>
+<td class="map-b"><a name="41561"></a><a class="link" href="../asm/41561.html">A259</a></td>
+<td class="map-length-0">6</td>
+<td class="map-b-desc">
+<div class="map-entry-title-10">red_cross_parcel_reset_data</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">162</td>
+<td class="map-byte-1">95</td>
+<td class="map-b"><a name="41567"></a><a class="link" href="../asm/41567.html">A25F</a></td>
+<td class="map-length-0">4</td>
+<td class="map-b-desc">
+<div class="map-entry-title-10">red_cross_parcel_contents_list</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">162</td>
+<td class="map-byte-1">99</td>
+<td class="map-b"><a name="41571"></a><a class="link" href="../asm/41571.html">A263</a></td>
+<td class="map-length-0">1</td>
+<td class="map-b-desc">
+<div class="map-entry-title-10">red_cross_parcel_current_contents</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2300,7 +2420,7 @@
 <td class="map-c"><a name="44025"></a><a class="link" href="../asm/44025.html">ABF9</a></td>
 <td class="map-length-0">118</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">zoombox_1</div>
+<div class="map-entry-title-10">zoombox_fill</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3236,7 +3356,7 @@
 <td class="map-b"><a name="52273"></a><a class="link" href="../asm/52273.html">CC31</a></td>
 <td class="map-length-0">6</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">solitary_player_reset_data</div>
+<div class="map-entry-title-10">solitary_hero_reset_data</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3428,7 +3548,7 @@
 <td class="map-c"><a name="56578"></a><a class="link" href="../asm/56578.html">DD02</a></td>
 <td class="map-length-0">103</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">sub_DD02</div>
+<div class="map-entry-title-10">item_visible</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3596,7 +3716,7 @@
 <td class="map-c"><a name="58400"></a><a class="link" href="../asm/58400.html">E420</a></td>
 <td class="map-length-0">290</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">setup_sprite_plotting</div>
+<div class="map-entry-title-10">setup_vischar_plotting</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3644,7 +3764,7 @@
 <td class="map-b"><a name="58719"></a><a class="link" href="../asm/58719.html">E55F</a></td>
 <td class="map-length-0">1309</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">outdoors_mask_data</div>
+<div class="map-entry-title-10">outdoors_mask</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4288,9 +4408,9 @@
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

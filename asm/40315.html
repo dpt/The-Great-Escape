@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 9D7B</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40312.html">9D78</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40315">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40399.html">9DCF</a></span></td>
+</tr>
+</table>
+<div class="description">9D7B: main_loop</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="26906.html">691A</a>.
+</div>
+<div class="paragraph">
+Main game loop.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="40315"></a>9D7B</td>
+<td class="instruction">CALL <a class="link" href="40399.html">$9DCF</a></td>
+<td class="comment-11" rowspan="1">main_loop: for (;;) &lt;% check_morale();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40318"></a>9D7E</td>
+<td class="instruction">CALL <a class="link" href="40421.html">$9DE5</a></td>
+<td class="comment-11" rowspan="1">keyscan_break();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40321"></a>9D81</td>
+<td class="instruction">CALL <a class="link" href="32072.html">$7D48</a></td>
+<td class="comment-11" rowspan="1">message_display();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40324"></a>9D84</td>
+<td class="instruction">CALL <a class="link" href="40455.html">$9E07</a></td>
+<td class="comment-11" rowspan="1">process_player_input();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40327"></a>9D87</td>
+<td class="instruction">CALL <a class="link" href="40737.html">$9F21</a></td>
+<td class="comment-11" rowspan="1">in_permitted_area();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40330"></a>9D8A</td>
+<td class="instruction">CALL <a class="link" href="48024.html">$BB98</a></td>
+<td class="comment-11" rowspan="1">called_from_main_loop_3();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40333"></a>9D8D</td>
+<td class="instruction">CALL <a class="link" href="50848.html">$C6A0</a></td>
+<td class="comment-11" rowspan="1">move_characters();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40336"></a>9D90</td>
+<td class="instruction">CALL <a class="link" href="51346.html">$C892</a></td>
+<td class="comment-11" rowspan="1">follow_suspicious_character();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40339"></a>9D93</td>
+<td class="instruction">CALL <a class="link" href="50302.html">$C47E</a></td>
+<td class="comment-11" rowspan="1">purge_visible_characters();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40342"></a>9D96</td>
+<td class="instruction">CALL <a class="link" href="50204.html">$C41C</a></td>
+<td class="comment-11" rowspan="1">spawn_characters();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40345"></a>9D99</td>
+<td class="instruction">CALL <a class="link" href="56222.html">$DB9E</a></td>
+<td class="comment-11" rowspan="1">mark_nearby_items();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40348"></a>9D9C</td>
+<td class="instruction">CALL <a class="link" href="41118.html">$A09E</a></td>
+<td class="comment-11" rowspan="1">ring_bell();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40351"></a>9D9F</td>
+<td class="instruction">CALL <a class="link" href="46542.html">$B5CE</a></td>
+<td class="comment-11" rowspan="1">called_from_main_loop_9();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40354"></a>9DA2</td>
+<td class="instruction">CALL <a class="link" href="43698.html">$AAB2</a></td>
+<td class="comment-11" rowspan="1">move_map();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40357"></a>9DA5</td>
+<td class="instruction">CALL <a class="link" href="32072.html">$7D48</a></td>
+<td class="comment-11" rowspan="1">message_display();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40360"></a>9DA8</td>
+<td class="instruction">CALL <a class="link" href="41118.html">$A09E</a></td>
+<td class="comment-11" rowspan="1">ring_bell();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40363"></a>9DAB</td>
+<td class="instruction">CALL <a class="link" href="47206.html">$B866</a></td>
+<td class="comment-11" rowspan="1">locate_thing_to_plot_then_plot();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40366"></a>9DAE</td>
+<td class="instruction">CALL <a class="link" href="61139.html">$EED3</a></td>
+<td class="comment-11" rowspan="1">plot_game_window();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40369"></a>9DB1</td>
+<td class="instruction">CALL <a class="link" href="41118.html">$A09E</a></td>
+<td class="comment-11" rowspan="1">ring_bell();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40372"></a>9DB4</td>
+<td class="instruction">LD A,($A146)</td>
+<td class="comment-11" rowspan="3">if (day_or_night != 0) nighttime();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40375"></a>9DB7</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40376"></a>9DB8</td>
+<td class="instruction">CALL NZ,<a class="link" href="44477.html">$ADBD</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40379"></a>9DBB</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment-11" rowspan="3">if (room_index != 0) interior_delay_loop();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40382"></a>9DBE</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40383"></a>9DBF</td>
+<td class="instruction">CALL NZ,<a class="link" href="41109.html">$A095</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40386"></a>9DC2</td>
+<td class="instruction">CALL <a class="link" href="41013.html">$A035</a></td>
+<td class="comment-11" rowspan="1">wave_morale_flag();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40389"></a>9DC5</td>
+<td class="instruction">LD A,($A12F)</td>
+<td class="comment-11" rowspan="3">if ((game_counter &amp; 63) == 0) dispatch_timed_event();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40392"></a>9DC8</td>
+<td class="instruction">AND $3F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40394"></a>9DCA</td>
+<td class="instruction">CALL Z,<a class="link" href="41376.html">$A1A0</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="40397"></a>9DCD</td>
+<td class="instruction">JR $9D7B</td>
+<td class="comment-11" rowspan="1">%&gt;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40312.html">9D78</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#40315">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40399.html">9DCF</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
+</div>
+</body>
+</html>

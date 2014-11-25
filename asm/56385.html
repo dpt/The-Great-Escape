@@ -208,7 +208,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="56428"></a>DC6C</td>
 <td class="instruction">CALL <a class="link" href="56578.html">$DD02</a></td>
-<td class="comment-11" rowspan="1">sub_DD02();</td>
+<td class="comment-11" rowspan="1">item_visible();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -238,7 +238,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="56435"></a>DC73</td>
 <td class="instruction">LD ($E2C2),A</td>
-<td class="comment-11" rowspan="1">($E2C2) = A; // self modify</td>
+<td class="comment-11" rowspan="1">($E2C1 + 1) = A; // self modify</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -400,7 +400,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="56472"></a>DC98</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="3">if (--Cdash == 0) A |= 0x77;</td>
+<td class="comment-11" rowspan="3">if (--Cdash == 0) A ^= 0x77;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -813,9 +813,9 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

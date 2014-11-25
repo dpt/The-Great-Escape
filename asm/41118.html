@@ -21,7 +21,7 @@
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="41109.html">A095</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41118">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="41170.html">A0D2</a></span></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41161.html">A0C9</a></span></td>
 </tr>
 </table>
 <div class="description">A09E: ring_bell</div>
@@ -30,7 +30,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Used by the routine at <a class="link" href="40315.html">9D7B</a>.
 </div>
 <div class="paragraph">
 Ring the alarm bell.
@@ -118,10 +118,20 @@ Decrement the ring counter.
 <td class="comment-11" rowspan="1">if (A == 0) &lt;%</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="41132"></a>
+<div class="comments">
+<div class="paragraph">
+Counter hit zero - stop ringing.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41132"></a>A0AC</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">*HL = bell_STOP; // counter hit zero - stop ringing</td>
+<td class="comment-11" rowspan="2">*HL = bell_STOP;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -136,10 +146,20 @@ Decrement the ring counter.
 <td class="comment-11" rowspan="1">return; %&gt; %&gt;</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="41136"></a>
+<div class="comments">
+<div class="paragraph">
+Fetch visible state of bell.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41136"></a>A0B0</td>
 <td class="instruction">LD A,($518E)</td>
-<td class="comment-11" rowspan="1">A = screenaddr_bell_ringer; // fetch visible state of bell</td>
+<td class="comment-11" rowspan="1">A = screenaddr_bell_ringer;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -158,7 +178,7 @@ Decrement the ring counter.
 <a name="41144"></a>
 <div class="comments">
 <div class="paragraph">
-Redundant jump.
+Bug: Needless jump.
 </div>
 </div>
 </td>
@@ -188,7 +208,7 @@ Plot ringer "on".
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41150"></a>A0BE</td>
-<td class="instruction">CALL $A0C9</td>
+<td class="instruction">CALL <a class="link" href="41161.html">$A0C9</a></td>
 <td class="comment-11" rowspan="1">plot_ringer();</td>
 </tr>
 <tr>
@@ -219,36 +239,18 @@ Plot ringer "off".
 <td class="instruction">LD DE,$A147</td>
 <td class="comment-11" rowspan="1">else &lt;% DE = bell_ringer_bitmap_off;</td>
 </tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-2"><a name="41161"></a>A0C9</td>
-<td class="instruction">LD HL,$518E</td>
-<td class="comment-11" rowspan="1">plot_ringer: HL = screenaddr_bell_ringer;</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41164"></a>A0CC</td>
-<td class="instruction">LD BC,$010C</td>
-<td class="comment-11" rowspan="2">plot_bitmap(0x010C); return; %&gt; // dimensions: 8 x 12 // args=BC // exit via</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41167"></a>A0CF</td>
-<td class="instruction">JP <a class="link" href="31934.html">$7CBE</a></td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="41109.html">A095</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#41118">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="41170.html">A0D2</a></span></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="41161.html">A0C9</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

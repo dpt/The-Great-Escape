@@ -39,7 +39,13 @@ Stops set_hero_target_location working.
 Used to set flag colour.
 </div>
 <div class="paragraph">
-morale_1 + morale_2 treated as a word by process_player_input. Everything else treats this as a byte.
+morale_1 and morale_2 are treated as a word by process_player_input. Everything else treats them as bytes.
+</div>
+<div class="paragraph">
+Read-only by process_player_input, in_permitted_area, set_hero_target_location, follow_suspicious_character.
+</div>
+<div class="paragraph">
+Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
 </div>
 </div>
 <table class="input-0">
@@ -71,9 +77,9 @@ morale_1 + morale_2 treated as a word by process_player_input. Everything else t
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

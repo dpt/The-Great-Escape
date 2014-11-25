@@ -54,7 +54,7 @@ Called by event_wake_up.
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41609"></a>A289</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment-11" rowspan="3">if (player_in_bed) &lt;% // odd that this jumps into a point which sets player_in_bed to zero when it's already zero</td>
+<td class="comment-11" rowspan="3">if (hero_in_bed) &lt;% // odd that this jumps into a point which sets hero_in_bed to zero when it's already zero</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -72,7 +72,7 @@ Called by event_wake_up.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41616"></a>A290</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment-11" rowspan="2">$800F = 46; // player's Y position</td>
+<td class="comment-11" rowspan="2">$800F = 46; // hero's Y position</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -84,7 +84,7 @@ Called by event_wake_up.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41621"></a>A295</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="3">$8011 = 46; %&gt; // player's X position</td>
+<td class="comment-11" rowspan="3">$8011 = 46; %&gt; // hero's X position</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -102,7 +102,7 @@ Called by event_wake_up.
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41625"></a>A299</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">player_in_bed = 0;</td>
+<td class="comment-11" rowspan="2">hero_in_bed = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -297,7 +297,7 @@ Bug: 7 iterations BUT only six beds in the data structure resulting in write to 
 <a name="41679"></a>
 <div class="comments">
 <div class="paragraph">
-Update the player's bed object to be empty.
+Update the hero's bed object to be empty.
 </div>
 </div>
 </td>
@@ -371,9 +371,9 @@ Update the player's bed object to be empty.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

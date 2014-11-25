@@ -167,7 +167,7 @@ Repeat:
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="27333"></a>6AC5</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="2">($6AE7) = B; // self modify (== width)</td>
+<td class="comment-11" rowspan="2">($6AE6 + 1) = B; // self modify (== width)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -221,7 +221,7 @@ Repeat:
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="27348"></a>6AD4</td>
 <td class="instruction">AND $F0</td>
-<td class="comment-11" rowspan="1">A &amp;= 0xF0; // redundant?</td>
+<td class="comment-11" rowspan="1">A &amp;= 0xF0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -419,19 +419,19 @@ Repeat:
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="27395"></a>6B03</td>
 <td class="instruction">LD A,($6AE7)</td>
-<td class="comment-11" rowspan="2">LD Adash,($6AE7)  // Adash = width</td>
+<td class="comment-11" rowspan="1">LD Adash,($6AE7)  // Adash = width</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="27398"></a>6B06</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">B = Adash;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="27399"></a>6B07</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="6">DE += 24 -    Adash; // stride</td>
+<td class="comment-11" rowspan="6">DE += 24 - B; // stride</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -609,7 +609,7 @@ Redundant: Self modify, but nothing else modifies it! Possible evidence that oth
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="27436"></a>6B2C</td>
 <td class="instruction">LD A,($6AE7)</td>
-<td class="comment-11" rowspan="2">LD Adash,($6AE7)  // Adash = width</td>
+<td class="comment-11" rowspan="2">LD Adash,($6AE6 + 1)  // Adash = width</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -710,9 +710,9 @@ Redundant: Self modify, but nothing else modifies it! Possible evidence that oth
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

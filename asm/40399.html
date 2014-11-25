@@ -19,7 +19,7 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="40312.html">9D78</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40315.html">9D7B</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40399">Map</a></td>
 <td class="next"><span class="next-1">Next: <a class="link" href="40421.html">9DE5</a></span></td>
 </tr>
@@ -30,10 +30,10 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Used by the routine at <a class="link" href="40315.html">9D7B</a>.
 </div>
 <div class="paragraph">
-(&lt;- main_loop)
+Check morale level, report if (near) zero and inhibit player control.
 </div>
 </div>
 <table class="input-0">
@@ -81,10 +81,20 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="40411"></a>
+<div class="comments">
+<div class="paragraph">
+Inhibit user input.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40411"></a>9DDB</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">morale_2 = 0xFF; // inhibit user input</td>
+<td class="comment-11" rowspan="2">morale_2 = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -93,10 +103,20 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="40416"></a>
+<div class="comments">
+<div class="paragraph">
+Immediately take automatic control of hero.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40416"></a>9DE0</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">automatic_player_counter = 0; // immediately take automatic control of player</td>
+<td class="comment-11" rowspan="2">automatic_player_counter = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -113,15 +133,15 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="40312.html">9D78</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="40315.html">9D7B</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40399">Map</a></td>
 <td class="next"><span class="next-1">Next: <a class="link" href="40421.html">9DE5</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

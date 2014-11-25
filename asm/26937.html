@@ -111,7 +111,7 @@ Used by the routines at <a class="link" href="26868.html">68F4</a> and <a class=
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="26963"></a>6953</td>
 <td class="instruction">CP $09</td>
-<td class="comment-11" rowspan="3">else if (A == room_9_crate) setup_crate();</td>
+<td class="comment-11" rowspan="3">else if (A == room_9_crate)    setup_crate();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -294,14 +294,56 @@ Fourteen bytes of reset data.
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="27040"></a>69A0</td>
-<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$F2</td>
-<td class="comment-11" rowspan="2">movable_item_reset_data</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">flags</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="27048"></a>69A8</td>
-<td class="instruction">DEFB $CD,$76,$CF,$00,$00,$00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="address-1"><a name="27041"></a>69A1</td>
+<td class="instruction">DEFW $0000</td>
+<td class="comment-11" rowspan="1">target</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27043"></a>69A3</td>
+<td class="instruction">DEFB $00,$00,$00</td>
+<td class="comment-11" rowspan="1">p04</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27046"></a>69A6</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">b07</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27047"></a>69A7</td>
+<td class="instruction">DEFW <a class="link" href="52722.html">$CDF2</a></td>
+<td class="comment-11" rowspan="1">w08</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27049"></a>69A9</td>
+<td class="instruction">DEFW <a class="link" href="52998.html#53110">$CF76</a></td>
+<td class="comment-11" rowspan="1">w0A</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27051"></a>69AB</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">b0C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27052"></a>69AC</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">b0D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="27053"></a>69AD</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">b0E</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -312,9 +354,9 @@ Fourteen bytes of reset data.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

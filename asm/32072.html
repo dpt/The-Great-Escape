@@ -30,7 +30,10 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Used by the routine at <a class="link" href="40315.html">9D7B</a>.
+</div>
+<div class="paragraph">
+Proceed only if message_display_counter is zero.
 </div>
 </div>
 <table class="input-0">
@@ -82,6 +85,16 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <td class="address-1"><a name="32083"></a>7D53</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="32084"></a>
+<div class="comments">
+<div class="paragraph">
+message_display_counter reached zero.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -180,10 +193,20 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="32117"></a>
+<div class="comments">
+<div class="paragraph">
+Leave the message for 31 turns.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="32117"></a>7D75</td>
 <td class="instruction">LD A,$1F</td>
-<td class="comment-11" rowspan="2">message_display_counter = 31; // leave the message for 31 turns</td>
+<td class="comment-11" rowspan="2">message_display_counter = 31;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -192,10 +215,20 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="32122"></a>
+<div class="comments">
+<div class="paragraph">
+Then wipe it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="32122"></a>7D7A</td>
 <td class="instruction">LD A,($7D10)</td>
-<td class="comment-11" rowspan="3">message_display_index |= 128; // then wipe it</td>
+<td class="comment-11" rowspan="3">message_display_index |= 128;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -236,9 +269,9 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

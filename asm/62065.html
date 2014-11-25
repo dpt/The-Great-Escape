@@ -169,6 +169,16 @@ Zero pressed to start game.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="62098"></a>
+<div class="comments">
+<div class="paragraph">
+This is tricky. A' is left with the low byte of the inputroutine address. In the case of the keyboard, it's zero. choose_keys relies on that in a nonobvious way.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="62098"></a>F292</td>
 <td class="instruction">LD C,A</td>
@@ -250,7 +260,7 @@ Zero pressed to start game.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="62119"></a>F2A7</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="3">if (A == inputdevice_KEYBOARD) goto choose_keys; // keyboard was selected</td>
+<td class="comment-11" rowspan="2">if (A == inputdevice_KEYBOARD) { choose_keys(); }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -262,7 +272,7 @@ Zero pressed to start game.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="62123"></a>F2AB</td>
 <td class="instruction">POP BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">/* Discard previous frame and resume at main:$F17D. */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -279,9 +289,9 @@ Zero pressed to start game.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

@@ -33,7 +33,7 @@
 Used by the routine at <a class="link" href="31542.html">7B36</a>.
 </div>
 <div class="paragraph">
-Returns an item within range of the player.
+Returns an item within range of the hero.
 </div>
 <div class="paragraph">
 Select a pick up radius.
@@ -136,7 +136,7 @@ Select a pick up radius.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="31896"></a>7C98</td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment-11" rowspan="1">DE = &amp;player_map_position.y; // this is probably 'Y' in this sense, but i'd need to rename all others to comply</td>
+<td class="comment-11" rowspan="1">DE = &amp;hero_map_position.y; // this is probably 'Y' in this sense, but i'd need to rename all others to comply</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -158,7 +158,7 @@ Range check.
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="31901"></a>7C9D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">do &lt;% A = *DE++; // get player map position</td>
+<td class="comment-11" rowspan="2">do &lt;% A = *DE++; // get hero map position</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -329,9 +329,9 @@ The next instruction is written as RET Z but there's no need for it to be condit
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

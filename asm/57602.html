@@ -111,13 +111,13 @@ Sprite plotter. Used for characters and objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57618"></a>E112</td>
 <td class="instruction">LD ($E161),A</td>
-<td class="comment-11" rowspan="1">($E161) = A; // self-modify // set branch target of second jump</td>
+<td class="comment-11" rowspan="1">($E160 + 1) = A; // self-modify // set branch target of second jump</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57621"></a>E115</td>
 <td class="instruction">LD ($E143),A</td>
-<td class="comment-11" rowspan="1">($E143) = A; // self-modify // set branch target of first jump</td>
+<td class="comment-11" rowspan="1">($E142 + 1) = A; // self-modify // set branch target of first jump</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -579,7 +579,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57736"></a>E188</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="3">*screenptr++ = A;          // jump target 0</td>
+<td class="comment-11" rowspan="3">*screenptr++ = A;          // enable/disable 0</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -681,7 +681,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57753"></a>E199</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="3">*screenptr++ = A;          // jump target 2</td>
+<td class="comment-11" rowspan="3">*screenptr++ = A;          // enable/disable 2</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -783,7 +783,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57770"></a>E1AA</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="3">*screenptr++ = A;          // jump target 4</td>
+<td class="comment-11" rowspan="3">*screenptr++ = A;          // enable/disable 4</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -879,13 +879,13 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57786"></a>E1BA</td>
 <td class="instruction">LD ($81B0),HL</td>
-<td class="comment-11" rowspan="1">foreground_mask_pointer = foremaskptr;</td>
+<td class="comment-11" rowspan="3">foreground_mask_pointer = foremaskptr;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57789"></a>E1BD</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="3">*screenptr = A;            // jump target 6</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -897,7 +897,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57791"></a>E1BF</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">*screenptr = A;            // enable/disable 6</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -975,13 +975,13 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57811"></a>E1D3</td>
 <td class="instruction">LD ($E22A),A</td>
-<td class="comment-11" rowspan="1">($E22A) = A; // self-modify: set branch target - second jump</td>
+<td class="comment-11" rowspan="1">($E229 + 1) = A; // self-modify: set branch target - second jump</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57814"></a>E1D6</td>
 <td class="instruction">LD ($E204),A</td>
-<td class="comment-11" rowspan="1">($E204) = A; // self-modify: set branch target - first jump</td>
+<td class="comment-11" rowspan="1">($E203 + 1) = A; // self-modify: set branch target - first jump</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1461,7 +1461,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57945"></a>E259</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="2">*HL++ = A;          // jump target 1</td>
+<td class="comment-11" rowspan="2">*HL++ = A;          // enable/disable 1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1563,7 +1563,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57962"></a>E26A</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="2">*HL++ = A;          // jump target 3</td>
+<td class="comment-11" rowspan="2">*HL++ = A;          // enable/disable 3</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1665,7 +1665,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="57979"></a>E27B</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="2">*HL++ = A;          // jump target 5</td>
+<td class="comment-11" rowspan="2">*HL++ = A;          // enable/disable 5</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1779,7 +1779,7 @@ Plot, using foreground mask.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="58000"></a>E290</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A;            // jump target 7</td>
+<td class="comment-11" rowspan="1">*HL = A;            // enable/disable 7</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1838,9 +1838,9 @@ Plot, using foreground mask.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

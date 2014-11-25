@@ -30,10 +30,16 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Used by the routine at <a class="link" href="40315.html">9D7B</a>.
 </div>
 <div class="paragraph">
-Causes characters to follow the player if they're being suspicious. Poisoned food handling.
+Causes characters to follow the hero if he's being suspicious.
+</div>
+<div class="paragraph">
+Also: Food item discovery.
+</div>
+<div class="paragraph">
+Also: Automatic hero behaviour.
 </div>
 </div>
 <table class="input-0">
@@ -117,6 +123,16 @@ Causes characters to follow the player if they're being suspicious. Poisoned foo
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="51367"></a>
+<div class="comments">
+<div class="paragraph">
+De-poison the food.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="51367"></a>C8A7</td>
 <td class="instruction">LD HL,$76F9</td>
@@ -139,6 +155,16 @@ Causes characters to follow the player if they're being suspicious. Poisoned foo
 <td class="address-1"><a name="51374"></a>C8AE</td>
 <td class="instruction">CALL <a class="link" href="52529.html">$CD31</a></td>
 <td class="comment-11" rowspan="1">item_discovered(); %&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="51377"></a>
+<div class="comments">
+<div class="paragraph">
+Make supporting characters react.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -189,26 +215,26 @@ Causes characters to follow the player if they're being suspicious. Poisoned foo
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<a name="51397"></a>
-<div class="comments">
-<div class="paragraph">
-Change '20' here to a higher number and prisoners will start following the player too. The character numbers I've defined earlier and the ones used here (and observed) elsewhere are a different set where &lt; 20 is a guard.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="51397"></a>C8C5</td>
 <td class="instruction">CP $14</td>
-<td class="comment-11" rowspan="2">if (A &lt; 20) &lt;%</td>
+<td class="comment-11" rowspan="2">if (A &lt;= character_19_GUARD_DOG_4) &lt;% // Hostile characters only.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="51399"></a>C8C7</td>
 <td class="instruction">JP NC,$C8F1</td>
 <td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="51402"></a>
+<div class="comments">
+<div class="paragraph">
+Characters 0..19.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -265,10 +291,20 @@ Change '20' here to a higher number and prisoners will start following the playe
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="51420"></a>
+<div class="comments">
+<div class="paragraph">
+Guard dogs 1..4 (characters 16..19).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="51420"></a>C8DC</td>
 <td class="instruction">CP $0F</td>
-<td class="comment-11" rowspan="3">if (A &gt; 15) &lt;% // 16,17,18,19  // could these be the dogs?</td>
+<td class="comment-11" rowspan="3">if (A &gt;= character_16_GUARD_DOG_1) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -281,6 +317,16 @@ Change '20' here to a higher number and prisoners will start following the playe
 <td class="address-1"><a name="51425"></a>C8E1</td>
 <td class="instruction">JP C,$C8F1</td>
 <td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="51428"></a>
+<div class="comments">
+<div class="paragraph">
+Is the food nearby?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -361,6 +407,16 @@ Change '20' here to a higher number and prisoners will start following the playe
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="51454"></a>
+<div class="comments">
+<div class="paragraph">
+Inhibit hero automatic behaviour when the flag is red, or otherwise inhibited.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="51454"></a>C8FE</td>
 <td class="instruction">LD A,($A138)</td>
@@ -377,7 +433,7 @@ Change '20' here to a higher number and prisoners will start following the playe
 <a name="51458"></a>
 <div class="comments">
 <div class="paragraph">
-Pointless JP NZ (jumps to RET, RET NZ would do).
+Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
 </div>
 </div>
 </td>
@@ -451,9 +507,9 @@ Pointless JP NZ (jumps to RET, RET NZ would do).
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

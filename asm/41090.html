@@ -60,7 +60,7 @@ Given a screen address, returns the same position on the previous scanline.
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41090"></a>A082</td>
 <td class="instruction">LD A,H</td>
-<td class="comment-11" rowspan="3">if ((H &amp; 7) != 0) &lt;% // NNN bits</td>
+<td class="comment-11" rowspan="3">if ((H &amp; 7) != 0) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -75,10 +75,23 @@ Given a screen address, returns the same position on the previous scanline.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="41095"></a>
+<div class="comments">
+<div class="paragraph">
+NNN bits.
+</div>
+<div class="paragraph">
+Step back one scanline.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41095"></a>A087</td>
 <td class="instruction">DEC H</td>
-<td class="comment-11" rowspan="1">HL -= 256; %&gt; // step back one scanline</td>
+<td class="comment-11" rowspan="1">HL -= 256; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -87,10 +100,20 @@ Given a screen address, returns the same position on the previous scanline.
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="41097"></a>
+<div class="comments">
+<div class="paragraph">
+Complicated.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41097"></a>A089</td>
 <td class="instruction">LD DE,$06E0</td>
-<td class="comment-11" rowspan="6">if (L &lt; 32) HL -= 32; else HL += 0x06E0; %&gt; // complicated</td>
+<td class="comment-11" rowspan="6">if (L &lt; 32) HL -= 32; else HL += 0x06E0; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -137,9 +160,9 @@ Given a screen address, returns the same position on the previous scanline.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

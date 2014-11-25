@@ -33,7 +33,7 @@
 Used by the routine at <a class="link" href="40455.html">9E07</a>.
 </div>
 <div class="paragraph">
-Locks the player out until wire is snipped.
+Locks the player out until the wire is snipped.
 </div>
 </div>
 <table class="input-0">
@@ -147,10 +147,23 @@ Locks the player out until wire is snipped.
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="40656"></a>
+<div class="comments">
+<div class="paragraph">
+Countdown reached: Snip the wire.
+</div>
+<div class="paragraph">
+Bug: A is always zero here, so $800E is always set to zero.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="40656"></a>9ED0</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment-11" rowspan="3">else &lt;% $800E = A &amp; 3; // set direction // Bug: But A is always zero here! $800E &amp;= 3;</td>
+<td class="comment-11" rowspan="3">else &lt;% $800E = A &amp; 3; // set direction</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -180,7 +193,7 @@ Locks the player out until wire is snipped.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40665"></a>9ED9</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="2">$8013 = 24; // set vertical offset</td>
+<td class="comment-11" rowspan="2">$8013 = 24; // set height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -203,9 +216,9 @@ Locks the player out until wire is snipped.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

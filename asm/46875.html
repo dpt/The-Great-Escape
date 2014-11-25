@@ -63,7 +63,7 @@ Save a copy of the vischar's position + offset.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="46876"></a>B71C</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment-11" rowspan="6">memcpy(&amp;saved_Y, HL + 0x0F, 6);</td>
+<td class="comment-11" rowspan="6">memcpy(&amp;saved_y, HL + 0x0F, 6);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -139,7 +139,7 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="46894"></a>B72E</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-11" rowspan="3">DE = saved_X + 0x0200;</td>
+<td class="comment-11" rowspan="3">DE = saved_x + 0x0200;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -169,7 +169,7 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="46906"></a>B73A</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="2">DE = (DE - saved_Y) * 2;</td>
+<td class="comment-11" rowspan="2">DE = (DE - saved_y) * 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -217,7 +217,7 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="46915"></a>B743</td>
 <td class="instruction">LD HL,$0800</td>
-<td class="comment-11" rowspan="7">DE = 0x0800 - saved_Y - saved_VO - saved_X;</td>
+<td class="comment-11" rowspan="7">DE = 0x0800 - saved_y - saved_height - saved_x;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -294,9 +294,9 @@ This entry point is used by the routine at <a class="link" href="46542.html">B5C
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

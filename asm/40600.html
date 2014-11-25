@@ -33,7 +33,7 @@
 Used by the routine at <a class="link" href="40455.html">9E07</a>.
 </div>
 <div class="paragraph">
-Locks the player out until lock is picked.
+Locks the player out until the lock is picked.
 </div>
 </div>
 <table class="input-0">
@@ -75,10 +75,20 @@ Locks the player out until lock is picked.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="40608"></a>
+<div class="comments">
+<div class="paragraph">
+Countdown reached: Unlock the door.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40608"></a>9EA0</td>
 <td class="instruction">LD HL,($A143)</td>
-<td class="comment-11" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~gates_and_doors_LOCKED; // unlock</td>
+<td class="comment-11" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~gates_and_doors_LOCKED;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -147,9 +157,9 @@ This entry point is used by the routine at <a class="link" href="40626.html">9EB
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

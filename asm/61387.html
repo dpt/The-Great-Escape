@@ -30,7 +30,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Is the player within the main gate bounds?
+Is the hero within the main gate bounds?
 </div>
 <div class="paragraph">
 Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
@@ -60,7 +60,7 @@ Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="61390"></a>EFCE</td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="comment-11" rowspan="1">HL = &amp;player_map_position.y;</td>
+<td class="comment-11" rowspan="1">HL = &amp;hero_map_position.y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -121,7 +121,7 @@ Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
 <a name="61406"></a>
 <div class="comments">
 <div class="paragraph">
-Using the papers at the main gate when not in uniform causes the player to be sent to solitary.
+Using the papers at the main gate when not in uniform causes the hero to be sent to solitary.
 </div>
 </div>
 </td>
@@ -188,7 +188,7 @@ Transition to outside the main gate.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="61426"></a>EFF2</td>
 <td class="instruction">LD IY,$8000</td>
-<td class="comment-11" rowspan="1">IY = $8000; // player character</td>
+<td class="comment-11" rowspan="1">IY = $8000; // hero character</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -205,9 +205,9 @@ Transition to outside the main gate.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

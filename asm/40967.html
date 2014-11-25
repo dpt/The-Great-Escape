@@ -21,7 +21,7 @@
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="40737.html">9F21</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40967">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="41013.html">A035</a></span></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40986.html">A01A</a></span></td>
 </tr>
 </table>
 <div class="description">A007: in_permitted_area_end_bit</div>
@@ -111,7 +111,7 @@ Used by the routine at <a class="link" href="40737.html">9F21</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40982"></a>A016</td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment-11" rowspan="2">DE = &amp;player_map_position.y;</td>
+<td class="comment-11" rowspan="2">DE = &amp;hero_map_position.y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -119,148 +119,18 @@ Used by the routine at <a class="link" href="40737.html">9F21</a>.
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<a name="40986"></a>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a class="link" href="52120.html">CB98</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-2"><a name="40986"></a>A01A</td>
-<td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="6">HL = &amp;byte_9F15[A * 4];</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40987"></a>A01B</td>
-<td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40988"></a>A01C</td>
-<td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40989"></a>A01D</td>
-<td class="instruction">LD B,$00</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40991"></a>A01F</td>
-<td class="instruction">LD HL,$9F15</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40994"></a>A022</td>
-<td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40995"></a>A023</td>
-<td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">B = 2;</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-2"><a name="40997"></a>A025</td>
-<td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">do &lt;% A = *DE++;</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40998"></a>A026</td>
-<td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A &lt; HL[0]) return; // return with flags NZ</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="40999"></a>A027</td>
-<td class="instruction">RET C</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41000"></a>A028</td>
-<td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="6">if (A &gt;= HL[1]) &lt;% A |= 1; return; %&gt; // return with flags NZ</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41001"></a>A029</td>
-<td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41002"></a>A02A</td>
-<td class="instruction">JR C,$A02F</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41004"></a>A02C</td>
-<td class="instruction">OR $01</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41006"></a>A02E</td>
-<td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-2"><a name="41007"></a>A02F</td>
-<td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41008"></a>A030</td>
-<td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL += 2;</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41009"></a>A031</td>
-<td class="instruction">DJNZ $A025</td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41011"></a>A033</td>
-<td class="instruction">AND B</td>
-<td class="comment-11" rowspan="1">A &amp;= B;</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="41012"></a>A034</td>
-<td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; // return with flags Z</td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="40737.html">9F21</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#40967">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="41013.html">A035</a></span></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="40986.html">A01A</a></span></td>
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

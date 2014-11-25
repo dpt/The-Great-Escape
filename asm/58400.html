@@ -24,7 +24,7 @@
 <td class="next"><span class="next-1">Next: <a class="link" href="58690.html">E542</a></span></td>
 </tr>
 </table>
-<div class="description">E420: setup_sprite_plotting</div>
+<div class="description">E420: setup_vischar_plotting</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -505,7 +505,7 @@ Sets sprites up for plotting.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="58510"></a>E48E</td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="2">($E2C2) = E; // self-modify</td>
+<td class="comment-11" rowspan="2">($E2C1 + 1) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -517,7 +517,7 @@ Sets sprites up for plotting.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="58514"></a>E492</td>
 <td class="instruction">LD ($E363),A</td>
-<td class="comment-11" rowspan="1">($E363) = E; // self-modify</td>
+<td class="comment-11" rowspan="1">($E362 + 1) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -547,13 +547,13 @@ Sets sprites up for plotting.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="58525"></a>E49D</td>
 <td class="instruction">LD ($E121),A</td>
-<td class="comment-11" rowspan="1">($E121) = E; // self-modify</td>
+<td class="comment-11" rowspan="1">($E120 + 1) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="58528"></a>E4A0</td>
 <td class="instruction">LD ($E1E2),A</td>
-<td class="comment-11" rowspan="1">($E1E2) = E; // self-modify</td>
+<td class="comment-11" rowspan="1">($E1E1 + 1) = E; // self-modify</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -577,7 +577,7 @@ Sets sprites up for plotting.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="58537"></a>E4A9</td>
 <td class="instruction">LD ($E4C0),A</td>
-<td class="comment-11" rowspan="1">($E4C0) = A; // self-modify</td>
+<td class="comment-11" rowspan="1">($E4BF + 1) = A; // self-modify</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1194,9 +1194,9 @@ Sets sprites up for plotting.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

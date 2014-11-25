@@ -67,7 +67,7 @@ Silence bell.
 <a name="52125"></a>
 <div class="comments">
 <div class="paragraph">
-Seize player's held items.
+Seize hero's held items.
 </div>
 </div>
 </td>
@@ -235,8 +235,8 @@ Reset all items. [unsure]
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="52166"></a>CBC6</td>
-<td class="instruction">CALL <a class="link" href="40967.html#40986">$A01A</a></td>
-<td class="comment-11" rowspan="1">CALL $A01A // end of in_permitted_area</td>
+<td class="instruction">CALL <a class="link" href="40986.html">$A01A</a></td>
+<td class="comment-11" rowspan="1">within_camp_bounds();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -386,7 +386,7 @@ Reset all items. [unsure]
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="52214"></a>CBF6</td>
 <td class="instruction">LD DE,$7613</td>
-<td class="comment-11" rowspan="4">memcpy(&amp;character_structs[0].secondbyte, &amp;solitary_player_reset_data, 6);</td>
+<td class="comment-11" rowspan="4">memcpy(&amp;character_structs[0].secondbyte, &amp;solitary_hero_reset_data, 6);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -458,7 +458,7 @@ Reset all items. [unsure]
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="52245"></a>CC15</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">automatic_player_counter = 0; // immediately take automatic control of player</td>
+<td class="comment-11" rowspan="2">automatic_player_counter = 0; // immediately take automatic control of hero</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -482,7 +482,7 @@ Reset all items. [unsure]
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="52255"></a>CC1F</td>
 <td class="instruction">LD HL,$7AC6</td>
-<td class="comment-11" rowspan="1">HL = &amp;solitary_transition_thing;</td>
+<td class="comment-11" rowspan="1">HL = &amp;solitary_pos;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -523,9 +523,9 @@ Reset all items. [unsure]
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>

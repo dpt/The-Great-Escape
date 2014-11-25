@@ -30,7 +30,13 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="40312.html">9D78</a>.
+Used by the routine at <a class="link" href="40315.html">9D7B</a>.
+</div>
+<div class="paragraph">
+Process player input.
+</div>
+<div class="paragraph">
+Inhibit user control when morale hits zero.
 </div>
 </div>
 <table class="input-0">
@@ -51,7 +57,7 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="40455"></a>9E07</td>
 <td class="instruction">LD HL,($A13A)</td>
-<td class="comment-11" rowspan="5">if (morale_1 || morale_2) return; // inhibits user control when morale hits zero // reads morale_1 + morale_2 together as a word</td>
+<td class="comment-11" rowspan="5">if (morale_1 || morale_2) return; // reads morale_1 + morale_2 together as a word</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -102,6 +108,9 @@ Used by the routine at <a class="link" href="40312.html">9D78</a>.
 <div class="paragraph">
 Picking a lock, or cutting wire fence.
 </div>
+<div class="paragraph">
+Set 31 turns until automatic control.
+</div>
 </div>
 </td>
 </tr>
@@ -109,7 +118,7 @@ Picking a lock, or cutting wire fence.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40469"></a>9E15</td>
 <td class="instruction">LD HL,$A139</td>
-<td class="comment-11" rowspan="2">automatic_player_counter = 31; // 31 turns until automatic control</td>
+<td class="comment-11" rowspan="2">automatic_player_counter = 31;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -188,10 +197,20 @@ Cutting wire fence.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="40496"></a>
+<div class="comments">
+<div class="paragraph">
+No user input: count down.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40496"></a>9E30</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment-11" rowspan="1">automatic_player_counter--; // no user input: count down</td>
+<td class="comment-11" rowspan="1">automatic_player_counter--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -206,10 +225,20 @@ Cutting wire fence.
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="40500"></a>
+<div class="comments">
+<div class="paragraph">
+Wait 31 turns until automatic control.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="40500"></a>9E34</td>
 <td class="instruction">LD (HL),$1F</td>
-<td class="comment-11" rowspan="1">automatic_player_counter = 31; // wait 31 turns until automatic control</td>
+<td class="comment-11" rowspan="1">automatic_player_counter = 31;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -221,7 +250,7 @@ Cutting wire fence.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40503"></a>9E37</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment-11" rowspan="3">if (player_in_bed == 0) &lt;%</td>
+<td class="comment-11" rowspan="3">if (hero_in_bed == 0) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -239,7 +268,7 @@ Cutting wire fence.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40509"></a>9E3D</td>
 <td class="instruction">LD A,($A137)</td>
-<td class="comment-11" rowspan="3">if (!player_in_breakfast) goto not_bed_or_breakfast;</td>
+<td class="comment-11" rowspan="3">if (!hero_in_breakfast) goto not_bed_or_breakfast;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -311,7 +340,7 @@ Cutting wire fence.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40535"></a>9E57</td>
 <td class="instruction">LD HL,$A137</td>
-<td class="comment-11" rowspan="1">HL = &amp;player_in_breakfast; %&gt;</td>
+<td class="comment-11" rowspan="1">HL = &amp;hero_in_breakfast; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -324,7 +353,7 @@ Cutting wire fence.
 <a name="40540"></a>
 <div class="comments">
 <div class="paragraph">
-Player was in bed.
+Hero was in bed.
 </div>
 </div>
 </td>
@@ -375,7 +404,7 @@ Player was in bed.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40560"></a>9E70</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="2">$8013 = 24; // set vertical offset</td>
+<td class="comment-11" rowspan="2">$8013 = 24; // set height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -387,7 +416,7 @@ Player was in bed.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40565"></a>9E75</td>
 <td class="instruction">LD HL,$6C61</td>
-<td class="comment-11" rowspan="2">player_bed = interiorobject_EMPTY_BED;</td>
+<td class="comment-11" rowspan="2">roomdef_2_hut2_left.bed = interiorobject_EMPTY_BED;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -399,7 +428,7 @@ Player was in bed.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="40570"></a>9E7A</td>
 <td class="instruction">LD HL,$A13F</td>
-<td class="comment-11" rowspan="1">HL = &amp;player_in_bed; %&gt;</td>
+<td class="comment-11" rowspan="1">HL = &amp;hero_in_bed; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -494,9 +523,9 @@ Player was in bed.
 </tr>
 </table>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20141019</div>
+<div class="release">The incomplete The Great Escape disassembly 20141125</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://pyskool.ca/?page_id=177">SkoolKit</a> 4.0.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
 </div>
 </body>
 </html>
