@@ -4514,7 +4514,12 @@ c $A0D2 increase_morale
 R $A0D2 I:B Amount to increase morale by. (Preserved)
   $A0D2 A = morale + B;
   $A0D6 if (A >= morale_MAX) A = morale_MAX;
-  $A0DC set_morale_from_A: morale = A;
+;
+; fallthrough
+
+c $A0DC set_morale_from_A
+; @label:$A0DC=set_morale_from_A
+  $A0DC morale = A;
   $A0DF return;
 
 c $A0E0 decrease_morale
