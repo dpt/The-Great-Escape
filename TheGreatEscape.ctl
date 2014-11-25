@@ -3203,10 +3203,19 @@ b $8218 tiles
 ;D $9768 #UDGARRAY1,7,4,1;$9768-$9D77-8(interior-tiles)
 ;
 D $8218 Exterior tiles set 0. 111 tiles. Looks like mask tiles for huts. (<- plot_tile)
+; @label:$8218=exterior_tiles_0
+;
 D $8590 Exterior tiles set 1. 145 tiles. Looks like tiles for huts. (<- plot_tile)
+; @label:$8590=exterior_tiles_1
+;
 D $8A18 Exterior tiles set 2. 220 tiles. Looks like main building wall tiles. (<- plot_tile)
+; @label:$8A18=exterior_tiles_2
+;
 D $90F8 Exterior tiles set 3. 243 tiles. Looks like main building wall tiles.
+; @label:$90F8=exterior_tiles_3
+;
 D $9768 Interior tiles. 194 tiles.
+; @label:$9768=interior_tiles
 ;
 ;B $8A18,8 tile: ground1 [start of exterior tiles 2] (<- plot_tile)
 ;B $8A20,8 tile: ground2
