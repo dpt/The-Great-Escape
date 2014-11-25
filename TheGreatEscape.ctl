@@ -5629,7 +5629,7 @@ c $A8F4 supertile_plot_vertical_common
 ; @label:$A8F4=supertile_plot_vertical_common
 D $A8F4 Plotting supertiles.
   $A8F4 A &= 3;
-  $A8F6 ($A94D) = A; // self modify
+  $A8F6 ($A94C + 1) = A; // self modify
   $A8F9 Cdash = A;
   $A8FA A = ((map_position >> 8) & 3) * 4 + Cdash;
   $A902 -
@@ -5683,7 +5683,7 @@ D $A8F4 Plotting supertiles.
   $A972 A = *HL;
   $A973 EXX
   $A974 HL = 0x5B00 + A * 16; // supertiles
-  $A97F HL += ($A94D); // read self modified
+  $A97F HL += ($A94C + 1); // read self modified
   $A984 A = ((map_position >> 8) & 3) + 1;
   $A98A BC = 24;
   $A98D EX DE,HL
