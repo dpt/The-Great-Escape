@@ -4223,6 +4223,7 @@ D $9E98 Locks the player out until the lock is picked.
 D $9EA0 Countdown reached: Unlock the door.
   $9EA0 *ptr_to_door_being_lockpicked &= ~gates_and_doors_LOCKED;
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
+; @label:$9EAA=clear_lockpick_wirecut_flags_and_return
   $9EAA clear_lockpick_wirecut_flags_and_return: $8001 &= ~(vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);
   $9EB1 return;
 
@@ -4550,6 +4551,7 @@ R $A0F9 I:B Amount to increase score by.
   $A0F9 A = 10;
   $A0FB HL = &score_digits + 4;
   $A0FE do <% tmp = HL;
+; @label:$A0FF=increase_score_increment_score
   $A0FF   increment_score: (*HL)++;
   $A100   if (*HL == A) <% *HL-- = 0; goto increment_score; %>
   $A108   HL = tmp;
@@ -5661,6 +5663,7 @@ D $A8F4 Plotting supertiles.
   $A93F   A = *HL;
   $A940   EXX
   $A941   HL = 0x5B00 + A * 16; // supertiles
+; @label:$A94C=supertile_plot_vertical_common_iters
   $A94C   A = 0; // self modified by $A8F6
   $A94E   A += L;
   $A94F   L = A;
@@ -5727,6 +5730,7 @@ R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile gro
   $A9BA if (Adash < 139 || Adash >= 204) goto chosen;
   $A9C2 BCdash = &exterior_tiles_3[0];
 ;
+; @label:$A9C5=plot_tile_chosen
   $A9C5 chosen: PUSH HLdash;
   $A9C6 -
   $A9C7 HLdash = A * 8 + BCdash;
@@ -5734,6 +5738,8 @@ R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile gro
   $A9CF EX DEdash,HLdash;
   $A9D0 BCdash = 24;
   $A9D3 A = 8; // 8 iterations
+;
+; @label:$A9D5=plot_tile_loop
   $A9D5 do <% -
   $A9D6   Adash = *DEdash;
   $A9D7   *HLdash = Adash;
