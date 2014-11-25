@@ -4433,9 +4433,11 @@ D $A053 Increasing morale.
 
 c $A071 set_morale_flag_screen_attributes
 ; @label:$A071=set_morale_flag_screen_attributes
+D $A071 Set the screen attributes of the morale flag.
 R $A071 I:A Attributes to use.
   $A071 HL = $5842; // first attribute byte
   $A074 DE = $001E; // skip
+D $A077 Height of flag.
   $A077 B  = $13;
   $A079 do <% *HL++ = A;
   $A07B   *HL++ = A;
