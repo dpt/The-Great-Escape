@@ -4255,7 +4255,7 @@ D $9EE0 Indexed by $800E.
 
 b $9EE4 byte_to_pointer
 ; @label:$9EE4=byte_to_pointer
-D $9EE4 7 structs, 3 wide. maps bytes to offsets.
+D $9EE4 Maps bytes to pointers to the below arrays.
   $9EE4,3 byte_to_offset { 42, &byte_9EF9[0] }
   $9EE7,3 byte_to_offset {  5, &byte_9EFC[0] }
   $9EEA,3 byte_to_offset { 14, &byte_9F01[0] }
@@ -4263,7 +4263,7 @@ D $9EE4 7 structs, 3 wide. maps bytes to offsets.
   $9EF0,3 byte_to_offset { 44, &byte_9F0E[0] }
   $9EF3,3 byte_to_offset { 43, &byte_9F11[0] }
   $9EF6,3 byte_to_offset { 45, &byte_9F13[0] }
-D $9EF9 Data 0xFF terminated.
+D $9EF9 Variable-length arrays, 0xFF terminated.
   $9EF9 byte_9EF9 = { 0x82,0x82,0xFF                     }
   $9EFC byte_9EFC = { 0x83,0x01,0x01,0x01,0xFF           }
   $9F01 byte_9F01 = { 0x01,0x01,0x01,0x00,0x02,0x02,0xFF }
