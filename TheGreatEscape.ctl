@@ -4285,7 +4285,7 @@ D $9F15 Pairs of low-high bounds.
 
 c $9F21 in_permitted_area
 ; @label:$9F21=in_permitted_area
-D $9F21 [unsure] -- could be as general as bounds detection
+D $9F21 In permitted area.
   $9F21 HL = $800F; // position on Y axis
   $9F24 DE = &hero_map_position.y; // x/y confusion here - mislabeling
   $9F27 if (room_index == 0) <% // outdoors
