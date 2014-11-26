@@ -1385,8 +1385,8 @@ D $6C15 roomdef_1_hut1_right
   $6C17,4 { 54, 68, 23, 34 }, // boundary
   $6C1B,4 { 54, 68, 39, 50 }, // boundary
   $6C1F,4 { 54, 68, 55, 68 }, // boundary
-  $6C23,1 4 // count of TBD
-  $6C24,4 [0, 1, 3, 10] // data TBD
+  $6C23,1 4 // count of mask bytes
+  $6C24,4 [0, 1, 3, 10] // data mask bytes
   $6C28,1 10 // count of objects
   $6C29,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6C2C,3 { interiorobject_WIDE_WINDOW,                 8,  0 },
@@ -1405,8 +1405,8 @@ D $6C47 roomdef_2_hut2_left
   $6C48,1 2 // count of boundaries
   $6C49,4 { 48, 64, 43, 56 }, // boundary
   $6C4D,4 { 24, 38, 26, 40 }, // boundary
-  $6C51,1 2 // count of TBD
-  $6C52,2 [13, 8] // data TBD
+  $6C51,1 2 // count of mask bytes
+  $6C52,2 [13, 8] // data mask bytes
   $6C54,1 8 // count of objects
   $6C55,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6C58,3 { interiorobject_WIDE_WINDOW,                 6,  2 },
@@ -1424,8 +1424,8 @@ D $6C6D roomdef_3_hut2_right
   $6C6F,4 { 54, 68, 23, 34 }, // boundary
   $6C73,4 { 54, 68, 39, 50 }, // boundary
   $6C77,4 { 54, 68, 55, 68 }, // boundary
-  $6C7B,1 4 // count of TBD
-  $6C7C,4 [0, 1, 3, 10] // data TBD
+  $6C7B,1 4 // count of mask bytes
+  $6C7C,4 [0, 1, 3, 10] // data mask bytes
   $6C80,1 10 // count of objects
   $6C81,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6C84,3 { interiorobject_WIDE_WINDOW,                 8,  0 },
@@ -1444,8 +1444,8 @@ D $6C9F roomdef_4_hut3_left
   $6CA0,1 2 // count of boundaries
   $6CA1,4 { 24, 40, 24, 42 }, // boundary
   $6CA5,4 { 48, 64, 43, 56 }, // boundary
-  $6CA9,1 3 // count of TBD
-  $6CAA,3 [18, 20, 8] // data TBD
+  $6CA9,1 3 // count of mask bytes
+  $6CAA,3 [18, 20, 8] // data mask bytes
   $6CAD,1 9 // count of objects
   $6CAE,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6CB1,3 { interiorobject_DOOR_FRAME_40,              16,  5 },
@@ -1464,8 +1464,8 @@ D $6CC9 roomdef_5_hut3_right
   $6CCB,4 { 54, 68, 23, 34 }, // boundary
   $6CCF,4 { 54, 68, 39, 50 }, // boundary
   $6CD3,4 { 54, 68, 55, 68 }, // boundary
-  $6CD7,1 4 // count of TBD
-  $6CD8,4 [0, 1, 3, 10] // data TBD
+  $6CD7,1 4 // count of mask bytes
+  $6CD8,4 [0, 1, 3, 10] // data mask bytes
   $6CDC,1 10 // count of objects
   $6CDD,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6CE0,3 { interiorobject_WIDE_WINDOW,                 8,  0 },
@@ -1482,8 +1482,8 @@ D $6CFB roomdef_6_corridor
 ; @label:$6CFB=roomdef_6_corridor
   $6CFB,1 2
   $6CFC,1 0 // count of boundaries
-  $6CFD,1 1 // count of TBD
-  $6CFE,1 [9] // data TBD
+  $6CFD,1 1 // count of mask bytes
+  $6CFE,1 [9] // data mask bytes
   $6CFF,1 5 // count of objects
   $6D00,3 { interiorobject_ROOM_OUTLINE_46,             3,  6 },
   $6D03,3 { interiorobject_DOOR_FRAME_38,              10,  3 },
@@ -1496,8 +1496,8 @@ D $6D0F roomdef_9_crate
   $6D0F,1 1
   $6D10,1 1 // count of boundaries
   $6D11,4 { 58, 64, 28, 42 }, // boundary
-  $6D15,1 2 // count of TBD
-  $6D16,2 [4, 21] // data TBD
+  $6D15,1 2 // count of mask bytes
+  $6D16,2 [4, 21] // data mask bytes
   $6D18,1 10 // count of objects
   $6D19,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6D1C,3 { interiorobject_SMALL_WINDOW,                6,  3 },
@@ -1516,8 +1516,8 @@ D $6D37 roomdef_10_lockpick
   $6D38,1 2 // count of boundaries
   $6D39,4 { 69, 75, 32, 54 }, // boundary
   $6D3D,4 { 36, 47, 48, 60 }, // boundary
-  $6D41,1 3 // count of TBD
-  $6D42,3 [6, 14, 22] // data TBD
+  $6D41,1 3 // count of mask bytes
+  $6D42,3 [6, 14, 22] // data mask bytes
   $6D45,1 14 // count of objects
   $6D46,3 { interiorobject_ROOM_OUTLINE_47,             1,  4 },
   $6D49,3 { interiorobject_DOOR_FRAME_15,              15, 10 },
@@ -1539,8 +1539,8 @@ D $6D70 roomdef_11_papers
   $6D70,1 4
   $6D71,1 1 // count of boundaries
   $6D72,4 { 27, 44, 36, 48 }, // boundary
-  $6D76,1 1 // count of TBD
-  $6D77,1 [23] // data TBD
+  $6D76,1 1 // count of mask bytes
+  $6D77,1 [23] // data mask bytes
   $6D78,1 9 // count of objects
   $6D79,3 { interiorobject_ROOM_OUTLINE_47,             1,  4 },
   $6D7C,3 { interiorobject_SMALL_SHELF,                 6,  3 },
@@ -1556,8 +1556,8 @@ D $6D94 roomdef_12_corridor
 ; @label:$6D94=roomdef_12_corridor
   $6D94,1 1
   $6D95,1 0 // count of boundaries
-  $6D96,1 2 // count of TBD
-  $6D97,2 [4, 7] // data TBD
+  $6D96,1 2 // count of mask bytes
+  $6D97,2 [4, 7] // data mask bytes
   $6D99,1 4 // count of objects
   $6D9A,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6D9D,3 { interiorobject_SMALL_WINDOW,                6,  3 },
@@ -1568,8 +1568,8 @@ D $6DA6 roomdef_13_corridor
 ; @label:$6DA6=roomdef_13_corridor
   $6DA6,1 1
   $6DA7,1 0 // count of boundaries
-  $6DA8,1 2 // count of TBD
-  $6DA9,2 [4, 8] // data TBD
+  $6DA8,1 2 // count of mask bytes
+  $6DA9,2 [4, 8] // data mask bytes
   $6DAB,1 6 // count of objects
   $6DAC,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6DAF,3 { interiorobject_DOOR_FRAME_38,               6,  3 },
@@ -1585,8 +1585,8 @@ D $6DBE roomdef_14_torch
   $6DC0,4 { 54, 68, 22, 32 }, // boundary
   $6DC4,4 { 62, 68, 48, 58 }, // boundary
   $6DC8,4 { 54, 68, 54, 68 }, // boundary
-  $6DCC,1 1 // count of TBD
-  $6DCD,1 [1] // data TBD
+  $6DCC,1 1 // count of mask bytes
+  $6DCD,1 [1] // data mask bytes
   $6DCE,1 9 // count of objects
   $6DCF,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6DD2,3 { interiorobject_DOOR_FRAME_38,               4,  3 },
@@ -1606,8 +1606,8 @@ D $6DEA roomdef_15_uniform
   $6DF0,4 { 54, 68, 54, 68 }, // boundary
   $6DF4,4 { 62, 68, 40, 58 }, // boundary
   $6DF8,4 { 30, 40, 56, 67 }, // boundary
-  $6DFC,1 4 // count of TBD
-  $6DFD,4 [1, 5, 10, 15] // data TBD
+  $6DFC,1 4 // count of mask bytes
+  $6DFD,4 [1, 5, 10, 15] // data mask bytes
   $6E01,1 10 // count of objects
   $6E02,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6E05,3 { interiorobject_SHORT_WARDROBE,             16,  4 },
@@ -1624,8 +1624,8 @@ D $6E20 roomdef_16_corridor
 ; @label:$6E20=roomdef_16_corridor
   $6E20,1 1
   $6E21,1 0 // count of boundaries
-  $6E22,1 2 // count of TBD
-  $6E23,2 [4, 7] // data TBD
+  $6E22,1 2 // count of mask bytes
+  $6E23,2 [4, 7] // data mask bytes
   $6E25,1 4 // count of objects
   $6E26,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6E29,3 { interiorobject_DOOR_FRAME_38,               4,  4 },
@@ -1636,8 +1636,8 @@ D $6E32 roomdef_7_corridor
 ; @label:$6E32=roomdef_7_corridor
   $6E32,1 1
   $6E33,1 0 // count of boundaries
-  $6E34,1 1 // count of TBD
-  $6E35,1 [4] // data TBD
+  $6E34,1 1 // count of mask bytes
+  $6E35,1 [4] // data mask bytes
   $6E36,1 4 // count of objects
   $6E37,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6E3A,3 { interiorobject_DOOR_FRAME_38,               4,  4 },
@@ -1651,8 +1651,8 @@ D $6E43 roomdef_18_radio
   $6E45,4 { 38, 56, 48, 60 }, // boundary
   $6E49,4 { 38, 46, 39, 60 }, // boundary
   $6E4D,4 { 22, 32, 48, 60 }, // boundary
-  $6E51,1 5 // count of TBD
-  $6E52,5 [11, 17, 16, 24, 25] // data TBD
+  $6E51,1 5 // count of mask bytes
+  $6E52,5 [11, 17, 16, 24, 25] // data mask bytes
   $6E57,1 10 // count of objects
   $6E58,3 { interiorobject_ROOM_OUTLINE_47,             1,  4 },
   $6E5B,3 { interiorobject_CUPBOARD,                    1,  4 },
@@ -1670,8 +1670,8 @@ D $6E76 roomdef_19_food
   $6E76,1 1
   $6E77,1 1 // count of boundaries
   $6E78,4 { 52, 64, 47, 56 }, // boundary
-  $6E7C,1 1 // count of TBD
-  $6E7D,1 [7] // data TBD
+  $6E7C,1 1 // count of mask bytes
+  $6E7D,1 [7] // data mask bytes
   $6E7E,1 11 // count of objects
   $6E7F,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6E82,3 { interiorobject_SMALL_WINDOW,                6,  3 },
@@ -1691,8 +1691,8 @@ D $6EA0 roomdef_20_redcross
   $6EA1,1 2 // count of boundaries
   $6EA2,4 { 58, 64, 26, 42 }, // boundary
   $6EA6,4 { 50, 64, 46, 54 }, // boundary
-  $6EAA,1 2 // count of TBD
-  $6EAB,2 [21, 4] // data TBD
+  $6EAA,1 2 // count of mask bytes
+  $6EAB,2 [21, 4] // data mask bytes
   $6EAD,1 11 // count of objects
   $6EAE,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6EB1,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
@@ -1712,8 +1712,8 @@ D $6ECF roomdef_22_red_key
   $6ED0,1 2 // count of boundaries
   $6ED1,4 { 54, 64, 46, 56 }, // boundary
   $6ED5,4 { 58, 64, 36, 44 }, // boundary
-  $6ED9,1 2 // count of TBD
-  $6EDA,2 [12, 21] // data TBD
+  $6ED9,1 2 // count of mask bytes
+  $6EDA,2 [12, 21] // data mask bytes
   $6EDC,1 7 // count of objects
   $6EDD,3 { interiorobject_ROOM_OUTLINE_41,             5,  6 },
   $6EE0,3 { interiorobject_NOTICEBOARD,                 4,  4 },
@@ -1728,8 +1728,8 @@ D $6EF2 roomdef_23_breakfast
   $6EF2,1 0
   $6EF3,1 1 // count of boundaries
   $6EF4,4 { 54, 68, 34, 68 }, // boundary
-  $6EF8,1 2 // count of TBD
-  $6EF9,2 [10, 3] // data TBD
+  $6EF8,1 2 // count of mask bytes
+  $6EF9,2 [10, 3] // data mask bytes
   $6EFB,1 12 // count of objects
   $6EFC,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6EFF,3 { interiorobject_SMALL_WINDOW,                8,  0 },
@@ -1749,8 +1749,8 @@ D $6F20 roomdef_24_solitary
   $6F20,1 3
   $6F21,1 1 // count of boundaries
   $6F22,4 { 48, 54, 38, 46 }, // boundary
-  $6F26,1 1 // count of TBD
-  $6F27,1 [26] // data TBD
+  $6F26,1 1 // count of mask bytes
+  $6F27,1 [26] // data mask bytes
   $6F28,1 3 // count of objects
   $6F29,3 { interiorobject_ROOM_OUTLINE_41,             5,  6 },
   $6F2C,3 { interiorobject_DOOR_FRAME_40,              14,  4 },
@@ -1761,8 +1761,8 @@ D $6F32 roomdef_25_breakfast
   $6F32,1 0
   $6F33,1 1 // count of boundaries
   $6F34,4 { 54, 68, 34, 68 }, // boundary
-  $6F38,1 0 // count of TBD
-  $6F39,0 [] // data TBD
+  $6F38,1 0 // count of mask bytes
+  $6F39,0 [] // data mask bytes
   $6F39,1 11 // count of objects
   $6F3A,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6F3D,3 { interiorobject_SMALL_WINDOW,                8,  0 },
@@ -1782,8 +1782,8 @@ D $6F5B roomdef_28_hut1_left
   $6F5C,1 2 // count of boundaries
   $6F5D,4 { 28, 40, 28, 52 }, // boundary
   $6F61,4 { 48, 63, 44, 56 }, // boundary
-  $6F65,1 3 // count of TBD
-  $6F66,3 [8, 13, 19] // data TBD
+  $6F65,1 3 // count of mask bytes
+  $6F66,3 [8, 13, 19] // data mask bytes
   $6F69,1 8 // count of objects
   $6F6A,3 { interiorobject_ROOM_OUTLINE_27,             3,  6 },
   $6F6D,3 { interiorobject_WIDE_WINDOW,                 6,  2 },
@@ -1798,8 +1798,8 @@ D $6F82 roomdef_29_second_tunnel_start
 ; @label:$6F82=roomdef_29_second_tunnel_start
   $6F82,1 5
   $6F83,1 0 // count of boundaries
-  $6F84,1 6 // count of TBD
-  $6F85,6 [30, 31, 32, 33, 34, 35] // data TBD
+  $6F84,1 6 // count of mask bytes
+  $6F85,6 [30, 31, 32, 33, 34, 35] // data mask bytes
   $6F8B,1 6 // count of objects
   $6F8C,3 { interiorobject_TUNNEL_0,                   20,  0 },
   $6F8F,3 { interiorobject_TUNNEL_0,                   16,  2 },
@@ -1812,8 +1812,8 @@ D $6F9E roomdef_31
 ; @label:$6F9E=roomdef_31
   $6F9E,1 6
   $6F9F,1 0 // count of boundaries
-  $6FA0,1 6 // count of TBD
-  $6FA1,6 [36, 37, 38, 39, 40, 41] // data TBD
+  $6FA0,1 6 // count of mask bytes
+  $6FA1,6 [36, 37, 38, 39, 40, 41] // data mask bytes
   $6FA7,1 6 // count of objects
   $6FA8,3 { interiorobject_TUNNEL_3,                    0,  0 },
   $6FAB,3 { interiorobject_TUNNEL_3,                    4,  2 },
@@ -1826,8 +1826,8 @@ D $6FBA roomdef_36
 ; @label:$6FBA=roomdef_36
   $6FBA,1 7
   $6FBB,1 0 // count of boundaries
-  $6FBC,1 6 // count of TBD
-  $6FBD,6 [31, 32, 33, 34, 35, 45] // data TBD
+  $6FBC,1 6 // count of mask bytes
+  $6FBD,6 [31, 32, 33, 34, 35, 45] // data mask bytes
   $6FC3,1 5 // count of objects
   $6FC4,3 { interiorobject_TUNNEL_0,                   20,  0 },
   $6FC7,3 { interiorobject_TUNNEL_0,                   16,  2 },
@@ -1839,8 +1839,8 @@ D $6FD3 roomdef_32
 ; @label:$6FD3=roomdef_32
   $6FD3,1 8
   $6FD4,1 0 // count of boundaries
-  $6FD5,1 6 // count of TBD
-  $6FD6,6 [36, 37, 38, 39, 40, 42] // data TBD
+  $6FD5,1 6 // count of mask bytes
+  $6FD6,6 [36, 37, 38, 39, 40, 42] // data mask bytes
   $6FDC,1 5 // count of objects
   $6FDD,3 { interiorobject_TUNNEL_3,                    0,  0 },
   $6FE0,3 { interiorobject_TUNNEL_3,                    4,  2 },
@@ -1852,8 +1852,8 @@ D $6FEC roomdef_34
 ; @label:$6FEC=roomdef_34
   $6FEC,1 6
   $6FED,1 0 // count of boundaries
-  $6FEE,1 6 // count of TBD
-  $6FEF,6 [36, 37, 38, 39, 40, 46] // data TBD
+  $6FEE,1 6 // count of mask bytes
+  $6FEF,6 [36, 37, 38, 39, 40, 46] // data mask bytes
   $6FF5,1 6 // count of objects
   $6FF6,3 { interiorobject_TUNNEL_3,                    0,  0 },
   $6FF9,3 { interiorobject_TUNNEL_3,                    4,  2 },
@@ -1866,8 +1866,8 @@ D $7008 roomdef_35
 ; @label:$7008=roomdef_35
   $7008,1 6
   $7009,1 0 // count of boundaries
-  $700A,1 6 // count of TBD
-  $700B,6 [36, 37, 38, 39, 40, 41] // data TBD
+  $700A,1 6 // count of mask bytes
+  $700B,6 [36, 37, 38, 39, 40, 41] // data mask bytes
   $7011,1 6 // count of objects
   $7012,3 { interiorobject_TUNNEL_3,                    0,  0 },
   $7015,3 { interiorobject_TUNNEL_3,                    4,  2 },
@@ -1880,8 +1880,8 @@ D $7024 roomdef_30
 ; @label:$7024=roomdef_30
   $7024,1 5
   $7025,1 0 // count of boundaries
-  $7026,1 7 // count of TBD
-  $7027,7 [30, 31, 32, 33, 34, 35, 44] // data TBD
+  $7026,1 7 // count of mask bytes
+  $7027,7 [30, 31, 32, 33, 34, 35, 44] // data mask bytes
   $702E,1 6 // count of objects
   $702F,3 { interiorobject_TUNNEL_0,                   20,  0 },
   $7032,3 { interiorobject_TUNNEL_0,                   16,  2 },
@@ -1894,8 +1894,8 @@ D $7041 roomdef_40
 ; @label:$7041=roomdef_40
   $7041,1 9
   $7042,1 0 // count of boundaries
-  $7043,1 6 // count of TBD
-  $7044,6 [30, 31, 32, 33, 34, 43] // data TBD
+  $7043,1 6 // count of mask bytes
+  $7044,6 [30, 31, 32, 33, 34, 43] // data mask bytes
   $704A,1 6 // count of objects
   $704B,3 { interiorobject_TUNNEL_7,                   20,  0 },
   $704E,3 { interiorobject_TUNNEL_0,                   16,  2 },
@@ -1908,8 +1908,8 @@ D $705D roomdef_44
 ; @label:$705D=roomdef_44
   $705D,1 8
   $705E,1 0 // count of boundaries
-  $705F,1 5 // count of TBD
-  $7060,5 [36, 37, 38, 39, 40] // data TBD
+  $705F,1 5 // count of mask bytes
+  $7060,5 [36, 37, 38, 39, 40] // data mask bytes
   $7065,1 5 // count of objects
   $7066,3 { interiorobject_TUNNEL_3,                    0,  0 },
   $7069,3 { interiorobject_TUNNEL_3,                    4,  2 },
@@ -1922,8 +1922,8 @@ D $7075 roomdef_50_blocked_tunnel
   $7075,1 5
   $7076,1 1 // count of boundaries
   $7077,4 { 52, 58, 32, 54 }, // boundary
-  $707B,1 6 // count of TBD
-  $707C,6 [30, 31, 32, 33, 34, 43] // data TBD
+  $707B,1 6 // count of mask bytes
+  $707C,6 [30, 31, 32, 33, 34, 43] // data mask bytes
   $7082,1 6 // count of objects
   $7083,3 { interiorobject_TUNNEL_7,                   20,  0 },
   $7086,3 { interiorobject_TUNNEL_0,                   16,  2 },
