@@ -47,7 +47,7 @@ asm: $(BUILD)/$(GAME).asm
 	skool2asm.py -H -c $< > $@
 
 .PHONY: bin
-bin: $(BUILD)/$(GAME).asm
+bin: $(BUILD)/$(GAME).bin
 
 %.bin: %.asm
 	pasmo -v --bin $< $@
