@@ -1419,7 +1419,8 @@ D $6C47 roomdef_2_hut2_left
   $6C58,3 { interiorobject_WIDE_WINDOW,                 6,  2 },
   $6C5B,3 { interiorobject_DOOR_FRAME_40,              16,  5 },
   $6C5E,3 { interiorobject_STOVE_PIPE,                  4,  5 },
-  $6C61,3 { interiorobject_OCCUPIED_BED,                8,  7 }, // hero's bed
+; @label:$6C61=roomdef_2_hut2_left_heros_bed
+  $6C61,3 { interiorobject_OCCUPIED_BED,                8,  7 },
   $6C64,3 { interiorobject_DOOR_FRAME_16,               7,  9 },
   $6C67,3 { interiorobject_TABLE_2,                    11, 12 },
   $6C6A,3 { interiorobject_SMALL_TUNNEL_ENTRANCE,       5,  9 },
@@ -1437,8 +1438,11 @@ D $6C6D roomdef_3_hut2_right
   $6C81,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6C84,3 { interiorobject_WIDE_WINDOW,                 8,  0 },
   $6C87,3 { interiorobject_WIDE_WINDOW,                 2,  3 },
-  $6C8A,3 { interiorobject_OCCUPIED_BED,               10,  5 }, // bed_C
-  $6C8D,3 { interiorobject_OCCUPIED_BED,                6,  7 }, // bed_B
+; @label:$6C8A=roomdef_3_hut2_right_bed_A
+  $6C8A,3 { interiorobject_OCCUPIED_BED,               10,  5 },
+; @label:$6C8D=roomdef_3_hut2_right_bed_B
+  $6C8D,3 { interiorobject_OCCUPIED_BED,                6,  7 },
+; @label:$6C90=roomdef_3_hut2_right_bed_C
   $6C90,3 { interiorobject_OCCUPIED_BED,                2,  9 },
   $6C93,3 { interiorobject_CHEST_OF_DRAWERS,           16,  5 },
   $6C96,3 { interiorobject_DOOR_FRAME_15,              15,  8 },
@@ -1477,9 +1481,12 @@ D $6CC9 roomdef_5_hut3_right
   $6CDD,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6CE0,3 { interiorobject_WIDE_WINDOW,                 8,  0 },
   $6CE3,3 { interiorobject_WIDE_WINDOW,                 2,  3 },
-  $6CE6,3 { interiorobject_OCCUPIED_BED,               10,  5 }, // bed_D
-  $6CE9,3 { interiorobject_OCCUPIED_BED,                6,  7 }, // bed_E
-  $6CEC,3 { interiorobject_OCCUPIED_BED,                2,  9 }, // bed_F
+; @label:$6CE6=roomdef_3_hut2_right_bed_D
+  $6CE6,3 { interiorobject_OCCUPIED_BED,               10,  5 },
+; @label:$6CE9=roomdef_3_hut2_right_bed_E
+  $6CE9,3 { interiorobject_OCCUPIED_BED,                6,  7 },
+; @label:$6CEC=roomdef_3_hut2_right_bed_F
+  $6CEC,3 { interiorobject_OCCUPIED_BED,                2,  9 },
   $6CEF,3 { interiorobject_DOOR_FRAME_15,              15,  8 },
   $6CF2,3 { interiorobject_CHEST_OF_DRAWERS,           16,  5 },
   $6CF5,3 { interiorobject_CHEST_OF_DRAWERS,           20,  7 },
@@ -1747,8 +1754,11 @@ D $6EF2 roomdef_23_breakfast
   $6F0E,3 { interiorobject_DOOR_FRAME_40,              20,  4 },
   $6F11,3 { interiorobject_DOOR_FRAME_15,              15,  8 },
   $6F14,3 { interiorobject_MESS_BENCH,                  7,  6 },
-  $6F17,3 { interiorobject_EMPTY_BENCH,                12,  5 }, // bench_A
+; @label:$6F17=roomdef_23_breakfast_bench_A
+  $6F17,3 { interiorobject_EMPTY_BENCH,                12,  5 },
+; @label:$6F1A=roomdef_23_breakfast_bench_B
   $6F1A,3 { interiorobject_EMPTY_BENCH,                10,  6 },
+; @label:$6F1D=roomdef_23_breakfast_bench_C
   $6F1D,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
 
 D $6F20 roomdef_24_solitary
@@ -1778,9 +1788,13 @@ D $6F32 roomdef_25_breakfast
   $6F46,3 { interiorobject_DOOR_FRAME_40,              18,  3 },
   $6F49,3 { interiorobject_MESS_TABLE,                  5,  4 },
   $6F4C,3 { interiorobject_MESS_BENCH,                  7,  6 },
-  $6F4F,3 { interiorobject_EMPTY_BENCH,                12,  5 }, // bench_D
+; @label:$6F4F=roomdef_25_breakfast_bench_D
+  $6F4F,3 { interiorobject_EMPTY_BENCH,                12,  5 },
+; @label:$6F52=roomdef_25_breakfast_bench_E
   $6F52,3 { interiorobject_EMPTY_BENCH,                10,  6 },
+; @label:$6F55=roomdef_25_breakfast_bench_F
   $6F55,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
+; @label:$6F58=roomdef_25_breakfast_bench_G
   $6F58,3 { interiorobject_EMPTY_BENCH,                14,  4 },
 
 D $6F5B roomdef_28_hut1_left
@@ -1928,6 +1942,7 @@ D $7075 roomdef_50_blocked_tunnel
 ; @label:$7075=roomdef_50_blocked_tunnel
   $7075,1 5
   $7076,1 1 // count of boundaries
+; @label:$7077=roomdef_50_blocked_tunnel_boundary
   $7077,4 { 52, 58, 32, 54 }, // boundary
   $707B,1 6 // count of mask bytes
   $707C,6 [30, 31, 32, 33, 34, 43] // data mask bytes
@@ -1935,7 +1950,8 @@ D $7075 roomdef_50_blocked_tunnel
   $7083,3 { interiorobject_TUNNEL_7,                   20,  0 },
   $7086,3 { interiorobject_TUNNEL_0,                   16,  2 },
   $7089,3 { interiorobject_TUNNEL_0,                   12,  4 },
-  $708C,3 { interiorobject_COLLAPSED_TUNNEL,            8,  6 }, // collapsed_tunnel_obj
+; @label:$708C=roomdef_50_blocked_tunnel_collapsed_tunnel
+  $708C,3 { interiorobject_COLLAPSED_TUNNEL,            8,  6 },
   $708F,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $7092,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
@@ -6927,9 +6943,9 @@ c $B3F6 action_shovel
 ; @label:$B3F6=action_shovel
 D $B3F6 Player has tried to use the shovel item.
   $B3F6 if (room_index != room_50_blocked_tunnel) return;
-  $B3FC if (roomdefn_50_blockage == 255) return; // blockage already cleared
-  $B402 roomdefn_50_blockage = 255;
-  $B407 roomdefn_50_collapsed_tunnel_obj = 0; // remove blockage graphic
+  $B3FC if (roomdef_50_blocked_tunnel_boundary[0] == 255) return; // blockage already cleared
+  $B402 roomdef_50_blocked_tunnel_boundary[0] = 255;
+  $B407 roomdef_50_blocked_tunnel_collapsed_tunnel = 0; // remove blockage graphic
   $B40B setup_room();
   $B40E choose_game_window_attributes();
   $B411 plot_interior_tiles();
@@ -7355,7 +7371,7 @@ D $B79B Resets all visible characters, clock, day_or_night flag, general flags, 
   $B7AD clock = 7;
   $B7B2 day_or_night = 0;
   $B7B6 ($8001) = 0; // flags
-  $B7B9 collapsed_tunnel_obj = interiorobject_COLLAPSED_TUNNEL;
+  $B7B9 roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL;
   $B7BE blockage = 0x34;
 D $B7C3 Lock the gates.
   $B7C3 HL = &gates_and_doors[0];
