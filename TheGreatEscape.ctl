@@ -2908,71 +2908,71 @@ D $7DF5 Non-ASCII: encoded to match the font; FF terminated.
 ;
 D $7DF5 "MISSED ROLL CALL"
 ; @label:$7DF5=messages_missed_roll_call
-  $7DF5 #CALL:decode_stringFF($7DF5)
+  $7DF5 #HTML[#CALL:decode_stringFF($7DF5)]
 ;
 D $7E06 "TIME TO WAKE UP"
 ; @label:$7E06=messages_time_to_wake_up
-  $7E06 #CALL:decode_stringFF($7E06)
+  $7E06 #HTML[#CALL:decode_stringFF($7E06)]
 ;
 D $7E16 "BREAKFAST TIME"
 ; @label:$7E16=messages_breakfast_time
-  $7E16 #CALL:decode_stringFF($7E16)
+  $7E16 #HTML[#CALL:decode_stringFF($7E16)]
 ;
 D $7E25 "EXERCISE TIME"
 ; @label:$7E25=messages_exercise_time
-  $7E25 #CALL:decode_stringFF($7E25)
+  $7E25 #HTML[#CALL:decode_stringFF($7E25)]
 ;
 D $7E33 "TIME FOR BED"
 ; @label:$7E33=messages_time_for_bed
-  $7E33 #CALL:decode_stringFF($7E33)
+  $7E33 #HTML[#CALL:decode_stringFF($7E33)]
 ;
 D $7E40 "THE DOOR IS LOCKED"
 ; @label:$7E40=messages_the_door_is_locked
-  $7E40 #CALL:decode_stringFF($7E40)
+  $7E40 #HTML[#CALL:decode_stringFF($7E40)]
 ;
 D $7E53 "IT IS OPEN"
 ; @label:$7E53=messages_it_is_open
-  $7E53 #CALL:decode_stringFF($7E53)
+  $7E53 #HTML[#CALL:decode_stringFF($7E53)]
 ;
 D $7E5E "INCORRECT KEY"
 ; @label:$7E5E=messages_incorrect_key
-  $7E5E #CALL:decode_stringFF($7E5E)
+  $7E5E #HTML[#CALL:decode_stringFF($7E5E)]
 ;
 D $7E6C "ROLL CALL"
 ; @label:$7E6C=messages_roll_call
-  $7E6C #CALL:decode_stringFF($7E6C)
+  $7E6C #HTML[#CALL:decode_stringFF($7E6C)]
 ;
 D $7E76 "RED CROSS PARCEL"
 ; @label:$7E76=messages_red_cross_parcel
-  $7E76 #CALL:decode_stringFF($7E76)
+  $7E76 #HTML[#CALL:decode_stringFF($7E76)]
 ;
 D $7E87 "PICKING THE LOCK"
 ; @label:$7E87=messages_picking_the_lock
-  $7E87 #CALL:decode_stringFF($7E87)
+  $7E87 #HTML[#CALL:decode_stringFF($7E87)]
 ;
 D $7E98 "CUTTING THE WIRE"
 ; @label:$7E98=messages_cutting_the_wire
-  $7E98 #CALL:decode_stringFF($7E98)
+  $7E98 #HTML[#CALL:decode_stringFF($7E98)]
 ;
 D $7EA9 "YOU OPEN THE BOX"
 ; @label:$7EA9=messages_you_open_the_box
-  $7EA9 #CALL:decode_stringFF($7EA9)
+  $7EA9 #HTML[#CALL:decode_stringFF($7EA9)]
 ;
 D $7EBA "YOU ARE IN SOLITARY"
 ; @label:$7EBA=messages_you_are_in_solitary
-  $7EBA #CALL:decode_stringFF($7EBA)
+  $7EBA #HTML[#CALL:decode_stringFF($7EBA)]
 ;
 D $7ECE "WAIT FOR RELEASE"
 ; @label:$7ECE=messages_wait_for_release
-  $7ECE #CALL:decode_stringFF($7ECE)
+  $7ECE #HTML[#CALL:decode_stringFF($7ECE)]
 ;
 D $7EDF "MORALE IS ZERO"
 ; @label:$7EDF=messages_morale_is_zero
-  $7EDF #CALL:decode_stringFF($7EDF)
+  $7EDF #HTML[#CALL:decode_stringFF($7EDF)]
 ;
 D $7EEE "ITEM DISCOVERED"
 ; @label:$7EEE=messages_item_discovered
-  $7EEE #CALL:decode_stringFF($7EEE)
+  $7EEE #HTML[#CALL:decode_stringFF($7EEE)]
 
 ; ------------------------------------------------------------------------------
 
@@ -5452,27 +5452,27 @@ R $A5BF O:HL Pointer to byte after screenlocstring.
 
 t $A5CE escape_strings
 D $A5CE "WELL DONE"
-  $A5CE #CALL:decode_screenlocstring($A5CE)
+  $A5CE #HTML[#CALL:decode_screenlocstring($A5CE)]
 D $A5DA "YOU HAVE ESCAPED"
-  $A5DA #CALL:decode_screenlocstring($A5DA)
+  $A5DA #HTML[#CALL:decode_screenlocstring($A5DA)]
 D $A5ED "FROM THE CAMP"
-  $A5ED #CALL:decode_screenlocstring($A5ED)
+  $A5ED #HTML[#CALL:decode_screenlocstring($A5ED)]
 D $A5FD "AND WILL CROSS THE"
-  $A5FD #CALL:decode_screenlocstring($A5FD)
+  $A5FD #HTML[#CALL:decode_screenlocstring($A5FD)]
 D $A612 "BORDER SUCCESSFULLY"
-  $A612 #CALL:decode_screenlocstring($A612)
+  $A612 #HTML[#CALL:decode_screenlocstring($A612)]
 D $A628 "BUT WERE RECAPTURED"
-  $A628 #CALL:decode_screenlocstring($A628)
+  $A628 #HTML[#CALL:decode_screenlocstring($A628)]
 D $A63E "AND SHOT AS A SPY"
-  $A63E #CALL:decode_screenlocstring($A63E)
+  $A63E #HTML[#CALL:decode_screenlocstring($A63E)]
 D $A652 "TOTALLY UNPREPARED"
-  $A652 #CALL:decode_screenlocstring($A652)
+  $A652 #HTML[#CALL:decode_screenlocstring($A652)]
 D $A667 "TOTALLY LOST"
-  $A667 #CALL:decode_screenlocstring($A667)
+  $A667 #HTML[#CALL:decode_screenlocstring($A667)]
 D $A676 "DUE TO LACK OF PAPERS"
-  $A676 #CALL:decode_screenlocstring($A676)
+  $A676 #HTML[#CALL:decode_screenlocstring($A676)]
 D $A68E "PRESS ANY KEY"
-  $A68E #CALL:decode_screenlocstring($A68E)
+  $A68E #HTML[#CALL:decode_screenlocstring($A68E)]
 
 ; ------------------------------------------------------------------------------
 
@@ -11196,7 +11196,7 @@ R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
 
 t $F014 screenlocstring_confirm_y_or_n
 D $F014 "CONFIRM. Y OR N"
-  $F014 #CALL:decode_screenlocstring($F014)
+  $F014 #HTML[#CALL:decode_screenlocstring($F014)]
 
 ; ------------------------------------------------------------------------------
 
@@ -11204,13 +11204,13 @@ t $F026 more_messages
 D $F026 More messages.
 D $F026 "HE TAKES THE BRIBE"
 ; @label:$F026=more_messages_he_takes_the_bribe
-  $F026 #CALL:decode_stringFF($F026)
+  $F026 #HTML[#CALL:decode_stringFF($F026)]
 D $F039 "AND ACTS AS DECOY"
 ; @label:$F039=more_messages_and_acts_as_decoy
-  $F039 #CALL:decode_stringFF($F039)
+  $F039 #HTML[#CALL:decode_stringFF($F039)]
 D $F04B "ANOTHER DAY DAWNS"
 ; @label:$F04B=more_messages_another_day_dawns
-  $F04B #CALL:decode_stringFF($F04B)
+  $F04B #HTML[#CALL:decode_stringFF($F04B)]
 
 ; ------------------------------------------------------------------------------
 
@@ -11461,17 +11461,17 @@ D $F292 This is tricky. A' is left with the low byte of the inputroutine address
 t $F2AD define_key_prompts
 D $F2AD Key choice prompt strings.
 D $F2AD "CHOOSE KEYS"
-  $F2AD #CALL:decode_screenlocstring($F2AD)
+  $F2AD #HTML[#CALL:decode_screenlocstring($F2AD)]
 D $F2BB "LEFT."
-  $F2BB #CALL:decode_screenlocstring($F2BB)
+  $F2BB #HTML[#CALL:decode_screenlocstring($F2BB)]
 D $F2C3 "RIGHT."
-  $F2C3 #CALL:decode_screenlocstring($F2C3)
+  $F2C3 #HTML[#CALL:decode_screenlocstring($F2C3)]
 D $F2CC "UP."
-  $F2CC #CALL:decode_screenlocstring($F2CC)
+  $F2CC #HTML[#CALL:decode_screenlocstring($F2CC)]
 D $F2D2 "DOWN."
-  $F2D2 #CALL:decode_screenlocstring($F2D2)
+  $F2D2 #HTML[#CALL:decode_screenlocstring($F2D2)]
 D $F2DA "FIRE."
-  $F2DA #CALL:decode_screenlocstring($F2DA)
+  $F2DA #HTML[#CALL:decode_screenlocstring($F2DA)]
 
 ; ------------------------------------------------------------------------------
 
@@ -11492,13 +11492,13 @@ D $F2E2 (<- choose_keys)
 t $F2EB counted_strings
 D $F2EB Counted strings (encoded to match font; first byte is count).
 D $F2EB "ENTER"
-  $F2EB #CALL:decode_stringcounted($F2EB)
+  $F2EB #HTML[#CALL:decode_stringcounted($F2EB)]
 D $F2F1 "CAPS"
-  $F2F1 #CALL:decode_stringcounted($F2F1)
+  $F2F1 #HTML[#CALL:decode_stringcounted($F2F1)]
 D $F2F6 "SYMBOL"
-  $F2F6 #CALL:decode_stringcounted($F2F6)
+  $F2F6 #HTML[#CALL:decode_stringcounted($F2F6)]
 D $F2FD "SPACE"
-  $F2FD #CALL:decode_stringcounted($F2FD)
+  $F2FD #HTML[#CALL:decode_stringcounted($F2FD)]
 
 ; ------------------------------------------------------------------------------
 
@@ -11709,21 +11709,21 @@ D $F445 0/1/2/3 keyboard/kempston/sinclair/protek
 t $F446 key_choice_screenlocstrings
 D $F446 Key choice screenlocstrings.
 D $F446 "CONTROLS"
-  $F446 #CALL:decode_screenlocstring($F446)
+  $F446 #HTML[#CALL:decode_screenlocstring($F446)]
 D $F451 "0 SELECT"
-  $F451 #CALL:decode_screenlocstring($F451)
+  $F451 #HTML[#CALL:decode_screenlocstring($F451)]
 D $F45C "1 KEYBOARD"
-  $F45C #CALL:decode_screenlocstring($F45C)
+  $F45C #HTML[#CALL:decode_screenlocstring($F45C)]
 D $F469 "2 KEMPSTON"
-  $F469 #CALL:decode_screenlocstring($F469)
+  $F469 #HTML[#CALL:decode_screenlocstring($F469)]
 D $F476 "3 SINCLAIR"
-  $F476 #CALL:decode_screenlocstring($F476)
+  $F476 #HTML[#CALL:decode_screenlocstring($F476)]
 D $F483 "4 PROTEK"
-  $F483 #CALL:decode_screenlocstring($F483)
+  $F483 #HTML[#CALL:decode_screenlocstring($F483)]
 D $F48E "BREAK OR CAPS AND SPACE"
-  $F48E #CALL:decode_screenlocstring($F48E)
+  $F48E #HTML[#CALL:decode_screenlocstring($F48E)]
 D $F4A8 "FOR NEW GAME"
-  $F4A8 #CALL:decode_screenlocstring($F4A8)
+  $F4A8 #HTML[#CALL:decode_screenlocstring($F4A8)]
 
 ; ------------------------------------------------------------------------------
 
