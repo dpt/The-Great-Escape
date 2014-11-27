@@ -985,6 +985,7 @@ c $6920 set_hero_sprite_for_room
 ; @label:$6920=set_hero_sprite_for_room
 D $6920 Called when changing rooms.
 D $6920 For tunnels this forces the hero sprite to 'prisoner' and sets the crawl flag appropriately.
+; @nowarn:$6920
   $6920 HL = $800D;
   $6923 *HL++ = 0x80; // likely a character direction
   $6926 if (room_index >= room_29_secondtunnelstart) <%
@@ -1023,10 +1024,14 @@ c $6939 setup_movable_items
 ; fallthrough
 
 ; movable item takes the first non-player vischar
+; @label:$697D=setup_movable_item
+; @nowarn:$697D
   $697D setup_movable_item: $8020 = A; // character index
   $6980 memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F
+; @nowarn:$6988
   $6988 memcpy($8021, movable_item_reset_data, 14);
   $6993 $803C = room_index;
+; @nowarn:$6999
   $6999 HL = $8020;
   $699C reset_position(); // reset item vischar
   $699F return;
@@ -1069,6 +1074,7 @@ B $69C8 b17: 0
 c $69C9 reset_nonplayer_visible_characters
 ; @label:$69C9=reset_nonplayer_visible_characters
 D $69C9 Reset all non-player visible characters.
+; @nowarn:$69C9
   $69C9 HL = $8020; // iterate over non-player characters
   $69CC B = 7; // 7 iterations
   $69CF do <% PUSH BC
@@ -1252,6 +1258,7 @@ R $6AB5 O:HL Corrupted.
 ; @label:$6B19=expand_object_64_to_127
   $6B19 A = 60; // opcode of 'INC A'
 D $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+; @nowarn:$6B1B
   $6B1B ($6B28) = A;
   $6B1E A = *HL++ & 0x0F;
   $6B21 -
@@ -2140,6 +2147,7 @@ D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk
   $76E4 { item_TORCH,            room_14_torch,    34,24, 0x02, 0x7A, 0xF6 },
   $76EB { item_BRIBE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4 }, // <- accept_bribe
   $76F2 { item_UNIFORM,          room_15_uniform,  44,65, 0x10, 0x87, 0xF1 },
+; @label:$76F9=item_structs_food
   $76F9 { item_FOOD,             room_19_food,     64,48, 0x10, 0x7E, 0xF0 }, // <- action_poison, called_from_main_loop
   $7700 { item_POISON,           room_1_hut1right, 66,52, 0x04, 0x7C, 0xF1 },
   $7707 { item_RED_KEY,          room_22_redkey,   60,42, 0x00, 0x7B, 0xF2 },
@@ -2330,6 +2338,7 @@ D $78D6 #define BYTE0(room,other) ((room << 2) | other)
 ; suspect 4th byte could be a scaled height (would it be four times larger for internal coords?)
 ; suspect bit 1 controls whether to jump to door listed in front, or behind (see $C742)
   $78D6 { BYTE0(room_0_outdoors,           1), 0xB2, 0x8A,  6 },
+; @label:$78DA=door_positions_1
   $78DA { BYTE0(room_0_outdoors,           3), 0xB2, 0x8E,  6 },
   $78DE { BYTE0(room_0_outdoors,           1), 0xB2, 0x7A,  6 },
   $78E2 { BYTE0(room_0_outdoors,           3), 0xB2, 0x7E,  6 },
@@ -2853,6 +2862,7 @@ D $7D54 message_display_counter reached zero.
   $7D57 if (A == 128) goto next_message; // exit via
   $7D5B else if (A > 128) goto wipe_message; // exit via
   $7D5D else <% HL = current_message_character;
+; @nowarn:$7D60
   $7D60   DE = screen_text_start_address + A;
   $7D65   plot_glyph();
   $7D68   message_display_index = E & 31;
@@ -2872,6 +2882,7 @@ c $7D87 wipe_message
 ; @label:$7D87=wipe_message
   $7D87 A = message_display_index;
   $7D8A message_display_index = --A;
+; @nowarn:$7D8E
   $7D8E DE = screen_text_start_address + A;
 D $7D93 Plot a space character.
   $7D93 plot_single_glyph(35);
@@ -4221,6 +4232,7 @@ D $9E34 Wait 31 turns until automatic control.
 D $9E5C Hero was in bed.
   $9E5C     (word) $8002 = 0x012C; // set target location?
   $9E62     (word) $8004 = 0x2E2E; // another position?
+; @nowarn:$9E65
   $9E68     (word) $800F = 0x002E; // set Y pos
   $9E6D     (word) $8011 = 0x002E; // set X pos
   $9E70     $8013 = 24; // set height
@@ -4233,6 +4245,7 @@ D $9E5C Hero was in bed.
   $9E86   if (A >= input_FIRE) <%
   $9E8A     check_for_pick_up_keypress();
   $9E8D     A = 0x80; %> %>
+; @nowarn:$9E8F
   $9E8F if ($800D == A) return; // tunnel related?
   $9E94 $800D = A | 0x80;
   $9E97 return;
@@ -4258,10 +4271,13 @@ D $9EB2 Locks the player out until the wire is snipped.
   $9EB2 A = player_locked_out_until - game_counter;
   $9EB9 if (A) <%
   $9EBB   if (A < 4)
+; @nowarn:$9EBE
   $9EBE     $800D = table_9EE0[$800E & 3]; // change direction
+; @nowarn:$9ECC
   $9ECF   return; %>
 D $9ED0 Countdown reached: Snip the wire.
 D $9ED0 Bug: A is always zero here, so $800E is always set to zero.
+; @nowarn:$9ED0
   $9ED0 else <% $800E = A & 3; // set direction
   $9ED6   $800D = 0x80;
   $9ED9   $8013 = 24; // set height
@@ -4395,6 +4411,7 @@ D $9FF8 Red flag code path.
   $9FFA A = ($5842); // first morale flag attribute byte
   $9FFD if (A == C) return; // flag already red
   $9FFF ($800D) = 0; // "tunnel related" thing
+; @nowarn:$A000
   $A003 A = 255; // red_flag
   $A005 goto flag_select;
 
@@ -5103,6 +5120,7 @@ R $A38C I:C     ?
   $A395 A = *HL & characterstruct_BYTE0_MASK;
   $A398 B = 7; // 7 iterations
   $A39A DE = 32; // stride
+; @nowarn:$A39D
   $A39D HL = $8020; // iterate over non-player characters
   $A3A0 do <% if (A == *HL) goto found;
   $A3A3   HL += DE;
@@ -5363,6 +5381,8 @@ D $A51C Print 'well done' message then test to see if the correct objects were u
 ;
 ; fallthrough
 
+; @label:$A540=escaped_success
+; @nowarn:$A540
   $A540 success: HL = &escape_strings[3];
   $A543 screenlocstring_plot(); // AND WILL CROSS THE
   $A546 screenlocstring_plot(); // BORDER SUCCESSFULLY
@@ -5371,19 +5391,26 @@ D $A51C Print 'well done' message then test to see if the correct objects were u
   $A54C goto press_any_key;
 
   $A54E captured: PUSH AF
+; @nowarn:$A54F
   $A54F HL = &escape_strings[5];
   $A552 screenlocstring_plot(); // BUT WERE RECAPTURED
   $A555 POP AF
   $A556 PUSH AF
   $A557 if (A >= escapeitem_UNIFORM) goto plot; // at least a uniform => 'but were recaptured' // bug? plotting twice
+; @nowarn:$A55B
   $A55B HL = &escape_strings[7];
   $A55E if (A == 0) goto plot; // no objects => 'totally unprepared'
+; @nowarn:$A561
   $A561 HL = &escape_strings[8];
   $A564 if ((A & escapeitem_COMPASS) == 0) goto plot; // no compass => 'totally lost'
+; @nowarn:$A568
   $A568 HL = &escape_strings[9];
 ;
+; @label:$A56B=escaped_plot
   $A56B plot: screenlocstring_plot();
 ;
+; @nowarn:$A56E
+; @label:$A56E=escaped_press_any_key
   $A56E press_any_key: HL = &escape_strings[10];
   $A571 screenlocstring_plot(); // PRESS ANY KEY
 D $A574 Wait for a keypress.
@@ -5451,6 +5478,7 @@ R $A5BF O:HL Pointer to byte after screenlocstring.
 ; ------------------------------------------------------------------------------
 
 t $A5CE escape_strings
+; @label:$A5CE=escape_strings
 D $A5CE "WELL DONE"
   $A5CE #HTML[#CALL:decode_screenlocstring($A5CE)]
 D $A5DA "YOU HAVE ESCAPED"
@@ -5516,10 +5544,13 @@ D $A7EE Populate $FF58 with 7x5 array of supertile refs.
 c $A80A supertile_plot_horizontal_1
 ; @label:$A80A=supertile_plot_horizontal_1
 D $A80A Causes some tile plotting.
+; @nowarn:$A80A
   $A80A DE = $F278;
   $A80D -
+; @nowarn:$A80E
   $A80E HLdash = $FF74;
   $A811 A = map_position >> 8; // map_position hi
+; @nowarn:$A814
   $A814 DEdash = $FE90;
   $A817 goto supertile_plot_horizontal_common;
 
@@ -5632,9 +5663,11 @@ D $A8A2 Note: Exits with banked registers active.
 
 c $A8CF supertile_plot_vertical_1
 ; @label:$A8CF=supertile_plot_vertical_1
+; @nowarn:$A8CF
   $A8CF DE = $F10F;
   $A8D2 EXX // unpaired
   $A8D3 HL = $FF5E;
+; @nowarn:$A8D6
   $A8D6 DE = $F2A7;
   $A8D9 A = map_position[0] & 3; // map_position lo
   $A8DE if (A == 0) HL--;
@@ -5788,6 +5821,7 @@ c $A9E4 map_shunt_horizontal_1
   $A9EE DE = visible_tiles_start_address;
   $A9F1 BC = visible_tiles_length - 1;
   $A9F4 LDIR
+; @nowarn:$A9F6
   $A9F6 HL = screen_buffer_start_address + 1;
   $A9F9 DE = screen_buffer_start_address;
   $A9FC BC = screen_buffer_length - 1;
@@ -5800,6 +5834,7 @@ c $AA05 map_shunt_horizontal_2
   $AA05 HL = &map_position;
   $AA08 (*HL)--;
   $AA09 get_supertiles();
+; @nowarn:$AA0C
   $AA0C HL = visible_tiles_end_address - 1;
   $AA0F DE = visible_tiles_end_address;
   $AA12 BC = visible_tiles_length - 1;
@@ -5821,7 +5856,9 @@ c $AA26 map_shunt_diagonal_1_2
   $AA31 DE = visible_tiles_start_address + 1;
   $AA34 BC = visible_tiles_length - 24;
   $AA37 LDIR
+; @nowarn:$AA39
   $AA39 HL = screen_buffer_start_address + 24 * 8;
+; @nowarn:$AA3C
   $AA3C DE = screen_buffer_start_address + 1;
   $AA3F BC = screen_buffer_length - 24 * 8;
   $AA42 LDIR
@@ -5838,6 +5875,7 @@ c $AA4B map_shunt_vertical_1
   $AA55 DE = visible_tiles_start_address;
   $AA58 BC = visible_tiles_length - 24;
   $AA5B LDIR
+; @nowarn:$AA5D
   $AA5D HL = screen_buffer_start_address + 24 * 8;
   $AA60 DE = screen_buffer_start_address;
   $AA63 BC = screen_buffer_length - 24 * 8;
@@ -5850,6 +5888,7 @@ c $AA6C map_shunt_vertical_2
   $AA6C HL = &map_position[1];
   $AA6F (*HL)--;
   $AA70 get_supertiles();
+; @nowarn:$AA73
   $AA73 HL = visible_tiles_end_address - 24;
   $AA76 DE = visible_tiles_end_address;
   $AA79 BC = visible_tiles_length - 24;
@@ -5867,7 +5906,9 @@ c $AA8D map_shunt_diagonal_2_1
   $AA8E H--;
   $AA8F map_position = HL;
   $AA92 get_supertiles();
+; @nowarn:$AA95
   $AA95 HL = visible_tiles_end_address - 24;
+; @nowarn:$AA98
   $AA98 DE = visible_tiles_end_address - 1;
   $AA9B BC = visible_tiles_length - 24 - 1;
   $AA9E LDDR
@@ -5897,12 +5938,14 @@ R $AAB2 O:HL == map_position
   $AACC if (C & (1<<7)) A ^= 2;
   $AAD2 PUSH AF
   $AAD3 HL = &map_move_jump_table[A];
+; @nowarn:$AAD7
   $AADB A = *HL++; // ie. HL = (word at HL); HL += 2;
   $AADD H = *HL;
   $AADE L = A;
   $AADF POP AF
   $AAE0 PUSH HL
   $AAE1 PUSH AF
+; @keep:$AAE2
   $AAE2 BC = 0x7C00;
   $AAE5 if (A >= 2) B = 0x00;
   $AAEB if (A != 1 && A != 2) C = 0xC0;
@@ -5976,12 +6019,15 @@ C $AB5A map_move_4
 ; -----------------------------------------------------------------------------
 
 b $AB66 zoombox_stuff
-; @label:$AB66=zoombox_stuff
 D $AB66 Zoombox stuff.
   $AB66 zoombox_x
+; @label:$AB66=zoombox_x
   $AB67 zoombox_horizontal_count
+; @label:$AB67=zoombox_horizontal_count
   $AB68 zoombox_y
+; @label:$AB68=zoombox_y
   $AB69 zoombox_vertical_count
+; @label:$AB69=zoombox_vertical_count
 
 ; -----------------------------------------------------------------------------
 
@@ -6021,6 +6067,7 @@ c $ABA0 zoombox
 ; @label:$ABA0=zoombox
   $ABA0 zoombox_x = 12;
   $ABA5 zoombox_y = 8;
+; @nowarn:$ABA7
   $ABAA choose_game_window_attributes();
   $ABAD H = A;
   $ABAE L = A;
@@ -6070,9 +6117,11 @@ c $ABF9 zoombox_fill
   $AC05 RRA
   $AC06 L = A;
   $AC07 HL += DE + zoombox_x;
+; @nowarn:$AC10
   $AC10 DE = screen_buffer_start_address + 1;
   $AC13 HL += DE;
   $AC14 EX DE,HL
+; @nowarn:$AC15
   $AC15 HL = game_window_start_addresses[zoombox_y * 8]; // ie. * 16
   $AC28 HL += zoombox_x;
   $AC2D EX DE,HL
@@ -6108,6 +6157,7 @@ c $ABF9 zoombox_fill
 
 c $AC6F zoombox_draw
 ; @label:$AC6F=zoombox_draw
+; @nowarn:$AC6F
   $AC6F HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
 D $AC83 Top left.
   $AC83 HL += zoombox_x - 1;
@@ -6356,15 +6406,18 @@ c $AEB8 searchlight_plot
 ; @label:$AEB8=searchlight_plot
 D $AEB8 Searchlight plotter.
   $AEB8 -
+; @nowarn:$AEB9
   $AEB9 DEdash = &searchlight_shape[0];
   $AEBC Cdash = 16; // iterations  / width?
   $AEBE do <% -
   $AEBF   A = searchlight_related;
+; @nowarn:$AEC2
   $AEC2   HL = 0x5A40; // screen attribute address (column 0 + bottom of game window)
   $AEC5   if (A != 0 && (E & 31) >= 22) L = 32;
   $AED2   SBC HL,DE
   $AED4   RET C  // if (HL < DE) return; // what about carry?
   $AED5   PUSH DE
+; @nowarn:$AED6
   $AED6   HL = 0x5840; // screen attribute address (column 0 + top of game window)
   $AED9   if (A != 0 && (E & 31) >= 7) L = 32;
   $AEE6   SBC HL,DE
@@ -6421,6 +6474,7 @@ D $AEB8 Searchlight plotter.
 ; -----------------------------------------------------------------------------
 
 B $AF3E searchlight_shape
+; @label:$AF3E=searchlight_shape
 D $AF3E Bitmap circle.
 
 ; -----------------------------------------------------------------------------
@@ -6562,6 +6616,7 @@ D $B03D --------
   $B0DA       if (!Z) return; /* odd */ %> %>
 ;
   $B0DB   BC = IY[14]; // sampled IY = $8000, $8040, $80E0
+; @nowarn:$B0E0
   $B0E0   IY[13]  = four_bytes_B0F8[BC];
   $B0E8   if ((C & 1) == 0) <%
   $B0EC     IY[7] &= ~vischar_BYTE7_BIT5;
@@ -6570,6 +6625,7 @@ D $B03D --------
   $B0F6     goto $B0D0; %>
 
 B $B0F8,4 four_bytes_B0F8
+; @label:$B0F8=four_bytes_B0F8
 D $B0F8 (<- collision)
 
   $B0FC   pop_next: POP HL
@@ -6595,6 +6651,7 @@ D $B123 We have a bribe.
   $B126 item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;
   $B12B draw_all_items();
   $B12E B = 7; // 7 iterations
+; @nowarn:$B130
   $B130 HL = $8020; // iterate over non-player characters
   $B133 do <% if (HL[0] <= character_19_GUARD_DOG_4) <% // Hostile characters only.
   $B138     HL[1] = vischar_BYTE1_BIT2; %> // character has taken bribe?
@@ -6893,6 +6950,7 @@ c $B3A8 action_bribe
 ; @label:$B3A8=action_bribe
 D $B3A8 Player has tried to bribe a prisoner.
 D $B3A8 This searches visible characters only.
+; @nowarn:$B3A8
   $B3A8 HL = $8020; // iterate over non-player characters
   $B3AB B = 7; // 7 iterations
   $B3AD do <% A = *HL;
@@ -6907,7 +6965,7 @@ D $B3A8 This searches visible characters only.
 
 ; -----------------------------------------------------------------------------
 
-; This function described in non pseudocode style...
+; This function is described in non-pseudocode style...
 
 c $B3C4 action_poison
 ; @label:$B3C4=action_poison
@@ -6917,6 +6975,7 @@ c $B3C4 action_poison
   $B3CA Yes - goto have_food.
   $B3CC Is 'high' slot item_FOOD?
   $B3CD No - return.
+; @label:$B3CE=action_poison_have_food
   $B3CE have_food: (test a character flag?)
   $B3D1 Bit 5 set?
   $B3D3 Yes - return.
@@ -7001,6 +7060,7 @@ c $B417 action_wiresnips
   $B46A set_to_6: A = 6; goto action_wiresnips_tail; // crawl BR
   $B46E set_to_7: A = 7;                             // crawl BL
   $B470 action_wiresnips_tail: ...
+; @nowarn:$B471
   $B471 $800E = A;
   $B475 $800D = 0x80;
   $B478 $8001 = vischar_BYTE1_CUTTING_WIRE;
@@ -7092,6 +7152,7 @@ R $B4D0 O:HL Likely a pointer to ?
   $B4FB A = 0;
   $B4FC return;
 
+; @nowarn:$B4FD
   $B4FD indoors: HL = &door_flags;
   $B500 B = 8; // 8 iterations
   $B502 do <% C = *HL & ~gates_and_doors_LOCKED;
@@ -7363,6 +7424,7 @@ c $B79B reset_map_and_characters
 ; @label:$B79B=reset_map_and_characters
 D $B79B Resets all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
   $B79B B = 7; // iterations
+; @nowarn:$B79D
   $B79D HL = $8020; // iterate over non-player characters
   $B7A0 do <%
   $B7A2   reset_visible_character();
@@ -7373,6 +7435,7 @@ D $B79B Resets all visible characters, clock, day_or_night flag, general flags, 
   $B7B6 ($8001) = 0; // flags
   $B7B9 roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL;
   $B7BE blockage = 0x34;
+; @nowarn:$B7C0
 D $B7C3 Lock the gates.
   $B7C3 HL = &gates_and_doors[0];
   $B7C6 B = 9; // 9 iterations
@@ -7557,7 +7620,9 @@ c $B916 mask_stuff
 ; @label:$B916=mask_stuff
 D $B916 Sets attr of something, checks indoor room index, ...
 D $B916 unpacks mask stuff
+; @nowarn:$B916
   $B916 memset($8100, 0xFF, 0xA0);
+; @nowarn:$B91B
   $B923 if (room_index) <%
   $B929   HL = &indoor_mask_data;
   $B92C   A = *HL;
@@ -7623,6 +7688,7 @@ R $B93A I:B Iterations (outer loop);
   $BA0A   A = *HL;
   $BA0B   -
   $BA0C   Adash = C * 32 + B;
+; @nowarn:$BA13
   $BA13   HL = $8100 + Adash;
   $BA18   ($81A0) = HL; // $81A0 is a mystery location
   $BA1B   -
@@ -8295,6 +8361,7 @@ D $C47E Run through all visible characters, resetting them.
   $C488 D = MAX(H - 9, 0);
 ;
   $C48F B = 7; // 7 iterations
+; @nowarn:$C491
   $C491 HL = $8020; // iterate over non-player characters
   $C494 do <% A = *HL;
   $C495   if (A == character_NONE) goto next;
@@ -8337,8 +8404,9 @@ D $C4E0 Adds characters to the visible character list.
 R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4E0 if (*HL & characterstruct_FLAG_DISABLED) return;
 ;
-D $C4E4 Find an empty visible character entry.
   $C4E3 PUSH HL
+D $C4E4 Find an empty visible character entry.
+; @nowarn:$C4E4
   $C4E4 HL = $8020; // iterate over non-player characters
   $C4E7 -
   $C4EA -
@@ -8389,6 +8457,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C536 PUSH DE
   $C537 DE = &character_meta_data[0]; // commandant
   $C53A if (A) <%
+; @nowarn:$C53D
   $C53D   DE = &character_meta_data[1]; // guard
   $C540   if (A >= 16) <%
   $C544     DE = &character_meta_data[2]; // dog
@@ -8709,6 +8778,7 @@ R $C7C6 I:HL Points to character_struct.unk2 or vischar.target.
   $C7C7 if (A >= character_7_GUARD_7  && A <= character_12_GUARD_12) goto character_sleeps;
   $C7D0 if (A >= character_18_GUARD_DOG_3 && A <= character_22_PRISONER_3) goto character_sits;
   $C7D9 PUSH HL // POPped by handlers
+; @nowarn:$C7DA
   $C7DA map = &character_to_event_handler_index_map[0];
   $C7DD B = NELEMS(character_to_event_handler_index_map); // 24 iterations
 D $C7DF Locate the character in the map.
@@ -8720,6 +8790,7 @@ D $C7DF Locate the character in the map.
   $C7E9 return;
 
   $C7EA call_action: goto character_event_handlers[*++HL];
+; @nowarn:$C7F0
 
 ; enum charevnt
 ; charevnt_1        ;
@@ -8734,6 +8805,7 @@ D $C7DF Locate the character in the map.
 ; charevnt_10       ; released from solitary
 
 D $C7F9 character_to_event_handler_index_map
+; @label:$C7F9=character_to_event_handler_index_map
 D $C7F9 Array of (character + flags, character event handler index) mappings.
 W $C7F9 { character_6_GUARD_6       | 0b10100000, charevnt_0 },
 W $C7FB { character_7_GUARD_7       | 0b10100000, charevnt_0 },
@@ -8761,6 +8833,7 @@ W $C825 { character_4_GUARD_4       | 0b00100000, charevnt_10 },// released from
 W $C827 { character_5_GUARD_5       | 0b00100000, charevnt_4 }, // zero morale_1
 
 D $C829 character_event_handlers
+; @label:$C829=character_event_handlers
 D $C829 Array of pointers to character event handlers.
 W $C829 charevnt_handler *character_event_handlers[] = { &charevnt_handler_0,
 W $C82B   &charevnt_handler_1,
@@ -8775,10 +8848,12 @@ W $C83B   &charevnt_handler_9_hero_sits,
 W $C83D   &charevnt_handler_10_hero_released_from_solitary, };
 
 D $C83F charevnt_handler_4_zero_morale_1
+; @label:$C83F=charevnt_handler_4_zero_morale_1
   $C83F morale_1 = 0;
   $C843 goto charevnt_handler_0;
 
 D $C845 charevnt_handler_6
+; @label:$C845=charevnt_handler_6
 ; saw this hit somewhere around (morning) roll call -- but hits are rare
   $C845 POP HL // (popped) sampled HL = $80C2 (x2), $8042  // likely target location
   $C846 *HL++ = 0x03;
@@ -8786,6 +8861,7 @@ D $C845 charevnt_handler_6
   $C84B return;
 
 D $C84C charevnt_handler_10_hero_released_from_solitary
+; @label:$C84C=charevnt_handler_10_hero_released_from_solitary
   $C84C POP HL
   $C84D *HL++ = 0xA4;
   $C850 *HL   = 0x03;
@@ -8793,14 +8869,17 @@ D $C84C charevnt_handler_10_hero_released_from_solitary
   $C856 set_hero_target_location(0x0025); return;
 
 D $C85C charevnt_handler_1
+; @label:$C85C=charevnt_handler_1
   $C85C C = 0x10; // 0xFF10
   $C85E goto exit;
 
 D $C860 charevnt_handler_2
+; @label:$C860=charevnt_handler_2
   $C860 C = 0x38; // 0xFF38
   $C862 goto exit;
 
 D $C864 charevnt_handler_0
+; @label:$C864=charevnt_handler_0
   $C864 C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062
   $C866 exit: POP HL
   $C867 *HL++ = 0xFF;
@@ -8808,24 +8887,29 @@ D $C864 charevnt_handler_0
   $C86B return;
 
 D $C86C charevnt_handler_3_check_var_A13E
+; @label:$C86C=charevnt_handler_3_check_var_A13E
   $C86C POP HL
   $C86D if (byte_A13E == 0) goto byte_A13E_is_zero; else goto byte_A13E_is_nonzero;
 
 D $C877 charevnt_handler_5_check_var_A13E_anotherone
+; @label:$C877=charevnt_handler_5_check_var_A13E_anotherone
   $C877 POP HL
   $C878 if (byte_A13E == 0) goto byte_A13E_is_zero_anotherone; else goto byte_A13E_is_nonzero_anotherone;
 
 D $C882 charevnt_handler_7
+; @label:$C882=charevnt_handler_7
   $C882 POP HL
   $C883 *HL++ = 0x05;
   $C886 *HL   = 0x00;
   $C888 return;
 
 D $C889 charevnt_handler_9_hero_sits
+; @label:$C889=charevnt_handler_9_hero_sits
   $C889 POP HL
   $C88A goto hero_sits;
 
 D $C88D charevnt_handler_8_hero_sleeps
+; @label:$C88D=charevnt_handler_8_hero_sleeps
   $C88D POP HL
   $C88E goto hero_sleeps;
 
@@ -8847,10 +8931,12 @@ D $C892 Also: Automatic hero behaviour.
   $C896 if (bell) hostiles_persue();
   $C89D if (food_discovered_counter != 0 && --food_discovered_counter == 0) <%
 D $C8A7 De-poison the food.
+; @nowarn:$C8A7
   $C8A7   item_structs[item_FOOD].item &= ~itemstruct_ITEM_FLAG_POISONED;
   $C8AC   C = item_FOOD;
   $C8AE   item_discovered(); %>
 D $C8B1 Make supporting characters react.
+; @nowarn:$C8B1
   $C8B1 IY = $8020; // iterate over non-player characters
   $C8B5 B = 7; // iterations
   $C8B7 do <% -
@@ -8930,6 +9016,7 @@ R $C918 I:IY Pointer to visible character block.
   $C981     if (A != character_NONE) <%
   $C985       -
   $C986       B = 7; // 7 iterations
+; @nowarn:$C988
   $C988       HL = $8020; // iterate over non-player characters
   $C98B       do <%
   $C98C         if (*HL == A) goto found_bribed;
@@ -8960,11 +9047,14 @@ D $C99C Found bribed character.
   $C9C1 -
   $C9C2 Cdash = A;
   $C9C3 if (room_index) <%
+; @nowarn:$C9C9
   $C9C9   HLdash = &multiply_by_1; %>
   $C9CC else <%
   $C9CE   if (Cdash & vischar_BYTE1_BIT6) <%
+; @nowarn:$C9D2
   $C9D2     HLdash = &multiply_by_4; %>
   $C9D5   else <%
+; @nowarn:$C9D7
   $C9D7     HLdash = &multiply_by_8; %> %>
   $C9DA ($CA13) = HLdash; // self-modify move_character_Y:$CA13
   $C9DD ($CA4B) = HLdash; // self-modify move_character_X:$CA4B
@@ -9025,7 +9115,7 @@ R $CA49 I:IY Pointer to visible character block.
 R $CA49 O:A  5/7/0 .. meaning ?
 R $CA49 O:HL Pointer to ?
   $CA49 A = *HL; // sampled HL=$8025,$8065,$8005
-  $CA4A multiply_by_8(); // self modified by #R$C9DD
+  $CA4A multiply_by_8(); // self modified by #R$C918
   $CA4D HL += 12; // position on X axis ($8011 etc.)
   $CA51 E = *HL++;
   $CA53 D = *HL;
@@ -9058,6 +9148,7 @@ R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
   $CA96     else <% solitary(); return; %> %> // exit via
   $CA99   else if (A == vischar_BYTE1_BIT1 || A == vischar_BYTE1_BIT2) <% return; %>
   $CA9F   -
+; @nowarn:$CAA0
   $CAA0   if ((item_structs[item_FOOD].item & itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;
   $CAAB   food_discovered_counter = A;
   $CAAE   -
@@ -9305,6 +9396,7 @@ c $CCAB hostiles_persue
 ; @label:$CCAB=hostiles_persue
 D $CCAB For all visible, hostile characters, at height < 32, set the bribed/persue flag.
 D $CCAB Research: If I nop this out then guards don't spot the items I drop.
+; @nowarn:$CCAB
   $CCAB HL = $8020; // iterate over non-player characters
   $CCB1 B = 7; // iterations
   $CCB3 do <%
@@ -9437,10 +9529,13 @@ D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
 ; ------------------------------------------------------------------------------
 
 b $CD9A character_meta_data
-; @label:$CD9A=character_meta_data
+; @label:$CD9A=character_meta_data_commandant
   $CD9A { &character_related_pointers[0], &sprites[30] } // meta_commandant (<- spawn_character)
+; @label:$CD9E=character_meta_data_guard
   $CD9E { &character_related_pointers[0], &sprites[22] } // meta_guard (<- spawn_character)
+; @label:$CDA2=character_meta_data_dog
   $CDA2 { &character_related_pointers[0], &sprites[14] } // meta_dog (<- spawn_character)
+; @label:$CDA6=character_meta_data_prisoner
   $CDA6 { &character_related_pointers[0], &sprites[2]  } // meta_prisoner (<- spawn_character)
 
 ; ------------------------------------------------------------------------------
@@ -9937,7 +10032,9 @@ R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
   $DCCA HL += DE;
   $DCCB DE = $F290; // screen buffer start address
   $DCCE HL += DE;
+; @nowarn:$DCCF
   $DCCF ($81A2) = HL;  // screen buffer pointer
+; @nowarn:$DCD2
   $DCD2 HL = $8100;
   $DCD5 POP DE
   $DCD6 PUSH DE
@@ -10016,6 +10113,7 @@ D $DD69 'Yellow/black' means yellow ink over black paper, for example.
   $DD6D item_attribute: TORCH - green/black
   $DD6E item_attribute: BRIBE - bright-red/black
   $DD6F item_attribute: UNIFORM - green/black
+; @label:$DD70=item_attributes_food
   $DD70 item_attribute: FOOD - white/black
 D $DD70 Food turns purple/black when it's poisoned.
   $DD71 item_attribute: POISON - purple/black
@@ -10318,6 +10416,7 @@ R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
   $E12F   mask2 = *maskptr++;
   $E132   if (flip_sprite & (1<<7)) flip_24_masked_pixels();
   $E139   foremaskptr = foreground_mask_pointer;
+; @nowarn:$E13D
   $E13D   screenptr = ($81A2); // screen ptr // moved compared to the other routines
 ;
 D $E140 Shift bitmap.
@@ -10382,6 +10481,7 @@ D $E17A   Plot, using foreground mask.
 ; @label:$E1BF=masked_sprite_plotter_24_wide_enable6
   $E1BF   *screenptr = A;            // enable/disable 6
   $E1C0   screenptr += 21; // stride (24 - 3)
+; @nowarn:$E1C4
   $E1C4   ($81A2) = screenptr;
   $E1C8 %> while (--iters);
   $E1CD return;
@@ -10411,6 +10511,7 @@ D $E17A   Plot, using foreground mask.
   $E1F3   if (flip_sprite & (1<<7)) flip_24_masked_pixels();
   $E1FA   HL = foreground_mask_pointer;
   $E1FD   EXX
+; @nowarn:$E1FE
   $E1FE   HL = ($81A2);
   $E201   D = 0;
 ; @label:$E203=masked_sprite_plotter_24_wide_jump2
@@ -10515,6 +10616,7 @@ D $E17A   Plot, using foreground mask.
 ; @label:$E290=masked_sprite_plotter_24_wide_enable7
   $E290   *HL = A;            // enable/disable 7
   $E291   HL += 21;
+; @nowarn:$E295
   $E295   ($81A2) = HL;
   $E298   POP HL
   $E299   POP BC
@@ -10599,6 +10701,7 @@ D $E2EF Shift bitmap.
 ;
 D $E307 Plot, using foreground mask.
 ;
+; @nowarn:$E307
   $E307   screenptr = ($81A2);
   $E30A   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E317   foremaskptr++;
@@ -10617,6 +10720,7 @@ D $E307 Plot, using foreground mask.
 ; @label:$E340=masked_sprite_plotter_16_wide_case_1_enable4
   $E340   *screenptr = A; // entry point jump4
   $E341   screenptr += 22; // stride (24 - 2)
+; @nowarn:$E345
   $E345   ($81A2) = screenptr;
   $E348 %> while (--B);
   $E34D return;
@@ -10682,6 +10786,7 @@ D $E396 Shift bitmap.
 ;
 D $E3B3 Plot, using foreground mask.
 ;
+; @nowarn:$E3B3
   $E3B3   screenptr = ($81A2);
   $E3B6   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E3C3   foremaskptr++;
@@ -10700,6 +10805,7 @@ D $E3B3 Plot, using foreground mask.
 ; @label:$E3EC=masked_sprite_plotter_16_wide_case_2_enable5
   $E3EC   *screenptr = A; // entry point jump5
   $E3ED   screenptr += 22; // stride (24 - 2)
+; @nowarn:$E3F1
   $E3F1   ($81A2) = screenptr;
   $E3F4 %> while (--B);
   $E3F9 return;
@@ -10875,7 +10981,9 @@ R $E420 I:IY Pointer to ? // observed: $8000+
   $E4F5 HL = map_position_related_1 - (map_position & 0xFF); // ie. low byte of map_position
   $E4FF if (HL < 0) H = 0xFF;
   $E503 HL += DE + 0xF290; // screen buffer start address
+; @nowarn:$E508
   $E508 ($81A2) = HL;
+; @nowarn:$E50B
   $E50B HL = 0x8100;
   $E50E POP DE
   $E50F PUSH DE
@@ -11033,6 +11141,7 @@ c $EED3 plot_game_window
   $EED3 saved_sp = SP;
   $EED7 A = *(&plot_game_window_x + 1);
   $EEDA if (A) goto unaligned;
+; @nowarn:$EEDE
   $EEDE HL = $F291 + plot_game_window_x;
   $EEE9 SP = game_window_start_addresses;
   $EEEC A = 128; // 128 rows
@@ -11124,14 +11233,17 @@ c $EF9A event_roll_call
 ; @label:$EF9A=event_roll_call
 D $EF9A Is the hero within the roll call area bounds?
 D $EF9A Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
+; @keep:$EF9A
   $EF9A DE = map_ROLL_CALL_X;
   $EF9D HL = &hero_map_position.y;
   $EFA0 B = 2; // iterations
   $EFA2 do <% A = *HL++;
   $EFA3   if (A < D || A >= E) goto not_at_roll_call;
+; @keep:$EFAA
   $EFAA   DE = map_ROLL_CALL_Y;
   $EFAD %> while (--B);
 D $EFAF All visible characters turn forward.
+; @nowarn:$EFAF
   $EFAF HL = $800D;
   $EFB2 B = 8; // iterations
   $EFB4 do <% *HL++ = 0x80; // movement
@@ -11155,11 +11267,13 @@ c $EFCB action_papers
 ; @label:$EFCB=action_papers
 D $EFCB Is the hero within the main gate bounds?
 D $EFCB Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
+; @keep:$EFCB
   $EFCB DE = map_MAIN_GATE_X;
   $EFCE HL = &hero_map_position.y;
   $EFD1 B = 2; // iterations
   $EFD3 do <% A = *HL++;
   $EFD4   if (A < D || A >= E) return;
+; @keep:$EFD9
   $EFD9   DE = map_MAIN_GATE_Y;
   $EFDC %> while (--B);
 D $EFDE Using the papers at the main gate when not in uniform causes the hero to be sent to solitary.
@@ -11317,6 +11431,7 @@ D $F190 Initialise visible characters (HL is $8000).
   $F1A4 %> while (--B);
 D $F1A7 Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
   $F1A7 B = 7; // iterations
+; @nowarn:$F1A9
   $F1A9 HL = 0x8020; // iterate over non-player characters
   $F1AC -
   $F1AF -
@@ -11613,6 +11728,7 @@ D $F3C1 Assign key def.
   $F3C3     *HL = C;
   $F3C4     -
   $F3C5     A *= 5;
+; @nowarn:$F3C9
   $F3C9     HL = 0xF302;  // &key_tables[0] - 1 byte + A // strange: off by one
   $F3CC     HL += A;
 ;
@@ -11820,6 +11936,7 @@ D $FDE1 Very first entry point used to shunt the game image down into its proper
   $FDE1 Disable interrupts.
   $FDE2 SP = 0xFFFF;
   $FDE5 memmove(0x5B00, 0x5E00, 0x9FE0);
+; @nowarn:$FDE8
   $FDF0 goto jump_to_main; // exit via
 
 ; ------------------------------------------------------------------------------
