@@ -1137,6 +1137,7 @@ c $6A35 setup_room
 ; @label:$6A35=setup_room
   $6A35 wipe_visible_tiles();
   $6A38 HL = rooms_and_tunnels[room_index - 1];
+; @isub:$6A3C=LD HL,rooms_and_tunnels - 2
   $6A48 PUSH HL
   $6A49 setup_doors();
   $6A4C POP HL
@@ -1214,6 +1215,7 @@ R $6AB5 O:HL Corrupted.
   $6AC1 B = *HL++; // width
   $6AC3 C = *HL++; // height
   $6AC5 ($6AE6 + 1) = B; // self modify (== width)
+; @isub:$6AC6=LD (expand_object_width + 1),A
   $6AC9 do <% do <% expand: A = *HL;
   $6ACA     if (A == objecttile_ESCAPE) <%
   $6ACE       HL++;
@@ -1243,7 +1245,8 @@ R $6AB5 O:HL Corrupted.
   $6B00   DE++;
   $6B01   DJNZ $6B12
 ; ran out of width
-  $6B03   LD Adash,($6AE7)  // Adash = width
+; @isub:$6B03=LD A,(expand_object_width + 1)
+  $6B03   LD Adash,($6AE6 + 1)  // Adash = width
   $6B06   B = Adash;
   $6B07   DE += 24 - B; // stride
   $6B0F   Adash = *HL;
@@ -1270,6 +1273,7 @@ D $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence 
   $6B28   INC Adash // self modified
   $6B29   DJNZ $6B3B
   $6B2B   PUSH AFdash
+; @isub:$6B2C=LD A,(expand_object_width + 1)
   $6B2C   LD Adash,($6AE6 + 1)  // Adash = width
   $6B30   DE += 24 - Adash; // stride
   $6B38   POP AFdash
@@ -2485,17 +2489,20 @@ R $7AC9 I:A Input event.
 
 c $7AF0 use_item_B
 ; @label:$7AF0=use_item_B
+; @isub:$7AF0=LD A,(items_held + 1)
   $7AF0 A = items_held[1]; // $8216
   $7AF3 goto use_item_common;
 
 c $7AF5 use_item_A
 ; @label:$7AF5=use_item_A
-  $7AF5 A = items_held[0]; // $8215 // FALLTHROUGH
+  $7AF5 A = items_held[0]; // $8215
+;
+; FALLTHROUGH
 
-c $7AFB use_item_common
-; @label:$7AFB=use_item_common
+c $7AF8 use_item_common
+; @label:$7AF8=use_item_common
   $7AF8 if (A == item_NONE) return;
-  $7AFB (pointless_jump)
+  $7AFB Bug: Pointless jump to adjacent instruction.
   $7AFD HL = &item_actions_jump_table[A];
   $7B05 L = *HL++;
   $7B07 H = *HL;
@@ -2573,6 +2580,7 @@ D $7B8B Drop the first item.
   $7B91 if (A == item_UNIFORM) $8015 = sprite_prisoner_tl_4;
   $7B9C PUSH AF
 D $7B9D Shuffle items down.
+; @isub:$7B9D=LD HL,items_held + 1
   $7B9D HL = &items_held[1];  // item slot B
   $7BA0 A = *HL;
   $7BA1 *HL-- = item_NONE;
