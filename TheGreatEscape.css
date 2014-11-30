@@ -10,8 +10,8 @@
 body {
   color: #f0f0f0;
   background-color: #000000;
-  font-family: 'Source Code Pro', 'Consolas', sans-serif;
-  font-size: 10pt;
+  font-family: Cambria, sans-serif;
+  font-size: 11pt;
 }
 img {
   border-width: 0px;
@@ -82,11 +82,11 @@ div.box-1 {
 div.box-2 {
   background-color: #194798;
 }
-table.default th {
-  background-color: #88aacc;
+table table.default th, table.default th {
+  background-color: #4B3914;
 }
-table.default td {
-  background-color: #14284b !important;
+table table.default td, table.default td {
+  background-color: #194798;
 }
 td.centre {
   text-align: center;
@@ -211,22 +211,34 @@ table.map td.map-page-1, table.map td.map-byte-1, table.map td.map-b, td.map-w, 
 table.map td.map-page-1, table.map td.map-byte-1 {
   background-color: transparent;
 }
-table.map td.map-b, td.map-w, table.map td.map-c, table.map td.map-g, table.map td.map-t, table.map td.map-s, td.map-u {
+table.map td.map-b, table.map td.map-c, table.map td.map-g, table.map td.map-s, table.map td.map-t, table.map td.map-u, table.map td.map-w {
   background-color: #060C17;
 }
-table.map td.map-c-desc, table.map td.map-b-desc, td.map-w-desc, table.map td.map-g-desc, table.map td.map-t-desc, table.map td.map-s-desc, td.map-u-desc {
+table.map td.map-b-desc, table.map td.map-c-desc, table.map td.map-g-desc, table.map td.map-s-desc, table.map td.map-t-desc, table.map td.map-u-desc, table.map td.map-w-desc {
   background-color: #14284B;
+  color: #f0f0f0;
+  font-family: inherit;
+  font-style: normal;
 }
-table.map td.map-c-desc {
-  font-style: italic;
-}
+table.map td.map-b-desc { color: #385A98; font-style: normal; }
+table.map td.map-c-desc { color: #F0F0F0; font-style: italic; }
+table.map td.map-g-desc { color: #986A0A; font-style: normal; }
+table.map td.map-s-desc { color: red; font-style: normal; }
+table.map td.map-t-desc { color: #4B3914; font-style: normal; }
+table.map td.map-u-desc { color: #194798; font-style: normal; }
+table.map td.map-w-desc { color: #385A98; font-style: normal; }
+
 
 /* Game status buffer */
 td.map-length-1 {
   text-align: center;
 }
 div.map-entry-title-11 {
+  font-family: Cambria, sans-serif;
   font-weight: bold;
+}
+div.map-entry-title-11, div.map-entry-desc-1, td.map-s-desc, td.map-u-desc {
+  color: #f0f0f0;
 }
 
 /* Graphic glitches */
