@@ -4748,7 +4748,7 @@ B $A13E byte_A13E
 ; ------------------------------------------------------------------------------
 
 g $A13F Hero in bed flag.
-D $A13F Read-only by event_night_time, 
+D $A13F Read-only by event_night_time,
 D $A13F Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
 B $A13F hero_in_bed
 ; @label:$A13F=hero_in_bed
@@ -4808,7 +4808,16 @@ c $A15F set_game_window_attributes
 ; @label:$A15F=set_game_window_attributes
 R $A15F I:A Attribute byte.
 D $A15F Starting at $5847, set 23 columns of 16 rows to A.
-  $A15F memset($5847, A, 23 * 16); // WRONG! FIXME
+  $A15F HL = $5847 // attributes base // $5800 + $47
+  $A162 C = 16 // rows
+  $A164 DE = 32 - 23 // skip
+  $A167 do <% B = 23 // columns
+  $A169 do *HL++ = A;
+  $A16B while (--B);
+  $A16D HL += DE;
+  $A16E C--;
+  $A16F %> while (C != 0);
+  $A172 return;
 
 ; ------------------------------------------------------------------------------
 
