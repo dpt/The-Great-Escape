@@ -4,17 +4,17 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Data at 81C0</title>
+<title>The Great Escape: Game status buffer entry at 81C0</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
 </head>
-<body class="Asm-b">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -24,14 +24,12 @@
 <td class="next"><span class="next-1">Next: <a class="link" href="33232.html">81D0</a></span></td>
 </tr>
 </table>
-<div class="description">81C0: roomdef_object_bounds</div>
+<div class="description">81C0: Copy of current room def's additional bounds (allows for four room objects).</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
-<div class="paragraph">
-Copy of current room def's additional bounds (allows for four room objects).
-</div>
+
 </div>
 <table class="input-0">
 <tr class="asm-input-header">
@@ -51,13 +49,13 @@ Copy of current room def's additional bounds (allows for four room objects).
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="33216"></a>81C0</td>
 <td class="instruction">DEFB $44,$CA,$D2,$E2,$7C,$38,$47,$00</td>
-<td class="comment-10" rowspan="1"></td>
+<td class="comment-11" rowspan="2">roomdef_object_bounds</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="33224"></a>81C8</td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
-<td class="comment-10" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">

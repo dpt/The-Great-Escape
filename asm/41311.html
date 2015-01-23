@@ -57,31 +57,31 @@ Starting at $5847, set 23 columns of 16 rows to A.
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41311"></a>A15F</td>
 <td class="instruction">LD HL,$5847</td>
-<td class="comment-11" rowspan="11">memset($5847, A, 23 * 16); // WRONG! FIXME</td>
+<td class="comment-11" rowspan="1">HL = $5847 // attributes base // $5800 + $47</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41314"></a>A162</td>
 <td class="instruction">LD C,$10</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">C = 16 // rows</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41316"></a>A164</td>
 <td class="instruction">LD DE,$0009</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">DE = 32 - 23 // skip</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41319"></a>A167</td>
 <td class="instruction">LD B,$17</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">do &lt;% B = 23 // columns</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><a name="41321"></a>A169</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">do *HL++ = A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -93,31 +93,31 @@ Starting at $5847, set 23 columns of 16 rows to A.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41323"></a>A16B</td>
 <td class="instruction">DJNZ $A169</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41325"></a>A16D</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">HL += DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41326"></a>A16E</td>
 <td class="instruction">DEC C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">C--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41327"></a>A16F</td>
 <td class="instruction">JP NZ,$A167</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">%&gt; while (C != 0);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41330"></a>A172</td>
 <td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">

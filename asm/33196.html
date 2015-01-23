@@ -4,27 +4,27 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Data at 81AC</title>
+<title>The Great Escape: Game status buffer entry at 81AC</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
 </head>
-<body class="Asm-w">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="33195.html">81AB</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#33196">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="33198.html">81AE</a></span></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="33202.html">81B2</a></span></td>
 </tr>
 </table>
-<div class="description">81AC: bitmap_pointer</div>
+<div class="description">81AC: Bitmap and mask pointers.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -49,14 +49,26 @@
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="33196"></a>81AC</td>
 <td class="instruction">DEFW $0810</td>
-<td class="comment-10" rowspan="1"></td>
+<td class="comment-11" rowspan="1">bitmap_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="33198"></a>81AE</td>
+<td class="instruction">DEFW $0204</td>
+<td class="comment-11" rowspan="1">mask_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="33200"></a>81B0</td>
+<td class="instruction">DEFW $0102</td>
+<td class="comment-11" rowspan="1">foreground_mask_pointer</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="33195.html">81AB</a></span></td>
 <td class="up">Up: <a class="link" href="../maps/all.html#33196">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="33198.html">81AE</a></span></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="33202.html">81B2</a></span></td>
 </tr>
 </table>
 <div class="footer">

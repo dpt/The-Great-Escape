@@ -4,17 +4,17 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Data at A130</title>
+<title>The Great Escape: Game status buffer entry at A130</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
 </head>
-<body class="Asm-b">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -24,19 +24,36 @@
 <td class="next"><span class="next-1">Next: <a class="link" href="41265.html">A131</a></span></td>
 </tr>
 </table>
-<div class="description">A130: bell</div>
+<div class="description">A130: Bell.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
+<table class="default">
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td class="centre">0</td>
+<td>Ring indefinitely</td>
+</tr>
+<tr>
+<td class="centre">255</td>
+<td>Don't ring</td>
+</tr>
+<tr>
+<td class="centre">N</td>
+<td>Ring for N calls</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
 Read-only by follow_suspicious_character.
 </div>
 <div class="paragraph">
 Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_roll_call, event_go_to_breakfast_time, event_breakfast_time, event_go_to_exercise_time, event_exercise_time, event_go_to_time_for_bed, searchlight_caught, solitary, guards_follow_suspicious_character, event_roll_call.
-</div>
-<div class="paragraph">
-0 =&gt; ring indefinitely; 255 =&gt; don't ring; N =&gt; ring for N calls
 </div>
 </div>
 <table class="input-0">
@@ -57,7 +74,7 @@ Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_rol
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41264"></a>A130</td>
 <td class="instruction">DEFB $FF</td>
-<td class="comment-10" rowspan="1"></td>
+<td class="comment-11" rowspan="1">bell</td>
 </tr>
 </table>
 <table class="asm-navigation">

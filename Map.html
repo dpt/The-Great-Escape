@@ -20,12 +20,12 @@
 <h3>Exterior map</h3>
 
 <p>
-<img alt="map" src="images/scr/map.png" />
+<img alt="map-0" src="images/scr/map-0.png" />
 </p>
 
-<h4>Compression</h4>
+<h4>Storage</h4>
 
-<p>The map is a 54x34 grid of <dfn>super tile indices</dfn>. There are 218 of these super tiles. Each super tile in turn is a 4x4 grid of <dfn>tile indices</dfn>. Tiles are 8x8 pixel blocks.</p>
+<p>The map is stored as a 54x34 grid of <dfn>super tile indices</dfn>. There are 218 of these super tiles. Each super tile in turn is a 4x4 grid of <dfn>tile indices</dfn>. Tiles are 8x8 pixel blocks.</p>
 
 <p>There are three separate tile sets, selected between based on which super tile is being plotted:
 <ul>
@@ -35,12 +35,26 @@
 </ul>
 </p>
 
+<p>Here's the map again with the super tile groups highlighted respectively in yellow, green and cyan.</p>
+
+<p>
+<img alt="map-1" src="images/scr/map-1.png" />
+</p>
+
+<p>And the tile sets contain:
+<ul>
+<li>exterior_tiles_1: 145 tiles (mainly tiles for huts) <img alt="exterior-tiles1" src="images/udgs/exterior-tiles1.png" /></li>
+<li>exterior_tiles_2: 220 tiles (mainly tiles for walls) <img alt="exterior-tiles2" src="images/udgs/exterior-tiles2.png" /></li>
+<li>exterior_tiles_3: 243 tiles (mainly tiles for fences) <img alt="exterior-tiles3" src="images/udgs/exterior-tiles3.png" /></li>
+</ul>
+</p>
+
 <p>The total storage for the map is thus 54*34 + 218*4*4 + (145+220+243)*8 = <strong>10,188 bytes</strong>.</p>
 <p>An uncompressed map not using such a scheme would consume 54*32*34*32/8 = <strong>235,008 bytes</strong>. That's 23 times larger and far beyond the capacity of the Spectrum.</p>
 
-<h4>Empty upper parts</h4>
+<h4>Blank upper parts</h4>
 
-<p>The upper parts of the map are blank as those tiles are never visible given the 192x128-sized viewport.</p>
+<p>The upper parts of the map are blank. Those sections of the map are never visible given the 192x128-sized viewport.</p>
 
 <h4>Super tiles</h4>
 
@@ -342,7 +356,7 @@
 </tr>
 </table>
 
-<h4>Unused super tiles</h4>
+<h5>Unused super tiles</h5>
 
 <p>Super tiles $4F (wall variant) and $9A (grassy tunnel exit) are unused.</p>
 <div class="footer">

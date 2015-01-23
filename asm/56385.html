@@ -61,6 +61,16 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <td class="comment-11" rowspan="1">A &amp;= 0x3F;</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<a name="56387"></a>
+<div class="comments">
+<div class="paragraph">
+Bug: Masked item value stored to possibly_holds_an_item which is never used again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="56387"></a>DC43</td>
 <td class="instruction">LD ($8213),A</td>
@@ -166,7 +176,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="56414"></a>DC5E</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; // &amp;item_definitions[A].second_member</td>
+<td class="comment-11" rowspan="1">HL++; // &amp;item_definitions[A].height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -178,7 +188,7 @@ Used by the routine at <a class="link" href="47206.html">B866</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="56416"></a>DC60</td>
 <td class="instruction">LD ($8214),A</td>
-<td class="comment-11" rowspan="1">item_def_2nd_memb_copy = A;</td>
+<td class="comment-11" rowspan="1">item_height = A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>

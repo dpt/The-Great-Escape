@@ -4,17 +4,17 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Data at C41A</title>
+<title>The Great Escape: Game status buffer entry at C41A</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
 </head>
-<body class="Asm-w">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -24,14 +24,11 @@
 <td class="next"><span class="next-1">Next: <a class="link" href="50204.html">C41C</a></span></td>
 </tr>
 </table>
-<div class="description">C41A: prng_pointer</div>
+<div class="description">C41A: Pointer to bytes to output as pseudo-random data.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
-<div class="paragraph">
-Pointer to bytes to output as pseudo-random data.
-</div>
 <div class="paragraph">
 Initially set to $9000. Wraps around after $90FF.
 </div>
@@ -54,7 +51,7 @@ Initially set to $9000. Wraps around after $90FF.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="50202"></a>C41A</td>
 <td class="instruction">DEFW <a class="link" href="33304.html#36864">$9000</a></td>
-<td class="comment-10" rowspan="1"></td>
+<td class="comment-11" rowspan="1">prng_pointer</td>
 </tr>
 </table>
 <table class="asm-navigation">

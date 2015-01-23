@@ -4,17 +4,17 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Data at 81D6</title>
+<title>The Great Escape: Game status buffer entry at 81D6</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
 </head>
-<body class="Asm-b">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -24,13 +24,13 @@
 <td class="next"><span class="next-1">Next: <a class="link" href="33242.html">81DA</a></span></td>
 </tr>
 </table>
-<div class="description">81D6: door_related</div>
+<div class="description">81D6: Door related stuff.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-(&lt;- indoors maybe, &lt;- open door)
+Used by the routines at <a class="link" href="27100.html">69DC</a>, <a class="link" href="45869.html">B32D</a>, <a class="link" href="46288.html">B4D0</a>.
 </div>
 </div>
 <table class="input-0">
@@ -50,24 +50,8 @@
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="33238"></a>81D6</td>
-<td class="instruction">DEFB $FF,$FF,$FF</td>
-<td class="comment-10" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<a name="33241"></a>
-<div class="comments">
-<div class="paragraph">
-Final byte?
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><a name="33241"></a>81D9</td>
-<td class="instruction">DEFB $FF</td>
-<td class="comment-10" rowspan="1"></td>
+<td class="instruction">DEFB $FF,$FF,$FF,$FF</td>
+<td class="comment-11" rowspan="1">door_related</td>
 </tr>
 </table>
 <table class="asm-navigation">

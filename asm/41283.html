@@ -4,17 +4,17 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Data at A143</title>
+<title>The Great Escape: Game status buffer entry at A143</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
 </head>
-<body class="Asm-w">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -24,14 +24,11 @@
 <td class="next"><span class="next-1">Next: <a class="link" href="41285.html">A145</a></span></td>
 </tr>
 </table>
-<div class="description">A143: ptr_to_door_being_lockpicked</div>
+<div class="description">A143: Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
-<div class="paragraph">
-Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.
-</div>
 <div class="paragraph">
 Read-only by picking_a_lock.
 </div>
@@ -57,7 +54,7 @@ Write/read-write by action_lockpick.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="41283"></a>A143</td>
 <td class="instruction">DEFW $0000</td>
-<td class="comment-10" rowspan="1"></td>
+<td class="comment-11" rowspan="1">ptr_to_door_being_lockpicked</td>
 </tr>
 </table>
 <table class="asm-navigation">

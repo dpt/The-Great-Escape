@@ -69,7 +69,7 @@ Player has tried to use the shovel item.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="46076"></a>B3FC</td>
 <td class="instruction">LD A,($7077)</td>
-<td class="comment-11" rowspan="3">if (roomdefn_50_blockage == 255) return; // blockage already cleared</td>
+<td class="comment-11" rowspan="3">if (roomdef_50_blocked_tunnel_boundary[0] == 255) return; // blockage already cleared</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -87,7 +87,7 @@ Player has tried to use the shovel item.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="46082"></a>B402</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">roomdefn_50_blockage = 255;</td>
+<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_boundary[0] = 255;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -99,7 +99,7 @@ Player has tried to use the shovel item.
 <td class="asm-label-0"></td>
 <td class="address-1"><a name="46087"></a>B407</td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="2">roomdefn_50_collapsed_tunnel_obj = 0; // remove blockage graphic</td>
+<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_collapsed_tunnel = 0; // remove blockage graphic</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>

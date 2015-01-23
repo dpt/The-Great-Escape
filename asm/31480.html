@@ -4,7 +4,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>The Great Escape: Routine at 7AFB</title>
+<title>The Great Escape: Routine at 7AF8</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
@@ -20,16 +20,18 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="31477.html">7AF5</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#31483">Map</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31480">Map</a></td>
 <td class="next"><span class="next-1">Next: <a class="link" href="31510.html">7B16</a></span></td>
 </tr>
 </table>
-<div class="description">7AFB: use_item_common</div>
+<div class="description">7AF8: use_item_common</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
-
+<div class="paragraph">
+Used by the routine at <a class="link" href="31472.html">7AF0</a>.
+</div>
 </div>
 <table class="input-0">
 <tr class="asm-input-header">
@@ -47,9 +49,21 @@
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="31483"></a>7AFB</td>
+<td class="address-2"><a name="31480"></a>7AF8</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-11" rowspan="2">if (A == item_NONE) return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31482"></a>7AFA</td>
+<td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="31483"></a>7AFB</td>
 <td class="instruction">JR $7AFD</td>
-<td class="comment-11" rowspan="1">(pointless_jump)</td>
+<td class="comment-11" rowspan="1">Bug: Pointless jump to adjacent instruction.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -145,7 +159,7 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a class="link" href="31477.html">7AF5</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#31483">Map</a></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#31480">Map</a></td>
 <td class="next"><span class="next-1">Next: <a class="link" href="31510.html">7B16</a></span></td>
 </tr>
 </table>
