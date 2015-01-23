@@ -110,12 +110,12 @@ TABLE#
 <h3>Exterior map</h3>
 
 <p>
-#CALL:map($BCEE, 54, 34)
+#CALL:map($BCEE, 54, 34, 0)
 </p>
 
-<h4>Compression</h4>
+<h4>Storage</h4>
 
-<p>The map is a 54x34 grid of <dfn>super tile indices</dfn>. There are 218 of these super tiles. Each super tile in turn is a 4x4 grid of <dfn>tile indices</dfn>. Tiles are 8x8 pixel blocks.</p>
+<p>The map is stored as a 54x34 grid of <dfn>super tile indices</dfn>. There are 218 of these super tiles. Each super tile in turn is a 4x4 grid of <dfn>tile indices</dfn>. Tiles are 8x8 pixel blocks.</p>
 
 <p>There are three separate tile sets, selected between based on which super tile is being plotted:
 <ul>
@@ -125,12 +125,26 @@ TABLE#
 </ul>
 </p>
 
+<p>Here's the map again with the super tile groups highlighted respectively in yellow, green and cyan.</p>
+
+<p>
+#CALL:map($BCEE, 54, 34, 1)
+</p>
+
+<p>And the tile sets contain:
+<ul>
+<li>exterior_tiles_1: 145 tiles (mainly tiles for huts) #UDGARRAY16,7;$8590-$8A17-8(exterior-tiles1)</li>
+<li>exterior_tiles_2: 220 tiles (mainly tiles for walls) #UDGARRAY16,7;$8A18-$90F7-8(exterior-tiles2)</li>
+<li>exterior_tiles_3: 243 tiles (mainly tiles for fences) #UDGARRAY16,7;$90F8-$9767-8(exterior-tiles3)</li>
+</ul>
+</p>
+
 <p>The total storage for the map is thus 54*34 + 218*4*4 + (145+220+243)*8 = <strong>10,188 bytes</strong>.</p>
 <p>An uncompressed map not using such a scheme would consume 54*32*34*32/8 = <strong>235,008 bytes</strong>. That's 23 times larger and far beyond the capacity of the Spectrum.</p>
 
-<h4>Empty upper parts</h4>
+<h4>Blank upper parts</h4>
 
-<p>The upper parts of the map are blank as those tiles are never visible given the 192x128-sized viewport.</p>
+<p>The upper parts of the map are blank. Those sections of the map are never visible given the 192x128-sized viewport.</p>
 
 <h4>Super tiles</h4>
 
@@ -139,300 +153,300 @@ TABLE#
 <table>
 
 <tr>
-<td>$5B00/$00/1<br />#CALL:supertile($5B00)</td>
-<td>$5B10/$01/1<br />#CALL:supertile($5B10)</td>
-<td>$5B20/$02/1<br />#CALL:supertile($5B20)</td>
-<td>$5B30/$03/1<br />#CALL:supertile($5B30)</td>
-<td>$5B40/$04/1<br />#CALL:supertile($5B40)</td>
-<td>$5B50/$05/1<br />#CALL:supertile($5B50)</td>
-<td>$5B60/$06/1<br />#CALL:supertile($5B60)</td>
-<td>$5B70/$07/1<br />#CALL:supertile($5B70)</td>
-<td>$5B80/$08/1<br />#CALL:supertile($5B80)</td>
+<td>$5B00/$00/1<br />#CALL:supertile($5B00, 1)</td>
+<td>$5B10/$01/1<br />#CALL:supertile($5B10, 1)</td>
+<td>$5B20/$02/1<br />#CALL:supertile($5B20, 1)</td>
+<td>$5B30/$03/1<br />#CALL:supertile($5B30, 1)</td>
+<td>$5B40/$04/1<br />#CALL:supertile($5B40, 1)</td>
+<td>$5B50/$05/1<br />#CALL:supertile($5B50, 1)</td>
+<td>$5B60/$06/1<br />#CALL:supertile($5B60, 1)</td>
+<td>$5B70/$07/1<br />#CALL:supertile($5B70, 1)</td>
+<td>$5B80/$08/1<br />#CALL:supertile($5B80, 1)</td>
 </tr>
 
 <tr>
-<td>$5B90/$09/1<br />#CALL:supertile($5B90)</td>
-<td>$5BA0/$0A/1<br />#CALL:supertile($5BA0)</td>
-<td>$5BB0/$0B/1<br />#CALL:supertile($5BB0)</td>
-<td>$5BC0/$0C/1<br />#CALL:supertile($5BC0)</td>
-<td>$5BD0/$0D/1<br />#CALL:supertile($5BD0)</td>
-<td>$5BE0/$0E/1<br />#CALL:supertile($5BE0)</td>
-<td>$5BF0/$0F/1<br />#CALL:supertile($5BF0)</td>
-<td>$5C00/$10/1<br />#CALL:supertile($5C00)</td>
-<td>$5C10/$11/1<br />#CALL:supertile($5C10)</td>
+<td>$5B90/$09/1<br />#CALL:supertile($5B90, 1)</td>
+<td>$5BA0/$0A/1<br />#CALL:supertile($5BA0, 1)</td>
+<td>$5BB0/$0B/1<br />#CALL:supertile($5BB0, 1)</td>
+<td>$5BC0/$0C/1<br />#CALL:supertile($5BC0, 1)</td>
+<td>$5BD0/$0D/1<br />#CALL:supertile($5BD0, 1)</td>
+<td>$5BE0/$0E/1<br />#CALL:supertile($5BE0, 1)</td>
+<td>$5BF0/$0F/1<br />#CALL:supertile($5BF0, 1)</td>
+<td>$5C00/$10/1<br />#CALL:supertile($5C00, 1)</td>
+<td>$5C10/$11/1<br />#CALL:supertile($5C10, 1)</td>
 </tr>
 
 <tr>
-<td>$5C20/$12/1<br />#CALL:supertile($5C20)</td>
-<td>$5C30/$13/1<br />#CALL:supertile($5C30)</td>
-<td>$5C40/$14/1<br />#CALL:supertile($5C40)</td>
-<td>$5C50/$15/1<br />#CALL:supertile($5C50)</td>
-<td>$5C60/$16/1<br />#CALL:supertile($5C60)</td>
-<td>$5C70/$17/1<br />#CALL:supertile($5C70)</td>
-<td>$5C80/$18/1<br />#CALL:supertile($5C80)</td>
-<td>$5C90/$19/1<br />#CALL:supertile($5C90)</td>
-<td>$5CA0/$1A/1<br />#CALL:supertile($5CA0)</td>
+<td>$5C20/$12/1<br />#CALL:supertile($5C20, 1)</td>
+<td>$5C30/$13/1<br />#CALL:supertile($5C30, 1)</td>
+<td>$5C40/$14/1<br />#CALL:supertile($5C40, 1)</td>
+<td>$5C50/$15/1<br />#CALL:supertile($5C50, 1)</td>
+<td>$5C60/$16/1<br />#CALL:supertile($5C60, 1)</td>
+<td>$5C70/$17/1<br />#CALL:supertile($5C70, 1)</td>
+<td>$5C80/$18/1<br />#CALL:supertile($5C80, 1)</td>
+<td>$5C90/$19/1<br />#CALL:supertile($5C90, 1)</td>
+<td>$5CA0/$1A/1<br />#CALL:supertile($5CA0, 1)</td>
 </tr>
 
 <tr>
-<td>$5CB0/$1B/1<br />#CALL:supertile($5CB0)</td>
-<td>$5CC0/$1C/1<br />#CALL:supertile($5CC0)</td>
-<td>$5CD0/$1D/1<br />#CALL:supertile($5CD0)</td>
-<td>$5CE0/$1E/1<br />#CALL:supertile($5CE0)</td>
-<td>$5CF0/$1F/1<br />#CALL:supertile($5CF0)</td>
-<td>$5D00/$20/1<br />#CALL:supertile($5D00)</td>
-<td>$5D10/$21/1<br />#CALL:supertile($5D10)</td>
-<td>$5D20/$22/1<br />#CALL:supertile($5D20)</td>
-<td>$5D30/$23/1<br />#CALL:supertile($5D30)</td>
+<td>$5CB0/$1B/1<br />#CALL:supertile($5CB0, 1)</td>
+<td>$5CC0/$1C/1<br />#CALL:supertile($5CC0, 1)</td>
+<td>$5CD0/$1D/1<br />#CALL:supertile($5CD0, 1)</td>
+<td>$5CE0/$1E/1<br />#CALL:supertile($5CE0, 1)</td>
+<td>$5CF0/$1F/1<br />#CALL:supertile($5CF0, 1)</td>
+<td>$5D00/$20/1<br />#CALL:supertile($5D00, 1)</td>
+<td>$5D10/$21/1<br />#CALL:supertile($5D10, 1)</td>
+<td>$5D20/$22/1<br />#CALL:supertile($5D20, 1)</td>
+<td>$5D30/$23/1<br />#CALL:supertile($5D30, 1)</td>
 </tr>
 
 <tr>
-<td>$5D40/$24/1<br />#CALL:supertile($5D40)</td>
-<td>$5D50/$25/1<br />#CALL:supertile($5D50)</td>
-<td>$5D60/$26/1<br />#CALL:supertile($5D60)</td>
-<td>$5D70/$27/1<br />#CALL:supertile($5D70)</td>
-<td>$5D80/$28/1<br />#CALL:supertile($5D80)</td>
-<td>$5D90/$29/1<br />#CALL:supertile($5D90)</td>
-<td>$5DA0/$2A/1<br />#CALL:supertile($5DA0)</td>
-<td>$5DB0/$2B/1<br />#CALL:supertile($5DB0)</td>
-<td>$5DC0/$2C/1<br />#CALL:supertile($5DC0)</td>
+<td>$5D40/$24/1<br />#CALL:supertile($5D40, 1)</td>
+<td>$5D50/$25/1<br />#CALL:supertile($5D50, 1)</td>
+<td>$5D60/$26/1<br />#CALL:supertile($5D60, 1)</td>
+<td>$5D70/$27/1<br />#CALL:supertile($5D70, 1)</td>
+<td>$5D80/$28/1<br />#CALL:supertile($5D80, 1)</td>
+<td>$5D90/$29/1<br />#CALL:supertile($5D90, 1)</td>
+<td>$5DA0/$2A/1<br />#CALL:supertile($5DA0, 1)</td>
+<td>$5DB0/$2B/1<br />#CALL:supertile($5DB0, 1)</td>
+<td>$5DC0/$2C/1<br />#CALL:supertile($5DC0, 1)</td>
 </tr>
 
 <tr>
-<td>$5DD0/$2D/2<br />#CALL:supertile($5DD0)</td>
-<td>$5DE0/$2E/2<br />#CALL:supertile($5DE0)</td>
-<td>$5DF0/$2F/2<br />#CALL:supertile($5DF0)</td>
-<td>$5E00/$30/2<br />#CALL:supertile($5E00)</td>
-<td>$5E10/$31/2<br />#CALL:supertile($5E10)</td>
-<td>$5E20/$32/2<br />#CALL:supertile($5E20)</td>
-<td>$5E30/$33/2<br />#CALL:supertile($5E30)</td>
-<td>$5E40/$34/2<br />#CALL:supertile($5E40)</td>
-<td>$5E50/$35/2<br />#CALL:supertile($5E50)</td>
+<td>$5DD0/$2D/2<br />#CALL:supertile($5DD0, 1)</td>
+<td>$5DE0/$2E/2<br />#CALL:supertile($5DE0, 1)</td>
+<td>$5DF0/$2F/2<br />#CALL:supertile($5DF0, 1)</td>
+<td>$5E00/$30/2<br />#CALL:supertile($5E00, 1)</td>
+<td>$5E10/$31/2<br />#CALL:supertile($5E10, 1)</td>
+<td>$5E20/$32/2<br />#CALL:supertile($5E20, 1)</td>
+<td>$5E30/$33/2<br />#CALL:supertile($5E30, 1)</td>
+<td>$5E40/$34/2<br />#CALL:supertile($5E40, 1)</td>
+<td>$5E50/$35/2<br />#CALL:supertile($5E50, 1)</td>
 </tr>
 
 <tr>
-<td>$5E60/$36/2<br />#CALL:supertile($5E60)</td>
-<td>$5E70/$37/2<br />#CALL:supertile($5E70)</td>
-<td>$5E80/$38/2<br />#CALL:supertile($5E80)</td>
-<td>$5E90/$39/2<br />#CALL:supertile($5E90)</td>
-<td>$5EA0/$3A/2<br />#CALL:supertile($5EA0)</td>
-<td>$5EB0/$3B/2<br />#CALL:supertile($5EB0)</td>
-<td>$5EC0/$3C/2<br />#CALL:supertile($5EC0)</td>
-<td>$5ED0/$3D/2<br />#CALL:supertile($5ED0)</td>
-<td>$5EE0/$3E/2<br />#CALL:supertile($5EE0)</td>
+<td>$5E60/$36/2<br />#CALL:supertile($5E60, 1)</td>
+<td>$5E70/$37/2<br />#CALL:supertile($5E70, 1)</td>
+<td>$5E80/$38/2<br />#CALL:supertile($5E80, 1)</td>
+<td>$5E90/$39/2<br />#CALL:supertile($5E90, 1)</td>
+<td>$5EA0/$3A/2<br />#CALL:supertile($5EA0, 1)</td>
+<td>$5EB0/$3B/2<br />#CALL:supertile($5EB0, 1)</td>
+<td>$5EC0/$3C/2<br />#CALL:supertile($5EC0, 1)</td>
+<td>$5ED0/$3D/2<br />#CALL:supertile($5ED0, 1)</td>
+<td>$5EE0/$3E/2<br />#CALL:supertile($5EE0, 1)</td>
 </tr>
 
 <tr>
-<td>$5EF0/$3F/2<br />#CALL:supertile($5EF0)</td>
-<td>$5F00/$40/2<br />#CALL:supertile($5F00)</td>
-<td>$5F10/$41/2<br />#CALL:supertile($5F10)</td>
-<td>$5F20/$42/2<br />#CALL:supertile($5F20)</td>
-<td>$5F30/$43/2<br />#CALL:supertile($5F30)</td>
-<td>$5F40/$44/2<br />#CALL:supertile($5F40)</td>
-<td>$5F50/$45/2<br />#CALL:supertile($5F50)</td>
-<td>$5F60/$46/2<br />#CALL:supertile($5F60)</td>
-<td>$5F70/$47/2<br />#CALL:supertile($5F70)</td>
+<td>$5EF0/$3F/2<br />#CALL:supertile($5EF0, 1)</td>
+<td>$5F00/$40/2<br />#CALL:supertile($5F00, 1)</td>
+<td>$5F10/$41/2<br />#CALL:supertile($5F10, 1)</td>
+<td>$5F20/$42/2<br />#CALL:supertile($5F20, 1)</td>
+<td>$5F30/$43/2<br />#CALL:supertile($5F30, 1)</td>
+<td>$5F40/$44/2<br />#CALL:supertile($5F40, 1)</td>
+<td>$5F50/$45/2<br />#CALL:supertile($5F50, 1)</td>
+<td>$5F60/$46/2<br />#CALL:supertile($5F60, 1)</td>
+<td>$5F70/$47/2<br />#CALL:supertile($5F70, 1)</td>
 </tr>
 
 <tr>
-<td>$5F80/$48/2<br />#CALL:supertile($5F80)</td>
-<td>$5F90/$49/2<br />#CALL:supertile($5F90)</td>
-<td>$5FA0/$4A/2<br />#CALL:supertile($5FA0)</td>
-<td>$5FB0/$4B/2<br />#CALL:supertile($5FB0)</td>
-<td>$5FC0/$4C/2<br />#CALL:supertile($5FC0)</td>
-<td>$5FD0/$4D/2<br />#CALL:supertile($5FD0)</td>
-<td>$5FE0/$4E/2<br />#CALL:supertile($5FE0)</td>
-<td>$5FF0/$4F/2<br />#CALL:supertile($5FF0)</td>
-<td>$6000/$50/2<br />#CALL:supertile($6000)</td>
+<td>$5F80/$48/2<br />#CALL:supertile($5F80, 1)</td>
+<td>$5F90/$49/2<br />#CALL:supertile($5F90, 1)</td>
+<td>$5FA0/$4A/2<br />#CALL:supertile($5FA0, 1)</td>
+<td>$5FB0/$4B/2<br />#CALL:supertile($5FB0, 1)</td>
+<td>$5FC0/$4C/2<br />#CALL:supertile($5FC0, 1)</td>
+<td>$5FD0/$4D/2<br />#CALL:supertile($5FD0, 1)</td>
+<td>$5FE0/$4E/2<br />#CALL:supertile($5FE0, 1)</td>
+<td>$5FF0/$4F/2<br />#CALL:supertile($5FF0, 1)</td>
+<td>$6000/$50/2<br />#CALL:supertile($6000, 1)</td>
 </tr>
 
 <tr>
-<td>$6010/$51/2<br />#CALL:supertile($6010)</td>
-<td>$6020/$52/2<br />#CALL:supertile($6020)</td>
-<td>$6030/$53/2<br />#CALL:supertile($6030)</td>
-<td>$6040/$54/2<br />#CALL:supertile($6040)</td>
-<td>$6050/$55/2<br />#CALL:supertile($6050)</td>
-<td>$6060/$56/2<br />#CALL:supertile($6060)</td>
-<td>$6070/$57/2<br />#CALL:supertile($6070)</td>
-<td>$6080/$58/2<br />#CALL:supertile($6080)</td>
-<td>$6090/$59/2<br />#CALL:supertile($6090)</td>
+<td>$6010/$51/2<br />#CALL:supertile($6010, 1)</td>
+<td>$6020/$52/2<br />#CALL:supertile($6020, 1)</td>
+<td>$6030/$53/2<br />#CALL:supertile($6030, 1)</td>
+<td>$6040/$54/2<br />#CALL:supertile($6040, 1)</td>
+<td>$6050/$55/2<br />#CALL:supertile($6050, 1)</td>
+<td>$6060/$56/2<br />#CALL:supertile($6060, 1)</td>
+<td>$6070/$57/2<br />#CALL:supertile($6070, 1)</td>
+<td>$6080/$58/2<br />#CALL:supertile($6080, 1)</td>
+<td>$6090/$59/2<br />#CALL:supertile($6090, 1)</td>
 </tr>
 
 <tr>
-<td>$60A0/$5A/2<br />#CALL:supertile($60A0)</td>
-<td>$60B0/$5B/2<br />#CALL:supertile($60B0)</td>
-<td>$60C0/$5C/2<br />#CALL:supertile($60C0)</td>
-<td>$60D0/$5D/2<br />#CALL:supertile($60D0)</td>
-<td>$60E0/$5E/2<br />#CALL:supertile($60E0)</td>
-<td>$60F0/$5F/2<br />#CALL:supertile($60F0)</td>
-<td>$6100/$60/2<br />#CALL:supertile($6100)</td>
-<td>$6110/$61/2<br />#CALL:supertile($6110)</td>
-<td>$6120/$62/2<br />#CALL:supertile($6120)</td>
+<td>$60A0/$5A/2<br />#CALL:supertile($60A0, 1)</td>
+<td>$60B0/$5B/2<br />#CALL:supertile($60B0, 1)</td>
+<td>$60C0/$5C/2<br />#CALL:supertile($60C0, 1)</td>
+<td>$60D0/$5D/2<br />#CALL:supertile($60D0, 1)</td>
+<td>$60E0/$5E/2<br />#CALL:supertile($60E0, 1)</td>
+<td>$60F0/$5F/2<br />#CALL:supertile($60F0, 1)</td>
+<td>$6100/$60/2<br />#CALL:supertile($6100, 1)</td>
+<td>$6110/$61/2<br />#CALL:supertile($6110, 1)</td>
+<td>$6120/$62/2<br />#CALL:supertile($6120, 1)</td>
 </tr>
 
 <tr>
-<td>$6130/$63/2<br />#CALL:supertile($6130)</td>
-<td>$6140/$64/2<br />#CALL:supertile($6140)</td>
-<td>$6150/$65/2<br />#CALL:supertile($6150)</td>
-<td>$6160/$66/2<br />#CALL:supertile($6160)</td>
-<td>$6170/$67/2<br />#CALL:supertile($6170)</td>
-<td>$6180/$68/2<br />#CALL:supertile($6180)</td>
-<td>$6190/$69/2<br />#CALL:supertile($6190)</td>
-<td>$61A0/$6A/2<br />#CALL:supertile($61A0)</td>
-<td>$61B0/$6B/2<br />#CALL:supertile($61B0)</td>
+<td>$6130/$63/2<br />#CALL:supertile($6130, 1)</td>
+<td>$6140/$64/2<br />#CALL:supertile($6140, 1)</td>
+<td>$6150/$65/2<br />#CALL:supertile($6150, 1)</td>
+<td>$6160/$66/2<br />#CALL:supertile($6160, 1)</td>
+<td>$6170/$67/2<br />#CALL:supertile($6170, 1)</td>
+<td>$6180/$68/2<br />#CALL:supertile($6180, 1)</td>
+<td>$6190/$69/2<br />#CALL:supertile($6190, 1)</td>
+<td>$61A0/$6A/2<br />#CALL:supertile($61A0, 1)</td>
+<td>$61B0/$6B/2<br />#CALL:supertile($61B0, 1)</td>
 </tr>
 
 <tr>
-<td>$61C0/$6C/2<br />#CALL:supertile($61C0)</td>
-<td>$61D0/$6D/2<br />#CALL:supertile($61D0)</td>
-<td>$61E0/$6E/2<br />#CALL:supertile($61E0)</td>
-<td>$61F0/$6F/2<br />#CALL:supertile($61F0)</td>
-<td>$6200/$70/2<br />#CALL:supertile($6200)</td>
-<td>$6210/$71/2<br />#CALL:supertile($6210)</td>
-<td>$6220/$72/2<br />#CALL:supertile($6220)</td>
-<td>$6230/$73/2<br />#CALL:supertile($6230)</td>
-<td>$6240/$74/2<br />#CALL:supertile($6240)</td>
+<td>$61C0/$6C/2<br />#CALL:supertile($61C0, 1)</td>
+<td>$61D0/$6D/2<br />#CALL:supertile($61D0, 1)</td>
+<td>$61E0/$6E/2<br />#CALL:supertile($61E0, 1)</td>
+<td>$61F0/$6F/2<br />#CALL:supertile($61F0, 1)</td>
+<td>$6200/$70/2<br />#CALL:supertile($6200, 1)</td>
+<td>$6210/$71/2<br />#CALL:supertile($6210, 1)</td>
+<td>$6220/$72/2<br />#CALL:supertile($6220, 1)</td>
+<td>$6230/$73/2<br />#CALL:supertile($6230, 1)</td>
+<td>$6240/$74/2<br />#CALL:supertile($6240, 1)</td>
 </tr>
 
 <tr>
-<td>$6250/$75/2<br />#CALL:supertile($6250)</td>
-<td>$6260/$76/2<br />#CALL:supertile($6260)</td>
-<td>$6270/$77/2<br />#CALL:supertile($6270)</td>
-<td>$6280/$78/2<br />#CALL:supertile($6280)</td>
-<td>$6290/$79/2<br />#CALL:supertile($6290)</td>
-<td>$62A0/$7A/2<br />#CALL:supertile($62A0)</td>
-<td>$62B0/$7B/2<br />#CALL:supertile($62B0)</td>
-<td>$62C0/$7C/2<br />#CALL:supertile($62C0)</td>
-<td>$62D0/$7D/2<br />#CALL:supertile($62D0)</td>
+<td>$6250/$75/2<br />#CALL:supertile($6250, 1)</td>
+<td>$6260/$76/2<br />#CALL:supertile($6260, 1)</td>
+<td>$6270/$77/2<br />#CALL:supertile($6270, 1)</td>
+<td>$6280/$78/2<br />#CALL:supertile($6280, 1)</td>
+<td>$6290/$79/2<br />#CALL:supertile($6290, 1)</td>
+<td>$62A0/$7A/2<br />#CALL:supertile($62A0, 1)</td>
+<td>$62B0/$7B/2<br />#CALL:supertile($62B0, 1)</td>
+<td>$62C0/$7C/2<br />#CALL:supertile($62C0, 1)</td>
+<td>$62D0/$7D/2<br />#CALL:supertile($62D0, 1)</td>
 </tr>
 
 <tr>
-<td>$62E0/$7E/2<br />#CALL:supertile($62E0)</td>
-<td>$62F0/$7F/2<br />#CALL:supertile($62F0)</td>
-<td>$6300/$80/2<br />#CALL:supertile($6300)</td>
-<td>$6310/$81/2<br />#CALL:supertile($6310)</td>
-<td>$6320/$82/2<br />#CALL:supertile($6320)</td>
-<td>$6330/$83/2<br />#CALL:supertile($6330)</td>
-<td>$6340/$84/2<br />#CALL:supertile($6340)</td>
-<td>$6350/$85/2<br />#CALL:supertile($6350)</td>
-<td>$6360/$86/2<br />#CALL:supertile($6360)</td>
+<td>$62E0/$7E/2<br />#CALL:supertile($62E0, 1)</td>
+<td>$62F0/$7F/2<br />#CALL:supertile($62F0, 1)</td>
+<td>$6300/$80/2<br />#CALL:supertile($6300, 1)</td>
+<td>$6310/$81/2<br />#CALL:supertile($6310, 1)</td>
+<td>$6320/$82/2<br />#CALL:supertile($6320, 1)</td>
+<td>$6330/$83/2<br />#CALL:supertile($6330, 1)</td>
+<td>$6340/$84/2<br />#CALL:supertile($6340, 1)</td>
+<td>$6350/$85/2<br />#CALL:supertile($6350, 1)</td>
+<td>$6360/$86/2<br />#CALL:supertile($6360, 1)</td>
 </tr>
 
 <tr>
-<td>$6370/$87/2<br />#CALL:supertile($6370)</td>
-<td>$6380/$88/2<br />#CALL:supertile($6380)</td>
-<td>$6390/$89/2<br />#CALL:supertile($6390)</td>
-<td>$63A0/$8A/2<br />#CALL:supertile($63A0)</td>
-<td>$63B0/$8B/3<br />#CALL:supertile($63B0)</td>
-<td>$63C0/$8C/3<br />#CALL:supertile($63C0)</td>
-<td>$63D0/$8D/3<br />#CALL:supertile($63D0)</td>
-<td>$63E0/$8E/3<br />#CALL:supertile($63E0)</td>
-<td>$63F0/$8F/3<br />#CALL:supertile($63F0)</td>
+<td>$6370/$87/2<br />#CALL:supertile($6370, 1)</td>
+<td>$6380/$88/2<br />#CALL:supertile($6380, 1)</td>
+<td>$6390/$89/2<br />#CALL:supertile($6390, 1)</td>
+<td>$63A0/$8A/2<br />#CALL:supertile($63A0, 1)</td>
+<td>$63B0/$8B/3<br />#CALL:supertile($63B0, 1)</td>
+<td>$63C0/$8C/3<br />#CALL:supertile($63C0, 1)</td>
+<td>$63D0/$8D/3<br />#CALL:supertile($63D0, 1)</td>
+<td>$63E0/$8E/3<br />#CALL:supertile($63E0, 1)</td>
+<td>$63F0/$8F/3<br />#CALL:supertile($63F0, 1)</td>
 </tr>
 
 <tr>
-<td>$6400/$90/3<br />#CALL:supertile($6400)</td>
-<td>$6410/$91/3<br />#CALL:supertile($6410)</td>
-<td>$6420/$92/3<br />#CALL:supertile($6420)</td>
-<td>$6430/$93/3<br />#CALL:supertile($6430)</td>
-<td>$6440/$94/3<br />#CALL:supertile($6440)</td>
-<td>$6450/$95/3<br />#CALL:supertile($6450)</td>
-<td>$6460/$96/3<br />#CALL:supertile($6460)</td>
-<td>$6470/$97/3<br />#CALL:supertile($6470)</td>
-<td>$6480/$98/3<br />#CALL:supertile($6480)</td>
+<td>$6400/$90/3<br />#CALL:supertile($6400, 1)</td>
+<td>$6410/$91/3<br />#CALL:supertile($6410, 1)</td>
+<td>$6420/$92/3<br />#CALL:supertile($6420, 1)</td>
+<td>$6430/$93/3<br />#CALL:supertile($6430, 1)</td>
+<td>$6440/$94/3<br />#CALL:supertile($6440, 1)</td>
+<td>$6450/$95/3<br />#CALL:supertile($6450, 1)</td>
+<td>$6460/$96/3<br />#CALL:supertile($6460, 1)</td>
+<td>$6470/$97/3<br />#CALL:supertile($6470, 1)</td>
+<td>$6480/$98/3<br />#CALL:supertile($6480, 1)</td>
 </tr>
 
 <tr>
-<td>$6490/$99/3<br />#CALL:supertile($6490)</td>
-<td>$64A0/$9A/3<br />#CALL:supertile($64A0)</td>
-<td>$64B0/$9B/3<br />#CALL:supertile($64B0)</td>
-<td>$64C0/$9C/3<br />#CALL:supertile($64C0)</td>
-<td>$64D0/$9D/3<br />#CALL:supertile($64D0)</td>
-<td>$64E0/$9E/3<br />#CALL:supertile($64E0)</td>
-<td>$64F0/$9F/3<br />#CALL:supertile($64F0)</td>
-<td>$6500/$A0/3<br />#CALL:supertile($6500)</td>
-<td>$6510/$A1/3<br />#CALL:supertile($6510)</td>
+<td>$6490/$99/3<br />#CALL:supertile($6490, 1)</td>
+<td>$64A0/$9A/3<br />#CALL:supertile($64A0, 1)</td>
+<td>$64B0/$9B/3<br />#CALL:supertile($64B0, 1)</td>
+<td>$64C0/$9C/3<br />#CALL:supertile($64C0, 1)</td>
+<td>$64D0/$9D/3<br />#CALL:supertile($64D0, 1)</td>
+<td>$64E0/$9E/3<br />#CALL:supertile($64E0, 1)</td>
+<td>$64F0/$9F/3<br />#CALL:supertile($64F0, 1)</td>
+<td>$6500/$A0/3<br />#CALL:supertile($6500, 1)</td>
+<td>$6510/$A1/3<br />#CALL:supertile($6510, 1)</td>
 </tr>
 
 <tr>
-<td>$6520/$A2/3<br />#CALL:supertile($6520)</td>
-<td>$6530/$A3/3<br />#CALL:supertile($6530)</td>
-<td>$6540/$A4/3<br />#CALL:supertile($6540)</td>
-<td>$6550/$A5/3<br />#CALL:supertile($6550)</td>
-<td>$6560/$A6/3<br />#CALL:supertile($6560)</td>
-<td>$6570/$A7/3<br />#CALL:supertile($6570)</td>
-<td>$6580/$A8/3<br />#CALL:supertile($6580)</td>
-<td>$6590/$A9/3<br />#CALL:supertile($6590)</td>
-<td>$65A0/$AA/3<br />#CALL:supertile($65A0)</td>
+<td>$6520/$A2/3<br />#CALL:supertile($6520, 1)</td>
+<td>$6530/$A3/3<br />#CALL:supertile($6530, 1)</td>
+<td>$6540/$A4/3<br />#CALL:supertile($6540, 1)</td>
+<td>$6550/$A5/3<br />#CALL:supertile($6550, 1)</td>
+<td>$6560/$A6/3<br />#CALL:supertile($6560, 1)</td>
+<td>$6570/$A7/3<br />#CALL:supertile($6570, 1)</td>
+<td>$6580/$A8/3<br />#CALL:supertile($6580, 1)</td>
+<td>$6590/$A9/3<br />#CALL:supertile($6590, 1)</td>
+<td>$65A0/$AA/3<br />#CALL:supertile($65A0, 1)</td>
 </tr>
 
 <tr>
-<td>$65B0/$AB/3<br />#CALL:supertile($65B0)</td>
-<td>$65C0/$AC/3<br />#CALL:supertile($65C0)</td>
-<td>$65D0/$AD/3<br />#CALL:supertile($65D0)</td>
-<td>$65E0/$AE/3<br />#CALL:supertile($65E0)</td>
-<td>$65F0/$AF/3<br />#CALL:supertile($65F0)</td>
-<td>$6600/$B0/3<br />#CALL:supertile($6600)</td>
-<td>$6610/$B1/3<br />#CALL:supertile($6610)</td>
-<td>$6620/$B2/3<br />#CALL:supertile($6620)</td>
-<td>$6630/$B3/3<br />#CALL:supertile($6630)</td>
+<td>$65B0/$AB/3<br />#CALL:supertile($65B0, 1)</td>
+<td>$65C0/$AC/3<br />#CALL:supertile($65C0, 1)</td>
+<td>$65D0/$AD/3<br />#CALL:supertile($65D0, 1)</td>
+<td>$65E0/$AE/3<br />#CALL:supertile($65E0, 1)</td>
+<td>$65F0/$AF/3<br />#CALL:supertile($65F0, 1)</td>
+<td>$6600/$B0/3<br />#CALL:supertile($6600, 1)</td>
+<td>$6610/$B1/3<br />#CALL:supertile($6610, 1)</td>
+<td>$6620/$B2/3<br />#CALL:supertile($6620, 1)</td>
+<td>$6630/$B3/3<br />#CALL:supertile($6630, 1)</td>
 </tr>
 
 <tr>
-<td>$6640/$B4/3<br />#CALL:supertile($6640)</td>
-<td>$6650/$B5/3<br />#CALL:supertile($6650)</td>
-<td>$6660/$B6/3<br />#CALL:supertile($6660)</td>
-<td>$6670/$B7/3<br />#CALL:supertile($6670)</td>
-<td>$6680/$B8/3<br />#CALL:supertile($6680)</td>
-<td>$6690/$B9/3<br />#CALL:supertile($6690)</td>
-<td>$66A0/$BA/3<br />#CALL:supertile($66A0)</td>
-<td>$66B0/$BB/3<br />#CALL:supertile($66B0)</td>
-<td>$66C0/$BC/3<br />#CALL:supertile($66C0)</td>
+<td>$6640/$B4/3<br />#CALL:supertile($6640, 1)</td>
+<td>$6650/$B5/3<br />#CALL:supertile($6650, 1)</td>
+<td>$6660/$B6/3<br />#CALL:supertile($6660, 1)</td>
+<td>$6670/$B7/3<br />#CALL:supertile($6670, 1)</td>
+<td>$6680/$B8/3<br />#CALL:supertile($6680, 1)</td>
+<td>$6690/$B9/3<br />#CALL:supertile($6690, 1)</td>
+<td>$66A0/$BA/3<br />#CALL:supertile($66A0, 1)</td>
+<td>$66B0/$BB/3<br />#CALL:supertile($66B0, 1)</td>
+<td>$66C0/$BC/3<br />#CALL:supertile($66C0, 1)</td>
 </tr>
 
 <tr>
-<td>$66D0/$BD/3<br />#CALL:supertile($66D0)</td>
-<td>$66E0/$BE/3<br />#CALL:supertile($66E0)</td>
-<td>$66F0/$BF/3<br />#CALL:supertile($66F0)</td>
-<td>$6700/$C0/3<br />#CALL:supertile($6700)</td>
-<td>$6710/$C1/3<br />#CALL:supertile($6710)</td>
-<td>$6720/$C2/3<br />#CALL:supertile($6720)</td>
-<td>$6730/$C3/3<br />#CALL:supertile($6730)</td>
-<td>$6740/$C4/3<br />#CALL:supertile($6740)</td>
-<td>$6750/$C5/3<br />#CALL:supertile($6750)</td>
+<td>$66D0/$BD/3<br />#CALL:supertile($66D0, 1)</td>
+<td>$66E0/$BE/3<br />#CALL:supertile($66E0, 1)</td>
+<td>$66F0/$BF/3<br />#CALL:supertile($66F0, 1)</td>
+<td>$6700/$C0/3<br />#CALL:supertile($6700, 1)</td>
+<td>$6710/$C1/3<br />#CALL:supertile($6710, 1)</td>
+<td>$6720/$C2/3<br />#CALL:supertile($6720, 1)</td>
+<td>$6730/$C3/3<br />#CALL:supertile($6730, 1)</td>
+<td>$6740/$C4/3<br />#CALL:supertile($6740, 1)</td>
+<td>$6750/$C5/3<br />#CALL:supertile($6750, 1)</td>
 </tr>
 
 <tr>
-<td>$6760/$C6/3<br />#CALL:supertile($6760)</td>
-<td>$6770/$C7/3<br />#CALL:supertile($6770)</td>
-<td>$6780/$C8/3<br />#CALL:supertile($6780)</td>
-<td>$6790/$C9/3<br />#CALL:supertile($6790)</td>
-<td>$67A0/$CA/3<br />#CALL:supertile($67A0)</td>
-<td>$67B0/$CB/3<br />#CALL:supertile($67B0)</td>
-<td>$67C0/$CC/2<br />#CALL:supertile($67C0)</td>
-<td>$67D0/$CD/2<br />#CALL:supertile($67D0)</td>
-<td>$67E0/$CE/2<br />#CALL:supertile($67E0)</td>
+<td>$6760/$C6/3<br />#CALL:supertile($6760, 1)</td>
+<td>$6770/$C7/3<br />#CALL:supertile($6770, 1)</td>
+<td>$6780/$C8/3<br />#CALL:supertile($6780, 1)</td>
+<td>$6790/$C9/3<br />#CALL:supertile($6790, 1)</td>
+<td>$67A0/$CA/3<br />#CALL:supertile($67A0, 1)</td>
+<td>$67B0/$CB/3<br />#CALL:supertile($67B0, 1)</td>
+<td>$67C0/$CC/2<br />#CALL:supertile($67C0, 1)</td>
+<td>$67D0/$CD/2<br />#CALL:supertile($67D0, 1)</td>
+<td>$67E0/$CE/2<br />#CALL:supertile($67E0, 1)</td>
 </tr>
 
 <tr>
-<td>$67F0/$CF/2<br />#CALL:supertile($67F0)</td>
-<td>$6800/$D0/2<br />#CALL:supertile($6800)</td>
-<td>$6810/$D1/2<br />#CALL:supertile($6810)</td>
-<td>$6820/$D2/2<br />#CALL:supertile($6820)</td>
-<td>$6830/$D3/2<br />#CALL:supertile($6830)</td>
-<td>$6840/$D4/2<br />#CALL:supertile($6840)</td>
-<td>$6850/$D5/2<br />#CALL:supertile($6850)</td>
-<td>$6860/$D6/2<br />#CALL:supertile($6860)</td>
-<td>$6870/$D7/2<br />#CALL:supertile($6870)</td>
+<td>$67F0/$CF/2<br />#CALL:supertile($67F0, 1)</td>
+<td>$6800/$D0/2<br />#CALL:supertile($6800, 1)</td>
+<td>$6810/$D1/2<br />#CALL:supertile($6810, 1)</td>
+<td>$6820/$D2/2<br />#CALL:supertile($6820, 1)</td>
+<td>$6830/$D3/2<br />#CALL:supertile($6830, 1)</td>
+<td>$6840/$D4/2<br />#CALL:supertile($6840, 1)</td>
+<td>$6850/$D5/2<br />#CALL:supertile($6850, 1)</td>
+<td>$6860/$D6/2<br />#CALL:supertile($6860, 1)</td>
+<td>$6870/$D7/2<br />#CALL:supertile($6870, 1)</td>
 </tr>
 
 <tr>
-<td>$6880/$D8/2<br />#CALL:supertile($6880)</td>
-<td>$6890/$D9/2<br />#CALL:supertile($6890)</td>
+<td>$6880/$D8/2<br />#CALL:supertile($6880, 1)</td>
+<td>$6890/$D9/2<br />#CALL:supertile($6890, 1)</td>
 </tr>
 </table>
 
-<h4>Unused super tiles</h4>
+<h5>Unused super tiles</h5>
 
 <p>Super tiles $4F (wall variant) and $9A (grassy tunnel exit) are unused.</p>
 

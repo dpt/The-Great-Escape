@@ -49,21 +49,25 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         str     = self.decode_string(cwd, addr + 3, nbytes)
         return "screen address $%X, length $%X, string='%s'" % (scraddr, nbytes, str)
 
-    def tile(self, cwd, tile_index, supertile_index):
+    def tile(self, cwd, tile_index, supertile_index, mode):
         """ Tile and supertile index -> Udg. """
 
         if supertile_index < 45:
             data = 0x8590 # ext tiles 1
+            attr = 70 # bright yellow over black
         elif supertile_index < 139 or supertile_index >= 204:
             data = 0x8A18 # ext tiles 2
+            attr = 68 # bright green over black
         else:
             data = 0x90F8 # ext tiles 3
+            attr = 69 # bright cyan over black
 
-        attr = 7
+        if mode == 0:
+            attr = 7 # white over black
         a = data + tile_index * 8
         return Udg(attr, self.snapshot[a : a + 8])
 
-    def supertile(self, cwd, addr):
+    def supertile(self, cwd, addr, mode):
         """ Supertile address -> image. """
 
         stile = (addr - 0x5B00) // 16
@@ -74,7 +78,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         for i in range(4 * 4):
             if i % 4 == 0:
                 udg_array.append([]) # start new row
-            udg_array[-1].append(self.tile(cwd, self.snapshot[addr + i], stile))
+            udg_array[-1].append(self.tile(cwd, self.snapshot[addr + i], stile, mode))
 
         img_path_id = 'ScreenshotImagePath'
         fname = 'supertile-%X' % stile
@@ -86,11 +90,11 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
     def all_supertiles(self, cwd, unused_arg):
         s = ""
         for addr in range(0x5B00, 0x68A0, 16):
-            s += self.supertile(cwd, addr)
+            s += self.supertile(cwd, addr, 0)
 
         return s
 
-    def map(self, cwd, addr, width, height):
+    def map(self, cwd, addr, width, height, mode):
 
         # Build tile UDG array
         udg_array = []
@@ -99,10 +103,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             udg_array.append([]) # start new row
             for x in range(width * 4):
                 stileidx = self.snapshot[addr + (y // 4) * width + (x // 4)]
-                udg_array[-1].append(self.tile(cwd, self.snapshot[0x5B00 + stileidx * 16 + (y & 3) * 4 + (x & 3)], stileidx))
+                udg_array[-1].append(self.tile(cwd, self.snapshot[0x5B00 + stileidx * 16 + (y & 3) * 4 + (x & 3)], stileidx, mode))
 
         img_path_id = 'ScreenshotImagePath'
-        fname = 'map'
+        fname = 'map-%d' % mode
         img_path = self.image_path(fname, img_path_id)
         self.write_image(img_path, udg_array, scale=1)
 
