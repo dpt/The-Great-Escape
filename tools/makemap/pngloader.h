@@ -1,4 +1,4 @@
-/* pngloader.h */
+/* pngloader.h -- load PNG images */
 
 #ifndef PNGLOADER_H
 #define PNGLOADER_H

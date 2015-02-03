@@ -1,4 +1,4 @@
-/* pngloader.c */
+/* pngloader.c -- load PNG images */
 
 #include <stdlib.h>
 

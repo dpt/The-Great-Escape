@@ -1,4 +1,4 @@
-/* makemaps.h */
+/* makemaps.h -- map making */
 
 #ifndef MAKEMAPS_H
 #define MAKEMAPS_H

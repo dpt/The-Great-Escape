@@ -1,4 +1,4 @@
-/* groupsloader.c */
+/* groupsloader.c -- load grouping information from a text file */
 
 #include <assert.h>
 #include <limits.h>

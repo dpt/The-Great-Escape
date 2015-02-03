@@ -1,4 +1,4 @@
-/* groupsloader.h */
+/* groupsloader.h -- load grouping information from a text file */
 
 #ifndef GROUPSLOADER_H
 #define GROUPSLOADER_H

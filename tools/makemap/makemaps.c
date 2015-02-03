@@ -1,4 +1,4 @@
-/* makemaps.c */
+/* makemaps.c -- map making */
 
 #include <assert.h>
 #include <limits.h>
