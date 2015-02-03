@@ -6,10 +6,10 @@
 typedef struct config
 {
   const char *program_name;
-  int         verbosity;
-  int         tilesize;
-  const char *groups_file;
-  const char *image_file;
+  int         verbosity;    /* 0 => quiet, 1 => chatty, 2+ => noisy */
+  int         tilesize;     /* e.g 32 */
+  const char *groups_file;  /* filename of groups file */
+  const char *image_file;   /* filename of input image */
 }
 config_t;
 
