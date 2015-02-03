@@ -22,10 +22,10 @@ result_t read_png_file(pngloader_t *png,
                        const char  *file_name,
                        int          verbosity)
 {
-  result_t  err = result_OK;
-  FILE     *fp;
-  png_byte  header[8]; /* 8 is the maximum size that can be checked */
-  int       y;
+  result_t err = result_OK;
+  FILE    *fp;
+  png_byte header[8]; /* 8 is the maximum size that can be checked */
+  int      y;
 
   /* open file and test for it being a png */
   fp = fopen(file_name, "rb");
