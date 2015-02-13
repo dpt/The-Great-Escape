@@ -8,7 +8,7 @@
 #include "base/result.h"
 #include "datastruct/vector.h"
 
-// Q: Why not make tilearray_t use a vector? I'm using vector anyway for the poses.
+// Q: Why not make tilearray_t use a vector? I'm using vector anyway for the tilecoord arrays.
 
 typedef struct tilearray
 {
