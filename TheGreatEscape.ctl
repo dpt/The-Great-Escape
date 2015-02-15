@@ -1333,7 +1333,7 @@ D $6B79 Note that the top hut has prisoners permanently in bed.
 b $6B85 roomdef_bounds
 ; @label:$6B85=roomdef_bounds
 D $6B85 Room dimensions. Pairs of min, max.
-D $6B85,40,4 10x 4-byte structures which are range checked by routine at #R$B29F.
+D $6B85 10x 4-byte structures which are range checked by routine at #R$B29F.
 
 ; ------------------------------------------------------------------------------
 
@@ -2252,7 +2252,7 @@ W $7738 46 long array of pointers to object tile refs.
 
 w $783A word_783A
 ; @label:$783A=word_783A
-D $783A,156,2 78 two-byte words
+D $783A 78 two-byte words
   $783A 0x6844
   $783C 0x5444
   $783E 0x4644
@@ -2336,7 +2336,7 @@ D $783A,156,2 78 two-byte words
 
 b $78D6 door_positions
 ; @label:$78D6=door_positions
-D $78D6,496,4 124 four-byte structs (<- sub 69DC)
+D $78D6 124 four-byte structs (<- sub 69DC)
 D $78D6 #define BYTE0(room,other) ((room << 2) | other)
 ; room could be a target or a destination. unsure presently.
 ; suspect 4th byte could be a scaled height (would it be four times larger for internal coords?)
@@ -9585,7 +9585,7 @@ b $CD9A character_meta_data
 b $CDAA byte_CDAA
 ; @label:$CDAA=byte_CDAA
 D $CDAA Likely direction transitions.
-D $CDAA,72,9 Groups of nine. (<- called_from_main_loop_9)
+D $CDAA Groups of nine. (<- called_from_main_loop_9)
 
 ; ------------------------------------------------------------------------------
 
@@ -11389,7 +11389,7 @@ c $F068 jump_to_main
 ; ------------------------------------------------------------------------------
 
 g $F06B User-defined keys.
-D $F06B,10,2 Pairs of (port, key mask).
+D $F06B Pairs of (port, key mask).
 B $F06B keydefs
 ; @label:$F06B=keydefs
 
