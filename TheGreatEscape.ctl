@@ -632,9 +632,9 @@
 ;          0x07 -> character faces bottom left  (crawling)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_thing_to_plot ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by sub_AF8F ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_thing_to_plot ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
-; b $8017 sub_AF8F sets this to stashed_A
+; b $8017 touch sets this to stashed_A
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
 ; b $801C room index: cleared to zero by action_papers, set to room_24_solitary by solitary, copied to room_index by transition
@@ -3107,7 +3107,7 @@ W $81A8 saved_height
 
 ; ------------------------------------------------------------------------------
 
-g $81AA Used by sub_AF8F only.
+g $81AA Used by touch only.
 ; @label:$81AA=stashed_A
 B $81AA stashed_A
 
@@ -6533,8 +6533,8 @@ B $AF8E bribed_character
 
 ; ------------------------------------------------------------------------------
 
-c $AF8F sub_AF8F
-; @label:$AF8F=sub_AF8F
+c $AF8F touch
+; @label:$AF8F=touch
 D $AF8F Door handling, bounds checking,
 R $AF8F I:IY Pointer to visible character block.
   $AF8F EX AF,AF'
@@ -7310,7 +7310,7 @@ c $B5CE called_from_main_loop_9
   $B63E     B = A;
   $B63F     HL -= BC;
   $B641     saved_height = HL;
-  $B644     sub_AF8F();
+  $B644     touch();
   $B647     if (!Z) goto pop_next;
   $B64A     IY[0x0C]--;
   $B64D   %>
@@ -7350,7 +7350,7 @@ c $B5CE called_from_main_loop_9
   $B696     DE++;
   $B697     A = *DE;
   $B698     EX AF,AF'
-  $B699     sub_AF8F();
+  $B699     touch();
   $B69C     if (!Z) goto pop_next;
   $B69F     IY[0x0C]++; %>
   $B6A2   HL = IY;
