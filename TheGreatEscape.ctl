@@ -663,8 +663,8 @@
 ; SKOOLKIT ASSEMBLY DIRECTIVES
 ; //////////////////////////////////////////////////////////////////////////////
 
-; @set-line-width:$4000=240
-; @set-warnings:$4000=1
+@ $4000 set-line-width=240
+@ $4000 set-warnings=1
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; CONTROL DIRECTIVES
@@ -672,14 +672,14 @@
 
 b $4000 screen
 D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
-; @label:$4000=screen
+@ $4000 label=screen
 B $4000,6144,32 Pixels.
 B $5800,768,32 Attributes.
 
 ; ------------------------------------------------------------------------------
 
 b $5B00 super_tiles
-; @label:$5B00=super_tiles
+@ $5B00 label=super_tiles
 D $5B00 Super tiles.
 D $5B00 The game's exterior map (at $BCEE) is constructed of references to these.
 D $5B00 Each super tile is a 4x4 array of tile indices.
@@ -905,19 +905,19 @@ B $6890,16,4 super_tile $D9 #HTML[#CALL:supertile($6890, 0)]
 ; ------------------------------------------------------------------------------
 
 g $68A0 room_index
-; @label:$68A0=room_index
+@ $68A0 label=room_index
 D $68A0 Index of the current room, or 0 when outside.
 
 ; ------------------------------------------------------------------------------
 
 g $68A1 current_door
-; @label:$68A1=current_door
+@ $68A1 label=current_door
 D $68A1 Holds current door.
 
 ; ------------------------------------------------------------------------------
 
 c $68A2 transition
-; @label:$68A2=transition
+@ $68A2 label=transition
 D $68A2 Looks like it's called to transition to a new room.
 R $68A2 I:HL Pointer to location?
 R $68A2 I:IY Pointer to visible character?
@@ -928,7 +928,7 @@ R $68A2 I:IY Pointer to visible character?
   $68A8 L = A + 0x0F; // $8xxF (position on Y axis)
   $68AB A = IY[0x1C]; // $8x1C (likely room index)
   $68AE if (A == 0) <% // outdoors
-D $68B2 Set position on Y axis, X axis and height (dividing by 4).
+N $68B2 Set position on Y axis, X axis and height (dividing by 4).
   $68B2   B = 3; // 3 iterations
   $68B4   do <% PUSH BC
   $68B5     A = *DE++;
@@ -938,7 +938,7 @@ D $68B2 Set position on Y axis, X axis and height (dividing by 4).
   $68BE     POP BC
   $68BF   %> while (--B); %>
   $68C1 else <% // indoors
-D $68C3 Set position on Y axis, X axis and height (copying).
+N $68C3 Set position on Y axis, X axis and height (copying).
   $68C3   B = 3; // 3 iterations
   $68C5   do <% *HL++ = *DE++;
   $68C8     *HL++ = 0;
@@ -946,7 +946,7 @@ D $68C3 Set position on Y axis, X axis and height (copying).
   $68CE POP AF
   $68CF L = A;
   $68D0 if (A) <% reset_visible_character(); return; %> // exit via
-D $68D7 HL points to the hero vischar at this point.
+N $68D7 HL points to the hero vischar at this point.
   $68D7 *++HL &= ~vischar_BYTE1_BIT7; // $8001
   $68DA A = ($801C); // room index
   $68DD room_index = A;
@@ -960,7 +960,7 @@ D $68D7 HL points to the hero vischar at this point.
 ; fallthrough
 
 c $68F4 enter_room
-; @label:$68F4=enter_room
+@ $68F4 label=enter_room
   $68F4 plot_game_window_x = 0;
   $68FA setup_room();
   $68FD plot_interior_tiles();
@@ -975,17 +975,17 @@ c $68F4 enter_room
 ; fallthrough
 
 c $691A squash_stack_goto_main
-; @label:$691A=squash_stack_goto_main
+@ $691A label=squash_stack_goto_main
   $691A SP = $FFFF;
   $691D goto main_loop;
 
 ; ------------------------------------------------------------------------------
 
 c $6920 set_hero_sprite_for_room
-; @label:$6920=set_hero_sprite_for_room
+@ $6920 label=set_hero_sprite_for_room
 D $6920 Called when changing rooms.
 D $6920 For tunnels this forces the hero sprite to 'prisoner' and sets the crawl flag appropriately.
-; @nowarn:$6920
+@ $6920 nowarn
   $6920 HL = $800D;
   $6923 *HL++ = 0x80; // likely a character direction
   $6926 if (room_index >= room_29_secondtunnelstart) <%
@@ -998,7 +998,7 @@ D $6920 For tunnels this forces the hero sprite to 'prisoner' and sets the crawl
 ; ------------------------------------------------------------------------------
 
 c $6939 setup_movable_items
-; @label:$6939=setup_movable_items
+@ $6939 label=setup_movable_items
   $6939 reset_nonplayer_visible_characters();
   $693C A = room_index;
   $693F      if (A == room_2_hut2left) setup_stove1();
@@ -1024,20 +1024,20 @@ c $6939 setup_movable_items
 ; fallthrough
 
 ; movable item takes the first non-player vischar
-; @label:$697D=setup_movable_item
-; @nowarn:$697D
+@ $697D label=setup_movable_item
+@ $697D nowarn
   $697D setup_movable_item: $8020 = A; // character index
   $6980 memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F
-; @nowarn:$6988
+@ $6988 nowarn
   $6988 memcpy($8021, movable_item_reset_data, 14);
   $6993 $803C = room_index;
-; @nowarn:$6999
+@ $6999 nowarn
   $6999 HL = $8020;
   $699C reset_position(); // reset item vischar
   $699F return;
 
-D $69A0 Fourteen bytes of reset data.
-; @label:$69A0=movable_item_reset_data
+N $69A0 Fourteen bytes of reset data.
+@ $69A0 label=movable_item_reset_data
 B $69A0 flags
 W $69A1 target
 B $69A3,3,3 p04
@@ -1051,20 +1051,20 @@ B $69AD b0E
 b $69AE movable_items
 D $69AE struct movable_item { word y_coord, x_coord, vertical_offset; const sprite *; byte terminator; };
 D $69AE Sub-struct of vischar ($802F..$8038).
-; @label:$69AE=movable_item_stove1
+@ $69AE label=movable_item_stove1
 W $69AE,6,6 pos: 62, 35, 16
 W $69B4 sprite: sprite_stove
 B $69B6 b17: 0
 D $69AE struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
 
-; @label:$69B7=movable_item_crate
-D $69B7 struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
+@ $69B7 label=movable_item_crate
+N $69B7 struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
 W $69B7,6,6 pos: 55, 54, 14
 W $69BD sprite: sprite_crate
 B $69BF b17: 0
 
-; @label:$69C0=movable_item_stove2
-D $69C0 struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
+@ $69C0 label=movable_item_stove2
+N $69C0 struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
 W $69C0,6,6 pos: 62, 35, 16
 W $69C6 sprite: sprite_stove
 B $69C8 b17: 0
@@ -1072,9 +1072,9 @@ B $69C8 b17: 0
 ; ------------------------------------------------------------------------------
 
 c $69C9 reset_nonplayer_visible_characters
-; @label:$69C9=reset_nonplayer_visible_characters
+@ $69C9 label=reset_nonplayer_visible_characters
 D $69C9 Reset all non-player visible characters.
-; @nowarn:$69C9
+@ $69C9 nowarn
   $69C9 HL = $8020; // iterate over non-player characters
   $69CC B = 7; // 7 iterations
   $69CF do <% PUSH BC
@@ -1089,7 +1089,7 @@ D $69C9 Reset all non-player visible characters.
 ; ------------------------------------------------------------------------------
 
 c $69DC setup_doors
-; @label:$69DC=setup_doors
+@ $69DC label=setup_doors
 D $69DC Looks like it's filling door_related with stuff from the door_positions table.
 D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
   $69DC -
@@ -1114,7 +1114,7 @@ D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
 ; ------------------------------------------------------------------------------
 
 c $6A12 get_door_position
-; @label:$6A12=get_door_position
+@ $6A12 label=get_door_position
 D $6A12 Index turns into door_position struct pointer.
 R $6A12 I:A  Index of ...
 R $6A12 O:HL Pointer to ...
@@ -1126,7 +1126,7 @@ R $6A12 O:DE Corrupted.
 ; ------------------------------------------------------------------------------
 
 c $6A27 wipe_visible_tiles
-; @label:$6A27=wipe_visible_tiles
+@ $6A27 label=wipe_visible_tiles
 D $6A27 Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
   $6A27 memset($F0F8, 0, 408);
   $6A34 return;
@@ -1134,10 +1134,10 @@ D $6A27 Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
 ; ------------------------------------------------------------------------------
 
 c $6A35 setup_room
-; @label:$6A35=setup_room
+@ $6A35 label=setup_room
   $6A35 wipe_visible_tiles();
   $6A38 HL = rooms_and_tunnels[room_index - 1];
-; @isub:$6A3C=LD HL,rooms_and_tunnels - 2
+@ $6A3C isub=LD HL,rooms_and_tunnels - 2
   $6A48 PUSH HL
   $6A49 setup_doors();
   $6A4C POP HL
@@ -1165,7 +1165,7 @@ c $6A35 setup_room
   $6A88     -
   $6A89     - %>
   $6A8A   while (--B); %>
-D $6A8C Plot all objects.
+N $6A8C Plot all objects.
   $6A8C B = *HL; // count of objects  // sample: HL -> $6E25 (room_16_corridor + 5)
   $6A8D if (B == 0) return;
   $6A90 HL++;
@@ -1198,7 +1198,7 @@ D $6A8C Plot all objects.
 ; ------------------------------------------------------------------------------
 
 c $6AB5 expand_object
-; @label:$6AB5=expand_object
+@ $6AB5 label=expand_object
 D $6AB5 Expands RLE-encoded objects to a full set of tile references.
 D $6AB5 Format:
 D $6AB5 <w> <h>: width, height
@@ -1215,7 +1215,7 @@ R $6AB5 O:HL Corrupted.
   $6AC1 B = *HL++; // width
   $6AC3 C = *HL++; // height
   $6AC5 ($6AE6 + 1) = B; // self modify (== width)
-; @isub:$6AC6=LD (expand_object_width + 1),A
+@ $6AC6 isub=LD (expand_object_width + 1),A
   $6AC9 do <% do <% expand: A = *HL;
   $6ACA     if (A == objecttile_ESCAPE) <%
   $6ACE       HL++;
@@ -1228,14 +1228,14 @@ R $6AB5 O:HL Corrupted.
   $6AE2     HL++;
   $6AE3     DE++;
   $6AE4   %> while (--B);
-; @label:$6AE6=expand_object_width
+@ $6AE6 label=expand_object_width
   $6AE6   B = 1; // self modified
   $6AE8   DE += 24 - B;
   $6AF0 %> while (--C); // for each row
   $6AF3 return;
 ;
 ; 128..255 case
-; @label:$6AF4=expand_object_128_to_255
+@ $6AF4 label=expand_object_128_to_255
   $6AF4 A = *HL++ & 0x7F;
   $6AF7 -
   $6AF9 Adash = *HL;
@@ -1245,7 +1245,7 @@ R $6AB5 O:HL Corrupted.
   $6B00   DE++;
   $6B01   DJNZ $6B12
 ; ran out of width
-; @isub:$6B03=LD A,(expand_object_width + 1)
+@ $6B03 isub=LD A,(expand_object_width + 1)
   $6B03   LD Adash,($6AE6 + 1)  // Adash = width
   $6B06   B = Adash;
   $6B07   DE += 24 - B; // stride
@@ -1258,10 +1258,10 @@ R $6AB5 O:HL Corrupted.
   $6B17 goto expand;
 ;
 ; 64..127 case
-; @label:$6B19=expand_object_64_to_127
+@ $6B19 label=expand_object_64_to_127
   $6B19 A = 60; // opcode of 'INC A'
-D $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
-; @nowarn:$6B1B
+N $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+@ $6B1B nowarn
   $6B1B ($6B28) = A;
   $6B1E A = *HL++ & 0x0F;
   $6B21 -
@@ -1269,11 +1269,11 @@ D $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence 
   $6B24 -
   $6B25 do <% -
   $6B26   *DE++ = Adash;
-; @label:$6B28=expand_object_increment
+@ $6B28 label=expand_object_increment
   $6B28   INC Adash // self modified
   $6B29   DJNZ $6B3B
   $6B2B   PUSH AFdash
-; @isub:$6B2C=LD A,(expand_object_width + 1)
+@ $6B2C isub=LD A,(expand_object_width + 1)
   $6B2C   LD Adash,($6AE6 + 1)  // Adash = width
   $6B30   DE += 24 - Adash; // stride
   $6B38   POP AFdash
@@ -1287,7 +1287,7 @@ D $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence 
 ; ------------------------------------------------------------------------------
 
 c $6B42 plot_interior_tiles
-; @label:$6B42=plot_interior_tiles
+@ $6B42 label=plot_interior_tiles
 D $6B42 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer.
 R $6B42 O:A      Corrupted.
 R $6B42 O:BC     Corrupted.
@@ -1318,7 +1318,7 @@ R $6B42 O:HLdash Corrupted.
 ; ------------------------------------------------------------------------------
 
 w $6B79 beds
-; @label:$6B79=beds
+@ $6B79 label=beds
 D $6B79 6x pointers to bed. These are the beds of active prisoners.
 D $6B79 Note that the top hut has prisoners permanently in bed.
   $6B79 &roomdef_3_hut2_right[29]
@@ -1331,14 +1331,14 @@ D $6B79 Note that the top hut has prisoners permanently in bed.
 ; ------------------------------------------------------------------------------
 
 b $6B85 roomdef_bounds
-; @label:$6B85=roomdef_bounds
+@ $6B85 label=roomdef_bounds
 D $6B85 Room dimensions. Pairs of min, max.
 D $6B85 10x 4-byte structures which are range checked by routine at #R$B29F.
 
 ; ------------------------------------------------------------------------------
 
 w $6BAD rooms_and_tunnels
-; @label:$6BAD=rooms_and_tunnels
+@ $6BAD label=rooms_and_tunnels
 D $6BAD Rooms and tunnels.
 D $6BAD Array of pointers to rooms (starting with room 1).
   $6BAD &roomdef_1_hut1_right,
@@ -1369,7 +1369,7 @@ D $6BAD Array of pointers to rooms (starting with room 1).
   $6BDF &roomdef_28_hut1_left, // unused
   $6BE1 &roomdef_28_hut1_left, // unused
   $6BE3 &roomdef_28_hut1_left,
-D $6BE5 Array of pointers to tunnels.
+N $6BE5 Array of pointers to tunnels.
   $6BE5 &roomdef_29_second_tunnel_start,
   $6BE7 &roomdef_30,
   $6BE9 &roomdef_31,
@@ -1397,7 +1397,7 @@ D $6BE5 Array of pointers to tunnels.
 
 b $6C15 room_defs
 D $6C15 roomdef_1_hut1_right
-; @label:$6C15=roomdef_1_hut1_right
+@ $6C15 label=roomdef_1_hut1_right
   $6C15,1 0
   $6C16,1 3 // count of boundaries
   $6C17,4 { 54, 68, 23, 34 }, // boundary
@@ -1417,8 +1417,8 @@ D $6C15 roomdef_1_hut1_right
   $6C41,3 { interiorobject_EMPTY_BED,                   2,  9 },
   $6C44,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
-D $6C47 roomdef_2_hut2_left
-; @label:$6C47=roomdef_2_hut2_left
+N $6C47 roomdef_2_hut2_left
+@ $6C47 label=roomdef_2_hut2_left
   $6C47,1 1
   $6C48,1 2 // count of boundaries
   $6C49,4 { 48, 64, 43, 56 }, // boundary
@@ -1430,14 +1430,14 @@ D $6C47 roomdef_2_hut2_left
   $6C58,3 { interiorobject_WIDE_WINDOW,                 6,  2 },
   $6C5B,3 { interiorobject_DOOR_FRAME_40,              16,  5 },
   $6C5E,3 { interiorobject_STOVE_PIPE,                  4,  5 },
-; @label:$6C61=roomdef_2_hut2_left_heros_bed
+@ $6C61 label=roomdef_2_hut2_left_heros_bed
   $6C61,3 { interiorobject_OCCUPIED_BED,                8,  7 },
   $6C64,3 { interiorobject_DOOR_FRAME_16,               7,  9 },
   $6C67,3 { interiorobject_TABLE_2,                    11, 12 },
   $6C6A,3 { interiorobject_SMALL_TUNNEL_ENTRANCE,       5,  9 },
 
-D $6C6D roomdef_3_hut2_right
-; @label:$6C6D=roomdef_3_hut2_right
+N $6C6D roomdef_3_hut2_right
+@ $6C6D label=roomdef_3_hut2_right
   $6C6D,1 0
   $6C6E,1 3 // count of boundaries
   $6C6F,4 { 54, 68, 23, 34 }, // boundary
@@ -1449,19 +1449,19 @@ D $6C6D roomdef_3_hut2_right
   $6C81,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6C84,3 { interiorobject_WIDE_WINDOW,                 8,  0 },
   $6C87,3 { interiorobject_WIDE_WINDOW,                 2,  3 },
-; @label:$6C8A=roomdef_3_hut2_right_bed_A
+@ $6C8A label=roomdef_3_hut2_right_bed_A
   $6C8A,3 { interiorobject_OCCUPIED_BED,               10,  5 },
-; @label:$6C8D=roomdef_3_hut2_right_bed_B
+@ $6C8D label=roomdef_3_hut2_right_bed_B
   $6C8D,3 { interiorobject_OCCUPIED_BED,                6,  7 },
-; @label:$6C90=roomdef_3_hut2_right_bed_C
+@ $6C90 label=roomdef_3_hut2_right_bed_C
   $6C90,3 { interiorobject_OCCUPIED_BED,                2,  9 },
   $6C93,3 { interiorobject_CHEST_OF_DRAWERS,           16,  5 },
   $6C96,3 { interiorobject_DOOR_FRAME_15,              15,  8 },
   $6C99,3 { interiorobject_SHORT_WARDROBE,             18,  5 },
   $6C9C,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
-D $6C9F roomdef_4_hut3_left
-; @label:$6C9F=roomdef_4_hut3_left
+N $6C9F roomdef_4_hut3_left
+@ $6C9F label=roomdef_4_hut3_left
   $6C9F,1 1
   $6CA0,1 2 // count of boundaries
   $6CA1,4 { 24, 40, 24, 42 }, // boundary
@@ -1479,8 +1479,8 @@ D $6C9F roomdef_4_hut3_left
   $6CC3,3 { interiorobject_CHAIR_POINTING_BOTTOM_LEFT, 13, 10 },
   $6CC6,3 { interiorobject_STUFF_31,                   14, 14 },
 
-D $6CC9 roomdef_5_hut3_right
-; @label:$6CC9=roomdef_5_hut3_right
+N $6CC9 roomdef_5_hut3_right
+@ $6CC9 label=roomdef_5_hut3_right
   $6CC9,1 0
   $6CCA,1 3 // count of boundaries
   $6CCB,4 { 54, 68, 23, 34 }, // boundary
@@ -1492,19 +1492,19 @@ D $6CC9 roomdef_5_hut3_right
   $6CDD,3 { interiorobject_ROOM_OUTLINE_2,              1,  4 },
   $6CE0,3 { interiorobject_WIDE_WINDOW,                 8,  0 },
   $6CE3,3 { interiorobject_WIDE_WINDOW,                 2,  3 },
-; @label:$6CE6=roomdef_3_hut2_right_bed_D
+@ $6CE6 label=roomdef_3_hut2_right_bed_D
   $6CE6,3 { interiorobject_OCCUPIED_BED,               10,  5 },
-; @label:$6CE9=roomdef_3_hut2_right_bed_E
+@ $6CE9 label=roomdef_3_hut2_right_bed_E
   $6CE9,3 { interiorobject_OCCUPIED_BED,                6,  7 },
-; @label:$6CEC=roomdef_3_hut2_right_bed_F
+@ $6CEC label=roomdef_3_hut2_right_bed_F
   $6CEC,3 { interiorobject_OCCUPIED_BED,                2,  9 },
   $6CEF,3 { interiorobject_DOOR_FRAME_15,              15,  8 },
   $6CF2,3 { interiorobject_CHEST_OF_DRAWERS,           16,  5 },
   $6CF5,3 { interiorobject_CHEST_OF_DRAWERS,           20,  7 },
   $6CF8,3 { interiorobject_DOOR_FRAME_16,               7, 10 },
 
-D $6CFB roomdef_6_corridor
-; @label:$6CFB=roomdef_6_corridor
+N $6CFB roomdef_6_corridor
+@ $6CFB label=roomdef_6_corridor
   $6CFB,1 2
   $6CFC,1 0 // count of boundaries
   $6CFD,1 1 // count of mask bytes
@@ -1516,8 +1516,8 @@ D $6CFB roomdef_6_corridor
   $6D09,3 { interiorobject_DOOR_FRAME_16,               5, 10 },
   $6D0C,3 { interiorobject_SHORT_WARDROBE,             18,  6 },
 
-D $6D0F roomdef_9_crate
-; @label:$6D0F=roomdef_9_crate
+N $6D0F roomdef_9_crate
+@ $6D0F label=roomdef_9_crate
   $6D0F,1 1
   $6D10,1 1 // count of boundaries
   $6D11,4 { 58, 64, 28, 42 }, // boundary
@@ -1535,8 +1535,8 @@ D $6D0F roomdef_9_crate
   $6D31,3 { interiorobject_SMALL_CRATE,                 6,  8 },
   $6D34,3 { interiorobject_SMALL_CRATE,                 4,  9 },
 
-D $6D37 roomdef_10_lockpick
-; @label:$6D37=roomdef_10_lockpick
+N $6D37 roomdef_10_lockpick
+@ $6D37 label=roomdef_10_lockpick
   $6D37,1 4
   $6D38,1 2 // count of boundaries
   $6D39,4 { 69, 75, 32, 54 }, // boundary
@@ -1559,8 +1559,8 @@ D $6D37 roomdef_10_lockpick
   $6D6A,3 { interiorobject_SMALL_CRATE,                 6,  5 },
   $6D6D,3 { interiorobject_TABLE_2,                     2,  6 },
 
-D $6D70 roomdef_11_papers
-; @label:$6D70=roomdef_11_papers
+N $6D70 roomdef_11_papers
+@ $6D70 label=roomdef_11_papers
   $6D70,1 4
   $6D71,1 1 // count of boundaries
   $6D72,4 { 27, 44, 36, 48 }, // boundary
@@ -1577,8 +1577,8 @@ D $6D70 roomdef_11_papers
   $6D8E,3 { interiorobject_DRAWERS_50,                 20,  8 },
   $6D91,3 { interiorobject_DESK,                       12, 10 },
 
-D $6D94 roomdef_12_corridor
-; @label:$6D94=roomdef_12_corridor
+N $6D94 roomdef_12_corridor
+@ $6D94 label=roomdef_12_corridor
   $6D94,1 1
   $6D95,1 0 // count of boundaries
   $6D96,1 2 // count of mask bytes
@@ -1589,8 +1589,8 @@ D $6D94 roomdef_12_corridor
   $6DA0,3 { interiorobject_DOOR_FRAME_16,               9, 10 },
   $6DA3,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
 
-D $6DA6 roomdef_13_corridor
-; @label:$6DA6=roomdef_13_corridor
+N $6DA6 roomdef_13_corridor
+@ $6DA6 label=roomdef_13_corridor
   $6DA6,1 1
   $6DA7,1 0 // count of boundaries
   $6DA8,1 2 // count of mask bytes
@@ -1603,8 +1603,8 @@ D $6DA6 roomdef_13_corridor
   $6DB8,3 { interiorobject_DRAWERS_50,                 12,  5 },
   $6DBB,3 { interiorobject_CHEST_OF_DRAWERS,           14,  7 },
 
-D $6DBE roomdef_14_torch
-; @label:$6DBE=roomdef_14_torch
+N $6DBE roomdef_14_torch
+@ $6DBE label=roomdef_14_torch
   $6DBE,1 0
   $6DBF,1 3 // count of boundaries
   $6DC0,4 { 54, 68, 22, 32 }, // boundary
@@ -1623,8 +1623,8 @@ D $6DBE roomdef_14_torch
   $6DE4,3 { interiorobject_SMALL_SHELF,                 2,  7 },
   $6DE7,3 { interiorobject_EMPTY_BED,                   2,  9 },
 
-D $6DEA roomdef_15_uniform
-; @label:$6DEA=roomdef_15_uniform
+N $6DEA roomdef_15_uniform
+@ $6DEA label=roomdef_15_uniform
   $6DEA,1 0
   $6DEB,1 4 // count of boundaries
   $6DEC,4 { 54, 68, 22, 32 }, // boundary
@@ -1645,8 +1645,8 @@ D $6DEA roomdef_15_uniform
   $6E1A,3 { interiorobject_DOOR_FRAME_15,              13,  9 },
   $6E1D,3 { interiorobject_TABLE_2,                    18,  8 },
 
-D $6E20 roomdef_16_corridor
-; @label:$6E20=roomdef_16_corridor
+N $6E20 roomdef_16_corridor
+@ $6E20 label=roomdef_16_corridor
   $6E20,1 1
   $6E21,1 0 // count of boundaries
   $6E22,1 2 // count of mask bytes
@@ -1657,8 +1657,8 @@ D $6E20 roomdef_16_corridor
   $6E2C,3 { interiorobject_DOOR_FRAME_16,               9, 10 },
   $6E2F,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
 
-D $6E32 roomdef_7_corridor
-; @label:$6E32=roomdef_7_corridor
+N $6E32 roomdef_7_corridor
+@ $6E32 label=roomdef_7_corridor
   $6E32,1 1
   $6E33,1 0 // count of boundaries
   $6E34,1 1 // count of mask bytes
@@ -1669,8 +1669,8 @@ D $6E32 roomdef_7_corridor
   $6E3D,3 { interiorobject_DOOR_FRAME_15,              13, 10 },
   $6E40,3 { interiorobject_TALL_WARDROBE,              12,  4 },
 
-D $6E43 roomdef_18_radio
-; @label:$6E43=roomdef_18_radio
+N $6E43 roomdef_18_radio
+@ $6E43 label=roomdef_18_radio
   $6E43,1 4
   $6E44,1 3 // count of boundaries
   $6E45,4 { 38, 56, 48, 60 }, // boundary
@@ -1690,8 +1690,8 @@ D $6E43 roomdef_18_radio
   $6E70,3 { interiorobject_TINY_TABLE,                 16, 12 },
   $6E73,3 { interiorobject_DOOR_FRAME_16,               5,  7 },
 
-D $6E76 roomdef_19_food
-; @label:$6E76=roomdef_19_food
+N $6E76 roomdef_19_food
+@ $6E76 label=roomdef_19_food
   $6E76,1 1
   $6E77,1 1 // count of boundaries
   $6E78,4 { 52, 64, 47, 56 }, // boundary
@@ -1710,8 +1710,8 @@ D $6E76 roomdef_19_food
   $6E9A,3 { interiorobject_DOOR_FRAME_40,              16,  5 },
   $6E9D,3 { interiorobject_DOOR_FRAME_16,               9, 10 },
 
-D $6EA0 roomdef_20_redcross
-; @label:$6EA0=roomdef_20_redcross
+N $6EA0 roomdef_20_redcross
+@ $6EA0 label=roomdef_20_redcross
   $6EA0,1 1
   $6EA1,1 2 // count of boundaries
   $6EA2,4 { 58, 64, 26, 42 }, // boundary
@@ -1731,8 +1731,8 @@ D $6EA0 roomdef_20_redcross
   $6EC9,3 { interiorobject_WARDROBE_WITH_KNOCKERS,     18,  8 },
   $6ECC,3 { interiorobject_TINY_TABLE,                 11,  8 },
 
-D $6ECF roomdef_22_red_key
-; @label:$6ECF=roomdef_22_red_key
+N $6ECF roomdef_22_red_key
+@ $6ECF label=roomdef_22_red_key
   $6ECF,1 3
   $6ED0,1 2 // count of boundaries
   $6ED1,4 { 54, 64, 46, 56 }, // boundary
@@ -1748,8 +1748,8 @@ D $6ECF roomdef_22_red_key
   $6EEC,3 { interiorobject_TABLE_2,                     9,  6 },
   $6EEF,3 { interiorobject_DOOR_FRAME_40,              14,  4 },
 
-D $6EF2 roomdef_23_breakfast
-; @label:$6EF2=roomdef_23_breakfast
+N $6EF2 roomdef_23_breakfast
+@ $6EF2 label=roomdef_23_breakfast
   $6EF2,1 0
   $6EF3,1 1 // count of boundaries
   $6EF4,4 { 54, 68, 34, 68 }, // boundary
@@ -1765,15 +1765,15 @@ D $6EF2 roomdef_23_breakfast
   $6F0E,3 { interiorobject_DOOR_FRAME_40,              20,  4 },
   $6F11,3 { interiorobject_DOOR_FRAME_15,              15,  8 },
   $6F14,3 { interiorobject_MESS_BENCH,                  7,  6 },
-; @label:$6F17=roomdef_23_breakfast_bench_A
+@ $6F17 label=roomdef_23_breakfast_bench_A
   $6F17,3 { interiorobject_EMPTY_BENCH,                12,  5 },
-; @label:$6F1A=roomdef_23_breakfast_bench_B
+@ $6F1A label=roomdef_23_breakfast_bench_B
   $6F1A,3 { interiorobject_EMPTY_BENCH,                10,  6 },
-; @label:$6F1D=roomdef_23_breakfast_bench_C
+@ $6F1D label=roomdef_23_breakfast_bench_C
   $6F1D,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
 
-D $6F20 roomdef_24_solitary
-; @label:$6F20=roomdef_24_solitary
+N $6F20 roomdef_24_solitary
+@ $6F20 label=roomdef_24_solitary
   $6F20,1 3
   $6F21,1 1 // count of boundaries
   $6F22,4 { 48, 54, 38, 46 }, // boundary
@@ -1784,8 +1784,8 @@ D $6F20 roomdef_24_solitary
   $6F2C,3 { interiorobject_DOOR_FRAME_40,              14,  4 },
   $6F2F,3 { interiorobject_TINY_TABLE,                 10,  9 },
 
-D $6F32 roomdef_25_breakfast
-; @label:$6F32=roomdef_25_breakfast
+N $6F32 roomdef_25_breakfast
+@ $6F32 label=roomdef_25_breakfast
   $6F32,1 0
   $6F33,1 1 // count of boundaries
   $6F34,4 { 54, 68, 34, 68 }, // boundary
@@ -1799,17 +1799,17 @@ D $6F32 roomdef_25_breakfast
   $6F46,3 { interiorobject_DOOR_FRAME_40,              18,  3 },
   $6F49,3 { interiorobject_MESS_TABLE,                  5,  4 },
   $6F4C,3 { interiorobject_MESS_BENCH,                  7,  6 },
-; @label:$6F4F=roomdef_25_breakfast_bench_D
+@ $6F4F label=roomdef_25_breakfast_bench_D
   $6F4F,3 { interiorobject_EMPTY_BENCH,                12,  5 },
-; @label:$6F52=roomdef_25_breakfast_bench_E
+@ $6F52 label=roomdef_25_breakfast_bench_E
   $6F52,3 { interiorobject_EMPTY_BENCH,                10,  6 },
-; @label:$6F55=roomdef_25_breakfast_bench_F
+@ $6F55 label=roomdef_25_breakfast_bench_F
   $6F55,3 { interiorobject_EMPTY_BENCH,                 8,  7 },
-; @label:$6F58=roomdef_25_breakfast_bench_G
+@ $6F58 label=roomdef_25_breakfast_bench_G
   $6F58,3 { interiorobject_EMPTY_BENCH,                14,  4 },
 
-D $6F5B roomdef_28_hut1_left
-; @label:$6F5B=roomdef_28_hut1_left
+N $6F5B roomdef_28_hut1_left
+@ $6F5B label=roomdef_28_hut1_left
   $6F5B,1 1
   $6F5C,1 2 // count of boundaries
   $6F5D,4 { 28, 40, 28, 52 }, // boundary
@@ -1826,8 +1826,8 @@ D $6F5B roomdef_28_hut1_left
   $6F7C,3 { interiorobject_CHAIR_POINTING_BOTTOM_LEFT, 15, 10 },
   $6F7F,3 { interiorobject_TABLE_2,                    11, 12 },
 
-D $6F82 roomdef_29_second_tunnel_start
-; @label:$6F82=roomdef_29_second_tunnel_start
+N $6F82 roomdef_29_second_tunnel_start
+@ $6F82 label=roomdef_29_second_tunnel_start
   $6F82,1 5
   $6F83,1 0 // count of boundaries
   $6F84,1 6 // count of mask bytes
@@ -1840,8 +1840,8 @@ D $6F82 roomdef_29_second_tunnel_start
   $6F98,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $6F9B,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
-D $6F9E roomdef_31
-; @label:$6F9E=roomdef_31
+N $6F9E roomdef_31
+@ $6F9E label=roomdef_31
   $6F9E,1 6
   $6F9F,1 0 // count of boundaries
   $6FA0,1 6 // count of mask bytes
@@ -1854,8 +1854,8 @@ D $6F9E roomdef_31
   $6FB4,3 { interiorobject_TUNNEL_3,                   16,  8 },
   $6FB7,3 { interiorobject_TUNNEL_3,                   20, 10 },
 
-D $6FBA roomdef_36
-; @label:$6FBA=roomdef_36
+N $6FBA roomdef_36
+@ $6FBA label=roomdef_36
   $6FBA,1 7
   $6FBB,1 0 // count of boundaries
   $6FBC,1 6 // count of mask bytes
@@ -1867,8 +1867,8 @@ D $6FBA roomdef_36
   $6FCD,3 { interiorobject_TUNNEL_0,                    8,  6 },
   $6FD0,3 { interiorobject_TUNNEL_14,                   4,  8 },
 
-D $6FD3 roomdef_32
-; @label:$6FD3=roomdef_32
+N $6FD3 roomdef_32
+@ $6FD3 label=roomdef_32
   $6FD3,1 8
   $6FD4,1 0 // count of boundaries
   $6FD5,1 6 // count of mask bytes
@@ -1880,8 +1880,8 @@ D $6FD3 roomdef_32
   $6FE6,3 { interiorobject_TUNNEL_3,                   12,  6 },
   $6FE9,3 { interiorobject_TUNNEL_17,                  16,  8 },
 
-D $6FEC roomdef_34
-; @label:$6FEC=roomdef_34
+N $6FEC roomdef_34
+@ $6FEC label=roomdef_34
   $6FEC,1 6
   $6FED,1 0 // count of boundaries
   $6FEE,1 6 // count of mask bytes
@@ -1894,8 +1894,8 @@ D $6FEC roomdef_34
   $7002,3 { interiorobject_TUNNEL_3,                   16,  8 },
   $7005,3 { interiorobject_TUNNEL_18,                  20, 10 },
 
-D $7008 roomdef_35
-; @label:$7008=roomdef_35
+N $7008 roomdef_35
+@ $7008 label=roomdef_35
   $7008,1 6
   $7009,1 0 // count of boundaries
   $700A,1 6 // count of mask bytes
@@ -1908,8 +1908,8 @@ D $7008 roomdef_35
   $701E,3 { interiorobject_TUNNEL_3,                   16,  8 },
   $7021,3 { interiorobject_TUNNEL_3,                   20, 10 },
 
-D $7024 roomdef_30
-; @label:$7024=roomdef_30
+N $7024 roomdef_30
+@ $7024 label=roomdef_30
   $7024,1 5
   $7025,1 0 // count of boundaries
   $7026,1 7 // count of mask bytes
@@ -1922,8 +1922,8 @@ D $7024 roomdef_30
   $703B,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $703E,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
-D $7041 roomdef_40
-; @label:$7041=roomdef_40
+N $7041 roomdef_40
+@ $7041 label=roomdef_40
   $7041,1 9
   $7042,1 0 // count of boundaries
   $7043,1 6 // count of mask bytes
@@ -1936,8 +1936,8 @@ D $7041 roomdef_40
   $7057,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $705A,3 { interiorobject_TUNNEL_0,                    0, 10 },
 
-D $705D roomdef_44
-; @label:$705D=roomdef_44
+N $705D roomdef_44
+@ $705D label=roomdef_44
   $705D,1 8
   $705E,1 0 // count of boundaries
   $705F,1 5 // count of mask bytes
@@ -1949,11 +1949,11 @@ D $705D roomdef_44
   $706F,3 { interiorobject_TUNNEL_3,                   12,  6 },
   $7072,3 { interiorobject_TUNNEL_12,                  16,  8 },
 
-D $7075 roomdef_50_blocked_tunnel
-; @label:$7075=roomdef_50_blocked_tunnel
+N $7075 roomdef_50_blocked_tunnel
+@ $7075 label=roomdef_50_blocked_tunnel
   $7075,1 5
   $7076,1 1 // count of boundaries
-; @label:$7077=roomdef_50_blocked_tunnel_boundary
+@ $7077 label=roomdef_50_blocked_tunnel_boundary
   $7077,4 { 52, 58, 32, 54 }, // boundary
   $707B,1 6 // count of mask bytes
   $707C,6 [30, 31, 32, 33, 34, 43] // data mask bytes
@@ -1961,7 +1961,7 @@ D $7075 roomdef_50_blocked_tunnel
   $7083,3 { interiorobject_TUNNEL_7,                   20,  0 },
   $7086,3 { interiorobject_TUNNEL_0,                   16,  2 },
   $7089,3 { interiorobject_TUNNEL_0,                   12,  4 },
-; @label:$708C=roomdef_50_blocked_tunnel_collapsed_tunnel
+@ $708C label=roomdef_50_blocked_tunnel_collapsed_tunnel
   $708C,3 { interiorobject_COLLAPSED_TUNNEL,            8,  6 },
   $708F,3 { interiorobject_TUNNEL_0,                    4,  8 },
   $7092,3 { interiorobject_TUNNEL_0,                    0, 10 },
@@ -1971,146 +1971,146 @@ D $7075 roomdef_50_blocked_tunnel
 ; Interior object definitions.
 ;
 b $7095 interior_object_defs
-; @label:$7095=interior_object_defs
+@ $7095 label=interior_object_defs
 W $7095 Array of pointer to interior object definitions, 54 entries long (== number of interior rooms).
 ;
 B $7101 interior_object_tile_refs_0
-; @label:$7101=interior_object_tile_refs_0
+@ $7101 label=interior_object_tile_refs_0
 B $711B interior_object_tile_refs_1
-; @label:$711B=interior_object_tile_refs_1
+@ $711B label=interior_object_tile_refs_1
 B $7121 interior_object_tile_refs_3
-; @label:$7121=interior_object_tile_refs_3
+@ $7121 label=interior_object_tile_refs_3
 B $713B interior_object_tile_refs_4
-; @label:$713B=interior_object_tile_refs_4
+@ $713B label=interior_object_tile_refs_4
 B $7155 interior_object_tile_refs_5
-; @label:$7155=interior_object_tile_refs_5
+@ $7155 label=interior_object_tile_refs_5
 B $715A interior_object_tile_refs_6
-; @label:$715A=interior_object_tile_refs_6
+@ $715A label=interior_object_tile_refs_6
 B $7174 interior_object_tile_refs_7
-; @label:$7174=interior_object_tile_refs_7
+@ $7174 label=interior_object_tile_refs_7
 B $718E interior_object_tile_refs_12
-; @label:$718E=interior_object_tile_refs_12
+@ $718E label=interior_object_tile_refs_12
 B $71A6 interior_object_tile_refs_13
-; @label:$71A6=interior_object_tile_refs_13
+@ $71A6 label=interior_object_tile_refs_13
 B $71AB interior_object_tile_refs_14
-; @label:$71AB=interior_object_tile_refs_14
+@ $71AB label=interior_object_tile_refs_14
 B $71C4 interior_object_tile_refs_17
-; @label:$71C4=interior_object_tile_refs_17
+@ $71C4 label=interior_object_tile_refs_17
 B $71DE interior_object_tile_refs_18
-; @label:$71DE=interior_object_tile_refs_18
+@ $71DE label=interior_object_tile_refs_18
 B $71F8 interior_object_tile_refs_19
-; @label:$71F8=interior_object_tile_refs_19
+@ $71F8 label=interior_object_tile_refs_19
 B $7200 interior_object_tile_refs_20
-; @label:$7200=interior_object_tile_refs_20
+@ $7200 label=interior_object_tile_refs_20
 B $721A interior_object_tile_refs_2
-; @label:$721A=interior_object_tile_refs_2
+@ $721A label=interior_object_tile_refs_2
 B $728E interior_object_tile_refs_8
-; @label:$728E=interior_object_tile_refs_8
+@ $728E label=interior_object_tile_refs_8
 B $72AE interior_object_tile_refs_9
-; @label:$72AE=interior_object_tile_refs_9
+@ $72AE label=interior_object_tile_refs_9
 B $72C1 interior_object_tile_refs_10
-; @label:$72C1=interior_object_tile_refs_10
+@ $72C1 label=interior_object_tile_refs_10
 B $72CC interior_object_tile_refs_11
-; @label:$72CC=interior_object_tile_refs_11
+@ $72CC label=interior_object_tile_refs_11
 B $72D1 interior_object_tile_refs_15
-; @label:$72D1=interior_object_tile_refs_15
+@ $72D1 label=interior_object_tile_refs_15
 B $72EB interior_object_tile_refs_16
-; @label:$72EB=interior_object_tile_refs_16
+@ $72EB label=interior_object_tile_refs_16
 B $7305 interior_object_tile_refs_22
-; @label:$7305=interior_object_tile_refs_22
+@ $7305 label=interior_object_tile_refs_22
 B $730F interior_object_tile_refs_23
-; @label:$730F=interior_object_tile_refs_23
+@ $730F label=interior_object_tile_refs_23
 B $7325 interior_object_tile_refs_24
-; @label:$7325=interior_object_tile_refs_24
+@ $7325 label=interior_object_tile_refs_24
 B $7333 interior_object_tile_refs_25
-; @label:$7333=interior_object_tile_refs_25
+@ $7333 label=interior_object_tile_refs_25
 B $733C interior_object_tile_refs_26
-; @label:$733C=interior_object_tile_refs_26
+@ $733C label=interior_object_tile_refs_26
 B $7342 interior_object_tile_refs_28
-; @label:$7342=interior_object_tile_refs_28
+@ $7342 label=interior_object_tile_refs_28
 B $734B interior_object_tile_refs_30
-; @label:$734B=interior_object_tile_refs_30
+@ $734B label=interior_object_tile_refs_30
 B $7359 interior_object_tile_refs_31
-; @label:$7359=interior_object_tile_refs_31
+@ $7359 label=interior_object_tile_refs_31
 B $735C interior_object_tile_refs_32
-; @label:$735C=interior_object_tile_refs_32
+@ $735C label=interior_object_tile_refs_32
 B $736A interior_object_tile_refs_33
-; @label:$736A=interior_object_tile_refs_33
+@ $736A label=interior_object_tile_refs_33
 B $736F interior_object_tile_refs_34
-; @label:$736F=interior_object_tile_refs_34
+@ $736F label=interior_object_tile_refs_34
 B $7374 interior_object_tile_refs_35
-; @label:$7374=interior_object_tile_refs_35
+@ $7374 label=interior_object_tile_refs_35
 B $7385 interior_object_tile_refs_36
-; @label:$7385=interior_object_tile_refs_36
+@ $7385 label=interior_object_tile_refs_36
 B $7393 interior_object_tile_refs_37
-; @label:$7393=interior_object_tile_refs_37
+@ $7393 label=interior_object_tile_refs_37
 B $73A5 interior_object_tile_refs_38
-; @label:$73A5=interior_object_tile_refs_38
+@ $73A5 label=interior_object_tile_refs_38
 B $73BF interior_object_tile_refs_39
-; @label:$73BF=interior_object_tile_refs_39
+@ $73BF label=interior_object_tile_refs_39
 B $73D9 interior_object_tile_refs_41
-; @label:$73D9=interior_object_tile_refs_41
+@ $73D9 label=interior_object_tile_refs_41
 B $7425 interior_object_tile_refs_42
-; @label:$7425=interior_object_tile_refs_42
+@ $7425 label=interior_object_tile_refs_42
 B $742D interior_object_tile_refs_43
-; @label:$742D=interior_object_tile_refs_43
+@ $742D label=interior_object_tile_refs_43
 B $7452 interior_object_tile_refs_44
-; @label:$7452=interior_object_tile_refs_44
+@ $7452 label=interior_object_tile_refs_44
 B $7482 interior_object_tile_refs_45
-; @label:$7482=interior_object_tile_refs_45
+@ $7482 label=interior_object_tile_refs_45
 B $7493 interior_object_tile_refs_46
-; @label:$7493=interior_object_tile_refs_46
+@ $7493 label=interior_object_tile_refs_46
 B $74F5 interior_object_tile_refs_47
-; @label:$74F5=interior_object_tile_refs_47
+@ $74F5 label=interior_object_tile_refs_47
 B $7570 interior_object_tile_refs_48
-; @label:$7570=interior_object_tile_refs_48
+@ $7570 label=interior_object_tile_refs_48
 B $7576 interior_object_tile_refs_49
-; @label:$7576=interior_object_tile_refs_49
+@ $7576 label=interior_object_tile_refs_49
 B $757E interior_object_tile_refs_50
-; @label:$757E=interior_object_tile_refs_50
+@ $757E label=interior_object_tile_refs_50
 B $7588 interior_object_tile_refs_51
-; @label:$7588=interior_object_tile_refs_51
+@ $7588 label=interior_object_tile_refs_51
 B $75A2 interior_object_tile_refs_52
-; @label:$75A2=interior_object_tile_refs_52
+@ $75A2 label=interior_object_tile_refs_52
 B $75AA interior_object_tile_refs_53
-; @label:$75AA=interior_object_tile_refs_53
+@ $75AA label=interior_object_tile_refs_53
 B $75B0 interior_object_tile_refs_27
-; @label:$75B0=interior_object_tile_refs_27
+@ $75B0 label=interior_object_tile_refs_27
 
 ; ------------------------------------------------------------------------------
 
 ; Characters.
 ;
 b $7612 character_structs
-; @label:$7612=character_structs
+@ $7612 label=character_structs
 D $7612 Array, 26 long, of 7-byte structures.
 D $7612 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; } // likely same struct type/layout as item_structs
 D $7612 0:
-D $7619 1:
-D $7620 2:
-D $7627 3:
-D $762E 4:
-D $7635 5:
-D $763C 6:
-D $7643 7: prisoner who sleeps at bed position A
-D $764A 8: prisoner who sleeps at bed position B
-D $7651 9: prisoner who sleeps at bed position C
-D $7658 10: prisoner who sleeps at bed position D
-D $765F 11: prisoner who sleeps at bed position E
-D $7666 12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
-D $766D 13:
-D $7674 14:
-D $767B 15:
-D $7682 16:
-D $7689 17:
-D $7690 18: prisoner who sits at bench position D
-D $7697 19: prisoner who sits at bench position E
-D $769E 20: prisoner who sits at bench position F (<- wake_up)
-D $76A5 21: prisoner who sits at bench position A
-D $76AC 22: prisoner who sits at bench position B
-D $76B3 23: prisoner who sits at bench position C
-D $76BA 24:
-D $76C1 25:
+N $7619 1:
+N $7620 2:
+N $7627 3:
+N $762E 4:
+N $7635 5:
+N $763C 6:
+N $7643 7: prisoner who sleeps at bed position A
+N $764A 8: prisoner who sleeps at bed position B
+N $7651 9: prisoner who sleeps at bed position C
+N $7658 10: prisoner who sleeps at bed position D
+N $765F 11: prisoner who sleeps at bed position E
+N $7666 12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
+N $766D 13:
+N $7674 14:
+N $767B 15:
+N $7682 16:
+N $7689 17:
+N $7690 18: prisoner who sits at bench position D
+N $7697 19: prisoner who sits at bench position E
+N $769E 20: prisoner who sits at bench position F (<- wake_up)
+N $76A5 21: prisoner who sits at bench position A
+N $76AC 22: prisoner who sits at bench position B
+N $76B3 23: prisoner who sits at bench position C
+N $76BA 24:
+N $76C1 25:
   $7612,7 { character_0_COMMANDANT,     room_11_papers,    46, 46, 0x18, 0x03, 0x00 },
   $7619,7 { character_1_GUARD_1,        room_0_outdoors,  102, 68, 0x03, 0x01, 0x00 },
   $7620,7 { character_2_GUARD_2,        room_0_outdoors,   68,104, 0x03, 0x01, 0x02 },
@@ -2141,7 +2141,7 @@ D $76C1 25:
 ; ------------------------------------------------------------------------------
 
 b $76C8 item_structs
-; @label:$76C8=item_structs
+@ $76C8 label=item_structs
 D $76C8 16 long array of 7-byte structures. These are 'characters' but seem to be the game items.
 D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; }
   $76C8 { item_WIRESNIPS,        room_NONE,        64,32, 0x02, 0x78, 0xF4 }, // <- item_to_itemstruct, find_nearby_item
@@ -2151,7 +2151,7 @@ D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk
   $76E4 { item_TORCH,            room_14_torch,    34,24, 0x02, 0x7A, 0xF6 },
   $76EB { item_BRIBE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4 }, // <- accept_bribe
   $76F2 { item_UNIFORM,          room_15_uniform,  44,65, 0x10, 0x87, 0xF1 },
-; @label:$76F9=item_structs_food
+@ $76F9 label=item_structs_food
   $76F9 { item_FOOD,             room_19_food,     64,48, 0x10, 0x7E, 0xF0 }, // <- action_poison, called_from_main_loop
   $7700 { item_POISON,           room_1_hut1right, 66,52, 0x04, 0x7C, 0xF1 },
   $7707 { item_RED_KEY,          room_22_redkey,   60,42, 0x00, 0x7B, 0xF2 },
@@ -2168,90 +2168,90 @@ D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk
 ;
 ; OR PERHAPS NOT.. if i screw these up then characters get lost when moving around
 b $7738 table_7738
-; @label:$7738=table_7738
+@ $7738 label=table_7738
 W $7738 46 long array of pointers to object tile refs.
   $7794,1 could be a terminating $FF
   $7795 byte_7738_0
-; @label:$7795=byte_7738_0
+@ $7795 label=byte_7738_0
   $7799 byte_7738_1
-; @label:$7799=byte_7738_1
+@ $7799 label=byte_7738_1
   $77A0 byte_7738_2
-; @label:$77A0=byte_7738_2
+@ $77A0 label=byte_7738_2
   $77CD byte_7738_3
-; @label:$77CD=byte_7738_3
+@ $77CD label=byte_7738_3
   $77D0 byte_7738_4
-; @label:$77D0=byte_7738_4
+@ $77D0 label=byte_7738_4
   $77D4 byte_7738_5
-; @label:$77D4=byte_7738_5
+@ $77D4 label=byte_7738_5
   $77D8 byte_7738_6
-; @label:$77D8=byte_7738_6
+@ $77D8 label=byte_7738_6
   $77DA byte_7738_7
-; @label:$77DA=byte_7738_7
+@ $77DA label=byte_7738_7
   $77DC byte_7738_8
-; @label:$77DC=byte_7738_8
+@ $77DC label=byte_7738_8
   $77DE byte_7738_9
-; @label:$77DE=byte_7738_9
+@ $77DE label=byte_7738_9
   $77E1 byte_7738_10
-; @label:$77E1=byte_7738_10
+@ $77E1 label=byte_7738_10
   $77E7 byte_7738_11
-; @label:$77E7=byte_7738_11
+@ $77E7 label=byte_7738_11
   $77EC byte_7738_12
-; @label:$77EC=byte_7738_12
+@ $77EC label=byte_7738_12
   $77F1 byte_7738_13
-; @label:$77F1=byte_7738_13
+@ $77F1 label=byte_7738_13
   $77F3 byte_7738_14
-; @label:$77F3=byte_7738_14
+@ $77F3 label=byte_7738_14
   $77F5 byte_7738_15
-; @label:$77F5=byte_7738_15
+@ $77F5 label=byte_7738_15
   $77F7 byte_7738_16
-; @label:$77F7=byte_7738_16
+@ $77F7 label=byte_7738_16
   $77F9 byte_7738_17
-; @label:$77F9=byte_7738_17
+@ $77F9 label=byte_7738_17
   $77FB byte_7738_18
-; @label:$77FB=byte_7738_18
+@ $77FB label=byte_7738_18
   $77FD byte_7738_19
-; @label:$77FD=byte_7738_19
+@ $77FD label=byte_7738_19
   $77FF byte_7738_20
-; @label:$77FF=byte_7738_20
+@ $77FF label=byte_7738_20
   $7801 byte_7738_21
-; @label:$7801=byte_7738_21
+@ $7801 label=byte_7738_21
   $7803 byte_7738_22
-; @label:$7803=byte_7738_22
+@ $7803 label=byte_7738_22
   $7805 byte_7738_23
-; @label:$7805=byte_7738_23
+@ $7805 label=byte_7738_23
   $7807 byte_7738_24
-; @label:$7807=byte_7738_24
+@ $7807 label=byte_7738_24
   $7809 byte_7738_25
-; @label:$7809=byte_7738_25
+@ $7809 label=byte_7738_25
   $780B byte_7738_26
-; @label:$780B=byte_7738_26
+@ $780B label=byte_7738_26
   $780D byte_7738_27
-; @label:$780D=byte_7738_27
+@ $780D label=byte_7738_27
   $780F byte_7738_28
-; @label:$780F=byte_7738_28
+@ $780F label=byte_7738_28
   $7815 byte_7738_29
-; @label:$7815=byte_7738_29
+@ $7815 label=byte_7738_29
   $781A byte_7738_30
-; @label:$781A=byte_7738_30
+@ $781A label=byte_7738_30
   $781F byte_7738_31
-; @label:$781F=byte_7738_31
+@ $781F label=byte_7738_31
   $7825 byte_7738_32
-; @label:$7825=byte_7738_32
+@ $7825 label=byte_7738_32
   $782B byte_7738_33
-; @label:$782B=byte_7738_33
+@ $782B label=byte_7738_33
   $7831 byte_7738_34
-; @label:$7831=byte_7738_34
+@ $7831 label=byte_7738_34
   $7833 byte_7738_35
-; @label:$7833=byte_7738_35
+@ $7833 label=byte_7738_35
   $7835 byte_7738_36
-; @label:$7835=byte_7738_36
+@ $7835 label=byte_7738_36
   $7838 byte_7738_37
-; @label:$7838=byte_7738_37
+@ $7838 label=byte_7738_37
 
 ; ------------------------------------------------------------------------------
 
 w $783A word_783A
-; @label:$783A=word_783A
+@ $783A label=word_783A
 D $783A 78 two-byte words
   $783A 0x6844
   $783C 0x5444
@@ -2335,14 +2335,14 @@ D $783A 78 two-byte words
 ; ------------------------------------------------------------------------------
 
 b $78D6 door_positions
-; @label:$78D6=door_positions
+@ $78D6 label=door_positions
 D $78D6 124 four-byte structs (<- sub 69DC)
 D $78D6 #define BYTE0(room,other) ((room << 2) | other)
 ; room could be a target or a destination. unsure presently.
 ; suspect 4th byte could be a scaled height (would it be four times larger for internal coords?)
 ; suspect bit 1 controls whether to jump to door listed in front, or behind (see $C742)
   $78D6 { BYTE0(room_0_outdoors,           1), 0xB2, 0x8A,  6 },
-; @label:$78DA=door_positions_1
+@ $78DA label=door_positions_1
   $78DA { BYTE0(room_0_outdoors,           3), 0xB2, 0x8E,  6 },
   $78DE { BYTE0(room_0_outdoors,           1), 0xB2, 0x7A,  6 },
   $78E2 { BYTE0(room_0_outdoors,           3), 0xB2, 0x7E,  6 },
@@ -2470,37 +2470,37 @@ D $78D6 #define BYTE0(room,other) ((room << 2) | other)
 ; ------------------------------------------------------------------------------
 
 b $7AC6 solitary_pos
-; @label:$7AC6=solitary_pos
+@ $7AC6 label=solitary_pos
 D $7AC6 3 bytes long (<- solitary)
 B $7AC6 58, 42, 24
 
 ; ------------------------------------------------------------------------------
 
 c $7AC9 check_for_pick_up_keypress
-; @label:$7AC9=check_for_pick_up_keypress
+@ $7AC9 label=check_for_pick_up_keypress
 D $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
 R $7AC9 I:A Input event.
   $7AC9 if (A == input_UP_FIRE) pick_up_item();
   $7AD3 else if (A == input_DOWN_FIRE) drop_item();
   $7ADD else if (A == input_LEFT_FIRE) use_item_A();
   $7AE7 else if (A == input_RIGHT_FIRE) use_item_B();
-; @label:$7AEF=check_for_pick_up_keypress_exit
+@ $7AEF label=check_for_pick_up_keypress_exit
   $7AEF return;
 
 c $7AF0 use_item_B
-; @label:$7AF0=use_item_B
-; @isub:$7AF0=LD A,(items_held + 1)
+@ $7AF0 label=use_item_B
+@ $7AF0 isub=LD A,(items_held + 1)
   $7AF0 A = items_held[1]; // $8216
   $7AF3 goto use_item_common;
 
 c $7AF5 use_item_A
-; @label:$7AF5=use_item_A
+@ $7AF5 label=use_item_A
   $7AF5 A = items_held[0]; // $8215
 ;
 ; FALLTHROUGH
 
 c $7AF8 use_item_common
-; @label:$7AF8=use_item_common
+@ $7AF8 label=use_item_common
   $7AF8 if (A == item_NONE) return;
   $7AFB Bug: Pointless jump to adjacent instruction.
   $7AFD HL = &item_actions_jump_table[A];
@@ -2513,7 +2513,7 @@ c $7AF8 use_item_common
 ; ------------------------------------------------------------------------------
 
 w $7B16 item_actions_jump_table
-; @label:$7B16=item_actions_jump_table
+@ $7B16 label=item_actions_jump_table
   $7B16 action_wiresnips
   $7B18 action_shovel
   $7B1A action_lockpick
@@ -2534,13 +2534,13 @@ w $7B16 item_actions_jump_table
 ; ------------------------------------------------------------------------------
 
 c $7B36 pick_up_item
-; @label:$7B36=pick_up_item
+@ $7B36 label=pick_up_item
   $7B36 HL = items_held;
   $7B39 A = item_NONE;
   $7B3B if (L != A && H != A) return; // no spare slots
   $7B40 find_nearby_item();
   $7B43 if (!Z) return; // not found
-D $7B44 Locate the empty item slot.
+N $7B44 Locate the empty item slot.
   $7B44 DE = &items_held[0];
   $7B47 A = *DE;
   $7B48 if (A != item_NONE) DE++;
@@ -2573,14 +2573,14 @@ D $7B44 Locate the empty item slot.
 ; ------------------------------------------------------------------------------
 
 c $7B8B drop_item
-; @label:$7B8B=drop_item
+@ $7B8B label=drop_item
 D $7B8B Drop the first item.
   $7B8B A = items_held[0];
   $7B8E if (A == item_NONE) return;
   $7B91 if (A == item_UNIFORM) $8015 = sprite_prisoner_tl_4;
   $7B9C PUSH AF
-D $7B9D Shuffle items down.
-; @isub:$7B9D=LD HL,items_held + 1
+N $7B9D Shuffle items down.
+@ $7B9D isub=LD HL,items_held + 1
   $7B9D HL = &items_held[1];  // item slot B
   $7BA0 A = *HL;
   $7BA1 *HL-- = item_NONE;
@@ -2593,17 +2593,17 @@ D $7B9D Shuffle items down.
 
 ; looks like it's converting character position + offset into object position + offset by dividing
 c $7BB5 drop_item_A
-; @label:$7BB5=drop_item_A
+@ $7BB5 label=drop_item_A
 R $7BB5 I:A Item.
   $7BB5 HL = item_to_itemstruct(A);
   $7BB8 HL++;
   $7BB9 A = room_index;
   $7BBC *HL = A; // set object's room index
   $7BBD if (A == 0) <%
-D $7BC0 Outdoors.
+N $7BC0 Outdoors.
   $7BC0   HL++;    // -> .y
   $7BC1   PUSH HL
-D $7BC2 HL is incremented here but then immediately overwritten by $7BC5.
+N $7BC2 HL is incremented here but then immediately overwritten by $7BC5.
   $7BC2   HL += 2; // -> .unk1
   $7BC4   POP DE
   $7BC5   HL = $800F;
@@ -2622,7 +2622,7 @@ R $7BD0   I:HL Pointer to dropped itemstruct + 4.
   $7BE2   *HL = B;
   $7BE3   return; %>
 ;
-D $7BE4 Indoors.
+N $7BE4 Indoors.
   $7BE4 else <% HL++;
   $7BE5   DE = $800F; // position on y axis
   $7BE8   *HL++ = *DE;
@@ -2650,7 +2650,7 @@ R $7BF2   I:HL Pointer to ? $77AE (odd - that's object tile refs...) // i doubt 
 ; ------------------------------------------------------------------------------
 
 c $7C26 item_to_itemstruct
-; @label:$7C26=item_to_itemstruct
+@ $7C26 label=item_to_itemstruct
 R $7C26 I:A  Item index.
 R $7C26 O:HL Pointer to itemstruct.
   $7C26 return &item_structs[A]; // $76C8 + A * 7
@@ -2658,7 +2658,7 @@ R $7C26 O:HL Pointer to itemstruct.
 ; ------------------------------------------------------------------------------
 
 c $7C33 draw_all_items
-; @label:$7C33=draw_all_items
+@ $7C33 label=draw_all_items
   $7C33 draw_item(screenaddr_item1, items_held[0]);
   $7C3C draw_item(screenaddr_item2, items_held[1]);
   $7C45 return;
@@ -2666,14 +2666,14 @@ c $7C33 draw_all_items
 ; ------------------------------------------------------------------------------
 
 c $7C46 draw_item
-; @label:$7C46=draw_item
+@ $7C46 label=draw_item
 R $7C46 I:A  Item index.
 R $7C46 I:HL Screen address of item.
 ;
   $7C46 PUSH HL
   $7C47 EX AF,AF'
 ;
-D $7C48 Wipe item.
+N $7C48 Wipe item.
   $7C48 B = 2; // 16 wide
   $7C4A C = 16;
   $7C4C screen_wipe();
@@ -2682,7 +2682,7 @@ D $7C48 Wipe item.
   $7C50 EX AF,AF'
   $7C51 if (A == item_NONE) return;
 ;
-D $7C54 Set screen attributes.
+N $7C54 Set screen attributes.
   $7C54 PUSH HL
   $7C55 HL = (HL & ~0xFF00) | 0x5A00; // point to screen attributes
   $7C57 PUSH AF
@@ -2694,7 +2694,7 @@ D $7C54 Set screen attributes.
   $7C69 *HL = A;
   $7C6A POP AF
 ;
-D $7C6B Plot bitmap.
+N $7C6B Plot bitmap.
   $7C6B HL = &item_definitions[A]; // elements are six bytes wide
   $7C76 B = *HL++;
   $7C78 C = *HL++;
@@ -2708,7 +2708,7 @@ D $7C6B Plot bitmap.
 ; ------------------------------------------------------------------------------
 
 c $7C82 find_nearby_item
-; @label:$7C82=find_nearby_item
+@ $7C82 label=find_nearby_item
 D $7C82 Returns an item within range of the hero.
 R $7C82 O:AF Z set if item found.
 R $7C82 O:HL If found, pointer to item.
@@ -2723,7 +2723,7 @@ D $7C82 Select a pick up radius.
   $7C97     HL++; // itemstruct.y
   $7C98     DE = &hero_map_position.y; // this is probably 'Y' in this sense, but i'd need to rename all others to comply
   $7C9B     B = 2; // 2 iterations
-D $7C9D Range check.
+N $7C9D Range check.
   $7C9D     do <% A = *DE++; // get hero map position
   $7C9F       if (A - C >= *HL || A + C < *HL) goto popnext;
   $7CA7       HL++;
@@ -2732,7 +2732,7 @@ D $7C9D Range check.
   $7CAC     HL--; // compensate for overshoot
   $7CAD     POP BC
   $7CAE     A = 0; // set Z (found)
-D $7CAF The next instruction is written as RET Z but there's no need for it to be conditional.
+N $7CAF The next instruction is written as RET Z but there's no need for it to be conditional.
   $7CAF     return;
 
   $7CB0     popnext: POP HL
@@ -2745,7 +2745,7 @@ D $7CAF The next instruction is written as RET Z but there's no need for it to b
 ; ------------------------------------------------------------------------------
 
 c $7CBE plot_bitmap
-; @label:$7CBE=plot_bitmap
+@ $7CBE label=plot_bitmap
 D $7CBE Straight bitmap plot without masking.
 R $7CBE I:BC Dimensions (w x h, where w is in bytes).
 R $7CBE I:DE Source address.
@@ -2762,7 +2762,7 @@ R $7CBE I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 c $7CD4 screen_wipe
-; @label:$7CD4=screen_wipe
+@ $7CD4 label=screen_wipe
 D $7CD4 Wipe the screen.
 R $7CD4 I:B  Number of bytes to set.
 R $7CD4 I:C  Number of scanlines.
@@ -2779,7 +2779,7 @@ R $7CD4 I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 c $7CE9 get_next_scanline
-; @label:$7CE9=get_next_scanline
+@ $7CE9 label=get_next_scanline
 D $7CE9 Given a screen address, returns the same position on the next scanline.
 R $7CE9 I:HL Original screen address.
 R $7CE9 O:HL Updated screen address.
@@ -2799,38 +2799,38 @@ g $7CFC message_queue_stuff
 
 D $7CFC Queue of message indexes. (Pairs of bytes + terminator).
 B $7CFC message_queue
-; @label:$7CFC=message_queue
+@ $7CFC label=message_queue
 
-D $7D0F Decrementing counter. Shows next message when it hits zero.
+N $7D0F Decrementing counter. Shows next message when it hits zero.
 B $7D0F message_display_counter
-; @label:$7D0F=message_display_counter
+@ $7D0F label=message_display_counter
 
-D $7D10 Index into the message we're displaying or wiping.
-D $7D10 If 128 then next_message. If > 128 then wipe_message. Else display.
+N $7D10 Index into the message we're displaying or wiping.
+N $7D10 If 128 then next_message. If > 128 then wipe_message. Else display.
 B $7D10 message_display_index
-; @label:$7D10=message_display_index
+@ $7D10 label=message_display_index
 
-D $7D11 Pointer to the head of the message queue.
+N $7D11 Pointer to the head of the message queue.
 W $7D11 message_queue_pointer
-; @label:$7D11=message_queue_pointer
+@ $7D11 label=message_queue_pointer
 
-D $7D13 Pointer to the next message character to be displayed.
+N $7D13 Pointer to the next message character to be displayed.
 W $7D13 current_message_character
-; @label:$7D13=current_message_character
+@ $7D13 label=current_message_character
 
 ; ------------------------------------------------------------------------------
 
 c $7D15 queue_message_for_display
-; @label:$7D15=queue_message_for_display
+@ $7D15 label=queue_message_for_display
 D $7D15 Add the specified message to the queue of pending messages.
 D $7D15 The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
 R $7D15 I:B message_* index.
 R $7D15 I:C Possibly a second message index.
   $7D15 if (*(HL = message_queue_pointer) == message_NONE) return;
-D $7D1C Are we already about to show this message?
+N $7D1C Are we already about to show this message?
   $7D1C HL -= 2;
   $7D1E if (*HL++ == B && *HL++ == C) return;
-D $7D26 Add it to the queue.
+N $7D26 Add it to the queue.
   $7D26 *HL++ = B; *HL++ = C;
   $7D2B message_queue_pointer = HL;
   $7D2E return;
@@ -2838,7 +2838,7 @@ D $7D26 Add it to the queue.
 ; ------------------------------------------------------------------------------
 
 c $7D2F plot_glyph
-; @label:$7D2F=plot_glyph
+@ $7D2F label=plot_glyph
 R $7D2F I:HL Pointer to glyph.
 R $7D2F I:DE Pointer to destination.
 R $7D2F O:HL Preserved.
@@ -2859,56 +2859,56 @@ R $7D2F O:DE Points to next character.
 ; ------------------------------------------------------------------------------
 
 c $7D48 message_display
-; @label:$7D48=message_display
+@ $7D48 label=message_display
 D $7D48 Proceed only if message_display_counter is zero.
   $7D48 if (message_display_counter > 0) <%
   $7D50   message_display_counter--;
   $7D53   return; %>
 ;
-D $7D54 message_display_counter reached zero.
+N $7D54 message_display_counter reached zero.
   $7D54 A = message_display_index;
   $7D57 if (A == 128) goto next_message; // exit via
   $7D5B else if (A > 128) goto wipe_message; // exit via
   $7D5D else <% HL = current_message_character;
-; @nowarn:$7D60
+@ $7D60 nowarn
   $7D60   DE = screen_text_start_address + A;
   $7D65   plot_glyph();
   $7D68   message_display_index = E & 31;
   $7D6E   A = *++HL;
   $7D70   if (A != 255) goto not_eol;
-D $7D75 Leave the message for 31 turns.
+N $7D75 Leave the message for 31 turns.
   $7D75   message_display_counter = 31;
-D $7D7A Then wipe it.
+N $7D7A Then wipe it.
   $7D7A   message_display_index |= 128;
   $7D82   return;
 ;
-; @label:$7D83=message_display_not_eol
+@ $7D83 label=message_display_not_eol
   $7D83   not_eol: current_message_character = HL;
   $7D86   return; %>
 
 c $7D87 wipe_message
-; @label:$7D87=wipe_message
+@ $7D87 label=wipe_message
   $7D87 A = message_display_index;
   $7D8A message_display_index = --A;
-; @nowarn:$7D8E
+@ $7D8E nowarn
   $7D8E DE = screen_text_start_address + A;
-D $7D93 Plot a space character.
+N $7D93 Plot a space character.
   $7D93 plot_single_glyph(35);
   $7D98 return;
 
 c $7D99 next_message
-; @label:$7D99=next_message
+@ $7D99 label=next_message
 D $7D99 Looks like message_queue is poked with the index of the message to display...
   $7D99 HL = message_queue_pointer;
   $7D9C DE = &message_queue[0];
   $7D9F if (L == E) return; // cheap test -- no more messages?
 ;
   $7DA3 A = *DE++;
-D $7DA5 C is loaded here but not used. This could be a hangover from 16-bit message IDs.
+N $7DA5 C is loaded here but not used. This could be a hangover from 16-bit message IDs.
   $7DA5 C = *DE;
   $7DA6 HL = messages_table[A];
   $7DB2 current_message_character = HL;
-D $7DB5 Remove first element.
+N $7DB5 Remove first element.
   $7DB5 memmove(message_queue, message_queue + 2, 16);
   $7DC0 message_queue_pointer -= 2;
   $7DC8 message_display_index = 0;
@@ -2919,78 +2919,78 @@ D $7DB5 Remove first element.
 ; Messages - messages printed at the bottom of the screen when things happen.
 ;
 w $7DCD messages_table
-; @label:$7DCD=messages_table
+@ $7DCD label=messages_table
   $7DCD Array of pointers to messages.
 
 t $7DF5 messages
 D $7DF5 Non-ASCII: encoded to match the font; FF terminated.
 ;
 D $7DF5 "MISSED ROLL CALL"
-; @label:$7DF5=messages_missed_roll_call
+@ $7DF5 label=messages_missed_roll_call
   $7DF5 #HTML[#CALL:decode_stringFF($7DF5)]
 ;
-D $7E06 "TIME TO WAKE UP"
-; @label:$7E06=messages_time_to_wake_up
+N $7E06 "TIME TO WAKE UP"
+@ $7E06 label=messages_time_to_wake_up
   $7E06 #HTML[#CALL:decode_stringFF($7E06)]
 ;
-D $7E16 "BREAKFAST TIME"
-; @label:$7E16=messages_breakfast_time
+N $7E16 "BREAKFAST TIME"
+@ $7E16 label=messages_breakfast_time
   $7E16 #HTML[#CALL:decode_stringFF($7E16)]
 ;
-D $7E25 "EXERCISE TIME"
-; @label:$7E25=messages_exercise_time
+N $7E25 "EXERCISE TIME"
+@ $7E25 label=messages_exercise_time
   $7E25 #HTML[#CALL:decode_stringFF($7E25)]
 ;
-D $7E33 "TIME FOR BED"
-; @label:$7E33=messages_time_for_bed
+N $7E33 "TIME FOR BED"
+@ $7E33 label=messages_time_for_bed
   $7E33 #HTML[#CALL:decode_stringFF($7E33)]
 ;
-D $7E40 "THE DOOR IS LOCKED"
-; @label:$7E40=messages_the_door_is_locked
+N $7E40 "THE DOOR IS LOCKED"
+@ $7E40 label=messages_the_door_is_locked
   $7E40 #HTML[#CALL:decode_stringFF($7E40)]
 ;
-D $7E53 "IT IS OPEN"
-; @label:$7E53=messages_it_is_open
+N $7E53 "IT IS OPEN"
+@ $7E53 label=messages_it_is_open
   $7E53 #HTML[#CALL:decode_stringFF($7E53)]
 ;
-D $7E5E "INCORRECT KEY"
-; @label:$7E5E=messages_incorrect_key
+N $7E5E "INCORRECT KEY"
+@ $7E5E label=messages_incorrect_key
   $7E5E #HTML[#CALL:decode_stringFF($7E5E)]
 ;
-D $7E6C "ROLL CALL"
-; @label:$7E6C=messages_roll_call
+N $7E6C "ROLL CALL"
+@ $7E6C label=messages_roll_call
   $7E6C #HTML[#CALL:decode_stringFF($7E6C)]
 ;
-D $7E76 "RED CROSS PARCEL"
-; @label:$7E76=messages_red_cross_parcel
+N $7E76 "RED CROSS PARCEL"
+@ $7E76 label=messages_red_cross_parcel
   $7E76 #HTML[#CALL:decode_stringFF($7E76)]
 ;
-D $7E87 "PICKING THE LOCK"
-; @label:$7E87=messages_picking_the_lock
+N $7E87 "PICKING THE LOCK"
+@ $7E87 label=messages_picking_the_lock
   $7E87 #HTML[#CALL:decode_stringFF($7E87)]
 ;
-D $7E98 "CUTTING THE WIRE"
-; @label:$7E98=messages_cutting_the_wire
+N $7E98 "CUTTING THE WIRE"
+@ $7E98 label=messages_cutting_the_wire
   $7E98 #HTML[#CALL:decode_stringFF($7E98)]
 ;
-D $7EA9 "YOU OPEN THE BOX"
-; @label:$7EA9=messages_you_open_the_box
+N $7EA9 "YOU OPEN THE BOX"
+@ $7EA9 label=messages_you_open_the_box
   $7EA9 #HTML[#CALL:decode_stringFF($7EA9)]
 ;
-D $7EBA "YOU ARE IN SOLITARY"
-; @label:$7EBA=messages_you_are_in_solitary
+N $7EBA "YOU ARE IN SOLITARY"
+@ $7EBA label=messages_you_are_in_solitary
   $7EBA #HTML[#CALL:decode_stringFF($7EBA)]
 ;
-D $7ECE "WAIT FOR RELEASE"
-; @label:$7ECE=messages_wait_for_release
+N $7ECE "WAIT FOR RELEASE"
+@ $7ECE label=messages_wait_for_release
   $7ECE #HTML[#CALL:decode_stringFF($7ECE)]
 ;
-D $7EDF "MORALE IS ZERO"
-; @label:$7EDF=messages_morale_is_zero
+N $7EDF "MORALE IS ZERO"
+@ $7EDF label=messages_morale_is_zero
   $7EDF #HTML[#CALL:decode_stringFF($7EDF)]
 ;
-D $7EEE "ITEM DISCOVERED"
-; @label:$7EEE=messages_item_discovered
+N $7EEE "ITEM DISCOVERED"
+@ $7EEE label=messages_item_discovered
   $7EEE #HTML[#CALL:decode_stringFF($7EEE)]
 
 ; ------------------------------------------------------------------------------
@@ -2998,7 +2998,7 @@ D $7EEE "ITEM DISCOVERED"
 ; Static tiles.
 ;
 b $7F00 static_tiles
-; @label:$7F00=static_tiles
+@ $7F00 label=static_tiles
 D $7F00 These tiles are used to draw fixed screen elements such as medals.
 D $7F00 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
 D $7F00 #UDGTABLE { #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles) } TABLE#
@@ -3098,17 +3098,17 @@ B $81A3 unused_81A3
 
 g $81A4 Saved position.
 D $81A4 Structure type: pos_t.
-; @label:$81A4=saved_y
+@ $81A4 label=saved_y
 W $81A4 saved_y
-; @label:$81A6=saved_x
+@ $81A6 label=saved_x
 W $81A6 saved_x
-; @label:$81A8=saved_height
+@ $81A8 label=saved_height
 W $81A8 saved_height
 
 ; ------------------------------------------------------------------------------
 
 g $81AA Used by touch only.
-; @label:$81AA=stashed_A
+@ $81AA label=stashed_A
 B $81AA stashed_A
 
 ; ------------------------------------------------------------------------------
@@ -3120,54 +3120,54 @@ B $81AB unused_81AB
 
 g $81AC Bitmap and mask pointers.
 W $81AC bitmap_pointer
-; @label:$81AC=bitmap_pointer
+@ $81AC label=bitmap_pointer
 W $81AE mask_pointer
-; @label:$81AE=mask_pointer
+@ $81AE label=mask_pointer
 W $81B0 foreground_mask_pointer
-; @label:$81B0=foreground_mask_pointer
+@ $81B0 label=foreground_mask_pointer
 
 ; ------------------------------------------------------------------------------
 
 g $81B2 Saved position.
 D $81B2 Structure type: tinypos_t.
 B $81B2 byte_81B2
-; @label:$81B2=byte_81B2
+@ $81B2 label=byte_81B2
 B $81B3 byte_81B3
-; @label:$81B3=byte_81B3
+@ $81B3 label=byte_81B3
 B $81B4 byte_81B4
-; @label:$81B4=byte_81B4
+@ $81B4 label=byte_81B4
 
 ; ------------------------------------------------------------------------------
 
 g $81B5 Map position related variables.
 B $81B5 map_position_related_1
-; @label:$81B5=map_position_related_1
+@ $81B5 label=map_position_related_1
 B $81B6 map_position_related_2
-; @label:$81B6=map_position_related_2
+@ $81B6 label=map_position_related_2
 
 ; ------------------------------------------------------------------------------
 
 g $81B7 Controls character left/right flipping.
 B $81B7 flip_sprite
-; @label:$81B7=flip_sprite
+@ $81B7 label=flip_sprite
 
 ; ------------------------------------------------------------------------------
 
 g $81B8 Hero's map position.
 D $81B8 Structure type: tinypos_t.
 B $81B8 hero_map_position_y
-; @label:$81B8=hero_map_position_y
+@ $81B8 label=hero_map_position_y
 B $81B9 hero_map_position_x
-; @label:$81B9=hero_map_position_x
+@ $81B9 label=hero_map_position_x
 B $81BA hero_map_position_height
-; @label:$81BA=hero_map_position_height
+@ $81BA label=hero_map_position_height
 
 ; ------------------------------------------------------------------------------
 
 g $81BB Map position.
 D $81BB Used when drawing tiles.
 W $81BB map_position
-; @label:$81BB=map_position
+@ $81BB label=map_position
 
 ; ------------------------------------------------------------------------------
 
@@ -3176,22 +3176,22 @@ D $81BD Suspect that this is a 'hero has been found in searchlight' flag. (possi
 D $81BD Used by the routines at #R$ADBD, #R$B866.
 D $81BD #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Searchlight is sweeping } { 31 | Searchlight is tracking the hero } { 255 | Searchlight is off } TABLE#
 B $81BD searchlight_state
-; @label:$81BD=searchlight_state
+@ $81BD label=searchlight_state
 
 ; ------------------------------------------------------------------------------
 
 g $81BE Copy of first byte of current room def.
 D $81BE Indexes roomdef_bounds[].
 B $81BE roomdef_bounds_index
-; @label:$81BE=roomdef_bounds_index
+@ $81BE label=roomdef_bounds_index
 
 g $81BF Count of object bounds.
 B $81BF roomdef_object_bounds_count
-; @label:$81BF=roomdef_object_bounds_count
+@ $81BF label=roomdef_object_bounds_count
 
 g $81C0 Copy of current room def's additional bounds (allows for four room objects).
 B $81C0 roomdef_object_bounds
-; @label:$81C0=roomdef_object_bounds
+@ $81C0 label=roomdef_object_bounds
 
 ; ------------------------------------------------------------------------------
 
@@ -3204,63 +3204,63 @@ B $81D0 unused_81D0
 g $81D6 Door related stuff.
 D $81D6 Used by the routines at #R$69DC, #R$B32D, #R$B4D0.
 B $81D6 door_related
-; @label:$81D6=door_related
-; @label:$81D9=door_related_end
+@ $81D6 label=door_related
+@ $81D9 label=door_related_end
 
 ; ------------------------------------------------------------------------------
 
 g $81DA Indoor mask data.
 D $81DA Used by the routines at #R$6A35, #R$B916.
 B $81DA indoor_mask_data
-; @label:$81DA=indoor_mask_data
+@ $81DA label=indoor_mask_data
 
 ; ------------------------------------------------------------------------------
 
 g $8213 Written to by #R$DC41 setup_item_plotting but never read.
 B $8213 possibly_holds_an_item
-; @label:$8213=possibly_holds_an_item
+@ $8213 label=possibly_holds_an_item
 
 ; ------------------------------------------------------------------------------
 
 g $8214 A copy of item_definition height.
 D $8214 Used by the routines at #R$DC41, #R$DD02.
 B $8214 item_height
-; @label:$8214=item_height
+@ $8214 label=item_height
 
 ; ------------------------------------------------------------------------------
 
 g $8215 The items which the hero is holding.
 D $8215 Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
 W $8215 items_held
-; @label:$8215=items_held
+@ $8215 label=items_held
 
 ; ------------------------------------------------------------------------------
 
 g $8217 The current character index.
 B $8217 character_index
-; @label:$8217=character_index
+@ $8217 label=character_index
 
 ; ------------------------------------------------------------------------------
 
 ; Tiles.
 ;
 b $8218 tiles
-; @label:$8218=tiles
+@ $8218 label=tiles
 ;
 D $8218 Exterior tiles set 0. 111 tiles. Looks like mask tiles for huts. (<- plot_tile)
-; @label:$8218=exterior_tiles_0
+@ $8218 label=exterior_tiles_0
 ;
-D $8590 Exterior tiles set 1. 145 tiles. Looks like tiles for huts. (<- plot_tile)
-; @label:$8590=exterior_tiles_1
+N $8590 Exterior tiles set 1. 145 tiles. Looks like tiles for huts. (<- plot_tile)
+@ $8590 label=exterior_tiles_1
 ;
-D $8A18 Exterior tiles set 2. 220 tiles. Looks like main building wall tiles. (<- plot_tile)
-; @label:$8A18=exterior_tiles_2
+N $8A18 Exterior tiles set 2. 220 tiles. Looks like main building wall tiles. (<- plot_tile)
+@ $8A18 label=exterior_tiles_2
 ;
-D $90F8 Exterior tiles set 3. 243 tiles. Looks like main building wall tiles.
-; @label:$90F8=exterior_tiles_3
+N $90F8 Exterior tiles set 3. 243 tiles. Looks like main building wall tiles.
+@ $90F8 label=exterior_tiles_3
 ;
-D $9768 Interior tiles. 194 tiles.
-; @label:$9768=interior_tiles
+N $9768 Interior tiles. 194 tiles.
+@ $9768 label=interior_tiles
 ;
 ;B $8A18,8 tile: ground1 [start of exterior tiles 2] (<- plot_tile)
 ;B $8A20,8 tile: ground2
@@ -4149,12 +4149,12 @@ B $9D70 #HTML[#UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)]
 ; ------------------------------------------------------------------------------
 
 c $9D78 main_loop_setup
-; @label:$9D78=main_loop_setup
+@ $9D78 label=main_loop_setup
 D $9D78 There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single caller might just as well goto enter_room instead of goto main_loop_setup.
   $9D78 enter_room(); // returns by goto main_loop
 
 c $9D7B main_loop
-; @label:$9D7B=main_loop
+@ $9D7B label=main_loop
 D $9D7B Main game loop.
   $9D7B main_loop: for (;;) <% check_morale();
   $9D7E   keyscan_break();
@@ -4184,20 +4184,20 @@ D $9D7B Main game loop.
 ; ------------------------------------------------------------------------------
 
 c $9DCF check_morale
-; @label:$9DCF=check_morale
+@ $9DCF label=check_morale
 D $9DCF Check morale level, report if (near) zero and inhibit player control.
   $9DCF if (morale >= 2) return;
   $9DD5 queue_message_for_display(message_MORALE_IS_ZERO);
-D $9DDB Inhibit user input.
+N $9DDB Inhibit user input.
   $9DDB morale_2 = 0xFF;
-D $9DE0 Immediately take automatic control of hero.
+N $9DE0 Immediately take automatic control of hero.
   $9DE0 automatic_player_counter = 0;
   $9DE4 return;
 
 ; ------------------------------------------------------------------------------
 
 c $9DE5 keyscan_break
-; @label:$9DE5=keyscan_break
+@ $9DE5 label=keyscan_break
 D $9DE5 Check for 'game cancel' keypress.
   $9DE5 if (!(shift_pressed && space_pressed)) return;
   $9DF4 screen_reset();
@@ -4209,27 +4209,27 @@ D $9DE5 Check for 'game cancel' keypress.
 ; ------------------------------------------------------------------------------
 
 c $9E07 process_player_input
-; @label:$9E07=process_player_input
+@ $9E07 label=process_player_input
 D $9E07 Process player input.
 D $9E07 Inhibit user control when morale hits zero.
   $9E07 if (morale_1 || morale_2) return; // reads morale_1 + morale_2 together as a word
   $9E0E if ($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) <%
-D $9E15 Picking a lock, or cutting wire fence.
-D $9E15 Set 31 turns until automatic control.
+N $9E15 Picking a lock, or cutting wire fence.
+N $9E15 Set 31 turns until automatic control.
   $9E15   automatic_player_counter = 31;
   $9E1A   if ($8001 == vischar_BYTE1_PICKING_LOCK) goto picking_a_lock;
-D $9E1F Cutting wire fence.
+N $9E1F Cutting wire fence.
   $9E1F   snipping_wire(); return; %> // exit via
   $9E22 A = input_routine(); // lives at same address as static_tiles_plot_direction
   $9E25 - // subsumed into following code
   $9E2A if (A == input_NONE) <%
   $9E2D   if (automatic_player_counter == 0) return;
-D $9E30 No user input: count down.
+N $9E30 No user input: count down.
   $9E30   automatic_player_counter--;
   $9E31   A = 0; %>
   $9E32 else <%
 R $9E34 I:HL Pointer to automatic_player_counter.
-D $9E34 Wait 31 turns until automatic control.
+N $9E34 Wait 31 turns until automatic control.
   $9E34   automatic_player_counter = 31;
   $9E36   ... (push af) ...
   $9E37   if (hero_in_bed == 0) <%
@@ -4240,10 +4240,10 @@ D $9E34 Wait 31 turns until automatic control.
   $9E52     roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
   $9E57     HL = &hero_in_breakfast; %>
   $9E5A   else <%
-D $9E5C Hero was in bed.
+N $9E5C Hero was in bed.
   $9E5C     (word) $8002 = 0x012C; // set target location?
   $9E62     (word) $8004 = 0x2E2E; // another position?
-; @nowarn:$9E65
+@ $9E65 nowarn
   $9E68     (word) $800F = 0x002E; // set Y pos
   $9E6D     (word) $8011 = 0x002E; // set X pos
   $9E70     $8013 = 24; // set height
@@ -4256,7 +4256,7 @@ D $9E5C Hero was in bed.
   $9E86   if (A >= input_FIRE) <%
   $9E8A     check_for_pick_up_keypress();
   $9E8D     A = 0x80; %> %>
-; @nowarn:$9E8F
+@ $9E8F nowarn
   $9E8F if ($800D == A) return; // tunnel related?
   $9E94 $800D = A | 0x80;
   $9E97 return;
@@ -4264,31 +4264,31 @@ D $9E5C Hero was in bed.
 ; ------------------------------------------------------------------------------
 
 c $9E98 picking_a_lock
-; @label:$9E98=picking_a_lock
+@ $9E98 label=picking_a_lock
 D $9E98 Locks the player out until the lock is picked.
   $9E98 if (player_locked_out_until != game_counter) return;
-D $9EA0 Countdown reached: Unlock the door.
+N $9EA0 Countdown reached: Unlock the door.
   $9EA0 *ptr_to_door_being_lockpicked &= ~gates_and_doors_LOCKED;
   $9EA5 queue_message_for_display(message_IT_IS_OPEN);
-; @label:$9EAA=clear_lockpick_wirecut_flags_and_return
+@ $9EAA label=clear_lockpick_wirecut_flags_and_return
   $9EAA clear_lockpick_wirecut_flags_and_return: $8001 &= ~(vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE);
   $9EB1 return;
 
 ; ------------------------------------------------------------------------------
 
 c $9EB2 snipping_wire
-; @label:$9EB2=snipping_wire
+@ $9EB2 label=snipping_wire
 D $9EB2 Locks the player out until the wire is snipped.
   $9EB2 A = player_locked_out_until - game_counter;
   $9EB9 if (A) <%
   $9EBB   if (A < 4)
-; @nowarn:$9EBE
+@ $9EBE nowarn
   $9EBE     $800D = table_9EE0[$800E & 3]; // change direction
-; @nowarn:$9ECC
+@ $9ECC nowarn
   $9ECF   return; %>
-D $9ED0 Countdown reached: Snip the wire.
-D $9ED0 Bug: A is always zero here, so $800E is always set to zero.
-; @nowarn:$9ED0
+N $9ED0 Countdown reached: Snip the wire.
+N $9ED0 Bug: A is always zero here, so $800E is always set to zero.
+@ $9ED0 nowarn
   $9ED0 else <% $800E = A & 3; // set direction
   $9ED6   $800D = 0x80;
   $9ED9   $8013 = 24; // set height
@@ -4297,7 +4297,7 @@ D $9ED0 Bug: A is always zero here, so $800E is always set to zero.
 ; ------------------------------------------------------------------------------
 
 b $9EE0 table_9EE0
-; @label:$9EE0=table_9EE0
+@ $9EE0 label=table_9EE0
 D $9EE0 Change of direction table used when wire is snipped?
 D $9EE0 Indexed by $800E.
   $9EE0 direction_type table_9EE0[] = { 0x84, 0x87, 0x88, 0x85 };
@@ -4305,7 +4305,7 @@ D $9EE0 Indexed by $800E.
 ; ------------------------------------------------------------------------------
 
 b $9EE4 byte_to_pointer
-; @label:$9EE4=byte_to_pointer
+@ $9EE4 label=byte_to_pointer
 D $9EE4 Maps bytes to pointers to the below arrays.
   $9EE4,3 byte_to_offset { 42, &byte_9EF9[0] }
   $9EE7,3 byte_to_offset {  5, &byte_9EFC[0] }
@@ -4314,7 +4314,7 @@ D $9EE4 Maps bytes to pointers to the below arrays.
   $9EF0,3 byte_to_offset { 44, &byte_9F0E[0] }
   $9EF3,3 byte_to_offset { 43, &byte_9F11[0] }
   $9EF6,3 byte_to_offset { 45, &byte_9F13[0] }
-D $9EF9 Variable-length arrays, 0xFF terminated.
+N $9EF9 Variable-length arrays, 0xFF terminated.
   $9EF9 byte_9EF9 = { 0x82,0x82,0xFF                     }
   $9EFC byte_9EFC = { 0x83,0x01,0x01,0x01,0xFF           }
   $9F01 byte_9F01 = { 0x01,0x01,0x01,0x00,0x02,0x02,0xFF }
@@ -4326,7 +4326,7 @@ D $9EF9 Variable-length arrays, 0xFF terminated.
 ; ------------------------------------------------------------------------------
 
 b $9F15 permitted_bounds
-; @label:$9F15=permitted_bounds
+@ $9F15 label=permitted_bounds
 D $9F15 Pairs of low-high bounds.
   $9F15,4 Corridor to yard.
   $9F19,4 Hut area.
@@ -4335,7 +4335,7 @@ D $9F15 Pairs of low-high bounds.
 ; ------------------------------------------------------------------------------
 
 c $9F21 in_permitted_area
-; @label:$9F21=in_permitted_area
+@ $9F21 label=in_permitted_area
 D $9F21 In permitted area.
   $9F21 HL = $800F; // position on Y axis
   $9F24 DE = &hero_map_position.y; // x/y confusion here - mislabeling
@@ -4404,7 +4404,7 @@ D $9F21 In permitted area.
   $9FDB POP HL
   $9FDC goto set_flag_red;
 
-D $9FDE Green flag code path.
+N $9FDE Green flag code path.
   $9FDE set_flag_green: A = 0; // red_flag
   $9FDF C = attribute_BRIGHT_GREEN_OVER_BLACK;
 
@@ -4417,12 +4417,12 @@ D $9FDE Green flag code path.
   $9FF4   A = C; %>
   $9FF5 goto set_morale_flag_screen_attributes; // exit via
 
-D $9FF8 Red flag code path.
+N $9FF8 Red flag code path.
   $9FF8 set_flag_red: C = attribute_BRIGHT_RED_OVER_BLACK;
   $9FFA A = ($5842); // first morale flag attribute byte
   $9FFD if (A == C) return; // flag already red
   $9FFF ($800D) = 0; // "tunnel related" thing
-; @nowarn:$A000
+@ $A000 nowarn
   $A003 A = 255; // red_flag
   $A005 goto flag_select;
 
@@ -4430,7 +4430,7 @@ D $9FF8 Red flag code path.
 
 ; is this the end of in_permitted_area or a separate routine?
 c $A007 in_permitted_area_end_bit
-; @label:$A007=in_permitted_area_end_bit
+@ $A007 label=in_permitted_area_end_bit
   $A007 HL = &room_index;
   $A00A if (A & (1<<7)) return *HL == A & 0x7F; // return with flags
 ;
@@ -4440,7 +4440,7 @@ c $A007 in_permitted_area_end_bit
 ; fallthrough
 
 c $A01A within_camp_bounds
-; @label:$A01A=within_camp_bounds
+@ $A01A label=within_camp_bounds
   $A01A HL = &permitted_bounds[A * 4];
   $A023 B = 2;
   $A025 do <% A = *DE++;
@@ -4454,23 +4454,23 @@ c $A01A within_camp_bounds
 ; ------------------------------------------------------------------------------
 
 c $A035 wave_morale_flag
-; @label:$A035=wave_morale_flag
+@ $A035 label=wave_morale_flag
 D $A035 Wave the morale flag.
   $A035 HL = &game_counter;
   $A038 (*HL)++;
-D $A039 Wave the flag on every other turn.
+N $A039 Wave the flag on every other turn.
   $A039 if (*HL & 1) return;
   $A03D PUSH HL
   $A03E A = morale;
   $A041 HL = &displayed_morale;
   $A044 if (A != *HL) <%
   $A047   if (A < *HL) <%
-D $A04A Decreasing morale.
+N $A04A Decreasing morale.
   $A04A     (*HL)--;
   $A04B     HL = moraleflag_screen_address;
   $A04E     get_next_scanline(); %>
   $A051   else <%
-D $A053 Increasing morale.
+N $A053 Increasing morale.
   $A053     (*HL)++;
   $A054     HL = moraleflag_screen_address;
   $A057     get_prev_scanline(); %>
@@ -4484,12 +4484,12 @@ D $A053 Increasing morale.
 ; ------------------------------------------------------------------------------
 
 c $A071 set_morale_flag_screen_attributes
-; @label:$A071=set_morale_flag_screen_attributes
+@ $A071 label=set_morale_flag_screen_attributes
 D $A071 Set the screen attributes of the morale flag.
 R $A071 I:A Attributes to use.
   $A071 HL = $5842; // first attribute byte
   $A074 DE = $001E; // skip
-D $A077 Height of flag.
+N $A077 Height of flag.
   $A077 B  = $13;
   $A079 do <% *HL++ = A;
   $A07B   *HL++ = A;
@@ -4501,23 +4501,23 @@ D $A077 Height of flag.
 ; ------------------------------------------------------------------------------
 
 c $A082 get_prev_scanline
-; @label:$A082=get_prev_scanline
+@ $A082 label=get_prev_scanline
 D $A082 Given a screen address, returns the same position on the previous scanline.
 R $A082 I:HL Original screen address.
 R $A082 O:HL Updated screen address.
   $A082 if ((H & 7) != 0) <%
-D $A087 NNN bits.
-D $A087 Step back one scanline.
+N $A087 NNN bits.
+N $A087 Step back one scanline.
   $A087   HL -= 256; %>
   $A088 else <%
-D $A089 Complicated.
+N $A089 Complicated.
   $A089   if (L < 32) HL -= 32; else HL += 0x06E0; %>
   $A094 return;
 
 ; ------------------------------------------------------------------------------
 
 c $A095 interior_delay_loop
-; @label:$A095=interior_delay_loop
+@ $A095 label=interior_delay_loop
 D $A095 Delay loop called only when the hero is indoors.
   $A095 BC = 0xFFF;
   $A098 while (--BC) ;
@@ -4526,35 +4526,35 @@ D $A095 Delay loop called only when the hero is indoors.
 ; ------------------------------------------------------------------------------
 
 c $A09E ring_bell
-; @label:$A09E=ring_bell
+@ $A09E label=ring_bell
 D $A09E Ring the alarm bell.
 D $A09E Called three times from main_loop.
   $A09E HL = &bell;
   $A0A1 A = *HL;
   $A0A2 if (A == bell_STOP) return; // not ringing
   $A0A5 if (A != bell_RING_PERPETUAL) <%
-D $A0A8 Decrement the ring counter.
+N $A0A8 Decrement the ring counter.
   $A0A8   *HL = --A;
   $A0AA   if (A == 0) <%
-D $A0AC Counter hit zero - stop ringing.
+N $A0AC Counter hit zero - stop ringing.
   $A0AC     *HL = bell_STOP;
   $A0AF     return; %> %>
-D $A0B0 Fetch visible state of bell.
+N $A0B0 Fetch visible state of bell.
   $A0B0 A = screenaddr_bell_ringer;
   $A0B3 if (A != 63) <%
-D $A0B8 Bug: Needless jump.
+N $A0B8 Bug: Needless jump.
   $A0B8 -
-D $A0BB Plot ringer "on".
+N $A0BB Plot ringer "on".
   $A0BB   DE = bell_ringer_bitmap_on;
   $A0BE   plot_ringer();
   $A0C1   play_speaker(sound_BELL_RINGER); return; %> // args=BC // exit via
-D $A0C6 Plot ringer "off".
+N $A0C6 Plot ringer "off".
   $A0C6 else <% DE = bell_ringer_bitmap_off;
 ;
 ; fallthrough
 
 c $A0C9 plot_ringer
-; @label:$A0C9=plot_ringer
+@ $A0C9 label=plot_ringer
 D $A0C9 Plot ringer.
   $A0C9   HL = screenaddr_bell_ringer;
   $A0CC   plot_bitmap(0x010C); return; %> // dimensions: 8 x 12 // args=BC // exit via
@@ -4562,7 +4562,7 @@ D $A0C9 Plot ringer.
 ; ------------------------------------------------------------------------------
 
 c $A0D2 increase_morale
-; @label:$A0D2=increase_morale
+@ $A0D2 label=increase_morale
 R $A0D2 I:B Amount to increase morale by. (Preserved)
   $A0D2 A = morale + B;
   $A0D6 if (A >= morale_MAX) A = morale_MAX;
@@ -4570,25 +4570,25 @@ R $A0D2 I:B Amount to increase morale by. (Preserved)
 ; fallthrough
 
 c $A0DC set_morale_from_A
-; @label:$A0DC=set_morale_from_A
+@ $A0DC label=set_morale_from_A
   $A0DC morale = A;
   $A0DF return;
 
 c $A0E0 decrease_morale
-; @label:$A0E0=decrease_morale
+@ $A0E0 label=decrease_morale
 R $A0E0 I:B Amount to decrease morale by. (Preserved)
   $A0E0 A = morale - B;
   $A0E4 if (A < morale_MIN) A = morale_MIN;
   $A0E7 goto set_morale_from_A;
 
 c $A0E9 increase_morale_by_10_score_by_50
-; @label:$A0E9=increase_morale_by_10_score_by_50
+@ $A0E9 label=increase_morale_by_10_score_by_50
 D $A0E9 Increase morale by 10, score by 50.
   $A0E9 increase_morale(10);
   $A0EE increase_score(50); return; // exit via
 
 c $A0F2 increase_morale_by_5_score_by_5
-; @label:$A0F2=increase_morale_by_5_score_by_5
+@ $A0F2 label=increase_morale_by_5_score_by_5
 D $A0F2 Increase morale by 5, score by 5.
   $A0F2 increase_morale(5);
   $A0F7 increase_score(5); return; // exit via
@@ -4596,13 +4596,13 @@ D $A0F2 Increase morale by 5, score by 5.
 ; ------------------------------------------------------------------------------
 
 c $A0F9 increase_score
-; @label:$A0F9=increase_score
+@ $A0F9 label=increase_score
 D $A0F9 Increases the score then plots it.
 R $A0F9 I:B Amount to increase score by.
   $A0F9 A = 10;
   $A0FB HL = &score_digits + 4;
   $A0FE do <% tmp = HL;
-; @label:$A0FF=increase_score_increment_score
+@ $A0FF label=increase_score_increment_score
   $A0FF   increment_score: (*HL)++;
   $A100   if (*HL == A) <% *HL-- = 0; goto increment_score; %>
   $A108   HL = tmp;
@@ -4612,7 +4612,7 @@ E $A0F9 FALL THROUGH into plot_score.
 ; ------------------------------------------------------------------------------
 
 c $A10B plot_score
-; @label:$A10B=plot_score
+@ $A10B label=plot_score
 D $A10B Draws the current score to screen.
   $A10B HL = &score_digits;
   $A10E DE = &score; // screen address of score
@@ -4628,7 +4628,7 @@ D $A10B Draws the current score to screen.
 ; ------------------------------------------------------------------------------
 
 c $A11D play_speaker
-; @label:$A11D=play_speaker
+@ $A11D label=play_speaker
 D $A11D Makes a sound through the speaker.
 R $A11D I:B Number of iterations to play for.
 R $A11D I:C Delay inbetween each iteration.
@@ -4647,7 +4647,7 @@ D $A12F Counts 00..FF then wraps.
 D $A12F Read-only by main_loop, picking_a_lock, snipping_wire, action_wiresnips, action_lockpick.
 D $A12F Write/read-write by wave_morale_flag.
 B $A12F game_counter
-; @label:$A12F=game_counter
+@ $A12F label=game_counter
 
 ; ------------------------------------------------------------------------------
 
@@ -4656,7 +4656,7 @@ D $A130 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Ring indefinitely
 D $A130 Read-only by follow_suspicious_character.
 D $A130 Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_roll_call, event_go_to_breakfast_time, event_breakfast_time, event_go_to_exercise_time, event_exercise_time, event_go_to_time_for_bed, searchlight_caught, solitary, guards_follow_suspicious_character, event_roll_call.
 B $A130 bell
-; @label:$A130=bell
+@ $A130 label=bell
 
 ; ------------------------------------------------------------------------------
 
@@ -4669,14 +4669,14 @@ g $A132 Score digits.
 D $A132 Read-only by plot_score.
 D $A132 Write/read-write by increase_score, reset_game.
 B $A132 score_digits
-; @label:$A132=score_digits
+@ $A132 label=score_digits
 
 ; ------------------------------------------------------------------------------
 
 g $A137 Hero at breakfast flag.
 D $A137 Write/read-write by process_player_input, breakfast_time, hero_sit_sleep_common.
 B $A137 hero_in_breakfast
-; @label:$A137=hero_in_breakfast
+@ $A137 label=hero_in_breakfast
 
 ; ------------------------------------------------------------------------------
 
@@ -4685,7 +4685,7 @@ D $A138 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Not naughty } { 2
 D $A138 Read-only by follow_suspicious_character, guards_follow_suspicious_character.
 D $A138 Write/read-write by in_permitted_area.
 B $A138 red_flag
-; @label:$A138=red_flag
+@ $A138 label=red_flag
 
 ; ------------------------------------------------------------------------------
 
@@ -4694,7 +4694,7 @@ D $A139 Countdown until CPU control of the player is assumed. When it becomes ze
 D $A139 Read-only by touch, follow_suspicious_character, character_behaviour.
 D $A139 Write/read-write by check_morale, process_player_input, charevnt_handler_10_hero_released_from_solitary, solitary.
 B $A139 automatic_player_counter
-; @label:$A139=automatic_player_counter
+@ $A139 label=automatic_player_counter
 
 ; ------------------------------------------------------------------------------
 
@@ -4705,21 +4705,21 @@ D $A13A morale_1 and morale_2 are treated as a word by process_player_input. Eve
 D $A13A Read-only by process_player_input, in_permitted_area, set_hero_target_location, follow_suspicious_character.
 D $A13A Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
 B $A13A morale_1
-; @label:$A13A=morale_1
-D $A13B Inhibits user input when non-zero.
-D $A13B Set by check_morale.
-D $A13B Reset by reset_game.
-D $A13B Read-only by process_player_input.
-D $A13B Write/read-write by check_morale.
+@ $A13A label=morale_1
+N $A13B Inhibits user input when non-zero.
+N $A13B Set by check_morale.
+N $A13B Reset by reset_game.
+N $A13B Read-only by process_player_input.
+N $A13B Write/read-write by check_morale.
 B $A13B morale_2
-; @label:$A13B=morale_2
+@ $A13B label=morale_2
 
 g $A13C Morale 'score'.
 D $A13C Ranges morale_MIN..morale_MAX.
 D $A13C Read-only by check_morale, wave_morale_flag.
 D $A13C Write/read-write by increase_morale, decrease_morale, reset_game.
 B $A13C morale
-; @label:$A13C=morale
+@ $A13C label=morale
 
 ; ------------------------------------------------------------------------------
 
@@ -4728,7 +4728,7 @@ D $A13D Ranges 0..139.
 D $A13D Read-only by in_permitted_area.
 D $A13D Write/read-write by dispatch_timed_event, reset_map_and_characters.
 B $A13D clock
-; @label:$A13D=clock
+@ $A13D label=clock
 
 ; ------------------------------------------------------------------------------
 
@@ -4737,7 +4737,7 @@ D $A13E In byte_A13E_is_nonzero etc.: when non-zero, character_index is valid. E
 D $A13E Read-only by charevnt_handler_3_check_var_A13E, charevnt_handler_5_check_var_A13E_anotherone.
 D $A13E Write/read-write by sub_A3BB, spawn_character, move_characters, follow_suspicious_character, sub_A3BB.
 B $A13E byte_A13E
-; @label:$A13E=byte_A13E
+@ $A13E label=byte_A13E
 
 ; ------------------------------------------------------------------------------
 
@@ -4745,7 +4745,7 @@ g $A13F Hero in bed flag.
 D $A13F Read-only by event_night_time,
 D $A13F Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
 B $A13F hero_in_bed
-; @label:$A13F=hero_in_bed
+@ $A13F label=hero_in_bed
 
 ; ------------------------------------------------------------------------------
 
@@ -4753,14 +4753,14 @@ g $A140 Displayed morale.
 D $A140 This lags behind actual morale while the flag moves slowly to its target.
 D $A140 Write/read-write by wave_morale_flag.
 B $A140 displayed_morale
-; @label:$A140=displayed_morale
+@ $A140 label=displayed_morale
 
 ; ------------------------------------------------------------------------------
 
 g $A141 Pointer to the screen address where the morale flag was last plotted.
 D $A141 Write/read-write by wave_morale_flag.
 W $A141 moraleflag_screen_address
-; @label:$A141=moraleflag_screen_address
+@ $A141 label=moraleflag_screen_address
 
 ; ------------------------------------------------------------------------------
 
@@ -4768,7 +4768,7 @@ g $A143 Address of door (in gates_and_doors[]) in which bit 7 is cleared when pi
 D $A143 Read-only by picking_a_lock.
 D $A143 Write/read-write by action_lockpick.
 W $A143 ptr_to_door_being_lockpicked
-; @label:$A143=ptr_to_door_being_lockpicked
+@ $A143 label=ptr_to_door_being_lockpicked
 
 ; ------------------------------------------------------------------------------
 
@@ -4777,7 +4777,7 @@ D $A145 e.g. when picking a lock or cutting wire.
 D $A145 Read-only by picking_a_lock, snipping_wire.
 D $A145 Write/read-write by action_wiresnips, action_lockpick.
 B $A145 player_locked_out_until
-; @label:$A145=player_locked_out_until
+@ $A145 label=player_locked_out_until
 
 ; ------------------------------------------------------------------------------
 
@@ -4786,20 +4786,20 @@ D $A146 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Daytime } { 255 |
 D $A146 Read-only by main_loop, choose_game_window_attributes.
 D $A146 Write/read-write by set_day_or_night, reset_map_and_characters.
 B $A146 day_or_night
-; @label:$A146=day_or_night
+@ $A146 label=day_or_night
 
 ; ------------------------------------------------------------------------------
 
 b $A147 bell_ringer_bitmaps
 B $A147,12,1 bell_ringer_bitmap_off
-; @label:$A147=bell_ringer_bitmap_off
+@ $A147 label=bell_ringer_bitmap_off
 B $A153,12,1 bell_ringer_bitmap_on
-; @label:$A153=bell_ringer_bitmap_on
+@ $A153 label=bell_ringer_bitmap_on
 
 ; ------------------------------------------------------------------------------
 
 c $A15F set_game_window_attributes
-; @label:$A15F=set_game_window_attributes
+@ $A15F label=set_game_window_attributes
 R $A15F I:A Attribute byte.
 D $A15F Starting at $5847, set 23 columns of 16 rows to A.
   $A15F HL = $5847 // attributes base // $5800 + $47
@@ -4816,7 +4816,7 @@ D $A15F Starting at $5847, set 23 columns of 16 rows to A.
 ; ------------------------------------------------------------------------------
 
 b $A173 timed_events
-; @label:$A173=timed_events
+@ $A173 label=timed_events
 D $A173 Array of 15 event structures.
   $A173 {   0, event_another_day_dawns },
   $A176 {   8, event_wake_up },
@@ -4837,14 +4837,14 @@ D $A173 Array of 15 event structures.
 ; ------------------------------------------------------------------------------
 
 c $A1A0 dispatch_timed_event
-; @label:$A1A0=dispatch_timed_event
+@ $A1A0 label=dispatch_timed_event
 D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll calls.
 D $A1A0 Increment the clock, wrapping at 140.
   $A1A0 HL = &clock;
   $A1A3 A = *HL + 1;
   $A1A5 if (A == 140) A = 0;
   $A1AA *HL = A;
-D $A1AB Dispatch the event for that time.
+N $A1AB Dispatch the event for that time.
   $A1AB HL = &timed_events[0];
   $A1AE B = 15; // 15 iterations
   $A1B0 do <% if (A == *HL++) goto found;
@@ -4859,13 +4859,13 @@ D $A1AB Dispatch the event for that time.
   $A1C2 goto *HL; // fantasy syntax
 
 c $A1C3 event_night_time
-; @label:$A1C3=event_night_time
+@ $A1C3 label=event_night_time
   $A1C3 if (hero_in_bed == 0) set_hero_target_location(location_012C);
   $A1CF A = 0xFF;
   $A1D1 goto set_attrs;
 
 c $A1D3 event_another_day_dawns
-; @label:$A1D3=event_another_day_dawns
+@ $A1D3 label=event_another_day_dawns
   $A1D3 queue_message_for_display(message_ANOTHER_DAY_DAWNS);
   $A1D8 decrease_morale(25);
   $A1DD A = 0;
@@ -4878,54 +4878,54 @@ R $A1DE I:A 0/255 for day/night.
   $A1E4 set_game_window_attributes(); return; // exit via
 
 c $A1E7 event_wake_up
-; @label:$A1E7=event_wake_up
+@ $A1E7 label=event_wake_up
   $A1E7 *BC = A; // bell = bell_RING_40_TIMES;
   $A1E8 queue_message_for_display(message_TIME_TO_WAKE_UP);
   $A1ED wake_up(); return; // exit via
 
 c $A1F0 event_go_to_roll_call
-; @label:$A1F0=event_go_to_roll_call
+@ $A1F0 label=event_go_to_roll_call
   $A1F0 *BC = A; // bell = bell_RING_40_TIMES;
   $A1F1 queue_message_for_display(message_ROLL_CALL);
   $A1F6 go_to_roll_call(); return; // exit via
 
 c $A1F9 event_go_to_breakfast_time
-; @label:$A1F9=event_go_to_breakfast_time
+@ $A1F9 label=event_go_to_breakfast_time
   $A1F9 *BC = A; // bell = bell_RING_40_TIMES;
   $A1FA queue_message_for_display(message_BREAKFAST_TIME);
   $A1FF set_location_0x0010(); return; // exit via
 
 c $A202 event_breakfast_time
-; @label:$A202=event_breakfast_time
+@ $A202 label=event_breakfast_time
   $A202 *BC = A; // bell = bell_RING_40_TIMES;
   $A203 breakfast_time(); return; // exit via
 
 c $A206 event_go_to_exercise_time
-; @label:$A206=event_go_to_exercise_time
+@ $A206 label=event_go_to_exercise_time
   $A206 *BC = A; // bell = bell_RING_40_TIMES;
   $A207 queue_message_for_display(message_EXERCISE_TIME);
-D $A20C Unlock the gates.
+N $A20C Unlock the gates.
   $A20C gates_and_doors[0] = 0x00; gates_and_doors[1] = 0x01;
   $A212 set_location_0x000E(); return; // exit via
 
 c $A215 event_exercise_time
-; @label:$A215=event_exercise_time
+@ $A215 label=event_exercise_time
   $A215 *BC = A; // bell = bell_RING_40_TIMES;
   $A216 set_location_0x048E(); return; // exit via
 
 c $A219 event_go_to_time_for_bed
-; @label:$A219=event_go_to_time_for_bed
+@ $A219 label=event_go_to_time_for_bed
   $A219 *BC = A; // bell = bell_RING_40_TIMES;
-D $A21A Lock the gates.
+N $A21A Lock the gates.
   $A21A gates_and_doors[0] = 0x80; gates_and_doors[1] = 0x81;
   $A220 queue_message_for_display(message_TIME_FOR_BED);
   $A225 go_to_time_for_bed(); return; // exit via
 
 c $A228 event_new_red_cross_parcel
-; @label:$A228=event_new_red_cross_parcel
+@ $A228 label=event_new_red_cross_parcel
 D $A228 Don't deliver a new red cross parcel while the previous one still exists.
   $A228 if ((item_structs[item_RED_CROSS_PARCEL].room & itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;
-D $A230 Select the next parcel contents -- the first item from the list which does not exist.
+N $A230 Select the next parcel contents -- the first item from the list which does not exist.
   $A230 DE = &red_cross_parcel_contents_list[0];
   $A233 B = 4; // length of above
   $A235 do <% A = *DE;
@@ -4941,14 +4941,14 @@ D $A230 Select the next parcel contents -- the first item from the list which do
   $A254 queue_message_for_display(message_RED_CROSS_PARCEL); return; // exit via
 
 b $A259 red_cross_parcel_reset_data
-; @label:$A259=red_cross_parcel_reset_data
+@ $A259 label=red_cross_parcel_reset_data
 D $A259 Data to set the parcel object up (room, tinypos, target).
 B $A259,1 item_RED_CROSS_PARCEL
 B $A25A,3 44,44,12
 W $A25D,2 0xF480
 
 b $A25F red_cross_parcel_contents_list
-; @label:$A25F=red_cross_parcel_contents_list
+@ $A25F label=red_cross_parcel_contents_list
 B $A25F item_PURSE
 B $A260 item_WIRESNIPS
 B $A261 item_BRIBE
@@ -4956,22 +4956,22 @@ B $A262 item_COMPASS
 
 g $A263 Current contents of red cross parcel.
 B $A263 red_cross_parcel_current_contents
-; @label:$A263=red_cross_parcel_current_contents
+@ $A263 label=red_cross_parcel_current_contents
 
 c $A264 event_time_for_bed
-; @label:$A264=event_time_for_bed
+@ $A264 label=event_time_for_bed
   $A264 A = 0xA6;
   $A266 C = 3;
   $A268 goto $A26E;
 
 c $A26A event_search_light
-; @label:$A26A=event_search_light
+@ $A26A label=event_search_light
   $A26A A = 0x26;
   $A26C C = 0;
 ;
 ; fallthrough
 
-D $A26E Common end of event_time_for_bed and event_search_light.
+N $A26E Common end of event_time_for_bed and event_search_light.
   $A26E -
   $A26F Adash = 12;
   $A271 B = 4; // 4 iterations
@@ -4988,7 +4988,7 @@ D $A26E Common end of event_time_for_bed and event_search_light.
 ; ------------------------------------------------------------------------------
 
 b $A27F prisoners_and_guards
-; @label:$A27F=prisoners_and_guards
+@ $A27F label=prisoners_and_guards
 D $A27F List of non-player characters: six prisoners and four guards.
 D $A27F Read-only by set_prisoners_and_guards_location, set_prisoners_and_guards_location_B.
 B $A27F,1 character_12_GUARD_12
@@ -5005,7 +5005,7 @@ B $A288,1 character_25_PRISONER_6
 ; ------------------------------------------------------------------------------
 
 c $A289 wake_up
-; @label:$A289=wake_up
+@ $A289 label=wake_up
 D $A289 Called by event_wake_up.
   $A289 if (hero_in_bed) <% // odd that this jumps into a point which sets hero_in_bed to zero when it's already zero
   $A290   $800F = 46; // hero's Y position
@@ -5028,16 +5028,16 @@ D $A289 Called by event_wake_up.
   $A2BB EX AF,AF'
   $A2BC C = 0; // BC = 0
   $A2BE set_prisoners_and_guards_location_B();
-D $A2C1 Update all the bed objects to be empty.
+N $A2C1 Update all the bed objects to be empty.
   $A2C1 -
   $A2C3 HL = &beds[0];
-D $A2C6 Bug: 7 iterations BUT only six beds in the data structure resulting in write to ROM location $1A42.
+N $A2C6 Bug: 7 iterations BUT only six beds in the data structure resulting in write to ROM location $1A42.
   $A2C6 B = 7; // 7 iterations
   $A2C8 do <% E = *HL++;
   $A2CA   D = *HL++;
   $A2CC   *DE = interiorobject_EMPTY_BED;
   $A2CD %> while (--B);
-D $A2CF Update the hero's bed object to be empty.
+N $A2CF Update the hero's bed object to be empty.
   $A2CF room_2_hut2_left.bed = interiorobject_EMPTY_BED;
   $A2D3 if (room_index == room_0_outdoors || room_index >= room_6) return;
   $A2DB setup_room();
@@ -5047,7 +5047,7 @@ D $A2CF Update the hero's bed object to be empty.
 ; ------------------------------------------------------------------------------
 
 c $A2E2 breakfast_time
-; @label:$A2E2=breakfast_time
+@ $A2E2 label=breakfast_time
   $A2E2 if (hero_in_breakfast) <%
   $A2E9   $800F = 52; // hero Y position
   $A2EE   $8011 = 62; %> // hero X position
@@ -5070,7 +5070,7 @@ c $A2E2 breakfast_time
   $A315 C = 3;
   $A317 set_prisoners_and_guards_location_B();
   $A31A -
-D $A31C Update all the benches to be empty.
+N $A31C Update all the benches to be empty.
   $A31C roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
   $A31F roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
   $A322 roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
@@ -5085,7 +5085,7 @@ D $A31C Update all the benches to be empty.
 ; ------------------------------------------------------------------------------
 
 c $A33F set_hero_target_location
-; @label:$A33F=set_hero_target_location
+@ $A33F label=set_hero_target_location
   $A33F if (morale_1) return;
   $A344 $8001 &= ~vischar_BYTE1_BIT6;
   $A349 $8002 = B;
@@ -5096,7 +5096,7 @@ c $A33F set_hero_target_location
 ; ------------------------------------------------------------------------------
 
 c $A351 go_to_time_for_bed
-; @label:$A351=go_to_time_for_bed
+@ $A351 label=go_to_time_for_bed
   $A351 set_hero_target_location(location_0285);
   $A357 Adash = 133;
   $A35A C = 2;
@@ -5105,7 +5105,7 @@ c $A351 go_to_time_for_bed
 ; ------------------------------------------------------------------------------
 
 c $A35F set_prisoners_and_guards_location
-; @label:$A35F=set_prisoners_and_guards_location
+@ $A35F label=set_prisoners_and_guards_location
 D $A35F Uses prisoners_and_guards structure.
 R $A35F O:Adash Counter incremented.
   $A35F HL = &prisoners_and_guards[0];
@@ -5124,7 +5124,7 @@ R $A35F O:Adash Counter incremented.
 ; ------------------------------------------------------------------------------
 
 c $A373 set_prisoners_and_guards_location_B
-; @label:$A373=set_prisoners_and_guards_location_B
+@ $A373 label=set_prisoners_and_guards_location_B
 R $A373 O:Adash Counter incremented.
 D $A373 Uses prisoners_and_guards structure.
   $A373 HL = &prisoners_and_guards[0];
@@ -5143,7 +5143,7 @@ D $A373 Uses prisoners_and_guards structure.
 ; ------------------------------------------------------------------------------
 
 c $A38C set_character_location
-; @label:$A38C=set_character_location
+@ $A38C label=set_character_location
 D $A38C Walk non-player visible characters, ...
 R $A38C I:A     Character index.
 R $A38C I:Adash ?
@@ -5154,7 +5154,7 @@ R $A38C I:C     ?
   $A395 A = *HL & characterstruct_BYTE0_MASK;
   $A398 B = 7; // 7 iterations
   $A39A DE = 32; // stride
-; @nowarn:$A39D
+@ $A39D nowarn
   $A39D HL = $8020; // iterate over non-player characters
   $A3A0 do <% if (A == *HL) goto found;
   $A3A3   HL += DE;
@@ -5176,7 +5176,7 @@ B $A3A9 Unreferenced byte.
 ; fallthrough
 
 c $A3BB sub_A3BB
-; @label:$A3BB=sub_A3BB
+@ $A3BB label=sub_A3BB
   $A3BB byte_A13E = 0;
   $A3BF PUSH BC
   $A3C0 PUSH HL
@@ -5204,7 +5204,7 @@ c $A3BB sub_A3BB
 ; ------------------------------------------------------------------------------
 
 c $A3ED store_location
-; @label:$A3ED=store_location
+@ $A3ED label=store_location
 ; sampled HL = $8022 $8042 $76A3 $76AA $76B1 $7679 $7680 $76B8 $76BF $76C6 $766B $8022 $8042 $8082 $80C2 $80E2 $80A2 $8062 $76BF
   $A3ED *HL++ = Adash;
   $A3F1 *HL = C;
@@ -5213,14 +5213,14 @@ c $A3ED store_location
 ; ------------------------------------------------------------------------------
 
 c $A3F3 byte_A13E_is_nonzero
-; @label:$A3F3=byte_A13E_is_nonzero
+@ $A3F3 label=byte_A13E_is_nonzero
 D $A3F3 Checks character indexes, sets target locations, ...
 R $A3F3 I:HL -> characterstruct?
   $A3F3 A = character_index;
   $A3F6 goto $A404;
 
 c $A3F8 byte_A13E_is_zero
-; @label:$A3F8=byte_A13E_is_zero
+@ $A3F8 label=byte_A13E_is_zero
 D $A3F8 Gets hit when hero enters hut at end of day.
   $A3F8 A = IY[0]; // IY=$8000 // must be a character index
   $A3FB if (A == 0) <% set_hero_target_location(location_002C); return; %> // exit via
@@ -5241,7 +5241,7 @@ R $A404 I:HL Pointer to ...
 ; ------------------------------------------------------------------------------
 
 c $A420 character_sits
-; @label:$A420=character_sits
+@ $A420 label=character_sits
 R $A420 I:A Character.
 R $A420 I:HL ?
   $A420 PUSH AF
@@ -5251,7 +5251,7 @@ R $A420 I:HL ?
   $A427 if (A >= 3) <% // second three characters
   $A42B   HL = &roomdef_23_breakfast.bench_A;
   $A42E   A -= 3; %>
-D $A430 Poke object.
+N $A430 Poke object.
   $A430 HL += A * 3;
   $A437 *HL = interiorobject_PRISONER_SAT_DOWN_MID_TABLE;
   $A439 POP AF
@@ -5259,13 +5259,13 @@ D $A430 Poke object.
   $A43C if (A >= character_21_PRISONER_2) C = room_23_breakfast;
   $A442 goto character_sit_sleep_common;
 
-D $A444 character_sleeps
+N $A444 character_sleeps
 R $A444 I:A Character.
 R $A444 I:HL ?
   $A444 PUSH AF
   $A445 A -= 7;
   $A448 EX DE,HL
-D $A449 Poke object.
+N $A449 Poke object.
   $A449 BC = beds[A];
   $A453 *BC = interiorobject_OCCUPIED_BED;
   $A456 POP AF
@@ -5276,9 +5276,9 @@ D $A449 Poke object.
 ;
 ; fallthrough
 
-D $A462 (common end of above two routines)
-D $A462 I:C Character?
-D $A462 I:DE Pointer to ?
+N $A462 (common end of above two routines)
+N $A462 I:C Character?
+N $A462 I:DE Pointer to ?
   $A462 character_sit_sleep_common: EX DE,HL
   $A463 *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)
   $A465 EX AF,AF'
@@ -5286,7 +5286,7 @@ D $A462 I:DE Pointer to ?
   $A46C   HL -= 4;
   $A470   *HL = 255;
   $A472   return; %>
-D $A473 Force a refresh.
+N $A473 Force a refresh.
   $A473 HL += 26;
   $A477 *HL = 255;
   $A479 select_room_and_plot: setup_room(); // make this into its own function
@@ -5295,21 +5295,21 @@ D $A473 Force a refresh.
 ; ------------------------------------------------------------------------------
 
 c $A47F hero_sits
-; @label:$A47F=hero_sits
+@ $A47F label=hero_sits
   $A47F roomdef_25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
   $A484 HL = &hero_in_breakfast;
   $A487 goto hero_sit_sleep_common;
 
 c $A489 hero_sleeps
-; @label:$A489=hero_sleeps
+@ $A489 label=hero_sleeps
   $A489 roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;
   $A48E HL = &hero_in_bed;
 
-D $A491 (common end of the above two routines)
+N $A491 (common end of the above two routines)
   $A491 hero_sit_sleep_common: *HL = 0xFF; // set in breakfast, or in bed
   $A493 A = 0;
   $A494 $8002 = A; // target location? bottom byte only?
-D $A498 Set hero's position to zero.
+N $A498 Set hero's position to zero.
   $A498 memset($800F, 0, 4);
   $A4A1 HL = $8000;
   $A4A4 reset_position(); // reset hero
@@ -5318,7 +5318,7 @@ D $A498 Set hero's position to zero.
 ; ------------------------------------------------------------------------------
 
 c $A4A9 set_location_0x000E
-; @label:$A4A9=set_location_0x000E
+@ $A4A9 label=set_location_0x000E
   $A4A9 set_hero_target_location(0x000E);
   $A4AF A = 0x0E;
   $A4B1 EX AF,AF'
@@ -5328,7 +5328,7 @@ c $A4A9 set_location_0x000E
 ; ------------------------------------------------------------------------------
 
 c $A4B7 set_location_0x048E
-; @label:$A4B7=set_location_0x048E
+@ $A4B7 label=set_location_0x048E
   $A4B7 set_hero_target_location(0x048E);
   $A4BD A = 0x8E;
   $A4BF EX AF,AF'
@@ -5338,7 +5338,7 @@ c $A4B7 set_location_0x048E
 ; ------------------------------------------------------------------------------
 
 c $A4C5 set_location_0x0010
-; @label:$A4C5=set_location_0x0010
+@ $A4C5 label=set_location_0x0010
   $A4C5 set_hero_target_location(0x0010);
   $A4CB A = 0x10;
   $A4CD EX AF,AF'
@@ -5348,13 +5348,13 @@ c $A4C5 set_location_0x0010
 ; ------------------------------------------------------------------------------
 
 c $A4D3 byte_A13E_is_nonzero_anotherone
-; @label:$A4D3=byte_A13E_is_nonzero_anotherone
+@ $A4D3 label=byte_A13E_is_nonzero_anotherone
 D $A4D3 Something character related [very similar to the routine at $A3F3].
   $A4D3 A = character_index;
   $A4D6 goto $A4E4;
 
 c $A4D8 byte_A13E_is_zero_anotherone
-; @label:$A4D8=byte_A13E_is_zero_anotherone
+@ $A4D8 label=byte_A13E_is_zero_anotherone
 D $A4D8 Sets a target location 0x002B. Seems to get hit around breakfasting time. If I nobble this it stops him sitting for breakfast.
   $A4D8 A = IY[0]; // must be a character index
   $A4DC if (A == 0) <% set_hero_target_location(location_002B); return; %> // exit via
@@ -5375,7 +5375,7 @@ R $A4E4 I:A Character index.
 ; ------------------------------------------------------------------------------
 
 c $A4FD go_to_roll_call
-; @label:$A4FD=go_to_roll_call
+@ $A4FD label=go_to_roll_call
   $A4FD A = 26;
   $A4FF EX AF,AF'
   $A500 C = 0;
@@ -5385,7 +5385,7 @@ c $A4FD go_to_roll_call
 ; ------------------------------------------------------------------------------
 
 c $A50B screen_reset
-; @label:$A50B=screen_reset
+@ $A50B label=screen_reset
   $A50B wipe_visible_tiles();
   $A50E plot_interior_tiles();
   $A511 zoombox();
@@ -5396,7 +5396,7 @@ c $A50B screen_reset
 ; ------------------------------------------------------------------------------
 
 c $A51C escaped
-; @label:$A51C=escaped
+@ $A51C label=escaped
 D $A51C Hero has escaped.
 D $A51C Print 'well done' message then test to see if the correct objects were used in the escape attempt.
   $A51C screen_reset();
@@ -5415,8 +5415,8 @@ D $A51C Print 'well done' message then test to see if the correct objects were u
 ;
 ; fallthrough
 
-; @label:$A540=escaped_success
-; @nowarn:$A540
+@ $A540 label=escaped_success
+@ $A540 nowarn
   $A540 success: HL = &escape_strings[3];
   $A543 screenlocstring_plot(); // AND WILL CROSS THE
   $A546 screenlocstring_plot(); // BORDER SUCCESSFULLY
@@ -5424,31 +5424,31 @@ D $A51C Print 'well done' message then test to see if the correct objects were u
   $A54B PUSH AF
   $A54C goto press_any_key;
 
-; @label:$A54E=escaped_captured
+@ $A54E label=escaped_captured
   $A54E captured: PUSH AF
-; @nowarn:$A54F
+@ $A54F nowarn
   $A54F HL = &escape_strings[5];
   $A552 screenlocstring_plot(); // BUT WERE RECAPTURED
   $A555 POP AF
   $A556 PUSH AF
   $A557 if (A >= escapeitem_UNIFORM) goto plot; // at least a uniform => 'but were recaptured' // bug? plotting twice
-; @nowarn:$A55B
+@ $A55B nowarn
   $A55B HL = &escape_strings[7];
   $A55E if (A == 0) goto plot; // no objects => 'totally unprepared'
-; @nowarn:$A561
+@ $A561 nowarn
   $A561 HL = &escape_strings[8];
   $A564 if ((A & escapeitem_COMPASS) == 0) goto plot; // no compass => 'totally lost'
-; @nowarn:$A568
+@ $A568 nowarn
   $A568 HL = &escape_strings[9];
 ;
-; @label:$A56B=escaped_plot
+@ $A56B label=escaped_plot
   $A56B plot: screenlocstring_plot();
 ;
-; @nowarn:$A56E
-; @label:$A56E=escaped_press_any_key
+@ $A56E nowarn
+@ $A56E label=escaped_press_any_key
   $A56E press_any_key: HL = &escape_strings[10];
   $A571 screenlocstring_plot(); // PRESS ANY KEY
-D $A574 Wait for a keypress.
+N $A574 Wait for a keypress.
   $A574 do <% keyscan_all(); %> while (!Z);
   $A579 do <% keyscan_all(); %> while (Z);
   $A57E POP AF
@@ -5458,7 +5458,7 @@ D $A574 Wait for a keypress.
 ; ------------------------------------------------------------------------------
 
 c $A58C keyscan_all
-; @label:$A58C=keyscan_all
+@ $A58C label=keyscan_all
 R $A58C O:A Pressed key.
   $A58C BC = $FEFE;
   $A58F do <% IN A,(C)
@@ -5472,7 +5472,7 @@ R $A58C O:A Pressed key.
 ; ------------------------------------------------------------------------------
 
 c $A59C join_item_to_escapeitem
-; @label:$A59C=join_item_to_escapeitem
+@ $A59C label=join_item_to_escapeitem
 D $A59C Call item_to_escapeitem then merge result with a previous escapeitem.
 R $A59C I:C  Previous return value.
 R $A59C I:HL Pointer to (single) item slot.
@@ -5483,7 +5483,7 @@ R $A59C O:C  Previous return value + escapeitem_ flag.
   $A5A2 return;
 
 c $A5A3 item_to_escapeitem
-; @label:$A5A3=item_to_escapeitem
+@ $A5A3 label=item_to_escapeitem
 D $A5A3 Return a bitfield indicating the presence of required items.
 R $A5A3 I:A Item.
 R $A5A3 O:A Bitfield.
@@ -5497,7 +5497,7 @@ R $A5A3 O:A Bitfield.
 ; ------------------------------------------------------------------------------
 
 c $A5BF screenlocstring_plot
-; @label:$A5BF=screenlocstring_plot
+@ $A5BF label=screenlocstring_plot
 R $A5BF I:HL Pointer to screenlocstring.
 R $A5BF O:HL Pointer to byte after screenlocstring.
   $A5BF E = *HL++; // read screen address into DE
@@ -5513,34 +5513,34 @@ R $A5BF O:HL Pointer to byte after screenlocstring.
 ; ------------------------------------------------------------------------------
 
 t $A5CE escape_strings
-; @label:$A5CE=escape_strings
+@ $A5CE label=escape_strings
 D $A5CE "WELL DONE"
   $A5CE #HTML[#CALL:decode_screenlocstring($A5CE)]
-D $A5DA "YOU HAVE ESCAPED"
+N $A5DA "YOU HAVE ESCAPED"
   $A5DA #HTML[#CALL:decode_screenlocstring($A5DA)]
-D $A5ED "FROM THE CAMP"
+N $A5ED "FROM THE CAMP"
   $A5ED #HTML[#CALL:decode_screenlocstring($A5ED)]
-D $A5FD "AND WILL CROSS THE"
+N $A5FD "AND WILL CROSS THE"
   $A5FD #HTML[#CALL:decode_screenlocstring($A5FD)]
-D $A612 "BORDER SUCCESSFULLY"
+N $A612 "BORDER SUCCESSFULLY"
   $A612 #HTML[#CALL:decode_screenlocstring($A612)]
-D $A628 "BUT WERE RECAPTURED"
+N $A628 "BUT WERE RECAPTURED"
   $A628 #HTML[#CALL:decode_screenlocstring($A628)]
-D $A63E "AND SHOT AS A SPY"
+N $A63E "AND SHOT AS A SPY"
   $A63E #HTML[#CALL:decode_screenlocstring($A63E)]
-D $A652 "TOTALLY UNPREPARED"
+N $A652 "TOTALLY UNPREPARED"
   $A652 #HTML[#CALL:decode_screenlocstring($A652)]
-D $A667 "TOTALLY LOST"
+N $A667 "TOTALLY LOST"
   $A667 #HTML[#CALL:decode_screenlocstring($A667)]
-D $A676 "DUE TO LACK OF PAPERS"
+N $A676 "DUE TO LACK OF PAPERS"
   $A676 #HTML[#CALL:decode_screenlocstring($A676)]
-D $A68E "PRESS ANY KEY"
+N $A68E "PRESS ANY KEY"
   $A68E #HTML[#CALL:decode_screenlocstring($A68E)]
 
 ; ------------------------------------------------------------------------------
 
 b $A69E bitmap_font
-; @label:$A69E=bitmap_font
+@ $A69E label=bitmap_font
 D $A69E 0..9, A..Z (omitting O), space, full stop
 D $A69E #UDGTABLE { #FONT$A69E,35,7,2{0,0,560,16}(font) } TABLE#
 
@@ -5548,25 +5548,25 @@ D $A69E #UDGTABLE { #FONT$A69E,35,7,2{0,0,560,16}(font) } TABLE#
 
 g $A7C6 Byte used by move_map.
 B $A7C6 used_by_move_map
-; @label:$A7C6=used_by_move_map
+@ $A7C6 label=used_by_move_map
 
 ; ------------------------------------------------------------------------------
 
 g $A7C7 Game window x offset.
 W $A7C7 plot_game_window_x
-; @label:$A7C7=plot_game_window_x
+@ $A7C7 label=plot_game_window_x
 
 ; ------------------------------------------------------------------------------
 
 c $A7C9 get_supertiles
-; @label:$A7C9=get_supertiles
+@ $A7C9 label=get_supertiles
 D $A7C9 Pulls supertiles out of the map.
 D $A7C9 Get height.
   $A7C9 A = (map_position >> 8) & 0xFC; // A = 0, 4, 8, 12, ...
-D $A7CE Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
+N $A7CE Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
   $A7CE HL = $BCB8 + (A + (A >> 1)) * 9; // $BCB8 is &map_tiles[0] - 54 so it must be skipping the first row.
   $A7E3 HL += (map_position & 0xFF) >> 2;
-D $A7EE Populate $FF58 with 7x5 array of supertile refs.
+N $A7EE Populate $FF58 with 7x5 array of supertile refs.
   $A7EE A = 5; // 5 iterations
   $A7F0 DE = $FF58;
   $A7F3 do <% memcpy(DE, HL, 7); DE += 7;
@@ -5579,20 +5579,20 @@ D $A7EE Populate $FF58 with 7x5 array of supertile refs.
 ; two entry points
 
 c $A80A supertile_plot_horizontal_1
-; @label:$A80A=supertile_plot_horizontal_1
+@ $A80A label=supertile_plot_horizontal_1
 D $A80A Causes some tile plotting.
-; @nowarn:$A80A
+@ $A80A nowarn
   $A80A DE = $F278;
   $A80D -
-; @nowarn:$A80E
+@ $A80E nowarn
   $A80E HLdash = $FF74;
   $A811 A = map_position >> 8; // map_position hi
-; @nowarn:$A814
+@ $A814 nowarn
   $A814 DEdash = $FE90;
   $A817 goto supertile_plot_horizontal_common;
 
 c $A819 supertile_plot_horizontal_2
-; @label:$A819=supertile_plot_horizontal_2
+@ $A819 label=supertile_plot_horizontal_2
 D $A819 Causes some tile plotting.
   $A819 DE = $F0F8; // visible tiles array
   $A81C -
@@ -5601,7 +5601,7 @@ D $A819 Causes some tile plotting.
   $A823 DEdash = $F290; // screen buffer start address
 
 c $A826 supertile_plot_horizontal_common
-; @label:$A826=supertile_plot_horizontal_common
+@ $A826 label=supertile_plot_horizontal_common
 D $A826 Plotting supertiles.
   $A826 A = (A & 3) * 4;
   $A82A ($A86A) = A; // self modify
@@ -5664,7 +5664,7 @@ D $A826 Plotting supertiles.
 ; ------------------------------------------------------------------------------
 
 c $A8A2 supertile_plot_all
-; @label:$A8A2=supertile_plot_all
+@ $A8A2 label=supertile_plot_all
 D $A8A2 Plot all tiles.
 D $A8A2 Note: Exits with banked registers active.
   $A8A2 DE = $F0F8; // visible tiles array
@@ -5699,12 +5699,12 @@ D $A8A2 Note: Exits with banked registers active.
 ; ------------------------------------------------------------------------------
 
 c $A8CF supertile_plot_vertical_1
-; @label:$A8CF=supertile_plot_vertical_1
-; @nowarn:$A8CF
+@ $A8CF label=supertile_plot_vertical_1
+@ $A8CF nowarn
   $A8CF DE = $F10F;
   $A8D2 EXX // unpaired
   $A8D3 HL = $FF5E;
-; @nowarn:$A8D6
+@ $A8D6 nowarn
   $A8D6 DE = $F2A7;
   $A8D9 A = map_position[0] & 3; // map_position lo
   $A8DE if (A == 0) HL--;
@@ -5712,7 +5712,7 @@ c $A8CF supertile_plot_vertical_1
   $A8E5 goto supertile_plot_vertical_common;
 
 c $A8E7 supertile_plot_vertical_2
-; @label:$A8E7=supertile_plot_vertical_2
+@ $A8E7 label=supertile_plot_vertical_2
 D $A8E7 Suspect: supertile plotting.
   $A8E7 DE = $F0F8; // visible tiles array
   $A8EA -
@@ -5721,7 +5721,7 @@ D $A8E7 Suspect: supertile plotting.
   $A8F1 A = map_position[0]; // map_position lo
 
 c $A8F4 supertile_plot_vertical_common
-; @label:$A8F4=supertile_plot_vertical_common
+@ $A8F4 label=supertile_plot_vertical_common
 D $A8F4 Plotting supertiles.
   $A8F4 A &= 3;
   $A8F6 ($A94C + 1) = A; // self modify
@@ -5756,7 +5756,7 @@ D $A8F4 Plotting supertiles.
   $A93F   A = *HL;
   $A940   EXX
   $A941   HL = 0x5B00 + A * 16; // supertiles
-; @label:$A94C=supertile_plot_vertical_common_iters
+@ $A94C label=supertile_plot_vertical_common_iters
   $A94C   A = 0; // self modified by $A8F6
   $A94E   A += L;
   $A94F   L = A;
@@ -5799,7 +5799,7 @@ D $A8F4 Plotting supertiles.
 ; ------------------------------------------------------------------------------
 
 c $A9A0 plot_tile_then_advance
-; @label:$A9A0=plot_tile_then_advance
+@ $A9A0 label=plot_tile_then_advance
   $A9A0 plot_tile();
   $A9A3 -
   $A9A4 DEdash += 0xBF;
@@ -5809,7 +5809,7 @@ c $A9A0 plot_tile_then_advance
 ; -----------------------------------------------------------------------------
 
 c $A9AD plot_tile
-; @label:$A9AD=plot_tile
+@ $A9AD label=plot_tile
 D $A9AD Plots a tile to the buffer.
 R $A9AD I:A      Tile index
 R $A9AD I:DEdash Output buffer start address.
@@ -5823,7 +5823,7 @@ R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile gro
   $A9BA if (Adash < 139 || Adash >= 204) goto chosen;
   $A9C2 BCdash = &exterior_tiles_3[0];
 ;
-; @label:$A9C5=plot_tile_chosen
+@ $A9C5 label=plot_tile_chosen
   $A9C5 chosen: PUSH HLdash;
   $A9C6 -
   $A9C7 HLdash = A * 8 + BCdash;
@@ -5832,7 +5832,7 @@ R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile gro
   $A9D0 BCdash = 24;
   $A9D3 A = 8; // 8 iterations
 ;
-; @label:$A9D5=plot_tile_loop
+@ $A9D5 label=plot_tile_loop
   $A9D5 do <% -
   $A9D6   Adash = *DEdash;
   $A9D7   *HLdash = Adash;
@@ -5850,7 +5850,7 @@ R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile gro
 ; -----------------------------------------------------------------------------
 
 c $A9E4 map_shunt_horizontal_1
-; @label:$A9E4=map_shunt_horizontal_1
+@ $A9E4 label=map_shunt_horizontal_1
   $A9E4 HL = &map_position;
   $A9E7 (*HL)++;
   $A9E8 get_supertiles();
@@ -5858,7 +5858,7 @@ c $A9E4 map_shunt_horizontal_1
   $A9EE DE = visible_tiles_start_address;
   $A9F1 BC = visible_tiles_length - 1;
   $A9F4 LDIR
-; @nowarn:$A9F6
+@ $A9F6 nowarn
   $A9F6 HL = screen_buffer_start_address + 1;
   $A9F9 DE = screen_buffer_start_address;
   $A9FC BC = screen_buffer_length - 1;
@@ -5867,11 +5867,11 @@ c $A9E4 map_shunt_horizontal_1
   $AA04 return;
 
 c $AA05 map_shunt_horizontal_2
-; @label:$AA05=map_shunt_horizontal_2
+@ $AA05 label=map_shunt_horizontal_2
   $AA05 HL = &map_position;
   $AA08 (*HL)--;
   $AA09 get_supertiles();
-; @nowarn:$AA0C
+@ $AA0C nowarn
   $AA0C HL = visible_tiles_end_address - 1;
   $AA0F DE = visible_tiles_end_address;
   $AA12 BC = visible_tiles_length - 1;
@@ -5884,7 +5884,7 @@ c $AA05 map_shunt_horizontal_2
   $AA25 return;
 
 c $AA26 map_shunt_diagonal_1_2
-; @label:$AA26=map_shunt_diagonal_1_2
+@ $AA26 label=map_shunt_diagonal_1_2
   $AA26 L--;
   $AA27 H++;
   $AA28 map_position = HL;
@@ -5893,9 +5893,9 @@ c $AA26 map_shunt_diagonal_1_2
   $AA31 DE = visible_tiles_start_address + 1;
   $AA34 BC = visible_tiles_length - 24;
   $AA37 LDIR
-; @nowarn:$AA39
+@ $AA39 nowarn
   $AA39 HL = screen_buffer_start_address + 24 * 8;
-; @nowarn:$AA3C
+@ $AA3C nowarn
   $AA3C DE = screen_buffer_start_address + 1;
   $AA3F BC = screen_buffer_length - 24 * 8;
   $AA42 LDIR
@@ -5904,7 +5904,7 @@ c $AA26 map_shunt_diagonal_1_2
   $AA4A return;
 
 c $AA4B map_shunt_vertical_1
-; @label:$AA4B=map_shunt_vertical_1
+@ $AA4B label=map_shunt_vertical_1
   $AA4B HL = &map_position[1];
   $AA4E (*HL)++;
   $AA4F get_supertiles();
@@ -5912,7 +5912,7 @@ c $AA4B map_shunt_vertical_1
   $AA55 DE = visible_tiles_start_address;
   $AA58 BC = visible_tiles_length - 24;
   $AA5B LDIR
-; @nowarn:$AA5D
+@ $AA5D nowarn
   $AA5D HL = screen_buffer_start_address + 24 * 8;
   $AA60 DE = screen_buffer_start_address;
   $AA63 BC = screen_buffer_length - 24 * 8;
@@ -5921,11 +5921,11 @@ c $AA4B map_shunt_vertical_1
   $AA6B return;
 
 c $AA6C map_shunt_vertical_2
-; @label:$AA6C=map_shunt_vertical_2
+@ $AA6C label=map_shunt_vertical_2
   $AA6C HL = &map_position[1];
   $AA6F (*HL)--;
   $AA70 get_supertiles();
-; @nowarn:$AA73
+@ $AA73 nowarn
   $AA73 HL = visible_tiles_end_address - 24;
   $AA76 DE = visible_tiles_end_address;
   $AA79 BC = visible_tiles_length - 24;
@@ -5938,14 +5938,14 @@ c $AA6C map_shunt_vertical_2
   $AA8C return;
 
 c $AA8D map_shunt_diagonal_2_1
-; @label:$AA8D=map_shunt_diagonal_2_1
+@ $AA8D label=map_shunt_diagonal_2_1
   $AA8D L++;
   $AA8E H--;
   $AA8F map_position = HL;
   $AA92 get_supertiles();
-; @nowarn:$AA95
+@ $AA95 nowarn
   $AA95 HL = visible_tiles_end_address - 24;
-; @nowarn:$AA98
+@ $AA98 nowarn
   $AA98 DE = visible_tiles_end_address - 1;
   $AA9B BC = visible_tiles_length - 24 - 1;
   $AA9E LDDR
@@ -5960,7 +5960,7 @@ c $AA8D map_shunt_diagonal_2_1
 ; ------------------------------------------------------------------------------
 
 c $AAB2 move_map
-; @label:$AAB2=move_map
+@ $AAB2 label=move_map
 D $AAB2 Moves the map when the character walks.
 R $AAB2 O:HL == map_position
   $AAB2 if (room_index) return; // outdoors only
@@ -5975,14 +5975,14 @@ R $AAB2 O:HL == map_position
   $AACC if (C & (1<<7)) A ^= 2;
   $AAD2 PUSH AF
   $AAD3 HL = &map_move_jump_table[A];
-; @nowarn:$AAD7
+@ $AAD7 nowarn
   $AADB A = *HL++; // ie. HL = (word at HL); HL += 2;
   $AADD H = *HL;
   $AADE L = A;
   $AADF POP AF
   $AAE0 PUSH HL
   $AAE1 PUSH AF
-; @keep:$AAE2
+@ $AAE2 keep
   $AAE2 BC = 0x7C00;
   $AAE5 if (A >= 2) B = 0x00;
   $AAEB if (A != 1 && A != 2) C = 0xC0;
@@ -6057,24 +6057,24 @@ C $AB5A map_move_4
 
 g $AB66 Zoombox stuff.
 B $AB66 zoombox_x
-; @label:$AB66=zoombox_x
+@ $AB66 label=zoombox_x
 B $AB67 zoombox_horizontal_count
-; @label:$AB67=zoombox_horizontal_count
+@ $AB67 label=zoombox_horizontal_count
 B $AB68 zoombox_y
-; @label:$AB68=zoombox_y
+@ $AB68 label=zoombox_y
 B $AB69 zoombox_vertical_count
-; @label:$AB69=zoombox_vertical_count
+@ $AB69 label=zoombox_vertical_count
 
 ; -----------------------------------------------------------------------------
 
 g $AB6A Game window current attribute byte.
 B $AB6A game_window_attribute
-; @label:$AB6A=game_window_attribute
+@ $AB6A label=game_window_attribute
 
 ; -----------------------------------------------------------------------------
 
 c $AB6B choose_game_window_attributes
-; @label:$AB6B=choose_game_window_attributes
+@ $AB6B label=choose_game_window_attributes
 R $AB6B O:A Chosen attribute.
   $AB6B if (room_index < room_29_secondtunnelstart) <%
   $AB72   A = day_or_night;
@@ -6089,7 +6089,7 @@ R $AB6B O:A Chosen attribute.
 ;
   $AB85   set_attribute_from_A: game_window_attribute = A;
   $AB88   return; %>
-D $AB89 Choose attribute for tunnel.
+N $AB89 Choose attribute for tunnel.
   $AB89 else <% C = attribute_RED_OVER_BLACK;
   $AB8B   HL = items_held;
   $AB8E   if (L == item_TORCH || H == item_TORCH) goto set_attribute_from_C;
@@ -6101,10 +6101,10 @@ D $AB89 Choose attribute for tunnel.
 ; -----------------------------------------------------------------------------
 
 c $ABA0 zoombox
-; @label:$ABA0=zoombox
+@ $ABA0 label=zoombox
   $ABA0 zoombox_x = 12;
   $ABA5 zoombox_y = 8;
-; @nowarn:$ABA7
+@ $ABA7 nowarn
   $ABAA choose_game_window_attributes();
   $ABAD H = A;
   $ABAE L = A;
@@ -6142,7 +6142,7 @@ c $ABA0 zoombox
   $ABF8 return;
 
 c $ABF9 zoombox_fill
-; @label:$ABF9=zoombox_fill
+@ $ABF9 label=zoombox_fill
   $ABF9 A = zoombox_y;
   $ABFC H = A;
   $ABFD A = 0;
@@ -6154,11 +6154,11 @@ c $ABF9 zoombox_fill
   $AC05 RRA
   $AC06 L = A;
   $AC07 HL += DE + zoombox_x;
-; @nowarn:$AC10
+@ $AC10 nowarn
   $AC10 DE = screen_buffer_start_address + 1;
   $AC13 HL += DE;
   $AC14 EX DE,HL
-; @nowarn:$AC15
+@ $AC15 nowarn
   $AC15 HL = game_window_start_addresses[zoombox_y * 8]; // ie. * 16
   $AC28 HL += zoombox_x;
   $AC2D EX DE,HL
@@ -6193,44 +6193,44 @@ c $ABF9 zoombox_fill
   $AC6E return;
 
 c $AC6F zoombox_draw
-; @label:$AC6F=zoombox_draw
-; @nowarn:$AC6F
+@ $AC6F label=zoombox_draw
+@ $AC6F nowarn
   $AC6F HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
-D $AC83 Top left.
+N $AC83 Top left.
   $AC83 HL += zoombox_x - 1;
   $AC89 zoombox_draw_tile(zoombox_tile_TL);
   $AC8E HL++;
-D $AC8F Horizontal.
+N $AC8F Horizontal.
   $AC8F B = zoombox_horizontal_count; // iterations
   $AC93 do <% zoombox_draw_tile(zoombox_tile_HZ);
   $AC98   HL++;
   $AC99 %> while (--B);
-D $AC9B Top right.
+N $AC9B Top right.
   $AC9B zoombox_draw_tile(zoombox_tile_TR);
   $ACA0 DE = 32;
   $ACA3 if (L >= 224) D = 0x07;
   $ACAA HL += DE;
-D $ACAB Vertical.
+N $ACAB Vertical.
   $ACAB B = zoombox_vertical_count; // iterations
   $ACAF do <% zoombox_draw_tile(zoombox_tile_VT);
   $ACB4   DE = 32;
   $ACB7   if (L >= 224) D = 0x07;
   $ACBE   HL += DE;
   $ACBF %> while (--B);
-D $ACC1 Bottom right.
+N $ACC1 Bottom right.
   $ACC1 zoombox_draw_tile(zoombox_tile_BR);
   $ACC6 HL--;
-D $ACC7 Horizontal.
+N $ACC7 Horizontal.
   $ACC7 B = zoombox_horizontal_count; // iterations
   $ACCB do <% zoombox_draw_tile(zoombox_tile_HZ);
   $ACD0   HL--;
   $ACD1 %> while (--B);
-D $ACD3 Bottom left.
+N $ACD3 Bottom left.
   $ACD3 zoombox_draw_tile(zoombox_tile_BL);
   $ACD8 DE = 0xFFE0;
   $ACDB if (L < 32) DE = 0xF8E0;
   $ACE3 HL += DE;
-D $ACE4 Vertical.
+N $ACE4 Vertical.
   $ACE4 B = zoombox_vertical_count; // iterations
   $ACE8 do <% zoombox_draw_tile(zoombox_tile_VT);
   $ACED   DE = 0xFFE0;
@@ -6240,7 +6240,7 @@ D $ACE4 Vertical.
   $ACFB return;
 
 c $ACFC zoombox_draw_tile
-; @label:$ACFC=zoombox_draw_tile
+@ $ACFC label=zoombox_draw_tile
 R $ACFC I:A Index of tile to draw.
 R $ACFC I:BC (preserved)
 R $ACFC I:HL Destination address.
@@ -6267,13 +6267,13 @@ R $ACFC I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 w $AD29 spotlight_movement_data_maybe
-; @label:$AD29=spotlight_movement_data_maybe
+@ $AD29 label=spotlight_movement_data_maybe
 D $AD29 Likely: spotlight movement data. Groups of seven?
 
 ; ------------------------------------------------------------------------------
 
 c $AD59 searchlight_AD59
-; @label:$AD59=searchlight_AD59
+@ $AD59 label=searchlight_AD59
 D $AD59 Used by nighttime.
 R $AD59 I:HL Pointer to spotlight_movement_data_maybe
   $AD59 E = *HL++;
@@ -6321,17 +6321,17 @@ R $AD59 I:HL Pointer to spotlight_movement_data_maybe
 ; ------------------------------------------------------------------------------
 
 c $ADBD nighttime
-; @label:$ADBD=nighttime
+@ $ADBD label=nighttime
 D $ADBD Turns white screen elements light blue and tracks the hero with a searchlight.
   $ADBD HL = &searchlight_state;
   $ADC0 if (*HL == searchlight_STATE_OFF) goto not_tracking;
 ;
   $ADC6 if (room_index) <% // hero is indoors
-D $ADCC If the hero goes indoors the searchlight loses track.
+N $ADCC If the hero goes indoors the searchlight loses track.
   $ADCC   *HL = searchlight_STATE_OFF;
   $ADCE   return; %>
 ;
-D $ADCF Hero is outdoors.
+N $ADCF Hero is outdoors.
   $ADCF if (*HL == searchlight_STATE_1F) <%
   $ADD5   HL = map_position;
   $ADD8   E = L + 4;
@@ -6340,13 +6340,13 @@ D $ADCF Hero is outdoors.
   $ADE0   if (L == E) <%
   $ADE4     if (H == D) return; %> // highlight doesn't need to move, so quit
   $ADE7   else <%
-D $ADE9 Move searchlight left/right to focus on hero.
+N $ADE9 Move searchlight left/right to focus on hero.
   $ADE9     if (L < E) <%
   $ADEC       L++; %>
   $ADED     else <%
   $ADEF       L--; %>
   $ADF0   %>
-D $ADF1 Move searchlight up/down to focus on hero.
+N $ADF1 Move searchlight up/down to focus on hero.
   $ADF1   if (H != D) <%
   $ADF5     if (H < D) <%
   $ADF8       H++; %>
@@ -6414,16 +6414,16 @@ g $AE75 Searchlight stuff
 ;
 D $AE75 (<- nighttime, searchlight_plot)
 B $AE75 searchlight_related
-; @label:$AE75=searchlight_related
+@ $AE75 label=searchlight_related
 ;
-D $AE76 (<- nighttime)
+N $AE76 (<- nighttime)
 W $AE76 searchlight_coords
-; @label:$AE76=searchlight_coords
+@ $AE76 label=searchlight_coords
 
 ; ------------------------------------------------------------------------------
 
 c $AE78 searchlight_caught
-; @label:$AE78=searchlight_caught
+@ $AE78 label=searchlight_caught
 D $AE78 Suspect this is when the hero is caught in the spotlight.
 R $AE78 I:HL Pointer to spotlight_movement_data_maybe
   $AE78 DE = map_position;
@@ -6440,21 +6440,21 @@ R $AE78 I:HL Pointer to spotlight_movement_data_maybe
 ; ------------------------------------------------------------------------------
 
 c $AEB8 searchlight_plot
-; @label:$AEB8=searchlight_plot
+@ $AEB8 label=searchlight_plot
 D $AEB8 Searchlight plotter.
   $AEB8 -
-; @nowarn:$AEB9
+@ $AEB9 nowarn
   $AEB9 DEdash = &searchlight_shape[0];
   $AEBC Cdash = 16; // iterations  / width?
   $AEBE do <% -
   $AEBF   A = searchlight_related;
-; @nowarn:$AEC2
+@ $AEC2 nowarn
   $AEC2   HL = 0x5A40; // screen attribute address (column 0 + bottom of game window)
   $AEC5   if (A != 0 && (E & 31) >= 22) L = 32;
   $AED2   SBC HL,DE
   $AED4   RET C  // if (HL < DE) return; // what about carry?
   $AED5   PUSH DE
-; @nowarn:$AED6
+@ $AED6 nowarn
   $AED6   HL = 0x5840; // screen attribute address (column 0 + top of game window)
   $AED9   if (A != 0 && (E & 31) >= 7) L = 32;
   $AEE6   SBC HL,DE
@@ -6511,13 +6511,13 @@ D $AEB8 Searchlight plotter.
 ; -----------------------------------------------------------------------------
 
 B $AF3E searchlight_shape
-; @label:$AF3E=searchlight_shape
-D $AF3E Bitmap circle.
+@ $AF3E label=searchlight_shape
+N $AF3E Bitmap circle.
 
 ; -----------------------------------------------------------------------------
 
 b $AF5E zoombox_tiles
-; @label:$AF5E=zoombox_tiles
+@ $AF5E label=zoombox_tiles
   $AF5E zoombox_tile_wire_tl
   $AF66 zoombox_tile_wire_hz
   $AF6E zoombox_tile_wire_tr
@@ -6529,12 +6529,12 @@ b $AF5E zoombox_tiles
 
 g $AF8E Bribed character.
 B $AF8E bribed_character
-; @label:$AF8E=bribed_character
+@ $AF8E label=bribed_character
 
 ; ------------------------------------------------------------------------------
 
 c $AF8F touch
-; @label:$AF8F=touch
+@ $AF8F label=touch
 D $AF8F Door handling, bounds checking,
 R $AF8F I:IY Pointer to visible character block.
   $AF8F EX AF,AF'
@@ -6544,7 +6544,7 @@ R $AF8F I:IY Pointer to visible character block.
   $AF9E -
   $AF9F if (L == 0 && automatic_player_counter > 0) door_handling(); // L == 0 => HL == 0x8000
   $AFAB if (L || (($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) != vischar_BYTE1_CUTTING_WIRE)) <% if (bounds_check()) return 1; %>
-D $AFB9 Cutting wire only from here onwards?
+N $AFB9 Cutting wire only from here onwards?
   $AFB9 A = IY[0]; // $8000,$8020,$8040,$8060
   $AFBC if (A <= character_25_PRISONER_6) <% // a character index
   $AFC0   collision();
@@ -6559,14 +6559,14 @@ D $AFB9 Cutting wire only from here onwards?
 ; ------------------------------------------------------------------------------
 
 c $AFDF collision
-; @label:$AFDF=collision
+@ $AFDF label=collision
   $AFDF HL = $8001; // &vischar[0].byte1;
   $AFE2 B = 8; // 8 iterations
   $AFE4 do <% if (*HL & vischar_BYTE1_BIT7) goto next; // $8001, $8021, ...
   $AFE9   PUSH BC
   $AFEA   PUSH HL
   $AFEB   HL += 0x0E; // $800F etc. - y axis position
-D $AFEF --------
+N $AFEF --------
   $AFEF   C = *HL++;
   $AFF1   B = *HL;
   $AFF2   EX DE,HL
@@ -6579,7 +6579,7 @@ D $AFEF --------
   $B011     if (HL < BC) goto pop_next; %>
   $B014   EX DE,HL
   $B015   HL++;
-D $B016 --------
+N $B016 --------
   $B016   C = *HL++;
   $B018   B = *HL;
   $B019   EX DE,HL
@@ -6592,7 +6592,7 @@ D $B016 --------
   $B038     if (HL < BC) goto pop_next; %>
   $B03B   EX DE,HL
   $B03C   HL++;
-D $B03D --------
+N $B03D --------
   $B03D   C = *HL;
   $B03E   A = saved_height - C;
   $B042   if (A < 0) <%
@@ -6654,7 +6654,7 @@ D $B03D --------
   $B0DA       if (!Z) return; /* odd */ %> %>
 ;
   $B0DB   BC = IY[14]; // sampled IY = $8000, $8040, $80E0
-; @nowarn:$B0E0
+@ $B0E0 nowarn
   $B0E0   IY[13]  = four_bytes_B0F8[BC];
   $B0E8   if ((C & 1) == 0) <%
   $B0EC     IY[7] &= ~vischar_BYTE7_BIT5;
@@ -6663,8 +6663,8 @@ D $B03D --------
   $B0F6     goto $B0D0; %>
 
 B $B0F8,4 four_bytes_B0F8
-; @label:$B0F8=four_bytes_B0F8
-D $B0F8 (<- collision)
+@ $B0F8 label=four_bytes_B0F8
+N $B0F8 (<- collision)
 
   $B0FC   pop_next: POP HL
   $B0FD   POP BC
@@ -6675,7 +6675,7 @@ D $B0F8 (<- collision)
 ; ------------------------------------------------------------------------------
 
 c $B107 accept_bribe
-; @label:$B107=accept_bribe
+@ $B107 label=accept_bribe
 D $B107 Character accepts the bribe.
 R $B107 I:IY Pointer to visible character.
   $B107 increase_morale_by_10_score_by_50();
@@ -6684,12 +6684,12 @@ R $B107 I:IY Pointer to visible character.
   $B113 sub_CB23();
   $B116 DE = &items_held[0];
   $B119 if (*DE != item_BRIBE && *++DE != item_BRIBE) return; // have no bribes
-D $B123 We have a bribe.
+N $B123 We have a bribe.
   $B123 *DE = item_NONE;
   $B126 item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;
   $B12B draw_all_items();
   $B12E B = 7; // 7 iterations
-; @nowarn:$B130
+@ $B130 nowarn
   $B130 HL = $8020; // iterate over non-player characters
   $B133 do <% if (HL[0] <= character_19_GUARD_DOG_4) <% // Hostile characters only.
   $B138     HL[1] = vischar_BYTE1_BIT2; %> // character has taken bribe?
@@ -6702,7 +6702,7 @@ D $B123 We have a bribe.
 ; ------------------------------------------------------------------------------
 
 c $B14C bounds_check
-; @label:$B14C=bounds_check
+@ $B14C label=bounds_check
 D $B14C Outdoor bounds detection?
 R $B14C I:IY Pointer to visible character block.
   $B14C if (room_index) <% interior_bounds_check(); return; %>
@@ -6722,7 +6722,7 @@ R $B14C I:IY Pointer to visible character block.
   $B198       (saved_height >= DE[4] * 8)     &&
   $B19F     -
   $B1A4       (saved_height <  DE[5] * 8 + 2)) <%
-D $B1AD Found it.
+N $B1AD Found it.
   $B1AD     -
   $B1AE     -
   $B1AF     IY[7] ^= vischar_BYTE7_BIT5; // sampled IY = $80A0, $8080, $8060
@@ -6738,7 +6738,7 @@ D $B1AD Found it.
 ; ------------------------------------------------------------------------------
 
 c $B1C7 multiply_by_8
-; @label:$B1C7=multiply_by_8
+@ $B1C7 label=multiply_by_8
 R $B1C7 A  Argument.
 R $B1C7 BC Result of (A << 3).
   $B1C7 B = 0;
@@ -6754,7 +6754,7 @@ R $B1C7 BC Result of (A << 3).
 ; ------------------------------------------------------------------------------
 
 c $B1D4 is_door_open
-; @label:$B1D4=is_door_open
+@ $B1D4 label=is_door_open
 R $B1D4 O:F Z set if door open.
   $B1D4 C = current_door & gates_and_doors_MASK;
   $B1DB HL = &gates_and_doors[0];
@@ -6772,7 +6772,7 @@ R $B1D4 O:F Z set if door open.
 ; ------------------------------------------------------------------------------
 
 c $B1F5 door_handling
-; @label:$B1F5=door_handling
+@ $B1F5 label=door_handling
   $B1F5 A = room_index;
   $B1F8 if (A) goto door_handling_interior; // exit via?
   $B1FC HL = &door_positions[0];
@@ -6811,7 +6811,7 @@ c $B1F5 door_handling
 ; ------------------------------------------------------------------------------
 
 c $B252 door_in_range
-; @label:$B252=door_in_range
+@ $B252 label=door_in_range
 D $B252 (saved_y,saved_x) within (-3,+3) of HL[1..] scaled << 2
 R $B252 I:HL Pointer to (byte before) coord byte pair.
 R $B252 O:HL Corrupted.
@@ -6832,7 +6832,7 @@ R $B252 O:F  C/NC if nomatch/match.
 ; ------------------------------------------------------------------------------
 
 c $B295 multiply_by_4
-; @label:$B295=multiply_by_4
+@ $B295 label=multiply_by_4
 D $B295 Multiplies A by 4, returning the result in BC.
 D $B295 Used by the routines at #R$68A2, #R$B252 and #R$C918.
 R $B295 I:A  Argument.
@@ -6848,7 +6848,7 @@ R $B295 O:BC Result of (A << 2).
 ; ------------------------------------------------------------------------------
 
 c $B29F interior_bounds_check
-; @label:$B29F=interior_bounds_check
+@ $B29F label=interior_bounds_check
 D $B29F Check the character is inside of bounds, when indoors.
 R $B29F I:IY Pointer to visible character.
 R $B29F O:A  Corrupted.
@@ -6862,7 +6862,7 @@ R $B29F O:HL Corrupted.
   $B2B3 A = *++BC + 4;
   $B2B7 if (A >= *HL) goto stop;
   $B2BA HL += 2;
-D $B2BC Bug: This instruction is stray code. It's incremented but never used.
+N $B2BC Bug: This instruction is stray code. It's incremented but never used.
   $B2BC DE++;
   $B2BD A = *++BC - 4;
   $B2C1 if (A < *HL) goto stop;
@@ -6881,7 +6881,7 @@ D $B2BC Bug: This instruction is stray code. It's incremented but never used.
   $B2E0     DE += 2;
   $B2E2     HL += 2; // increment moved - hope it's still correct
   $B2E3   %> while (--B);
-D $B2E5 Found.
+N $B2E5 Found.
   $B2E5   POP HL
   $B2E6   POP BC
 ;
@@ -6889,19 +6889,19 @@ D $B2E5 Found.
   $B2EF   A |= 1;
   $B2F1   return; // return NZ
 
-D $B2F2 Next iteration.
+N $B2F2 Next iteration.
   $B2F2 next:  POP HL
   $B2F3   HL += 4;
   $B2F7   POP BC
   $B2F8 %> while (--B);
-D $B2FA Not found.
+N $B2FA Not found.
   $B2FA A &= B; // B is zero here
   $B2FB return; // return Z
 
 ; ------------------------------------------------------------------------------
 
 c $B2FC reset_outdoors
-; @label:$B2FC=reset_outdoors
+@ $B2FC label=reset_outdoors
 D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the screen.
   $B2FC HL = $8000;
   $B2FF reset_position(); // reset hero
@@ -6928,7 +6928,7 @@ D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the sc
 ; ------------------------------------------------------------------------------
 
 c $B32D door_handling_interior
-; @label:$B32D=door_handling_interior
+@ $B32D label=door_handling_interior
 D $B32D Door related stuff.
 R $B32D I:IY Pointer to visible character.
   $B32D HL = &door_related;
@@ -6970,7 +6970,7 @@ R $B32D I:IY Pointer to visible character.
 ; -----------------------------------------------------------------------------
 
 c $B387 action_red_cross_parcel
-; @label:$B387=action_red_cross_parcel
+@ $B387 label=action_red_cross_parcel
 D $B387 Player has tried to open the red cross parcel.
   $B387 item_structs[item_RED_CROSS_PARCEL].room = itemstruct_ROOM_MASK; // room_NONE & 0x3F;
   $B38C HL = &items_held;
@@ -6985,10 +6985,10 @@ D $B387 Player has tried to open the red cross parcel.
 ; -----------------------------------------------------------------------------
 
 c $B3A8 action_bribe
-; @label:$B3A8=action_bribe
+@ $B3A8 label=action_bribe
 D $B3A8 Player has tried to bribe a prisoner.
 D $B3A8 This searches visible characters only.
-; @nowarn:$B3A8
+@ $B3A8 nowarn
   $B3A8 HL = $8020; // iterate over non-player characters
   $B3AB B = 7; // 7 iterations
   $B3AD do <% A = *HL;
@@ -7006,14 +7006,14 @@ D $B3A8 This searches visible characters only.
 ; This function is described in non-pseudocode style...
 
 c $B3C4 action_poison
-; @label:$B3C4=action_poison
+@ $B3C4 label=action_poison
   $B3C4 Load items_held.
   $B3C7 Load item_FOOD.
   $B3C9 Is 'low' slot item_FOOD?
   $B3CA Yes - goto have_food.
   $B3CC Is 'high' slot item_FOOD?
   $B3CD No - return.
-; @label:$B3CE=action_poison_have_food
+@ $B3CE label=action_poison_have_food
   $B3CE have_food: (test a character flag?)
   $B3D1 Bit 5 set?
   $B3D3 Yes - return.
@@ -7025,7 +7025,7 @@ c $B3C4 action_poison
 ; -----------------------------------------------------------------------------
 
 c $B3E1 action_uniform
-; @label:$B3E1=action_uniform
+@ $B3E1 label=action_uniform
   $B3E1 HL = $8015; // current character sprite set
   $B3E4 DE = &sprite_guard_tl_4;
   $B3E7 if (*HL == E) return; // cheap equality test // already in uniform
@@ -7037,7 +7037,7 @@ c $B3E1 action_uniform
 ; -----------------------------------------------------------------------------
 
 c $B3F6 action_shovel
-; @label:$B3F6=action_shovel
+@ $B3F6 label=action_shovel
 D $B3F6 Player has tried to use the shovel item.
   $B3F6 if (room_index != room_50_blocked_tunnel) return;
   $B3FC if (roomdef_50_blocked_tunnel_boundary[0] == 255) return; // blockage already cleared
@@ -7051,7 +7051,7 @@ D $B3F6 Player has tried to use the shovel item.
 ; -----------------------------------------------------------------------------
 
 c $B417 action_wiresnips
-; @label:$B417=action_wiresnips
+@ $B417 label=action_wiresnips
   $B417 HL = &fences[0] + 3;
   $B41A DE = &hero_map_position.x;
   $B41D B = 4; // iterations
@@ -7098,7 +7098,7 @@ c $B417 action_wiresnips
   $B46A set_to_6: A = 6; goto action_wiresnips_tail; // crawl BR
   $B46E set_to_7: A = 7;                             // crawl BL
   $B470 action_wiresnips_tail: ...
-; @nowarn:$B471
+@ $B471 nowarn
   $B471 $800E = A;
   $B475 $800D = 0x80;
   $B478 $8001 = vischar_BYTE1_CUTTING_WIRE;
@@ -7110,7 +7110,7 @@ c $B417 action_wiresnips
 ; -----------------------------------------------------------------------------
 
 c $B495 action_lockpick
-; @label:$B495=action_lockpick
+@ $B495 label=action_lockpick
   $B495 open_door();
   $B498 if (!Z) return; // wrong door?
   $B499 ptr_to_door_being_lockpicked = HL;
@@ -7121,21 +7121,21 @@ c $B495 action_lockpick
 ; -----------------------------------------------------------------------------
 
 c $B4AE action_red_key
-; @label:$B4AE=action_red_key
+@ $B4AE label=action_red_key
   $B4AE A = room_22_redkey;
   $B4B0 goto action_key;
 
 ; -----------------------------------------------------------------------------
 
 c $B4B2 action_yellow_key
-; @label:$B4B2=action_yellow_key
+@ $B4B2 label=action_yellow_key
   $B4B2 A = room_13_corridor;
   $B4B4 goto action_key;
 
 ; -----------------------------------------------------------------------------
 
 c $B4B6 action_green_key
-; @label:$B4B6=action_green_key
+@ $B4B6 label=action_green_key
   $B4B6 A = room_14_torch;
 ;
 ; fallthrough
@@ -7143,7 +7143,7 @@ c $B4B6 action_green_key
 ; -----------------------------------------------------------------------------
 
 c $B4B8 action_key
-; @label:$B4B8=action_key
+@ $B4B8 label=action_key
 D $B4B8 Common end of action_*_key routines.
 R $B4B8 I:A Room number the key is for.
   $B4B8 PUSH AF
@@ -7164,7 +7164,7 @@ R $B4B8 I:A Room number the key is for.
 ; -----------------------------------------------------------------------------
 
 c $B4D0 open_door
-; @label:$B4D0=open_door
+@ $B4D0 label=open_door
 R $B4D0 O:HL Likely a pointer to ?
   $B4D0 if (room_index == 0) goto outdoors; else goto indoors;
 
@@ -7190,11 +7190,11 @@ R $B4D0 O:HL Likely a pointer to ?
   $B4FB A = 0;
   $B4FC return;
 
-; @nowarn:$B4FD
+@ $B4FD nowarn
   $B4FD indoors: HL = &door_flags;
   $B500 B = 8; // 8 iterations
   $B502 do <% C = *HL & ~gates_and_doors_LOCKED;
-D $B506 Search door_related for C.
+N $B506 Search door_related for C.
   $B506   DE = &door_related;
   $B509   for (;;) <% A = *DE;
   $B50A     if (A != 0xFF) <%
@@ -7210,7 +7210,7 @@ D $B506 Search door_related for C.
   $B51E get_door_position();
   $B521 HL++;
   $B522 EX DE,HL
-D $B523 Range check pattern (-3..+3).
+N $B523 Range check pattern (-3..+3).
   $B523 HL = &saved_y;
   $B526 B = 2; // 2 iterations
   $B528 do <% if (*HL <= *DE - 3 || *HL > *DE + 3) goto exx_next;
@@ -7227,7 +7227,7 @@ D $B523 Range check pattern (-3..+3).
 ; ------------------------------------------------------------------------------
 
 b $B53E walls
-; @label:$B53E=walls
+@ $B53E label=walls
 D $B53E Boundaries.
   $B53E,6
   $B544,6
@@ -7245,7 +7245,7 @@ D $B53E Boundaries.
 ; ------------------------------------------------------------------------------
 
 b $B586 fences
-; @label:$B586=fences
+@ $B586 label=fences
 D $B586 Boundaries.
   $B586,6
   $B58C,6
@@ -7263,7 +7263,7 @@ D $B586 Boundaries.
 ; -----------------------------------------------------------------------------
 
 c $B5CE called_from_main_loop_9
-; @label:$B5CE=called_from_main_loop_9
+@ $B5CE label=called_from_main_loop_9
   $B5CE B = 8;
   $B5D0 IY = $8000;
   $B5D4 do <% if (IY[1] == vischar_BYTE1_EMPTY_SLOT) goto next; // $8001 flags
@@ -7398,7 +7398,7 @@ c $B5CE called_from_main_loop_9
 ; -----------------------------------------------------------------------------
 
 c $B71B reset_position
-; @label:$B71B=reset_position
+@ $B71B label=reset_position
 D $B71B Save a copy of the vischar's position + offset.
 R $B71B I:HL Pointer to visible character.
   $B71B -
@@ -7425,7 +7425,7 @@ R $B71B I:HL Pointer to visible character.
 ; -----------------------------------------------------------------------------
 
 c $B75A reset_game
-; @label:$B75A=reset_game
+@ $B75A label=reset_game
 D $B75A Discover all items.
   $B75A B = 16; C = 0;
   $B75D do <% -
@@ -7433,25 +7433,25 @@ D $B75A Discover all items.
   $B761   -
   $B762   C++;
   $B763 %> while (--B);
-D $B765 Reset message queue.
+N $B765 Reset message queue.
   $B765 message_queue_pointer = message_queue + 2;
   $B76B reset_map_and_characters();
   $B76E $8001 = 0;
-D $B772 Reset score.
+N $B772 Reset score.
   $B772 HL = &score_digits[0];
   $B775 B = 10; // iterations
   $B777 do <% *HL++ = 0;
   $B779 %> while (--B); // could do a memset
-D $B77B Reset morale.
+N $B77B Reset morale.
   $B77B morale = morale_MAX;
   $B77D plot_score();
-D $B780 Reset items.
+N $B780 Reset items.
   $B780 items_held = (item_NONE) | (item_NONE << 8);
   $B786 draw_all_items();
-D $B789 Reset sprite.
+N $B789 Reset sprite.
   $B789 $8015 = sprite_prisoner_tl_4;
   $B78F room_index = room_2_hut2left;
-D $B794 Put hero to bed.
+N $B794 Put hero to bed.
   $B794 hero_sleeps();
   $B797 enter_room();
   $B79A return;
@@ -7459,10 +7459,10 @@ D $B794 Put hero to bed.
 ; -----------------------------------------------------------------------------
 
 c $B79B reset_map_and_characters
-; @label:$B79B=reset_map_and_characters
+@ $B79B label=reset_map_and_characters
 D $B79B Resets all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
   $B79B B = 7; // iterations
-; @nowarn:$B79D
+@ $B79D nowarn
   $B79D HL = $8020; // iterate over non-player characters
   $B7A0 do <%
   $B7A2   reset_visible_character();
@@ -7473,20 +7473,20 @@ D $B79B Resets all visible characters, clock, day_or_night flag, general flags, 
   $B7B6 ($8001) = 0; // flags
   $B7B9 roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL;
   $B7BE blockage = 0x34;
-; @nowarn:$B7C0
-D $B7C3 Lock the gates.
+@ $B7C0 nowarn
+N $B7C3 Lock the gates.
   $B7C3 HL = &gates_and_doors[0];
   $B7C6 B = 9; // 9 iterations
   $B7C8 do <% *HL++ |= gates_and_doors_LOCKED;
   $B7CB %> while (--B);
-D $B7CD Reset all beds.
+N $B7CD Reset all beds.
   $B7CD B = 6; // iterations
   $B7CF HL = &beds[0];
   $B7D4 do <% E = *HL++;
   $B7D6   D = *HL++;
   $B7D8   *DE = interiorobject_OCCUPIED_BED;
   $B7D9 %> while (--B);
-D $B7DB Clear the mess halls.
+N $B7DB Clear the mess halls.
   $B7DB roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
   $B7E0 roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
   $B7E3 roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
@@ -7494,7 +7494,7 @@ D $B7DB Clear the mess halls.
   $B7E9 roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
   $B7EC roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
   $B7EF roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
-D $B7F2 Reset characters 12..15 and 20..25.
+N $B7F2 Reset characters 12..15 and 20..25.
   $B7F2 DE = &character_structs[12].BYTE1;
   $B7F5 C = 10; // iterations
   $B7F7 HL = &character_reset_data[0];
@@ -7509,7 +7509,7 @@ D $B7F2 Reset characters 12..15 and 20..25.
 ; ------------------------------------------------------------------------------
 
 b $B819 character_reset_data
-; @label:$B819=character_reset_data
+@ $B819 label=character_reset_data
 D $B819 10 x 3-byte structs
 D $B819 struct { byte room; byte y; byte x; }; // partial of character_struct
   $B819,3 { room_3_hut2right, 40,60 }, // for character 12
@@ -7532,19 +7532,19 @@ D $B819 struct { byte room; byte y; byte x; }; // partial of character_struct
 g $B837 mask_stuff stuff.
 ;
 B $B837 byte_B837
-; @label:$B837=byte_B837
+@ $B837 label=byte_B837
 ;
 B $B838 byte_B838
-; @label:$B838=byte_B838
+@ $B838 label=byte_B838
 ;
 W $B839 word_B839
 ; might be better as two bytes
-; @label:$B839=word_B839
+@ $B839 label=word_B839
 
 ; -----------------------------------------------------------------------------
 
 c $B83B searchlight_sub
-; @label:$B83B=searchlight_sub
+@ $B83B label=searchlight_sub
 R $B83B I:IY Pointer to visible character?
   $B83B HL = IY;
   $B83E if (L) return; // skip non-player character
@@ -7566,7 +7566,7 @@ R $B83B I:IY Pointer to visible character?
 ; -----------------------------------------------------------------------------
 
 c $B866 locate_thing_to_plot_then_plot
-; @label:$B866=locate_thing_to_plot_then_plot
+@ $B866 label=locate_thing_to_plot_then_plot
 D $B866 searchlight related.
   $B866 locate_thing_to_plot();
   $B869 if (!Z) return;
@@ -7590,7 +7590,7 @@ D $B866 searchlight related.
 ; -----------------------------------------------------------------------------
 
 c $B89C locate_thing_to_plot
-; @label:$B89C=locate_thing_to_plot
+@ $B89C label=locate_thing_to_plot
 D $B89C Locates a vischar or item to plot.
   $B89C BC = 0;
   $B89F DE = 0;
@@ -7659,12 +7659,12 @@ D $B89C Locates a vischar or item to plot.
 ; -----------------------------------------------------------------------------
 
 c $B916 mask_stuff
-; @label:$B916=mask_stuff
+@ $B916 label=mask_stuff
 D $B916 Sets attr of something, checks indoor room index, ...
 D $B916 unpacks mask stuff
-; @nowarn:$B916
+@ $B916 nowarn
   $B916 memset($8100, 0xFF, 0xA0);
-; @nowarn:$B91B
+@ $B91B nowarn
   $B923 if (room_index) <%
   $B929   HL = &indoor_mask_data;
   $B92C   A = *HL;
@@ -7730,11 +7730,11 @@ R $B93A I:B Iterations (outer loop);
   $BA0A   A = *HL;
   $BA0B   -
   $BA0C   Adash = C * 32 + B;
-; @nowarn:$BA13
+@ $BA13 nowarn
   $BA13   HL = $8100 + Adash;
   $BA18   ($81A0) = HL; // $81A0 is a mystery location
   $BA1B   -
-D $BA1C If I break this bit then the character gets drawn on top of *indoors* objects.
+N $BA1C If I break this bit then the character gets drawn on top of *indoors* objects.
   $BA1C   DE = exterior_mask_data_pointers[A];
   $BA27   HL = word_B839;
   $BA2A   ($BA70) = L; // self modify
@@ -7827,7 +7827,7 @@ R $BA6F I:C Iterations (inner loop);
 ; fallthrough
 
 c $BACD scale_val
-; @label:$BACD=scale_val
+@ $BACD label=scale_val
 D $BACD Given a bitmask in A, produce a widened and shifted 16-bit bitmask in HL.
 R $BACD I:A Value to scale.
 R $BACD I:E Shift value, 4 or 8.
@@ -7845,7 +7845,7 @@ R $BACD O:HL Widened value.
 ; -----------------------------------------------------------------------------
 
 c $BADC mask_against_tile
-; @label:$BADC=mask_against_tile
+@ $BADC label=mask_against_tile
 D $BADC Masks characters obscured by foreground objects.
 R $BADC I:A  Mask tile index.
 R $BADC I:HL Pointer to destination.
@@ -7863,7 +7863,7 @@ R $BADC I:HL Pointer to destination.
 ; -----------------------------------------------------------------------------
 
 c $BAF7 vischar_visible
-; @label:$BAF7=vischar_visible
+@ $BAF7 label=vischar_visible
 D $BAF7 Clipping vischars to the game window.
 R $BAF7 O:A  0 or 0xFF
 R $BAF7 O:BC Clipped width.
@@ -7923,7 +7923,7 @@ R $BAF7 O:IY Pointer to visible character.
 ; -----------------------------------------------------------------------------
 
 c $BB98 called_from_main_loop_3
-; @label:$BB98=called_from_main_loop_3
+@ $BB98 label=called_from_main_loop_3
 D $BB98 Walks the visible characters array doing ?
   $BB98 B = 8; // iterations
   $BB9A IY = $8000;
@@ -8033,7 +8033,7 @@ D $BB98 Walks the visible characters array doing ?
 ; -----------------------------------------------------------------------------
 
 c $BCAA select_tile_set
-; @label:$BCAA=select_tile_set
+@ $BCAA label=select_tile_set
 D $BCAA Turn a map ref? into a tile set pointer.
 R $BCAA O:BC Pointer to tile set.
 R $BCAA O:HL ?
@@ -8042,7 +8042,7 @@ R $BCAA O:HL ?
   $BCB1   BC = &interior_tiles[0];
   $BCB4   -
   $BCB5   return; %>
-D $BCB6 Convert map position to an index into 7x5 supertile refs array.
+N $BCB6 Convert map position to an index into 7x5 supertile refs array.
   $BCB6 else <% Adash = (((map_position >> 8) & 3) + L) >> 2;
   $BCBE   L = (Adash & 0x3F) * 7;
   $BCC6   Adash = (((map_position & 0xFF) & 3) + H) >> 2;
@@ -8061,7 +8061,7 @@ D $BCB6 Convert map position to an index into 7x5 supertile refs array.
 ; Map
 ;
 b $BCEE map_tiles
-; @label:$BCEE=map_tiles
+@ $BCEE label=map_tiles
 D $BCEE Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
   $BCEE,1836,54*34
 
@@ -8332,12 +8332,12 @@ D $BCEE Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
 g $C41A Pointer to bytes to output as pseudo-random data.
 D $C41A Initially set to $9000. Wraps around after $90FF.
 W $C41A prng_pointer
-; @label:$C41A=prng_pointer
+@ $C41A label=prng_pointer
 
 ; -----------------------------------------------------------------------------
 
 c $C41C spawn_characters
-; @label:$C41C=spawn_characters
+@ $C41C label=spawn_characters
 D $C41C seems to move characters around, or perhaps just spawn them
 ;
 D $C41C Form a map position in DE.
@@ -8345,7 +8345,7 @@ D $C41C Form a map position in DE.
   $C41F E = (L < 8) ? 0 : L;
   $C426 D = (H < 8) ? 0 : H;
 ;
-D $C42D Walk all character structs.
+N $C42D Walk all character structs.
   $C42D HL = &character_structs[0];
   $C430 B = character_26_STOVE_1; // the 26 'real' characters
   $C432 do <% if (*HL & characterstruct_FLAG_DISABLED) goto skip;
@@ -8356,7 +8356,7 @@ D $C42D Walk all character structs.
   $C43B   if (A != *HL) goto unstash_skip; // not in the visible room
   $C43E   if (A != 0) goto indoors;
 ;
-D $C441   Outdoors.
+N $C441   Outdoors.
   $C441   HL++; // $7614
   $C442   A -= *HL; // A always starts as zero here
   $C443   HL++; // $7615
@@ -8396,14 +8396,14 @@ D $C441   Outdoors.
 ; -----------------------------------------------------------------------------
 
 c $C47E purge_visible_characters
-; @label:$C47E=purge_visible_characters
+@ $C47E label=purge_visible_characters
 D $C47E Run through all visible characters, resetting them.
   $C47E HL = &map_position;
   $C481 E = MAX(L - 9, 0);
   $C488 D = MAX(H - 9, 0);
 ;
   $C48F B = 7; // 7 iterations
-; @nowarn:$C491
+@ $C491 nowarn
   $C491 HL = $8020; // iterate over non-player characters
   $C494 do <% A = *HL;
   $C495   if (A == character_NONE) goto next;
@@ -8441,14 +8441,14 @@ D $C47E Run through all visible characters, resetting them.
 ; -----------------------------------------------------------------------------
 
 c $C4E0 spawn_character
-; @label:$C4E0=spawn_character
+@ $C4E0 label=spawn_character
 D $C4E0 Adds characters to the visible character list.
 R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
   $C4E0 if (*HL & characterstruct_FLAG_DISABLED) return;
 ;
   $C4E3 PUSH HL
-D $C4E4 Find an empty visible character entry.
-; @nowarn:$C4E4
+N $C4E4 Find an empty visible character entry.
+@ $C4E4 nowarn
   $C4E4 HL = $8020; // iterate over non-player characters
   $C4E7 -
   $C4EA -
@@ -8459,7 +8459,7 @@ D $C4E4 Find an empty visible character entry.
   $C4F4 POP HL
   $C4F5 return;
 
-D $C4F6 Empty slot found.
+N $C4F6 Empty slot found.
 R $C4F6 I:HL Pointer to empty slot.
   $C4F6 found_empty_slot: POP DE  // DE = HL (-> character struct)
   $C4F7 PUSH HL // resave
@@ -8499,7 +8499,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C536 PUSH DE
   $C537 DE = &character_meta_data[0]; // commandant
   $C53A if (A) <%
-; @nowarn:$C53D
+@ $C53D nowarn
   $C53D   DE = &character_meta_data[1]; // guard
   $C540   if (A >= 16) <%
   $C544     DE = &character_meta_data[2]; // dog
@@ -8555,18 +8555,18 @@ R $C4F6 I:HL Pointer to empty slot.
 ; -----------------------------------------------------------------------------
 
 c $C5D3 reset_visible_character
-; @label:$C5D3=reset_visible_character
+@ $C5D3 label=reset_visible_character
 D $C5D3 Reset a visible character (either a character or an object).
 R $C5D3 I:HL Pointer to visible character.
   $C5D3 A = *HL;
   $C5D4 if (A == character_NONE) return;
   $C5D7 if (A >= character_26_STOVE_1) <%
-D $C5DC A stove/crate character.
+N $C5DC A stove/crate character.
   $C5DC   HL[0] = character_NONE
   $C5DF   HL[1] = 0xFF; // flags
   $C5E1   HL[7] = 0; // more flags
   $C5E7   HL += 0x0F; // vischar + 0x0F
-D $C5EB Save the old position.
+N $C5EB Save the old position.
   $C5EB   DE = &movable_items[0]; // stove1
   $C5EE   if (A != character_26_STOVE_1) <%
   $C5F2     DE = &movable_items[2]; // stove2
@@ -8574,7 +8574,7 @@ D $C5EB Save the old position.
   $C5F9       DE = &movable_items[1]; %> %> // crate
   $C5FC   memcpy(DE, HL, 6);
   $C601   return; %>
-D $C602 A non-object character.
+N $C602 A non-object character.
   $C602 else <% -
   $C603   DE = get_character_struct(A);
   $C606   *DE &= ~characterstruct_FLAG_DISABLED;
@@ -8608,7 +8608,7 @@ D $C602 A non-object character.
 ; -----------------------------------------------------------------------------
 
 c $C651 sub_C651
-; @label:$C651=sub_C651
+@ $C651 label=sub_C651
 D $C651 ...
 R $C651 I:HL Pointer to characterstruct + 5. // sampled = $768E, 7695, 769C, 7617, 761E, 7625, 762C, 7633, 7656, 765D
 R $C651 O:A  0/255
@@ -8643,7 +8643,7 @@ R $C651 O:HL Pointer to somewhere in word_783A.
   $C68C     A = 0x80;
   $C68E     return; %>
   $C68F   A = *DE - 40; %>
-D $C692 sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
+N $C692 sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
   $C692 HL = word_783A[A];
   $C69B A = 0;
   $C69C return;
@@ -8654,7 +8654,7 @@ D $C692 sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
 ; -----------------------------------------------------------------------------
 
 c $C6A0 move_characters
-; @label:$C6A0=move_characters
+@ $C6A0 label=move_characters
 D $C6A0 Moves characters around.
   $C6A0 byte_A13E = 0xFF;
   $C6A5 character_index = (character_index + 1) % character_26; // 26 = highest + 1 character
@@ -8681,9 +8681,9 @@ D $C6A0 Moves characters around.
 ;   ...
 ; %> else ...
   $C6DD   if (A != character_0_COMMANDANT) <%
-D $C6DD Not a player character.
+N $C6DD Not a player character.
   $C6E0     if (A >= character_12_GUARD_12) goto char_ge_12;
-D $C6E4 Characters 1..11.
+N $C6E4 Characters 1..11.
 ;
   $C6E4     back: *HL++ ^= 0x80;
   $C6E9     if (A & 7) (*HL) -= 2;
@@ -8691,14 +8691,14 @@ D $C6E4 Characters 1..11.
   $C6F0     POP HL
   $C6F1     return; %>
 
-D $C6F2 Hero character.
+N $C6F2 Hero character.
   $C6F2   char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5) // location
   $C6F5   if (A != 36) goto back;
 ;
   $C6F9   char_ge_12: POP DE
   $C6FA   goto character_event; // exit via
 ;
-D $C6FD   Two unused bytes.
+N $C6FD   Two unused bytes.
 B $C6FD,2   %>
 ;
   $C6FF if (A == 0x80) <%
@@ -8725,7 +8725,7 @@ B $C6FD,2   %>
   $C739   DE -= 2;
   $C73B   HL--;
   $C73C   *DE = (*HL & doorposition_BYTE0_MASK_HI) >> 2; // mask
-D $C742 Stuff reading from door_positions.
+N $C742 Stuff reading from door_positions.
   $C742   if ((*HL & doorposition_BYTE0_MASK_LO) < 2) <% // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a
   $C749     HL += 5; %>
   $C74E   else <%
@@ -8771,7 +8771,7 @@ D $C742 Stuff reading from door_positions.
 ; -----------------------------------------------------------------------------
 
 c $C79A increment_DE_by_diff
-; @label:$C79A=increment_DE_by_diff
+@ $C79A label=increment_DE_by_diff
 D $C79A [leaf] (<- move_characters)
 D $C79A Gets called with successive bytes.
 R $C79A I:Adash Maximum value of delta?
@@ -8798,7 +8798,7 @@ R $C79A O:B     Incremented by one if no movement.
 ; -----------------------------------------------------------------------------
 
 c $C7B9 get_character_struct
-; @label:$C7B9=get_character_struct
+@ $C7B9 label=get_character_struct
 R $C7B9 I:A  Character index.
 R $C7B9 O:HL Character struct.
   $C7B9 HL = &character_structs[A];
@@ -8809,7 +8809,7 @@ R $C7B9 O:HL Character struct.
 ; Character events and handlers.
 ;
 c $C7C6 character_event
-; @label:$C7C6=character_event
+@ $C7C6 label=character_event
 D $C7C6 Makes characters sit, sleep or other things TBD.
 ; sampled HL = 80a2, 80e2, 8042, 8062, 76b8, 76bf, 80c2, 80e2, 8022, 8002, 8082, 766b,  (vischar+2 OR charstruct+5)
 R $C7C6 I:HL Points to character_struct.unk2 or vischar.target.
@@ -8820,10 +8820,10 @@ R $C7C6 I:HL Points to character_struct.unk2 or vischar.target.
   $C7C7 if (A >= character_7_GUARD_7  && A <= character_12_GUARD_12) goto character_sleeps;
   $C7D0 if (A >= character_18_GUARD_DOG_3 && A <= character_22_PRISONER_3) goto character_sits;
   $C7D9 PUSH HL // POPped by handlers
-; @nowarn:$C7DA
+@ $C7DA nowarn
   $C7DA map = &character_to_event_handler_index_map[0];
   $C7DD B = NELEMS(character_to_event_handler_index_map); // 24 iterations
-D $C7DF Locate the character in the map.
+N $C7DF Locate the character in the map.
   $C7DF do <% if (A == map->character) goto call_action;
   $C7E2   map += 2;
   $C7E4 %> while (--B);
@@ -8832,7 +8832,7 @@ D $C7DF Locate the character in the map.
   $C7E9 return;
 
   $C7EA call_action: goto character_event_handlers[*++HL];
-; @nowarn:$C7F0
+@ $C7F0 nowarn
 
 ; enum charevnt
 ; charevnt_1        ;
@@ -8846,9 +8846,9 @@ D $C7DF Locate the character in the map.
 ; charevnt_9        ; hero sits
 ; charevnt_10       ; released from solitary
 
-D $C7F9 character_to_event_handler_index_map
-; @label:$C7F9=character_to_event_handler_index_map
-D $C7F9 Array of (character + flags, character event handler index) mappings.
+N $C7F9 character_to_event_handler_index_map
+@ $C7F9 label=character_to_event_handler_index_map
+N $C7F9 Array of (character + flags, character event handler index) mappings.
 W $C7F9 { character_6_GUARD_6       | 0b10100000, charevnt_0 },
 W $C7FB { character_7_GUARD_7       | 0b10100000, charevnt_0 },
 W $C7FD { character_8_GUARD_8       | 0b10100000, charevnt_1 },
@@ -8874,9 +8874,9 @@ W $C823 { character_4_GUARD_4       | 0b10100000, charevnt_6 }, // go to 0x0315
 W $C825 { character_4_GUARD_4       | 0b00100000, charevnt_10 },// released from solitary
 W $C827 { character_5_GUARD_5       | 0b00100000, charevnt_4 }, // zero morale_1
 
-D $C829 character_event_handlers
-; @label:$C829=character_event_handlers
-D $C829 Array of pointers to character event handlers.
+N $C829 character_event_handlers
+@ $C829 label=character_event_handlers
+N $C829 Array of pointers to character event handlers.
 W $C829 charevnt_handler *character_event_handlers[] = { &charevnt_handler_0,
 W $C82B   &charevnt_handler_1,
 W $C82D   &charevnt_handler_2,
@@ -8889,69 +8889,69 @@ W $C839   &charevnt_handler_8_hero_sleeps,
 W $C83B   &charevnt_handler_9_hero_sits,
 W $C83D   &charevnt_handler_10_hero_released_from_solitary, };
 
-D $C83F charevnt_handler_4_zero_morale_1
-; @label:$C83F=charevnt_handler_4_zero_morale_1
+N $C83F charevnt_handler_4_zero_morale_1
+@ $C83F label=charevnt_handler_4_zero_morale_1
   $C83F morale_1 = 0;
   $C843 goto charevnt_handler_0;
 
-D $C845 charevnt_handler_6
-; @label:$C845=charevnt_handler_6
+N $C845 charevnt_handler_6
+@ $C845 label=charevnt_handler_6
 ; saw this hit somewhere around (morning) roll call -- but hits are rare
   $C845 POP HL // (popped) sampled HL = $80C2 (x2), $8042  // likely target location
   $C846 *HL++ = 0x03;
   $C849 *HL   = 0x15;
   $C84B return;
 
-D $C84C charevnt_handler_10_hero_released_from_solitary
-; @label:$C84C=charevnt_handler_10_hero_released_from_solitary
+N $C84C charevnt_handler_10_hero_released_from_solitary
+@ $C84C label=charevnt_handler_10_hero_released_from_solitary
   $C84C POP HL
   $C84D *HL++ = 0xA4;
   $C850 *HL   = 0x03;
   $C852 automatic_player_counter = 0; // force automatic control
   $C856 set_hero_target_location(0x0025); return;
 
-D $C85C charevnt_handler_1
-; @label:$C85C=charevnt_handler_1
+N $C85C charevnt_handler_1
+@ $C85C label=charevnt_handler_1
   $C85C C = 0x10; // 0xFF10
   $C85E goto exit;
 
-D $C860 charevnt_handler_2
-; @label:$C860=charevnt_handler_2
+N $C860 charevnt_handler_2
+@ $C860 label=charevnt_handler_2
   $C860 C = 0x38; // 0xFF38
   $C862 goto exit;
 
-D $C864 charevnt_handler_0
-; @label:$C864=charevnt_handler_0
+N $C864 charevnt_handler_0
+@ $C864 label=charevnt_handler_0
   $C864 C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062
   $C866 exit: POP HL
   $C867 *HL++ = 0xFF;
   $C86A *HL   = C;
   $C86B return;
 
-D $C86C charevnt_handler_3_check_var_A13E
-; @label:$C86C=charevnt_handler_3_check_var_A13E
+N $C86C charevnt_handler_3_check_var_A13E
+@ $C86C label=charevnt_handler_3_check_var_A13E
   $C86C POP HL
   $C86D if (byte_A13E == 0) goto byte_A13E_is_zero; else goto byte_A13E_is_nonzero;
 
-D $C877 charevnt_handler_5_check_var_A13E_anotherone
-; @label:$C877=charevnt_handler_5_check_var_A13E_anotherone
+N $C877 charevnt_handler_5_check_var_A13E_anotherone
+@ $C877 label=charevnt_handler_5_check_var_A13E_anotherone
   $C877 POP HL
   $C878 if (byte_A13E == 0) goto byte_A13E_is_zero_anotherone; else goto byte_A13E_is_nonzero_anotherone;
 
-D $C882 charevnt_handler_7
-; @label:$C882=charevnt_handler_7
+N $C882 charevnt_handler_7
+@ $C882 label=charevnt_handler_7
   $C882 POP HL
   $C883 *HL++ = 0x05;
   $C886 *HL   = 0x00;
   $C888 return;
 
-D $C889 charevnt_handler_9_hero_sits
-; @label:$C889=charevnt_handler_9_hero_sits
+N $C889 charevnt_handler_9_hero_sits
+@ $C889 label=charevnt_handler_9_hero_sits
   $C889 POP HL
   $C88A goto hero_sits;
 
-D $C88D charevnt_handler_8_hero_sleeps
-; @label:$C88D=charevnt_handler_8_hero_sleeps
+N $C88D charevnt_handler_8_hero_sleeps
+@ $C88D label=charevnt_handler_8_hero_sleeps
   $C88D POP HL
   $C88E goto hero_sleeps;
 
@@ -8960,47 +8960,47 @@ D $C88D charevnt_handler_8_hero_sleeps
 g $C891 Likely: A countdown until any food item is discovered.
 D $C891 (<- follow_suspicious_character, bribes_solitary_food)
 B $C891 food_discovered_counter
-; @label:$C891=food_discovered_counter
+@ $C891 label=food_discovered_counter
 
 ; ------------------------------------------------------------------------------
 
 c $C892 follow_suspicious_character
-; @label:$C892=follow_suspicious_character
+@ $C892 label=follow_suspicious_character
 D $C892 Causes characters to follow the hero if he's being suspicious.
 D $C892 Also: Food item discovery.
 D $C892 Also: Automatic hero behaviour.
   $C892 byte_A13E = 0;
   $C896 if (bell) hostiles_persue();
   $C89D if (food_discovered_counter != 0 && --food_discovered_counter == 0) <%
-D $C8A7 De-poison the food.
-; @nowarn:$C8A7
+N $C8A7 De-poison the food.
+@ $C8A7 nowarn
   $C8A7   item_structs[item_FOOD].item &= ~itemstruct_ITEM_FLAG_POISONED;
   $C8AC   C = item_FOOD;
   $C8AE   item_discovered(); %>
-D $C8B1 Make supporting characters react.
-; @nowarn:$C8B1
+N $C8B1 Make supporting characters react.
+@ $C8B1 nowarn
   $C8B1 IY = $8020; // iterate over non-player characters
   $C8B5 B = 7; // iterations
   $C8B7 do <% -
   $C8B8   if (IY[1] != 0) <% // flags
   $C8C0     A = IY[0] & vischar_BYTE0_MASK; // character index
   $C8C5     if (A <= character_19_GUARD_DOG_4) <% // Hostile characters only.
-D $C8CA Characters 0..19.
+N $C8CA Characters 0..19.
   $C8CA       -
   $C8CB       is_item_discoverable();
   $C8CE       if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_character();
   $C8DB       -
-D $C8DC Guard dogs 1..4 (characters 16..19).
+N $C8DC Guard dogs 1..4 (characters 16..19).
   $C8DC       if (A >= character_16_GUARD_DOG_1) <%
-D $C8E4 Is the food nearby?
+N $C8E4 Is the food nearby?
   $C8E4         if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_ITEM_NEARBY) IY[1] = 3; %> %>
   $C8F1     character_behaviour(); %>
   $C8F4   -
   $C8F5   IY += 32; // stride
   $C8FA %> while (--B);
-D $C8FE Inhibit hero automatic behaviour when the flag is red, or otherwise inhibited.
+N $C8FE Inhibit hero automatic behaviour when the flag is red, or otherwise inhibited.
   $C8FE if (!red_flag && (morale_1 || automatic_player_counter == 0)) <%
-D $C902 Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
+N $C902 Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
   $C910   IY = $8000;
   $C914   character_behaviour(); %>
   $C917 return;
@@ -9008,7 +9008,7 @@ D $C902 Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
 ; ------------------------------------------------------------------------------
 
 c $C918 character_behaviour
-; @label:$C918=character_behaviour
+@ $C918 label=character_behaviour
 D $C918 Character behaviour?
 R $C918 I:IY Pointer to visible character block.
   $C918 A = IY[7]; // $8007 etc. // more flags
@@ -9058,7 +9058,7 @@ R $C918 I:IY Pointer to visible character block.
   $C981     if (A != character_NONE) <%
   $C985       -
   $C986       B = 7; // 7 iterations
-; @nowarn:$C988
+@ $C988 nowarn
   $C988       HL = $8020; // iterate over non-player characters
   $C98B       do <%
   $C98C         if (*HL == A) goto found_bribed;
@@ -9068,7 +9068,7 @@ R $C918 I:IY Pointer to visible character block.
   $C996     *HL++ = 0;
   $C999     sub_CB23(); return; // exit via
 
-D $C99C Found bribed character.
+N $C99C Found bribed character.
 ; indentation is wrong here, i think
   $C99C found_bribed: HL += 15;
   $C9A0     POP DE
@@ -9089,14 +9089,14 @@ D $C99C Found bribed character.
   $C9C1 -
   $C9C2 Cdash = A;
   $C9C3 if (room_index) <%
-; @nowarn:$C9C9
+@ $C9C9 nowarn
   $C9C9   HLdash = &multiply_by_1; %>
   $C9CC else <%
   $C9CE   if (Cdash & vischar_BYTE1_BIT6) <%
-; @nowarn:$C9D2
+@ $C9D2 nowarn
   $C9D2     HLdash = &multiply_by_4; %>
   $C9D5   else <%
-; @nowarn:$C9D7
+@ $C9D7 nowarn
   $C9D7     HLdash = &multiply_by_8; %> %>
   $C9DA ($CA13) = HLdash; // self-modify move_character_Y:$CA13
   $C9DD ($CA4B) = HLdash; // self-modify move_character_X:$CA4B
@@ -9123,7 +9123,7 @@ D $C99C Found bribed character.
 ; ------------------------------------------------------------------------------
 
 c $CA11 move_character_Y
-; @label:$CA11=move_character_Y
+@ $CA11 label=move_character_Y
 D $CA11 Returns vischar[15] - scalefn(vischar[4])
 R $CA11 I:HL Pointer to visible character block + 4.
 R $CA11 I:IY Pointer to visible character block.
@@ -9150,7 +9150,7 @@ R $CA11 O:HL Pointer to ?
 ; ------------------------------------------------------------------------------
 
 c $CA49 move_character_X
-; @label:$CA49=move_character_X
+@ $CA49 label=move_character_X
 D $CA49 Nearly identical routine to move_character_Y above.
 R $CA49 I:HL Pointer to visible character block + 5.
 R $CA49 I:IY Pointer to visible character block.
@@ -9177,7 +9177,7 @@ R $CA49 O:HL Pointer to ?
 ; ------------------------------------------------------------------------------
 
 c $CA81 bribes_solitary_food
-; @label:$CA81=bribes_solitary_food
+@ $CA81 label=bribes_solitary_food
 D $CA81 Bribes, solitary, food, 'character enters' sound.
 R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
 R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
@@ -9190,7 +9190,7 @@ R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
   $CA96     else <% solitary(); return; %> %> // exit via
   $CA99   else if (A == vischar_BYTE1_BIT1 || A == vischar_BYTE1_BIT2) <% return; %>
   $CA9F   -
-; @nowarn:$CAA0
+@ $CAA0 nowarn
   $CAA0   if ((item_structs[item_FOOD].item & itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;
   $CAAB   food_discovered_counter = A;
   $CAAE   -
@@ -9237,7 +9237,7 @@ R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
 ; fallthrough
 
 c $CB23 sub_CB23
-; @label:$CB23=sub_CB23
+@ $CB23 label=sub_CB23
 ; This entry point is used by the routines at #R$A3B3, #R$B107 and #R$C918.
 R $CB23 I:A  Character index?
 R $CB23 I:HL ?
@@ -9278,13 +9278,13 @@ B $CB5F Unreferenced bytes.
 ; ------------------------------------------------------------------------------
 
 c $CB75 multiply_by_1
-; @label:$CB75=multiply_by_1
+@ $CB75 label=multiply_by_1
   $CB75 BC = A; return;
 
 ; ------------------------------------------------------------------------------
 
 c $CB79 element_A_of_table_7738
-; @label:$CB79=element_A_of_table_7738
+@ $CB79 label=element_A_of_table_7738
 R $CB79 I:A  Index.
 R $CB79 O:DE Element.
   $CB79 DE = table_7738[A];
@@ -9293,12 +9293,12 @@ R $CB79 O:DE Element.
 ; ------------------------------------------------------------------------------
 
 c $CB85 random_nibble
-; @label:$CB85=random_nibble
+@ $CB85 label=random_nibble
 D $CB85 Pseudo random number generator.
 R $CB85 O:A Pseudo-random number from 0..15.
   $CB85 PUSH HL
   $CB86 HL = prng_pointer + 1;
-D $CB8A sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's fetching exterior tiles
+N $CB8A sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's fetching exterior tiles
   $CB8A A = *HL & 0x0F;
   $CB8D prng_pointer = HL;
   $CB90 POP HL
@@ -9312,10 +9312,10 @@ D $CB92 Unreferenced bytes.
 ; ------------------------------------------------------------------------------
 
 c $CB98 solitary
-; @label:$CB98=solitary
+@ $CB98 label=solitary
 D $CB98 Silence bell.
   $CB98 bell = bell_STOP;
-D $CB9D Seize hero's held items.
+N $CB9D Seize hero's held items.
   $CB9D HL = &items_held[0];
   $CBA0 C = *HL;
   $CBA1 *HL = item_NONE;
@@ -9325,7 +9325,7 @@ D $CB9D Seize hero's held items.
   $CBA9 *HL = item_NONE;
   $CBAB item_discovered();
   $CBAE draw_all_items();
-D $CBB1 Reset all items. [unsure]
+N $CBB1 Reset all items. [unsure]
   $CBB1 B = 16; // all items
   $CBB3 HL = &item_structs[0].room;
   $CBB6 do <% PUSH BC
@@ -9376,17 +9376,17 @@ D $CBB1 Reset all items. [unsure]
 ; ------------------------------------------------------------------------------
 
 b $CC31 solitary_hero_reset_data
-; @label:$CC31=solitary_hero_reset_data
+@ $CC31 label=solitary_hero_reset_data
 D $CC31 (<- solitary)
 
 ; ------------------------------------------------------------------------------
 
 c $CC37 guards_follow_suspicious_character
-; @label:$CC37=guards_follow_suspicious_character
+@ $CC37 label=guards_follow_suspicious_character
 R $CC37 I:IY Pointer to visible character.
   $CC37 HL = IY;
   $CC3A A = *HL;
-D $CC3B Don't follow non-players dressed as guards.
+N $CC3B Don't follow non-players dressed as guards.
   $CC3B if (A && *$8015 == sprite_guard_tl_4) return;
   $CC46 if (HL[1] == vischar_BYTE1_BIT2) return; // $8041 etc. // 'gone mad' flag
   $CC4B -
@@ -9435,14 +9435,14 @@ D $CC3B Don't follow non-players dressed as guards.
 ; ------------------------------------------------------------------------------
 
 c $CCAB hostiles_persue
-; @label:$CCAB=hostiles_persue
+@ $CCAB label=hostiles_persue
 D $CCAB For all visible, hostile characters, at height < 32, set the bribed/persue flag.
 D $CCAB Research: If I nop this out then guards don't spot the items I drop.
-; @nowarn:$CCAB
+@ $CCAB nowarn
   $CCAB HL = $8020; // iterate over non-player characters
   $CCB1 B = 7; // iterations
   $CCB3 do <%
-D $CCB4 HL[0x13] is the character's height, testing this excludes the guards in the towers.
+N $CCB4 HL[0x13] is the character's height, testing this excludes the guards in the towers.
   $CCB4   if (HL[0] <= character_19_GUARD_DOG_4 && HL[0x13] < 32) HL[1] = vischar_BYTE1_PERSUE;
   $CCC9   HL += 32; // stride
   $CCCA %> while (--B);
@@ -9451,16 +9451,16 @@ D $CCB4 HL[0x13] is the character's height, testing this excludes the guards in 
 ; ------------------------------------------------------------------------------
 
 c $CCCD is_item_discoverable
-; @label:$CCCD=is_item_discoverable
+@ $CCCD label=is_item_discoverable
 D $CCCD Searches item_structs for items dropped nearby. If items are found the hostiles are made to persue the hero.
 D $CCCD Green key and food items are ignored.
   $CCCD A = room_index;
   $CCD0 if (A != room_0_outdoors) <%
-D $CCD3 Indoors.
+N $CCD3 Indoors.
   $CCD3   is_item_discoverable_interior(A);
   $CCD6   if (Z) hostiles_persue();
   $CCDA   return; %>
-D $CCDB Outdoors.
+N $CCDB Outdoors.
   $CCDB else <% HL = &item_structs[0].room;
   $CCDE   -
   $CCE1   B = 16; // iterations == n.itemstructs
@@ -9470,10 +9470,10 @@ D $CCDB Outdoors.
   $CCE8   %> while (--B);
   $CCEA   return; %>
 ;
-D $CCEB Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So it must be reading a byte early when iteration is resumed. Consequences? I think it'll screw up when multiple items are in range.
+N $CCEB Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So it must be reading a byte early when iteration is resumed. Consequences? I think it'll screw up when multiple items are in range.
   $CCEB nearby: HL--;
   $CCEC A = *HL & itemstruct_ITEM_MASK; // sampled HL = $772A (&item_structs[item_PURSE].item)
-D $CCEF The green key and food items are ignored.
+N $CCEF The green key and food items are ignored.
   $CCEF if (A == item_GREEN_KEY || A == item_FOOD) goto next;
   $CCF7 hostiles_persue();
   $CCFA return;
@@ -9481,7 +9481,7 @@ D $CCEF The green key and food items are ignored.
 ; ------------------------------------------------------------------------------
 
 c $CCFB is_item_discoverable_interior
-; @label:$CCFB=is_item_discoverable_interior
+@ $CCFB label=is_item_discoverable_interior
 D $CCFB Examines the specified room to see if it contains a discoverable item.
 D $CCFB A discoverable item is one moved away from its default room, and one that isn't the red cross parcel.
 R $CCFB I:A     Room ref.
@@ -9491,11 +9491,11 @@ R $CCFB O:C     Item (if found).
   $CCFC HL = &item_structs[0].room; // pointer to room ref
   $CCFF B = 16; // items__LIMIT
   $CD01 do <% A = *HL & itemstruct_ROOM_MASK;
-D $CD04 Is the item in the specified room?
+N $CD04 Is the item in the specified room?
   $CD04   if (A == C) <% // yes
   $CD07     -
-D $CD08 Has the item been moved to a different room?
-D $CD08 Note that room_and_flags doesn't get its flags masked off.
+N $CD08 Has the item been moved to a different room?
+N $CD08 Note that room_and_flags doesn't get its flags masked off.
   $CD08     A = default_item_locations[HL[-1] & itemstruct_ITEM_MASK].room_and_flags; // HL[-1] = itemstruct.item
   $CD17     if (A != C) goto not_in_default_room;
   $CD1A     - %>
@@ -9505,7 +9505,7 @@ D $CD08 Note that room_and_flags doesn't get its flags masked off.
 
   $CD22 not_in_default_room: -
   $CD23 A = HL[-1] & itemstruct_ITEM_MASK; // itemstruct.item
-D $CD27 Ignore red cross parcel.
+N $CD27 Ignore red cross parcel.
   $CD27 if (A == item_RED_CROSS_PARCEL) <%
   $CD2B   -
   $CD2C   goto next; %>
@@ -9516,7 +9516,7 @@ D $CD27 Ignore red cross parcel.
 ; ------------------------------------------------------------------------------
 
 c $CD31 item_discovered
-; @label:$CD31=item_discovered
+@ $CD31 label=item_discovered
 R $CD31 I:C Item.
   $CD31 A = C;
   $CD32 if (A == item_NONE) return;
@@ -9529,7 +9529,7 @@ R $CD31 I:C Item.
   $CD4C A = HL->room_and_flags;
   $CD4D EX DE,HL
   $CD4E
-D $CD4F Bug: This is not masked with 0x0F so item_to_itemstruct generates out of range addresses.
+N $CD4F Bug: This is not masked with 0x0F so item_to_itemstruct generates out of range addresses.
   $CD4F Adash = C;
   $CD50 HL = item_to_itemstruct(Adash);
   $CD53 *HL &= ~itemstruct_ITEM_FLAG_HELD;
@@ -9547,7 +9547,7 @@ D $CD4F Bug: This is not masked with 0x0F so item_to_itemstruct generates out of
 ; ------------------------------------------------------------------------------
 
 b $CD6A default_item_locations
-; @label:$CD6A=default_item_locations
+@ $CD6A label=default_item_locations
 D $CD6A Array of 16 three-byte structures. Suspect these are /default/ locations.
 D $CD6A struct default_item_location { byte room_and_flags; byte y; byte x; };
 D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
@@ -9571,375 +9571,375 @@ D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
 ; ------------------------------------------------------------------------------
 
 b $CD9A character_meta_data
-; @label:$CD9A=character_meta_data_commandant
+@ $CD9A label=character_meta_data_commandant
   $CD9A { &character_related_pointers[0], &sprites[30] } // meta_commandant (<- spawn_character)
-; @label:$CD9E=character_meta_data_guard
+@ $CD9E label=character_meta_data_guard
   $CD9E { &character_related_pointers[0], &sprites[22] } // meta_guard (<- spawn_character)
-; @label:$CDA2=character_meta_data_dog
+@ $CDA2 label=character_meta_data_dog
   $CDA2 { &character_related_pointers[0], &sprites[14] } // meta_dog (<- spawn_character)
-; @label:$CDA6=character_meta_data_prisoner
+@ $CDA6 label=character_meta_data_prisoner
   $CDA6 { &character_related_pointers[0], &sprites[2]  } // meta_prisoner (<- spawn_character)
 
 ; ------------------------------------------------------------------------------
 
 b $CDAA byte_CDAA
-; @label:$CDAA=byte_CDAA
+@ $CDAA label=byte_CDAA
 D $CDAA Likely direction transitions.
 D $CDAA Groups of nine. (<- called_from_main_loop_9)
 
 ; ------------------------------------------------------------------------------
 
 w $CDF2 character_related_pointers
-; @label:$CDF2=character_related_pointers
+@ $CDF2 label=character_related_pointers
 D $CDF2 Array, 24 long, of pointers to data.
 
 ; ------------------------------------------------------------------------------
 
 b $CE22 sprites
-; @label:$CE22=sprites
+@ $CE22 label=sprites
 D $CE22 Objects which can move.
 D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 D $CE22 Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
 D $CE22 'tl' => character faces top left of the screen
 D $CE22 'br' => character faces bottom right of the screen
-; @label:$CE22=sprite_stove
+@ $CE22 label=sprite_stove
   $CE22 { 3, 22, &bitmap_stove          , &mask_stove        } // (16x22,$DB46,$DB72)
-; @label:$CE28=sprite_crate
+@ $CE28 label=sprite_crate
   $CE28 { 4, 24, &bitmap_crate          , &mask_crate        } // (24x24,$DAB6,$DAFE)
-; @label:$CE2E=sprite_prisoner_tl_4
+@ $CE2E label=sprite_prisoner_tl_4
   $CE2E { 3, 27, &bitmap_prisoner_tl_4  , &mask_various_tl_4 } // (16x27,$D28C,$D545)
-; @label:$CE34=sprite_prisoner_tl_3
+@ $CE34 label=sprite_prisoner_tl_3
   $CE34 { 3, 28, &bitmap_prisoner_tl_3  , &mask_various_tl_3 } // (16x28,$D256,$D505)
-; @label:$CE3A=sprite_prisoner_tl_2
+@ $CE3A label=sprite_prisoner_tl_2
   $CE3A { 3, 28, &bitmap_prisoner_tl_2  , &mask_various_tl_2 } // (16x28,$D220,$D4C5)
-; @label:$CE40=sprite_prisoner_tl_1
+@ $CE40 label=sprite_prisoner_tl_1
   $CE40 { 3, 28, &bitmap_prisoner_tl_1  , &mask_various_tl_1 } // (16x28,$D1EA,$D485)
-; @label:$CE46=sprite_prisoner_br_1
+@ $CE46 label=sprite_prisoner_br_1
   $CE46 { 3, 27, &bitmap_prisoner_br_1  , &mask_various_br_1 } // (16x27,$D2C0,$D585)
-; @label:$CE4C=sprite_prisoner_br_2
+@ $CE4C label=sprite_prisoner_br_2
   $CE4C { 3, 29, &bitmap_prisoner_br_2  , &mask_various_br_2 } // (16x29,$D2F4,$D5C5)
-; @label:$CE52=sprite_prisoner_br_3
+@ $CE52 label=sprite_prisoner_br_3
   $CE52 { 3, 28, &bitmap_prisoner_br_3  , &mask_various_br_3 } // (16x28,$D32C,$D605)
-; @label:$CE58=sprite_prisoner_br_4
+@ $CE58 label=sprite_prisoner_br_4
   $CE58 { 3, 28, &bitmap_prisoner_br_4  , &mask_various_br_4 } // (16x28,$D362,$D63D)
-; @label:$CE5E=sprite_crawl_bl_2
+@ $CE5E label=sprite_crawl_bl_2
   $CE5E { 4, 16, &bitmap_crawl_bl_2     , &mask_crawl_bl     } // (24x16,$D3C5,$D677)
-; @label:$CE64=sprite_crawl_bl_1
+@ $CE64 label=sprite_crawl_bl_1
   $CE64 { 4, 15, &bitmap_crawl_bl_1     , &mask_crawl_bl     } // (24x15,$D398,$D677)
-; @label:$CE6A=sprite_crawl_tl_1
+@ $CE6A label=sprite_crawl_tl_1
   $CE6A { 4, 16, &bitmap_crawl_tl_1     , &mask_crawl_bl     } // (24x16,$D3F5,$D455)
-; @label:$CE70=sprite_crawl_tl_2
+@ $CE70 label=sprite_crawl_tl_2
   $CE70 { 4, 16, &bitmap_crawl_tl_2     , &mask_crawl_bl     } // (24x16,$D425,$D455)
-; @label:$CE76=sprite_dog_tl_1
+@ $CE76 label=sprite_dog_tl_1
   $CE76 { 4, 16, &bitmap_dog_tl_1       , &mask_dog_tl       } // (24x16,$D867,$D921)
-; @label:$CE7C=sprite_dog_tl_2
+@ $CE7C label=sprite_dog_tl_2
   $CE7C { 4, 16, &bitmap_dog_tl_2       , &mask_dog_tl       } // (24x16,$D897,$D921)
-; @label:$CE82=sprite_dog_tl_3
+@ $CE82 label=sprite_dog_tl_3
   $CE82 { 4, 15, &bitmap_dog_tl_3       , &mask_dog_tl       } // (24x15,$D8C7,$D921)
-; @label:$CE88=sprite_dog_tl_4
+@ $CE88 label=sprite_dog_tl_4
   $CE88 { 4, 15, &bitmap_dog_tl_4       , &mask_dog_tl       } // (24x15,$D8F4,$D921)
-; @label:$CE8E=sprite_dog_br_1
+@ $CE8E label=sprite_dog_br_1
   $CE8E { 4, 14, &bitmap_dog_br_1       , &mask_dog_br       } // (24x14,$D951,$D9F9)
-; @label:$CE94=sprite_dog_br_2
+@ $CE94 label=sprite_dog_br_2
   $CE94 { 4, 15, &bitmap_dog_br_2       , &mask_dog_br       } // (24x15,$D97B,$D9F9)
-D $CE9A Height of following sprite is one row too high.
-; @label:$CE9A=sprite_dog_br_3
+N $CE9A Height of following sprite is one row too high.
+@ $CE9A label=sprite_dog_br_3
   $CE9A { 4, 15, &bitmap_dog_br_3       , &mask_dog_br       } // (24x15,$D9A8,$D9F9)
-; @label:$CEA0=sprite_dog_br_4
+@ $CEA0 label=sprite_dog_br_4
   $CEA0 { 4, 14, &bitmap_dog_br_4       , &mask_dog_br       } // (24x14,$D9CF,$D9F9)
-; @label:$CEA6=sprite_guard_tl_4
+@ $CEA6 label=sprite_guard_tl_4
   $CEA6 { 3, 27, &bitmap_guard_tl_4     , &mask_various_tl_4 } // (16x27,$D74D,$D545)
-; @label:$CEAC=sprite_guard_tl_3
+@ $CEAC label=sprite_guard_tl_3
   $CEAC { 3, 29, &bitmap_guard_tl_3     , &mask_various_tl_3 } // (16x29,$D713,$D505)
-; @label:$CEB2=sprite_guard_tl_2
+@ $CEB2 label=sprite_guard_tl_2
   $CEB2 { 3, 27, &bitmap_guard_tl_2     , &mask_various_tl_2 } // (16x27,$D6DD,$D4C5)
-; @label:$CEB8=sprite_guard_tl_1
+@ $CEB8 label=sprite_guard_tl_1
   $CEB8 { 3, 27, &bitmap_guard_tl_1     , &mask_various_tl_1 } // (16x27,$D6A7,$D485)
-; @label:$CEBE=sprite_guard_br_1
+@ $CEBE label=sprite_guard_br_1
   $CEBE { 3, 29, &bitmap_guard_br_1     , &mask_various_br_1 } // (16x29,$D783,$D585)
-; @label:$CEC4=sprite_guard_br_2
+@ $CEC4 label=sprite_guard_br_2
   $CEC4 { 3, 29, &bitmap_guard_br_2     , &mask_various_br_2 } // (16x29,$D7BD,$D5C5)
-; @label:$CECA=sprite_guard_br_3
+@ $CECA label=sprite_guard_br_3
   $CECA { 3, 28, &bitmap_guard_br_3     , &mask_various_br_3 } // (16x28,$D7F7,$D605)
-; @label:$CED0=sprite_guard_br_4
+@ $CED0 label=sprite_guard_br_4
   $CED0 { 3, 28, &bitmap_guard_br_4     , &mask_various_br_4 } // (16x28,$D82F,$D63D)
-; @label:$CED6=sprite_commandant_tl_4
+@ $CED6 label=sprite_commandant_tl_4
   $CED6 { 3, 28, &bitmap_commandant_tl_4, &mask_various_tl_4 } // (16x28,$D0D6,$D545)
-; @label:$CEDC=sprite_commandant_tl_3
+@ $CEDC label=sprite_commandant_tl_3
   $CEDC { 3, 30, &bitmap_commandant_tl_3, &mask_various_tl_3 } // (16x30,$D09A,$D505)
-; @label:$CEE2=sprite_commandant_tl_2
+@ $CEE2 label=sprite_commandant_tl_2
   $CEE2 { 3, 29, &bitmap_commandant_tl_2, &mask_various_tl_2 } // (16x29,$D060,$D4C5)
-; @label:$CEE8=sprite_commandant_tl_1
+@ $CEE8 label=sprite_commandant_tl_1
   $CEE8 { 3, 29, &bitmap_commandant_tl_1, &mask_various_tl_1 } // (16x29,$D026,$D485)
-; @label:$CEEE=sprite_commandant_br_1
+@ $CEEE label=sprite_commandant_br_1
   $CEEE { 3, 27, &bitmap_commandant_br_1, &mask_various_br_1 } // (16x27,$D10E,$D585)
-; @label:$CEF4=sprite_commandant_br_2
+@ $CEF4 label=sprite_commandant_br_2
   $CEF4 { 3, 28, &bitmap_commandant_br_2, &mask_various_br_2 } // (16x28,$D144,$D5C5)
-; @label:$CEFA=sprite_commandant_br_3
+@ $CEFA label=sprite_commandant_br_3
   $CEFA { 3, 27, &bitmap_commandant_br_3, &mask_various_br_3 } // (16x27,$D17C,$D605)
-; @label:$CF00=sprite_commandant_br_4
+@ $CF00 label=sprite_commandant_br_4
   $CF00 { 3, 28, &bitmap_commandant_br_4, &mask_various_br_4 } // (16x28,$D1B2,$D63D)
 
 ; ------------------------------------------------------------------------------
 
 b $CF06 character_related_data
-; @label:$CF06=character_related_data
+@ $CF06 label=character_related_data
 D $CF06 [unknown] character related stuff? read by routine around $b64f (called_from_main_loop_9)
-; @label:$CF06=character_related_data_0
+@ $CF06 label=character_related_data_0
   $CF0E
-; @label:$CF0E=character_related_data_1
+@ $CF0E label=character_related_data_1
   $CF16
-; @label:$CF16=character_related_data_2
+@ $CF16 label=character_related_data_2
   $CF1E
-; @label:$CF1E=character_related_data_3
+@ $CF1E label=character_related_data_3
   $CF26
-; @label:$CF26=character_related_data_4
+@ $CF26 label=character_related_data_4
   $CF3A
-; @label:$CF3A=character_related_data_5
+@ $CF3A label=character_related_data_5
   $CF4E
-; @label:$CF4E=character_related_data_6
+@ $CF4E label=character_related_data_6
   $CF62
-; @label:$CF62=character_related_data_7
+@ $CF62 label=character_related_data_7
   $CF76
-; @label:$CF76=character_related_data_8
+@ $CF76 label=character_related_data_8
   $CF7E
-; @label:$CF7E=character_related_data_9
+@ $CF7E label=character_related_data_9
   $CF86
-; @label:$CF86=character_related_data_10
+@ $CF86 label=character_related_data_10
   $CF8E
-; @label:$CF8E=character_related_data_11
+@ $CF8E label=character_related_data_11
   $CF96
-; @label:$CF96=character_related_data_12
+@ $CF96 label=character_related_data_12
   $CFA2
-; @label:$CFA2=character_related_data_13
+@ $CFA2 label=character_related_data_13
   $CFAE
-; @label:$CFAE=character_related_data_14
+@ $CFAE label=character_related_data_14
   $CFBA
-; @label:$CFBA=character_related_data_15
+@ $CFBA label=character_related_data_15
   $CFC6
-; @label:$CFC6=character_related_data_16
+@ $CFC6 label=character_related_data_16
   $CFD2
-; @label:$CFD2=character_related_data_17
+@ $CFD2 label=character_related_data_17
   $CFDE
-; @label:$CFDE=character_related_data_18
+@ $CFDE label=character_related_data_18
   $CFEA
-; @label:$CFEA=character_related_data_19
+@ $CFEA label=character_related_data_19
   $CFF6
-; @label:$CFF6=character_related_data_20
+@ $CFF6 label=character_related_data_20
   $D002
-; @label:$D002=character_related_data_21
+@ $D002 label=character_related_data_21
   $D00E
-; @label:$D00E=character_related_data_22
+@ $D00E label=character_related_data_22
   $D01A
-; @label:$D01A=character_related_data_23
+@ $D01A label=character_related_data_23
 
 ; ------------------------------------------------------------------------------
 
 b $D026 sprite_bitmaps_and_masks
-; @label:$D026=sprite_bitmaps_and_masks
+@ $D026 label=sprite_bitmaps_and_masks
 D $D026 Sprite bitmaps and masks.
 B $D026 Raw data.
 ;
 B $D026 bitmap: COMMANDANT FACING TOP LEFT 1
-; @label:$D026=bitmap_commandant_facing_top_left_1
+@ $D026 label=bitmap_commandant_facing_top_left_1
 B $D060 bitmap: COMMANDANT FACING TOP LEFT 2
-; @label:$D060=bitmap_commandant_facing_top_left_2
+@ $D060 label=bitmap_commandant_facing_top_left_2
 B $D09A bitmap: COMMANDANT FACING TOP LEFT 3
-; @label:$D09A=bitmap_commandant_facing_top_left_3
+@ $D09A label=bitmap_commandant_facing_top_left_3
 B $D0D6 bitmap: COMMANDANT FACING TOP LEFT 4
-; @label:$D0D6=bitmap_commandant_facing_top_left_4
+@ $D0D6 label=bitmap_commandant_facing_top_left_4
 ;
 B $D10E bitmap: COMMANDANT FACING BOTTOM RIGHT 1
-; @label:$D10E=bitmap_commandant_facing_bottom_right_1
+@ $D10E label=bitmap_commandant_facing_bottom_right_1
 B $D144 bitmap: COMMANDANT FACING BOTTOM RIGHT 2
-; @label:$D144=bitmap_commandant_facing_bottom_right_2
+@ $D144 label=bitmap_commandant_facing_bottom_right_2
 B $D17C bitmap: COMMANDANT FACING BOTTOM RIGHT 3
-; @label:$D17C=bitmap_commandant_facing_bottom_right_3
+@ $D17C label=bitmap_commandant_facing_bottom_right_3
 B $D1B2 bitmap: COMMANDANT FACING BOTTOM RIGHT 4
-; @label:$D1B2=bitmap_commandant_facing_bottom_right_4
+@ $D1B2 label=bitmap_commandant_facing_bottom_right_4
 ;
 B $D1EA bitmap: PRISONER FACING TOP LEFT 1
-; @label:$D1EA=bitmap_prisoner_facing_top_left_1
+@ $D1EA label=bitmap_prisoner_facing_top_left_1
 B $D220 bitmap: PRISONER FACING TOP LEFT 2
-; @label:$D220=bitmap_prisoner_facing_top_left_2
+@ $D220 label=bitmap_prisoner_facing_top_left_2
 B $D256 bitmap: PRISONER FACING TOP LEFT 3
-; @label:$D256=bitmap_prisoner_facing_top_left_3
+@ $D256 label=bitmap_prisoner_facing_top_left_3
 B $D28C bitmap: PRISONER FACING TOP LEFT 4
-; @label:$D28C=bitmap_prisoner_facing_top_left_4
+@ $D28C label=bitmap_prisoner_facing_top_left_4
 ;
 B $D2C0 bitmap: PRISONER FACING BOTTOM RIGHT 1
-; @label:$D2C0=bitmap_prisoner_facing_bottom_right_1
+@ $D2C0 label=bitmap_prisoner_facing_bottom_right_1
 B $D2F4 bitmap: PRISONER FACING BOTTOM RIGHT 2
-; @label:$D2F4=bitmap_prisoner_facing_bottom_right_2
+@ $D2F4 label=bitmap_prisoner_facing_bottom_right_2
 B $D32C bitmap: PRISONER FACING BOTTOM RIGHT 3
-; @label:$D32C=bitmap_prisoner_facing_bottom_right_3
+@ $D32C label=bitmap_prisoner_facing_bottom_right_3
 B $D362 bitmap: PRISONER FACING BOTTOM RIGHT 4
-; @label:$D362=bitmap_prisoner_facing_bottom_right_4
+@ $D362 label=bitmap_prisoner_facing_bottom_right_4
 ;
 B $D398 bitmap: CRAWL FACING BOTTOM LEFT 1
-; @label:$D398=bitmap_crawl_facing_bottom_left_1
+@ $D398 label=bitmap_crawl_facing_bottom_left_1
 B $D3C5 bitmap: CRAWL FACING BOTTOM LEFT 2
-; @label:$D3C5=bitmap_crawl_facing_bottom_left_2
+@ $D3C5 label=bitmap_crawl_facing_bottom_left_2
 B $D3F5 bitmap: CRAWL FACING TOP LEFT 1
-; @label:$D3F5=bitmap_crawl_facing_top_left_1
+@ $D3F5 label=bitmap_crawl_facing_top_left_1
 B $D425 bitmap: CRAWL FACING TOP LEFT 2
-; @label:$D425=bitmap_crawl_facing_top_left_2
+@ $D425 label=bitmap_crawl_facing_top_left_2
 B $D455 mask: CRAWL FACING TOP LEFT (shared)
-; @label:$D455=mask_crawl_facing_top_left_shared
+@ $D455 label=mask_crawl_facing_top_left_shared
 ;
 B $D485 mask: VARIOUS FACING TOP LEFT 1
-; @label:$D485=mask_various_facing_top_left_1
+@ $D485 label=mask_various_facing_top_left_1
 B $D4C5 mask: VARIOUS FACING TOP LEFT 2
-; @label:$D4C5=mask_various_facing_top_left_2
+@ $D4C5 label=mask_various_facing_top_left_2
 B $D505 mask: VARIOUS FACING TOP LEFT 3
-; @label:$D505=mask_various_facing_top_left_3
+@ $D505 label=mask_various_facing_top_left_3
 B $D545 mask: VARIOUS FACING TOP LEFT 4
-; @label:$D545=mask_various_facing_top_left_4
+@ $D545 label=mask_various_facing_top_left_4
 ;
 B $D585 mask: VARIOUS FACING BOTTOM RIGHT 1
-; @label:$D585=mask_various_facing_bottom_right_1
+@ $D585 label=mask_various_facing_bottom_right_1
 B $D5C5 mask: VARIOUS FACING BOTTOM RIGHT 2
-; @label:$D5C5=mask_various_facing_bottom_right_2
+@ $D5C5 label=mask_various_facing_bottom_right_2
 B $D605 mask: VARIOUS FACING BOTTOM RIGHT 3
-; @label:$D605=mask_various_facing_bottom_right_3
+@ $D605 label=mask_various_facing_bottom_right_3
 B $D63D mask: VARIOUS FACING BOTTOM RIGHT 4
-; @label:$D63D=mask_various_facing_bottom_right_4
+@ $D63D label=mask_various_facing_bottom_right_4
 ;
 B $D677 mask: CRAWL FACING BOTTOM LEFT (shared)
-; @label:$D677=mask_crawl_facing_bottom_left_shared
+@ $D677 label=mask_crawl_facing_bottom_left_shared
 ;
 B $D6A7 bitmap: GUARD FACING TOP LEFT 1
-; @label:$D6A7=bitmap_guard_facing_top_left_1
+@ $D6A7 label=bitmap_guard_facing_top_left_1
 B $D6DD bitmap: GUARD FACING TOP LEFT 2
-; @label:$D6DD=bitmap_guard_facing_top_left_2
+@ $D6DD label=bitmap_guard_facing_top_left_2
 B $D713 bitmap: GUARD FACING TOP LEFT 3
-; @label:$D713=bitmap_guard_facing_top_left_3
+@ $D713 label=bitmap_guard_facing_top_left_3
 B $D74D bitmap: GUARD FACING TOP LEFT 4
-; @label:$D74D=bitmap_guard_facing_top_left_4
+@ $D74D label=bitmap_guard_facing_top_left_4
 ;
 B $D783 bitmap: GUARD FACING BOTTOM RIGHT 1
-; @label:$D783=bitmap_guard_facing_bottom_right_1
+@ $D783 label=bitmap_guard_facing_bottom_right_1
 B $D7BD bitmap: GUARD FACING BOTTOM RIGHT 2
-; @label:$D7BD=bitmap_guard_facing_bottom_right_2
+@ $D7BD label=bitmap_guard_facing_bottom_right_2
 B $D7F7 bitmap: GUARD FACING BOTTOM RIGHT 3
-; @label:$D7F7=bitmap_guard_facing_bottom_right_3
+@ $D7F7 label=bitmap_guard_facing_bottom_right_3
 B $D82F bitmap: GUARD FACING BOTTOM RIGHT 4
-; @label:$D82F=bitmap_guard_facing_bottom_right_4
+@ $D82F label=bitmap_guard_facing_bottom_right_4
 ;
 B $D867 bitmap: DOG FACING TOP LEFT 1
-; @label:$D867=bitmap_dog_facing_top_left_1
+@ $D867 label=bitmap_dog_facing_top_left_1
 B $D897 bitmap: DOG FACING TOP LEFT 2
-; @label:$D897=bitmap_dog_facing_top_left_2
+@ $D897 label=bitmap_dog_facing_top_left_2
 B $D8C7 bitmap: DOG FACING TOP LEFT 3
-; @label:$D8C7=bitmap_dog_facing_top_left_3
+@ $D8C7 label=bitmap_dog_facing_top_left_3
 B $D8F4 bitmap: DOG FACING TOP LEFT 4
-; @label:$D8F4=bitmap_dog_facing_top_left_4
+@ $D8F4 label=bitmap_dog_facing_top_left_4
 B $D921 mask: DOG FACING TOP LEFT (shared)
-; @label:$D921=mask_dog_facing_top_left_shared
+@ $D921 label=mask_dog_facing_top_left_shared
 ;
 B $D951 bitmap: DOG FACING BOTTOM RIGHT 1
-; @label:$D951=bitmap_dog_facing_bottom_right_1
+@ $D951 label=bitmap_dog_facing_bottom_right_1
 B $D97B bitmap: DOG FACING BOTTOM RIGHT 2
-; @label:$D97B=bitmap_dog_facing_bottom_right_2
+@ $D97B label=bitmap_dog_facing_bottom_right_2
 B $D9A8 bitmap: DOG FACING BOTTOM RIGHT 3
-; @label:$D9A8=bitmap_dog_facing_bottom_right_3
+@ $D9A8 label=bitmap_dog_facing_bottom_right_3
 B $D9CF bitmap: DOG FACING BOTTOM RIGHT 4
-; @label:$D9CF=bitmap_dog_facing_bottom_right_4
+@ $D9CF label=bitmap_dog_facing_bottom_right_4
 B $D9F9 mask: DOG FACING BOTTOM RIGHT (shared)
-; @label:$D9F9=mask_dog_facing_bottom_right_shared
+@ $D9F9 label=mask_dog_facing_bottom_right_shared
 ;
 B $DA29 bitmap: FLAG UP
-; @label:$DA29=bitmap_flag_up
+@ $DA29 label=bitmap_flag_up
 B $DA6B bitmap: FLAG DOWN
-; @label:$DA6B=bitmap_flag_down
+@ $DA6B label=bitmap_flag_down
 ;
 B $DAB6 bitmap: CRATE
-; @label:$DAB6=bitmap_crate
+@ $DAB6 label=bitmap_crate
 B $DAFE mask: CRATE
-; @label:$DAFE=mask_crate
+@ $DAFE label=mask_crate
 ;
 B $DB46 bitmap: STOVE
-; @label:$DB46=bitmap_stove
+@ $DB46 label=bitmap_stove
 B $DB72 mask: STOVE
-; @label:$DB72=mask_stove
+@ $DB72 label=mask_stove
 
 ;
 ; Images for above
 ;
 
 D $D026 #UDGTABLE { #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1) } TABLE#
-D $D060 #UDGTABLE { #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2) } TABLE#
-D $D09A #UDGTABLE { #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,120}(bitmap-commandant-facing-top-left-3) } TABLE#
-D $D0D6 #UDGTABLE { #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-top-left-4) } TABLE#
+N $D060 #UDGTABLE { #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2) } TABLE#
+N $D09A #UDGTABLE { #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,120}(bitmap-commandant-facing-top-left-3) } TABLE#
+N $D0D6 #UDGTABLE { #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-top-left-4) } TABLE#
 ;
-D $D10E #UDGTABLE { #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-1) } TABLE#
-D $D144 #UDGTABLE { #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-2) } TABLE#
-D $D17C #UDGTABLE { #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-3) } TABLE#
-D $D1B2 #UDGTABLE { #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-4) } TABLE#
+N $D10E #UDGTABLE { #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-1) } TABLE#
+N $D144 #UDGTABLE { #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-2) } TABLE#
+N $D17C #UDGTABLE { #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-3) } TABLE#
+N $D1B2 #UDGTABLE { #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-4) } TABLE#
 ;
-D $D1EA #UDGTABLE { #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-1) } TABLE#
-D $D220 #UDGTABLE { #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-2) } TABLE#
-D $D256 #UDGTABLE { #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-3) } TABLE#
-D $D28C #UDGTABLE { #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(bitmap-prisoner-facing-top-left-4) } TABLE#
+N $D1EA #UDGTABLE { #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-1) } TABLE#
+N $D220 #UDGTABLE { #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-2) } TABLE#
+N $D256 #UDGTABLE { #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-3) } TABLE#
+N $D28C #UDGTABLE { #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(bitmap-prisoner-facing-top-left-4) } TABLE#
 ;
-D $D2C0 #UDGTABLE { #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(bitmap-prisoner-facing-bottom-right-1) } TABLE#
-D $D2F4 #UDGTABLE { #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-bottom-right-2) } TABLE#
-D $D32C #UDGTABLE { #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-3) } TABLE#
-D $D362 #UDGTABLE { #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-4) } TABLE#
+N $D2C0 #UDGTABLE { #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(bitmap-prisoner-facing-bottom-right-1) } TABLE#
+N $D2F4 #UDGTABLE { #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-bottom-right-2) } TABLE#
+N $D32C #UDGTABLE { #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-3) } TABLE#
+N $D362 #UDGTABLE { #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-4) } TABLE#
 ;
-D $D398 #UDGTABLE { #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-left-1) } TABLE#
-D $D3C5 #UDGTABLE { #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-left-2) } TABLE#
-D $D3F5 #UDGTABLE { #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-1) } TABLE#
-D $D425 #UDGTABLE { #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-2) } TABLE#
-D $D455 #UDGTABLE { #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left) } TABLE#
+N $D398 #UDGTABLE { #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-left-1) } TABLE#
+N $D3C5 #UDGTABLE { #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-left-2) } TABLE#
+N $D3F5 #UDGTABLE { #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-1) } TABLE#
+N $D425 #UDGTABLE { #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-2) } TABLE#
+N $D455 #UDGTABLE { #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left) } TABLE#
 ;
-D $D485 #UDGTABLE { #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-top-left-1) } TABLE#
-D $D4C5 #UDGTABLE { #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-top-left-2) } TABLE#
-D $D505 #UDGTABLE { #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-top-left-3) } TABLE#
-D $D545 #UDGTABLE { #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-top-left-4) } TABLE#
+N $D485 #UDGTABLE { #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-top-left-1) } TABLE#
+N $D4C5 #UDGTABLE { #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-top-left-2) } TABLE#
+N $D505 #UDGTABLE { #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-top-left-3) } TABLE#
+N $D545 #UDGTABLE { #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-top-left-4) } TABLE#
 ;
-D $D585 #UDGTABLE { #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-top-right-1) } TABLE#
-D $D5C5 #UDGTABLE { #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-top-right-2) } TABLE#
-D $D605 #UDGTABLE { #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,112}(mask-various-facing-top-right-3) } TABLE#
-D $D63D #UDGTABLE { #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,116}(mask-various-facing-top-right-4) } TABLE#
-D $D677 #UDGTABLE { #UDGARRAY3,7,4,3;$D677-$D6A6-1-24(mask-crawl-facing-bottom-left) } TABLE#
+N $D585 #UDGTABLE { #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-top-right-1) } TABLE#
+N $D5C5 #UDGTABLE { #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-top-right-2) } TABLE#
+N $D605 #UDGTABLE { #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,112}(mask-various-facing-top-right-3) } TABLE#
+N $D63D #UDGTABLE { #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,116}(mask-various-facing-top-right-4) } TABLE#
+N $D677 #UDGTABLE { #UDGARRAY3,7,4,3;$D677-$D6A6-1-24(mask-crawl-facing-bottom-left) } TABLE#
 ;
-D $D6A7 #UDGTABLE { #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(bitmap-guard-facing-top-left-1) } TABLE#
-D $D6DD #UDGTABLE { #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(bitmap-guard-facing-top-left-2) } TABLE#
-D $D713 #UDGTABLE { #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(bitmap-guard-facing-top-left-3) } TABLE#
-D $D74D #UDGTABLE { #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(bitmap-guard-facing-top-left-4) } TABLE#
+N $D6A7 #UDGTABLE { #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(bitmap-guard-facing-top-left-1) } TABLE#
+N $D6DD #UDGTABLE { #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(bitmap-guard-facing-top-left-2) } TABLE#
+N $D713 #UDGTABLE { #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(bitmap-guard-facing-top-left-3) } TABLE#
+N $D74D #UDGTABLE { #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(bitmap-guard-facing-top-left-4) } TABLE#
 ;
-D $D783 #UDGTABLE { #UDGARRAY2,7,4,2;$D783-$D7BC-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-1) } TABLE#
-D $D7BD #UDGTABLE { #UDGARRAY2,7,4,2;$D7BD-$D7F6-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-2) } TABLE#
-D $D7F7 #UDGTABLE { #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-3) } TABLE#
-D $D82F #UDGTABLE { #UDGARRAY2,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4) } TABLE#
+N $D783 #UDGTABLE { #UDGARRAY2,7,4,2;$D783-$D7BC-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-1) } TABLE#
+N $D7BD #UDGTABLE { #UDGARRAY2,7,4,2;$D7BD-$D7F6-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-2) } TABLE#
+N $D7F7 #UDGTABLE { #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-3) } TABLE#
+N $D82F #UDGTABLE { #UDGARRAY2,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4) } TABLE#
 ;
-D $D867 #UDGTABLE { #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1) } TABLE#
-D $D897 #UDGTABLE { #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2) } TABLE#
-D $D8C7 #UDGTABLE { #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3) } TABLE#
-D $D8F4 #UDGTABLE { #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4) } TABLE#
-D $D921 #UDGTABLE { #UDGARRAY3,7,4,3;$D921-$D950-1-24(mask-dog-facing-top-left) } TABLE#
+N $D867 #UDGTABLE { #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1) } TABLE#
+N $D897 #UDGTABLE { #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2) } TABLE#
+N $D8C7 #UDGTABLE { #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3) } TABLE#
+N $D8F4 #UDGTABLE { #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4) } TABLE#
+N $D921 #UDGTABLE { #UDGARRAY3,7,4,3;$D921-$D950-1-24(mask-dog-facing-top-left) } TABLE#
 ;
-D $D951 #UDGTABLE { #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-1) } TABLE#
-D $D97B #UDGTABLE { #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-2) } TABLE#
-D $D9A8 #UDGTABLE { #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-3) } TABLE#
-D $D9CF #UDGTABLE { #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-4) } TABLE#
-D $D9F9 #UDGTABLE { #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24(mask-dog-facing-bottom-right) } TABLE#
+N $D951 #UDGTABLE { #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-1) } TABLE#
+N $D97B #UDGTABLE { #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-2) } TABLE#
+N $D9A8 #UDGTABLE { #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-3) } TABLE#
+N $D9CF #UDGTABLE { #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-4) } TABLE#
+N $D9F9 #UDGTABLE { #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24(mask-dog-facing-bottom-right) } TABLE#
 ;
 ; I'm currently unsure of the exact dimensions of the following flag graphics.
-D $DA29 #UDGTABLE { #UDGARRAY3,7,4,3;$DA29-$DA6A-1-24{0,0,96,96}(flag-up) } TABLE#
-D $DA6B #UDGTABLE { #UDGARRAY3,7,4,3;$DA6B-$DAB5-1-24{0,0,96,96}(flag-down) } TABLE#
+N $DA29 #UDGTABLE { #UDGARRAY3,7,4,3;$DA29-$DA6A-1-24{0,0,96,96}(flag-up) } TABLE#
+N $DA6B #UDGTABLE { #UDGARRAY3,7,4,3;$DA6B-$DAB5-1-24{0,0,96,96}(flag-down) } TABLE#
 ;
-D $DAB6 #UDGTABLE { #UDGARRAY3,7,4,3;$DAB6-$DAFD-1-24{0,0,96,96}(bitmap-crate) } TABLE#
-D $DAFE #UDGTABLE { #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24(mask-crate) } TABLE#
+N $DAB6 #UDGTABLE { #UDGARRAY3,7,4,3;$DAB6-$DAFD-1-24{0,0,96,96}(bitmap-crate) } TABLE#
+N $DAFE #UDGTABLE { #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24(mask-crate) } TABLE#
 ;
-D $DB46 #UDGTABLE { #UDGARRAY2,7,4,2;$DB46-$DB71-1-16{0,0,64,88}(bitmap-stove) } TABLE#
-D $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) } TABLE#
+N $DB46 #UDGTABLE { #UDGARRAY2,7,4,2;$DB46-$DB71-1-16{0,0,64,88}(bitmap-stove) } TABLE#
+N $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) } TABLE#
 
 ; ------------------------------------------------------------------------------
 
 c $DB9E mark_nearby_items
-; @label:$DB9E=mark_nearby_items
+@ $DB9E label=mark_nearby_items
 D $DB9E Iterates over item structs. Tests to see if items are within range (-1..22,0..15) of the map position.
 D $DB9E This is similar to is_item_discoverable_interior in that it iterates over item_structs.
   $DB9E A = room_index;
@@ -9956,7 +9956,7 @@ D $DB9E This is similar to is_item_discoverable_interior in that it iterates ove
   $DBD6         *HL |= itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY; // sampled HL=$772B  &itemstruct_14.room
   $DBDA         goto next; %> %> %>
 
-D $DBDC Reset.
+N $DBDC Reset.
   $DBDC   -
   $DBDD   *HL &= ~(itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY);
 ;
@@ -9967,7 +9967,7 @@ D $DBDC Reset.
 ; ------------------------------------------------------------------------------
 
 c $DBEB sub_DBEB
-; @label:$DBEB=sub_DBEB
+@ $DBEB label=sub_DBEB
 D $DBEB Iterates over all items. Uses multiply_by_8.
 R $DBEB O:IY Pointer to ? (result?)
 R $DBEB O:Adash result?
@@ -10011,11 +10011,11 @@ R $DBEB O:Adash result?
 ; ------------------------------------------------------------------------------
 
 c $DC41 setup_item_plotting
-; @label:$DC41=setup_item_plotting
+@ $DC41 label=setup_item_plotting
 R $DC41 I:A  ?
 R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
   $DC41 A &= 0x3F;
-D $DC43 Bug: Masked item value stored to possibly_holds_an_item which is never used again.
+N $DC43 Bug: Masked item value stored to possibly_holds_an_item which is never used again.
   $DC43 possibly_holds_an_item = A;
   $DC46 HL = IY + 2;
   $DC4B DE = &byte_81B2;
@@ -10075,9 +10075,9 @@ D $DC43 Bug: Masked item value stored to possibly_holds_an_item which is never u
   $DCCA HL += DE;
   $DCCB DE = $F290; // screen buffer start address
   $DCCE HL += DE;
-; @nowarn:$DCCF
+@ $DCCF nowarn
   $DCCF ($81A2) = HL;  // screen buffer pointer
-; @nowarn:$DCD2
+@ $DCD2 nowarn
   $DCD2 HL = $8100;
   $DCD5 POP DE
   $DCD6 PUSH DE
@@ -10104,7 +10104,7 @@ D $DC43 Bug: Masked item value stored to possibly_holds_an_item which is never u
 ; ------------------------------------------------------------------------------
 
 c $DD02 item_visible
-; @label:$DD02=item_visible
+@ $DD02 label=item_visible
 D $DD02 This is range checking something.
 R $DD02 O:AF Z => ?, !Z => ?
 R $DD02 O:BC
@@ -10145,7 +10145,7 @@ R $DD02 O:DE
 ; ------------------------------------------------------------------------------
 
 b $DD69 item_attributes
-; @label:$DD69=item_attributes
+@ $DD69 label=item_attributes
 D $DD69 20 bytes, 4 of which are unknown, possibly unused.
 D $DD69 'Yellow/black' means yellow ink over black paper, for example.
 ;
@@ -10156,9 +10156,9 @@ D $DD69 'Yellow/black' means yellow ink over black paper, for example.
   $DD6D item_attribute: TORCH - green/black
   $DD6E item_attribute: BRIBE - bright-red/black
   $DD6F item_attribute: UNIFORM - green/black
-; @label:$DD70=item_attributes_food
+@ $DD70 label=item_attributes_food
   $DD70 item_attribute: FOOD - white/black
-D $DD70 Food turns purple/black when it's poisoned.
+N $DD70 Food turns purple/black when it's poisoned.
   $DD71 item_attribute: POISON - purple/black
   $DD72 item_attribute: RED KEY - bright-red/black
   $DD73 item_attribute: YELLOW KEY - yellow/black
@@ -10167,7 +10167,7 @@ D $DD70 Food turns purple/black when it's poisoned.
   $DD76 item_attribute: RADIO - white/black
   $DD77 item_attribute: PURSE - white/black
   $DD78 item_attribute: COMPASS - green/black
-D $DD79 The following are likely unused.
+N $DD79 The following are likely unused.
   $DD79 item_attribute: yellow/black
   $DD7A item_attribute: cyan/black
   $DD7B item_attribute: bright-red/black
@@ -10176,7 +10176,7 @@ D $DD79 The following are likely unused.
 ; ------------------------------------------------------------------------------
 
 b $DD7D item_definitions
-; @label:$DD7D=item_definitions
+@ $DD7D label=item_definitions
 D $DD7D Item definitions.
 D $DD7D Array of "sprite" structures.
 ;
@@ -10186,91 +10186,91 @@ B $DD7E,1 height
 W $DD7F,2 bitmap pointer
 W $DD81,2 mask pointer
 ;
-D $DD83 item_definition: SHOVEL
+N $DD83 item_definition: SHOVEL
 B $DD83,1 width
 B $DD84,1 height
 W $DD85,2 bitmap pointer
 W $DD87,2 mask pointer
 ;
-D $DD89 item_definition: LOCKPICK
+N $DD89 item_definition: LOCKPICK
 B $DD89,1 width
 B $DD8A,1 height
 W $DD8B,2 bitmap pointer
 W $DD8D,2 mask pointer
 ;
-D $DD8F item_definition: PAPERS
+N $DD8F item_definition: PAPERS
 B $DD8F,1 width
 B $DD90,1 height
 W $DD91,2 bitmap pointer
 W $DD93,2 mask pointer
 ;
-D $DD95 item_definition: TORCH
+N $DD95 item_definition: TORCH
 B $DD95,1 width
 B $DD96,1 height
 W $DD97,2 bitmap pointer
 W $DD99,2 mask pointer
 ;
-D $DD9B item_definition: BRIBE
+N $DD9B item_definition: BRIBE
 B $DD9B,1 width
 B $DD9C,1 height
 W $DD9D,2 bitmap pointer
 W $DD9F,2 mask pointer
 ;
-D $DDA1 item_definition: UNIFORM
+N $DDA1 item_definition: UNIFORM
 B $DDA1,1 width
 B $DDA2,1 height
 W $DDA3,2 bitmap pointer
 W $DDA5,2 mask pointer
 ;
-D $DDA7 item_definition: FOOD
+N $DDA7 item_definition: FOOD
 B $DDA7,1 width
 B $DDA8,1 height
 W $DDA9,2 bitmap pointer
 W $DDAB,2 mask pointer
 ;
-D $DDAD item_definition: POISON
+N $DDAD item_definition: POISON
 B $DDAD,1 width
 B $DDAE,1 height
 W $DDAF,2 bitmap pointer
 W $DDB1,2 mask pointer
 ;
-D $DDB3 item_definition: RED_KEY
+N $DDB3 item_definition: RED_KEY
 B $DDB3,1 width
 B $DDB4,1 height
 W $DDB5,2 bitmap pointer
 W $DDB7,2 mask pointer
 ;
-D $DDB9 item_definition: YELLOW_KEY
+N $DDB9 item_definition: YELLOW_KEY
 B $DDB9,1 width
 B $DDBA,1 height
 W $DDBB,2 bitmap pointer
 W $DDBD,2 mask pointer
 ;
-D $DDBF item_definition: GREEN_KEY
+N $DDBF item_definition: GREEN_KEY
 B $DDBF,1 width
 B $DDC0,1 height
 W $DDC1,2 bitmap pointer
 W $DDC3,2 mask pointer
 ;
-D $DDC5 item_definition: PARCEL
+N $DDC5 item_definition: PARCEL
 B $DDC5,1 width
 B $DDC6,1 height
 W $DDC7,2 bitmap pointer
 W $DDC9,2 mask pointer
 ;
-D $DDCB item_definition: RADIO
+N $DDCB item_definition: RADIO
 B $DDCB,1 width
 B $DDCC,1 height
 W $DDCD,2 bitmap pointer
 W $DDCF,2 mask pointer
 ;
-D $DDD1 item_definition: PURSE
+N $DDD1 item_definition: PURSE
 B $DDD1,1 width
 B $DDD2,1 height
 W $DDD3,2 bitmap pointer
 W $DDD5,2 mask pointer
 ;
-D $DDD7 item_definition: COMPASS
+N $DDD7 item_definition: COMPASS
 B $DDD7,1 width
 B $DDD8,1 height
 W $DDD9,2 bitmap pointer
@@ -10283,112 +10283,112 @@ D $DDDD Item definitions.
 D $DDDD Raw data.
 ;
 B $DDDD,26,2 item_bitmap: SHOVEL
-; @label:$DDDD=bitmap_shovel
+@ $DDDD label=bitmap_shovel
 D $DDDD #UDGTABLE { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) } TABLE#
 ;
 B $DDF7,26,2 item_bitmap: KEY (shared for all keys)
-; @label:$DDF7=bitmap_key
-D $DDF7 #UDGTABLE { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) } TABLE#
+@ $DDF7 label=bitmap_key
+N $DDF7 #UDGTABLE { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) } TABLE#
 ;
 B $DE11,32,2 item_bitmap: LOCKPICK
-; @label:$DE11=bitmap_lockpick
-D $DE11 #UDGTABLE { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) } TABLE#
+@ $DE11 label=bitmap_lockpick
+N $DE11 #UDGTABLE { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) } TABLE#
 ;
 B $DE31,24,2 item_bitmap: COMPASS
-; @label:$DE31=bitmap_compass
-D $DE31 #UDGTABLE { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) } TABLE#
+@ $DE31 label=bitmap_compass
+N $DE31 #UDGTABLE { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) } TABLE#
 ;
 B $DE49,24,2 item_bitmap: PURSE
-; @label:$DE49=bitmap_purse
-D $DE49 #UDGTABLE { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) } TABLE#
+@ $DE49 label=bitmap_purse
+N $DE49 #UDGTABLE { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) } TABLE#
 ;
 B $DE61,30,2 item_bitmap: PAPERS
-; @label:$DE61=bitmap_papers
-D $DE61 #UDGTABLE { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) } TABLE#
+@ $DE61 label=bitmap_papers
+N $DE61 #UDGTABLE { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) } TABLE#
 ;
 B $DE7F,22,2 item_bitmap: WIRESNIPS
-; @label:$DE7F=bitmap_wiresnips
-D $DE7F #UDGTABLE { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) } TABLE#
+@ $DE7F label=bitmap_wiresnips
+N $DE7F #UDGTABLE { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) } TABLE#
 ;
 B $DE95,26,2 item_mask: SHOVEL or KEY (shared)
-; @label:$DE95=mask_shovel_key
-D $DE95 #UDGTABLE { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) } TABLE#
+@ $DE95 label=mask_shovel_key
+N $DE95 #UDGTABLE { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) } TABLE#
 ;
 B $DEAF,32,2 item_mask: LOCKPICK
-; @label:$DEAF=mask_lockpick
-D $DEAF #UDGTABLE { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) } TABLE#
+@ $DEAF label=mask_lockpick
+N $DEAF #UDGTABLE { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) } TABLE#
 ;
 B $DECF,24,2 item_mask: COMPASS
-; @label:$DECF=mask_compass
-D $DECF #UDGTABLE { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) } TABLE#
+@ $DECF label=mask_compass
+N $DECF #UDGTABLE { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) } TABLE#
 ;
 B $DEE7,24,2 item_mask: PURSE
-; @label:$DEE7=mask_purse
-D $DEE7 #UDGTABLE { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) } TABLE#
+@ $DEE7 label=mask_purse
+N $DEE7 #UDGTABLE { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) } TABLE#
 ;
 B $DEFF,30,2 item_mask: PAPERS
-; @label:$DEFF=mask_papers
-D $DEFF #UDGTABLE { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) } TABLE#
+@ $DEFF label=mask_papers
+N $DEFF #UDGTABLE { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) } TABLE#
 ;
 B $DF1D,22,2 item_mask: WIRESNIPS
-; @label:$DF1D=mask_wiresnips
-D $DF1D #UDGTABLE { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) } TABLE#
+@ $DF1D label=mask_wiresnips
+N $DF1D #UDGTABLE { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) } TABLE#
 ;
 B $DF33,32,2 item_bitmap: FOOD
-; @label:$DF33=bitmap_food
-D $DF33 #UDGTABLE { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) } TABLE#
+@ $DF33 label=bitmap_food
+N $DF33 #UDGTABLE { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) } TABLE#
 ;
 B $DF53,32,2 item_bitmap: POISON
-; @label:$DF53=bitmap_poison
-D $DF53 #UDGTABLE { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) } TABLE#
+@ $DF53 label=bitmap_poison
+N $DF53 #UDGTABLE { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) } TABLE#
 ;
 B $DF73,24,2 item_bitmap: TORCH
-; @label:$DF73=bitmap_torch
-D $DF73 #UDGTABLE { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) } TABLE#
+@ $DF73 label=bitmap_torch
+N $DF73 #UDGTABLE { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) } TABLE#
 ;
 B $DF8B,32,2 item_bitmap: UNIFORM
-; @label:$DF8B=bitmap_uniform
-D $DF8B #UDGTABLE { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) } TABLE#
+@ $DF8B label=bitmap_uniform
+N $DF8B #UDGTABLE { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) } TABLE#
 ;
 B $DFAB,26,2 item_bitmap: BRIBE
-; @label:$DFAB=bitmap_bribe
-D $DFAB #UDGTABLE { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) } TABLE#
+@ $DFAB label=bitmap_bribe
+N $DFAB #UDGTABLE { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) } TABLE#
 ;
 B $DFC5,32,2 item_bitmap: RADIO
-; @label:$DFC5=bitmap_radio
-D $DFC5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) } TABLE#
+@ $DFC5 label=bitmap_radio
+N $DFC5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) } TABLE#
 ;
 B $DFE5,32,2 item_bitmap: PARCEL
-; @label:$DFE5=bitmap_parcel
-D $DFE5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) } TABLE#
+@ $DFE5 label=bitmap_parcel
+N $DFE5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) } TABLE#
 ;
 B $E005,26,2 item_mask: BRIBE
-; @label:$E005=mask_bribe
-D $E005 #UDGTABLE { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) } TABLE#
+@ $E005 label=mask_bribe
+N $E005 #UDGTABLE { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) } TABLE#
 ;
 B $E01F,32,2 item_mask: UNIFORM
-; @label:$E01F=mask_uniform
-D $E01F #UDGTABLE { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,64}(item-mask-uniform) } TABLE#
+@ $E01F label=mask_uniform
+N $E01F #UDGTABLE { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,64}(item-mask-uniform) } TABLE#
 ;
 B $E03F,32,2 item_mask: PARCEL
-; @label:$E03F=mask_parcel
-D $E03F #UDGTABLE { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) } TABLE#
+@ $E03F label=mask_parcel
+N $E03F #UDGTABLE { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) } TABLE#
 ;
 B $E05F,32,2 item_mask: POISON
-; @label:$E05F=mask_poison
-D $E05F #UDGTABLE { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) } TABLE#
+@ $E05F label=mask_poison
+N $E05F #UDGTABLE { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) } TABLE#
 ;
 B $E07F,24,2 item_mask: TORCH
-; @label:$E07F=mask_torch
-D $E07F #UDGTABLE { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) } TABLE#
+@ $E07F label=mask_torch
+N $E07F #UDGTABLE { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) } TABLE#
 ;
 B $E097,32,2 item_mask: RADIO
-; @label:$E097=mask_radio
-D $E097 #UDGTABLE { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) } TABLE#
+@ $E097 label=mask_radio
+N $E097 #UDGTABLE { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) } TABLE#
 ;
 B $E0B7,32,2 item_mask: FOOD
-; @label:$E0B7=mask_food
-D $E0B7 #UDGTABLE { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) } TABLE#
+@ $E0B7 label=mask_food
+N $E0B7 #UDGTABLE { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) } TABLE#
 
 ; ------------------------------------------------------------------------------
 
@@ -10398,7 +10398,7 @@ B $E0D7 unused_E0D7
 ; ------------------------------------------------------------------------------
 
 w $E0E0 masked_sprite_plotter_16_enables
-; @label:$E0E0=masked_sprite_plotter_16_enables
+@ $E0E0 label=masked_sprite_plotter_16_enables
 D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
   $E0E0 masked_sprite_plotter_16_wide_case_1_enable0
   $E0E2 masked_sprite_plotter_16_wide_case_2_enable1
@@ -10410,7 +10410,7 @@ D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
 ; ------------------------------------------------------------------------------
 
 w $E0EC masked_sprite_plotter_24_enables
-; @label:$E0EC=masked_sprite_plotter_24_enables
+@ $E0EC label=masked_sprite_plotter_24_enables
 D $E0EC (<- setup_vischar_plotting)
   $E0EC masked_sprite_plotter_24_wide_enable0
   $E0EE masked_sprite_plotter_24_wide_enable1
@@ -10421,7 +10421,7 @@ D $E0EC (<- setup_vischar_plotting)
   $E0F8 masked_sprite_plotter_24_wide_enable6
   $E0FA masked_sprite_plotter_24_wide_enable7
 
-D $E0FC These two look different. Unused?
+N $E0FC These two look different. Unused?
   $E0FC masked_sprite_plotter_16_wide_case_1
   $E0FE masked_sprite_plotter_24_wide
 
@@ -10440,7 +10440,7 @@ W $E100 unused_E100
 ;
 
 c $E102 masked_sprite_plotter_24_wide
-; @label:$E102=masked_sprite_plotter_24_wide
+@ $E102 label=masked_sprite_plotter_24_wide
 D $E102 Sprite plotter. Used for characters and objects.
 R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
 ;
@@ -10451,7 +10451,7 @@ R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
   $E115 ($E142 + 1) = A; // self-modify // set branch target of first jump
   $E118 maskptr = mask_pointer; // mask pointer
   $E11C bitmapptr = bitmap_pointer; // bitmap pointer
-; @label:$E120=masked_sprite_plotter_24_wide_height_iters
+@ $E120 label=masked_sprite_plotter_24_wide_height_iters
   $E120 iters = 32; // iterations // height? // self modified
   $E122 do <% bm0 = *bitmapptr++; // bitmap bytes
   $E125   bm1 = *bitmapptr++;
@@ -10461,13 +10461,13 @@ R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
   $E12F   mask2 = *maskptr++;
   $E132   if (flip_sprite & (1<<7)) flip_24_masked_pixels();
   $E139   foremaskptr = foreground_mask_pointer;
-; @nowarn:$E13D
+@ $E13D nowarn
   $E13D   screenptr = ($81A2); // screen ptr // moved compared to the other routines
 ;
-D $E140 Shift bitmap.
+N $E140 Shift bitmap.
 ;
   $E140   bm3 = 0;
-; @label:$E142=masked_sprite_plotter_24_wide_jump0
+@ $E142 label=masked_sprite_plotter_24_wide_jump0
   $E142   goto $E144; // self-modified // jump table
   $E144   SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
   $E146   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
@@ -10482,11 +10482,11 @@ D $E140 Shift bitmap.
   $E158   RR bm2
   $E15A   RR bm3
 ;
-D $E15D Shift mask.
+N $E15D Shift mask.
 ;
   $E15D   mask3 = 0xFF;
   $E15F   carry = 1;
-; @label:$E160=masked_sprite_plotter_24_wide_jump1
+@ $E160 label=masked_sprite_plotter_24_wide_jump1
   $E160   goto $E162; // self-modified // jump table
   $E162   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
   $E164   RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
@@ -10501,38 +10501,38 @@ D $E15D Shift mask.
   $E176   RR mask2
   $E178   RR mask3
 ;
-D $E17A   Plot, using foreground mask.
+N $E17A   Plot, using foreground mask.
 ;
   $E17A   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E186   foremaskptr++;
 ;
-; @label:$E188=masked_sprite_plotter_24_wide_enable0
+@ $E188 label=masked_sprite_plotter_24_wide_enable0
   $E188   *screenptr++ = A;          // enable/disable 0
   $E18B   A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
   $E197   foremaskptr++;
 ;
-; @label:$E199=masked_sprite_plotter_24_wide_enable2
+@ $E199 label=masked_sprite_plotter_24_wide_enable2
   $E199   *screenptr++ = A;          // enable/disable 2
   $E19C   A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
   $E1A8   foremaskptr++;
 ;
-; @label:$E1AA=masked_sprite_plotter_24_wide_enable4
+@ $E1AA label=masked_sprite_plotter_24_wide_enable4
   $E1AA   *screenptr++ = A;          // enable/disable 4
   $E1AD   A = ((~*foremaskptr | mask3) & *screenptr) | (bm3 & *foremaskptr);
   $E1B9   foremaskptr++;
 ;
   $E1BA   foreground_mask_pointer = foremaskptr;
 ;
-; @label:$E1BF=masked_sprite_plotter_24_wide_enable6
+@ $E1BF label=masked_sprite_plotter_24_wide_enable6
   $E1BF   *screenptr = A;            // enable/disable 6
   $E1C0   screenptr += 21; // stride (24 - 3)
-; @nowarn:$E1C4
+@ $E1C4 nowarn
   $E1C4   ($81A2) = screenptr;
   $E1C8 %> while (--iters);
   $E1CD return;
 
 
-; @label:$E1CE=masked_sprite_plotter_24_wide_unaligned
+@ $E1CE label=masked_sprite_plotter_24_wide_unaligned
   $E1CE unaligned: A -= 4;
   $E1D0 RLCA
   $E1D1 RLCA
@@ -10541,7 +10541,7 @@ D $E17A   Plot, using foreground mask.
   $E1D6 ($E203 + 1) = A; // self-modify: set branch target - first jump
   $E1D9 HLdash = mask_pointer;
   $E1DD HL = bitmap_pointer;
-; @label:$E1E1=masked_sprite_plotter_24_wide_unaligned_height_iters
+@ $E1E1 label=masked_sprite_plotter_24_wide_unaligned_height_iters
   $E1E1 B = 32;
   $E1E3 do <% PUSH BC
   $E1E4   B = *HL++;
@@ -10556,10 +10556,10 @@ D $E17A   Plot, using foreground mask.
   $E1F3   if (flip_sprite & (1<<7)) flip_24_masked_pixels();
   $E1FA   HL = foreground_mask_pointer;
   $E1FD   EXX
-; @nowarn:$E1FE
+@ $E1FE nowarn
   $E1FE   HL = ($81A2);
   $E201   D = 0;
-; @label:$E203=masked_sprite_plotter_24_wide_jump2
+@ $E203 label=masked_sprite_plotter_24_wide_jump2
   $E203   goto $E205; // self-modified to jump into ...;
   $E205   SLA E
   $E207   RL C
@@ -10580,7 +10580,7 @@ D $E17A   Plot, using foreground mask.
   $E225   EXX
   $E226   D = 255;
   $E228   SCF
-; @label:$E229=masked_sprite_plotter_24_wide_jump3
+@ $E229 label=masked_sprite_plotter_24_wide_jump3
   $E229   goto $E22B; // self-modified to jump into ...;
   $E22B   RL E
   $E22D   RL C
@@ -10611,7 +10611,7 @@ D $E17A   Plot, using foreground mask.
   $E256   A |= D;
   $E257   L++;
   $E258   EXX
-; @label:$E259=masked_sprite_plotter_24_wide_enable1
+@ $E259 label=masked_sprite_plotter_24_wide_enable1
   $E259   *HL++ = A;          // enable/disable 1
   $E25B   EXX
   $E25C   A = ~*HL | B;       // 2
@@ -10626,7 +10626,7 @@ D $E17A   Plot, using foreground mask.
   $E267   A |= B;
   $E268   L++;
   $E269   EXX
-; @label:$E26A=masked_sprite_plotter_24_wide_enable3
+@ $E26A label=masked_sprite_plotter_24_wide_enable3
   $E26A   *HL++ = A;          // enable/disable 3
   $E26C   EXX
   $E26D   A = ~*HL | C;       // 3
@@ -10641,7 +10641,7 @@ D $E17A   Plot, using foreground mask.
   $E278   A |= C;
   $E279   L++;
   $E27A   EXX
-; @label:$E27B=masked_sprite_plotter_24_wide_enable5
+@ $E27B label=masked_sprite_plotter_24_wide_enable5
   $E27B   *HL++ = A;          // enable/disable 5
   $E27D   EXX
   $E27E   A = ~*HL | E;       // 4
@@ -10658,10 +10658,10 @@ D $E17A   Plot, using foreground mask.
   $E28B   foreground_mask_pointer = HL;
   $E28E   POP HL
   $E28F   EXX
-; @label:$E290=masked_sprite_plotter_24_wide_enable7
+@ $E290 label=masked_sprite_plotter_24_wide_enable7
   $E290   *HL = A;            // enable/disable 7
   $E291   HL += 21;
-; @nowarn:$E295
+@ $E295 nowarn
   $E295   ($81A2) = HL;
   $E298   POP HL
   $E299   POP BC
@@ -10671,7 +10671,7 @@ D $E17A   Plot, using foreground mask.
 ; ------------------------------------------------------------------------------
 
 c $E29F masked_sprite_plotter_16_wide_case_1_searchlight
-; @label:$E29F=masked_sprite_plotter_16_wide_case_1_searchlight
+@ $E29F label=masked_sprite_plotter_16_wide_case_1_searchlight
 D $E29F Direct entry point used by searchlight code.
   $E29F A = 0;
   $E2A0 goto $E2AC;
@@ -10687,7 +10687,7 @@ D $E29F Direct entry point used by searchlight code.
 ;
 
 c $E2A2 masked_sprite_plotter_16_wide_case_1
-; @label:$E2A2=masked_sprite_plotter_16_wide_case_1
+@ $E2A2 label=masked_sprite_plotter_16_wide_case_1
 D $E2A2 Sprite plotter. Used for characters and objects.
 D $E2A2 Looks like it plots a two byte-wide sprite with mask into a three byte-wide destination.
   $E2A2 if ((A = IY[24] & 7) >= 4) goto masked_sprite_plotter_16_wide_case_2;
@@ -10700,7 +10700,7 @@ D $E2A2 Looks like it plots a two byte-wide sprite with mask into a three byte-w
   $E2B9 maskptr = mask_pointer; // maskptr = HL'  // observed: $D505 (a mask)
   $E2BE bitmapptr = bitmap_pointer; // bitmapptr = HL  // observed: $D256 (a bitmap)
 ;
-; @label:$E2C1=masked_sprite_plotter_16_wide_case_1_height_iters
+@ $E2C1 label=masked_sprite_plotter_16_wide_case_1_height_iters
   $E2C1 B = 32; // iterations // height? // self modified
   $E2C3 do <% bm0 = *bitmapptr++; // D
   $E2C5   bm1 = *bitmapptr++; // E
@@ -10711,11 +10711,11 @@ D $E2A2 Looks like it plots a two byte-wide sprite with mask into a three byte-w
 ; incremented by four each step, like a supertile wide thing.
   $E2D5   foremaskptr = foreground_mask_pointer;  // observed: $8100 (mask buffer)
 ;
-D $E2D8 Shift mask.
+N $E2D8 Shift mask.
 ;
   $E2D8   mask2 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
   $E2DA   carry = 1; // mask OFF
-; @label:$E2DB=masked_sprite_plotter_16_wide_case_1_jump0
+@ $E2DB label=masked_sprite_plotter_16_wide_case_1_jump0
   $E2DB   goto $E2DD; // self modified // jump table
 ; RR = 9-bit rotation to the right
   $E2DD   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
@@ -10728,11 +10728,11 @@ D $E2D8 Shift mask.
   $E2EB   RR mask1
   $E2ED   RR mask2
 ;
-D $E2EF Shift bitmap.
+N $E2EF Shift bitmap.
 ;
   $E2EF   bm2 = 0; // all bits clear => pixels OFF
   $E2F2   A &= A; // I do not grok this. Setting carry flag?
-; @label:$E2F3=masked_sprite_plotter_16_wide_case_1_jump1
+@ $E2F3 label=masked_sprite_plotter_16_wide_case_1_jump1
   $E2F3   goto $E2F5; // self modified // jump table
   $E2F5   SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
   $E2F7   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
@@ -10744,28 +10744,28 @@ D $E2EF Shift bitmap.
   $E303   RR bm1
   $E305   RR bm2
 ;
-D $E307 Plot, using foreground mask.
+N $E307 Plot, using foreground mask.
 ;
-; @nowarn:$E307
+@ $E307 nowarn
   $E307   screenptr = ($81A2);
   $E30A   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E317   foremaskptr++;
 ;
-; @label:$E319=masked_sprite_plotter_16_wide_case_1_enable0
+@ $E319 label=masked_sprite_plotter_16_wide_case_1_enable0
   $E319   *screenptr++ = A; // entry point jump0
   $E31B   A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
   $E328   foremaskptr++;
 ;
-; @label:$E32A=masked_sprite_plotter_16_wide_case_1_enable2
+@ $E32A label=masked_sprite_plotter_16_wide_case_1_enable2
   $E32A   *screenptr++ = A; // entry point jump2
   $E32C   A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
   $E339   foremaskptr += 2;
   $E33B   foreground_mask_pointer = foremaskptr;
 ;
-; @label:$E340=masked_sprite_plotter_16_wide_case_1_enable4
+@ $E340 label=masked_sprite_plotter_16_wide_case_1_enable4
   $E340   *screenptr = A; // entry point jump4
   $E341   screenptr += 22; // stride (24 - 2)
-; @nowarn:$E345
+@ $E345 nowarn
   $E345   ($81A2) = screenptr;
   $E348 %> while (--B);
   $E34D return;
@@ -10773,7 +10773,7 @@ D $E307 Plot, using foreground mask.
 ; ------------------------------------------------------------------------------
 
 c $E34E masked_sprite_plotter_16_wide_case_2
-; @label:$E34E=masked_sprite_plotter_16_wide_case_2
+@ $E34E label=masked_sprite_plotter_16_wide_case_2
 D $E34E Sprite plotter. Used for characters and objects.
 D $E34E Similar variant to above routine.
   $E34E A = (A - 4) * 6; // jump table offset
@@ -10782,7 +10782,7 @@ D $E34E Similar variant to above routine.
   $E35A maskptr = mask_pointer;
   $E35E bitmapptr = bitmap_pointer;
 ;
-; @label:$E362=masked_sprite_plotter_16_wide_case_2_height_iters
+@ $E362 label=masked_sprite_plotter_16_wide_case_2_height_iters
   $E362 B = 32; // iterations // height? // self modified
   $E364 do <% bm1 = *bitmapptr++; // numbering of the masks ... unsure
   $E366   bm2 = *bitmapptr++;
@@ -10791,11 +10791,11 @@ D $E34E Similar variant to above routine.
   $E36E   if (flip_sprite & (1<<7)) flip_16_masked_pixels();
   $E376   foremaskptr = foreground_mask_pointer;
 ;
-D $E379   Shift mask.
+N $E379   Shift mask.
 ;
   $E379   mask0 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
   $E37B   carry = 1; // mask OFF
-; @label:$E37C=masked_sprite_plotter_16_wide_case_2_jump0
+@ $E37C label=masked_sprite_plotter_16_wide_case_2_jump0
   $E37C   goto $E37E; // self modified // jump table
 ; RL = 9-bit rotation to the left
   $E37E   RL mask2 // 0 // new_carry = mask2 >> 7; mask2 = (mask2 << 1) | (carry << 0); carry = new_carry;
@@ -10811,10 +10811,10 @@ D $E379   Shift mask.
   $E392   RL mask1
   $E394   RL mask0
 ;
-D $E396 Shift bitmap.
+N $E396 Shift bitmap.
 ;
   $E396   bm0 = 0; // all bits clear => pixels OFF
-; @label:$E399=masked_sprite_plotter_16_wide_case_2_jump1
+@ $E399 label=masked_sprite_plotter_16_wide_case_2_jump1
   $E399   goto $E39B; // self modified // jump table
   $E39B   SLA bm2 // 0 // carry = bm2 >> 7; bm2 <<= 1;
   $E39D   RL bm1       // new_carry = bm1 >> 7; bm1 = (bm1 << 1) | (carry << 0); carry = new_carry;
@@ -10829,28 +10829,28 @@ D $E396 Shift bitmap.
   $E3AF   RL bm1
   $E3B1   RL bm0
 ;
-D $E3B3 Plot, using foreground mask.
+N $E3B3 Plot, using foreground mask.
 ;
-; @nowarn:$E3B3
+@ $E3B3 nowarn
   $E3B3   screenptr = ($81A2);
   $E3B6   A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
   $E3C3   foremaskptr++;
 ;
-; @label:$E3C5=masked_sprite_plotter_16_wide_case_2_enable1
+@ $E3C5 label=masked_sprite_plotter_16_wide_case_2_enable1
   $E3C5   *screenptr++ = A; // entry point jump1
   $E3C7   A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
   $E3D4   foremaskptr++;
 ;
-; @label:$E3D6=masked_sprite_plotter_16_wide_case_2_enable3
+@ $E3D6 label=masked_sprite_plotter_16_wide_case_2_enable3
   $E3D6   *screenptr++ = A; // entry point jump3
   $E3D8   A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
   $E3E5   foremaskptr += 2;
   $E3E7   foreground_mask_pointer = foremaskptr;
 ;
-; @label:$E3EC=masked_sprite_plotter_16_wide_case_2_enable5
+@ $E3EC label=masked_sprite_plotter_16_wide_case_2_enable5
   $E3EC   *screenptr = A; // entry point jump5
   $E3ED   screenptr += 22; // stride (24 - 2)
-; @nowarn:$E3F1
+@ $E3F1 nowarn
   $E3F1   ($81A2) = screenptr;
   $E3F4 %> while (--B);
   $E3F9 return;
@@ -10858,7 +10858,7 @@ D $E3B3 Plot, using foreground mask.
 ; ------------------------------------------------------------------------------
 
 c $E3FA flip_24_masked_pixels
-; @label:$E3FA=flip_24_masked_pixels
+@ $E3FA label=flip_24_masked_pixels
 D $E3FA Takes the 24 pixels in E,C,B and reverses them bitwise.
 D $E3FA Does the same for the mask pixels in E',C',B'.
 ; Simultaneously:
@@ -10880,7 +10880,7 @@ D $E3FA Roll the bitmap.
   $E401 L = C;     // HL = (HL & 0xFF00) | (BC & 0xFF);
   $E402 C = *HL;   // BC = (BC & 0xFF00) | *HL;
   $E403 -
-D $E404 Roll the mask.
+N $E404 Roll the mask.
   $E404 Hdash = 0x7F;
   $E406 Ldash = Edash;
   $E407 Edash = Bdash;
@@ -10895,7 +10895,7 @@ D $E404 Roll the mask.
 ; ------------------------------------------------------------------------------
 
 c $E40F flip_16_masked_pixels
-; @label:$E40F=flip_16_masked_pixels
+@ $E40F label=flip_16_masked_pixels
 D $E40F Takes the 16 pixels in D,E and reverses them bitwise.
 D $E40F Does the same for the mask pixels in D',E'.
 R $E40F I:DE 16 pixels to reverse.
@@ -10909,7 +10909,7 @@ D $E40F Roll the bitmap.
   $E415 D = *HL;   // DE = (*HL << 8) | (DE & 0x00FF);
   $E416 -
 ; 'dash' is assigned here relative to the register state on entry
-D $E417 Roll the mask.
+N $E417 Roll the mask.
   $E417 Hdash = 0x7F;
   $E419 Ldash = Ddash;
   $E41A Ddash = Edash;
@@ -10922,7 +10922,7 @@ D $E417 Roll the mask.
 ; ------------------------------------------------------------------------------
 
 c $E420 setup_vischar_plotting
-; @label:$E420=setup_vischar_plotting
+@ $E420 label=setup_vischar_plotting
 D $E420 Sets sprites up for plotting.
 R $E420 I:HL Pointer to ? // observed: always the same as IY
 R $E420 I:IY Pointer to ? // observed: $8000+
@@ -10999,7 +10999,7 @@ R $E420 I:IY Pointer to ? // observed: $8000+
   $E4BC POP HLdash
   $E4BD Cdash = Adash;
   $E4BE -
-; @label:$E4BF=setup_vischar_plotting_enables_iters
+@ $E4BF label=setup_vischar_plotting_enables_iters
   $E4BF Bdash = 3; // 3 iterations // self modified by $E4A9
   $E4C1 do <% Edash = *HLdash++;
   $E4C3   Ddash = *HLdash++;
@@ -11026,9 +11026,9 @@ R $E420 I:IY Pointer to ? // observed: $8000+
   $E4F5 HL = map_position_related_1 - (map_position & 0xFF); // ie. low byte of map_position
   $E4FF if (HL < 0) H = 0xFF;
   $E503 HL += DE + 0xF290; // screen buffer start address
-; @nowarn:$E508
+@ $E508 nowarn
   $E508 ($81A2) = HL;
-; @nowarn:$E50B
+@ $E50B nowarn
   $E50B HL = 0x8100;
   $E50E POP DE
   $E50F PUSH DE
@@ -11050,7 +11050,7 @@ R $E420 I:IY Pointer to ? // observed: $8000+
 ; ------------------------------------------------------------------------------
 
 c $E542 pos_to_tinypos
-; @label:$E542=pos_to_tinypos
+@ $E542 label=pos_to_tinypos
 D $E542 Scale down a pos_t and assign result to a tinypos_t.
 D $E542 Divides the three input 16-bit words by 8, with rounding to nearest, storing the result as bytes.
 R $E542 I:HL Pointer to input words
@@ -11066,7 +11066,7 @@ R $E542 O:DE Updated.
   $E54F return;
 
 c $E550 divide_by_8_with_rounding
-; @label:$E550=divide_by_8_with_rounding
+@ $E550 label=divide_by_8_with_rounding
 D $E550 Divides AC by 8, with rounding to nearest.
 R $E550 I:A Low.
 R $E550 I:C High.
@@ -11077,7 +11077,7 @@ R $E550 O:A Result.
 ; fallthrough
 
 c $E555 divide_by_8
-; @label:$E555=divide_by_8
+@ $E555 label=divide_by_8
 D $E555 Divides AC by 8.
   $E555 A = (A >> 3) | (C << 5); C >>= 3;
   $E55E return;
@@ -11085,84 +11085,84 @@ D $E555 Divides AC by 8.
 ; ------------------------------------------------------------------------------
 
 b $E55F outdoors_mask
-; @label:$E55F=outdoors_mask
+@ $E55F label=outdoors_mask
 D $E55F { byte count+flags; ... }
   $E55F outdoors_mask_0
-; @label:$E55F=outdoors_mask_0
+@ $E55F label=outdoors_mask_0
   $E5FF outdoors_mask_1
-; @label:$E5FF=outdoors_mask_1
+@ $E5FF label=outdoors_mask_1
   $E61E outdoors_mask_2
-; @label:$E61E=outdoors_mask_2
+@ $E61E label=outdoors_mask_2
   $E6CA outdoors_mask_3
-; @label:$E6CA=outdoors_mask_3
+@ $E6CA label=outdoors_mask_3
   $E74B outdoors_mask_4
-; @label:$E74B=outdoors_mask_4
+@ $E74B label=outdoors_mask_4
   $E758 outdoors_mask_5
-; @label:$E758=outdoors_mask_5
+@ $E758 label=outdoors_mask_5
   $E77F outdoors_mask_6
-; @label:$E77F=outdoors_mask_6
+@ $E77F label=outdoors_mask_6
   $E796 outdoors_mask_7
-; @label:$E796=outdoors_mask_7
+@ $E796 label=outdoors_mask_7
   $E7AF outdoors_mask_8
-; @label:$E7AF=outdoors_mask_8
+@ $E7AF label=outdoors_mask_8
   $E85C outdoors_mask_9
-; @label:$E85C=outdoors_mask_9
+@ $E85C label=outdoors_mask_9
   $E8A3 outdoors_mask_10
-; @label:$E8A3=outdoors_mask_10
+@ $E8A3 label=outdoors_mask_10
   $E8F0 outdoors_mask_11
-; @label:$E8F0=outdoors_mask_11
+@ $E8F0 label=outdoors_mask_11
   $E92F outdoors_mask_12
-; @label:$E92F=outdoors_mask_12
+@ $E92F label=outdoors_mask_12
   $E940 outdoors_mask_13
-; @label:$E940=outdoors_mask_13
+@ $E940 label=outdoors_mask_13
   $E972 outdoors_mask_14
-; @label:$E972=outdoors_mask_14
+@ $E972 label=outdoors_mask_14
   $E99A outdoors_mask_15
-; @label:$E99A=outdoors_mask_15
+@ $E99A label=outdoors_mask_15
   $E99F outdoors_mask_16
-; @label:$E99F=outdoors_mask_16
+@ $E99F label=outdoors_mask_16
   $E9B9 outdoors_mask_17
-; @label:$E9B9=outdoors_mask_17
+@ $E9B9 label=outdoors_mask_17
   $E9C6 outdoors_mask_18
-; @label:$E9C6=outdoors_mask_18
+@ $E9C6 label=outdoors_mask_18
   $E9CB outdoors_mask_19
-; @label:$E9CB=outdoors_mask_19
+@ $E9CB label=outdoors_mask_19
   $E9E6 outdoors_mask_20
-; @label:$E9E6=outdoors_mask_20
+@ $E9E6 label=outdoors_mask_20
   $E9F5 outdoors_mask_21
-; @label:$E9F5=outdoors_mask_21
+@ $E9F5 label=outdoors_mask_21
   $EA0E outdoors_mask_22
-; @label:$EA0E=outdoors_mask_22
+@ $EA0E label=outdoors_mask_22
   $EA2B outdoors_mask_23
-; @label:$EA2B=outdoors_mask_23
+@ $EA2B label=outdoors_mask_23
   $EA35 outdoors_mask_24
-; @label:$EA35=outdoors_mask_24
+@ $EA35 label=outdoors_mask_24
   $EA43 outdoors_mask_25
-; @label:$EA43=outdoors_mask_25
+@ $EA43 label=outdoors_mask_25
   $EA4A outdoors_mask_26
-; @label:$EA4A=outdoors_mask_26
+@ $EA4A label=outdoors_mask_26
   $EA53 outdoors_mask_27
-; @label:$EA53=outdoors_mask_27
+@ $EA53 label=outdoors_mask_27
   $EA5D outdoors_mask_28
-; @label:$EA5D=outdoors_mask_28
+@ $EA5D label=outdoors_mask_28
   $EA67 outdoors_mask_29
-; @label:$EA67=outdoors_mask_29
+@ $EA67 label=outdoors_mask_29
 
 ; ------------------------------------------------------------------------------
 
 b $EA7C stru_EA7C
-; @label:$EA7C=stru_EA7C
+@ $EA7C label=stru_EA7C
 D $EA7C 47 7-byte structs.
   $EA7C,329,7 Elements.
 
 ; ------------------------------------------------------------------------------
 
 w $EBC5 exterior_mask_data_pointers
-; @label:$EBC5=exterior_mask_data_pointers
+@ $EBC5 label=exterior_mask_data_pointers
 D $EBC5 30 pointers to byte arrays -- probably masks.
 
 b $EC01 exterior_mask_data
-; @label:$EC01=exterior_mask_data
+@ $EC01 label=exterior_mask_data
 D $EC01 58 8-byte structs.
 D $EC01 Used by mask_stuff. Used in outdoor mode only.
 D $EC01 struct { ?, lo, hi, lo, hi, ?, ?, ? };
@@ -11171,23 +11171,23 @@ D $EC01 struct { ?, lo, hi, lo, hi, ?, ?, ? };
 
 g $EDD1 Saved stack pointer.
 W $EDD1 saved_sp
-; @label:$EDD1=saved_sp
+@ $EDD1 label=saved_sp
 D $EDD1 Used by plot_game_window and wipe_game_window.
 
 ; ------------------------------------------------------------------------------
 
 w $EDD3 game_window_start_addresses
-; @label:$EDD3=game_window_start_addresses
+@ $EDD3 label=game_window_start_addresses
 D $EDD3 128 screen pointers.
 
 ; ------------------------------------------------------------------------------
 
 c $EED3 plot_game_window
-; @label:$EED3=plot_game_window
+@ $EED3 label=plot_game_window
   $EED3 saved_sp = SP;
   $EED7 A = *(&plot_game_window_x + 1);
   $EEDA if (A) goto unaligned;
-; @nowarn:$EEDE
+@ $EEDE nowarn
   $EEDE HL = $F291 + plot_game_window_x;
   $EEE9 SP = game_window_start_addresses;
   $EEEC A = 128; // 128 rows
@@ -11276,20 +11276,20 @@ c $EED3 plot_game_window
 ; ------------------------------------------------------------------------------
 
 c $EF9A event_roll_call
-; @label:$EF9A=event_roll_call
+@ $EF9A label=event_roll_call
 D $EF9A Is the hero within the roll call area bounds?
 D $EF9A Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
-; @keep:$EF9A
+@ $EF9A keep
   $EF9A DE = map_ROLL_CALL_X;
   $EF9D HL = &hero_map_position.y;
   $EFA0 B = 2; // iterations
   $EFA2 do <% A = *HL++;
   $EFA3   if (A < D || A >= E) goto not_at_roll_call;
-; @keep:$EFAA
+@ $EFAA keep
   $EFAA   DE = map_ROLL_CALL_Y;
   $EFAD %> while (--B);
-D $EFAF All visible characters turn forward.
-; @nowarn:$EFAF
+N $EFAF All visible characters turn forward.
+@ $EFAF nowarn
   $EFAF HL = $800D;
   $EFB2 B = 8; // iterations
   $EFB4 do <% *HL++ = 0x80; // movement
@@ -11310,36 +11310,36 @@ D $EFAF All visible characters turn forward.
 ; I NEVER KNEW THAT!
 
 c $EFCB action_papers
-; @label:$EFCB=action_papers
+@ $EFCB label=action_papers
 D $EFCB Is the hero within the main gate bounds?
 D $EFCB Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
-; @keep:$EFCB
+@ $EFCB keep
   $EFCB DE = map_MAIN_GATE_X;
   $EFCE HL = &hero_map_position.y;
   $EFD1 B = 2; // iterations
   $EFD3 do <% A = *HL++;
   $EFD4   if (A < D || A >= E) return;
-; @keep:$EFD9
+@ $EFD9 keep
   $EFD9   DE = map_MAIN_GATE_Y;
   $EFDC %> while (--B);
-D $EFDE Using the papers at the main gate when not in uniform causes the hero to be sent to solitary.
+N $EFDE Using the papers at the main gate when not in uniform causes the hero to be sent to solitary.
   $EFDE if ($8015 != sprite_guard_tl_4) goto solitary; // exit via
   $EFE8 increase_morale_by_10_score_by_50();
   $EFEB $801C = room_0_outdoors; // set room index
-D $EFEF Transition to outside the main gate.
-; @nowarn:$EFEF
+N $EFEF Transition to outside the main gate.
+@ $EFEF nowarn
   $EFEF HL = &word_EFF9; // pointer to location
   $EFF2 IY = $8000; // hero character
   $EFF6 transition(); return; // doesn't return: exits with goto main_loop
 ;
-D $EFF9 Position outside the main gate.
-; @label:$EFF9=word_EFF9
+N $EFF9 Position outside the main gate.
+@ $EFF9 label=word_EFF9
 B $EFF9,3 static const tinypos_t outside_main_gate = <% 0xD6, 0x8A, 0x06 %>;
 
 ; ------------------------------------------------------------------------------
 
 c $EFFC user_confirm
-; @label:$EFFC=user_confirm
+@ $EFFC label=user_confirm
 D $EFFC Waits for the user to press Y or N.
 R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
   $EFFC HL = &screenlocstring_confirm_y_or_n[0];
@@ -11364,19 +11364,19 @@ D $F014 "CONFIRM. Y OR N"
 t $F026 more_messages
 D $F026 More messages.
 D $F026 "HE TAKES THE BRIBE"
-; @label:$F026=more_messages_he_takes_the_bribe
+@ $F026 label=more_messages_he_takes_the_bribe
   $F026 #HTML[#CALL:decode_stringFF($F026)]
-D $F039 "AND ACTS AS DECOY"
-; @label:$F039=more_messages_and_acts_as_decoy
+N $F039 "AND ACTS AS DECOY"
+@ $F039 label=more_messages_and_acts_as_decoy
   $F039 #HTML[#CALL:decode_stringFF($F039)]
-D $F04B "ANOTHER DAY DAWNS"
-; @label:$F04B=more_messages_another_day_dawns
+N $F04B "ANOTHER DAY DAWNS"
+@ $F04B label=more_messages_another_day_dawns
   $F04B #HTML[#CALL:decode_stringFF($F04B)]
 
 ; ------------------------------------------------------------------------------
 
 b $F05D gates_and_doors
-; @label:$F05D=gates_and_doors
+@ $F05D label=gates_and_doors
   $F05D,2 gates_flags
   $F05F,7 door_flags
   $F066,2 unknown
@@ -11384,81 +11384,81 @@ b $F05D gates_and_doors
 ; ------------------------------------------------------------------------------
 
 c $F068 jump_to_main
-; @label:$F068=jump_to_main
+@ $F068 label=jump_to_main
 
 ; ------------------------------------------------------------------------------
 
 g $F06B User-defined keys.
 D $F06B Pairs of (port, key mask).
 B $F06B keydefs
-; @label:$F06B=keydefs
+@ $F06B label=keydefs
 
 ; ------------------------------------------------------------------------------
 
 g $F075 Static tiles plot direction.
 D $F445 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Horizontal } { 255 | Vertical } TABLE#
 B $F075 static_tiles_plot_direction
-; @label:$F075=static_tiles_plot_direction
+@ $F075 label=static_tiles_plot_direction
 
 ; ------------------------------------------------------------------------------
 
 b $F076 static_graphic_defs
-; @label:$F076=static_graphic_defs
+@ $F076 label=static_graphic_defs
 D $F076 Definitions of fixed graphic elements.
 D $F076 Only used by #R$F1E0.
 D $F076 struct: w(addr), flags+length, attrs[length]
   $F076 statics_flagpole
-; @label:$F076=statics_flagpole
+@ $F076 label=statics_flagpole
   $F08D statics_game_window_left_border
-; @label:$F08D=statics_game_window_left_border
+@ $F08D label=statics_game_window_left_border
   $F0A4 statics_game_window_right_border
-; @label:$F0A4=statics_game_window_right_border
+@ $F0A4 label=statics_game_window_right_border
   $F0BB statics_game_window_top_border
-; @label:$F0BB=statics_game_window_top_border
+@ $F0BB label=statics_game_window_top_border
   $F0D5 statics_game_window_bottom
-; @label:$F0D5=statics_game_window_bottom
+@ $F0D5 label=statics_game_window_bottom
   $F0EF statics_flagpole_grass
-; @label:$F0EF=statics_flagpole_grass
+@ $F0EF label=statics_flagpole_grass
   $F0F7 statics_medals_row0
-; @label:$F0F7=statics_medals_row0
+@ $F0F7 label=statics_medals_row0
   $F107 statics_medals_row1
-; @label:$F107=statics_medals_row1
+@ $F107 label=statics_medals_row1
   $F115 statics_medals_row2
-; @label:$F115=statics_medals_row2
+@ $F115 label=statics_medals_row2
   $F123 statics_medals_row3
-; @label:$F123=statics_medals_row3
+@ $F123 label=statics_medals_row3
   $F131 statics_medals_row4
-; @label:$F131=statics_medals_row4
+@ $F131 label=statics_medals_row4
   $F13E statics_bell_row0
-; @label:$F13E=statics_bell_row0
+@ $F13E label=statics_bell_row0
   $F144 statics_bell_row1
-; @label:$F144=statics_bell_row1
+@ $F144 label=statics_bell_row1
   $F14A statics_bell_row2
-; @label:$F14A=statics_bell_row2
+@ $F14A label=statics_bell_row2
   $F14F statics_corner_tl
-; @label:$F14F=statics_corner_tl
+@ $F14F label=statics_corner_tl
   $F154 statics_corner_tr
-; @label:$F154=statics_corner_tr
+@ $F154 label=statics_corner_tr
   $F159 statics_corner_bl
-; @label:$F159=statics_corner_bl
+@ $F159 label=statics_corner_bl
   $F15E statics_corner_br
-; @label:$F15E=statics_corner_br
+@ $F15E label=statics_corner_br
 
 ; ------------------------------------------------------------------------------
 
 c $F163 main
-; @label:$F163=main
+@ $F163 label=main
 D $F163 Main.
 D $F163 Disable interrupts and set up stack pointer.
   $F163 -
-D $F167 Set up screen.
+N $F167 Set up screen.
   $F167 wipe_full_screen_and_attributes();
   $F16A set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
   $F16F set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);
   $F174 plot_statics_and_menu_text();
   $F177 plot_score();
   $F17A menu_screen();
-D $F17D Construct a table of 256 bit-reversed bytes at 0x7F00.
+N $F17D Construct a table of 256 bit-reversed bytes at 0x7F00.
   $F17D HL = 0x7F00;
   $F180 do <% A = L;
   $F181   C = 0;
@@ -11468,7 +11468,7 @@ D $F17D Construct a table of 256 bit-reversed bytes at 0x7F00.
   $F188   %> while (--B);
   $F18A   *HL++ = C;
   $F18F %> while ((HL & 0xFF) != 0);
-D $F190 Initialise visible characters (HL is $8000).
+N $F190 Initialise visible characters (HL is $8000).
   $F190 DE = &vischar_initial;
   $F193 B = 8; // iterations
   $F195 do <% -
@@ -11478,9 +11478,9 @@ D $F190 Initialise visible characters (HL is $8000).
   $F19F   HL += 32;
   $F1A3   -
   $F1A4 %> while (--B);
-D $F1A7 Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
+N $F1A7 Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
   $F1A7 B = 7; // iterations
-; @nowarn:$F1A9
+@ $F1A9 nowarn
   $F1A9 HL = 0x8020; // iterate over non-player characters
   $F1AC -
   $F1AF -
@@ -11488,15 +11488,15 @@ D $F1A7 Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
   $F1B3   HL[1] = 0xFF; // flags
   $F1B4   HL += 32;
   $F1B5 %> while (--B);
-D $F1B7 Zero 0x118 bytes at HL (== $8100) onwards.
-D $F1B7 This is likely wiping everything up until the start of tiles ($8218).
+N $F1B7 Zero 0x118 bytes at HL (== $8100) onwards.
+N $F1B7 This is likely wiping everything up until the start of tiles ($8218).
   $F1B7 BC = 0x118;
   $F1BA do <% *HL++ = 0; %> while (--BC != 0); // turn into memset
   $F1C3 reset_game();
   $F1C6 goto main_loop_setup;
 
 b $F1C9 vischar_initial
-; @label:$F1C9=vischar_initial
+@ $F1C9 label=vischar_initial
 D $F1C9 Initial state of a visible character.
 B $F1C9 character
 B $F1CA flags
@@ -11514,12 +11514,12 @@ W $F1DE mi.spriteset
 ; ------------------------------------------------------------------------------
 
 c $F1E0 plot_statics_and_menu_text
-; @label:$F1E0=plot_statics_and_menu_text
+@ $F1E0 label=plot_statics_and_menu_text
 D $F1E0 Plot statics and menu text.
   $F1E0 HL = &static_graphic_defs[0];
   $F1E3 B = NELEMS(static_graphic_defs); // 18 iterations
   $F1E5 do <% PUSH BC
-D $F1E6 Fetch screen address.
+N $F1E6 Fetch screen address.
   $F1E6   E = *HL++;
   $F1E8   D = *HL++;
   $F1EA   if (*HL & statictiles_VERTICAL)
@@ -11528,7 +11528,7 @@ D $F1E6 Fetch screen address.
   $F1F3     plot_static_tiles_horizontal();
   $F1F6   POP BC
   $F1F7 %> while (--B);
-D $F1F9 Plot menu text.
+N $F1F9 Plot menu text.
   $F1F9 B = 8; // 8 iterations
   $F1FB HL = &key_choice_screenlocstrings;
   $F1FE do <% PUSH BC
@@ -11540,7 +11540,7 @@ D $F1F9 Plot menu text.
 ; ------------------------------------------------------------------------------
 
 c $F206 plot_static_tiles_horizontal
-; @label:$F206=plot_static_tiles_horizontal
+@ $F206 label=plot_static_tiles_horizontal
 D $F206 Plot static screen tiles horizontally.
 R $F206 I:DE Pointer to screen address.
 R $F206 I:HL Pointer to tile indices.
@@ -11560,13 +11560,13 @@ R $F206 I:HL Pointer to tile indices.
   $F218   -
   $F219   HLdash = &static_tiles[A]; // elements: 9 bytes each
   $F227   Bdash = 8; // 8 iterations
-D $F229 Plot a tile.
+N $F229 Plot a tile.
   $F229   do <% *DEdash = *HLdash++;
   $F22B     DEdash += 256; // next row
   $F22D   %> while (--Bdash);
   $F22F   DEdash -= 256;
   $F230   PUSH DEdash
-D $F231 Calculate screen attribute address of tile.
+N $F231 Calculate screen attribute address of tile.
   $F231   A = Ddash;
   $F232   Ddash = 0x58; // screen attributes base
   $F234   if (A >= 0x48) DEdash += 256;
@@ -11588,7 +11588,7 @@ D $F231 Calculate screen attribute address of tile.
 ; ------------------------------------------------------------------------------
 
 c $F257 wipe_full_screen_and_attributes
-; @label:$F257=wipe_full_screen_and_attributes
+@ $F257 label=wipe_full_screen_and_attributes
   $F257 memset(screen, 0, 0x1800);
   $F265 memset(atttributes, attribute_WHITE_OVER_BLACK, 0x300);
   $F26D border = 0; // black
@@ -11597,7 +11597,7 @@ c $F257 wipe_full_screen_and_attributes
 ; ------------------------------------------------------------------------------
 
 c $F271 check_menu_keys
-; @label:$F271=check_menu_keys
+@ $F271 label=check_menu_keys
 D $F271 Menu screen key handling.
 D $F271 Scan for a keypress which either starts the game or selects an input device. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
 D $F271 If the game is started then copy the input routine to $F075. If the chosen input device is keyboard, then exit via choose_keys.
@@ -11612,9 +11612,9 @@ D $F271 If the game is started then copy the input routine to $F075. If the chos
   $F285   chosen_input_device = A;
   $F288   set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);
   $F28D   return; %>
-D $F28E Zero pressed to start game.
+N $F28E Zero pressed to start game.
   $F28E else <% A = chosen_input_device;
-D $F292 This is tricky. A' is left with the low byte of the inputroutine address. In the case of the keyboard, it's zero. choose_keys relies on that in a nonobvious way.
+N $F292 This is tricky. A' is left with the low byte of the inputroutine address. In the case of the keyboard, it's zero. choose_keys relies on that in a nonobvious way.
   $F292   memcpy($F075, inputroutine[A], 0x4A); // copy input routine to $F075, length 0x4A
   $F2A7   if (A == inputdevice_KEYBOARD) { choose_keys(); }
   $F2AB   /* Discard previous frame and resume at main:$F17D. */
@@ -11626,26 +11626,26 @@ t $F2AD define_key_prompts
 D $F2AD Key choice prompt strings.
 D $F2AD "CHOOSE KEYS"
   $F2AD #HTML[#CALL:decode_screenlocstring($F2AD)]
-D $F2BB "LEFT."
+N $F2BB "LEFT."
   $F2BB #HTML[#CALL:decode_screenlocstring($F2BB)]
-D $F2C3 "RIGHT."
+N $F2C3 "RIGHT."
   $F2C3 #HTML[#CALL:decode_screenlocstring($F2C3)]
-D $F2CC "UP."
+N $F2CC "UP."
   $F2CC #HTML[#CALL:decode_screenlocstring($F2CC)]
-D $F2D2 "DOWN."
+N $F2D2 "DOWN."
   $F2D2 #HTML[#CALL:decode_screenlocstring($F2D2)]
-D $F2DA "FIRE."
+N $F2DA "FIRE."
   $F2DA #HTML[#CALL:decode_screenlocstring($F2DA)]
 
 ; ------------------------------------------------------------------------------
 
 b $F2E1 byte_F2E1
-; @label:$F2E1=byte_F2E1
+@ $F2E1 label=byte_F2E1
 D $F2E1 Unsure if anything reads this byte for real, but its address is taken prior to accessing keyboard_port_hi_bytes.
 D $F2E1 (<- choose_keys)
 
 b $F2E2 keyboard_port_hi_bytes
-; @label:$F2E2=keyboard_port_hi_bytes
+@ $F2E2 label=keyboard_port_hi_bytes
 D $F2E2 Zero terminated.
 D $F2E2 (<- choose_keys)
 
@@ -11657,17 +11657,17 @@ t $F2EB counted_strings
 D $F2EB Counted strings (encoded to match font; first byte is count).
 D $F2EB "ENTER"
   $F2EB #HTML[#CALL:decode_stringcounted($F2EB)]
-D $F2F1 "CAPS"
+N $F2F1 "CAPS"
   $F2F1 #HTML[#CALL:decode_stringcounted($F2F1)]
-D $F2F6 "SYMBOL"
+N $F2F6 "SYMBOL"
   $F2F6 #HTML[#CALL:decode_stringcounted($F2F6)]
-D $F2FD "SPACE"
+N $F2FD "SPACE"
   $F2FD #HTML[#CALL:decode_stringcounted($F2FD)]
 
 ; ------------------------------------------------------------------------------
 
 b $F303 key_tables
-; @label:$F303=key_tables
+@ $F303 label=key_tables
 D $F303 Five bytes each.
 B $F303 table_12345
 B $F308 table_09876
@@ -11681,13 +11681,13 @@ B $F326 table_SPACESYMSHFTMNB
 ; ------------------------------------------------------------------------------
 
 w $F32B key_name_screen_addrs
-; @label:$F32B=key_name_screen_addrs
+@ $F32B label=key_name_screen_addrs
 D $F32B Screen addresses of chosen key names (5 long).
 
 ; ------------------------------------------------------------------------------
 
 c $F335 wipe_game_window
-; @label:$F335=wipe_game_window
+@ $F335 label=wipe_game_window
 D $F335 Wipe the game window.
   $F335 DI
   $F336 saved_sp = SP;
@@ -11705,10 +11705,10 @@ D $F335 Wipe the game window.
 ; ------------------------------------------------------------------------------
 
 c $F350 choose_keys
-; @label:$F350=choose_keys
+@ $F350 label=choose_keys
   $F350 for (;;) <% wipe_game_window();
   $F353   set_game_window_attributes(attribute_WHITE_OVER_BLACK);
-D $F358 Draw key choice prompt strings.
+N $F358 Draw key choice prompt strings.
   $F358   B = 6; // iterations
   $F35A   HL = &define_key_prompts[0];
   $F35D   do <% PUSH BC
@@ -11723,7 +11723,7 @@ D $F358 Draw key choice prompt strings.
   $F36B     %> while (--B);
   $F36D     POP BC
   $F36E   %> while (--B);
-D $F370 Wipe keydefs.
+N $F370 Wipe keydefs.
   $F370   HL = &keydefs[0];
   $F373   B = 10; // iterations
   $F375   A = 0;
@@ -11772,12 +11772,12 @@ D $F370 Wipe keydefs.
   $F3BB       if (A != C) goto $F3B1;
   $F3BE     %>
 
-D $F3C1 Assign key def.
+N $F3C1 Assign key def.
   $F3C1     *HL++ = B;
   $F3C3     *HL = C;
   $F3C4     -
   $F3C5     A *= 5;
-; @nowarn:$F3C9
+@ $F3C9 nowarn
   $F3C9     HL = 0xF302;  // &key_tables[0] - 1 byte + A // strange: off by one
   $F3CC     HL += A;
 ;
@@ -11802,10 +11802,10 @@ D $F3C1 Assign key def.
   $F3F4     POP HL
   $F3F5     POP BC
   $F3F6   %> while (--B);
-D $F3F9 Delay loop.
+N $F3F9 Delay loop.
   $F3F9   BC = 0xFFFF;
   $F3FC   while (--BC);
-D $F401 Wait for user's input.
+N $F401 Wait for user's input.
   $F401   user_confirm();
   $F404   if (Z) return; // confirmed
   $F405 %>
@@ -11813,16 +11813,16 @@ D $F401 Wait for user's input.
 ; ------------------------------------------------------------------------------
 
 c $F408 set_menu_item_attributes
-; @label:$F408=set_menu_item_attributes
+@ $F408 label=set_menu_item_attributes
 D $F408 Set the screen attributes of the specified menu item.
 R $F408 I:A Item index.
 R $F408 I:E Attributes.
   $F408 HL = 0x590D; // initial screen attribute address
-D $F40B Skip to the item's row.
+N $F40B Skip to the item's row.
   $F40B if (A) <%
   $F40E   B = A;
   $F40F   do <% L += 32 * 2; %> while (--B); %> // skip two rows per iteration
-D $F415 Draw.
+N $F415 Draw.
   $F415 B = 10;
   $F417 do <% *HL++ = E; %> while (--B);
   $F41B return;
@@ -11830,7 +11830,7 @@ D $F415 Draw.
 ; ------------------------------------------------------------------------------
 
 c $F41C menu_keyscan
-; @label:$F41C=menu_keyscan
+@ $F41C label=menu_keyscan
 D $F41C Scan for keys to select an input device.
 R $F41C O:A 0/1/2/3/4 = keypress, or 255 = no keypress.
   $F41C BC = port_KEYBOARD_12345;
@@ -11856,7 +11856,7 @@ R $F41C O:A 0/1/2/3/4 = keypress, or 255 = no keypress.
 ; ------------------------------------------------------------------------------
 
 w $F43D inputroutines
-; @label:$F43D=inputroutines
+@ $F43D label=inputroutines
 D $F43D Array [4] of pointers to input routines.
   $F43D &inputroutine_keyboard,
   $F43F &inputroutine_kempston,
@@ -11868,7 +11868,7 @@ D $F43D Array [4] of pointers to input routines.
 g $F445 Chosen input device.
 D $F445 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Keyboard } { 1 | Kempston } { 2 | Sinclair } { 3 | Protek } TABLE#
 B $F445 chosen_input_device
-; @label:$F445=chosen_input_device
+@ $F445 label=chosen_input_device
 
 ; ------------------------------------------------------------------------------
 
@@ -11876,30 +11876,30 @@ t $F446 key_choice_screenlocstrings
 D $F446 Key choice screenlocstrings.
 D $F446 "CONTROLS"
   $F446 #HTML[#CALL:decode_screenlocstring($F446)]
-D $F451 "0 SELECT"
+N $F451 "0 SELECT"
   $F451 #HTML[#CALL:decode_screenlocstring($F451)]
-D $F45C "1 KEYBOARD"
+N $F45C "1 KEYBOARD"
   $F45C #HTML[#CALL:decode_screenlocstring($F45C)]
-D $F469 "2 KEMPSTON"
+N $F469 "2 KEMPSTON"
   $F469 #HTML[#CALL:decode_screenlocstring($F469)]
-D $F476 "3 SINCLAIR"
+N $F476 "3 SINCLAIR"
   $F476 #HTML[#CALL:decode_screenlocstring($F476)]
-D $F483 "4 PROTEK"
+N $F483 "4 PROTEK"
   $F483 #HTML[#CALL:decode_screenlocstring($F483)]
-D $F48E "BREAK OR CAPS AND SPACE"
+N $F48E "BREAK OR CAPS AND SPACE"
   $F48E #HTML[#CALL:decode_screenlocstring($F48E)]
-D $F4A8 "FOR NEW GAME"
+N $F4A8 "FOR NEW GAME"
   $F4A8 #HTML[#CALL:decode_screenlocstring($F4A8)]
 
 ; ------------------------------------------------------------------------------
 
 c $F4B7 menu_screen
-; @label:$F4B7=menu_screen
+@ $F4B7 label=menu_screen
 D $F4B7 Runs the menu screen.
 D $F4B7 Waits for user to select an input device, waves the morale flag and plays the title tune.
   $F4B7 for (;;) <% check_menu_keys();
   $F4BA   wave_morale_flag();
-D $F4BD Play music.
+N $F4BD Play music.
   $F4BD   HL = music_channel0_index + 1;
   $F4C1   for (;;) <% music_channel0_index = HL;
   $F4C4     A = music_channel0_data[HL];
@@ -11948,7 +11948,7 @@ D $F4BD Play music.
 ; ------------------------------------------------------------------------------
 
 c $F52C get_tuning
-; @label:$F52C=get_tuning
+@ $F52C label=get_tuning
 R $F52C I:A  Index.
 R $F52C O:BC ...
 R $F52C O:DE ...
@@ -11963,20 +11963,20 @@ R $F52C O:HL ...
 
 g $F541 Music state.
 W $F541 music_channel0_index
-; @label:$F541=music_channel0_index
+@ $F541 label=music_channel0_index
 W $F543 music_channel1_index
-; @label:$F543=music_channel1_index
+@ $F543 label=music_channel1_index
 
 u $F545 Unreferenced byte.
 B $F545 unused_F545
 
 b $F546 Music data.
 B $F546 music_channel0_data
-; @label:$F546=music_channel0_data
+@ $F546 label=music_channel0_data
 B $F7C7 music_channel1_data
-; @label:$F7C7=music_channel1_data
+@ $F7C7 label=music_channel1_data
 W $FA48 music_tuning_table
-; @label:$FA48=music_tuning_table
+@ $FA48 label=music_tuning_table
 
 ; ------------------------------------------------------------------------------
 
@@ -11986,12 +11986,12 @@ D $FDE0 Unreferenced byte.
 ; ------------------------------------------------------------------------------
 
 c $FDE1 loaded
-; @label:$FDE1=loaded
+@ $FDE1 label=loaded
 D $FDE1 Very first entry point used to shunt the game image down into its proper position.
   $FDE1 Disable interrupts.
   $FDE2 SP = 0xFFFF;
   $FDE5 memmove(0x5B00, 0x5E00, 0x9FE0);
-; @nowarn:$FDE8
+@ $FDE8 nowarn
   $FDF0 goto jump_to_main; // exit via
 
 ; ------------------------------------------------------------------------------
@@ -12006,12 +12006,12 @@ B $FDF3 unused_FDF3
 ; These are relocated to $F075 when chosen from the menu screen.
 
 c $FE00 inputroutine_keyboard
-; @label:$FE00=inputroutine_keyboard
+@ $FE00 label=inputroutine_keyboard
 D $FE00 Input routine for keyboard.
 R $FE00 O:A Input value (as per enum input).
   $FE00 HL = keydefs; // pairs of bytes (port high byte, key mask)
   $FE03 C = 0xFE; // port 0xXXFE
-D $FE05 Left/right.
+N $FE05 Left/right.
   $FE05 B = *HL++;
   $FE07 IN A,(C)
   $FE09 A = ~A & *HL++;
@@ -12026,7 +12026,7 @@ D $FE05 Left/right.
   $FE1D     E = input_RIGHT;
   $FE1F   %>
   $FE21   else <% E = A; %> %>
-D $FE22 Up/down.
+N $FE22 Up/down.
   $FE22 B = *HL++;
   $FE24 IN A,(C)
   $FE26 A = ~A & *HL++;
@@ -12039,7 +12039,7 @@ D $FE22 Up/down.
   $FE34   A = ~A & *HL++;
   $FE37   if (A) <%
   $FE39     E += input_DOWN; %> %>
-D $FE3B Fire.
+N $FE3B Fire.
   $FE3B B = *HL++;
   $FE3D IN A,(C)
   $FE3F A = ~A & *HL++;
@@ -12051,7 +12051,7 @@ D $FE3B Fire.
 ; ------------------------------------------------------------------------------
 
 c $FE47 inputroutine_protek
-; @label:$FE47=inputroutine_protek
+@ $FE47 label=inputroutine_protek
 D $FE47 Input routine for Protek (cursor) joystick.
 R $FE47 O:A Input value (as per enum input).
   $FE47 BC = port_KEYBOARD_12345;
@@ -12086,7 +12086,7 @@ R $FE47 O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 c $FE7E inputroutine_kempston
-; @label:$FE7E=inputroutine_kempston
+@ $FE7E label=inputroutine_kempston
 D $FE7E Input routine for Kempston joystick.
 ; "#1F Kempston (000FUDLR, active high)"
 R $FE7E O:A Input value (as per enum input).
@@ -12110,7 +12110,7 @@ R $FE7E O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 c $FEA3 inputroutine_fuller
-; @label:$FEA3=inputroutine_fuller
+@ $FEA3 label=inputroutine_fuller
 D $FEA3 Input routine for Fuller joystick. (Unused).
 ; "#7F Fuller Box (FxxxRLDU, active low)"
 R $FEA3 O:A Input value (as per enum input).
@@ -12133,7 +12133,7 @@ R $FEA3 O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 c $FECD inputroutine_sinclair
-; @label:$FECD=inputroutine_sinclair
+@ $FECD label=inputroutine_sinclair
 D $FECD Input routine for Sinclair joystick.
 ; "#EFFE Sinclair1 (000LRDUF, active low, corresponds to keys '6' to '0')"
 R $FECD O:A Input value (as per enum input).
@@ -12157,7 +12157,7 @@ R $FECD O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 b $FEF4 mystery_FEF4
-; @label:$FEF4=mystery_FEF4
+@ $FEF4 label=mystery_FEF4
 D $FEF4 A block starting with NOPs.
 
 ; ------------------------------------------------------------------------------
