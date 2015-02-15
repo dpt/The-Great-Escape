@@ -8,7 +8,7 @@
 There are two unused supertiles. $4F and $9A.
 
 [Fact:alternatingSpeed:Game speed varies]
-When on the exterior map the speed of the game can vary depending on where our hero stands. Look at the flag waving rate then take a single step. You will notice the flag waving faster or slower depending on where you started.
+When our hero is outdoors the speed of the game can vary depending on where he stands. Look at the flag waving rate then take a single step. You will notice the flag waving faster or slower depending on where you started.
 
 This is because the routine which copies the back-buffered game screen to the real screen has two modes: a fast mode where the bytes are copied directly and a slow mode where the pixels are rolled by a nibble before being written. Depending on where the hero is standing the screen buffer may not be aligned with regard to the screen and require use of the slow rolling routine.
 
