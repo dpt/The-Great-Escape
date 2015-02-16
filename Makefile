@@ -44,7 +44,7 @@ disasm: skool
 asm: $(BUILD)/$(GAME).asm
 
 %.asm: %.skool
-	skool2asm.py -H -c $< > $@
+	skool2asm.py $(OPTIONS) -c $< > $@
 
 .PHONY: bin
 bin: $(BUILD)/$(GAME).bin
