@@ -2476,8 +2476,8 @@ B $7AC6 58, 42, 24
 
 ; ------------------------------------------------------------------------------
 
-c $7AC9 check_for_pick_up_keypress
-@ $7AC9 label=check_for_pick_up_keypress
+c $7AC9 process_player_input_fire
+@ $7AC9 label=process_player_input_fire
 D $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
 R $7AC9 I:A Input event.
   $7AC9 if (A == input_UP_FIRE) pick_up_item();
@@ -2487,49 +2487,47 @@ R $7AC9 I:A Input event.
 @ $7AEF label=check_for_pick_up_keypress_exit
   $7AEF return;
 
-c $7AF0 use_item_B
+N $7AF0 Use item 'B'.
 @ $7AF0 label=use_item_B
 @ $7AF0 isub=LD A,(items_held + 1)
   $7AF0 A = items_held[1]; // $8216
   $7AF3 goto use_item_common;
 
-c $7AF5 use_item_A
+N $7AF5 Use item 'A'.
 @ $7AF5 label=use_item_A
   $7AF5 A = items_held[0]; // $8215
-;
-; FALLTHROUGH
-
-c $7AF8 use_item_common
+E $7AF5 FALL THROUGH into use_item_common.
+ 
+N $7AF8 Use item common part.
 @ $7AF8 label=use_item_common
   $7AF8 if (A == item_NONE) return;
   $7AFB Bug: Pointless jump to adjacent instruction.
   $7AFD HL = &item_actions_jump_table[A];
+@ $7B01 nowarn
   $7B05 L = *HL++;
   $7B07 H = *HL;
   $7B09 PUSH HL // exit via jump table entry
   $7B0A memcpy(&saved_y, $800F, 6); // copy Y,X and height
   $7B15 return;
 
-; ------------------------------------------------------------------------------
-
-w $7B16 item_actions_jump_table
+N $7B16 Use item action jump table.
 @ $7B16 label=item_actions_jump_table
-  $7B16 action_wiresnips
-  $7B18 action_shovel
-  $7B1A action_lockpick
-  $7B1C action_papers
-  $7B1E -
-  $7B20 action_bribe
-  $7B22 action_uniform
-  $7B24 -
-  $7B26 action_poison
-  $7B28 action_red_key
-  $7B2A action_yellow_key
-  $7B2C action_green_key
-  $7B2E action_red_cross_parcel
-  $7B30 -
-  $7B32 -
-  $7B34 -
+W $7B16 action_wiresnips
+W $7B18 action_shovel
+W $7B1A action_lockpick
+W $7B1C action_papers
+W $7B1E -
+W $7B20 action_bribe
+W $7B22 action_uniform
+W $7B24 -
+W $7B26 action_poison
+W $7B28 action_red_key
+W $7B2A action_yellow_key
+W $7B2C action_green_key
+W $7B2E action_red_cross_parcel
+W $7B30 -
+W $7B32 -
+W $7B34 -
 
 ; ------------------------------------------------------------------------------
 
@@ -4254,7 +4252,7 @@ N $9E5C Hero was in bed.
   $9E82   plot_interior_tiles();
   $9E85 not_bed_or_breakfast: // ... (pop af -- restores user input value stored at $9E36)
   $9E86   if (A >= input_FIRE) <%
-  $9E8A     check_for_pick_up_keypress();
+  $9E8A     process_player_input_fire();
   $9E8D     A = 0x80; %> %>
 @ $9E8F nowarn
   $9E8F if ($800D == A) return; // tunnel related?
