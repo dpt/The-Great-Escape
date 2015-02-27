@@ -1008,7 +1008,7 @@ c $6939 setup_movable_items
   $695E mark_nearby_items();
   $6961 called_from_main_loop_9();
   $6964 move_map();
-  $6967 locate_thing_to_plot_then_plot(); return;
+  $6967 locate_vischar_or_itemstruct_then_plot(); return;
 
   $696A setup_crate: HL = &movable_items[movable_item_CRATE];
   $696D A = character_28_CRATE;
@@ -4170,7 +4170,7 @@ D $9D7B Main game loop.
   $9DA2   move_map();
   $9DA5   message_display();
   $9DA8   ring_bell();
-  $9DAB   locate_thing_to_plot_then_plot();
+  $9DAB   locate_vischar_or_itemstruct_then_plot();
   $9DAE   plot_game_window();
   $9DB1   ring_bell();
   $9DB4   if (day_or_night != 0) nighttime();
@@ -7563,27 +7563,27 @@ R $B83B I:IY Pointer to visible character?
 
 ; -----------------------------------------------------------------------------
 
-c $B866 locate_thing_to_plot_then_plot
-@ $B866 label=locate_thing_to_plot_then_plot
+c $B866 locate_vischar_or_itemstruct_then_plot
+@ $B866 label=locate_vischar_or_itemstruct_then_plot
 D $B866 searchlight related.
   $B866 locate_vischar_or_itemstruct();
   $B869 if (!Z) return;
   $B86A if ((A & (1<<6)) == 0) <%
   $B86E   setup_vischar_plotting();
-  $B871   if (!Z) goto locate_thing_to_plot_then_plot;
+  $B871   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
   $B873   mask_stuff();
   $B876   if (searchlight_state != searchlight_STATE_OFF) searchlight_sub();
   $B87E   A = IY[0x1E];
   $B881   if (A != 3) <%
   $B885     masked_sprite_plotter_24_wide();
-  $B888     goto locate_thing_to_plot_then_plot; %>
+  $B888     goto locate_vischar_or_itemstruct_then_plot; %>
   $B88A   if (Z) masked_sprite_plotter_16_wide_case_1(); // odd to test for Z since it's always set
-  $B88D   goto locate_thing_to_plot_then_plot; %>
+  $B88D   goto locate_vischar_or_itemstruct_then_plot; %>
   $B88F else <% setup_item_plotting();
-  $B892   if (!Z) goto locate_thing_to_plot_then_plot;
+  $B892   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
   $B894   mask_stuff();
   $B897   masked_sprite_plotter_16_wide_case_1_searchlight();
-  $B89A   goto locate_thing_to_plot_then_plot; %>
+  $B89A   goto locate_vischar_or_itemstruct_then_plot; %>
 
 ; -----------------------------------------------------------------------------
 
