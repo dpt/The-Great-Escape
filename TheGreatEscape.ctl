@@ -632,7 +632,7 @@
 ;          0x07 -> character faces bottom left  (crawling)
 ; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_thing_to_plot ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 touch sets this to stashed_A
 ; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
@@ -7566,7 +7566,7 @@ R $B83B I:IY Pointer to visible character?
 c $B866 locate_thing_to_plot_then_plot
 @ $B866 label=locate_thing_to_plot_then_plot
 D $B866 searchlight related.
-  $B866 locate_thing_to_plot();
+  $B866 locate_vischar_or_itemstruct();
   $B869 if (!Z) return;
   $B86A if ((A & (1<<6)) == 0) <%
   $B86E   setup_vischar_plotting();
@@ -7587,8 +7587,8 @@ D $B866 searchlight related.
 
 ; -----------------------------------------------------------------------------
 
-c $B89C locate_thing_to_plot
-@ $B89C label=locate_thing_to_plot
+c $B89C locate_vischar_or_itemstruct
+@ $B89C label=locate_vischar_or_itemstruct
 D $B89C Locates a vischar or item to plot.
   $B89C BC = 0;
   $B89F DE = 0;
