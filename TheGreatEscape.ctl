@@ -7643,7 +7643,7 @@ D $B89C Locates a vischar or item to plot.
   $B8F6   POP HL
   $B8F7   next: HL += C;
   $B8FA %> while (--B);
-  $B8FC sub_DBEB();
+  $B8FC get_greatest_itemstruct();
   $B8FF EX AF,AF' // return value
   $B900 if (A & (1<<7)) return;
   $B903 HL = IY;
@@ -9964,8 +9964,8 @@ N $DBDC Reset.
 
 ; ------------------------------------------------------------------------------
 
-c $DBEB sub_DBEB
-@ $DBEB label=sub_DBEB
+c $DBEB get_greatest_itemstruct
+@ $DBEB label=get_greatest_itemstruct
 D $DBEB Iterates over all items. Uses multiply_by_8.
 R $DBEB O:IY Pointer to ? (result?)
 R $DBEB O:Adash result?
