@@ -6134,7 +6134,7 @@ c $ABA0 zoombox
   $ABDF   A += *HL;
   $ABE0   if (A < 15) (*HL)++;
   $ABE6   zoombox_fill();
-  $ABE9   zoombox_draw();
+  $ABE9   zoombox_draw_border();
   $ABEC   A = zoombox_vertical_count + zoombox_horizontal_count;
   $ABF3 %> while (A < 35);
   $ABF8 return;
@@ -6190,8 +6190,8 @@ c $ABF9 zoombox_fill
   $AC6C %> while (--B);
   $AC6E return;
 
-c $AC6F zoombox_draw
-@ $AC6F label=zoombox_draw
+c $AC6F zoombox_draw_border
+@ $AC6F label=zoombox_draw_border
 @ $AC6F nowarn
   $AC6F HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
 N $AC83 Top left.
