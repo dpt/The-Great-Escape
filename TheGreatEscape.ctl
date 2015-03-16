@@ -7742,7 +7742,7 @@ N $BA1C If I break this bit then the character gets drawn on top of *indoors* ob
   $BA3D   PUSH DE
   $BA3E   E = *DE;
   $BA40   A = byte_B838;
-  $BA43   scale_val();
+  $BA43   multiply();
   $BA46   E = byte_B837;
   $BA4A   HL += DE;
   $BA4B   POP DE
@@ -7824,12 +7824,12 @@ R $BA6F I:C Iterations (inner loop);
 ;
 ; fallthrough
 
-c $BACD scale_val
-@ $BACD label=scale_val
-D $BACD Given a bitmask in A, produce a widened and shifted 16-bit bitmask in HL.
-R $BACD I:A Value to scale.
-R $BACD I:E Shift value, 4 or 8.
-R $BACD O:HL Widened value.
+c $BACD multiply
+@ $BACD label=multiply
+D $BACD HL = A * E
+R $BACD I:A Left hand value.
+R $BACD I:E Right hand value.
+R $BACD O:HL Multiplied result.
 ;
   $BACD B = 8; // iterations
   $BACF HL = 0;
