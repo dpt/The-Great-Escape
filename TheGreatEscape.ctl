@@ -7821,6 +7821,7 @@ R $BA6F I:C Iterations (inner loop);
   $BAC4   POP BC
   $BAC5   HL += 8;
   $BAC9 %> while (--B);
+E $B916 Bug: Looks like a RET is missing here. We fall through into multiply.
 ;
 ; fallthrough
 
