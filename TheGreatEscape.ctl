@@ -7753,8 +7753,8 @@ N $BA1C If I break this bit then the character gets drawn on top of *indoors* ob
   $BA54       DE++;
   $BA55       HL -= A;
   $BA58       if (HL < 0) goto $BA69;
-  $BA5A       DE++;
-  $BA5B       if (DE) goto $BA4D;
+  $BA5A       DE++; // doesn't affect flags
+  $BA5B       if (HL != 0) goto $BA4D;
   $BA5D       A = 0;
   $BA5E       goto $BA6C; %>
 
@@ -7798,8 +7798,8 @@ R $BA6F I:C Iterations (inner loop);
 ;
   $BAA3         B -= A;
   $BAA7         if (B < 0) goto $BAB6;
-  $BAA9         DE++;
-  $BAAA         if (!Z) goto $BA9B;
+  $BAA9         DE++; // doesn't affect flags
+  $BAAA         if (B != 0) goto $BA9B;
   $BAAC         EX AF,AF' // why not just jump instr earlier? // bank
   $BAAD         goto $BAB9; %>
 
