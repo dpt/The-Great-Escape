@@ -166,13 +166,13 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 if c == 0xFF:
                     s.append(c)
                     iters = iters - 1
-                elif c >= 128:
+                elif c >= 128: # repeat the next byte (c - 128) times
                     d = self.snapshot[p]
                     p += 1
                     for i in range(1, 1 + c - 128):
                         s.append(d)
                         iters = iters - 1
-                elif c >= 64:
+                elif c >= 64: # generate a range starting at <next byte> (c - 64) times
                     d = self.snapshot[p]
                     p += 1
                     for i in range(d, d + c - 64):
