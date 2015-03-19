@@ -11,7 +11,6 @@ from skoolkit.skoolasm import AsmWriter
 class TheGreatEscapeHtmlWriter(HtmlWriter):
     def init(self):
         self.font = {}
-        pass
 
     def hello_world(self, cwd):
         return "Hello, world!"
