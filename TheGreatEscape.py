@@ -12,9 +12,6 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
     def init(self):
         self.font = {}
 
-    def hello_world(self, cwd):
-        return "Hello, world!"
-
     def decode_string(self, cwd, addr, nbytes):
         """ Decode a string. """
         alphabet = string.digits + string.uppercase[:14] + string.uppercase[15:] + " ."
