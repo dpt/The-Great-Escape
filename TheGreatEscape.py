@@ -111,6 +111,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return self.img_element(cwd, img_path)
 
+# -----------------------------------------------------------------------------
+
     def interior_tile(self, cwd, tile_index):
         """ Interior tile -> Udg. """
 
@@ -185,6 +187,106 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 iters -= 1
 
         return (width, height, s)
+
+# -----------------------------------------------------------------------------
+
+    def mask_tile(self, cwd, tile_index):
+        """ Mask tile -> Udg. """
+
+        data = 0x8218
+        attr = 7
+        a = data + tile_index * 8
+        return Udg(attr, self.snapshot[a : a + 8])
+
+    def decode_all_masks(self, cwd, base, ents):
+
+        # There are no heights in the mask data so use the bounds of the $EC01
+        # and $EA7C tables to work out the worst case and use that (for
+        # exterior masks).
+
+        widths = {}
+        heights = {}
+
+        # force all refs to be present
+        # mask 19 seems to not be used
+        for ref in range(30):
+            widths.setdefault(ref, [])
+            heights.setdefault(ref, [])
+
+        # 0xEA7C's stride is one byte shorter than mask_t since the constant
+        # final byte is removed
+        for data, dataend, stride in [(0xEC01, 0xEDD1, 8), (0xEA7C, 0xEBC5, 7)]:
+            while data < dataend:
+                ref = self.snapshot[data + 0]
+                x0 = self.snapshot[data + 1]
+                x1 = self.snapshot[data + 2]
+                y0 = self.snapshot[data + 3]
+                y1 = self.snapshot[data + 4]
+                data += stride
+
+                widths[ref].append(x1 - x0)
+                heights[ref].append(y1 - y0)
+
+        drawn_widths = [max(widths[key] + [0]) + 1 for key in widths]
+        drawn_heights = [max(heights[key] + [0]) + 1 for key in heights]
+        #for i, wh in enumerate(zip(drawn_widths, drawn_heights)):
+        #    print "%d: %d x %d" % (i, wh[0], wh[1])
+
+        s = ""
+        for index,base in enumerate(range(base, base + ents * 2, 2)):
+            addr = self.snapshot[base + 0] + self.snapshot[base + 1] * 256
+            s += "<h3>$%.4x</h3>" % addr
+            s += "<p>" + self.decode_mask(cwd, addr, index, drawn_widths[index], drawn_heights[index]) + "</p>"
+        return s
+
+    def decode_mask(self, cwd, addr, index, suggested_width, suggested_height):
+        width, height, tiles = self.expand_mask(cwd, addr, suggested_width, suggested_height)
+
+        tiles.reverse()
+
+        # Build tile UDG array
+        udg_array = []
+
+        for y in range(height):
+            udg_array.append([]) # start new row
+            for x in range(width):
+                udg_array[-1].append(self.mask_tile(cwd, tiles.pop()))
+
+        img_path_id = 'ScreenshotImagePath'
+        fname = 'mask-%d' % index
+        img_path = self.image_path(fname, img_path_id)
+        self.write_image(img_path, udg_array)
+
+        return self.img_element(cwd, img_path)
+
+    def expand_mask(self, cwd, addr, suggested_width, suggested_height):
+        width = self.snapshot[addr + 0]
+        height = suggested_height
+
+        if suggested_width > width:
+            print "suggested width %d > actual %d" % (suggested_width, width)
+
+        iters = width * height
+
+        s = []
+
+        p = addr + 1
+        while iters > 0:
+            b = self.snapshot[p]
+            p += 1
+            if b >= 128:
+                c = self.snapshot[p]
+                p += 1
+                for i in range(1, 1 + b - 128):
+                    s.append(c)
+                    iters -= 1
+            else:
+                s.append(b)
+                iters -= 1
+
+        return (width, height, s)
+
+# -----------------------------------------------------------------------------
 
     def decode_all_rooms(self, cwd, base):
         data = self.snapshot[base:base + 52 * 2]
