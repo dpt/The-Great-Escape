@@ -491,9 +491,8 @@
 ; doorposition_BYTE0_MASK_HI = 0xFC,
 
 ; enum searchlightflags
-; searchlight_STATE_00       = 0x00,
-; searchlight_STATE_1F       = 0x1F,
-; searchlight_STATE_OFF      = 0xFF, // likely: hunting for hero
+; searchlight_STATE_CAUGHT      = 0x1F,
+; searchlight_STATE_SEARCHING   = 0xFF, // hunting for hero
 
 ; enum bellringflags
 ; bell_RING_PERPETUAL        = 0x00,
@@ -653,7 +652,7 @@
 
 ; $8100 mask buffer thing
 
-; $8131 <- searchlight_sub
+; $8131 <- searchlight_mask_test
 
 ; $81A0 mystery (mask_stuff)
 
@@ -6322,15 +6321,15 @@ c $ADBD nighttime
 @ $ADBD label=nighttime
 D $ADBD Turns white screen elements light blue and tracks the hero with a searchlight.
   $ADBD HL = &searchlight_state;
-  $ADC0 if (*HL == searchlight_STATE_OFF) goto not_tracking;
+  $ADC0 if (*HL == searchlight_STATE_SEARCHING) goto not_tracking;
 ;
   $ADC6 if (room_index) <% // hero is indoors
 N $ADCC If the hero goes indoors the searchlight loses track.
-  $ADCC   *HL = searchlight_STATE_OFF;
+  $ADCC   *HL = searchlight_STATE_SEARCHING;
   $ADCE   return; %>
 ;
 N $ADCF Hero is outdoors.
-  $ADCF if (*HL == searchlight_STATE_1F) <%
+  $ADCF if (*HL == searchlight_STATE_CAUGHT) <%
   $ADD5   HL = map_position;
   $ADD8   E = L + 4;
   $ADDC   D = H;
@@ -6427,8 +6426,8 @@ R $AE78 I:HL Pointer to spotlight_movement_data_maybe
   $AE78 DE = map_position;
   $AE7C if (HL[0] + 5 >= E + 12 || HL[0] + 10 < E + 10) return;
   $AE8B if (HL[1] + 5 >= D + 10 || D + 6 >= HL[1] + 12) return;
-  $AE9D if (searchlight_state == searchlight_STATE_1F) return;
-  $AEA3 searchlight_state = searchlight_STATE_1F;
+  $AE9D if (searchlight_state == searchlight_STATE_CAUGHT) return;
+  $AEA3 searchlight_state = searchlight_STATE_CAUGHT;
   $AEA8 D = HL[0];
   $AEAA E = HL[1];
   $AEAB searchlight_coords = DE;
@@ -7541,15 +7540,15 @@ W $B839 word_B839
 
 ; -----------------------------------------------------------------------------
 
-c $B83B searchlight_sub
-@ $B83B label=searchlight_sub
+c $B83B searchlight_mask_test
+@ $B83B label=searchlight_mask_test
 R $B83B I:IY Pointer to visible character?
   $B83B HL = IY;
   $B83E if (L) return; // skip non-player character
-  $B841 HL = $8131;
-  $B844 BC = 0x0804; // 8 iterations, C is ?
+  $B841 HL = $8131; // mask_buffer + 0x31
+  $B844 BC = 0x0804; // 8 iterations // (C is 4 but doesn't seem to get used)
   $B847 do <% if (*HL != 0) goto $B860;
-  $B84B   HL += 4;
+  $B84B   HL += 4; // stride of 4?
   $B84F %> while (--B);
   $B851 HL = &searchlight_state;
   $B854 (*HL)--;
@@ -7558,7 +7557,7 @@ R $B83B I:IY Pointer to visible character?
   $B85C set_game_window_attributes();
   $B85F return;
 
-  $B860 searchlight_state = searchlight_STATE_1F;
+  $B860 searchlight_state = searchlight_STATE_CAUGHT;
   $B865 return;
 
 ; -----------------------------------------------------------------------------
@@ -7572,7 +7571,7 @@ D $B866 searchlight related.
   $B86E   setup_vischar_plotting();
   $B871   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
   $B873   mask_stuff();
-  $B876   if (searchlight_state != searchlight_STATE_OFF) searchlight_sub();
+  $B876   if (searchlight_state != searchlight_STATE_SEARCHING) searchlight_mask_test();
   $B87E   A = IY[0x1E];
   $B881   if (A != 3) <%
   $B885     masked_sprite_plotter_24_wide();
