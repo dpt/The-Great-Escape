@@ -8714,10 +8714,10 @@ B $C6FD,2   %>
   $C71F   if (DE[-1] == 0) A = 2; else A = 6;
   $C729   EX AF,AF'
   $C72A   B = 0;
-  $C72C   increment_DE_by_diff(A, B, HL, DE);
+  $C72C   change_by_delta(A, B, HL, DE);
   $C72F   DE++;
   $C730   HL++;
-  $C731   increment_DE_by_diff(A, B, HL, DE);
+  $C731   change_by_delta(A, B, HL, DE);
   $C734   POP HL
   $C735   if (B != 2) return; // managed to move
   $C739   DE -= 2;
@@ -8747,10 +8747,10 @@ N $C742 Stuff reading from door_positions.
   $C775   if (tmpA) A = 6;
   $C779   EX AF,AF'
   $C77A   B = 0;
-  $C77C   increment_DE_by_diff()
+  $C77C   change_by_delta()
   $C77F   HL++;
   $C780   DE++;
-  $C781   increment_DE_by_diff()
+  $C781   change_by_delta()
   $C784   DE++;
   $C785   if (B != 2) return; %>
   $C78B DE++;
@@ -8768,8 +8768,8 @@ N $C742 Stuff reading from door_positions.
 
 ; -----------------------------------------------------------------------------
 
-c $C79A increment_DE_by_diff
-@ $C79A label=increment_DE_by_diff
+c $C79A change_by_delta
+@ $C79A label=change_by_delta
 D $C79A [leaf] (<- move_characters)
 D $C79A Gets called with successive bytes.
 R $C79A I:Adash Maximum value of delta?
