@@ -2545,7 +2545,7 @@ N $7B44 Locate the empty item slot.
   $7B51 PUSH HL
   $7B52 A = room_index;
   $7B55 if (A == 0) <% // outdoors
-  $7B5A   supertile_plot_all();
+  $7B5A   plot_all_tiles();
   $7B5D %>
   $7B5F else <% setup_room();
   $7B62   plot_interior_tiles();
@@ -5544,8 +5544,8 @@ D $A69E #UDGTABLE { #FONT$A69E,35,7,2{0,0,560,16}(font) } TABLE#
 ; ------------------------------------------------------------------------------
 
 g $A7C6 Byte used by move_map.
-B $A7C6 used_by_move_map
-@ $A7C6 label=used_by_move_map
+B $A7C6 move_map_y
+@ $A7C6 label=move_map_y
 
 ; ------------------------------------------------------------------------------
 
@@ -5575,8 +5575,8 @@ N $A7EE Populate $FF58 with 7x5 array of supertile refs.
 
 ; two entry points
 
-c $A80A supertile_plot_horizontal_1
-@ $A80A label=supertile_plot_horizontal_1
+c $A80A plot_bottommost_tiles
+@ $A80A label=plot_bottommost_tiles
 D $A80A Causes some tile plotting.
 @ $A80A nowarn
   $A80A DE = $F278;
@@ -5586,10 +5586,10 @@ D $A80A Causes some tile plotting.
   $A811 A = map_position >> 8; // map_position hi
 @ $A814 nowarn
   $A814 DEdash = $FE90;
-  $A817 goto supertile_plot_horizontal_common;
+  $A817 goto plot_horizontal_tiles_common;
 
-c $A819 supertile_plot_horizontal_2
-@ $A819 label=supertile_plot_horizontal_2
+c $A819 plot_topmost_tiles
+@ $A819 label=plot_topmost_tiles
 D $A819 Causes some tile plotting.
   $A819 DE = $F0F8; // visible tiles array
   $A81C -
@@ -5597,8 +5597,8 @@ D $A819 Causes some tile plotting.
   $A820 A = map_position >> 8; // map_position hi
   $A823 DEdash = $F290; // screen buffer start address
 
-c $A826 supertile_plot_horizontal_common
-@ $A826 label=supertile_plot_horizontal_common
+c $A826 plot_horizontal_tiles_common
+@ $A826 label=plot_horizontal_tiles_common
 D $A826 Plotting supertiles.
   $A826 A = (A & 3) * 4;
   $A82A ($A86A) = A; // self modify
@@ -5660,8 +5660,8 @@ D $A826 Plotting supertiles.
 
 ; ------------------------------------------------------------------------------
 
-c $A8A2 supertile_plot_all
-@ $A8A2 label=supertile_plot_all
+c $A8A2 plot_all_tiles
+@ $A8A2 label=plot_all_tiles
 D $A8A2 Plot all tiles.
 D $A8A2 Note: Exits with banked registers active.
   $A8A2 DE = $F0F8; // visible tiles array
@@ -5677,7 +5677,7 @@ D $A8A2 Note: Exits with banked registers active.
   $A8B5   -
   $A8B6   PUSH DE
   $A8B7   -
-  $A8B8   supertile_plot_vertical_common();
+  $A8B8   plot_vertical_tiles_common();
   $A8BB   -
   $A8BC   POP DE
   $A8BD   DE++;
@@ -5695,8 +5695,8 @@ D $A8A2 Note: Exits with banked registers active.
 
 ; ------------------------------------------------------------------------------
 
-c $A8CF supertile_plot_vertical_1
-@ $A8CF label=supertile_plot_vertical_1
+c $A8CF plot_rightmost_tiles
+@ $A8CF label=plot_rightmost_tiles
 @ $A8CF nowarn
   $A8CF DE = $F10F;
   $A8D2 EXX // unpaired
@@ -5706,10 +5706,10 @@ c $A8CF supertile_plot_vertical_1
   $A8D9 A = map_position[0] & 3; // map_position lo
   $A8DE if (A == 0) HL--;
   $A8E1 A = map_position[0] - 1; // map_position lo
-  $A8E5 goto supertile_plot_vertical_common;
+  $A8E5 goto plot_vertical_tiles_common;
 
-c $A8E7 supertile_plot_vertical_2
-@ $A8E7 label=supertile_plot_vertical_2
+c $A8E7 plot_leftmost_tiles
+@ $A8E7 label=plot_leftmost_tiles
 D $A8E7 Suspect: supertile plotting.
   $A8E7 DE = $F0F8; // visible tiles array
   $A8EA -
@@ -5717,8 +5717,8 @@ D $A8E7 Suspect: supertile plotting.
   $A8EE DEdash = $F290; // screen buffer start address
   $A8F1 A = map_position[0]; // map_position lo
 
-c $A8F4 supertile_plot_vertical_common
-@ $A8F4 label=supertile_plot_vertical_common
+c $A8F4 plot_vertical_tiles_common
+@ $A8F4 label=plot_vertical_tiles_common
 D $A8F4 Plotting supertiles.
   $A8F4 A &= 3;
   $A8F6 ($A94C + 1) = A; // self modify
@@ -5846,8 +5846,8 @@ R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile gro
 
 ; -----------------------------------------------------------------------------
 
-c $A9E4 map_shunt_horizontal_1
-@ $A9E4 label=map_shunt_horizontal_1
+c $A9E4 shunt_map_left
+@ $A9E4 label=shunt_map_left
   $A9E4 HL = &map_position;
   $A9E7 (*HL)++;
   $A9E8 get_supertiles();
@@ -5860,11 +5860,11 @@ c $A9E4 map_shunt_horizontal_1
   $A9F9 DE = screen_buffer_start_address;
   $A9FC BC = screen_buffer_length - 1;
   $A9FF LDIR
-  $AA01 supertile_plot_vertical_1();
+  $AA01 plot_rightmost_tiles();
   $AA04 return;
 
-c $AA05 map_shunt_horizontal_2
-@ $AA05 label=map_shunt_horizontal_2
+c $AA05 shunt_map_right
+@ $AA05 label=shunt_map_right
   $AA05 HL = &map_position;
   $AA08 (*HL)--;
   $AA09 get_supertiles();
@@ -5877,11 +5877,11 @@ c $AA05 map_shunt_horizontal_2
   $AA1A DE = screen_buffer_end_address + 1;
   $AA1D BC = screen_buffer_length;
   $AA20 LDDR
-  $AA22 supertile_plot_vertical_2();
+  $AA22 plot_leftmost_tiles();
   $AA25 return;
 
-c $AA26 map_shunt_diagonal_1_2
-@ $AA26 label=map_shunt_diagonal_1_2
+c $AA26 shunt_map_up_right
+@ $AA26 label=shunt_map_up_right
   $AA26 L--;
   $AA27 H++;
   $AA28 map_position = HL;
@@ -5896,12 +5896,12 @@ c $AA26 map_shunt_diagonal_1_2
   $AA3C DE = screen_buffer_start_address + 1;
   $AA3F BC = screen_buffer_length - 24 * 8;
   $AA42 LDIR
-  $AA44 supertile_plot_horizontal_1();
-  $AA47 supertile_plot_vertical_2();
+  $AA44 plot_bottommost_tiles();
+  $AA47 plot_leftmost_tiles();
   $AA4A return;
 
-c $AA4B map_shunt_vertical_1
-@ $AA4B label=map_shunt_vertical_1
+c $AA4B shunt_map_up
+@ $AA4B label=shunt_map_up
   $AA4B HL = &map_position[1];
   $AA4E (*HL)++;
   $AA4F get_supertiles();
@@ -5914,11 +5914,11 @@ c $AA4B map_shunt_vertical_1
   $AA60 DE = screen_buffer_start_address;
   $AA63 BC = screen_buffer_length - 24 * 8;
   $AA66 LDIR
-  $AA68 supertile_plot_horizontal_1();
+  $AA68 plot_bottommost_tiles();
   $AA6B return;
 
-c $AA6C map_shunt_vertical_2
-@ $AA6C label=map_shunt_vertical_2
+c $AA6C shunt_map_down
+@ $AA6C label=shunt_map_down
   $AA6C HL = &map_position[1];
   $AA6F (*HL)--;
   $AA70 get_supertiles();
@@ -5931,11 +5931,11 @@ c $AA6C map_shunt_vertical_2
   $AA81 DE = screen_buffer_end_address;
   $AA84 BC = screen_buffer_length - 24 * 8;
   $AA87 LDDR
-  $AA89 supertile_plot_horizontal_2();
+  $AA89 plot_topmost_tiles();
   $AA8C return;
 
-c $AA8D map_shunt_diagonal_2_1
-@ $AA8D label=map_shunt_diagonal_2_1
+c $AA8D shunt_map_down_left
+@ $AA8D label=shunt_map_down_left
   $AA8D L++;
   $AA8E H--;
   $AA8F map_position = HL;
@@ -5950,17 +5950,17 @@ c $AA8D map_shunt_diagonal_2_1
   $AAA3 DE = screen_buffer_end_address - 1;
   $AAA6 BC = screen_buffer_length - 24 * 8 - 1;
   $AAA9 LDDR
-  $AAAB supertile_plot_horizontal_2();
-  $AAAE supertile_plot_vertical_1();
+  $AAAB plot_topmost_tiles();
+  $AAAE plot_rightmost_tiles();
   $AAB1 return;
 
 ; ------------------------------------------------------------------------------
 
 c $AAB2 move_map
 @ $AAB2 label=move_map
-D $AAB2 Moves the map when the character walks.
+D $AAB2 Moves the map when the hero walks.
 R $AAB2 O:HL == map_position
-  $AAB2 if (room_index) return; // outdoors only
+  $AAB2 if (room_index) return; // Can't move the map when indoors.
   $AAB7 if ($8007 & vischar_BYTE7_BIT6) return;
   $AABD HL = $800A;
   $AAC0 E = *HL++;
@@ -5971,7 +5971,7 @@ R $AAB2 O:HL == map_position
   $AAC9 if (A == 255) return;
   $AACC if (C & (1<<7)) A ^= 2;
   $AAD2 PUSH AF
-  $AAD3 HL = &map_move_jump_table[A];
+  $AAD3 HL = &move_map_jump_table[A];
 @ $AAD7 nowarn
   $AADB A = *HL++; // ie. HL = (word at HL); HL += 2;
   $AADD H = *HL;
@@ -5980,16 +5980,16 @@ R $AAB2 O:HL == map_position
   $AAE0 PUSH HL
   $AAE1 PUSH AF
 @ $AAE2 keep
-  $AAE2 BC = 0x7C00;
-  $AAE5 if (A >= 2) B = 0x00;
-  $AAEB if (A != 1 && A != 2) C = 0xC0;
+  $AAE2 B, C = 0x7C, 0x00;
+  $AAE5 if (A >= 2) B = 0x00; // bottom of the map clamp
+  $AAEB if (A != 1 && A != 2) C = 0xC0; // left of the map clamp
   $AAF5 HL = map_position;
   $AAF8 if (L == C || H == B) <%
   $AAFC   popret: POP AF
   $AAFD   POP HL
   $AAFE   return; %>
   $AB03 POP AF
-  $AB04 HL = &used_by_move_map; // screen offset of some sort?
+  $AB04 HL = &move_map_y; // screen offset of some sort?
   $AB07 if (A >= 2) <%
   $AB0B   A = *HL + 1; %>
   $AB0D else <%
@@ -6017,37 +6017,40 @@ R $AAB2 O:HL == map_position
   $AB28 L = 0x90;
   $AB2A plot_game_window_x = HL;
   $AB2D HL = map_position;
-  $AB30 return; // pops and calls map_move_* routine pushed at $AAE0
+  $AB30 return; // pops and calls move_map_* routine pushed at $AAE0
 
-W $AB31 map_move_jump_table
-  $AB31 { map_move_1,
-  $AB33 map_move_2,
-  $AB35 map_move_3,
-  $AB37 map_move_4 };
+@ $AB31 label=move_map_jump_table
+W $AB31 { move_map_up_left,
+W $AB33 move_map_up_right,
+W $AB35 move_map_down_right,
+W $AB37 move_map_down_left };
 
-C $AB39 map_move_1
+C $AB39 move_map_up_left
+@ $AB39 label=move_map_up_left
   $AB39 A = *DE;
-  $AB3A if (A == 0) goto map_shunt_vertical_1;
+  $AB3A if (A == 0) goto shunt_map_up;
   $AB3E if ((A & 1) == 0) return;
-  $AB41 goto map_shunt_horizontal_1;
+  $AB41 goto shunt_map_left;
 
-C $AB44 map_move_2
+C $AB44 move_map_up_right
+@ $AB44 label=move_map_up_right
   $AB44 A = *DE;
-  $AB45 if (A == 0) goto map_shunt_diagonal_1_2;
+  $AB45 if (A == 0) goto shunt_map_up_right;
   $AB49 if (A != 2) return;
-  $AB4C goto map_shunt_horizontal_2;
+  $AB4C goto shunt_map_right;
 
-C $AB4F map_move_3
+C $AB4F move_map_down_right
+@ $AB4F label=move_map_down_right
   $AB4F A = *DE;
-  $AB50 if (A == 3) goto map_shunt_vertical_2;
-  $AB55 RRA // rotate right?
-  $AB56 JP NC,map_shunt_horizontal_2;
+  $AB50 if (A == 3) goto shunt_map_down;
+  $AB55 if ((A & 1) == 0) goto shunt_map_right;
   $AB59 return;
 
-C $AB5A map_move_4
+C $AB5A move_map_down_left
+@ $AB5A label=move_map_down_left
   $AB5A A = *DE;
-  $AB5B if (A == 1) goto map_shunt_horizontal_1;
-  $AB60 if (A == 3) goto map_shunt_diagonal_2_1;
+  $AB5B if (A == 1) goto shunt_map_left;
+  $AB60 if (A == 3) goto shunt_map_down_left;
   $AB65 return;
 
 ; -----------------------------------------------------------------------------
@@ -6917,7 +6920,7 @@ D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the sc
 ;
   $B31C room_index = room_NONE;
   $B320 get_supertiles();
-  $B323 supertile_plot_all();
+  $B323 plot_all_tiles();
   $B326 setup_movable_items();
   $B329 zoombox();
   $B32C return;
