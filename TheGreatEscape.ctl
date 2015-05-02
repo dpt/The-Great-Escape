@@ -6753,8 +6753,8 @@ R $B1C7 BC Result of (A << 3).
 
 ; ------------------------------------------------------------------------------
 
-c $B1D4 is_door_open
-@ $B1D4 label=is_door_open
+c $B1D4 is_door_locked
+@ $B1D4 label=is_door_locked
 R $B1D4 O:F Z set if door open.
   $B1D4 C = current_door & gates_and_doors_MASK;
   $B1DB HL = &gates_and_doors[0];
@@ -6798,7 +6798,7 @@ c $B1F5 door_handling
   $B229 found: A = 16 - B;
   $B22C current_door = A;
   $B22F EXX
-  $B230 is_door_open();
+  $B230 is_door_locked();
   $B233 if (!Z) return; // door was locked
   $B234 EXX
   $B235 IY[28] = (*HL >> 2) & 0x3F; // sampled HL = $792E (in door_positions[])
@@ -6954,7 +6954,7 @@ R $B32D I:IY Pointer to visible character.
   $B360   -
   $B361   PUSH HLdash
   $B362   PUSH BCdash
-  $B363   is_door_open();
+  $B363   is_door_locked();
   $B366   POP BCdash
   $B367   POP HLdash
   $B368   if (!Z) return; // door was closed
