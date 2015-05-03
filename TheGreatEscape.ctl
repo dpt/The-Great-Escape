@@ -1,7 +1,9 @@
 ;
-; SkoolKit control file for The Great Escape by Denton Designs.
+; SkoolKit disassembly control file for The Great Escape by Denton Designs.
+; https://github.com/dpt/The-Great-Escape
 ;
-; This disassembly copyright (c) David Thomas, 2012-2015. <dave@davespace.co.uk>
+; Copyright 1986 Ocean Software Ltd. (The Great Escape)
+; Copyright 2012-2014 David Thomas <dave@davespace.co.uk> (this disassembly)
 ;
 ; To build the HTML disassembly, create a z80 snapshot of The Great Escape
 ; named TheGreatEscape.z80, and run these commands from the top-level SkoolKit
@@ -9,11 +11,13 @@
 ;   ./sna2skool.py -c TheGreatEscape.ctl TheGreatEscape.z80 > TheGreatEscape.skool
 ;   ./skool2html.py TheGreatEscape.ref
 ;
+
 ; To create a snapshot which preserves the loading screen, breakpoint $F068 and
 ; alter that to jump to itself when the TZX has loaded. Save the snapshot in
 ; Z80 format. Use a hex editor on the .z80 to restore the bytes to their former
 ; values (JP $F163).
-
+;
+  
 ; //////////////////////////////////////////////////////////////////////////////
 ; TODO
 ; //////////////////////////////////////////////////////////////////////////////
@@ -4147,7 +4151,7 @@ B $9D70 #HTML[#UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)]
 
 c $9D78 main_loop_setup
 @ $9D78 label=main_loop_setup
-D $9D78 There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single caller might just as well goto enter_room instead of goto main_loop_setup.
+D $9D78 There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single calling routine (main) might just as well goto enter_room instead of goto main_loop_setup.
   $9D78 enter_room(); // returns by goto main_loop
 
 c $9D7B main_loop
@@ -7592,18 +7596,19 @@ D $B866 searchlight related.
 c $B89C locate_vischar_or_itemstruct
 @ $B89C label=locate_vischar_or_itemstruct
 D $B89C Locates a vischar or item to plot.
+R $B89C O:IY vischar or itemstruct to plot.
   $B89C BC = 0;
   $B89F DE = 0;
   $B8A1 A = 0xFF;
   $B8A3 EX AF,AF'
   $B8A4 EXX
   $B8A5 DE = 0;
-  $B8A8 BC = 0x0820; // B = 8 iterations, C = stride, 32
+  $B8A8 B = 8; C = 32; // iterations, stride
   $B8AB HL = $8007; // vischar byte7
   $B8AE do <% if ((*HL & vischar_BYTE7_BIT7) == 0) goto next;
   $B8B2   PUSH HL
   $B8B3   PUSH BC
-  $B8B4   HL += 8; // $8007 + 8 = $800F
+  $B8B4   HL += 8; // $8007 + 8 = $800F = mi.pos.y
   $B8B8   C = *HL++;
   $B8BA   B = *HL;
   $B8BB   BC += 4;
@@ -7646,7 +7651,7 @@ D $B89C Locates a vischar or item to plot.
   $B8F7   next: HL += C;
   $B8FA %> while (--B);
   $B8FC get_greatest_itemstruct();
-  $B8FF EX AF,AF' // return value
+  $B8FF EX AF,AF' // extract return value
   $B900 if (A & (1<<7)) return;
   $B903 HL = IY;
   $B906 if ((A & (1<<6)) == 0) <%
@@ -8682,18 +8687,18 @@ D $C6A0 Moves characters around.
 ;   ...
 ; %> else ...
   $C6DD   if (A != character_0_COMMANDANT) <%
-N $C6DD Not a player character.
+N $C6DD Not the commandant.
   $C6E0     if (A >= character_12_GUARD_12) goto char_ge_12;
 N $C6E4 Characters 1..11.
 ;
   $C6E4     back: *HL++ ^= 0x80;
   $C6E9     if (A & 7) (*HL) -= 2;
-  $C6EF     (*HL)++; // weird // i.e -1 or +1
+  $C6EF     (*HL)++; // i.e -1 or +1
   $C6F0     POP HL
   $C6F1     return; %>
 
-N $C6F2 Hero character.
-  $C6F2   char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // fetching a character index? // sampled = HL = $7617 (characterstruct + 5) // location
+N $C6F2 Commandant.
+  $C6F2   char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // sampled = HL = $7617 (characterstruct + 5) // location
   $C6F5   if (A != 36) goto back;
 ;
   $C6F9   char_ge_12: POP DE
@@ -9970,8 +9975,10 @@ N $DBDC Reset.
 c $DBEB get_greatest_itemstruct
 @ $DBEB label=get_greatest_itemstruct
 D $DBEB Iterates over all items. Uses multiply_by_8.
-R $DBEB O:IY Pointer to ? (result?)
-R $DBEB O:Adash result?
+R $DBEB I:BC' samples = 0, $1A, $1C, $1E, $20, $22,
+R $DBEB I:DE' samples = 0, $22, $22, $22, $22, $22,
+R $DBEB O:IY Pointer to to item struct. (result?)
+R $DBEB O:A' result?
   $DBEB B = 16; // iterations
   $DBEE Outer_HL = &item_structs[0].room;
   $DBF1 do <% if ((*Outer_HL & (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) == (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) <%
@@ -9981,7 +9988,7 @@ R $DBEB O:Adash result?
   $DC00
   $DC01
   $DC02
-  $DC03   A &= A; // clear carry?
+  $DC03   A &= A; // Clear carry flag.
   $DC04   HLdash -= BCdash; // where is BCdash initialised?
   $DC06
   $DC07   if (HLdash > 0) <%
@@ -10023,7 +10030,7 @@ N $DC43 Bug: Masked item value stored to possibly_holds_an_item which is never u
   $DC4E BC = 5;
   $DC51 LDIR
   $DC53 EX DE,HL
-  $DC54 *HL = B;
+  $DC54 *HL = B; // B == 0 due to LDIR
   $DC55 HL = &item_definitions[A];
   $DC5E HL++; // &item_definitions[A].height
   $DC5F A = (HL);
