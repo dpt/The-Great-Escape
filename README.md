@@ -1,7 +1,7 @@
 The Great Escape
 ================
 
-Reverse engineering [Denton Designs'](http://en.wikipedia.org/wiki/Denton_Designs) classic [ZX Spectrum](http://en.wikipedia.org/wiki/ZX_Spectrum) 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) using [SkoolKit](http://skoolkit.ca/) from a raw binary image.
+Reverse engineering [Denton Designs'](http://en.wikipedia.org/wiki/Denton_Designs) classic [ZX Spectrum](http://en.wikipedia.org/wiki/ZX_Spectrum) 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) from a raw binary image using [SkoolKit](http://skoolkit.ca/).
 
 Goals
 -----
