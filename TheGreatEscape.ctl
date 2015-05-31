@@ -12164,9 +12164,6 @@ R $FECD O:A Input value (as per enum input).
 
 ; ------------------------------------------------------------------------------
 
-b $FEF4 mystery_FEF4
-@ $FEF4 label=mystery_FEF4
-D $FEF4 A block starting with NOPs.
-
-; ------------------------------------------------------------------------------
+b $FEF4 stack
+; @end:$FEF4
 
