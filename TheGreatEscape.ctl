@@ -1,3 +1,5 @@
+; @start:$4000
+; @writer:$4000=~/.skoolkit:TheGreatEscape.TheGreatEscapeAsmWriter
 ;
 ; SkoolKit disassembly control file for The Great Escape by Denton Designs.
 ; https://github.com/dpt/The-Great-Escape
@@ -5,6 +7,20 @@
 ; Copyright 1986 Ocean Software Ltd. (The Great Escape)
 ; Copyright 2012-2014 David Thomas <dave@davespace.co.uk> (this disassembly)
 ;
+
+; @ofix+begin:$8000
+; This disassembly contains ofix changes.
+; @ofix+end:$8000
+;
+; @bfix+begin:$8000
+; This disassembly contains bfix changes.
+; @bfix+end:$8000
+;
+; @rfix+begin:$8000
+; This disassembly contains rfix changes.
+; @rfix+end:$8000
+;
+
 ; To build the HTML disassembly, create a z80 snapshot of The Great Escape
 ; named TheGreatEscape.z80, and run these commands from the top-level SkoolKit
 ; directory:
