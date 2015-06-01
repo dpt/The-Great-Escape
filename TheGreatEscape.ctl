@@ -33,7 +33,7 @@
 ; Z80 format. Use a hex editor on the .z80 to restore the bytes to their former
 ; values (JP $F163).
 ;
-  
+
 ; //////////////////////////////////////////////////////////////////////////////
 ; TODO
 ; //////////////////////////////////////////////////////////////////////////////
@@ -692,254 +692,256 @@
 b $4000 screen
 D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 @ $4000 label=screen
-B $4000,6144,32 Pixels.
-B $5800,768,32 Attributes.
+  $4000,6144,32 Pixels.
+  $5800,768,32 Attributes.
 
 ; ------------------------------------------------------------------------------
 
 b $5B00 super_tiles
-@ $5B00 label=super_tiles
 D $5B00 Super tiles.
 D $5B00 The game's exterior map (at $BCEE) is constructed of references to these.
 D $5B00 Each super tile is a 4x4 array of tile indices.
-B $5B00,16,4 super_tile $00 #HTML[#CALL:supertile($5B00, 0)]
-B $5B10,16,4 super_tile $01 #HTML[#CALL:supertile($5B10, 0)]
-B $5B20,16,4 super_tile $02 #HTML[#CALL:supertile($5B20, 0)]
-B $5B30,16,4 super_tile $03 #HTML[#CALL:supertile($5B30, 0)]
-B $5B40,16,4 super_tile $04 #HTML[#CALL:supertile($5B40, 0)]
-B $5B50,16,4 super_tile $05 #HTML[#CALL:supertile($5B50, 0)]
-B $5B60,16,4 super_tile $06 #HTML[#CALL:supertile($5B60, 0)]
-B $5B70,16,4 super_tile $07 #HTML[#CALL:supertile($5B70, 0)]
-B $5B80,16,4 super_tile $08 #HTML[#CALL:supertile($5B80, 0)]
-B $5B90,16,4 super_tile $09 #HTML[#CALL:supertile($5B90, 0)]
-B $5BA0,16,4 super_tile $0A #HTML[#CALL:supertile($5BA0, 0)]
-B $5BB0,16,4 super_tile $0B #HTML[#CALL:supertile($5BB0, 0)]
-B $5BC0,16,4 super_tile $0C #HTML[#CALL:supertile($5BC0, 0)]
-B $5BD0,16,4 super_tile $0D #HTML[#CALL:supertile($5BD0, 0)]
-B $5BE0,16,4 super_tile $0E #HTML[#CALL:supertile($5BE0, 0)]
-B $5BF0,16,4 super_tile $0F #HTML[#CALL:supertile($5BF0, 0)]
-B $5C00,16,4 super_tile $10 #HTML[#CALL:supertile($5C00, 0)]
-B $5C10,16,4 super_tile $11 #HTML[#CALL:supertile($5C10, 0)]
-B $5C20,16,4 super_tile $12 #HTML[#CALL:supertile($5C20, 0)]
-B $5C30,16,4 super_tile $13 #HTML[#CALL:supertile($5C30, 0)]
-B $5C40,16,4 super_tile $14 #HTML[#CALL:supertile($5C40, 0)]
-B $5C50,16,4 super_tile $15 #HTML[#CALL:supertile($5C50, 0)]
-B $5C60,16,4 super_tile $16 #HTML[#CALL:supertile($5C60, 0)]
-B $5C70,16,4 super_tile $17 #HTML[#CALL:supertile($5C70, 0)]
-B $5C80,16,4 super_tile $18 #HTML[#CALL:supertile($5C80, 0)]
-B $5C90,16,4 super_tile $19 #HTML[#CALL:supertile($5C90, 0)]
-B $5CA0,16,4 super_tile $1A #HTML[#CALL:supertile($5CA0, 0)]
-B $5CB0,16,4 super_tile $1B #HTML[#CALL:supertile($5CB0, 0)]
-B $5CC0,16,4 super_tile $1C #HTML[#CALL:supertile($5CC0, 0)]
-B $5CD0,16,4 super_tile $1D #HTML[#CALL:supertile($5CD0, 0)]
-B $5CE0,16,4 super_tile $1E #HTML[#CALL:supertile($5CE0, 0)]
-B $5CF0,16,4 super_tile $1F #HTML[#CALL:supertile($5CF0, 0)]
-B $5D00,16,4 super_tile $20 #HTML[#CALL:supertile($5D00, 0)]
-B $5D10,16,4 super_tile $21 #HTML[#CALL:supertile($5D10, 0)]
-B $5D20,16,4 super_tile $22 #HTML[#CALL:supertile($5D20, 0)]
-B $5D30,16,4 super_tile $23 #HTML[#CALL:supertile($5D30, 0)]
-B $5D40,16,4 super_tile $24 #HTML[#CALL:supertile($5D40, 0)]
-B $5D50,16,4 super_tile $25 #HTML[#CALL:supertile($5D50, 0)]
-B $5D60,16,4 super_tile $26 #HTML[#CALL:supertile($5D60, 0)]
-B $5D70,16,4 super_tile $27 #HTML[#CALL:supertile($5D70, 0)]
-B $5D80,16,4 super_tile $28 #HTML[#CALL:supertile($5D80, 0)]
-B $5D90,16,4 super_tile $29 #HTML[#CALL:supertile($5D90, 0)]
-B $5DA0,16,4 super_tile $2A #HTML[#CALL:supertile($5DA0, 0)]
-B $5DB0,16,4 super_tile $2B #HTML[#CALL:supertile($5DB0, 0)]
-B $5DC0,16,4 super_tile $2C #HTML[#CALL:supertile($5DC0, 0)]
-B $5DD0,16,4 super_tile $2D #HTML[#CALL:supertile($5DD0, 0)]
-B $5DE0,16,4 super_tile $2E #HTML[#CALL:supertile($5DE0, 0)]
-B $5DF0,16,4 super_tile $2F #HTML[#CALL:supertile($5DF0, 0)]
-B $5E00,16,4 super_tile $30 #HTML[#CALL:supertile($5E00, 0)]
-B $5E10,16,4 super_tile $31 #HTML[#CALL:supertile($5E10, 0)]
-B $5E20,16,4 super_tile $32 #HTML[#CALL:supertile($5E20, 0)]
-B $5E30,16,4 super_tile $33 #HTML[#CALL:supertile($5E30, 0)]
-B $5E40,16,4 super_tile $34 #HTML[#CALL:supertile($5E40, 0)]
-B $5E50,16,4 super_tile $35 #HTML[#CALL:supertile($5E50, 0)]
-B $5E60,16,4 super_tile $36 #HTML[#CALL:supertile($5E60, 0)]
-B $5E70,16,4 super_tile $37 #HTML[#CALL:supertile($5E70, 0)]
-B $5E80,16,4 super_tile $38 #HTML[#CALL:supertile($5E80, 0)]
-B $5E90,16,4 super_tile $39 #HTML[#CALL:supertile($5E90, 0)]
-B $5EA0,16,4 super_tile $3A #HTML[#CALL:supertile($5EA0, 0)]
-B $5EB0,16,4 super_tile $3B #HTML[#CALL:supertile($5EB0, 0)]
-B $5EC0,16,4 super_tile $3C #HTML[#CALL:supertile($5EC0, 0)]
-B $5ED0,16,4 super_tile $3D #HTML[#CALL:supertile($5ED0, 0)]
-B $5EE0,16,4 super_tile $3E #HTML[#CALL:supertile($5EE0, 0)]
-B $5EF0,16,4 super_tile $3F #HTML[#CALL:supertile($5EF0, 0)]
-B $5F00,16,4 super_tile $40 #HTML[#CALL:supertile($5F00, 0)]
-B $5F10,16,4 super_tile $41 #HTML[#CALL:supertile($5F10, 0)]
-B $5F20,16,4 super_tile $42 #HTML[#CALL:supertile($5F20, 0)]
-B $5F30,16,4 super_tile $43 #HTML[#CALL:supertile($5F30, 0)]
-B $5F40,16,4 super_tile $44 #HTML[#CALL:supertile($5F40, 0)]
-B $5F50,16,4 super_tile $45 #HTML[#CALL:supertile($5F50, 0)]
-B $5F60,16,4 super_tile $46 #HTML[#CALL:supertile($5F60, 0)]
-B $5F70,16,4 super_tile $47 #HTML[#CALL:supertile($5F70, 0)]
-B $5F80,16,4 super_tile $48 #HTML[#CALL:supertile($5F80, 0)]
-B $5F90,16,4 super_tile $49 #HTML[#CALL:supertile($5F90, 0)]
-B $5FA0,16,4 super_tile $4A #HTML[#CALL:supertile($5FA0, 0)]
-B $5FB0,16,4 super_tile $4B #HTML[#CALL:supertile($5FB0, 0)]
-B $5FC0,16,4 super_tile $4C #HTML[#CALL:supertile($5FC0, 0)]
-B $5FD0,16,4 super_tile $4D #HTML[#CALL:supertile($5FD0, 0)]
-B $5FE0,16,4 super_tile $4E #HTML[#CALL:supertile($5FE0, 0)]
-B $5FF0,16,4 super_tile $4F #HTML[#CALL:supertile($5FF0, 0)] [unused by map]
-B $6000,16,4 super_tile $50 #HTML[#CALL:supertile($6000, 0)]
-B $6010,16,4 super_tile $51 #HTML[#CALL:supertile($6010, 0)]
-B $6020,16,4 super_tile $52 #HTML[#CALL:supertile($6020, 0)]
-B $6030,16,4 super_tile $53 #HTML[#CALL:supertile($6030, 0)]
-B $6040,16,4 super_tile $54 #HTML[#CALL:supertile($6040, 0)]
-B $6050,16,4 super_tile $55 #HTML[#CALL:supertile($6050, 0)]
-B $6060,16,4 super_tile $56 #HTML[#CALL:supertile($6060, 0)]
-B $6070,16,4 super_tile $57 #HTML[#CALL:supertile($6070, 0)]
-B $6080,16,4 super_tile $58 #HTML[#CALL:supertile($6080, 0)]
-B $6090,16,4 super_tile $59 #HTML[#CALL:supertile($6090, 0)]
-B $60A0,16,4 super_tile $5A #HTML[#CALL:supertile($60A0, 0)]
-B $60B0,16,4 super_tile $5B #HTML[#CALL:supertile($60B0, 0)]
-B $60C0,16,4 super_tile $5C #HTML[#CALL:supertile($60C0, 0)]
-B $60D0,16,4 super_tile $5D #HTML[#CALL:supertile($60D0, 0)]
-B $60E0,16,4 super_tile $5E #HTML[#CALL:supertile($60E0, 0)]
-B $60F0,16,4 super_tile $5F #HTML[#CALL:supertile($60F0, 0)]
-B $6100,16,4 super_tile $60 #HTML[#CALL:supertile($6100, 0)]
-B $6110,16,4 super_tile $61 #HTML[#CALL:supertile($6110, 0)]
-B $6120,16,4 super_tile $62 #HTML[#CALL:supertile($6120, 0)]
-B $6130,16,4 super_tile $63 #HTML[#CALL:supertile($6130, 0)]
-B $6140,16,4 super_tile $64 #HTML[#CALL:supertile($6140, 0)]
-B $6150,16,4 super_tile $65 #HTML[#CALL:supertile($6150, 0)]
-B $6160,16,4 super_tile $66 #HTML[#CALL:supertile($6160, 0)]
-B $6170,16,4 super_tile $67 #HTML[#CALL:supertile($6170, 0)]
-B $6180,16,4 super_tile $68 #HTML[#CALL:supertile($6180, 0)]
-B $6190,16,4 super_tile $69 #HTML[#CALL:supertile($6190, 0)]
-B $61A0,16,4 super_tile $6A #HTML[#CALL:supertile($61A0, 0)]
-B $61B0,16,4 super_tile $6B #HTML[#CALL:supertile($61B0, 0)]
-B $61C0,16,4 super_tile $6C #HTML[#CALL:supertile($61C0, 0)]
-B $61D0,16,4 super_tile $6D #HTML[#CALL:supertile($61D0, 0)]
-B $61E0,16,4 super_tile $6E #HTML[#CALL:supertile($61E0, 0)]
-B $61F0,16,4 super_tile $6F #HTML[#CALL:supertile($61F0, 0)]
-B $6200,16,4 super_tile $70 #HTML[#CALL:supertile($6200, 0)]
-B $6210,16,4 super_tile $71 #HTML[#CALL:supertile($6210, 0)]
-B $6220,16,4 super_tile $72 #HTML[#CALL:supertile($6220, 0)]
-B $6230,16,4 super_tile $73 #HTML[#CALL:supertile($6230, 0)]
-B $6240,16,4 super_tile $74 #HTML[#CALL:supertile($6240, 0)]
-B $6250,16,4 super_tile $75 #HTML[#CALL:supertile($6250, 0)]
-B $6260,16,4 super_tile $76 #HTML[#CALL:supertile($6260, 0)]
-B $6270,16,4 super_tile $77 #HTML[#CALL:supertile($6270, 0)]
-B $6280,16,4 super_tile $78 #HTML[#CALL:supertile($6280, 0)]
-B $6290,16,4 super_tile $79 #HTML[#CALL:supertile($6290, 0)]
-B $62A0,16,4 super_tile $7A #HTML[#CALL:supertile($62A0, 0)]
-B $62B0,16,4 super_tile $7B #HTML[#CALL:supertile($62B0, 0)]
-B $62C0,16,4 super_tile $7C #HTML[#CALL:supertile($62C0, 0)]
-B $62D0,16,4 super_tile $7D #HTML[#CALL:supertile($62D0, 0)]
-B $62E0,16,4 super_tile $7E #HTML[#CALL:supertile($62E0, 0)]
-B $62F0,16,4 super_tile $7F #HTML[#CALL:supertile($62F0, 0)]
-B $6300,16,4 super_tile $80 #HTML[#CALL:supertile($6300, 0)]
-B $6310,16,4 super_tile $81 #HTML[#CALL:supertile($6310, 0)]
-B $6320,16,4 super_tile $82 #HTML[#CALL:supertile($6320, 0)]
-B $6330,16,4 super_tile $83 #HTML[#CALL:supertile($6330, 0)]
-B $6340,16,4 super_tile $84 #HTML[#CALL:supertile($6340, 0)]
-B $6350,16,4 super_tile $85 #HTML[#CALL:supertile($6350, 0)]
-B $6360,16,4 super_tile $86 #HTML[#CALL:supertile($6360, 0)]
-B $6370,16,4 super_tile $87 #HTML[#CALL:supertile($6370, 0)]
-B $6380,16,4 super_tile $88 #HTML[#CALL:supertile($6380, 0)]
-B $6390,16,4 super_tile $89 #HTML[#CALL:supertile($6390, 0)]
-B $63A0,16,4 super_tile $8A #HTML[#CALL:supertile($63A0, 0)]
-B $63B0,16,4 super_tile $8B #HTML[#CALL:supertile($63B0, 0)]
-B $63C0,16,4 super_tile $8C #HTML[#CALL:supertile($63C0, 0)]
-B $63D0,16,4 super_tile $8D #HTML[#CALL:supertile($63D0, 0)]
-B $63E0,16,4 super_tile $8E #HTML[#CALL:supertile($63E0, 0)]
-B $63F0,16,4 super_tile $8F #HTML[#CALL:supertile($63F0, 0)]
-B $6400,16,4 super_tile $90 #HTML[#CALL:supertile($6400, 0)]
-B $6410,16,4 super_tile $91 #HTML[#CALL:supertile($6410, 0)]
-B $6420,16,4 super_tile $92 #HTML[#CALL:supertile($6420, 0)]
-B $6430,16,4 super_tile $93 #HTML[#CALL:supertile($6430, 0)]
-B $6440,16,4 super_tile $94 #HTML[#CALL:supertile($6440, 0)]
-B $6450,16,4 super_tile $95 #HTML[#CALL:supertile($6450, 0)]
-B $6460,16,4 super_tile $96 #HTML[#CALL:supertile($6460, 0)]
-B $6470,16,4 super_tile $97 #HTML[#CALL:supertile($6470, 0)]
-B $6480,16,4 super_tile $98 #HTML[#CALL:supertile($6480, 0)]
-B $6490,16,4 super_tile $99 #HTML[#CALL:supertile($6490, 0)]
-B $64A0,16,4 super_tile $9A #HTML[#CALL:supertile($64A0, 0)] [unused by map]
-B $64B0,16,4 super_tile $9B #HTML[#CALL:supertile($64B0, 0)]
-B $64C0,16,4 super_tile $9C #HTML[#CALL:supertile($64C0, 0)]
-B $64D0,16,4 super_tile $9D #HTML[#CALL:supertile($64D0, 0)]
-B $64E0,16,4 super_tile $9E #HTML[#CALL:supertile($64E0, 0)]
-B $64F0,16,4 super_tile $9F #HTML[#CALL:supertile($64F0, 0)]
-B $6500,16,4 super_tile $A0 #HTML[#CALL:supertile($6500, 0)]
-B $6510,16,4 super_tile $A1 #HTML[#CALL:supertile($6510, 0)]
-B $6520,16,4 super_tile $A2 #HTML[#CALL:supertile($6520, 0)]
-B $6530,16,4 super_tile $A3 #HTML[#CALL:supertile($6530, 0)]
-B $6540,16,4 super_tile $A4 #HTML[#CALL:supertile($6540, 0)]
-B $6550,16,4 super_tile $A5 #HTML[#CALL:supertile($6550, 0)]
-B $6560,16,4 super_tile $A6 #HTML[#CALL:supertile($6560, 0)]
-B $6570,16,4 super_tile $A7 #HTML[#CALL:supertile($6570, 0)]
-B $6580,16,4 super_tile $A8 #HTML[#CALL:supertile($6580, 0)]
-B $6590,16,4 super_tile $A9 #HTML[#CALL:supertile($6590, 0)]
-B $65A0,16,4 super_tile $AA #HTML[#CALL:supertile($65A0, 0)]
-B $65B0,16,4 super_tile $AB #HTML[#CALL:supertile($65B0, 0)]
-B $65C0,16,4 super_tile $AC #HTML[#CALL:supertile($65C0, 0)]
-B $65D0,16,4 super_tile $AD #HTML[#CALL:supertile($65D0, 0)]
-B $65E0,16,4 super_tile $AE #HTML[#CALL:supertile($65E0, 0)]
-B $65F0,16,4 super_tile $AF #HTML[#CALL:supertile($65F0, 0)]
-B $6600,16,4 super_tile $B0 #HTML[#CALL:supertile($6600, 0)]
-B $6610,16,4 super_tile $B1 #HTML[#CALL:supertile($6610, 0)]
-B $6620,16,4 super_tile $B2 #HTML[#CALL:supertile($6620, 0)]
-B $6630,16,4 super_tile $B3 #HTML[#CALL:supertile($6630, 0)]
-B $6640,16,4 super_tile $B4 #HTML[#CALL:supertile($6640, 0)]
-B $6650,16,4 super_tile $B5 #HTML[#CALL:supertile($6650, 0)]
-B $6660,16,4 super_tile $B6 #HTML[#CALL:supertile($6660, 0)]
-B $6670,16,4 super_tile $B7 #HTML[#CALL:supertile($6670, 0)]
-B $6680,16,4 super_tile $B8 #HTML[#CALL:supertile($6680, 0)]
-B $6690,16,4 super_tile $B9 #HTML[#CALL:supertile($6690, 0)]
-B $66A0,16,4 super_tile $BA #HTML[#CALL:supertile($66A0, 0)]
-B $66B0,16,4 super_tile $BB #HTML[#CALL:supertile($66B0, 0)]
-B $66C0,16,4 super_tile $BC #HTML[#CALL:supertile($66C0, 0)]
-B $66D0,16,4 super_tile $BD #HTML[#CALL:supertile($66D0, 0)]
-B $66E0,16,4 super_tile $BE #HTML[#CALL:supertile($66E0, 0)]
-B $66F0,16,4 super_tile $BF #HTML[#CALL:supertile($66F0, 0)]
-B $6700,16,4 super_tile $C0 #HTML[#CALL:supertile($6700, 0)]
-B $6710,16,4 super_tile $C1 #HTML[#CALL:supertile($6710, 0)]
-B $6720,16,4 super_tile $C2 #HTML[#CALL:supertile($6720, 0)]
-B $6730,16,4 super_tile $C3 #HTML[#CALL:supertile($6730, 0)]
-B $6740,16,4 super_tile $C4 #HTML[#CALL:supertile($6740, 0)]
-B $6750,16,4 super_tile $C5 #HTML[#CALL:supertile($6750, 0)]
-B $6760,16,4 super_tile $C6 #HTML[#CALL:supertile($6760, 0)]
-B $6770,16,4 super_tile $C7 #HTML[#CALL:supertile($6770, 0)]
-B $6780,16,4 super_tile $C8 #HTML[#CALL:supertile($6780, 0)]
-B $6790,16,4 super_tile $C9 #HTML[#CALL:supertile($6790, 0)]
-B $67A0,16,4 super_tile $CA #HTML[#CALL:supertile($67A0, 0)]
-B $67B0,16,4 super_tile $CB #HTML[#CALL:supertile($67B0, 0)]
-B $67C0,16,4 super_tile $CC #HTML[#CALL:supertile($67C0, 0)]
-B $67D0,16,4 super_tile $CD #HTML[#CALL:supertile($67D0, 0)]
-B $67E0,16,4 super_tile $CE #HTML[#CALL:supertile($67E0, 0)]
-B $67F0,16,4 super_tile $CF #HTML[#CALL:supertile($67F0, 0)]
-B $6800,16,4 super_tile $D0 #HTML[#CALL:supertile($6800, 0)]
-B $6810,16,4 super_tile $D1 #HTML[#CALL:supertile($6810, 0)]
-B $6820,16,4 super_tile $D2 #HTML[#CALL:supertile($6820, 0)]
-B $6830,16,4 super_tile $D3 #HTML[#CALL:supertile($6830, 0)]
-B $6840,16,4 super_tile $D4 #HTML[#CALL:supertile($6840, 0)]
-B $6850,16,4 super_tile $D5 #HTML[#CALL:supertile($6850, 0)]
-B $6860,16,4 super_tile $D6 #HTML[#CALL:supertile($6860, 0)]
-B $6870,16,4 super_tile $D7 #HTML[#CALL:supertile($6870, 0)]
-B $6880,16,4 super_tile $D8 #HTML[#CALL:supertile($6880, 0)]
-B $6890,16,4 super_tile $D9 #HTML[#CALL:supertile($6890, 0)]
+@ $5B00 label=super_tiles
+  $5B00,16,4 super_tile $00 #HTML[#CALL:supertile($5B00, 0)]
+  $5B10,16,4 super_tile $01 #HTML[#CALL:supertile($5B10, 0)]
+  $5B20,16,4 super_tile $02 #HTML[#CALL:supertile($5B20, 0)]
+  $5B30,16,4 super_tile $03 #HTML[#CALL:supertile($5B30, 0)]
+  $5B40,16,4 super_tile $04 #HTML[#CALL:supertile($5B40, 0)]
+  $5B50,16,4 super_tile $05 #HTML[#CALL:supertile($5B50, 0)]
+  $5B60,16,4 super_tile $06 #HTML[#CALL:supertile($5B60, 0)]
+  $5B70,16,4 super_tile $07 #HTML[#CALL:supertile($5B70, 0)]
+  $5B80,16,4 super_tile $08 #HTML[#CALL:supertile($5B80, 0)]
+  $5B90,16,4 super_tile $09 #HTML[#CALL:supertile($5B90, 0)]
+  $5BA0,16,4 super_tile $0A #HTML[#CALL:supertile($5BA0, 0)]
+  $5BB0,16,4 super_tile $0B #HTML[#CALL:supertile($5BB0, 0)]
+  $5BC0,16,4 super_tile $0C #HTML[#CALL:supertile($5BC0, 0)]
+  $5BD0,16,4 super_tile $0D #HTML[#CALL:supertile($5BD0, 0)]
+  $5BE0,16,4 super_tile $0E #HTML[#CALL:supertile($5BE0, 0)]
+  $5BF0,16,4 super_tile $0F #HTML[#CALL:supertile($5BF0, 0)]
+  $5C00,16,4 super_tile $10 #HTML[#CALL:supertile($5C00, 0)]
+  $5C10,16,4 super_tile $11 #HTML[#CALL:supertile($5C10, 0)]
+  $5C20,16,4 super_tile $12 #HTML[#CALL:supertile($5C20, 0)]
+  $5C30,16,4 super_tile $13 #HTML[#CALL:supertile($5C30, 0)]
+  $5C40,16,4 super_tile $14 #HTML[#CALL:supertile($5C40, 0)]
+  $5C50,16,4 super_tile $15 #HTML[#CALL:supertile($5C50, 0)]
+  $5C60,16,4 super_tile $16 #HTML[#CALL:supertile($5C60, 0)]
+  $5C70,16,4 super_tile $17 #HTML[#CALL:supertile($5C70, 0)]
+  $5C80,16,4 super_tile $18 #HTML[#CALL:supertile($5C80, 0)]
+  $5C90,16,4 super_tile $19 #HTML[#CALL:supertile($5C90, 0)]
+  $5CA0,16,4 super_tile $1A #HTML[#CALL:supertile($5CA0, 0)]
+  $5CB0,16,4 super_tile $1B #HTML[#CALL:supertile($5CB0, 0)]
+  $5CC0,16,4 super_tile $1C #HTML[#CALL:supertile($5CC0, 0)]
+  $5CD0,16,4 super_tile $1D #HTML[#CALL:supertile($5CD0, 0)]
+  $5CE0,16,4 super_tile $1E #HTML[#CALL:supertile($5CE0, 0)]
+  $5CF0,16,4 super_tile $1F #HTML[#CALL:supertile($5CF0, 0)]
+  $5D00,16,4 super_tile $20 #HTML[#CALL:supertile($5D00, 0)]
+  $5D10,16,4 super_tile $21 #HTML[#CALL:supertile($5D10, 0)]
+  $5D20,16,4 super_tile $22 #HTML[#CALL:supertile($5D20, 0)]
+  $5D30,16,4 super_tile $23 #HTML[#CALL:supertile($5D30, 0)]
+  $5D40,16,4 super_tile $24 #HTML[#CALL:supertile($5D40, 0)]
+  $5D50,16,4 super_tile $25 #HTML[#CALL:supertile($5D50, 0)]
+  $5D60,16,4 super_tile $26 #HTML[#CALL:supertile($5D60, 0)]
+  $5D70,16,4 super_tile $27 #HTML[#CALL:supertile($5D70, 0)]
+  $5D80,16,4 super_tile $28 #HTML[#CALL:supertile($5D80, 0)]
+  $5D90,16,4 super_tile $29 #HTML[#CALL:supertile($5D90, 0)]
+  $5DA0,16,4 super_tile $2A #HTML[#CALL:supertile($5DA0, 0)]
+  $5DB0,16,4 super_tile $2B #HTML[#CALL:supertile($5DB0, 0)]
+  $5DC0,16,4 super_tile $2C #HTML[#CALL:supertile($5DC0, 0)]
+  $5DD0,16,4 super_tile $2D #HTML[#CALL:supertile($5DD0, 0)]
+  $5DE0,16,4 super_tile $2E #HTML[#CALL:supertile($5DE0, 0)]
+  $5DF0,16,4 super_tile $2F #HTML[#CALL:supertile($5DF0, 0)]
+  $5E00,16,4 super_tile $30 #HTML[#CALL:supertile($5E00, 0)]
+  $5E10,16,4 super_tile $31 #HTML[#CALL:supertile($5E10, 0)]
+  $5E20,16,4 super_tile $32 #HTML[#CALL:supertile($5E20, 0)]
+  $5E30,16,4 super_tile $33 #HTML[#CALL:supertile($5E30, 0)]
+  $5E40,16,4 super_tile $34 #HTML[#CALL:supertile($5E40, 0)]
+  $5E50,16,4 super_tile $35 #HTML[#CALL:supertile($5E50, 0)]
+  $5E60,16,4 super_tile $36 #HTML[#CALL:supertile($5E60, 0)]
+  $5E70,16,4 super_tile $37 #HTML[#CALL:supertile($5E70, 0)]
+  $5E80,16,4 super_tile $38 #HTML[#CALL:supertile($5E80, 0)]
+  $5E90,16,4 super_tile $39 #HTML[#CALL:supertile($5E90, 0)]
+  $5EA0,16,4 super_tile $3A #HTML[#CALL:supertile($5EA0, 0)]
+  $5EB0,16,4 super_tile $3B #HTML[#CALL:supertile($5EB0, 0)]
+  $5EC0,16,4 super_tile $3C #HTML[#CALL:supertile($5EC0, 0)]
+  $5ED0,16,4 super_tile $3D #HTML[#CALL:supertile($5ED0, 0)]
+  $5EE0,16,4 super_tile $3E #HTML[#CALL:supertile($5EE0, 0)]
+  $5EF0,16,4 super_tile $3F #HTML[#CALL:supertile($5EF0, 0)]
+  $5F00,16,4 super_tile $40 #HTML[#CALL:supertile($5F00, 0)]
+  $5F10,16,4 super_tile $41 #HTML[#CALL:supertile($5F10, 0)]
+  $5F20,16,4 super_tile $42 #HTML[#CALL:supertile($5F20, 0)]
+  $5F30,16,4 super_tile $43 #HTML[#CALL:supertile($5F30, 0)]
+  $5F40,16,4 super_tile $44 #HTML[#CALL:supertile($5F40, 0)]
+  $5F50,16,4 super_tile $45 #HTML[#CALL:supertile($5F50, 0)]
+  $5F60,16,4 super_tile $46 #HTML[#CALL:supertile($5F60, 0)]
+  $5F70,16,4 super_tile $47 #HTML[#CALL:supertile($5F70, 0)]
+  $5F80,16,4 super_tile $48 #HTML[#CALL:supertile($5F80, 0)]
+  $5F90,16,4 super_tile $49 #HTML[#CALL:supertile($5F90, 0)]
+  $5FA0,16,4 super_tile $4A #HTML[#CALL:supertile($5FA0, 0)]
+  $5FB0,16,4 super_tile $4B #HTML[#CALL:supertile($5FB0, 0)]
+  $5FC0,16,4 super_tile $4C #HTML[#CALL:supertile($5FC0, 0)]
+  $5FD0,16,4 super_tile $4D #HTML[#CALL:supertile($5FD0, 0)]
+  $5FE0,16,4 super_tile $4E #HTML[#CALL:supertile($5FE0, 0)]
+  $5FF0,16,4 super_tile $4F #HTML[#CALL:supertile($5FF0, 0)] [unused by map]
+  $6000,16,4 super_tile $50 #HTML[#CALL:supertile($6000, 0)]
+  $6010,16,4 super_tile $51 #HTML[#CALL:supertile($6010, 0)]
+  $6020,16,4 super_tile $52 #HTML[#CALL:supertile($6020, 0)]
+  $6030,16,4 super_tile $53 #HTML[#CALL:supertile($6030, 0)]
+  $6040,16,4 super_tile $54 #HTML[#CALL:supertile($6040, 0)]
+  $6050,16,4 super_tile $55 #HTML[#CALL:supertile($6050, 0)]
+  $6060,16,4 super_tile $56 #HTML[#CALL:supertile($6060, 0)]
+  $6070,16,4 super_tile $57 #HTML[#CALL:supertile($6070, 0)]
+  $6080,16,4 super_tile $58 #HTML[#CALL:supertile($6080, 0)]
+  $6090,16,4 super_tile $59 #HTML[#CALL:supertile($6090, 0)]
+  $60A0,16,4 super_tile $5A #HTML[#CALL:supertile($60A0, 0)]
+  $60B0,16,4 super_tile $5B #HTML[#CALL:supertile($60B0, 0)]
+  $60C0,16,4 super_tile $5C #HTML[#CALL:supertile($60C0, 0)]
+  $60D0,16,4 super_tile $5D #HTML[#CALL:supertile($60D0, 0)]
+  $60E0,16,4 super_tile $5E #HTML[#CALL:supertile($60E0, 0)]
+  $60F0,16,4 super_tile $5F #HTML[#CALL:supertile($60F0, 0)]
+  $6100,16,4 super_tile $60 #HTML[#CALL:supertile($6100, 0)]
+  $6110,16,4 super_tile $61 #HTML[#CALL:supertile($6110, 0)]
+  $6120,16,4 super_tile $62 #HTML[#CALL:supertile($6120, 0)]
+  $6130,16,4 super_tile $63 #HTML[#CALL:supertile($6130, 0)]
+  $6140,16,4 super_tile $64 #HTML[#CALL:supertile($6140, 0)]
+  $6150,16,4 super_tile $65 #HTML[#CALL:supertile($6150, 0)]
+  $6160,16,4 super_tile $66 #HTML[#CALL:supertile($6160, 0)]
+  $6170,16,4 super_tile $67 #HTML[#CALL:supertile($6170, 0)]
+  $6180,16,4 super_tile $68 #HTML[#CALL:supertile($6180, 0)]
+  $6190,16,4 super_tile $69 #HTML[#CALL:supertile($6190, 0)]
+  $61A0,16,4 super_tile $6A #HTML[#CALL:supertile($61A0, 0)]
+  $61B0,16,4 super_tile $6B #HTML[#CALL:supertile($61B0, 0)]
+  $61C0,16,4 super_tile $6C #HTML[#CALL:supertile($61C0, 0)]
+  $61D0,16,4 super_tile $6D #HTML[#CALL:supertile($61D0, 0)]
+  $61E0,16,4 super_tile $6E #HTML[#CALL:supertile($61E0, 0)]
+  $61F0,16,4 super_tile $6F #HTML[#CALL:supertile($61F0, 0)]
+  $6200,16,4 super_tile $70 #HTML[#CALL:supertile($6200, 0)]
+  $6210,16,4 super_tile $71 #HTML[#CALL:supertile($6210, 0)]
+  $6220,16,4 super_tile $72 #HTML[#CALL:supertile($6220, 0)]
+  $6230,16,4 super_tile $73 #HTML[#CALL:supertile($6230, 0)]
+  $6240,16,4 super_tile $74 #HTML[#CALL:supertile($6240, 0)]
+  $6250,16,4 super_tile $75 #HTML[#CALL:supertile($6250, 0)]
+  $6260,16,4 super_tile $76 #HTML[#CALL:supertile($6260, 0)]
+  $6270,16,4 super_tile $77 #HTML[#CALL:supertile($6270, 0)]
+  $6280,16,4 super_tile $78 #HTML[#CALL:supertile($6280, 0)]
+  $6290,16,4 super_tile $79 #HTML[#CALL:supertile($6290, 0)]
+  $62A0,16,4 super_tile $7A #HTML[#CALL:supertile($62A0, 0)]
+  $62B0,16,4 super_tile $7B #HTML[#CALL:supertile($62B0, 0)]
+  $62C0,16,4 super_tile $7C #HTML[#CALL:supertile($62C0, 0)]
+  $62D0,16,4 super_tile $7D #HTML[#CALL:supertile($62D0, 0)]
+  $62E0,16,4 super_tile $7E #HTML[#CALL:supertile($62E0, 0)]
+  $62F0,16,4 super_tile $7F #HTML[#CALL:supertile($62F0, 0)]
+  $6300,16,4 super_tile $80 #HTML[#CALL:supertile($6300, 0)]
+  $6310,16,4 super_tile $81 #HTML[#CALL:supertile($6310, 0)]
+  $6320,16,4 super_tile $82 #HTML[#CALL:supertile($6320, 0)]
+  $6330,16,4 super_tile $83 #HTML[#CALL:supertile($6330, 0)]
+  $6340,16,4 super_tile $84 #HTML[#CALL:supertile($6340, 0)]
+  $6350,16,4 super_tile $85 #HTML[#CALL:supertile($6350, 0)]
+  $6360,16,4 super_tile $86 #HTML[#CALL:supertile($6360, 0)]
+  $6370,16,4 super_tile $87 #HTML[#CALL:supertile($6370, 0)]
+  $6380,16,4 super_tile $88 #HTML[#CALL:supertile($6380, 0)]
+  $6390,16,4 super_tile $89 #HTML[#CALL:supertile($6390, 0)]
+  $63A0,16,4 super_tile $8A #HTML[#CALL:supertile($63A0, 0)]
+  $63B0,16,4 super_tile $8B #HTML[#CALL:supertile($63B0, 0)]
+  $63C0,16,4 super_tile $8C #HTML[#CALL:supertile($63C0, 0)]
+  $63D0,16,4 super_tile $8D #HTML[#CALL:supertile($63D0, 0)]
+  $63E0,16,4 super_tile $8E #HTML[#CALL:supertile($63E0, 0)]
+  $63F0,16,4 super_tile $8F #HTML[#CALL:supertile($63F0, 0)]
+  $6400,16,4 super_tile $90 #HTML[#CALL:supertile($6400, 0)]
+  $6410,16,4 super_tile $91 #HTML[#CALL:supertile($6410, 0)]
+  $6420,16,4 super_tile $92 #HTML[#CALL:supertile($6420, 0)]
+  $6430,16,4 super_tile $93 #HTML[#CALL:supertile($6430, 0)]
+  $6440,16,4 super_tile $94 #HTML[#CALL:supertile($6440, 0)]
+  $6450,16,4 super_tile $95 #HTML[#CALL:supertile($6450, 0)]
+  $6460,16,4 super_tile $96 #HTML[#CALL:supertile($6460, 0)]
+  $6470,16,4 super_tile $97 #HTML[#CALL:supertile($6470, 0)]
+  $6480,16,4 super_tile $98 #HTML[#CALL:supertile($6480, 0)]
+  $6490,16,4 super_tile $99 #HTML[#CALL:supertile($6490, 0)]
+  $64A0,16,4 super_tile $9A #HTML[#CALL:supertile($64A0, 0)] [unused by map]
+  $64B0,16,4 super_tile $9B #HTML[#CALL:supertile($64B0, 0)]
+  $64C0,16,4 super_tile $9C #HTML[#CALL:supertile($64C0, 0)]
+  $64D0,16,4 super_tile $9D #HTML[#CALL:supertile($64D0, 0)]
+  $64E0,16,4 super_tile $9E #HTML[#CALL:supertile($64E0, 0)]
+  $64F0,16,4 super_tile $9F #HTML[#CALL:supertile($64F0, 0)]
+  $6500,16,4 super_tile $A0 #HTML[#CALL:supertile($6500, 0)]
+  $6510,16,4 super_tile $A1 #HTML[#CALL:supertile($6510, 0)]
+  $6520,16,4 super_tile $A2 #HTML[#CALL:supertile($6520, 0)]
+  $6530,16,4 super_tile $A3 #HTML[#CALL:supertile($6530, 0)]
+  $6540,16,4 super_tile $A4 #HTML[#CALL:supertile($6540, 0)]
+  $6550,16,4 super_tile $A5 #HTML[#CALL:supertile($6550, 0)]
+  $6560,16,4 super_tile $A6 #HTML[#CALL:supertile($6560, 0)]
+  $6570,16,4 super_tile $A7 #HTML[#CALL:supertile($6570, 0)]
+  $6580,16,4 super_tile $A8 #HTML[#CALL:supertile($6580, 0)]
+  $6590,16,4 super_tile $A9 #HTML[#CALL:supertile($6590, 0)]
+  $65A0,16,4 super_tile $AA #HTML[#CALL:supertile($65A0, 0)]
+  $65B0,16,4 super_tile $AB #HTML[#CALL:supertile($65B0, 0)]
+  $65C0,16,4 super_tile $AC #HTML[#CALL:supertile($65C0, 0)]
+  $65D0,16,4 super_tile $AD #HTML[#CALL:supertile($65D0, 0)]
+  $65E0,16,4 super_tile $AE #HTML[#CALL:supertile($65E0, 0)]
+  $65F0,16,4 super_tile $AF #HTML[#CALL:supertile($65F0, 0)]
+  $6600,16,4 super_tile $B0 #HTML[#CALL:supertile($6600, 0)]
+  $6610,16,4 super_tile $B1 #HTML[#CALL:supertile($6610, 0)]
+  $6620,16,4 super_tile $B2 #HTML[#CALL:supertile($6620, 0)]
+  $6630,16,4 super_tile $B3 #HTML[#CALL:supertile($6630, 0)]
+  $6640,16,4 super_tile $B4 #HTML[#CALL:supertile($6640, 0)]
+  $6650,16,4 super_tile $B5 #HTML[#CALL:supertile($6650, 0)]
+  $6660,16,4 super_tile $B6 #HTML[#CALL:supertile($6660, 0)]
+  $6670,16,4 super_tile $B7 #HTML[#CALL:supertile($6670, 0)]
+  $6680,16,4 super_tile $B8 #HTML[#CALL:supertile($6680, 0)]
+  $6690,16,4 super_tile $B9 #HTML[#CALL:supertile($6690, 0)]
+  $66A0,16,4 super_tile $BA #HTML[#CALL:supertile($66A0, 0)]
+  $66B0,16,4 super_tile $BB #HTML[#CALL:supertile($66B0, 0)]
+  $66C0,16,4 super_tile $BC #HTML[#CALL:supertile($66C0, 0)]
+  $66D0,16,4 super_tile $BD #HTML[#CALL:supertile($66D0, 0)]
+  $66E0,16,4 super_tile $BE #HTML[#CALL:supertile($66E0, 0)]
+  $66F0,16,4 super_tile $BF #HTML[#CALL:supertile($66F0, 0)]
+  $6700,16,4 super_tile $C0 #HTML[#CALL:supertile($6700, 0)]
+  $6710,16,4 super_tile $C1 #HTML[#CALL:supertile($6710, 0)]
+  $6720,16,4 super_tile $C2 #HTML[#CALL:supertile($6720, 0)]
+  $6730,16,4 super_tile $C3 #HTML[#CALL:supertile($6730, 0)]
+  $6740,16,4 super_tile $C4 #HTML[#CALL:supertile($6740, 0)]
+  $6750,16,4 super_tile $C5 #HTML[#CALL:supertile($6750, 0)]
+  $6760,16,4 super_tile $C6 #HTML[#CALL:supertile($6760, 0)]
+  $6770,16,4 super_tile $C7 #HTML[#CALL:supertile($6770, 0)]
+  $6780,16,4 super_tile $C8 #HTML[#CALL:supertile($6780, 0)]
+  $6790,16,4 super_tile $C9 #HTML[#CALL:supertile($6790, 0)]
+  $67A0,16,4 super_tile $CA #HTML[#CALL:supertile($67A0, 0)]
+  $67B0,16,4 super_tile $CB #HTML[#CALL:supertile($67B0, 0)]
+  $67C0,16,4 super_tile $CC #HTML[#CALL:supertile($67C0, 0)]
+  $67D0,16,4 super_tile $CD #HTML[#CALL:supertile($67D0, 0)]
+  $67E0,16,4 super_tile $CE #HTML[#CALL:supertile($67E0, 0)]
+  $67F0,16,4 super_tile $CF #HTML[#CALL:supertile($67F0, 0)]
+  $6800,16,4 super_tile $D0 #HTML[#CALL:supertile($6800, 0)]
+  $6810,16,4 super_tile $D1 #HTML[#CALL:supertile($6810, 0)]
+  $6820,16,4 super_tile $D2 #HTML[#CALL:supertile($6820, 0)]
+  $6830,16,4 super_tile $D3 #HTML[#CALL:supertile($6830, 0)]
+  $6840,16,4 super_tile $D4 #HTML[#CALL:supertile($6840, 0)]
+  $6850,16,4 super_tile $D5 #HTML[#CALL:supertile($6850, 0)]
+  $6860,16,4 super_tile $D6 #HTML[#CALL:supertile($6860, 0)]
+  $6870,16,4 super_tile $D7 #HTML[#CALL:supertile($6870, 0)]
+  $6880,16,4 super_tile $D8 #HTML[#CALL:supertile($6880, 0)]
+  $6890,16,4 super_tile $D9 #HTML[#CALL:supertile($6890, 0)]
 
 ; ------------------------------------------------------------------------------
 
 g $68A0 room_index
-@ $68A0 label=room_index
 D $68A0 Index of the current room, or 0 when outside.
+@ $68A0 label=room_index
+  $68A0,1,1
 
 ; ------------------------------------------------------------------------------
 
 g $68A1 current_door
-@ $68A1 label=current_door
 D $68A1 Holds current door.
+@ $68A1 label=current_door
+  $68A1,1,1
 
 ; ------------------------------------------------------------------------------
 
 c $68A2 transition
-@ $68A2 label=transition
 D $68A2 Looks like it's called to transition to a new room.
 R $68A2 I:HL Pointer to location?
 R $68A2 I:IY Pointer to visible character?
+@ $68A2 label=transition
   $68A2 EX DE,HL
   $68A3 HL = IY;
   $68A6 A = L; // stash vischar index/offset
@@ -975,8 +977,7 @@ N $68D7 HL points to the hero vischar at this point.
   $68EB   *HL &= 3;     // $800E // likely a sprite direction
   $68EF   reset_outdoors();
   $68F2   goto squash_stack_goto_main; %>
-;
-; fallthrough
+E $68A2 FALL THROUGH into enter_room.
 
 c $68F4 enter_room
 @ $68F4 label=enter_room
@@ -990,8 +991,7 @@ c $68F4 enter_room
   $690F setup_movable_items();
   $6912 zoombox();
   $6915 increase_score(1);
-;
-; fallthrough
+E $68F4 FALL THROUGH into squash_stack_goto_main.
 
 c $691A squash_stack_goto_main
 @ $691A label=squash_stack_goto_main
@@ -1001,9 +1001,10 @@ c $691A squash_stack_goto_main
 ; ------------------------------------------------------------------------------
 
 c $6920 set_hero_sprite_for_room
-@ $6920 label=set_hero_sprite_for_room
+D $6920 Used by the routine at #R$68F4.
 D $6920 Called when changing rooms.
 D $6920 For tunnels this forces the hero sprite to 'prisoner' and sets the crawl flag appropriately.
+@ $6920 label=set_hero_sprite_for_room
 @ $6920 nowarn
   $6920 HL = $800D;
   $6923 *HL++ = 0x80; // likely a character direction
@@ -1029,18 +1030,19 @@ c $6939 setup_movable_items
   $6964 move_map();
   $6967 locate_vischar_or_itemstruct_then_plot(); return;
 
-  $696A setup_crate: HL = &movable_items[movable_item_CRATE];
+@ $696A label=setup_crate
+  $696A HL = &movable_items[movable_item_CRATE];
   $696D A = character_28_CRATE;
   $696F goto setup_movable_item;
 
-  $6971 setup_stove2: HL = &movable_items[movable_item_STOVE2];
+@ $6971 label=setup_stove2
+  $6971 HL = &movable_items[movable_item_STOVE2];
   $6974 A = character_27_STOVE_2;
   $6976 goto setup_movable_item;
 
-  $6978 setup_stove1: HL = &movable_items[movable_item_STOVE1];
+@ $6978 label=setup_stove1
+  $6978 HL = &movable_items[movable_item_STOVE1];
   $697B A = character_26_STOVE_1;
-;
-; fallthrough
 
 ; movable item takes the first non-player vischar
 @ $697D label=setup_movable_item
@@ -1071,28 +1073,30 @@ b $69AE movable_items
 D $69AE struct movable_item { word y_coord, x_coord, vertical_offset; const sprite *; byte terminator; };
 D $69AE Sub-struct of vischar ($802F..$8038).
 @ $69AE label=movable_item_stove1
+N $69AE struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
 W $69AE,6,6 pos: 62, 35, 16
 W $69B4 sprite: sprite_stove
-B $69B6 b17: 0
-D $69AE struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
+  $69B6 b17: 0
 
 @ $69B7 label=movable_item_crate
 N $69B7 struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
 W $69B7,6,6 pos: 55, 54, 14
 W $69BD sprite: sprite_crate
-B $69BF b17: 0
+  $69BF b17: 0
 
 @ $69C0 label=movable_item_stove2
 N $69C0 struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
 W $69C0,6,6 pos: 62, 35, 16
 W $69C6 sprite: sprite_stove
-B $69C8 b17: 0
+  $69C8 b17: 0
 
 ; ------------------------------------------------------------------------------
 
 c $69C9 reset_nonplayer_visible_characters
-@ $69C9 label=reset_nonplayer_visible_characters
+D $69C9 Used by the routine at #R$6939.
+D $69C9 Used by the routine at #R$6939.
 D $69C9 Reset all non-player visible characters.
+@ $69C9 label=reset_nonplayer_visible_characters
 @ $69C9 nowarn
   $69C9 HL = $8020; // iterate over non-player characters
   $69CC B = 7; // 7 iterations
@@ -1108,9 +1112,10 @@ D $69C9 Reset all non-player visible characters.
 ; ------------------------------------------------------------------------------
 
 c $69DC setup_doors
-@ $69DC label=setup_doors
+D $69DC Used by the routine at #R$6A35.
 D $69DC Looks like it's filling door_related with stuff from the door_positions table.
 D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
+@ $69DC label=setup_doors
   $69DC -
   $69DE DE = door_related + 3;
   $69E1 B = 4;
@@ -1133,11 +1138,11 @@ D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
 ; ------------------------------------------------------------------------------
 
 c $6A12 get_door_position
-@ $6A12 label=get_door_position
 D $6A12 Index turns into door_position struct pointer.
 R $6A12 I:A  Index of ...
 R $6A12 O:HL Pointer to ...
 R $6A12 O:DE Corrupted.
+@ $6A12 label=get_door_position
   $6A12 HL = &door_positions[(A * 2) & 0xFF]; // are they pairs of doors?
   $6A1D if (A & (1<<7)) HL += 4;
   $6A26 return;
@@ -1145,8 +1150,8 @@ R $6A12 O:DE Corrupted.
 ; ------------------------------------------------------------------------------
 
 c $6A27 wipe_visible_tiles
-@ $6A27 label=wipe_visible_tiles
 D $6A27 Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
+@ $6A27 label=wipe_visible_tiles
   $6A27 memset($F0F8, 0, 408);
   $6A34 return;
 
@@ -1155,8 +1160,8 @@ D $6A27 Wipe the visible tiles array at $F0F8 (24 * 17 = 408).
 c $6A35 setup_room
 @ $6A35 label=setup_room
   $6A35 wipe_visible_tiles();
-  $6A38 HL = rooms_and_tunnels[room_index - 1];
 @ $6A3C isub=LD HL,rooms_and_tunnels - 2
+  $6A38 HL = rooms_and_tunnels[room_index - 1];
   $6A48 PUSH HL
   $6A49 setup_doors();
   $6A4C POP HL
@@ -1217,7 +1222,7 @@ N $6A8C Plot all objects.
 ; ------------------------------------------------------------------------------
 
 c $6AB5 expand_object
-@ $6AB5 label=expand_object
+D $6AB5 Used by the routine at #R$6A35.
 D $6AB5 Expands RLE-encoded objects to a full set of tile references.
 D $6AB5 Format:
 D $6AB5 <w> <h>: width, height
@@ -1230,11 +1235,12 @@ R $6AB5 I:A  Object index.
 R $6AB5 I:DE Receives expanded tiles. Must point to correct x,y in tile buf.
 R $6AB5 O:BC Corrupted.
 R $6AB5 O:HL Corrupted.
+@ $6AB5 label=expand_object
   $6AB5 HL = interior_object_defs[A];
   $6AC1 B = *HL++; // width
   $6AC3 C = *HL++; // height
-  $6AC5 ($6AE6 + 1) = B; // self modify (== width)
 @ $6AC6 isub=LD (expand_object_width + 1),A
+  $6AC5 ($6AE6 + 1) = B; // self modify (== width)
   $6AC9 do <% do <% expand: A = *HL;
   $6ACA     if (A == objecttile_ESCAPE) <%
   $6ACE       HL++;
@@ -1252,8 +1258,7 @@ R $6AB5 O:HL Corrupted.
   $6AE8   DE += 24 - B;
   $6AF0 %> while (--C); // for each row
   $6AF3 return;
-;
-; 128..255 case
+N $6AF4 128..255 case
 @ $6AF4 label=expand_object_128_to_255
   $6AF4 A = *HL++ & 0x7F;
   $6AF7 -
@@ -1263,20 +1268,18 @@ R $6AB5 O:HL Corrupted.
   $6AFC   if (Adash > 0) *DE = Adash;
   $6B00   DE++;
   $6B01   DJNZ $6B12
-; ran out of width
+N $6B03 Ran out of width.
 @ $6B03 isub=LD A,(expand_object_width + 1)
   $6B03   LD Adash,($6AE6 + 1)  // Adash = width
   $6B06   B = Adash;
   $6B07   DE += 24 - B; // stride
   $6B0F   Adash = *HL;
   $6B10   if (--C == 0) return;
-;
   $6B12   -
   $6B13 %> while (--A);
   $6B16 HL++;
   $6B17 goto expand;
-;
-; 64..127 case
+N $6B19 64..127 case.
 @ $6B19 label=expand_object_64_to_127
   $6B19 A = 60; // opcode of 'INC A'
 N $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
@@ -1297,7 +1300,6 @@ N $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence 
   $6B30   DE += 24 - Adash; // stride
   $6B38   POP AFdash
   $6B3A   if (--C == 0) return;
-;
   $6B3B   -
   $6B3D %> while (--A);
   $6B3F HL++;
@@ -1306,7 +1308,6 @@ N $6B1B Redundant: Self modify, but nothing else modifies it! Possible evidence 
 ; ------------------------------------------------------------------------------
 
 c $6B42 plot_interior_tiles
-@ $6B42 label=plot_interior_tiles
 D $6B42 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer.
 R $6B42 O:A      Corrupted.
 R $6B42 O:BC     Corrupted.
@@ -1316,6 +1317,7 @@ R $6B42 O:Adash  Corrupted.
 R $6B42 O:BCdash Corrupted.
 R $6B42 O:DEdash Corrupted.
 R $6B42 O:HLdash Corrupted.
+@ $6B42 label=plot_interior_tiles
   $6B42 HL = $F290;  // screen buffer start address
   $6B45 DE = $F0F8;  // visible tiles array
   $6B48 C = 16;      // rows
@@ -1337,9 +1339,9 @@ R $6B42 O:HLdash Corrupted.
 ; ------------------------------------------------------------------------------
 
 w $6B79 beds
-@ $6B79 label=beds
 D $6B79 6x pointers to bed. These are the beds of active prisoners.
 D $6B79 Note that the top hut has prisoners permanently in bed.
+@ $6B79 label=beds
   $6B79 &roomdef_3_hut2_right[29]
   $6B7B &roomdef_3_hut2_right[32]
   $6B7D &roomdef_3_hut2_right[35]
@@ -1350,16 +1352,16 @@ D $6B79 Note that the top hut has prisoners permanently in bed.
 ; ------------------------------------------------------------------------------
 
 b $6B85 roomdef_bounds
-@ $6B85 label=roomdef_bounds
 D $6B85 Room dimensions. Pairs of min, max.
 D $6B85 10x 4-byte structures which are range checked by routine at #R$B29F.
+@ $6B85 label=roomdef_bounds
 
 ; ------------------------------------------------------------------------------
 
 w $6BAD rooms_and_tunnels
-@ $6BAD label=rooms_and_tunnels
 D $6BAD Rooms and tunnels.
 D $6BAD Array of pointers to rooms (starting with room 1).
+@ $6BAD label=rooms_and_tunnels
   $6BAD &roomdef_1_hut1_right,
   $6BAF &roomdef_2_hut2_left,
   $6BB1 &roomdef_3_hut2_right,
@@ -1987,182 +1989,178 @@ N $7075 roomdef_50_blocked_tunnel
 
 ; ------------------------------------------------------------------------------
 
-; Interior object definitions.
-;
 b $7095 interior_object_defs
+D $7095 Interior object definitions.
 @ $7095 label=interior_object_defs
 W $7095 Array of pointer to interior object definitions, 54 entries long (== number of interior rooms).
-;
-B $7101 interior_object_tile_refs_0
 @ $7101 label=interior_object_tile_refs_0
-B $711B interior_object_tile_refs_1
+  $7101 interior_object_tile_refs_0
 @ $711B label=interior_object_tile_refs_1
-B $7121 interior_object_tile_refs_3
+  $711B interior_object_tile_refs_1
 @ $7121 label=interior_object_tile_refs_3
-B $713B interior_object_tile_refs_4
+  $7121 interior_object_tile_refs_3
 @ $713B label=interior_object_tile_refs_4
-B $7155 interior_object_tile_refs_5
+  $713B interior_object_tile_refs_4
 @ $7155 label=interior_object_tile_refs_5
-B $715A interior_object_tile_refs_6
+  $7155 interior_object_tile_refs_5
 @ $715A label=interior_object_tile_refs_6
-B $7174 interior_object_tile_refs_7
+  $715A interior_object_tile_refs_6
 @ $7174 label=interior_object_tile_refs_7
-B $718E interior_object_tile_refs_12
+  $7174 interior_object_tile_refs_7
 @ $718E label=interior_object_tile_refs_12
-B $71A6 interior_object_tile_refs_13
+  $718E interior_object_tile_refs_12
 @ $71A6 label=interior_object_tile_refs_13
-B $71AB interior_object_tile_refs_14
+  $71A6 interior_object_tile_refs_13
 @ $71AB label=interior_object_tile_refs_14
-B $71C4 interior_object_tile_refs_17
+  $71AB interior_object_tile_refs_14
 @ $71C4 label=interior_object_tile_refs_17
-B $71DE interior_object_tile_refs_18
+  $71C4 interior_object_tile_refs_17
 @ $71DE label=interior_object_tile_refs_18
-B $71F8 interior_object_tile_refs_19
+  $71DE interior_object_tile_refs_18
 @ $71F8 label=interior_object_tile_refs_19
-B $7200 interior_object_tile_refs_20
+  $71F8 interior_object_tile_refs_19
 @ $7200 label=interior_object_tile_refs_20
-B $721A interior_object_tile_refs_2
+  $7200 interior_object_tile_refs_20
 @ $721A label=interior_object_tile_refs_2
-B $728E interior_object_tile_refs_8
+  $721A interior_object_tile_refs_2
 @ $728E label=interior_object_tile_refs_8
-B $72AE interior_object_tile_refs_9
+  $728E interior_object_tile_refs_8
 @ $72AE label=interior_object_tile_refs_9
-B $72C1 interior_object_tile_refs_10
+  $72AE interior_object_tile_refs_9
 @ $72C1 label=interior_object_tile_refs_10
-B $72CC interior_object_tile_refs_11
+  $72C1 interior_object_tile_refs_10
 @ $72CC label=interior_object_tile_refs_11
-B $72D1 interior_object_tile_refs_15
+  $72CC interior_object_tile_refs_11
 @ $72D1 label=interior_object_tile_refs_15
-B $72EB interior_object_tile_refs_16
+  $72D1 interior_object_tile_refs_15
 @ $72EB label=interior_object_tile_refs_16
-B $7305 interior_object_tile_refs_22
+  $72EB interior_object_tile_refs_16
 @ $7305 label=interior_object_tile_refs_22
-B $730F interior_object_tile_refs_23
+  $7305 interior_object_tile_refs_22
 @ $730F label=interior_object_tile_refs_23
-B $7325 interior_object_tile_refs_24
+  $730F interior_object_tile_refs_23
 @ $7325 label=interior_object_tile_refs_24
-B $7333 interior_object_tile_refs_25
+  $7325 interior_object_tile_refs_24
 @ $7333 label=interior_object_tile_refs_25
-B $733C interior_object_tile_refs_26
+  $7333 interior_object_tile_refs_25
 @ $733C label=interior_object_tile_refs_26
-B $7342 interior_object_tile_refs_28
+  $733C interior_object_tile_refs_26
 @ $7342 label=interior_object_tile_refs_28
-B $734B interior_object_tile_refs_30
+  $7342 interior_object_tile_refs_28
 @ $734B label=interior_object_tile_refs_30
-B $7359 interior_object_tile_refs_31
+  $734B interior_object_tile_refs_30
 @ $7359 label=interior_object_tile_refs_31
-B $735C interior_object_tile_refs_32
+  $7359 interior_object_tile_refs_31
 @ $735C label=interior_object_tile_refs_32
-B $736A interior_object_tile_refs_33
+  $735C interior_object_tile_refs_32
 @ $736A label=interior_object_tile_refs_33
-B $736F interior_object_tile_refs_34
+  $736A interior_object_tile_refs_33
 @ $736F label=interior_object_tile_refs_34
-B $7374 interior_object_tile_refs_35
+  $736F interior_object_tile_refs_34
 @ $7374 label=interior_object_tile_refs_35
-B $7385 interior_object_tile_refs_36
+  $7374 interior_object_tile_refs_35
 @ $7385 label=interior_object_tile_refs_36
-B $7393 interior_object_tile_refs_37
+  $7385 interior_object_tile_refs_36
 @ $7393 label=interior_object_tile_refs_37
-B $73A5 interior_object_tile_refs_38
+  $7393 interior_object_tile_refs_37
 @ $73A5 label=interior_object_tile_refs_38
-B $73BF interior_object_tile_refs_39
+  $73A5 interior_object_tile_refs_38
 @ $73BF label=interior_object_tile_refs_39
-B $73D9 interior_object_tile_refs_41
+  $73BF interior_object_tile_refs_39
 @ $73D9 label=interior_object_tile_refs_41
-B $7425 interior_object_tile_refs_42
+  $73D9 interior_object_tile_refs_41
 @ $7425 label=interior_object_tile_refs_42
-B $742D interior_object_tile_refs_43
+  $7425 interior_object_tile_refs_42
 @ $742D label=interior_object_tile_refs_43
-B $7452 interior_object_tile_refs_44
+  $742D interior_object_tile_refs_43
 @ $7452 label=interior_object_tile_refs_44
-B $7482 interior_object_tile_refs_45
+  $7452 interior_object_tile_refs_44
 @ $7482 label=interior_object_tile_refs_45
-B $7493 interior_object_tile_refs_46
+  $7482 interior_object_tile_refs_45
 @ $7493 label=interior_object_tile_refs_46
-B $74F5 interior_object_tile_refs_47
+  $7493 interior_object_tile_refs_46
 @ $74F5 label=interior_object_tile_refs_47
-B $7570 interior_object_tile_refs_48
+  $74F5 interior_object_tile_refs_47
 @ $7570 label=interior_object_tile_refs_48
-B $7576 interior_object_tile_refs_49
+  $7570 interior_object_tile_refs_48
 @ $7576 label=interior_object_tile_refs_49
-B $757E interior_object_tile_refs_50
+  $7576 interior_object_tile_refs_49
 @ $757E label=interior_object_tile_refs_50
-B $7588 interior_object_tile_refs_51
+  $757E interior_object_tile_refs_50
 @ $7588 label=interior_object_tile_refs_51
-B $75A2 interior_object_tile_refs_52
+  $7588 interior_object_tile_refs_51
 @ $75A2 label=interior_object_tile_refs_52
-B $75AA interior_object_tile_refs_53
+  $75A2 interior_object_tile_refs_52
 @ $75AA label=interior_object_tile_refs_53
-B $75B0 interior_object_tile_refs_27
+  $75AA interior_object_tile_refs_53
 @ $75B0 label=interior_object_tile_refs_27
+  $75B0 interior_object_tile_refs_27
 
 ; ------------------------------------------------------------------------------
 
-; Characters.
-;
 b $7612 character_structs
-@ $7612 label=character_structs
 D $7612 Array, 26 long, of 7-byte structures.
 D $7612 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; } // likely same struct type/layout as item_structs
-D $7612 0:
-N $7619 1:
-N $7620 2:
-N $7627 3:
-N $762E 4:
-N $7635 5:
-N $763C 6:
-N $7643 7: prisoner who sleeps at bed position A
-N $764A 8: prisoner who sleeps at bed position B
-N $7651 9: prisoner who sleeps at bed position C
-N $7658 10: prisoner who sleeps at bed position D
-N $765F 11: prisoner who sleeps at bed position E
-N $7666 12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
-N $766D 13:
-N $7674 14:
-N $767B 15:
-N $7682 16:
-N $7689 17:
-N $7690 18: prisoner who sits at bench position D
-N $7697 19: prisoner who sits at bench position E
-N $769E 20: prisoner who sits at bench position F (<- wake_up)
-N $76A5 21: prisoner who sits at bench position A
-N $76AC 22: prisoner who sits at bench position B
-N $76B3 23: prisoner who sits at bench position C
-N $76BA 24:
-N $76C1 25:
+@ $7612 label=character_structs
+N $7612 0:
   $7612,7 { character_0_COMMANDANT,     room_11_papers,    46, 46, 0x18, 0x03, 0x00 },
+N $7619 1:
   $7619,7 { character_1_GUARD_1,        room_0_outdoors,  102, 68, 0x03, 0x01, 0x00 },
+N $7620 2:
   $7620,7 { character_2_GUARD_2,        room_0_outdoors,   68,104, 0x03, 0x01, 0x02 },
+N $7627 3:
   $7627,7 { character_3_GUARD_3,        room_16_corridor,  46, 46, 0x18, 0x03, 0x13 },
+N $762E 4:
   $762E,7 { character_4_GUARD_4,        room_0_outdoors,   61,103, 0x03, 0x02, 0x04 },
+N $7635 5:
   $7635,7 { character_5_GUARD_5,        room_0_outdoors,  106, 56, 0x0D, 0x00, 0x00 },
+N $763C 6:
   $763C,7 { character_6_GUARD_6,        room_0_outdoors,   72, 94, 0x0D, 0x00, 0x00 },
+N $7643 7: prisoner who sleeps at bed position A
   $7643,7 { character_7_GUARD_7,        room_0_outdoors,   72, 70, 0x0D, 0x00, 0x00 },
+N $764A 8: prisoner who sleeps at bed position B
   $764A,7 { character_8_GUARD_8,        room_0_outdoors,   80, 46, 0x0D, 0x00, 0x00 },
+N $7651 9: prisoner who sleeps at bed position C
   $7651,7 { character_9_GUARD_9,        room_0_outdoors,  108, 71, 0x15, 0x04, 0x00 },
+N $7658 10: prisoner who sleeps at bed position D
   $7658,7 { character_10_GUARD_10,      room_0_outdoors,   92, 52, 0x03, 0xFF, 0x38 },
+N $765F 11: prisoner who sleeps at bed position E
   $765F,7 { character_11_GUARD_11,      room_0_outdoors,  109, 69, 0x03, 0x00, 0x00 },
+N $7666 12: prisoner who sleeps at bed position F (<- perhaps_reset_map_and_characters)
   $7666,7 { character_12_GUARD_12,      room_3_hut2right,  40, 60, 0x18, 0x00, 0x08 },
+N $766D 13:
   $766D,7 { character_13_GUARD_13,      room_2_hut2left,   36, 48, 0x18, 0x00, 0x08 },
+N $7674 14:
   $7674,7 { character_14_GUARD_14,      room_5_hut3right,  40, 60, 0x18, 0x00, 0x10 },
+N $767B 15:
   $767B,7 { character_15_GUARD_15,      room_5_hut3right,  36, 34, 0x18, 0x00, 0x10 },
+N $7682 16:
   $7682,7 { character_16_GUARD_DOG_1,   room_0_outdoors,   68, 84, 0x01, 0xFF, 0x00 },
+N $7689 17:
   $7689,7 { character_16_GUARD_DOG_2,   room_0_outdoors,   68,104, 0x01, 0xFF, 0x00 },
+N $7690 18: prisoner who sits at bench position D
   $7690,7 { character_18_GUARD_DOG_3,   room_0_outdoors,  102, 68, 0x01, 0xFF, 0x18 },
+N $7697 19: prisoner who sits at bench position E
   $7697,7 { character_19_GUARD_DOG_4,   room_0_outdoors,   88, 68, 0x01, 0xFF, 0x18 },
+N $769E 20: prisoner who sits at bench position F (<- wake_up)
   $769E,7 { character_20_PRISONER_1,    room_NONE,         52, 60, 0x18, 0x00, 0x08 },
+N $76A5 21: prisoner who sits at bench position A
   $76A5,7 { character_21_PRISONER_2,    room_NONE,         52, 44, 0x18, 0x00, 0x08 },
+N $76AC 22: prisoner who sits at bench position B
   $76AC,7 { character_22_PRISONER_3,    room_NONE,         52, 28, 0x18, 0x00, 0x08 },
+N $76B3 23: prisoner who sits at bench position C
   $76B3,7 { character_23_PRISONER_4,    room_NONE,         52, 60, 0x18, 0x00, 0x10 },
+N $76BA 24:
   $76BA,7 { character_24_PRISONER_5,    room_NONE,         52, 44, 0x18, 0x00, 0x10 },
+N $76C1 25:
   $76C1,7 { character_25_PRISONER_6,    room_NONE,         52, 28, 0x18, 0x00, 0x10 },
 
 ; ------------------------------------------------------------------------------
 
 b $76C8 item_structs
-@ $76C8 label=item_structs
 D $76C8 16 long array of 7-byte structures. These are 'characters' but seem to be the game items.
 D $76C8 struct { byte item; byte room; byte y, x; byte unk1; byte unk2; byte unk3; }
+@ $76C8 label=item_structs
   $76C8 { item_WIRESNIPS,        room_NONE,        64,32, 0x02, 0x78, 0xF4 }, // <- item_to_itemstruct, find_nearby_item
   $76CF { item_SHOVEL,           room_9_crate,     62,48, 0x00, 0x7C, 0xF2 },
   $76D6 { item_LOCKPICK,         room_10_lockpick, 73,36, 0x10, 0x77, 0xF0 },
@@ -2190,88 +2188,88 @@ b $7738 table_7738
 @ $7738 label=table_7738
 W $7738 46 long array of pointers to object tile refs.
   $7794,1 could be a terminating $FF
-  $7795 byte_7738_0
 @ $7795 label=byte_7738_0
-  $7799 byte_7738_1
+  $7795 byte_7738_0
 @ $7799 label=byte_7738_1
-  $77A0 byte_7738_2
+  $7799 byte_7738_1
 @ $77A0 label=byte_7738_2
-  $77CD byte_7738_3
+  $77A0 byte_7738_2
 @ $77CD label=byte_7738_3
-  $77D0 byte_7738_4
+  $77CD byte_7738_3
 @ $77D0 label=byte_7738_4
-  $77D4 byte_7738_5
+  $77D0 byte_7738_4
 @ $77D4 label=byte_7738_5
-  $77D8 byte_7738_6
+  $77D4 byte_7738_5
 @ $77D8 label=byte_7738_6
-  $77DA byte_7738_7
+  $77D8 byte_7738_6
 @ $77DA label=byte_7738_7
-  $77DC byte_7738_8
+  $77DA byte_7738_7
 @ $77DC label=byte_7738_8
-  $77DE byte_7738_9
+  $77DC byte_7738_8
 @ $77DE label=byte_7738_9
-  $77E1 byte_7738_10
+  $77DE byte_7738_9
 @ $77E1 label=byte_7738_10
-  $77E7 byte_7738_11
+  $77E1 byte_7738_10
 @ $77E7 label=byte_7738_11
-  $77EC byte_7738_12
+  $77E7 byte_7738_11
 @ $77EC label=byte_7738_12
-  $77F1 byte_7738_13
+  $77EC byte_7738_12
 @ $77F1 label=byte_7738_13
-  $77F3 byte_7738_14
+  $77F1 byte_7738_13
 @ $77F3 label=byte_7738_14
-  $77F5 byte_7738_15
+  $77F3 byte_7738_14
 @ $77F5 label=byte_7738_15
-  $77F7 byte_7738_16
+  $77F5 byte_7738_15
 @ $77F7 label=byte_7738_16
-  $77F9 byte_7738_17
+  $77F7 byte_7738_16
 @ $77F9 label=byte_7738_17
-  $77FB byte_7738_18
+  $77F9 byte_7738_17
 @ $77FB label=byte_7738_18
-  $77FD byte_7738_19
+  $77FB byte_7738_18
 @ $77FD label=byte_7738_19
-  $77FF byte_7738_20
+  $77FD byte_7738_19
 @ $77FF label=byte_7738_20
-  $7801 byte_7738_21
+  $77FF byte_7738_20
 @ $7801 label=byte_7738_21
-  $7803 byte_7738_22
+  $7801 byte_7738_21
 @ $7803 label=byte_7738_22
-  $7805 byte_7738_23
+  $7803 byte_7738_22
 @ $7805 label=byte_7738_23
-  $7807 byte_7738_24
+  $7805 byte_7738_23
 @ $7807 label=byte_7738_24
-  $7809 byte_7738_25
+  $7807 byte_7738_24
 @ $7809 label=byte_7738_25
-  $780B byte_7738_26
+  $7809 byte_7738_25
 @ $780B label=byte_7738_26
-  $780D byte_7738_27
+  $780B byte_7738_26
 @ $780D label=byte_7738_27
-  $780F byte_7738_28
+  $780D byte_7738_27
 @ $780F label=byte_7738_28
-  $7815 byte_7738_29
+  $780F byte_7738_28
 @ $7815 label=byte_7738_29
-  $781A byte_7738_30
+  $7815 byte_7738_29
 @ $781A label=byte_7738_30
-  $781F byte_7738_31
+  $781A byte_7738_30
 @ $781F label=byte_7738_31
-  $7825 byte_7738_32
+  $781F byte_7738_31
 @ $7825 label=byte_7738_32
-  $782B byte_7738_33
+  $7825 byte_7738_32
 @ $782B label=byte_7738_33
-  $7831 byte_7738_34
+  $782B byte_7738_33
 @ $7831 label=byte_7738_34
-  $7833 byte_7738_35
+  $7831 byte_7738_34
 @ $7833 label=byte_7738_35
-  $7835 byte_7738_36
+  $7833 byte_7738_35
 @ $7835 label=byte_7738_36
-  $7838 byte_7738_37
+  $7835 byte_7738_36
 @ $7838 label=byte_7738_37
+  $7838 byte_7738_37
 
 ; ------------------------------------------------------------------------------
 
 w $783A word_783A
-@ $783A label=word_783A
 D $783A 78 two-byte words
+@ $783A label=word_783A
   $783A 0x6844
   $783C 0x5444
   $783E 0x4644
@@ -2354,12 +2352,12 @@ D $783A 78 two-byte words
 ; ------------------------------------------------------------------------------
 
 b $78D6 door_positions
-@ $78D6 label=door_positions
 D $78D6 124 four-byte structs (<- sub 69DC)
 D $78D6 #define BYTE0(room,other) ((room << 2) | other)
 ; room could be a target or a destination. unsure presently.
 ; suspect 4th byte could be a scaled height (would it be four times larger for internal coords?)
 ; suspect bit 1 controls whether to jump to door listed in front, or behind (see $C742)
+@ $78D6 label=door_positions
   $78D6 { BYTE0(room_0_outdoors,           1), 0xB2, 0x8A,  6 },
 @ $78DA label=door_positions_1
   $78DA { BYTE0(room_0_outdoors,           3), 0xB2, 0x8E,  6 },
@@ -2489,16 +2487,17 @@ D $78D6 #define BYTE0(room,other) ((room << 2) | other)
 ; ------------------------------------------------------------------------------
 
 b $7AC6 solitary_pos
-@ $7AC6 label=solitary_pos
 D $7AC6 3 bytes long (<- solitary)
+@ $7AC6 label=solitary_pos
 B $7AC6 58, 42, 24
 
 ; ------------------------------------------------------------------------------
 
 c $7AC9 process_player_input_fire
-@ $7AC9 label=process_player_input_fire
+D $7AC9 Used by the routine at #R$9E07.
 D $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
 R $7AC9 I:A Input event.
+@ $7AC9 label=process_player_input_fire
   $7AC9 if (A == input_UP_FIRE) pick_up_item();
   $7AD3 else if (A == input_DOWN_FIRE) drop_item();
   $7ADD else if (A == input_LEFT_FIRE) use_item_A();
@@ -2515,14 +2514,13 @@ N $7AF0 Use item 'B'.
 N $7AF5 Use item 'A'.
 @ $7AF5 label=use_item_A
   $7AF5 A = items_held[0]; // $8215
-E $7AF5 FALL THROUGH into use_item_common.
- 
+
 N $7AF8 Use item common part.
 @ $7AF8 label=use_item_common
   $7AF8 if (A == item_NONE) return;
   $7AFB Bug: Pointless jump to adjacent instruction.
-  $7AFD HL = &item_actions_jump_table[A];
 @ $7B01 nowarn
+  $7AFD HL = &item_actions_jump_table[A];
   $7B05 L = *HL++;
   $7B07 H = *HL;
   $7B09 PUSH HL // exit via jump table entry
@@ -2590,8 +2588,9 @@ N $7B44 Locate the empty item slot.
 ; ------------------------------------------------------------------------------
 
 c $7B8B drop_item
-@ $7B8B label=drop_item
+D $7B8B Used by the routine at #R$7AC9.
 D $7B8B Drop the first item.
+@ $7B8B label=drop_item
   $7B8B A = items_held[0];
   $7B8E if (A == item_NONE) return;
   $7B91 if (A == item_UNIFORM) $8015 = sprite_prisoner_tl_4;
@@ -2610,8 +2609,9 @@ N $7B9D Shuffle items down.
 
 ; looks like it's converting character position + offset into object position + offset by dividing
 c $7BB5 drop_item_A
-@ $7BB5 label=drop_item_A
+D $7BB5 Used by the routine at #R$B387.
 R $7BB5 I:A Item.
+@ $7BB5 label=drop_item_A
   $7BB5 HL = item_to_itemstruct(A);
   $7BB8 HL++;
   $7BB9 A = room_index;
@@ -2628,10 +2628,9 @@ N $7BC2 HL is incremented here but then immediately overwritten by $7BC5.
   $7BCB   DE--;
   $7BCC   *DE = 0; // ->vo ?
   $7BCF   EX DE,HL
-;
-; This entry point is used by the routine at #R$CD31.
-; sampled HL = 7719, 7720,
+N $7BD0 This entry point is used by the routine at #R$CD31.
 R $7BD0   I:HL Pointer to dropped itemstruct + 4.
+; sampled HL = 7719, 7720,
 ; have i over-simplified here?
   $7BD0   HL--; C = (0x40 + HL[1] - HL[0]) * 2; // itemstruct.x, itemstruct.y;
   $7BD8   B = 0 - HL[0] - HL[1] - HL[2]; HL += 3; // itemstruct.y, .x, .height
@@ -2646,8 +2645,7 @@ N $7BE4 Indoors.
   $7BEB   DE += 2; // position on x axis
   $7BED   *HL++ = *DE;
   $7BF0   *HL = 5;
-;
-; This entry point is used by the routine at #R$CD31.
+N $7BF2 This entry point is used by the routine at #R$CD31.
 R $7BF2   I:HL Pointer to ? $77AE (odd - that's object tile refs...) // i doubt those are tile refs now
   $7BF2   HL--;
   $7BF3   DE = 0x0200 + HL[0];  // 512 / 8 = 64
@@ -2667,9 +2665,9 @@ R $7BF2   I:HL Pointer to ? $77AE (odd - that's object tile refs...) // i doubt 
 ; ------------------------------------------------------------------------------
 
 c $7C26 item_to_itemstruct
-@ $7C26 label=item_to_itemstruct
 R $7C26 I:A  Item index.
 R $7C26 O:HL Pointer to itemstruct.
+@ $7C26 label=item_to_itemstruct
   $7C26 return &item_structs[A]; // $76C8 + A * 7
 
 ; ------------------------------------------------------------------------------
@@ -2683,10 +2681,10 @@ c $7C33 draw_all_items
 ; ------------------------------------------------------------------------------
 
 c $7C46 draw_item
-@ $7C46 label=draw_item
+D $7C46 Used by the routine at #R$7C33.
 R $7C46 I:A  Item index.
 R $7C46 I:HL Screen address of item.
-;
+@ $7C46 label=draw_item
   $7C46 PUSH HL
   $7C47 EX AF,AF'
 ;
@@ -2725,11 +2723,12 @@ N $7C6B Plot bitmap.
 ; ------------------------------------------------------------------------------
 
 c $7C82 find_nearby_item
-@ $7C82 label=find_nearby_item
+D $7C82 Used by the routine at #R$7B36.
 D $7C82 Returns an item within range of the hero.
 R $7C82 O:AF Z set if item found.
 R $7C82 O:HL If found, pointer to item.
-D $7C82 Select a pick up radius.
+@ $7C82 label=find_nearby_item
+N $7C82 Select a pick up radius.
   $7C82 C = 1; // outdoors
   $7C84 if (room_index) C = 6; // indoors
   $7C8C B = item__LIMIT; // 16 iterations
@@ -2762,11 +2761,11 @@ N $7CAF The next instruction is written as RET Z but there's no need for it to b
 ; ------------------------------------------------------------------------------
 
 c $7CBE plot_bitmap
-@ $7CBE label=plot_bitmap
 D $7CBE Straight bitmap plot without masking.
 R $7CBE I:BC Dimensions (w x h, where w is in bytes).
 R $7CBE I:DE Source address.
 R $7CBE I:HL Destination address.
+@ $7CBE label=plot_bitmap
   $7CBE A = B;
   $7CBF (loopcounter + 1) = A;   // self modifying
   $7CC2 do <% loopcounter: B = 3; // modified
@@ -2779,11 +2778,12 @@ R $7CBE I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 c $7CD4 screen_wipe
-@ $7CD4 label=screen_wipe
+D $7CD4 Used by the routine at #R$7C46.
 D $7CD4 Wipe the screen.
 R $7CD4 I:B  Number of bytes to set.
 R $7CD4 I:C  Number of scanlines.
 R $7CD4 I:HL Destination address.
+@ $7CD4 label=screen_wipe
   $7CD4 A = B;
   $7CD5 (loopcounter + 1) = A;   // self modifying
   $7CD8 do <% loopcounter: B = 2; // modified
@@ -2796,10 +2796,10 @@ R $7CD4 I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 c $7CE9 get_next_scanline
-@ $7CE9 label=get_next_scanline
 D $7CE9 Given a screen address, returns the same position on the next scanline.
 R $7CE9 I:HL Original screen address.
 R $7CE9 O:HL Updated screen address.
+@ $7CE9 label=get_next_scanline
   $7CE9 HL += 256;
   $7CEA if ((H & 7) != 0) return;
 ;
@@ -2815,34 +2815,34 @@ R $7CE9 O:HL Updated screen address.
 g $7CFC message_queue_stuff
 
 D $7CFC Queue of message indexes. (Pairs of bytes + terminator).
-B $7CFC message_queue
 @ $7CFC label=message_queue
+  $7CFC message_queue
 
 N $7D0F Decrementing counter. Shows next message when it hits zero.
-B $7D0F message_display_counter
 @ $7D0F label=message_display_counter
+  $7D0F message_display_counter
 
 N $7D10 Index into the message we're displaying or wiping.
 N $7D10 If 128 then next_message. If > 128 then wipe_message. Else display.
-B $7D10 message_display_index
 @ $7D10 label=message_display_index
+  $7D10 message_display_index
 
 N $7D11 Pointer to the head of the message queue.
-W $7D11 message_queue_pointer
 @ $7D11 label=message_queue_pointer
+W $7D11 message_queue_pointer
 
 N $7D13 Pointer to the next message character to be displayed.
-W $7D13 current_message_character
 @ $7D13 label=current_message_character
+W $7D13 current_message_character
 
 ; ------------------------------------------------------------------------------
 
 c $7D15 queue_message_for_display
-@ $7D15 label=queue_message_for_display
 D $7D15 Add the specified message to the queue of pending messages.
 D $7D15 The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
 R $7D15 I:B message_* index.
 R $7D15 I:C Possibly a second message index.
+@ $7D15 label=queue_message_for_display
   $7D15 if (*(HL = message_queue_pointer) == message_NONE) return;
 N $7D1C Are we already about to show this message?
   $7D1C HL -= 2;
@@ -2855,13 +2855,16 @@ N $7D26 Add it to the queue.
 ; ------------------------------------------------------------------------------
 
 c $7D2F plot_glyph
-@ $7D2F label=plot_glyph
 R $7D2F I:HL Pointer to glyph.
 R $7D2F I:DE Pointer to destination.
 R $7D2F O:HL Preserved.
 R $7D2F O:DE Points to next character.
+@ $7D2F label=plot_glyph
   $7D2F A = *HL;
-  $7D30 plot_single_glyph: ...
+E $7D2F FALL THROUGH into plot_single_glyph,
+
+c $7D30 plot_single_glyph
+  $7D30 ...
   $7D31 HL = A * 8;
   $7D37 BC = bitmap_font;
   $7D3A HL += BC;
@@ -2876,8 +2879,8 @@ R $7D2F O:DE Points to next character.
 ; ------------------------------------------------------------------------------
 
 c $7D48 message_display
-@ $7D48 label=message_display
 D $7D48 Proceed only if message_display_counter is zero.
+@ $7D48 label=message_display
   $7D48 if (message_display_counter > 0) <%
   $7D50   message_display_counter--;
   $7D53   return; %>
@@ -2914,8 +2917,8 @@ N $7D93 Plot a space character.
   $7D98 return;
 
 c $7D99 next_message
-@ $7D99 label=next_message
 D $7D99 Looks like message_queue is poked with the index of the message to display...
+@ $7D99 label=next_message
   $7D99 HL = message_queue_pointer;
   $7D9C DE = &message_queue[0];
   $7D9F if (L == E) return; // cheap test -- no more messages?
@@ -2933,92 +2936,72 @@ N $7DB5 Remove first element.
 
 ; ------------------------------------------------------------------------------
 
-; Messages - messages printed at the bottom of the screen when things happen.
-;
 w $7DCD messages_table
+D $7DCD Messages printed at the bottom of the screen when things happen.
 @ $7DCD label=messages_table
   $7DCD Array of pointers to messages.
 
 t $7DF5 messages
 D $7DF5 Non-ASCII: encoded to match the font; FF terminated.
-;
 D $7DF5 "MISSED ROLL CALL"
 @ $7DF5 label=messages_missed_roll_call
-  $7DF5 #HTML[#CALL:decode_stringFF($7DF5)]
-;
+B $7DF5,17 #HTML[#CALL:decode_stringFF($7DF5)]
 N $7E06 "TIME TO WAKE UP"
 @ $7E06 label=messages_time_to_wake_up
-  $7E06 #HTML[#CALL:decode_stringFF($7E06)]
-;
+B $7E06,16 #HTML[#CALL:decode_stringFF($7E06)]
 N $7E16 "BREAKFAST TIME"
 @ $7E16 label=messages_breakfast_time
-  $7E16 #HTML[#CALL:decode_stringFF($7E16)]
-;
+B $7E16,15 #HTML[#CALL:decode_stringFF($7E16)]
 N $7E25 "EXERCISE TIME"
 @ $7E25 label=messages_exercise_time
-  $7E25 #HTML[#CALL:decode_stringFF($7E25)]
-;
+B $7E25,14 #HTML[#CALL:decode_stringFF($7E25)]
 N $7E33 "TIME FOR BED"
 @ $7E33 label=messages_time_for_bed
-  $7E33 #HTML[#CALL:decode_stringFF($7E33)]
-;
+B $7E33,13 #HTML[#CALL:decode_stringFF($7E33)]
 N $7E40 "THE DOOR IS LOCKED"
 @ $7E40 label=messages_the_door_is_locked
-  $7E40 #HTML[#CALL:decode_stringFF($7E40)]
-;
+B $7E40,19 #HTML[#CALL:decode_stringFF($7E40)]
 N $7E53 "IT IS OPEN"
 @ $7E53 label=messages_it_is_open
-  $7E53 #HTML[#CALL:decode_stringFF($7E53)]
-;
+B $7E53,11 #HTML[#CALL:decode_stringFF($7E53)]
 N $7E5E "INCORRECT KEY"
 @ $7E5E label=messages_incorrect_key
-  $7E5E #HTML[#CALL:decode_stringFF($7E5E)]
-;
+B $7E5E,14 #HTML[#CALL:decode_stringFF($7E5E)]
 N $7E6C "ROLL CALL"
 @ $7E6C label=messages_roll_call
-  $7E6C #HTML[#CALL:decode_stringFF($7E6C)]
-;
+B $7E6C,10 #HTML[#CALL:decode_stringFF($7E6C)]
 N $7E76 "RED CROSS PARCEL"
 @ $7E76 label=messages_red_cross_parcel
-  $7E76 #HTML[#CALL:decode_stringFF($7E76)]
-;
+B $7E76,17 #HTML[#CALL:decode_stringFF($7E76)]
 N $7E87 "PICKING THE LOCK"
 @ $7E87 label=messages_picking_the_lock
-  $7E87 #HTML[#CALL:decode_stringFF($7E87)]
-;
+B $7E87,17 #HTML[#CALL:decode_stringFF($7E87)]
 N $7E98 "CUTTING THE WIRE"
 @ $7E98 label=messages_cutting_the_wire
-  $7E98 #HTML[#CALL:decode_stringFF($7E98)]
-;
+B $7E98,17 #HTML[#CALL:decode_stringFF($7E98)]
 N $7EA9 "YOU OPEN THE BOX"
 @ $7EA9 label=messages_you_open_the_box
-  $7EA9 #HTML[#CALL:decode_stringFF($7EA9)]
-;
+B $7EA9,17 #HTML[#CALL:decode_stringFF($7EA9)]
 N $7EBA "YOU ARE IN SOLITARY"
 @ $7EBA label=messages_you_are_in_solitary
-  $7EBA #HTML[#CALL:decode_stringFF($7EBA)]
-;
+B $7EBA,20 #HTML[#CALL:decode_stringFF($7EBA)]
 N $7ECE "WAIT FOR RELEASE"
 @ $7ECE label=messages_wait_for_release
-  $7ECE #HTML[#CALL:decode_stringFF($7ECE)]
-;
+B $7ECE,17 #HTML[#CALL:decode_stringFF($7ECE)]
 N $7EDF "MORALE IS ZERO"
 @ $7EDF label=messages_morale_is_zero
-  $7EDF #HTML[#CALL:decode_stringFF($7EDF)]
-;
+B $7EDF,15 #HTML[#CALL:decode_stringFF($7EDF)]
 N $7EEE "ITEM DISCOVERED"
 @ $7EEE label=messages_item_discovered
-  $7EEE #HTML[#CALL:decode_stringFF($7EEE)]
+B $7EEE #HTML[#CALL:decode_stringFF($7EEE)]
 
 ; ------------------------------------------------------------------------------
 
-; Static tiles.
-;
 b $7F00 static_tiles
-@ $7F00 label=static_tiles
 D $7F00 These tiles are used to draw fixed screen elements such as medals.
 D $7F00 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
 D $7F00 #UDGTABLE { #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles) } TABLE#
+@ $7F00 label=static_tiles
 B $7F00,9 blank
 ;
 B $7F09,9 speaker_tl_tl
@@ -3109,7 +3092,7 @@ B $819A,9 bell_middle_middle
 ; ------------------------------------------------------------------------------
 
 g $81A3 Unreferenced byte.
-B $81A3 unused_81A3
+  $81A3 unused_81A3
 
 ; ------------------------------------------------------------------------------
 
@@ -3126,65 +3109,65 @@ W $81A8 saved_height
 
 g $81AA Used by touch only.
 @ $81AA label=stashed_A
-B $81AA stashed_A
+  $81AA stashed_A
 
 ; ------------------------------------------------------------------------------
 
 g $81AB Unreferenced byte.
-B $81AB unused_81AB
+  $81AB unused_81AB
 
 ; ------------------------------------------------------------------------------
 
 g $81AC Bitmap and mask pointers.
-W $81AC bitmap_pointer
 @ $81AC label=bitmap_pointer
-W $81AE mask_pointer
+W $81AC bitmap_pointer
 @ $81AE label=mask_pointer
-W $81B0 foreground_mask_pointer
+W $81AE mask_pointer
 @ $81B0 label=foreground_mask_pointer
+W $81B0 foreground_mask_pointer
 
 ; ------------------------------------------------------------------------------
 
 g $81B2 Saved position.
 D $81B2 Structure type: tinypos_t.
-B $81B2 byte_81B2
 @ $81B2 label=byte_81B2
-B $81B3 byte_81B3
+  $81B2 byte_81B2
 @ $81B3 label=byte_81B3
-B $81B4 byte_81B4
+  $81B3 byte_81B3
 @ $81B4 label=byte_81B4
+  $81B4 byte_81B4
 
 ; ------------------------------------------------------------------------------
 
 g $81B5 Map position related variables.
-B $81B5 map_position_related_1
 @ $81B5 label=map_position_related_1
-B $81B6 map_position_related_2
+B $81B5 map_position_related_1
 @ $81B6 label=map_position_related_2
+B $81B6 map_position_related_2
 
 ; ------------------------------------------------------------------------------
 
 g $81B7 Controls character left/right flipping.
-B $81B7 flip_sprite
 @ $81B7 label=flip_sprite
+B $81B7 flip_sprite
 
 ; ------------------------------------------------------------------------------
 
 g $81B8 Hero's map position.
 D $81B8 Structure type: tinypos_t.
-B $81B8 hero_map_position_y
 @ $81B8 label=hero_map_position_y
-B $81B9 hero_map_position_x
+B $81B8 hero_map_position_y
 @ $81B9 label=hero_map_position_x
-B $81BA hero_map_position_height
+B $81B9 hero_map_position_x
 @ $81BA label=hero_map_position_height
+B $81BA hero_map_position_height
 
 ; ------------------------------------------------------------------------------
 
 g $81BB Map position.
 D $81BB Used when drawing tiles.
-W $81BB map_position
 @ $81BB label=map_position
+W $81BB map_position
 
 ; ------------------------------------------------------------------------------
 
@@ -3192,93 +3175,962 @@ g $81BD Searchlight state.
 D $81BD Suspect that this is a 'hero has been found in searchlight' flag. (possible states: 0, 31, 255)
 D $81BD Used by the routines at #R$ADBD, #R$B866.
 D $81BD #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Searchlight is sweeping } { 31 | Searchlight is tracking the hero } { 255 | Searchlight is off } TABLE#
-B $81BD searchlight_state
 @ $81BD label=searchlight_state
+B $81BD searchlight_state
 
 ; ------------------------------------------------------------------------------
 
 g $81BE Copy of first byte of current room def.
 D $81BE Indexes roomdef_bounds[].
-B $81BE roomdef_bounds_index
 @ $81BE label=roomdef_bounds_index
+  $81BE roomdef_bounds_index
 
 g $81BF Count of object bounds.
-B $81BF roomdef_object_bounds_count
 @ $81BF label=roomdef_object_bounds_count
+  $81BF roomdef_object_bounds_count
 
 g $81C0 Copy of current room def's additional bounds (allows for four room objects).
-B $81C0 roomdef_object_bounds
 @ $81C0 label=roomdef_object_bounds
+  $81C0 roomdef_object_bounds
 
 ; ------------------------------------------------------------------------------
 
 g $81D0 Unreferenced bytes.
 D $81D0 These are possibly spare object bounds bytes, but not ever used.
-B $81D0 unused_81D0
+  $81D0 unused_81D0
 
 ; ------------------------------------------------------------------------------
 
 g $81D6 Door related stuff.
 D $81D6 Used by the routines at #R$69DC, #R$B32D, #R$B4D0.
-B $81D6 door_related
 @ $81D6 label=door_related
 @ $81D9 label=door_related_end
+  $81D6 door_related
 
 ; ------------------------------------------------------------------------------
 
 g $81DA Indoor mask data.
 D $81DA Used by the routines at #R$6A35, #R$B916.
-B $81DA indoor_mask_data
 @ $81DA label=indoor_mask_data
+  $81DA indoor_mask_data
 
 ; ------------------------------------------------------------------------------
 
 g $8213 Written to by #R$DC41 setup_item_plotting but never read.
-B $8213 possibly_holds_an_item
 @ $8213 label=possibly_holds_an_item
+  $8213 possibly_holds_an_item
 
 ; ------------------------------------------------------------------------------
 
 g $8214 A copy of item_definition height.
 D $8214 Used by the routines at #R$DC41, #R$DD02.
-B $8214 item_height
 @ $8214 label=item_height
+  $8214 item_height
 
 ; ------------------------------------------------------------------------------
 
 g $8215 The items which the hero is holding.
 D $8215 Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
-W $8215 items_held
 @ $8215 label=items_held
+W $8215 items_held
 
 ; ------------------------------------------------------------------------------
 
 g $8217 The current character index.
-B $8217 character_index
 @ $8217 label=character_index
+  $8217 character_index
 
 ; ------------------------------------------------------------------------------
 
-; Tiles.
-;
 b $8218 tiles
-@ $8218 label=tiles
-;
 D $8218 Exterior tiles set 0. 111 tiles. Looks like mask tiles for huts. (<- plot_tile)
+@ $8218 label=tiles
 @ $8218 label=exterior_tiles_0
-;
+  $8218,8,8 #HTML[#UDGARRAY1,7,4,1;$8218-$821F-8(exterior-tiles0-000)]
+  $8220,8,8 #HTML[#UDGARRAY1,7,4,1;$8220-$8227-8(exterior-tiles0-001)]
+  $8228,8,8 #HTML[#UDGARRAY1,7,4,1;$8228-$822F-8(exterior-tiles0-002)]
+  $8230,8,8 #HTML[#UDGARRAY1,7,4,1;$8230-$8237-8(exterior-tiles0-003)]
+  $8238,8,8 #HTML[#UDGARRAY1,7,4,1;$8238-$823F-8(exterior-tiles0-004)]
+  $8240,8,8 #HTML[#UDGARRAY1,7,4,1;$8240-$8247-8(exterior-tiles0-005)]
+  $8248,8,8 #HTML[#UDGARRAY1,7,4,1;$8248-$824F-8(exterior-tiles0-006)]
+  $8250,8,8 #HTML[#UDGARRAY1,7,4,1;$8250-$8257-8(exterior-tiles0-007)]
+  $8258,8,8 #HTML[#UDGARRAY1,7,4,1;$8258-$825F-8(exterior-tiles0-008)]
+  $8260,8,8 #HTML[#UDGARRAY1,7,4,1;$8260-$8267-8(exterior-tiles0-009)]
+  $8268,8,8 #HTML[#UDGARRAY1,7,4,1;$8268-$826F-8(exterior-tiles0-010)]
+  $8270,8,8 #HTML[#UDGARRAY1,7,4,1;$8270-$8277-8(exterior-tiles0-011)]
+  $8278,8,8 #HTML[#UDGARRAY1,7,4,1;$8278-$827F-8(exterior-tiles0-012)]
+  $8280,8,8 #HTML[#UDGARRAY1,7,4,1;$8280-$8287-8(exterior-tiles0-013)]
+  $8288,8,8 #HTML[#UDGARRAY1,7,4,1;$8288-$828F-8(exterior-tiles0-014)]
+  $8290,8,8 #HTML[#UDGARRAY1,7,4,1;$8290-$8297-8(exterior-tiles0-015)]
+  $8298,8,8 #HTML[#UDGARRAY1,7,4,1;$8298-$829F-8(exterior-tiles0-016)]
+  $82A0,8,8 #HTML[#UDGARRAY1,7,4,1;$82A0-$82A7-8(exterior-tiles0-017)]
+  $82A8,8,8 #HTML[#UDGARRAY1,7,4,1;$82A8-$82AF-8(exterior-tiles0-018)]
+  $82B0,8,8 #HTML[#UDGARRAY1,7,4,1;$82B0-$82B7-8(exterior-tiles0-019)]
+  $82B8,8,8 #HTML[#UDGARRAY1,7,4,1;$82B8-$82BF-8(exterior-tiles0-020)]
+  $82C0,8,8 #HTML[#UDGARRAY1,7,4,1;$82C0-$82C7-8(exterior-tiles0-021)]
+  $82C8,8,8 #HTML[#UDGARRAY1,7,4,1;$82C8-$82CF-8(exterior-tiles0-022)]
+  $82D0,8,8 #HTML[#UDGARRAY1,7,4,1;$82D0-$82D7-8(exterior-tiles0-023)]
+  $82D8,8,8 #HTML[#UDGARRAY1,7,4,1;$82D8-$82DF-8(exterior-tiles0-024)]
+  $82E0,8,8 #HTML[#UDGARRAY1,7,4,1;$82E0-$82E7-8(exterior-tiles0-025)]
+  $82E8,8,8 #HTML[#UDGARRAY1,7,4,1;$82E8-$82EF-8(exterior-tiles0-026)]
+  $82F0,8,8 #HTML[#UDGARRAY1,7,4,1;$82F0-$82F7-8(exterior-tiles0-027)]
+  $82F8,8,8 #HTML[#UDGARRAY1,7,4,1;$82F8-$82FF-8(exterior-tiles0-028)]
+  $8300,8,8 #HTML[#UDGARRAY1,7,4,1;$8300-$8307-8(exterior-tiles0-029)]
+  $8308,8,8 #HTML[#UDGARRAY1,7,4,1;$8308-$830F-8(exterior-tiles0-030)]
+  $8310,8,8 #HTML[#UDGARRAY1,7,4,1;$8310-$8317-8(exterior-tiles0-031)]
+  $8318,8,8 #HTML[#UDGARRAY1,7,4,1;$8318-$831F-8(exterior-tiles0-032)]
+  $8320,8,8 #HTML[#UDGARRAY1,7,4,1;$8320-$8327-8(exterior-tiles0-033)]
+  $8328,8,8 #HTML[#UDGARRAY1,7,4,1;$8328-$832F-8(exterior-tiles0-034)]
+  $8330,8,8 #HTML[#UDGARRAY1,7,4,1;$8330-$8337-8(exterior-tiles0-035)]
+  $8338,8,8 #HTML[#UDGARRAY1,7,4,1;$8338-$833F-8(exterior-tiles0-036)]
+  $8340,8,8 #HTML[#UDGARRAY1,7,4,1;$8340-$8347-8(exterior-tiles0-037)]
+  $8348,8,8 #HTML[#UDGARRAY1,7,4,1;$8348-$834F-8(exterior-tiles0-038)]
+  $8350,8,8 #HTML[#UDGARRAY1,7,4,1;$8350-$8357-8(exterior-tiles0-039)]
+  $8358,8,8 #HTML[#UDGARRAY1,7,4,1;$8358-$835F-8(exterior-tiles0-040)]
+  $8360,8,8 #HTML[#UDGARRAY1,7,4,1;$8360-$8367-8(exterior-tiles0-041)]
+  $8368,8,8 #HTML[#UDGARRAY1,7,4,1;$8368-$836F-8(exterior-tiles0-042)]
+  $8370,8,8 #HTML[#UDGARRAY1,7,4,1;$8370-$8377-8(exterior-tiles0-043)]
+  $8378,8,8 #HTML[#UDGARRAY1,7,4,1;$8378-$837F-8(exterior-tiles0-044)]
+  $8380,8,8 #HTML[#UDGARRAY1,7,4,1;$8380-$8387-8(exterior-tiles0-045)]
+  $8388,8,8 #HTML[#UDGARRAY1,7,4,1;$8388-$838F-8(exterior-tiles0-046)]
+  $8390,8,8 #HTML[#UDGARRAY1,7,4,1;$8390-$8397-8(exterior-tiles0-047)]
+  $8398,8,8 #HTML[#UDGARRAY1,7,4,1;$8398-$839F-8(exterior-tiles0-048)]
+  $83A0,8,8 #HTML[#UDGARRAY1,7,4,1;$83A0-$83A7-8(exterior-tiles0-049)]
+  $83A8,8,8 #HTML[#UDGARRAY1,7,4,1;$83A8-$83AF-8(exterior-tiles0-050)]
+  $83B0,8,8 #HTML[#UDGARRAY1,7,4,1;$83B0-$83B7-8(exterior-tiles0-051)]
+  $83B8,8,8 #HTML[#UDGARRAY1,7,4,1;$83B8-$83BF-8(exterior-tiles0-052)]
+  $83C0,8,8 #HTML[#UDGARRAY1,7,4,1;$83C0-$83C7-8(exterior-tiles0-053)]
+  $83C8,8,8 #HTML[#UDGARRAY1,7,4,1;$83C8-$83CF-8(exterior-tiles0-054)]
+  $83D0,8,8 #HTML[#UDGARRAY1,7,4,1;$83D0-$83D7-8(exterior-tiles0-055)]
+  $83D8,8,8 #HTML[#UDGARRAY1,7,4,1;$83D8-$83DF-8(exterior-tiles0-056)]
+  $83E0,8,8 #HTML[#UDGARRAY1,7,4,1;$83E0-$83E7-8(exterior-tiles0-057)]
+  $83E8,8,8 #HTML[#UDGARRAY1,7,4,1;$83E8-$83EF-8(exterior-tiles0-058)]
+  $83F0,8,8 #HTML[#UDGARRAY1,7,4,1;$83F0-$83F7-8(exterior-tiles0-059)]
+  $83F8,8,8 #HTML[#UDGARRAY1,7,4,1;$83F8-$83FF-8(exterior-tiles0-060)]
+  $8400,8,8 #HTML[#UDGARRAY1,7,4,1;$8400-$8407-8(exterior-tiles0-061)]
+  $8408,8,8 #HTML[#UDGARRAY1,7,4,1;$8408-$840F-8(exterior-tiles0-062)]
+  $8410,8,8 #HTML[#UDGARRAY1,7,4,1;$8410-$8417-8(exterior-tiles0-063)]
+  $8418,8,8 #HTML[#UDGARRAY1,7,4,1;$8418-$841F-8(exterior-tiles0-064)]
+  $8420,8,8 #HTML[#UDGARRAY1,7,4,1;$8420-$8427-8(exterior-tiles0-065)]
+  $8428,8,8 #HTML[#UDGARRAY1,7,4,1;$8428-$842F-8(exterior-tiles0-066)]
+  $8430,8,8 #HTML[#UDGARRAY1,7,4,1;$8430-$8437-8(exterior-tiles0-067)]
+  $8438,8,8 #HTML[#UDGARRAY1,7,4,1;$8438-$843F-8(exterior-tiles0-068)]
+  $8440,8,8 #HTML[#UDGARRAY1,7,4,1;$8440-$8447-8(exterior-tiles0-069)]
+  $8448,8,8 #HTML[#UDGARRAY1,7,4,1;$8448-$844F-8(exterior-tiles0-070)]
+  $8450,8,8 #HTML[#UDGARRAY1,7,4,1;$8450-$8457-8(exterior-tiles0-071)]
+  $8458,8,8 #HTML[#UDGARRAY1,7,4,1;$8458-$845F-8(exterior-tiles0-072)]
+  $8460,8,8 #HTML[#UDGARRAY1,7,4,1;$8460-$8467-8(exterior-tiles0-073)]
+  $8468,8,8 #HTML[#UDGARRAY1,7,4,1;$8468-$846F-8(exterior-tiles0-074)]
+  $8470,8,8 #HTML[#UDGARRAY1,7,4,1;$8470-$8477-8(exterior-tiles0-075)]
+  $8478,8,8 #HTML[#UDGARRAY1,7,4,1;$8478-$847F-8(exterior-tiles0-076)]
+  $8480,8,8 #HTML[#UDGARRAY1,7,4,1;$8480-$8487-8(exterior-tiles0-077)]
+  $8488,8,8 #HTML[#UDGARRAY1,7,4,1;$8488-$848F-8(exterior-tiles0-078)]
+  $8490,8,8 #HTML[#UDGARRAY1,7,4,1;$8490-$8497-8(exterior-tiles0-079)]
+  $8498,8,8 #HTML[#UDGARRAY1,7,4,1;$8498-$849F-8(exterior-tiles0-080)]
+  $84A0,8,8 #HTML[#UDGARRAY1,7,4,1;$84A0-$84A7-8(exterior-tiles0-081)]
+  $84A8,8,8 #HTML[#UDGARRAY1,7,4,1;$84A8-$84AF-8(exterior-tiles0-082)]
+  $84B0,8,8 #HTML[#UDGARRAY1,7,4,1;$84B0-$84B7-8(exterior-tiles0-083)]
+  $84B8,8,8 #HTML[#UDGARRAY1,7,4,1;$84B8-$84BF-8(exterior-tiles0-084)]
+  $84C0,8,8 #HTML[#UDGARRAY1,7,4,1;$84C0-$84C7-8(exterior-tiles0-085)]
+  $84C8,8,8 #HTML[#UDGARRAY1,7,4,1;$84C8-$84CF-8(exterior-tiles0-086)]
+  $84D0,8,8 #HTML[#UDGARRAY1,7,4,1;$84D0-$84D7-8(exterior-tiles0-087)]
+  $84D8,8,8 #HTML[#UDGARRAY1,7,4,1;$84D8-$84DF-8(exterior-tiles0-088)]
+  $84E0,8,8 #HTML[#UDGARRAY1,7,4,1;$84E0-$84E7-8(exterior-tiles0-089)]
+  $84E8,8,8 #HTML[#UDGARRAY1,7,4,1;$84E8-$84EF-8(exterior-tiles0-090)]
+  $84F0,8,8 #HTML[#UDGARRAY1,7,4,1;$84F0-$84F7-8(exterior-tiles0-091)]
+  $84F8,8,8 #HTML[#UDGARRAY1,7,4,1;$84F8-$84FF-8(exterior-tiles0-092)]
+  $8500,8,8 #HTML[#UDGARRAY1,7,4,1;$8500-$8507-8(exterior-tiles0-093)]
+  $8508,8,8 #HTML[#UDGARRAY1,7,4,1;$8508-$850F-8(exterior-tiles0-094)]
+  $8510,8,8 #HTML[#UDGARRAY1,7,4,1;$8510-$8517-8(exterior-tiles0-095)]
+  $8518,8,8 #HTML[#UDGARRAY1,7,4,1;$8518-$851F-8(exterior-tiles0-096)]
+  $8520,8,8 #HTML[#UDGARRAY1,7,4,1;$8520-$8527-8(exterior-tiles0-097)]
+  $8528,8,8 #HTML[#UDGARRAY1,7,4,1;$8528-$852F-8(exterior-tiles0-098)]
+  $8530,8,8 #HTML[#UDGARRAY1,7,4,1;$8530-$8537-8(exterior-tiles0-099)]
+  $8538,8,8 #HTML[#UDGARRAY1,7,4,1;$8538-$853F-8(exterior-tiles0-100)]
+  $8540,8,8 #HTML[#UDGARRAY1,7,4,1;$8540-$8547-8(exterior-tiles0-101)]
+  $8548,8,8 #HTML[#UDGARRAY1,7,4,1;$8548-$854F-8(exterior-tiles0-102)]
+  $8550,8,8 #HTML[#UDGARRAY1,7,4,1;$8550-$8557-8(exterior-tiles0-103)]
+  $8558,8,8 #HTML[#UDGARRAY1,7,4,1;$8558-$855F-8(exterior-tiles0-104)]
+  $8560,8,8 #HTML[#UDGARRAY1,7,4,1;$8560-$8567-8(exterior-tiles0-105)]
+  $8568,8,8 #HTML[#UDGARRAY1,7,4,1;$8568-$856F-8(exterior-tiles0-106)]
+  $8570,8,8 #HTML[#UDGARRAY1,7,4,1;$8570-$8577-8(exterior-tiles0-107)]
+  $8578,8,8 #HTML[#UDGARRAY1,7,4,1;$8578-$857F-8(exterior-tiles0-108)]
+  $8580,8,8 #HTML[#UDGARRAY1,7,4,1;$8580-$8587-8(exterior-tiles0-109)]
+  $8588,8,8 #HTML[#UDGARRAY1,7,4,1;$8588-$858F-8(exterior-tiles0-110)]
 N $8590 Exterior tiles set 1. 145 tiles. Looks like tiles for huts. (<- plot_tile)
 @ $8590 label=exterior_tiles_1
-;
+  $8590,8,8 #HTML[#UDGARRAY1,7,4,1;$8590-$8597-8(exterior-tiles1-000)]
+  $8598,8,8 #HTML[#UDGARRAY1,7,4,1;$8598-$859F-8(exterior-tiles1-001)]
+  $85A0,8,8 #HTML[#UDGARRAY1,7,4,1;$85A0-$85A7-8(exterior-tiles1-002)]
+  $85A8,8,8 #HTML[#UDGARRAY1,7,4,1;$85A8-$85AF-8(exterior-tiles1-003)]
+  $85B0,8,8 #HTML[#UDGARRAY1,7,4,1;$85B0-$85B7-8(exterior-tiles1-004)]
+  $85B8,8,8 #HTML[#UDGARRAY1,7,4,1;$85B8-$85BF-8(exterior-tiles1-005)]
+  $85C0,8,8 #HTML[#UDGARRAY1,7,4,1;$85C0-$85C7-8(exterior-tiles1-006)]
+  $85C8,8,8 #HTML[#UDGARRAY1,7,4,1;$85C8-$85CF-8(exterior-tiles1-007)]
+  $85D0,8,8 #HTML[#UDGARRAY1,7,4,1;$85D0-$85D7-8(exterior-tiles1-008)]
+  $85D8,8,8 #HTML[#UDGARRAY1,7,4,1;$85D8-$85DF-8(exterior-tiles1-009)]
+  $85E0,8,8 #HTML[#UDGARRAY1,7,4,1;$85E0-$85E7-8(exterior-tiles1-010)]
+  $85E8,8,8 #HTML[#UDGARRAY1,7,4,1;$85E8-$85EF-8(exterior-tiles1-011)]
+  $85F0,8,8 #HTML[#UDGARRAY1,7,4,1;$85F0-$85F7-8(exterior-tiles1-012)]
+  $85F8,8,8 #HTML[#UDGARRAY1,7,4,1;$85F8-$85FF-8(exterior-tiles1-013)]
+  $8600,8,8 #HTML[#UDGARRAY1,7,4,1;$8600-$8607-8(exterior-tiles1-014)]
+  $8608,8,8 #HTML[#UDGARRAY1,7,4,1;$8608-$860F-8(exterior-tiles1-015)]
+  $8610,8,8 #HTML[#UDGARRAY1,7,4,1;$8610-$8617-8(exterior-tiles1-016)]
+  $8618,8,8 #HTML[#UDGARRAY1,7,4,1;$8618-$861F-8(exterior-tiles1-017)]
+  $8620,8,8 #HTML[#UDGARRAY1,7,4,1;$8620-$8627-8(exterior-tiles1-018)]
+  $8628,8,8 #HTML[#UDGARRAY1,7,4,1;$8628-$862F-8(exterior-tiles1-019)]
+  $8630,8,8 #HTML[#UDGARRAY1,7,4,1;$8630-$8637-8(exterior-tiles1-020)]
+  $8638,8,8 #HTML[#UDGARRAY1,7,4,1;$8638-$863F-8(exterior-tiles1-021)]
+  $8640,8,8 #HTML[#UDGARRAY1,7,4,1;$8640-$8647-8(exterior-tiles1-022)]
+  $8648,8,8 #HTML[#UDGARRAY1,7,4,1;$8648-$864F-8(exterior-tiles1-023)]
+  $8650,8,8 #HTML[#UDGARRAY1,7,4,1;$8650-$8657-8(exterior-tiles1-024)]
+  $8658,8,8 #HTML[#UDGARRAY1,7,4,1;$8658-$865F-8(exterior-tiles1-025)]
+  $8660,8,8 #HTML[#UDGARRAY1,7,4,1;$8660-$8667-8(exterior-tiles1-026)]
+  $8668,8,8 #HTML[#UDGARRAY1,7,4,1;$8668-$866F-8(exterior-tiles1-027)]
+  $8670,8,8 #HTML[#UDGARRAY1,7,4,1;$8670-$8677-8(exterior-tiles1-028)]
+  $8678,8,8 #HTML[#UDGARRAY1,7,4,1;$8678-$867F-8(exterior-tiles1-029)]
+  $8680,8,8 #HTML[#UDGARRAY1,7,4,1;$8680-$8687-8(exterior-tiles1-030)]
+  $8688,8,8 #HTML[#UDGARRAY1,7,4,1;$8688-$868F-8(exterior-tiles1-031)]
+  $8690,8,8 #HTML[#UDGARRAY1,7,4,1;$8690-$8697-8(exterior-tiles1-032)]
+  $8698,8,8 #HTML[#UDGARRAY1,7,4,1;$8698-$869F-8(exterior-tiles1-033)]
+  $86A0,8,8 #HTML[#UDGARRAY1,7,4,1;$86A0-$86A7-8(exterior-tiles1-034)]
+  $86A8,8,8 #HTML[#UDGARRAY1,7,4,1;$86A8-$86AF-8(exterior-tiles1-035)]
+  $86B0,8,8 #HTML[#UDGARRAY1,7,4,1;$86B0-$86B7-8(exterior-tiles1-036)]
+  $86B8,8,8 #HTML[#UDGARRAY1,7,4,1;$86B8-$86BF-8(exterior-tiles1-037)]
+  $86C0,8,8 #HTML[#UDGARRAY1,7,4,1;$86C0-$86C7-8(exterior-tiles1-038)]
+  $86C8,8,8 #HTML[#UDGARRAY1,7,4,1;$86C8-$86CF-8(exterior-tiles1-039)]
+  $86D0,8,8 #HTML[#UDGARRAY1,7,4,1;$86D0-$86D7-8(exterior-tiles1-040)]
+  $86D8,8,8 #HTML[#UDGARRAY1,7,4,1;$86D8-$86DF-8(exterior-tiles1-041)]
+  $86E0,8,8 #HTML[#UDGARRAY1,7,4,1;$86E0-$86E7-8(exterior-tiles1-042)]
+  $86E8,8,8 #HTML[#UDGARRAY1,7,4,1;$86E8-$86EF-8(exterior-tiles1-043)]
+  $86F0,8,8 #HTML[#UDGARRAY1,7,4,1;$86F0-$86F7-8(exterior-tiles1-044)]
+  $86F8,8,8 #HTML[#UDGARRAY1,7,4,1;$86F8-$86FF-8(exterior-tiles1-045)]
+  $8700,8,8 #HTML[#UDGARRAY1,7,4,1;$8700-$8707-8(exterior-tiles1-046)]
+  $8708,8,8 #HTML[#UDGARRAY1,7,4,1;$8708-$870F-8(exterior-tiles1-047)]
+  $8710,8,8 #HTML[#UDGARRAY1,7,4,1;$8710-$8717-8(exterior-tiles1-048)]
+  $8718,8,8 #HTML[#UDGARRAY1,7,4,1;$8718-$871F-8(exterior-tiles1-049)]
+  $8720,8,8 #HTML[#UDGARRAY1,7,4,1;$8720-$8727-8(exterior-tiles1-050)]
+  $8728,8,8 #HTML[#UDGARRAY1,7,4,1;$8728-$872F-8(exterior-tiles1-051)]
+  $8730,8,8 #HTML[#UDGARRAY1,7,4,1;$8730-$8737-8(exterior-tiles1-052)]
+  $8738,8,8 #HTML[#UDGARRAY1,7,4,1;$8738-$873F-8(exterior-tiles1-053)]
+  $8740,8,8 #HTML[#UDGARRAY1,7,4,1;$8740-$8747-8(exterior-tiles1-054)]
+  $8748,8,8 #HTML[#UDGARRAY1,7,4,1;$8748-$874F-8(exterior-tiles1-055)]
+  $8750,8,8 #HTML[#UDGARRAY1,7,4,1;$8750-$8757-8(exterior-tiles1-056)]
+  $8758,8,8 #HTML[#UDGARRAY1,7,4,1;$8758-$875F-8(exterior-tiles1-057)]
+  $8760,8,8 #HTML[#UDGARRAY1,7,4,1;$8760-$8767-8(exterior-tiles1-058)]
+  $8768,8,8 #HTML[#UDGARRAY1,7,4,1;$8768-$876F-8(exterior-tiles1-059)]
+  $8770,8,8 #HTML[#UDGARRAY1,7,4,1;$8770-$8777-8(exterior-tiles1-060)]
+  $8778,8,8 #HTML[#UDGARRAY1,7,4,1;$8778-$877F-8(exterior-tiles1-061)]
+  $8780,8,8 #HTML[#UDGARRAY1,7,4,1;$8780-$8787-8(exterior-tiles1-062)]
+  $8788,8,8 #HTML[#UDGARRAY1,7,4,1;$8788-$878F-8(exterior-tiles1-063)]
+  $8790,8,8 #HTML[#UDGARRAY1,7,4,1;$8790-$8797-8(exterior-tiles1-064)]
+  $8798,8,8 #HTML[#UDGARRAY1,7,4,1;$8798-$879F-8(exterior-tiles1-065)]
+  $87A0,8,8 #HTML[#UDGARRAY1,7,4,1;$87A0-$87A7-8(exterior-tiles1-066)]
+  $87A8,8,8 #HTML[#UDGARRAY1,7,4,1;$87A8-$87AF-8(exterior-tiles1-067)]
+  $87B0,8,8 #HTML[#UDGARRAY1,7,4,1;$87B0-$87B7-8(exterior-tiles1-068)]
+  $87B8,8,8 #HTML[#UDGARRAY1,7,4,1;$87B8-$87BF-8(exterior-tiles1-069)]
+  $87C0,8,8 #HTML[#UDGARRAY1,7,4,1;$87C0-$87C7-8(exterior-tiles1-070)]
+  $87C8,8,8 #HTML[#UDGARRAY1,7,4,1;$87C8-$87CF-8(exterior-tiles1-071)]
+  $87D0,8,8 #HTML[#UDGARRAY1,7,4,1;$87D0-$87D7-8(exterior-tiles1-072)]
+  $87D8,8,8 #HTML[#UDGARRAY1,7,4,1;$87D8-$87DF-8(exterior-tiles1-073)]
+  $87E0,8,8 #HTML[#UDGARRAY1,7,4,1;$87E0-$87E7-8(exterior-tiles1-074)]
+  $87E8,8,8 #HTML[#UDGARRAY1,7,4,1;$87E8-$87EF-8(exterior-tiles1-075)]
+  $87F0,8,8 #HTML[#UDGARRAY1,7,4,1;$87F0-$87F7-8(exterior-tiles1-076)]
+  $87F8,8,8 #HTML[#UDGARRAY1,7,4,1;$87F8-$87FF-8(exterior-tiles1-077)]
+  $8800,8,8 #HTML[#UDGARRAY1,7,4,1;$8800-$8807-8(exterior-tiles1-078)]
+  $8808,8,8 #HTML[#UDGARRAY1,7,4,1;$8808-$880F-8(exterior-tiles1-079)]
+  $8810,8,8 #HTML[#UDGARRAY1,7,4,1;$8810-$8817-8(exterior-tiles1-080)]
+  $8818,8,8 #HTML[#UDGARRAY1,7,4,1;$8818-$881F-8(exterior-tiles1-081)]
+  $8820,8,8 #HTML[#UDGARRAY1,7,4,1;$8820-$8827-8(exterior-tiles1-082)]
+  $8828,8,8 #HTML[#UDGARRAY1,7,4,1;$8828-$882F-8(exterior-tiles1-083)]
+  $8830,8,8 #HTML[#UDGARRAY1,7,4,1;$8830-$8837-8(exterior-tiles1-084)]
+  $8838,8,8 #HTML[#UDGARRAY1,7,4,1;$8838-$883F-8(exterior-tiles1-085)]
+  $8840,8,8 #HTML[#UDGARRAY1,7,4,1;$8840-$8847-8(exterior-tiles1-086)]
+  $8848,8,8 #HTML[#UDGARRAY1,7,4,1;$8848-$884F-8(exterior-tiles1-087)]
+  $8850,8,8 #HTML[#UDGARRAY1,7,4,1;$8850-$8857-8(exterior-tiles1-088)]
+  $8858,8,8 #HTML[#UDGARRAY1,7,4,1;$8858-$885F-8(exterior-tiles1-089)]
+  $8860,8,8 #HTML[#UDGARRAY1,7,4,1;$8860-$8867-8(exterior-tiles1-090)]
+  $8868,8,8 #HTML[#UDGARRAY1,7,4,1;$8868-$886F-8(exterior-tiles1-091)]
+  $8870,8,8 #HTML[#UDGARRAY1,7,4,1;$8870-$8877-8(exterior-tiles1-092)]
+  $8878,8,8 #HTML[#UDGARRAY1,7,4,1;$8878-$887F-8(exterior-tiles1-093)]
+  $8880,8,8 #HTML[#UDGARRAY1,7,4,1;$8880-$8887-8(exterior-tiles1-094)]
+  $8888,8,8 #HTML[#UDGARRAY1,7,4,1;$8888-$888F-8(exterior-tiles1-095)]
+  $8890,8,8 #HTML[#UDGARRAY1,7,4,1;$8890-$8897-8(exterior-tiles1-096)]
+  $8898,8,8 #HTML[#UDGARRAY1,7,4,1;$8898-$889F-8(exterior-tiles1-097)]
+  $88A0,8,8 #HTML[#UDGARRAY1,7,4,1;$88A0-$88A7-8(exterior-tiles1-098)]
+  $88A8,8,8 #HTML[#UDGARRAY1,7,4,1;$88A8-$88AF-8(exterior-tiles1-099)]
+  $88B0,8,8 #HTML[#UDGARRAY1,7,4,1;$88B0-$88B7-8(exterior-tiles1-100)]
+  $88B8,8,8 #HTML[#UDGARRAY1,7,4,1;$88B8-$88BF-8(exterior-tiles1-101)]
+  $88C0,8,8 #HTML[#UDGARRAY1,7,4,1;$88C0-$88C7-8(exterior-tiles1-102)]
+  $88C8,8,8 #HTML[#UDGARRAY1,7,4,1;$88C8-$88CF-8(exterior-tiles1-103)]
+  $88D0,8,8 #HTML[#UDGARRAY1,7,4,1;$88D0-$88D7-8(exterior-tiles1-104)]
+  $88D8,8,8 #HTML[#UDGARRAY1,7,4,1;$88D8-$88DF-8(exterior-tiles1-105)]
+  $88E0,8,8 #HTML[#UDGARRAY1,7,4,1;$88E0-$88E7-8(exterior-tiles1-106)]
+  $88E8,8,8 #HTML[#UDGARRAY1,7,4,1;$88E8-$88EF-8(exterior-tiles1-107)]
+  $88F0,8,8 #HTML[#UDGARRAY1,7,4,1;$88F0-$88F7-8(exterior-tiles1-108)]
+  $88F8,8,8 #HTML[#UDGARRAY1,7,4,1;$88F8-$88FF-8(exterior-tiles1-109)]
+  $8900,8,8 #HTML[#UDGARRAY1,7,4,1;$8900-$8907-8(exterior-tiles1-110)]
+  $8908,8,8 #HTML[#UDGARRAY1,7,4,1;$8908-$890F-8(exterior-tiles1-111)]
+  $8910,8,8 #HTML[#UDGARRAY1,7,4,1;$8910-$8917-8(exterior-tiles1-112)]
+  $8918,8,8 #HTML[#UDGARRAY1,7,4,1;$8918-$891F-8(exterior-tiles1-113)]
+  $8920,8,8 #HTML[#UDGARRAY1,7,4,1;$8920-$8927-8(exterior-tiles1-114)]
+  $8928,8,8 #HTML[#UDGARRAY1,7,4,1;$8928-$892F-8(exterior-tiles1-115)]
+  $8930,8,8 #HTML[#UDGARRAY1,7,4,1;$8930-$8937-8(exterior-tiles1-116)]
+  $8938,8,8 #HTML[#UDGARRAY1,7,4,1;$8938-$893F-8(exterior-tiles1-117)]
+  $8940,8,8 #HTML[#UDGARRAY1,7,4,1;$8940-$8947-8(exterior-tiles1-118)]
+  $8948,8,8 #HTML[#UDGARRAY1,7,4,1;$8948-$894F-8(exterior-tiles1-119)]
+  $8950,8,8 #HTML[#UDGARRAY1,7,4,1;$8950-$8957-8(exterior-tiles1-120)]
+  $8958,8,8 #HTML[#UDGARRAY1,7,4,1;$8958-$895F-8(exterior-tiles1-121)]
+  $8960,8,8 #HTML[#UDGARRAY1,7,4,1;$8960-$8967-8(exterior-tiles1-122)]
+  $8968,8,8 #HTML[#UDGARRAY1,7,4,1;$8968-$896F-8(exterior-tiles1-123)]
+  $8970,8,8 #HTML[#UDGARRAY1,7,4,1;$8970-$8977-8(exterior-tiles1-124)]
+  $8978,8,8 #HTML[#UDGARRAY1,7,4,1;$8978-$897F-8(exterior-tiles1-125)]
+  $8980,8,8 #HTML[#UDGARRAY1,7,4,1;$8980-$8987-8(exterior-tiles1-126)]
+  $8988,8,8 #HTML[#UDGARRAY1,7,4,1;$8988-$898F-8(exterior-tiles1-127)]
+  $8990,8,8 #HTML[#UDGARRAY1,7,4,1;$8990-$8997-8(exterior-tiles1-128)]
+  $8998,8,8 #HTML[#UDGARRAY1,7,4,1;$8998-$899F-8(exterior-tiles1-129)]
+  $89A0,8,8 #HTML[#UDGARRAY1,7,4,1;$89A0-$89A7-8(exterior-tiles1-130)]
+  $89A8,8,8 #HTML[#UDGARRAY1,7,4,1;$89A8-$89AF-8(exterior-tiles1-131)]
+  $89B0,8,8 #HTML[#UDGARRAY1,7,4,1;$89B0-$89B7-8(exterior-tiles1-132)]
+  $89B8,8,8 #HTML[#UDGARRAY1,7,4,1;$89B8-$89BF-8(exterior-tiles1-133)]
+  $89C0,8,8 #HTML[#UDGARRAY1,7,4,1;$89C0-$89C7-8(exterior-tiles1-134)]
+  $89C8,8,8 #HTML[#UDGARRAY1,7,4,1;$89C8-$89CF-8(exterior-tiles1-135)]
+  $89D0,8,8 #HTML[#UDGARRAY1,7,4,1;$89D0-$89D7-8(exterior-tiles1-136)]
+  $89D8,8,8 #HTML[#UDGARRAY1,7,4,1;$89D8-$89DF-8(exterior-tiles1-137)]
+  $89E0,8,8 #HTML[#UDGARRAY1,7,4,1;$89E0-$89E7-8(exterior-tiles1-138)]
+  $89E8,8,8 #HTML[#UDGARRAY1,7,4,1;$89E8-$89EF-8(exterior-tiles1-139)]
+  $89F0,8,8 #HTML[#UDGARRAY1,7,4,1;$89F0-$89F7-8(exterior-tiles1-140)]
+  $89F8,8,8 #HTML[#UDGARRAY1,7,4,1;$89F8-$89FF-8(exterior-tiles1-141)]
+  $8A00,8,8 #HTML[#UDGARRAY1,7,4,1;$8A00-$8A07-8(exterior-tiles1-142)]
+  $8A08,8,8 #HTML[#UDGARRAY1,7,4,1;$8A08-$8A0F-8(exterior-tiles1-143)]
+  $8A10,8,8 #HTML[#UDGARRAY1,7,4,1;$8A10-$8A17-8(exterior-tiles1-144)]
 N $8A18 Exterior tiles set 2. 220 tiles. Looks like main building wall tiles. (<- plot_tile)
 @ $8A18 label=exterior_tiles_2
-;
+  $8A18,8,8 #HTML[#UDGARRAY1,7,4,1;$8A18-$8A1F-8(exterior-tiles2-000)]
+  $8A20,8,8 #HTML[#UDGARRAY1,7,4,1;$8A20-$8A27-8(exterior-tiles2-001)]
+  $8A28,8,8 #HTML[#UDGARRAY1,7,4,1;$8A28-$8A2F-8(exterior-tiles2-002)]
+  $8A30,8,8 #HTML[#UDGARRAY1,7,4,1;$8A30-$8A37-8(exterior-tiles2-003)]
+  $8A38,8,8 #HTML[#UDGARRAY1,7,4,1;$8A38-$8A3F-8(exterior-tiles2-004)]
+  $8A40,8,8 #HTML[#UDGARRAY1,7,4,1;$8A40-$8A47-8(exterior-tiles2-005)]
+  $8A48,8,8 #HTML[#UDGARRAY1,7,4,1;$8A48-$8A4F-8(exterior-tiles2-006)]
+  $8A50,8,8 #HTML[#UDGARRAY1,7,4,1;$8A50-$8A57-8(exterior-tiles2-007)]
+  $8A58,8,8 #HTML[#UDGARRAY1,7,4,1;$8A58-$8A5F-8(exterior-tiles2-008)]
+  $8A60,8,8 #HTML[#UDGARRAY1,7,4,1;$8A60-$8A67-8(exterior-tiles2-009)]
+  $8A68,8,8 #HTML[#UDGARRAY1,7,4,1;$8A68-$8A6F-8(exterior-tiles2-010)]
+  $8A70,8,8 #HTML[#UDGARRAY1,7,4,1;$8A70-$8A77-8(exterior-tiles2-011)]
+  $8A78,8,8 #HTML[#UDGARRAY1,7,4,1;$8A78-$8A7F-8(exterior-tiles2-012)]
+  $8A80,8,8 #HTML[#UDGARRAY1,7,4,1;$8A80-$8A87-8(exterior-tiles2-013)]
+  $8A88,8,8 #HTML[#UDGARRAY1,7,4,1;$8A88-$8A8F-8(exterior-tiles2-014)]
+  $8A90,8,8 #HTML[#UDGARRAY1,7,4,1;$8A90-$8A97-8(exterior-tiles2-015)]
+  $8A98,8,8 #HTML[#UDGARRAY1,7,4,1;$8A98-$8A9F-8(exterior-tiles2-016)]
+  $8AA0,8,8 #HTML[#UDGARRAY1,7,4,1;$8AA0-$8AA7-8(exterior-tiles2-017)]
+  $8AA8,8,8 #HTML[#UDGARRAY1,7,4,1;$8AA8-$8AAF-8(exterior-tiles2-018)]
+  $8AB0,8,8 #HTML[#UDGARRAY1,7,4,1;$8AB0-$8AB7-8(exterior-tiles2-019)]
+  $8AB8,8,8 #HTML[#UDGARRAY1,7,4,1;$8AB8-$8ABF-8(exterior-tiles2-020)]
+  $8AC0,8,8 #HTML[#UDGARRAY1,7,4,1;$8AC0-$8AC7-8(exterior-tiles2-021)]
+  $8AC8,8,8 #HTML[#UDGARRAY1,7,4,1;$8AC8-$8ACF-8(exterior-tiles2-022)]
+  $8AD0,8,8 #HTML[#UDGARRAY1,7,4,1;$8AD0-$8AD7-8(exterior-tiles2-023)]
+  $8AD8,8,8 #HTML[#UDGARRAY1,7,4,1;$8AD8-$8ADF-8(exterior-tiles2-024)]
+  $8AE0,8,8 #HTML[#UDGARRAY1,7,4,1;$8AE0-$8AE7-8(exterior-tiles2-025)]
+  $8AE8,8,8 #HTML[#UDGARRAY1,7,4,1;$8AE8-$8AEF-8(exterior-tiles2-026)]
+  $8AF0,8,8 #HTML[#UDGARRAY1,7,4,1;$8AF0-$8AF7-8(exterior-tiles2-027)]
+  $8AF8,8,8 #HTML[#UDGARRAY1,7,4,1;$8AF8-$8AFF-8(exterior-tiles2-028)]
+  $8B00,8,8 #HTML[#UDGARRAY1,7,4,1;$8B00-$8B07-8(exterior-tiles2-029)]
+  $8B08,8,8 #HTML[#UDGARRAY1,7,4,1;$8B08-$8B0F-8(exterior-tiles2-030)]
+  $8B10,8,8 #HTML[#UDGARRAY1,7,4,1;$8B10-$8B17-8(exterior-tiles2-031)]
+  $8B18,8,8 #HTML[#UDGARRAY1,7,4,1;$8B18-$8B1F-8(exterior-tiles2-032)]
+  $8B20,8,8 #HTML[#UDGARRAY1,7,4,1;$8B20-$8B27-8(exterior-tiles2-033)]
+  $8B28,8,8 #HTML[#UDGARRAY1,7,4,1;$8B28-$8B2F-8(exterior-tiles2-034)]
+  $8B30,8,8 #HTML[#UDGARRAY1,7,4,1;$8B30-$8B37-8(exterior-tiles2-035)]
+  $8B38,8,8 #HTML[#UDGARRAY1,7,4,1;$8B38-$8B3F-8(exterior-tiles2-036)]
+  $8B40,8,8 #HTML[#UDGARRAY1,7,4,1;$8B40-$8B47-8(exterior-tiles2-037)]
+  $8B48,8,8 #HTML[#UDGARRAY1,7,4,1;$8B48-$8B4F-8(exterior-tiles2-038)]
+  $8B50,8,8 #HTML[#UDGARRAY1,7,4,1;$8B50-$8B57-8(exterior-tiles2-039)]
+  $8B58,8,8 #HTML[#UDGARRAY1,7,4,1;$8B58-$8B5F-8(exterior-tiles2-040)]
+  $8B60,8,8 #HTML[#UDGARRAY1,7,4,1;$8B60-$8B67-8(exterior-tiles2-041)]
+  $8B68,8,8 #HTML[#UDGARRAY1,7,4,1;$8B68-$8B6F-8(exterior-tiles2-042)]
+  $8B70,8,8 #HTML[#UDGARRAY1,7,4,1;$8B70-$8B77-8(exterior-tiles2-043)]
+  $8B78,8,8 #HTML[#UDGARRAY1,7,4,1;$8B78-$8B7F-8(exterior-tiles2-044)]
+  $8B80,8,8 #HTML[#UDGARRAY1,7,4,1;$8B80-$8B87-8(exterior-tiles2-045)]
+  $8B88,8,8 #HTML[#UDGARRAY1,7,4,1;$8B88-$8B8F-8(exterior-tiles2-046)]
+  $8B90,8,8 #HTML[#UDGARRAY1,7,4,1;$8B90-$8B97-8(exterior-tiles2-047)]
+  $8B98,8,8 #HTML[#UDGARRAY1,7,4,1;$8B98-$8B9F-8(exterior-tiles2-048)]
+  $8BA0,8,8 #HTML[#UDGARRAY1,7,4,1;$8BA0-$8BA7-8(exterior-tiles2-049)]
+  $8BA8,8,8 #HTML[#UDGARRAY1,7,4,1;$8BA8-$8BAF-8(exterior-tiles2-050)]
+  $8BB0,8,8 #HTML[#UDGARRAY1,7,4,1;$8BB0-$8BB7-8(exterior-tiles2-051)]
+  $8BB8,8,8 #HTML[#UDGARRAY1,7,4,1;$8BB8-$8BBF-8(exterior-tiles2-052)]
+  $8BC0,8,8 #HTML[#UDGARRAY1,7,4,1;$8BC0-$8BC7-8(exterior-tiles2-053)]
+  $8BC8,8,8 #HTML[#UDGARRAY1,7,4,1;$8BC8-$8BCF-8(exterior-tiles2-054)]
+  $8BD0,8,8 #HTML[#UDGARRAY1,7,4,1;$8BD0-$8BD7-8(exterior-tiles2-055)]
+  $8BD8,8,8 #HTML[#UDGARRAY1,7,4,1;$8BD8-$8BDF-8(exterior-tiles2-056)]
+  $8BE0,8,8 #HTML[#UDGARRAY1,7,4,1;$8BE0-$8BE7-8(exterior-tiles2-057)]
+  $8BE8,8,8 #HTML[#UDGARRAY1,7,4,1;$8BE8-$8BEF-8(exterior-tiles2-058)]
+  $8BF0,8,8 #HTML[#UDGARRAY1,7,4,1;$8BF0-$8BF7-8(exterior-tiles2-059)]
+  $8BF8,8,8 #HTML[#UDGARRAY1,7,4,1;$8BF8-$8BFF-8(exterior-tiles2-060)]
+  $8C00,8,8 #HTML[#UDGARRAY1,7,4,1;$8C00-$8C07-8(exterior-tiles2-061)]
+  $8C08,8,8 #HTML[#UDGARRAY1,7,4,1;$8C08-$8C0F-8(exterior-tiles2-062)]
+  $8C10,8,8 #HTML[#UDGARRAY1,7,4,1;$8C10-$8C17-8(exterior-tiles2-063)]
+  $8C18,8,8 #HTML[#UDGARRAY1,7,4,1;$8C18-$8C1F-8(exterior-tiles2-064)]
+  $8C20,8,8 #HTML[#UDGARRAY1,7,4,1;$8C20-$8C27-8(exterior-tiles2-065)]
+  $8C28,8,8 #HTML[#UDGARRAY1,7,4,1;$8C28-$8C2F-8(exterior-tiles2-066)]
+  $8C30,8,8 #HTML[#UDGARRAY1,7,4,1;$8C30-$8C37-8(exterior-tiles2-067)]
+  $8C38,8,8 #HTML[#UDGARRAY1,7,4,1;$8C38-$8C3F-8(exterior-tiles2-068)]
+  $8C40,8,8 #HTML[#UDGARRAY1,7,4,1;$8C40-$8C47-8(exterior-tiles2-069)]
+  $8C48,8,8 #HTML[#UDGARRAY1,7,4,1;$8C48-$8C4F-8(exterior-tiles2-070)]
+  $8C50,8,8 #HTML[#UDGARRAY1,7,4,1;$8C50-$8C57-8(exterior-tiles2-071)]
+  $8C58,8,8 #HTML[#UDGARRAY1,7,4,1;$8C58-$8C5F-8(exterior-tiles2-072)]
+  $8C60,8,8 #HTML[#UDGARRAY1,7,4,1;$8C60-$8C67-8(exterior-tiles2-073)]
+  $8C68,8,8 #HTML[#UDGARRAY1,7,4,1;$8C68-$8C6F-8(exterior-tiles2-074)]
+  $8C70,8,8 #HTML[#UDGARRAY1,7,4,1;$8C70-$8C77-8(exterior-tiles2-075)]
+  $8C78,8,8 #HTML[#UDGARRAY1,7,4,1;$8C78-$8C7F-8(exterior-tiles2-076)]
+  $8C80,8,8 #HTML[#UDGARRAY1,7,4,1;$8C80-$8C87-8(exterior-tiles2-077)]
+  $8C88,8,8 #HTML[#UDGARRAY1,7,4,1;$8C88-$8C8F-8(exterior-tiles2-078)]
+  $8C90,8,8 #HTML[#UDGARRAY1,7,4,1;$8C90-$8C97-8(exterior-tiles2-079)]
+  $8C98,8,8 #HTML[#UDGARRAY1,7,4,1;$8C98-$8C9F-8(exterior-tiles2-080)]
+  $8CA0,8,8 #HTML[#UDGARRAY1,7,4,1;$8CA0-$8CA7-8(exterior-tiles2-081)]
+  $8CA8,8,8 #HTML[#UDGARRAY1,7,4,1;$8CA8-$8CAF-8(exterior-tiles2-082)]
+  $8CB0,8,8 #HTML[#UDGARRAY1,7,4,1;$8CB0-$8CB7-8(exterior-tiles2-083)]
+  $8CB8,8,8 #HTML[#UDGARRAY1,7,4,1;$8CB8-$8CBF-8(exterior-tiles2-084)]
+  $8CC0,8,8 #HTML[#UDGARRAY1,7,4,1;$8CC0-$8CC7-8(exterior-tiles2-085)]
+  $8CC8,8,8 #HTML[#UDGARRAY1,7,4,1;$8CC8-$8CCF-8(exterior-tiles2-086)]
+  $8CD0,8,8 #HTML[#UDGARRAY1,7,4,1;$8CD0-$8CD7-8(exterior-tiles2-087)]
+  $8CD8,8,8 #HTML[#UDGARRAY1,7,4,1;$8CD8-$8CDF-8(exterior-tiles2-088)]
+  $8CE0,8,8 #HTML[#UDGARRAY1,7,4,1;$8CE0-$8CE7-8(exterior-tiles2-089)]
+  $8CE8,8,8 #HTML[#UDGARRAY1,7,4,1;$8CE8-$8CEF-8(exterior-tiles2-090)]
+  $8CF0,8,8 #HTML[#UDGARRAY1,7,4,1;$8CF0-$8CF7-8(exterior-tiles2-091)]
+  $8CF8,8,8 #HTML[#UDGARRAY1,7,4,1;$8CF8-$8CFF-8(exterior-tiles2-092)]
+  $8D00,8,8 #HTML[#UDGARRAY1,7,4,1;$8D00-$8D07-8(exterior-tiles2-093)]
+  $8D08,8,8 #HTML[#UDGARRAY1,7,4,1;$8D08-$8D0F-8(exterior-tiles2-094)]
+  $8D10,8,8 #HTML[#UDGARRAY1,7,4,1;$8D10-$8D17-8(exterior-tiles2-095)]
+  $8D18,8,8 #HTML[#UDGARRAY1,7,4,1;$8D18-$8D1F-8(exterior-tiles2-096)]
+  $8D20,8,8 #HTML[#UDGARRAY1,7,4,1;$8D20-$8D27-8(exterior-tiles2-097)]
+  $8D28,8,8 #HTML[#UDGARRAY1,7,4,1;$8D28-$8D2F-8(exterior-tiles2-098)]
+  $8D30,8,8 #HTML[#UDGARRAY1,7,4,1;$8D30-$8D37-8(exterior-tiles2-099)]
+  $8D38,8,8 #HTML[#UDGARRAY1,7,4,1;$8D38-$8D3F-8(exterior-tiles2-100)]
+  $8D40,8,8 #HTML[#UDGARRAY1,7,4,1;$8D40-$8D47-8(exterior-tiles2-101)]
+  $8D48,8,8 #HTML[#UDGARRAY1,7,4,1;$8D48-$8D4F-8(exterior-tiles2-102)]
+  $8D50,8,8 #HTML[#UDGARRAY1,7,4,1;$8D50-$8D57-8(exterior-tiles2-103)]
+  $8D58,8,8 #HTML[#UDGARRAY1,7,4,1;$8D58-$8D5F-8(exterior-tiles2-104)]
+  $8D60,8,8 #HTML[#UDGARRAY1,7,4,1;$8D60-$8D67-8(exterior-tiles2-105)]
+  $8D68,8,8 #HTML[#UDGARRAY1,7,4,1;$8D68-$8D6F-8(exterior-tiles2-106)]
+  $8D70,8,8 #HTML[#UDGARRAY1,7,4,1;$8D70-$8D77-8(exterior-tiles2-107)]
+  $8D78,8,8 #HTML[#UDGARRAY1,7,4,1;$8D78-$8D7F-8(exterior-tiles2-108)]
+  $8D80,8,8 #HTML[#UDGARRAY1,7,4,1;$8D80-$8D87-8(exterior-tiles2-109)]
+  $8D88,8,8 #HTML[#UDGARRAY1,7,4,1;$8D88-$8D8F-8(exterior-tiles2-110)]
+  $8D90,8,8 #HTML[#UDGARRAY1,7,4,1;$8D90-$8D97-8(exterior-tiles2-111)]
+  $8D98,8,8 #HTML[#UDGARRAY1,7,4,1;$8D98-$8D9F-8(exterior-tiles2-112)]
+  $8DA0,8,8 #HTML[#UDGARRAY1,7,4,1;$8DA0-$8DA7-8(exterior-tiles2-113)]
+  $8DA8,8,8 #HTML[#UDGARRAY1,7,4,1;$8DA8-$8DAF-8(exterior-tiles2-114)]
+  $8DB0,8,8 #HTML[#UDGARRAY1,7,4,1;$8DB0-$8DB7-8(exterior-tiles2-115)]
+  $8DB8,8,8 #HTML[#UDGARRAY1,7,4,1;$8DB8-$8DBF-8(exterior-tiles2-116)]
+  $8DC0,8,8 #HTML[#UDGARRAY1,7,4,1;$8DC0-$8DC7-8(exterior-tiles2-117)]
+  $8DC8,8,8 #HTML[#UDGARRAY1,7,4,1;$8DC8-$8DCF-8(exterior-tiles2-118)]
+  $8DD0,8,8 #HTML[#UDGARRAY1,7,4,1;$8DD0-$8DD7-8(exterior-tiles2-119)]
+  $8DD8,8,8 #HTML[#UDGARRAY1,7,4,1;$8DD8-$8DDF-8(exterior-tiles2-120)]
+  $8DE0,8,8 #HTML[#UDGARRAY1,7,4,1;$8DE0-$8DE7-8(exterior-tiles2-121)]
+  $8DE8,8,8 #HTML[#UDGARRAY1,7,4,1;$8DE8-$8DEF-8(exterior-tiles2-122)]
+  $8DF0,8,8 #HTML[#UDGARRAY1,7,4,1;$8DF0-$8DF7-8(exterior-tiles2-123)]
+  $8DF8,8,8 #HTML[#UDGARRAY1,7,4,1;$8DF8-$8DFF-8(exterior-tiles2-124)]
+  $8E00,8,8 #HTML[#UDGARRAY1,7,4,1;$8E00-$8E07-8(exterior-tiles2-125)]
+  $8E08,8,8 #HTML[#UDGARRAY1,7,4,1;$8E08-$8E0F-8(exterior-tiles2-126)]
+  $8E10,8,8 #HTML[#UDGARRAY1,7,4,1;$8E10-$8E17-8(exterior-tiles2-127)]
+  $8E18,8,8 #HTML[#UDGARRAY1,7,4,1;$8E18-$8E1F-8(exterior-tiles2-128)]
+  $8E20,8,8 #HTML[#UDGARRAY1,7,4,1;$8E20-$8E27-8(exterior-tiles2-129)]
+  $8E28,8,8 #HTML[#UDGARRAY1,7,4,1;$8E28-$8E2F-8(exterior-tiles2-130)]
+  $8E30,8,8 #HTML[#UDGARRAY1,7,4,1;$8E30-$8E37-8(exterior-tiles2-131)]
+  $8E38,8,8 #HTML[#UDGARRAY1,7,4,1;$8E38-$8E3F-8(exterior-tiles2-132)]
+  $8E40,8,8 #HTML[#UDGARRAY1,7,4,1;$8E40-$8E47-8(exterior-tiles2-133)]
+  $8E48,8,8 #HTML[#UDGARRAY1,7,4,1;$8E48-$8E4F-8(exterior-tiles2-134)]
+  $8E50,8,8 #HTML[#UDGARRAY1,7,4,1;$8E50-$8E57-8(exterior-tiles2-135)]
+  $8E58,8,8 #HTML[#UDGARRAY1,7,4,1;$8E58-$8E5F-8(exterior-tiles2-136)]
+  $8E60,8,8 #HTML[#UDGARRAY1,7,4,1;$8E60-$8E67-8(exterior-tiles2-137)]
+  $8E68,8,8 #HTML[#UDGARRAY1,7,4,1;$8E68-$8E6F-8(exterior-tiles2-138)]
+  $8E70,8,8 #HTML[#UDGARRAY1,7,4,1;$8E70-$8E77-8(exterior-tiles2-139)]
+  $8E78,8,8 #HTML[#UDGARRAY1,7,4,1;$8E78-$8E7F-8(exterior-tiles2-140)]
+  $8E80,8,8 #HTML[#UDGARRAY1,7,4,1;$8E80-$8E87-8(exterior-tiles2-141)]
+  $8E88,8,8 #HTML[#UDGARRAY1,7,4,1;$8E88-$8E8F-8(exterior-tiles2-142)]
+  $8E90,8,8 #HTML[#UDGARRAY1,7,4,1;$8E90-$8E97-8(exterior-tiles2-143)]
+  $8E98,8,8 #HTML[#UDGARRAY1,7,4,1;$8E98-$8E9F-8(exterior-tiles2-144)]
+  $8EA0,8,8 #HTML[#UDGARRAY1,7,4,1;$8EA0-$8EA7-8(exterior-tiles2-145)]
+  $8EA8,8,8 #HTML[#UDGARRAY1,7,4,1;$8EA8-$8EAF-8(exterior-tiles2-146)]
+  $8EB0,8,8 #HTML[#UDGARRAY1,7,4,1;$8EB0-$8EB7-8(exterior-tiles2-147)]
+  $8EB8,8,8 #HTML[#UDGARRAY1,7,4,1;$8EB8-$8EBF-8(exterior-tiles2-148)]
+  $8EC0,8,8 #HTML[#UDGARRAY1,7,4,1;$8EC0-$8EC7-8(exterior-tiles2-149)]
+  $8EC8,8,8 #HTML[#UDGARRAY1,7,4,1;$8EC8-$8ECF-8(exterior-tiles2-150)]
+  $8ED0,8,8 #HTML[#UDGARRAY1,7,4,1;$8ED0-$8ED7-8(exterior-tiles2-151)]
+  $8ED8,8,8 #HTML[#UDGARRAY1,7,4,1;$8ED8-$8EDF-8(exterior-tiles2-152)]
+  $8EE0,8,8 #HTML[#UDGARRAY1,7,4,1;$8EE0-$8EE7-8(exterior-tiles2-153)]
+  $8EE8,8,8 #HTML[#UDGARRAY1,7,4,1;$8EE8-$8EEF-8(exterior-tiles2-154)]
+  $8EF0,8,8 #HTML[#UDGARRAY1,7,4,1;$8EF0-$8EF7-8(exterior-tiles2-155)]
+  $8EF8,8,8 #HTML[#UDGARRAY1,7,4,1;$8EF8-$8EFF-8(exterior-tiles2-156)]
+  $8F00,8,8 #HTML[#UDGARRAY1,7,4,1;$8F00-$8F07-8(exterior-tiles2-157)]
+  $8F08,8,8 #HTML[#UDGARRAY1,7,4,1;$8F08-$8F0F-8(exterior-tiles2-158)]
+  $8F10,8,8 #HTML[#UDGARRAY1,7,4,1;$8F10-$8F17-8(exterior-tiles2-159)]
+  $8F18,8,8 #HTML[#UDGARRAY1,7,4,1;$8F18-$8F1F-8(exterior-tiles2-160)]
+  $8F20,8,8 #HTML[#UDGARRAY1,7,4,1;$8F20-$8F27-8(exterior-tiles2-161)]
+  $8F28,8,8 #HTML[#UDGARRAY1,7,4,1;$8F28-$8F2F-8(exterior-tiles2-162)]
+  $8F30,8,8 #HTML[#UDGARRAY1,7,4,1;$8F30-$8F37-8(exterior-tiles2-163)]
+  $8F38,8,8 #HTML[#UDGARRAY1,7,4,1;$8F38-$8F3F-8(exterior-tiles2-164)]
+  $8F40,8,8 #HTML[#UDGARRAY1,7,4,1;$8F40-$8F47-8(exterior-tiles2-165)]
+  $8F48,8,8 #HTML[#UDGARRAY1,7,4,1;$8F48-$8F4F-8(exterior-tiles2-166)]
+  $8F50,8,8 #HTML[#UDGARRAY1,7,4,1;$8F50-$8F57-8(exterior-tiles2-167)]
+  $8F58,8,8 #HTML[#UDGARRAY1,7,4,1;$8F58-$8F5F-8(exterior-tiles2-168)]
+  $8F60,8,8 #HTML[#UDGARRAY1,7,4,1;$8F60-$8F67-8(exterior-tiles2-169)]
+  $8F68,8,8 #HTML[#UDGARRAY1,7,4,1;$8F68-$8F6F-8(exterior-tiles2-170)]
+  $8F70,8,8 #HTML[#UDGARRAY1,7,4,1;$8F70-$8F77-8(exterior-tiles2-171)]
+  $8F78,8,8 #HTML[#UDGARRAY1,7,4,1;$8F78-$8F7F-8(exterior-tiles2-172)]
+  $8F80,8,8 #HTML[#UDGARRAY1,7,4,1;$8F80-$8F87-8(exterior-tiles2-173)]
+  $8F88,8,8 #HTML[#UDGARRAY1,7,4,1;$8F88-$8F8F-8(exterior-tiles2-174)]
+  $8F90,8,8 #HTML[#UDGARRAY1,7,4,1;$8F90-$8F97-8(exterior-tiles2-175)]
+  $8F98,8,8 #HTML[#UDGARRAY1,7,4,1;$8F98-$8F9F-8(exterior-tiles2-176)]
+  $8FA0,8,8 #HTML[#UDGARRAY1,7,4,1;$8FA0-$8FA7-8(exterior-tiles2-177)]
+  $8FA8,8,8 #HTML[#UDGARRAY1,7,4,1;$8FA8-$8FAF-8(exterior-tiles2-178)]
+  $8FB0,8,8 #HTML[#UDGARRAY1,7,4,1;$8FB0-$8FB7-8(exterior-tiles2-179)]
+  $8FB8,8,8 #HTML[#UDGARRAY1,7,4,1;$8FB8-$8FBF-8(exterior-tiles2-180)]
+  $8FC0,8,8 #HTML[#UDGARRAY1,7,4,1;$8FC0-$8FC7-8(exterior-tiles2-181)]
+  $8FC8,8,8 #HTML[#UDGARRAY1,7,4,1;$8FC8-$8FCF-8(exterior-tiles2-182)]
+  $8FD0,8,8 #HTML[#UDGARRAY1,7,4,1;$8FD0-$8FD7-8(exterior-tiles2-183)]
+  $8FD8,8,8 #HTML[#UDGARRAY1,7,4,1;$8FD8-$8FDF-8(exterior-tiles2-184)]
+  $8FE0,8,8 #HTML[#UDGARRAY1,7,4,1;$8FE0-$8FE7-8(exterior-tiles2-185)]
+  $8FE8,8,8 #HTML[#UDGARRAY1,7,4,1;$8FE8-$8FEF-8(exterior-tiles2-186)]
+  $8FF0,8,8 #HTML[#UDGARRAY1,7,4,1;$8FF0-$8FF7-8(exterior-tiles2-187)]
+  $8FF8,8,8 #HTML[#UDGARRAY1,7,4,1;$8FF8-$8FFF-8(exterior-tiles2-188)]
+  $9000,8,8 #HTML[#UDGARRAY1,7,4,1;$9000-$9007-8(exterior-tiles2-189)]
+  $9008,8,8 #HTML[#UDGARRAY1,7,4,1;$9008-$900F-8(exterior-tiles2-190)]
+  $9010,8,8 #HTML[#UDGARRAY1,7,4,1;$9010-$9017-8(exterior-tiles2-191)]
+  $9018,8,8 #HTML[#UDGARRAY1,7,4,1;$9018-$901F-8(exterior-tiles2-192)]
+  $9020,8,8 #HTML[#UDGARRAY1,7,4,1;$9020-$9027-8(exterior-tiles2-193)]
+  $9028,8,8 #HTML[#UDGARRAY1,7,4,1;$9028-$902F-8(exterior-tiles2-194)]
+  $9030,8,8 #HTML[#UDGARRAY1,7,4,1;$9030-$9037-8(exterior-tiles2-195)]
+  $9038,8,8 #HTML[#UDGARRAY1,7,4,1;$9038-$903F-8(exterior-tiles2-196)]
+  $9040,8,8 #HTML[#UDGARRAY1,7,4,1;$9040-$9047-8(exterior-tiles2-197)]
+  $9048,8,8 #HTML[#UDGARRAY1,7,4,1;$9048-$904F-8(exterior-tiles2-198)]
+  $9050,8,8 #HTML[#UDGARRAY1,7,4,1;$9050-$9057-8(exterior-tiles2-199)]
+  $9058,8,8 #HTML[#UDGARRAY1,7,4,1;$9058-$905F-8(exterior-tiles2-200)]
+  $9060,8,8 #HTML[#UDGARRAY1,7,4,1;$9060-$9067-8(exterior-tiles2-201)]
+  $9068,8,8 #HTML[#UDGARRAY1,7,4,1;$9068-$906F-8(exterior-tiles2-202)]
+  $9070,8,8 #HTML[#UDGARRAY1,7,4,1;$9070-$9077-8(exterior-tiles2-203)]
+  $9078,8,8 #HTML[#UDGARRAY1,7,4,1;$9078-$907F-8(exterior-tiles2-204)]
+  $9080,8,8 #HTML[#UDGARRAY1,7,4,1;$9080-$9087-8(exterior-tiles2-205)]
+  $9088,8,8 #HTML[#UDGARRAY1,7,4,1;$9088-$908F-8(exterior-tiles2-206)]
+  $9090,8,8 #HTML[#UDGARRAY1,7,4,1;$9090-$9097-8(exterior-tiles2-207)]
+  $9098,8,8 #HTML[#UDGARRAY1,7,4,1;$9098-$909F-8(exterior-tiles2-208)]
+  $90A0,8,8 #HTML[#UDGARRAY1,7,4,1;$90A0-$90A7-8(exterior-tiles2-209)]
+  $90A8,8,8 #HTML[#UDGARRAY1,7,4,1;$90A8-$90AF-8(exterior-tiles2-210)]
+  $90B0,8,8 #HTML[#UDGARRAY1,7,4,1;$90B0-$90B7-8(exterior-tiles2-211)]
+  $90B8,8,8 #HTML[#UDGARRAY1,7,4,1;$90B8-$90BF-8(exterior-tiles2-212)]
+  $90C0,8,8 #HTML[#UDGARRAY1,7,4,1;$90C0-$90C7-8(exterior-tiles2-213)]
+  $90C8,8,8 #HTML[#UDGARRAY1,7,4,1;$90C8-$90CF-8(exterior-tiles2-214)]
+  $90D0,8,8 #HTML[#UDGARRAY1,7,4,1;$90D0-$90D7-8(exterior-tiles2-215)]
+  $90D8,8,8 #HTML[#UDGARRAY1,7,4,1;$90D8-$90DF-8(exterior-tiles2-216)]
+  $90E0,8,8 #HTML[#UDGARRAY1,7,4,1;$90E0-$90E7-8(exterior-tiles2-217)]
+  $90E8,8,8 #HTML[#UDGARRAY1,7,4,1;$90E8-$90EF-8(exterior-tiles2-218)]
+  $90F0,8,8 #HTML[#UDGARRAY1,7,4,1;$90F0-$90F7-8(exterior-tiles2-219)]
 N $90F8 Exterior tiles set 3. 243 tiles. Looks like main building wall tiles.
 @ $90F8 label=exterior_tiles_3
-;
+  $90F8,8,8 #HTML[#UDGARRAY1,7,4,1;$90F8-$90FF-8(exterior-tiles3-000)]
+  $9100,8,8 #HTML[#UDGARRAY1,7,4,1;$9100-$9107-8(exterior-tiles3-001)]
+  $9108,8,8 #HTML[#UDGARRAY1,7,4,1;$9108-$910F-8(exterior-tiles3-002)]
+  $9110,8,8 #HTML[#UDGARRAY1,7,4,1;$9110-$9117-8(exterior-tiles3-003)]
+  $9118,8,8 #HTML[#UDGARRAY1,7,4,1;$9118-$911F-8(exterior-tiles3-004)]
+  $9120,8,8 #HTML[#UDGARRAY1,7,4,1;$9120-$9127-8(exterior-tiles3-005)]
+  $9128,8,8 #HTML[#UDGARRAY1,7,4,1;$9128-$912F-8(exterior-tiles3-006)]
+  $9130,8,8 #HTML[#UDGARRAY1,7,4,1;$9130-$9137-8(exterior-tiles3-007)]
+  $9138,8,8 #HTML[#UDGARRAY1,7,4,1;$9138-$913F-8(exterior-tiles3-008)]
+  $9140,8,8 #HTML[#UDGARRAY1,7,4,1;$9140-$9147-8(exterior-tiles3-009)]
+  $9148,8,8 #HTML[#UDGARRAY1,7,4,1;$9148-$914F-8(exterior-tiles3-010)]
+  $9150,8,8 #HTML[#UDGARRAY1,7,4,1;$9150-$9157-8(exterior-tiles3-011)]
+  $9158,8,8 #HTML[#UDGARRAY1,7,4,1;$9158-$915F-8(exterior-tiles3-012)]
+  $9160,8,8 #HTML[#UDGARRAY1,7,4,1;$9160-$9167-8(exterior-tiles3-013)]
+  $9168,8,8 #HTML[#UDGARRAY1,7,4,1;$9168-$916F-8(exterior-tiles3-014)]
+  $9170,8,8 #HTML[#UDGARRAY1,7,4,1;$9170-$9177-8(exterior-tiles3-015)]
+  $9178,8,8 #HTML[#UDGARRAY1,7,4,1;$9178-$917F-8(exterior-tiles3-016)]
+  $9180,8,8 #HTML[#UDGARRAY1,7,4,1;$9180-$9187-8(exterior-tiles3-017)]
+  $9188,8,8 #HTML[#UDGARRAY1,7,4,1;$9188-$918F-8(exterior-tiles3-018)]
+  $9190,8,8 #HTML[#UDGARRAY1,7,4,1;$9190-$9197-8(exterior-tiles3-019)]
+  $9198,8,8 #HTML[#UDGARRAY1,7,4,1;$9198-$919F-8(exterior-tiles3-020)]
+  $91A0,8,8 #HTML[#UDGARRAY1,7,4,1;$91A0-$91A7-8(exterior-tiles3-021)]
+  $91A8,8,8 #HTML[#UDGARRAY1,7,4,1;$91A8-$91AF-8(exterior-tiles3-022)]
+  $91B0,8,8 #HTML[#UDGARRAY1,7,4,1;$91B0-$91B7-8(exterior-tiles3-023)]
+  $91B8,8,8 #HTML[#UDGARRAY1,7,4,1;$91B8-$91BF-8(exterior-tiles3-024)]
+  $91C0,8,8 #HTML[#UDGARRAY1,7,4,1;$91C0-$91C7-8(exterior-tiles3-025)]
+  $91C8,8,8 #HTML[#UDGARRAY1,7,4,1;$91C8-$91CF-8(exterior-tiles3-026)]
+  $91D0,8,8 #HTML[#UDGARRAY1,7,4,1;$91D0-$91D7-8(exterior-tiles3-027)]
+  $91D8,8,8 #HTML[#UDGARRAY1,7,4,1;$91D8-$91DF-8(exterior-tiles3-028)]
+  $91E0,8,8 #HTML[#UDGARRAY1,7,4,1;$91E0-$91E7-8(exterior-tiles3-029)]
+  $91E8,8,8 #HTML[#UDGARRAY1,7,4,1;$91E8-$91EF-8(exterior-tiles3-030)]
+  $91F0,8,8 #HTML[#UDGARRAY1,7,4,1;$91F0-$91F7-8(exterior-tiles3-031)]
+  $91F8,8,8 #HTML[#UDGARRAY1,7,4,1;$91F8-$91FF-8(exterior-tiles3-032)]
+  $9200,8,8 #HTML[#UDGARRAY1,7,4,1;$9200-$9207-8(exterior-tiles3-033)]
+  $9208,8,8 #HTML[#UDGARRAY1,7,4,1;$9208-$920F-8(exterior-tiles3-034)]
+  $9210,8,8 #HTML[#UDGARRAY1,7,4,1;$9210-$9217-8(exterior-tiles3-035)]
+  $9218,8,8 #HTML[#UDGARRAY1,7,4,1;$9218-$921F-8(exterior-tiles3-036)]
+  $9220,8,8 #HTML[#UDGARRAY1,7,4,1;$9220-$9227-8(exterior-tiles3-037)]
+  $9228,8,8 #HTML[#UDGARRAY1,7,4,1;$9228-$922F-8(exterior-tiles3-038)]
+  $9230,8,8 #HTML[#UDGARRAY1,7,4,1;$9230-$9237-8(exterior-tiles3-039)]
+  $9238,8,8 #HTML[#UDGARRAY1,7,4,1;$9238-$923F-8(exterior-tiles3-040)]
+  $9240,8,8 #HTML[#UDGARRAY1,7,4,1;$9240-$9247-8(exterior-tiles3-041)]
+  $9248,8,8 #HTML[#UDGARRAY1,7,4,1;$9248-$924F-8(exterior-tiles3-042)]
+  $9250,8,8 #HTML[#UDGARRAY1,7,4,1;$9250-$9257-8(exterior-tiles3-043)]
+  $9258,8,8 #HTML[#UDGARRAY1,7,4,1;$9258-$925F-8(exterior-tiles3-044)]
+  $9260,8,8 #HTML[#UDGARRAY1,7,4,1;$9260-$9267-8(exterior-tiles3-045)]
+  $9268,8,8 #HTML[#UDGARRAY1,7,4,1;$9268-$926F-8(exterior-tiles3-046)]
+  $9270,8,8 #HTML[#UDGARRAY1,7,4,1;$9270-$9277-8(exterior-tiles3-047)]
+  $9278,8,8 #HTML[#UDGARRAY1,7,4,1;$9278-$927F-8(exterior-tiles3-048)]
+  $9280,8,8 #HTML[#UDGARRAY1,7,4,1;$9280-$9287-8(exterior-tiles3-049)]
+  $9288,8,8 #HTML[#UDGARRAY1,7,4,1;$9288-$928F-8(exterior-tiles3-050)]
+  $9290,8,8 #HTML[#UDGARRAY1,7,4,1;$9290-$9297-8(exterior-tiles3-051)]
+  $9298,8,8 #HTML[#UDGARRAY1,7,4,1;$9298-$929F-8(exterior-tiles3-052)]
+  $92A0,8,8 #HTML[#UDGARRAY1,7,4,1;$92A0-$92A7-8(exterior-tiles3-053)]
+  $92A8,8,8 #HTML[#UDGARRAY1,7,4,1;$92A8-$92AF-8(exterior-tiles3-054)]
+  $92B0,8,8 #HTML[#UDGARRAY1,7,4,1;$92B0-$92B7-8(exterior-tiles3-055)]
+  $92B8,8,8 #HTML[#UDGARRAY1,7,4,1;$92B8-$92BF-8(exterior-tiles3-056)]
+  $92C0,8,8 #HTML[#UDGARRAY1,7,4,1;$92C0-$92C7-8(exterior-tiles3-057)]
+  $92C8,8,8 #HTML[#UDGARRAY1,7,4,1;$92C8-$92CF-8(exterior-tiles3-058)]
+  $92D0,8,8 #HTML[#UDGARRAY1,7,4,1;$92D0-$92D7-8(exterior-tiles3-059)]
+  $92D8,8,8 #HTML[#UDGARRAY1,7,4,1;$92D8-$92DF-8(exterior-tiles3-060)]
+  $92E0,8,8 #HTML[#UDGARRAY1,7,4,1;$92E0-$92E7-8(exterior-tiles3-061)]
+  $92E8,8,8 #HTML[#UDGARRAY1,7,4,1;$92E8-$92EF-8(exterior-tiles3-062)]
+  $92F0,8,8 #HTML[#UDGARRAY1,7,4,1;$92F0-$92F7-8(exterior-tiles3-063)]
+  $92F8,8,8 #HTML[#UDGARRAY1,7,4,1;$92F8-$92FF-8(exterior-tiles3-064)]
+  $9300,8,8 #HTML[#UDGARRAY1,7,4,1;$9300-$9307-8(exterior-tiles3-065)]
+  $9308,8,8 #HTML[#UDGARRAY1,7,4,1;$9308-$930F-8(exterior-tiles3-066)]
+  $9310,8,8 #HTML[#UDGARRAY1,7,4,1;$9310-$9317-8(exterior-tiles3-067)]
+  $9318,8,8 #HTML[#UDGARRAY1,7,4,1;$9318-$931F-8(exterior-tiles3-068)]
+  $9320,8,8 #HTML[#UDGARRAY1,7,4,1;$9320-$9327-8(exterior-tiles3-069)]
+  $9328,8,8 #HTML[#UDGARRAY1,7,4,1;$9328-$932F-8(exterior-tiles3-070)]
+  $9330,8,8 #HTML[#UDGARRAY1,7,4,1;$9330-$9337-8(exterior-tiles3-071)]
+  $9338,8,8 #HTML[#UDGARRAY1,7,4,1;$9338-$933F-8(exterior-tiles3-072)]
+  $9340,8,8 #HTML[#UDGARRAY1,7,4,1;$9340-$9347-8(exterior-tiles3-073)]
+  $9348,8,8 #HTML[#UDGARRAY1,7,4,1;$9348-$934F-8(exterior-tiles3-074)]
+  $9350,8,8 #HTML[#UDGARRAY1,7,4,1;$9350-$9357-8(exterior-tiles3-075)]
+  $9358,8,8 #HTML[#UDGARRAY1,7,4,1;$9358-$935F-8(exterior-tiles3-076)]
+  $9360,8,8 #HTML[#UDGARRAY1,7,4,1;$9360-$9367-8(exterior-tiles3-077)]
+  $9368,8,8 #HTML[#UDGARRAY1,7,4,1;$9368-$936F-8(exterior-tiles3-078)]
+  $9370,8,8 #HTML[#UDGARRAY1,7,4,1;$9370-$9377-8(exterior-tiles3-079)]
+  $9378,8,8 #HTML[#UDGARRAY1,7,4,1;$9378-$937F-8(exterior-tiles3-080)]
+  $9380,8,8 #HTML[#UDGARRAY1,7,4,1;$9380-$9387-8(exterior-tiles3-081)]
+  $9388,8,8 #HTML[#UDGARRAY1,7,4,1;$9388-$938F-8(exterior-tiles3-082)]
+  $9390,8,8 #HTML[#UDGARRAY1,7,4,1;$9390-$9397-8(exterior-tiles3-083)]
+  $9398,8,8 #HTML[#UDGARRAY1,7,4,1;$9398-$939F-8(exterior-tiles3-084)]
+  $93A0,8,8 #HTML[#UDGARRAY1,7,4,1;$93A0-$93A7-8(exterior-tiles3-085)]
+  $93A8,8,8 #HTML[#UDGARRAY1,7,4,1;$93A8-$93AF-8(exterior-tiles3-086)]
+  $93B0,8,8 #HTML[#UDGARRAY1,7,4,1;$93B0-$93B7-8(exterior-tiles3-087)]
+  $93B8,8,8 #HTML[#UDGARRAY1,7,4,1;$93B8-$93BF-8(exterior-tiles3-088)]
+  $93C0,8,8 #HTML[#UDGARRAY1,7,4,1;$93C0-$93C7-8(exterior-tiles3-089)]
+  $93C8,8,8 #HTML[#UDGARRAY1,7,4,1;$93C8-$93CF-8(exterior-tiles3-090)]
+  $93D0,8,8 #HTML[#UDGARRAY1,7,4,1;$93D0-$93D7-8(exterior-tiles3-091)]
+  $93D8,8,8 #HTML[#UDGARRAY1,7,4,1;$93D8-$93DF-8(exterior-tiles3-092)]
+  $93E0,8,8 #HTML[#UDGARRAY1,7,4,1;$93E0-$93E7-8(exterior-tiles3-093)]
+  $93E8,8,8 #HTML[#UDGARRAY1,7,4,1;$93E8-$93EF-8(exterior-tiles3-094)]
+  $93F0,8,8 #HTML[#UDGARRAY1,7,4,1;$93F0-$93F7-8(exterior-tiles3-095)]
+  $93F8,8,8 #HTML[#UDGARRAY1,7,4,1;$93F8-$93FF-8(exterior-tiles3-096)]
+  $9400,8,8 #HTML[#UDGARRAY1,7,4,1;$9400-$9407-8(exterior-tiles3-097)]
+  $9408,8,8 #HTML[#UDGARRAY1,7,4,1;$9408-$940F-8(exterior-tiles3-098)]
+  $9410,8,8 #HTML[#UDGARRAY1,7,4,1;$9410-$9417-8(exterior-tiles3-099)]
+  $9418,8,8 #HTML[#UDGARRAY1,7,4,1;$9418-$941F-8(exterior-tiles3-100)]
+  $9420,8,8 #HTML[#UDGARRAY1,7,4,1;$9420-$9427-8(exterior-tiles3-101)]
+  $9428,8,8 #HTML[#UDGARRAY1,7,4,1;$9428-$942F-8(exterior-tiles3-102)]
+  $9430,8,8 #HTML[#UDGARRAY1,7,4,1;$9430-$9437-8(exterior-tiles3-103)]
+  $9438,8,8 #HTML[#UDGARRAY1,7,4,1;$9438-$943F-8(exterior-tiles3-104)]
+  $9440,8,8 #HTML[#UDGARRAY1,7,4,1;$9440-$9447-8(exterior-tiles3-105)]
+  $9448,8,8 #HTML[#UDGARRAY1,7,4,1;$9448-$944F-8(exterior-tiles3-106)]
+  $9450,8,8 #HTML[#UDGARRAY1,7,4,1;$9450-$9457-8(exterior-tiles3-107)]
+  $9458,8,8 #HTML[#UDGARRAY1,7,4,1;$9458-$945F-8(exterior-tiles3-108)]
+  $9460,8,8 #HTML[#UDGARRAY1,7,4,1;$9460-$9467-8(exterior-tiles3-109)]
+  $9468,8,8 #HTML[#UDGARRAY1,7,4,1;$9468-$946F-8(exterior-tiles3-110)]
+  $9470,8,8 #HTML[#UDGARRAY1,7,4,1;$9470-$9477-8(exterior-tiles3-111)]
+  $9478,8,8 #HTML[#UDGARRAY1,7,4,1;$9478-$947F-8(exterior-tiles3-112)]
+  $9480,8,8 #HTML[#UDGARRAY1,7,4,1;$9480-$9487-8(exterior-tiles3-113)]
+  $9488,8,8 #HTML[#UDGARRAY1,7,4,1;$9488-$948F-8(exterior-tiles3-114)]
+  $9490,8,8 #HTML[#UDGARRAY1,7,4,1;$9490-$9497-8(exterior-tiles3-115)]
+  $9498,8,8 #HTML[#UDGARRAY1,7,4,1;$9498-$949F-8(exterior-tiles3-116)]
+  $94A0,8,8 #HTML[#UDGARRAY1,7,4,1;$94A0-$94A7-8(exterior-tiles3-117)]
+  $94A8,8,8 #HTML[#UDGARRAY1,7,4,1;$94A8-$94AF-8(exterior-tiles3-118)]
+  $94B0,8,8 #HTML[#UDGARRAY1,7,4,1;$94B0-$94B7-8(exterior-tiles3-119)]
+  $94B8,8,8 #HTML[#UDGARRAY1,7,4,1;$94B8-$94BF-8(exterior-tiles3-120)]
+  $94C0,8,8 #HTML[#UDGARRAY1,7,4,1;$94C0-$94C7-8(exterior-tiles3-121)]
+  $94C8,8,8 #HTML[#UDGARRAY1,7,4,1;$94C8-$94CF-8(exterior-tiles3-122)]
+  $94D0,8,8 #HTML[#UDGARRAY1,7,4,1;$94D0-$94D7-8(exterior-tiles3-123)]
+  $94D8,8,8 #HTML[#UDGARRAY1,7,4,1;$94D8-$94DF-8(exterior-tiles3-124)]
+  $94E0,8,8 #HTML[#UDGARRAY1,7,4,1;$94E0-$94E7-8(exterior-tiles3-125)]
+  $94E8,8,8 #HTML[#UDGARRAY1,7,4,1;$94E8-$94EF-8(exterior-tiles3-126)]
+  $94F0,8,8 #HTML[#UDGARRAY1,7,4,1;$94F0-$94F7-8(exterior-tiles3-127)]
+  $94F8,8,8 #HTML[#UDGARRAY1,7,4,1;$94F8-$94FF-8(exterior-tiles3-128)]
+  $9500,8,8 #HTML[#UDGARRAY1,7,4,1;$9500-$9507-8(exterior-tiles3-129)]
+  $9508,8,8 #HTML[#UDGARRAY1,7,4,1;$9508-$950F-8(exterior-tiles3-130)]
+  $9510,8,8 #HTML[#UDGARRAY1,7,4,1;$9510-$9517-8(exterior-tiles3-131)]
+  $9518,8,8 #HTML[#UDGARRAY1,7,4,1;$9518-$951F-8(exterior-tiles3-132)]
+  $9520,8,8 #HTML[#UDGARRAY1,7,4,1;$9520-$9527-8(exterior-tiles3-133)]
+  $9528,8,8 #HTML[#UDGARRAY1,7,4,1;$9528-$952F-8(exterior-tiles3-134)]
+  $9530,8,8 #HTML[#UDGARRAY1,7,4,1;$9530-$9537-8(exterior-tiles3-135)]
+  $9538,8,8 #HTML[#UDGARRAY1,7,4,1;$9538-$953F-8(exterior-tiles3-136)]
+  $9540,8,8 #HTML[#UDGARRAY1,7,4,1;$9540-$9547-8(exterior-tiles3-137)]
+  $9548,8,8 #HTML[#UDGARRAY1,7,4,1;$9548-$954F-8(exterior-tiles3-138)]
+  $9550,8,8 #HTML[#UDGARRAY1,7,4,1;$9550-$9557-8(exterior-tiles3-139)]
+  $9558,8,8 #HTML[#UDGARRAY1,7,4,1;$9558-$955F-8(exterior-tiles3-140)]
+  $9560,8,8 #HTML[#UDGARRAY1,7,4,1;$9560-$9567-8(exterior-tiles3-141)]
+  $9568,8,8 #HTML[#UDGARRAY1,7,4,1;$9568-$956F-8(exterior-tiles3-142)]
+  $9570,8,8 #HTML[#UDGARRAY1,7,4,1;$9570-$9577-8(exterior-tiles3-143)]
+  $9578,8,8 #HTML[#UDGARRAY1,7,4,1;$9578-$957F-8(exterior-tiles3-144)]
+  $9580,8,8 #HTML[#UDGARRAY1,7,4,1;$9580-$9587-8(exterior-tiles3-145)]
+  $9588,8,8 #HTML[#UDGARRAY1,7,4,1;$9588-$958F-8(exterior-tiles3-146)]
+  $9590,8,8 #HTML[#UDGARRAY1,7,4,1;$9590-$9597-8(exterior-tiles3-147)]
+  $9598,8,8 #HTML[#UDGARRAY1,7,4,1;$9598-$959F-8(exterior-tiles3-148)]
+  $95A0,8,8 #HTML[#UDGARRAY1,7,4,1;$95A0-$95A7-8(exterior-tiles3-149)]
+  $95A8,8,8 #HTML[#UDGARRAY1,7,4,1;$95A8-$95AF-8(exterior-tiles3-150)]
+  $95B0,8,8 #HTML[#UDGARRAY1,7,4,1;$95B0-$95B7-8(exterior-tiles3-151)]
+  $95B8,8,8 #HTML[#UDGARRAY1,7,4,1;$95B8-$95BF-8(exterior-tiles3-152)]
+  $95C0,8,8 #HTML[#UDGARRAY1,7,4,1;$95C0-$95C7-8(exterior-tiles3-153)]
+  $95C8,8,8 #HTML[#UDGARRAY1,7,4,1;$95C8-$95CF-8(exterior-tiles3-154)]
+  $95D0,8,8 #HTML[#UDGARRAY1,7,4,1;$95D0-$95D7-8(exterior-tiles3-155)]
+  $95D8,8,8 #HTML[#UDGARRAY1,7,4,1;$95D8-$95DF-8(exterior-tiles3-156)]
+  $95E0,8,8 #HTML[#UDGARRAY1,7,4,1;$95E0-$95E7-8(exterior-tiles3-157)]
+  $95E8,8,8 #HTML[#UDGARRAY1,7,4,1;$95E8-$95EF-8(exterior-tiles3-158)]
+  $95F0,8,8 #HTML[#UDGARRAY1,7,4,1;$95F0-$95F7-8(exterior-tiles3-159)]
+  $95F8,8,8 #HTML[#UDGARRAY1,7,4,1;$95F8-$95FF-8(exterior-tiles3-160)]
+  $9600,8,8 #HTML[#UDGARRAY1,7,4,1;$9600-$9607-8(exterior-tiles3-161)]
+  $9608,8,8 #HTML[#UDGARRAY1,7,4,1;$9608-$960F-8(exterior-tiles3-162)]
+  $9610,8,8 #HTML[#UDGARRAY1,7,4,1;$9610-$9617-8(exterior-tiles3-163)]
+  $9618,8,8 #HTML[#UDGARRAY1,7,4,1;$9618-$961F-8(exterior-tiles3-164)]
+  $9620,8,8 #HTML[#UDGARRAY1,7,4,1;$9620-$9627-8(exterior-tiles3-165)]
+  $9628,8,8 #HTML[#UDGARRAY1,7,4,1;$9628-$962F-8(exterior-tiles3-166)]
+  $9630,8,8 #HTML[#UDGARRAY1,7,4,1;$9630-$9637-8(exterior-tiles3-167)]
+  $9638,8,8 #HTML[#UDGARRAY1,7,4,1;$9638-$963F-8(exterior-tiles3-168)]
+  $9640,8,8 #HTML[#UDGARRAY1,7,4,1;$9640-$9647-8(exterior-tiles3-169)]
+  $9648,8,8 #HTML[#UDGARRAY1,7,4,1;$9648-$964F-8(exterior-tiles3-170)]
+  $9650,8,8 #HTML[#UDGARRAY1,7,4,1;$9650-$9657-8(exterior-tiles3-171)]
+  $9658,8,8 #HTML[#UDGARRAY1,7,4,1;$9658-$965F-8(exterior-tiles3-172)]
+  $9660,8,8 #HTML[#UDGARRAY1,7,4,1;$9660-$9667-8(exterior-tiles3-173)]
+  $9668,8,8 #HTML[#UDGARRAY1,7,4,1;$9668-$966F-8(exterior-tiles3-174)]
+  $9670,8,8 #HTML[#UDGARRAY1,7,4,1;$9670-$9677-8(exterior-tiles3-175)]
+  $9678,8,8 #HTML[#UDGARRAY1,7,4,1;$9678-$967F-8(exterior-tiles3-176)]
+  $9680,8,8 #HTML[#UDGARRAY1,7,4,1;$9680-$9687-8(exterior-tiles3-177)]
+  $9688,8,8 #HTML[#UDGARRAY1,7,4,1;$9688-$968F-8(exterior-tiles3-178)]
+  $9690,8,8 #HTML[#UDGARRAY1,7,4,1;$9690-$9697-8(exterior-tiles3-179)]
+  $9698,8,8 #HTML[#UDGARRAY1,7,4,1;$9698-$969F-8(exterior-tiles3-180)]
+  $96A0,8,8 #HTML[#UDGARRAY1,7,4,1;$96A0-$96A7-8(exterior-tiles3-181)]
+  $96A8,8,8 #HTML[#UDGARRAY1,7,4,1;$96A8-$96AF-8(exterior-tiles3-182)]
+  $96B0,8,8 #HTML[#UDGARRAY1,7,4,1;$96B0-$96B7-8(exterior-tiles3-183)]
+  $96B8,8,8 #HTML[#UDGARRAY1,7,4,1;$96B8-$96BF-8(exterior-tiles3-184)]
+  $96C0,8,8 #HTML[#UDGARRAY1,7,4,1;$96C0-$96C7-8(exterior-tiles3-185)]
+  $96C8,8,8 #HTML[#UDGARRAY1,7,4,1;$96C8-$96CF-8(exterior-tiles3-186)]
+  $96D0,8,8 #HTML[#UDGARRAY1,7,4,1;$96D0-$96D7-8(exterior-tiles3-187)]
+  $96D8,8,8 #HTML[#UDGARRAY1,7,4,1;$96D8-$96DF-8(exterior-tiles3-188)]
+  $96E0,8,8 #HTML[#UDGARRAY1,7,4,1;$96E0-$96E7-8(exterior-tiles3-189)]
+  $96E8,8,8 #HTML[#UDGARRAY1,7,4,1;$96E8-$96EF-8(exterior-tiles3-190)]
+  $96F0,8,8 #HTML[#UDGARRAY1,7,4,1;$96F0-$96F7-8(exterior-tiles3-191)]
+  $96F8,8,8 #HTML[#UDGARRAY1,7,4,1;$96F8-$96FF-8(exterior-tiles3-192)]
+  $9700,8,8 #HTML[#UDGARRAY1,7,4,1;$9700-$9707-8(exterior-tiles3-193)]
+  $9708,8,8 #HTML[#UDGARRAY1,7,4,1;$9708-$970F-8(exterior-tiles3-194)]
+  $9710,8,8 #HTML[#UDGARRAY1,7,4,1;$9710-$9717-8(exterior-tiles3-195)]
+  $9718,8,8 #HTML[#UDGARRAY1,7,4,1;$9718-$971F-8(exterior-tiles3-196)]
+  $9720,8,8 #HTML[#UDGARRAY1,7,4,1;$9720-$9727-8(exterior-tiles3-197)]
+  $9728,8,8 #HTML[#UDGARRAY1,7,4,1;$9728-$972F-8(exterior-tiles3-198)]
+  $9730,8,8 #HTML[#UDGARRAY1,7,4,1;$9730-$9737-8(exterior-tiles3-199)]
+  $9738,8,8 #HTML[#UDGARRAY1,7,4,1;$9738-$973F-8(exterior-tiles3-200)]
+  $9740,8,8 #HTML[#UDGARRAY1,7,4,1;$9740-$9747-8(exterior-tiles3-201)]
+  $9748,8,8 #HTML[#UDGARRAY1,7,4,1;$9748-$974F-8(exterior-tiles3-202)]
+  $9750,8,8 #HTML[#UDGARRAY1,7,4,1;$9750-$9757-8(exterior-tiles3-203)]
+  $9758,8,8 #HTML[#UDGARRAY1,7,4,1;$9758-$975F-8(exterior-tiles3-204)]
+  $9760,8,8 #HTML[#UDGARRAY1,7,4,1;$9760-$9767-8(exterior-tiles3-205)]
 N $9768 Interior tiles. 194 tiles.
 @ $9768 label=interior_tiles
-;
+  $9768,8,8 #HTML[#UDGARRAY1,7,4,1;$9768-$976F-8(interior-tiles-000)]
+  $9770,8,8 #HTML[#UDGARRAY1,7,4,1;$9770-$9777-8(interior-tiles-001)]
+  $9778,8,8 #HTML[#UDGARRAY1,7,4,1;$9778-$977F-8(interior-tiles-002)]
+  $9780,8,8 #HTML[#UDGARRAY1,7,4,1;$9780-$9787-8(interior-tiles-003)]
+  $9788,8,8 #HTML[#UDGARRAY1,7,4,1;$9788-$978F-8(interior-tiles-004)]
+  $9790,8,8 #HTML[#UDGARRAY1,7,4,1;$9790-$9797-8(interior-tiles-005)]
+  $9798,8,8 #HTML[#UDGARRAY1,7,4,1;$9798-$979F-8(interior-tiles-006)]
+  $97A0,8,8 #HTML[#UDGARRAY1,7,4,1;$97A0-$97A7-8(interior-tiles-007)]
+  $97A8,8,8 #HTML[#UDGARRAY1,7,4,1;$97A8-$97AF-8(interior-tiles-008)]
+  $97B0,8,8 #HTML[#UDGARRAY1,7,4,1;$97B0-$97B7-8(interior-tiles-009)]
+  $97B8,8,8 #HTML[#UDGARRAY1,7,4,1;$97B8-$97BF-8(interior-tiles-010)]
+  $97C0,8,8 #HTML[#UDGARRAY1,7,4,1;$97C0-$97C7-8(interior-tiles-011)]
+  $97C8,8,8 #HTML[#UDGARRAY1,7,4,1;$97C8-$97CF-8(interior-tiles-012)]
+  $97D0,8,8 #HTML[#UDGARRAY1,7,4,1;$97D0-$97D7-8(interior-tiles-013)]
+  $97D8,8,8 #HTML[#UDGARRAY1,7,4,1;$97D8-$97DF-8(interior-tiles-014)]
+  $97E0,8,8 #HTML[#UDGARRAY1,7,4,1;$97E0-$97E7-8(interior-tiles-015)]
+  $97E8,8,8 #HTML[#UDGARRAY1,7,4,1;$97E8-$97EF-8(interior-tiles-016)]
+  $97F0,8,8 #HTML[#UDGARRAY1,7,4,1;$97F0-$97F7-8(interior-tiles-017)]
+  $97F8,8,8 #HTML[#UDGARRAY1,7,4,1;$97F8-$97FF-8(interior-tiles-018)]
+  $9800,8,8 #HTML[#UDGARRAY1,7,4,1;$9800-$9807-8(interior-tiles-019)]
+  $9808,8,8 #HTML[#UDGARRAY1,7,4,1;$9808-$980F-8(interior-tiles-020)]
+  $9810,8,8 #HTML[#UDGARRAY1,7,4,1;$9810-$9817-8(interior-tiles-021)]
+  $9818,8,8 #HTML[#UDGARRAY1,7,4,1;$9818-$981F-8(interior-tiles-022)]
+  $9820,8,8 #HTML[#UDGARRAY1,7,4,1;$9820-$9827-8(interior-tiles-023)]
+  $9828,8,8 #HTML[#UDGARRAY1,7,4,1;$9828-$982F-8(interior-tiles-024)]
+  $9830,8,8 #HTML[#UDGARRAY1,7,4,1;$9830-$9837-8(interior-tiles-025)]
+  $9838,8,8 #HTML[#UDGARRAY1,7,4,1;$9838-$983F-8(interior-tiles-026)]
+  $9840,8,8 #HTML[#UDGARRAY1,7,4,1;$9840-$9847-8(interior-tiles-027)]
+  $9848,8,8 #HTML[#UDGARRAY1,7,4,1;$9848-$984F-8(interior-tiles-028)]
+  $9850,8,8 #HTML[#UDGARRAY1,7,4,1;$9850-$9857-8(interior-tiles-029)]
+  $9858,8,8 #HTML[#UDGARRAY1,7,4,1;$9858-$985F-8(interior-tiles-030)]
+  $9860,8,8 #HTML[#UDGARRAY1,7,4,1;$9860-$9867-8(interior-tiles-031)]
+  $9868,8,8 #HTML[#UDGARRAY1,7,4,1;$9868-$986F-8(interior-tiles-032)]
+  $9870,8,8 #HTML[#UDGARRAY1,7,4,1;$9870-$9877-8(interior-tiles-033)]
+  $9878,8,8 #HTML[#UDGARRAY1,7,4,1;$9878-$987F-8(interior-tiles-034)]
+  $9880,8,8 #HTML[#UDGARRAY1,7,4,1;$9880-$9887-8(interior-tiles-035)]
+  $9888,8,8 #HTML[#UDGARRAY1,7,4,1;$9888-$988F-8(interior-tiles-036)]
+  $9890,8,8 #HTML[#UDGARRAY1,7,4,1;$9890-$9897-8(interior-tiles-037)]
+  $9898,8,8 #HTML[#UDGARRAY1,7,4,1;$9898-$989F-8(interior-tiles-038)]
+  $98A0,8,8 #HTML[#UDGARRAY1,7,4,1;$98A0-$98A7-8(interior-tiles-039)]
+  $98A8,8,8 #HTML[#UDGARRAY1,7,4,1;$98A8-$98AF-8(interior-tiles-040)]
+  $98B0,8,8 #HTML[#UDGARRAY1,7,4,1;$98B0-$98B7-8(interior-tiles-041)]
+  $98B8,8,8 #HTML[#UDGARRAY1,7,4,1;$98B8-$98BF-8(interior-tiles-042)]
+  $98C0,8,8 #HTML[#UDGARRAY1,7,4,1;$98C0-$98C7-8(interior-tiles-043)]
+  $98C8,8,8 #HTML[#UDGARRAY1,7,4,1;$98C8-$98CF-8(interior-tiles-044)]
+  $98D0,8,8 #HTML[#UDGARRAY1,7,4,1;$98D0-$98D7-8(interior-tiles-045)]
+  $98D8,8,8 #HTML[#UDGARRAY1,7,4,1;$98D8-$98DF-8(interior-tiles-046)]
+  $98E0,8,8 #HTML[#UDGARRAY1,7,4,1;$98E0-$98E7-8(interior-tiles-047)]
+  $98E8,8,8 #HTML[#UDGARRAY1,7,4,1;$98E8-$98EF-8(interior-tiles-048)]
+  $98F0,8,8 #HTML[#UDGARRAY1,7,4,1;$98F0-$98F7-8(interior-tiles-049)]
+  $98F8,8,8 #HTML[#UDGARRAY1,7,4,1;$98F8-$98FF-8(interior-tiles-050)]
+  $9900,8,8 #HTML[#UDGARRAY1,7,4,1;$9900-$9907-8(interior-tiles-051)]
+  $9908,8,8 #HTML[#UDGARRAY1,7,4,1;$9908-$990F-8(interior-tiles-052)]
+  $9910,8,8 #HTML[#UDGARRAY1,7,4,1;$9910-$9917-8(interior-tiles-053)]
+  $9918,8,8 #HTML[#UDGARRAY1,7,4,1;$9918-$991F-8(interior-tiles-054)]
+  $9920,8,8 #HTML[#UDGARRAY1,7,4,1;$9920-$9927-8(interior-tiles-055)]
+  $9928,8,8 #HTML[#UDGARRAY1,7,4,1;$9928-$992F-8(interior-tiles-056)]
+  $9930,8,8 #HTML[#UDGARRAY1,7,4,1;$9930-$9937-8(interior-tiles-057)]
+  $9938,8,8 #HTML[#UDGARRAY1,7,4,1;$9938-$993F-8(interior-tiles-058)]
+  $9940,8,8 #HTML[#UDGARRAY1,7,4,1;$9940-$9947-8(interior-tiles-059)]
+  $9948,8,8 #HTML[#UDGARRAY1,7,4,1;$9948-$994F-8(interior-tiles-060)]
+  $9950,8,8 #HTML[#UDGARRAY1,7,4,1;$9950-$9957-8(interior-tiles-061)]
+  $9958,8,8 #HTML[#UDGARRAY1,7,4,1;$9958-$995F-8(interior-tiles-062)]
+  $9960,8,8 #HTML[#UDGARRAY1,7,4,1;$9960-$9967-8(interior-tiles-063)]
+  $9968,8,8 #HTML[#UDGARRAY1,7,4,1;$9968-$996F-8(interior-tiles-064)]
+  $9970,8,8 #HTML[#UDGARRAY1,7,4,1;$9970-$9977-8(interior-tiles-065)]
+  $9978,8,8 #HTML[#UDGARRAY1,7,4,1;$9978-$997F-8(interior-tiles-066)]
+  $9980,8,8 #HTML[#UDGARRAY1,7,4,1;$9980-$9987-8(interior-tiles-067)]
+  $9988,8,8 #HTML[#UDGARRAY1,7,4,1;$9988-$998F-8(interior-tiles-068)]
+  $9990,8,8 #HTML[#UDGARRAY1,7,4,1;$9990-$9997-8(interior-tiles-069)]
+  $9998,8,8 #HTML[#UDGARRAY1,7,4,1;$9998-$999F-8(interior-tiles-070)]
+  $99A0,8,8 #HTML[#UDGARRAY1,7,4,1;$99A0-$99A7-8(interior-tiles-071)]
+  $99A8,8,8 #HTML[#UDGARRAY1,7,4,1;$99A8-$99AF-8(interior-tiles-072)]
+  $99B0,8,8 #HTML[#UDGARRAY1,7,4,1;$99B0-$99B7-8(interior-tiles-073)]
+  $99B8,8,8 #HTML[#UDGARRAY1,7,4,1;$99B8-$99BF-8(interior-tiles-074)]
+  $99C0,8,8 #HTML[#UDGARRAY1,7,4,1;$99C0-$99C7-8(interior-tiles-075)]
+  $99C8,8,8 #HTML[#UDGARRAY1,7,4,1;$99C8-$99CF-8(interior-tiles-076)]
+  $99D0,8,8 #HTML[#UDGARRAY1,7,4,1;$99D0-$99D7-8(interior-tiles-077)]
+  $99D8,8,8 #HTML[#UDGARRAY1,7,4,1;$99D8-$99DF-8(interior-tiles-078)]
+  $99E0,8,8 #HTML[#UDGARRAY1,7,4,1;$99E0-$99E7-8(interior-tiles-079)]
+  $99E8,8,8 #HTML[#UDGARRAY1,7,4,1;$99E8-$99EF-8(interior-tiles-080)]
+  $99F0,8,8 #HTML[#UDGARRAY1,7,4,1;$99F0-$99F7-8(interior-tiles-081)]
+  $99F8,8,8 #HTML[#UDGARRAY1,7,4,1;$99F8-$99FF-8(interior-tiles-082)]
+  $9A00,8,8 #HTML[#UDGARRAY1,7,4,1;$9A00-$9A07-8(interior-tiles-083)]
+  $9A08,8,8 #HTML[#UDGARRAY1,7,4,1;$9A08-$9A0F-8(interior-tiles-084)]
+  $9A10,8,8 #HTML[#UDGARRAY1,7,4,1;$9A10-$9A17-8(interior-tiles-085)]
+  $9A18,8,8 #HTML[#UDGARRAY1,7,4,1;$9A18-$9A1F-8(interior-tiles-086)]
+  $9A20,8,8 #HTML[#UDGARRAY1,7,4,1;$9A20-$9A27-8(interior-tiles-087)]
+  $9A28,8,8 #HTML[#UDGARRAY1,7,4,1;$9A28-$9A2F-8(interior-tiles-088)]
+  $9A30,8,8 #HTML[#UDGARRAY1,7,4,1;$9A30-$9A37-8(interior-tiles-089)]
+  $9A38,8,8 #HTML[#UDGARRAY1,7,4,1;$9A38-$9A3F-8(interior-tiles-090)]
+  $9A40,8,8 #HTML[#UDGARRAY1,7,4,1;$9A40-$9A47-8(interior-tiles-091)]
+  $9A48,8,8 #HTML[#UDGARRAY1,7,4,1;$9A48-$9A4F-8(interior-tiles-092)]
+  $9A50,8,8 #HTML[#UDGARRAY1,7,4,1;$9A50-$9A57-8(interior-tiles-093)]
+  $9A58,8,8 #HTML[#UDGARRAY1,7,4,1;$9A58-$9A5F-8(interior-tiles-094)]
+  $9A60,8,8 #HTML[#UDGARRAY1,7,4,1;$9A60-$9A67-8(interior-tiles-095)]
+  $9A68,8,8 #HTML[#UDGARRAY1,7,4,1;$9A68-$9A6F-8(interior-tiles-096)]
+  $9A70,8,8 #HTML[#UDGARRAY1,7,4,1;$9A70-$9A77-8(interior-tiles-097)]
+  $9A78,8,8 #HTML[#UDGARRAY1,7,4,1;$9A78-$9A7F-8(interior-tiles-098)]
+  $9A80,8,8 #HTML[#UDGARRAY1,7,4,1;$9A80-$9A87-8(interior-tiles-099)]
+  $9A88,8,8 #HTML[#UDGARRAY1,7,4,1;$9A88-$9A8F-8(interior-tiles-100)]
+  $9A90,8,8 #HTML[#UDGARRAY1,7,4,1;$9A90-$9A97-8(interior-tiles-101)]
+  $9A98,8,8 #HTML[#UDGARRAY1,7,4,1;$9A98-$9A9F-8(interior-tiles-102)]
+  $9AA0,8,8 #HTML[#UDGARRAY1,7,4,1;$9AA0-$9AA7-8(interior-tiles-103)]
+  $9AA8,8,8 #HTML[#UDGARRAY1,7,4,1;$9AA8-$9AAF-8(interior-tiles-104)]
+  $9AB0,8,8 #HTML[#UDGARRAY1,7,4,1;$9AB0-$9AB7-8(interior-tiles-105)]
+  $9AB8,8,8 #HTML[#UDGARRAY1,7,4,1;$9AB8-$9ABF-8(interior-tiles-106)]
+  $9AC0,8,8 #HTML[#UDGARRAY1,7,4,1;$9AC0-$9AC7-8(interior-tiles-107)]
+  $9AC8,8,8 #HTML[#UDGARRAY1,7,4,1;$9AC8-$9ACF-8(interior-tiles-108)]
+  $9AD0,8,8 #HTML[#UDGARRAY1,7,4,1;$9AD0-$9AD7-8(interior-tiles-109)]
+  $9AD8,8,8 #HTML[#UDGARRAY1,7,4,1;$9AD8-$9ADF-8(interior-tiles-110)]
+  $9AE0,8,8 #HTML[#UDGARRAY1,7,4,1;$9AE0-$9AE7-8(interior-tiles-111)]
+  $9AE8,8,8 #HTML[#UDGARRAY1,7,4,1;$9AE8-$9AEF-8(interior-tiles-112)]
+  $9AF0,8,8 #HTML[#UDGARRAY1,7,4,1;$9AF0-$9AF7-8(interior-tiles-113)]
+  $9AF8,8,8 #HTML[#UDGARRAY1,7,4,1;$9AF8-$9AFF-8(interior-tiles-114)]
+  $9B00,8,8 #HTML[#UDGARRAY1,7,4,1;$9B00-$9B07-8(interior-tiles-115)]
+  $9B08,8,8 #HTML[#UDGARRAY1,7,4,1;$9B08-$9B0F-8(interior-tiles-116)]
+  $9B10,8,8 #HTML[#UDGARRAY1,7,4,1;$9B10-$9B17-8(interior-tiles-117)]
+  $9B18,8,8 #HTML[#UDGARRAY1,7,4,1;$9B18-$9B1F-8(interior-tiles-118)]
+  $9B20,8,8 #HTML[#UDGARRAY1,7,4,1;$9B20-$9B27-8(interior-tiles-119)]
+  $9B28,8,8 #HTML[#UDGARRAY1,7,4,1;$9B28-$9B2F-8(interior-tiles-120)]
+  $9B30,8,8 #HTML[#UDGARRAY1,7,4,1;$9B30-$9B37-8(interior-tiles-121)]
+  $9B38,8,8 #HTML[#UDGARRAY1,7,4,1;$9B38-$9B3F-8(interior-tiles-122)]
+  $9B40,8,8 #HTML[#UDGARRAY1,7,4,1;$9B40-$9B47-8(interior-tiles-123)]
+  $9B48,8,8 #HTML[#UDGARRAY1,7,4,1;$9B48-$9B4F-8(interior-tiles-124)]
+  $9B50,8,8 #HTML[#UDGARRAY1,7,4,1;$9B50-$9B57-8(interior-tiles-125)]
+  $9B58,8,8 #HTML[#UDGARRAY1,7,4,1;$9B58-$9B5F-8(interior-tiles-126)]
+  $9B60,8,8 #HTML[#UDGARRAY1,7,4,1;$9B60-$9B67-8(interior-tiles-127)]
+  $9B68,8,8 #HTML[#UDGARRAY1,7,4,1;$9B68-$9B6F-8(interior-tiles-128)]
+  $9B70,8,8 #HTML[#UDGARRAY1,7,4,1;$9B70-$9B77-8(interior-tiles-129)]
+  $9B78,8,8 #HTML[#UDGARRAY1,7,4,1;$9B78-$9B7F-8(interior-tiles-130)]
+  $9B80,8,8 #HTML[#UDGARRAY1,7,4,1;$9B80-$9B87-8(interior-tiles-131)]
+  $9B88,8,8 #HTML[#UDGARRAY1,7,4,1;$9B88-$9B8F-8(interior-tiles-132)]
+  $9B90,8,8 #HTML[#UDGARRAY1,7,4,1;$9B90-$9B97-8(interior-tiles-133)]
+  $9B98,8,8 #HTML[#UDGARRAY1,7,4,1;$9B98-$9B9F-8(interior-tiles-134)]
+  $9BA0,8,8 #HTML[#UDGARRAY1,7,4,1;$9BA0-$9BA7-8(interior-tiles-135)]
+  $9BA8,8,8 #HTML[#UDGARRAY1,7,4,1;$9BA8-$9BAF-8(interior-tiles-136)]
+  $9BB0,8,8 #HTML[#UDGARRAY1,7,4,1;$9BB0-$9BB7-8(interior-tiles-137)]
+  $9BB8,8,8 #HTML[#UDGARRAY1,7,4,1;$9BB8-$9BBF-8(interior-tiles-138)]
+  $9BC0,8,8 #HTML[#UDGARRAY1,7,4,1;$9BC0-$9BC7-8(interior-tiles-139)]
+  $9BC8,8,8 #HTML[#UDGARRAY1,7,4,1;$9BC8-$9BCF-8(interior-tiles-140)]
+  $9BD0,8,8 #HTML[#UDGARRAY1,7,4,1;$9BD0-$9BD7-8(interior-tiles-141)]
+  $9BD8,8,8 #HTML[#UDGARRAY1,7,4,1;$9BD8-$9BDF-8(interior-tiles-142)]
+  $9BE0,8,8 #HTML[#UDGARRAY1,7,4,1;$9BE0-$9BE7-8(interior-tiles-143)]
+  $9BE8,8,8 #HTML[#UDGARRAY1,7,4,1;$9BE8-$9BEF-8(interior-tiles-144)]
+  $9BF0,8,8 #HTML[#UDGARRAY1,7,4,1;$9BF0-$9BF7-8(interior-tiles-145)]
+  $9BF8,8,8 #HTML[#UDGARRAY1,7,4,1;$9BF8-$9BFF-8(interior-tiles-146)]
+  $9C00,8,8 #HTML[#UDGARRAY1,7,4,1;$9C00-$9C07-8(interior-tiles-147)]
+  $9C08,8,8 #HTML[#UDGARRAY1,7,4,1;$9C08-$9C0F-8(interior-tiles-148)]
+  $9C10,8,8 #HTML[#UDGARRAY1,7,4,1;$9C10-$9C17-8(interior-tiles-149)]
+  $9C18,8,8 #HTML[#UDGARRAY1,7,4,1;$9C18-$9C1F-8(interior-tiles-150)]
+  $9C20,8,8 #HTML[#UDGARRAY1,7,4,1;$9C20-$9C27-8(interior-tiles-151)]
+  $9C28,8,8 #HTML[#UDGARRAY1,7,4,1;$9C28-$9C2F-8(interior-tiles-152)]
+  $9C30,8,8 #HTML[#UDGARRAY1,7,4,1;$9C30-$9C37-8(interior-tiles-153)]
+  $9C38,8,8 #HTML[#UDGARRAY1,7,4,1;$9C38-$9C3F-8(interior-tiles-154)]
+  $9C40,8,8 #HTML[#UDGARRAY1,7,4,1;$9C40-$9C47-8(interior-tiles-155)]
+  $9C48,8,8 #HTML[#UDGARRAY1,7,4,1;$9C48-$9C4F-8(interior-tiles-156)]
+  $9C50,8,8 #HTML[#UDGARRAY1,7,4,1;$9C50-$9C57-8(interior-tiles-157)]
+  $9C58,8,8 #HTML[#UDGARRAY1,7,4,1;$9C58-$9C5F-8(interior-tiles-158)]
+  $9C60,8,8 #HTML[#UDGARRAY1,7,4,1;$9C60-$9C67-8(interior-tiles-159)]
+  $9C68,8,8 #HTML[#UDGARRAY1,7,4,1;$9C68-$9C6F-8(interior-tiles-160)]
+  $9C70,8,8 #HTML[#UDGARRAY1,7,4,1;$9C70-$9C77-8(interior-tiles-161)]
+  $9C78,8,8 #HTML[#UDGARRAY1,7,4,1;$9C78-$9C7F-8(interior-tiles-162)]
+  $9C80,8,8 #HTML[#UDGARRAY1,7,4,1;$9C80-$9C87-8(interior-tiles-163)]
+  $9C88,8,8 #HTML[#UDGARRAY1,7,4,1;$9C88-$9C8F-8(interior-tiles-164)]
+  $9C90,8,8 #HTML[#UDGARRAY1,7,4,1;$9C90-$9C97-8(interior-tiles-165)]
+  $9C98,8,8 #HTML[#UDGARRAY1,7,4,1;$9C98-$9C9F-8(interior-tiles-166)]
+  $9CA0,8,8 #HTML[#UDGARRAY1,7,4,1;$9CA0-$9CA7-8(interior-tiles-167)]
+  $9CA8,8,8 #HTML[#UDGARRAY1,7,4,1;$9CA8-$9CAF-8(interior-tiles-168)]
+  $9CB0,8,8 #HTML[#UDGARRAY1,7,4,1;$9CB0-$9CB7-8(interior-tiles-169)]
+  $9CB8,8,8 #HTML[#UDGARRAY1,7,4,1;$9CB8-$9CBF-8(interior-tiles-170)]
+  $9CC0,8,8 #HTML[#UDGARRAY1,7,4,1;$9CC0-$9CC7-8(interior-tiles-171)]
+  $9CC8,8,8 #HTML[#UDGARRAY1,7,4,1;$9CC8-$9CCF-8(interior-tiles-172)]
+  $9CD0,8,8 #HTML[#UDGARRAY1,7,4,1;$9CD0-$9CD7-8(interior-tiles-173)]
+  $9CD8,8,8 #HTML[#UDGARRAY1,7,4,1;$9CD8-$9CDF-8(interior-tiles-174)]
+  $9CE0,8,8 #HTML[#UDGARRAY1,7,4,1;$9CE0-$9CE7-8(interior-tiles-175)]
+  $9CE8,8,8 #HTML[#UDGARRAY1,7,4,1;$9CE8-$9CEF-8(interior-tiles-176)]
+  $9CF0,8,8 #HTML[#UDGARRAY1,7,4,1;$9CF0-$9CF7-8(interior-tiles-177)]
+  $9CF8,8,8 #HTML[#UDGARRAY1,7,4,1;$9CF8-$9CFF-8(interior-tiles-178)]
+  $9D00,8,8 #HTML[#UDGARRAY1,7,4,1;$9D00-$9D07-8(interior-tiles-179)]
+  $9D08,8,8 #HTML[#UDGARRAY1,7,4,1;$9D08-$9D0F-8(interior-tiles-180)]
+  $9D10,8,8 #HTML[#UDGARRAY1,7,4,1;$9D10-$9D17-8(interior-tiles-181)]
+  $9D18,8,8 #HTML[#UDGARRAY1,7,4,1;$9D18-$9D1F-8(interior-tiles-182)]
+  $9D20,8,8 #HTML[#UDGARRAY1,7,4,1;$9D20-$9D27-8(interior-tiles-183)]
+  $9D28,8,8 #HTML[#UDGARRAY1,7,4,1;$9D28-$9D2F-8(interior-tiles-184)]
+  $9D30,8,8 #HTML[#UDGARRAY1,7,4,1;$9D30-$9D37-8(interior-tiles-185)]
+  $9D38,8,8 #HTML[#UDGARRAY1,7,4,1;$9D38-$9D3F-8(interior-tiles-186)]
+  $9D40,8,8 #HTML[#UDGARRAY1,7,4,1;$9D40-$9D47-8(interior-tiles-187)]
+  $9D48,8,8 #HTML[#UDGARRAY1,7,4,1;$9D48-$9D4F-8(interior-tiles-188)]
+  $9D50,8,8 #HTML[#UDGARRAY1,7,4,1;$9D50-$9D57-8(interior-tiles-189)]
+  $9D58,8,8 #HTML[#UDGARRAY1,7,4,1;$9D58-$9D5F-8(interior-tiles-190)]
+  $9D60,8,8 #HTML[#UDGARRAY1,7,4,1;$9D60-$9D67-8(interior-tiles-191)]
+  $9D68,8,8 #HTML[#UDGARRAY1,7,4,1;$9D68-$9D6F-8(interior-tiles-192)]
+  $9D70,8,8 #HTML[#UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)]
+
 ;B $8A18,8 tile: ground1 [start of exterior tiles 2] (<- plot_tile)
 ;B $8A20,8 tile: ground2
 ;B $8A28,8 tile: ground3
@@ -3286,893 +4138,16 @@ N $9768 Interior tiles. 194 tiles.
 ;
 ;D $9768,8 empty tile (<- plot_interior_tiles, select_tile_set)
 
-B $8218 #HTML[#UDGARRAY1,7,4,1;$8218-$821F-8(exterior-tiles0-000)]
-B $8220 #HTML[#UDGARRAY1,7,4,1;$8220-$8227-8(exterior-tiles0-001)]
-B $8228 #HTML[#UDGARRAY1,7,4,1;$8228-$822F-8(exterior-tiles0-002)]
-B $8230 #HTML[#UDGARRAY1,7,4,1;$8230-$8237-8(exterior-tiles0-003)]
-B $8238 #HTML[#UDGARRAY1,7,4,1;$8238-$823F-8(exterior-tiles0-004)]
-B $8240 #HTML[#UDGARRAY1,7,4,1;$8240-$8247-8(exterior-tiles0-005)]
-B $8248 #HTML[#UDGARRAY1,7,4,1;$8248-$824F-8(exterior-tiles0-006)]
-B $8250 #HTML[#UDGARRAY1,7,4,1;$8250-$8257-8(exterior-tiles0-007)]
-B $8258 #HTML[#UDGARRAY1,7,4,1;$8258-$825F-8(exterior-tiles0-008)]
-B $8260 #HTML[#UDGARRAY1,7,4,1;$8260-$8267-8(exterior-tiles0-009)]
-B $8268 #HTML[#UDGARRAY1,7,4,1;$8268-$826F-8(exterior-tiles0-010)]
-B $8270 #HTML[#UDGARRAY1,7,4,1;$8270-$8277-8(exterior-tiles0-011)]
-B $8278 #HTML[#UDGARRAY1,7,4,1;$8278-$827F-8(exterior-tiles0-012)]
-B $8280 #HTML[#UDGARRAY1,7,4,1;$8280-$8287-8(exterior-tiles0-013)]
-B $8288 #HTML[#UDGARRAY1,7,4,1;$8288-$828F-8(exterior-tiles0-014)]
-B $8290 #HTML[#UDGARRAY1,7,4,1;$8290-$8297-8(exterior-tiles0-015)]
-B $8298 #HTML[#UDGARRAY1,7,4,1;$8298-$829F-8(exterior-tiles0-016)]
-B $82A0 #HTML[#UDGARRAY1,7,4,1;$82A0-$82A7-8(exterior-tiles0-017)]
-B $82A8 #HTML[#UDGARRAY1,7,4,1;$82A8-$82AF-8(exterior-tiles0-018)]
-B $82B0 #HTML[#UDGARRAY1,7,4,1;$82B0-$82B7-8(exterior-tiles0-019)]
-B $82B8 #HTML[#UDGARRAY1,7,4,1;$82B8-$82BF-8(exterior-tiles0-020)]
-B $82C0 #HTML[#UDGARRAY1,7,4,1;$82C0-$82C7-8(exterior-tiles0-021)]
-B $82C8 #HTML[#UDGARRAY1,7,4,1;$82C8-$82CF-8(exterior-tiles0-022)]
-B $82D0 #HTML[#UDGARRAY1,7,4,1;$82D0-$82D7-8(exterior-tiles0-023)]
-B $82D8 #HTML[#UDGARRAY1,7,4,1;$82D8-$82DF-8(exterior-tiles0-024)]
-B $82E0 #HTML[#UDGARRAY1,7,4,1;$82E0-$82E7-8(exterior-tiles0-025)]
-B $82E8 #HTML[#UDGARRAY1,7,4,1;$82E8-$82EF-8(exterior-tiles0-026)]
-B $82F0 #HTML[#UDGARRAY1,7,4,1;$82F0-$82F7-8(exterior-tiles0-027)]
-B $82F8 #HTML[#UDGARRAY1,7,4,1;$82F8-$82FF-8(exterior-tiles0-028)]
-B $8300 #HTML[#UDGARRAY1,7,4,1;$8300-$8307-8(exterior-tiles0-029)]
-B $8308 #HTML[#UDGARRAY1,7,4,1;$8308-$830F-8(exterior-tiles0-030)]
-B $8310 #HTML[#UDGARRAY1,7,4,1;$8310-$8317-8(exterior-tiles0-031)]
-B $8318 #HTML[#UDGARRAY1,7,4,1;$8318-$831F-8(exterior-tiles0-032)]
-B $8320 #HTML[#UDGARRAY1,7,4,1;$8320-$8327-8(exterior-tiles0-033)]
-B $8328 #HTML[#UDGARRAY1,7,4,1;$8328-$832F-8(exterior-tiles0-034)]
-B $8330 #HTML[#UDGARRAY1,7,4,1;$8330-$8337-8(exterior-tiles0-035)]
-B $8338 #HTML[#UDGARRAY1,7,4,1;$8338-$833F-8(exterior-tiles0-036)]
-B $8340 #HTML[#UDGARRAY1,7,4,1;$8340-$8347-8(exterior-tiles0-037)]
-B $8348 #HTML[#UDGARRAY1,7,4,1;$8348-$834F-8(exterior-tiles0-038)]
-B $8350 #HTML[#UDGARRAY1,7,4,1;$8350-$8357-8(exterior-tiles0-039)]
-B $8358 #HTML[#UDGARRAY1,7,4,1;$8358-$835F-8(exterior-tiles0-040)]
-B $8360 #HTML[#UDGARRAY1,7,4,1;$8360-$8367-8(exterior-tiles0-041)]
-B $8368 #HTML[#UDGARRAY1,7,4,1;$8368-$836F-8(exterior-tiles0-042)]
-B $8370 #HTML[#UDGARRAY1,7,4,1;$8370-$8377-8(exterior-tiles0-043)]
-B $8378 #HTML[#UDGARRAY1,7,4,1;$8378-$837F-8(exterior-tiles0-044)]
-B $8380 #HTML[#UDGARRAY1,7,4,1;$8380-$8387-8(exterior-tiles0-045)]
-B $8388 #HTML[#UDGARRAY1,7,4,1;$8388-$838F-8(exterior-tiles0-046)]
-B $8390 #HTML[#UDGARRAY1,7,4,1;$8390-$8397-8(exterior-tiles0-047)]
-B $8398 #HTML[#UDGARRAY1,7,4,1;$8398-$839F-8(exterior-tiles0-048)]
-B $83A0 #HTML[#UDGARRAY1,7,4,1;$83A0-$83A7-8(exterior-tiles0-049)]
-B $83A8 #HTML[#UDGARRAY1,7,4,1;$83A8-$83AF-8(exterior-tiles0-050)]
-B $83B0 #HTML[#UDGARRAY1,7,4,1;$83B0-$83B7-8(exterior-tiles0-051)]
-B $83B8 #HTML[#UDGARRAY1,7,4,1;$83B8-$83BF-8(exterior-tiles0-052)]
-B $83C0 #HTML[#UDGARRAY1,7,4,1;$83C0-$83C7-8(exterior-tiles0-053)]
-B $83C8 #HTML[#UDGARRAY1,7,4,1;$83C8-$83CF-8(exterior-tiles0-054)]
-B $83D0 #HTML[#UDGARRAY1,7,4,1;$83D0-$83D7-8(exterior-tiles0-055)]
-B $83D8 #HTML[#UDGARRAY1,7,4,1;$83D8-$83DF-8(exterior-tiles0-056)]
-B $83E0 #HTML[#UDGARRAY1,7,4,1;$83E0-$83E7-8(exterior-tiles0-057)]
-B $83E8 #HTML[#UDGARRAY1,7,4,1;$83E8-$83EF-8(exterior-tiles0-058)]
-B $83F0 #HTML[#UDGARRAY1,7,4,1;$83F0-$83F7-8(exterior-tiles0-059)]
-B $83F8 #HTML[#UDGARRAY1,7,4,1;$83F8-$83FF-8(exterior-tiles0-060)]
-B $8400 #HTML[#UDGARRAY1,7,4,1;$8400-$8407-8(exterior-tiles0-061)]
-B $8408 #HTML[#UDGARRAY1,7,4,1;$8408-$840F-8(exterior-tiles0-062)]
-B $8410 #HTML[#UDGARRAY1,7,4,1;$8410-$8417-8(exterior-tiles0-063)]
-B $8418 #HTML[#UDGARRAY1,7,4,1;$8418-$841F-8(exterior-tiles0-064)]
-B $8420 #HTML[#UDGARRAY1,7,4,1;$8420-$8427-8(exterior-tiles0-065)]
-B $8428 #HTML[#UDGARRAY1,7,4,1;$8428-$842F-8(exterior-tiles0-066)]
-B $8430 #HTML[#UDGARRAY1,7,4,1;$8430-$8437-8(exterior-tiles0-067)]
-B $8438 #HTML[#UDGARRAY1,7,4,1;$8438-$843F-8(exterior-tiles0-068)]
-B $8440 #HTML[#UDGARRAY1,7,4,1;$8440-$8447-8(exterior-tiles0-069)]
-B $8448 #HTML[#UDGARRAY1,7,4,1;$8448-$844F-8(exterior-tiles0-070)]
-B $8450 #HTML[#UDGARRAY1,7,4,1;$8450-$8457-8(exterior-tiles0-071)]
-B $8458 #HTML[#UDGARRAY1,7,4,1;$8458-$845F-8(exterior-tiles0-072)]
-B $8460 #HTML[#UDGARRAY1,7,4,1;$8460-$8467-8(exterior-tiles0-073)]
-B $8468 #HTML[#UDGARRAY1,7,4,1;$8468-$846F-8(exterior-tiles0-074)]
-B $8470 #HTML[#UDGARRAY1,7,4,1;$8470-$8477-8(exterior-tiles0-075)]
-B $8478 #HTML[#UDGARRAY1,7,4,1;$8478-$847F-8(exterior-tiles0-076)]
-B $8480 #HTML[#UDGARRAY1,7,4,1;$8480-$8487-8(exterior-tiles0-077)]
-B $8488 #HTML[#UDGARRAY1,7,4,1;$8488-$848F-8(exterior-tiles0-078)]
-B $8490 #HTML[#UDGARRAY1,7,4,1;$8490-$8497-8(exterior-tiles0-079)]
-B $8498 #HTML[#UDGARRAY1,7,4,1;$8498-$849F-8(exterior-tiles0-080)]
-B $84A0 #HTML[#UDGARRAY1,7,4,1;$84A0-$84A7-8(exterior-tiles0-081)]
-B $84A8 #HTML[#UDGARRAY1,7,4,1;$84A8-$84AF-8(exterior-tiles0-082)]
-B $84B0 #HTML[#UDGARRAY1,7,4,1;$84B0-$84B7-8(exterior-tiles0-083)]
-B $84B8 #HTML[#UDGARRAY1,7,4,1;$84B8-$84BF-8(exterior-tiles0-084)]
-B $84C0 #HTML[#UDGARRAY1,7,4,1;$84C0-$84C7-8(exterior-tiles0-085)]
-B $84C8 #HTML[#UDGARRAY1,7,4,1;$84C8-$84CF-8(exterior-tiles0-086)]
-B $84D0 #HTML[#UDGARRAY1,7,4,1;$84D0-$84D7-8(exterior-tiles0-087)]
-B $84D8 #HTML[#UDGARRAY1,7,4,1;$84D8-$84DF-8(exterior-tiles0-088)]
-B $84E0 #HTML[#UDGARRAY1,7,4,1;$84E0-$84E7-8(exterior-tiles0-089)]
-B $84E8 #HTML[#UDGARRAY1,7,4,1;$84E8-$84EF-8(exterior-tiles0-090)]
-B $84F0 #HTML[#UDGARRAY1,7,4,1;$84F0-$84F7-8(exterior-tiles0-091)]
-B $84F8 #HTML[#UDGARRAY1,7,4,1;$84F8-$84FF-8(exterior-tiles0-092)]
-B $8500 #HTML[#UDGARRAY1,7,4,1;$8500-$8507-8(exterior-tiles0-093)]
-B $8508 #HTML[#UDGARRAY1,7,4,1;$8508-$850F-8(exterior-tiles0-094)]
-B $8510 #HTML[#UDGARRAY1,7,4,1;$8510-$8517-8(exterior-tiles0-095)]
-B $8518 #HTML[#UDGARRAY1,7,4,1;$8518-$851F-8(exterior-tiles0-096)]
-B $8520 #HTML[#UDGARRAY1,7,4,1;$8520-$8527-8(exterior-tiles0-097)]
-B $8528 #HTML[#UDGARRAY1,7,4,1;$8528-$852F-8(exterior-tiles0-098)]
-B $8530 #HTML[#UDGARRAY1,7,4,1;$8530-$8537-8(exterior-tiles0-099)]
-B $8538 #HTML[#UDGARRAY1,7,4,1;$8538-$853F-8(exterior-tiles0-100)]
-B $8540 #HTML[#UDGARRAY1,7,4,1;$8540-$8547-8(exterior-tiles0-101)]
-B $8548 #HTML[#UDGARRAY1,7,4,1;$8548-$854F-8(exterior-tiles0-102)]
-B $8550 #HTML[#UDGARRAY1,7,4,1;$8550-$8557-8(exterior-tiles0-103)]
-B $8558 #HTML[#UDGARRAY1,7,4,1;$8558-$855F-8(exterior-tiles0-104)]
-B $8560 #HTML[#UDGARRAY1,7,4,1;$8560-$8567-8(exterior-tiles0-105)]
-B $8568 #HTML[#UDGARRAY1,7,4,1;$8568-$856F-8(exterior-tiles0-106)]
-B $8570 #HTML[#UDGARRAY1,7,4,1;$8570-$8577-8(exterior-tiles0-107)]
-B $8578 #HTML[#UDGARRAY1,7,4,1;$8578-$857F-8(exterior-tiles0-108)]
-B $8580 #HTML[#UDGARRAY1,7,4,1;$8580-$8587-8(exterior-tiles0-109)]
-B $8588 #HTML[#UDGARRAY1,7,4,1;$8588-$858F-8(exterior-tiles0-110)]
-B $8590 #HTML[#UDGARRAY1,7,4,1;$8590-$8597-8(exterior-tiles1-000)]
-B $8598 #HTML[#UDGARRAY1,7,4,1;$8598-$859F-8(exterior-tiles1-001)]
-B $85A0 #HTML[#UDGARRAY1,7,4,1;$85A0-$85A7-8(exterior-tiles1-002)]
-B $85A8 #HTML[#UDGARRAY1,7,4,1;$85A8-$85AF-8(exterior-tiles1-003)]
-B $85B0 #HTML[#UDGARRAY1,7,4,1;$85B0-$85B7-8(exterior-tiles1-004)]
-B $85B8 #HTML[#UDGARRAY1,7,4,1;$85B8-$85BF-8(exterior-tiles1-005)]
-B $85C0 #HTML[#UDGARRAY1,7,4,1;$85C0-$85C7-8(exterior-tiles1-006)]
-B $85C8 #HTML[#UDGARRAY1,7,4,1;$85C8-$85CF-8(exterior-tiles1-007)]
-B $85D0 #HTML[#UDGARRAY1,7,4,1;$85D0-$85D7-8(exterior-tiles1-008)]
-B $85D8 #HTML[#UDGARRAY1,7,4,1;$85D8-$85DF-8(exterior-tiles1-009)]
-B $85E0 #HTML[#UDGARRAY1,7,4,1;$85E0-$85E7-8(exterior-tiles1-010)]
-B $85E8 #HTML[#UDGARRAY1,7,4,1;$85E8-$85EF-8(exterior-tiles1-011)]
-B $85F0 #HTML[#UDGARRAY1,7,4,1;$85F0-$85F7-8(exterior-tiles1-012)]
-B $85F8 #HTML[#UDGARRAY1,7,4,1;$85F8-$85FF-8(exterior-tiles1-013)]
-B $8600 #HTML[#UDGARRAY1,7,4,1;$8600-$8607-8(exterior-tiles1-014)]
-B $8608 #HTML[#UDGARRAY1,7,4,1;$8608-$860F-8(exterior-tiles1-015)]
-B $8610 #HTML[#UDGARRAY1,7,4,1;$8610-$8617-8(exterior-tiles1-016)]
-B $8618 #HTML[#UDGARRAY1,7,4,1;$8618-$861F-8(exterior-tiles1-017)]
-B $8620 #HTML[#UDGARRAY1,7,4,1;$8620-$8627-8(exterior-tiles1-018)]
-B $8628 #HTML[#UDGARRAY1,7,4,1;$8628-$862F-8(exterior-tiles1-019)]
-B $8630 #HTML[#UDGARRAY1,7,4,1;$8630-$8637-8(exterior-tiles1-020)]
-B $8638 #HTML[#UDGARRAY1,7,4,1;$8638-$863F-8(exterior-tiles1-021)]
-B $8640 #HTML[#UDGARRAY1,7,4,1;$8640-$8647-8(exterior-tiles1-022)]
-B $8648 #HTML[#UDGARRAY1,7,4,1;$8648-$864F-8(exterior-tiles1-023)]
-B $8650 #HTML[#UDGARRAY1,7,4,1;$8650-$8657-8(exterior-tiles1-024)]
-B $8658 #HTML[#UDGARRAY1,7,4,1;$8658-$865F-8(exterior-tiles1-025)]
-B $8660 #HTML[#UDGARRAY1,7,4,1;$8660-$8667-8(exterior-tiles1-026)]
-B $8668 #HTML[#UDGARRAY1,7,4,1;$8668-$866F-8(exterior-tiles1-027)]
-B $8670 #HTML[#UDGARRAY1,7,4,1;$8670-$8677-8(exterior-tiles1-028)]
-B $8678 #HTML[#UDGARRAY1,7,4,1;$8678-$867F-8(exterior-tiles1-029)]
-B $8680 #HTML[#UDGARRAY1,7,4,1;$8680-$8687-8(exterior-tiles1-030)]
-B $8688 #HTML[#UDGARRAY1,7,4,1;$8688-$868F-8(exterior-tiles1-031)]
-B $8690 #HTML[#UDGARRAY1,7,4,1;$8690-$8697-8(exterior-tiles1-032)]
-B $8698 #HTML[#UDGARRAY1,7,4,1;$8698-$869F-8(exterior-tiles1-033)]
-B $86A0 #HTML[#UDGARRAY1,7,4,1;$86A0-$86A7-8(exterior-tiles1-034)]
-B $86A8 #HTML[#UDGARRAY1,7,4,1;$86A8-$86AF-8(exterior-tiles1-035)]
-B $86B0 #HTML[#UDGARRAY1,7,4,1;$86B0-$86B7-8(exterior-tiles1-036)]
-B $86B8 #HTML[#UDGARRAY1,7,4,1;$86B8-$86BF-8(exterior-tiles1-037)]
-B $86C0 #HTML[#UDGARRAY1,7,4,1;$86C0-$86C7-8(exterior-tiles1-038)]
-B $86C8 #HTML[#UDGARRAY1,7,4,1;$86C8-$86CF-8(exterior-tiles1-039)]
-B $86D0 #HTML[#UDGARRAY1,7,4,1;$86D0-$86D7-8(exterior-tiles1-040)]
-B $86D8 #HTML[#UDGARRAY1,7,4,1;$86D8-$86DF-8(exterior-tiles1-041)]
-B $86E0 #HTML[#UDGARRAY1,7,4,1;$86E0-$86E7-8(exterior-tiles1-042)]
-B $86E8 #HTML[#UDGARRAY1,7,4,1;$86E8-$86EF-8(exterior-tiles1-043)]
-B $86F0 #HTML[#UDGARRAY1,7,4,1;$86F0-$86F7-8(exterior-tiles1-044)]
-B $86F8 #HTML[#UDGARRAY1,7,4,1;$86F8-$86FF-8(exterior-tiles1-045)]
-B $8700 #HTML[#UDGARRAY1,7,4,1;$8700-$8707-8(exterior-tiles1-046)]
-B $8708 #HTML[#UDGARRAY1,7,4,1;$8708-$870F-8(exterior-tiles1-047)]
-B $8710 #HTML[#UDGARRAY1,7,4,1;$8710-$8717-8(exterior-tiles1-048)]
-B $8718 #HTML[#UDGARRAY1,7,4,1;$8718-$871F-8(exterior-tiles1-049)]
-B $8720 #HTML[#UDGARRAY1,7,4,1;$8720-$8727-8(exterior-tiles1-050)]
-B $8728 #HTML[#UDGARRAY1,7,4,1;$8728-$872F-8(exterior-tiles1-051)]
-B $8730 #HTML[#UDGARRAY1,7,4,1;$8730-$8737-8(exterior-tiles1-052)]
-B $8738 #HTML[#UDGARRAY1,7,4,1;$8738-$873F-8(exterior-tiles1-053)]
-B $8740 #HTML[#UDGARRAY1,7,4,1;$8740-$8747-8(exterior-tiles1-054)]
-B $8748 #HTML[#UDGARRAY1,7,4,1;$8748-$874F-8(exterior-tiles1-055)]
-B $8750 #HTML[#UDGARRAY1,7,4,1;$8750-$8757-8(exterior-tiles1-056)]
-B $8758 #HTML[#UDGARRAY1,7,4,1;$8758-$875F-8(exterior-tiles1-057)]
-B $8760 #HTML[#UDGARRAY1,7,4,1;$8760-$8767-8(exterior-tiles1-058)]
-B $8768 #HTML[#UDGARRAY1,7,4,1;$8768-$876F-8(exterior-tiles1-059)]
-B $8770 #HTML[#UDGARRAY1,7,4,1;$8770-$8777-8(exterior-tiles1-060)]
-B $8778 #HTML[#UDGARRAY1,7,4,1;$8778-$877F-8(exterior-tiles1-061)]
-B $8780 #HTML[#UDGARRAY1,7,4,1;$8780-$8787-8(exterior-tiles1-062)]
-B $8788 #HTML[#UDGARRAY1,7,4,1;$8788-$878F-8(exterior-tiles1-063)]
-B $8790 #HTML[#UDGARRAY1,7,4,1;$8790-$8797-8(exterior-tiles1-064)]
-B $8798 #HTML[#UDGARRAY1,7,4,1;$8798-$879F-8(exterior-tiles1-065)]
-B $87A0 #HTML[#UDGARRAY1,7,4,1;$87A0-$87A7-8(exterior-tiles1-066)]
-B $87A8 #HTML[#UDGARRAY1,7,4,1;$87A8-$87AF-8(exterior-tiles1-067)]
-B $87B0 #HTML[#UDGARRAY1,7,4,1;$87B0-$87B7-8(exterior-tiles1-068)]
-B $87B8 #HTML[#UDGARRAY1,7,4,1;$87B8-$87BF-8(exterior-tiles1-069)]
-B $87C0 #HTML[#UDGARRAY1,7,4,1;$87C0-$87C7-8(exterior-tiles1-070)]
-B $87C8 #HTML[#UDGARRAY1,7,4,1;$87C8-$87CF-8(exterior-tiles1-071)]
-B $87D0 #HTML[#UDGARRAY1,7,4,1;$87D0-$87D7-8(exterior-tiles1-072)]
-B $87D8 #HTML[#UDGARRAY1,7,4,1;$87D8-$87DF-8(exterior-tiles1-073)]
-B $87E0 #HTML[#UDGARRAY1,7,4,1;$87E0-$87E7-8(exterior-tiles1-074)]
-B $87E8 #HTML[#UDGARRAY1,7,4,1;$87E8-$87EF-8(exterior-tiles1-075)]
-B $87F0 #HTML[#UDGARRAY1,7,4,1;$87F0-$87F7-8(exterior-tiles1-076)]
-B $87F8 #HTML[#UDGARRAY1,7,4,1;$87F8-$87FF-8(exterior-tiles1-077)]
-B $8800 #HTML[#UDGARRAY1,7,4,1;$8800-$8807-8(exterior-tiles1-078)]
-B $8808 #HTML[#UDGARRAY1,7,4,1;$8808-$880F-8(exterior-tiles1-079)]
-B $8810 #HTML[#UDGARRAY1,7,4,1;$8810-$8817-8(exterior-tiles1-080)]
-B $8818 #HTML[#UDGARRAY1,7,4,1;$8818-$881F-8(exterior-tiles1-081)]
-B $8820 #HTML[#UDGARRAY1,7,4,1;$8820-$8827-8(exterior-tiles1-082)]
-B $8828 #HTML[#UDGARRAY1,7,4,1;$8828-$882F-8(exterior-tiles1-083)]
-B $8830 #HTML[#UDGARRAY1,7,4,1;$8830-$8837-8(exterior-tiles1-084)]
-B $8838 #HTML[#UDGARRAY1,7,4,1;$8838-$883F-8(exterior-tiles1-085)]
-B $8840 #HTML[#UDGARRAY1,7,4,1;$8840-$8847-8(exterior-tiles1-086)]
-B $8848 #HTML[#UDGARRAY1,7,4,1;$8848-$884F-8(exterior-tiles1-087)]
-B $8850 #HTML[#UDGARRAY1,7,4,1;$8850-$8857-8(exterior-tiles1-088)]
-B $8858 #HTML[#UDGARRAY1,7,4,1;$8858-$885F-8(exterior-tiles1-089)]
-B $8860 #HTML[#UDGARRAY1,7,4,1;$8860-$8867-8(exterior-tiles1-090)]
-B $8868 #HTML[#UDGARRAY1,7,4,1;$8868-$886F-8(exterior-tiles1-091)]
-B $8870 #HTML[#UDGARRAY1,7,4,1;$8870-$8877-8(exterior-tiles1-092)]
-B $8878 #HTML[#UDGARRAY1,7,4,1;$8878-$887F-8(exterior-tiles1-093)]
-B $8880 #HTML[#UDGARRAY1,7,4,1;$8880-$8887-8(exterior-tiles1-094)]
-B $8888 #HTML[#UDGARRAY1,7,4,1;$8888-$888F-8(exterior-tiles1-095)]
-B $8890 #HTML[#UDGARRAY1,7,4,1;$8890-$8897-8(exterior-tiles1-096)]
-B $8898 #HTML[#UDGARRAY1,7,4,1;$8898-$889F-8(exterior-tiles1-097)]
-B $88A0 #HTML[#UDGARRAY1,7,4,1;$88A0-$88A7-8(exterior-tiles1-098)]
-B $88A8 #HTML[#UDGARRAY1,7,4,1;$88A8-$88AF-8(exterior-tiles1-099)]
-B $88B0 #HTML[#UDGARRAY1,7,4,1;$88B0-$88B7-8(exterior-tiles1-100)]
-B $88B8 #HTML[#UDGARRAY1,7,4,1;$88B8-$88BF-8(exterior-tiles1-101)]
-B $88C0 #HTML[#UDGARRAY1,7,4,1;$88C0-$88C7-8(exterior-tiles1-102)]
-B $88C8 #HTML[#UDGARRAY1,7,4,1;$88C8-$88CF-8(exterior-tiles1-103)]
-B $88D0 #HTML[#UDGARRAY1,7,4,1;$88D0-$88D7-8(exterior-tiles1-104)]
-B $88D8 #HTML[#UDGARRAY1,7,4,1;$88D8-$88DF-8(exterior-tiles1-105)]
-B $88E0 #HTML[#UDGARRAY1,7,4,1;$88E0-$88E7-8(exterior-tiles1-106)]
-B $88E8 #HTML[#UDGARRAY1,7,4,1;$88E8-$88EF-8(exterior-tiles1-107)]
-B $88F0 #HTML[#UDGARRAY1,7,4,1;$88F0-$88F7-8(exterior-tiles1-108)]
-B $88F8 #HTML[#UDGARRAY1,7,4,1;$88F8-$88FF-8(exterior-tiles1-109)]
-B $8900 #HTML[#UDGARRAY1,7,4,1;$8900-$8907-8(exterior-tiles1-110)]
-B $8908 #HTML[#UDGARRAY1,7,4,1;$8908-$890F-8(exterior-tiles1-111)]
-B $8910 #HTML[#UDGARRAY1,7,4,1;$8910-$8917-8(exterior-tiles1-112)]
-B $8918 #HTML[#UDGARRAY1,7,4,1;$8918-$891F-8(exterior-tiles1-113)]
-B $8920 #HTML[#UDGARRAY1,7,4,1;$8920-$8927-8(exterior-tiles1-114)]
-B $8928 #HTML[#UDGARRAY1,7,4,1;$8928-$892F-8(exterior-tiles1-115)]
-B $8930 #HTML[#UDGARRAY1,7,4,1;$8930-$8937-8(exterior-tiles1-116)]
-B $8938 #HTML[#UDGARRAY1,7,4,1;$8938-$893F-8(exterior-tiles1-117)]
-B $8940 #HTML[#UDGARRAY1,7,4,1;$8940-$8947-8(exterior-tiles1-118)]
-B $8948 #HTML[#UDGARRAY1,7,4,1;$8948-$894F-8(exterior-tiles1-119)]
-B $8950 #HTML[#UDGARRAY1,7,4,1;$8950-$8957-8(exterior-tiles1-120)]
-B $8958 #HTML[#UDGARRAY1,7,4,1;$8958-$895F-8(exterior-tiles1-121)]
-B $8960 #HTML[#UDGARRAY1,7,4,1;$8960-$8967-8(exterior-tiles1-122)]
-B $8968 #HTML[#UDGARRAY1,7,4,1;$8968-$896F-8(exterior-tiles1-123)]
-B $8970 #HTML[#UDGARRAY1,7,4,1;$8970-$8977-8(exterior-tiles1-124)]
-B $8978 #HTML[#UDGARRAY1,7,4,1;$8978-$897F-8(exterior-tiles1-125)]
-B $8980 #HTML[#UDGARRAY1,7,4,1;$8980-$8987-8(exterior-tiles1-126)]
-B $8988 #HTML[#UDGARRAY1,7,4,1;$8988-$898F-8(exterior-tiles1-127)]
-B $8990 #HTML[#UDGARRAY1,7,4,1;$8990-$8997-8(exterior-tiles1-128)]
-B $8998 #HTML[#UDGARRAY1,7,4,1;$8998-$899F-8(exterior-tiles1-129)]
-B $89A0 #HTML[#UDGARRAY1,7,4,1;$89A0-$89A7-8(exterior-tiles1-130)]
-B $89A8 #HTML[#UDGARRAY1,7,4,1;$89A8-$89AF-8(exterior-tiles1-131)]
-B $89B0 #HTML[#UDGARRAY1,7,4,1;$89B0-$89B7-8(exterior-tiles1-132)]
-B $89B8 #HTML[#UDGARRAY1,7,4,1;$89B8-$89BF-8(exterior-tiles1-133)]
-B $89C0 #HTML[#UDGARRAY1,7,4,1;$89C0-$89C7-8(exterior-tiles1-134)]
-B $89C8 #HTML[#UDGARRAY1,7,4,1;$89C8-$89CF-8(exterior-tiles1-135)]
-B $89D0 #HTML[#UDGARRAY1,7,4,1;$89D0-$89D7-8(exterior-tiles1-136)]
-B $89D8 #HTML[#UDGARRAY1,7,4,1;$89D8-$89DF-8(exterior-tiles1-137)]
-B $89E0 #HTML[#UDGARRAY1,7,4,1;$89E0-$89E7-8(exterior-tiles1-138)]
-B $89E8 #HTML[#UDGARRAY1,7,4,1;$89E8-$89EF-8(exterior-tiles1-139)]
-B $89F0 #HTML[#UDGARRAY1,7,4,1;$89F0-$89F7-8(exterior-tiles1-140)]
-B $89F8 #HTML[#UDGARRAY1,7,4,1;$89F8-$89FF-8(exterior-tiles1-141)]
-B $8A00 #HTML[#UDGARRAY1,7,4,1;$8A00-$8A07-8(exterior-tiles1-142)]
-B $8A08 #HTML[#UDGARRAY1,7,4,1;$8A08-$8A0F-8(exterior-tiles1-143)]
-B $8A10 #HTML[#UDGARRAY1,7,4,1;$8A10-$8A17-8(exterior-tiles1-144)]
-B $8A18 #HTML[#UDGARRAY1,7,4,1;$8A18-$8A1F-8(exterior-tiles2-000)]
-B $8A20 #HTML[#UDGARRAY1,7,4,1;$8A20-$8A27-8(exterior-tiles2-001)]
-B $8A28 #HTML[#UDGARRAY1,7,4,1;$8A28-$8A2F-8(exterior-tiles2-002)]
-B $8A30 #HTML[#UDGARRAY1,7,4,1;$8A30-$8A37-8(exterior-tiles2-003)]
-B $8A38 #HTML[#UDGARRAY1,7,4,1;$8A38-$8A3F-8(exterior-tiles2-004)]
-B $8A40 #HTML[#UDGARRAY1,7,4,1;$8A40-$8A47-8(exterior-tiles2-005)]
-B $8A48 #HTML[#UDGARRAY1,7,4,1;$8A48-$8A4F-8(exterior-tiles2-006)]
-B $8A50 #HTML[#UDGARRAY1,7,4,1;$8A50-$8A57-8(exterior-tiles2-007)]
-B $8A58 #HTML[#UDGARRAY1,7,4,1;$8A58-$8A5F-8(exterior-tiles2-008)]
-B $8A60 #HTML[#UDGARRAY1,7,4,1;$8A60-$8A67-8(exterior-tiles2-009)]
-B $8A68 #HTML[#UDGARRAY1,7,4,1;$8A68-$8A6F-8(exterior-tiles2-010)]
-B $8A70 #HTML[#UDGARRAY1,7,4,1;$8A70-$8A77-8(exterior-tiles2-011)]
-B $8A78 #HTML[#UDGARRAY1,7,4,1;$8A78-$8A7F-8(exterior-tiles2-012)]
-B $8A80 #HTML[#UDGARRAY1,7,4,1;$8A80-$8A87-8(exterior-tiles2-013)]
-B $8A88 #HTML[#UDGARRAY1,7,4,1;$8A88-$8A8F-8(exterior-tiles2-014)]
-B $8A90 #HTML[#UDGARRAY1,7,4,1;$8A90-$8A97-8(exterior-tiles2-015)]
-B $8A98 #HTML[#UDGARRAY1,7,4,1;$8A98-$8A9F-8(exterior-tiles2-016)]
-B $8AA0 #HTML[#UDGARRAY1,7,4,1;$8AA0-$8AA7-8(exterior-tiles2-017)]
-B $8AA8 #HTML[#UDGARRAY1,7,4,1;$8AA8-$8AAF-8(exterior-tiles2-018)]
-B $8AB0 #HTML[#UDGARRAY1,7,4,1;$8AB0-$8AB7-8(exterior-tiles2-019)]
-B $8AB8 #HTML[#UDGARRAY1,7,4,1;$8AB8-$8ABF-8(exterior-tiles2-020)]
-B $8AC0 #HTML[#UDGARRAY1,7,4,1;$8AC0-$8AC7-8(exterior-tiles2-021)]
-B $8AC8 #HTML[#UDGARRAY1,7,4,1;$8AC8-$8ACF-8(exterior-tiles2-022)]
-B $8AD0 #HTML[#UDGARRAY1,7,4,1;$8AD0-$8AD7-8(exterior-tiles2-023)]
-B $8AD8 #HTML[#UDGARRAY1,7,4,1;$8AD8-$8ADF-8(exterior-tiles2-024)]
-B $8AE0 #HTML[#UDGARRAY1,7,4,1;$8AE0-$8AE7-8(exterior-tiles2-025)]
-B $8AE8 #HTML[#UDGARRAY1,7,4,1;$8AE8-$8AEF-8(exterior-tiles2-026)]
-B $8AF0 #HTML[#UDGARRAY1,7,4,1;$8AF0-$8AF7-8(exterior-tiles2-027)]
-B $8AF8 #HTML[#UDGARRAY1,7,4,1;$8AF8-$8AFF-8(exterior-tiles2-028)]
-B $8B00 #HTML[#UDGARRAY1,7,4,1;$8B00-$8B07-8(exterior-tiles2-029)]
-B $8B08 #HTML[#UDGARRAY1,7,4,1;$8B08-$8B0F-8(exterior-tiles2-030)]
-B $8B10 #HTML[#UDGARRAY1,7,4,1;$8B10-$8B17-8(exterior-tiles2-031)]
-B $8B18 #HTML[#UDGARRAY1,7,4,1;$8B18-$8B1F-8(exterior-tiles2-032)]
-B $8B20 #HTML[#UDGARRAY1,7,4,1;$8B20-$8B27-8(exterior-tiles2-033)]
-B $8B28 #HTML[#UDGARRAY1,7,4,1;$8B28-$8B2F-8(exterior-tiles2-034)]
-B $8B30 #HTML[#UDGARRAY1,7,4,1;$8B30-$8B37-8(exterior-tiles2-035)]
-B $8B38 #HTML[#UDGARRAY1,7,4,1;$8B38-$8B3F-8(exterior-tiles2-036)]
-B $8B40 #HTML[#UDGARRAY1,7,4,1;$8B40-$8B47-8(exterior-tiles2-037)]
-B $8B48 #HTML[#UDGARRAY1,7,4,1;$8B48-$8B4F-8(exterior-tiles2-038)]
-B $8B50 #HTML[#UDGARRAY1,7,4,1;$8B50-$8B57-8(exterior-tiles2-039)]
-B $8B58 #HTML[#UDGARRAY1,7,4,1;$8B58-$8B5F-8(exterior-tiles2-040)]
-B $8B60 #HTML[#UDGARRAY1,7,4,1;$8B60-$8B67-8(exterior-tiles2-041)]
-B $8B68 #HTML[#UDGARRAY1,7,4,1;$8B68-$8B6F-8(exterior-tiles2-042)]
-B $8B70 #HTML[#UDGARRAY1,7,4,1;$8B70-$8B77-8(exterior-tiles2-043)]
-B $8B78 #HTML[#UDGARRAY1,7,4,1;$8B78-$8B7F-8(exterior-tiles2-044)]
-B $8B80 #HTML[#UDGARRAY1,7,4,1;$8B80-$8B87-8(exterior-tiles2-045)]
-B $8B88 #HTML[#UDGARRAY1,7,4,1;$8B88-$8B8F-8(exterior-tiles2-046)]
-B $8B90 #HTML[#UDGARRAY1,7,4,1;$8B90-$8B97-8(exterior-tiles2-047)]
-B $8B98 #HTML[#UDGARRAY1,7,4,1;$8B98-$8B9F-8(exterior-tiles2-048)]
-B $8BA0 #HTML[#UDGARRAY1,7,4,1;$8BA0-$8BA7-8(exterior-tiles2-049)]
-B $8BA8 #HTML[#UDGARRAY1,7,4,1;$8BA8-$8BAF-8(exterior-tiles2-050)]
-B $8BB0 #HTML[#UDGARRAY1,7,4,1;$8BB0-$8BB7-8(exterior-tiles2-051)]
-B $8BB8 #HTML[#UDGARRAY1,7,4,1;$8BB8-$8BBF-8(exterior-tiles2-052)]
-B $8BC0 #HTML[#UDGARRAY1,7,4,1;$8BC0-$8BC7-8(exterior-tiles2-053)]
-B $8BC8 #HTML[#UDGARRAY1,7,4,1;$8BC8-$8BCF-8(exterior-tiles2-054)]
-B $8BD0 #HTML[#UDGARRAY1,7,4,1;$8BD0-$8BD7-8(exterior-tiles2-055)]
-B $8BD8 #HTML[#UDGARRAY1,7,4,1;$8BD8-$8BDF-8(exterior-tiles2-056)]
-B $8BE0 #HTML[#UDGARRAY1,7,4,1;$8BE0-$8BE7-8(exterior-tiles2-057)]
-B $8BE8 #HTML[#UDGARRAY1,7,4,1;$8BE8-$8BEF-8(exterior-tiles2-058)]
-B $8BF0 #HTML[#UDGARRAY1,7,4,1;$8BF0-$8BF7-8(exterior-tiles2-059)]
-B $8BF8 #HTML[#UDGARRAY1,7,4,1;$8BF8-$8BFF-8(exterior-tiles2-060)]
-B $8C00 #HTML[#UDGARRAY1,7,4,1;$8C00-$8C07-8(exterior-tiles2-061)]
-B $8C08 #HTML[#UDGARRAY1,7,4,1;$8C08-$8C0F-8(exterior-tiles2-062)]
-B $8C10 #HTML[#UDGARRAY1,7,4,1;$8C10-$8C17-8(exterior-tiles2-063)]
-B $8C18 #HTML[#UDGARRAY1,7,4,1;$8C18-$8C1F-8(exterior-tiles2-064)]
-B $8C20 #HTML[#UDGARRAY1,7,4,1;$8C20-$8C27-8(exterior-tiles2-065)]
-B $8C28 #HTML[#UDGARRAY1,7,4,1;$8C28-$8C2F-8(exterior-tiles2-066)]
-B $8C30 #HTML[#UDGARRAY1,7,4,1;$8C30-$8C37-8(exterior-tiles2-067)]
-B $8C38 #HTML[#UDGARRAY1,7,4,1;$8C38-$8C3F-8(exterior-tiles2-068)]
-B $8C40 #HTML[#UDGARRAY1,7,4,1;$8C40-$8C47-8(exterior-tiles2-069)]
-B $8C48 #HTML[#UDGARRAY1,7,4,1;$8C48-$8C4F-8(exterior-tiles2-070)]
-B $8C50 #HTML[#UDGARRAY1,7,4,1;$8C50-$8C57-8(exterior-tiles2-071)]
-B $8C58 #HTML[#UDGARRAY1,7,4,1;$8C58-$8C5F-8(exterior-tiles2-072)]
-B $8C60 #HTML[#UDGARRAY1,7,4,1;$8C60-$8C67-8(exterior-tiles2-073)]
-B $8C68 #HTML[#UDGARRAY1,7,4,1;$8C68-$8C6F-8(exterior-tiles2-074)]
-B $8C70 #HTML[#UDGARRAY1,7,4,1;$8C70-$8C77-8(exterior-tiles2-075)]
-B $8C78 #HTML[#UDGARRAY1,7,4,1;$8C78-$8C7F-8(exterior-tiles2-076)]
-B $8C80 #HTML[#UDGARRAY1,7,4,1;$8C80-$8C87-8(exterior-tiles2-077)]
-B $8C88 #HTML[#UDGARRAY1,7,4,1;$8C88-$8C8F-8(exterior-tiles2-078)]
-B $8C90 #HTML[#UDGARRAY1,7,4,1;$8C90-$8C97-8(exterior-tiles2-079)]
-B $8C98 #HTML[#UDGARRAY1,7,4,1;$8C98-$8C9F-8(exterior-tiles2-080)]
-B $8CA0 #HTML[#UDGARRAY1,7,4,1;$8CA0-$8CA7-8(exterior-tiles2-081)]
-B $8CA8 #HTML[#UDGARRAY1,7,4,1;$8CA8-$8CAF-8(exterior-tiles2-082)]
-B $8CB0 #HTML[#UDGARRAY1,7,4,1;$8CB0-$8CB7-8(exterior-tiles2-083)]
-B $8CB8 #HTML[#UDGARRAY1,7,4,1;$8CB8-$8CBF-8(exterior-tiles2-084)]
-B $8CC0 #HTML[#UDGARRAY1,7,4,1;$8CC0-$8CC7-8(exterior-tiles2-085)]
-B $8CC8 #HTML[#UDGARRAY1,7,4,1;$8CC8-$8CCF-8(exterior-tiles2-086)]
-B $8CD0 #HTML[#UDGARRAY1,7,4,1;$8CD0-$8CD7-8(exterior-tiles2-087)]
-B $8CD8 #HTML[#UDGARRAY1,7,4,1;$8CD8-$8CDF-8(exterior-tiles2-088)]
-B $8CE0 #HTML[#UDGARRAY1,7,4,1;$8CE0-$8CE7-8(exterior-tiles2-089)]
-B $8CE8 #HTML[#UDGARRAY1,7,4,1;$8CE8-$8CEF-8(exterior-tiles2-090)]
-B $8CF0 #HTML[#UDGARRAY1,7,4,1;$8CF0-$8CF7-8(exterior-tiles2-091)]
-B $8CF8 #HTML[#UDGARRAY1,7,4,1;$8CF8-$8CFF-8(exterior-tiles2-092)]
-B $8D00 #HTML[#UDGARRAY1,7,4,1;$8D00-$8D07-8(exterior-tiles2-093)]
-B $8D08 #HTML[#UDGARRAY1,7,4,1;$8D08-$8D0F-8(exterior-tiles2-094)]
-B $8D10 #HTML[#UDGARRAY1,7,4,1;$8D10-$8D17-8(exterior-tiles2-095)]
-B $8D18 #HTML[#UDGARRAY1,7,4,1;$8D18-$8D1F-8(exterior-tiles2-096)]
-B $8D20 #HTML[#UDGARRAY1,7,4,1;$8D20-$8D27-8(exterior-tiles2-097)]
-B $8D28 #HTML[#UDGARRAY1,7,4,1;$8D28-$8D2F-8(exterior-tiles2-098)]
-B $8D30 #HTML[#UDGARRAY1,7,4,1;$8D30-$8D37-8(exterior-tiles2-099)]
-B $8D38 #HTML[#UDGARRAY1,7,4,1;$8D38-$8D3F-8(exterior-tiles2-100)]
-B $8D40 #HTML[#UDGARRAY1,7,4,1;$8D40-$8D47-8(exterior-tiles2-101)]
-B $8D48 #HTML[#UDGARRAY1,7,4,1;$8D48-$8D4F-8(exterior-tiles2-102)]
-B $8D50 #HTML[#UDGARRAY1,7,4,1;$8D50-$8D57-8(exterior-tiles2-103)]
-B $8D58 #HTML[#UDGARRAY1,7,4,1;$8D58-$8D5F-8(exterior-tiles2-104)]
-B $8D60 #HTML[#UDGARRAY1,7,4,1;$8D60-$8D67-8(exterior-tiles2-105)]
-B $8D68 #HTML[#UDGARRAY1,7,4,1;$8D68-$8D6F-8(exterior-tiles2-106)]
-B $8D70 #HTML[#UDGARRAY1,7,4,1;$8D70-$8D77-8(exterior-tiles2-107)]
-B $8D78 #HTML[#UDGARRAY1,7,4,1;$8D78-$8D7F-8(exterior-tiles2-108)]
-B $8D80 #HTML[#UDGARRAY1,7,4,1;$8D80-$8D87-8(exterior-tiles2-109)]
-B $8D88 #HTML[#UDGARRAY1,7,4,1;$8D88-$8D8F-8(exterior-tiles2-110)]
-B $8D90 #HTML[#UDGARRAY1,7,4,1;$8D90-$8D97-8(exterior-tiles2-111)]
-B $8D98 #HTML[#UDGARRAY1,7,4,1;$8D98-$8D9F-8(exterior-tiles2-112)]
-B $8DA0 #HTML[#UDGARRAY1,7,4,1;$8DA0-$8DA7-8(exterior-tiles2-113)]
-B $8DA8 #HTML[#UDGARRAY1,7,4,1;$8DA8-$8DAF-8(exterior-tiles2-114)]
-B $8DB0 #HTML[#UDGARRAY1,7,4,1;$8DB0-$8DB7-8(exterior-tiles2-115)]
-B $8DB8 #HTML[#UDGARRAY1,7,4,1;$8DB8-$8DBF-8(exterior-tiles2-116)]
-B $8DC0 #HTML[#UDGARRAY1,7,4,1;$8DC0-$8DC7-8(exterior-tiles2-117)]
-B $8DC8 #HTML[#UDGARRAY1,7,4,1;$8DC8-$8DCF-8(exterior-tiles2-118)]
-B $8DD0 #HTML[#UDGARRAY1,7,4,1;$8DD0-$8DD7-8(exterior-tiles2-119)]
-B $8DD8 #HTML[#UDGARRAY1,7,4,1;$8DD8-$8DDF-8(exterior-tiles2-120)]
-B $8DE0 #HTML[#UDGARRAY1,7,4,1;$8DE0-$8DE7-8(exterior-tiles2-121)]
-B $8DE8 #HTML[#UDGARRAY1,7,4,1;$8DE8-$8DEF-8(exterior-tiles2-122)]
-B $8DF0 #HTML[#UDGARRAY1,7,4,1;$8DF0-$8DF7-8(exterior-tiles2-123)]
-B $8DF8 #HTML[#UDGARRAY1,7,4,1;$8DF8-$8DFF-8(exterior-tiles2-124)]
-B $8E00 #HTML[#UDGARRAY1,7,4,1;$8E00-$8E07-8(exterior-tiles2-125)]
-B $8E08 #HTML[#UDGARRAY1,7,4,1;$8E08-$8E0F-8(exterior-tiles2-126)]
-B $8E10 #HTML[#UDGARRAY1,7,4,1;$8E10-$8E17-8(exterior-tiles2-127)]
-B $8E18 #HTML[#UDGARRAY1,7,4,1;$8E18-$8E1F-8(exterior-tiles2-128)]
-B $8E20 #HTML[#UDGARRAY1,7,4,1;$8E20-$8E27-8(exterior-tiles2-129)]
-B $8E28 #HTML[#UDGARRAY1,7,4,1;$8E28-$8E2F-8(exterior-tiles2-130)]
-B $8E30 #HTML[#UDGARRAY1,7,4,1;$8E30-$8E37-8(exterior-tiles2-131)]
-B $8E38 #HTML[#UDGARRAY1,7,4,1;$8E38-$8E3F-8(exterior-tiles2-132)]
-B $8E40 #HTML[#UDGARRAY1,7,4,1;$8E40-$8E47-8(exterior-tiles2-133)]
-B $8E48 #HTML[#UDGARRAY1,7,4,1;$8E48-$8E4F-8(exterior-tiles2-134)]
-B $8E50 #HTML[#UDGARRAY1,7,4,1;$8E50-$8E57-8(exterior-tiles2-135)]
-B $8E58 #HTML[#UDGARRAY1,7,4,1;$8E58-$8E5F-8(exterior-tiles2-136)]
-B $8E60 #HTML[#UDGARRAY1,7,4,1;$8E60-$8E67-8(exterior-tiles2-137)]
-B $8E68 #HTML[#UDGARRAY1,7,4,1;$8E68-$8E6F-8(exterior-tiles2-138)]
-B $8E70 #HTML[#UDGARRAY1,7,4,1;$8E70-$8E77-8(exterior-tiles2-139)]
-B $8E78 #HTML[#UDGARRAY1,7,4,1;$8E78-$8E7F-8(exterior-tiles2-140)]
-B $8E80 #HTML[#UDGARRAY1,7,4,1;$8E80-$8E87-8(exterior-tiles2-141)]
-B $8E88 #HTML[#UDGARRAY1,7,4,1;$8E88-$8E8F-8(exterior-tiles2-142)]
-B $8E90 #HTML[#UDGARRAY1,7,4,1;$8E90-$8E97-8(exterior-tiles2-143)]
-B $8E98 #HTML[#UDGARRAY1,7,4,1;$8E98-$8E9F-8(exterior-tiles2-144)]
-B $8EA0 #HTML[#UDGARRAY1,7,4,1;$8EA0-$8EA7-8(exterior-tiles2-145)]
-B $8EA8 #HTML[#UDGARRAY1,7,4,1;$8EA8-$8EAF-8(exterior-tiles2-146)]
-B $8EB0 #HTML[#UDGARRAY1,7,4,1;$8EB0-$8EB7-8(exterior-tiles2-147)]
-B $8EB8 #HTML[#UDGARRAY1,7,4,1;$8EB8-$8EBF-8(exterior-tiles2-148)]
-B $8EC0 #HTML[#UDGARRAY1,7,4,1;$8EC0-$8EC7-8(exterior-tiles2-149)]
-B $8EC8 #HTML[#UDGARRAY1,7,4,1;$8EC8-$8ECF-8(exterior-tiles2-150)]
-B $8ED0 #HTML[#UDGARRAY1,7,4,1;$8ED0-$8ED7-8(exterior-tiles2-151)]
-B $8ED8 #HTML[#UDGARRAY1,7,4,1;$8ED8-$8EDF-8(exterior-tiles2-152)]
-B $8EE0 #HTML[#UDGARRAY1,7,4,1;$8EE0-$8EE7-8(exterior-tiles2-153)]
-B $8EE8 #HTML[#UDGARRAY1,7,4,1;$8EE8-$8EEF-8(exterior-tiles2-154)]
-B $8EF0 #HTML[#UDGARRAY1,7,4,1;$8EF0-$8EF7-8(exterior-tiles2-155)]
-B $8EF8 #HTML[#UDGARRAY1,7,4,1;$8EF8-$8EFF-8(exterior-tiles2-156)]
-B $8F00 #HTML[#UDGARRAY1,7,4,1;$8F00-$8F07-8(exterior-tiles2-157)]
-B $8F08 #HTML[#UDGARRAY1,7,4,1;$8F08-$8F0F-8(exterior-tiles2-158)]
-B $8F10 #HTML[#UDGARRAY1,7,4,1;$8F10-$8F17-8(exterior-tiles2-159)]
-B $8F18 #HTML[#UDGARRAY1,7,4,1;$8F18-$8F1F-8(exterior-tiles2-160)]
-B $8F20 #HTML[#UDGARRAY1,7,4,1;$8F20-$8F27-8(exterior-tiles2-161)]
-B $8F28 #HTML[#UDGARRAY1,7,4,1;$8F28-$8F2F-8(exterior-tiles2-162)]
-B $8F30 #HTML[#UDGARRAY1,7,4,1;$8F30-$8F37-8(exterior-tiles2-163)]
-B $8F38 #HTML[#UDGARRAY1,7,4,1;$8F38-$8F3F-8(exterior-tiles2-164)]
-B $8F40 #HTML[#UDGARRAY1,7,4,1;$8F40-$8F47-8(exterior-tiles2-165)]
-B $8F48 #HTML[#UDGARRAY1,7,4,1;$8F48-$8F4F-8(exterior-tiles2-166)]
-B $8F50 #HTML[#UDGARRAY1,7,4,1;$8F50-$8F57-8(exterior-tiles2-167)]
-B $8F58 #HTML[#UDGARRAY1,7,4,1;$8F58-$8F5F-8(exterior-tiles2-168)]
-B $8F60 #HTML[#UDGARRAY1,7,4,1;$8F60-$8F67-8(exterior-tiles2-169)]
-B $8F68 #HTML[#UDGARRAY1,7,4,1;$8F68-$8F6F-8(exterior-tiles2-170)]
-B $8F70 #HTML[#UDGARRAY1,7,4,1;$8F70-$8F77-8(exterior-tiles2-171)]
-B $8F78 #HTML[#UDGARRAY1,7,4,1;$8F78-$8F7F-8(exterior-tiles2-172)]
-B $8F80 #HTML[#UDGARRAY1,7,4,1;$8F80-$8F87-8(exterior-tiles2-173)]
-B $8F88 #HTML[#UDGARRAY1,7,4,1;$8F88-$8F8F-8(exterior-tiles2-174)]
-B $8F90 #HTML[#UDGARRAY1,7,4,1;$8F90-$8F97-8(exterior-tiles2-175)]
-B $8F98 #HTML[#UDGARRAY1,7,4,1;$8F98-$8F9F-8(exterior-tiles2-176)]
-B $8FA0 #HTML[#UDGARRAY1,7,4,1;$8FA0-$8FA7-8(exterior-tiles2-177)]
-B $8FA8 #HTML[#UDGARRAY1,7,4,1;$8FA8-$8FAF-8(exterior-tiles2-178)]
-B $8FB0 #HTML[#UDGARRAY1,7,4,1;$8FB0-$8FB7-8(exterior-tiles2-179)]
-B $8FB8 #HTML[#UDGARRAY1,7,4,1;$8FB8-$8FBF-8(exterior-tiles2-180)]
-B $8FC0 #HTML[#UDGARRAY1,7,4,1;$8FC0-$8FC7-8(exterior-tiles2-181)]
-B $8FC8 #HTML[#UDGARRAY1,7,4,1;$8FC8-$8FCF-8(exterior-tiles2-182)]
-B $8FD0 #HTML[#UDGARRAY1,7,4,1;$8FD0-$8FD7-8(exterior-tiles2-183)]
-B $8FD8 #HTML[#UDGARRAY1,7,4,1;$8FD8-$8FDF-8(exterior-tiles2-184)]
-B $8FE0 #HTML[#UDGARRAY1,7,4,1;$8FE0-$8FE7-8(exterior-tiles2-185)]
-B $8FE8 #HTML[#UDGARRAY1,7,4,1;$8FE8-$8FEF-8(exterior-tiles2-186)]
-B $8FF0 #HTML[#UDGARRAY1,7,4,1;$8FF0-$8FF7-8(exterior-tiles2-187)]
-B $8FF8 #HTML[#UDGARRAY1,7,4,1;$8FF8-$8FFF-8(exterior-tiles2-188)]
-B $9000 #HTML[#UDGARRAY1,7,4,1;$9000-$9007-8(exterior-tiles2-189)]
-B $9008 #HTML[#UDGARRAY1,7,4,1;$9008-$900F-8(exterior-tiles2-190)]
-B $9010 #HTML[#UDGARRAY1,7,4,1;$9010-$9017-8(exterior-tiles2-191)]
-B $9018 #HTML[#UDGARRAY1,7,4,1;$9018-$901F-8(exterior-tiles2-192)]
-B $9020 #HTML[#UDGARRAY1,7,4,1;$9020-$9027-8(exterior-tiles2-193)]
-B $9028 #HTML[#UDGARRAY1,7,4,1;$9028-$902F-8(exterior-tiles2-194)]
-B $9030 #HTML[#UDGARRAY1,7,4,1;$9030-$9037-8(exterior-tiles2-195)]
-B $9038 #HTML[#UDGARRAY1,7,4,1;$9038-$903F-8(exterior-tiles2-196)]
-B $9040 #HTML[#UDGARRAY1,7,4,1;$9040-$9047-8(exterior-tiles2-197)]
-B $9048 #HTML[#UDGARRAY1,7,4,1;$9048-$904F-8(exterior-tiles2-198)]
-B $9050 #HTML[#UDGARRAY1,7,4,1;$9050-$9057-8(exterior-tiles2-199)]
-B $9058 #HTML[#UDGARRAY1,7,4,1;$9058-$905F-8(exterior-tiles2-200)]
-B $9060 #HTML[#UDGARRAY1,7,4,1;$9060-$9067-8(exterior-tiles2-201)]
-B $9068 #HTML[#UDGARRAY1,7,4,1;$9068-$906F-8(exterior-tiles2-202)]
-B $9070 #HTML[#UDGARRAY1,7,4,1;$9070-$9077-8(exterior-tiles2-203)]
-B $9078 #HTML[#UDGARRAY1,7,4,1;$9078-$907F-8(exterior-tiles2-204)]
-B $9080 #HTML[#UDGARRAY1,7,4,1;$9080-$9087-8(exterior-tiles2-205)]
-B $9088 #HTML[#UDGARRAY1,7,4,1;$9088-$908F-8(exterior-tiles2-206)]
-B $9090 #HTML[#UDGARRAY1,7,4,1;$9090-$9097-8(exterior-tiles2-207)]
-B $9098 #HTML[#UDGARRAY1,7,4,1;$9098-$909F-8(exterior-tiles2-208)]
-B $90A0 #HTML[#UDGARRAY1,7,4,1;$90A0-$90A7-8(exterior-tiles2-209)]
-B $90A8 #HTML[#UDGARRAY1,7,4,1;$90A8-$90AF-8(exterior-tiles2-210)]
-B $90B0 #HTML[#UDGARRAY1,7,4,1;$90B0-$90B7-8(exterior-tiles2-211)]
-B $90B8 #HTML[#UDGARRAY1,7,4,1;$90B8-$90BF-8(exterior-tiles2-212)]
-B $90C0 #HTML[#UDGARRAY1,7,4,1;$90C0-$90C7-8(exterior-tiles2-213)]
-B $90C8 #HTML[#UDGARRAY1,7,4,1;$90C8-$90CF-8(exterior-tiles2-214)]
-B $90D0 #HTML[#UDGARRAY1,7,4,1;$90D0-$90D7-8(exterior-tiles2-215)]
-B $90D8 #HTML[#UDGARRAY1,7,4,1;$90D8-$90DF-8(exterior-tiles2-216)]
-B $90E0 #HTML[#UDGARRAY1,7,4,1;$90E0-$90E7-8(exterior-tiles2-217)]
-B $90E8 #HTML[#UDGARRAY1,7,4,1;$90E8-$90EF-8(exterior-tiles2-218)]
-B $90F0 #HTML[#UDGARRAY1,7,4,1;$90F0-$90F7-8(exterior-tiles2-219)]
-B $90F8 #HTML[#UDGARRAY1,7,4,1;$90F8-$90FF-8(exterior-tiles3-000)]
-B $9100 #HTML[#UDGARRAY1,7,4,1;$9100-$9107-8(exterior-tiles3-001)]
-B $9108 #HTML[#UDGARRAY1,7,4,1;$9108-$910F-8(exterior-tiles3-002)]
-B $9110 #HTML[#UDGARRAY1,7,4,1;$9110-$9117-8(exterior-tiles3-003)]
-B $9118 #HTML[#UDGARRAY1,7,4,1;$9118-$911F-8(exterior-tiles3-004)]
-B $9120 #HTML[#UDGARRAY1,7,4,1;$9120-$9127-8(exterior-tiles3-005)]
-B $9128 #HTML[#UDGARRAY1,7,4,1;$9128-$912F-8(exterior-tiles3-006)]
-B $9130 #HTML[#UDGARRAY1,7,4,1;$9130-$9137-8(exterior-tiles3-007)]
-B $9138 #HTML[#UDGARRAY1,7,4,1;$9138-$913F-8(exterior-tiles3-008)]
-B $9140 #HTML[#UDGARRAY1,7,4,1;$9140-$9147-8(exterior-tiles3-009)]
-B $9148 #HTML[#UDGARRAY1,7,4,1;$9148-$914F-8(exterior-tiles3-010)]
-B $9150 #HTML[#UDGARRAY1,7,4,1;$9150-$9157-8(exterior-tiles3-011)]
-B $9158 #HTML[#UDGARRAY1,7,4,1;$9158-$915F-8(exterior-tiles3-012)]
-B $9160 #HTML[#UDGARRAY1,7,4,1;$9160-$9167-8(exterior-tiles3-013)]
-B $9168 #HTML[#UDGARRAY1,7,4,1;$9168-$916F-8(exterior-tiles3-014)]
-B $9170 #HTML[#UDGARRAY1,7,4,1;$9170-$9177-8(exterior-tiles3-015)]
-B $9178 #HTML[#UDGARRAY1,7,4,1;$9178-$917F-8(exterior-tiles3-016)]
-B $9180 #HTML[#UDGARRAY1,7,4,1;$9180-$9187-8(exterior-tiles3-017)]
-B $9188 #HTML[#UDGARRAY1,7,4,1;$9188-$918F-8(exterior-tiles3-018)]
-B $9190 #HTML[#UDGARRAY1,7,4,1;$9190-$9197-8(exterior-tiles3-019)]
-B $9198 #HTML[#UDGARRAY1,7,4,1;$9198-$919F-8(exterior-tiles3-020)]
-B $91A0 #HTML[#UDGARRAY1,7,4,1;$91A0-$91A7-8(exterior-tiles3-021)]
-B $91A8 #HTML[#UDGARRAY1,7,4,1;$91A8-$91AF-8(exterior-tiles3-022)]
-B $91B0 #HTML[#UDGARRAY1,7,4,1;$91B0-$91B7-8(exterior-tiles3-023)]
-B $91B8 #HTML[#UDGARRAY1,7,4,1;$91B8-$91BF-8(exterior-tiles3-024)]
-B $91C0 #HTML[#UDGARRAY1,7,4,1;$91C0-$91C7-8(exterior-tiles3-025)]
-B $91C8 #HTML[#UDGARRAY1,7,4,1;$91C8-$91CF-8(exterior-tiles3-026)]
-B $91D0 #HTML[#UDGARRAY1,7,4,1;$91D0-$91D7-8(exterior-tiles3-027)]
-B $91D8 #HTML[#UDGARRAY1,7,4,1;$91D8-$91DF-8(exterior-tiles3-028)]
-B $91E0 #HTML[#UDGARRAY1,7,4,1;$91E0-$91E7-8(exterior-tiles3-029)]
-B $91E8 #HTML[#UDGARRAY1,7,4,1;$91E8-$91EF-8(exterior-tiles3-030)]
-B $91F0 #HTML[#UDGARRAY1,7,4,1;$91F0-$91F7-8(exterior-tiles3-031)]
-B $91F8 #HTML[#UDGARRAY1,7,4,1;$91F8-$91FF-8(exterior-tiles3-032)]
-B $9200 #HTML[#UDGARRAY1,7,4,1;$9200-$9207-8(exterior-tiles3-033)]
-B $9208 #HTML[#UDGARRAY1,7,4,1;$9208-$920F-8(exterior-tiles3-034)]
-B $9210 #HTML[#UDGARRAY1,7,4,1;$9210-$9217-8(exterior-tiles3-035)]
-B $9218 #HTML[#UDGARRAY1,7,4,1;$9218-$921F-8(exterior-tiles3-036)]
-B $9220 #HTML[#UDGARRAY1,7,4,1;$9220-$9227-8(exterior-tiles3-037)]
-B $9228 #HTML[#UDGARRAY1,7,4,1;$9228-$922F-8(exterior-tiles3-038)]
-B $9230 #HTML[#UDGARRAY1,7,4,1;$9230-$9237-8(exterior-tiles3-039)]
-B $9238 #HTML[#UDGARRAY1,7,4,1;$9238-$923F-8(exterior-tiles3-040)]
-B $9240 #HTML[#UDGARRAY1,7,4,1;$9240-$9247-8(exterior-tiles3-041)]
-B $9248 #HTML[#UDGARRAY1,7,4,1;$9248-$924F-8(exterior-tiles3-042)]
-B $9250 #HTML[#UDGARRAY1,7,4,1;$9250-$9257-8(exterior-tiles3-043)]
-B $9258 #HTML[#UDGARRAY1,7,4,1;$9258-$925F-8(exterior-tiles3-044)]
-B $9260 #HTML[#UDGARRAY1,7,4,1;$9260-$9267-8(exterior-tiles3-045)]
-B $9268 #HTML[#UDGARRAY1,7,4,1;$9268-$926F-8(exterior-tiles3-046)]
-B $9270 #HTML[#UDGARRAY1,7,4,1;$9270-$9277-8(exterior-tiles3-047)]
-B $9278 #HTML[#UDGARRAY1,7,4,1;$9278-$927F-8(exterior-tiles3-048)]
-B $9280 #HTML[#UDGARRAY1,7,4,1;$9280-$9287-8(exterior-tiles3-049)]
-B $9288 #HTML[#UDGARRAY1,7,4,1;$9288-$928F-8(exterior-tiles3-050)]
-B $9290 #HTML[#UDGARRAY1,7,4,1;$9290-$9297-8(exterior-tiles3-051)]
-B $9298 #HTML[#UDGARRAY1,7,4,1;$9298-$929F-8(exterior-tiles3-052)]
-B $92A0 #HTML[#UDGARRAY1,7,4,1;$92A0-$92A7-8(exterior-tiles3-053)]
-B $92A8 #HTML[#UDGARRAY1,7,4,1;$92A8-$92AF-8(exterior-tiles3-054)]
-B $92B0 #HTML[#UDGARRAY1,7,4,1;$92B0-$92B7-8(exterior-tiles3-055)]
-B $92B8 #HTML[#UDGARRAY1,7,4,1;$92B8-$92BF-8(exterior-tiles3-056)]
-B $92C0 #HTML[#UDGARRAY1,7,4,1;$92C0-$92C7-8(exterior-tiles3-057)]
-B $92C8 #HTML[#UDGARRAY1,7,4,1;$92C8-$92CF-8(exterior-tiles3-058)]
-B $92D0 #HTML[#UDGARRAY1,7,4,1;$92D0-$92D7-8(exterior-tiles3-059)]
-B $92D8 #HTML[#UDGARRAY1,7,4,1;$92D8-$92DF-8(exterior-tiles3-060)]
-B $92E0 #HTML[#UDGARRAY1,7,4,1;$92E0-$92E7-8(exterior-tiles3-061)]
-B $92E8 #HTML[#UDGARRAY1,7,4,1;$92E8-$92EF-8(exterior-tiles3-062)]
-B $92F0 #HTML[#UDGARRAY1,7,4,1;$92F0-$92F7-8(exterior-tiles3-063)]
-B $92F8 #HTML[#UDGARRAY1,7,4,1;$92F8-$92FF-8(exterior-tiles3-064)]
-B $9300 #HTML[#UDGARRAY1,7,4,1;$9300-$9307-8(exterior-tiles3-065)]
-B $9308 #HTML[#UDGARRAY1,7,4,1;$9308-$930F-8(exterior-tiles3-066)]
-B $9310 #HTML[#UDGARRAY1,7,4,1;$9310-$9317-8(exterior-tiles3-067)]
-B $9318 #HTML[#UDGARRAY1,7,4,1;$9318-$931F-8(exterior-tiles3-068)]
-B $9320 #HTML[#UDGARRAY1,7,4,1;$9320-$9327-8(exterior-tiles3-069)]
-B $9328 #HTML[#UDGARRAY1,7,4,1;$9328-$932F-8(exterior-tiles3-070)]
-B $9330 #HTML[#UDGARRAY1,7,4,1;$9330-$9337-8(exterior-tiles3-071)]
-B $9338 #HTML[#UDGARRAY1,7,4,1;$9338-$933F-8(exterior-tiles3-072)]
-B $9340 #HTML[#UDGARRAY1,7,4,1;$9340-$9347-8(exterior-tiles3-073)]
-B $9348 #HTML[#UDGARRAY1,7,4,1;$9348-$934F-8(exterior-tiles3-074)]
-B $9350 #HTML[#UDGARRAY1,7,4,1;$9350-$9357-8(exterior-tiles3-075)]
-B $9358 #HTML[#UDGARRAY1,7,4,1;$9358-$935F-8(exterior-tiles3-076)]
-B $9360 #HTML[#UDGARRAY1,7,4,1;$9360-$9367-8(exterior-tiles3-077)]
-B $9368 #HTML[#UDGARRAY1,7,4,1;$9368-$936F-8(exterior-tiles3-078)]
-B $9370 #HTML[#UDGARRAY1,7,4,1;$9370-$9377-8(exterior-tiles3-079)]
-B $9378 #HTML[#UDGARRAY1,7,4,1;$9378-$937F-8(exterior-tiles3-080)]
-B $9380 #HTML[#UDGARRAY1,7,4,1;$9380-$9387-8(exterior-tiles3-081)]
-B $9388 #HTML[#UDGARRAY1,7,4,1;$9388-$938F-8(exterior-tiles3-082)]
-B $9390 #HTML[#UDGARRAY1,7,4,1;$9390-$9397-8(exterior-tiles3-083)]
-B $9398 #HTML[#UDGARRAY1,7,4,1;$9398-$939F-8(exterior-tiles3-084)]
-B $93A0 #HTML[#UDGARRAY1,7,4,1;$93A0-$93A7-8(exterior-tiles3-085)]
-B $93A8 #HTML[#UDGARRAY1,7,4,1;$93A8-$93AF-8(exterior-tiles3-086)]
-B $93B0 #HTML[#UDGARRAY1,7,4,1;$93B0-$93B7-8(exterior-tiles3-087)]
-B $93B8 #HTML[#UDGARRAY1,7,4,1;$93B8-$93BF-8(exterior-tiles3-088)]
-B $93C0 #HTML[#UDGARRAY1,7,4,1;$93C0-$93C7-8(exterior-tiles3-089)]
-B $93C8 #HTML[#UDGARRAY1,7,4,1;$93C8-$93CF-8(exterior-tiles3-090)]
-B $93D0 #HTML[#UDGARRAY1,7,4,1;$93D0-$93D7-8(exterior-tiles3-091)]
-B $93D8 #HTML[#UDGARRAY1,7,4,1;$93D8-$93DF-8(exterior-tiles3-092)]
-B $93E0 #HTML[#UDGARRAY1,7,4,1;$93E0-$93E7-8(exterior-tiles3-093)]
-B $93E8 #HTML[#UDGARRAY1,7,4,1;$93E8-$93EF-8(exterior-tiles3-094)]
-B $93F0 #HTML[#UDGARRAY1,7,4,1;$93F0-$93F7-8(exterior-tiles3-095)]
-B $93F8 #HTML[#UDGARRAY1,7,4,1;$93F8-$93FF-8(exterior-tiles3-096)]
-B $9400 #HTML[#UDGARRAY1,7,4,1;$9400-$9407-8(exterior-tiles3-097)]
-B $9408 #HTML[#UDGARRAY1,7,4,1;$9408-$940F-8(exterior-tiles3-098)]
-B $9410 #HTML[#UDGARRAY1,7,4,1;$9410-$9417-8(exterior-tiles3-099)]
-B $9418 #HTML[#UDGARRAY1,7,4,1;$9418-$941F-8(exterior-tiles3-100)]
-B $9420 #HTML[#UDGARRAY1,7,4,1;$9420-$9427-8(exterior-tiles3-101)]
-B $9428 #HTML[#UDGARRAY1,7,4,1;$9428-$942F-8(exterior-tiles3-102)]
-B $9430 #HTML[#UDGARRAY1,7,4,1;$9430-$9437-8(exterior-tiles3-103)]
-B $9438 #HTML[#UDGARRAY1,7,4,1;$9438-$943F-8(exterior-tiles3-104)]
-B $9440 #HTML[#UDGARRAY1,7,4,1;$9440-$9447-8(exterior-tiles3-105)]
-B $9448 #HTML[#UDGARRAY1,7,4,1;$9448-$944F-8(exterior-tiles3-106)]
-B $9450 #HTML[#UDGARRAY1,7,4,1;$9450-$9457-8(exterior-tiles3-107)]
-B $9458 #HTML[#UDGARRAY1,7,4,1;$9458-$945F-8(exterior-tiles3-108)]
-B $9460 #HTML[#UDGARRAY1,7,4,1;$9460-$9467-8(exterior-tiles3-109)]
-B $9468 #HTML[#UDGARRAY1,7,4,1;$9468-$946F-8(exterior-tiles3-110)]
-B $9470 #HTML[#UDGARRAY1,7,4,1;$9470-$9477-8(exterior-tiles3-111)]
-B $9478 #HTML[#UDGARRAY1,7,4,1;$9478-$947F-8(exterior-tiles3-112)]
-B $9480 #HTML[#UDGARRAY1,7,4,1;$9480-$9487-8(exterior-tiles3-113)]
-B $9488 #HTML[#UDGARRAY1,7,4,1;$9488-$948F-8(exterior-tiles3-114)]
-B $9490 #HTML[#UDGARRAY1,7,4,1;$9490-$9497-8(exterior-tiles3-115)]
-B $9498 #HTML[#UDGARRAY1,7,4,1;$9498-$949F-8(exterior-tiles3-116)]
-B $94A0 #HTML[#UDGARRAY1,7,4,1;$94A0-$94A7-8(exterior-tiles3-117)]
-B $94A8 #HTML[#UDGARRAY1,7,4,1;$94A8-$94AF-8(exterior-tiles3-118)]
-B $94B0 #HTML[#UDGARRAY1,7,4,1;$94B0-$94B7-8(exterior-tiles3-119)]
-B $94B8 #HTML[#UDGARRAY1,7,4,1;$94B8-$94BF-8(exterior-tiles3-120)]
-B $94C0 #HTML[#UDGARRAY1,7,4,1;$94C0-$94C7-8(exterior-tiles3-121)]
-B $94C8 #HTML[#UDGARRAY1,7,4,1;$94C8-$94CF-8(exterior-tiles3-122)]
-B $94D0 #HTML[#UDGARRAY1,7,4,1;$94D0-$94D7-8(exterior-tiles3-123)]
-B $94D8 #HTML[#UDGARRAY1,7,4,1;$94D8-$94DF-8(exterior-tiles3-124)]
-B $94E0 #HTML[#UDGARRAY1,7,4,1;$94E0-$94E7-8(exterior-tiles3-125)]
-B $94E8 #HTML[#UDGARRAY1,7,4,1;$94E8-$94EF-8(exterior-tiles3-126)]
-B $94F0 #HTML[#UDGARRAY1,7,4,1;$94F0-$94F7-8(exterior-tiles3-127)]
-B $94F8 #HTML[#UDGARRAY1,7,4,1;$94F8-$94FF-8(exterior-tiles3-128)]
-B $9500 #HTML[#UDGARRAY1,7,4,1;$9500-$9507-8(exterior-tiles3-129)]
-B $9508 #HTML[#UDGARRAY1,7,4,1;$9508-$950F-8(exterior-tiles3-130)]
-B $9510 #HTML[#UDGARRAY1,7,4,1;$9510-$9517-8(exterior-tiles3-131)]
-B $9518 #HTML[#UDGARRAY1,7,4,1;$9518-$951F-8(exterior-tiles3-132)]
-B $9520 #HTML[#UDGARRAY1,7,4,1;$9520-$9527-8(exterior-tiles3-133)]
-B $9528 #HTML[#UDGARRAY1,7,4,1;$9528-$952F-8(exterior-tiles3-134)]
-B $9530 #HTML[#UDGARRAY1,7,4,1;$9530-$9537-8(exterior-tiles3-135)]
-B $9538 #HTML[#UDGARRAY1,7,4,1;$9538-$953F-8(exterior-tiles3-136)]
-B $9540 #HTML[#UDGARRAY1,7,4,1;$9540-$9547-8(exterior-tiles3-137)]
-B $9548 #HTML[#UDGARRAY1,7,4,1;$9548-$954F-8(exterior-tiles3-138)]
-B $9550 #HTML[#UDGARRAY1,7,4,1;$9550-$9557-8(exterior-tiles3-139)]
-B $9558 #HTML[#UDGARRAY1,7,4,1;$9558-$955F-8(exterior-tiles3-140)]
-B $9560 #HTML[#UDGARRAY1,7,4,1;$9560-$9567-8(exterior-tiles3-141)]
-B $9568 #HTML[#UDGARRAY1,7,4,1;$9568-$956F-8(exterior-tiles3-142)]
-B $9570 #HTML[#UDGARRAY1,7,4,1;$9570-$9577-8(exterior-tiles3-143)]
-B $9578 #HTML[#UDGARRAY1,7,4,1;$9578-$957F-8(exterior-tiles3-144)]
-B $9580 #HTML[#UDGARRAY1,7,4,1;$9580-$9587-8(exterior-tiles3-145)]
-B $9588 #HTML[#UDGARRAY1,7,4,1;$9588-$958F-8(exterior-tiles3-146)]
-B $9590 #HTML[#UDGARRAY1,7,4,1;$9590-$9597-8(exterior-tiles3-147)]
-B $9598 #HTML[#UDGARRAY1,7,4,1;$9598-$959F-8(exterior-tiles3-148)]
-B $95A0 #HTML[#UDGARRAY1,7,4,1;$95A0-$95A7-8(exterior-tiles3-149)]
-B $95A8 #HTML[#UDGARRAY1,7,4,1;$95A8-$95AF-8(exterior-tiles3-150)]
-B $95B0 #HTML[#UDGARRAY1,7,4,1;$95B0-$95B7-8(exterior-tiles3-151)]
-B $95B8 #HTML[#UDGARRAY1,7,4,1;$95B8-$95BF-8(exterior-tiles3-152)]
-B $95C0 #HTML[#UDGARRAY1,7,4,1;$95C0-$95C7-8(exterior-tiles3-153)]
-B $95C8 #HTML[#UDGARRAY1,7,4,1;$95C8-$95CF-8(exterior-tiles3-154)]
-B $95D0 #HTML[#UDGARRAY1,7,4,1;$95D0-$95D7-8(exterior-tiles3-155)]
-B $95D8 #HTML[#UDGARRAY1,7,4,1;$95D8-$95DF-8(exterior-tiles3-156)]
-B $95E0 #HTML[#UDGARRAY1,7,4,1;$95E0-$95E7-8(exterior-tiles3-157)]
-B $95E8 #HTML[#UDGARRAY1,7,4,1;$95E8-$95EF-8(exterior-tiles3-158)]
-B $95F0 #HTML[#UDGARRAY1,7,4,1;$95F0-$95F7-8(exterior-tiles3-159)]
-B $95F8 #HTML[#UDGARRAY1,7,4,1;$95F8-$95FF-8(exterior-tiles3-160)]
-B $9600 #HTML[#UDGARRAY1,7,4,1;$9600-$9607-8(exterior-tiles3-161)]
-B $9608 #HTML[#UDGARRAY1,7,4,1;$9608-$960F-8(exterior-tiles3-162)]
-B $9610 #HTML[#UDGARRAY1,7,4,1;$9610-$9617-8(exterior-tiles3-163)]
-B $9618 #HTML[#UDGARRAY1,7,4,1;$9618-$961F-8(exterior-tiles3-164)]
-B $9620 #HTML[#UDGARRAY1,7,4,1;$9620-$9627-8(exterior-tiles3-165)]
-B $9628 #HTML[#UDGARRAY1,7,4,1;$9628-$962F-8(exterior-tiles3-166)]
-B $9630 #HTML[#UDGARRAY1,7,4,1;$9630-$9637-8(exterior-tiles3-167)]
-B $9638 #HTML[#UDGARRAY1,7,4,1;$9638-$963F-8(exterior-tiles3-168)]
-B $9640 #HTML[#UDGARRAY1,7,4,1;$9640-$9647-8(exterior-tiles3-169)]
-B $9648 #HTML[#UDGARRAY1,7,4,1;$9648-$964F-8(exterior-tiles3-170)]
-B $9650 #HTML[#UDGARRAY1,7,4,1;$9650-$9657-8(exterior-tiles3-171)]
-B $9658 #HTML[#UDGARRAY1,7,4,1;$9658-$965F-8(exterior-tiles3-172)]
-B $9660 #HTML[#UDGARRAY1,7,4,1;$9660-$9667-8(exterior-tiles3-173)]
-B $9668 #HTML[#UDGARRAY1,7,4,1;$9668-$966F-8(exterior-tiles3-174)]
-B $9670 #HTML[#UDGARRAY1,7,4,1;$9670-$9677-8(exterior-tiles3-175)]
-B $9678 #HTML[#UDGARRAY1,7,4,1;$9678-$967F-8(exterior-tiles3-176)]
-B $9680 #HTML[#UDGARRAY1,7,4,1;$9680-$9687-8(exterior-tiles3-177)]
-B $9688 #HTML[#UDGARRAY1,7,4,1;$9688-$968F-8(exterior-tiles3-178)]
-B $9690 #HTML[#UDGARRAY1,7,4,1;$9690-$9697-8(exterior-tiles3-179)]
-B $9698 #HTML[#UDGARRAY1,7,4,1;$9698-$969F-8(exterior-tiles3-180)]
-B $96A0 #HTML[#UDGARRAY1,7,4,1;$96A0-$96A7-8(exterior-tiles3-181)]
-B $96A8 #HTML[#UDGARRAY1,7,4,1;$96A8-$96AF-8(exterior-tiles3-182)]
-B $96B0 #HTML[#UDGARRAY1,7,4,1;$96B0-$96B7-8(exterior-tiles3-183)]
-B $96B8 #HTML[#UDGARRAY1,7,4,1;$96B8-$96BF-8(exterior-tiles3-184)]
-B $96C0 #HTML[#UDGARRAY1,7,4,1;$96C0-$96C7-8(exterior-tiles3-185)]
-B $96C8 #HTML[#UDGARRAY1,7,4,1;$96C8-$96CF-8(exterior-tiles3-186)]
-B $96D0 #HTML[#UDGARRAY1,7,4,1;$96D0-$96D7-8(exterior-tiles3-187)]
-B $96D8 #HTML[#UDGARRAY1,7,4,1;$96D8-$96DF-8(exterior-tiles3-188)]
-B $96E0 #HTML[#UDGARRAY1,7,4,1;$96E0-$96E7-8(exterior-tiles3-189)]
-B $96E8 #HTML[#UDGARRAY1,7,4,1;$96E8-$96EF-8(exterior-tiles3-190)]
-B $96F0 #HTML[#UDGARRAY1,7,4,1;$96F0-$96F7-8(exterior-tiles3-191)]
-B $96F8 #HTML[#UDGARRAY1,7,4,1;$96F8-$96FF-8(exterior-tiles3-192)]
-B $9700 #HTML[#UDGARRAY1,7,4,1;$9700-$9707-8(exterior-tiles3-193)]
-B $9708 #HTML[#UDGARRAY1,7,4,1;$9708-$970F-8(exterior-tiles3-194)]
-B $9710 #HTML[#UDGARRAY1,7,4,1;$9710-$9717-8(exterior-tiles3-195)]
-B $9718 #HTML[#UDGARRAY1,7,4,1;$9718-$971F-8(exterior-tiles3-196)]
-B $9720 #HTML[#UDGARRAY1,7,4,1;$9720-$9727-8(exterior-tiles3-197)]
-B $9728 #HTML[#UDGARRAY1,7,4,1;$9728-$972F-8(exterior-tiles3-198)]
-B $9730 #HTML[#UDGARRAY1,7,4,1;$9730-$9737-8(exterior-tiles3-199)]
-B $9738 #HTML[#UDGARRAY1,7,4,1;$9738-$973F-8(exterior-tiles3-200)]
-B $9740 #HTML[#UDGARRAY1,7,4,1;$9740-$9747-8(exterior-tiles3-201)]
-B $9748 #HTML[#UDGARRAY1,7,4,1;$9748-$974F-8(exterior-tiles3-202)]
-B $9750 #HTML[#UDGARRAY1,7,4,1;$9750-$9757-8(exterior-tiles3-203)]
-B $9758 #HTML[#UDGARRAY1,7,4,1;$9758-$975F-8(exterior-tiles3-204)]
-B $9760 #HTML[#UDGARRAY1,7,4,1;$9760-$9767-8(exterior-tiles3-205)]
-B $9768 #HTML[#UDGARRAY1,7,4,1;$9768-$976F-8(interior-tiles-000)]
-B $9770 #HTML[#UDGARRAY1,7,4,1;$9770-$9777-8(interior-tiles-001)]
-B $9778 #HTML[#UDGARRAY1,7,4,1;$9778-$977F-8(interior-tiles-002)]
-B $9780 #HTML[#UDGARRAY1,7,4,1;$9780-$9787-8(interior-tiles-003)]
-B $9788 #HTML[#UDGARRAY1,7,4,1;$9788-$978F-8(interior-tiles-004)]
-B $9790 #HTML[#UDGARRAY1,7,4,1;$9790-$9797-8(interior-tiles-005)]
-B $9798 #HTML[#UDGARRAY1,7,4,1;$9798-$979F-8(interior-tiles-006)]
-B $97A0 #HTML[#UDGARRAY1,7,4,1;$97A0-$97A7-8(interior-tiles-007)]
-B $97A8 #HTML[#UDGARRAY1,7,4,1;$97A8-$97AF-8(interior-tiles-008)]
-B $97B0 #HTML[#UDGARRAY1,7,4,1;$97B0-$97B7-8(interior-tiles-009)]
-B $97B8 #HTML[#UDGARRAY1,7,4,1;$97B8-$97BF-8(interior-tiles-010)]
-B $97C0 #HTML[#UDGARRAY1,7,4,1;$97C0-$97C7-8(interior-tiles-011)]
-B $97C8 #HTML[#UDGARRAY1,7,4,1;$97C8-$97CF-8(interior-tiles-012)]
-B $97D0 #HTML[#UDGARRAY1,7,4,1;$97D0-$97D7-8(interior-tiles-013)]
-B $97D8 #HTML[#UDGARRAY1,7,4,1;$97D8-$97DF-8(interior-tiles-014)]
-B $97E0 #HTML[#UDGARRAY1,7,4,1;$97E0-$97E7-8(interior-tiles-015)]
-B $97E8 #HTML[#UDGARRAY1,7,4,1;$97E8-$97EF-8(interior-tiles-016)]
-B $97F0 #HTML[#UDGARRAY1,7,4,1;$97F0-$97F7-8(interior-tiles-017)]
-B $97F8 #HTML[#UDGARRAY1,7,4,1;$97F8-$97FF-8(interior-tiles-018)]
-B $9800 #HTML[#UDGARRAY1,7,4,1;$9800-$9807-8(interior-tiles-019)]
-B $9808 #HTML[#UDGARRAY1,7,4,1;$9808-$980F-8(interior-tiles-020)]
-B $9810 #HTML[#UDGARRAY1,7,4,1;$9810-$9817-8(interior-tiles-021)]
-B $9818 #HTML[#UDGARRAY1,7,4,1;$9818-$981F-8(interior-tiles-022)]
-B $9820 #HTML[#UDGARRAY1,7,4,1;$9820-$9827-8(interior-tiles-023)]
-B $9828 #HTML[#UDGARRAY1,7,4,1;$9828-$982F-8(interior-tiles-024)]
-B $9830 #HTML[#UDGARRAY1,7,4,1;$9830-$9837-8(interior-tiles-025)]
-B $9838 #HTML[#UDGARRAY1,7,4,1;$9838-$983F-8(interior-tiles-026)]
-B $9840 #HTML[#UDGARRAY1,7,4,1;$9840-$9847-8(interior-tiles-027)]
-B $9848 #HTML[#UDGARRAY1,7,4,1;$9848-$984F-8(interior-tiles-028)]
-B $9850 #HTML[#UDGARRAY1,7,4,1;$9850-$9857-8(interior-tiles-029)]
-B $9858 #HTML[#UDGARRAY1,7,4,1;$9858-$985F-8(interior-tiles-030)]
-B $9860 #HTML[#UDGARRAY1,7,4,1;$9860-$9867-8(interior-tiles-031)]
-B $9868 #HTML[#UDGARRAY1,7,4,1;$9868-$986F-8(interior-tiles-032)]
-B $9870 #HTML[#UDGARRAY1,7,4,1;$9870-$9877-8(interior-tiles-033)]
-B $9878 #HTML[#UDGARRAY1,7,4,1;$9878-$987F-8(interior-tiles-034)]
-B $9880 #HTML[#UDGARRAY1,7,4,1;$9880-$9887-8(interior-tiles-035)]
-B $9888 #HTML[#UDGARRAY1,7,4,1;$9888-$988F-8(interior-tiles-036)]
-B $9890 #HTML[#UDGARRAY1,7,4,1;$9890-$9897-8(interior-tiles-037)]
-B $9898 #HTML[#UDGARRAY1,7,4,1;$9898-$989F-8(interior-tiles-038)]
-B $98A0 #HTML[#UDGARRAY1,7,4,1;$98A0-$98A7-8(interior-tiles-039)]
-B $98A8 #HTML[#UDGARRAY1,7,4,1;$98A8-$98AF-8(interior-tiles-040)]
-B $98B0 #HTML[#UDGARRAY1,7,4,1;$98B0-$98B7-8(interior-tiles-041)]
-B $98B8 #HTML[#UDGARRAY1,7,4,1;$98B8-$98BF-8(interior-tiles-042)]
-B $98C0 #HTML[#UDGARRAY1,7,4,1;$98C0-$98C7-8(interior-tiles-043)]
-B $98C8 #HTML[#UDGARRAY1,7,4,1;$98C8-$98CF-8(interior-tiles-044)]
-B $98D0 #HTML[#UDGARRAY1,7,4,1;$98D0-$98D7-8(interior-tiles-045)]
-B $98D8 #HTML[#UDGARRAY1,7,4,1;$98D8-$98DF-8(interior-tiles-046)]
-B $98E0 #HTML[#UDGARRAY1,7,4,1;$98E0-$98E7-8(interior-tiles-047)]
-B $98E8 #HTML[#UDGARRAY1,7,4,1;$98E8-$98EF-8(interior-tiles-048)]
-B $98F0 #HTML[#UDGARRAY1,7,4,1;$98F0-$98F7-8(interior-tiles-049)]
-B $98F8 #HTML[#UDGARRAY1,7,4,1;$98F8-$98FF-8(interior-tiles-050)]
-B $9900 #HTML[#UDGARRAY1,7,4,1;$9900-$9907-8(interior-tiles-051)]
-B $9908 #HTML[#UDGARRAY1,7,4,1;$9908-$990F-8(interior-tiles-052)]
-B $9910 #HTML[#UDGARRAY1,7,4,1;$9910-$9917-8(interior-tiles-053)]
-B $9918 #HTML[#UDGARRAY1,7,4,1;$9918-$991F-8(interior-tiles-054)]
-B $9920 #HTML[#UDGARRAY1,7,4,1;$9920-$9927-8(interior-tiles-055)]
-B $9928 #HTML[#UDGARRAY1,7,4,1;$9928-$992F-8(interior-tiles-056)]
-B $9930 #HTML[#UDGARRAY1,7,4,1;$9930-$9937-8(interior-tiles-057)]
-B $9938 #HTML[#UDGARRAY1,7,4,1;$9938-$993F-8(interior-tiles-058)]
-B $9940 #HTML[#UDGARRAY1,7,4,1;$9940-$9947-8(interior-tiles-059)]
-B $9948 #HTML[#UDGARRAY1,7,4,1;$9948-$994F-8(interior-tiles-060)]
-B $9950 #HTML[#UDGARRAY1,7,4,1;$9950-$9957-8(interior-tiles-061)]
-B $9958 #HTML[#UDGARRAY1,7,4,1;$9958-$995F-8(interior-tiles-062)]
-B $9960 #HTML[#UDGARRAY1,7,4,1;$9960-$9967-8(interior-tiles-063)]
-B $9968 #HTML[#UDGARRAY1,7,4,1;$9968-$996F-8(interior-tiles-064)]
-B $9970 #HTML[#UDGARRAY1,7,4,1;$9970-$9977-8(interior-tiles-065)]
-B $9978 #HTML[#UDGARRAY1,7,4,1;$9978-$997F-8(interior-tiles-066)]
-B $9980 #HTML[#UDGARRAY1,7,4,1;$9980-$9987-8(interior-tiles-067)]
-B $9988 #HTML[#UDGARRAY1,7,4,1;$9988-$998F-8(interior-tiles-068)]
-B $9990 #HTML[#UDGARRAY1,7,4,1;$9990-$9997-8(interior-tiles-069)]
-B $9998 #HTML[#UDGARRAY1,7,4,1;$9998-$999F-8(interior-tiles-070)]
-B $99A0 #HTML[#UDGARRAY1,7,4,1;$99A0-$99A7-8(interior-tiles-071)]
-B $99A8 #HTML[#UDGARRAY1,7,4,1;$99A8-$99AF-8(interior-tiles-072)]
-B $99B0 #HTML[#UDGARRAY1,7,4,1;$99B0-$99B7-8(interior-tiles-073)]
-B $99B8 #HTML[#UDGARRAY1,7,4,1;$99B8-$99BF-8(interior-tiles-074)]
-B $99C0 #HTML[#UDGARRAY1,7,4,1;$99C0-$99C7-8(interior-tiles-075)]
-B $99C8 #HTML[#UDGARRAY1,7,4,1;$99C8-$99CF-8(interior-tiles-076)]
-B $99D0 #HTML[#UDGARRAY1,7,4,1;$99D0-$99D7-8(interior-tiles-077)]
-B $99D8 #HTML[#UDGARRAY1,7,4,1;$99D8-$99DF-8(interior-tiles-078)]
-B $99E0 #HTML[#UDGARRAY1,7,4,1;$99E0-$99E7-8(interior-tiles-079)]
-B $99E8 #HTML[#UDGARRAY1,7,4,1;$99E8-$99EF-8(interior-tiles-080)]
-B $99F0 #HTML[#UDGARRAY1,7,4,1;$99F0-$99F7-8(interior-tiles-081)]
-B $99F8 #HTML[#UDGARRAY1,7,4,1;$99F8-$99FF-8(interior-tiles-082)]
-B $9A00 #HTML[#UDGARRAY1,7,4,1;$9A00-$9A07-8(interior-tiles-083)]
-B $9A08 #HTML[#UDGARRAY1,7,4,1;$9A08-$9A0F-8(interior-tiles-084)]
-B $9A10 #HTML[#UDGARRAY1,7,4,1;$9A10-$9A17-8(interior-tiles-085)]
-B $9A18 #HTML[#UDGARRAY1,7,4,1;$9A18-$9A1F-8(interior-tiles-086)]
-B $9A20 #HTML[#UDGARRAY1,7,4,1;$9A20-$9A27-8(interior-tiles-087)]
-B $9A28 #HTML[#UDGARRAY1,7,4,1;$9A28-$9A2F-8(interior-tiles-088)]
-B $9A30 #HTML[#UDGARRAY1,7,4,1;$9A30-$9A37-8(interior-tiles-089)]
-B $9A38 #HTML[#UDGARRAY1,7,4,1;$9A38-$9A3F-8(interior-tiles-090)]
-B $9A40 #HTML[#UDGARRAY1,7,4,1;$9A40-$9A47-8(interior-tiles-091)]
-B $9A48 #HTML[#UDGARRAY1,7,4,1;$9A48-$9A4F-8(interior-tiles-092)]
-B $9A50 #HTML[#UDGARRAY1,7,4,1;$9A50-$9A57-8(interior-tiles-093)]
-B $9A58 #HTML[#UDGARRAY1,7,4,1;$9A58-$9A5F-8(interior-tiles-094)]
-B $9A60 #HTML[#UDGARRAY1,7,4,1;$9A60-$9A67-8(interior-tiles-095)]
-B $9A68 #HTML[#UDGARRAY1,7,4,1;$9A68-$9A6F-8(interior-tiles-096)]
-B $9A70 #HTML[#UDGARRAY1,7,4,1;$9A70-$9A77-8(interior-tiles-097)]
-B $9A78 #HTML[#UDGARRAY1,7,4,1;$9A78-$9A7F-8(interior-tiles-098)]
-B $9A80 #HTML[#UDGARRAY1,7,4,1;$9A80-$9A87-8(interior-tiles-099)]
-B $9A88 #HTML[#UDGARRAY1,7,4,1;$9A88-$9A8F-8(interior-tiles-100)]
-B $9A90 #HTML[#UDGARRAY1,7,4,1;$9A90-$9A97-8(interior-tiles-101)]
-B $9A98 #HTML[#UDGARRAY1,7,4,1;$9A98-$9A9F-8(interior-tiles-102)]
-B $9AA0 #HTML[#UDGARRAY1,7,4,1;$9AA0-$9AA7-8(interior-tiles-103)]
-B $9AA8 #HTML[#UDGARRAY1,7,4,1;$9AA8-$9AAF-8(interior-tiles-104)]
-B $9AB0 #HTML[#UDGARRAY1,7,4,1;$9AB0-$9AB7-8(interior-tiles-105)]
-B $9AB8 #HTML[#UDGARRAY1,7,4,1;$9AB8-$9ABF-8(interior-tiles-106)]
-B $9AC0 #HTML[#UDGARRAY1,7,4,1;$9AC0-$9AC7-8(interior-tiles-107)]
-B $9AC8 #HTML[#UDGARRAY1,7,4,1;$9AC8-$9ACF-8(interior-tiles-108)]
-B $9AD0 #HTML[#UDGARRAY1,7,4,1;$9AD0-$9AD7-8(interior-tiles-109)]
-B $9AD8 #HTML[#UDGARRAY1,7,4,1;$9AD8-$9ADF-8(interior-tiles-110)]
-B $9AE0 #HTML[#UDGARRAY1,7,4,1;$9AE0-$9AE7-8(interior-tiles-111)]
-B $9AE8 #HTML[#UDGARRAY1,7,4,1;$9AE8-$9AEF-8(interior-tiles-112)]
-B $9AF0 #HTML[#UDGARRAY1,7,4,1;$9AF0-$9AF7-8(interior-tiles-113)]
-B $9AF8 #HTML[#UDGARRAY1,7,4,1;$9AF8-$9AFF-8(interior-tiles-114)]
-B $9B00 #HTML[#UDGARRAY1,7,4,1;$9B00-$9B07-8(interior-tiles-115)]
-B $9B08 #HTML[#UDGARRAY1,7,4,1;$9B08-$9B0F-8(interior-tiles-116)]
-B $9B10 #HTML[#UDGARRAY1,7,4,1;$9B10-$9B17-8(interior-tiles-117)]
-B $9B18 #HTML[#UDGARRAY1,7,4,1;$9B18-$9B1F-8(interior-tiles-118)]
-B $9B20 #HTML[#UDGARRAY1,7,4,1;$9B20-$9B27-8(interior-tiles-119)]
-B $9B28 #HTML[#UDGARRAY1,7,4,1;$9B28-$9B2F-8(interior-tiles-120)]
-B $9B30 #HTML[#UDGARRAY1,7,4,1;$9B30-$9B37-8(interior-tiles-121)]
-B $9B38 #HTML[#UDGARRAY1,7,4,1;$9B38-$9B3F-8(interior-tiles-122)]
-B $9B40 #HTML[#UDGARRAY1,7,4,1;$9B40-$9B47-8(interior-tiles-123)]
-B $9B48 #HTML[#UDGARRAY1,7,4,1;$9B48-$9B4F-8(interior-tiles-124)]
-B $9B50 #HTML[#UDGARRAY1,7,4,1;$9B50-$9B57-8(interior-tiles-125)]
-B $9B58 #HTML[#UDGARRAY1,7,4,1;$9B58-$9B5F-8(interior-tiles-126)]
-B $9B60 #HTML[#UDGARRAY1,7,4,1;$9B60-$9B67-8(interior-tiles-127)]
-B $9B68 #HTML[#UDGARRAY1,7,4,1;$9B68-$9B6F-8(interior-tiles-128)]
-B $9B70 #HTML[#UDGARRAY1,7,4,1;$9B70-$9B77-8(interior-tiles-129)]
-B $9B78 #HTML[#UDGARRAY1,7,4,1;$9B78-$9B7F-8(interior-tiles-130)]
-B $9B80 #HTML[#UDGARRAY1,7,4,1;$9B80-$9B87-8(interior-tiles-131)]
-B $9B88 #HTML[#UDGARRAY1,7,4,1;$9B88-$9B8F-8(interior-tiles-132)]
-B $9B90 #HTML[#UDGARRAY1,7,4,1;$9B90-$9B97-8(interior-tiles-133)]
-B $9B98 #HTML[#UDGARRAY1,7,4,1;$9B98-$9B9F-8(interior-tiles-134)]
-B $9BA0 #HTML[#UDGARRAY1,7,4,1;$9BA0-$9BA7-8(interior-tiles-135)]
-B $9BA8 #HTML[#UDGARRAY1,7,4,1;$9BA8-$9BAF-8(interior-tiles-136)]
-B $9BB0 #HTML[#UDGARRAY1,7,4,1;$9BB0-$9BB7-8(interior-tiles-137)]
-B $9BB8 #HTML[#UDGARRAY1,7,4,1;$9BB8-$9BBF-8(interior-tiles-138)]
-B $9BC0 #HTML[#UDGARRAY1,7,4,1;$9BC0-$9BC7-8(interior-tiles-139)]
-B $9BC8 #HTML[#UDGARRAY1,7,4,1;$9BC8-$9BCF-8(interior-tiles-140)]
-B $9BD0 #HTML[#UDGARRAY1,7,4,1;$9BD0-$9BD7-8(interior-tiles-141)]
-B $9BD8 #HTML[#UDGARRAY1,7,4,1;$9BD8-$9BDF-8(interior-tiles-142)]
-B $9BE0 #HTML[#UDGARRAY1,7,4,1;$9BE0-$9BE7-8(interior-tiles-143)]
-B $9BE8 #HTML[#UDGARRAY1,7,4,1;$9BE8-$9BEF-8(interior-tiles-144)]
-B $9BF0 #HTML[#UDGARRAY1,7,4,1;$9BF0-$9BF7-8(interior-tiles-145)]
-B $9BF8 #HTML[#UDGARRAY1,7,4,1;$9BF8-$9BFF-8(interior-tiles-146)]
-B $9C00 #HTML[#UDGARRAY1,7,4,1;$9C00-$9C07-8(interior-tiles-147)]
-B $9C08 #HTML[#UDGARRAY1,7,4,1;$9C08-$9C0F-8(interior-tiles-148)]
-B $9C10 #HTML[#UDGARRAY1,7,4,1;$9C10-$9C17-8(interior-tiles-149)]
-B $9C18 #HTML[#UDGARRAY1,7,4,1;$9C18-$9C1F-8(interior-tiles-150)]
-B $9C20 #HTML[#UDGARRAY1,7,4,1;$9C20-$9C27-8(interior-tiles-151)]
-B $9C28 #HTML[#UDGARRAY1,7,4,1;$9C28-$9C2F-8(interior-tiles-152)]
-B $9C30 #HTML[#UDGARRAY1,7,4,1;$9C30-$9C37-8(interior-tiles-153)]
-B $9C38 #HTML[#UDGARRAY1,7,4,1;$9C38-$9C3F-8(interior-tiles-154)]
-B $9C40 #HTML[#UDGARRAY1,7,4,1;$9C40-$9C47-8(interior-tiles-155)]
-B $9C48 #HTML[#UDGARRAY1,7,4,1;$9C48-$9C4F-8(interior-tiles-156)]
-B $9C50 #HTML[#UDGARRAY1,7,4,1;$9C50-$9C57-8(interior-tiles-157)]
-B $9C58 #HTML[#UDGARRAY1,7,4,1;$9C58-$9C5F-8(interior-tiles-158)]
-B $9C60 #HTML[#UDGARRAY1,7,4,1;$9C60-$9C67-8(interior-tiles-159)]
-B $9C68 #HTML[#UDGARRAY1,7,4,1;$9C68-$9C6F-8(interior-tiles-160)]
-B $9C70 #HTML[#UDGARRAY1,7,4,1;$9C70-$9C77-8(interior-tiles-161)]
-B $9C78 #HTML[#UDGARRAY1,7,4,1;$9C78-$9C7F-8(interior-tiles-162)]
-B $9C80 #HTML[#UDGARRAY1,7,4,1;$9C80-$9C87-8(interior-tiles-163)]
-B $9C88 #HTML[#UDGARRAY1,7,4,1;$9C88-$9C8F-8(interior-tiles-164)]
-B $9C90 #HTML[#UDGARRAY1,7,4,1;$9C90-$9C97-8(interior-tiles-165)]
-B $9C98 #HTML[#UDGARRAY1,7,4,1;$9C98-$9C9F-8(interior-tiles-166)]
-B $9CA0 #HTML[#UDGARRAY1,7,4,1;$9CA0-$9CA7-8(interior-tiles-167)]
-B $9CA8 #HTML[#UDGARRAY1,7,4,1;$9CA8-$9CAF-8(interior-tiles-168)]
-B $9CB0 #HTML[#UDGARRAY1,7,4,1;$9CB0-$9CB7-8(interior-tiles-169)]
-B $9CB8 #HTML[#UDGARRAY1,7,4,1;$9CB8-$9CBF-8(interior-tiles-170)]
-B $9CC0 #HTML[#UDGARRAY1,7,4,1;$9CC0-$9CC7-8(interior-tiles-171)]
-B $9CC8 #HTML[#UDGARRAY1,7,4,1;$9CC8-$9CCF-8(interior-tiles-172)]
-B $9CD0 #HTML[#UDGARRAY1,7,4,1;$9CD0-$9CD7-8(interior-tiles-173)]
-B $9CD8 #HTML[#UDGARRAY1,7,4,1;$9CD8-$9CDF-8(interior-tiles-174)]
-B $9CE0 #HTML[#UDGARRAY1,7,4,1;$9CE0-$9CE7-8(interior-tiles-175)]
-B $9CE8 #HTML[#UDGARRAY1,7,4,1;$9CE8-$9CEF-8(interior-tiles-176)]
-B $9CF0 #HTML[#UDGARRAY1,7,4,1;$9CF0-$9CF7-8(interior-tiles-177)]
-B $9CF8 #HTML[#UDGARRAY1,7,4,1;$9CF8-$9CFF-8(interior-tiles-178)]
-B $9D00 #HTML[#UDGARRAY1,7,4,1;$9D00-$9D07-8(interior-tiles-179)]
-B $9D08 #HTML[#UDGARRAY1,7,4,1;$9D08-$9D0F-8(interior-tiles-180)]
-B $9D10 #HTML[#UDGARRAY1,7,4,1;$9D10-$9D17-8(interior-tiles-181)]
-B $9D18 #HTML[#UDGARRAY1,7,4,1;$9D18-$9D1F-8(interior-tiles-182)]
-B $9D20 #HTML[#UDGARRAY1,7,4,1;$9D20-$9D27-8(interior-tiles-183)]
-B $9D28 #HTML[#UDGARRAY1,7,4,1;$9D28-$9D2F-8(interior-tiles-184)]
-B $9D30 #HTML[#UDGARRAY1,7,4,1;$9D30-$9D37-8(interior-tiles-185)]
-B $9D38 #HTML[#UDGARRAY1,7,4,1;$9D38-$9D3F-8(interior-tiles-186)]
-B $9D40 #HTML[#UDGARRAY1,7,4,1;$9D40-$9D47-8(interior-tiles-187)]
-B $9D48 #HTML[#UDGARRAY1,7,4,1;$9D48-$9D4F-8(interior-tiles-188)]
-B $9D50 #HTML[#UDGARRAY1,7,4,1;$9D50-$9D57-8(interior-tiles-189)]
-B $9D58 #HTML[#UDGARRAY1,7,4,1;$9D58-$9D5F-8(interior-tiles-190)]
-B $9D60 #HTML[#UDGARRAY1,7,4,1;$9D60-$9D67-8(interior-tiles-191)]
-B $9D68 #HTML[#UDGARRAY1,7,4,1;$9D68-$9D6F-8(interior-tiles-192)]
-B $9D70 #HTML[#UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)]
-
 ; ------------------------------------------------------------------------------
 
 c $9D78 main_loop_setup
-@ $9D78 label=main_loop_setup
 D $9D78 There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single calling routine (main) might just as well goto enter_room instead of goto main_loop_setup.
+@ $9D78 label=main_loop_setup
   $9D78 enter_room(); // returns by goto main_loop
 
 c $9D7B main_loop
-@ $9D7B label=main_loop
 D $9D7B Main game loop.
+@ $9D7B label=main_loop
   $9D7B main_loop: for (;;) <% check_morale();
   $9D7E   keyscan_break();
   $9D81   message_display();
@@ -4201,8 +4176,8 @@ D $9D7B Main game loop.
 ; ------------------------------------------------------------------------------
 
 c $9DCF check_morale
-@ $9DCF label=check_morale
 D $9DCF Check morale level, report if (near) zero and inhibit player control.
+@ $9DCF label=check_morale
   $9DCF if (morale >= 2) return;
   $9DD5 queue_message_for_display(message_MORALE_IS_ZERO);
 N $9DDB Inhibit user input.
@@ -4214,8 +4189,8 @@ N $9DE0 Immediately take automatic control of hero.
 ; ------------------------------------------------------------------------------
 
 c $9DE5 keyscan_break
-@ $9DE5 label=keyscan_break
 D $9DE5 Check for 'game cancel' keypress.
+@ $9DE5 label=keyscan_break
   $9DE5 if (!(shift_pressed && space_pressed)) return;
   $9DF4 screen_reset();
   $9DF7 user_confirm();
@@ -4226,9 +4201,9 @@ D $9DE5 Check for 'game cancel' keypress.
 ; ------------------------------------------------------------------------------
 
 c $9E07 process_player_input
-@ $9E07 label=process_player_input
 D $9E07 Process player input.
 D $9E07 Inhibit user control when morale hits zero.
+@ $9E07 label=process_player_input
   $9E07 if (morale_1 || morale_2) return; // reads morale_1 + morale_2 together as a word
   $9E0E if ($8001 & (vischar_BYTE1_PICKING_LOCK | vischar_BYTE1_CUTTING_WIRE)) <%
 N $9E15 Picking a lock, or cutting wire fence.
@@ -4281,8 +4256,8 @@ N $9E5C Hero was in bed.
 ; ------------------------------------------------------------------------------
 
 c $9E98 picking_a_lock
-@ $9E98 label=picking_a_lock
 D $9E98 Locks the player out until the lock is picked.
+@ $9E98 label=picking_a_lock
   $9E98 if (player_locked_out_until != game_counter) return;
 N $9EA0 Countdown reached: Unlock the door.
   $9EA0 *ptr_to_door_being_lockpicked &= ~gates_and_doors_LOCKED;
@@ -4294,13 +4269,13 @@ N $9EA0 Countdown reached: Unlock the door.
 ; ------------------------------------------------------------------------------
 
 c $9EB2 snipping_wire
-@ $9EB2 label=snipping_wire
 D $9EB2 Locks the player out until the wire is snipped.
+@ $9EB2 label=snipping_wire
   $9EB2 A = player_locked_out_until - game_counter;
   $9EB9 if (A) <%
   $9EBB   if (A < 4)
 @ $9EBE nowarn
-  $9EBE     $800D = table_9EE0[$800E & 3]; // change direction
+  $9EBE $800D = table_9EE0[$800E & 3]; // change direction
 @ $9ECC nowarn
   $9ECF   return; %>
 N $9ED0 Countdown reached: Snip the wire.
@@ -4314,16 +4289,16 @@ N $9ED0 Bug: A is always zero here, so $800E is always set to zero.
 ; ------------------------------------------------------------------------------
 
 b $9EE0 table_9EE0
-@ $9EE0 label=table_9EE0
 D $9EE0 Change of direction table used when wire is snipped?
 D $9EE0 Indexed by $800E.
+@ $9EE0 label=table_9EE0
   $9EE0 direction_type table_9EE0[] = { 0x84, 0x87, 0x88, 0x85 };
 
 ; ------------------------------------------------------------------------------
 
 b $9EE4 byte_to_pointer
-@ $9EE4 label=byte_to_pointer
 D $9EE4 Maps bytes to pointers to the below arrays.
+@ $9EE4 label=byte_to_pointer
   $9EE4,3 byte_to_offset { 42, &byte_9EF9[0] }
   $9EE7,3 byte_to_offset {  5, &byte_9EFC[0] }
   $9EEA,3 byte_to_offset { 14, &byte_9F01[0] }
@@ -4343,8 +4318,8 @@ N $9EF9 Variable-length arrays, 0xFF terminated.
 ; ------------------------------------------------------------------------------
 
 b $9F15 permitted_bounds
-@ $9F15 label=permitted_bounds
 D $9F15 Pairs of low-high bounds.
+@ $9F15 label=permitted_bounds
   $9F15,4 Corridor to yard.
   $9F19,4 Hut area.
   $9F1D,4 Yard area.
@@ -4352,8 +4327,8 @@ D $9F15 Pairs of low-high bounds.
 ; ------------------------------------------------------------------------------
 
 c $9F21 in_permitted_area
-@ $9F21 label=in_permitted_area
 D $9F21 In permitted area.
+@ $9F21 label=in_permitted_area
   $9F21 HL = $800F; // position on Y axis
   $9F24 DE = &hero_map_position.y; // x/y confusion here - mislabeling
   $9F27 if (room_index == 0) <% // outdoors
@@ -4453,8 +4428,7 @@ c $A007 in_permitted_area_end_bit
 ;
   $A012 if (*HL) return; // return with flags NZ
   $A016 DE = &hero_map_position.y;
-;
-; fallthrough
+E $A007 FALL THROUGH to within_camp_bounds.
 
 c $A01A within_camp_bounds
 @ $A01A label=within_camp_bounds
@@ -4471,8 +4445,8 @@ c $A01A within_camp_bounds
 ; ------------------------------------------------------------------------------
 
 c $A035 wave_morale_flag
-@ $A035 label=wave_morale_flag
 D $A035 Wave the morale flag.
+@ $A035 label=wave_morale_flag
   $A035 HL = &game_counter;
   $A038 (*HL)++;
 N $A039 Wave the flag on every other turn.
@@ -4501,9 +4475,9 @@ N $A053 Increasing morale.
 ; ------------------------------------------------------------------------------
 
 c $A071 set_morale_flag_screen_attributes
-@ $A071 label=set_morale_flag_screen_attributes
 D $A071 Set the screen attributes of the morale flag.
 R $A071 I:A Attributes to use.
+@ $A071 label=set_morale_flag_screen_attributes
   $A071 HL = $5842; // first attribute byte
   $A074 DE = $001E; // skip
 N $A077 Height of flag.
@@ -4518,10 +4492,10 @@ N $A077 Height of flag.
 ; ------------------------------------------------------------------------------
 
 c $A082 get_prev_scanline
-@ $A082 label=get_prev_scanline
 D $A082 Given a screen address, returns the same position on the previous scanline.
 R $A082 I:HL Original screen address.
 R $A082 O:HL Updated screen address.
+@ $A082 label=get_prev_scanline
   $A082 if ((H & 7) != 0) <%
 N $A087 NNN bits.
 N $A087 Step back one scanline.
@@ -4534,8 +4508,8 @@ N $A089 Complicated.
 ; ------------------------------------------------------------------------------
 
 c $A095 interior_delay_loop
-@ $A095 label=interior_delay_loop
 D $A095 Delay loop called only when the hero is indoors.
+@ $A095 label=interior_delay_loop
   $A095 BC = 0xFFF;
   $A098 while (--BC) ;
   $A09D return;
@@ -4543,9 +4517,9 @@ D $A095 Delay loop called only when the hero is indoors.
 ; ------------------------------------------------------------------------------
 
 c $A09E ring_bell
-@ $A09E label=ring_bell
 D $A09E Ring the alarm bell.
 D $A09E Called three times from main_loop.
+@ $A09E label=ring_bell
   $A09E HL = &bell;
   $A0A1 A = *HL;
   $A0A2 if (A == bell_STOP) return; // not ringing
@@ -4567,55 +4541,53 @@ N $A0BB Plot ringer "on".
   $A0C1   play_speaker(sound_BELL_RINGER); return; %> // args=BC // exit via
 N $A0C6 Plot ringer "off".
   $A0C6 else <% DE = bell_ringer_bitmap_off;
-;
-; fallthrough
+E $A09E FALL THROUGH to plot_ringer.
 
 c $A0C9 plot_ringer
-@ $A0C9 label=plot_ringer
 D $A0C9 Plot ringer.
-  $A0C9   HL = screenaddr_bell_ringer;
-  $A0CC   plot_bitmap(0x010C); return; %> // dimensions: 8 x 12 // args=BC // exit via
+@ $A0C9 label=plot_ringer
+  $A0C9 HL = screenaddr_bell_ringer;
+  $A0CC plot_bitmap(0x010C); return; %> // dimensions: 8 x 12 // args=BC // exit via
 
 ; ------------------------------------------------------------------------------
 
 c $A0D2 increase_morale
-@ $A0D2 label=increase_morale
 R $A0D2 I:B Amount to increase morale by. (Preserved)
+@ $A0D2 label=increase_morale
   $A0D2 A = morale + B;
   $A0D6 if (A >= morale_MAX) A = morale_MAX;
-;
-; fallthrough
+E $A0D2 FALL THROUGH into set_morale_from_A.
 
 c $A0DC set_morale_from_A
-@ $A0DC label=set_morale_from_A
   $A0DC morale = A;
+@ $A0DC label=set_morale_from_A
   $A0DF return;
 
 c $A0E0 decrease_morale
-@ $A0E0 label=decrease_morale
 R $A0E0 I:B Amount to decrease morale by. (Preserved)
+@ $A0E0 label=decrease_morale
   $A0E0 A = morale - B;
   $A0E4 if (A < morale_MIN) A = morale_MIN;
   $A0E7 goto set_morale_from_A;
 
 c $A0E9 increase_morale_by_10_score_by_50
-@ $A0E9 label=increase_morale_by_10_score_by_50
 D $A0E9 Increase morale by 10, score by 50.
+@ $A0E9 label=increase_morale_by_10_score_by_50
   $A0E9 increase_morale(10);
   $A0EE increase_score(50); return; // exit via
 
 c $A0F2 increase_morale_by_5_score_by_5
-@ $A0F2 label=increase_morale_by_5_score_by_5
 D $A0F2 Increase morale by 5, score by 5.
+@ $A0F2 label=increase_morale_by_5_score_by_5
   $A0F2 increase_morale(5);
   $A0F7 increase_score(5); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
 c $A0F9 increase_score
-@ $A0F9 label=increase_score
 D $A0F9 Increases the score then plots it.
 R $A0F9 I:B Amount to increase score by.
+@ $A0F9 label=increase_score
   $A0F9 A = 10;
   $A0FB HL = &score_digits + 4;
   $A0FE do <% tmp = HL;
@@ -4629,8 +4601,8 @@ E $A0F9 FALL THROUGH into plot_score.
 ; ------------------------------------------------------------------------------
 
 c $A10B plot_score
-@ $A10B label=plot_score
 D $A10B Draws the current score to screen.
+@ $A10B label=plot_score
   $A10B HL = &score_digits;
   $A10E DE = &score; // screen address of score
   $A111 B = 5;
@@ -4645,10 +4617,10 @@ D $A10B Draws the current score to screen.
 ; ------------------------------------------------------------------------------
 
 c $A11D play_speaker
-@ $A11D label=play_speaker
 D $A11D Makes a sound through the speaker.
 R $A11D I:B Number of iterations to play for.
 R $A11D I:C Delay inbetween each iteration.
+@ $A11D label=play_speaker
   $A11D delay = C; // Self-modify delay loop at $A126.
   $A121 A = 16; // Initial speaker bit.
   $A123 do <% OUT ($FE),A // Play.
@@ -4663,8 +4635,8 @@ g $A12F Game counter.
 D $A12F Counts 00..FF then wraps.
 D $A12F Read-only by main_loop, picking_a_lock, snipping_wire, action_wiresnips, action_lockpick.
 D $A12F Write/read-write by wave_morale_flag.
-B $A12F game_counter
 @ $A12F label=game_counter
+  $A12F game_counter
 
 ; ------------------------------------------------------------------------------
 
@@ -4672,28 +4644,28 @@ g $A130 Bell.
 D $A130 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Ring indefinitely } { 255 | Don't ring } { N | Ring for N calls } TABLE#
 D $A130 Read-only by follow_suspicious_character.
 D $A130 Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_roll_call, event_go_to_breakfast_time, event_breakfast_time, event_go_to_exercise_time, event_exercise_time, event_go_to_time_for_bed, searchlight_caught, solitary, guards_follow_suspicious_character, event_roll_call.
-B $A130 bell
 @ $A130 label=bell
+  $A130 bell
 
 ; ------------------------------------------------------------------------------
 
 g $A131 Unreferenced byte.
-B $A131 unused_A131
+  $A131 unused_A131
 
 ; ------------------------------------------------------------------------------
 
 g $A132 Score digits.
 D $A132 Read-only by plot_score.
 D $A132 Write/read-write by increase_score, reset_game.
-B $A132 score_digits
 @ $A132 label=score_digits
+  $A132 score_digits
 
 ; ------------------------------------------------------------------------------
 
 g $A137 Hero at breakfast flag.
 D $A137 Write/read-write by process_player_input, breakfast_time, hero_sit_sleep_common.
-B $A137 hero_in_breakfast
 @ $A137 label=hero_in_breakfast
+  $A137 hero_in_breakfast
 
 ; ------------------------------------------------------------------------------
 
@@ -4701,8 +4673,8 @@ g $A138 Red flag flag.
 D $A138 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Not naughty } { 255 | Naughty } TABLE#
 D $A138 Read-only by follow_suspicious_character, guards_follow_suspicious_character.
 D $A138 Write/read-write by in_permitted_area.
-B $A138 red_flag
 @ $A138 label=red_flag
+  $A138 red_flag
 
 ; ------------------------------------------------------------------------------
 
@@ -4710,8 +4682,8 @@ g $A139 Automatic player counter.
 D $A139 Countdown until CPU control of the player is assumed. When it becomes zero, control is assumed. It's usually set to 31 by input events.
 D $A139 Read-only by touch, follow_suspicious_character, character_behaviour.
 D $A139 Write/read-write by check_morale, process_player_input, charevnt_handler_10_hero_released_from_solitary, solitary.
-B $A139 automatic_player_counter
 @ $A139 label=automatic_player_counter
+  $A139 automatic_player_counter
 
 ; ------------------------------------------------------------------------------
 
@@ -4721,22 +4693,22 @@ D $A13A Used to set flag colour.
 D $A13A morale_1 and morale_2 are treated as a word by process_player_input. Everything else treats them as bytes.
 D $A13A Read-only by process_player_input, in_permitted_area, set_hero_target_location, follow_suspicious_character.
 D $A13A Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
-B $A13A morale_1
 @ $A13A label=morale_1
+  $A13A morale_1
 N $A13B Inhibits user input when non-zero.
 N $A13B Set by check_morale.
 N $A13B Reset by reset_game.
 N $A13B Read-only by process_player_input.
 N $A13B Write/read-write by check_morale.
-B $A13B morale_2
 @ $A13B label=morale_2
+  $A13B morale_2
 
 g $A13C Morale 'score'.
 D $A13C Ranges morale_MIN..morale_MAX.
 D $A13C Read-only by check_morale, wave_morale_flag.
 D $A13C Write/read-write by increase_morale, decrease_morale, reset_game.
-B $A13C morale
 @ $A13C label=morale
+  $A13C morale
 
 ; ------------------------------------------------------------------------------
 
@@ -4744,8 +4716,8 @@ g $A13D Game clock.
 D $A13D Ranges 0..139.
 D $A13D Read-only by in_permitted_area.
 D $A13D Write/read-write by dispatch_timed_event, reset_map_and_characters.
-B $A13D clock
 @ $A13D label=clock
+  $A13D clock
 
 ; ------------------------------------------------------------------------------
 
@@ -4753,39 +4725,39 @@ g $A13E Mystery flag.
 D $A13E In byte_A13E_is_nonzero etc.: when non-zero, character_index is valid. Else IY points to character_struct.
 D $A13E Read-only by charevnt_handler_3_check_var_A13E, charevnt_handler_5_check_var_A13E_anotherone.
 D $A13E Write/read-write by sub_A3BB, spawn_character, move_characters, follow_suspicious_character, sub_A3BB.
-B $A13E byte_A13E
 @ $A13E label=byte_A13E
+  $A13E byte_A13E
 
 ; ------------------------------------------------------------------------------
 
 g $A13F Hero in bed flag.
 D $A13F Read-only by event_night_time,
 D $A13F Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
-B $A13F hero_in_bed
 @ $A13F label=hero_in_bed
+  $A13F hero_in_bed
 
 ; ------------------------------------------------------------------------------
 
 g $A140 Displayed morale.
 D $A140 This lags behind actual morale while the flag moves slowly to its target.
 D $A140 Write/read-write by wave_morale_flag.
-B $A140 displayed_morale
 @ $A140 label=displayed_morale
+  $A140 displayed_morale
 
 ; ------------------------------------------------------------------------------
 
 g $A141 Pointer to the screen address where the morale flag was last plotted.
 D $A141 Write/read-write by wave_morale_flag.
-W $A141 moraleflag_screen_address
 @ $A141 label=moraleflag_screen_address
+W $A141 moraleflag_screen_address
 
 ; ------------------------------------------------------------------------------
 
 g $A143 Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.
 D $A143 Read-only by picking_a_lock.
 D $A143 Write/read-write by action_lockpick.
-W $A143 ptr_to_door_being_lockpicked
 @ $A143 label=ptr_to_door_being_lockpicked
+W $A143 ptr_to_door_being_lockpicked
 
 ; ------------------------------------------------------------------------------
 
@@ -4793,8 +4765,8 @@ g $A145 Game time until player control is restored.
 D $A145 e.g. when picking a lock or cutting wire.
 D $A145 Read-only by picking_a_lock, snipping_wire.
 D $A145 Write/read-write by action_wiresnips, action_lockpick.
-B $A145 player_locked_out_until
 @ $A145 label=player_locked_out_until
+  $A145 player_locked_out_until
 
 ; ------------------------------------------------------------------------------
 
@@ -4802,23 +4774,23 @@ g $A146 Day or night flag.
 D $A146 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Daytime } { 255 | Nighttime } TABLE#
 D $A146 Read-only by main_loop, choose_game_window_attributes.
 D $A146 Write/read-write by set_day_or_night, reset_map_and_characters.
-B $A146 day_or_night
 @ $A146 label=day_or_night
+  $A146 day_or_night
 
 ; ------------------------------------------------------------------------------
 
 b $A147 bell_ringer_bitmaps
-B $A147,12,1 bell_ringer_bitmap_off
 @ $A147 label=bell_ringer_bitmap_off
-B $A153,12,1 bell_ringer_bitmap_on
+  $A147,12,1 bell_ringer_bitmap_off
 @ $A153 label=bell_ringer_bitmap_on
+  $A153,12,1 bell_ringer_bitmap_on
 
 ; ------------------------------------------------------------------------------
 
 c $A15F set_game_window_attributes
-@ $A15F label=set_game_window_attributes
 R $A15F I:A Attribute byte.
 D $A15F Starting at $5847, set 23 columns of 16 rows to A.
+@ $A15F label=set_game_window_attributes
   $A15F HL = $5847 // attributes base // $5800 + $47
   $A162 C = 16 // rows
   $A164 DE = 32 - 23 // skip
@@ -4833,8 +4805,8 @@ D $A15F Starting at $5847, set 23 columns of 16 rows to A.
 ; ------------------------------------------------------------------------------
 
 b $A173 timed_events
-@ $A173 label=timed_events
 D $A173 Array of 15 event structures.
+@ $A173 label=timed_events
   $A173 {   0, event_another_day_dawns },
   $A176 {   8, event_wake_up },
   $A179 {  12, event_new_red_cross_parcel },
@@ -4854,9 +4826,9 @@ D $A173 Array of 15 event structures.
 ; ------------------------------------------------------------------------------
 
 c $A1A0 dispatch_timed_event
-@ $A1A0 label=dispatch_timed_event
 D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll calls.
 D $A1A0 Increment the clock, wrapping at 140.
+@ $A1A0 label=dispatch_timed_event
   $A1A0 HL = &clock;
   $A1A3 A = *HL + 1;
   $A1A5 if (A == 140) A = 0;
@@ -4886,8 +4858,6 @@ c $A1D3 event_another_day_dawns
   $A1D3 queue_message_for_display(message_ANOTHER_DAY_DAWNS);
   $A1D8 decrease_morale(25);
   $A1DD A = 0;
-;
-; fallthrough
 
 R $A1DE I:A 0/255 for day/night.
   $A1DE set_attrs: day_or_night = A;
@@ -4939,8 +4909,8 @@ N $A21A Lock the gates.
   $A225 go_to_time_for_bed(); return; // exit via
 
 c $A228 event_new_red_cross_parcel
-@ $A228 label=event_new_red_cross_parcel
 D $A228 Don't deliver a new red cross parcel while the previous one still exists.
+@ $A228 label=event_new_red_cross_parcel
   $A228 if ((item_structs[item_RED_CROSS_PARCEL].room & itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;
 N $A230 Select the next parcel contents -- the first item from the list which does not exist.
   $A230 DE = &red_cross_parcel_contents_list[0];
@@ -4958,22 +4928,22 @@ N $A230 Select the next parcel contents -- the first item from the list which do
   $A254 queue_message_for_display(message_RED_CROSS_PARCEL); return; // exit via
 
 b $A259 red_cross_parcel_reset_data
-@ $A259 label=red_cross_parcel_reset_data
 D $A259 Data to set the parcel object up (room, tinypos, target).
-B $A259,1 item_RED_CROSS_PARCEL
-B $A25A,3 44,44,12
+@ $A259 label=red_cross_parcel_reset_data
+  $A259,1 item_RED_CROSS_PARCEL
+  $A25A,3 44,44,12
 W $A25D,2 0xF480
 
 b $A25F red_cross_parcel_contents_list
 @ $A25F label=red_cross_parcel_contents_list
-B $A25F item_PURSE
-B $A260 item_WIRESNIPS
-B $A261 item_BRIBE
-B $A262 item_COMPASS
+  $A25F item_PURSE
+  $A260 item_WIRESNIPS
+  $A261 item_BRIBE
+  $A262 item_COMPASS
 
 g $A263 Current contents of red cross parcel.
-B $A263 red_cross_parcel_current_contents
 @ $A263 label=red_cross_parcel_current_contents
+  $A263 red_cross_parcel_current_contents
 
 c $A264 event_time_for_bed
 @ $A264 label=event_time_for_bed
@@ -4985,8 +4955,6 @@ c $A26A event_search_light
 @ $A26A label=event_search_light
   $A26A A = 0x26;
   $A26C C = 0;
-;
-; fallthrough
 
 N $A26E Common end of event_time_for_bed and event_search_light.
   $A26E -
@@ -5005,9 +4973,9 @@ N $A26E Common end of event_time_for_bed and event_search_light.
 ; ------------------------------------------------------------------------------
 
 b $A27F prisoners_and_guards
-@ $A27F label=prisoners_and_guards
 D $A27F List of non-player characters: six prisoners and four guards.
 D $A27F Read-only by set_prisoners_and_guards_location, set_prisoners_and_guards_location_B.
+@ $A27F label=prisoners_and_guards
 B $A27F,1 character_12_GUARD_12
 B $A280,1 character_13_GUARD_13
 B $A281,1 character_20_PRISONER_1
@@ -5022,8 +4990,8 @@ B $A288,1 character_25_PRISONER_6
 ; ------------------------------------------------------------------------------
 
 c $A289 wake_up
-@ $A289 label=wake_up
 D $A289 Called by event_wake_up.
+@ $A289 label=wake_up
   $A289 if (hero_in_bed) <% // odd that this jumps into a point which sets hero_in_bed to zero when it's already zero
   $A290   $800F = 46; // hero's Y position
   $A295   $8011 = 46; %> // hero's X position
@@ -5122,9 +5090,9 @@ c $A351 go_to_time_for_bed
 ; ------------------------------------------------------------------------------
 
 c $A35F set_prisoners_and_guards_location
-@ $A35F label=set_prisoners_and_guards_location
 D $A35F Uses prisoners_and_guards structure.
 R $A35F O:Adash Counter incremented.
+@ $A35F label=set_prisoners_and_guards_location
   $A35F HL = &prisoners_and_guards[0];
   $A362 B = 10;
   $A364 do <% PUSH HL
@@ -5141,9 +5109,9 @@ R $A35F O:Adash Counter incremented.
 ; ------------------------------------------------------------------------------
 
 c $A373 set_prisoners_and_guards_location_B
-@ $A373 label=set_prisoners_and_guards_location_B
-R $A373 O:Adash Counter incremented.
 D $A373 Uses prisoners_and_guards structure.
+R $A373 O:Adash Counter incremented.
+@ $A373 label=set_prisoners_and_guards_location_B
   $A373 HL = &prisoners_and_guards[0];
   $A376 B = 10;
   $A378 do <% PUSH HL
@@ -5160,11 +5128,11 @@ D $A373 Uses prisoners_and_guards structure.
 ; ------------------------------------------------------------------------------
 
 c $A38C set_character_location
-@ $A38C label=set_character_location
 D $A38C Walk non-player visible characters, ...
 R $A38C I:A     Character index.
 R $A38C I:Adash ?
 R $A38C I:C     ?
+@ $A38C label=set_character_location
   $A38C HL = get_character_struct(A);
   $A38F if ((*HL & characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?
   $A394 PUSH BC
@@ -5189,8 +5157,7 @@ B $A3A9 Unreferenced byte.
   $A3B4 HL++;
   $A3B5 *HL++ &= ~vischar_BYTE1_BIT6;
   $A3B8 store_location(); // HL = vischar->target
-;
-; fallthrough
+E $A38C FALL THROUGH into sub_A3BB.
 
 c $A3BB sub_A3BB
 @ $A3BB label=sub_A3BB
@@ -5230,21 +5197,17 @@ c $A3ED store_location
 ; ------------------------------------------------------------------------------
 
 c $A3F3 byte_A13E_is_nonzero
-@ $A3F3 label=byte_A13E_is_nonzero
 D $A3F3 Checks character indexes, sets target locations, ...
 R $A3F3 I:HL -> characterstruct?
+@ $A3F3 label=byte_A13E_is_nonzero
   $A3F3 A = character_index;
   $A3F6 goto $A404;
 
 c $A3F8 byte_A13E_is_zero
-@ $A3F8 label=byte_A13E_is_zero
 D $A3F8 Gets hit when hero enters hut at end of day.
+@ $A3F8 label=byte_A13E_is_zero
   $A3F8 A = IY[0]; // IY=$8000 // must be a character index
   $A3FB if (A == 0) <% set_hero_target_location(location_002C); return; %> // exit via
-;
-; This entry point is used by the routine at #R$A3F3.
-R $A404 I:A Character index.
-R $A404 I:HL Pointer to ...
   $A404 HL[1] = 0; // HL=$766B,$7672 characterstruct + 5 (characterstruct + 6 when zeroed)
   $A407 if (A > 19) <%
   $A40F   A -= 13; %> // 20.. => 7..
@@ -5258,9 +5221,9 @@ R $A404 I:HL Pointer to ...
 ; ------------------------------------------------------------------------------
 
 c $A420 character_sits
-@ $A420 label=character_sits
 R $A420 I:A Character.
 R $A420 I:HL ?
+@ $A420 label=character_sits
   $A420 PUSH AF
   $A421 EX DE,HL
   $A422 A -= 18; // first three characters
@@ -5277,8 +5240,6 @@ N $A430 Poke object.
   $A442 goto character_sit_sleep_common;
 
 N $A444 character_sleeps
-R $A444 I:A Character.
-R $A444 I:HL ?
   $A444 PUSH AF
   $A445 A -= 7;
   $A448 EX DE,HL
@@ -5290,9 +5251,6 @@ N $A449 Poke object.
   $A45C   C = room_3_hut2_right;
   $A45E else
   $A460   C = room_5_hut3_right;
-;
-; fallthrough
-
 N $A462 (common end of above two routines)
 N $A462 I:C Character?
 N $A462 I:DE Pointer to ?
@@ -5365,19 +5323,16 @@ c $A4C5 set_location_0x0010
 ; ------------------------------------------------------------------------------
 
 c $A4D3 byte_A13E_is_nonzero_anotherone
-@ $A4D3 label=byte_A13E_is_nonzero_anotherone
 D $A4D3 Something character related [very similar to the routine at $A3F3].
+@ $A4D3 label=byte_A13E_is_nonzero_anotherone
   $A4D3 A = character_index;
   $A4D6 goto $A4E4;
 
 c $A4D8 byte_A13E_is_zero_anotherone
-@ $A4D8 label=byte_A13E_is_zero_anotherone
 D $A4D8 Sets a target location 0x002B. Seems to get hit around breakfasting time. If I nobble this it stops him sitting for breakfast.
+@ $A4D8 label=byte_A13E_is_zero_anotherone
   $A4D8 A = IY[0]; // must be a character index
   $A4DC if (A == 0) <% set_hero_target_location(location_002B); return; %> // exit via
-;
-; This entry point is used by the routine at #R$A4D3.
-R $A4E4 I:A Character index.
   $A4E4 HL[1] = 0;
   $A4E7 if (A > 19) <% // change this to 20 and character_21? stands in place of a guard
   $A4EF   tmp_A = A - 2; %> // seems to affect position at table // 20.. => 18..
@@ -5413,9 +5368,9 @@ c $A50B screen_reset
 ; ------------------------------------------------------------------------------
 
 c $A51C escaped
-@ $A51C label=escaped
 D $A51C Hero has escaped.
 D $A51C Print 'well done' message then test to see if the correct objects were used in the escape attempt.
+@ $A51C label=escaped
   $A51C screen_reset();
   $A51F HL = &escape_strings[0];
   $A522 screenlocstring_plot(); // WELL DONE
@@ -5429,9 +5384,6 @@ D $A51C Print 'well done' message then test to see if the correct objects were u
   $A537 A = C;
   $A538 if (A == escapeitem_COMPASS + escapeitem_PURSE) goto success;
   $A53C else if (A != escapeitem_COMPASS + escapeitem_PAPERS) goto captured;
-;
-; fallthrough
-
 @ $A540 label=escaped_success
 @ $A540 nowarn
   $A540 success: HL = &escape_strings[3];
@@ -5475,8 +5427,8 @@ N $A574 Wait for a keypress.
 ; ------------------------------------------------------------------------------
 
 c $A58C keyscan_all
-@ $A58C label=keyscan_all
 R $A58C O:A Pressed key.
+@ $A58C label=keyscan_all
   $A58C BC = $FEFE;
   $A58F do <% IN A,(C)
   $A591   A = ~A & 0x1F;
@@ -5489,21 +5441,21 @@ R $A58C O:A Pressed key.
 ; ------------------------------------------------------------------------------
 
 c $A59C join_item_to_escapeitem
-@ $A59C label=join_item_to_escapeitem
 D $A59C Call item_to_escapeitem then merge result with a previous escapeitem.
 R $A59C I:C  Previous return value.
 R $A59C I:HL Pointer to (single) item slot.
 R $A59C O:C  Previous return value + escapeitem_ flag.
+@ $A59C label=join_item_to_escapeitem
   $A59C A = *HL;
   $A59D item_to_escapeitem();
   $A5A0 C += A;
   $A5A2 return;
 
 c $A5A3 item_to_escapeitem
-@ $A5A3 label=item_to_escapeitem
 D $A5A3 Return a bitfield indicating the presence of required items.
 R $A5A3 I:A Item.
 R $A5A3 O:A Bitfield.
+@ $A5A3 label=item_to_escapeitem
   $A5A3 if (A == item_COMPASS) <% A = escapeitem_COMPASS; return; %>
   $A5AA if (A == item_PAPERS)  <% A = escapeitem_PAPERS;  return; %>
   $A5B1 if (A == item_PURSE)   <% A = escapeitem_PURSE;   return; %>
@@ -5514,9 +5466,9 @@ R $A5A3 O:A Bitfield.
 ; ------------------------------------------------------------------------------
 
 c $A5BF screenlocstring_plot
-@ $A5BF label=screenlocstring_plot
 R $A5BF I:HL Pointer to screenlocstring.
 R $A5BF O:HL Pointer to byte after screenlocstring.
+@ $A5BF label=screenlocstring_plot
   $A5BF E = *HL++; // read screen address into DE
   $A5C1 D = *HL++;
   $A5C3 B = *HL++; // iterations / nbytes
@@ -5531,54 +5483,54 @@ R $A5BF O:HL Pointer to byte after screenlocstring.
 
 t $A5CE escape_strings
 @ $A5CE label=escape_strings
-D $A5CE "WELL DONE"
-  $A5CE #HTML[#CALL:decode_screenlocstring($A5CE)]
+N $A5CE "WELL DONE"
+B $A5CE,12,8,4 #HTML[#CALL:decode_screenlocstring($A5CE)]
 N $A5DA "YOU HAVE ESCAPED"
-  $A5DA #HTML[#CALL:decode_screenlocstring($A5DA)]
+B $A5DA,19,8*2,3 #HTML[#CALL:decode_screenlocstring($A5DA)]
 N $A5ED "FROM THE CAMP"
-  $A5ED #HTML[#CALL:decode_screenlocstring($A5ED)]
+B $A5ED,16,8 #HTML[#CALL:decode_screenlocstring($A5ED)]
 N $A5FD "AND WILL CROSS THE"
-  $A5FD #HTML[#CALL:decode_screenlocstring($A5FD)]
+B $A5FD,21,8*2,5 #HTML[#CALL:decode_screenlocstring($A5FD)]
 N $A612 "BORDER SUCCESSFULLY"
-  $A612 #HTML[#CALL:decode_screenlocstring($A612)]
+B $A612,22,8*2,6 #HTML[#CALL:decode_screenlocstring($A612)]
 N $A628 "BUT WERE RECAPTURED"
-  $A628 #HTML[#CALL:decode_screenlocstring($A628)]
+B $A628,22,8*2,6 #HTML[#CALL:decode_screenlocstring($A628)]
 N $A63E "AND SHOT AS A SPY"
-  $A63E #HTML[#CALL:decode_screenlocstring($A63E)]
+B $A63E,20,8*2,4 #HTML[#CALL:decode_screenlocstring($A63E)]
 N $A652 "TOTALLY UNPREPARED"
-  $A652 #HTML[#CALL:decode_screenlocstring($A652)]
+B $A652,21,8*2,5 #HTML[#CALL:decode_screenlocstring($A652)]
 N $A667 "TOTALLY LOST"
-  $A667 #HTML[#CALL:decode_screenlocstring($A667)]
+B $A667,15,8,7 #HTML[#CALL:decode_screenlocstring($A667)]
 N $A676 "DUE TO LACK OF PAPERS"
-  $A676 #HTML[#CALL:decode_screenlocstring($A676)]
+B $A676,24,8 #HTML[#CALL:decode_screenlocstring($A676)]
 N $A68E "PRESS ANY KEY"
-  $A68E #HTML[#CALL:decode_screenlocstring($A68E)]
+B $A68E,16,8 #HTML[#CALL:decode_screenlocstring($A68E)]
 
 ; ------------------------------------------------------------------------------
 
 b $A69E bitmap_font
-@ $A69E label=bitmap_font
 D $A69E 0..9, A..Z (omitting O), space, full stop
 D $A69E #UDGTABLE { #FONT$A69E,35,7,2{0,0,560,16}(font) } TABLE#
+@ $A69E label=bitmap_font
 
 ; ------------------------------------------------------------------------------
 
 g $A7C6 Byte used by move_map.
-B $A7C6 move_map_y
 @ $A7C6 label=move_map_y
+  $A7C6 move_map_y
 
 ; ------------------------------------------------------------------------------
 
 g $A7C7 Game window x offset.
-W $A7C7 plot_game_window_x
 @ $A7C7 label=plot_game_window_x
+W $A7C7 plot_game_window_x
 
 ; ------------------------------------------------------------------------------
 
 c $A7C9 get_supertiles
-@ $A7C9 label=get_supertiles
 D $A7C9 Pulls supertiles out of the map.
 D $A7C9 Get height.
+@ $A7C9 label=get_supertiles
   $A7C9 A = (map_position >> 8) & 0xFC; // A = 0, 4, 8, 12, ...
 N $A7CE Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
   $A7CE HL = $BCB8 + (A + (A >> 1)) * 9; // $BCB8 is &map_tiles[0] - 54 so it must be skipping the first row.
@@ -5596,8 +5548,8 @@ N $A7EE Populate $FF58 with 7x5 array of supertile refs.
 ; two entry points
 
 c $A80A plot_bottommost_tiles
-@ $A80A label=plot_bottommost_tiles
 D $A80A Causes some tile plotting.
+@ $A80A label=plot_bottommost_tiles
 @ $A80A nowarn
   $A80A DE = $F278;
   $A80D -
@@ -5609,8 +5561,8 @@ D $A80A Causes some tile plotting.
   $A817 goto plot_horizontal_tiles_common;
 
 c $A819 plot_topmost_tiles
-@ $A819 label=plot_topmost_tiles
 D $A819 Causes some tile plotting.
+@ $A819 label=plot_topmost_tiles
   $A819 DE = $F0F8; // visible tiles array
   $A81C -
   $A81D HLdash = $FF58;
@@ -5618,8 +5570,8 @@ D $A819 Causes some tile plotting.
   $A823 DEdash = $F290; // screen buffer start address
 
 c $A826 plot_horizontal_tiles_common
-@ $A826 label=plot_horizontal_tiles_common
 D $A826 Plotting supertiles.
+@ $A826 label=plot_horizontal_tiles_common
   $A826 A = (A & 3) * 4;
   $A82A ($A86A) = A; // self modify
   $A82D Cdash = A;
@@ -5681,9 +5633,9 @@ D $A826 Plotting supertiles.
 ; ------------------------------------------------------------------------------
 
 c $A8A2 plot_all_tiles
-@ $A8A2 label=plot_all_tiles
 D $A8A2 Plot all tiles.
 D $A8A2 Note: Exits with banked registers active.
+@ $A8A2 label=plot_all_tiles
   $A8A2 DE = $F0F8; // visible tiles array
   $A8A5 -
   $A8A6 HLdash = $FF58; // 7x5 supertile refs
@@ -5729,8 +5681,8 @@ c $A8CF plot_rightmost_tiles
   $A8E5 goto plot_vertical_tiles_common;
 
 c $A8E7 plot_leftmost_tiles
-@ $A8E7 label=plot_leftmost_tiles
 D $A8E7 Suspect: supertile plotting.
+@ $A8E7 label=plot_leftmost_tiles
   $A8E7 DE = $F0F8; // visible tiles array
   $A8EA -
   $A8EB HLdash = $FF58; // 7x5 supertile refs
@@ -5738,8 +5690,8 @@ D $A8E7 Suspect: supertile plotting.
   $A8F1 A = map_position[0]; // map_position lo
 
 c $A8F4 plot_vertical_tiles_common
-@ $A8F4 label=plot_vertical_tiles_common
 D $A8F4 Plotting supertiles.
+@ $A8F4 label=plot_vertical_tiles_common
   $A8F4 A &= 3;
   $A8F6 ($A94C + 1) = A; // self modify
   $A8F9 Cdash = A;
@@ -5826,11 +5778,11 @@ c $A9A0 plot_tile_then_advance
 ; -----------------------------------------------------------------------------
 
 c $A9AD plot_tile
-@ $A9AD label=plot_tile
 D $A9AD Plots a tile to the buffer.
 R $A9AD I:A      Tile index
 R $A9AD I:DEdash Output buffer start address.
 R $A9AD I:HLdash Pointer to supertile index (used to select the correct tile group).
+@ $A9AD label=plot_tile
   $A9AD -
   $A9AE -
   $A9AF Adash = *HLdash; // get supertile index
@@ -5977,9 +5929,9 @@ c $AA8D shunt_map_down_left
 ; ------------------------------------------------------------------------------
 
 c $AAB2 move_map
-@ $AAB2 label=move_map
 D $AAB2 Moves the map when the hero walks.
 R $AAB2 O:HL == map_position
+@ $AAB2 label=move_map
   $AAB2 if (room_index) return; // Can't move the map when indoors.
   $AAB7 if ($8007 & vischar_BYTE7_BIT6) return;
   $AABD HL = $800A;
@@ -6040,10 +5992,10 @@ R $AAB2 O:HL == map_position
   $AB30 return; // pops and calls move_map_* routine pushed at $AAE0
 
 @ $AB31 label=move_map_jump_table
-W $AB31 { move_map_up_left,
-W $AB33 move_map_up_right,
-W $AB35 move_map_down_right,
-W $AB37 move_map_down_left };
+W $AB31 move_map_up_left
+W $AB33 move_map_up_right
+W $AB35 move_map_down_right
+W $AB37 move_map_down_left
 
 C $AB39 move_map_up_left
 @ $AB39 label=move_map_up_left
@@ -6076,26 +6028,26 @@ C $AB5A move_map_down_left
 ; -----------------------------------------------------------------------------
 
 g $AB66 Zoombox stuff.
-B $AB66 zoombox_x
 @ $AB66 label=zoombox_x
-B $AB67 zoombox_horizontal_count
+  $AB66 zoombox_x
 @ $AB67 label=zoombox_horizontal_count
-B $AB68 zoombox_y
+  $AB67 zoombox_horizontal_count
 @ $AB68 label=zoombox_y
-B $AB69 zoombox_vertical_count
+  $AB68 zoombox_y
 @ $AB69 label=zoombox_vertical_count
+  $AB69 zoombox_vertical_count
 
 ; -----------------------------------------------------------------------------
 
 g $AB6A Game window current attribute byte.
-B $AB6A game_window_attribute
 @ $AB6A label=game_window_attribute
+  $AB6A game_window_attribute
 
 ; -----------------------------------------------------------------------------
 
 c $AB6B choose_game_window_attributes
-@ $AB6B label=choose_game_window_attributes
 R $AB6B O:A Chosen attribute.
+@ $AB6B label=choose_game_window_attributes
   $AB6B if (room_index < room_29_secondtunnelstart) <%
   $AB72   A = day_or_night;
   $AB75   C = attribute_WHITE_OVER_BLACK;
@@ -6260,10 +6212,10 @@ N $ACE4 Vertical.
   $ACFB return;
 
 c $ACFC zoombox_draw_tile
-@ $ACFC label=zoombox_draw_tile
 R $ACFC I:A Index of tile to draw.
 R $ACFC I:BC (preserved)
 R $ACFC I:HL Destination address.
+@ $ACFC label=zoombox_draw_tile
   $ACFC PUSH BC
   $ACFD PUSH AF
   $ACFE PUSH HL
@@ -6287,15 +6239,15 @@ R $ACFC I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 w $AD29 spotlight_movement_data_maybe
-@ $AD29 label=spotlight_movement_data_maybe
 D $AD29 Likely: spotlight movement data. Groups of seven?
+@ $AD29 label=spotlight_movement_data_maybe
 
 ; ------------------------------------------------------------------------------
 
 c $AD59 searchlight_AD59
-@ $AD59 label=searchlight_AD59
 D $AD59 Used by nighttime.
 R $AD59 I:HL Pointer to spotlight_movement_data_maybe
+@ $AD59 label=searchlight_AD59
   $AD59 E = *HL++;
   $AD5B D = *HL++;
   $AD5D (*HL)--;
@@ -6341,8 +6293,8 @@ R $AD59 I:HL Pointer to spotlight_movement_data_maybe
 ; ------------------------------------------------------------------------------
 
 c $ADBD nighttime
-@ $ADBD label=nighttime
 D $ADBD Turns white screen elements light blue and tracks the hero with a searchlight.
+@ $ADBD label=nighttime
   $ADBD HL = &searchlight_state;
   $ADC0 if (*HL == searchlight_STATE_SEARCHING) goto not_tracking;
 ;
@@ -6431,21 +6383,19 @@ N $ADF1 Move searchlight up/down to focus on hero.
 ; ------------------------------------------------------------------------------
 
 g $AE75 Searchlight stuff
-;
 D $AE75 (<- nighttime, searchlight_plot)
-B $AE75 searchlight_related
 @ $AE75 label=searchlight_related
-;
+  $AE75 searchlight_related
 N $AE76 (<- nighttime)
-W $AE76 searchlight_coords
 @ $AE76 label=searchlight_coords
+W $AE76 searchlight_coords
 
 ; ------------------------------------------------------------------------------
 
 c $AE78 searchlight_caught
-@ $AE78 label=searchlight_caught
 D $AE78 Suspect this is when the hero is caught in the spotlight.
 R $AE78 I:HL Pointer to spotlight_movement_data_maybe
+@ $AE78 label=searchlight_caught
   $AE78 DE = map_position;
   $AE7C if (HL[0] + 5 >= E + 12 || HL[0] + 10 < E + 10) return;
   $AE8B if (HL[1] + 5 >= D + 10 || D + 6 >= HL[1] + 12) return;
@@ -6460,8 +6410,8 @@ R $AE78 I:HL Pointer to spotlight_movement_data_maybe
 ; ------------------------------------------------------------------------------
 
 c $AEB8 searchlight_plot
-@ $AEB8 label=searchlight_plot
 D $AEB8 Searchlight plotter.
+@ $AEB8 label=searchlight_plot
   $AEB8 -
 @ $AEB9 nowarn
   $AEB9 DEdash = &searchlight_shape[0];
@@ -6530,9 +6480,9 @@ D $AEB8 Searchlight plotter.
 
 ; -----------------------------------------------------------------------------
 
-B $AF3E searchlight_shape
-@ $AF3E label=searchlight_shape
 N $AF3E Bitmap circle.
+@ $AF3E label=searchlight_shape
+B $AF3E searchlight_shape
 
 ; -----------------------------------------------------------------------------
 
@@ -6548,15 +6498,15 @@ b $AF5E zoombox_tiles
 ; ------------------------------------------------------------------------------
 
 g $AF8E Bribed character.
-B $AF8E bribed_character
 @ $AF8E label=bribed_character
+  $AF8E bribed_character
 
 ; ------------------------------------------------------------------------------
 
 c $AF8F touch
-@ $AF8F label=touch
 D $AF8F Door handling, bounds checking,
 R $AF8F I:IY Pointer to visible character block.
+@ $AF8F label=touch
   $AF8F EX AF,AF'
   $AF90 stashed_A = A;
   $AF93 IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_BIT7;  // wild guess: clamp character in position?
@@ -6682,9 +6632,9 @@ N $B03D --------
   $B0F2   else <% IY[7] |= vischar_BYTE7_BIT5;
   $B0F6     goto $B0D0; %>
 
-B $B0F8,4 four_bytes_B0F8
-@ $B0F8 label=four_bytes_B0F8
 N $B0F8 (<- collision)
+@ $B0F8 label=four_bytes_B0F8
+  $B0F8,4 four_bytes_B0F8
 
   $B0FC   pop_next: POP HL
   $B0FD   POP BC
@@ -6695,9 +6645,9 @@ N $B0F8 (<- collision)
 ; ------------------------------------------------------------------------------
 
 c $B107 accept_bribe
-@ $B107 label=accept_bribe
 D $B107 Character accepts the bribe.
 R $B107 I:IY Pointer to visible character.
+@ $B107 label=accept_bribe
   $B107 increase_morale_by_10_score_by_50();
   $B10A IY[1] = 0;
   $B10E HL = IY + 2;
@@ -6722,9 +6672,9 @@ N $B123 We have a bribe.
 ; ------------------------------------------------------------------------------
 
 c $B14C bounds_check
-@ $B14C label=bounds_check
 D $B14C Outdoor bounds detection?
 R $B14C I:IY Pointer to visible character block.
+@ $B14C label=bounds_check
   $B14C if (room_index) <% interior_bounds_check(); return; %>
   $B153 B = 24; // 24 iterations (includes walls and fences)
   $B155 DE = &walls[0];
@@ -6758,9 +6708,9 @@ N $B1AD Found it.
 ; ------------------------------------------------------------------------------
 
 c $B1C7 multiply_by_8
-@ $B1C7 label=multiply_by_8
 R $B1C7 A  Argument.
 R $B1C7 BC Result of (A << 3).
+@ $B1C7 label=multiply_by_8
   $B1C7 B = 0;
   $B1C9 A <<= 1;
   $B1CA B = (B << 1) + carry;
@@ -6774,8 +6724,8 @@ R $B1C7 BC Result of (A << 3).
 ; ------------------------------------------------------------------------------
 
 c $B1D4 is_door_locked
-@ $B1D4 label=is_door_locked
 R $B1D4 O:F Z set if door open.
+@ $B1D4 label=is_door_locked
   $B1D4 C = current_door & gates_and_doors_MASK;
   $B1DB HL = &gates_and_doors[0];
   $B1DE B = 9; // 9 iterations
@@ -6831,11 +6781,11 @@ c $B1F5 door_handling
 ; ------------------------------------------------------------------------------
 
 c $B252 door_in_range
-@ $B252 label=door_in_range
 D $B252 (saved_y,saved_x) within (-3,+3) of HL[1..] scaled << 2
 R $B252 I:HL Pointer to (byte before) coord byte pair.
 R $B252 O:HL Corrupted.
 R $B252 O:F  C/NC if nomatch/match.
+@ $B252 label=door_in_range
   $B252 A = HL[1];
   $B254 -
   $B255 multiply_by_4();
@@ -6852,11 +6802,10 @@ R $B252 O:F  C/NC if nomatch/match.
 ; ------------------------------------------------------------------------------
 
 c $B295 multiply_by_4
-@ $B295 label=multiply_by_4
 D $B295 Multiplies A by 4, returning the result in BC.
-D $B295 Used by the routines at #R$68A2, #R$B252 and #R$C918.
 R $B295 I:A  Argument.
 R $B295 O:BC Result of (A << 2).
+@ $B295 label=multiply_by_4
   $B295 B = 0;
   $B297 A <<= 1;
   $B298 B = (B << 1) + carry;
@@ -6868,13 +6817,13 @@ R $B295 O:BC Result of (A << 2).
 ; ------------------------------------------------------------------------------
 
 c $B29F interior_bounds_check
-@ $B29F label=interior_bounds_check
 D $B29F Check the character is inside of bounds, when indoors.
 R $B29F I:IY Pointer to visible character.
 R $B29F O:A  Corrupted.
 R $B29F O:BC Corrupted.
 R $B29F O:F  Z clear if boundary hit, set otherwise.
 R $B29F O:HL Corrupted.
+@ $B29F label=interior_bounds_check
   $B29F BC = &roomdef_bounds[roomdef_bounds_index];
   $B2AC HL = &saved_y;
   $B2AF A = *BC;
@@ -6921,8 +6870,8 @@ N $B2FA Not found.
 ; ------------------------------------------------------------------------------
 
 c $B2FC reset_outdoors
-@ $B2FC label=reset_outdoors
 D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the screen.
+@ $B2FC label=reset_outdoors
   $B2FC HL = $8000;
   $B2FF reset_position(); // reset hero
 ;
@@ -6948,9 +6897,9 @@ D $B2FC Reset the hero's position, redraw the scene, then zoombox it onto the sc
 ; ------------------------------------------------------------------------------
 
 c $B32D door_handling_interior
-@ $B32D label=door_handling_interior
 D $B32D Door related stuff.
 R $B32D I:IY Pointer to visible character.
+@ $B32D label=door_handling_interior
   $B32D HL = &door_related;
   $B330 for (;;) <% A = *HL;
   $B331   if (A == 255) return;
@@ -6990,8 +6939,8 @@ R $B32D I:IY Pointer to visible character.
 ; -----------------------------------------------------------------------------
 
 c $B387 action_red_cross_parcel
-@ $B387 label=action_red_cross_parcel
 D $B387 Player has tried to open the red cross parcel.
+@ $B387 label=action_red_cross_parcel
   $B387 item_structs[item_RED_CROSS_PARCEL].room = itemstruct_ROOM_MASK; // room_NONE & 0x3F;
   $B38C HL = &items_held;
   $B38F if (*HL != item_RED_CROSS_PARCEL) HL++; // one or the other must be a red cross parcel item
@@ -7005,9 +6954,9 @@ D $B387 Player has tried to open the red cross parcel.
 ; -----------------------------------------------------------------------------
 
 c $B3A8 action_bribe
-@ $B3A8 label=action_bribe
 D $B3A8 Player has tried to bribe a prisoner.
 D $B3A8 This searches visible characters only.
+@ $B3A8 label=action_bribe
 @ $B3A8 nowarn
   $B3A8 HL = $8020; // iterate over non-player characters
   $B3AB B = 7; // 7 iterations
@@ -7057,8 +7006,8 @@ c $B3E1 action_uniform
 ; -----------------------------------------------------------------------------
 
 c $B3F6 action_shovel
-@ $B3F6 label=action_shovel
 D $B3F6 Player has tried to use the shovel item.
+@ $B3F6 label=action_shove
   $B3F6 if (room_index != room_50_blocked_tunnel) return;
   $B3FC if (roomdef_50_blocked_tunnel_boundary[0] == 255) return; // blockage already cleared
   $B402 roomdef_50_blocked_tunnel_boundary[0] = 255;
@@ -7157,15 +7106,14 @@ c $B4B2 action_yellow_key
 c $B4B6 action_green_key
 @ $B4B6 label=action_green_key
   $B4B6 A = room_14_torch;
-;
-; fallthrough
+E $B4B6 FALL THROUGH into action_key.
 
 ; -----------------------------------------------------------------------------
 
 c $B4B8 action_key
-@ $B4B8 label=action_key
 D $B4B8 Common end of action_*_key routines.
 R $B4B8 I:A Room number the key is for.
+@ $B4B8 label=action_key
   $B4B8 PUSH AF
   $B4B9 open_door();
   $B4BC POP BC
@@ -7178,14 +7126,13 @@ R $B4B8 I:A Room number the key is for.
   $B4C8   increase_morale_by_10_score_by_50();
   $B4CB   B = message_IT_IS_OPEN; %>
   $B4CD queue_message_for_display(B);
-;
-; fallthrough
+E $B4B8 FALL THROUGH into open_door.
 
 ; -----------------------------------------------------------------------------
 
 c $B4D0 open_door
-@ $B4D0 label=open_door
 R $B4D0 O:HL Likely a pointer to ?
+@ $B4D0 label=open_door
   $B4D0 if (room_index == 0) goto outdoors; else goto indoors;
 
 ; needless jump here
@@ -7247,8 +7194,8 @@ N $B523 Range check pattern (-3..+3).
 ; ------------------------------------------------------------------------------
 
 b $B53E walls
-@ $B53E label=walls
 D $B53E Boundaries.
+@ $B53E label=walls
   $B53E,6
   $B544,6
   $B54A,6
@@ -7265,8 +7212,8 @@ D $B53E Boundaries.
 ; ------------------------------------------------------------------------------
 
 b $B586 fences
-@ $B586 label=fences
 D $B586 Boundaries.
+@ $B586 label=fences
   $B586,6
   $B58C,6
   $B592,6
@@ -7418,14 +7365,12 @@ c $B5CE called_from_main_loop_9
 ; -----------------------------------------------------------------------------
 
 c $B71B reset_position
-@ $B71B label=reset_position
 D $B71B Save a copy of the vischar's position + offset.
 R $B71B I:HL Pointer to visible character.
+@ $B71B label=reset_position
   $B71B -
   $B71C memcpy(&saved_y, HL + 0x0F, 6);
   $B728 -
-
-; This entry point is used by the routine at #R$B5CE.
   $B729 -
   $B72A HL += 0x18;
   $B72E DE = saved_x + 0x0200;
@@ -7445,8 +7390,8 @@ R $B71B I:HL Pointer to visible character.
 ; -----------------------------------------------------------------------------
 
 c $B75A reset_game
-@ $B75A label=reset_game
 D $B75A Discover all items.
+@ $B75A label=reset_game
   $B75A B = 16; C = 0;
   $B75D do <% -
   $B75E   item_discovered(C); // pass C as C
@@ -7479,8 +7424,8 @@ N $B794 Put hero to bed.
 ; -----------------------------------------------------------------------------
 
 c $B79B reset_map_and_characters
-@ $B79B label=reset_map_and_characters
 D $B79B Resets all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
+@ $B79B label=reset_map_and_characters
   $B79B B = 7; // iterations
 @ $B79D nowarn
   $B79D HL = $8020; // iterate over non-player characters
@@ -7529,19 +7474,19 @@ N $B7F2 Reset characters 12..15 and 20..25.
 ; ------------------------------------------------------------------------------
 
 b $B819 character_reset_data
-@ $B819 label=character_reset_data
 D $B819 10 x 3-byte structs
 D $B819 struct { byte room; byte y; byte x; }; // partial of character_struct
-  $B819,3 { room_3_hut2right, 40,60 }, // for character 12
-  $B81C,3 { room_3_hut2right, 36,48 }, // for character 13
-  $B81F,3 { room_5_hut3right, 40,60 }, // for character 14
-  $B822,3 { room_5_hut3right, 36,34 }, // for character 15
-  $B825,3 { room_NONE,        52,60 }, // for character 20
-  $B828,3 { room_NONE,        52,44 }, // for character 21
-  $B82B,3 { room_NONE,        52,28 }, // for character 22
-  $B82E,3 { room_NONE,        52,60 }, // for character 23
-  $B831,3 { room_NONE,        52,44 }, // for character 24
-  $B834,3 { room_NONE,        52,28 }, // for character 25
+@ $B819 label=character_reset_data
+  $B819,3 room_3_hut2right, 40,60 // for character 12
+  $B81C,3 room_3_hut2right, 36,48 // for character 13
+  $B81F,3 room_5_hut3right, 40,60 // for character 14
+  $B822,3 room_5_hut3right, 36,34 // for character 15
+  $B825,3 room_NONE,        52,60 // for character 20
+  $B828,3 room_NONE,        52,44 // for character 21
+  $B82B,3 room_NONE,        52,28 // for character 22
+  $B82E,3 room_NONE,        52,60 // for character 23
+  $B831,3 room_NONE,        52,44 // for character 24
+  $B834,3 room_NONE,        52,28 // for character 25
 
 ; $766E is 2, but reset_map_and_characters resets it to 3 (the only byte the
 ; differs between the default character data and the character_reset_data). Bug?
@@ -7551,21 +7496,21 @@ D $B819 struct { byte room; byte y; byte x; }; // partial of character_struct
 
 g $B837 mask_stuff stuff.
 ;
-B $B837 byte_B837
 @ $B837 label=byte_B837
+  $B837 byte_B837
 ;
-B $B838 byte_B838
 @ $B838 label=byte_B838
+  $B838 byte_B838
 ;
+@ $B839 label=word_B839
 W $B839 word_B839
 ; might be better as two bytes
-@ $B839 label=word_B839
 
 ; -----------------------------------------------------------------------------
 
 c $B83B searchlight_mask_test
-@ $B83B label=searchlight_mask_test
 R $B83B I:IY Pointer to visible character?
+@ $B83B label=searchlight_mask_test
   $B83B HL = IY;
   $B83E if (L) return; // skip non-player character
   $B841 HL = $8131; // mask_buffer + 0x31
@@ -7586,8 +7531,8 @@ R $B83B I:IY Pointer to visible character?
 ; -----------------------------------------------------------------------------
 
 c $B866 locate_vischar_or_itemstruct_then_plot
-@ $B866 label=locate_vischar_or_itemstruct_then_plot
 D $B866 searchlight related.
+@ $B866 label=locate_vischar_or_itemstruct_then_plot
   $B866 locate_vischar_or_itemstruct();
   $B869 if (!Z) return;
   $B86A if ((A & (1<<6)) == 0) <%
@@ -7610,9 +7555,9 @@ D $B866 searchlight related.
 ; -----------------------------------------------------------------------------
 
 c $B89C locate_vischar_or_itemstruct
-@ $B89C label=locate_vischar_or_itemstruct
 D $B89C Locates a vischar or item to plot.
 R $B89C O:IY vischar or itemstruct to plot.
+@ $B89C label=locate_vischar_or_itemstruct
   $B89C BC = 0;
   $B89F DE = 0;
   $B8A1 A = 0xFF;
@@ -7680,9 +7625,9 @@ R $B89C O:IY vischar or itemstruct to plot.
 ; -----------------------------------------------------------------------------
 
 c $B916 mask_stuff
-@ $B916 label=mask_stuff
 D $B916 Sets attr of something, checks indoor room index, ...
 D $B916 unpacks mask stuff
+@ $B916 label=mask_stuff
 @ $B916 nowarn
   $B916 memset($8100, 0xFF, 0xA0);
 @ $B91B nowarn
@@ -7845,16 +7790,13 @@ R $BA6F I:C Iterations (inner loop);
   $BAC5   HL += 8;
   $BAC9 %> while (--B);
 E $B916 Bug: Looks like a RET is missing here. We fall through into multiply.
-;
-; fallthrough
 
 c $BACD multiply
-@ $BACD label=multiply
 D $BACD HL = A * E
 R $BACD I:A Left hand value.
 R $BACD I:E Right hand value.
 R $BACD O:HL Multiplied result.
-;
+@ $BACD label=multiply
   $BACD B = 8; // iterations
   $BACF HL = 0;
   $BAD2 D = 0; // e.g. DE = 8;
@@ -7867,10 +7809,10 @@ R $BACD O:HL Multiplied result.
 ; -----------------------------------------------------------------------------
 
 c $BADC mask_against_tile
-@ $BADC label=mask_against_tile
 D $BADC Masks characters obscured by foreground objects.
 R $BADC I:A  Mask tile index.
 R $BADC I:HL Pointer to destination.
+@ $BADC label=mask_against_tile
   $BADC DEdash = HL
   $BADD -
   $BADE HLdash = &exterior_tiles_0[A];
@@ -7885,12 +7827,12 @@ R $BADC I:HL Pointer to destination.
 ; -----------------------------------------------------------------------------
 
 c $BAF7 vischar_visible
-@ $BAF7 label=vischar_visible
 D $BAF7 Clipping vischars to the game window.
 R $BAF7 O:A  0 or 0xFF
 R $BAF7 O:BC Clipped width.
 R $BAF7 O:DE Clipped height.
 R $BAF7 O:IY Pointer to visible character.
+@ $BAF7 label=vischar_visible
   $BAF7 HL = &map_position_related_1;
   $BAFA A = map_position[0] + 24;
   $BAFF A -= *HL;
@@ -7945,8 +7887,8 @@ R $BAF7 O:IY Pointer to visible character.
 ; -----------------------------------------------------------------------------
 
 c $BB98 called_from_main_loop_3
-@ $BB98 label=called_from_main_loop_3
 D $BB98 Walks the visible characters array doing ?
+@ $BB98 label=called_from_main_loop_3
   $BB98 B = 8; // iterations
   $BB9A IY = $8000;
   $BB9E do <% PUSH BC
@@ -8055,10 +7997,10 @@ D $BB98 Walks the visible characters array doing ?
 ; -----------------------------------------------------------------------------
 
 c $BCAA select_tile_set
-@ $BCAA label=select_tile_set
 D $BCAA Turn a map ref? into a tile set pointer.
 R $BCAA O:BC Pointer to tile set.
 R $BCAA O:HL ?
+@ $BCAA label=select_tile_set
   $BCAA -
   $BCAB if (room_index) <%
   $BCB1   BC = &interior_tiles[0];
@@ -8083,9 +8025,9 @@ N $BCB6 Convert map position to an index into 7x5 supertile refs array.
 ; Map
 ;
 b $BCEE map_tiles
-@ $BCEE label=map_tiles
 D $BCEE Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
-  $BCEE,1836,54*34
+@ $BCEE label=map_tiles
+  $BCEE,1836,54
 
 ; The map, with blanks and grass replaced to show the outline more clearly:
 ;
@@ -8353,16 +8295,15 @@ D $BCEE Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
 
 g $C41A Pointer to bytes to output as pseudo-random data.
 D $C41A Initially set to $9000. Wraps around after $90FF.
-W $C41A prng_pointer
 @ $C41A label=prng_pointer
+W $C41A prng_pointer
 
 ; -----------------------------------------------------------------------------
 
 c $C41C spawn_characters
-@ $C41C label=spawn_characters
 D $C41C seems to move characters around, or perhaps just spawn them
-;
-D $C41C Form a map position in DE.
+@ $C41C label=spawn_characters
+N $C41C Form a map position in DE.
   $C41C HL = map_position;
   $C41F E = (L < 8) ? 0 : L;
   $C426 D = (H < 8) ? 0 : H;
@@ -8418,8 +8359,8 @@ N $C441   Outdoors.
 ; -----------------------------------------------------------------------------
 
 c $C47E purge_visible_characters
-@ $C47E label=purge_visible_characters
 D $C47E Run through all visible characters, resetting them.
+@ $C47E label=purge_visible_characters
   $C47E HL = &map_position;
   $C481 E = MAX(L - 9, 0);
   $C488 D = MAX(H - 9, 0);
@@ -8463,9 +8404,9 @@ D $C47E Run through all visible characters, resetting them.
 ; -----------------------------------------------------------------------------
 
 c $C4E0 spawn_character
-@ $C4E0 label=spawn_character
 D $C4E0 Adds characters to the visible character list.
 R $C4E0 I:HL Pointer to characterstruct.  // e.g. $766D
+@ $C4E0 label=spawn_character
   $C4E0 if (*HL & characterstruct_FLAG_DISABLED) return;
 ;
   $C4E3 PUSH HL
@@ -8577,9 +8518,9 @@ R $C4F6 I:HL Pointer to empty slot.
 ; -----------------------------------------------------------------------------
 
 c $C5D3 reset_visible_character
-@ $C5D3 label=reset_visible_character
 D $C5D3 Reset a visible character (either a character or an object).
 R $C5D3 I:HL Pointer to visible character.
+@ $C5D3 label=reset_visible_character
   $C5D3 A = *HL;
   $C5D4 if (A == character_NONE) return;
   $C5D7 if (A >= character_26_STOVE_1) <%
@@ -8630,11 +8571,11 @@ N $C602 A non-object character.
 ; -----------------------------------------------------------------------------
 
 c $C651 sub_C651
-@ $C651 label=sub_C651
 D $C651 ...
 R $C651 I:HL Pointer to characterstruct + 5. // sampled = $768E, 7695, 769C, 7617, 761E, 7625, 762C, 7633, 7656, 765D
 R $C651 O:A  0/255
 R $C651 O:HL Pointer to somewhere in word_783A.
+@ $C651 label=sub_C651
   $C651 A = *HL;
   $C652 if (A == 0xFF) <%
   $C656   A = *++HL & characterstruct_BYTE6_MASK_HI;
@@ -8676,8 +8617,8 @@ N $C692 sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
 ; -----------------------------------------------------------------------------
 
 c $C6A0 move_characters
-@ $C6A0 label=move_characters
 D $C6A0 Moves characters around.
+@ $C6A0 label=move_characters
   $C6A0 byte_A13E = 0xFF;
   $C6A5 character_index = (character_index + 1) % character_26; // 26 = highest + 1 character
   $C6B1 HL = get_character_struct(character_index); // pass character_index as A
@@ -8793,7 +8734,6 @@ N $C742 Stuff reading from door_positions.
 ; -----------------------------------------------------------------------------
 
 c $C79A change_by_delta
-@ $C79A label=change_by_delta
 D $C79A [leaf] (<- move_characters)
 D $C79A Gets called with successive bytes.
 R $C79A I:Adash Maximum value of delta?
@@ -8801,6 +8741,7 @@ R $C79A I:B     Reset to zero.
 R $C79A I:DE    Pointer to bytes within character_structs. // 761b,761c, 7622,7623, 7629,762a, 7630,7631, 7653,...
 R $C79A I:HL    Pointer to bytes within word_783A.         // 787a,787b, 787e,787f, 78b2,78b3, 7884,7885, 7892,...
 R $C79A O:B     Incremented by one if no movement.
+@ $C79A label=change_by_delta
   $C79A -
   $C79B C = Adash; // ie. banked A // some maximum value
   $C79C -
@@ -8820,24 +8761,22 @@ R $C79A O:B     Incremented by one if no movement.
 ; -----------------------------------------------------------------------------
 
 c $C7B9 get_character_struct
-@ $C7B9 label=get_character_struct
 R $C7B9 I:A  Character index.
 R $C7B9 O:HL Character struct.
+@ $C7B9 label=get_character_struct
   $C7B9 HL = &character_structs[A];
   $C7C5 return;
 
 ; ------------------------------------------------------------------------------
 
-; Character events and handlers.
-;
 c $C7C6 character_event
-@ $C7C6 label=character_event
 D $C7C6 Makes characters sit, sleep or other things TBD.
 ; sampled HL = 80a2, 80e2, 8042, 8062, 76b8, 76bf, 80c2, 80e2, 8022, 8002, 8082, 766b,  (vischar+2 OR charstruct+5)
 R $C7C6 I:HL Points to character_struct.unk2 or vischar.target.
 
 ; something isn't right here. i've sampled HL at this point and we're receiving a location structure, either from character_struct or vischar. next we're comparing the first byte /as if/ it's a character. this was decided in some very early investigations so could be wrong.
 
+@ $C7C6 label=character_event
   $C7C6 A = *HL;
   $C7C7 if (A >= character_7_GUARD_7  && A <= character_12_GUARD_12) goto character_sleeps;
   $C7D0 if (A >= character_18_GUARD_DOG_3 && A <= character_22_PRISONER_3) goto character_sits;
@@ -8869,36 +8808,36 @@ N $C7DF Locate the character in the map.
 ; charevnt_10       ; released from solitary
 
 N $C7F9 character_to_event_handler_index_map
-@ $C7F9 label=character_to_event_handler_index_map
 N $C7F9 Array of (character + flags, character event handler index) mappings.
-W $C7F9 { character_6_GUARD_6       | 0b10100000, charevnt_0 },
-W $C7FB { character_7_GUARD_7       | 0b10100000, charevnt_0 },
-W $C7FD { character_8_GUARD_8       | 0b10100000, charevnt_1 },
-W $C7FF { character_9_GUARD_9       | 0b10100000, charevnt_1 },
-W $C801 { character_5_GUARD_5       | 0b00000000, charevnt_0 },
-W $C803 { character_6_GUARD_6       | 0b00000000, charevnt_1 },
-W $C805 { character_5_GUARD_5       | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
-W $C807 { character_6_GUARD_6       | 0b10000000, charevnt_3 }, // checks byte_A13E case 1
-W $C809 { character_14_GUARD_14     | 0b00000000, charevnt_2 },
-W $C80B { character_15_GUARD_15     | 0b00000000, charevnt_2 },
-W $C80D { character_14_GUARD_14     | 0b10000000, charevnt_0 },
-W $C80F { character_15_GUARD_15     | 0b10000000, charevnt_1 },
-W $C811 { character_16_GUARD_DOG_1  | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
-W $C813 { character_16_GUARD_DOG_2  | 0b00000000, charevnt_5 }, // checks byte_A13E case 2
-W $C815 { character_16_GUARD_DOG_1  | 0b10000000, charevnt_0 },
-W $C817 { character_16_GUARD_DOG_2  | 0b10000000, charevnt_1 },
-W $C819 { character_0_COMMANDANT    | 0b10100000, charevnt_0 },
-W $C81B { character_1_GUARD_1       | 0b10100000, charevnt_1 },
-W $C81D { character_10_GUARD_10     | 0b00100000, charevnt_7 },
-W $C81F { character_12_GUARD_12     | 0b00100000, charevnt_8 }, // hero sleeps
-W $C821 { character_11_GUARD_11     | 0b00100000, charevnt_9 }, // hero sits
-W $C823 { character_4_GUARD_4       | 0b10100000, charevnt_6 }, // go to 0x0315
-W $C825 { character_4_GUARD_4       | 0b00100000, charevnt_10 },// released from solitary
-W $C827 { character_5_GUARD_5       | 0b00100000, charevnt_4 }, // zero morale_1
+@ $C7F9 label=character_to_event_handler_index_map
+W $C7F9 character_6_GUARD_6       | 0b10100000, charevnt_0,
+W $C7FB character_7_GUARD_7       | 0b10100000, charevnt_0,
+W $C7FD character_8_GUARD_8       | 0b10100000, charevnt_1,
+W $C7FF character_9_GUARD_9       | 0b10100000, charevnt_1,
+W $C801 character_5_GUARD_5       | 0b00000000, charevnt_0,
+W $C803 character_6_GUARD_6       | 0b00000000, charevnt_1,
+W $C805 character_5_GUARD_5       | 0b10000000, charevnt_3, // checks byte_A13E case 1
+W $C807 character_6_GUARD_6       | 0b10000000, charevnt_3, // checks byte_A13E case 1
+W $C809 character_14_GUARD_14     | 0b00000000, charevnt_2,
+W $C80B character_15_GUARD_15     | 0b00000000, charevnt_2,
+W $C80D character_14_GUARD_14     | 0b10000000, charevnt_0,
+W $C80F character_15_GUARD_15     | 0b10000000, charevnt_1,
+W $C811 character_16_GUARD_DOG_1  | 0b00000000, charevnt_5, // checks byte_A13E case 2
+W $C813 character_16_GUARD_DOG_2  | 0b00000000, charevnt_5, // checks byte_A13E case 2
+W $C815 character_16_GUARD_DOG_1  | 0b10000000, charevnt_0,
+W $C817 character_16_GUARD_DOG_2  | 0b10000000, charevnt_1,
+W $C819 character_0_COMMANDANT    | 0b10100000, charevnt_0,
+W $C81B character_1_GUARD_1       | 0b10100000, charevnt_1,
+W $C81D character_10_GUARD_10     | 0b00100000, charevnt_7,
+W $C81F character_12_GUARD_12     | 0b00100000, charevnt_8, // hero sleeps
+W $C821 character_11_GUARD_11     | 0b00100000, charevnt_9, // hero sits
+W $C823 character_4_GUARD_4       | 0b10100000, charevnt_6, // go to 0x0315
+W $C825 character_4_GUARD_4       | 0b00100000, charevnt_10,// released from solitary
+W $C827 character_5_GUARD_5       | 0b00100000, charevnt_4, // zero morale_1
 
 N $C829 character_event_handlers
-@ $C829 label=character_event_handlers
 N $C829 Array of pointers to character event handlers.
+@ $C829 label=character_event_handlers
 W $C829 charevnt_handler *character_event_handlers[] = { &charevnt_handler_0,
 W $C82B   &charevnt_handler_1,
 W $C82D   &charevnt_handler_2,
@@ -8981,16 +8920,16 @@ N $C88D charevnt_handler_8_hero_sleeps
 
 g $C891 Likely: A countdown until any food item is discovered.
 D $C891 (<- follow_suspicious_character, bribes_solitary_food)
-B $C891 food_discovered_counter
 @ $C891 label=food_discovered_counter
+  $C891 food_discovered_counter
 
 ; ------------------------------------------------------------------------------
 
 c $C892 follow_suspicious_character
-@ $C892 label=follow_suspicious_character
 D $C892 Causes characters to follow the hero if he's being suspicious.
 D $C892 Also: Food item discovery.
 D $C892 Also: Automatic hero behaviour.
+@ $C892 label=follow_suspicious_character
   $C892 byte_A13E = 0;
   $C896 if (bell) hostiles_persue();
   $C89D if (food_discovered_counter != 0 && --food_discovered_counter == 0) <%
@@ -9030,9 +8969,9 @@ N $C902 Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
 ; ------------------------------------------------------------------------------
 
 c $C918 character_behaviour
-@ $C918 label=character_behaviour
 D $C918 Character behaviour?
 R $C918 I:IY Pointer to visible character block.
+@ $C918 label=character_behaviour
   $C918 A = IY[7]; // $8007 etc. // more flags
   $C91B B = A;
   $C91C A &= vischar_BYTE7_MASK;
@@ -9130,7 +9069,6 @@ N $C99C Found bribed character.
   $C9EF   move_character_X();
   $C9F2   if (Z) goto bribes_solitary_food; %> // exit via
 
-; This entry point is used by the routine at #R$CA81.
 ; Calling this "gizzards", as unsure what it's doing.
   $C9F5 gizzards: if (A != IY[13]) IY[13] = A | vischar_BYTE13_BIT7; // sampled IY=$8040,$8020,$8000
   $C9FE return;
@@ -9145,12 +9083,12 @@ N $C99C Found bribed character.
 ; ------------------------------------------------------------------------------
 
 c $CA11 move_character_Y
-@ $CA11 label=move_character_Y
 D $CA11 Returns vischar[15] - scalefn(vischar[4])
 R $CA11 I:HL Pointer to visible character block + 4.
 R $CA11 I:IY Pointer to visible character block.
 R $CA11 O:A  8/4/0 .. meaning ?
 R $CA11 O:HL Pointer to ?
+@ $CA11 label=move_character_Y
   $CA11 A = *HL; // sampled HL=$8004,$8044,$8064,$8084
   $CA12 multiply_by_8(); // self modified by #R$C9DA
   $CA15 HL += 11; // position on Y axis ($800F etc.)
@@ -9172,12 +9110,12 @@ R $CA11 O:HL Pointer to ?
 ; ------------------------------------------------------------------------------
 
 c $CA49 move_character_X
-@ $CA49 label=move_character_X
 D $CA49 Nearly identical routine to move_character_Y above.
 R $CA49 I:HL Pointer to visible character block + 5.
 R $CA49 I:IY Pointer to visible character block.
 R $CA49 O:A  5/7/0 .. meaning ?
 R $CA49 O:HL Pointer to ?
+@ $CA49 label=move_character_X
   $CA49 A = *HL; // sampled HL=$8025,$8065,$8005
   $CA4A multiply_by_8(); // self modified by #R$C918
   $CA4D HL += 12; // position on X axis ($8011 etc.)
@@ -9199,10 +9137,10 @@ R $CA49 O:HL Pointer to ?
 ; ------------------------------------------------------------------------------
 
 c $CA81 bribes_solitary_food
-@ $CA81 label=bribes_solitary_food
 D $CA81 Bribes, solitary, food, 'character enters' sound.
 R $CA81 I:IY Pointer to $8000, $8020, $8040, $8060, $8080
 R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
+@ $CA81 label=bribes_solitary_food
   $CA81 A = IY[1];
   $CA84 C = A;
   $CA85 A &= vischar_BYTE1_MASK;
@@ -9255,19 +9193,16 @@ R $CA81 I:HL Pointer to $8004, $8024, $8044, $8064, $8084
   $CB1F     (*HL) -= 2; %> // $8003 etc.
   $CB21   else <% (*HL)++;
   $CB22     HL--; %> %>
-;
-; fallthrough
+E $CA81 FALL THROUGH to sub_CB23.
 
 c $CB23 sub_CB23
-@ $CB23 label=sub_CB23
-; This entry point is used by the routines at #R$A3B3, #R$B107 and #R$C918.
 R $CB23 I:A  Character index?
 R $CB23 I:HL ?
+@ $CB23 label=sub_CB23
   $CB23 PUSH HL
   $CB24 sub_C651();
   $CB27 if (A == 0xFF) <%
   $CB2C   POP HL
-; This entry point is used by the routine at #R$C4E0.
   $CB2D   if (L != 0x02) <% // if not hero's vischar
   $CB33     if (IY[0] & vischar_BYTE0_MASK == 0) <%
   $CB3A       A = *HL & vischar_BYTE2_MASK;
@@ -9306,18 +9241,18 @@ c $CB75 multiply_by_1
 ; ------------------------------------------------------------------------------
 
 c $CB79 element_A_of_table_7738
-@ $CB79 label=element_A_of_table_7738
 R $CB79 I:A  Index.
 R $CB79 O:DE Element.
+@ $CB79 label=element_A_of_table_7738
   $CB79 DE = table_7738[A];
   $CB84 return;
 
 ; ------------------------------------------------------------------------------
 
 c $CB85 random_nibble
-@ $CB85 label=random_nibble
 D $CB85 Pseudo random number generator.
 R $CB85 O:A Pseudo-random number from 0..15.
+@ $CB85 label=random_nibble
   $CB85 PUSH HL
   $CB86 HL = prng_pointer + 1;
 N $CB8A sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's fetching exterior tiles
@@ -9334,8 +9269,8 @@ D $CB92 Unreferenced bytes.
 ; ------------------------------------------------------------------------------
 
 c $CB98 solitary
-@ $CB98 label=solitary
 D $CB98 Silence bell.
+@ $CB98 label=solitary
   $CB98 bell = bell_STOP;
 N $CB9D Seize hero's held items.
   $CB9D HL = &items_held[0];
@@ -9398,14 +9333,14 @@ N $CBB1 Reset all items. [unsure]
 ; ------------------------------------------------------------------------------
 
 b $CC31 solitary_hero_reset_data
-@ $CC31 label=solitary_hero_reset_data
 D $CC31 (<- solitary)
+@ $CC31 label=solitary_hero_reset_data
 
 ; ------------------------------------------------------------------------------
 
 c $CC37 guards_follow_suspicious_character
-@ $CC37 label=guards_follow_suspicious_character
 R $CC37 I:IY Pointer to visible character.
+@ $CC37 label=guards_follow_suspicious_character
   $CC37 HL = IY;
   $CC3A A = *HL;
 N $CC3B Don't follow non-players dressed as guards.
@@ -9457,9 +9392,9 @@ N $CC3B Don't follow non-players dressed as guards.
 ; ------------------------------------------------------------------------------
 
 c $CCAB hostiles_persue
-@ $CCAB label=hostiles_persue
 D $CCAB For all visible, hostile characters, at height < 32, set the bribed/persue flag.
 D $CCAB Research: If I nop this out then guards don't spot the items I drop.
+@ $CCAB label=hostiles_persue
 @ $CCAB nowarn
   $CCAB HL = $8020; // iterate over non-player characters
   $CCB1 B = 7; // iterations
@@ -9473,9 +9408,9 @@ N $CCB4 HL[0x13] is the character's height, testing this excludes the guards in 
 ; ------------------------------------------------------------------------------
 
 c $CCCD is_item_discoverable
-@ $CCCD label=is_item_discoverable
 D $CCCD Searches item_structs for items dropped nearby. If items are found the hostiles are made to persue the hero.
 D $CCCD Green key and food items are ignored.
+@ $CCCD label=is_item_discoverable
   $CCCD A = room_index;
   $CCD0 if (A != room_0_outdoors) <%
 N $CCD3 Indoors.
@@ -9503,12 +9438,12 @@ N $CCEF The green key and food items are ignored.
 ; ------------------------------------------------------------------------------
 
 c $CCFB is_item_discoverable_interior
-@ $CCFB label=is_item_discoverable_interior
 D $CCFB Examines the specified room to see if it contains a discoverable item.
 D $CCFB A discoverable item is one moved away from its default room, and one that isn't the red cross parcel.
 R $CCFB I:A     Room ref.
 R $CCFB O:Flags Z => found, NZ => not found.
 R $CCFB O:C     Item (if found).
+@ $CCFB label=is_item_discoverable_interior
   $CCFB C = A; // room ref
   $CCFC HL = &item_structs[0].room; // pointer to room ref
   $CCFF B = 16; // items__LIMIT
@@ -9538,8 +9473,8 @@ N $CD27 Ignore red cross parcel.
 ; ------------------------------------------------------------------------------
 
 c $CD31 item_discovered
-@ $CD31 label=item_discovered
 R $CD31 I:C Item.
+@ $CD31 label=item_discovered
   $CD31 A = C;
   $CD32 if (A == item_NONE) return;
   $CD35 A &= 0x0F; // likely this mask is itemstruct_ITEM_MASK
@@ -9569,10 +9504,10 @@ N $CD4F Bug: This is not masked with 0x0F so item_to_itemstruct generates out of
 ; ------------------------------------------------------------------------------
 
 b $CD6A default_item_locations
-@ $CD6A label=default_item_locations
 D $CD6A Array of 16 three-byte structures. Suspect these are /default/ locations.
 D $CD6A struct default_item_location { byte room_and_flags; byte y; byte x; };
 D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
+@ $CD6A label=default_item_locations
   $CD6A item_WIRESNIPS        { ITEM_ROOM(room_NONE, (3<<6)), ... } // do these flags mean that the wiresnips are always or /never/ found?
   $CD6D item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }
   $CD70 item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }
@@ -9593,37 +9528,37 @@ D $CD6A #define ITEM_ROOM(item_no, flags) ((item_no & 63) | flags)
 ; ------------------------------------------------------------------------------
 
 b $CD9A character_meta_data
+  $CD9A &character_related_pointers[0], &sprites[30] // meta_commandant (<- spawn_character)
 @ $CD9A label=character_meta_data_commandant
-  $CD9A { &character_related_pointers[0], &sprites[30] } // meta_commandant (<- spawn_character)
+  $CD9E &character_related_pointers[0], &sprites[22] // meta_guard (<- spawn_character)
 @ $CD9E label=character_meta_data_guard
-  $CD9E { &character_related_pointers[0], &sprites[22] } // meta_guard (<- spawn_character)
+  $CDA2 &character_related_pointers[0], &sprites[14] // meta_dog (<- spawn_character)
 @ $CDA2 label=character_meta_data_dog
-  $CDA2 { &character_related_pointers[0], &sprites[14] } // meta_dog (<- spawn_character)
+  $CDA6 &character_related_pointers[0], &sprites[2]  // meta_prisoner (<- spawn_character)
 @ $CDA6 label=character_meta_data_prisoner
-  $CDA6 { &character_related_pointers[0], &sprites[2]  } // meta_prisoner (<- spawn_character)
 
 ; ------------------------------------------------------------------------------
 
 b $CDAA byte_CDAA
-@ $CDAA label=byte_CDAA
 D $CDAA Likely direction transitions.
 D $CDAA Groups of nine. (<- called_from_main_loop_9)
+@ $CDAA label=byte_CDAA
 
 ; ------------------------------------------------------------------------------
 
 w $CDF2 character_related_pointers
-@ $CDF2 label=character_related_pointers
 D $CDF2 Array, 24 long, of pointers to data.
+@ $CDF2 label=character_related_pointers
 
 ; ------------------------------------------------------------------------------
 
 b $CE22 sprites
-@ $CE22 label=sprites
 D $CE22 Objects which can move.
 D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 D $CE22 Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
 D $CE22 'tl' => character faces top left of the screen
 D $CE22 'br' => character faces bottom right of the screen
+@ $CE22 label=sprites
 @ $CE22 label=sprite_stove
   $CE22 { 3, 22, &bitmap_stove          , &mask_stove        } // (16x22,$DB46,$DB72)
 @ $CE28 label=sprite_crate
@@ -9705,60 +9640,59 @@ N $CE9A Height of following sprite is one row too high.
 ; ------------------------------------------------------------------------------
 
 b $CF06 character_related_data
-@ $CF06 label=character_related_data
 D $CF06 [unknown] character related stuff? read by routine around $b64f (called_from_main_loop_9)
 @ $CF06 label=character_related_data_0
-  $CF0E
+  $CF06
 @ $CF0E label=character_related_data_1
-  $CF16
+  $CF0E
 @ $CF16 label=character_related_data_2
-  $CF1E
+  $CF16
 @ $CF1E label=character_related_data_3
-  $CF26
+  $CF1E
 @ $CF26 label=character_related_data_4
-  $CF3A
+  $CF26
 @ $CF3A label=character_related_data_5
-  $CF4E
+  $CF3A
 @ $CF4E label=character_related_data_6
-  $CF62
+  $CF4E
 @ $CF62 label=character_related_data_7
-  $CF76
+  $CF62
 @ $CF76 label=character_related_data_8
-  $CF7E
+  $CF76
 @ $CF7E label=character_related_data_9
-  $CF86
+  $CF7E
 @ $CF86 label=character_related_data_10
-  $CF8E
+  $CF86
 @ $CF8E label=character_related_data_11
-  $CF96
+  $CF8E
 @ $CF96 label=character_related_data_12
-  $CFA2
+  $CF96
 @ $CFA2 label=character_related_data_13
-  $CFAE
+  $CFA2
 @ $CFAE label=character_related_data_14
-  $CFBA
+  $CFAE
 @ $CFBA label=character_related_data_15
-  $CFC6
+  $CFBA
 @ $CFC6 label=character_related_data_16
-  $CFD2
+  $CFC6
 @ $CFD2 label=character_related_data_17
-  $CFDE
+  $CFD2
 @ $CFDE label=character_related_data_18
-  $CFEA
+  $CFDE
 @ $CFEA label=character_related_data_19
-  $CFF6
+  $CFEA
 @ $CFF6 label=character_related_data_20
-  $D002
+  $CFF6
 @ $D002 label=character_related_data_21
-  $D00E
+  $D002
 @ $D00E label=character_related_data_22
-  $D01A
+  $D00E
 @ $D01A label=character_related_data_23
+  $D01A
 
 ; ------------------------------------------------------------------------------
 
 b $D026 sprite_bitmaps_and_masks
-@ $D026 label=sprite_bitmaps_and_masks
 D $D026 Sprite bitmaps and masks.
 B $D026 Raw data.
 ;
@@ -9961,9 +9895,9 @@ N $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) } TABLE#
 ; ------------------------------------------------------------------------------
 
 c $DB9E mark_nearby_items
-@ $DB9E label=mark_nearby_items
 D $DB9E Iterates over item structs. Tests to see if items are within range (-1..22,0..15) of the map position.
 D $DB9E This is similar to is_item_discoverable_interior in that it iterates over item_structs.
+@ $DB9E label=mark_nearby_items
   $DB9E A = room_index;
   $DBA1 if (A == room_NONE) A = 0;
   $DBA6 C = A; // room ref
@@ -9989,12 +9923,12 @@ N $DBDC Reset.
 ; ------------------------------------------------------------------------------
 
 c $DBEB get_greatest_itemstruct
-@ $DBEB label=get_greatest_itemstruct
 D $DBEB Iterates over all items. Uses multiply_by_8.
 R $DBEB I:BC' samples = 0, $1A, $1C, $1E, $20, $22,
 R $DBEB I:DE' samples = 0, $22, $22, $22, $22, $22,
 R $DBEB O:IY Pointer to to item struct. (result?)
 R $DBEB O:A' result?
+@ $DBEB label=get_greatest_itemstruct
   $DBEB B = 16; // iterations
   $DBEE Outer_HL = &item_structs[0].room;
   $DBF1 do <% if ((*Outer_HL & (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) == (itemstruct_ROOM_FLAG_BIT6 | itemstruct_ROOM_FLAG_ITEM_NEARBY)) <%
@@ -10035,9 +9969,9 @@ R $DBEB O:A' result?
 ; ------------------------------------------------------------------------------
 
 c $DC41 setup_item_plotting
-@ $DC41 label=setup_item_plotting
 R $DC41 I:A  ?
 R $DC41 I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
+@ $DC41 label=setup_item_plotting
   $DC41 A &= 0x3F;
 N $DC43 Bug: Masked item value stored to possibly_holds_an_item which is never used again.
   $DC43 possibly_holds_an_item = A;
@@ -10128,11 +10062,11 @@ N $DC43 Bug: Masked item value stored to possibly_holds_an_item which is never u
 ; ------------------------------------------------------------------------------
 
 c $DD02 item_visible
-@ $DD02 label=item_visible
 D $DD02 This is range checking something.
 R $DD02 O:AF Z => ?, !Z => ?
 R $DD02 O:BC
 R $DD02 O:DE
+@ $DD02 label=item_visible
   $DD02 HL = &map_position_related_1;
   $DD05 DE = map_position;
   $DD09 A = E + 24 - HL[0];
@@ -10169,10 +10103,9 @@ R $DD02 O:DE
 ; ------------------------------------------------------------------------------
 
 b $DD69 item_attributes
-@ $DD69 label=item_attributes
 D $DD69 20 bytes, 4 of which are unknown, possibly unused.
 D $DD69 'Yellow/black' means yellow ink over black paper, for example.
-;
+@ $DD69 label=item_attributes
   $DD69 item_attribute: WIRESNIPS - yellow/black
   $DD6A item_attribute: SHOVEL - cyan/black
   $DD6B item_attribute: LOCKPICK - cyan/black
@@ -10200,9 +10133,9 @@ N $DD79 The following are likely unused.
 ; ------------------------------------------------------------------------------
 
 b $DD7D item_definitions
-@ $DD7D label=item_definitions
 D $DD7D Item definitions.
 D $DD7D Array of "sprite" structures.
+@ $DD7D label=item_definitions
 ;
 D $DD7D item_definition: WIRESNIPS
 B $DD7D,1 width
@@ -10306,112 +10239,112 @@ b $DDDD item_bitmaps_and_masks
 D $DDDD Item definitions.
 D $DDDD Raw data.
 ;
-B $DDDD,26,2 item_bitmap: SHOVEL
 @ $DDDD label=bitmap_shovel
+  $DDDD,26,2 item_bitmap: SHOVEL
 D $DDDD #UDGTABLE { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) } TABLE#
 ;
-B $DDF7,26,2 item_bitmap: KEY (shared for all keys)
 @ $DDF7 label=bitmap_key
+  $DDF7,26,2 item_bitmap: KEY (shared for all keys)
 N $DDF7 #UDGTABLE { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) } TABLE#
 ;
-B $DE11,32,2 item_bitmap: LOCKPICK
 @ $DE11 label=bitmap_lockpick
+  $DE11,32,2 item_bitmap: LOCKPICK
 N $DE11 #UDGTABLE { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) } TABLE#
 ;
-B $DE31,24,2 item_bitmap: COMPASS
 @ $DE31 label=bitmap_compass
+  $DE31,24,2 item_bitmap: COMPASS
 N $DE31 #UDGTABLE { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) } TABLE#
 ;
-B $DE49,24,2 item_bitmap: PURSE
 @ $DE49 label=bitmap_purse
+  $DE49,24,2 item_bitmap: PURSE
 N $DE49 #UDGTABLE { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) } TABLE#
 ;
-B $DE61,30,2 item_bitmap: PAPERS
 @ $DE61 label=bitmap_papers
+  $DE61,30,2 item_bitmap: PAPERS
 N $DE61 #UDGTABLE { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) } TABLE#
 ;
-B $DE7F,22,2 item_bitmap: WIRESNIPS
 @ $DE7F label=bitmap_wiresnips
+  $DE7F,22,2 item_bitmap: WIRESNIPS
 N $DE7F #UDGTABLE { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) } TABLE#
 ;
-B $DE95,26,2 item_mask: SHOVEL or KEY (shared)
 @ $DE95 label=mask_shovel_key
+  $DE95,26,2 item_mask: SHOVEL or KEY (shared)
 N $DE95 #UDGTABLE { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) } TABLE#
 ;
-B $DEAF,32,2 item_mask: LOCKPICK
 @ $DEAF label=mask_lockpick
+  $DEAF,32,2 item_mask: LOCKPICK
 N $DEAF #UDGTABLE { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) } TABLE#
 ;
-B $DECF,24,2 item_mask: COMPASS
 @ $DECF label=mask_compass
+  $DECF,24,2 item_mask: COMPASS
 N $DECF #UDGTABLE { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) } TABLE#
 ;
-B $DEE7,24,2 item_mask: PURSE
 @ $DEE7 label=mask_purse
+  $DEE7,24,2 item_mask: PURSE
 N $DEE7 #UDGTABLE { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) } TABLE#
 ;
-B $DEFF,30,2 item_mask: PAPERS
 @ $DEFF label=mask_papers
+  $DEFF,30,2 item_mask: PAPERS
 N $DEFF #UDGTABLE { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) } TABLE#
 ;
-B $DF1D,22,2 item_mask: WIRESNIPS
 @ $DF1D label=mask_wiresnips
+  $DF1D,22,2 item_mask: WIRESNIPS
 N $DF1D #UDGTABLE { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) } TABLE#
 ;
-B $DF33,32,2 item_bitmap: FOOD
 @ $DF33 label=bitmap_food
+  $DF33,32,2 item_bitmap: FOOD
 N $DF33 #UDGTABLE { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) } TABLE#
 ;
-B $DF53,32,2 item_bitmap: POISON
 @ $DF53 label=bitmap_poison
+  $DF53,32,2 item_bitmap: POISON
 N $DF53 #UDGTABLE { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) } TABLE#
 ;
-B $DF73,24,2 item_bitmap: TORCH
 @ $DF73 label=bitmap_torch
+  $DF73,24,2 item_bitmap: TORCH
 N $DF73 #UDGTABLE { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) } TABLE#
 ;
-B $DF8B,32,2 item_bitmap: UNIFORM
 @ $DF8B label=bitmap_uniform
+  $DF8B,32,2 item_bitmap: UNIFORM
 N $DF8B #UDGTABLE { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) } TABLE#
 ;
-B $DFAB,26,2 item_bitmap: BRIBE
 @ $DFAB label=bitmap_bribe
+  $DFAB,26,2 item_bitmap: BRIBE
 N $DFAB #UDGTABLE { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) } TABLE#
 ;
-B $DFC5,32,2 item_bitmap: RADIO
 @ $DFC5 label=bitmap_radio
+  $DFC5,32,2 item_bitmap: RADIO
 N $DFC5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) } TABLE#
 ;
-B $DFE5,32,2 item_bitmap: PARCEL
 @ $DFE5 label=bitmap_parcel
+  $DFE5,32,2 item_bitmap: PARCEL
 N $DFE5 #UDGTABLE { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) } TABLE#
 ;
-B $E005,26,2 item_mask: BRIBE
 @ $E005 label=mask_bribe
+  $E005,26,2 item_mask: BRIBE
 N $E005 #UDGTABLE { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) } TABLE#
 ;
-B $E01F,32,2 item_mask: UNIFORM
 @ $E01F label=mask_uniform
+  $E01F,32,2 item_mask: UNIFORM
 N $E01F #UDGTABLE { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,64}(item-mask-uniform) } TABLE#
 ;
-B $E03F,32,2 item_mask: PARCEL
 @ $E03F label=mask_parcel
+  $E03F,32,2 item_mask: PARCEL
 N $E03F #UDGTABLE { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) } TABLE#
 ;
-B $E05F,32,2 item_mask: POISON
 @ $E05F label=mask_poison
+  $E05F,32,2 item_mask: POISON
 N $E05F #UDGTABLE { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) } TABLE#
 ;
-B $E07F,24,2 item_mask: TORCH
 @ $E07F label=mask_torch
+  $E07F,24,2 item_mask: TORCH
 N $E07F #UDGTABLE { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) } TABLE#
 ;
-B $E097,32,2 item_mask: RADIO
 @ $E097 label=mask_radio
+  $E097,32,2 item_mask: RADIO
 N $E097 #UDGTABLE { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) } TABLE#
 ;
-B $E0B7,32,2 item_mask: FOOD
 @ $E0B7 label=mask_food
+  $E0B7,32,2 item_mask: FOOD
 N $E0B7 #UDGTABLE { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) } TABLE#
 
 ; ------------------------------------------------------------------------------
@@ -10422,8 +10355,8 @@ B $E0D7 unused_E0D7
 ; ------------------------------------------------------------------------------
 
 w $E0E0 masked_sprite_plotter_16_enables
-@ $E0E0 label=masked_sprite_plotter_16_enables
 D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
+@ $E0E0 label=masked_sprite_plotter_16_enables
   $E0E0 masked_sprite_plotter_16_wide_case_1_enable0
   $E0E2 masked_sprite_plotter_16_wide_case_2_enable1
   $E0E4 masked_sprite_plotter_16_wide_case_1_enable2
@@ -10434,8 +10367,8 @@ D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
 ; ------------------------------------------------------------------------------
 
 w $E0EC masked_sprite_plotter_24_enables
-@ $E0EC label=masked_sprite_plotter_24_enables
 D $E0EC (<- setup_vischar_plotting)
+@ $E0EC label=masked_sprite_plotter_24_enables
   $E0EC masked_sprite_plotter_24_wide_enable0
   $E0EE masked_sprite_plotter_24_wide_enable1
   $E0F0 masked_sprite_plotter_24_wide_enable2
@@ -10464,10 +10397,9 @@ W $E100 unused_E100
 ;
 
 c $E102 masked_sprite_plotter_24_wide
-@ $E102 label=masked_sprite_plotter_24_wide
 D $E102 Sprite plotter. Used for characters and objects.
 R $E102 I:IY Unsure. Have seen IY = 0x8020 => 0x8038, IY = 0x8040, IY = 0x80A0.
-;
+@ $E102 label=masked_sprite_plotter_24_wide
   $E102 if ((A = IY[24] & 7) >= 4) goto unaligned;
 ;
   $E10C A = (~A & 3) * 8; // jump table offset
@@ -10695,8 +10627,8 @@ N $E17A   Plot, using foreground mask.
 ; ------------------------------------------------------------------------------
 
 c $E29F masked_sprite_plotter_16_wide_case_1_searchlight
-@ $E29F label=masked_sprite_plotter_16_wide_case_1_searchlight
 D $E29F Direct entry point used by searchlight code.
+@ $E29F label=masked_sprite_plotter_16_wide_case_1_searchlight
   $E29F A = 0;
   $E2A0 goto $E2AC;
 
@@ -10711,12 +10643,10 @@ D $E29F Direct entry point used by searchlight code.
 ;
 
 c $E2A2 masked_sprite_plotter_16_wide_case_1
-@ $E2A2 label=masked_sprite_plotter_16_wide_case_1
 D $E2A2 Sprite plotter. Used for characters and objects.
 D $E2A2 Looks like it plots a two byte-wide sprite with mask into a three byte-wide destination.
+@ $E2A2 label=masked_sprite_plotter_16_wide_case_1
   $E2A2 if ((A = IY[24] & 7) >= 4) goto masked_sprite_plotter_16_wide_case_2;
-;
-; This entry point is used by the routine at #R$E29F.
 ;
   $E2AC A = (~A & 3) * 6; // jump table offset
   $E2B3 ($E2DB + 1) = A; // self-modify - first jump
@@ -10797,9 +10727,9 @@ N $E307 Plot, using foreground mask.
 ; ------------------------------------------------------------------------------
 
 c $E34E masked_sprite_plotter_16_wide_case_2
-@ $E34E label=masked_sprite_plotter_16_wide_case_2
 D $E34E Sprite plotter. Used for characters and objects.
 D $E34E Similar variant to above routine.
+@ $E34E label=masked_sprite_plotter_16_wide_case_2
   $E34E A = (A - 4) * 6; // jump table offset
   $E354 ($E399 + 1) = A; // self-modify - first jump
   $E357 ($E37C + 1) = A; // self-modify - second jump
@@ -10882,7 +10812,6 @@ N $E3B3 Plot, using foreground mask.
 ; ------------------------------------------------------------------------------
 
 c $E3FA flip_24_masked_pixels
-@ $E3FA label=flip_24_masked_pixels
 D $E3FA Takes the 24 pixels in E,C,B and reverses them bitwise.
 D $E3FA Does the same for the mask pixels in E',C',B'.
 ; Simultaneously:
@@ -10894,7 +10823,8 @@ R $E3FA I:E  First 8 pixels.
 R $E3FA I:BC Second 16 pixels.
 R $E3FA O:E  Reversed pixels.
 R $E3FA O:BC Reversed pixels.
-D $E3FA Roll the bitmap.
+@ $E3FA label=flip_24_masked_pixels
+N $E3FA Roll the bitmap.
   $E3FA H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 -> table of bit reversed bytes
   $E3FC L = E;
   $E3FD E = B;     // DE = (DE & 0xFF00) | (BC >> 8);
@@ -10919,12 +10849,12 @@ N $E404 Roll the mask.
 ; ------------------------------------------------------------------------------
 
 c $E40F flip_16_masked_pixels
-@ $E40F label=flip_16_masked_pixels
 D $E40F Takes the 16 pixels in D,E and reverses them bitwise.
 D $E40F Does the same for the mask pixels in D',E'.
 R $E40F I:DE 16 pixels to reverse.
 R $E40F O:DE Reversed pixels.
-D $E40F Roll the bitmap.
+@ $E40F label=flip_16_masked_pixels
+N $E40F Roll the bitmap.
   $E40F H = 0x7F;  // HL = 0x7F00 | (DE >> 8); // 0x7F00 -> table of bit reversed bytes
   $E411 L = D;
   $E412 D = E;     // DE = (E << 8) | *HL;
@@ -10946,10 +10876,10 @@ N $E417 Roll the mask.
 ; ------------------------------------------------------------------------------
 
 c $E420 setup_vischar_plotting
-@ $E420 label=setup_vischar_plotting
 D $E420 Sets sprites up for plotting.
 R $E420 I:HL Pointer to ? // observed: always the same as IY
 R $E420 I:IY Pointer to ? // observed: $8000+
+@ $E420 label=setup_vischar_plotting
   $E420 HL += 15;
   $E424 DE = &byte_81B2;
   $E427 if (room_index) <% // indoors
@@ -11074,13 +11004,13 @@ R $E420 I:IY Pointer to ? // observed: $8000+
 ; ------------------------------------------------------------------------------
 
 c $E542 pos_to_tinypos
-@ $E542 label=pos_to_tinypos
 D $E542 Scale down a pos_t and assign result to a tinypos_t.
 D $E542 Divides the three input 16-bit words by 8, with rounding to nearest, storing the result as bytes.
 R $E542 I:HL Pointer to input words
 R $E542 I:DE Pointer to output bytes
 R $E542 O:HL Updated.
 R $E542 O:DE Updated.
+@ $E542 label=pos_to_tinypos
   $E542 B = 3;
   $E544 do <% A = *HL++;
   $E546   C = *HL++;
@@ -11090,19 +11020,18 @@ R $E542 O:DE Updated.
   $E54F return;
 
 c $E550 divide_by_8_with_rounding
-@ $E550 label=divide_by_8_with_rounding
 D $E550 Divides AC by 8, with rounding to nearest.
 R $E550 I:A Low.
 R $E550 I:C High.
 R $E550 O:A Result.
+@ $E550 label=divide_by_8_with_rounding
   $E550 A += 4;
   $E552 if (carry) C++;
-;
-; fallthrough
+E $E550 FALL THROUGH into divide_by_8.
 
 c $E555 divide_by_8
-@ $E555 label=divide_by_8
 D $E555 Divides AC by 8.
+@ $E555 label=divide_by_8
   $E555 A = (A >> 3) | (C << 5); C >>= 3;
   $E55E return;
 
@@ -11111,92 +11040,92 @@ D $E555 Divides AC by 8.
 b $E55F outdoors_mask
 @ $E55F label=outdoors_mask
 D $E55F { byte count+flags; ... }
-  $E55F outdoors_mask_0
 @ $E55F label=outdoors_mask_0
-  $E5FF outdoors_mask_1
+  $E55F outdoors_mask_0
 @ $E5FF label=outdoors_mask_1
-  $E61E outdoors_mask_2
+  $E5FF outdoors_mask_1
 @ $E61E label=outdoors_mask_2
-  $E6CA outdoors_mask_3
+  $E61E outdoors_mask_2
 @ $E6CA label=outdoors_mask_3
-  $E74B outdoors_mask_4
+  $E6CA outdoors_mask_3
 @ $E74B label=outdoors_mask_4
-  $E758 outdoors_mask_5
+  $E74B outdoors_mask_4
 @ $E758 label=outdoors_mask_5
-  $E77F outdoors_mask_6
+  $E758 outdoors_mask_5
 @ $E77F label=outdoors_mask_6
-  $E796 outdoors_mask_7
+  $E77F outdoors_mask_6
 @ $E796 label=outdoors_mask_7
-  $E7AF outdoors_mask_8
+  $E796 outdoors_mask_7
 @ $E7AF label=outdoors_mask_8
-  $E85C outdoors_mask_9
+  $E7AF outdoors_mask_8
 @ $E85C label=outdoors_mask_9
-  $E8A3 outdoors_mask_10
+  $E85C outdoors_mask_9
 @ $E8A3 label=outdoors_mask_10
-  $E8F0 outdoors_mask_11
+  $E8A3 outdoors_mask_10
 @ $E8F0 label=outdoors_mask_11
-  $E92F outdoors_mask_12
+  $E8F0 outdoors_mask_11
 @ $E92F label=outdoors_mask_12
-  $E940 outdoors_mask_13
+  $E92F outdoors_mask_12
 @ $E940 label=outdoors_mask_13
-  $E972 outdoors_mask_14
+  $E940 outdoors_mask_13
 @ $E972 label=outdoors_mask_14
-  $E99A outdoors_mask_15
+  $E972 outdoors_mask_14
 @ $E99A label=outdoors_mask_15
-  $E99F outdoors_mask_16
+  $E99A outdoors_mask_15
 @ $E99F label=outdoors_mask_16
-  $E9B9 outdoors_mask_17
+  $E99F outdoors_mask_16
 @ $E9B9 label=outdoors_mask_17
-  $E9C6 outdoors_mask_18
+  $E9B9 outdoors_mask_17
 @ $E9C6 label=outdoors_mask_18
-  $E9CB outdoors_mask_19
+  $E9C6 outdoors_mask_18
 @ $E9CB label=outdoors_mask_19
-  $E9E6 outdoors_mask_20
+  $E9CB outdoors_mask_19
 @ $E9E6 label=outdoors_mask_20
-  $E9F5 outdoors_mask_21
+  $E9E6 outdoors_mask_20
 @ $E9F5 label=outdoors_mask_21
-  $EA0E outdoors_mask_22
+  $E9F5 outdoors_mask_21
 @ $EA0E label=outdoors_mask_22
-  $EA2B outdoors_mask_23
+  $EA0E outdoors_mask_22
 @ $EA2B label=outdoors_mask_23
-  $EA35 outdoors_mask_24
+  $EA2B outdoors_mask_23
 @ $EA35 label=outdoors_mask_24
-  $EA43 outdoors_mask_25
+  $EA35 outdoors_mask_24
 @ $EA43 label=outdoors_mask_25
-  $EA4A outdoors_mask_26
+  $EA43 outdoors_mask_25
 @ $EA4A label=outdoors_mask_26
-  $EA53 outdoors_mask_27
+  $EA4A outdoors_mask_26
 @ $EA53 label=outdoors_mask_27
-  $EA5D outdoors_mask_28
+  $EA53 outdoors_mask_27
 @ $EA5D label=outdoors_mask_28
-  $EA67 outdoors_mask_29
+  $EA5D outdoors_mask_28
 @ $EA67 label=outdoors_mask_29
+  $EA67 outdoors_mask_29
 
 ; ------------------------------------------------------------------------------
 
 b $EA7C stru_EA7C
-@ $EA7C label=stru_EA7C
 D $EA7C 47 7-byte structs.
+@ $EA7C label=stru_EA7C
   $EA7C,329,7 Elements.
 
 ; ------------------------------------------------------------------------------
 
 w $EBC5 exterior_mask_data_pointers
-@ $EBC5 label=exterior_mask_data_pointers
 D $EBC5 30 pointers to byte arrays -- probably masks.
+@ $EBC5 label=exterior_mask_data_pointers
 
 b $EC01 exterior_mask_data
-@ $EC01 label=exterior_mask_data
 D $EC01 58 8-byte structs.
 D $EC01 Used by mask_stuff. Used in outdoor mode only.
 D $EC01 struct { ?, lo, hi, lo, hi, ?, ?, ? };
+@ $EC01 label=exterior_mask_data
 
 ; ------------------------------------------------------------------------------
 
 g $EDD1 Saved stack pointer.
-W $EDD1 saved_sp
-@ $EDD1 label=saved_sp
 D $EDD1 Used by plot_game_window and wipe_game_window.
+@ $EDD1 label=saved_sp
+W $EDD1 saved_sp
 
 ; ------------------------------------------------------------------------------
 
@@ -11300,9 +11229,9 @@ c $EED3 plot_game_window
 ; ------------------------------------------------------------------------------
 
 c $EF9A event_roll_call
-@ $EF9A label=event_roll_call
 D $EF9A Is the hero within the roll call area bounds?
 D $EF9A Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
+@ $EF9A label=event_roll_call
 @ $EF9A keep
   $EF9A DE = map_ROLL_CALL_X;
   $EF9D HL = &hero_map_position.y;
@@ -11334,9 +11263,9 @@ N $EFAF All visible characters turn forward.
 ; I NEVER KNEW THAT!
 
 c $EFCB action_papers
-@ $EFCB label=action_papers
 D $EFCB Is the hero within the main gate bounds?
 D $EFCB Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
+@ $EFCB label=action_papers
 @ $EFCB keep
   $EFCB DE = map_MAIN_GATE_X;
   $EFCE HL = &hero_map_position.y;
@@ -11363,9 +11292,9 @@ B $EFF9,3 static const tinypos_t outside_main_gate = <% 0xD6, 0x8A, 0x06 %>;
 ; ------------------------------------------------------------------------------
 
 c $EFFC user_confirm
-@ $EFFC label=user_confirm
 D $EFFC Waits for the user to press Y or N.
 R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
+@ $EFFC label=user_confirm
   $EFFC HL = &screenlocstring_confirm_y_or_n[0];
   $EFFF screenlocstring_plot();
   $F002 for (;;) <% BC = port_KEYBOARD_POIUY;
@@ -11381,7 +11310,8 @@ R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
 
 t $F014 screenlocstring_confirm_y_or_n
 D $F014 "CONFIRM. Y OR N"
-  $F014 #HTML[#CALL:decode_screenlocstring($F014)]
+M $F014 #HTML[#CALL:decode_screenlocstring($F014)]
+B $F014,18,18
 
 ; ------------------------------------------------------------------------------
 
@@ -11389,13 +11319,16 @@ t $F026 more_messages
 D $F026 More messages.
 D $F026 "HE TAKES THE BRIBE"
 @ $F026 label=more_messages_he_takes_the_bribe
-  $F026 #HTML[#CALL:decode_stringFF($F026)]
+M $F026 #HTML[#CALL:decode_stringFF($F026)]
+B $F026,19,19
 N $F039 "AND ACTS AS DECOY"
 @ $F039 label=more_messages_and_acts_as_decoy
-  $F039 #HTML[#CALL:decode_stringFF($F039)]
+M $F039 #HTML[#CALL:decode_stringFF($F039)]
+B $F039,18,18
 N $F04B "ANOTHER DAY DAWNS"
 @ $F04B label=more_messages_another_day_dawns
-  $F04B #HTML[#CALL:decode_stringFF($F04B)]
+M $F04B #HTML[#CALL:decode_stringFF($F04B)]
+B $F04B,18,18
 
 ; ------------------------------------------------------------------------------
 
@@ -11414,66 +11347,66 @@ c $F068 jump_to_main
 
 g $F06B User-defined keys.
 D $F06B Pairs of (port, key mask).
-B $F06B keydefs
 @ $F06B label=keydefs
+  $F06B keydefs
 
 ; ------------------------------------------------------------------------------
 
 g $F075 Static tiles plot direction.
-D $F445 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Horizontal } { 255 | Vertical } TABLE#
-B $F075 static_tiles_plot_direction
+D $F075 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Horizontal } { 255 | Vertical } TABLE#
 @ $F075 label=static_tiles_plot_direction
+  $F075 static_tiles_plot_direction
 
 ; ------------------------------------------------------------------------------
 
 b $F076 static_graphic_defs
-@ $F076 label=static_graphic_defs
 D $F076 Definitions of fixed graphic elements.
 D $F076 Only used by #R$F1E0.
 D $F076 struct: w(addr), flags+length, attrs[length]
-  $F076 statics_flagpole
+@ $F076 label=static_graphic_defs
 @ $F076 label=statics_flagpole
-  $F08D statics_game_window_left_border
+  $F076 statics_flagpole
 @ $F08D label=statics_game_window_left_border
-  $F0A4 statics_game_window_right_border
+  $F08D statics_game_window_left_border
 @ $F0A4 label=statics_game_window_right_border
-  $F0BB statics_game_window_top_border
+  $F0A4 statics_game_window_right_border
 @ $F0BB label=statics_game_window_top_border
-  $F0D5 statics_game_window_bottom
+  $F0BB statics_game_window_top_border
 @ $F0D5 label=statics_game_window_bottom
-  $F0EF statics_flagpole_grass
+  $F0D5 statics_game_window_bottom
 @ $F0EF label=statics_flagpole_grass
-  $F0F7 statics_medals_row0
+  $F0EF statics_flagpole_grass
 @ $F0F7 label=statics_medals_row0
-  $F107 statics_medals_row1
+  $F0F7 statics_medals_row0
 @ $F107 label=statics_medals_row1
-  $F115 statics_medals_row2
+  $F107 statics_medals_row1
 @ $F115 label=statics_medals_row2
-  $F123 statics_medals_row3
+  $F115 statics_medals_row2
 @ $F123 label=statics_medals_row3
-  $F131 statics_medals_row4
+  $F123 statics_medals_row3
 @ $F131 label=statics_medals_row4
-  $F13E statics_bell_row0
+  $F131 statics_medals_row4
 @ $F13E label=statics_bell_row0
-  $F144 statics_bell_row1
+  $F13E statics_bell_row0
 @ $F144 label=statics_bell_row1
-  $F14A statics_bell_row2
+  $F144 statics_bell_row1
 @ $F14A label=statics_bell_row2
-  $F14F statics_corner_tl
+  $F14A statics_bell_row2
 @ $F14F label=statics_corner_tl
-  $F154 statics_corner_tr
+  $F14F statics_corner_tl
 @ $F154 label=statics_corner_tr
-  $F159 statics_corner_bl
+  $F154 statics_corner_tr
 @ $F159 label=statics_corner_bl
-  $F15E statics_corner_br
+  $F159 statics_corner_bl
 @ $F15E label=statics_corner_br
+  $F15E statics_corner_br
 
 ; ------------------------------------------------------------------------------
 
 c $F163 main
-@ $F163 label=main
 D $F163 Main.
 D $F163 Disable interrupts and set up stack pointer.
+@ $F163 label=main
   $F163 -
 N $F167 Set up screen.
   $F167 wipe_full_screen_and_attributes();
@@ -11538,8 +11471,8 @@ W $F1DE mi.spriteset
 ; ------------------------------------------------------------------------------
 
 c $F1E0 plot_statics_and_menu_text
-@ $F1E0 label=plot_statics_and_menu_text
 D $F1E0 Plot statics and menu text.
+@ $F1E0 label=plot_statics_and_menu_text
   $F1E0 HL = &static_graphic_defs[0];
   $F1E3 B = NELEMS(static_graphic_defs); // 18 iterations
   $F1E5 do <% PUSH BC
@@ -11564,10 +11497,10 @@ N $F1F9 Plot menu text.
 ; ------------------------------------------------------------------------------
 
 c $F206 plot_static_tiles_horizontal
-@ $F206 label=plot_static_tiles_horizontal
 D $F206 Plot static screen tiles horizontally.
 R $F206 I:DE Pointer to screen address.
 R $F206 I:HL Pointer to tile indices.
+@ $F206 label=plot_static_tiles_horizontal
   $F206 A = 0;
   $F207 goto plot_static_tiles;
 
@@ -11621,10 +11554,10 @@ c $F257 wipe_full_screen_and_attributes
 ; ------------------------------------------------------------------------------
 
 c $F271 check_menu_keys
-@ $F271 label=check_menu_keys
 D $F271 Menu screen key handling.
 D $F271 Scan for a keypress which either starts the game or selects an input device. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
 D $F271 If the game is started then copy the input routine to $F075. If the chosen input device is keyboard, then exit via choose_keys.
+@ $F271 label=check_menu_keys
   $F271 A = menu_keyscan();
   $F274 if (A == 0xFF) return; /* no keypress */
   $F277 if (A) <%
@@ -11649,70 +11582,74 @@ N $F292 This is tricky. A' is left with the low byte of the inputroutine address
 t $F2AD define_key_prompts
 D $F2AD Key choice prompt strings.
 D $F2AD "CHOOSE KEYS"
-  $F2AD #HTML[#CALL:decode_screenlocstring($F2AD)]
+M $F2AD #HTML[#CALL:decode_screenlocstring($F2AD)]
+B $F2AD,11
 N $F2BB "LEFT."
-  $F2BB #HTML[#CALL:decode_screenlocstring($F2BB)]
+M $F2BB #HTML[#CALL:decode_screenlocstring($F2BB)]
+B $F2BB,5
 N $F2C3 "RIGHT."
-  $F2C3 #HTML[#CALL:decode_screenlocstring($F2C3)]
+M $F2C3 #HTML[#CALL:decode_screenlocstring($F2C3)]
+B $F2C3,6
 N $F2CC "UP."
-  $F2CC #HTML[#CALL:decode_screenlocstring($F2CC)]
+M $F2CC #HTML[#CALL:decode_screenlocstring($F2CC)]
+B $F2CC,3
 N $F2D2 "DOWN."
-  $F2D2 #HTML[#CALL:decode_screenlocstring($F2D2)]
+M $F2D2 #HTML[#CALL:decode_screenlocstring($F2D2)]
+B $F2D2,5
 N $F2DA "FIRE."
-  $F2DA #HTML[#CALL:decode_screenlocstring($F2DA)]
+M $F2DA #HTML[#CALL:decode_screenlocstring($F2DA)]
+B $F2DA,5
 
 ; ------------------------------------------------------------------------------
 
 b $F2E1 byte_F2E1
-@ $F2E1 label=byte_F2E1
 D $F2E1 Unsure if anything reads this byte for real, but its address is taken prior to accessing keyboard_port_hi_bytes.
 D $F2E1 (<- choose_keys)
+@ $F2E1 label=byte_F2E1
 
 b $F2E2 keyboard_port_hi_bytes
-@ $F2E2 label=keyboard_port_hi_bytes
 D $F2E2 Zero terminated.
 D $F2E2 (<- choose_keys)
+@ $F2E2 label=keyboard_port_hi_bytes
 
 ; ------------------------------------------------------------------------------
 
-; Counted strings.
-;
 t $F2EB counted_strings
 D $F2EB Counted strings (encoded to match font; first byte is count).
-D $F2EB "ENTER"
-  $F2EB #HTML[#CALL:decode_stringcounted($F2EB)]
+N $F2EB "ENTER"
+B $F2EB,6,1 #HTML[#CALL:decode_stringcounted($F2EB)]
 N $F2F1 "CAPS"
-  $F2F1 #HTML[#CALL:decode_stringcounted($F2F1)]
+B $F2F1,5,1 #HTML[#CALL:decode_stringcounted($F2F1)]
 N $F2F6 "SYMBOL"
-  $F2F6 #HTML[#CALL:decode_stringcounted($F2F6)]
+B $F2F6,7,1 #HTML[#CALL:decode_stringcounted($F2F6)]
 N $F2FD "SPACE"
-  $F2FD #HTML[#CALL:decode_stringcounted($F2FD)]
+B $F2FD,6,1 #HTML[#CALL:decode_stringcounted($F2FD)]
 
 ; ------------------------------------------------------------------------------
 
 b $F303 key_tables
-@ $F303 label=key_tables
 D $F303 Five bytes each.
-B $F303 table_12345
-B $F308 table_09876
-B $F30D table_QWERT
-B $F312 table_POIUY
-B $F317 table_ASDFG
-B $F31C table_ENTERLKJH
-B $F321 table_SHIFTZXCV
-B $F326 table_SPACESYMSHFTMNB
+@ $F303 label=key_tables
+  $F303 table_12345
+  $F308 table_09876
+  $F30D table_QWERT
+  $F312 table_POIUY
+  $F317 table_ASDFG
+  $F31C table_ENTERLKJH
+  $F321 table_SHIFTZXCV
+  $F326 table_SPACESYMSHFTMNB
 
 ; ------------------------------------------------------------------------------
 
 w $F32B key_name_screen_addrs
-@ $F32B label=key_name_screen_addrs
 D $F32B Screen addresses of chosen key names (5 long).
+@ $F32B label=key_name_screen_addrs
 
 ; ------------------------------------------------------------------------------
 
 c $F335 wipe_game_window
-@ $F335 label=wipe_game_window
 D $F335 Wipe the game window.
+@ $F335 label=wipe_game_window
   $F335 DI
   $F336 saved_sp = SP;
   $F33A sp = game_window_start_addresses;
@@ -11837,10 +11774,10 @@ N $F401 Wait for user's input.
 ; ------------------------------------------------------------------------------
 
 c $F408 set_menu_item_attributes
-@ $F408 label=set_menu_item_attributes
 D $F408 Set the screen attributes of the specified menu item.
 R $F408 I:A Item index.
 R $F408 I:E Attributes.
+@ $F408 label=set_menu_item_attributes
   $F408 HL = 0x590D; // initial screen attribute address
 N $F40B Skip to the item's row.
   $F40B if (A) <%
@@ -11854,9 +11791,9 @@ N $F415 Draw.
 ; ------------------------------------------------------------------------------
 
 c $F41C menu_keyscan
-@ $F41C label=menu_keyscan
 D $F41C Scan for keys to select an input device.
 R $F41C O:A 0/1/2/3/4 = keypress, or 255 = no keypress.
+@ $F41C label=menu_keyscan
   $F41C BC = port_KEYBOARD_12345;
   $F41F E = 0;
   $F421 IN A,(C)
@@ -11880,8 +11817,8 @@ R $F41C O:A 0/1/2/3/4 = keypress, or 255 = no keypress.
 ; ------------------------------------------------------------------------------
 
 w $F43D inputroutines
-@ $F43D label=inputroutines
 D $F43D Array [4] of pointers to input routines.
+@ $F43D label=inputroutines
   $F43D &inputroutine_keyboard,
   $F43F &inputroutine_kempston,
   $F441 &inputroutine_sinclair,
@@ -11891,36 +11828,36 @@ D $F43D Array [4] of pointers to input routines.
 
 g $F445 Chosen input device.
 D $F445 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Keyboard } { 1 | Kempston } { 2 | Sinclair } { 3 | Protek } TABLE#
-B $F445 chosen_input_device
 @ $F445 label=chosen_input_device
+  $F445 chosen_input_device
 
 ; ------------------------------------------------------------------------------
 
 t $F446 key_choice_screenlocstrings
 D $F446 Key choice screenlocstrings.
-D $F446 "CONTROLS"
-  $F446 #HTML[#CALL:decode_screenlocstring($F446)]
+N $F446 "CONTROLS"
+B $F446 #HTML[#CALL:decode_screenlocstring($F446)]
 N $F451 "0 SELECT"
-  $F451 #HTML[#CALL:decode_screenlocstring($F451)]
+B $F451 #HTML[#CALL:decode_screenlocstring($F451)]
 N $F45C "1 KEYBOARD"
-  $F45C #HTML[#CALL:decode_screenlocstring($F45C)]
+B $F45C #HTML[#CALL:decode_screenlocstring($F45C)]
 N $F469 "2 KEMPSTON"
-  $F469 #HTML[#CALL:decode_screenlocstring($F469)]
+B $F469 #HTML[#CALL:decode_screenlocstring($F469)]
 N $F476 "3 SINCLAIR"
-  $F476 #HTML[#CALL:decode_screenlocstring($F476)]
+B $F476 #HTML[#CALL:decode_screenlocstring($F476)]
 N $F483 "4 PROTEK"
-  $F483 #HTML[#CALL:decode_screenlocstring($F483)]
+B $F483 #HTML[#CALL:decode_screenlocstring($F483)]
 N $F48E "BREAK OR CAPS AND SPACE"
-  $F48E #HTML[#CALL:decode_screenlocstring($F48E)]
+B $F48E #HTML[#CALL:decode_screenlocstring($F48E)]
 N $F4A8 "FOR NEW GAME"
-  $F4A8 #HTML[#CALL:decode_screenlocstring($F4A8)]
+B $F4A8 #HTML[#CALL:decode_screenlocstring($F4A8)]
 
 ; ------------------------------------------------------------------------------
 
 c $F4B7 menu_screen
-@ $F4B7 label=menu_screen
 D $F4B7 Runs the menu screen.
 D $F4B7 Waits for user to select an input device, waves the morale flag and plays the title tune.
+@ $F4B7 label=menu_screen
   $F4B7 for (;;) <% check_menu_keys();
   $F4BA   wave_morale_flag();
 N $F4BD Play music.
@@ -11972,11 +11909,11 @@ N $F4BD Play music.
 ; ------------------------------------------------------------------------------
 
 c $F52C get_tuning
-@ $F52C label=get_tuning
 R $F52C I:A  Index.
 R $F52C O:BC ...
 R $F52C O:DE ...
 R $F52C O:HL ...
+@ $F52C label=get_tuning
   $F52C BC = music_tuning_table[A];
   $F537 C++;
   $F538 B++;
@@ -11986,21 +11923,21 @@ R $F52C O:HL ...
   $F540 return;
 
 g $F541 Music state.
-W $F541 music_channel0_index
 @ $F541 label=music_channel0_index
-W $F543 music_channel1_index
+W $F541 music_channel0_index
 @ $F543 label=music_channel1_index
+W $F543 music_channel1_index
 
 u $F545 Unreferenced byte.
-B $F545 unused_F545
+  $F545 unused_F545
 
 b $F546 Music data.
-B $F546 music_channel0_data
 @ $F546 label=music_channel0_data
-B $F7C7 music_channel1_data
+  $F546 music_channel0_data
 @ $F7C7 label=music_channel1_data
-W $FA48 music_tuning_table
+  $F7C7 music_channel1_data
 @ $FA48 label=music_tuning_table
+W $FA48 music_tuning_table
 
 ; ------------------------------------------------------------------------------
 
@@ -12010,8 +11947,8 @@ D $FDE0 Unreferenced byte.
 ; ------------------------------------------------------------------------------
 
 c $FDE1 loaded
-@ $FDE1 label=loaded
 D $FDE1 Very first entry point used to shunt the game image down into its proper position.
+@ $FDE1 label=loaded
   $FDE1 Disable interrupts.
   $FDE2 SP = 0xFFFF;
   $FDE5 memmove(0x5B00, 0x5E00, 0x9FE0);
@@ -12030,9 +11967,9 @@ B $FDF3 unused_FDF3
 ; These are relocated to $F075 when chosen from the menu screen.
 
 c $FE00 inputroutine_keyboard
-@ $FE00 label=inputroutine_keyboard
 D $FE00 Input routine for keyboard.
 R $FE00 O:A Input value (as per enum input).
+@ $FE00 label=inputroutine_keyboard
   $FE00 HL = keydefs; // pairs of bytes (port high byte, key mask)
   $FE03 C = 0xFE; // port 0xXXFE
 N $FE05 Left/right.
@@ -12075,9 +12012,9 @@ N $FE3B Fire.
 ; ------------------------------------------------------------------------------
 
 c $FE47 inputroutine_protek
-@ $FE47 label=inputroutine_protek
 D $FE47 Input routine for Protek (cursor) joystick.
 R $FE47 O:A Input value (as per enum input).
+@ $FE47 label=inputroutine_protek
   $FE47 BC = port_KEYBOARD_12345;
   $FE4A IN A,(C)
   $FE4C A = ~A & (1<<4); // 5 == left
@@ -12110,10 +12047,10 @@ R $FE47 O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 c $FE7E inputroutine_kempston
-@ $FE7E label=inputroutine_kempston
 D $FE7E Input routine for Kempston joystick.
 ; "#1F Kempston (000FUDLR, active high)"
 R $FE7E O:A Input value (as per enum input).
+@ $FE7E label=inputroutine_kempston
   $FE7E BC = 0x001F;
   $FE81 IN A,(C)
   $FE83 BC = 0;
@@ -12134,10 +12071,10 @@ R $FE7E O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 c $FEA3 inputroutine_fuller
-@ $FEA3 label=inputroutine_fuller
 D $FEA3 Input routine for Fuller joystick. (Unused).
 ; "#7F Fuller Box (FxxxRLDU, active low)"
 R $FEA3 O:A Input value (as per enum input).
+@ $FEA3 label=inputroutine_fuller
   $FEA3 BC = 0x007F;
   $FEA6 IN A,(C)
   $FEA8 BC = 0;
@@ -12157,10 +12094,10 @@ R $FEA3 O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 c $FECD inputroutine_sinclair
-@ $FECD label=inputroutine_sinclair
 D $FECD Input routine for Sinclair joystick.
 ; "#EFFE Sinclair1 (000LRDUF, active low, corresponds to keys '6' to '0')"
 R $FECD O:A Input value (as per enum input).
+@ $FECD label=inputroutine_sinclair
   $FECD BC = port_KEYBOARD_09876;
   $FED0 IN A,(C)
   $FED2 A = ~A; // xxx67890
