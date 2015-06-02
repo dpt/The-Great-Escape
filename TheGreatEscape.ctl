@@ -980,7 +980,7 @@ E $68A2 FALL THROUGH into enter_room.
 
 c $68F4 enter_room
 @ $68F4 label=enter_room
-  $68F4 plot_game_window_x = 0;
+  $68F4 game_window_offset = 0;
   $68FA setup_room();
   $68FD plot_interior_tiles();
   $6900 map_position = 0xEA74;
@@ -5521,8 +5521,8 @@ g $A7C6 Byte used by move_map.
 ; ------------------------------------------------------------------------------
 
 g $A7C7 Game window x offset.
-@ $A7C7 label=plot_game_window_x
-W $A7C7 plot_game_window_x
+@ $A7C7 label=game_window_offset
+W $A7C7 game_window_offset
 
 ; ------------------------------------------------------------------------------
 
@@ -5986,7 +5986,7 @@ R $AAB2 O:HL == map_position
   $AB21 HL = 0xFF30;
   $AB24 if (A == 1) goto $AB2A;
   $AB28 L = 0x90;
-  $AB2A plot_game_window_x = HL;
+  $AB2A game_window_offset = HL;
   $AB2D HL = map_position;
   $AB30 return; // pops and calls move_map_* routine pushed at $AAE0
 
@@ -11137,10 +11137,10 @@ D $EDD3 128 screen pointers.
 c $EED3 plot_game_window
 @ $EED3 label=plot_game_window
   $EED3 saved_sp = SP;
-  $EED7 A = *(&plot_game_window_x + 1);
+  $EED7 A = *(&game_window_offset + 1);
   $EEDA if (A) goto unaligned;
 @ $EEDE nowarn
-  $EEDE HL = $F291 + plot_game_window_x;
+  $EEDE HL = $F291 + game_window_offset;
   $EEE9 SP = game_window_start_addresses;
   $EEEC A = 128; // 128 rows
   $EEEE do <% DE = *SP++; // output address
@@ -11172,7 +11172,7 @@ c $EED3 plot_game_window
   $EF22 SP = saved_sp;
   $EF26 return;
 
-  $EF27 unaligned: HL = $F290 + plot_game_window_x; // screen buffer start address
+  $EF27 unaligned: HL = $F290 + game_window_offset; // screen buffer start address
   $EF32 A = *HL++; // prime A
   $EF34 SP = game_window_start_addresses;
   $EF37 Bdash = 128; // 128 rows
