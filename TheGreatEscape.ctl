@@ -47,7 +47,6 @@
 ;   - Currently using (<- somefunc) to show a reference.
 ;
 ; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
-; - Fix axis described as Y/X to X/Y.
 
 ; //////////////////////////////////////////////////////////////////////////////
 ; STYLE
@@ -649,8 +648,8 @@
 ;          0x05 -> character faces top right    (crawling)
 ;          0x06 -> character faces bottom right (crawling)
 ;          0x07 -> character faces bottom left  (crawling)
-; w $800F position on Y axis (along the line of - bottom right to top left of screen) (set by process_player_input)
-; w $8011 position on X axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
+; w $800F position on X axis (along the line of - bottom right to top left of screen) (set by process_player_input)
+; w $8011 position on Y axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
 ; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 touch sets this to stashed_A
@@ -946,10 +945,10 @@ R $68A2 I:IY Pointer to visible character?
   $68A3 HL = IY;
   $68A6 A = L; // stash vischar index/offset
   $68A7 PUSH AF
-  $68A8 L = A + 0x0F; // $8xxF (position on Y axis)
+  $68A8 L = A + 0x0F; // $8xxF (position on X axis)
   $68AB A = IY[0x1C]; // $8x1C (likely room index)
   $68AE if (A == 0) <% // outdoors
-N $68B2 Set position on Y axis, X axis and height (dividing by 4).
+N $68B2 Set position on X axis, Y axis and height (dividing by 4).
   $68B2   B = 3; // 3 iterations
   $68B4   do <% PUSH BC
   $68B5     A = *DE++;
@@ -959,7 +958,7 @@ N $68B2 Set position on Y axis, X axis and height (dividing by 4).
   $68BE     POP BC
   $68BF   %> while (--B); %>
   $68C1 else <% // indoors
-N $68C3 Set position on Y axis, X axis and height (copying).
+N $68C3 Set position on X axis, Y axis and height (copying).
   $68C3   B = 3; // 3 iterations
   $68C5   do <% *HL++ = *DE++;
   $68C8     *HL++ = 0;
@@ -2524,7 +2523,7 @@ N $7AF8 Use item common part.
   $7B05 L = *HL++;
   $7B07 H = *HL;
   $7B09 PUSH HL // exit via jump table entry
-  $7B0A memcpy(&saved_y, $800F, 6); // copy Y,X and height
+  $7B0A memcpy(&saved_pos_x, $800F, 6); // copy X,Y and height
   $7B15 return;
 
 N $7B16 Use item action jump table.
@@ -2640,9 +2639,9 @@ R $7BD0   I:HL Pointer to dropped itemstruct + 4.
 ;
 N $7BE4 Indoors.
   $7BE4 else <% HL++;
-  $7BE5   DE = $800F; // position on y axis
+  $7BE5   DE = $800F; // position on X axis
   $7BE8   *HL++ = *DE;
-  $7BEB   DE += 2; // position on x axis
+  $7BEB   DE += 2; // position on Y axis
   $7BED   *HL++ = *DE;
   $7BF0   *HL = 5;
 N $7BF2 This entry point is used by the routine at #R$CD31.
@@ -3098,10 +3097,10 @@ g $81A3 Unreferenced byte.
 
 g $81A4 Saved position.
 D $81A4 Structure type: pos_t.
-@ $81A4 label=saved_y
-W $81A4 saved_y
-@ $81A6 label=saved_x
-W $81A6 saved_x
+@ $81A4 label=saved_pos_x
+W $81A4 saved_pos_x
+@ $81A6 label=saved_pos_y
+W $81A6 saved_pos_y
 @ $81A8 label=saved_height
 W $81A8 saved_height
 
@@ -3155,10 +3154,10 @@ B $81B7 flip_sprite
 
 g $81B8 Hero's map position.
 D $81B8 Structure type: tinypos_t.
-@ $81B8 label=hero_map_position_y
-B $81B8 hero_map_position_y
-@ $81B9 label=hero_map_position_x
-B $81B9 hero_map_position_x
+@ $81B8 label=hero_map_position_x
+B $81B8 hero_map_position_x
+@ $81B9 label=hero_map_position_y
+B $81B9 hero_map_position_y
 @ $81BA label=hero_map_position_height
 B $81BA hero_map_position_height
 
@@ -4227,8 +4226,8 @@ N $9E34 Wait 31 turns until automatic control.
   $9E37   if (hero_in_bed == 0) <%
   $9E3D     if (!hero_in_breakfast) goto not_bed_or_breakfast;
   $9E43     (word) $8002 = 0x002B; // set target location?
-  $9E49     (word) $800F = 0x0034; // set Y pos
-  $9E4E     (word) $8011 = 0x003E; // set X pos
+  $9E49     (word) $800F = 0x0034; // set X pos
+  $9E4E     (word) $8011 = 0x003E; // set Y pos
   $9E52     roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
   $9E57     HL = &hero_in_breakfast; %>
   $9E5A   else <%
@@ -4236,8 +4235,8 @@ N $9E5C Hero was in bed.
   $9E5C     (word) $8002 = 0x012C; // set target location?
   $9E62     (word) $8004 = 0x2E2E; // another position?
 @ $9E65 nowarn
-  $9E68     (word) $800F = 0x002E; // set Y pos
-  $9E6D     (word) $8011 = 0x002E; // set X pos
+  $9E68     (word) $800F = 0x002E; // set X pos
+  $9E6D     (word) $8011 = 0x002E; // set Y pos
   $9E70     $8013 = 24; // set height
   $9E75     roomdef_2_hut2_left.bed = interiorobject_EMPTY_BED;
   $9E7A     HL = &hero_in_bed; %>
@@ -4329,7 +4328,7 @@ D $9F15 Pairs of low-high bounds.
 c $9F21 in_permitted_area
 D $9F21 In permitted area.
 @ $9F21 label=in_permitted_area
-  $9F21 HL = $800F; // position on Y axis
+  $9F21 HL = $800F; // position on X axis
   $9F24 DE = &hero_map_position.y; // x/y confusion here - mislabeling
   $9F27 if (room_index == 0) <% // outdoors
   $9F2E   pos_to_tinypos(HL,DE);
@@ -4993,8 +4992,8 @@ c $A289 wake_up
 D $A289 Called by event_wake_up.
 @ $A289 label=wake_up
   $A289 if (hero_in_bed) <% // odd that this jumps into a point which sets hero_in_bed to zero when it's already zero
-  $A290   $800F = 46; // hero's Y position
-  $A295   $8011 = 46; %> // hero's X position
+  $A290   $800F = 46; // hero's X position
+  $A295   $8011 = 46; %> // hero's Y position
   $A299 hero_in_bed = 0;
   $A29D set_hero_target_location(location_002A);
   $A2A3 HL = &characterstruct_20.room;
@@ -5034,8 +5033,8 @@ N $A2CF Update the hero's bed object to be empty.
 c $A2E2 breakfast_time
 @ $A2E2 label=breakfast_time
   $A2E2 if (hero_in_breakfast) <%
-  $A2E9   $800F = 52; // hero Y position
-  $A2EE   $8011 = 62; %> // hero X position
+  $A2E9   $800F = 52; // hero X position
+  $A2EE   $8011 = 62; %> // hero Y position
   $A2F2 hero_in_breakfast = 0;
   $A2F6 set_hero_target_location(location_0390);
   $A2FC HL = &characterstruct_20.room; // character_20_PRISONER_1
@@ -6521,7 +6520,7 @@ N $AFB9 Cutting wire only from here onwards?
   $AFC3   if (!Z) return; %>
 ; else object only from here on?
   $AFC4 IY[7] &= ~vischar_BYTE7_BIT6;
-  $AFC8 memcpy(IY + 15, &saved_y, 6); // $800F // copy Y,X and height
+  $AFC8 memcpy(IY + 15, &saved_pos_x, 6); // $800F // copy X,Y and height
   $AFD7 IY[0x17] = stashed_A;
   $AFDD A = 0;
   $AFDE return 0;
@@ -6535,17 +6534,17 @@ c $AFDF collision
   $AFE4 do <% if (*HL & vischar_BYTE1_BIT7) goto next; // $8001, $8021, ...
   $AFE9   PUSH BC
   $AFEA   PUSH HL
-  $AFEB   HL += 0x0E; // $800F etc. - y axis position
+  $AFEB   HL += 0x0E; // $800F etc. - X axis position
 N $AFEF --------
   $AFEF   C = *HL++;
   $AFF1   B = *HL;
   $AFF2   EX DE,HL
-  $AFF3   HL = saved_y;
+  $AFF3   HL = saved_pos_x;
   $AFF6   BC += 4;
   $AFFE   if (HL != BC) <%
   $B002     if (HL > BC) goto pop_next;
   $B005     BC -= 8; // ie -4 over original
-  $B00C     HL = saved_y;
+  $B00C     HL = saved_pos_x;
   $B011     if (HL < BC) goto pop_next; %>
   $B014   EX DE,HL
   $B015   HL++;
@@ -6553,12 +6552,12 @@ N $B016 --------
   $B016   C = *HL++;
   $B018   B = *HL;
   $B019   EX DE,HL
-  $B01A   HL = saved_x;
+  $B01A   HL = saved_pos_y;
   $B01D   BC += 4;
   $B025   if (HL != BC) <%
   $B029     if (HL > BC) goto pop_next;
   $B02C     BC -= 8;
-  $B033     HL = saved_x;
+  $B033     HL = saved_pos_y;
   $B038     if (HL < BC) goto pop_next; %>
   $B03B   EX DE,HL
   $B03C   HL++;
@@ -6681,13 +6680,13 @@ R $B14C I:IY Pointer to visible character block.
   $B158 do <% -
   $B159   -
   $B15A   -
-  $B15E   if ((saved_y >= DE[0] * 8 + 2) &&
+  $B15E   if ((saved_pos_x >= DE[0] * 8 + 2) &&
   $B167     -
-  $B16C       (saved_y <  DE[1] * 8 + 4) &&
+  $B16C       (saved_pos_x <  DE[1] * 8 + 4) &&
   $B177     -
-  $B17C       (saved_x >= DE[2] * 8)     &&
+  $B17C       (saved_pos_y >= DE[2] * 8)     &&
   $B183     -
-  $B188       (saved_x <  DE[3] * 8 + 4) &&
+  $B188       (saved_pos_y <  DE[3] * 8 + 4) &&
   $B193     -
   $B198       (saved_height >= DE[4] * 8)     &&
   $B19F     -
@@ -6781,7 +6780,7 @@ c $B1F5 door_handling
 ; ------------------------------------------------------------------------------
 
 c $B252 door_in_range
-D $B252 (saved_y,saved_x) within (-3,+3) of HL[1..] scaled << 2
+D $B252 (saved_pos_x,saved_pos_y) within (-3,+3) of HL[1..] scaled << 2
 R $B252 I:HL Pointer to (byte before) coord byte pair.
 R $B252 O:HL Corrupted.
 R $B252 O:F  C/NC if nomatch/match.
@@ -6789,13 +6788,13 @@ R $B252 O:F  C/NC if nomatch/match.
   $B252 A = HL[1];
   $B254 -
   $B255 multiply_by_4();
-  $B258 if (saved_y < BC - 3 || saved_y >= BC + 3) return; // with C set
+  $B258 if (saved_pos_x < BC - 3 || saved_pos_x >= BC + 3) return; // with C set
 ;
   $B273 -
   $B274 A = HL[2];
   $B276 multiply_by_4();
   $B279 -
-  $B27A if (saved_x < BC - 3 || saved_x >= BC + 3) return; // with C set
+  $B27A if (saved_pos_y < BC - 3 || saved_pos_y >= BC + 3) return; // with C set
 ;
   $B294 return; // C not set
 
@@ -6825,7 +6824,7 @@ R $B29F O:F  Z clear if boundary hit, set otherwise.
 R $B29F O:HL Corrupted.
 @ $B29F label=interior_bounds_check
   $B29F BC = &roomdef_bounds[roomdef_bounds_index];
-  $B2AC HL = &saved_y;
+  $B2AC HL = &saved_pos_x;
   $B2AF A = *BC;
   $B2B0 if (A < *HL) goto stop;
   $B2B3 A = *++BC + 4;
@@ -6843,7 +6842,7 @@ N $B2BC Bug: This instruction is stray code. It's incremented but never used.
   $B2D0 HL++;
   $B2D1 do <% PUSH BC
   $B2D2     PUSH HL
-  $B2D3     DE = &saved_y;
+  $B2D3     DE = &saved_pos_x;
   $B2D6     B = 2; // 2 iterations
   $B2D8     do <% A = *DE;
   $B2D9     if (A < HL[0] || A >= HL[1]) goto next; // next outer loop iteration
@@ -6912,7 +6911,7 @@ R $B32D I:IY Pointer to visible character.
   $B340   if (IY[14] & 3 != Bdash) goto next;
   $B348   HLdash++;
   $B349   -
-  $B34A   DEdash = &saved_y;
+  $B34A   DEdash = &saved_pos_x;
   $B34D   Bdash = 2; // 2 iterations
   $B34F   do <% A = *HLdash - 3;
   $B352     if (A >= *DEdash || A + 6 < *DEdash) goto next; // -3 .. +3
@@ -7178,7 +7177,7 @@ N $B506 Search door_related for C.
   $B521 HL++;
   $B522 EX DE,HL
 N $B523 Range check pattern (-3..+3).
-  $B523 HL = &saved_y;
+  $B523 HL = &saved_pos_x;
   $B526 B = 2; // 2 iterations
   $B528 do <% if (*HL <= *DE - 3 || *HL > *DE + 3) goto exx_next;
   $B533   HL += 2;
@@ -7248,7 +7247,7 @@ c $B5CE called_from_main_loop_9
   $B603     EX AF,AF'
 ;
   $B605     resume1: EX DE,HL
-  $B606     L = IY[0x0F]; // Y axis
+  $B606     L = IY[0x0F]; // X axis
   $B609     H = IY[0x10];
   $B60C     A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data)
   $B60D     C = A;
@@ -7256,9 +7255,9 @@ c $B5CE called_from_main_loop_9
   $B610     if (A) A = 0xFF;
   $B614     B = A;
   $B615     HL -= BC;
-  $B617     saved_y = HL;
+  $B617     saved_pos_x = HL;
   $B61A     DE++;
-  $B61B     L = IY[0x11]; // X axis
+  $B61B     L = IY[0x11]; // Y axis
   $B61E     H = IY[0x12];
   $B621     A = *DE;
   $B622     C = A;
@@ -7266,7 +7265,7 @@ c $B5CE called_from_main_loop_9
   $B625     if (A) A = 0xFF;
   $B629     B = A;
   $B62A     HL -= BC;
-  $B62C     saved_x = HL;
+  $B62C     saved_pos_y = HL;
   $B62F     DE++;
   $B630     L = IY[0x13]; // height
   $B633     H = IY[0x14];
@@ -7290,20 +7289,20 @@ c $B5CE called_from_main_loop_9
   $B65D     A &= 0x80;
   $B65F     if (A) A = 0xFF;
   $B663     H = A;
-  $B664     C = IY[0x0F]; // Y axis
+  $B664     C = IY[0x0F]; // X axis
   $B667     B = IY[0x10];
   $B66A     HL += BC;
-  $B66B     saved_y = HL;
+  $B66B     saved_pos_x = HL;
   $B66E     DE++;
   $B66F     A = *DE;
   $B670     L = A;
   $B671     A &= 0x80;
   $B673     if (A) A = 0xFF;
   $B677     H = A;
-  $B678     C = IY[0x11]; // X axis
+  $B678     C = IY[0x11]; // Y axis
   $B67B     B = IY[0x12];
   $B67E     HL += BC;
-  $B67F     saved_x = HL;
+  $B67F     saved_pos_y = HL;
   $B682     DE++;
   $B683     A = *DE;
   $B684     L = A;
@@ -7369,19 +7368,19 @@ D $B71B Save a copy of the vischar's position + offset.
 R $B71B I:HL Pointer to visible character.
 @ $B71B label=reset_position
   $B71B -
-  $B71C memcpy(&saved_y, HL + 0x0F, 6);
+  $B71C memcpy(&saved_pos_x, HL + 0x0F, 6);
   $B728 -
   $B729 -
   $B72A HL += 0x18;
-  $B72E DE = saved_x + 0x0200;
+  $B72E DE = saved_pos_y + 0x0200;
   $B735 -
   $B739 -
-  $B73A DE = (DE - saved_y) * 2;
+  $B73A DE = (DE - saved_pos_x) * 2;
   $B73D -
   $B73E *HL++ = E;
   $B740 *HL++ = D;
   $B742 -
-  $B743 DE = 0x0800 - saved_y - saved_height - saved_x;
+  $B743 DE = 0x0800 - saved_pos_x - saved_height - saved_pos_y;
   $B755 -
   $B756 *HL++ = E;
   $B758 *HL = D;
@@ -7569,7 +7568,7 @@ R $B89C O:IY vischar or itemstruct to plot.
   $B8AE do <% if ((*HL & vischar_BYTE7_BIT7) == 0) goto next;
   $B8B2   PUSH HL
   $B8B3   PUSH BC
-  $B8B4   HL += 8; // $8007 + 8 = $800F = mi.pos.y
+  $B8B4   HL += 8; // $8007 + 8 = $800F = mi.pos.x
   $B8B8   C = *HL++;
   $B8BA   B = *HL;
   $B8BB   BC += 4;
@@ -8430,7 +8429,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C4FA PUSH HL // resave
   $C4FB PUSH DE
   $C4FC DE++;
-  $C4FD HL = &saved_y;
+  $C4FD HL = &saved_pos_x;
   $C500 A = *DE++;
   $C502 A &= A;
   $C503 if (A == 0) <%
@@ -8476,7 +8475,7 @@ R $C4F6 I:HL Pointer to empty slot.
   $C55B *DE++ = *HL++;
   $C55D *DE++ = *HL++;
   $C55F DE -= 8;
-  $C563 memcpy(DE, &saved_y, 6);
+  $C563 memcpy(DE, &saved_pos_x, 6);
   $C56B POP HL
   $C56C HL += 5;
   $C571 DE += 7;
@@ -8629,7 +8628,7 @@ D $C6A0 Moves characters around.
   $C6BD   is_item_discoverable_interior(A);
   $C6C0   if (Z) item_discovered(); %>
   $C6C5 POP HL
-  $C6C6 HL += 2; // point at characterstruct y,x coords
+  $C6C6 HL += 2; // point at characterstruct X,Y coords
   $C6C8 PUSH HL
   $C6C9 HL += 3; // point at characterstruct byte2
   $C6CC A = *HL;
@@ -8670,11 +8669,11 @@ B $C6FD,2   %>
   $C708   PUSH HL
   $C709   if (A == 0) <%
   $C70D     PUSH DE
-  $C70E     DE = &saved_y;
+  $C70E     DE = &saved_pos_x;
   $C711     B = 2; // 2 iters
   $C713     do <% *DE++ = *HL++ >> 1;
   $C719     %> while (--B);
-  $C71B     HL = &saved_y;
+  $C71B     HL = &saved_pos_x;
   $C71E     POP DE %>
   $C71F   if (DE[-1] == 0) A = 2; else A = 6;
   $C729   EX AF,AF'
@@ -9059,14 +9058,14 @@ N $C99C Found bribed character.
   $C9D5   else <%
 @ $C9D7 nowarn
   $C9D7     HLdash = &multiply_by_8; %> %>
-  $C9DA ($CA13) = HLdash; // self-modify move_character_Y:$CA13
-  $C9DD ($CA4B) = HLdash; // self-modify move_character_X:$CA4B
+  $C9DA ($CA13) = HLdash; // self-modify move_character_x:$CA13
+  $C9DD ($CA4B) = HLdash; // self-modify move_character_y:$CA4B
   $C9E0 -
   $C9E1 if (IY[7] & vischar_BYTE7_BIT5) goto bit5set; // I could 'else' this chunk.
   $C9E7 HL += 3;
-  $C9EA move_character_Y();
+  $C9EA move_character_x();
   $C9ED if (Z) <%
-  $C9EF   move_character_X();
+  $C9EF   move_character_y();
   $C9F2   if (Z) goto bribes_solitary_food; %> // exit via
 
 ; Calling this "gizzards", as unsure what it's doing.
@@ -9074,24 +9073,24 @@ N $C99C Found bribed character.
   $C9FE return;
 
   $C9FF bit5set: L += 4;
-  $CA03 move_character_X();
-  $CA06 if (Z) move_character_Y();
+  $CA03 move_character_y();
+  $CA06 if (Z) move_character_x();
   $CA0B if (!Z) goto gizzards; // keep trying to move?
   $CA0D HL--;
   $CA0E bribes_solitary_food(); return; // exit via
 
 ; ------------------------------------------------------------------------------
 
-c $CA11 move_character_Y
+c $CA11 move_character_x
 D $CA11 Returns vischar[15] - scalefn(vischar[4])
 R $CA11 I:HL Pointer to visible character block + 4.
 R $CA11 I:IY Pointer to visible character block.
 R $CA11 O:A  8/4/0 .. meaning ?
 R $CA11 O:HL Pointer to ?
-@ $CA11 label=move_character_Y
+@ $CA11 label=move_character_x
   $CA11 A = *HL; // sampled HL=$8004,$8044,$8064,$8084
   $CA12 multiply_by_8(); // self modified by #R$C9DA
-  $CA15 HL += 11; // position on Y axis ($800F etc.)
+  $CA15 HL += 11; // position on X axis ($800F etc.)
   $CA19 E = *HL++;
   $CA1B D = *HL;
   $CA1C -
@@ -9109,16 +9108,16 @@ R $CA11 O:HL Pointer to ?
 
 ; ------------------------------------------------------------------------------
 
-c $CA49 move_character_X
-D $CA49 Nearly identical routine to move_character_Y above.
+c $CA49 move_character_y
+D $CA49 Nearly identical routine to move_character_x above.
 R $CA49 I:HL Pointer to visible character block + 5.
 R $CA49 I:IY Pointer to visible character block.
 R $CA49 O:A  5/7/0 .. meaning ?
 R $CA49 O:HL Pointer to ?
-@ $CA49 label=move_character_X
+@ $CA49 label=move_character_y
   $CA49 A = *HL; // sampled HL=$8025,$8065,$8005
   $CA4A multiply_by_8(); // self modified by #R$C918
-  $CA4D HL += 12; // position on X axis ($8011 etc.)
+  $CA4D HL += 12; // position on Y axis ($8011 etc.)
   $CA51 E = *HL++;
   $CA53 D = *HL;
   $CA54 -
