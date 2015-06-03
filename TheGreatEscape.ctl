@@ -1000,7 +1000,6 @@ c $691A squash_stack_goto_main
 ; ------------------------------------------------------------------------------
 
 c $6920 set_hero_sprite_for_room
-D $6920 Used by the routine at #R$68F4.
 D $6920 Called when changing rooms.
 D $6920 For tunnels this forces the hero sprite to 'prisoner' and sets the crawl flag appropriately.
 @ $6920 label=set_hero_sprite_for_room
@@ -1092,8 +1091,6 @@ W $69C6 sprite: sprite_stove
 ; ------------------------------------------------------------------------------
 
 c $69C9 reset_nonplayer_visible_characters
-D $69C9 Used by the routine at #R$6939.
-D $69C9 Used by the routine at #R$6939.
 D $69C9 Reset all non-player visible characters.
 @ $69C9 label=reset_nonplayer_visible_characters
 @ $69C9 nowarn
@@ -1111,7 +1108,6 @@ D $69C9 Reset all non-player visible characters.
 ; ------------------------------------------------------------------------------
 
 c $69DC setup_doors
-D $69DC Used by the routine at #R$6A35.
 D $69DC Looks like it's filling door_related with stuff from the door_positions table.
 D $69DC Wipe $81D6..$81D9 (door_related) with 0xFF.
 @ $69DC label=setup_doors
@@ -1221,7 +1217,6 @@ N $6A8C Plot all objects.
 ; ------------------------------------------------------------------------------
 
 c $6AB5 expand_object
-D $6AB5 Used by the routine at #R$6A35.
 D $6AB5 Expands RLE-encoded objects to a full set of tile references.
 D $6AB5 Format:
 D $6AB5 <w> <h>: width, height
@@ -2493,7 +2488,6 @@ B $7AC6 58, 42, 24
 ; ------------------------------------------------------------------------------
 
 c $7AC9 process_player_input_fire
-D $7AC9 Used by the routine at #R$9E07.
 D $7AC9 check for 'pick up', 'drop' and both 'use item' keypresses
 R $7AC9 I:A Input event.
 @ $7AC9 label=process_player_input_fire
@@ -2587,7 +2581,6 @@ N $7B44 Locate the empty item slot.
 ; ------------------------------------------------------------------------------
 
 c $7B8B drop_item
-D $7B8B Used by the routine at #R$7AC9.
 D $7B8B Drop the first item.
 @ $7B8B label=drop_item
   $7B8B A = items_held[0];
@@ -2608,7 +2601,6 @@ N $7B9D Shuffle items down.
 
 ; looks like it's converting character position + offset into object position + offset by dividing
 c $7BB5 drop_item_A
-D $7BB5 Used by the routine at #R$B387.
 R $7BB5 I:A Item.
 @ $7BB5 label=drop_item_A
   $7BB5 HL = item_to_itemstruct(A);
@@ -2627,7 +2619,6 @@ N $7BC2 HL is incremented here but then immediately overwritten by $7BC5.
   $7BCB   DE--;
   $7BCC   *DE = 0; // ->vo ?
   $7BCF   EX DE,HL
-N $7BD0 This entry point is used by the routine at #R$CD31.
 R $7BD0   I:HL Pointer to dropped itemstruct + 4.
 ; sampled HL = 7719, 7720,
 ; have i over-simplified here?
@@ -2644,7 +2635,6 @@ N $7BE4 Indoors.
   $7BEB   DE += 2; // position on Y axis
   $7BED   *HL++ = *DE;
   $7BF0   *HL = 5;
-N $7BF2 This entry point is used by the routine at #R$CD31.
 R $7BF2   I:HL Pointer to ? $77AE (odd - that's object tile refs...) // i doubt those are tile refs now
   $7BF2   HL--;
   $7BF3   DE = 0x0200 + HL[0];  // 512 / 8 = 64
@@ -2680,7 +2670,6 @@ c $7C33 draw_all_items
 ; ------------------------------------------------------------------------------
 
 c $7C46 draw_item
-D $7C46 Used by the routine at #R$7C33.
 R $7C46 I:A  Item index.
 R $7C46 I:HL Screen address of item.
 @ $7C46 label=draw_item
@@ -2722,7 +2711,6 @@ N $7C6B Plot bitmap.
 ; ------------------------------------------------------------------------------
 
 c $7C82 find_nearby_item
-D $7C82 Used by the routine at #R$7B36.
 D $7C82 Returns an item within range of the hero.
 R $7C82 O:AF Z set if item found.
 R $7C82 O:HL If found, pointer to item.
@@ -2777,7 +2765,6 @@ R $7CBE I:HL Destination address.
 ; ------------------------------------------------------------------------------
 
 c $7CD4 screen_wipe
-D $7CD4 Used by the routine at #R$7C46.
 D $7CD4 Wipe the screen.
 R $7CD4 I:B  Number of bytes to set.
 R $7CD4 I:C  Number of scanlines.
