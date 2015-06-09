@@ -483,7 +483,6 @@
 ; vischar_BYTE7_BIT7         = 1<<7,
 ; vischar_BYTE12_MASK        = 0x7F,
 ; vischar_BYTE13_MASK        = 0x7F,
-; vischar_BYTE13_BIT7        = 1<<7,
 ; vischar_BYTE14_CRAWL       = 1<<2,
 
 ; enum itemstructflags
@@ -633,13 +632,13 @@
 ; w $8008 (read by called_from_main_loop_9)
 ; w $800A (read/written by called_from_main_loop_9)
 ; b $800C (read/written by called_from_main_loop_9)
-; b $800D tunnel related (<- process_player_input, snipping_wire, process_player_input) assigned from table at 9EE0.  causes movement when set. but not when in solitary.
+; b $800D tunnel related (<- process_player_input, snipping_wire, process_player_input) assigned from snipping_wire_new_inputs table.  causes movement when set. but not when in solitary.
 ;            0x81 -> move toward top left,
 ;            0x82 -> move toward bottom right,
 ;            0x83 -> move toward bottom left,
 ;            0x84 -> TL (again)
 ;            0x85 ->
-; b $800E tunnel related, direction (bottom 2 bits index table_9EE0) bit 2 is walk/crawl flag
+; b $800E tunnel related, direction (bottom 2 bits index snipping_wire_new_inputs) bit 2 is walk/crawl flag
 ; set to - 0x00 -> character faces top left
 ;          0x01 -> character faces top right
 ;          0x02 -> character faces bottom right
@@ -972,7 +971,7 @@ N $68D7 HL points to the hero vischar at this point.
   $68DD room_index = A;
   $68E0 if (A == 0) <%
   $68E4   HL += 12;
-  $68E8   *HL++ = 0x80; // $800D // likely a character direction
+  $68E8   *HL++ = input_KICK; // $800D
   $68EB   *HL &= 3;     // $800E // likely a sprite direction
   $68EF   reset_outdoors();
   $68F2   goto squash_stack_goto_main; %>
@@ -1005,7 +1004,7 @@ D $6920 For tunnels this forces the hero sprite to 'prisoner' and sets the crawl
 @ $6920 label=set_hero_sprite_for_room
 @ $6920 nowarn
   $6920 HL = $800D;
-  $6923 *HL++ = 0x80; // likely a character direction
+  $6923 *HL++ = input_KICK;
   $6926 if (room_index >= room_29_secondtunnelstart) <%
   $692D   *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag
   $692F   $8015 = &sprite_prisoner_tl_4; %>
@@ -4233,10 +4232,10 @@ N $9E5C Hero was in bed.
   $9E85 not_bed_or_breakfast: // ... (pop af -- restores user input value stored at $9E36)
   $9E86   if (A >= input_FIRE) <%
   $9E8A     process_player_input_fire();
-  $9E8D     A = 0x80; %> %>
+  $9E8D     A = input_KICK; %> %>
 @ $9E8F nowarn
   $9E8F if ($800D == A) return; // tunnel related?
-  $9E94 $800D = A | 0x80;
+  $9E94 $800D = A | input_KICK;
   $9E97 return;
 
 ; ------------------------------------------------------------------------------
@@ -4261,24 +4260,26 @@ D $9EB2 Locks the player out until the wire is snipped.
   $9EB9 if (A) <%
   $9EBB   if (A < 4)
 @ $9EBE nowarn
-  $9EBE $800D = table_9EE0[$800E & 3]; // change direction
+  $9EBE $800D = snipping_wire_new_inputs[$800E & 3]; // change direction
 @ $9ECC nowarn
   $9ECF   return; %>
 N $9ED0 Countdown reached: Snip the wire.
 N $9ED0 Bug: A is always zero here, so $800E is always set to zero.
 @ $9ED0 nowarn
   $9ED0 else <% $800E = A & 3; // set direction
-  $9ED6   $800D = 0x80;
+  $9ED6   $800D = input_KICK;
   $9ED9   $8013 = 24; // set height
   $9EDE   goto clear_lockpick_wirecut_flags_and_return; %>
 
 ; ------------------------------------------------------------------------------
 
-b $9EE0 table_9EE0
-D $9EE0 Change of direction table used when wire is snipped?
-D $9EE0 Indexed by $800E.
-@ $9EE0 label=table_9EE0
-  $9EE0 direction_type table_9EE0[] = { 0x84, 0x87, 0x88, 0x85 };
+b $9EE0 snipping_wire_new_inputs
+D $9EE0 New inputs table used by snipping_wire.
+@ $9EE0 label=snipping_wire_new_inputs
+  $9EE0 input_UP   | input_LEFT  | input_KICK
+  $9EE1 input_UP   | input_RIGHT | input_KICK
+  $9EE2 input_DOWN | input_RIGHT | input_KICK
+  $9EE3 input_DOWN | input_LEFT  | input_KICK
 
 ; ------------------------------------------------------------------------------
 
@@ -4774,8 +4775,8 @@ b $A147 bell_ringer_bitmaps
 ; ------------------------------------------------------------------------------
 
 c $A15F set_game_window_attributes
-R $A15F I:A Attribute byte.
 D $A15F Starting at $5847, set 23 columns of 16 rows to A.
+R $A15F I:A Attribute byte.
 @ $A15F label=set_game_window_attributes
   $A15F HL = $5847 // attributes base // $5800 + $47
   $A162 C = 16 // rows
@@ -6604,14 +6605,14 @@ N $B03D --------
   $B0C3     HL++;
   $B0C4     A = *HL ^ 2;
   $B0C7     if (A != IY[14]) <%
-  $B0CC       IY[13] = 0x80;
+  $B0CC       IY[13] = input_KICK;
 ;
   $B0D0       IY[7] = (IY[7] & vischar_BYTE7_MASK_HI) | 5; // preserve flags and set 5? // sampled IY = $8000, $80E0
   $B0DA       if (!Z) return; /* odd */ %> %>
 ;
   $B0DB   BC = IY[14]; // sampled IY = $8000, $8040, $80E0
 @ $B0E0 nowarn
-  $B0E0   IY[13]  = four_bytes_B0F8[BC];
+  $B0E0   IY[13] = collision_new_inputs[BC];
   $B0E8   if ((C & 1) == 0) <%
   $B0EC     IY[7] &= ~vischar_BYTE7_BIT5;
   $B0F0     goto $B0D0; %>
@@ -6619,8 +6620,11 @@ N $B03D --------
   $B0F6     goto $B0D0; %>
 
 N $B0F8 (<- collision)
-@ $B0F8 label=four_bytes_B0F8
-  $B0F8,4 four_bytes_B0F8
+@ $B0F8 label=collision_new_inputs
+B $B0F8 input_DOWN | input_LEFT  | input_KICK
+B $B0F9 input_UP   | input_LEFT  | input_KICK
+B $B0FA input_UP   | input_RIGHT | input_KICK
+B $B0FB input_DOWN | input_RIGHT | input_KICK
 
   $B0FC   pop_next: POP HL
   $B0FD   POP BC
@@ -7055,7 +7059,7 @@ c $B417 action_wiresnips
   $B470 action_wiresnips_tail: ...
 @ $B471 nowarn
   $B471 $800E = A;
-  $B475 $800D = 0x80;
+  $B475 $800D = input_KICK;
   $B478 $8001 = vischar_BYTE1_CUTTING_WIRE;
   $B47D $8013 = 12; // set height
   $B482 $8015 = sprite_prisoner_tl_4;
@@ -7222,7 +7226,7 @@ c $B5CE called_from_main_loop_9
   $B5D4 do <% if (IY[1] == vischar_BYTE1_EMPTY_SLOT) goto next; // $8001 flags
   $B5DC   PUSH BC
   $B5DD   IY[1] |= vischar_BYTE1_BIT7;
-  $B5E1   if (IY[0x0D] & vischar_BYTE13_BIT7) goto byte13bit7set; // $800D
+  $B5E1   if (IY[0x0D] & input_KICK) goto kicked; // $800D
   $B5E8   H = IY[0x0B];
   $B5EB   L = IY[0x0A];
   $B5EE   A = IY[0x0C];
@@ -7317,7 +7321,7 @@ c $B5CE called_from_main_loop_9
   $B6B9 %> while (--B);
   $B6BD return;
 
-  $B6BE byte13bit7set: IY[0x0D] &= ~vischar_BYTE13_BIT7; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,
+  $B6BE kicked: IY[0x0D] &= ~input_KICK; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,
 ;
   $B6C2 snozzle: A = byte_CDAA[IY[0x0E] * 9 + IY[0x0D]];
   $B6D5 C = A;
@@ -9056,7 +9060,7 @@ N $C99C Found bribed character.
   $C9F2   if (Z) goto bribes_solitary_food; %> // exit via
 
 ; Calling this "gizzards", as unsure what it's doing.
-  $C9F5 gizzards: if (A != IY[13]) IY[13] = A | vischar_BYTE13_BIT7; // sampled IY=$8040,$8020,$8000
+  $C9F5 gizzards: if (A != IY[13]) IY[13] = A | input_KICK; // sampled IY=$8040,$8020,$8000
   $C9FE return;
 
   $C9FF bit5set: L += 4;
@@ -11231,7 +11235,7 @@ N $EFAF All visible characters turn forward.
 @ $EFAF nowarn
   $EFAF HL = $800D;
   $EFB2 B = 8; // iterations
-  $EFB4 do <% *HL++ = 0x80; // movement
+  $EFB4 do <% *HL++ = input_KICK;
   $EFB7   *HL = 0x03; // direction (3 => face bottom left)
   $EFB9   HL += 31;
   $EFBD %> while (--B);
