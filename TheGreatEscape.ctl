@@ -1982,112 +1982,366 @@ N $7075 roomdef_50_blocked_tunnel
 
 ; ------------------------------------------------------------------------------
 
-b $7095 interior_object_defs
-D $7095 Interior object definitions.
+b $7095 Interior object definitions.
 @ $7095 label=interior_object_defs
-W $7095 Array of pointer to interior object definitions, 54 entries long (== number of interior rooms).
+W $7095 Array of pointer to interior object definitions, 54 entries long (== number of interior objects).
+
+b $7101 Room object 0: Straight tunnel section (BL to TR)
 @ $7101 label=interior_object_tile_refs_0
-  $7101 interior_object_tile_refs_0
+  $7101,1 width
+  $7102,1 height
+  $7103,26,4 tile references
+E $7101 #HTML[#CALL:decode_object($7101, 0)]
+
+b $711B Room object 1: Small tunnel entrance
 @ $711B label=interior_object_tile_refs_1
-  $711B interior_object_tile_refs_1
+  $711B,1 width
+  $711C,1 height
+  $711D,4,2 tile references
+E $711B #HTML[#CALL:decode_object($711B, 1)]
+
+b $7121 Room object 3: Straight tunnel section (TL to BR)
 @ $7121 label=interior_object_tile_refs_3
-  $7121 interior_object_tile_refs_3
+  $7121,1 width
+  $7122,1 height
+  $7123,26,4 tile references
+E $7121 #HTML[#CALL:decode_object($7121, 3)]
+
+b $713B Room object 4: 'T' tunnel section (TL to BR)
 @ $713B label=interior_object_tile_refs_4
-  $713B interior_object_tile_refs_4
+  $713B,1 width
+  $713C,1 height
+  $713D,26,4 tile references
+E $713B #HTML[#CALL:decode_object($713B, 4)]
+
+b $7155 Room object 5: Prisoner sat at breakfast bench (mid-table)
 @ $7155 label=interior_object_tile_refs_5
-  $7155 interior_object_tile_refs_5
+  $7155,1 width
+  $7156,1 height
+  $7157,3 tile references (incl. RLE)
+E $7155 #HTML[#CALL:decode_object($7155, 5)]
+
+b $715A Room object 6: 'L' tunnel section (BL to TR)
 @ $715A label=interior_object_tile_refs_6
-  $715A interior_object_tile_refs_6
+  $715A,1 width
+  $715B,1 height
+  $715C,24,4 tile references
+E $715A #HTML[#CALL:decode_object($715A, 6)]
+
+b $7174 Room object 7: 'L' tunnel section (BL to TR) with collapsed end?
 @ $7174 label=interior_object_tile_refs_7
-  $7174 interior_object_tile_refs_7
+  $7174,1 width
+  $7175,1 height
+  $7176,24,4 tile references
+E $7174 #HTML[#CALL:decode_object($7174, 7)]
+
+b $718E Room object 12: 'L' tunnel section (TL to TR)
 @ $718E label=interior_object_tile_refs_12
-  $718E interior_object_tile_refs_12
+  $718E,1 width
+  $718F,1 height
+  $7190,22 tile references (incl. RLE)
+E $718E #HTML[#CALL:decode_object($718E, 12)]
+
+b $71A6 Room object 13: Blank?
 @ $71A6 label=interior_object_tile_refs_13
-  $71A6 interior_object_tile_refs_13
+  $71A6,1 width
+  $71A7,1 height
+  $71A8,3 tile references (incl. RLE)
+E $71A6 #HTML[#CALL:decode_object($71A6, 13)]
+
+b $71AB Room object 14: 'L' tunnel section (TR to BR)
 @ $71AB label=interior_object_tile_refs_14
-  $71AB interior_object_tile_refs_14
+  $71AB,1 width
+  $71AC,1 height
+  $71AD,23 tile references (incl. RLE)
+E $71AB #HTML[#CALL:decode_object($71AB, 14)]
+
+b $71C4 Room object 17: 'L' tunnel section (TL to BL)
 @ $71C4 label=interior_object_tile_refs_17
-  $71C4 interior_object_tile_refs_17
+  $71C4,1 width
+  $71C5,1 height
+  $71C6,24,4 tile references
+E $71C4 #HTML[#CALL:decode_object($71C4, 17)]
+
+b $71DE Room object 18: 'T' tunnel section?
 @ $71DE label=interior_object_tile_refs_18
-  $71DE interior_object_tile_refs_18
+  $71DE,1 width
+  $71DF,1 height
+  $71E0,24,4 tile references
+E $71DE #HTML[#CALL:decode_object($71DE, 18)]
+
+b $71F8 Room object 19: Prisoner sat at breakfast bench (end-table)
 @ $71F8 label=interior_object_tile_refs_19
-  $71F8 interior_object_tile_refs_19
+  $71F8,1 width
+  $71F9,1 height
+  $71FA,6,2 tile references
+E $71F8 #HTML[#CALL:decode_object($71F8, 19)]
+
+b $7200 Room object 20: Collapsed tunnel section (BL to TR)
 @ $7200 label=interior_object_tile_refs_20
-  $7200 interior_object_tile_refs_20
+  $7200,1 width
+  $7201,1 height
+  $7202,3 tile references (incl. RLE)
+E $7200 #HTML[#CALL:decode_object($7200, 20)]
+
+b $721A Room object 2: 24x12 room outline
 @ $721A label=interior_object_tile_refs_2
-  $721A interior_object_tile_refs_2
+  $721A,1 width
+  $721B,1 height
+  $721C,114 tile references (incl. RLE)
+E $721A #HTML[#CALL:decode_object($721A, 2)]
+
+b $728E Room object 8: Wide window
 @ $728E label=interior_object_tile_refs_8
-  $728E interior_object_tile_refs_8
+  $728E,1 width
+  $728F,1 height
+  $7290,30,5 tile references
+E $728E #HTML[#CALL:decode_object($728E, 8)]
+
+b $72AE Room object 9: Empty bed
 @ $72AE label=interior_object_tile_refs_9
-  $72AE interior_object_tile_refs_9
+  $72AE,1 width
+  $72AF,1 height
+  $72B0,17 tile references (incl. RLE)
+E $72AE #HTML[#CALL:decode_object($72AE, 9)]
+
+b $72C1 Room object 10: Short wardrobe
 @ $72C1 label=interior_object_tile_refs_10
-  $72C1 interior_object_tile_refs_10
+  $72C1,1 width
+  $72C2,1 height
+  $72C3,9 tile references (incl. RLE)
+E $72C1 #HTML[#CALL:decode_object($72C1, 10)]
+
+b $72CC Room object 11: Chest of drawers
 @ $72CC label=interior_object_tile_refs_11
-  $72CC interior_object_tile_refs_11
+  $72CC,1 width
+  $72CD,1 height
+  $72CE,3 tile references (incl. RLE)
+E $72CC #HTML[#CALL:decode_object($72CC, 11)]
+
+b $72D1 Room object 15: Door frame (facing BR)
 @ $72D1 label=interior_object_tile_refs_15
-  $72D1 interior_object_tile_refs_15
+  $72D1,1 width
+  $72D2,1 height
+  $72D3,24,4 tile references
+E $72D1 #HTML[#CALL:decode_object($72D1, 15)]
+
+b $72EB Room object 16: Door frame (facing BL)
 @ $72EB label=interior_object_tile_refs_16
-  $72EB interior_object_tile_refs_16
+  $72EB,1 width
+  $72EC,1 height
+  $72ED,24,4 tile references
+E $72EB #HTML[#CALL:decode_object($72EB, 16)]
+
+b $7305 Room object 22: Chair (facing BR)
 @ $7305 label=interior_object_tile_refs_22
-  $7305 interior_object_tile_refs_22
+  $7305,1 width
+  $7306,1 height
+  $7307,8,2 tile references
+E $7305 #HTML[#CALL:decode_object($7305, 22)]
+
+b $730F Room object 23: Occupied bed
 @ $730F label=interior_object_tile_refs_23
-  $730F interior_object_tile_refs_23
+  $730F,1 width
+  $7310,1 height
+  $7311,20,5 tile references
+E $730F #HTML[#CALL:decode_object($730F, 23)]
+
+b $7325 Room object 24: Wardrobe with knockers
 @ $7325 label=interior_object_tile_refs_24
-  $7325 interior_object_tile_refs_24
+  $7325,1 width
+  $7326,1 height
+  $7327,12,3 tile references
+E $7325 #HTML[#CALL:decode_object($7325, 24)]
+
+b $7333 Room object 25: Chair (facing BL)
 @ $7333 label=interior_object_tile_refs_25
-  $7333 interior_object_tile_refs_25
+  $7333,1 width
+  $7334,1 height
+  $7335,7 tile references (incl. RLE)
+E $7333 #HTML[#CALL:decode_object($7333, 25)]
+
+b $733C Room object 26: Cupboard 26
 @ $733C label=interior_object_tile_refs_26
-  $733C interior_object_tile_refs_26
-@ $7342 label=interior_object_tile_refs_28
-  $7342 interior_object_tile_refs_28
+  $733C,1 width
+  $733D,1 height
+  $733E,4 tile references (incl. RLE)
+E $733C #HTML[#CALL:decode_object($733C, 26)]
+
+b $7342 Room object 29: Table
+@ $7342 label=interior_object_tile_refs_29
+  $7342,1 width
+  $7343,1 height
+  $7344,7 tile references (incl. RLE)
+E $7342 #HTML[#CALL:decode_object($7342, 29)]
+
+b $734B Room object 30: Stove pipe
 @ $734B label=interior_object_tile_refs_30
-  $734B interior_object_tile_refs_30
+  $734B,1 width
+  $734C,1 height
+  $734D,12 tile references (incl. RLE)
+E $734B #HTML[#CALL:decode_object($734B, 30)]
+
+b $7359 Room object 31: Stuff (mess on floor?)
 @ $7359 label=interior_object_tile_refs_31
-  $7359 interior_object_tile_refs_31
+  $7359,1 width
+  $735A,1 height
+  $735B,1 tile references
+E $7359 #HTML[#CALL:decode_object($7359, 31)]
+
+b $735C Room object 32: Tall wardrobe
 @ $735C label=interior_object_tile_refs_32
-  $735C interior_object_tile_refs_32
+  $735C,1 width
+  $735D,1 height
+  $735E,12 tile references (incl. RLE)
+E $735C #HTML[#CALL:decode_object($735C, 32)]
+
+b $736A Room object 33: Small shelf
 @ $736A label=interior_object_tile_refs_33
-  $736A interior_object_tile_refs_33
+  $736A,1 width
+  $736B,1 height
+  $736C,3 tile references (incl. RLE)
+E $736A #HTML[#CALL:decode_object($736A, 33)]
+
+b $736F Room object 34: Small crate
 @ $736F label=interior_object_tile_refs_34
-  $736F interior_object_tile_refs_34
+  $736F,1 width
+  $7370,1 height
+  $7371,3 tile references (incl. RLE)
+E $736F #HTML[#CALL:decode_object($736F, 34)]
+
+b $7374 Room object 35: Small window
 @ $7374 label=interior_object_tile_refs_35
-  $7374 interior_object_tile_refs_35
+  $7374,1 width
+  $7375,1 height
+  $7376,15 tile references (incl. RLE)
+E $7374 #HTML[#CALL:decode_object($7374, 35)]
+
+b $7385 Room object 36: Door frame tunnel entrance
 @ $7385 label=interior_object_tile_refs_36
-  $7385 interior_object_tile_refs_36
+  $7385,1 width
+  $7386,1 height
+  $7387,12 tile references (incl. RLE)
+E $7385 #HTML[#CALL:decode_object($7385, 36)]
+
+b $7393 Room object 37: Noticeboard
 @ $7393 label=interior_object_tile_refs_37
-  $7393 interior_object_tile_refs_37
+  $7393,1 width
+  $7394,1 height
+  $7395,16 tile references (incl. RLE)
+E $7393 #HTML[#CALL:decode_object($7393, 37)]
+
+b $73A5 Room object 38: Door frame (facing BR) with no leading edge
 @ $73A5 label=interior_object_tile_refs_38
-  $73A5 interior_object_tile_refs_38
-@ $73BF label=interior_object_tile_refs_39
-  $73BF interior_object_tile_refs_39
+  $73A5,1 width
+  $73A6,1 height
+  $73A7,24,4 tile references
+E $73A5 #HTML[#CALL:decode_object($73A5, 38)]
+
+b $73BF Room object 40: Door frame (facing BL) with no leading edge
+@ $73BF label=interior_object_tile_refs_40
+  $73BF,1 width
+  $73C0,1 height
+  $73C1,24,4 tile references
+E $73BF #HTML[#CALL:decode_object($73BF, 40)]
+
+b $73D9 Room object 41: 14x8 room outline
 @ $73D9 label=interior_object_tile_refs_41
-  $73D9 interior_object_tile_refs_41
+  $73D9,1 width
+  $73DA,1 height
+  $73DB,74 tile references (incl. RLE)
+E $73D9 #HTML[#CALL:decode_object($73D9, 41)]
+
+b $7425 Room object 42: Cupboard 42
 @ $7425 label=interior_object_tile_refs_42
-  $7425 interior_object_tile_refs_42
+  $7425,1 width
+  $7426,1 height
+  $7427,6,2 tile references
+E $7425 #HTML[#CALL:decode_object($7425, 42)]
+
+b $742D Room object 43: Mess bench
 @ $742D label=interior_object_tile_refs_43
-  $742D interior_object_tile_refs_43
+  $742D,1 width
+  $742E,1 height
+  $742F,35 tile references (incl. RLE)
+E $742D #HTML[#CALL:decode_object($742D, 43)]
+
+b $7452 Room object 44: Mess table
 @ $7452 label=interior_object_tile_refs_44
-  $7452 interior_object_tile_refs_44
+  $7452,1 width
+  $7453,1 height
+  $7454,46 tile references (incl. RLE)
+E $7452 #HTML[#CALL:decode_object($7452, 44)]
+
+b $7482 Room object 45: Mess bench short
 @ $7482 label=interior_object_tile_refs_45
-  $7482 interior_object_tile_refs_45
+  $7482,1 width
+  $7483,1 height
+  $7484,15 tile references (incl. RLE)
+E $7482 #HTML[#CALL:decode_object($7482, 45)]
+
+b $7493 Room object 46: 18x10 room outline
 @ $7493 label=interior_object_tile_refs_46
-  $7493 interior_object_tile_refs_46
+  $7493,1 width
+  $7494,1 height
+  $7495,96 tile references (incl. RLE)
+E $7493 #HTML[#CALL:decode_object($7493, 46)]
+
+b $74F5 Room object 47: 22x12 room outline
 @ $74F5 label=interior_object_tile_refs_47
-  $74F5 interior_object_tile_refs_47
+  $74F5,1 width
+  $74F6,1 height
+  $74F7,121 tile references (incl. RLE)
+E $74F5 #HTML[#CALL:decode_object($74F5, 47)]
+
+b $7570 Room object 48: Tiny table
 @ $7570 label=interior_object_tile_refs_48
-  $7570 interior_object_tile_refs_48
+  $7570,1 width
+  $7571,1 height
+  $7572,4,2 tile references
+E $7570 #HTML[#CALL:decode_object($7570, 48)]
+
+b $7576 Room object 49: Tiny drawers
 @ $7576 label=interior_object_tile_refs_49
-  $7576 interior_object_tile_refs_49
+  $7576,1 width
+  $7577,1 height
+  $7578,6,2 tile references
+E $7576 #HTML[#CALL:decode_object($7576, 49)]
+
+b $757E Room object 50: Drawers 50
 @ $757E label=interior_object_tile_refs_50
-  $757E interior_object_tile_refs_50
+  $757E,1 width
+  $757F,1 height
+  $7580,8,2 tile references
+E $757E #HTML[#CALL:decode_object($757E, 50)]
+
+b $7588 Room object 51: Desk
 @ $7588 label=interior_object_tile_refs_51
-  $7588 interior_object_tile_refs_51
+  $7588,1 width
+  $7589,1 height
+  $758A,24,6 tile references
+E $7588 #HTML[#CALL:decode_object($7588, 51)]
+
+b $75A2 Room object 52: Sink
 @ $75A2 label=interior_object_tile_refs_52
-  $75A2 interior_object_tile_refs_52
+  $75A2,1 width
+  $75A3,1 height
+  $75A4,6 tile references (incl. RLE)
+E $75A2 #HTML[#CALL:decode_object($75A2, 52)]
+
+b $75AA Room object 53: Key rack
 @ $75AA label=interior_object_tile_refs_53
-  $75AA interior_object_tile_refs_53
+  $75AA,1 width
+  $75AB,1 height
+  $75AC,4,2 tile references
+E $75AA #HTML[#CALL:decode_object($75AA, 53)]
+
+b $75B0 Room object 27: 18x10 room outline
 @ $75B0 label=interior_object_tile_refs_27
-  $75B0 interior_object_tile_refs_27
+  $75B0,1 width
+  $75B1,1 height
+  $75B2,96 tile references (incl. RLE)
+E $75B0 #HTML[#CALL:decode_object($75B0, 27)]
 
 ; ------------------------------------------------------------------------------
 
