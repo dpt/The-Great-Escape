@@ -8,27 +8,27 @@ Goals
 
 **Goal one** is to build a fully documented disassembly of the game. SkoolKit enables us to generate both an annotated assembly listing suitable for rebuilding an exact image of the original game and a detailed cross-referenced disassembly in HTML format.
 
-**Goal two** is to transform the annotated assembly into working C source code which behaves exactly like the original game. The work-in-progress reimplementation project lives in [this repository](https://github.com/dpt/The-Great-Escape-in-C).
+**Goal two** is to transform the annotated assembly into working C source code which behaves exactly like the original game. The work-in-progress reimplementation project lives in [a separate repository](https://github.com/dpt/The-Great-Escape-in-C).
 
 SkoolKit
 --------
 
 [SkoolKit](http://skoolkit.ca/) is the awesome Python toolkit for disassembling ZX Spectrum software written by Richard Dymond.
 
-You can view the cross-referenced disassembly [here](http://dpt.github.com/The-Great-Escape/). Note that this often lags behind the current head of the source tree.
+You can view the current cross-referenced disassembly [here](http://dpt.github.com/The-Great-Escape/). Note that this can lag behind the head of the source tree.
 
 You can also disassemble and reassemble the game to a .TAP file which you can load into an emulator. (e.g. you can alter the game and fix 30-year-old bugs!)
 
 SkoolKit disassemblies are normally written in a plain text comment style but I've chosen to use a C-family-style pseudocode and Z80 fragments where C syntax cannot cope. Wise decision? Time will tell.
 
-Also note that currently the disassembly is contained in a  _control_ file (comments only format) rather than a _skool_ file (instructions + comments).
+Also note that currently the disassembly is contained in a  _control_ file (a comments-only format) rather than a _skool_ file (all instructions and comments).
 
 
 Building the Disassembly
 ------------------------
 
 * First, make a local clone of this repository: `git clone https://github.com/dpt/The-Great-Escape.git`
-* `cd <the cloned repo>`.
+* `cd <cloned repo>`.
 * Drop a Z80 format snapshot of the game into the project directory. Call it `TheGreatEscape.z80`.
 * `make install`. This will install `TheGreatEscape.py` into your `~/.skoolkit` directory. You only have to do this once. (Note: If you wish to install into a different location you may have to customise the path inside `Makefile`).
 * `make disasm`. To build the HTML format disassembly.
