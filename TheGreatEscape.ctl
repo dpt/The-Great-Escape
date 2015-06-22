@@ -7715,8 +7715,8 @@ g $B837 mask_stuff stuff.
   $B838 clip_y0
 @ $B839 label=word_B839
   $B839 clip_y1
-@ $B839 label=word_B83A
-  $B839 clip_x1
+@ $B83A label=word_B83A
+  $B83A clip_x1
 
 ; -----------------------------------------------------------------------------
 
