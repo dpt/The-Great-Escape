@@ -19,6 +19,7 @@
 </table>
 <ul class="contents">
 <li><a class="link" href="#unusedSupertiles">Unused super tiles</a></li>
+<li><a class="link" href="#alternatingSpeed">Game speed varies</a></li>
 </ul>
 <div><a name="unusedSupertiles"></a></div>
 <div class="box box-1">
@@ -27,10 +28,23 @@
 There are two unused supertiles. $4F and $9A.
 </div>
 </div>
+<div><a name="alternatingSpeed"></a></div>
+<div class="box box-2">
+<div class="box-title">Game speed varies</div>
+<div class="paragraph">
+When our hero is outdoors the speed of the game can vary depending on where he stands. Look at the flag waving rate then take a single step. You will notice the flag waving faster or slower depending on where you started.
+</div>
+<div class="paragraph">
+This is because the routine which copies the back-buffered game screen to the real screen has two modes: a fast mode where the bytes are copied directly and a slow mode where the pixels are rolled by a nibble before being written. Depending on where the hero is standing the screen buffer may not be aligned with regard to the screen and require use of the slow rolling routine.
+</div>
+<div class="paragraph">
+In the interior maps the game runs far too fast so has a dedicated delay loop at <a class="link" href="../asm/A095.html">A095</a> to slow things down.
+</div>
+</div>
 <div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150123</div>
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.1.1.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
 </div>
 </body>
 </html>

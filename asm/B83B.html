@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B83B</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B837.html">B837</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b83b">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B866.html">B866</a></span></td>
+</tr>
+</table>
+<div class="description">B83B: Check the mask data to see if the hero is hiding behind something.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="B866.html">B866</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">Pointer to visible character.</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b83b"></a>B83B</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-11" rowspan="2">HL = IY;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b83d"></a>B83D</td>
+<td class="instruction">POP HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b83e"></a>B83E</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="3">if (L) return; /* Skip non-hero characters. */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b83f"></a>B83F</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b840"></a>B840</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b841"></a>B841</td>
+<td class="instruction">LD HL,$8131</td>
+<td class="comment-11" rowspan="1">HL = $8100 + $31; // mask_buffer + 0x31</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="b844"></a>
+<div class="comments">
+<div class="paragraph">
+Bug: Does a fused load of BC, but doesn't use C after. Probably a leftover stride constant.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b844"></a>B844</td>
+<td class="instruction">LD BC,$0804</td>
+<td class="comment-11" rowspan="1">BC = 0x0804; // 8 iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b847"></a>B847</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="3">do &lt;% if (*HL != 0) goto still_in_spotlight;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b848"></a>B848</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b849"></a>B849</td>
+<td class="instruction">JR NZ,$B860</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b84b"></a>B84B</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="4">HL += 4; // stride is 4?</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b84c"></a>B84C</td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b84d"></a>B84D</td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b84e"></a>B84E</td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b84f"></a>B84F</td>
+<td class="instruction">DJNZ $B848</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="b851"></a>
+<div class="comments">
+<div class="paragraph">
+Otherwise the hero has escaped the spotlight, so decrement the counter.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b851"></a>B851</td>
+<td class="instruction">LD HL,$81BD</td>
+<td class="comment-11" rowspan="1">HL = &amp;searchlight_state;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b854"></a>B854</td>
+<td class="instruction">DEC (HL)</td>
+<td class="comment-11" rowspan="1">(*HL)--;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b855"></a>B855</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-11" rowspan="3">if (searchlight_STATE_SEARCHING != *HL) return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b857"></a>B857</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b858"></a>B858</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b859"></a>B859</td>
+<td class="instruction">CALL <a class="link" href="AB6B.html">$AB6B</a></td>
+<td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b85c"></a>B85C</td>
+<td class="instruction">CALL <a class="link" href="A15F.html">$A15F</a></td>
+<td class="comment-11" rowspan="1">set_game_window_attributes();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b85f"></a>B85F</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b860"></a>B860</td>
+<td class="instruction">LD HL,$81BD</td>
+<td class="comment-11" rowspan="2">searchlight_state = searchlight_STATE_CAUGHT;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b863"></a>B863</td>
+<td class="instruction">LD (HL),$1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b865"></a>B865</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B837.html">B837</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b83b">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B866.html">B866</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

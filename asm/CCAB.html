@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at CCAB</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="CC37.html">CC37</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#ccab">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="CCCD.html">CCCD</a></span></td>
+</tr>
+</table>
+<div class="description">CCAB: Guards persue prisoners.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="C892.html">C892</a>, <a class="link" href="CC37.html">CC37</a>, <a class="link" href="CCCD.html">CCCD</a> and <a class="link" href="EF9A.html">EF9A</a>.
+</div>
+<div class="paragraph">
+For all visible, hostile characters, at height &lt; 32, set the bribed/persue flag.
+</div>
+<div class="paragraph">
+Research: If I nop this out then guards don't spot the items I drop.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="ccab"></a>CCAB</td>
+<td class="instruction">LD HL,$8020</td>
+<td class="comment-11" rowspan="2">HL = $8020; // iterate over non-player characters</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccae"></a>CCAE</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccb1"></a>CCB1</td>
+<td class="instruction">LD B,$07</td>
+<td class="comment-11" rowspan="1">B = 7; // iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="ccb3"></a>CCB3</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">do &lt;%</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="ccb4"></a>
+<div class="comments">
+<div class="paragraph">
+HL[0x13] is the character's height, testing this excludes the guards in the towers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccb4"></a>CCB4</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="14">if (HL[0] &lt;= character_19_GUARD_DOG_4 &amp;&amp; HL[0x13] &lt; 32) HL[1] = vischar_FLAGS_BRIBE_PENDING;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccb5"></a>CCB5</td>
+<td class="instruction">CP $14</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccb7"></a>CCB7</td>
+<td class="instruction">JR NC,$CCC8</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccb9"></a>CCB9</td>
+<td class="instruction">LD A,$13</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccbb"></a>CCBB</td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccbc"></a>CCBC</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccbd"></a>CCBD</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccbe"></a>CCBE</td>
+<td class="instruction">CP $20</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccc0"></a>CCC0</td>
+<td class="instruction">JR NC,$CCC8</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccc2"></a>CCC2</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccc3"></a>CCC3</td>
+<td class="instruction">SUB $12</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccc5"></a>CCC5</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccc6"></a>CCC6</td>
+<td class="instruction">LD (HL),$01</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="ccc8"></a>CCC8</td>
+<td class="instruction">POP HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccc9"></a>CCC9</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-11" rowspan="1">HL += 32; // stride</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="ccca"></a>CCCA</td>
+<td class="instruction">DJNZ $CCB3</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="cccc"></a>CCCC</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="CC37.html">CC37</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#ccab">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="CCCD.html">CCCD</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

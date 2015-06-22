@@ -1,0 +1,1933 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at E102</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="E100.html">E100</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#e102">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="E29F.html">E29F</a></span></td>
+</tr>
+</table>
+<div class="description">E102: Sprite plotter for 24-pixel-wide sprites. Used for characters and objects.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="B866.html">B866</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">Pointer to visible character.</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e102"></a>E102</td>
+<td class="instruction">LD A,(IY+$18)</td>
+<td class="comment-11" rowspan="4">if ((A = (IY[24] &amp; 7)) &gt;= 4) goto unaligned;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e105"></a>E105</td>
+<td class="instruction">AND $07</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e107"></a>E107</td>
+<td class="instruction">CP $04</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e109"></a>E109</td>
+<td class="instruction">JP NC,$E1CE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e10c"></a>
+<div class="comments">
+<div class="paragraph">
+Shift right?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e10c"></a>E10C</td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="5">A = (~A &amp; 3) * 8; // jump table offset (on input, A is 0..3)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e10d"></a>E10D</td>
+<td class="instruction">AND $03</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e10f"></a>E10F</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e110"></a>E110</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e111"></a>E111</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e112"></a>E112</td>
+<td class="instruction">LD ($E161),A</td>
+<td class="comment-11" rowspan="1">($E160 + 1) = A; // self-modify: jump into mask rotate</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e115"></a>E115</td>
+<td class="instruction">LD ($E143),A</td>
+<td class="comment-11" rowspan="1">($E142 + 1) = A; // self-modify: jump into bitmap rotate</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e118"></a>E118</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">maskptr = mask_pointer;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e119"></a>E119</td>
+<td class="instruction">LD HL,($81AE)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e11c"></a>E11C</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">bitmapptr = bitmap_pointer;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e11d"></a>E11D</td>
+<td class="instruction">LD HL,($81AC)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e120"></a>E120</td>
+<td class="instruction">LD B,$20</td>
+<td class="comment-11" rowspan="1">iters = 32; // iterations // clipped_height &amp; 0xFF // self modified</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e122"></a>
+<div class="comments">
+<div class="paragraph">
+Load bitmap bytes into B,C,E.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e122"></a>E122</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="3">do &lt;% bm0 = *bitmapptr++; // bitmap bytes</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e123"></a>E123</td>
+<td class="instruction">LD B,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e124"></a>E124</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e125"></a>E125</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-11" rowspan="2">bm1 = *bitmapptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e126"></a>E126</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e127"></a>E127</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-11" rowspan="4">bm2 = *bitmapptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e128"></a>E128</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e129"></a>E129</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e12a"></a>E12A</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e12b"></a>
+<div class="comments">
+<div class="paragraph">
+Load mask bytes into B',C',E'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e12b"></a>E12B</td>
+<td class="instruction">LD B,(HL)</td>
+<td class="comment-11" rowspan="2">mask0 = *maskptr++; // mask bytes</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e12c"></a>E12C</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e12d"></a>E12D</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-11" rowspan="2">mask1 = *maskptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e12e"></a>E12E</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e12f"></a>E12F</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-11" rowspan="3">mask2 = *maskptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e130"></a>E130</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e131"></a>E131</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e132"></a>E132</td>
+<td class="instruction">LD A,($81B7)</td>
+<td class="comment-11" rowspan="3">if (flip_sprite &amp; (1&lt;&lt;7)) flip_24_masked_pixels();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e135"></a>E135</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e136"></a>E136</td>
+<td class="instruction">CALL M,<a class="link" href="E3FA.html">$E3FA</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e139"></a>E139</td>
+<td class="instruction">LD HL,($81B0)</td>
+<td class="comment-11" rowspan="2">foremaskptr = foreground_mask_pointer;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e13c"></a>E13C</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e13d"></a>E13D</td>
+<td class="instruction">LD HL,($81A2)</td>
+<td class="comment-11" rowspan="1">screenptr = ($81A2); // moved compared to the other routines</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e140"></a>
+<div class="comments">
+<div class="paragraph">
+Shift bitmap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e140"></a>E140</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-11" rowspan="1">bm3 = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e142"></a>E142</td>
+<td class="instruction">JR $E144</td>
+<td class="comment-11" rowspan="1">goto $E144; // self-modified // jump table</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e144"></a>E144</td>
+<td class="instruction">SRL B</td>
+<td class="comment-11" rowspan="1">SRL bm0 // 0 // carry = bm0 &amp; 1; bm0 &gt;&gt;= 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e146"></a>E146</td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">RR bm1       // new_carry = bm1 &amp; 1; bm1 = (bm1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e148"></a>E148</td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">RR bm2       // new_carry = bm2 &amp; 1; bm2 = (bm2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e14a"></a>E14A</td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="1">RR bm3       // new_carry = bm3 &amp; 1; bm3 = (bm3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e14c"></a>E14C</td>
+<td class="instruction">SRL B</td>
+<td class="comment-11" rowspan="1">SRL bm0 // 1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e14e"></a>E14E</td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">RR bm1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e150"></a>E150</td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">RR bm2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e152"></a>E152</td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="1">RR bm3</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e154"></a>E154</td>
+<td class="instruction">SRL B</td>
+<td class="comment-11" rowspan="1">SRL bm0 // 2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e156"></a>E156</td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">RR bm1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e158"></a>E158</td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">RR bm2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e15a"></a>E15A</td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="2">RR bm3</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e15c"></a>E15C</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e15d"></a>
+<div class="comments">
+<div class="paragraph">
+Shift mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e15d"></a>E15D</td>
+<td class="instruction">LD D,$FF</td>
+<td class="comment-11" rowspan="1">mask3 = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e15f"></a>E15F</td>
+<td class="instruction">SCF</td>
+<td class="comment-11" rowspan="1">carry = 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e160"></a>E160</td>
+<td class="instruction">JR $E162</td>
+<td class="comment-11" rowspan="1">goto $E162; // self-modified // jump table</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e162"></a>E162</td>
+<td class="instruction">RR B</td>
+<td class="comment-11" rowspan="1">RR mask0 // 0 // new_carry = mask0 &amp; 1; mask0 = (mask0 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e164"></a>E164</td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">RR mask1      // new_carry = mask1 &amp; 1; mask1 = (mask1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e166"></a>E166</td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">RR mask2      // new_carry = mask2 &amp; 1; mask2 = (mask2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e168"></a>E168</td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="1">RR mask3      // new_carry = mask3 &amp; 1; mask3 = (mask3 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e16a"></a>E16A</td>
+<td class="instruction">RR B</td>
+<td class="comment-11" rowspan="1">RR mask0 // 1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e16c"></a>E16C</td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">RR mask1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e16e"></a>E16E</td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">RR mask2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e170"></a>E170</td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="1">RR mask3</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e172"></a>E172</td>
+<td class="instruction">RR B</td>
+<td class="comment-11" rowspan="1">RR mask0 // 2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e174"></a>E174</td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">RR mask1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e176"></a>E176</td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">RR mask2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e178"></a>E178</td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="1">RR mask3</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e17a"></a>
+<div class="comments">
+<div class="paragraph">
+Plot, using foreground mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e17a"></a>E17A</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="12">A = ((~*foremaskptr | mask0) &amp; *screenptr) | (bm0 &amp; *foremaskptr);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e17b"></a>E17B</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e17c"></a>E17C</td>
+<td class="instruction">OR B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e17d"></a>E17D</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e17e"></a>E17E</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e17f"></a>E17F</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e180"></a>E180</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e181"></a>E181</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e182"></a>E182</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e183"></a>E183</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e184"></a>E184</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e185"></a>E185</td>
+<td class="instruction">OR B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e186"></a>E186</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="2">foremaskptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e187"></a>E187</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e188"></a>E188</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="3">*screenptr++ = A;          // enable/disable 0</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e189"></a>E189</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e18a"></a>E18A</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e18b"></a>E18B</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="12">A = ((~*foremaskptr | mask1) &amp; *screenptr) | (bm1 &amp; *foremaskptr);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e18c"></a>E18C</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e18d"></a>E18D</td>
+<td class="instruction">OR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e18e"></a>E18E</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e18f"></a>E18F</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e190"></a>E190</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e191"></a>E191</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e192"></a>E192</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e193"></a>E193</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e194"></a>E194</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e195"></a>E195</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e196"></a>E196</td>
+<td class="instruction">OR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e197"></a>E197</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="2">foremaskptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e198"></a>E198</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e199"></a>E199</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="3">*screenptr++ = A;          // enable/disable 2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e19a"></a>E19A</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e19b"></a>E19B</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e19c"></a>E19C</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="12">A = ((~*foremaskptr | mask2) &amp; *screenptr) | (bm2 &amp; *foremaskptr);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e19d"></a>E19D</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e19e"></a>E19E</td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e19f"></a>E19F</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a0"></a>E1A0</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a1"></a>E1A1</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a2"></a>E1A2</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a3"></a>E1A3</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a4"></a>E1A4</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a5"></a>E1A5</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a6"></a>E1A6</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a7"></a>E1A7</td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a8"></a>E1A8</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="2">foremaskptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1a9"></a>E1A9</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1aa"></a>E1AA</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="3">*screenptr++ = A;          // enable/disable 4</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ab"></a>E1AB</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ac"></a>E1AC</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ad"></a>E1AD</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="12">A = ((~*foremaskptr | mask3) &amp; *screenptr) | (bm3 &amp; *foremaskptr);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ae"></a>E1AE</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1af"></a>E1AF</td>
+<td class="instruction">OR D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b0"></a>E1B0</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b1"></a>E1B1</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b2"></a>E1B2</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b3"></a>E1B3</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b4"></a>E1B4</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b5"></a>E1B5</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b6"></a>E1B6</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b7"></a>E1B7</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b8"></a>E1B8</td>
+<td class="instruction">OR D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1b9"></a>E1B9</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">foremaskptr++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ba"></a>E1BA</td>
+<td class="instruction">LD ($81B0),HL</td>
+<td class="comment-11" rowspan="3">foreground_mask_pointer = foremaskptr;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1bd"></a>E1BD</td>
+<td class="instruction">POP HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1be"></a>E1BE</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1bf"></a>E1BF</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1">*screenptr = A;            // enable/disable 6</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1c0"></a>E1C0</td>
+<td class="instruction">LD BC,$0015</td>
+<td class="comment-11" rowspan="2">screenptr += 21; // stride (24 - 3)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1c3"></a>E1C3</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1c4"></a>E1C4</td>
+<td class="instruction">LD ($81A2),HL</td>
+<td class="comment-11" rowspan="2">($81A2) = screenptr;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1c7"></a>E1C7</td>
+<td class="instruction">POP HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1c8"></a>E1C8</td>
+<td class="instruction">POP BC</td>
+<td class="comment-11" rowspan="3">%&gt; while (--iters);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1c9"></a>E1C9</td>
+<td class="instruction">DEC B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ca"></a>E1CA</td>
+<td class="instruction">JP NZ,$E122</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1cd"></a>E1CD</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e1ce"></a>
+<div class="comments">
+<div class="paragraph">
+Shift left?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e1ce"></a>E1CE</td>
+<td class="instruction">SUB $04</td>
+<td class="comment-11" rowspan="1">unaligned: A -= 4;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1d0"></a>E1D0</td>
+<td class="instruction">RLCA</td>
+<td class="comment-11" rowspan="1">RLCA</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1d1"></a>E1D1</td>
+<td class="instruction">RLCA</td>
+<td class="comment-11" rowspan="1">RLCA</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1d2"></a>E1D2</td>
+<td class="instruction">RLCA</td>
+<td class="comment-11" rowspan="1">RLCA</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1d3"></a>E1D3</td>
+<td class="instruction">LD ($E22A),A</td>
+<td class="comment-11" rowspan="1">($E229 + 1) = A; // self-modify: jump into mask rotate</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1d6"></a>E1D6</td>
+<td class="instruction">LD ($E204),A</td>
+<td class="comment-11" rowspan="1">($E203 + 1) = A; // self-modify: jump into bitmap rotate</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1d9"></a>E1D9</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">HLdash = mask_pointer;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1da"></a>E1DA</td>
+<td class="instruction">LD HL,($81AE)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1dd"></a>E1DD</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">HL = bitmap_pointer;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1de"></a>E1DE</td>
+<td class="instruction">LD HL,($81AC)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1e1"></a>E1E1</td>
+<td class="instruction">LD B,$20</td>
+<td class="comment-11" rowspan="1">B = 32; // iterations // clipped_height &amp; 0xFF // self modified</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e1e3"></a>
+<div class="comments">
+<div class="paragraph">
+Load bitmap bytes into B,C,E.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e1e3"></a>E1E3</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1e4"></a>E1E4</td>
+<td class="instruction">LD B,(HL)</td>
+<td class="comment-11" rowspan="2">B = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1e5"></a>E1E5</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1e6"></a>E1E6</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-11" rowspan="2">C = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1e7"></a>E1E7</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1e8"></a>E1E8</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-11" rowspan="2">E = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1e9"></a>E1E9</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ea"></a>E1EA</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1eb"></a>E1EB</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e1ec"></a>
+<div class="comments">
+<div class="paragraph">
+Load mask bytes into B',C',E'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ec"></a>E1EC</td>
+<td class="instruction">LD B,(HL)</td>
+<td class="comment-11" rowspan="2">B = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ed"></a>E1ED</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ee"></a>E1EE</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-11" rowspan="2">C = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1ef"></a>E1EF</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1f0"></a>E1F0</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-11" rowspan="2">E = *HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1f1"></a>E1F1</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1f2"></a>E1F2</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1f3"></a>E1F3</td>
+<td class="instruction">LD A,($81B7)</td>
+<td class="comment-11" rowspan="3">if (flip_sprite &amp; (1&lt;&lt;7)) flip_24_masked_pixels();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1f6"></a>E1F6</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1f7"></a>E1F7</td>
+<td class="instruction">CALL M,<a class="link" href="E3FA.html">$E3FA</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1fa"></a>E1FA</td>
+<td class="instruction">LD HL,($81B0)</td>
+<td class="comment-11" rowspan="1">HL = foreground_mask_pointer;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1fd"></a>E1FD</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e1fe"></a>E1FE</td>
+<td class="instruction">LD HL,($81A2)</td>
+<td class="comment-11" rowspan="1">HL = ($81A2); // screen pointer</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e201"></a>
+<div class="comments">
+<div class="paragraph">
+Shift bitmap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e201"></a>E201</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-11" rowspan="1">D = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e203"></a>E203</td>
+<td class="instruction">JR $E205</td>
+<td class="comment-11" rowspan="1">goto $E205; // self-modified to jump into ...;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e205"></a>E205</td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="1">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e207"></a>E207</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e209"></a>E209</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e20b"></a>E20B</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e20d"></a>E20D</td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="1">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e20f"></a>E20F</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e211"></a>E211</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e213"></a>E213</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e215"></a>E215</td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="1">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e217"></a>E217</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e219"></a>E219</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e21b"></a>E21B</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e21d"></a>E21D</td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="1">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e21f"></a>E21F</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e221"></a>E221</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e223"></a>E223</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e225"></a>E225</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e226"></a>
+<div class="comments">
+<div class="paragraph">
+Shift mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e226"></a>E226</td>
+<td class="instruction">LD D,$FF</td>
+<td class="comment-11" rowspan="1">D = 255;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e228"></a>E228</td>
+<td class="instruction">SCF</td>
+<td class="comment-11" rowspan="1">SCF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e229"></a>E229</td>
+<td class="instruction">JR $E22B</td>
+<td class="comment-11" rowspan="1">goto $E22B; // self-modified to jump into ...;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="e22b"></a>E22B</td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="1">RL E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e22d"></a>E22D</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e22f"></a>E22F</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e231"></a>E231</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e233"></a>E233</td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="1">RL E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e235"></a>E235</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e237"></a>E237</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e239"></a>E239</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e23b"></a>E23B</td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="1">RL E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e23d"></a>E23D</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e23f"></a>E23F</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e241"></a>E241</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e243"></a>E243</td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="1">RL E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e245"></a>E245</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e247"></a>E247</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">RL B</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e249"></a>E249</td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">RL D</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="e24b"></a>
+<div class="comments">
+<div class="paragraph">
+Plot, using foreground mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e24b"></a>E24B</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">A = ~*HL | D;       // 1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e24c"></a>E24C</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e24d"></a>E24D</td>
+<td class="instruction">OR D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e24e"></a>E24E</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e24f"></a>E24F</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e250"></a>E250</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e251"></a>E251</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-11" rowspan="1">A = D;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e252"></a>E252</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e253"></a>E253</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e254"></a>E254</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-11" rowspan="1">D = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e255"></a>E255</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e256"></a>E256</td>
+<td class="instruction">OR D</td>
+<td class="comment-11" rowspan="1">A |= D;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e257"></a>E257</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">L++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e258"></a>E258</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e259"></a>E259</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="2">*HL++ = A;          // enable/disable 1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e25a"></a>E25A</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e25b"></a>E25B</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e25c"></a>E25C</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">A = ~*HL | B;       // 2</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e25d"></a>E25D</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e25e"></a>E25E</td>
+<td class="instruction">OR B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e25f"></a>E25F</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e260"></a>E260</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e261"></a>E261</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e262"></a>E262</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-11" rowspan="1">A = B;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e263"></a>E263</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e264"></a>E264</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e265"></a>E265</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-11" rowspan="1">B = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e266"></a>E266</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e267"></a>E267</td>
+<td class="instruction">OR B</td>
+<td class="comment-11" rowspan="1">A |= B;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e268"></a>E268</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">L++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e269"></a>E269</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e26a"></a>E26A</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="2">*HL++ = A;          // enable/disable 3</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e26b"></a>E26B</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e26c"></a>E26C</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e26d"></a>E26D</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">A = ~*HL | C;       // 3</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e26e"></a>E26E</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e26f"></a>E26F</td>
+<td class="instruction">OR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e270"></a>E270</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e271"></a>E271</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e272"></a>E272</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e273"></a>E273</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-11" rowspan="1">A = C;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e274"></a>E274</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e275"></a>E275</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e276"></a>E276</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e277"></a>E277</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e278"></a>E278</td>
+<td class="instruction">OR C</td>
+<td class="comment-11" rowspan="1">A |= C;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e279"></a>E279</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">L++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e27a"></a>E27A</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e27b"></a>E27B</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="2">*HL++ = A;          // enable/disable 5</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e27c"></a>E27C</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e27d"></a>E27D</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e27e"></a>E27E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">A = ~*HL | E;       // 4</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e27f"></a>E27F</td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e280"></a>E280</td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e281"></a>E281</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e282"></a>E282</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e283"></a>E283</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e284"></a>E284</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-11" rowspan="1">A = E;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e285"></a>E285</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e286"></a>E286</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">A &amp;= *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e287"></a>E287</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-11" rowspan="1">E = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e288"></a>E288</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e289"></a>E289</td>
+<td class="instruction">OR E</td>
+<td class="comment-11" rowspan="1">A |= E;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e28a"></a>E28A</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">L++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e28b"></a>E28B</td>
+<td class="instruction">LD ($81B0),HL</td>
+<td class="comment-11" rowspan="1">foreground_mask_pointer = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e28e"></a>E28E</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e28f"></a>E28F</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">EXX</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e290"></a>E290</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1">*HL = A;            // enable/disable 7</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e291"></a>E291</td>
+<td class="instruction">LD BC,$0015</td>
+<td class="comment-11" rowspan="2">HL += 21;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e294"></a>E294</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e295"></a>E295</td>
+<td class="instruction">LD ($81A2),HL</td>
+<td class="comment-11" rowspan="1">($81A2) = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e298"></a>E298</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e299"></a>E299</td>
+<td class="instruction">POP BC</td>
+<td class="comment-11" rowspan="1">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e29a"></a>E29A</td>
+<td class="instruction">DEC B</td>
+<td class="comment-11" rowspan="2">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e29b"></a>E29B</td>
+<td class="instruction">JP NZ,$E1E3</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="e29e"></a>E29E</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="E100.html">E100</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#e102">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="E29F.html">E29F</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B1D4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B1C7.html">B1C7</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b1d4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B1F5.html">B1F5</a></span></td>
+</tr>
+</table>
+<div class="description">B1D4: Locate current door, queuing a message if it's locked.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="B1F5.html">B1F5</a> and <a class="link" href="B32D.html">B32D</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if door open.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b1d4"></a>B1D4</td>
+<td class="instruction">LD E,$7F</td>
+<td class="comment-11" rowspan="4">C = current_door &amp; gates_and_doors_MASK;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1d6"></a>B1D6</td>
+<td class="instruction">LD A,($68A1)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1d9"></a>B1D9</td>
+<td class="instruction">AND E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1da"></a>B1DA</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1db"></a>B1DB</td>
+<td class="instruction">LD HL,$F05D</td>
+<td class="comment-11" rowspan="1">HL = &amp;gates_and_doors[0];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1de"></a>B1DE</td>
+<td class="instruction">LD B,$09</td>
+<td class="comment-11" rowspan="1">B = 9; // 9 iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b1e0"></a>B1E0</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="4">do &lt;% if (*HL &amp; gates_and_doors_MASK == C) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1e1"></a>B1E1</td>
+<td class="instruction">AND E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1e2"></a>B1E2</td>
+<td class="instruction">CP C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1e3"></a>B1E3</td>
+<td class="instruction">JR NZ,$B1F0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1e5"></a>B1E5</td>
+<td class="instruction">BIT 7,(HL)</td>
+<td class="comment-11" rowspan="3">if ((*HL &amp; gates_and_doors_LOCKED) == 0) return; // Door is open.</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1e7"></a>B1E7</td>
+<td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1e8"></a>B1E8</td>
+<td class="instruction">LD B,$05</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1ea"></a>B1EA</td>
+<td class="instruction">CALL <a class="link" href="7D15.html">$7D15</a></td>
+<td class="comment-11" rowspan="1">queue_message_for_display(message_THE_DOOR_IS_LOCKED);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1ed"></a>B1ED</td>
+<td class="instruction">OR $01</td>
+<td class="comment-11" rowspan="1">A |= 1; // set NZ // Door is locked.</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1ef"></a>B1EF</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b1f0"></a>B1F0</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1f1"></a>B1F1</td>
+<td class="instruction">DJNZ $B1E0</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1f3"></a>B1F3</td>
+<td class="instruction">AND B</td>
+<td class="comment-11" rowspan="1">A &amp;= B; // set Z (B is zero) // Door is open.</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b1f4"></a>B1F4</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B1C7.html">B1C7</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b1d4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B1F5.html">B1F5</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

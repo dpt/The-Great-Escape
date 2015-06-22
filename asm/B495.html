@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B495</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B417.html">B417</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b495">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B4AE.html">B4AE</a></span></td>
+</tr>
+</table>
+<div class="description">B495: Use lockpick.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b495"></a>B495</td>
+<td class="instruction">CALL <a class="link" href="B4D0.html">$B4D0</a></td>
+<td class="comment-11" rowspan="1">open_door();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b498"></a>B498</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-11" rowspan="1">if (!Z) return; /* Wrong door? */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b499"></a>B499</td>
+<td class="instruction">LD ($A143),HL</td>
+<td class="comment-11" rowspan="1">ptr_to_door_being_lockpicked = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b49c"></a>B49C</td>
+<td class="instruction">LD A,($A12F)</td>
+<td class="comment-11" rowspan="3">player_locked_out_until = game_counter + 255;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b49f"></a>B49F</td>
+<td class="instruction">ADD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b4a1"></a>B4A1</td>
+<td class="instruction">LD ($A145),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b4a4"></a>B4A4</td>
+<td class="instruction">LD HL,$8001</td>
+<td class="comment-11" rowspan="2">($8001) = vischar_FLAGS_PICKING_LOCK;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b4a7"></a>B4A7</td>
+<td class="instruction">LD (HL),$01</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b4a9"></a>B4A9</td>
+<td class="instruction">LD B,$0A</td>
+<td class="comment-11" rowspan="2">queue_message_for_display(message_PICKING_THE_LOCK);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b4ab"></a>B4AB</td>
+<td class="instruction">JP <a class="link" href="7D15.html">$7D15</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B417.html">B417</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b495">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B4AE.html">B4AE</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

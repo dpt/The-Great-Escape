@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7BB5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7B8B.html">7B8B</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7bb5">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7BD0.html">7BD0</a></span></td>
+</tr>
+</table>
+<div class="description">7BB5: Drop item, tail part.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="B387.html">B387</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Item.</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7bb5"></a>7BB5</td>
+<td class="instruction">CALL <a class="link" href="7C26.html">$7C26</a></td>
+<td class="comment-11" rowspan="1">HL = item_to_itemstruct(A);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bb8"></a>7BB8</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bb9"></a>7BB9</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment-11" rowspan="1">A = room_index;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bbc"></a>7BBC</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1">*HL = A; // set object's room index</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bbd"></a>7BBD</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bbe"></a>7BBE</td>
+<td class="instruction">JR NZ,<a class="link" href="7BE4.html">$7BE4</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7bc0"></a>
+<div class="comments">
+<div class="paragraph">
+Outdoors.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bc0"></a>7BC0</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;    // -&gt; .x</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bc1"></a>7BC1</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7bc2"></a>
+<div class="comments">
+<div class="paragraph">
+HL is incremented here but then immediately overwritten by $7BC5.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bc2"></a>7BC2</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="2">HL += 2; // -&gt; .unk1</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bc3"></a>7BC3</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bc4"></a>7BC4</td>
+<td class="instruction">POP DE</td>
+<td class="comment-11" rowspan="1">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bc5"></a>7BC5</td>
+<td class="instruction">LD HL,$800F</td>
+<td class="comment-11" rowspan="1">HL = $800F;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bc8"></a>7BC8</td>
+<td class="instruction">CALL <a class="link" href="E542.html">$E542</a></td>
+<td class="comment-11" rowspan="1">pos_to_tinypos(HL,DE);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bcb"></a>7BCB</td>
+<td class="instruction">DEC DE</td>
+<td class="comment-11" rowspan="1">DE--;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bcc"></a>7BCC</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-11" rowspan="2">*DE = 0; // -&gt;vo ?</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bce"></a>7BCE</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7bcf"></a>7BCF</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+
+<div class="comments">
+<div class="paragraph">
+FALL THROUGH into calc_exterior_item_screenpos.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7B8B.html">7B8B</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7bb5">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7BD0.html">7BD0</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

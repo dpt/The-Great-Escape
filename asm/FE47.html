@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at FE47</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="FE00.html">FE00</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#fe47">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="FE7E.html">FE7E</a></span></td>
+</tr>
+</table>
+<div class="description">FE47: Protek (cursor) joystick input routine.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Input value (as per enum input).</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="fe47"></a>
+<div class="comments">
+<div class="paragraph">
+Horizontal.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="fe47"></a>FE47</td>
+<td class="instruction">LD BC,$F7FE</td>
+<td class="comment-11" rowspan="1">BC = port_KEYBOARD_12345;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe4a"></a>FE4A</td>
+<td class="instruction">IN A,(C)</td>
+<td class="comment-11" rowspan="1">IN A,(C)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe4c"></a>FE4C</td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="2">A = ~A &amp; (1&lt;&lt;4); /* 5 == left */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe4d"></a>FE4D</td>
+<td class="instruction">AND $10</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe4f"></a>FE4F</td>
+<td class="instruction">LD E,$03</td>
+<td class="comment-11" rowspan="1">E = input_LEFT;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe51"></a>FE51</td>
+<td class="instruction">LD B,$EF</td>
+<td class="comment-11" rowspan="1">B = 0xEF; /* port_KEYBOARD_09876 */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe53"></a>FE53</td>
+<td class="instruction">JR NZ,$FE60</td>
+<td class="comment-11" rowspan="1">if (Z) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe55"></a>FE55</td>
+<td class="instruction">IN A,(C)</td>
+<td class="comment-11" rowspan="1">IN A,(C)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe57"></a>FE57</td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="2">A = ~A &amp; (1&lt;&lt;2);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe58"></a>FE58</td>
+<td class="instruction">AND $04</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe5a"></a>FE5A</td>
+<td class="instruction">LD E,$06</td>
+<td class="comment-11" rowspan="1">E = input_RIGHT;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe5c"></a>FE5C</td>
+<td class="instruction">JR NZ,$FE60</td>
+<td class="comment-11" rowspan="1">if (Z)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe5e"></a>FE5E</td>
+<td class="instruction">LD E,$00</td>
+<td class="comment-11" rowspan="1">E = 0; %&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="fe60"></a>
+<div class="comments">
+<div class="paragraph">
+Vertical.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="fe60"></a>FE60</td>
+<td class="instruction">IN A,(C)</td>
+<td class="comment-11" rowspan="1">IN A,(C)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe62"></a>FE62</td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="1">A = ~A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe63"></a>FE63</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-11" rowspan="1">D = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe64"></a>FE64</td>
+<td class="instruction">AND $08</td>
+<td class="comment-11" rowspan="1">A &amp;= (1&lt;&lt;3);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe66"></a>FE66</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-11" rowspan="1">A = input_UP; /* interleaved */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe68"></a>FE68</td>
+<td class="instruction">JR NZ,$FE72</td>
+<td class="comment-11" rowspan="1">if (Z) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe6a"></a>FE6A</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-11" rowspan="1">A = D;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe6b"></a>FE6B</td>
+<td class="instruction">AND $10</td>
+<td class="comment-11" rowspan="1">A &amp;= (1&lt;&lt;4);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe6d"></a>FE6D</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-11" rowspan="1">A = input_DOWN; /* interleaved */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe6f"></a>FE6F</td>
+<td class="instruction">JR NZ,$FE72</td>
+<td class="comment-11" rowspan="1">if (Z)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe71"></a>FE71</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="1">A = input_NONE; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="fe72"></a>FE72</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-11" rowspan="2">E += A; /* Combine axis */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe73"></a>FE73</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="fe74"></a>
+<div class="comments">
+<div class="paragraph">
+Fire.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe74"></a>FE74</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-11" rowspan="2">A = D &amp; (1&lt;&lt;0);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe75"></a>FE75</td>
+<td class="instruction">AND $01</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe77"></a>FE77</td>
+<td class="instruction">LD A,$09</td>
+<td class="comment-11" rowspan="1">A = input_FIRE; /* interleaved */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe79"></a>FE79</td>
+<td class="instruction">JR NZ,$FE7C</td>
+<td class="comment-11" rowspan="2">if (Z) A = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe7b"></a>FE7B</td>
+<td class="instruction">XOR A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="fe7c"></a>FE7C</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-11" rowspan="1">A += E; /* Combine axis */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="fe7d"></a>FE7D</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="FE00.html">FE00</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#fe47">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="FE7E.html">FE7E</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

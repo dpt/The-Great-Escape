@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at F20B</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="F209.html">F209</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#f20b">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="F257.html">F257</a></span></td>
+</tr>
+</table>
+<div class="description">F20B: Plot static tiles.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="F206.html">F206</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Pointer to screen address.</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="f20b"></a>F20B</td>
+<td class="instruction">LD ($F075),A</td>
+<td class="comment-11" rowspan="1">static_tiles_plot_direction = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f20e"></a>F20E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="4">B = *HL++ &amp; statictiles_COUNT_MASK; // loop iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f20f"></a>F20F</td>
+<td class="instruction">AND $7F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f211"></a>F211</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f212"></a>F212</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f213"></a>F213</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-11" rowspan="1">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f214"></a>F214</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f215"></a>F215</td>
+<td class="instruction">POP DE</td>
+<td class="comment-11" rowspan="1">POP DEdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f216"></a>F216</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="f217"></a>F217</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">do &lt;% A = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f218"></a>F218</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f219"></a>F219</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="10">HLdash = &amp;static_tiles[A]; // elements: 9 bytes each</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f21a"></a>F21A</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f21c"></a>F21C</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f21d"></a>F21D</td>
+<td class="instruction">LD H,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f21f"></a>F21F</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f220"></a>F220</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f221"></a>F221</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f222"></a>F222</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f223"></a>F223</td>
+<td class="instruction">LD BC,$7F00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f226"></a>F226</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f227"></a>F227</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-11" rowspan="1">Bdash = 8; // 8 iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="f229"></a>
+<div class="comments">
+<div class="paragraph">
+Plot a tile.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="f229"></a>F229</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">do &lt;% *DEdash = *HLdash++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f22a"></a>F22A</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f22b"></a>F22B</td>
+<td class="instruction">INC D</td>
+<td class="comment-11" rowspan="2">DEdash += 256; // next row</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f22c"></a>F22C</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f22d"></a>F22D</td>
+<td class="instruction">DJNZ $F229</td>
+<td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f22f"></a>F22F</td>
+<td class="instruction">DEC D</td>
+<td class="comment-11" rowspan="1">DEdash -= 256;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f230"></a>F230</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-11" rowspan="1">PUSH DEdash</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="f231"></a>
+<div class="comments">
+<div class="paragraph">
+Calculate screen attribute address of tile.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f231"></a>F231</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-11" rowspan="1">A = Ddash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f232"></a>F232</td>
+<td class="instruction">LD D,$58</td>
+<td class="comment-11" rowspan="1">Ddash = 0x58; // screen attributes base</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f234"></a>F234</td>
+<td class="instruction">CP $48</td>
+<td class="comment-11" rowspan="3">if (A &gt;= 0x48) DEdash += 256;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f236"></a>F236</td>
+<td class="instruction">JR C,$F23E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f238"></a>F238</td>
+<td class="instruction">INC D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f239"></a>F239</td>
+<td class="instruction">CP $50</td>
+<td class="comment-11" rowspan="3">if (A &gt;= 0x50) DEdash += 256;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f23b"></a>F23B</td>
+<td class="instruction">JR C,$F23E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f23d"></a>F23D</td>
+<td class="instruction">INC D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="f23e"></a>F23E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">*DEdash = *HLdash; // copy attribute byte</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f23f"></a>F23F</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f240"></a>F240</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HLdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f241"></a>F241</td>
+<td class="instruction">LD A,($F075)</td>
+<td class="comment-11" rowspan="1">A = static_tiles_plot_direction;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f244"></a>F244</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="2">if (A == 0) &lt;% // horizontal</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f245"></a>F245</td>
+<td class="instruction">JR NZ,$F24E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f247"></a>F247</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-11" rowspan="3">Hdash -= 7;  // HLdash -= 7 * 256;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f248"></a>F248</td>
+<td class="instruction">SUB $07</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f24a"></a>F24A</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f24b"></a>F24B</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">Ldash++; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f24c"></a>F24C</td>
+<td class="instruction">JR $F251</td>
+<td class="comment-11" rowspan="1">else &lt;% // vertical</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="f24e"></a>F24E</td>
+<td class="instruction">CALL <a class="link" href="7CE9.html">$7CE9</a></td>
+<td class="comment-11" rowspan="1">get_next_scanline(); %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="f251"></a>F251</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DEdash,HLdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f252"></a>F252</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f253"></a>F253</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f254"></a>F254</td>
+<td class="instruction">DJNZ $F217</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="f256"></a>F256</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="F209.html">F209</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#f20b">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="F257.html">F257</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

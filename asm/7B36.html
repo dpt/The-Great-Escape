@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7B36</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7AC9.html">7AC9</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7b36">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7B8B.html">7B8B</a></span></td>
+</tr>
+</table>
+<div class="description">7B36: Pick up an item.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="7AC9.html">7AC9</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7b36"></a>7B36</td>
+<td class="instruction">LD HL,($8215)</td>
+<td class="comment-11" rowspan="1">HL = items_held;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b39"></a>7B39</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-11" rowspan="1">A = item_NONE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b3b"></a>7B3B</td>
+<td class="instruction">CP L</td>
+<td class="comment-11" rowspan="4">if (L != A &amp;&amp; H != A) return; // no spare slots</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b3c"></a>7B3C</td>
+<td class="instruction">JR Z,$7B40</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b3e"></a>7B3E</td>
+<td class="instruction">CP H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b3f"></a>7B3F</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7b40"></a>7B40</td>
+<td class="instruction">CALL <a class="link" href="7C82.html">$7C82</a></td>
+<td class="comment-11" rowspan="1">find_nearby_item();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b43"></a>7B43</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-11" rowspan="1">if (!Z) return; // no item nearby</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7b44"></a>
+<div class="comments">
+<div class="paragraph">
+Locate an empty item slot.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b44"></a>7B44</td>
+<td class="instruction">LD DE,$8215</td>
+<td class="comment-11" rowspan="1">DE = &amp;items_held[0];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b47"></a>7B47</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b48"></a>7B48</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-11" rowspan="3">if (A != item_NONE) DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b4a"></a>7B4A</td>
+<td class="instruction">JR Z,$7B4D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b4c"></a>7B4C</td>
+<td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7b4d"></a>7B4D</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="3">*DE = *HL &amp; 0x1F; // item mask + extra bit (which is not seen elsewhere in the code...)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b4e"></a>7B4E</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b50"></a>7B50</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b51"></a>7B51</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b52"></a>7B52</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment-11" rowspan="1">A = room_index;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b55"></a>7B55</td>
+<td class="instruction">CP $00</td>
+<td class="comment-11" rowspan="2">if (A == 0) &lt;% // outdoors</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b57"></a>7B57</td>
+<td class="instruction">JP NZ,$7B5F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b5a"></a>7B5A</td>
+<td class="instruction">CALL <a class="link" href="A8A2.html">$A8A2</a></td>
+<td class="comment-11" rowspan="1">plot_all_tiles();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b5d"></a>7B5D</td>
+<td class="instruction">JR $7B6B</td>
+<td class="comment-11" rowspan="1">%&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7b5f"></a>7B5F</td>
+<td class="instruction">CALL <a class="link" href="6A35.html">$6A35</a></td>
+<td class="comment-11" rowspan="1">else &lt;% setup_room(); // indoors</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b62"></a>7B62</td>
+<td class="instruction">CALL <a class="link" href="6B42.html">$6B42</a></td>
+<td class="comment-11" rowspan="1">plot_interior_tiles();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b65"></a>7B65</td>
+<td class="instruction">CALL <a class="link" href="AB6B.html">$AB6B</a></td>
+<td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b68"></a>7B68</td>
+<td class="instruction">CALL <a class="link" href="A15F.html">$A15F</a></td>
+<td class="comment-11" rowspan="1">set_game_window_attributes(); %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7b6b"></a>7B6B</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b6c"></a>7B6C</td>
+<td class="instruction">BIT 7,(HL)</td>
+<td class="comment-11" rowspan="2">if ((*HL &amp; itemstruct_ITEM_FLAG_HELD) == 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b6e"></a>7B6E</td>
+<td class="instruction">JR NZ,$7B77</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7b70"></a>
+<div class="comments">
+<div class="paragraph">
+Have picked up an item not previously held.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b70"></a>7B70</td>
+<td class="instruction">SET 7,(HL)</td>
+<td class="comment-11" rowspan="1">*HL |= itemstruct_ITEM_FLAG_HELD;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b72"></a>7B72</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b73"></a>7B73</td>
+<td class="instruction">CALL <a class="link" href="A0F2.html">$A0F2</a></td>
+<td class="comment-11" rowspan="1">increase_morale_by_5_score_by_5();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b76"></a>7B76</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HL %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7b77"></a>7B77</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="1">A = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b78"></a>7B78</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b79"></a>7B79</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1">*HL = A; // itemstruct-&gt;room_and_flags = 0</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b7a"></a>7B7A</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="4">HL += 4;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b7b"></a>7B7B</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b7c"></a>7B7C</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b7d"></a>7B7D</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b7e"></a>7B7E</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="2">*HL++ = A; // itemstruct-&gt;screenpos.x = 0</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b7f"></a>7B7F</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b80"></a>7B80</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1">*HL = A; // itemstruct-&gt;screenpos.x = 0</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b81"></a>7B81</td>
+<td class="instruction">CALL <a class="link" href="7C33.html">$7C33</a></td>
+<td class="comment-11" rowspan="1">draw_all_items();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b84"></a>7B84</td>
+<td class="instruction">LD BC,$3030</td>
+<td class="comment-11" rowspan="2">play_speaker(sound_PICK_UP_ITEM);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b87"></a>7B87</td>
+<td class="instruction">CALL <a class="link" href="A11D.html">$A11D</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7b8a"></a>7B8A</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7AC9.html">7AC9</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7b36">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7B8B.html">7B8B</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

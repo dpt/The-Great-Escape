@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at AA26</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="AA05.html">AA05</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#aa26">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="AA4B.html">AA4B</a></span></td>
+</tr>
+</table>
+<div class="description">AA26: Shunt the map up-right.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="AAB2.html">AAB2</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aa26"></a>AA26</td>
+<td class="instruction">DEC L</td>
+<td class="comment-11" rowspan="1">L--;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa27"></a>AA27</td>
+<td class="instruction">INC H</td>
+<td class="comment-11" rowspan="1">H++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa28"></a>AA28</td>
+<td class="instruction">LD ($81BB),HL</td>
+<td class="comment-11" rowspan="1">map_position = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa2b"></a>AA2B</td>
+<td class="instruction">CALL <a class="link" href="A7C9.html">$A7C9</a></td>
+<td class="comment-11" rowspan="1">get_supertiles();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa2e"></a>AA2E</td>
+<td class="instruction">LD HL,$F110</td>
+<td class="comment-11" rowspan="1">HL = visible_tiles_start_address + 24;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa31"></a>AA31</td>
+<td class="instruction">LD DE,$F0F9</td>
+<td class="comment-11" rowspan="1">DE = visible_tiles_start_address + 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa34"></a>AA34</td>
+<td class="instruction">LD BC,$0180</td>
+<td class="comment-11" rowspan="1">BC = visible_tiles_length - 24;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa37"></a>AA37</td>
+<td class="instruction">LDIR</td>
+<td class="comment-11" rowspan="1">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa39"></a>AA39</td>
+<td class="instruction">LD HL,$F350</td>
+<td class="comment-11" rowspan="1">HL = screen_buffer_start_address + 24 * 8;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa3c"></a>AA3C</td>
+<td class="instruction">LD DE,$F291</td>
+<td class="comment-11" rowspan="1">DE = screen_buffer_start_address + 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa3f"></a>AA3F</td>
+<td class="instruction">LD BC,$0C00</td>
+<td class="comment-11" rowspan="1">BC = screen_buffer_length - 24 * 8;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa42"></a>AA42</td>
+<td class="instruction">LDIR</td>
+<td class="comment-11" rowspan="1">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa44"></a>AA44</td>
+<td class="instruction">CALL <a class="link" href="A80A.html">$A80A</a></td>
+<td class="comment-11" rowspan="1">plot_bottommost_tiles();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa47"></a>AA47</td>
+<td class="instruction">CALL <a class="link" href="A8E7.html">$A8E7</a></td>
+<td class="comment-11" rowspan="1">plot_leftmost_tiles();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aa4a"></a>AA4A</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="AA05.html">AA05</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#aa26">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="AA4B.html">AA4B</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

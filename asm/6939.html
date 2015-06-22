@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 6939</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="6920.html">6920</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#6939">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="697D.html">697D</a></span></td>
+</tr>
+</table>
+<div class="description">6939: Setup movable items.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="68F4.html">68F4</a> and <a class="link" href="B2FC.html">B2FC</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6939"></a>6939</td>
+<td class="instruction">CALL <a class="link" href="69C9.html">$69C9</a></td>
+<td class="comment-11" rowspan="1">reset_nonplayer_visible_characters();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="693c"></a>693C</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment-11" rowspan="1">A = room_index;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="693f"></a>693F</td>
+<td class="instruction">CP $02</td>
+<td class="comment-11" rowspan="4">if (A == room_2_HUT2LEFT) setup_stove1();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6941"></a>6941</td>
+<td class="instruction">JP NZ,$6949</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6944"></a>6944</td>
+<td class="instruction">CALL $6978</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6947"></a>6947</td>
+<td class="instruction">JR $695B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6949"></a>6949</td>
+<td class="instruction">CP $04</td>
+<td class="comment-11" rowspan="4">else if (A == room_4_HUT3LEFT) setup_stove2();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="694b"></a>694B</td>
+<td class="instruction">JP NZ,$6953</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="694e"></a>694E</td>
+<td class="instruction">CALL $6971</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6951"></a>6951</td>
+<td class="instruction">JR $695B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6953"></a>6953</td>
+<td class="instruction">CP $09</td>
+<td class="comment-11" rowspan="3">else if (A == room_9_CRATE)    setup_crate();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6955"></a>6955</td>
+<td class="instruction">JP NZ,$695B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6958"></a>6958</td>
+<td class="instruction">CALL $696A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="695b"></a>695B</td>
+<td class="instruction">CALL <a class="link" href="C41C.html">$C41C</a></td>
+<td class="comment-11" rowspan="1">spawn_characters();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="695e"></a>695E</td>
+<td class="instruction">CALL <a class="link" href="DB9E.html">$DB9E</a></td>
+<td class="comment-11" rowspan="1">mark_nearby_items();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6961"></a>6961</td>
+<td class="instruction">CALL <a class="link" href="B5CE.html">$B5CE</a></td>
+<td class="comment-11" rowspan="1">called_from_main_loop_9();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6964"></a>6964</td>
+<td class="instruction">CALL <a class="link" href="AAB2.html">$AAB2</a></td>
+<td class="comment-11" rowspan="1">move_map();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6967"></a>6967</td>
+<td class="instruction">JP <a class="link" href="B866.html">$B866</a></td>
+<td class="comment-11" rowspan="1">locate_vischar_or_itemstruct_then_plot(); return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="696a"></a>696A</td>
+<td class="instruction">LD HL,$69B7</td>
+<td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_CRATE];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="696d"></a>696D</td>
+<td class="instruction">LD A,$1C</td>
+<td class="comment-11" rowspan="1">A = character_28_CRATE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="696f"></a>696F</td>
+<td class="instruction">JR <a class="link" href="697D.html">$697D</a></td>
+<td class="comment-11" rowspan="1">goto setup_movable_item;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6971"></a>6971</td>
+<td class="instruction">LD HL,$69C0</td>
+<td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_STOVE2];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6974"></a>6974</td>
+<td class="instruction">LD A,$1B</td>
+<td class="comment-11" rowspan="1">A = character_27_STOVE_2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6976"></a>6976</td>
+<td class="instruction">JR <a class="link" href="697D.html">$697D</a></td>
+<td class="comment-11" rowspan="1">goto setup_movable_item;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6978"></a>6978</td>
+<td class="instruction">LD HL,$69AE</td>
+<td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_STOVE1];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="697b"></a>697B</td>
+<td class="instruction">LD A,$1A</td>
+<td class="comment-11" rowspan="1">A = character_26_STOVE_1;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+
+<div class="comments">
+<div class="paragraph">
+FALL THROUGH into setup_movable_item.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="6920.html">6920</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#6939">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="697D.html">697D</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

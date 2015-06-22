@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at DBEB</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="DB9E.html">DB9E</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#dbeb">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="DC41.html">DC41</a></span></td>
+</tr>
+</table>
+<div class="description">DBEB: Iterates over all item_structs looking for nearby items.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="B89C.html">B89C</a>.
+</div>
+<div class="paragraph">
+Returns the furthest/highest/nearest item?
+</div>
+<div class="paragraph">
+Iterates over all items. Uses multiply_by_8.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">BC'</td>
+<td class="register-desc">samples = 0, $1A, $1C, $1E, $20, $22,</td>
+</tr>
+<tr>
+<td class="register">DE'</td>
+<td class="register-desc">samples = 0, $22, $22, $22, $22, $22,</td>
+</tr>
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">Pointer to to item struct. (result?)</td>
+</tr>
+<tr>
+<td class="register">A'</td>
+<td class="register-desc">result?</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="dbeb"></a>DBEB</td>
+<td class="instruction">LD BC,$1007</td>
+<td class="comment-11" rowspan="1">B = item_LIMIT; // iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbee"></a>DBEE</td>
+<td class="instruction">LD HL,$76C9</td>
+<td class="comment-11" rowspan="1">Outer_HL = &amp;item_structs[0].room;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="dbf1"></a>DBF1</td>
+<td class="instruction">BIT 7,(HL)</td>
+<td class="comment-11" rowspan="4">do &lt;% if ((*Outer_HL &amp; (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) == (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbf3"></a>DBF3</td>
+<td class="instruction">JR Z,$DC38</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbf5"></a>DBF5</td>
+<td class="instruction">BIT 6,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbf7"></a>DBF7</td>
+<td class="instruction">JR Z,$DC38</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbf9"></a>DBF9</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">HL = Outer_HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbfa"></a>DBFA</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbfb"></a>DBFB</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="3">HLdash = *++HL * 8; // x position</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbfc"></a>DBFC</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dbfd"></a>DBFD</td>
+<td class="instruction">CALL <a class="link" href="B1C7.html">$B1C7</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc00"></a>DC00</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc01"></a>DC01</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc02"></a>DC02</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc03"></a>DC03</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="1">A &amp;= A; // Clear carry flag.</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc04"></a>DC04</td>
+<td class="instruction">SBC HL,BC</td>
+<td class="comment-11" rowspan="1">HLdash -= BCdash; // itemstr-&gt;pos.x * 8 - x</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc06"></a>DC06</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc07"></a>DC07</td>
+<td class="instruction">JR Z,$DC36</td>
+<td class="comment-11" rowspan="2">if (HLdash &gt; 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc09"></a>DC09</td>
+<td class="instruction">JR C,$DC36</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc0b"></a>DC0B</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++; // y position</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc0c"></a>DC0C</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">HLdash = *HL * 8;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc0d"></a>DC0D</td>
+<td class="instruction">CALL <a class="link" href="B1C7.html">$B1C7</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc10"></a>DC10</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc11"></a>DC11</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc12"></a>DC12</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">// not clearing carry?</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc13"></a>DC13</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-11" rowspan="1">HLdash -= BCdash; // itemstr-&gt;pos.y * 8 - y</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc15"></a>DC15</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc16"></a>DC16</td>
+<td class="instruction">JR Z,$DC36</td>
+<td class="comment-11" rowspan="2">if (HLdash &gt; 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc18"></a>DC18</td>
+<td class="instruction">JR C,$DC36</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc1a"></a>DC1A</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="3">HLdash = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc1b"></a>DC1B</td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc1c"></a>DC1C</td>
+<td class="instruction">POP HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="dc1d"></a>
+<div class="comments">
+<div class="paragraph">
+Get x,y for the next iteration.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc1d"></a>DC1D</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="5">DEdash = *HLdash-- * 8; // y position</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc1e"></a>DC1E</td>
+<td class="instruction">CALL <a class="link" href="B1C7.html">$B1C7</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc21"></a>DC21</td>
+<td class="instruction">LD E,C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc22"></a>DC22</td>
+<td class="instruction">LD D,B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc23"></a>DC23</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc24"></a>DC24</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">BCdash = *HLdash-- * 8; // x position</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc25"></a>DC25</td>
+<td class="instruction">CALL <a class="link" href="B1C7.html">$B1C7</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc28"></a>DC28</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-11" rowspan="2">HLdash--; // point to item</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc29"></a>DC29</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc2a"></a>DC2A</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="2">IY = HLdash; // IY is not banked // sampled IY = $771C,7715 (pointing into item_structs)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc2b"></a>DC2B</td>
+<td class="instruction">POP IY</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc2d"></a>DC2D</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc2e"></a>DC2E</td>
+<td class="instruction">POP BC</td>
+<td class="comment-11" rowspan="1">- // fetch iter count</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc2f"></a>DC2F</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc30"></a>DC30</td>
+<td class="instruction">LD A,$10</td>
+<td class="comment-11" rowspan="3">A = (16 - B) | (1&lt;&lt;6); // item found flag</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc32"></a>DC32</td>
+<td class="instruction">SUB B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc33"></a>DC33</td>
+<td class="instruction">OR $40</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc35"></a>DC35</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">EX AF,AF' %&gt; %&gt; // unpaired // returns the value in Adash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="dc36"></a>DC36</td>
+<td class="instruction">POP BC</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc37"></a>DC37</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="dc38"></a>DC38</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-11" rowspan="5">%&gt; Outer_HL += 7; // stride</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc39"></a>DC39</td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc3a"></a>DC3A</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc3b"></a>DC3B</td>
+<td class="instruction">JR NC,$DC3E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc3d"></a>DC3D</td>
+<td class="instruction">INC H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="dc3e"></a>DC3E</td>
+<td class="instruction">DJNZ $DBF1</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="dc40"></a>DC40</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="DB9E.html">DB9E</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#dbeb">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="DC41.html">DC41</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

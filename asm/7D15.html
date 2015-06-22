@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7D15</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7CFC.html">7CFC</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7d15">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7D2F.html">7D2F</a></span></td>
+</tr>
+</table>
+<div class="description">7D15: Add a message to the pending messages queue.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="9DCF.html">9DCF</a>, <a class="link" href="9E98.html">9E98</a>, <a class="link" href="A1D3.html">A1D3</a>, <a class="link" href="A1E7.html">A1E7</a>, <a class="link" href="A1F0.html">A1F0</a>, <a class="link" href="A1F9.html">A1F9</a>, <a class="link" href="A206.html">A206</a>, <a class="link" href="A219.html">A219</a>, <a class="link" href="A228.html">A228</a>, <a class="link" href="B107.html">B107</a>, <a class="link" href="B1D4.html">B1D4</a>, <a class="link" href="B387.html">B387</a>, <a class="link" href="B417.html">B417</a>, <a class="link" href="B495.html">B495</a>, <a class="link" href="B4B8.html">B4B8</a>, <a class="link" href="CB98.html">CB98</a>, <a class="link" href="CD31.html">CD31</a> and <a class="link" href="EF9A.html">EF9A</a>.
+</div>
+<div class="paragraph">
+The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">message_* index.</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Possibly a second message index.</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7d15"></a>7D15</td>
+<td class="instruction">LD HL,($7D11)</td>
+<td class="comment-11" rowspan="4">if ((*HL = message_queue_pointer) == message_QUEUE_END) return; // queue full</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d18"></a>7D18</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d1a"></a>7D1A</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d1b"></a>7D1B</td>
+<td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7d1c"></a>
+<div class="comments">
+<div class="paragraph">
+Is this message pending?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d1c"></a>7D1C</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-11" rowspan="2">HL -= 2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d1d"></a>7D1D</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d1e"></a>7D1E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="7">if (*HL++ == B &amp;&amp; *HL++ == C) return; // yes - skip adding it</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d1f"></a>7D1F</td>
+<td class="instruction">CP B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d20"></a>7D20</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d21"></a>7D21</td>
+<td class="instruction">JR NZ,$7D26</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d23"></a>7D23</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d24"></a>7D24</td>
+<td class="instruction">CP C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d25"></a>7D25</td>
+<td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7d26"></a>
+<div class="comments">
+<div class="paragraph">
+Add it to the queue.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7d26"></a>7D26</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="5">*HL++ = B; *HL++ = C;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d27"></a>7D27</td>
+<td class="instruction">LD (HL),B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d28"></a>7D28</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d29"></a>7D29</td>
+<td class="instruction">LD (HL),C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d2a"></a>7D2A</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d2b"></a>7D2B</td>
+<td class="instruction">LD ($7D11),HL</td>
+<td class="comment-11" rowspan="1">message_queue_pointer = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d2e"></a>7D2E</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7CFC.html">7CFC</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7d15">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7D2F.html">7D2F</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

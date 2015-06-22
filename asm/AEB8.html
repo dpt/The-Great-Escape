@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at AEB8</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="AE78.html">AE78</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#aeb8">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="AF5E.html">AF5E</a></span></td>
+</tr>
+</table>
+<div class="description">AEB8: Searchlight plotter.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="ADBD.html">ADBD</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Pointer to screen attributes.</td>
+</tr>
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aeb8"></a>AEB8</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeb9"></a>AEB9</td>
+<td class="instruction">LD DE,$AF3E</td>
+<td class="comment-11" rowspan="1">DEdash = &amp;searchlight_shape[0];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aebc"></a>AEBC</td>
+<td class="instruction">LD C,$10</td>
+<td class="comment-11" rowspan="1">Cdash = 16; // iterations  / width?</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aebe"></a>AEBE</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">do &lt;% -</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aebf"></a>AEBF</td>
+<td class="instruction">LD A,($AE75)</td>
+<td class="comment-11" rowspan="1">A = searchlight_related;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aec2"></a>AEC2</td>
+<td class="instruction">LD HL,$5A40</td>
+<td class="comment-11" rowspan="1">HL = 0x5A40; // screen attribute address (column 0 + bottom of game window)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aec5"></a>AEC5</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="7">if (A != 0 &amp;&amp; (E &amp; 31) &gt;= 22) L = 32;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aec6"></a>AEC6</td>
+<td class="instruction">JP Z,$AED2</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aec9"></a>AEC9</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeca"></a>AECA</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aecc"></a>AECC</td>
+<td class="instruction">CP $16</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aece"></a>AECE</td>
+<td class="instruction">JR C,$AED2</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aed0"></a>AED0</td>
+<td class="instruction">LD L,$20</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aed2"></a>AED2</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-11" rowspan="1">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aed4"></a>AED4</td>
+<td class="instruction">RET C</td>
+<td class="comment-11" rowspan="1">RET C  // if (HL &lt; DE) return; // what about carry?</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aed5"></a>AED5</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-11" rowspan="1">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aed6"></a>AED6</td>
+<td class="instruction">LD HL,$5840</td>
+<td class="comment-11" rowspan="1">HL = 0x5840; // screen attribute address (column 0 + top of game window)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aed9"></a>AED9</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="7">if (A != 0 &amp;&amp; (E &amp; 31) &gt;= 7) L = 32;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeda"></a>AEDA</td>
+<td class="instruction">JP Z,$AEE6</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aedd"></a>AEDD</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aede"></a>AEDE</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aee0"></a>AEE0</td>
+<td class="instruction">CP $07</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aee2"></a>AEE2</td>
+<td class="instruction">JR C,$AEE6</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aee4"></a>AEE4</td>
+<td class="instruction">LD L,$20</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aee6"></a>AEE6</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-11" rowspan="1">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aee8"></a>AEE8</td>
+<td class="instruction">JR C,$AEF0</td>
+<td class="comment-11" rowspan="1">JR C,$AEF0  // if (HL &lt; DE) goto $AEF0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeea"></a>AEEA</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeeb"></a>AEEB</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="2">DEdash += 2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeec"></a>AEEC</td>
+<td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeed"></a>AEED</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeee"></a>AEEE</td>
+<td class="instruction">JR $AF32</td>
+<td class="comment-11" rowspan="1">goto nextrow;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aef0"></a>AEF0</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aef1"></a>AEF1</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aef2"></a>AEF2</td>
+<td class="instruction">LD B,$02</td>
+<td class="comment-11" rowspan="1">Bdash = 2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aef4"></a>AEF4</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">do &lt;% A = *DEdash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aef5"></a>AEF5</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aef6"></a>AEF6</td>
+<td class="instruction">LD DE,$071E</td>
+<td class="comment-11" rowspan="1">DE = 0x071E;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aef9"></a>AEF9</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aefa"></a>AEFA</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-11" rowspan="1">B = 8;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="aefc"></a>AEFC</td>
+<td class="instruction">LD A,($AE75)</td>
+<td class="comment-11" rowspan="1">do &lt;% A = searchlight_related;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="aeff"></a>AEFF</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="1">if (A != 0) ...</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af00"></a>AF00</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="1">A = L; // interleaved</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af01"></a>AF01</td>
+<td class="instruction">JP Z,$AF0C</td>
+<td class="comment-11" rowspan="1">... goto $AF0C;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af04"></a>AF04</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-11" rowspan="3">if ((A &amp; 31) &gt;= 22) goto $AF1B;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af06"></a>AF06</td>
+<td class="instruction">CP $16</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af08"></a>AF08</td>
+<td class="instruction">JR NC,$AF1B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af0a"></a>AF0A</td>
+<td class="instruction">JR $AF18</td>
+<td class="comment-11" rowspan="1">goto $AF18;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af0c"></a>AF0C</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-11" rowspan="3">if ((A &amp; 31) &lt; E) goto $AF18;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af0e"></a>AF0E</td>
+<td class="instruction">CP E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af0f"></a>AF0F</td>
+<td class="instruction">JR C,$AF18</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af11"></a>AF11</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af12"></a>AF12</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="2">do &lt;% DEdash++; %&gt; while (--Bdash);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af13"></a>AF13</td>
+<td class="instruction">DJNZ $AF12</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af15"></a>AF15</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af16"></a>AF16</td>
+<td class="instruction">JR $AF32</td>
+<td class="comment-11" rowspan="1">goto nextrow;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af18"></a>AF18</td>
+<td class="instruction">CP D</td>
+<td class="comment-11" rowspan="2">if (A &lt; D) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af19"></a>AF19</td>
+<td class="instruction">JR NC,$AF1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af1b"></a>AF1B</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C %&gt; // looks like bit extraction ...</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af1d"></a>AF1D</td>
+<td class="instruction">JR $AF2A</td>
+<td class="comment-11" rowspan="1">else &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af1f"></a>AF1F</td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">RL C</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af21"></a>AF21</td>
+<td class="instruction">JP NC,$AF28</td>
+<td class="comment-11" rowspan="1">if (carry) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af24"></a>AF24</td>
+<td class="instruction">LD (HL),$06</td>
+<td class="comment-11" rowspan="1">*HL = attribute_YELLOW_OVER_BLACK; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af26"></a>AF26</td>
+<td class="instruction">JR $AF2A</td>
+<td class="comment-11" rowspan="1">else &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af28"></a>AF28</td>
+<td class="instruction">LD (HL),$41</td>
+<td class="comment-11" rowspan="1">*HL = attribute_BRIGHT_BLUE_OVER_BLACK; %&gt; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af2a"></a>AF2A</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af2b"></a>AF2B</td>
+<td class="instruction">DJNZ $AEFC</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af2d"></a>AF2D</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af2e"></a>AF2E</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DEdash++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af2f"></a>AF2F</td>
+<td class="instruction">DJNZ $AEF4</td>
+<td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af31"></a>AF31</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="af32"></a>AF32</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">nextrow: POP HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af33"></a>AF33</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-11" rowspan="2">HL += 32;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af36"></a>AF36</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af37"></a>AF37</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af38"></a>AF38</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af39"></a>AF39</td>
+<td class="instruction">DEC C</td>
+<td class="comment-11" rowspan="2">%&gt; while (--Cdash);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af3a"></a>AF3A</td>
+<td class="instruction">JP NZ,$AEBE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af3d"></a>AF3D</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="af3e"></a>
+<div class="comments">
+<div class="paragraph">
+Searchlight circle shape.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af3e"></a>AF3E</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$01,$80</td>
+<td class="comment-11" rowspan="4">searchlight_shape</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af46"></a>AF46</td>
+<td class="instruction">DEFB $07,$E0,$0F,$F0,$0F,$F0,$1F,$F8</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af4e"></a>AF4E</td>
+<td class="instruction">DEFB $1F,$F8,$0F,$F0,$0F,$F0,$07,$E0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="af56"></a>AF56</td>
+<td class="instruction">DEFB $01,$80,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="AE78.html">AE78</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#aeb8">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="AF5E.html">AF5E</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

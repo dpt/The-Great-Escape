@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A1C3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="A1A0.html">A1A0</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#a1c3">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="A1D3.html">A1D3</a></span></td>
+</tr>
+</table>
+<div class="description">A1C3: Event: night time.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="a1c3"></a>A1C3</td>
+<td class="instruction">LD A,($A13F)</td>
+<td class="comment-11" rowspan="5">if (hero_in_bed == 0) set_hero_target_location(location_012C);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a1c6"></a>A1C6</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a1c7"></a>A1C7</td>
+<td class="instruction">JR NZ,$A1CF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a1c9"></a>A1C9</td>
+<td class="instruction">LD BC,$2C01</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a1cc"></a>A1CC</td>
+<td class="instruction">CALL <a class="link" href="A33F.html">$A33F</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="a1cf"></a>A1CF</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-11" rowspan="1">A = 0xFF;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a1d1"></a>A1D1</td>
+<td class="instruction">JR <a class="link" href="A1D3.html#a1de">$A1DE</a></td>
+<td class="comment-11" rowspan="1">goto set_attrs;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="A1A0.html">A1A0</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#a1c3">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="A1D3.html">A1D3</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

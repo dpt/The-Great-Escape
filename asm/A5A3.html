@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at A5A3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="A59C.html">A59C</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#a5a3">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="A5BF.html">A5BF</a></span></td>
+</tr>
+</table>
+<div class="description">A5A3: Return a bitmask indicating the presence of items required for escape.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="A59C.html">A59C</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Item.</td>
+</tr>
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Bitfield.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="a5a3"></a>A5A3</td>
+<td class="instruction">CP $0F</td>
+<td class="comment-11" rowspan="4">if (A == item_COMPASS) &lt;% A = escapeitem_COMPASS; return; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5a5"></a>A5A5</td>
+<td class="instruction">JR NZ,$A5AA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5a7"></a>A5A7</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5a9"></a>A5A9</td>
+<td class="instruction">RET</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="a5aa"></a>A5AA</td>
+<td class="instruction">CP $03</td>
+<td class="comment-11" rowspan="4">if (A == item_PAPERS)  &lt;% A = escapeitem_PAPERS; return; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5ac"></a>A5AC</td>
+<td class="instruction">JR NZ,$A5B1</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5ae"></a>A5AE</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5b0"></a>A5B0</td>
+<td class="instruction">RET</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="a5b1"></a>A5B1</td>
+<td class="instruction">CP $0E</td>
+<td class="comment-11" rowspan="4">if (A == item_PURSE)   &lt;% A = escapeitem_PURSE; return; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5b3"></a>A5B3</td>
+<td class="instruction">JR NZ,$A5B8</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5b5"></a>A5B5</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5b7"></a>A5B7</td>
+<td class="instruction">RET</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="a5b8"></a>A5B8</td>
+<td class="instruction">CP $06</td>
+<td class="comment-11" rowspan="3">if (A == item_UNIFORM) &lt;% A = escapeitem_UNIFORM; return; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5ba"></a>A5BA</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5bc"></a>A5BC</td>
+<td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5bd"></a>A5BD</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="1">A = 0; // have no required objects</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="a5be"></a>A5BE</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="A59C.html">A59C</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#a5a3">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="A5BF.html">A5BF</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 7D48</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7D30.html">7D30</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7d48">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7D87.html">7D87</a></span></td>
+</tr>
+</table>
+<div class="description">7D48: Incrementally display queued game messages.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="9D7B.html">9D7B</a>.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7d48"></a>
+<div class="comments">
+<div class="paragraph">
+Proceed only if message_display_delay is zero.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7d48"></a>7D48</td>
+<td class="instruction">LD A,($7D0F)</td>
+<td class="comment-11" rowspan="4">if (message_display_delay &gt; 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d4b"></a>7D4B</td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d4c"></a>7D4C</td>
+<td class="instruction">JP Z,$7D54</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d4f"></a>7D4F</td>
+<td class="instruction">DEC A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d50"></a>7D50</td>
+<td class="instruction">LD ($7D0F),A</td>
+<td class="comment-11" rowspan="1">message_display_delay--;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d53"></a>7D53</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7d54"></a>
+<div class="comments">
+<div class="paragraph">
+message_display_delay reached zero.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7d54"></a>7D54</td>
+<td class="instruction">LD A,($7D10)</td>
+<td class="comment-11" rowspan="1">A = message_display_index;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d57"></a>7D57</td>
+<td class="instruction">CP $80</td>
+<td class="comment-11" rowspan="2">if (A == 128) goto next_message; // exit via</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d59"></a>7D59</td>
+<td class="instruction">JR Z,<a class="link" href="7D99.html">$7D99</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d5b"></a>7D5B</td>
+<td class="instruction">JR NC,<a class="link" href="7D87.html">$7D87</a></td>
+<td class="comment-11" rowspan="1">else if (A &gt; 128) goto wipe_message; // exit via</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d5d"></a>7D5D</td>
+<td class="instruction">LD HL,($7D13)</td>
+<td class="comment-11" rowspan="1">else &lt;% HL = current_message_character;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d60"></a>7D60</td>
+<td class="instruction">LD DE,$50E0</td>
+<td class="comment-11" rowspan="3">DE = screen_text_start_address + A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d63"></a>7D63</td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d64"></a>7D64</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d65"></a>7D65</td>
+<td class="instruction">CALL <a class="link" href="7D2F.html">$7D2F</a></td>
+<td class="comment-11" rowspan="1">plot_glyph();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d68"></a>7D68</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-11" rowspan="3">message_display_index = E &amp; 31;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d69"></a>7D69</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d6b"></a>7D6B</td>
+<td class="instruction">LD ($7D10),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d6e"></a>7D6E</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="2">A = *++HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d6f"></a>7D6F</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d70"></a>7D70</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-11" rowspan="2">if (A == 255) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d72"></a>7D72</td>
+<td class="instruction">JP NZ,$7D83</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="7d75"></a>
+<div class="comments">
+<div class="paragraph">
+Leave the message for 31 turns, then wipe it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d75"></a>7D75</td>
+<td class="instruction">LD A,$1F</td>
+<td class="comment-11" rowspan="2">message_display_delay = 31;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d77"></a>7D77</td>
+<td class="instruction">LD ($7D0F),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d7a"></a>7D7A</td>
+<td class="instruction">LD A,($7D10)</td>
+<td class="comment-11" rowspan="3">message_display_index |= 128;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d7d"></a>7D7D</td>
+<td class="instruction">OR $80</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d7f"></a>7D7F</td>
+<td class="instruction">LD ($7D10),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d82"></a>7D82</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="7d83"></a>7D83</td>
+<td class="instruction">LD ($7D13),HL</td>
+<td class="comment-11" rowspan="1">else &lt;% current_message_character = HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="7d86"></a>7D86</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return; %&gt;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="7D30.html">7D30</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#7d48">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="7D87.html">7D87</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

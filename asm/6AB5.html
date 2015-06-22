@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at 6AB5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="6A35.html">6A35</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#6ab5">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="6B42.html">6B42</a></span></td>
+</tr>
+</table>
+<div class="description">6AB5: Expands RLE-encoded objects to a full set of tile references.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="6A35.html">6A35</a>.
+</div>
+<div class="paragraph">
+Format:
+</div>
+<div class="paragraph">
+&lt;w&gt; &lt;h&gt;: width, height
+</div>
+<div class="paragraph">
+Repeat:
+</div>
+<div class="paragraph">
+&lt;t&gt;: emit tile &lt;t&gt;
+</div>
+<div class="paragraph">
+&lt;0xFF&gt; &lt;64..127&gt; &lt;t&gt;: emit tile &lt;t&gt; &lt;t+1&gt; &lt;t+2&gt; .. up to 63 times
+</div>
+<div class="paragraph">
+&lt;0xFF&gt; &lt;128..254&gt; &lt;t&gt;: emit tile &lt;t&gt; up to 126 times
+</div>
+<div class="paragraph">
+&lt;0xFF&gt; &lt;0xFF&gt;: emit &lt;0xFF&gt;
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object index.</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Tile buffer location to expand to.</td>
+</tr>
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Corrupted.</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Corrupted.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6ab5"></a>6AB5</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-11" rowspan="9">HL = interior_object_defs[A];</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ab6"></a>6AB6</td>
+<td class="instruction">LD HL,$7095</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ab9"></a>6AB9</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aba"></a>6ABA</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6abc"></a>6ABC</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6abd"></a>6ABD</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6abe"></a>6ABE</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6abf"></a>6ABF</td>
+<td class="instruction">LD H,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ac0"></a>6AC0</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ac1"></a>6AC1</td>
+<td class="instruction">LD B,(HL)</td>
+<td class="comment-11" rowspan="2">B = *HL++; // width</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ac2"></a>6AC2</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ac3"></a>6AC3</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-11" rowspan="2">C = *HL++; // height</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ac4"></a>6AC4</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ac5"></a>6AC5</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-11" rowspan="2">($6AE6 + 1) = B; // self modify (== width)</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ac6"></a>6AC6</td>
+<td class="instruction">LD ($6AE7),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6ac9"></a>6AC9</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">do &lt;% do &lt;% expand: A = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aca"></a>6ACA</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-11" rowspan="2">if (A == objecttile_ESCAPE) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6acc"></a>6ACC</td>
+<td class="instruction">JR NZ,$6ADE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ace"></a>6ACE</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6acf"></a>6ACF</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">A = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ad0"></a>6AD0</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-11" rowspan="2">if (A != objecttile_ESCAPE) &lt;% // FF FF =&gt; FF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ad2"></a>6AD2</td>
+<td class="instruction">JR Z,$6ADE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ad4"></a>6AD4</td>
+<td class="instruction">AND $F0</td>
+<td class="comment-11" rowspan="1">A &amp;= 0xF0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ad6"></a>6AD6</td>
+<td class="instruction">CP $80</td>
+<td class="comment-11" rowspan="2">if (A &gt;= 128) goto run;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ad8"></a>6AD8</td>
+<td class="instruction">JR NC,$6AF4</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ada"></a>6ADA</td>
+<td class="instruction">CP $40</td>
+<td class="comment-11" rowspan="2">if (A == 64) goto range; %&gt; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6adc"></a>6ADC</td>
+<td class="instruction">JR Z,$6B19</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6ade"></a>6ADE</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="3">if (A) *DE = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6adf"></a>6ADF</td>
+<td class="instruction">JR Z,$6AE2</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ae1"></a>6AE1</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6ae2"></a>6AE2</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ae3"></a>6AE3</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ae4"></a>6AE4</td>
+<td class="instruction">DJNZ $6AC9</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ae6"></a>6AE6</td>
+<td class="instruction">LD B,$01</td>
+<td class="comment-11" rowspan="1">B = 1; // self modified</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6ae8"></a>6AE8</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment-11" rowspan="6">DE += 24 - B;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aea"></a>6AEA</td>
+<td class="instruction">SUB B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aeb"></a>6AEB</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aec"></a>6AEC</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aed"></a>6AED</td>
+<td class="instruction">JR NC,$6AF0</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aef"></a>6AEF</td>
+<td class="instruction">INC D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6af0"></a>6AF0</td>
+<td class="instruction">DEC C</td>
+<td class="comment-11" rowspan="2">%&gt; while (--C); // for each row</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6af1"></a>6AF1</td>
+<td class="instruction">JR NZ,$6AC9</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6af3"></a>6AF3</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="6af4"></a>
+<div class="comments">
+<div class="paragraph">
+128..255 case
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6af4"></a>6AF4</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">A = *HL++ &amp; 0x7F;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6af5"></a>6AF5</td>
+<td class="instruction">AND $7F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6af7"></a>6AF7</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="2">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6af8"></a>6AF8</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6af9"></a>6AF9</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">Adash = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6afa"></a>6AFA</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6afb"></a>6AFB</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">do &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6afc"></a>6AFC</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="3">if (Adash &gt; 0) *DE = Adash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6afd"></a>6AFD</td>
+<td class="instruction">JR Z,$6B00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6aff"></a>6AFF</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6b00"></a>6B00</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b01"></a>6B01</td>
+<td class="instruction">DJNZ $6B12</td>
+<td class="comment-11" rowspan="1">DJNZ $6B12</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="6b03"></a>
+<div class="comments">
+<div class="paragraph">
+Ran out of width.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b03"></a>6B03</td>
+<td class="instruction">LD A,($6AE7)</td>
+<td class="comment-11" rowspan="1">LD Adash,($6AE6 + 1)  // Adash = width</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b06"></a>6B06</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-11" rowspan="1">B = Adash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b07"></a>6B07</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment-11" rowspan="6">DE += 24 - B; // stride // move to next row</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b09"></a>6B09</td>
+<td class="instruction">SUB B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b0a"></a>6B0A</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b0b"></a>6B0B</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b0c"></a>6B0C</td>
+<td class="instruction">JR NC,$6B0F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b0e"></a>6B0E</td>
+<td class="instruction">INC D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6b0f"></a>6B0F</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">Adash = *HL; // Bug: Needless reload.</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b10"></a>6B10</td>
+<td class="instruction">DEC C</td>
+<td class="comment-11" rowspan="2">if (--C == 0) return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b11"></a>6B11</td>
+<td class="instruction">RET Z</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6b12"></a>6B12</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b13"></a>6B13</td>
+<td class="instruction">DEC A</td>
+<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b14"></a>6B14</td>
+<td class="instruction">JR NZ,$6AFB</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b16"></a>6B16</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b17"></a>6B17</td>
+<td class="instruction">JR $6AC9</td>
+<td class="comment-11" rowspan="1">goto expand;</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="6b19"></a>
+<div class="comments">
+<div class="paragraph">
+64..127 case.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6b19"></a>6B19</td>
+<td class="instruction">LD A,$3C</td>
+<td class="comment-11" rowspan="1">A = 60; // opcode of 'INC A'</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="6b1b"></a>
+<div class="comments">
+<div class="paragraph">
+Bug: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b1b"></a>6B1B</td>
+<td class="instruction">LD ($6B28),A</td>
+<td class="comment-11" rowspan="1">($6B28) = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b1e"></a>6B1E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">A = *HL++ &amp; 0x0F;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b1f"></a>6B1F</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b21"></a>6B21</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="2">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b22"></a>6B22</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b23"></a>6B23</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">Adash = *HL;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b24"></a>6B24</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6b25"></a>6B25</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">do &lt;% -</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b26"></a>6B26</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-11" rowspan="2">*DE++ = Adash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b27"></a>6B27</td>
+<td class="instruction">INC DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b28"></a>6B28</td>
+<td class="instruction">INC A</td>
+<td class="comment-11" rowspan="1">INC Adash // self modified</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b29"></a>6B29</td>
+<td class="instruction">DJNZ $6B3B</td>
+<td class="comment-11" rowspan="1">DJNZ $6B3B</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<a name="6b2b"></a>
+<div class="comments">
+<div class="paragraph">
+Ran out of width.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b2b"></a>6B2B</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-11" rowspan="1">PUSH AFdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b2c"></a>6B2C</td>
+<td class="instruction">LD A,($6AE7)</td>
+<td class="comment-11" rowspan="2">LD Adash,($6AE6 + 1)  // Adash = width</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b2f"></a>6B2F</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b30"></a>6B30</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment-11" rowspan="6">DE += 24 - Adash; // stride // move to next row</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b32"></a>6B32</td>
+<td class="instruction">SUB B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b33"></a>6B33</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b34"></a>6B34</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b35"></a>6B35</td>
+<td class="instruction">JR NC,$6B38</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b37"></a>6B37</td>
+<td class="instruction">INC D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6b38"></a>6B38</td>
+<td class="instruction">POP AF</td>
+<td class="comment-11" rowspan="2">POP AFdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b39"></a>6B39</td>
+<td class="instruction">DEC C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b3a"></a>6B3A</td>
+<td class="instruction">RET Z</td>
+<td class="comment-11" rowspan="1">if (--C == 0) return;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="6b3b"></a>6B3B</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="2">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b3c"></a>6B3C</td>
+<td class="instruction">DEC A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b3d"></a>6B3D</td>
+<td class="instruction">JR NZ,$6B25</td>
+<td class="comment-11" rowspan="1">%&gt; while (--A);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b3f"></a>6B3F</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="6b40"></a>6B40</td>
+<td class="instruction">JR $6AC9</td>
+<td class="comment-11" rowspan="1">goto expand;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="6A35.html">6A35</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#6ab5">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="6B42.html">6B42</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

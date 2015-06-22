@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B295</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B252.html">B252</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b295">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B29F.html">B29F</a></span></td>
+</tr>
+</table>
+<div class="description">B295: Multiplies A by 4, returning the result in BC.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a class="link" href="68A2.html">68A2</a> and <a class="link" href="B252.html">B252</a>.
+</div>
+</div>
+<table class="input-1">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Argument.</td>
+</tr>
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Result of (A &lt;&lt; 2).</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b295"></a>B295</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-11" rowspan="1">B = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b297"></a>B297</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-11" rowspan="1">A &lt;&lt;= 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b298"></a>B298</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">B = (B &lt;&lt; 1) + carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b29a"></a>B29A</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-11" rowspan="1">A &lt;&lt;= 1;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b29b"></a>B29B</td>
+<td class="instruction">RL B</td>
+<td class="comment-11" rowspan="1">B = (B &lt;&lt; 1) + carry;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b29d"></a>B29D</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b29e"></a>B29E</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B252.html">B252</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b295">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B29F.html">B29F</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

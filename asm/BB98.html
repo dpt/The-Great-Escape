@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at BB98</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="BAF7.html">BAF7</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#bb98">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="BCAA.html">BCAA</a></span></td>
+</tr>
+</table>
+<div class="description">BB98: (unknown) Called from main loop 3.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a class="link" href="9D7B.html">9D7B</a>.
+</div>
+<div class="paragraph">
+Plots tiles. Checks that characters are visible.
+</div>
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bb98"></a>BB98</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-11" rowspan="1">B = 8; // iterations</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bb9a"></a>BB9A</td>
+<td class="instruction">LD IY,$8000</td>
+<td class="comment-11" rowspan="1">IY = $8000;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bb9e"></a>BB9E</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bb9f"></a>BB9F</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-11" rowspan="3">if (IY[1] == room_NONE) goto next;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bba2"></a>BBA2</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bba4"></a>BBA4</td>
+<td class="instruction">JP Z,$BC9F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bba7"></a>BBA7</td>
+<td class="instruction">LD H,(IY+$1B)</td>
+<td class="comment-11" rowspan="9">map_position_related_y = (IY[26] &gt;&gt; 3) | (IY[27] &lt;&lt; 5); // divide by 8</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbaa"></a>BBAA</td>
+<td class="instruction">LD A,(IY+$1A)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbad"></a>BBAD</td>
+<td class="instruction">SRL H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbaf"></a>BBAF</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbb0"></a>BBB0</td>
+<td class="instruction">SRL H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbb2"></a>BBB2</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbb3"></a>BBB3</td>
+<td class="instruction">SRL H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbb5"></a>BBB5</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbb6"></a>BBB6</td>
+<td class="instruction">LD ($81B6),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbb9"></a>BBB9</td>
+<td class="instruction">LD H,(IY+$19)</td>
+<td class="comment-11" rowspan="9">map_position_related_x = (IY[24] &gt;&gt; 3) | (IY[25] &lt;&lt; 5); // divide by 8</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbbc"></a>BBBC</td>
+<td class="instruction">LD A,(IY+$18)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbbf"></a>BBBF</td>
+<td class="instruction">SRL H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbc1"></a>BBC1</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbc2"></a>BBC2</td>
+<td class="instruction">SRL H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbc4"></a>BBC4</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbc5"></a>BBC5</td>
+<td class="instruction">SRL H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbc7"></a>BBC7</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbc8"></a>BBC8</td>
+<td class="instruction">LD ($81B5),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbcb"></a>BBCB</td>
+<td class="instruction">CALL <a class="link" href="BAF7.html">$BAF7</a></td>
+<td class="comment-11" rowspan="1">vischar_visible();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbce"></a>BBCE</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-11" rowspan="2">if (A == 0xFF) goto next; // possibly not found case</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbd0"></a>BBD0</td>
+<td class="instruction">JP Z,$BC9F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbd3"></a>BBD3</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-11" rowspan="6">A = ((E &gt;&gt; 3) &amp; 31) + 2;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbd4"></a>BBD4</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbd5"></a>BBD5</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbd6"></a>BBD6</td>
+<td class="instruction">RRA</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbd7"></a>BBD7</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbd9"></a>BBD9</td>
+<td class="instruction">ADD A,$02</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbdb"></a>BBDB</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-11" rowspan="1">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbdc"></a>BBDC</td>
+<td class="instruction">LD HL,$81B6</td>
+<td class="comment-11" rowspan="4">A += map_position_related_y - ((map_position &amp; 0xFF00) &gt;&gt; 8);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbdf"></a>BBDF</td>
+<td class="instruction">ADD A,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbe0"></a>BBE0</td>
+<td class="instruction">LD HL,$81BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbe3"></a>BBE3</td>
+<td class="instruction">SUB (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbe4"></a>BBE4</td>
+<td class="instruction">JR C,$BBF7</td>
+<td class="comment-11" rowspan="1">if (A &gt;= 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbe6"></a>BBE6</td>
+<td class="instruction">SUB $11</td>
+<td class="comment-11" rowspan="1">A -= 17;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbe8"></a>BBE8</td>
+<td class="instruction">JR Z,$BBF7</td>
+<td class="comment-11" rowspan="2">if (A &gt; 0) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbea"></a>BBEA</td>
+<td class="instruction">JR C,$BBF7</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbec"></a>BBEC</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-11" rowspan="1">E = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbed"></a>BBED</td>
+<td class="instruction">POP AF</td>
+<td class="comment-11" rowspan="1">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbee"></a>BBEE</td>
+<td class="instruction">SUB E</td>
+<td class="comment-11" rowspan="1">A -= E;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbef"></a>BBEF</td>
+<td class="instruction">JP C,$BC9F</td>
+<td class="comment-11" rowspan="1">if (carry) goto next;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbf2"></a>BBF2</td>
+<td class="instruction">JR NZ,$BBF8</td>
+<td class="comment-11" rowspan="1">if (!Z) goto $BBF8;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbf4"></a>BBF4</td>
+<td class="instruction">JP $BC9F</td>
+<td class="comment-11" rowspan="1">goto next; %&gt; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bbf7"></a>BBF7</td>
+<td class="instruction">POP AF</td>
+<td class="comment-11" rowspan="1">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bbf8"></a>BBF8</td>
+<td class="instruction">CP $05</td>
+<td class="comment-11" rowspan="4">if (A &gt; 5) A = 5;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbfa"></a>BBFA</td>
+<td class="instruction">JP Z,$BC02</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bbfd"></a>BBFD</td>
+<td class="instruction">JP C,$BC02</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc00"></a>BC00</td>
+<td class="instruction">LD A,$05</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc02"></a>BC02</td>
+<td class="instruction">LD ($BC5F),A</td>
+<td class="comment-11" rowspan="1">($BC5F) = A; // self modify</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc05"></a>BC05</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-11" rowspan="1">A = C;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc06"></a>BC06</td>
+<td class="instruction">LD ($BC61),A</td>
+<td class="comment-11" rowspan="1">($BC61) = A; // self modify</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc09"></a>BC09</td>
+<td class="instruction">LD ($BC89),A</td>
+<td class="comment-11" rowspan="1">($BC89) = A; // self modify</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc0c"></a>BC0C</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment-11" rowspan="2">A = 24 - C;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc0e"></a>BC0E</td>
+<td class="instruction">SUB C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc0f"></a>BC0F</td>
+<td class="instruction">LD ($BC8E),A</td>
+<td class="comment-11" rowspan="1">($BC8E) = A; // self modify</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc12"></a>BC12</td>
+<td class="instruction">ADD A,$A8</td>
+<td class="comment-11" rowspan="1">A += $A8;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc14"></a>BC14</td>
+<td class="instruction">LD ($BC95),A</td>
+<td class="comment-11" rowspan="1">($BC95) = A; // self modify</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc17"></a>BC17</td>
+<td class="instruction">LD HL,$81BB</td>
+<td class="comment-11" rowspan="1">HL = &amp;map_position;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc1a"></a>BC1A</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-11" rowspan="1">A = B;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc1b"></a>BC1B</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="1">A &amp;= A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc1c"></a>BC1C</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-11" rowspan="1">A = 0; // interleaved</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc1e"></a>BC1E</td>
+<td class="instruction">JR NZ,$BC24</td>
+<td class="comment-11" rowspan="1">if (Z) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc20"></a>BC20</td>
+<td class="instruction">LD A,($81B5)</td>
+<td class="comment-11" rowspan="1">A = map_position_related_x;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc23"></a>BC23</td>
+<td class="instruction">SUB (HL)</td>
+<td class="comment-11" rowspan="1">A -= *HL; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc24"></a>BC24</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-11" rowspan="1">B = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc25"></a>BC25</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-11" rowspan="1">A = D;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc26"></a>BC26</td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="1">A &amp;= A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc27"></a>BC27</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-11" rowspan="1">A = 0; // interleaved</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc29"></a>BC29</td>
+<td class="instruction">JR NZ,$BC30</td>
+<td class="comment-11" rowspan="1">if (Z) &lt;%</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc2b"></a>BC2B</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc2c"></a>BC2C</td>
+<td class="instruction">LD A,($81B6)</td>
+<td class="comment-11" rowspan="1">A = map_position_related_y;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc2f"></a>BC2F</td>
+<td class="instruction">SUB (HL)</td>
+<td class="comment-11" rowspan="1">A -= *HL; %&gt;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc30"></a>BC30</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">C = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc31"></a>BC31</td>
+<td class="instruction">LD H,C</td>
+<td class="comment-11" rowspan="1">H = C;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc32"></a>BC32</td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="1">A = 0;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc33"></a>BC33</td>
+<td class="instruction">SRL H</td>
+<td class="comment-11" rowspan="1">SRL H</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc35"></a>BC35</td>
+<td class="instruction">RRA</td>
+<td class="comment-11" rowspan="1">RRA</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc36"></a>BC36</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-11" rowspan="1">E = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc37"></a>BC37</td>
+<td class="instruction">LD D,H</td>
+<td class="comment-11" rowspan="1">D = H;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc38"></a>BC38</td>
+<td class="instruction">SRL H</td>
+<td class="comment-11" rowspan="1">SRL H</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc3a"></a>BC3A</td>
+<td class="instruction">RRA</td>
+<td class="comment-11" rowspan="1">RRA</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc3b"></a>BC3B</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="1">L = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc3c"></a>BC3C</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-11" rowspan="6">HL += DE + B + $F290; // screen buffer start address</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc3d"></a>BC3D</td>
+<td class="instruction">LD E,B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc3e"></a>BC3E</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc40"></a>BC40</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc41"></a>BC41</td>
+<td class="instruction">LD DE,$F290</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc44"></a>BC44</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc45"></a>BC45</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc46"></a>BC46</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-11" rowspan="1">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc47"></a>BC47</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc48"></a>BC48</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HLdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc49"></a>BC49</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc4a"></a>BC4A</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-11" rowspan="1">A = B;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc4b"></a>BC4B</td>
+<td class="instruction">LD L,C</td>
+<td class="comment-11" rowspan="14">HL = C * 24 + A + $F0F8; // visible tiles array</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc4c"></a>BC4C</td>
+<td class="instruction">LD H,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc4e"></a>BC4E</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc4f"></a>BC4F</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc50"></a>BC50</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc51"></a>BC51</td>
+<td class="instruction">LD C,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc52"></a>BC52</td>
+<td class="instruction">LD B,H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc53"></a>BC53</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc54"></a>BC54</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc55"></a>BC55</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc56"></a>BC56</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc58"></a>BC58</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc59"></a>BC59</td>
+<td class="instruction">LD BC,$F0F8</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc5c"></a>BC5C</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc5d"></a>BC5D</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-11" rowspan="1">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc5e"></a>BC5E</td>
+<td class="instruction">LD C,$05</td>
+<td class="comment-11" rowspan="1">C = 5; // iterations // self modified $BC5F</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc60"></a>BC60</td>
+<td class="instruction">LD B,$04</td>
+<td class="comment-11" rowspan="1">do &lt;% B = 4; // iterations // self modified $BC61</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc62"></a>BC62</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">do &lt;% PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc63"></a>BC63</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-11" rowspan="1">A = *DE;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc64"></a>BC64</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc65"></a>BC65</td>
+<td class="instruction">POP DE</td>
+<td class="comment-11" rowspan="1">POP DEdash // visible tiles array pointer</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc66"></a>BC66</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">PUSH HLdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc67"></a>BC67</td>
+<td class="instruction">CALL <a class="link" href="BCAA.html">$BCAA</a></td>
+<td class="comment-11" rowspan="1">select_tile_set(); // call using banked registers</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc6a"></a>BC6A</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="6">HLdash = A * 8 + BCdash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc6b"></a>BC6B</td>
+<td class="instruction">LD H,$00</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc6d"></a>BC6D</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc6e"></a>BC6E</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc6f"></a>BC6F</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc70"></a>BC70</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc71"></a>BC71</td>
+<td class="instruction">LD BC,$0818</td>
+<td class="comment-11" rowspan="1">Bdash, Cdash = 8, 24; // iterations, stride</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc74"></a>BC74</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="2">do &lt;% *DEdash = *HLdash++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc75"></a>BC75</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc76"></a>BC76</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-11" rowspan="6">DEdash += Cdash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc77"></a>BC77</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc78"></a>BC78</td>
+<td class="instruction">JR NC,$BC7B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc7a"></a>BC7A</td>
+<td class="instruction">INC D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc7b"></a>BC7B</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc7c"></a>BC7C</td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc7d"></a>BC7D</td>
+<td class="instruction">DJNZ $BC74</td>
+<td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc7f"></a>BC7F</td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">POP HLdash</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc80"></a>BC80</td>
+<td class="instruction">INC H</td>
+<td class="comment-11" rowspan="1">Hdash++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc81"></a>BC81</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc82"></a>BC82</td>
+<td class="instruction">INC DE</td>
+<td class="comment-11" rowspan="1">DE++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc83"></a>BC83</td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">HL++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc84"></a>BC84</td>
+<td class="instruction">DJNZ $BC62</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc86"></a>BC86</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc87"></a>BC87</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-11" rowspan="1">A = Hdash;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc88"></a>BC88</td>
+<td class="instruction">SUB $00</td>
+<td class="comment-11" rowspan="1">A -= 0; // self modified $BC89</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc8a"></a>BC8A</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-11" rowspan="1">Hdash = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc8b"></a>BC8B</td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">Ldash++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc8c"></a>BC8C</td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc8d"></a>BC8D</td>
+<td class="instruction">LD A,$14</td>
+<td class="comment-11" rowspan="1">A = 20; // self modified $BC8E</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc8f"></a>BC8F</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-11" rowspan="1">A += E;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc90"></a>BC90</td>
+<td class="instruction">JR NC,$BC93</td>
+<td class="comment-11" rowspan="2">if (carry) D++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc92"></a>BC92</td>
+<td class="instruction">INC D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc93"></a>BC93</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-11" rowspan="1">E = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc94"></a>BC94</td>
+<td class="instruction">LD A,$BC</td>
+<td class="comment-11" rowspan="1">A = $BC; // self modified $BC95</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc96"></a>BC96</td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-11" rowspan="1">A += L;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc97"></a>BC97</td>
+<td class="instruction">JR NC,$BC9A</td>
+<td class="comment-11" rowspan="2">if (carry) H++;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc99"></a>BC99</td>
+<td class="instruction">INC H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc9a"></a>BC9A</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-11" rowspan="1">L = A;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc9b"></a>BC9B</td>
+<td class="instruction">DEC C</td>
+<td class="comment-11" rowspan="2">%&gt; while (--C);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bc9c"></a>BC9C</td>
+<td class="instruction">JP NZ,$BC60</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="bc9f"></a>BC9F</td>
+<td class="instruction">POP BC</td>
+<td class="comment-11" rowspan="1">next: POP BC</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bca0"></a>BCA0</td>
+<td class="instruction">LD DE,$0020</td>
+<td class="comment-11" rowspan="3">IY += 32; // stride</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bca3"></a>BCA3</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bca5"></a>BCA5</td>
+<td class="instruction">DEC B</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bca6"></a>BCA6</td>
+<td class="instruction">JP NZ,$BB9E</td>
+<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="bca9"></a>BCA9</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">return;</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="BAF7.html">BAF7</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#bb98">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="BCAA.html">BCAA</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>

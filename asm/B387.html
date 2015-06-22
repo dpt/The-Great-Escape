@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Great Escape: Routine at B387</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
+
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B32D.html">B32D</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b387">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B3A8.html">B3A8</a></span></td>
+</tr>
+</table>
+<div class="description">B387: The hero has tried to open the red cross parcel.</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="4">
+<div class="details">
+
+</div>
+<table class="input-0">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+
+</table>
+<table class="output-0">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b387"></a>B387</td>
+<td class="instruction">LD A,$3F</td>
+<td class="comment-11" rowspan="2">item_structs[item_RED_CROSS_PARCEL].room = itemstruct_ROOM_MASK; // room_NONE &amp; 0x3F;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b389"></a>B389</td>
+<td class="instruction">LD ($771D),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b38c"></a>B38C</td>
+<td class="instruction">LD HL,$8215</td>
+<td class="comment-11" rowspan="1">HL = &amp;items_held;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b38f"></a>B38F</td>
+<td class="instruction">LD A,$0C</td>
+<td class="comment-11" rowspan="4">if (*HL != item_RED_CROSS_PARCEL) HL++; /* One or the other must be a red cross parcel item, so advance. */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b391"></a>B391</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b392"></a>B392</td>
+<td class="instruction">JR Z,$B395</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b394"></a>B394</td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-2"><a name="b395"></a>B395</td>
+<td class="instruction">LD (HL),$FF</td>
+<td class="comment-11" rowspan="1">*HL = item_NONE; /* Parcel opened. */</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b397"></a>B397</td>
+<td class="instruction">CALL <a class="link" href="7C33.html">$7C33</a></td>
+<td class="comment-11" rowspan="1">draw_all_items();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b39a"></a>B39A</td>
+<td class="instruction">LD A,($A263)</td>
+<td class="comment-11" rowspan="1">A = red_cross_parcel_current_contents;</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b39d"></a>B39D</td>
+<td class="instruction">CALL <a class="link" href="7BB5.html">$7BB5</a></td>
+<td class="comment-11" rowspan="1">drop_item_tail();</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b3a0"></a>B3A0</td>
+<td class="instruction">LD B,$0C</td>
+<td class="comment-11" rowspan="2">queue_message_for_display(message_YOU_OPEN_THE_BOX);</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b3a2"></a>B3A2</td>
+<td class="instruction">CALL <a class="link" href="7D15.html">$7D15</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><a name="b3a5"></a>B3A5</td>
+<td class="instruction">JP <a class="link" href="A0E9.html">$A0E9</a></td>
+<td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50(); return; // exit via</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev"><span class="prev-1">Prev: <a class="link" href="B32D.html">B32D</a></span></td>
+<td class="up">Up: <a class="link" href="../maps/all.html#b387">Map</a></td>
+<td class="next"><span class="next-1">Next: <a class="link" href="B3A8.html">B3A8</a></span></td>
+</tr>
+</table>
+<div class="footer">
+<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
+<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
+</div>
+</body>
+</html>
