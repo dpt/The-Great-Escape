@@ -5733,12 +5733,12 @@ D $A7C9 Uses map_position to copy supertile indices from map into the buffer at 
 N $A7C9 Get vertical offset.
   $A7C9 A = (map_position >> 8) & 0xFC; // A = 0, 4, 8, 12, ...
 N $A7CE Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
-  $A7CE HL = $BCB8 + (A + (A >> 1)) * 9; // $BCB8 is &map_tiles[0] - 54 so it must be skipping the first row.
+  $A7CE HL = &map_tiles[-54] + (A + (A >> 1)) * 9; // must be skipping the first row.
 N $A7E3 Add horizontal offset.
   $A7E3 HL += (map_position & 0xFF) >> 2;
-N $A7EE Populate $FF58 with 7x5 array of supertile refs.
+N $A7EE Populate map_buf with 7x5 array of supertile refs.
   $A7EE A = 5; // 5 iterations
-  $A7F0 DE = $FF58;
+  $A7F0 DE = &map_buf[0];
   $A7F3 do <% memcpy(DE, HL, 7); DE += 7;
   $A801   HL += 54; // stride - width of map
   $A805 %> while (--A);
@@ -5749,22 +5749,22 @@ N $A7EE Populate $FF58 with 7x5 array of supertile refs.
 c $A80A Plot the complete bottommost row of tiles.
 @ $A80A label=plot_bottommost_tiles
 @ $A80A nowarn
-  $A80A DE = $F278;
+  $A80A DE = &tile_buf[24 * 16];
   $A80D -
 @ $A80E nowarn
-  $A80E HLdash = $FF74;
+  $A80E HLdash = &map_buf[28];
   $A811 A = map_position >> 8; // map_position hi
 @ $A814 nowarn
-  $A814 DEdash = $FE90;
+  $A814 DEdash = &window_buf[24 * 16 * 8];
   $A817 goto plot_horizontal_tiles_common;
 
 c $A819 Plot the complete topmost row of tiles.
 @ $A819 label=plot_topmost_tiles
-  $A819 DE = $F0F8; // visible tiles array
+  $A819 DE = &state->tile_buf[0];
   $A81C -
-  $A81D HLdash = $FF58;
+  $A81D HLdash = &state->map_buf[8];
   $A820 A = map_position >> 8; // map_position hi
-  $A823 DEdash = $F290; // screen buffer start address
+  $A823 DEdash = &state->window_buf[0];
 
 c $A826 Plotting supertiles.
 @ $A826 label=plot_horizontal_tiles_common
@@ -5776,7 +5776,7 @@ c $A826 Plotting supertiles.
   $A835 Adash = *HLdash;
   $A836 -
 N $A837 Initial edge.
-  $A837 HL = 0x5B00 + Adash * 16; // supertiles
+  $A837 HL = &super_tiles[0] + Adash * 16;
   $A842 -
   $A843 A += L;
   $A844 L = A;
@@ -5834,10 +5834,10 @@ N $A87D Trailing edge.
 c $A8A2 Plot all tiles.
 D $A8A2 Note: Exits with banked registers active.
 @ $A8A2 label=plot_all_tiles
-  $A8A2 DE = $F0F8; // visible tiles array
+  $A8A2 DE = &tile_buf[0]; // visible tiles array
   $A8A5 -
-  $A8A6 HLdash = $FF58; // 7x5 supertile refs
-  $A8A9 DEdash = $F290; // screen buffer start address
+  $A8A6 HLdash = &map_buf[0]; // 7x5 supertile refs
+  $A8A9 DEdash = &window_buf[0]; // screen buffer start address
   $A8AC A = map_position[0];
   $A8AF Bdash = 24; // 24 iterations (screen rows?)
   $A8B1 do <% PUSH BCdash
@@ -5868,11 +5868,10 @@ D $A8A2 Note: Exits with banked registers active.
 c $A8CF Plot the complete rightmost column of tiles.
 @ $A8CF label=plot_rightmost_tiles
 @ $A8CF nowarn
-  $A8CF DE = $F10F;
+  $A8CF DE = &tile_buf[23];
   $A8D2 EXX // unpaired
-  $A8D3 HL = $FF5E;
-@ $A8D6 nowarn
-  $A8D6 DE = $F2A7;
+  $A8D3 HL = &map_buf[6];
+  $A8D6 DE = &window_buf[23];
   $A8D9 A = map_position[0] & 3; // map_position lo
   $A8DE if (A == 0) HL--;
   $A8E1 A = map_position[0] - 1; // map_position lo
@@ -5880,10 +5879,10 @@ c $A8CF Plot the complete rightmost column of tiles.
 
 c $A8E7 Plot the complete leftmost column of tiles.
 @ $A8E7 label=plot_leftmost_tiles
-  $A8E7 DE = $F0F8; // visible tiles array
+  $A8E7 DE = &tile_buf[0]; // visible tiles array
   $A8EA -
-  $A8EB HLdash = $FF58; // 7x5 supertile refs
-  $A8EE DEdash = $F290; // screen buffer start address
+  $A8EB HLdash = &map_buf[0]; // 7x5 supertile refs
+  $A8EE DEdash = &window_buf[0]; // screen buffer start address
   $A8F1 A = map_position[0]; // map_position lo
 
 c $A8F4 Plotting vertical tiles (common part).
@@ -5896,7 +5895,7 @@ c $A8F4 Plotting vertical tiles (common part).
 N $A903 Initial edge.
   $A903 Adash = *HLdash;
   $A904 -
-  $A905 HL = 0x5B00 + Adash * 16; // supertiles
+  $A905 HL = &super_tiles[0] + Adash * 16; // supertiles
   $A910 -
   $A911 A += L;
   $A912 L = A;
@@ -5922,7 +5921,7 @@ N $A93C Middle loop.
   $A93E do <% PUSH BC
   $A93F   A = *HL;
   $A940   EXX
-  $A941   HL = 0x5B00 + A * 16; // supertiles
+  $A941   HL = &super_tiles[0] + A * 16; // supertiles
 @ $A94C label=supertile_plot_vertical_common_iters
   $A94C   A = 0; // self modified by $A8F6
   $A94E   A += L;
@@ -5946,7 +5945,7 @@ N $A93C Middle loop.
 N $A972 Trailing edge.
   $A972 A = *HL;
   $A973 EXX
-  $A974 HL = 0x5B00 + A * 16; // supertiles
+  $A974 HL = &super_tiles[0] + A * 16; // supertiles
   $A97F HL += ($A94C + 1); // read self modified
   $A984 A = ((map_position >> 8) & 3) + 1;
   $A98A BC = 24;
@@ -6021,14 +6020,14 @@ c $A9E4 Shunt the map left.
   $A9E4 HL = &map_position;
   $A9E7 (*HL)++;
   $A9E8 get_supertiles();
-  $A9EB HL = visible_tiles_start_address + 1;
-  $A9EE DE = visible_tiles_start_address;
-  $A9F1 BC = visible_tiles_length - 1;
+  $A9EB HL = &tile_buf[1];
+  $A9EE DE = &tile_buf[0];
+  $A9F1 BC = tile_buf_length - 1;
   $A9F4 LDIR
 @ $A9F6 nowarn
-  $A9F6 HL = screen_buffer_start_address + 1;
-  $A9F9 DE = screen_buffer_start_address;
-  $A9FC BC = screen_buffer_length - 1;
+  $A9F6 HL = &window_buf[1];
+  $A9F9 DE = &window_buf[0];
+  $A9FC BC = window_buf_length - 1;
   $A9FF LDIR
   $AA01 plot_rightmost_tiles();
   $AA04 return;
@@ -6039,13 +6038,13 @@ c $AA05 Shunt the map right.
   $AA08 (*HL)--;
   $AA09 get_supertiles();
 @ $AA0C nowarn
-  $AA0C HL = visible_tiles_end_address - 1;
-  $AA0F DE = visible_tiles_end_address;
-  $AA12 BC = visible_tiles_length - 1;
+  $AA0C HL = &tile_buf[0];
+  $AA0F DE = &tile_buf[1];
+  $AA12 BC = tile_buf_length - 1;
   $AA15 LDDR
-  $AA17 HL = screen_buffer_end_address;
-  $AA1A DE = screen_buffer_end_address + 1;
-  $AA1D BC = screen_buffer_length;
+  $AA17 HL = &window_buf[0];
+  $AA1A DE = &window_buf[1];
+  $AA1D BC = window_buf_length;
   $AA20 LDDR
   $AA22 plot_leftmost_tiles();
   $AA25 return;
@@ -6056,15 +6055,15 @@ c $AA26 Shunt the map up-right.
   $AA27 H++;
   $AA28 map_position = HL;
   $AA2B get_supertiles();
-  $AA2E HL = visible_tiles_start_address + 24;
-  $AA31 DE = visible_tiles_start_address + 1;
-  $AA34 BC = visible_tiles_length - 24;
+  $AA2E HL = &tile_buf[24];
+  $AA31 DE = &tile_buf[1];
+  $AA34 BC = tile_buf_length - 24;
   $AA37 LDIR
 @ $AA39 nowarn
-  $AA39 HL = screen_buffer_start_address + 24 * 8;
+  $AA39 HL = &window_buf[24 * 8];
 @ $AA3C nowarn
-  $AA3C DE = screen_buffer_start_address + 1;
-  $AA3F BC = screen_buffer_length - 24 * 8;
+  $AA3C DE = &window_buf[1];
+  $AA3F BC = window_buf_length - 24 * 8;
   $AA42 LDIR
   $AA44 plot_bottommost_tiles();
   $AA47 plot_leftmost_tiles();
@@ -6075,14 +6074,14 @@ c $AA4B Shunt the map up.
   $AA4B HL = &map_position[1];
   $AA4E (*HL)++;
   $AA4F get_supertiles();
-  $AA52 HL = visible_tiles_start_address + 24;
-  $AA55 DE = visible_tiles_start_address;
-  $AA58 BC = visible_tiles_length - 24;
+  $AA52 HL = &tile_buf[24];
+  $AA55 DE = &tile_buf[0];
+  $AA58 BC = tile_buf_length - 24;
   $AA5B LDIR
 @ $AA5D nowarn
-  $AA5D HL = screen_buffer_start_address + 24 * 8;
-  $AA60 DE = screen_buffer_start_address;
-  $AA63 BC = screen_buffer_length - 24 * 8;
+  $AA5D HL = &window_buf[24 * 8];
+  $AA60 DE = &window_buf[0];
+  $AA63 BC = window_buf_length - 24 * 8;
   $AA66 LDIR
   $AA68 plot_bottommost_tiles();
   $AA6B return;
@@ -6093,13 +6092,13 @@ c $AA6C Shunt the map down.
   $AA6F (*HL)--;
   $AA70 get_supertiles();
 @ $AA73 nowarn
-  $AA73 HL = visible_tiles_end_address - 24;
-  $AA76 DE = visible_tiles_end_address;
-  $AA79 BC = visible_tiles_length - 24;
+  $AA73 HL = &tile_buf[0];
+  $AA76 DE = &tile_buf[24];
+  $AA79 BC = tile_buf_length - 24;
   $AA7C LDDR
-  $AA7E HL = screen_buffer_end_address - 24 * 8;
-  $AA81 DE = screen_buffer_end_address;
-  $AA84 BC = screen_buffer_length - 24 * 8;
+  $AA7E HL = &window_buf[0];
+  $AA81 DE = &window_buf[24 * 8];
+  $AA84 BC = window_buf_length - 24 * 8;
   $AA87 LDDR
   $AA89 plot_topmost_tiles();
   $AA8C return;
@@ -6111,14 +6110,14 @@ c $AA8D Shunt the map down left.
   $AA8F map_position = HL;
   $AA92 get_supertiles();
 @ $AA95 nowarn
-  $AA95 HL = visible_tiles_end_address - 24;
+  $AA95 HL = &tile_buf[1];
 @ $AA98 nowarn
-  $AA98 DE = visible_tiles_end_address - 1;
-  $AA9B BC = visible_tiles_length - 24 - 1;
+  $AA98 DE = &tile_buf[24];
+  $AA9B BC = tile_buf_length - 24 - 1;
   $AA9E LDDR
-  $AAA0 HL = screen_buffer_end_address - 24 * 8;
-  $AAA3 DE = screen_buffer_end_address - 1;
-  $AAA6 BC = screen_buffer_length - 24 * 8 - 1;
+  $AAA0 HL = &window_buf[1];
+  $AAA3 DE = &window_buf[24 * 8];
+  $AAA6 BC = window_buf_length - 24 * 8 - 1;
   $AAA9 LDDR
   $AAAB plot_topmost_tiles();
   $AAAE plot_rightmost_tiles();
@@ -6328,7 +6327,7 @@ c $ABF9 Zoombox. partial copy of window buffer contents?
   $AC06 L = A;
   $AC07 HL += DE + zoombox_x;
 @ $AC10 nowarn
-  $AC10 DE = screen_buffer_start_address + 1;
+  $AC10 DE = &state->window_buf[1];
   $AC13 HL += DE;
   $AC14 EX DE,HL
 @ $AC15 nowarn
@@ -12437,5 +12436,11 @@ R $FECD O:A Input value (as per enum input).
 ; ------------------------------------------------------------------------------
 
 b $FEF4 Stack.
-; @end:$FEF4
+
+@ $F0F8 label=tile_buf
+@ $F290 label=window_buf
+@ $FF58 label=map_buf
+@ $FFFF label=stack
+
+@ $FFFF end
 
