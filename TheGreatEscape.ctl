@@ -4451,6 +4451,7 @@ c $9EB2 Locks the player out until the wire is snipped.
   $9EB9 if (A) <%
   $9EBB   if (A < 4)
 @ $9EBE nowarn
+@ $9EC1 nowarn
   $9EBE $800D = snipping_wire_new_inputs[$800E & 3]; // change direction
 @ $9ECC nowarn
   $9ECF   return; %>
@@ -5083,6 +5084,7 @@ c $A228 Event: new red cross parcel.
 N $A228 Don't deliver a new red cross parcel while the previous one still exists.
   $A228 if ((item_structs[item_RED_CROSS_PARCEL].room & itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;
 N $A230 Select the contents of the next parcel; choosing the first item from the list which does not already exist.
+@ $A230 nowarn
   $A230 DE = &red_cross_parcel_contents_list[0];
   $A233 B = 4; // length of above
   $A235 do <% A = *DE;
@@ -5094,6 +5096,8 @@ N $A230 Select the contents of the next parcel; choosing the first item from the
   $A244 return;
 
   $A245 found: red_cross_parcel_current_contents = *DE;
+
+@ $A24C nowarn
   $A249 memcpy(&item_structs[item_RED_CROSS_PARCEL].room, red_cross_parcel_reset_data, 6);
   $A254 queue_message_for_display(message_RED_CROSS_PARCEL); return; // exit via
 
@@ -7672,6 +7676,7 @@ N $B7DB Clear the mess halls.
 N $B7F2 Reset characters 12..15 (guards) and 20..25 (prisoners).
   $B7F2 DE = &character_structs[12].BYTE1;
   $B7F5 C = 10; // iterations
+@ $B7F7 nowarn
   $B7F7 HL = &character_reset_data[0];
   $B7FA do <% memcpy(DE, HL, 3); DE += 3; HL += 3;
   $B803   *DE++ = 18; /* Bug/Odd: This is reset to 18 but the initial data is 24. */
@@ -11734,6 +11739,7 @@ N $F17D Construct a table of 256 bit-reversed bytes at 0x7F00.
   $F18A   *HL++ = C;
   $F18F %> while ((HL & 0xFF) != 0);
 N $F190 Initialise visible characters (HL is $8000).
+@ $F190 nowarn
   $F190 DE = &vischar_initial;
   $F193 B = 8; // iterations
   $F195 do <% -
