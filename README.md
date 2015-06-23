@@ -21,8 +21,6 @@ You can also disassemble and reassemble the game to a .TAP file which you can lo
 
 SkoolKit disassemblies are normally written in a plain text comment style but I've chosen to use a C-family-style pseudocode and Z80 fragments where C syntax cannot cope. Wise decision? Time will tell.
 
-Also note that currently the disassembly is contained in a  _control_ file (a comments-only format) rather than a _skool_ file (all instructions and comments).
-
 
 Building the Disassembly
 ------------------------
@@ -37,13 +35,12 @@ If all's well you will see:
 
     $ make disasm
     mkdir -p build
-    sna2skool.py -H -R -c TheGreatEscape.ctl TheGreatEscape.z80 > build/TheGreatEscape.skool
-    skool2html.py -H -o build/TheGreatEscape.skool
-    Using skool file: build/TheGreatEscape.skool
+    skool2html.py -H -o TheGreatEscape.skool
+    Using skool file: TheGreatEscape.skool
     Using ref files: TheGreatEscape.ref, TheGreatEscapeBugs.ref, TheGreatEscapeFacts.ref, TheGreatEscapeGlossary.ref, TheGreatEscapeGraphics.ref
-    Parsing build/TheGreatEscape.skool
+    Parsing TheGreatEscape.skool
     Creating directory build/TheGreatEscape
-    Copying /Library/Python/2.7/site-packages/skoolkit/resources/skoolkit.css to build/TheGreatEscape/skoolkit.css
+    Copying /usr/local/lib/python2.7/site-packages/skoolkit/resources/skoolkit.css to build/TheGreatEscape/skoolkit.css
     Copying TheGreatEscape.css to build/TheGreatEscape/TheGreatEscape.css
       Writing disassembly files in build/TheGreatEscape/asm
       Writing build/TheGreatEscape/maps/all.html
@@ -51,8 +48,10 @@ If all's well you will see:
       Writing build/TheGreatEscape/maps/data.html
       Writing build/TheGreatEscape/maps/messages.html
       Writing build/TheGreatEscape/maps/unused.html
+      Writing build/TheGreatEscape/buffers/gbuffer.html
       Writing build/TheGreatEscape/Characters.html
       Writing build/TheGreatEscape/Items.html
+      Writing build/TheGreatEscape/Masks.html
       Writing build/TheGreatEscape/RoomObjects.html
       Writing build/TheGreatEscape/Rooms.html
       Writing build/TheGreatEscape/Map.html

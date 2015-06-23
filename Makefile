@@ -9,7 +9,6 @@ usage:
 	@echo "  usage		Show this help"
 	@echo "  install	Install the $(NAME) support script"
 	@echo "  all		Build everything"
-	@echo "  skool		Build the $(NAME) skool file"
 	@echo "  disasm	Build the $(NAME) disassembly"
 	@echo "  asm		Build the $(NAME) assembly"
 	@echo "  bin		Build the $(NAME) binary image"
@@ -29,21 +28,14 @@ install:
 .PHONY: all
 all: disasm tap
 
-.PHONY: skool
-skool: $(BUILD)/$(GAME).skool
-
-$(BUILD)/$(GAME).skool: $(GAME).ctl $(GAME).z80
-	mkdir -p $(BUILD)
-	sna2skool.py $(OPTIONS) -R -c $(GAME).ctl $(GAME).z80 > $@
-
 .PHONY: disasm
-disasm: skool
-	skool2html.py $(OPTIONS) -o $(BUILD)/$(GAME).skool
+disasm:
+	skool2html.py $(OPTIONS) -o $(GAME).skool
 
 .PHONY: asm
 asm: $(BUILD)/$(GAME).asm
 
-%.asm: %.skool
+%.asm: ../%.skool
 	skool2asm.py $(OPTIONS) -c $< > $@
 
 .PHONY: bin
