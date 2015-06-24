@@ -1,7 +1,7 @@
 NAME="The Great Escape"
 GAME=TheGreatEscape
 BUILD?=build
-OPTIONS=-H
+OPTIONS=--hex
 
 .PHONY: usage
 usage:
@@ -10,6 +10,7 @@ usage:
 	@echo "  install	Install the $(NAME) support script"
 	@echo "  all		Build everything"
 	@echo "  disasm	Build the $(NAME) disassembly"
+	@echo "  ctl		Build the $(NAME) control file"
 	@echo "  asm		Build the $(NAME) assembly"
 	@echo "  bin		Build the $(NAME) binary image"
 	@echo "  tap		Build the $(NAME) tape image"
@@ -29,13 +30,21 @@ install:
 all: disasm tap
 
 .PHONY: disasm
-disasm:
+disasm: $(GAME).skool
 	skool2html.py $(OPTIONS) -o $(GAME).skool
+
+.PHONY: ctl
+ctl: $(BUILD)/$(GAME).ctl
+
+$(BUILD)/$(GAME).ctl: $(GAME).skool
+	mkdir -p $(BUILD)
+	skool2ctl.py $(OPTIONS) $(GAME).skool > $@
 
 .PHONY: asm
 asm: $(BUILD)/$(GAME).asm
 
 %.asm: ../%.skool
+	mkdir -p $(BUILD)
 	skool2asm.py $(OPTIONS) -c $< > $@
 
 .PHONY: bin
