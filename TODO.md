@@ -6,7 +6,7 @@ TODO
 
 - [ ] Start a proper [changelog](http://keepachangelog.com/)
   - [ ] Including a retrospective changes for earlier releases
-- [ ] Migrate from a [control file](http://skoolkit.ca/docs/skoolkit/control-files.html) to a [skool file](http://skoolkit.ca/docs/skoolkit/skool-files.html)
+- [x] Migrate from a [control file](http://skoolkit.ca/docs/skoolkit/control-files.html) to a [skool file](http://skoolkit.ca/docs/skoolkit/skool-files.html)
   - [ ] Add a build rule for skool -> ctl.
   - [ ] Preserve `;` comments which won't make it across
   - [ ] Change direct address references into label references
