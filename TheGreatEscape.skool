@@ -1525,19 +1525,15 @@ c$6A35 CALL $6A27    ; wipe_visible_tiles();
 ;
 ; Used by the routine at #R$6A35.
 ; .
-; Format:
-; .
-; <w> <h>: width, height
-; .
-; Repeat:
-; .
-; <t>: emit tile <t>
-; .
-; <0xFF> <64..127> <t>: emit tile <t> <t+1> <t+2> .. up to 63 times
-; .
-; <0xFF> <128..254> <t>: emit tile <t> up to 126 times
-; .
-; <0xFF> <0xFF>: emit <0xFF>
+; #TABLE(default)
+; { =c2 Each object starts with dimension bytes: }
+; { <w> <h>               | width, height }
+; { =c2 Which are then followed by a repetition of the following bytes: }
+; { <t>                   | emit tile <t> }
+; { <0xFF> <64..127> <t>  | emit tile <t> <t+1> <t+2> .. up to 63 times }
+; { <0xFF> <128..254> <t> | emit tile <t> up to 126 times }
+; { <0xFF> <0xFF>         | emit <0xFF> }
+; TABLE#
 ;
 ; I:A  Object index.
 ; I:DE Tile buffer location to expand to.
