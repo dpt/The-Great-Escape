@@ -2,6 +2,671 @@
 @writer=~/.skoolkit:TheGreatEscape.TheGreatEscapeAsmWriter
 @set-line-width=240
 @set-warnings=1
+;
+; SkoolKit disassembly of The Great Escape by Denton Designs.
+; https://github.com/dpt/The-Great-Escape
+;
+; Copyright 1986 Ocean Software Ltd. (The Great Escape)
+; Copyright 2012-2015 David Thomas <dave@davespace.co.uk> (this disassembly)
+;
+@ofix+begin
+; This disassembly contains ofix changes.
+;
+@ofix+end
+@bfix+begin
+; This disassembly contains bfix changes.
+;
+@bfix+end
+@rfix+begin
+; This disassembly contains rfix changes.
+;
+@rfix+end
+
+; //////////////////////////////////////////////////////////////////////////////
+; TODO
+; //////////////////////////////////////////////////////////////////////////////
+;
+; - Document everything!
+;   - sub_* functions
+;   - '...' indicates a gap in documentation
+; - Map out game state at $8000+ which overlaps graphics.
+; - Sort out inverted masks issue.
+; - Use SkoolKit # refs more.
+;   - Currently using (<- somefunc) to show a reference.
+;
+; - Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
+; - Add a reversal status for every function. (complete, incomplete)
+;
+; //////////////////////////////////////////////////////////////////////////////
+; STYLE
+; //////////////////////////////////////////////////////////////////////////////
+;
+; A single dash '-' indicates a statement has been omitted.
+;
+; Code separated by a single ';' line indicates that control flow passes
+; through that point and that the subsequent instruction is a goto/jump target.
+;
+; Using C style braces { } conflict with SkoolKit's own use of braces, so use
+; the digraphs <% and %> instead.
+;
+; Pseudo-C code is formatted in an uneven way to best fit the lines to which it
+; is assigned. e.g.
+;     if (condition) <%
+;         statement; %>
+;     else <% statement;
+;     %>
+;
+; Omit variables when the value is used once (e.g. for strides).
+;
+; //////////////////////////////////////////////////////////////////////////////
+; ASSEMBLY PATTERNS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; Multiply A by 2^N:
+;   ADD A,A ; A += A (N times)
+;
+; Increment HL by 8-bit delta:
+;   A = L
+;   A += delta
+;   L = A
+;   JR NC,skip
+;   H++
+;   skip:
+; Q: Does this only work for HL?
+;
+; if-else:
+;   CP <value>
+;   JR <cond>,elsepart;
+;   <ifwork>
+;   JR endifpart;
+;   elsepart: <elsework>
+;   endifpart:
+;
+; Less than or equal:
+;   CP $0F
+;   JP Z,$C8F1
+;   JP C,$C8F1
+;
+; Transfer between awkward registers:
+;   PUSH reg
+;   POP anotherreg
+;
+; //////////////////////////////////////////////////////////////////////////////
+; ENUMERATIONS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; These are here for information only and are not used by any of the control
+; directives.
+;
+; ; enum attribute (width 1 byte)
+; attribute_BLUE_OVER_BLACK = 1
+; attribute_RED_OVER_BLACK = 2
+; attribute_PURPLE_OVER_BLACK = 3
+; attribute_GREEN_OVER_BLACK = 4
+; attribute_CYAN_OVER_BLACK = 5
+; attribute_YELLOW_OVER_BLACK = 6
+; attribute_WHITE_OVER_BLACK = 7
+; attribute_BRIGHT_BLUE_OVER_BLACK = 65
+; attribute_BRIGHT_RED_OVER_BLACK = 66
+; attribute_BRIGHT_PURPLE_OVER_BLACK = 67
+; attribute_BRIGHT_GREEN_OVER_BLACK = 68
+; attribute_BRIGHT_CYAN_OVER_BLACK = 69
+; attribute_BRIGHT_YELLOW_OVER_BLACK = 70
+; attribute_BRIGHT_WHITE_OVER_BLACK = 71
+;
+; ; enum character
+; character_0_COMMANDANT = 0
+; character_1_GUARD_1 = 1
+; character_2_GUARD_2 = 2
+; character_3_GUARD_3 = 3
+; character_4_GUARD_4 = 4
+; character_5_GUARD_5 = 5
+; character_6_GUARD_6 = 6
+; character_7_GUARD_7 = 7
+; character_8_GUARD_8 = 8
+; character_9_GUARD_9 = 9
+; character_10_GUARD_10 = 10
+; character_11_GUARD_11 = 11
+; character_12_GUARD_12 = 12
+; character_13_GUARD_13 = 13
+; character_14_GUARD_14 = 14
+; character_15_GUARD_15 = 15
+; character_16_GUARD_DOG_1 = 16
+; character_16_GUARD_DOG_2 = 17
+; character_18_GUARD_DOG_3 = 18
+; character_19_GUARD_DOG_4 = 19
+; character_20_PRISONER_1 = 20
+; character_21_PRISONER_2 = 21
+; character_22_PRISONER_3 = 22
+; character_23_PRISONER_4 = 23
+; character_24_PRISONER_5 = 24
+; character_25_PRISONER_6 = 25
+; Non-character characters start here.
+; character_26_STOVE_1 = 26
+; character_27_STOVE_2 = 27
+; character_28_CRATE = 28
+; character_NONE = 255
+;
+; ; enum room
+; room_0_OUTDOORS = 0
+; room_1_HUT1RIGHT = 1
+; room_2_HUT2LEFT = 2
+; room_3_HUT2RIGHT = 3
+; room_4_HUT3LEFT = 4
+; room_5_HUT3RIGHT = 5
+; room_6 = 6                            ; unused
+; room_7_CORRIDOR = 7
+; room_8_CORRIDOR = 8
+; room_9_CRATE = 9
+; room_10_LOCKPICK = 10
+; room_11_PAPERS = 11
+; room_12_CORRIDOR = 12
+; room_13_CORRIDOR = 13
+; room_14_TORCH = 14
+; room_15_UNIFORM = 15
+; room_16_CORRIDOR = 16
+; room_17_CORRIDOR = 17
+; room_18_RADIO = 18
+; room_19_FOOD = 19
+; room_20_REDCROSS = 20
+; room_21_CORRIDOR = 21
+; room_22_REDKEY = 22
+; room_23_BREAKFAST = 23
+; room_24_SOLITARY = 24
+; room_25_BREAKFAST = 25
+; room_26 = 26                          ; unused
+; room_27 = 27                          ; unused
+; room_28_HUT1LEFT = 28
+; room_29_SECOND_TUNNEL_START = 29        ; possibly the second tunnel start
+;                                       ; many of the tunnels are displayed duplicated
+; room_30 = 30
+; room_31 = 31
+; room_32 = 32
+; room_33 = 33
+; room_34 = 34
+; room_35 = 35
+; room_36 = 36
+; room_37 = 37
+; room_38 = 38
+; room_39 = 39
+; room_40 = 40
+; room_41 = 41
+; room_42 = 42
+; room_43 = 43
+; room_44 = 44
+; room_45 = 45
+; room_46 = 46
+; room_47 = 47
+; room_48 = 48
+; room_49 = 49
+; room_50_BLOCKED_TUNNEL = 50
+; room_51 = 51
+; room_52 = 52
+; room_NONE = 255
+;
+; ; enum item
+; item_WIRESNIPS = 0
+; item_SHOVEL = 1
+; item_LOCKPICK = 2
+; item_PAPERS = 3
+; item_TORCH = 4
+; item_BRIBE = 5
+; item_UNIFORM = 6
+; item_FOOD = 7
+; item_POISON = 8
+; item_RED_KEY = 9
+; item_YELLOW_KEY = 10
+; item_GREEN_KEY = 11
+; item_RED_CROSS_PARCEL = 12
+; item_RADIO = 13
+; item_PURSE = 14
+; item_COMPASS = 15
+; item__LIMIT = 16
+; item_NONE = 255
+;
+; ; enum zoombox_tiles
+; zoombox_tile_TL = 0
+; zoombox_tile_HZ = 1
+; zoombox_tile_TR = 2
+; zoombox_tile_VT = 3
+; zoombox_tile_BR = 4
+; zoombox_tile_BL = 5
+;
+; ; enum static_tiles (width 1 byte)
+; statictile_EMPTY = 0
+; statictile_HORN_TL_TL = 1
+; statictile_HORN_TL_TR = 2
+; statictile_HORN_TL_BL = 3
+; statictile_HORN_TL_BR = 4
+; statictile_HORN_TR_TL = 5
+; statictile_HORN_TR_TR = 6
+; statictile_HORN_TR_BL = 7
+; statictile_HORN_TR_BR = 8
+; statictile_HORN_BR_TL = 9
+; statictile_HORN_BR_TR = 10
+; statictile_HORN_BR_BL = 11
+; statictile_HORN_BR_BR = 12
+; statictile_HORN_BL_TL = 13
+; statictile_HORN_BL_TR = 14
+; statictile_HORN_BL_BL = 15
+; statictile_HORN_BL_BR = 16
+; statictile_WIRE_VT_LEFT = 17
+; statictile_WIRE_VT_RIGHT = 18
+; statictile_WIRE_HZ_LEFT = 19
+; statictile_WIRE_HZ_RIGHT = 20
+; statictile_LONGWIRE_HZ_LEFT = 21
+; statictile_LONGWIRE_HZ_MIDDLE = 22
+; statictile_LONGWIRE_HZ_RIGHT = 23
+; statictile_FLAGPOLE_TOP = 24
+; statictile_FLAGPOLE_MIDDLE = 25
+; statictile_FLAGPOLE_BOTTOM = 26
+; statictile_GRASS_1 = 27
+; statictile_GRASS_2 = 28
+; statictile_GRASS_3 = 29
+; statictile_GRASS_4 = 30
+; statictile_GRASS_0 = 31
+; statictile_MEDAL_0_0 = 32
+; statictile_MEDAL_0_1 = 33
+; statictile_MEDAL_0_2 = 34
+; statictile_MEDAL_0_4 = 35
+; statictile_MEDAL_0_6 = 36
+; statictile_MEDAL_0_10 = 37
+; statictile_MEDAL_1_0 = 38
+; statictile_MEDAL_1_2 = 39
+; statictile_MEDAL_1_4 = 40
+; statictile_MEDAL_1_6 = 41
+; statictile_MEDAL_1_10 = 42
+; statictile_MEDAL_2_0 = 43
+; statictile_MEDAL_2_1 = 44
+; statictile_MEDAL_2_2 = 45
+; statictile_MEDAL_2_4 = 46
+; statictile_MEDAL_2_6 = 47
+; statictile_MEDAL_2_10 = 48
+; statictile_MEDAL_3_0 = 49
+; statictile_MEDAL_3_1 = 50
+; statictile_MEDAL_3_2 = 51
+; statictile_MEDAL_3_3 = 52
+; statictile_MEDAL_3_4 = 53
+; statictile_MEDAL_3_5 = 54
+; statictile_MEDAL_3_6 = 55
+; statictile_MEDAL_3_7 = 56
+; statictile_MEDAL_3_8 = 57
+; statictile_MEDAL_3_9 = 58
+; statictile_MEDAL_3_10 = 59
+; statictile_MEDAL_4_0 = 60
+; statictile_MEDAL_4_1 = 61
+; statictile_MEDAL_4_2 = 62
+; statictile_MEDAL_4_3 = 63
+; statictile_MEDAL_4_4 = 64
+; statictile_MEDAL_4_5 = 65
+; statictile_MEDAL_4_6 = 66
+; statictile_MEDAL_4_7 = 67
+; statictile_MEDAL_4_8 = 68
+; statictile_MEDAL_4_9 = 69
+; statictile_BELL_0_0 = 70
+; statictile_BELL_0_1 = 71
+; statictile_BELL_0_2 = 72
+; statictile_BELL_1_0 = 73
+; statictile_BELL_1_1 = 74
+; statictile_BELL_1_2 = 75
+; statictile_BELL_2_0 = 76
+; statictile_BELL_2_1 = 77
+; statictile_MEDAL_1_1 = 78
+; statictile_4F = 79
+; statictile_50 = 80
+; statictile_51 = 81
+; statictile_52 = 82
+; statictile_53 = 83
+;
+; ; enum message (width 1 byte)
+; message_MISSED_ROLL_CALL = 0
+; message_TIME_TO_WAKE_UP = 1
+; message_BREAKFAST_TIME = 2
+; message_EXERCISE_TIME = 3
+; message_TIME_FOR_BED = 4
+; message_THE_DOOR_IS_LOCKED = 5
+; message_IT_IS_OPEN = 6
+; message_INCORRECT_KEY = 7
+; message_ROLL_CALL = 8
+; message_RED_CROSS_PARCEL = 9
+; message_PICKING_THE_LOCK = 10
+; message_CUTTING_THE_WIRE = 11
+; message_YOU_OPEN_THE_BOX = 12
+; message_YOU_ARE_IN_SOLITARY = 13
+; message_WAIT_FOR_RELEASE = 14
+; message_MORALE_IS_ZERO = 15
+; message_ITEM_DISCOVERED = 16
+; message_HE_TAKES_THE_BRIBE = 17
+; message_AND_ACTS_AS_DECOY = 18
+; message_ANOTHER_DAY_DAWNS = 19
+; message_QUEUE_END = 255
+;
+; ; enum interior_object
+; interiorobject_TUNNEL_0 = 0
+; interiorobject_SMALL_TUNNEL_ENTRANCE = 1
+; interiorobject_ROOM_OUTLINE_2 = 2
+; interiorobject_TUNNEL_3 = 3
+; interiorobject_TUNNEL_JOIN_4 = 4
+; interiorobject_PRISONER_SAT_DOWN_MID_TABLE = 5
+; interiorobject_TUNNEL_CORNER_6 = 6
+; interiorobject_TUNNEL_7 = 7
+; interiorobject_WIDE_WINDOW = 8
+; interiorobject_EMPTY_BED = 9
+; interiorobject_SHORT_WARDROBE = 10
+; interiorobject_CHEST_OF_DRAWERS = 11
+; interiorobject_TUNNEL_12 = 12
+; interiorobject_EMPTY_BENCH = 13
+; interiorobject_TUNNEL_14 = 14
+; interiorobject_DOOR_FRAME_15 = 15
+; interiorobject_DOOR_FRAME_16 = 16
+; interiorobject_TUNNEL_17 = 17
+; interiorobject_TUNNEL_18 = 18
+; interiorobject_PRISONER_SAT_DOWN_END_TABLE = 19
+; interiorobject_COLLAPSED_TUNNEL = 20
+; interiorobject_ROOM_OUTLINE_21 = 21
+; interiorobject_CHAIR_POINTING_BOTTOM_RIGHT = 22
+; interiorobject_OCCUPIED_BED = 23
+; interiorobject_WARDROBE_WITH_KNOCKERS = 24
+; interiorobject_CHAIR_POINTING_BOTTOM_LEFT = 25
+; interiorobject_CUPBOARD = 26
+; interiorobject_ROOM_OUTLINE_27 = 27
+; interiorobject_TABLE_1 = 28
+; interiorobject_TABLE_2 = 29                   ; the two table objects are identical
+; interiorobject_STOVE_PIPE = 30
+; interiorobject_STUFF_31 = 31                  ; can't tell what this is supposed to be
+; interiorobject_TALL_WARDROBE = 32
+; interiorobject_SMALL_SHELF = 33
+; interiorobject_SMALL_CRATE = 34
+; interiorobject_SMALL_WINDOW = 35
+; interiorobject_DOOR_FRAME_36 = 36
+; interiorobject_NOTICEBOARD = 37
+; interiorobject_DOOR_FRAME_38 = 38
+; interiorobject_DOOR_FRAME_39 = 39
+; interiorobject_DOOR_FRAME_40 = 40
+; interiorobject_ROOM_OUTLINE_41 = 41
+; interiorobject_CUPBOARD_42 = 42
+; interiorobject_MESS_BENCH = 43
+; interiorobject_MESS_TABLE = 44
+; interiorobject_MESS_BENCH_SHORT = 45
+; interiorobject_ROOM_OUTLINE_46 = 46
+; interiorobject_ROOM_OUTLINE_47 = 47
+; interiorobject_TINY_TABLE = 48
+; interiorobject_TINY_DRAWERS = 49
+; interiorobject_DRAWERS_50 = 50
+; interiorobject_DESK = 51
+; interiorobject_SINK = 52
+; interiorobject_KEY_RACK = 53
+; interiorobject__LIMIT = 54
+;
+; ; enum interior_object_tile
+; interiorobjecttile_MAX = 194,
+; interiorobjecttile_ESCAPE = 255              ; escape character
+;
+; ; enum location
+; location_000E = $000E
+; location_0010 = $0010
+; location_002A = $002A
+; location_002B = $002B
+; location_002C = $002C
+; location_002D = $002D
+; location_012C = $012C
+; location_0285 = $0285
+; location_0390 = $0390
+; location_048E = $048E
+;
+; ; enum sound
+; sound_CHARACTER_ENTERS_1 = $2030
+; sound_CHARACTER_ENTERS_2 = $2040
+; sound_BELL_RINGER = $2530
+; sound_PICK_UP_ITEM = $3030
+; sound_DROP_ITEM = $3040
+;
+; //////////////////////////////////////////////////////////////////////////////
+; FLAGS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; These are here for information only and are not used by any of the control
+; directives.
+;
+; ; enum input
+; input_NONE = 0
+; input_UP = 1
+; input_DOWN = 2
+; input_LEFT = 3
+; input_RIGHT = 6
+; input_FIRE = 9
+; input_UP_FIRE = input_UP + input_FIRE
+; input_DOWN_FIRE = input_DOWN + input_FIRE
+; input_LEFT_FIRE = input_LEFT + input_FIRE
+; input_RIGHT_FIRE = input_RIGHT + input_FIRE
+;
+; ; enum port_keyboard
+; port_KEYBOARD_SHIFTZXCV       = 0xFEFE,
+; port_KEYBOARD_ASDFG           = 0xFDFE,
+; port_KEYBOARD_QWERT           = 0xFBFE,
+; port_KEYBOARD_12345           = 0xF7FE,
+; port_KEYBOARD_09876           = 0xEFFE,
+; port_KEYBOARD_POIUY           = 0xDFFE,
+; port_KEYBOARD_ENTERLKJH       = 0xBFFE,
+; port_KEYBOARD_SPACESYMSHFTMNB = 0x7FFE,
+;
+; ; enum vischar
+; ; $800x flags (and $802x, $804x, ...)
+; vischar_CHARACTER_EMPTY_SLOT  = 0xFF,
+; vischar_CHARACTER_MASK        = 0x1F, // character index
+; vischar_FLAGS_EMPTY_SLOT      = 0xFF,
+; vischar_FLAGS_MASK            = 0x3F,
+; vischar_FLAGS_PICKING_LOCK    = 1<<0, // hero only
+; vischar_FLAGS_CUTTING_WIRE    = 1<<1, // hero only
+; vischar_FLAGS_BRIBE_PENDING   = 1<<0, // AI only
+; vischar_FLAGS_BIT1            = 1<<1, // AI only
+; vischar_FLAGS_SAW_BRIBE       = 1<<2, // set when bribe taken ('gone mad' flag)
+; vischar_FLAGS_BIT6            = 1<<6, // seems to affect coordinate scaling
+; vischar_FLAGS_NO_COLLIDE      = 1<<7, // set in called_from_main_loop_9
+; vischar_BYTE2_MASK            = 0x7F,
+; vischar_BYTE2_BIT7            = 1<<7,
+; vischar_BYTE7_MASK_LO         = 0x0F,
+; vischar_BYTE7_MASK_HI         = 0xF0,
+; vischar_BYTE7_IMPEDED         = 1<<5, // bounds related, perhaps stopping movement
+; vischar_BYTE7_BIT6            = 1<<6,
+; vischar_BYTE7_LOCATABLE       = 1<<7,
+; vischar_BYTE12_MASK           = 0x7F,
+; vischar_INPUT_MASK            = 0x7F,
+; vischar_BYTE14_CRAWL          = 1<<2,
+;
+; enum itemstructflags
+; itemstruct_ITEM_MASK              = 0x0F,
+; itemstruct_ITEM_FLAG_POISONED     = 1<<5,
+; itemstruct_ITEM_FLAG_HELD         = 1<<7, // set when the item is picked up (maybe)
+; itemstruct_ROOM_MASK              = 0x3F,
+; itemstruct_ROOM_FLAG_NEARBY_6     = 1<<6, // unknown
+; itemstruct_ROOM_FLAG_NEARBY_7     = 1<<7, // set when the item is nearby
+;
+; enum gatesanddoorsflags
+; gates_and_doors_MASK       = 0x7F,
+; gates_and_doors_LOCKED     = 1<<7,
+;
+; enum characterstructflags
+; characterstruct_FLAG_DISABLED  = 1<<6, // this disables the character
+; characterstruct_BYTE0_MASK    = 0x1F,
+; characterstruct_BYTE5_MASK    = 0x7F,
+; characterstruct_BYTE6_MASK_HI = 0xF8,
+; characterstruct_BYTE6_MASK_LO = 0x07,
+;
+; enum doorpositionflags
+; doorposition_FLAGS_MASK_LO = 0x03,
+; doorposition_FLAGS_MASK_HI = 0xFC,
+;
+; enum searchlightflags
+; searchlight_STATE_CAUGHT      = 0x1F,
+; searchlight_STATE_SEARCHING   = 0xFF, // hunting for hero
+;
+; enum bellringflags
+; bell_RING_PERPETUAL        = 0x00,
+; bell_RING_40_TIMES         = 0x28,
+; bell_STOP                  = 0xFF,
+;
+; enum escapeitemflags
+; escapeitem_COMPASS         = 1,
+; escapeitem_PAPERS          = 2,
+; escapeitem_PURSE           = 4,
+; escapeitem_UNIFORM         = 8,
+;
+; statictiles_COUNT_MASK     = 0x7F,
+; statictiles_VERTICAL       = 1<<7, // otherwise horizontal
+;
+; map constants
+; map_MAIN_GATE_X            = 0x696D, // coords: 0x69..0x6D
+; map_MAIN_GATE_Y            = 0x494B,
+; map_ROLL_CALL_X            = 0x727C,
+; map_ROLL_CALL_Y            = 0x6A72,
+;
+; input device constants
+; inputdevice_KEYBOARD       = 0,
+;
+; //////////////////////////////////////////////////////////////////////////////
+; CONSTANTS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; ; enum morale
+; morale_MIN = 0
+; morale_MAX = 112
+;
+; //////////////////////////////////////////////////////////////////////////////
+; ROOMS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; Key
+;
+;   '' => door (up/down)
+;   =  => door (left/right)
+;   in => entrance
+;   [] => exit
+;   ~  => void / ground
+;
+; Map of rooms' indices
+;
+;   +--------+--------+----+----+----+
+;   |   25   =   23   = 19 = 18 = 12 |
+;   +--------+-+-''-+-+----+    +-''-+
+;    | 24 = 22 = 21 | | 20 +    + 17 |
+;    +----+----+-''-+ +-''-+----+-''-+
+;                          = 15 |  7 |
+;       +----+------+      +-''-+-''-+
+;       = 28 =   1  |      | 14 = 16 |
+;       +----+--''--+      +----+-''-+
+;                               = 13 |
+;       +----+------+           +-''-+
+;       =  2 =   3  |           | 11 |
+;       +----+--''--+           |    |
+;                          +----+----+
+;       +----+------+      |  9 | 10 |
+;       =  4 =   5  |      |    |    |
+;       +----+--''--+      +-''-+-''-+
+;                          =    8    |
+;                          +----+----+
+;
+; Map of tunnels' indices 1
+;
+;   ~~~~~~~~~~~~~~~~~~~~+---------+----+
+;   ~~~~~~~~~~~~~~~~~~~~|    49   = 50 |
+;   ~~~~~~~~~~~~~~~~~~~~+-''-+----+-''-+
+;   ~~~~~~~~~~~~~~~~~~~~| 48 |~~~~| 47 |
+;   ~~~~~~~~~~~~~~~~~~~~+-[]-+~~~~|    |
+;   +------+-------+----+----+----+    |
+;   |  45  =   41  =    40   | 46 =    |
+;   +-''-+-+--+-''-+------''-+-''-+----+
+;   | 44 = 43 = 42 |~~~~| 38 = 39 |~~~~~
+;   +----+----+----+~~~~+-''-+----+~~~~~
+;   ~~~~~~~~~~~~~~~~~~~~| 37 |~~~~~~~~~~
+;   ~~~~~~~~~~~~~~~~~~~~+-in-+~~~~~~~~~~
+;
+; Map of tunnels' indices 2
+;
+;   +----------+--------+--------+
+;   |    36    =   30   =   52   |
+;   +-''-+-----+--''----+---+-''-+
+;   | 35 |~~~~~~| 31 |~~~~~~| 51 |
+;   |    +------+-''-+~~~~~~|    |
+;   |    =  33  = 32 |~~~~~~|    |
+;   |    +------+----+~~~~~~|    |
+;   |    |~~~~~~~~~~~~~+----+    |
+;   +-''-+~~~~~~~~~~~~in 29 =    |
+;   | 34 |~~~~~~~~~~~~~+----+----+
+;   +-[]-+~~~~~~~~~~~~~~~~~~~~~~~~
+;
+; I'm fairly sure that the visual of the above layout is actually topologically
+; impossible. e.g. if you take screenshots of every room and attempt to combine
+; them in an image editor it won't join up.
+;
+; Unused room indices: 6, 26, 27
+;
+;
+; //////////////////////////////////////////////////////////////////////////////
+; GAME STATE
+; //////////////////////////////////////////////////////////////////////////////
+;
+; game state which overlaps with tiles etc.
+;
+; vars referenced as $8015 etc.
+;
+; $8000 seems to be an array of eight 32-wide visible character blocks. the first is likely the hero character.
+
+; b $8000 character index? (0xFF if no visible character)
+; b $8001 flags: bit 6 gets toggled in set_hero_target_location /  bit 0: picking lock /  bit 1: cutting wire  (0xFF when reset)
+; w $8002 could be a target location (set in set_hero_target_location, process_player_input)
+; w $8004 (<- process_player_input) a coordinate? (i see it getting scaled in #R$CA11)
+; ? $8006
+; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too) (0x00 when reset)
+; w $8008 (read by called_from_main_loop_9)
+; w $800A (read/written by called_from_main_loop_9)
+; b $800C (read/written by called_from_main_loop_9)
+; b $800D tunnel related (<- process_player_input, snipping_wire, process_player_input) assigned from snipping_wire_new_inputs table.  causes movement when set. but not when in solitary.
+;            0x81 -> move toward top left,
+;            0x82 -> move toward bottom right,
+;            0x83 -> move toward bottom left,
+;            0x84 -> TL (again)
+;            0x85 ->
+; b $800E tunnel related, direction (bottom 2 bits index snipping_wire_new_inputs) bit 2 is walk/crawl flag
+; set to - 0x00 -> character faces top left
+;          0x01 -> character faces top right
+;          0x02 -> character faces bottom right
+;          0x03 -> character faces bottom left
+;          0x04 -> character faces top left     (crawling)
+;          0x05 -> character faces top right    (crawling)
+;          0x06 -> character faces bottom right (crawling)
+;          0x07 -> character faces bottom left  (crawling)
+; w $800F position on X axis (along the line of - bottom right to top left of screen) (set by process_player_input)
+; w $8011 position on Y axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
+; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
+; b $8017 touch sets this to stashed_A
+; w $8018 points to something (gets 0x06C8 subtracted from it) (<- in_permitted_area)
+; w $801A points to something (gets 0x0448 subtracted from it) (<- in_permitted_area)
+; b $801C room index: cleared to zero by action_papers, set to room_24_SOLITARY by solitary, copied to room_index by transition
+; ? $801D
+; ? $801E
+; ? $801F (written by setup_vischar_plotting)
+;
+; $8020 visible character blocks. 7 sets of 32 bytes, one per visible character. can there be >7 characters on-screen/visible at once? or is it prisoners only?
+;
+;   $8020 byte -- bit 6 means something here, likely merged with a character index
+;   $8021 likely a room index
+;   $8022 likely a position
+;   $8023 likely a position
+;   $8024 likely a position
+;   $803C room index within struct at $8020
+;
+; $8100 mask buffer thing
+;
+; $8131 <- searchlight_mask_test
+;
+; $81A0 mystery (mask_stuff)
+;
+; w $81A2 (<- masked_sprite_plotter_*)  likely screen buffer pointer
+
+@org=$4000
+
 ; Loading screen.
 ;
 ; #UDGTABLE
@@ -3259,6 +3924,8 @@ b$7612 DEFB $00,$0B,$2E,$2E,$18,$03,$00 ; character_0_COMMANDANT,
  $7666 DEFB $0C,$03,$28,$3C,$18,$00,$08 ; character_12_GUARD_12,
                                         ; room_3_HUT2RIGHT,  40, 60, 0x18,
                                         ; 0x00, 0x08
+; Bug: The room field here is 2 but reset_map_and_characters will reset it to
+; 3.
  $766D DEFB $0D,$02,$24,$30,$18,$00,$08 ; character_13_GUARD_13,
                                         ; room_2_HUT2LEFT,   36, 48, 0x18,
                                         ; 0x00, 0x08
@@ -4042,8 +4709,9 @@ c$7BD0 DEC HL        ; {  HL--; C = (0x40 + HL[1] - HL[0]) * 2; //
 ; Drop item, interior part.
 ;
 ; Used by the routine at #R$7BB5.
+;
 @label=drop_item_interior
-c$7BE4 INC HL        ; else <% HL++;
+c$7BE4 INC HL        ; else <% HL++; // The else is logically here when considered as part of drop_item.
  $7BE5 LD DE,$800F   ;   DE = $800F; // position on X axis
  $7BE8 LD A,(DE)     ; {  *HL++ = *DE;
  $7BE9 LD (HL),A     ;
@@ -11489,6 +12157,42 @@ c$BCAA EX AF,AF'     ; -
  $BCED RET           ;   return; %>
 
 ; Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
+;
+; The map, with blanks and grass replaced to show the outline more clearly:
+;                                                                         5F 33 3C 58
+;                                                                   5F 33 34 2E 3D 45 3C 58
+;                               55 5E 31                         33 34 2B 37 2D 3F 28 48 42 5B 58
+;                               82 3E 30 2E 57             33 34 2E 37 2A 2F 2C 41 26 47 43 53 42 3C 57
+;                         75 76 81 5E 31 33 3C 5E 31 33 34 2B 35 2D 36 29 .. .. .. .. 49 44 54 43 3D 45 3C 58
+;                   75 76 7C 7F 80 3E 30 39 3D 3E 30 2E 35 2A 2F 38 .. .. .. .. .. .. .. .. 41 44 46 27 48 42 5B 58
+; 75 76 7A 79 75 76 7C 7F 7E 3A 5D 40 31 3A 3F 40 31 2D 2F 29 .. .. .. .. .. .. .. .. .. .. .. .. 41 26 47 43 53 42 3C 58
+; 6A 74 77 78 7B 7F 7E 3A 2F 2C 49 3B 32 2C 41 3B 32 38 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 49 44 54 43 3D 52 59 53
+; 63 64 66 6F 7D 3A 2F 38 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 06 07 .. .. .. .. .. .. .. .. 41 44 46 51 5D 58 5A 53
+; 65 62 6C 6D 36 2C .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 08 1A .. .. .. .. .. .. .. .. .. 41 44 5C 5B 57 58 5A 53
+; 63 64 6B 6E 71 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. .. .. .. .. .. .. 59 53 45 3C 57 58 5A
+; 61 62 5A 73 72 70 71 .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07 .. .. .. .. .. .. 55 58 5A 53 45 3C 57
+; 49 3B 68    5A 73 72 70 71 .. .. 75 76 7A 79 .. .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. .. .. .. .. 4B 45 3C 58 5A 53 45 45
+; .. .. 41 56 68    5A 73 72 70 71 6A 74 84 85 7A 79 .. 0D 0C 0B 17 20 16 15 18 .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. 4A 50 4C 52 5B 58 5A
+; .. .. .. .. 49 56 68 69 5A 73 72 63 86 88 74 77 78 .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07 49 44 4D 51 4C 52 3C 58
+; .. .. .. .. .. .. 49 67 68 69 5A 65 87 83 64 66 6F .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. 41 44 4E 51 4C 45 3C 58
+; .. .. .. .. .. .. .. .. 41 67 68 59 CC CD 62 8A 6D .. .. .. .. .. .. .. 0D 0C 0B 17 20 16 15 18 .. .. 02 03 04 05 09 1C 1B .. .. .. 49 44 4E 28 4C 52 5B 58
+; .. .. .. .. .. .. .. .. .. .. 41 89 CE CF D2 D5 6F .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. B9 BA .. 49 26 C8 C9 4C 45 3C 58
+; .. .. .. .. .. .. .. B9 BA B1 B1 49 D0 D1 D3 D6 D8 9B 9C .. .. .. .. .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. BB BC BD BE 9D 97 CA CB 4D 28 4C 45
+; .. .. .. .. .. .. BB BC BD BE AF B2 B7 93 D4 D7 D9 8E 90 9B 9C .. .. .. .. .. .. .. .. .. 0D 0C 0B 17 20 16 15 18 .. .. .. .. .. C5 C0 97 96 93 95 94 41 26 C8 C9
+; .. .. .. .. .. B1 B1 C5 C0 97 96 B3 B5 B6 '' '' 8C 8D 8B 8E 90 9B 9C .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. .. .. .. 9C 9D C6 C2 93 95 94 '' 99 98 97 CA CB
+; .. .. .. B1 B1 B0 AF C6 C2 93 95 B4 8B 8E 90 8F '' '' 8C 8D 8B 8E A8 AA 9C .. .. .. .. .. 10 11 13 18 .. .. .. .. .. 9C 9D 97 96 C7 C4 94 '' 99 98 97 96 93 95 94
+; .. .. B1 B0 AF 97 96 C7 C4 94 '' B8 8C 8D 8B 8E 90 8F '' '' 8C 8D A7 A6 90 9B 9C .. .. .. .. .. .. .. .. .. .. 9C 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. ..
+; .. .. B0 B2 B7 93 95 94 '' '' '' '' '' '' 8C 8D 8B 8E A8 A9 '' '' A5 A4 8B 8E 90 9B 9C .. .. B9 BA .. .. 9C 9D 97 96 93 95 94 B8 99 98 97 96 93 95 94 .. .. .. ..
+; .. .. B0 B3 B5 B6 '' '' '' '' '' '' '' '' '' '' 8C 8D A7 A6 90 8F '' '' 8C 8D 8B 8E 90 9B BB BC BD BE 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. ..
+; .. .. B1 B4 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' A5 A4 8B 8E 90 8F '' '' 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. ..
+; .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' 8C 8D AB AC 90 8F '' '' 8C 8D 8B C1 C2 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' B9 BA '' '' 99 98 97 AD AE 8B 8E 90 8F '' '' 8C C3 C4 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 8F BB BC BD BE 98 97 96 93 95 94 8C 8D 8B 8E 90 8F '' '' '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 .. .. .. .. 8C 8D 8B 8E 90 A2 A3 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B C1 C2 93 95 94 .. .. .. .. .. .. .. .. 8C 8D 8B A0 A1 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. 8C C3 C4 94 .. .. .. .. .. .. .. .. .. .. .. .. 8C 9F 9E 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
 @label=map_tiles
 b$BCEE DEFB $60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$5F,$33,$3C,$58,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60
  $BD24 DEFB $60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$5F,$33,$34,$2E,$3D,$45,$3C,$58,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60
