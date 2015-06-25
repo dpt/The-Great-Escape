@@ -12856,7 +12856,6 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
                      ; // => character struct entry + 5
  $C78E CP $FF        ; {if (A == 0xFF) return;
  $C790 RET Z         ; }
-; Pattern: [+2]-1
  $C791 BIT 7,A       ; if ((A & (1<<7)) != 0) ...
  $C793 INC HL        ; HL++;       // interleaved
  $C794 JR NZ,$C798   ; ... goto exit;
