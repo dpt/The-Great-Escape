@@ -9401,31 +9401,19 @@ c$ACFC PUSH BC       ; PUSH BC
  $AD28 RET           ; return;
 
 ; Searchlight movement data.
-@label=spotlight_movement_data_maybe
-w$AD29 DEFW $5224    ; {3x searchlight_state_t
- $AD2B DEFW $022C
- $AD2D DEFW $5400
- $AD2F DEFW $78AD
- $AD31 DEFW $1852
- $AD33 DEFW $0001
- $AD35 DEFW $AD43
- $AD37 DEFW $4C3C
- $AD39 DEFW $0220
- $AD3B DEFW $3E00
- $AD3D DEFW $20AD
- $AD3F DEFW $2002
- $AD41 DEFW $FF01
- $AD43 DEFW $0118
- $AD45 DEFW $000C
- $AD47 DEFW $0318
- $AD49 DEFW $000C
- $AD4B DEFW $0120
- $AD4D DEFW $0014
- $AD4F DEFW $0320
- $AD51 DEFW $022C
- $AD53 DEFW $2CFF
- $AD55 DEFW $2A02
- $AD57 DEFW $FF01    ; }
+@label=searchlight_states
+w$AD29 DEFB $24, $52, $2C, $02, $00 ; x, y, step, direction, counter
+ $AD2D DEFW $AD54   ; searchlight_path_2
+ $AD2F DEFB $78, $52, $18, $01, $00 ; x, y, step, direction, counter
+ $AD34 DEFW $AD43   ; searchlight_path_1
+ $AD37 DEFB $3C, $4C, $20, $02, $00 ; x, y, step, direction, counter
+ $AD3C DEFW $AD3E   ; searchlight_path_0
+@label=searchlight_path_0
+ $AD3E DEFB $20, $02, $20, $01, $FF
+@label=searchlight_path_1
+ $AD43 DEFB $18, $01, $0C, $00, $18, $03, $0C, $00, $20, $01, $14, $00, $20, $03, $2C, $02, $FF
+@label=searchlight_path_2
+ $AD54 DEFB $2C, $02, $2A, $01, $FF
 
 ; Decides searchlight movement.
 ;
@@ -9538,7 +9526,7 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
  $ADD9 ADD A,$04     ;
  $ADDB LD E,A        ; }
  $ADDC LD D,H        ;   D = H;
- $ADDD LD HL,($AE76) ;   HL = searchlight_coords;
+ $ADDD LD HL,($AE76) ;   HL = searchlight_caught_coord;
  $ADE0 LD A,L        ; {  if (L == E) <%
  $ADE1 CP E          ;
  $ADE2 JR NZ,$ADE9   ; }
@@ -9563,15 +9551,15 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
  $ADF9 JR $ADFC      ;     else <%
 *$ADFB DEC A         ;       H--; %>
 *$ADFC LD H,A        ;   %>
-*$ADFD LD ($AE76),HL ;   searchlight_coords = HL; %>
+*$ADFD LD ($AE76),HL ;   searchlight_caught_coord = HL; %>
 *$AE00 LD DE,($81BB) ; DE = map_position;
- $AE04 LD HL,$AE77   ; HL = $AE77; // &searchlight_coords + 1 byte; //
+ $AE04 LD HL,$AE77   ; HL = $AE77; // &searchlight_caught_coord + 1 byte; //
                      ; compensating for HL--; jumped into
  $AE07 LD B,$01      ; B = 1; // 1 iteration
  $AE09 PUSH BC       ; PUSH BC
  $AE0A PUSH HL       ; PUSH HL
  $AE0B JR $AE3F      ; goto $AE3F;
-*$AE0D LD HL,$AD29   ; not_tracking: HL = &spotlight_movement_data_maybe[0];
+*$AE0D LD HL,$AD29   ; not_tracking: HL = &searchlight_states[0];
  $AE10 LD B,$03      ; B = 3; // 3 iterations == three searchlights
 *$AE12 PUSH BC       ; do <% PUSH BC
  $AE13 PUSH HL       ;   PUSH HL
@@ -9645,12 +9633,12 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
 ;
 ; (<- nighttime, searchlight_plot)
 @label=searchlight_related
-g$AE75 DEFB $00      ; searchlight_related
-; (<- nighttime)
-@label=searchlight_coords
- $AE76 DEFW $0000    ; searchlight_coords
+g$AE75 DEFB $00
+; Coordinates of searchlight when hero is caught.
+@label=searchlight_caught_coord
+ $AE76 DEFW $0000
 
-; Is the hero is caught in the spotlight?
+; Is the hero is caught in the searchlight?
 ;
 ; Used by the routine at #R$ADBD.
 ;
@@ -9692,7 +9680,7 @@ c$AE78 LD DE,($81BB) ; DE = map_position;
  $AEA8 LD D,(HL)     ; {D = HL[0];
  $AEA9 DEC HL        ; }
  $AEAA LD E,(HL)     ; E = HL[1];
- $AEAB LD ($AE76),DE ; searchlight_coords = DE;
+ $AEAB LD ($AE76),DE ; searchlight_caught_coord = DE;
  $AEAF XOR A         ; {bell = bell_RING_PERPETUAL;
  $AEB0 LD ($A130),A  ; }
  $AEB3 LD B,$0A      ; {decrease_morale(10); // exit via
@@ -11298,7 +11286,7 @@ c$B83B PUSH IY       ; {HL = IY;
 ; Bug: Does a fused load of BC, but doesn't use C after. Probably a leftover
 ; stride constant.
  $B844 LD BC,$0804   ; BC = 0x0804; // 8 iterations
- $B847 XOR A         ; {do <% if (*HL != 0) goto still_in_spotlight;
+ $B847 XOR A         ; {do <% if (*HL != 0) goto still_in_searchlight;
 *$B848 CP (HL)       ;
  $B849 JR NZ,$B860   ; }
  $B84B INC L         ; {  HL += 4; // stride is 4?
@@ -11306,7 +11294,7 @@ c$B83B PUSH IY       ; {HL = IY;
  $B84D INC L         ;
  $B84E INC L         ; }
  $B84F DJNZ $B848    ; %> while (--B);
-; Otherwise the hero has escaped the spotlight, so decrement the counter.
+; Otherwise the hero has escaped the searchlight, so decrement the counter.
  $B851 LD HL,$81BD   ; HL = &searchlight_state;
  $B854 DEC (HL)      ; (*HL)--;
  $B855 LD A,$FF      ; {if (searchlight_STATE_SEARCHING != *HL) return;
@@ -11315,7 +11303,7 @@ c$B83B PUSH IY       ; {HL = IY;
  $B859 CALL $AB6B    ; choose_game_window_attributes();
  $B85C CALL $A15F    ; set_game_window_attributes();
  $B85F RET           ; return;
-@label=still_in_spotlight
+@label=still_in_searchlight
 *$B860 LD HL,$81BD   ; {searchlight_state = searchlight_STATE_CAUGHT;
  $B863 LD (HL),$1F   ; }
  $B865 RET           ; return;
