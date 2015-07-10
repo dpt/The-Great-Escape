@@ -1,6 +1,23 @@
 TODO
 ====
 
+26-Jun-2015
+-----------
+
+- [ ] Document everything!
+  - [ ] Add descriptions for every byte of the skool file
+    - [ ] Including register descriptions
+  - [ ] Add a reversal status for every function. (complete, incomplete)
+- [ ] Sort out the inverted masks issue
+- [ ] Use SkoolKit # refs more
+  - [ ] Currently using (<- somefunc) to show a reference
+- [ ] Check occurrences of LDIR I've converted to memcpy where I've not accounted for DE and HL being incremented...
+
+25-Jun-2015
+-----------
+
+- [ ] Assign IDs to bugs so they can be mentioned in more than one location in the disassembly.
+
 24-Jun-2015
 -----------
 
@@ -23,7 +40,7 @@ TODO
   - [ ] All items and their uses
   - [ ] The escape conditions
 - [ ] Document the memory map
-  - [ ] Overlapping ranges in particular
+  - [ ] In particular map out the game state at $8000+ which overlaps static tile graphics
 - [ ] Document graphic glitches
   - [ ] Guard graphic too low
   - [ ] Stray pixels on dog graphic
