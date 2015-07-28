@@ -196,22 +196,25 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         return Udg(attr, self.snapshot[a : a + 8])
 
     def decode_all_masks(self, cwd, base, ents):
+        """ Decode all masks. """
 
         # There are no heights in the mask data so use the bounds of the $EC01
         # and $EA7C tables to work out the worst case and use that (for
         # exterior masks).
 
+        # Collect dicts of lists of dimensions, keyed by ref. Each mask may
+        # have multiple uses with different dimensions so we collect them here
+        # to work out the largest.
         widths = {}
         heights = {}
 
-        # force all refs to be present
-        # mask 19 seems to not be used
+        # Force all refs to be present but empty because mask 19 is unused.
         for ref in range(30):
             widths.setdefault(ref, [])
             heights.setdefault(ref, [])
 
-        # 0xEA7C's stride is one byte shorter than mask_t since the constant
-        # final byte is removed
+        # The structures at $EA7C stride is one byte shorter than mask_t since
+        # the constant final byte is removed.
         for data, dataend, stride in [(0xEC01, 0xEDD1, 8), (0xEA7C, 0xEBC5, 7)]:
             while data < dataend:
                 ref = self.snapshot[data + 0]
@@ -224,16 +227,16 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 widths[ref].append(x1 - x0)
                 heights[ref].append(y1 - y0)
 
-        drawn_widths = [max(widths[key] + [0]) + 1 for key in widths]
-        drawn_heights = [max(heights[key] + [0]) + 1 for key in heights]
-        #for i, wh in enumerate(zip(drawn_widths, drawn_heights)):
+        max_widths = [max(widths[key] + [0]) + 1 for key in widths]
+        max_heights = [max(heights[key] + [0]) + 1 for key in heights]
+        #for i, wh in enumerate(zip(max_widths, max_heights)):
         #    print "%d: %d x %d" % (i, wh[0], wh[1])
 
         s = ""
-        for index,base in enumerate(range(base, base + ents * 2, 2)):
+        for ref, base in enumerate(range(base, base + ents * 2, 2)):
             addr = self.snapshot[base + 0] + self.snapshot[base + 1] * 256
             s += "<h3>$%.4x</h3>" % addr
-            s += "<p>" + self.decode_mask(cwd, addr, index, drawn_widths[index], drawn_heights[index]) + "</p>"
+            s += "<p>" + self.decode_mask(cwd, addr, ref, max_widths[ref], max_heights[ref]) + "</p>"
         return s
 
     def decode_mask(self, cwd, addr, index, suggested_width, suggested_height):
