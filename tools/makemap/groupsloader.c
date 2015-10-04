@@ -12,13 +12,13 @@
 
 #include "base/debug.h"
 #include "base/result.h"
+#include "base/utils.h"
 #include "datastruct/bitvec.h"
 #include "datastruct/vector.h"
 #include "io/stream.h"
 #include "io/stream-mem.h"
 #include "io/stream-stdio.h"
 #include "utils/array.h"
-#include "utils/minmax.h"
 
 #include "groupsloader.h"
 
