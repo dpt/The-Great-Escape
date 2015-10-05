@@ -19214,7 +19214,11 @@ c$FECD LD BC,$EFFE   ; BC = port_KEYBOARD_09876;
  $FEF2 ADD A,C       ; }
  $FEF3 RET           ; return;
 
-; Stack.
+; Data block at FEF4.
+;
+; The final standard speed data block on the tape is loaded at $FC60..$FF81.
+; The bytes from here up to $FF81 come from that block.
+;
 b$FEF4 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FEFC DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FF04 DEFB $00,$00,$00,$00,$00,$00,$E0,$57
@@ -19227,12 +19231,16 @@ b$FEF4 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FF3C DEFB $F7,$54,$09,$00,$F6,$54,$0C,$02
  $FF44 DEFB $5C,$0E,$C0,$57,$71,$0E,$F3,$0D
  $FF4C DEFB $21,$17,$C6,$1E,$FF,$5D,$76,$1B
- $FF54 DEFB $03,$13,$00,$3E,$00,$3C,$42,$42
- $FF5C DEFB $7E,$42,$42,$00,$00,$7C,$42,$7C
- $FF64 DEFB $42,$42,$7C,$00,$00,$3C,$42,$40
- $FF6C DEFB $40,$42,$3C,$00,$00,$78,$44,$42
- $FF74 DEFB $42,$44,$78,$00,$00,$7E,$40,$7C
- $FF7C DEFB $40,$40,$7E,$00,$00,$7E,$00,$00
+ $FF54 DEFB $03,$13,$00,$3E
+; UDGs 'A' to 'E' follow, with 'F' truncated at its second byte.
+ $FF58 DEFB $00,$3C,$42,$42,$7E,$42,$42,$00 ; A #HTML[#UDG$FF58]
+ $FF60 DEFB $00,$7C,$42,$7C,$42,$42,$7C,$00 ; B #HTML[#UDG$FF60]
+ $FF68 DEFB $00,$3C,$42,$40,$40,$42,$3C,$00 ; C #HTML[#UDG$FF68]
+ $FF70 DEFB $00,$78,$44,$42,$42,$44,$78,$00 ; D #HTML[#UDG$FF70]
+ $FF78 DEFB $00,$7E,$40,$7C,$40,$40,$7E,$00 ; E #HTML[#UDG$FF78]
+ $FF80 DEFB $00,$7E ; Truncated F
+; NUL bytes
+ $FF82 DEFB $00,$00
  $FF84 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FF8C DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FF94 DEFB $00,$00,$00,$00,$00,$00,$00,$00
