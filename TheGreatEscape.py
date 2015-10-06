@@ -119,8 +119,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         return Udg(attr, self.snapshot[a : a + 8])
 
     def decode_all_objects(self, cwd, base, ents):
+        unused = (21, 28, 39)
         s = ""
         for index,i in enumerate(range(base, base + ents * 2, 2)):
+            if index in unused: continue
             addr = self.snapshot[i + 0] + self.snapshot[i + 1] * 256
             s += "<h3>$%.4x</h3>" % addr
             s += "<p>" + self.decode_object(cwd, addr, index) + "</p>"
