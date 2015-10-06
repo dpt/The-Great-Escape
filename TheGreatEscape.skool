@@ -341,7 +341,7 @@
 ;
 ; interiorobject_TUNNEL_0                       = 0,
 ; interiorobject_SMALL_TUNNEL_ENTRANCE          = 1,
-; interiorobject_ROOM_OUTLINE_2                 = 2,    ; 24x12
+; interiorobject_ROOM_OUTLINE_2                 = 2,    ; 22x12
 ; interiorobject_TUNNEL_3                       = 3,
 ; interiorobject_TUNNEL_JOIN_4                  = 4,
 ; interiorobject_PRISONER_SAT_DOWN_MID_TABLE    = 5,
@@ -366,7 +366,7 @@
 ; interiorobject_WARDROBE_WITH_KNOCKERS         = 24,
 ; interiorobject_CHAIR_POINTING_BOTTOM_LEFT     = 25,
 ; interiorobject_CUPBOARD                       = 26,
-; interiorobject_ROOM_OUTLINE_27                = 27,
+; interiorobject_ROOM_OUTLINE_27                = 27,   ; 18x10
 ; interiorobject_UNUSED_28                      = 28,   ; unused by game, draws as interiorobject_TABLE
 ; interiorobject_TABLE                          = 29,
 ; interiorobject_STOVE_PIPE                     = 30,
@@ -380,13 +380,13 @@
 ; interiorobject_DOOR_FRAME_38                  = 38,
 ; interiorobject_UNUSED_39                      = 39,   ; unused by game, draws as interiorobject_DOOR_FRAME_40
 ; interiorobject_DOOR_FRAME_40                  = 40,
-; interiorobject_ROOM_OUTLINE_41                = 41,
+; interiorobject_ROOM_OUTLINE_41                = 41,   ; 15x8
 ; interiorobject_CUPBOARD_42                    = 42,
 ; interiorobject_MESS_BENCH                     = 43,
 ; interiorobject_MESS_TABLE                     = 44,
 ; interiorobject_MESS_BENCH_SHORT               = 45,
-; interiorobject_ROOM_OUTLINE_46                = 46,
-; interiorobject_ROOM_OUTLINE_47                = 47,
+; interiorobject_ROOM_OUTLINE_46                = 46,   ; 18x10
+; interiorobject_ROOM_OUTLINE_47                = 47,   ; 22x12
 ; interiorobject_TINY_TABLE                     = 48,
 ; interiorobject_TINY_DRAWERS                   = 49,
 ; interiorobject_DRAWERS_50                     = 50,
@@ -3464,7 +3464,7 @@ b$7200 DEFB $04                             ; width
  $7215 DEFB $00,$0D,$00,$00,$00
 ; #HTML[#CALL:decode_object($7200, 20)]
 
-; Room object 2: 24x12 room outline
+; Room object 2: 22x12 room outline
 @label=interior_object_tile_refs_2
 b$721A DEFB $16                             ; width
  $721B DEFB $0C                             ; height
@@ -3681,7 +3681,7 @@ b$73BF DEFB $04             ; width
  $73D5 DEFB $00,$01,$01,$27 ; }
 ; #HTML[#CALL:decode_object($73BF, 40)]
 
-; Room object 41: 14x8 room outline
+; Room object 41: 15x8 room outline
 @label=interior_object_tile_refs_41
 b$73D9 DEFB $0E                             ; width
  $73DA DEFB $08                             ; height
