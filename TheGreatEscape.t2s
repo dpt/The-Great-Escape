@@ -1,0 +1,30 @@
+; tap2sna.py file for The Great Escape. Run
+;
+;   $ tap2sna.py @TheGreatEscape.t2s
+;
+; to create a Z80 snapshot.
+
+http://www.worldofspectrum.org/pub/sinclair/games/g/GreatEscapeThe.tzx.zip
+TheGreatEscape.z80
+
+--ram load=+137+,16384        # 16384-23295
+--ram poke=16384-23295,^22
+--ram poke=16384-23295,+171
+
+--ram load=+139+,60000        # 60000-64609
+--ram poke=60000-64609,^22
+--ram poke=60000-64609,+171
+
+--ram load=+145+,24064        # 24064-54063
+--ram poke=24064-54063,^65
+--ram poke=24064-54063,+171
+
+--ram load=+147,54064         # 54064-60003
+--ram poke=54064-60003,^65
+--ram poke=54064-60003,+171
+
+--ram load=149,64608          # 64608-65409
+
+--ram move=24064,40928,23296  # Move 24064-64991 down to 23296-64223
+
+--reg pc=61795                # Start at 61795
