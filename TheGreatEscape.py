@@ -325,9 +325,9 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         s += "<li>" + "Number of boundaries: %d" % nboundaries
         p += 1 + nboundaries * 4
 
-        ntbd = self.snapshot[p]
-        s += "<li>" + "Number of TBD: %d" % ntbd
-        p += 1 + ntbd
+        nmasks = self.snapshot[p]
+        s += "<li>" + "Number of masks: %d" % nmasks
+        p += 1 + nmasks
 
         nobjs = self.snapshot[p]
         s += "<li>" + "Number of objects: %d" % nobjs
