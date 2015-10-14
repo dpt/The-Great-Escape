@@ -2360,22 +2360,22 @@ w$6B79 DEFW $6C8A    ; &roomdef_3_hut2_right[29]
 
 ; Room dimensions.
 ;
-; Pairs of min, max.
+; Looks like (x1,x0, y1,y0).
 ; .
 ; Used only by interior_bounds_check.
 ; .
 ; 10x 4-byte structures which are range checked by routine at #R$B29F.
 @label=roomdef_bounds
-b$6B85 DEFB $42,$1A,$46,$16 ; $42, $1A, $46, $16
- $6B89 DEFB $3E,$16,$3A,$1A ; $3E, $16, $3A, $1A
- $6B8D DEFB $36,$1E,$42,$12 ; $36, $1E, $42, $12
- $6B91 DEFB $3E,$1E,$3A,$22 ; $3E, $1E, $3A, $22
- $6B95 DEFB $4A,$12,$3E,$1E ; $4A, $12, $3E, $1E
- $6B99 DEFB $38,$32,$64,$0A ; $38, $32, $64, $0A
- $6B9D DEFB $68,$06,$38,$32 ; $68, $06, $38, $32
- $6BA1 DEFB $38,$32,$64,$1A ; $38, $32, $64, $1A
- $6BA5 DEFB $68,$1C,$38,$32 ; $68, $1C, $38, $32
- $6BA9 DEFB $38,$32,$58,$0A ; $38, $32, $58, $0A
+b$6B85 DEFB $42,$1A,$46,$16 ;  66, 26,  70, 22
+ $6B89 DEFB $3E,$16,$3A,$1A ;  62, 22,  58, 26
+ $6B8D DEFB $36,$1E,$42,$12 ;  54, 30,  66, 18
+ $6B91 DEFB $3E,$1E,$3A,$22 ;  62, 30,  58, 34
+ $6B95 DEFB $4A,$12,$3E,$1E ;  74, 18,  62, 30
+ $6B99 DEFB $38,$32,$64,$0A ;  56, 50, 100, 10
+ $6B9D DEFB $68,$06,$38,$32 ; 104,  6,  56, 50
+ $6BA1 DEFB $38,$32,$64,$1A ;  56, 50, 100, 26
+ $6BA5 DEFB $68,$1C,$38,$32 ; 104, 28,  56, 50
+ $6BA9 DEFB $38,$32,$58,$0A ;  56, 50,  88, 10
 
 ; Room and tunnel definitions.
 ;
