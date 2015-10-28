@@ -28,12 +28,12 @@ TODO
   - [x] Preserve `;` comments which won't make it across
   - [ ] Change direct address references into label references
   - [ ] Split skool file up into parts
-- [ ] Create images of every room in the HTML disassembly
+- [x] Create images of every room in the HTML disassembly
   - [ ] Illustrate the room bounds too
-- [ ] Add stats for the room objects (e.g. 'foo' used in 12 rooms, 'bar' used in 5 rooms)
+- [x] Add stats for the room objects (e.g. 'foo' used in 12 rooms, 'bar' used in 5 rooms)
   - [ ] Totals for every object
   - [ ] Totals per room
-- [ ] Decode masks into images in the HTML disassembly
+- [x] Decode masks into images in the HTML disassembly
   - [ ] Include a variant of the exterior map with the masks shown atop it
 - [ ] Add a a variant of the exterior map with a checkerboard pattern showing the supertiles (using the BRIGHT bit)
 - [ ] Document the game rules
@@ -42,11 +42,11 @@ TODO
 - [ ] Document the memory map
   - [ ] In particular map out the game state at $8000+ which overlaps static tile graphics
 - [ ] Document graphic glitches
-  - [ ] Guard graphic too low
+  - [x] Guard graphic too low
   - [ ] Stray pixels on dog graphic
 - [ ] Document all bugs noted in the code
 - [ ] Add POKEs!
   - [ ] Infinite morale
-- [ ] Import tap2sna script from @skoolkid
-- [ ] Import `stack` changes from @skoolkid
+- [x] Import tap2sna script from @skoolkid
+- [x] Import `stack` changes from @skoolkid
 - [ ] Improve the HTML disassembly's stylesheet
