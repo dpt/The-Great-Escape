@@ -1,6 +1,6 @@
 # SkoolKit extension for The Great Escape by Denton Designs.
 #
-# This file copyright (c) David Thomas, 2013. <dave@davespace.co.uk>
+# This file copyright (c) David Thomas, 2013-2015. <dave@davespace.co.uk>
 #
 
 import string
@@ -124,7 +124,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         for index,i in enumerate(range(base, base + ents * 2, 2)):
             if index in unused: continue
             addr = self.snapshot[i + 0] + self.snapshot[i + 1] * 256
-            s += "<h3>$%.4x</h3>" % addr
+            s += "<h3>%s @ $%.4x</h3>" % (self.interiorobject_name(index), addr)
             s += "<p>" + self.decode_object(cwd, addr, index) + "</p>"
         return s
 
@@ -290,52 +290,269 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
 # -----------------------------------------------------------------------------
 
-    def decode_all_rooms(self, cwd, base):
-        data = self.snapshot[base:base + 52 * 2]
-        rooms = []
-        for lo, hi in zip(data[0::2], data[1::2]):
-            rooms.append(lo + hi * 256)
+    @staticmethod
+    def room_name(index):
+        """ Return the name of the specified room. """
+
+        return ("Room 0: Outdoors",
+                "Room 1: Lowest Hut, right",
+                "Room 2: Middle Hut, left (Hero's start room)",
+                "Room 3: Middle Hut, right",
+                "Room 4: Highest Hut, left",
+                "Room 5: Highest Hut, right",
+                "Room 6: (unused)",
+                "Room 7: Corridor",
+                "Room 8: Corridor",
+                "Room 9: Crate",
+                "Room 10: Lockpick",
+                "Room 11: Commandant's Office",
+                "Room 12: Corridor",
+                "Room 13: Corridor",
+                "Room 14: Guard's Quarters 1 (Torch)",
+                "Room 15: Guard's Quarters 2 (Uniform)",
+                "Room 16: Corridor",
+                "Room 17: Corridor",
+                "Room 18: Radio",
+                "Room 19: Food",
+                "Room 20: Red Cross Parcel",
+                "Room 21: Corridor",
+                "Room 22: Corridor to Solitary (Red key)",
+                "Room 23: Mess Hall, right",
+                "Room 24: Solitary Confinement",
+                "Room 25: Mess Hall, left",
+                "Room 26: (unused)",
+                "Room 27: (unused)",
+                "Room 28: Lowest Hut, left",
+                "Room 29: Tunnels 2 (Start)",
+                "Room 30: Tunnels 2",
+                "Room 31: Tunnels 2",
+                "Room 32: Tunnels 2",
+                "Room 33: Tunnels 2",
+                "Room 34: Tunnels 2 (End)",
+                "Room 35: Tunnels 2",
+                "Room 36: Tunnels 2",
+                "Room 37: Tunnels 1 (Start)",
+                "Room 38: Tunnels 1",
+                "Room 39: Tunnels 1",
+                "Room 40: Tunnels 1",
+                "Room 41: Tunnels 1",
+                "Room 42: Tunnels 1",
+                "Room 43: Tunnels 1",
+                "Room 44: Tunnels 1",
+                "Room 45: Tunnels 1",
+                "Room 46: Tunnels 1",
+                "Room 47: Tunnels 1",
+                "Room 48: Tunnels 1 (End)",
+                "Room 49: Tunnels 1",
+                "Room 50: Tunnels 1 (Blocked Tunnel)",
+                "Room 51: Tunnels 2",
+                "Room 52: Tunnels 2")[index]
+
+    @staticmethod
+    def interiorobject_name(index):
+        """ Return the name of the specified interior object. """
+
+        return ("Object 0: Straight tunnel section SW-NE",
+                "Object 1: Small tunnel entrance",
+                "Object 2: Room outline 22x12 A",
+                "Object 3: Straight tunnel section NW-SE",
+                "Object 4: Tunnel T-join section NW-SE",
+                "Object 5: Prisoner sat mid table",
+                "Object 6: Tunnel T-join section SW-NE",
+                "Object 7: Tunnel corner section SW-SE",
+                "Object 8: Wide window facing SE",
+                "Object 9: Empty bed facing SE",
+                "Object 10: Short wardrobe facing SW",
+                "Object 11: Chest of drawers facing SW",
+                "Object 12: Tunnel corner section NW-NE",
+                "Object 13: Empty bench",
+                "Object 14: Tunnel corner section NE-SE",
+                "Object 15: Door frame SE",
+                "Object 16: Door frame SW",
+                "Object 17: Tunnel corner section NW-SW",
+                "Object 18: Tunnel entrance",
+                "Object 19: Prisoner sat end table",
+                "Object 20: Collapsed tunnel section SW-NE",
+                "Object 21: (unused)",
+                "Object 22: Chair facing SE",
+                "Object 23: Occupied bed",
+                "Object 24: Ornate wardrobe facing SW",
+                "Object 25: Chair facing SW",
+                "Object 26: Cupboard facing SE",
+                "Object 27: Room outline 18x10 A",
+                "Object 28: (unused)",
+                "Object 29: Table",
+                "Object 30: Stove pipe",
+                "Object 31: Papers on floor",
+                "Object 32: Tall wardrobe facing SW",
+                "Object 33: Small shelf facing SE",
+                "Object 34: Small crate",
+                "Object 35: Small window with bars facing SE",
+                "Object 36: Tiny door frame NE", # tunnel entrance
+                "Object 37: Noticeboard facing SE",
+                "Object 38: Door frame NW",
+                "Object 39: (unused)",
+                "Object 40: Door frame NE",
+                "Object 41: Room outline 15x8",
+                "Object 42: Cupboard facing SW",
+                "Object 43: Mess bench",
+                "Object 44: Mess table",
+                "Object 45: Mess bench short",
+                "Object 46: Room outline 18x10 B",
+                "Object 47: Room outline 22x12 B",
+                "Object 48: Tiny table",
+                "Object 49: Tiny drawers facing SE",
+                "Object 50: Tall drawers facing SW",
+                "Object 51: Desk facing SW",
+                "Object 52: Sink facing SE",
+                "Object 53: Key rack facing SE")[index]
+
+    def decode_all_rooms(self, cwd, base, nrooms):
+        """ Decode all rooms. """
+
+        # Extract the start addresses of all room definitions
+
+        roomdefptrs = self.snapshot[base:base + nrooms * 2]
+        roomdefs = []
+        for lo, hi in zip(roomdefptrs[0::2], roomdefptrs[1::2]):
+            roomdefs.append(lo + hi * 256)
+
+        # Build a dictionary of room data
+
+        unused_rooms = (6, 26, 27) # room numbers to skip
+
+        all_rooms = {}
+        for index, roomdef in enumerate(roomdefs):
+            room_no = index + 1
+            if room_no in unused_rooms: continue
+            all_rooms[room_no] = self.decode_room(cwd, room_no, roomdef)
+
+        # Produce a list of objects and the rooms which use them
+
+        object_rooms = {}
+        for _, room in all_rooms.items():
+            for obj, x, y in room['objects']:
+                object_rooms.setdefault(obj, set([]))
+                room_no = room['room_no']
+                object_rooms[obj].add(room_no)
+
+        # Emit the info text
 
         s = ""
-        for addr in rooms:
-            s += self.decode_room(cwd, addr)
+        for _, room in all_rooms.items():
+            s += "<h3>%s at $%X</h3>" % (self.room_name(room['room_no']), room['roomdef'])
+            s += "<p>" + self.render_room(cwd, room) + "</p>"
+            s += "<ul>"
+            for func in [self.room_dimensions_info,
+                         self.room_boundary_info,
+                         self.room_mask_info,
+                         self.room_object_info]:
+                s += "<li>" + func(cwd, all_rooms, room, object_rooms)
+            s += "</ul>"
 
         return s
 
-    def decode_room(self, cwd, roomdef_addr):
-        s = "<h3>Room at $%X</h3>" % roomdef_addr
+    def decode_room(self, cwd, room_no, roomdef):
+        """ Decode a single room. """
 
-        # Decode all room dimensions
+        # There are ten possible room sizes, decode them into 'dims'.
         p = 0x6B85
-        dims = []
-        for i in range(10):
-            dims.append((self.snapshot[p + 0], self.snapshot[p + 1], self.snapshot[p + 2], self.snapshot[p + 3]))
-            p += 4
+        dims = zip(self.snapshot[p + 0:p + 0 + 10 * 4:4],
+                   self.snapshot[p + 1:p + 1 + 10 * 4:4],
+                   self.snapshot[p + 2:p + 2 + 10 * 4:4],
+                   self.snapshot[p + 3:p + 3 + 10 * 4:4])
 
-        p = roomdef_addr
+        p = roomdef
         dimensions_index = self.snapshot[p]
         room_dims = dims[dimensions_index]
         p += 1
 
-        s += "<ul>"
-
-        s += "<li>" + "Dimensions: " + str(room_dims)
+        # Unpack boundaries
 
         nboundaries = self.snapshot[p]
-        s += "<li>" + "Number of boundaries: %d" % nboundaries
-        p += 1 + nboundaries * 4
+        p += 1
+        boundaries = []
+        for i in range(nboundaries):
+            boundaries.append(self.snapshot[p : p + 4])
+            p += 4
+
+        # Unpack masks
 
         nmasks = self.snapshot[p]
-        s += "<li>" + "Number of masks: %d" % nmasks
-        p += 1 + nmasks
+        p += 1
+        masks = self.snapshot[p : p + nmasks]
+        p += nmasks
+
+        # Unpack objects
 
         nobjs = self.snapshot[p]
-        s += "<li>" + "Number of objects: %d" % nobjs
         p += 1
+        objects = []
+        for i in range(nobjs):
+            objects.append(self.snapshot[p : p + 3])
+            p += 3
 
-        s += "</ul>"
+        return { "room_no": room_no,
+                 "roomdef": roomdef,
+                 "dimensions": room_dims,
+                 "boundaries": boundaries,
+                 "masks": masks,
+                 "objects": objects }
 
+    def room_dimensions_info(self, cwd, all_rooms, room, object_rooms):
+        s = "Dimensions: " + str(room['dimensions'])
         return s
+
+    def room_boundary_info(self, cwd, all_rooms, room, object_rooms):
+        s = "Number of boundaries: %d" % len(room['boundaries'])
+        return s
+
+    def room_mask_info(self, cwd, all_rooms, room, object_rooms):
+        s = "Number of masks: %d" % len(room['masks'])
+        return s
+
+    def room_object_info(self, cwd, all_rooms, room, object_rooms):
+        s = "Number of objects: %d" % len(room['objects'])
+        s += "<ul>"
+        roomobjects = [r[0] for r in room['objects']]
+        for obj in set(roomobjects): # deduplicate the objs
+            ninroom = roomobjects.count(obj) # number in this room
+            notherrooms = len(object_rooms[obj]) - 1
+            if notherrooms:
+                s += "<li>" + "%d x '%s' - present in %d other rooms.<br>" % (ninroom, self.interiorobject_name(obj), notherrooms)
+            else:
+                s += "<li>" + "%d x '%s' - <strong>unique to this room</strong>.<br>" % (ninroom, self.interiorobject_name(obj))
+        s += "</ul>"
+        return s
+
+    def render_room(self, cwd, roomdata):
+        # room_dims is not comprehendible to me right now .. could use a
+        # worst-size case of the screen size
+
+        room_width, room_height = 24, 16
+
+        # Build a UDG array for the room
+
+        udg_array = [[self.interior_tile(cwd, 0) for x in range(room_width)] for y in range(room_height)]
+
+        for obj_index, x, y in roomdata['objects']:
+            interior_object_defs = 0x7095 + obj_index * 2
+            objdef = self.snapshot[interior_object_defs] + self.snapshot[interior_object_defs + 1] * 256
+            width, height, tiles = self.expand_object(cwd, objdef)
+
+            tiles.reverse()
+
+            for yy in range(height):
+                for xx in range(width):
+                    t = tiles.pop()
+                    if t: udg_array[y + yy][x + xx] = self.interior_tile(cwd, t)
+
+        img_path_id = 'ScreenshotImagePath'
+        fname = 'room-%d' % roomdata['room_no']
+        img_path = self.image_path(fname, img_path_id)
+        self.write_image(img_path, udg_array)
+
+        return self.img_element(cwd, img_path)
 
 class TheGreatEscapeAsmWriter(AsmWriter):
     pass

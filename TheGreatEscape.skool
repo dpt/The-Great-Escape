@@ -339,64 +339,61 @@
 ; message_ANOTHER_DAY_DAWNS                     = 19,
 ; message_QUEUE_END                             = 255,
 ;
-;
-; SW_NE means that the object is drawn on the SW-NE axis, etc.
-;
-; interiorobject_TUNNEL_SW_NE                   = 0,
+; interiorobject_STRAIGHT_TUNNEL_SW_NE          = 0,
 ; interiorobject_SMALL_TUNNEL_ENTRANCE          = 1,
-; interiorobject_ROOM_OUTLINE_22x12_A           = 2,    ; 22x12
-; interiorobject_TUNNEL_NW_SE                   = 3,
-; interiorobject_TUNNEL_T_JOIN_NW_SE            = 4,    ; room 35 only
-; interiorobject_PRISONER_SAT_DOWN_MID_TABLE    = 5,
-; interiorobject_TUNNEL_CORNER_6                = 6,    ; ?
-; interiorobject_TUNNEL_CORNER_7                = 7,    ; ?very similar to above too but drawn differently .. collapsed?
-; interiorobject_WIDE_WINDOW                    = 8,
-; interiorobject_EMPTY_BED                      = 9,
-; interiorobject_SHORT_WARDROBE                 = 10,
-; interiorobject_CHEST_OF_DRAWERS               = 11,
-; interiorobject_TUNNEL_CORNER_NW_NE            = 12,   ; room 44 only
+; interiorobject_ROOM_OUTLINE_22x12_A           = 2,
+; interiorobject_STRAIGHT_TUNNEL_NW_SE          = 3,
+; interiorobject_TUNNEL_T_JOIN_NW_SE            = 4,
+; interiorobject_PRISONER_SAT_MID_TABLE         = 5,
+; interiorobject_TUNNEL_T_JOIN_SW_NE            = 6,
+; interiorobject_TUNNEL_CORNER_SW_SE            = 7,
+; interiorobject_WIDE_WINDOW_FACING_SE          = 8,
+; interiorobject_EMPTY_BED_FACING_SE            = 9,
+; interiorobject_SHORT_WARDROBE_FACING_SW       = 10, 
+; interiorobject_CHEST_OF_DRAWERS_FACING_SW     = 11,
+; interiorobject_TUNNEL_CORNER_NW_NE            = 12,
 ; interiorobject_EMPTY_BENCH                    = 13,
-; interiorobject_TUNNEL_14                      = 14,   ; ?corner NE-SE
-; interiorobject_DOOR_FRAME_SW_NE               = 15,
-; interiorobject_DOOR_FRAME_NW_SE               = 16,
-; interiorobject_TUNNEL_17                      = 17,   ; ?corner or tunnel end?   used in room 32 only
-; interiorobject_TUNNEL_JOIN_18                 = 18,   ; ?SW-NE with mid join  room 34 only
-; interiorobject_PRISONER_SAT_DOWN_END_TABLE    = 19,
-; interiorobject_COLLAPSED_TUNNEL               = 20,
-; interiorobject_UNUSED_21                      = 21,   ; unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
-; interiorobject_CHAIR_POINTING_BOTTOM_RIGHT    = 22,
+; interiorobject_TUNNEL_CORNER_NE_SE            = 14,
+; interiorobject_DOOR_FRAME_SE                  = 15,
+; interiorobject_DOOR_FRAME_SW                  = 16,
+; interiorobject_TUNNEL_CORNER_NW_SW            = 17,
+; interiorobject_TUNNEL_ENTRANCE                = 18,
+; interiorobject_PRISONER_SAT_END_TABLE         = 19,
+; interiorobject_COLLAPSED_TUNNEL_SW_NE         = 20,
+; interiorobject_UNUSED_21                      = 21, // unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
+; interiorobject_CHAIR_FACING_SE                = 22,
 ; interiorobject_OCCUPIED_BED                   = 23,
-; interiorobject_WARDROBE_WITH_KNOCKERS         = 24,
-; interiorobject_CHAIR_POINTING_BOTTOM_LEFT     = 25,
-; interiorobject_CUPBOARD                       = 26,
-; interiorobject_ROOM_OUTLINE_18x10_A           = 27,   ; 18x10
-; interiorobject_UNUSED_28                      = 28,   ; unused by game, draws as interiorobject_TABLE
+; interiorobject_ORNATE_WARDROBE_FACING_SW      = 24,
+; interiorobject_CHAIR_FACING_SW                = 25,
+; interiorobject_CUPBOARD_FACING_SE             = 26,
+; interiorobject_ROOM_OUTLINE_18x10_A           = 27,
+; interiorobject_UNUSED_28                      = 28, // unused by game, draws as interiorobject_TABLE
 ; interiorobject_TABLE                          = 29,
 ; interiorobject_STOVE_PIPE                     = 30,
-; interiorobject_STUFF                          = 31,   ; paper on the floor (too small to tell)  room 4 only
-; interiorobject_TALL_WARDROBE                  = 32,
-; interiorobject_SMALL_SHELF                    = 33,
+; interiorobject_PAPERS_ON_FLOOR                = 31,
+; interiorobject_TALL_WARDROBE_FACING_SW        = 32,
+; interiorobject_SMALL_SHELF_FACING_SE          = 33,
 ; interiorobject_SMALL_CRATE                    = 34,
-; interiorobject_SMALL_WINDOW                   = 35,
-; interiorobject_TINY_DOOR_FRAME_NW_SE          = 36,   ; wall tunnel entrance from crate room, NW-SE  room 9 only
-; interiorobject_NOTICEBOARD                    = 37,
-; interiorobject_END_DOOR_FRAME_SW_NE           = 38,
-; interiorobject_UNUSED_39                      = 39,   ; unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
-; interiorobject_END_DOOR_FRAME_NW_SE           = 40,
-; interiorobject_ROOM_OUTLINE_15x8              = 41,   ; 15x8
-; interiorobject_CUPBOARD_42                    = 42,
+; interiorobject_SMALL_WINDOW_WITH_BARS_FACING_SE = 35,
+; interiorobject_TINY_DOOR_FRAME_NE             = 36, // tunnel entrance
+; interiorobject_NOTICEBOARD_FACING_SE          = 37,
+; interiorobject_DOOR_FRAME_NW                  = 38,
+; interiorobject_UNUSED_39                      = 39, // unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
+; interiorobject_DOOR_FRAME_NE                  = 40,
+; interiorobject_ROOM_OUTLINE_15x8              = 41,
+; interiorobject_CUPBOARD_FACING_SW             = 42,
 ; interiorobject_MESS_BENCH                     = 43,
 ; interiorobject_MESS_TABLE                     = 44,
 ; interiorobject_MESS_BENCH_SHORT               = 45,
-; interiorobject_ROOM_OUTLINE_18x10_B           = 46,   ; 18x10
-; interiorobject_ROOM_OUTLINE_22x12_B           = 47,   ; 22x12
+; interiorobject_ROOM_OUTLINE_18x10_B           = 46,
+; interiorobject_ROOM_OUTLINE_22x12_B           = 47,
 ; interiorobject_TINY_TABLE                     = 48,
-; interiorobject_TINY_DRAWERS                   = 49,
-; interiorobject_TALL_DRAWERS                   = 50,   ; tall drawers or a filing cabinet? (NW-SE)
-; interiorobject_DESK                           = 51,   ; commandant's desk
-; interiorobject_SINK                           = 52,
-; interiorobject_KEY_RACK                       = 53,
-; interiorobject__LIMIT                         = 54,
+; interiorobject_TINY_DRAWERS_FACING_SE         = 49,
+; interiorobject_TALL_DRAWERS_FACING_SW         = 50,
+; interiorobject_DESK_FACING_SW                 = 51,
+; interiorobject_SINK_FACING_SE                 = 52,
+; interiorobject_KEY_RACK_FACING_SE             = 53,
+; interiorobject__LIMIT                         = 54
 ;
 ; interiorobjecttile_MAX                        = 194,
 ; interiorobjecttile_ESCAPE                     = 255,  ; escape character
@@ -2459,9 +2456,9 @@ b$6C15 DEFB $00             ; 0
                             ; 7 },
  $6C38 DEFB $0F,$0F,$08     ; { interiorobject_DOOR_FRAME_SW_NE,              15,
                             ; 8 },
- $6C3B DEFB $18,$12,$05     ; { interiorobject_WARDROBE_WITH_KNOCKERS,     18,
+ $6C3B DEFB $18,$12,$05     ; { interiorobject_ORNATE_WARDROBE_FACING_SW,     18,
                             ; 5 },
- $6C3E DEFB $18,$14,$06     ; { interiorobject_WARDROBE_WITH_KNOCKERS,     20,
+ $6C3E DEFB $18,$14,$06     ; { interiorobject_ORNATE_WARDROBE_FACING_SW,     20,
                             ; 6 },
  $6C41 DEFB $09,$02,$09     ; { interiorobject_EMPTY_BED,                   2,
                             ; 9 },
@@ -2550,9 +2547,9 @@ b$6C9F DEFB $01             ; 1
                             ; 7 },
  $6CBD DEFB $10,$07,$09     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
                             ; 9 },
- $6CC0 DEFB $16,$0B,$0B     ; { interiorobject_CHAIR_POINTING_BOTTOM_RIGHT,11,
+ $6CC0 DEFB $16,$0B,$0B     ; { interiorobject_CHAIR_FACING_SE,11,
                             ; 11 },
- $6CC3 DEFB $19,$0D,$0A     ; { interiorobject_CHAIR_POINTING_BOTTOM_LEFT, 13,
+ $6CC3 DEFB $19,$0D,$0A     ; { interiorobject_CHAIR_FACING_SW, 13,
                             ; 10 },
  $6CC6 DEFB $1F,$0E,$0E     ; { interiorobject_STUFF,                      14,
                             ; 14 },
@@ -2921,7 +2918,7 @@ b$6EA0 DEFB $01             ; 1
                             ; 5 },
  $6EC6 DEFB $20,$10,$06     ; { interiorobject_TALL_WARDROBE,              16,
                             ; 6 },
- $6EC9 DEFB $18,$12,$08     ; { interiorobject_WARDROBE_WITH_KNOCKERS,     18,
+ $6EC9 DEFB $18,$12,$08     ; { interiorobject_ORNATE_WARDROBE_FACING_SW,     18,
                             ; 8 },
  $6ECC DEFB $30,$0B,$08     ; { interiorobject_TINY_TABLE,                 11,
                             ; 8 },
@@ -3056,7 +3053,7 @@ b$6F5B DEFB $01             ; 1
                             ; 7 },
  $6F79 DEFB $10,$07,$09     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
                             ; 9 },
- $6F7C DEFB $19,$0F,$0A     ; { interiorobject_CHAIR_POINTING_BOTTOM_LEFT, 15,
+ $6F7C DEFB $19,$0F,$0A     ; { interiorobject_CHAIR_FACING_SW, 15,
                             ; 10 },
  $6F7F DEFB $1D,$0B,$0C     ; { interiorobject_TABLE,                      11,
                             ; 12 },
@@ -3324,7 +3321,7 @@ b$7095 DEFW $7101    ; {Array of pointer to interior object definitions, 54
  $70FD DEFW $75A2
  $70FF DEFW $75AA    ; }
 
-; Room object 0: Straight tunnel section (BL to TR)
+; Room object 0: Straight tunnel section SW-NE
 @label=interior_object_tile_refs_0
 b$7101 DEFB $04             ; width
  $7102 DEFB $06             ; height
@@ -3344,7 +3341,7 @@ b$711B DEFB $02      ; width
  $711F DEFB $B7,$B5  ; }
 ; #HTML[#CALL:decode_object($711B, 1)]
 
-; Room object 3: Straight tunnel section (TL to BR)
+; Room object 3: Straight tunnel section NW-SE
 @label=interior_object_tile_refs_3
 b$7121 DEFB $04             ; width
  $7122 DEFB $06             ; height
@@ -3356,7 +3353,7 @@ b$7121 DEFB $04             ; width
  $7137 DEFB $00,$00,$00,$13 ; }
 ; #HTML[#CALL:decode_object($7121, 3)]
 
-; Room object 4: 'T' tunnel section (TL to BR)
+; Room object 4: Tunnel T-join section NW-SE
 @label=interior_object_tile_refs_4
 b$713B DEFB $04             ; width
  $713C DEFB $06             ; height
@@ -3368,14 +3365,14 @@ b$713B DEFB $04             ; width
  $7151 DEFB $00,$00,$00,$13 ; }
 ; #HTML[#CALL:decode_object($713B, 4)]
 
-; Room object 5: Prisoner sat at breakfast bench (mid-table)
+; Room object 5: Prisoner sat mid table
 @label=interior_object_tile_refs_5
 b$7155 DEFB $02         ; width
  $7156 DEFB $03         ; height
  $7157 DEFB $FF,$46,$B8 ; tile references (incl. RLE)
 ; #HTML[#CALL:decode_object($7155, 5)]
 
-; Room object 6: 'L' tunnel section (BL to TR)
+; Room object 6: Tunnel T-join section SW-NE
 @label=interior_object_tile_refs_6
 b$715A DEFB $04             ; width
  $715B DEFB $06             ; height
@@ -3387,7 +3384,7 @@ b$715A DEFB $04             ; width
  $7170 DEFB $18,$0E,$00,$00 ; }
 ; #HTML[#CALL:decode_object($715A, 6)]
 
-; Room object 7: 'L' tunnel section (BL to TR) with collapsed end?
+; Room object 7: Tunnel corner section SW-SE
 @label=interior_object_tile_refs_7
 b$7174 DEFB $04             ; width
  $7175 DEFB $06             ; height
@@ -3399,7 +3396,7 @@ b$7174 DEFB $04             ; width
  $718A DEFB $18,$0E,$00,$00 ; }
 ; #HTML[#CALL:decode_object($7174, 7)]
 
-; Room object 12: 'L' tunnel section (TL to TR)
+; Room object 12: Tunnel corner section NW-NE
 @label=interior_object_tile_refs_12
 b$718E DEFB $04                             ; width
  $718F DEFB $06                             ; height
@@ -3408,14 +3405,14 @@ b$718E DEFB $04                             ; width
  $71A0 DEFB $00,$13,$0D,$FF,$85,$00         ; }
 ; #HTML[#CALL:decode_object($718E, 12)]
 
-; Room object 13: Blank?
+; Room object 13: Empty bench
 @label=interior_object_tile_refs_13
 b$71A6 DEFB $02         ; width
  $71A7 DEFB $03         ; height
  $71A8 DEFB $FF,$86,$00 ; tile references (incl. RLE)
 ; #HTML[#CALL:decode_object($71A6, 13)]
 
-; Room object 14: 'L' tunnel section (TR to BR)
+; Room object 14: Tunnel corner section NE-SE
 @label=interior_object_tile_refs_14
 b$71AB DEFB $04                             ; width
  $71AC DEFB $06                             ; height
@@ -3424,7 +3421,7 @@ b$71AB DEFB $04                             ; width
  $71BD DEFB $00,$13,$18,$07,$FF,$84,$00     ; }
 ; #HTML[#CALL:decode_object($71AB, 14)]
 
-; Room object 17: 'L' tunnel section (TL to BL)
+; Room object 17: Tunnel corner section NW-SW
 @label=interior_object_tile_refs_17
 b$71C4 DEFB $04             ; width
  $71C5 DEFB $06             ; height
@@ -3436,7 +3433,7 @@ b$71C4 DEFB $04             ; width
  $71DA DEFB $0D,$00,$00,$00 ; }
 ; #HTML[#CALL:decode_object($71C4, 17)]
 
-; Room object 18: 'T' tunnel section?
+; Room object 18: Tunnel entrance
 @label=interior_object_tile_refs_18
 b$71DE DEFB $04             ; width
  $71DF DEFB $06             ; height
@@ -3448,7 +3445,7 @@ b$71DE DEFB $04             ; width
  $71F4 DEFB $00,$00,$00,$00 ; }
 ; #HTML[#CALL:decode_object($71DE, 18)]
 
-; Room object 19: Prisoner sat at breakfast bench (end-table)
+; Room object 19: Prisoner sat end table
 @label=interior_object_tile_refs_19
 b$71F8 DEFB $02      ; width
  $71F9 DEFB $03      ; height
@@ -3457,7 +3454,7 @@ b$71F8 DEFB $02      ; width
  $71FE DEFB $BC,$C1  ; }
 ; #HTML[#CALL:decode_object($71F8, 19)]
 
-; Room object 20: Collapsed tunnel section (BL to TR)
+; Room object 20: Collapsed tunnel section SW-NE
 @label=interior_object_tile_refs_20
 b$7200 DEFB $04                             ; width
  $7201 DEFB $06                             ; height
@@ -3467,7 +3464,7 @@ b$7200 DEFB $04                             ; width
  $7215 DEFB $00,$0D,$00,$00,$00
 ; #HTML[#CALL:decode_object($7200, 20)]
 
-; Room object 2: 22x12 room outline
+; Room object 2: Room outline 22x12 A
 @label=interior_object_tile_refs_2
 b$721A DEFB $16                             ; width
  $721B DEFB $0C                             ; height
@@ -3488,7 +3485,7 @@ b$721A DEFB $16                             ; width
  $728C DEFB $8A,$00                         ; }
 ; #HTML[#CALL:decode_object($721A, 2)]
 
-; Room object 8: Wide window
+; Room object 8: Wide window facing SE
 @label=interior_object_tile_refs_8
 b$728E DEFB $05                 ; width
  $728F DEFB $06                 ; height
@@ -3500,7 +3497,7 @@ b$728E DEFB $05                 ; width
  $72A9 DEFB $2E,$2F,$00,$00,$00 ; }
 ; #HTML[#CALL:decode_object($728E, 8)]
 
-; Room object 9: Empty bed
+; Room object 9: Empty bed facing SE
 @label=interior_object_tile_refs_9
 b$72AE DEFB $05                             ; width
  $72AF DEFB $04                             ; height
@@ -3509,7 +3506,7 @@ b$72AE DEFB $05                             ; width
  $72C0 DEFB $00                             ; }
 ; #HTML[#CALL:decode_object($72AE, 9)]
 
-; Room object 10: Short wardrobe
+; Room object 10: Short wardrobe facing SW
 @label=interior_object_tile_refs_10
 b$72C1 DEFB $03                             ; width
  $72C2 DEFB $04                             ; height
@@ -3517,14 +3514,14 @@ b$72C1 DEFB $03                             ; width
  $72CB DEFB $5A                             ; }
 ; #HTML[#CALL:decode_object($72C1, 10)]
 
-; Room object 11: Chest of drawers
+; Room object 11: Chest of drawers facing SW
 @label=interior_object_tile_refs_11
 b$72CC DEFB $02         ; width
  $72CD DEFB $03         ; height
  $72CE DEFB $FF,$46,$4B ; tile references (incl. RLE)
 ; #HTML[#CALL:decode_object($72CC, 11)]
 
-; Room object 15: Door frame (facing BR)
+; Room object 15: Door frame SE
 @label=interior_object_tile_refs_15
 b$72D1 DEFB $04             ; width
  $72D2 DEFB $06             ; height
@@ -3536,7 +3533,7 @@ b$72D1 DEFB $04             ; width
  $72E7 DEFB $3C,$01,$01,$00 ; }
 ; #HTML[#CALL:decode_object($72D1, 15)]
 
-; Room object 16: Door frame (facing BL)
+; Room object 16: Door frame SW
 @label=interior_object_tile_refs_16
 b$72EB DEFB $04             ; width
  $72EC DEFB $06             ; height
@@ -3548,7 +3545,7 @@ b$72EB DEFB $04             ; width
  $7301 DEFB $00,$01,$01,$3D ; }
 ; #HTML[#CALL:decode_object($72EB, 16)]
 
-; Room object 22: Chair (facing BR)
+; Room object 22: Chair facing SE
 @label=interior_object_tile_refs_22
 b$7305 DEFB $02      ; width
  $7306 DEFB $04      ; height
@@ -3568,7 +3565,7 @@ b$730F DEFB $05                 ; width
  $7320 DEFB $00,$00,$00,$4A,$00 ; }
 ; #HTML[#CALL:decode_object($730F, 23)]
 
-; Room object 24: Wardrobe with knockers
+; Room object 24: Ornate wardrobe facing SW
 @label=interior_object_tile_refs_24
 b$7325 DEFB $03         ; width
  $7326 DEFB $04         ; height
@@ -3578,14 +3575,14 @@ b$7325 DEFB $03         ; width
  $7330 DEFB $58,$59,$5A ; }
 ; #HTML[#CALL:decode_object($7325, 24)]
 
-; Room object 25: Chair (facing BL)
+; Room object 25: Chair facing SW
 @label=interior_object_tile_refs_25
 b$7333 DEFB $02                         ; width
  $7334 DEFB $04                         ; height
  $7335 DEFB $00,$73,$5C,$FF,$44,$74,$00 ; tile references (incl. RLE)
 ; #HTML[#CALL:decode_object($7333, 25)]
 
-; Room object 26: Cupboard 26
+; Room object 26: Cupboard facing SE
 @label=interior_object_tile_refs_26
 b$733C DEFB $03             ; width
  $733D DEFB $03             ; height
@@ -3607,14 +3604,14 @@ b$734B DEFB $03                             ; width
  $7355 DEFB $00,$00,$80,$00                 ; }
 ; #HTML[#CALL:decode_object($734B, 30)]
 
-; Room object 31: Stuff (mess on floor?)
+; Room object 31: Papers on floor
 @label=interior_object_tile_refs_31
 b$7359 DEFB $01      ; width
  $735A DEFB $01      ; height
  $735B DEFB $83      ; tile references
 ; #HTML[#CALL:decode_object($7359, 31)]
 
-; Room object 32: Tall wardrobe
+; Room object 32: Tall wardrobe facing SW
 @label=interior_object_tile_refs_32
 b$735C DEFB $03                             ; width
  $735D DEFB $05                             ; height
@@ -3622,7 +3619,7 @@ b$735C DEFB $03                             ; width
  $7366 DEFB $56,$58,$59,$5A                 ; }
 ; #HTML[#CALL:decode_object($735C, 32)]
 
-; Room object 33: Small shelf
+; Room object 33: Small shelf facing SE
 @label=interior_object_tile_refs_33
 b$736A DEFB $02         ; width
  $736B DEFB $02         ; height
@@ -3636,7 +3633,7 @@ b$736F DEFB $02         ; width
  $7371 DEFB $FF,$44,$8C ; tile references (incl. RLE)
 ; #HTML[#CALL:decode_object($736F, 34)]
 
-; Room object 35: Small window
+; Room object 35: Small window with bars facing SE
 @label=interior_object_tile_refs_35
 b$7374 DEFB $03                             ; width
  $7375 DEFB $05                             ; height
@@ -3644,7 +3641,7 @@ b$7374 DEFB $03                             ; width
  $737E DEFB $27,$85,$87,$2D,$2E,$2F,$00     ; }
 ; #HTML[#CALL:decode_object($7374, 35)]
 
-; Room object 36: Door frame tunnel entrance
+; Room object 36: Tiny door frame NE (tunnel entrance)
 @label=interior_object_tile_refs_36
 b$7385 DEFB $04                             ; width
  $7386 DEFB $03                             ; height
@@ -3652,7 +3649,7 @@ b$7385 DEFB $04                             ; width
  $738F DEFB $00,$01,$01,$27                 ; }
 ; #HTML[#CALL:decode_object($7385, 36)]
 
-; Room object 37: Noticeboard
+; Room object 37: Noticeboard facing SE
 @label=interior_object_tile_refs_37
 b$7393 DEFB $04                             ; width
  $7394 DEFB $04                             ; height
@@ -3660,7 +3657,7 @@ b$7393 DEFB $04                             ; width
  $739D DEFB $38,$90,$90,$27,$38,$25,$34,$00 ; }
 ; #HTML[#CALL:decode_object($7393, 37)]
 
-; Room object 38: Door frame (facing BR) with no leading edge
+; Room object 38: Door frame NW
 @label=interior_object_tile_refs_38
 b$73A5 DEFB $04             ; width
  $73A6 DEFB $06             ; height
@@ -3672,7 +3669,7 @@ b$73A5 DEFB $04             ; width
  $73BB DEFB $38,$01,$01,$00 ; }
 ; #HTML[#CALL:decode_object($73A5, 38)]
 
-; Room object 40: Door frame (facing BL) with no leading edge
+; Room object 40: Door frame NE
 @label=interior_object_tile_refs_40
 b$73BF DEFB $04             ; width
  $73C0 DEFB $06             ; height
@@ -3684,7 +3681,7 @@ b$73BF DEFB $04             ; width
  $73D5 DEFB $00,$01,$01,$27 ; }
 ; #HTML[#CALL:decode_object($73BF, 40)]
 
-; Room object 41: 15x8 room outline
+; Room object 41: Room outline 15x8
 @label=interior_object_tile_refs_41
 b$73D9 DEFB $0E                             ; width
  $73DA DEFB $08                             ; height
@@ -3700,7 +3697,7 @@ b$73D9 DEFB $0E                             ; width
  $7423 DEFB $84,$00                         ; }
 ; #HTML[#CALL:decode_object($73D9, 41)]
 
-; Room object 42: Cupboard 42
+; Room object 42: Cupboard facing SW
 @label=interior_object_tile_refs_42
 b$7425 DEFB $02      ; width
  $7426 DEFB $03      ; height
@@ -3740,7 +3737,7 @@ b$7482 DEFB $05                             ; width
  $748C DEFB $66,$96,$98,$66,$00,$00,$00     ; }
 ; #HTML[#CALL:decode_object($7482, 45)]
 
-; Room object 46: 18x10 room outline
+; Room object 46: Room outline 18x10 B
 @label=interior_object_tile_refs_46
 b$7493 DEFB $12                             ; width
  $7494 DEFB $0A                             ; height
@@ -3758,7 +3755,7 @@ b$7493 DEFB $12                             ; width
  $74ED DEFB $00,$13,$3A,$39,$0D,$FF,$8A,$00 ; }
 ; #HTML[#CALL:decode_object($7493, 46)]
 
-; Room object 47: 22x12 room outline
+; Room object 47: Room outline 22x12 B
 @label=interior_object_tile_refs_47
 b$74F5 DEFB $16                             ; width
  $74F6 DEFB $0C                             ; height
@@ -3788,7 +3785,7 @@ b$7570 DEFB $02      ; width
  $7574 DEFB $98,$93  ; }
 ; #HTML[#CALL:decode_object($7570, 48)]
 
-; Room object 49: Tiny drawers
+; Room object 49: Tiny drawers facing SE
 @label=interior_object_tile_refs_49
 b$7576 DEFB $02      ; width
  $7577 DEFB $03      ; height
@@ -3797,7 +3794,7 @@ b$7576 DEFB $02      ; width
  $757C DEFB $9D,$9C  ; }
 ; #HTML[#CALL:decode_object($7576, 49)]
 
-; Room object 50: Drawers 50
+; Room object 50: Tall drawers facing SW
 @label=interior_object_tile_refs_50
 b$757E DEFB $02      ; width
  $757F DEFB $04      ; height
@@ -3807,7 +3804,7 @@ b$757E DEFB $02      ; width
  $7586 DEFB $4F,$50  ; }
 ; #HTML[#CALL:decode_object($757E, 50)]
 
-; Room object 51: Desk
+; Room object 51: Desk facing SW
 @label=interior_object_tile_refs_51
 b$7588 DEFB $06                     ; width
  $7589 DEFB $04                     ; height
@@ -3817,14 +3814,14 @@ b$7588 DEFB $06                     ; width
  $759C DEFB $00,$00,$00,$2D,$00,$00 ; }
 ; #HTML[#CALL:decode_object($7588, 51)]
 
-; Room object 52: Sink
+; Room object 52: Sink facing SE
 @label=interior_object_tile_refs_52
 b$75A2 DEFB $03                     ; width
  $75A3 DEFB $03                     ; height
  $75A4 DEFB $A9,$AA,$00,$FF,$46,$AB ; tile references (incl. RLE)
 ; #HTML[#CALL:decode_object($75A2, 52)]
 
-; Room object 53: Key rack
+; Room object 53: Key rack facing SE
 @label=interior_object_tile_refs_53
 b$75AA DEFB $02      ; width
  $75AB DEFB $02      ; height
@@ -3832,7 +3829,7 @@ b$75AA DEFB $02      ; width
  $75AE DEFB $B3,$B4  ; }
 ; #HTML[#CALL:decode_object($75AA, 53)]
 
-; Room object 27: 18x10 room outline
+; Room object 27: Room outline 18x10 A
 @label=interior_object_tile_refs_27
 b$75B0 DEFB $12                             ; width
  $75B1 DEFB $0A                             ; height
