@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 9DCF</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="9D7B.html">9D7B</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#9dcf">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="9DE5.html">9DE5</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="9D7B.html">9D7B</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#9dcf">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="9DE5.html">9DE5</a></span></td>
 </tr>
 </table>
 <div class="description">9DCF: Check morale level, report if (near) zero and inhibit player control.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">9D7B</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,37 +46,37 @@ Used by the routine at <a class="link" href="9D7B.html">9D7B</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="9dcf"></a>9DCF</td>
+<td class="address-2"><span id="9dcf"></span>9DCF</td>
 <td class="instruction">LD A,($A13C)</td>
 <td class="comment-11" rowspan="3">if (morale &gt;= 2) return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9dd2"></a>9DD2</td>
+<td class="address-1"><span id="9dd2"></span>9DD2</td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9dd4"></a>9DD4</td>
+<td class="address-1"><span id="9dd4"></span>9DD4</td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9dd5"></a>9DD5</td>
+<td class="address-1"><span id="9dd5"></span>9DD5</td>
 <td class="instruction">LD BC,$0F00</td>
 <td class="comment-11" rowspan="2">queue_message_for_display(message_MORALE_IS_ZERO);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9dd8"></a>9DD8</td>
-<td class="instruction">CALL <a class="link" href="7D15.html">$7D15</a></td>
+<td class="address-1"><span id="9dd8"></span>9DD8</td>
+<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="9ddb"></a>
+<span id="9ddb"></span>
 <div class="comments">
 <div class="paragraph">
 Inhibit user input.
@@ -89,19 +86,19 @@ Inhibit user input.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ddb"></a>9DDB</td>
+<td class="address-1"><span id="9ddb"></span>9DDB</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">morale_2 = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ddd"></a>9DDD</td>
+<td class="address-1"><span id="9ddd"></span>9DDD</td>
 <td class="instruction">LD ($A13B),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="9de0"></a>
+<span id="9de0"></span>
 <div class="comments">
 <div class="paragraph">
 Immediately take automatic control of hero.
@@ -111,34 +108,34 @@ Immediately take automatic control of hero.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9de0"></a>9DE0</td>
+<td class="address-1"><span id="9de0"></span>9DE0</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">automatic_player_counter = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9de1"></a>9DE1</td>
+<td class="address-1"><span id="9de1"></span>9DE1</td>
 <td class="instruction">LD ($A139),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9de4"></a>9DE4</td>
+<td class="address-1"><span id="9de4"></span>9DE4</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="9D7B.html">9D7B</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#9dcf">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="9DE5.html">9DE5</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="9D7B.html">9D7B</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#9dcf">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="9DE5.html">9DE5</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

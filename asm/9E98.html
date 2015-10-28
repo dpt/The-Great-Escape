@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 9E98</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="9E07.html">9E07</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#9e98">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="9EB2.html">9EB2</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="9E07.html">9E07</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#9e98">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="9EB2.html">9EB2</a></span></td>
 </tr>
 </table>
 <div class="description">9E98: Locks the player out until the lock is picked.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="9E07.html">9E07</a>.
+Used by the routine at <a href="9E07.html">9E07</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,31 +46,31 @@ Used by the routine at <a class="link" href="9E07.html">9E07</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="9e98"></a>9E98</td>
+<td class="address-2"><span id="9e98"></span>9E98</td>
 <td class="instruction">LD HL,$A12F</td>
 <td class="comment-11" rowspan="4">if (player_locked_out_until != game_counter) return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9e9b"></a>9E9B</td>
+<td class="address-1"><span id="9e9b"></span>9E9B</td>
 <td class="instruction">LD A,($A145)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9e9e"></a>9E9E</td>
+<td class="address-1"><span id="9e9e"></span>9E9E</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9e9f"></a>9E9F</td>
+<td class="address-1"><span id="9e9f"></span>9E9F</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="9ea0"></a>
+<span id="9ea0"></span>
 <div class="comments">
 <div class="paragraph">
 Countdown reached: Unlock the door.
@@ -83,80 +80,80 @@ Countdown reached: Unlock the door.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ea0"></a>9EA0</td>
+<td class="address-1"><span id="9ea0"></span>9EA0</td>
 <td class="instruction">LD HL,($A143)</td>
 <td class="comment-11" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~gates_and_doors_LOCKED;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ea3"></a>9EA3</td>
+<td class="address-1"><span id="9ea3"></span>9EA3</td>
 <td class="instruction">RES 7,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ea5"></a>9EA5</td>
+<td class="address-1"><span id="9ea5"></span>9EA5</td>
 <td class="instruction">LD B,$06</td>
 <td class="comment-11" rowspan="2">queue_message_for_display(message_IT_IS_OPEN);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ea7"></a>9EA7</td>
-<td class="instruction">CALL <a class="link" href="7D15.html">$7D15</a></td>
+<td class="address-1"><span id="9ea7"></span>9EA7</td>
+<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="9eaa"></a>
+<span id="9eaa"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a class="link" href="9EB2.html">9EB2</a>.
+This entry point is used by the routine at <a href="9EB2.html">9EB2</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="9eaa"></a>9EAA</td>
+<td class="address-2"><span id="9eaa"></span>9EAA</td>
 <td class="instruction">LD HL,$8001</td>
 <td class="comment-11" rowspan="4">clear_lockpick_wirecut_flags_and_return: $8001 &amp;= ~(vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ead"></a>9EAD</td>
+<td class="address-1"><span id="9ead"></span>9EAD</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9eae"></a>9EAE</td>
+<td class="address-1"><span id="9eae"></span>9EAE</td>
 <td class="instruction">AND $FC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9eb0"></a>9EB0</td>
+<td class="address-1"><span id="9eb0"></span>9EB0</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9eb1"></a>9EB1</td>
+<td class="address-1"><span id="9eb1"></span>9EB1</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="9E07.html">9E07</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#9e98">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="9EB2.html">9EB2</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="9E07.html">9E07</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#9e98">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="9EB2.html">9EB2</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

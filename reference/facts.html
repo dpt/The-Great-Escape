@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Trivia</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,22 +10,22 @@
 <body class="Facts">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Trivia</td>
 </tr>
 </table>
 <ul class="contents">
-<li><a class="link" href="#unusedSupertiles">Unused super tiles</a></li>
-<li><a class="link" href="#alternatingSpeed">Game speed varies</a></li>
+<li><a href="#unusedSupertiles">Unused super tiles</a></li>
+<li><a href="#alternatingSpeed">Game speed varies</a></li>
 </ul>
-<div><a name="unusedSupertiles"></a></div>
+<div><span id="unusedSupertiles"></span></div>
 <div class="box box-1">
 <div class="box-title">Unused super tiles</div>
 <div class="paragraph">
 There are two unused supertiles. $4F and $9A.
 </div>
 </div>
-<div><a name="alternatingSpeed"></a></div>
+<div><span id="alternatingSpeed"></span></div>
 <div class="box box-2">
 <div class="box-title">Game speed varies</div>
 <div class="paragraph">
@@ -38,13 +35,13 @@ When our hero is outdoors the speed of the game can vary depending on where he s
 This is because the routine which copies the back-buffered game screen to the real screen has two modes: a fast mode where the bytes are copied directly and a slow mode where the pixels are rolled by a nibble before being written. Depending on where the hero is standing the screen buffer may not be aligned with regard to the screen and require use of the slow rolling routine.
 </div>
 <div class="paragraph">
-In the interior maps the game runs far too fast so has a dedicated delay loop at <a class="link" href="../asm/A095.html">A095</a> to slow things down.
+In the interior maps the game runs far too fast so has a dedicated delay loop at <a href="../asm/A095.html">A095</a> to slow things down.
 </div>
 </div>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

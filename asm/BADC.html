@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at BADC</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="BACD.html">BACD</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#badc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="BAF7.html">BAF7</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="BACD.html">BACD</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#badc">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="BAF7.html">BAF7</a></span></td>
 </tr>
 </table>
 <div class="description">BADC: Masks tiles (placed in a stride-of-4 arrangement) by the specified index exterior_tiles (set zero).</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="B916.html">B916</a>.
+Used by the routine at <a href="B916.html">B916</a>.
 </div>
 </div>
 <table class="input-1">
@@ -56,148 +53,148 @@ Used by the routine at <a class="link" href="B916.html">B916</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="badc"></a>BADC</td>
+<td class="address-2"><span id="badc"></span>BADC</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">DEdash = HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="badd"></a>BADD</td>
+<td class="address-1"><span id="badd"></span>BADD</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bade"></a>BADE</td>
+<td class="address-1"><span id="bade"></span>BADE</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="7">HLdash = &amp;exterior_tiles_0[A];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="badf"></a>BADF</td>
+<td class="address-1"><span id="badf"></span>BADF</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bae1"></a>BAE1</td>
+<td class="address-1"><span id="bae1"></span>BAE1</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bae2"></a>BAE2</td>
+<td class="address-1"><span id="bae2"></span>BAE2</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bae3"></a>BAE3</td>
+<td class="address-1"><span id="bae3"></span>BAE3</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bae4"></a>BAE4</td>
+<td class="address-1"><span id="bae4"></span>BAE4</td>
 <td class="instruction">LD BC,$8218</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bae7"></a>BAE7</td>
+<td class="address-1"><span id="bae7"></span>BAE7</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bae8"></a>BAE8</td>
+<td class="address-1"><span id="bae8"></span>BAE8</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bae9"></a>BAE9</td>
+<td class="address-1"><span id="bae9"></span>BAE9</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">Bdash = 8; // 8 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="baeb"></a>BAEB</td>
+<td class="address-2"><span id="baeb"></span>BAEB</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="4">do &lt;% *DEdash &amp;= *HLdash++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baec"></a>BAEC</td>
+<td class="address-1"><span id="baec"></span>BAEC</td>
 <td class="instruction">AND (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baed"></a>BAED</td>
+<td class="address-1"><span id="baed"></span>BAED</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baee"></a>BAEE</td>
+<td class="address-1"><span id="baee"></span>BAEE</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baef"></a>BAEF</td>
+<td class="address-1"><span id="baef"></span>BAEF</td>
 <td class="instruction">INC E</td>
 <td class="comment-11" rowspan="4">DEdash += 4; /* supertile stride */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baf0"></a>BAF0</td>
+<td class="address-1"><span id="baf0"></span>BAF0</td>
 <td class="instruction">INC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baf1"></a>BAF1</td>
+<td class="address-1"><span id="baf1"></span>BAF1</td>
 <td class="instruction">INC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baf2"></a>BAF2</td>
+<td class="address-1"><span id="baf2"></span>BAF2</td>
 <td class="instruction">INC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baf3"></a>BAF3</td>
+<td class="address-1"><span id="baf3"></span>BAF3</td>
 <td class="instruction">DJNZ $BAEB</td>
 <td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baf5"></a>BAF5</td>
+<td class="address-1"><span id="baf5"></span>BAF5</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="baf6"></a>BAF6</td>
+<td class="address-1"><span id="baf6"></span>BAF6</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="BACD.html">BACD</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#badc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="BAF7.html">BAF7</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="BACD.html">BACD</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#badc">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="BAF7.html">BAF7</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

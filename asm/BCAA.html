@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at BCAA</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="BB98.html">BB98</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#bcaa">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="BCEE.html">BCEE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="BB98.html">BB98</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#bcaa">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="BCEE.html">BCEE</a></span></td>
 </tr>
 </table>
 <div class="description">BCAA: Turn a map ref into a tile set pointer.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="BB98.html">BB98</a>.
+Used by the routine at <a href="BB98.html">BB98</a>.
 </div>
 </div>
 <table class="input-0">
@@ -60,49 +57,49 @@ Used by the routine at <a class="link" href="BB98.html">BB98</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="bcaa"></a>BCAA</td>
+<td class="address-2"><span id="bcaa"></span>BCAA</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcab"></a>BCAB</td>
+<td class="address-1"><span id="bcab"></span>BCAB</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcae"></a>BCAE</td>
+<td class="address-1"><span id="bcae"></span>BCAE</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcaf"></a>BCAF</td>
+<td class="address-1"><span id="bcaf"></span>BCAF</td>
 <td class="instruction">JR Z,$BCB6</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcb1"></a>BCB1</td>
+<td class="address-1"><span id="bcb1"></span>BCB1</td>
 <td class="instruction">LD BC,$9768</td>
 <td class="comment-11" rowspan="1">BC = &amp;interior_tiles[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcb4"></a>BCB4</td>
+<td class="address-1"><span id="bcb4"></span>BCB4</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcb5"></a>BCB5</td>
+<td class="address-1"><span id="bcb5"></span>BCB5</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="bcb6"></a>
+<span id="bcb6"></span>
 <div class="comments">
 <div class="paragraph">
 Convert map position to an index into 7x5 supertile refs array.
@@ -112,220 +109,220 @@ Convert map position to an index into 7x5 supertile refs array.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="bcb6"></a>BCB6</td>
+<td class="address-2"><span id="bcb6"></span>BCB6</td>
 <td class="instruction">LD A,($81BC)</td>
 <td class="comment-11" rowspan="5">else &lt;% Adash = (((map_position &gt;&gt; 8) &amp; 3) + L) &gt;&gt; 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcb9"></a>BCB9</td>
+<td class="address-1"><span id="bcb9"></span>BCB9</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcbb"></a>BCBB</td>
+<td class="address-1"><span id="bcbb"></span>BCBB</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcbc"></a>BCBC</td>
+<td class="address-1"><span id="bcbc"></span>BCBC</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcbd"></a>BCBD</td>
+<td class="address-1"><span id="bcbd"></span>BCBD</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcbe"></a>BCBE</td>
+<td class="address-1"><span id="bcbe"></span>BCBE</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-11" rowspan="7">L = (Adash &amp; 0x3F) * 7; // vertical</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc0"></a>BCC0</td>
+<td class="address-1"><span id="bcc0"></span>BCC0</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc1"></a>BCC1</td>
+<td class="address-1"><span id="bcc1"></span>BCC1</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc2"></a>BCC2</td>
+<td class="address-1"><span id="bcc2"></span>BCC2</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc3"></a>BCC3</td>
+<td class="address-1"><span id="bcc3"></span>BCC3</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc4"></a>BCC4</td>
+<td class="address-1"><span id="bcc4"></span>BCC4</td>
 <td class="instruction">SUB L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc5"></a>BCC5</td>
+<td class="address-1"><span id="bcc5"></span>BCC5</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc6"></a>BCC6</td>
+<td class="address-1"><span id="bcc6"></span>BCC6</td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="5">Adash = (((map_position &amp; 0xFF) &amp; 3) + H) &gt;&gt; 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcc9"></a>BCC9</td>
+<td class="address-1"><span id="bcc9"></span>BCC9</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bccb"></a>BCCB</td>
+<td class="address-1"><span id="bccb"></span>BCCB</td>
 <td class="instruction">ADD A,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bccc"></a>BCCC</td>
+<td class="address-1"><span id="bccc"></span>BCCC</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bccd"></a>BCCD</td>
+<td class="address-1"><span id="bccd"></span>BCCD</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcce"></a>BCCE</td>
+<td class="address-1"><span id="bcce"></span>BCCE</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-11" rowspan="2">Adash = (Adash &amp; 0x3F) + L; // horizontal</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcd0"></a>BCD0</td>
+<td class="address-1"><span id="bcd0"></span>BCD0</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcd1"></a>BCD1</td>
+<td class="address-1"><span id="bcd1"></span>BCD1</td>
 <td class="instruction">LD HL,$FF58</td>
 <td class="comment-11" rowspan="4">Adash = $FF58[Adash]; // (7x5) supertile refs</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcd4"></a>BCD4</td>
+<td class="address-1"><span id="bcd4"></span>BCD4</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcd5"></a>BCD5</td>
+<td class="address-1"><span id="bcd5"></span>BCD5</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcd6"></a>BCD6</td>
+<td class="address-1"><span id="bcd6"></span>BCD6</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcd7"></a>BCD7</td>
+<td class="address-1"><span id="bcd7"></span>BCD7</td>
 <td class="instruction">LD BC,$8590</td>
 <td class="comment-11" rowspan="1">BC = &amp;exterior_tiles_1[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcda"></a>BCDA</td>
+<td class="address-1"><span id="bcda"></span>BCDA</td>
 <td class="instruction">CP $2D</td>
 <td class="comment-11" rowspan="2">if (Adash &gt;= 45) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcdc"></a>BCDC</td>
+<td class="address-1"><span id="bcdc"></span>BCDC</td>
 <td class="instruction">JR C,$BCEC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bcde"></a>BCDE</td>
+<td class="address-1"><span id="bcde"></span>BCDE</td>
 <td class="instruction">LD BC,$8A18</td>
 <td class="comment-11" rowspan="1">BC = &amp;exterior_tiles_2[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bce1"></a>BCE1</td>
+<td class="address-1"><span id="bce1"></span>BCE1</td>
 <td class="instruction">CP $8B</td>
 <td class="comment-11" rowspan="4">if (Adash &gt;= 139 &amp;&amp; Adash &lt; 204) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bce3"></a>BCE3</td>
+<td class="address-1"><span id="bce3"></span>BCE3</td>
 <td class="instruction">JR C,$BCEC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bce5"></a>BCE5</td>
+<td class="address-1"><span id="bce5"></span>BCE5</td>
 <td class="instruction">CP $CC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bce7"></a>BCE7</td>
+<td class="address-1"><span id="bce7"></span>BCE7</td>
 <td class="instruction">JR NC,$BCEC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bce9"></a>BCE9</td>
+<td class="address-1"><span id="bce9"></span>BCE9</td>
 <td class="instruction">LD BC,$90F8</td>
 <td class="comment-11" rowspan="1">BC = &amp;exterior_tiles_3[0]; %&gt; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="bcec"></a>BCEC</td>
+<td class="address-2"><span id="bcec"></span>BCEC</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bced"></a>BCED</td>
+<td class="address-1"><span id="bced"></span>BCED</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="BB98.html">BB98</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#bcaa">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="BCEE.html">BCEE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="BB98.html">BB98</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#bcaa">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="BCEE.html">BCEE</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 7C82</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7C46.html">7C46</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7c82">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7CBE.html">7CBE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7C46.html">7C46</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7c82">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7CBE.html">7CBE</a></span></td>
 </tr>
 </table>
 <div class="description">7C82: Returns an item within range of the hero.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="7B36.html">7B36</a>.
+Used by the routine at <a href="7B36.html">7B36</a>.
 </div>
 </div>
 <table class="input-0">
@@ -56,7 +53,7 @@ Used by the routine at <a class="link" href="7B36.html">7B36</a>.
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7c82"></a>
+<span id="7c82"></span>
 <div class="comments">
 <div class="paragraph">
 Select a pick up radius.
@@ -66,37 +63,37 @@ Select a pick up radius.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7c82"></a>7C82</td>
+<td class="address-2"><span id="7c82"></span>7C82</td>
 <td class="instruction">LD C,$01</td>
 <td class="comment-11" rowspan="1">C = 1; // outdoors</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c84"></a>7C84</td>
+<td class="address-1"><span id="7c84"></span>7C84</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="4">if (room_index) C = 6; // interior</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c87"></a>7C87</td>
+<td class="address-1"><span id="7c87"></span>7C87</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c88"></a>7C88</td>
+<td class="address-1"><span id="7c88"></span>7C88</td>
 <td class="instruction">JR Z,$7C8C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c8a"></a>7C8A</td>
+<td class="address-1"><span id="7c8a"></span>7C8A</td>
 <td class="instruction">LD C,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7c8c"></a>
+<span id="7c8c"></span>
 <div class="comments">
 <div class="paragraph">
 For all items.
@@ -106,61 +103,61 @@ For all items.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7c8c"></a>7C8C</td>
+<td class="address-2"><span id="7c8c"></span>7C8C</td>
 <td class="instruction">LD B,$10</td>
 <td class="comment-11" rowspan="1">B = item__LIMIT; // 16 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c8e"></a>7C8E</td>
+<td class="address-1"><span id="7c8e"></span>7C8E</td>
 <td class="instruction">LD HL,$76C9</td>
 <td class="comment-11" rowspan="1">HL = &amp;item_structs[0].room;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7c91"></a>7C91</td>
+<td class="address-2"><span id="7c91"></span>7C91</td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% if (*HL &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY_7) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c93"></a>7C93</td>
+<td class="address-1"><span id="7c93"></span>7C93</td>
 <td class="instruction">JR Z,$7CB2</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c95"></a>7C95</td>
+<td class="address-1"><span id="7c95"></span>7C95</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c96"></a>7C96</td>
+<td class="address-1"><span id="7c96"></span>7C96</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c97"></a>7C97</td>
+<td class="address-1"><span id="7c97"></span>7C97</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // itemstruct.x</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c98"></a>7C98</td>
+<td class="address-1"><span id="7c98"></span>7C98</td>
 <td class="instruction">LD DE,$81B8</td>
 <td class="comment-11" rowspan="1">DE = &amp;hero_map_position.x;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c9b"></a>7C9B</td>
+<td class="address-1"><span id="7c9b"></span>7C9B</td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">B = 2; // 2 iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7c9d"></a>
+<span id="7c9d"></span>
 <div class="comments">
 <div class="paragraph">
 Range check.
@@ -170,97 +167,97 @@ Range check.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7c9d"></a>7C9D</td>
+<td class="address-2"><span id="7c9d"></span>7C9D</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="2">do &lt;% A = *DE++; // get hero map position</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c9e"></a>7C9E</td>
+<td class="address-1"><span id="7c9e"></span>7C9E</td>
 <td class="instruction">SUB C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7c9f"></a>7C9F</td>
+<td class="address-1"><span id="7c9f"></span>7C9F</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="6">if (A - C &gt;= *HL || A + C &lt; *HL) goto popnext;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca0"></a>7CA0</td>
+<td class="address-1"><span id="7ca0"></span>7CA0</td>
 <td class="instruction">JR NC,$7CB0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca2"></a>7CA2</td>
+<td class="address-1"><span id="7ca2"></span>7CA2</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca3"></a>7CA3</td>
+<td class="address-1"><span id="7ca3"></span>7CA3</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca4"></a>7CA4</td>
+<td class="address-1"><span id="7ca4"></span>7CA4</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca5"></a>7CA5</td>
+<td class="address-1"><span id="7ca5"></span>7CA5</td>
 <td class="instruction">JR C,$7CB0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca7"></a>7CA7</td>
+<td class="address-1"><span id="7ca7"></span>7CA7</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca8"></a>7CA8</td>
+<td class="address-1"><span id="7ca8"></span>7CA8</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ca9"></a>7CA9</td>
+<td class="address-1"><span id="7ca9"></span>7CA9</td>
 <td class="instruction">DJNZ $7C9D</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cab"></a>7CAB</td>
+<td class="address-1"><span id="7cab"></span>7CAB</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cac"></a>7CAC</td>
+<td class="address-1"><span id="7cac"></span>7CAC</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">HL--; // compensate for overshoot</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cad"></a>7CAD</td>
+<td class="address-1"><span id="7cad"></span>7CAD</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cae"></a>7CAE</td>
+<td class="address-1"><span id="7cae"></span>7CAE</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0; // set Z (found)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7caf"></a>
+<span id="7caf"></span>
 <div class="comments">
 <div class="paragraph">
 Bug: The next instruction is written as RET Z but there's no need for it to be conditional.
@@ -270,82 +267,82 @@ Bug: The next instruction is written as RET Z but there's no need for it to be c
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7caf"></a>7CAF</td>
+<td class="address-1"><span id="7caf"></span>7CAF</td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7cb0"></a>7CB0</td>
+<td class="address-2"><span id="7cb0"></span>7CB0</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">popnext: POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cb1"></a>7CB1</td>
+<td class="address-1"><span id="7cb1"></span>7CB1</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7cb2"></a>7CB2</td>
+<td class="address-2"><span id="7cb2"></span>7CB2</td>
 <td class="instruction">LD A,$07</td>
 <td class="comment-11" rowspan="5">HL += 7; // stride</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cb4"></a>7CB4</td>
+<td class="address-1"><span id="7cb4"></span>7CB4</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cb5"></a>7CB5</td>
+<td class="address-1"><span id="7cb5"></span>7CB5</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cb6"></a>7CB6</td>
+<td class="address-1"><span id="7cb6"></span>7CB6</td>
 <td class="instruction">JR NC,$7CB9</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cb8"></a>7CB8</td>
+<td class="address-1"><span id="7cb8"></span>7CB8</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7cb9"></a>7CB9</td>
+<td class="address-2"><span id="7cb9"></span>7CB9</td>
 <td class="instruction">DJNZ $7C91</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cbb"></a>7CBB</td>
+<td class="address-1"><span id="7cbb"></span>7CBB</td>
 <td class="instruction">OR $01</td>
 <td class="comment-11" rowspan="1">A |= 1; // set NZ (not found)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cbd"></a>7CBD</td>
+<td class="address-1"><span id="7cbd"></span>7CBD</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7C46.html">7C46</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7c82">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7CBE.html">7CBE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7C46.html">7C46</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7c82">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7CBE.html">7CBE</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

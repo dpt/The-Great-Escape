@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at BACD</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B916.html">B916</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#bacd">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="BADC.html">BADC</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B916.html">B916</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#bacd">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="BADC.html">BADC</a></span></td>
 </tr>
 </table>
 <div class="description">BACD: Multiply the two input values, A and E, returning a widened result in HL.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="B916.html">B916</a>.
+Used by the routine at <a href="B916.html">B916</a>.
 </div>
 </div>
 <table class="input-1">
@@ -59,70 +56,70 @@ Used by the routine at <a class="link" href="B916.html">B916</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="bacd"></a>BACD</td>
+<td class="address-2"><span id="bacd"></span>BACD</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bacf"></a>BACF</td>
+<td class="address-1"><span id="bacf"></span>BACF</td>
 <td class="instruction">LD HL,$0000</td>
 <td class="comment-11" rowspan="1">HL = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bad2"></a>BAD2</td>
+<td class="address-1"><span id="bad2"></span>BAD2</td>
 <td class="instruction">LD D,H</td>
 <td class="comment-11" rowspan="1">D = 0; // e.g. DE = 8;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="bad3"></a>BAD3</td>
+<td class="address-2"><span id="bad3"></span>BAD3</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-11" rowspan="1">do &lt;% HL += HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bad4"></a>BAD4</td>
+<td class="address-1"><span id="bad4"></span>BAD4</td>
 <td class="instruction">RLA</td>
 <td class="comment-11" rowspan="1">RLA  // carry = (A &gt;&gt; 7); A &lt;&lt;= 1; /* shift out of high end */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bad5"></a>BAD5</td>
+<td class="address-1"><span id="bad5"></span>BAD5</td>
 <td class="instruction">JP NC,$BAD9</td>
 <td class="comment-11" rowspan="2">if (carry) HL += DE; /* shift into low end */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="bad8"></a>BAD8</td>
+<td class="address-1"><span id="bad8"></span>BAD8</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="bad9"></a>BAD9</td>
+<td class="address-2"><span id="bad9"></span>BAD9</td>
 <td class="instruction">DJNZ $BAD3</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="badb"></a>BADB</td>
+<td class="address-1"><span id="badb"></span>BADB</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B916.html">B916</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#bacd">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="BADC.html">BADC</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B916.html">B916</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#bacd">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="BADC.html">BADC</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

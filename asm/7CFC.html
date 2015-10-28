@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Game status buffer entry at 7CFC</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-g">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7CE9.html">7CE9</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7cfc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7D15.html">7D15</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7CE9.html">7CE9</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7cfc">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7D15.html">7D15</a></span></td>
 </tr>
 </table>
 <div class="description">7CFC: Message queue stuff.</div>
@@ -47,58 +44,58 @@
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cfc"></a>7CFC</td>
+<td class="address-1"><span id="7cfc"></span>7CFC</td>
 <td class="instruction">DEFB $FF,$FF,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-11" rowspan="3">Queue of message indexes. Pairs of bytes + 0xFF terminator.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d04"></a>7D04</td>
+<td class="address-1"><span id="7d04"></span>7D04</td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d0c"></a>7D0C</td>
+<td class="address-1"><span id="7d0c"></span>7D0C</td>
 <td class="instruction">DEFB $00,$00,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d0f"></a>7D0F</td>
+<td class="address-1"><span id="7d0f"></span>7D0F</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">Decrementing counter which shows the next message when it reaches zero.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d10"></a>7D10</td>
+<td class="address-1"><span id="7d10"></span>7D10</td>
 <td class="instruction">DEFB $80</td>
 <td class="comment-11" rowspan="1">Index into the message we're displaying or wiping. If 128 then next_message. If &gt; 128 then wipe_message. Else display.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d11"></a>7D11</td>
+<td class="address-1"><span id="7d11"></span>7D11</td>
 <td class="instruction">DEFW $7CFE</td>
 <td class="comment-11" rowspan="1">Pointer to the next available slot in the message queue.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d13"></a>7D13</td>
+<td class="address-1"><span id="7d13"></span>7D13</td>
 <td class="instruction">DEFW $0000</td>
 <td class="comment-11" rowspan="1">Pointer to the next message character to be displayed.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7CE9.html">7CE9</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7cfc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7D15.html">7D15</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7CE9.html">7CE9</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7cfc">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7D15.html">7D15</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

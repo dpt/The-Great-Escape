@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at CB85</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="CB79.html">CB79</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#cb85">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="CB92.html">CB92</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="CB79.html">CB79</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#cb85">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="CB92.html">CB92</a></span></td>
 </tr>
 </table>
 <div class="description">CB85: Pseudo-random number generator.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="C651.html">C651</a>.
+Used by the routine at <a href="C651.html">C651</a>.
 </div>
 </div>
 <table class="input-0">
@@ -52,25 +49,25 @@ Used by the routine at <a class="link" href="C651.html">C651</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="cb85"></a>CB85</td>
+<td class="address-2"><span id="cb85"></span>CB85</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="cb86"></a>CB86</td>
+<td class="address-1"><span id="cb86"></span>CB86</td>
 <td class="instruction">LD HL,($C41A)</td>
 <td class="comment-11" rowspan="2">HL = prng_pointer + 1;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="cb89"></a>CB89</td>
+<td class="address-1"><span id="cb89"></span>CB89</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="cb8a"></a>
+<span id="cb8a"></span>
 <div class="comments">
 <div class="paragraph">
 sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's fetching exterior tiles
@@ -80,46 +77,46 @@ sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="cb8a"></a>CB8A</td>
+<td class="address-1"><span id="cb8a"></span>CB8A</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL &amp; 0x0F;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="cb8b"></a>CB8B</td>
+<td class="address-1"><span id="cb8b"></span>CB8B</td>
 <td class="instruction">AND $0F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="cb8d"></a>CB8D</td>
+<td class="address-1"><span id="cb8d"></span>CB8D</td>
 <td class="instruction">LD ($C41A),HL</td>
 <td class="comment-11" rowspan="1">prng_pointer = HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="cb90"></a>CB90</td>
+<td class="address-1"><span id="cb90"></span>CB90</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="cb91"></a>CB91</td>
+<td class="address-1"><span id="cb91"></span>CB91</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="CB79.html">CB79</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#cb85">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="CB92.html">CB92</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="CB79.html">CB79</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#cb85">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="CB92.html">CB92</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

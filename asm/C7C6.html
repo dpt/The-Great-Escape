@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at C7C6</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="C7B9.html">C7B9</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#c7c6">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="C891.html">C891</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="C7B9.html">C7B9</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#c7c6">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="C891.html">C891</a></span></td>
 </tr>
 </table>
 <div class="description">C7C6: Character event.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="C6A0.html">C6A0</a> and <a class="link" href="CB2D.html">CB2D</a>.
+Used by the routines at <a href="C6A0.html">C6A0</a> and <a href="CB2D.html">CB2D</a>.
 </div>
 <div class="paragraph">
 Makes characters sit, sleep or other things TBD.
@@ -55,79 +52,79 @@ Makes characters sit, sleep or other things TBD.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c7c6"></a>C7C6</td>
+<td class="address-2"><span id="c7c6"></span>C7C6</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7c7"></a>C7C7</td>
+<td class="address-1"><span id="c7c7"></span>C7C7</td>
 <td class="instruction">CP $07</td>
 <td class="comment-11" rowspan="4">if (A &gt;= character_7_GUARD_7  &amp;&amp; A &lt;= character_12_GUARD_12) goto character_sleeps;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7c9"></a>C7C9</td>
+<td class="address-1"><span id="c7c9"></span>C7C9</td>
 <td class="instruction">JR C,$C7D0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7cb"></a>C7CB</td>
+<td class="address-1"><span id="c7cb"></span>C7CB</td>
 <td class="instruction">CP $0D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7cd"></a>C7CD</td>
-<td class="instruction">JP C,<a class="link" href="A444.html">$A444</a></td>
+<td class="address-1"><span id="c7cd"></span>C7CD</td>
+<td class="instruction">JP C,<a href="A444.html">$A444</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c7d0"></a>C7D0</td>
+<td class="address-2"><span id="c7d0"></span>C7D0</td>
 <td class="instruction">CP $12</td>
 <td class="comment-11" rowspan="4">if (A &gt;= character_18_GUARD_DOG_3 &amp;&amp; A &lt;= character_22_PRISONER_3) goto character_sits;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7d2"></a>C7D2</td>
+<td class="address-1"><span id="c7d2"></span>C7D2</td>
 <td class="instruction">JR C,$C7D9</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7d4"></a>C7D4</td>
+<td class="address-1"><span id="c7d4"></span>C7D4</td>
 <td class="instruction">CP $17</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7d6"></a>C7D6</td>
-<td class="instruction">JP C,<a class="link" href="A420.html">$A420</a></td>
+<td class="address-1"><span id="c7d6"></span>C7D6</td>
+<td class="instruction">JP C,<a href="A420.html">$A420</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c7d9"></a>C7D9</td>
+<td class="address-2"><span id="c7d9"></span>C7D9</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HL // POPped by handlers</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7da"></a>C7DA</td>
+<td class="address-1"><span id="c7da"></span>C7DA</td>
 <td class="instruction">LD HL,$C7F9</td>
 <td class="comment-11" rowspan="1">map = &amp;character_to_event_handler_index_map[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7dd"></a>C7DD</td>
+<td class="address-1"><span id="c7dd"></span>C7DD</td>
 <td class="instruction">LD B,$18</td>
 <td class="comment-11" rowspan="1">B = NELEMS(character_to_event_handler_index_map); // 24 iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c7df"></a>
+<span id="c7df"></span>
 <div class="comments">
 <div class="paragraph">
 Locate the character in the map.
@@ -137,127 +134,127 @@ Locate the character in the map.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c7df"></a>C7DF</td>
+<td class="address-2"><span id="c7df"></span>C7DF</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% if (A == map-&gt;character) goto call_action;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7e0"></a>C7E0</td>
+<td class="address-1"><span id="c7e0"></span>C7E0</td>
 <td class="instruction">JR Z,$C7EA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7e2"></a>C7E2</td>
+<td class="address-1"><span id="c7e2"></span>C7E2</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">map += 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7e3"></a>C7E3</td>
+<td class="address-1"><span id="c7e3"></span>C7E3</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7e4"></a>C7E4</td>
+<td class="address-1"><span id="c7e4"></span>C7E4</td>
 <td class="instruction">DJNZ $C7DF</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7e6"></a>C7E6</td>
+<td class="address-1"><span id="c7e6"></span>C7E6</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7e7"></a>C7E7</td>
+<td class="address-1"><span id="c7e7"></span>C7E7</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="1">*HL = 0; // no action</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7e9"></a>C7E9</td>
+<td class="address-1"><span id="c7e9"></span>C7E9</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c7ea"></a>C7EA</td>
+<td class="address-2"><span id="c7ea"></span>C7EA</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="12">call_action: goto character_event_handlers[*++HL];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7eb"></a>C7EB</td>
+<td class="address-1"><span id="c7eb"></span>C7EB</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7ec"></a>C7EC</td>
+<td class="address-1"><span id="c7ec"></span>C7EC</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7ed"></a>C7ED</td>
+<td class="address-1"><span id="c7ed"></span>C7ED</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7ee"></a>C7EE</td>
+<td class="address-1"><span id="c7ee"></span>C7EE</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f0"></a>C7F0</td>
+<td class="address-1"><span id="c7f0"></span>C7F0</td>
 <td class="instruction">LD HL,$C829</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f3"></a>C7F3</td>
+<td class="address-1"><span id="c7f3"></span>C7F3</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f4"></a>C7F4</td>
+<td class="address-1"><span id="c7f4"></span>C7F4</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f5"></a>C7F5</td>
+<td class="address-1"><span id="c7f5"></span>C7F5</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f6"></a>C7F6</td>
+<td class="address-1"><span id="c7f6"></span>C7F6</td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f7"></a>C7F7</td>
+<td class="address-1"><span id="c7f7"></span>C7F7</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f8"></a>C7F8</td>
+<td class="address-1"><span id="c7f8"></span>C7F8</td>
 <td class="instruction">JP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c7f9"></a>
+<span id="c7f9"></span>
 <div class="comments">
 <div class="paragraph">
 character_to_event_handler_index_map
@@ -270,151 +267,151 @@ Array of (character + flags, character event handler index) mappings.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7f9"></a>C7F9</td>
+<td class="address-1"><span id="c7f9"></span>C7F9</td>
 <td class="instruction">DEFW $00A6</td>
 <td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b10100000, charevnt_0,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7fb"></a>C7FB</td>
+<td class="address-1"><span id="c7fb"></span>C7FB</td>
 <td class="instruction">DEFW $00A7</td>
 <td class="comment-11" rowspan="1">character_7_GUARD_7       | 0b10100000, charevnt_0,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7fd"></a>C7FD</td>
+<td class="address-1"><span id="c7fd"></span>C7FD</td>
 <td class="instruction">DEFW $01A8</td>
 <td class="comment-11" rowspan="1">character_8_GUARD_8       | 0b10100000, charevnt_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c7ff"></a>C7FF</td>
+<td class="address-1"><span id="c7ff"></span>C7FF</td>
 <td class="instruction">DEFW $01A9</td>
 <td class="comment-11" rowspan="1">character_9_GUARD_9       | 0b10100000, charevnt_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c801"></a>C801</td>
+<td class="address-1"><span id="c801"></span>C801</td>
 <td class="instruction">DEFW $0005</td>
 <td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b00000000, charevnt_0,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c803"></a>C803</td>
+<td class="address-1"><span id="c803"></span>C803</td>
 <td class="instruction">DEFW $0106</td>
 <td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b00000000, charevnt_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c805"></a>C805</td>
+<td class="address-1"><span id="c805"></span>C805</td>
 <td class="instruction">DEFW $0385</td>
 <td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b10000000, charevnt_3, // checks byte_A13E case 1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c807"></a>C807</td>
+<td class="address-1"><span id="c807"></span>C807</td>
 <td class="instruction">DEFW $0386</td>
 <td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b10000000, charevnt_3, // checks byte_A13E case 1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c809"></a>C809</td>
+<td class="address-1"><span id="c809"></span>C809</td>
 <td class="instruction">DEFW $020E</td>
 <td class="comment-11" rowspan="1">character_14_GUARD_14     | 0b00000000, charevnt_2,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c80b"></a>C80B</td>
+<td class="address-1"><span id="c80b"></span>C80B</td>
 <td class="instruction">DEFW $020F</td>
 <td class="comment-11" rowspan="1">character_15_GUARD_15     | 0b00000000, charevnt_2,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c80d"></a>C80D</td>
+<td class="address-1"><span id="c80d"></span>C80D</td>
 <td class="instruction">DEFW $008E</td>
 <td class="comment-11" rowspan="1">character_14_GUARD_14     | 0b10000000, charevnt_0,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c80f"></a>C80F</td>
+<td class="address-1"><span id="c80f"></span>C80F</td>
 <td class="instruction">DEFW $018F</td>
 <td class="comment-11" rowspan="1">character_15_GUARD_15     | 0b10000000, charevnt_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c811"></a>C811</td>
+<td class="address-1"><span id="c811"></span>C811</td>
 <td class="instruction">DEFW $0510</td>
 <td class="comment-11" rowspan="1">character_16_GUARD_DOG_1  | 0b00000000, charevnt_5, // checks byte_A13E case 2</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c813"></a>C813</td>
+<td class="address-1"><span id="c813"></span>C813</td>
 <td class="instruction">DEFW $0511</td>
 <td class="comment-11" rowspan="1">character_16_GUARD_DOG_2  | 0b00000000, charevnt_5, // checks byte_A13E case 2</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c815"></a>C815</td>
+<td class="address-1"><span id="c815"></span>C815</td>
 <td class="instruction">DEFW $0090</td>
 <td class="comment-11" rowspan="1">character_16_GUARD_DOG_1  | 0b10000000, charevnt_0,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c817"></a>C817</td>
+<td class="address-1"><span id="c817"></span>C817</td>
 <td class="instruction">DEFW $0191</td>
 <td class="comment-11" rowspan="1">character_16_GUARD_DOG_2  | 0b10000000, charevnt_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c819"></a>C819</td>
+<td class="address-1"><span id="c819"></span>C819</td>
 <td class="instruction">DEFW $00A0</td>
 <td class="comment-11" rowspan="1">character_0_COMMANDANT    | 0b10100000, charevnt_0,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c81b"></a>C81B</td>
+<td class="address-1"><span id="c81b"></span>C81B</td>
 <td class="instruction">DEFW $01A1</td>
 <td class="comment-11" rowspan="1">character_1_GUARD_1       | 0b10100000, charevnt_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c81d"></a>C81D</td>
+<td class="address-1"><span id="c81d"></span>C81D</td>
 <td class="instruction">DEFW $072A</td>
 <td class="comment-11" rowspan="1">character_10_GUARD_10     | 0b00100000, charevnt_7,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c81f"></a>C81F</td>
+<td class="address-1"><span id="c81f"></span>C81F</td>
 <td class="instruction">DEFW $082C</td>
 <td class="comment-11" rowspan="1">character_12_GUARD_12     | 0b00100000, charevnt_8, // hero sleeps</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c821"></a>C821</td>
+<td class="address-1"><span id="c821"></span>C821</td>
 <td class="instruction">DEFW $092B</td>
 <td class="comment-11" rowspan="1">character_11_GUARD_11     | 0b00100000, charevnt_9, // hero sits</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c823"></a>C823</td>
+<td class="address-1"><span id="c823"></span>C823</td>
 <td class="instruction">DEFW $06A4</td>
 <td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b10100000, charevnt_6, // go to 0x0315</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c825"></a>C825</td>
+<td class="address-1"><span id="c825"></span>C825</td>
 <td class="instruction">DEFW $0A24</td>
 <td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b00100000, charevnt_10,// released from solitary</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c827"></a>C827</td>
+<td class="address-1"><span id="c827"></span>C827</td>
 <td class="instruction">DEFW $0425</td>
 <td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b00100000, charevnt_4, // zero morale_1</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c829"></a>
+<span id="c829"></span>
 <div class="comments">
 <div class="paragraph">
 character_event_handlers
@@ -427,73 +424,73 @@ Array of pointers to character event handlers.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c829"></a>C829</td>
+<td class="address-1"><span id="c829"></span>C829</td>
 <td class="instruction">DEFW $C864</td>
 <td class="comment-11" rowspan="1">charevnt_handler *character_event_handlers[] = { &amp;charevnt_handler_0,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c82b"></a>C82B</td>
+<td class="address-1"><span id="c82b"></span>C82B</td>
 <td class="instruction">DEFW $C85C</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c82d"></a>C82D</td>
+<td class="address-1"><span id="c82d"></span>C82D</td>
 <td class="instruction">DEFW $C860</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_2,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c82f"></a>C82F</td>
+<td class="address-1"><span id="c82f"></span>C82F</td>
 <td class="instruction">DEFW $C86C</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_3_check_var_A13E,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c831"></a>C831</td>
+<td class="address-1"><span id="c831"></span>C831</td>
 <td class="instruction">DEFW $C83F</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_4_zero_morale_1,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c833"></a>C833</td>
+<td class="address-1"><span id="c833"></span>C833</td>
 <td class="instruction">DEFW $C877</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_5_check_var_A13E_anotherone,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c835"></a>C835</td>
+<td class="address-1"><span id="c835"></span>C835</td>
 <td class="instruction">DEFW $C845</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_6,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c837"></a>C837</td>
+<td class="address-1"><span id="c837"></span>C837</td>
 <td class="instruction">DEFW $C882</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_7,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c839"></a>C839</td>
+<td class="address-1"><span id="c839"></span>C839</td>
 <td class="instruction">DEFW $C88D</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_8_hero_sleeps,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c83b"></a>C83B</td>
+<td class="address-1"><span id="c83b"></span>C83B</td>
 <td class="instruction">DEFW $C889</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_9_hero_sits,</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c83d"></a>C83D</td>
+<td class="address-1"><span id="c83d"></span>C83D</td>
 <td class="instruction">DEFW $C84C</td>
 <td class="comment-11" rowspan="1">&amp;charevnt_handler_10_hero_released_from_solitary, };</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c83f"></a>
+<span id="c83f"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_4_zero_morale_1
@@ -503,25 +500,25 @@ charevnt_handler_4_zero_morale_1
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c83f"></a>C83F</td>
+<td class="address-1"><span id="c83f"></span>C83F</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">morale_1 = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c840"></a>C840</td>
+<td class="address-1"><span id="c840"></span>C840</td>
 <td class="instruction">LD ($A13A),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c843"></a>C843</td>
+<td class="address-1"><span id="c843"></span>C843</td>
 <td class="instruction">JR $C864</td>
 <td class="comment-11" rowspan="1">goto charevnt_handler_0;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c845"></a>
+<span id="c845"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_6
@@ -531,37 +528,37 @@ charevnt_handler_6
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c845"></a>C845</td>
+<td class="address-1"><span id="c845"></span>C845</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL // (popped) sampled HL = $80C2 (x2), $8042  // likely target location</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c846"></a>C846</td>
+<td class="address-1"><span id="c846"></span>C846</td>
 <td class="instruction">LD (HL),$03</td>
 <td class="comment-11" rowspan="2">*HL++ = 0x03;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c848"></a>C848</td>
+<td class="address-1"><span id="c848"></span>C848</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c849"></a>C849</td>
+<td class="address-1"><span id="c849"></span>C849</td>
 <td class="instruction">LD (HL),$15</td>
 <td class="comment-11" rowspan="1">*HL   = 0x15;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c84b"></a>C84B</td>
+<td class="address-1"><span id="c84b"></span>C84B</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c84c"></a>
+<span id="c84c"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_10_hero_released_from_solitary
@@ -571,55 +568,55 @@ charevnt_handler_10_hero_released_from_solitary
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c84c"></a>C84C</td>
+<td class="address-1"><span id="c84c"></span>C84C</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c84d"></a>C84D</td>
+<td class="address-1"><span id="c84d"></span>C84D</td>
 <td class="instruction">LD (HL),$A4</td>
 <td class="comment-11" rowspan="2">*HL++ = 0xA4;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c84f"></a>C84F</td>
+<td class="address-1"><span id="c84f"></span>C84F</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c850"></a>C850</td>
+<td class="address-1"><span id="c850"></span>C850</td>
 <td class="instruction">LD (HL),$03</td>
 <td class="comment-11" rowspan="1">*HL   = 0x03;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c852"></a>C852</td>
+<td class="address-1"><span id="c852"></span>C852</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">automatic_player_counter = 0; // force automatic control</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c853"></a>C853</td>
+<td class="address-1"><span id="c853"></span>C853</td>
 <td class="instruction">LD ($A139),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c856"></a>C856</td>
+<td class="address-1"><span id="c856"></span>C856</td>
 <td class="instruction">LD BC,$2500</td>
 <td class="comment-11" rowspan="2">set_hero_target_location(0x0025); return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c859"></a>C859</td>
-<td class="instruction">JP <a class="link" href="A33F.html#a344">$A344</a></td>
+<td class="address-1"><span id="c859"></span>C859</td>
+<td class="instruction">JP <a href="A33F.html#a344">$A344</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c85c"></a>
+<span id="c85c"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_1
@@ -629,19 +626,19 @@ charevnt_handler_1
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c85c"></a>C85C</td>
+<td class="address-1"><span id="c85c"></span>C85C</td>
 <td class="instruction">LD C,$10</td>
 <td class="comment-11" rowspan="1">C = 0x10; // 0xFF10</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c85e"></a>C85E</td>
+<td class="address-1"><span id="c85e"></span>C85E</td>
 <td class="instruction">JR $C866</td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c860"></a>
+<span id="c860"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_2
@@ -651,19 +648,19 @@ charevnt_handler_2
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c860"></a>C860</td>
+<td class="address-1"><span id="c860"></span>C860</td>
 <td class="instruction">LD C,$38</td>
 <td class="comment-11" rowspan="1">C = 0x38; // 0xFF38</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c862"></a>C862</td>
+<td class="address-1"><span id="c862"></span>C862</td>
 <td class="instruction">JR $C866</td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c864"></a>
+<span id="c864"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_0
@@ -673,43 +670,43 @@ charevnt_handler_0
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c864"></a>C864</td>
+<td class="address-2"><span id="c864"></span>C864</td>
 <td class="instruction">LD C,$08</td>
 <td class="comment-11" rowspan="1">C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c866"></a>C866</td>
+<td class="address-2"><span id="c866"></span>C866</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">exit: POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c867"></a>C867</td>
+<td class="address-1"><span id="c867"></span>C867</td>
 <td class="instruction">LD (HL),$FF</td>
 <td class="comment-11" rowspan="2">*HL++ = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c869"></a>C869</td>
+<td class="address-1"><span id="c869"></span>C869</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c86a"></a>C86A</td>
+<td class="address-1"><span id="c86a"></span>C86A</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-11" rowspan="1">*HL   = C;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c86b"></a>C86B</td>
+<td class="address-1"><span id="c86b"></span>C86B</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c86c"></a>
+<span id="c86c"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_3_check_var_A13E
@@ -719,37 +716,37 @@ charevnt_handler_3_check_var_A13E
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c86c"></a>C86C</td>
+<td class="address-1"><span id="c86c"></span>C86C</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c86d"></a>C86D</td>
+<td class="address-1"><span id="c86d"></span>C86D</td>
 <td class="instruction">LD A,($A13E)</td>
 <td class="comment-11" rowspan="4">if (entered_move_characters == 0) goto byte_A13E_is_zero; else goto byte_A13E_is_nonzero;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c870"></a>C870</td>
+<td class="address-1"><span id="c870"></span>C870</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c871"></a>C871</td>
-<td class="instruction">JP Z,<a class="link" href="A3F8.html">$A3F8</a></td>
+<td class="address-1"><span id="c871"></span>C871</td>
+<td class="instruction">JP Z,<a href="A3F8.html">$A3F8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c874"></a>C874</td>
-<td class="instruction">JP <a class="link" href="A3F3.html">$A3F3</a></td>
+<td class="address-1"><span id="c874"></span>C874</td>
+<td class="instruction">JP <a href="A3F3.html">$A3F3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c877"></a>
+<span id="c877"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_5_check_var_A13E_anotherone
@@ -759,37 +756,37 @@ charevnt_handler_5_check_var_A13E_anotherone
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c877"></a>C877</td>
+<td class="address-1"><span id="c877"></span>C877</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c878"></a>C878</td>
+<td class="address-1"><span id="c878"></span>C878</td>
 <td class="instruction">LD A,($A13E)</td>
 <td class="comment-11" rowspan="4">if (entered_move_characters == 0) goto byte_A13E_is_zero_anotherone; else goto byte_A13E_is_nonzero_anotherone;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c87b"></a>C87B</td>
+<td class="address-1"><span id="c87b"></span>C87B</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c87c"></a>C87C</td>
-<td class="instruction">JP Z,<a class="link" href="A4D8.html">$A4D8</a></td>
+<td class="address-1"><span id="c87c"></span>C87C</td>
+<td class="instruction">JP Z,<a href="A4D8.html">$A4D8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c87f"></a>C87F</td>
-<td class="instruction">JP <a class="link" href="A4D3.html">$A4D3</a></td>
+<td class="address-1"><span id="c87f"></span>C87F</td>
+<td class="instruction">JP <a href="A4D3.html">$A4D3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c882"></a>
+<span id="c882"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_7
@@ -799,37 +796,37 @@ charevnt_handler_7
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c882"></a>C882</td>
+<td class="address-1"><span id="c882"></span>C882</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c883"></a>C883</td>
+<td class="address-1"><span id="c883"></span>C883</td>
 <td class="instruction">LD (HL),$05</td>
 <td class="comment-11" rowspan="2">*HL++ = 0x05;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c885"></a>C885</td>
+<td class="address-1"><span id="c885"></span>C885</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c886"></a>C886</td>
+<td class="address-1"><span id="c886"></span>C886</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="1">*HL   = 0x00;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c888"></a>C888</td>
+<td class="address-1"><span id="c888"></span>C888</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c889"></a>
+<span id="c889"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_9_hero_sits
@@ -839,19 +836,19 @@ charevnt_handler_9_hero_sits
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c889"></a>C889</td>
+<td class="address-1"><span id="c889"></span>C889</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c88a"></a>C88A</td>
-<td class="instruction">JP <a class="link" href="A47F.html">$A47F</a></td>
+<td class="address-1"><span id="c88a"></span>C88A</td>
+<td class="instruction">JP <a href="A47F.html">$A47F</a></td>
 <td class="comment-11" rowspan="1">goto hero_sits;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c88d"></a>
+<span id="c88d"></span>
 <div class="comments">
 <div class="paragraph">
 charevnt_handler_8_hero_sleeps
@@ -861,28 +858,28 @@ charevnt_handler_8_hero_sleeps
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c88d"></a>C88D</td>
+<td class="address-1"><span id="c88d"></span>C88D</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c88e"></a>C88E</td>
-<td class="instruction">JP <a class="link" href="A489.html">$A489</a></td>
+<td class="address-1"><span id="c88e"></span>C88E</td>
+<td class="instruction">JP <a href="A489.html">$A489</a></td>
 <td class="comment-11" rowspan="1">goto hero_sleeps;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="C7B9.html">C7B9</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#c7c6">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="C891.html">C891</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="C7B9.html">C7B9</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#c7c6">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="C891.html">C891</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

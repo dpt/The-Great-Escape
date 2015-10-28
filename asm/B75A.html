@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at B75A</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B729.html">B729</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b75a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B79B.html">B79B</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B729.html">B729</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b75a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B79B.html">B79B</a></span></td>
 </tr>
 </table>
 <div class="description">B75A: Reset the game.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="9DE5.html">9DE5</a>, <a class="link" href="A51C.html">A51C</a> and <a class="link" href="F163.html">F163</a>.
+Used by the routines at <a href="9DE5.html">9DE5</a>, <a href="A51C.html">A51C</a> and <a href="F163.html">F163</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,7 +46,7 @@ Used by the routines at <a class="link" href="9DE5.html">9DE5</a>, <a class="lin
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="b75a"></a>
+<span id="b75a"></span>
 <div class="comments">
 <div class="paragraph">
 Cause discovery of all items.
@@ -59,43 +56,43 @@ Cause discovery of all items.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b75a"></a>B75A</td>
+<td class="address-2"><span id="b75a"></span>B75A</td>
 <td class="instruction">LD BC,$1000</td>
 <td class="comment-11" rowspan="1">B = item__LIMIT; C = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b75d"></a>B75D</td>
+<td class="address-2"><span id="b75d"></span>B75D</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% -</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b75e"></a>B75E</td>
-<td class="instruction">CALL <a class="link" href="CD31.html">$CD31</a></td>
+<td class="address-1"><span id="b75e"></span>B75E</td>
+<td class="instruction">CALL <a href="CD31.html">$CD31</a></td>
 <td class="comment-11" rowspan="1">item_discovered(C); // pass C as C</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b761"></a>B761</td>
+<td class="address-1"><span id="b761"></span>B761</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b762"></a>B762</td>
+<td class="address-1"><span id="b762"></span>B762</td>
 <td class="instruction">INC C</td>
 <td class="comment-11" rowspan="1">C++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b763"></a>B763</td>
+<td class="address-1"><span id="b763"></span>B763</td>
 <td class="instruction">DJNZ $B75D</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="b765"></a>
+<span id="b765"></span>
 <div class="comments">
 <div class="paragraph">
 Reset message queue.
@@ -105,37 +102,37 @@ Reset message queue.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b765"></a>B765</td>
+<td class="address-1"><span id="b765"></span>B765</td>
 <td class="instruction">LD HL,$7CFE</td>
 <td class="comment-11" rowspan="2">message_queue_pointer = message_queue + 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b768"></a>B768</td>
+<td class="address-1"><span id="b768"></span>B768</td>
 <td class="instruction">LD ($7D11),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b76b"></a>B76B</td>
-<td class="instruction">CALL <a class="link" href="B79B.html">$B79B</a></td>
+<td class="address-1"><span id="b76b"></span>B76B</td>
+<td class="instruction">CALL <a href="B79B.html">$B79B</a></td>
 <td class="comment-11" rowspan="1">reset_map_and_characters();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b76e"></a>B76E</td>
+<td class="address-1"><span id="b76e"></span>B76E</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">$8001 = 0; // vischars[0].flags = 0</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b76f"></a>B76F</td>
+<td class="address-1"><span id="b76f"></span>B76F</td>
 <td class="instruction">LD ($8001),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="b772"></a>
+<span id="b772"></span>
 <div class="comments">
 <div class="paragraph">
 Reset score.
@@ -145,37 +142,37 @@ Reset score.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b772"></a>B772</td>
+<td class="address-1"><span id="b772"></span>B772</td>
 <td class="instruction">LD HL,$A132</td>
 <td class="comment-11" rowspan="1">HL = &amp;score_digits[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b775"></a>B775</td>
+<td class="address-1"><span id="b775"></span>B775</td>
 <td class="instruction">LD B,$0A</td>
 <td class="comment-11" rowspan="1">B = 10; // iterations   // CHECK why isn't this 5?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b777"></a>B777</td>
+<td class="address-2"><span id="b777"></span>B777</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="2">do &lt;% *HL++ = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b778"></a>B778</td>
+<td class="address-1"><span id="b778"></span>B778</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b779"></a>B779</td>
+<td class="address-1"><span id="b779"></span>B779</td>
 <td class="instruction">DJNZ $B777</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B); // could do a memset</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="b77b"></a>
+<span id="b77b"></span>
 <div class="comments">
 <div class="paragraph">
 Reset morale.
@@ -185,19 +182,19 @@ Reset morale.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b77b"></a>B77B</td>
+<td class="address-1"><span id="b77b"></span>B77B</td>
 <td class="instruction">LD (HL),$70</td>
 <td class="comment-11" rowspan="1">morale = morale_MAX;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b77d"></a>B77D</td>
-<td class="instruction">CALL <a class="link" href="A10B.html">$A10B</a></td>
+<td class="address-1"><span id="b77d"></span>B77D</td>
+<td class="instruction">CALL <a href="A10B.html">$A10B</a></td>
 <td class="comment-11" rowspan="1">plot_score();</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="b780"></a>
+<span id="b780"></span>
 <div class="comments">
 <div class="paragraph">
 Reset and redraw items.
@@ -207,25 +204,25 @@ Reset and redraw items.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b780"></a>B780</td>
+<td class="address-1"><span id="b780"></span>B780</td>
 <td class="instruction">LD HL,$FFFF</td>
 <td class="comment-11" rowspan="2">items_held = item_NONE | (item_NONE &lt;&lt; 8);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b783"></a>B783</td>
+<td class="address-1"><span id="b783"></span>B783</td>
 <td class="instruction">LD ($8215),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b786"></a>B786</td>
-<td class="instruction">CALL <a class="link" href="7C33.html">$7C33</a></td>
+<td class="address-1"><span id="b786"></span>B786</td>
+<td class="instruction">CALL <a href="7C33.html">$7C33</a></td>
 <td class="comment-11" rowspan="1">draw_all_items();</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="b789"></a>
+<span id="b789"></span>
 <div class="comments">
 <div class="paragraph">
 Reset the hero's sprite.
@@ -235,31 +232,31 @@ Reset the hero's sprite.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b789"></a>B789</td>
+<td class="address-1"><span id="b789"></span>B789</td>
 <td class="instruction">LD HL,$CE2E</td>
 <td class="comment-11" rowspan="2">$8015 = sprite_prisoner_tl_4;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b78c"></a>B78C</td>
+<td class="address-1"><span id="b78c"></span>B78C</td>
 <td class="instruction">LD ($8015),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b78f"></a>B78F</td>
+<td class="address-1"><span id="b78f"></span>B78F</td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-11" rowspan="2">room_index = room_2_HUT2LEFT;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b791"></a>B791</td>
+<td class="address-1"><span id="b791"></span>B791</td>
 <td class="instruction">LD ($68A0),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="b794"></a>
+<span id="b794"></span>
 <div class="comments">
 <div class="paragraph">
 Put the hero to bed.
@@ -269,34 +266,34 @@ Put the hero to bed.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b794"></a>B794</td>
-<td class="instruction">CALL <a class="link" href="A489.html">$A489</a></td>
+<td class="address-1"><span id="b794"></span>B794</td>
+<td class="instruction">CALL <a href="A489.html">$A489</a></td>
 <td class="comment-11" rowspan="1">hero_sleeps();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b797"></a>B797</td>
-<td class="instruction">CALL <a class="link" href="68F4.html">$68F4</a></td>
+<td class="address-1"><span id="b797"></span>B797</td>
+<td class="instruction">CALL <a href="68F4.html">$68F4</a></td>
 <td class="comment-11" rowspan="1">enter_room();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b79a"></a>B79A</td>
+<td class="address-1"><span id="b79a"></span>B79A</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B729.html">B729</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b75a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B79B.html">B79B</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B729.html">B729</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b75a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B79B.html">B79B</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at B417</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B3F6.html">B3F6</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b417">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B495.html">B495</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B3F6.html">B3F6</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b417">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B495.html">B495</a></span></td>
 </tr>
 </table>
 <div class="description">B417: Use wiresnips.</div>
@@ -47,484 +44,484 @@
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b417"></a>B417</td>
+<td class="address-2"><span id="b417"></span>B417</td>
 <td class="instruction">LD HL,$B589</td>
 <td class="comment-11" rowspan="1">HL = &amp;fences[0] + 3;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b41a"></a>B41A</td>
+<td class="address-1"><span id="b41a"></span>B41A</td>
 <td class="instruction">LD DE,$81B9</td>
 <td class="comment-11" rowspan="1">DE = &amp;hero_map_position.x;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b41d"></a>B41D</td>
+<td class="address-1"><span id="b41d"></span>B41D</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-11" rowspan="1">B = 4; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b41f"></a>B41F</td>
+<td class="address-2"><span id="b41f"></span>B41F</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">do &lt;% ...</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b420"></a>B420</td>
+<td class="address-1"><span id="b420"></span>B420</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b421"></a>B421</td>
+<td class="address-1"><span id="b421"></span>B421</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A &gt;= *HL) goto next;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b422"></a>B422</td>
+<td class="address-1"><span id="b422"></span>B422</td>
 <td class="instruction">JR NC,$B433</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b424"></a>B424</td>
+<td class="address-1"><span id="b424"></span>B424</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">HL--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b425"></a>B425</td>
+<td class="address-1"><span id="b425"></span>B425</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A &lt; *HL) goto next;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b426"></a>B426</td>
+<td class="address-1"><span id="b426"></span>B426</td>
 <td class="instruction">JR C,$B433</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b428"></a>B428</td>
+<td class="address-1"><span id="b428"></span>B428</td>
 <td class="instruction">DEC DE</td>
 <td class="comment-11" rowspan="1">DE--; // &amp;hero_map_position.y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b429"></a>B429</td>
+<td class="address-1"><span id="b429"></span>B429</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b42a"></a>B42A</td>
+<td class="address-1"><span id="b42a"></span>B42A</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">HL--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b42b"></a>B42B</td>
+<td class="address-1"><span id="b42b"></span>B42B</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A == *HL) goto set_to_4;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b42c"></a>B42C</td>
+<td class="address-1"><span id="b42c"></span>B42C</td>
 <td class="instruction">JR Z,$B462</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b42e"></a>B42E</td>
+<td class="address-1"><span id="b42e"></span>B42E</td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1">A--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b42f"></a>B42F</td>
+<td class="address-1"><span id="b42f"></span>B42F</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A == *HL) goto set_to_6;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b430"></a>B430</td>
+<td class="address-1"><span id="b430"></span>B430</td>
 <td class="instruction">JR Z,$B46A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b432"></a>B432</td>
+<td class="address-1"><span id="b432"></span>B432</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++; // reset to Y</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b433"></a>B433</td>
+<td class="address-2"><span id="b433"></span>B433</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">next: ...</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b434"></a>B434</td>
+<td class="address-1"><span id="b434"></span>B434</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="5">HL += 6; // array stride</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b435"></a>B435</td>
+<td class="address-1"><span id="b435"></span>B435</td>
 <td class="instruction">ADD A,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b437"></a>B437</td>
+<td class="address-1"><span id="b437"></span>B437</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b438"></a>B438</td>
+<td class="address-1"><span id="b438"></span>B438</td>
 <td class="instruction">JR NC,$B43B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b43a"></a>B43A</td>
+<td class="address-1"><span id="b43a"></span>B43A</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b43b"></a>B43B</td>
+<td class="address-2"><span id="b43b"></span>B43B</td>
 <td class="instruction">DJNZ $B41F</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b43d"></a>B43D</td>
+<td class="address-1"><span id="b43d"></span>B43D</td>
 <td class="instruction">DEC DE</td>
 <td class="comment-11" rowspan="1">DE--; // &amp;hero_map_position.y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b43e"></a>B43E</td>
+<td class="address-1"><span id="b43e"></span>B43E</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="3">HL -= 3; // pointing to $B59E</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b43f"></a>B43F</td>
+<td class="address-1"><span id="b43f"></span>B43F</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b440"></a>B440</td>
+<td class="address-1"><span id="b440"></span>B440</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b441"></a>B441</td>
+<td class="address-1"><span id="b441"></span>B441</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">B = 3; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b443"></a>B443</td>
+<td class="address-2"><span id="b443"></span>B443</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">do &lt;% ...</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b444"></a>B444</td>
+<td class="address-1"><span id="b444"></span>B444</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b445"></a>B445</td>
+<td class="address-1"><span id="b445"></span>B445</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A &lt; *HL) goto next2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b446"></a>B446</td>
+<td class="address-1"><span id="b446"></span>B446</td>
 <td class="instruction">JR C,$B457</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b448"></a>B448</td>
+<td class="address-1"><span id="b448"></span>B448</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b449"></a>B449</td>
+<td class="address-1"><span id="b449"></span>B449</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A &gt;= *HL) goto next2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b44a"></a>B44A</td>
+<td class="address-1"><span id="b44a"></span>B44A</td>
 <td class="instruction">JR NC,$B457</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b44c"></a>B44C</td>
+<td class="address-1"><span id="b44c"></span>B44C</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b44d"></a>B44D</td>
+<td class="address-1"><span id="b44d"></span>B44D</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b44e"></a>B44E</td>
+<td class="address-1"><span id="b44e"></span>B44E</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b44f"></a>B44F</td>
+<td class="address-1"><span id="b44f"></span>B44F</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A == *HL) goto set_to_5;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b450"></a>B450</td>
+<td class="address-1"><span id="b450"></span>B450</td>
 <td class="instruction">JR Z,$B466</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b452"></a>B452</td>
+<td class="address-1"><span id="b452"></span>B452</td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1">A--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b453"></a>B453</td>
+<td class="address-1"><span id="b453"></span>B453</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A == *HL) goto set_to_7;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b454"></a>B454</td>
+<td class="address-1"><span id="b454"></span>B454</td>
 <td class="instruction">JR Z,$B46E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b456"></a>B456</td>
+<td class="address-1"><span id="b456"></span>B456</td>
 <td class="instruction">DEC DE</td>
 <td class="comment-11" rowspan="1">DE--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b457"></a>B457</td>
+<td class="address-2"><span id="b457"></span>B457</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">next2: ...</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b458"></a>B458</td>
+<td class="address-1"><span id="b458"></span>B458</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="5">HL += 6; // array stride</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b459"></a>B459</td>
+<td class="address-1"><span id="b459"></span>B459</td>
 <td class="instruction">ADD A,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b45b"></a>B45B</td>
+<td class="address-1"><span id="b45b"></span>B45B</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b45c"></a>B45C</td>
+<td class="address-1"><span id="b45c"></span>B45C</td>
 <td class="instruction">JR NC,$B45F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b45e"></a>B45E</td>
+<td class="address-1"><span id="b45e"></span>B45E</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b45f"></a>B45F</td>
+<td class="address-2"><span id="b45f"></span>B45F</td>
 <td class="instruction">DJNZ $B443</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b461"></a>B461</td>
+<td class="address-1"><span id="b461"></span>B461</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="3">return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b462"></a>B462</td>
+<td class="address-2"><span id="b462"></span>B462</td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b464"></a>B464</td>
+<td class="address-1"><span id="b464"></span>B464</td>
 <td class="instruction">JR $B470</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b466"></a>B466</td>
+<td class="address-2"><span id="b466"></span>B466</td>
 <td class="instruction">LD A,$05</td>
 <td class="comment-11" rowspan="2">set_to_5: A = 5; goto action_wiresnips_tail; // crawl TR</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b468"></a>B468</td>
+<td class="address-1"><span id="b468"></span>B468</td>
 <td class="instruction">JR $B470</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b46a"></a>B46A</td>
+<td class="address-2"><span id="b46a"></span>B46A</td>
 <td class="instruction">LD A,$06</td>
 <td class="comment-11" rowspan="2">set_to_6: A = 6; goto action_wiresnips_tail; // crawl BR</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b46c"></a>B46C</td>
+<td class="address-1"><span id="b46c"></span>B46C</td>
 <td class="instruction">JR $B470</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b46e"></a>B46E</td>
+<td class="address-2"><span id="b46e"></span>B46E</td>
 <td class="instruction">LD A,$07</td>
 <td class="comment-11" rowspan="1">set_to_7: A = 7;                             // crawl BL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b470"></a>B470</td>
+<td class="address-2"><span id="b470"></span>B470</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">action_wiresnips_tail: ...</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b471"></a>B471</td>
+<td class="address-1"><span id="b471"></span>B471</td>
 <td class="instruction">LD HL,$800E</td>
 <td class="comment-11" rowspan="2">$800E = A; // walk/crawl flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b474"></a>B474</td>
+<td class="address-1"><span id="b474"></span>B474</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b475"></a>B475</td>
+<td class="address-1"><span id="b475"></span>B475</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">$800D = input_KICK;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b476"></a>B476</td>
+<td class="address-1"><span id="b476"></span>B476</td>
 <td class="instruction">LD (HL),$80</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b478"></a>B478</td>
+<td class="address-1"><span id="b478"></span>B478</td>
 <td class="instruction">LD HL,$8001</td>
 <td class="comment-11" rowspan="2">$8001 = vischar_FLAGS_CUTTING_WIRE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b47b"></a>B47B</td>
+<td class="address-1"><span id="b47b"></span>B47B</td>
 <td class="instruction">LD (HL),$02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b47d"></a>B47D</td>
+<td class="address-1"><span id="b47d"></span>B47D</td>
 <td class="instruction">LD A,$0C</td>
 <td class="comment-11" rowspan="2">$8013 = 12; // set height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b47f"></a>B47F</td>
+<td class="address-1"><span id="b47f"></span>B47F</td>
 <td class="instruction">LD ($8013),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b482"></a>B482</td>
+<td class="address-1"><span id="b482"></span>B482</td>
 <td class="instruction">LD HL,$CE2E</td>
 <td class="comment-11" rowspan="2">$8015 = sprite_prisoner_tl_4;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b485"></a>B485</td>
+<td class="address-1"><span id="b485"></span>B485</td>
 <td class="instruction">LD ($8015),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b488"></a>B488</td>
+<td class="address-1"><span id="b488"></span>B488</td>
 <td class="instruction">LD A,($A12F)</td>
 <td class="comment-11" rowspan="3">player_locked_out_until = game_counter + 96;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b48b"></a>B48B</td>
+<td class="address-1"><span id="b48b"></span>B48B</td>
 <td class="instruction">ADD A,$60</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b48d"></a>B48D</td>
+<td class="address-1"><span id="b48d"></span>B48D</td>
 <td class="instruction">LD ($A145),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b490"></a>B490</td>
+<td class="address-1"><span id="b490"></span>B490</td>
 <td class="instruction">LD B,$0B</td>
 <td class="comment-11" rowspan="2">queue_message_for_display(message_CUTTING_THE_WIRE);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b492"></a>B492</td>
-<td class="instruction">JP <a class="link" href="7D15.html">$7D15</a></td>
+<td class="address-1"><span id="b492"></span>B492</td>
+<td class="instruction">JP <a href="7D15.html">$7D15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B3F6.html">B3F6</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b417">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B495.html">B495</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B3F6.html">B3F6</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b417">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B495.html">B495</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

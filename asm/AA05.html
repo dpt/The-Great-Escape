@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at AA05</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A9E4.html">A9E4</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#aa05">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="AA26.html">AA26</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A9E4.html">A9E4</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#aa05">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="AA26.html">AA26</a></span></td>
 </tr>
 </table>
 <div class="description">AA05: Shunt the map right.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="AAB2.html">AAB2</a>.
+Used by the routine at <a href="AAB2.html">AAB2</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,94 +46,94 @@ Used by the routine at <a class="link" href="AAB2.html">AAB2</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="aa05"></a>AA05</td>
+<td class="address-2"><span id="aa05"></span>AA05</td>
 <td class="instruction">LD HL,$81BB</td>
 <td class="comment-11" rowspan="1">HL = &amp;map_position;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa08"></a>AA08</td>
+<td class="address-1"><span id="aa08"></span>AA08</td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">(*HL)--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa09"></a>AA09</td>
-<td class="instruction">CALL <a class="link" href="A7C9.html">$A7C9</a></td>
+<td class="address-1"><span id="aa09"></span>AA09</td>
+<td class="instruction">CALL <a href="A7C9.html">$A7C9</a></td>
 <td class="comment-11" rowspan="1">get_supertiles();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa0c"></a>AA0C</td>
+<td class="address-1"><span id="aa0c"></span>AA0C</td>
 <td class="instruction">LD HL,$F28E</td>
-<td class="comment-11" rowspan="1">HL = visible_tiles_end_address - 1;</td>
+<td class="comment-11" rowspan="1">HL = &amp;tile_buf[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa0f"></a>AA0F</td>
+<td class="address-1"><span id="aa0f"></span>AA0F</td>
 <td class="instruction">LD DE,$F28F</td>
-<td class="comment-11" rowspan="1">DE = visible_tiles_end_address;</td>
+<td class="comment-11" rowspan="1">DE = &amp;tile_buf[1];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa12"></a>AA12</td>
+<td class="address-1"><span id="aa12"></span>AA12</td>
 <td class="instruction">LD BC,$0197</td>
-<td class="comment-11" rowspan="1">BC = visible_tiles_length - 1;</td>
+<td class="comment-11" rowspan="1">BC = tile_buf_length - 1;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa15"></a>AA15</td>
+<td class="address-1"><span id="aa15"></span>AA15</td>
 <td class="instruction">LDDR</td>
 <td class="comment-11" rowspan="1">LDDR</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa17"></a>AA17</td>
+<td class="address-1"><span id="aa17"></span>AA17</td>
 <td class="instruction">LD HL,$FF4F</td>
-<td class="comment-11" rowspan="1">HL = screen_buffer_end_address;</td>
+<td class="comment-11" rowspan="1">HL = &amp;window_buf[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa1a"></a>AA1A</td>
+<td class="address-1"><span id="aa1a"></span>AA1A</td>
 <td class="instruction">LD DE,$FF50</td>
-<td class="comment-11" rowspan="1">DE = screen_buffer_end_address + 1;</td>
+<td class="comment-11" rowspan="1">DE = &amp;window_buf[1];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa1d"></a>AA1D</td>
+<td class="address-1"><span id="aa1d"></span>AA1D</td>
 <td class="instruction">LD BC,$0CC0</td>
-<td class="comment-11" rowspan="1">BC = screen_buffer_length;</td>
+<td class="comment-11" rowspan="1">BC = window_buf_length;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa20"></a>AA20</td>
+<td class="address-1"><span id="aa20"></span>AA20</td>
 <td class="instruction">LDDR</td>
 <td class="comment-11" rowspan="1">LDDR</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa22"></a>AA22</td>
-<td class="instruction">CALL <a class="link" href="A8E7.html">$A8E7</a></td>
+<td class="address-1"><span id="aa22"></span>AA22</td>
+<td class="instruction">CALL <a href="A8E7.html">$A8E7</a></td>
 <td class="comment-11" rowspan="1">plot_leftmost_tiles();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="aa25"></a>AA25</td>
+<td class="address-1"><span id="aa25"></span>AA25</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A9E4.html">A9E4</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#aa05">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="AA26.html">AA26</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A9E4.html">A9E4</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#aa05">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="AA26.html">AA26</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

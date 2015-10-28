@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at F257</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F20B.html">F20B</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f257">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F271.html">F271</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F20B.html">F20B</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f257">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F271.html">F271</a></span></td>
 </tr>
 </table>
 <div class="description">F257: Clear the screen and attributes and set the screen border to black.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="F163.html">F163</a>.
+Used by the routine at <a href="F163.html">F163</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,94 +46,94 @@ Used by the routine at <a class="link" href="F163.html">F163</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f257"></a>F257</td>
+<td class="address-2"><span id="f257"></span>F257</td>
 <td class="instruction">LD HL,$4000</td>
 <td class="comment-11" rowspan="6">memset(screen, 0, 0x1800);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f25a"></a>F25A</td>
+<td class="address-1"><span id="f25a"></span>F25A</td>
 <td class="instruction">LD DE,$4001</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f25d"></a>F25D</td>
+<td class="address-1"><span id="f25d"></span>F25D</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f25f"></a>F25F</td>
+<td class="address-1"><span id="f25f"></span>F25F</td>
 <td class="instruction">LD BC,$17FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f262"></a>F262</td>
+<td class="address-1"><span id="f262"></span>F262</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f264"></a>F264</td>
+<td class="address-1"><span id="f264"></span>F264</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f265"></a>F265</td>
+<td class="address-1"><span id="f265"></span>F265</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="4">memset(atttributes, attribute_WHITE_OVER_BLACK, 0x300);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f266"></a>F266</td>
+<td class="address-1"><span id="f266"></span>F266</td>
 <td class="instruction">LD (HL),$07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f268"></a>F268</td>
+<td class="address-1"><span id="f268"></span>F268</td>
 <td class="instruction">LD BC,$02FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f26b"></a>F26B</td>
+<td class="address-1"><span id="f26b"></span>F26B</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f26d"></a>F26D</td>
+<td class="address-1"><span id="f26d"></span>F26D</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">border = 0; // black</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f26e"></a>F26E</td>
+<td class="address-1"><span id="f26e"></span>F26E</td>
 <td class="instruction">OUT ($FE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f270"></a>F270</td>
+<td class="address-1"><span id="f270"></span>F270</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F20B.html">F20B</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f257">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F271.html">F271</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F20B.html">F20B</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f257">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F271.html">F271</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

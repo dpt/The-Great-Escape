@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at F350</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F335.html">F335</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f350">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F408.html">F408</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F335.html">F335</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f350">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F408.html">F408</a></span></td>
 </tr>
 </table>
 <div class="description">F350: Choose keys.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="F271.html">F271</a>.
+Used by the routine at <a href="F271.html">F271</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,7 +46,7 @@ Used by the routine at <a class="link" href="F271.html">F271</a>.
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f350"></a>
+<span id="f350"></span>
 <div class="comments">
 <div class="paragraph">
 Loop while the user does not confirm.
@@ -62,25 +59,25 @@ Clear the game window.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f350"></a>F350</td>
-<td class="instruction">CALL <a class="link" href="F335.html">$F335</a></td>
+<td class="address-2"><span id="f350"></span>F350</td>
+<td class="instruction">CALL <a href="F335.html">$F335</a></td>
 <td class="comment-11" rowspan="1">for (;;) &lt;% wipe_game_window();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f353"></a>F353</td>
+<td class="address-1"><span id="f353"></span>F353</td>
 <td class="instruction">LD A,$07</td>
 <td class="comment-11" rowspan="2">set_game_window_attributes(attribute_WHITE_OVER_BLACK);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f355"></a>F355</td>
-<td class="instruction">CALL <a class="link" href="A15F.html">$A15F</a></td>
+<td class="address-1"><span id="f355"></span>F355</td>
+<td class="instruction">CALL <a href="A15F.html">$A15F</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f358"></a>
+<span id="f358"></span>
 <div class="comments">
 <div class="paragraph">
 Draw key choice prompt strings.
@@ -90,109 +87,109 @@ Draw key choice prompt strings.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f358"></a>F358</td>
+<td class="address-1"><span id="f358"></span>F358</td>
 <td class="instruction">LD B,$06</td>
 <td class="comment-11" rowspan="1">B = 6; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f35a"></a>F35A</td>
+<td class="address-1"><span id="f35a"></span>F35A</td>
 <td class="instruction">LD HL,$F2AD</td>
 <td class="comment-11" rowspan="1">HL = &amp;define_key_prompts[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f35d"></a>F35D</td>
+<td class="address-2"><span id="f35d"></span>F35D</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f35e"></a>F35E</td>
+<td class="address-1"><span id="f35e"></span>F35E</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f35f"></a>F35F</td>
+<td class="address-1"><span id="f35f"></span>F35F</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f360"></a>F360</td>
+<td class="address-1"><span id="f360"></span>F360</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="2">D = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f361"></a>F361</td>
+<td class="address-1"><span id="f361"></span>F361</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f362"></a>F362</td>
+<td class="address-1"><span id="f362"></span>F362</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="2">B = *HL++; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f363"></a>F363</td>
+<td class="address-1"><span id="f363"></span>F363</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f364"></a>F364</td>
+<td class="address-2"><span id="f364"></span>F364</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f365"></a>F365</td>
+<td class="address-1"><span id="f365"></span>F365</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL; // redundant</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f366"></a>F366</td>
-<td class="instruction">CALL <a class="link" href="7D2F.html">$7D2F</a></td>
+<td class="address-1"><span id="f366"></span>F366</td>
+<td class="instruction">CALL <a href="7D2F.html">$7D2F</a></td>
 <td class="comment-11" rowspan="1">plot_glyph();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f369"></a>F369</td>
+<td class="address-1"><span id="f369"></span>F369</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f36a"></a>F36A</td>
+<td class="address-1"><span id="f36a"></span>F36A</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f36b"></a>F36B</td>
+<td class="address-1"><span id="f36b"></span>F36B</td>
 <td class="instruction">DJNZ $F364</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f36d"></a>F36D</td>
+<td class="address-1"><span id="f36d"></span>F36D</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f36e"></a>F36E</td>
+<td class="address-1"><span id="f36e"></span>F36E</td>
 <td class="instruction">DJNZ $F35D</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f370"></a>
+<span id="f370"></span>
 <div class="comments">
 <div class="paragraph">
 Wipe keydefs.
@@ -202,319 +199,319 @@ Wipe keydefs.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f370"></a>F370</td>
+<td class="address-1"><span id="f370"></span>F370</td>
 <td class="instruction">LD HL,$F06B</td>
 <td class="comment-11" rowspan="1">HL = &amp;keydefs[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f373"></a>F373</td>
+<td class="address-1"><span id="f373"></span>F373</td>
 <td class="instruction">LD B,$0A</td>
 <td class="comment-11" rowspan="1">B = 10; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f375"></a>F375</td>
+<td class="address-1"><span id="f375"></span>F375</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f376"></a>F376</td>
+<td class="address-2"><span id="f376"></span>F376</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="2">do &lt;% *HL++ = A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f377"></a>F377</td>
+<td class="address-1"><span id="f377"></span>F377</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f378"></a>F378</td>
+<td class="address-1"><span id="f378"></span>F378</td>
 <td class="instruction">DJNZ $F376</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f37a"></a>F37A</td>
+<td class="address-1"><span id="f37a"></span>F37A</td>
 <td class="instruction">LD B,$05</td>
 <td class="comment-11" rowspan="1">B = 5; // iterations L/R/U/D/F</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f37c"></a>F37C</td>
+<td class="address-1"><span id="f37c"></span>F37C</td>
 <td class="instruction">LD HL,$F32B</td>
 <td class="comment-11" rowspan="1">HL = &amp;key_name_screen_addrs[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f37f"></a>F37F</td>
+<td class="address-2"><span id="f37f"></span>F37F</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f380"></a>F380</td>
+<td class="address-1"><span id="f380"></span>F380</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f381"></a>F381</td>
+<td class="address-1"><span id="f381"></span>F381</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f382"></a>F382</td>
+<td class="address-1"><span id="f382"></span>F382</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="2">D = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f383"></a>F383</td>
+<td class="address-1"><span id="f383"></span>F383</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f384"></a>F384</td>
+<td class="address-1"><span id="f384"></span>F384</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f385"></a>F385</td>
+<td class="address-1"><span id="f385"></span>F385</td>
 <td class="instruction">LD ($F3E9),DE</td>
 <td class="comment-11" rowspan="1">($F3E9) = DE; // self modify screen addr</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f389"></a>F389</td>
+<td class="address-1"><span id="f389"></span>F389</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">A = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f38b"></a>F38B</td>
+<td class="address-2"><span id="f38b"></span>F38B</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">for (;;) &lt;% -</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f38c"></a>F38C</td>
+<td class="address-1"><span id="f38c"></span>F38C</td>
 <td class="instruction">LD HL,$F2E1</td>
 <td class="comment-11" rowspan="1">HL = &amp;keyboard_port_hi_bytes[-1]; // &amp;byte_F2E1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f38f"></a>F38F</td>
+<td class="address-1"><span id="f38f"></span>F38F</td>
 <td class="instruction">LD D,$FF</td>
 <td class="comment-11" rowspan="1">D = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f391"></a>F391</td>
+<td class="address-2"><span id="f391"></span>F391</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">do &lt;% HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f392"></a>F392</td>
+<td class="address-1"><span id="f392"></span>F392</td>
 <td class="instruction">INC D</td>
 <td class="comment-11" rowspan="1">D++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f393"></a>F393</td>
+<td class="address-1"><span id="f393"></span>F393</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Adash = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f394"></a>F394</td>
+<td class="address-1"><span id="f394"></span>F394</td>
 <td class="instruction">OR A</td>
 <td class="comment-11" rowspan="2">if (Adash == 0) goto $F38B; // end of keyboard_port_hi_bytes</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f395"></a>F395</td>
+<td class="address-1"><span id="f395"></span>F395</td>
 <td class="instruction">JR Z,$F38B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f397"></a>F397</td>
+<td class="address-1"><span id="f397"></span>F397</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">B = Adash;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f398"></a>F398</td>
+<td class="address-1"><span id="f398"></span>F398</td>
 <td class="instruction">LD C,$FE</td>
 <td class="comment-11" rowspan="1">C = 0xFE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f39a"></a>F39A</td>
+<td class="address-1"><span id="f39a"></span>F39A</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-11" rowspan="1">IN Adash,(C)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f39c"></a>F39C</td>
+<td class="address-1"><span id="f39c"></span>F39C</td>
 <td class="instruction">CPL</td>
 <td class="comment-11" rowspan="1">Adash = ~Adash;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f39d"></a>F39D</td>
+<td class="address-1"><span id="f39d"></span>F39D</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-11" rowspan="1">E = Adash;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f39e"></a>F39E</td>
+<td class="address-1"><span id="f39e"></span>F39E</td>
 <td class="instruction">LD C,$20</td>
 <td class="comment-11" rowspan="1">C = 0x20; // mask</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f3a0"></a>F3A0</td>
+<td class="address-2"><span id="f3a0"></span>F3A0</td>
 <td class="instruction">SRL C</td>
 <td class="comment-11" rowspan="1">C &gt;&gt;= 1;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3a2"></a>F3A2</td>
+<td class="address-1"><span id="f3a2"></span>F3A2</td>
 <td class="instruction">JR C,$F391</td>
 <td class="comment-11" rowspan="1">%&gt; while (carry);  // loop structure is not quite right</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3a4"></a>F3A4</td>
+<td class="address-1"><span id="f3a4"></span>F3A4</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="2">Adash = C &amp; E;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3a5"></a>F3A5</td>
+<td class="address-1"><span id="f3a5"></span>F3A5</td>
 <td class="instruction">AND E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3a6"></a>F3A6</td>
+<td class="address-1"><span id="f3a6"></span>F3A6</td>
 <td class="instruction">JR Z,$F3A0</td>
 <td class="comment-11" rowspan="1">if (Adash == 0) goto $F3A0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3a8"></a>F3A8</td>
+<td class="address-1"><span id="f3a8"></span>F3A8</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3a9"></a>F3A9</td>
+<td class="address-1"><span id="f3a9"></span>F3A9</td>
 <td class="instruction">OR A</td>
 <td class="comment-11" rowspan="2">if (A) goto $F38B;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3aa"></a>F3AA</td>
+<td class="address-1"><span id="f3aa"></span>F3AA</td>
 <td class="instruction">JR NZ,$F38B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ac"></a>F3AC</td>
+<td class="address-1"><span id="f3ac"></span>F3AC</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="1">A = D;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ad"></a>F3AD</td>
+<td class="address-1"><span id="f3ad"></span>F3AD</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ae"></a>F3AE</td>
+<td class="address-1"><span id="f3ae"></span>F3AE</td>
 <td class="instruction">LD HL,$F06A</td>
 <td class="comment-11" rowspan="1">HL = 0xF06A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f3b1"></a>F3B1</td>
+<td class="address-2"><span id="f3b1"></span>F3B1</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3b2"></a>F3B2</td>
+<td class="address-1"><span id="f3b2"></span>F3B2</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Adash = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3b3"></a>F3B3</td>
+<td class="address-1"><span id="f3b3"></span>F3B3</td>
 <td class="instruction">OR A</td>
 <td class="comment-11" rowspan="2">if (Adash == 0) goto $F3C1;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3b4"></a>F3B4</td>
+<td class="address-1"><span id="f3b4"></span>F3B4</td>
 <td class="instruction">JR Z,$F3C1</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3b6"></a>F3B6</td>
+<td class="address-1"><span id="f3b6"></span>F3B6</td>
 <td class="instruction">CP B</td>
 <td class="comment-11" rowspan="1">if (A != B) ...</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3b7"></a>F3B7</td>
+<td class="address-1"><span id="f3b7"></span>F3B7</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // interleaved</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3b8"></a>F3B8</td>
+<td class="address-1"><span id="f3b8"></span>F3B8</td>
 <td class="instruction">JR NZ,$F3B1</td>
 <td class="comment-11" rowspan="1">... goto $F3B1;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ba"></a>F3BA</td>
+<td class="address-1"><span id="f3ba"></span>F3BA</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Adash = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3bb"></a>F3BB</td>
+<td class="address-1"><span id="f3bb"></span>F3BB</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="2">if (A != C) goto $F3B1;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3bc"></a>F3BC</td>
+<td class="address-1"><span id="f3bc"></span>F3BC</td>
 <td class="instruction">JR NZ,$F3B1</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3be"></a>F3BE</td>
+<td class="address-1"><span id="f3be"></span>F3BE</td>
 <td class="instruction">JP $F38B</td>
 <td class="comment-11" rowspan="1">%&gt;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f3c1"></a>
+<span id="f3c1"></span>
 <div class="comments">
 <div class="paragraph">
 Assign key def.
@@ -524,127 +521,127 @@ Assign key def.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f3c1"></a>F3C1</td>
+<td class="address-2"><span id="f3c1"></span>F3C1</td>
 <td class="instruction">LD (HL),B</td>
 <td class="comment-11" rowspan="2">*HL++ = B;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c2"></a>F3C2</td>
+<td class="address-1"><span id="f3c2"></span>F3C2</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c3"></a>F3C3</td>
+<td class="address-1"><span id="f3c3"></span>F3C3</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-11" rowspan="1">*HL = C;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c4"></a>F3C4</td>
+<td class="address-1"><span id="f3c4"></span>F3C4</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c5"></a>F3C5</td>
+<td class="address-1"><span id="f3c5"></span>F3C5</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="4">A *= 5;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c6"></a>F3C6</td>
+<td class="address-1"><span id="f3c6"></span>F3C6</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c7"></a>F3C7</td>
+<td class="address-1"><span id="f3c7"></span>F3C7</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c8"></a>F3C8</td>
+<td class="address-1"><span id="f3c8"></span>F3C8</td>
 <td class="instruction">ADD A,B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3c9"></a>F3C9</td>
+<td class="address-1"><span id="f3c9"></span>F3C9</td>
 <td class="instruction">LD HL,$F302</td>
 <td class="comment-11" rowspan="1">HL = 0xF302;  // &amp;key_tables[0] - 1 byte + A // strange: off by one</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3cc"></a>F3CC</td>
+<td class="address-1"><span id="f3cc"></span>F3CC</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="4">HL += A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3cd"></a>F3CD</td>
+<td class="address-1"><span id="f3cd"></span>F3CD</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ce"></a>F3CE</td>
+<td class="address-1"><span id="f3ce"></span>F3CE</td>
 <td class="instruction">JR NC,$F3D1</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3d0"></a>F3D0</td>
+<td class="address-1"><span id="f3d0"></span>F3D0</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f3d1"></a>F3D1</td>
+<td class="address-2"><span id="f3d1"></span>F3D1</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3d2"></a>F3D2</td>
+<td class="address-1"><span id="f3d2"></span>F3D2</td>
 <td class="instruction">RR C</td>
 <td class="comment-11" rowspan="1">RR C</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3d4"></a>F3D4</td>
+<td class="address-1"><span id="f3d4"></span>F3D4</td>
 <td class="instruction">JR NC,$F3D1</td>
 <td class="comment-11" rowspan="1">JR NC,$F3D1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3d6"></a>F3D6</td>
+<td class="address-1"><span id="f3d6"></span>F3D6</td>
 <td class="instruction">LD B,$01</td>
 <td class="comment-11" rowspan="1">B = 1;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3d8"></a>F3D8</td>
+<td class="address-1"><span id="f3d8"></span>F3D8</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3d9"></a>F3D9</td>
+<td class="address-1"><span id="f3d9"></span>F3D9</td>
 <td class="instruction">OR A</td>
 <td class="comment-11" rowspan="1">A |= A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3da"></a>F3DA</td>
+<td class="address-1"><span id="f3da"></span>F3DA</td>
 <td class="instruction">JP P,$F3E8</td>
 <td class="comment-11" rowspan="1">JP P,$F3E8</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f3dd"></a>
+<span id="f3dd"></span>
 <div class="comments">
 <div class="paragraph">
 If the top bit was set then it's a modifier key.
@@ -654,49 +651,49 @@ If the top bit was set then it's a modifier key.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3dd"></a>F3DD</td>
+<td class="address-1"><span id="f3dd"></span>F3DD</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-11" rowspan="1">A &amp;= 0x7F;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3df"></a>F3DF</td>
+<td class="address-1"><span id="f3df"></span>F3DF</td>
 <td class="instruction">LD DE,$F2EB</td>
 <td class="comment-11" rowspan="4">HL = &amp;special_key_names[0] + A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3e2"></a>F3E2</td>
+<td class="address-1"><span id="f3e2"></span>F3E2</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3e3"></a>F3E3</td>
+<td class="address-1"><span id="f3e3"></span>F3E3</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3e5"></a>F3E5</td>
+<td class="address-1"><span id="f3e5"></span>F3E5</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3e6"></a>F3E6</td>
+<td class="address-1"><span id="f3e6"></span>F3E6</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="2">B = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3e7"></a>F3E7</td>
+<td class="address-1"><span id="f3e7"></span>F3E7</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f3e8"></a>
+<span id="f3e8"></span>
 <div class="comments">
 <div class="paragraph">
 Plot.
@@ -706,73 +703,73 @@ Plot.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f3e8"></a>F3E8</td>
+<td class="address-2"><span id="f3e8"></span>F3E8</td>
 <td class="instruction">LD DE,$40D5</td>
 <td class="comment-11" rowspan="1">DE = 0x40D5; // self modified // screen address</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f3eb"></a>F3EB</td>
+<td class="address-2"><span id="f3eb"></span>F3EB</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ec"></a>F3EC</td>
+<td class="address-1"><span id="f3ec"></span>F3EC</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL; // Bug: Redundant.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ed"></a>F3ED</td>
-<td class="instruction">CALL <a class="link" href="7D2F.html">$7D2F</a></td>
+<td class="address-1"><span id="f3ed"></span>F3ED</td>
+<td class="instruction">CALL <a href="7D2F.html">$7D2F</a></td>
 <td class="comment-11" rowspan="1">plot_glyph();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f0"></a>F3F0</td>
+<td class="address-1"><span id="f3f0"></span>F3F0</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f1"></a>F3F1</td>
+<td class="address-1"><span id="f3f1"></span>F3F1</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f2"></a>F3F2</td>
+<td class="address-1"><span id="f3f2"></span>F3F2</td>
 <td class="instruction">DJNZ $F3EB</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f4"></a>F3F4</td>
+<td class="address-1"><span id="f3f4"></span>F3F4</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f5"></a>F3F5</td>
+<td class="address-1"><span id="f3f5"></span>F3F5</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f6"></a>F3F6</td>
+<td class="address-1"><span id="f3f6"></span>F3F6</td>
 <td class="instruction">DEC B</td>
 <td class="comment-11" rowspan="2">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f7"></a>F3F7</td>
+<td class="address-1"><span id="f3f7"></span>F3F7</td>
 <td class="instruction">JR NZ,$F37F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f3f9"></a>
+<span id="f3f9"></span>
 <div class="comments">
 <div class="paragraph">
 Delay loop.
@@ -782,37 +779,37 @@ Delay loop.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3f9"></a>F3F9</td>
+<td class="address-1"><span id="f3f9"></span>F3F9</td>
 <td class="instruction">LD BC,$FFFF</td>
 <td class="comment-11" rowspan="1">BC = 0xFFFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f3fc"></a>F3FC</td>
+<td class="address-2"><span id="f3fc"></span>F3FC</td>
 <td class="instruction">DEC BC</td>
 <td class="comment-11" rowspan="4">while (--BC);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3fd"></a>F3FD</td>
+<td class="address-1"><span id="f3fd"></span>F3FD</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3fe"></a>F3FE</td>
+<td class="address-1"><span id="f3fe"></span>F3FE</td>
 <td class="instruction">OR C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f3ff"></a>F3FF</td>
+<td class="address-1"><span id="f3ff"></span>F3FF</td>
 <td class="instruction">JR NZ,$F3FC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f401"></a>
+<span id="f401"></span>
 <div class="comments">
 <div class="paragraph">
 Wait for user's input.
@@ -822,34 +819,34 @@ Wait for user's input.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f401"></a>F401</td>
-<td class="instruction">CALL <a class="link" href="EFFC.html">$EFFC</a></td>
+<td class="address-1"><span id="f401"></span>F401</td>
+<td class="instruction">CALL <a href="EFFC.html">$EFFC</a></td>
 <td class="comment-11" rowspan="1">user_confirm();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f404"></a>F404</td>
+<td class="address-1"><span id="f404"></span>F404</td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">if (Z) return; // confirmed</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f405"></a>F405</td>
+<td class="address-1"><span id="f405"></span>F405</td>
 <td class="instruction">JP NZ,$F350</td>
 <td class="comment-11" rowspan="1">%&gt;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F335.html">F335</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f350">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F408.html">F408</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F335.html">F335</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f350">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F408.html">F408</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

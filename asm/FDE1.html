@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at FDE1</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="FAE0.html">FAE0</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#fde1">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="FDF3.html">FDF3</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="FAE0.html">FAE0</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#fde1">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="FDF3.html">FDF3</a></span></td>
 </tr>
 </table>
 <div class="description">FDE1: Loaded.</div>
@@ -49,58 +46,58 @@ Very first entry point used to shunt the game image down into its proper positio
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="fde1"></a>FDE1</td>
+<td class="address-2"><span id="fde1"></span>FDE1</td>
 <td class="instruction">DI</td>
 <td class="comment-11" rowspan="1">Disable interrupts.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="fde2"></a>FDE2</td>
+<td class="address-1"><span id="fde2"></span>FDE2</td>
 <td class="instruction">LD SP,$FFFF</td>
 <td class="comment-11" rowspan="1">SP = 0xFFFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="fde5"></a>FDE5</td>
+<td class="address-1"><span id="fde5"></span>FDE5</td>
 <td class="instruction">LD BC,$9FE0</td>
 <td class="comment-11" rowspan="4">memmove(0x5B00, 0x5E00, 0x9FE0);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="fde8"></a>FDE8</td>
+<td class="address-1"><span id="fde8"></span>FDE8</td>
 <td class="instruction">LD HL,$5E00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="fdeb"></a>FDEB</td>
+<td class="address-1"><span id="fdeb"></span>FDEB</td>
 <td class="instruction">LD DE,$5B00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="fdee"></a>FDEE</td>
+<td class="address-1"><span id="fdee"></span>FDEE</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="fdf0"></a>FDF0</td>
-<td class="instruction">JP <a class="link" href="F068.html">$F068</a></td>
+<td class="address-1"><span id="fdf0"></span>FDF0</td>
+<td class="instruction">JP <a href="F068.html">$F068</a></td>
 <td class="comment-11" rowspan="1">goto jump_to_main; /* exit via */</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="FAE0.html">FAE0</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#fde1">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="FDF3.html">FDF3</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="FAE0.html">FAE0</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#fde1">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="FDF3.html">FDF3</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

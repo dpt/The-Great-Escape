@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 7D30</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7D2F.html">7D2F</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7d30">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7D48.html">7D48</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7D2F.html">7D2F</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7d30">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7D48.html">7D48</a></span></td>
 </tr>
 </table>
 <div class="description">7D30: Plot a single glyph.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="7D87.html">7D87</a>.
+Used by the routine at <a href="7D87.html">7D87</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,130 +46,130 @@ Used by the routine at <a class="link" href="7D87.html">7D87</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7d30"></a>7D30</td>
+<td class="address-2"><span id="7d30"></span>7D30</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d31"></a>7D31</td>
+<td class="address-1"><span id="7d31"></span>7D31</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="5">HL = A * 8;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d32"></a>7D32</td>
+<td class="address-1"><span id="7d32"></span>7D32</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d34"></a>7D34</td>
+<td class="address-1"><span id="7d34"></span>7D34</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d35"></a>7D35</td>
+<td class="address-1"><span id="7d35"></span>7D35</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d36"></a>7D36</td>
+<td class="address-1"><span id="7d36"></span>7D36</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d37"></a>7D37</td>
+<td class="address-1"><span id="7d37"></span>7D37</td>
 <td class="instruction">LD BC,$A69E</td>
 <td class="comment-11" rowspan="1">BC = bitmap_font;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d3a"></a>7D3A</td>
+<td class="address-1"><span id="7d3a"></span>7D3A</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="2">HL += BC;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d3b"></a>7D3B</td>
+<td class="address-1"><span id="7d3b"></span>7D3B</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d3c"></a>7D3C</td>
+<td class="address-1"><span id="7d3c"></span>7D3C</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7d3e"></a>7D3E</td>
+<td class="address-2"><span id="7d3e"></span>7D3E</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% *DE = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d3f"></a>7D3F</td>
+<td class="address-1"><span id="7d3f"></span>7D3F</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d40"></a>7D40</td>
+<td class="address-1"><span id="7d40"></span>7D40</td>
 <td class="instruction">INC D</td>
 <td class="comment-11" rowspan="1">D++; // i.e. DE += 256;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d41"></a>7D41</td>
+<td class="address-1"><span id="7d41"></span>7D41</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d42"></a>7D42</td>
+<td class="address-1"><span id="7d42"></span>7D42</td>
 <td class="instruction">DJNZ $7D3E</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d44"></a>7D44</td>
+<td class="address-1"><span id="7d44"></span>7D44</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="3">DE++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d45"></a>7D45</td>
+<td class="address-1"><span id="7d45"></span>7D45</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d46"></a>7D46</td>
+<td class="address-1"><span id="7d46"></span>7D46</td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7d47"></a>7D47</td>
+<td class="address-1"><span id="7d47"></span>7D47</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7D2F.html">7D2F</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7d30">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7D48.html">7D48</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7D2F.html">7D2F</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7d30">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7D48.html">7D48</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

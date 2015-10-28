@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 69C9</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="69AE.html">69AE</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#69c9">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="69DC.html">69DC</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="69AE.html">69AE</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#69c9">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="69DC.html">69DC</a></span></td>
 </tr>
 </table>
 <div class="description">69C9: Reset all non-player visible characters.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="6939.html">6939</a>.
+Used by the routine at <a href="6939.html">6939</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,88 +46,88 @@ Used by the routine at <a class="link" href="6939.html">6939</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="69c9"></a>69C9</td>
+<td class="address-2"><span id="69c9"></span>69C9</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69cc"></a>69CC</td>
+<td class="address-1"><span id="69cc"></span>69CC</td>
 <td class="instruction">LD BC,$0720</td>
 <td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="69cf"></a>69CF</td>
+<td class="address-2"><span id="69cf"></span>69CF</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d0"></a>69D0</td>
+<td class="address-1"><span id="69d0"></span>69D0</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d1"></a>69D1</td>
-<td class="instruction">CALL <a class="link" href="C5D3.html">$C5D3</a></td>
+<td class="address-1"><span id="69d1"></span>69D1</td>
+<td class="instruction">CALL <a href="C5D3.html">$C5D3</a></td>
 <td class="comment-11" rowspan="1">reset_visible_character();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d4"></a>69D4</td>
+<td class="address-1"><span id="69d4"></span>69D4</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d5"></a>69D5</td>
+<td class="address-1"><span id="69d5"></span>69D5</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d6"></a>69D6</td>
+<td class="address-1"><span id="69d6"></span>69D6</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">HL += 32; // stride</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d7"></a>69D7</td>
+<td class="address-1"><span id="69d7"></span>69D7</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d8"></a>69D8</td>
+<td class="address-1"><span id="69d8"></span>69D8</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69d9"></a>69D9</td>
+<td class="address-1"><span id="69d9"></span>69D9</td>
 <td class="instruction">DJNZ $69CF</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69db"></a>69DB</td>
+<td class="address-1"><span id="69db"></span>69DB</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="69AE.html">69AE</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#69c9">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="69DC.html">69DC</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="69AE.html">69AE</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#69c9">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="69DC.html">69DC</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

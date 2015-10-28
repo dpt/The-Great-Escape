@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A26A</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A264.html">A264</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a26a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A27F.html">A27F</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A264.html">A264</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a26a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A27F.html">A27F</a></span></td>
 </tr>
 </table>
 <div class="description">A26A: Event: search light.</div>
@@ -47,22 +44,22 @@
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a26a"></a>A26A</td>
+<td class="address-2"><span id="a26a"></span>A26A</td>
 <td class="instruction">LD A,$26</td>
 <td class="comment-11" rowspan="1">A = 0x26;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a26c"></a>A26C</td>
+<td class="address-1"><span id="a26c"></span>A26C</td>
 <td class="instruction">LD C,$00</td>
 <td class="comment-11" rowspan="1">C = 0;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a26e"></a>
+<span id="a26e"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a class="link" href="A264.html">A264</a>.
+This entry point is used by the routine at <a href="A264.html">A264</a>.
 </div>
 <div class="paragraph">
 Common end of event_time_for_bed and event_search_light.
@@ -72,88 +69,88 @@ Common end of event_time_for_bed and event_search_light.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a26e"></a>A26E</td>
+<td class="address-2"><span id="a26e"></span>A26E</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a26f"></a>A26F</td>
+<td class="address-1"><span id="a26f"></span>A26F</td>
 <td class="instruction">LD A,$0C</td>
 <td class="comment-11" rowspan="1">Adash = 12;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a271"></a>A271</td>
+<td class="address-1"><span id="a271"></span>A271</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-11" rowspan="1">B = 4; // 4 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a273"></a>A273</td>
+<td class="address-2"><span id="a273"></span>A273</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH AF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a274"></a>A274</td>
-<td class="instruction">CALL <a class="link" href="A38C.html">$A38C</a></td>
+<td class="address-1"><span id="a274"></span>A274</td>
+<td class="instruction">CALL <a href="A38C.html">$A38C</a></td>
 <td class="comment-11" rowspan="1">set_character_location();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a277"></a>A277</td>
+<td class="address-1"><span id="a277"></span>A277</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">POP AF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a278"></a>A278</td>
+<td class="address-1"><span id="a278"></span>A278</td>
 <td class="instruction">INC A</td>
 <td class="comment-11" rowspan="1">Adash++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a279"></a>A279</td>
+<td class="address-1"><span id="a279"></span>A279</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a27a"></a>A27A</td>
+<td class="address-1"><span id="a27a"></span>A27A</td>
 <td class="instruction">INC A</td>
 <td class="comment-11" rowspan="1">A++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a27b"></a>A27B</td>
+<td class="address-1"><span id="a27b"></span>A27B</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a27c"></a>A27C</td>
+<td class="address-1"><span id="a27c"></span>A27C</td>
 <td class="instruction">DJNZ $A273</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a27e"></a>A27E</td>
+<td class="address-1"><span id="a27e"></span>A27E</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A264.html">A264</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a26a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A27F.html">A27F</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A264.html">A264</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a26a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A27F.html">A27F</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

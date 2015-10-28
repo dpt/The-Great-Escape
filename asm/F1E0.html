@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at F1E0</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F163.html">F163</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f1e0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F206.html">F206</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F163.html">F163</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f1e0">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F206.html">F206</a></span></td>
 </tr>
 </table>
 <div class="description">F1E0: Plot statics and menu text.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="F163.html">F163</a>.
+Used by the routine at <a href="F163.html">F163</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,25 +46,25 @@ Used by the routine at <a class="link" href="F163.html">F163</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f1e0"></a>F1E0</td>
+<td class="address-2"><span id="f1e0"></span>F1E0</td>
 <td class="instruction">LD HL,$F076</td>
 <td class="comment-11" rowspan="1">HL = &amp;static_graphic_defs[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1e3"></a>F1E3</td>
+<td class="address-1"><span id="f1e3"></span>F1E3</td>
 <td class="instruction">LD B,$12</td>
 <td class="comment-11" rowspan="1">B = NELEMS(static_graphic_defs); // 18 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f1e5"></a>F1E5</td>
+<td class="address-2"><span id="f1e5"></span>F1E5</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f1e6"></a>
+<span id="f1e6"></span>
 <div class="comments">
 <div class="paragraph">
 Fetch screen address.
@@ -77,73 +74,73 @@ Fetch screen address.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1e6"></a>F1E6</td>
+<td class="address-1"><span id="f1e6"></span>F1E6</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1e7"></a>F1E7</td>
+<td class="address-1"><span id="f1e7"></span>F1E7</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1e8"></a>F1E8</td>
+<td class="address-1"><span id="f1e8"></span>F1E8</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="2">D = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1e9"></a>F1E9</td>
+<td class="address-1"><span id="f1e9"></span>F1E9</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1ea"></a>F1EA</td>
+<td class="address-1"><span id="f1ea"></span>F1EA</td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="2">if (*HL &amp; statictiles_VERTICAL)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1ec"></a>F1EC</td>
+<td class="address-1"><span id="f1ec"></span>F1EC</td>
 <td class="instruction">JR Z,$F1F3</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1ee"></a>F1EE</td>
-<td class="instruction">CALL <a class="link" href="F209.html">$F209</a></td>
+<td class="address-1"><span id="f1ee"></span>F1EE</td>
+<td class="instruction">CALL <a href="F209.html">$F209</a></td>
 <td class="comment-11" rowspan="1">plot_static_tiles_vertical();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1f1"></a>F1F1</td>
+<td class="address-1"><span id="f1f1"></span>F1F1</td>
 <td class="instruction">JR $F1F6</td>
 <td class="comment-11" rowspan="1">else</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f1f3"></a>F1F3</td>
-<td class="instruction">CALL <a class="link" href="F206.html">$F206</a></td>
+<td class="address-2"><span id="f1f3"></span>F1F3</td>
+<td class="instruction">CALL <a href="F206.html">$F206</a></td>
 <td class="comment-11" rowspan="1">plot_static_tiles_horizontal();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f1f6"></a>F1F6</td>
+<td class="address-2"><span id="f1f6"></span>F1F6</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1f7"></a>F1F7</td>
+<td class="address-1"><span id="f1f7"></span>F1F7</td>
 <td class="instruction">DJNZ $F1E5</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f1f9"></a>
+<span id="f1f9"></span>
 <div class="comments">
 <div class="paragraph">
 Plot menu text.
@@ -153,58 +150,58 @@ Plot menu text.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1f9"></a>F1F9</td>
+<td class="address-1"><span id="f1f9"></span>F1F9</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1fb"></a>F1FB</td>
+<td class="address-1"><span id="f1fb"></span>F1FB</td>
 <td class="instruction">LD HL,$F446</td>
 <td class="comment-11" rowspan="1">HL = &amp;key_choice_screenlocstrings;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f1fe"></a>F1FE</td>
+<td class="address-2"><span id="f1fe"></span>F1FE</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1ff"></a>F1FF</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="f1ff"></span>F1FF</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f202"></a>F202</td>
+<td class="address-1"><span id="f202"></span>F202</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f203"></a>F203</td>
+<td class="address-1"><span id="f203"></span>F203</td>
 <td class="instruction">DJNZ $F1FE</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f205"></a>F205</td>
+<td class="address-1"><span id="f205"></span>F205</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F163.html">F163</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f1e0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F206.html">F206</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F163.html">F163</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f1e0">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F206.html">F206</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

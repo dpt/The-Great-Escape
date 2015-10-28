@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 9EB2</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="9E98.html">9E98</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#9eb2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="9EE4.html">9EE4</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="9E98.html">9E98</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#9eb2">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="9EE4.html">9EE4</a></span></td>
 </tr>
 </table>
 <div class="description">9EB2: Locks the player out until the wire is snipped.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="9E07.html">9E07</a>.
+Used by the routine at <a href="9E07.html">9E07</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,103 +46,103 @@ Used by the routine at <a class="link" href="9E07.html">9E07</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="9eb2"></a>9EB2</td>
+<td class="address-2"><span id="9eb2"></span>9EB2</td>
 <td class="instruction">LD HL,$A12F</td>
 <td class="comment-11" rowspan="3">A = player_locked_out_until - game_counter;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9eb5"></a>9EB5</td>
+<td class="address-1"><span id="9eb5"></span>9EB5</td>
 <td class="instruction">LD A,($A145)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9eb8"></a>9EB8</td>
+<td class="address-1"><span id="9eb8"></span>9EB8</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9eb9"></a>9EB9</td>
+<td class="address-1"><span id="9eb9"></span>9EB9</td>
 <td class="instruction">JR Z,$9ED0</td>
 <td class="comment-11" rowspan="1">if (A) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ebb"></a>9EBB</td>
+<td class="address-1"><span id="9ebb"></span>9EBB</td>
 <td class="instruction">CP $04</td>
 <td class="comment-11" rowspan="2">if (A &lt; 4)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ebd"></a>9EBD</td>
+<td class="address-1"><span id="9ebd"></span>9EBD</td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ebe"></a>9EBE</td>
+<td class="address-1"><span id="9ebe"></span>9EBE</td>
 <td class="instruction">LD A,($800E)</td>
 <td class="comment-11" rowspan="9">$800D = snipping_wire_new_inputs[$800E &amp; 3]; // change direction</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ec1"></a>9EC1</td>
+<td class="address-1"><span id="9ec1"></span>9EC1</td>
 <td class="instruction">LD HL,$9EE0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ec4"></a>9EC4</td>
+<td class="address-1"><span id="9ec4"></span>9EC4</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ec6"></a>9EC6</td>
+<td class="address-1"><span id="9ec6"></span>9EC6</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ec7"></a>9EC7</td>
+<td class="address-1"><span id="9ec7"></span>9EC7</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ec8"></a>9EC8</td>
+<td class="address-1"><span id="9ec8"></span>9EC8</td>
 <td class="instruction">JR NC,$9ECB</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9eca"></a>9ECA</td>
+<td class="address-1"><span id="9eca"></span>9ECA</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="9ecb"></a>9ECB</td>
+<td class="address-2"><span id="9ecb"></span>9ECB</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ecc"></a>9ECC</td>
+<td class="address-1"><span id="9ecc"></span>9ECC</td>
 <td class="instruction">LD ($800D),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ecf"></a>9ECF</td>
+<td class="address-1"><span id="9ecf"></span>9ECF</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="9ed0"></a>
+<span id="9ed0"></span>
 <div class="comments">
 <div class="paragraph">
 Countdown reached: Snip the wire.
@@ -158,55 +155,55 @@ Bug: A is always zero here, so $800E is always set to zero.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="9ed0"></a>9ED0</td>
+<td class="address-2"><span id="9ed0"></span>9ED0</td>
 <td class="instruction">LD HL,$800E</td>
 <td class="comment-11" rowspan="3">else &lt;% $800E = A &amp; 3; // set direction</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ed3"></a>9ED3</td>
+<td class="address-1"><span id="9ed3"></span>9ED3</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ed5"></a>9ED5</td>
+<td class="address-1"><span id="9ed5"></span>9ED5</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ed6"></a>9ED6</td>
+<td class="address-1"><span id="9ed6"></span>9ED6</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">$800D = input_KICK;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ed7"></a>9ED7</td>
+<td class="address-1"><span id="9ed7"></span>9ED7</td>
 <td class="instruction">LD (HL),$80</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ed9"></a>9ED9</td>
+<td class="address-1"><span id="9ed9"></span>9ED9</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="2">$8013 = 24; // set height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9edb"></a>9EDB</td>
+<td class="address-1"><span id="9edb"></span>9EDB</td>
 <td class="instruction">LD ($8013),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ede"></a>9EDE</td>
-<td class="instruction">JR <a class="link" href="9E98.html#9eaa">$9EAA</a></td>
+<td class="address-1"><span id="9ede"></span>9EDE</td>
+<td class="instruction">JR <a href="9E98.html#9eaa">$9EAA</a></td>
 <td class="comment-11" rowspan="1">goto clear_lockpick_wirecut_flags_and_return; %&gt;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="9ee0"></a>
+<span id="9ee0"></span>
 <div class="comments">
 <div class="paragraph">
 New inputs table.
@@ -216,40 +213,40 @@ New inputs table.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ee0"></a>9EE0</td>
+<td class="address-1"><span id="9ee0"></span>9EE0</td>
 <td class="instruction">DEFB $84</td>
 <td class="comment-11" rowspan="1">input_UP   | input_LEFT  | input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ee1"></a>9EE1</td>
+<td class="address-1"><span id="9ee1"></span>9EE1</td>
 <td class="instruction">DEFB $87</td>
 <td class="comment-11" rowspan="1">input_UP   | input_RIGHT | input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ee2"></a>9EE2</td>
+<td class="address-1"><span id="9ee2"></span>9EE2</td>
 <td class="instruction">DEFB $88</td>
 <td class="comment-11" rowspan="1">input_DOWN | input_RIGHT | input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="9ee3"></a>9EE3</td>
+<td class="address-1"><span id="9ee3"></span>9EE3</td>
 <td class="instruction">DEFB $85</td>
 <td class="comment-11" rowspan="1">input_DOWN | input_LEFT  | input_KICK</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="9E98.html">9E98</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#9eb2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="9EE4.html">9EE4</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="9E98.html">9E98</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#9eb2">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="9EE4.html">9EE4</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

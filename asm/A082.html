@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A082</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A071.html">A071</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a082">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A095.html">A095</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A071.html">A071</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a082">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A095.html">A095</a></span></td>
 </tr>
 </table>
 <div class="description">A082: Given a screen address, returns the same position on the previous scanline.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="A035.html">A035</a>.
+Used by the routine at <a href="A035.html">A035</a>.
 </div>
 </div>
 <table class="input-1">
@@ -55,25 +52,25 @@ Used by the routine at <a class="link" href="A035.html">A035</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a082"></a>A082</td>
+<td class="address-2"><span id="a082"></span>A082</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="3">if ((H &amp; 7) != 0) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a083"></a>A083</td>
+<td class="address-1"><span id="a083"></span>A083</td>
 <td class="instruction">AND $07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a085"></a>A085</td>
+<td class="address-1"><span id="a085"></span>A085</td>
 <td class="instruction">JR Z,$A089</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a087"></a>
+<span id="a087"></span>
 <div class="comments">
 <div class="paragraph">
 NNN bits.
@@ -86,19 +83,19 @@ Step back one scanline.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a087"></a>A087</td>
+<td class="address-1"><span id="a087"></span>A087</td>
 <td class="instruction">DEC H</td>
 <td class="comment-11" rowspan="1">HL -= 256; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a088"></a>A088</td>
+<td class="address-1"><span id="a088"></span>A088</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a089"></a>
+<span id="a089"></span>
 <div class="comments">
 <div class="paragraph">
 Complicated.
@@ -108,58 +105,58 @@ Complicated.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a089"></a>A089</td>
+<td class="address-2"><span id="a089"></span>A089</td>
 <td class="instruction">LD DE,$06E0</td>
 <td class="comment-11" rowspan="6">if (L &lt; 32) HL -= 32; else HL += 0x06E0; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a08c"></a>A08C</td>
+<td class="address-1"><span id="a08c"></span>A08C</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a08d"></a>A08D</td>
+<td class="address-1"><span id="a08d"></span>A08D</td>
 <td class="instruction">CP $20</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a08f"></a>A08F</td>
+<td class="address-1"><span id="a08f"></span>A08F</td>
 <td class="instruction">JR NC,$A093</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a091"></a>A091</td>
+<td class="address-1"><span id="a091"></span>A091</td>
 <td class="instruction">LD D,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a093"></a>A093</td>
+<td class="address-2"><span id="a093"></span>A093</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a094"></a>A094</td>
+<td class="address-1"><span id="a094"></span>A094</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A071.html">A071</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a082">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A095.html">A095</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A071.html">A071</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a082">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A095.html">A095</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

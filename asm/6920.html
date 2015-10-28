@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 6920</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="691A.html">691A</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#6920">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="6939.html">6939</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="691A.html">691A</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#6920">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="6939.html">6939</a></span></td>
 </tr>
 </table>
 <div class="description">6920: Set appropriate hero sprite for room.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="68F4.html">68F4</a>.
+Used by the routine at <a href="68F4.html">68F4</a>.
 </div>
 <div class="paragraph">
 Called when changing rooms.
@@ -52,25 +49,25 @@ Called when changing rooms.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="6920"></a>6920</td>
+<td class="address-2"><span id="6920"></span>6920</td>
 <td class="instruction">LD HL,$800D</td>
 <td class="comment-11" rowspan="1">HL = $800D;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6923"></a>6923</td>
+<td class="address-1"><span id="6923"></span>6923</td>
 <td class="instruction">LD (HL),$80</td>
 <td class="comment-11" rowspan="2">*HL++ = input_KICK;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6925"></a>6925</td>
+<td class="address-1"><span id="6925"></span>6925</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="6926"></a>
+<span id="6926"></span>
 <div class="comments">
 <div class="paragraph">
 When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag appropriately.
@@ -80,70 +77,70 @@ When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag 
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6926"></a>6926</td>
+<td class="address-1"><span id="6926"></span>6926</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index &gt;= room_29_SECOND_TUNNEL_START) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6929"></a>6929</td>
+<td class="address-1"><span id="6929"></span>6929</td>
 <td class="instruction">CP $1D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="692b"></a>692B</td>
+<td class="address-1"><span id="692b"></span>692B</td>
 <td class="instruction">JR C,$6936</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="692d"></a>692D</td>
+<td class="address-1"><span id="692d"></span>692D</td>
 <td class="instruction">SET 2,(HL)</td>
 <td class="comment-11" rowspan="1">*HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="692f"></a>692F</td>
+<td class="address-1"><span id="692f"></span>692F</td>
 <td class="instruction">LD HL,$CE2E</td>
 <td class="comment-11" rowspan="2">$8015 = &amp;sprite_prisoner_tl_4; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6932"></a>6932</td>
+<td class="address-1"><span id="6932"></span>6932</td>
 <td class="instruction">LD ($8015),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6935"></a>6935</td>
+<td class="address-1"><span id="6935"></span>6935</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="6936"></a>6936</td>
+<td class="address-2"><span id="6936"></span>6936</td>
 <td class="instruction">RES 2,(HL)</td>
 <td class="comment-11" rowspan="1">*HL &amp;= ~vischar_BYTE14_CRAWL; %&gt; // clear crawl flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6938"></a>6938</td>
+<td class="address-1"><span id="6938"></span>6938</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="691A.html">691A</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#6920">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="6939.html">6939</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="691A.html">691A</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#6920">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="6939.html">6939</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

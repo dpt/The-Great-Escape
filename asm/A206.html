@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A206</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A202.html">A202</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a206">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A215.html">A215</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A202.html">A202</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a206">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A215.html">A215</a></span></td>
 </tr>
 </table>
 <div class="description">A206: Event: go to exercise time.</div>
@@ -47,25 +44,25 @@
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a206"></a>A206</td>
+<td class="address-2"><span id="a206"></span>A206</td>
 <td class="instruction">LD (BC),A</td>
 <td class="comment-11" rowspan="1">*BC = A; // bell = bell_RING_40_TIMES;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a207"></a>A207</td>
+<td class="address-1"><span id="a207"></span>A207</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="2">queue_message_for_display(message_EXERCISE_TIME);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a209"></a>A209</td>
-<td class="instruction">CALL <a class="link" href="7D15.html">$7D15</a></td>
+<td class="address-1"><span id="a209"></span>A209</td>
+<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a20c"></a>
+<span id="a20c"></span>
 <div class="comments">
 <div class="paragraph">
 Unlock the gates.
@@ -75,34 +72,34 @@ Unlock the gates.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a20c"></a>A20C</td>
+<td class="address-1"><span id="a20c"></span>A20C</td>
 <td class="instruction">LD HL,$0100</td>
 <td class="comment-11" rowspan="2">gates_and_doors[0] = 0x00; gates_and_doors[1] = 0x01;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a20f"></a>A20F</td>
+<td class="address-1"><span id="a20f"></span>A20F</td>
 <td class="instruction">LD ($F05D),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a212"></a>A212</td>
-<td class="instruction">JP <a class="link" href="A4A9.html">$A4A9</a></td>
+<td class="address-1"><span id="a212"></span>A212</td>
+<td class="instruction">JP <a href="A4A9.html">$A4A9</a></td>
 <td class="comment-11" rowspan="1">set_location_0x000E(); return; // exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A202.html">A202</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a206">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A215.html">A215</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A202.html">A202</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a206">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A215.html">A215</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

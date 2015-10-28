@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A09E</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A095.html">A095</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a09e">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A0C9.html">A0C9</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A095.html">A095</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a09e">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A0C9.html">A0C9</a></span></td>
 </tr>
 </table>
 <div class="description">A09E: Ring the alarm bell.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">9D7B</a>.
 </div>
 <div class="paragraph">
 Called three times from main_loop.
@@ -52,43 +49,43 @@ Called three times from main_loop.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a09e"></a>A09E</td>
+<td class="address-2"><span id="a09e"></span>A09E</td>
 <td class="instruction">LD HL,$A130</td>
 <td class="comment-11" rowspan="1">HL = &amp;bell;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0a1"></a>A0A1</td>
+<td class="address-1"><span id="a0a1"></span>A0A1</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0a2"></a>A0A2</td>
+<td class="address-1"><span id="a0a2"></span>A0A2</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == bell_STOP) return; // not ringing</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0a4"></a>A0A4</td>
+<td class="address-1"><span id="a0a4"></span>A0A4</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0a5"></a>A0A5</td>
+<td class="address-1"><span id="a0a5"></span>A0A5</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A != bell_RING_PERPETUAL) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0a6"></a>A0A6</td>
+<td class="address-1"><span id="a0a6"></span>A0A6</td>
 <td class="instruction">JR Z,$A0B0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a0a8"></a>
+<span id="a0a8"></span>
 <div class="comments">
 <div class="paragraph">
 Decrement the ring counter.
@@ -98,25 +95,25 @@ Decrement the ring counter.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0a8"></a>A0A8</td>
+<td class="address-1"><span id="a0a8"></span>A0A8</td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="2">*HL = --A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0a9"></a>A0A9</td>
+<td class="address-1"><span id="a0a9"></span>A0A9</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0aa"></a>A0AA</td>
+<td class="address-1"><span id="a0aa"></span>A0AA</td>
 <td class="instruction">JR NZ,$A0B0</td>
 <td class="comment-11" rowspan="1">if (A == 0) &lt;%</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a0ac"></a>
+<span id="a0ac"></span>
 <div class="comments">
 <div class="paragraph">
 Counter hit zero - stop ringing.
@@ -126,25 +123,25 @@ Counter hit zero - stop ringing.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0ac"></a>A0AC</td>
+<td class="address-1"><span id="a0ac"></span>A0AC</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">*HL = bell_STOP;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0ae"></a>A0AE</td>
+<td class="address-1"><span id="a0ae"></span>A0AE</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0af"></a>A0AF</td>
+<td class="address-1"><span id="a0af"></span>A0AF</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt; %&gt;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a0b0"></a>
+<span id="a0b0"></span>
 <div class="comments">
 <div class="paragraph">
 Fetch visible state of bell.
@@ -154,25 +151,25 @@ Fetch visible state of bell.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a0b0"></a>A0B0</td>
+<td class="address-2"><span id="a0b0"></span>A0B0</td>
 <td class="instruction">LD A,($518E)</td>
 <td class="comment-11" rowspan="1">A = screenaddr_bell_ringer;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0b3"></a>A0B3</td>
+<td class="address-1"><span id="a0b3"></span>A0B3</td>
 <td class="instruction">CP $3F</td>
 <td class="comment-11" rowspan="2">if (A != 63) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0b5"></a>A0B5</td>
+<td class="address-1"><span id="a0b5"></span>A0B5</td>
 <td class="instruction">JP Z,$A0C6</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a0b8"></a>
+<span id="a0b8"></span>
 <div class="comments">
 <div class="paragraph">
 Bug: Needless jump.
@@ -182,13 +179,13 @@ Bug: Needless jump.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0b8"></a>A0B8</td>
+<td class="address-1"><span id="a0b8"></span>A0B8</td>
 <td class="instruction">JP $A0BB</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a0bb"></a>
+<span id="a0bb"></span>
 <div class="comments">
 <div class="paragraph">
 Plot ringer "on".
@@ -198,31 +195,31 @@ Plot ringer "on".
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a0bb"></a>A0BB</td>
+<td class="address-2"><span id="a0bb"></span>A0BB</td>
 <td class="instruction">LD DE,$A153</td>
 <td class="comment-11" rowspan="1">DE = bell_ringer_bitmap_on;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0be"></a>A0BE</td>
-<td class="instruction">CALL <a class="link" href="A0C9.html">$A0C9</a></td>
+<td class="address-1"><span id="a0be"></span>A0BE</td>
+<td class="instruction">CALL <a href="A0C9.html">$A0C9</a></td>
 <td class="comment-11" rowspan="1">plot_ringer();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0c1"></a>A0C1</td>
+<td class="address-1"><span id="a0c1"></span>A0C1</td>
 <td class="instruction">LD BC,$2530</td>
 <td class="comment-11" rowspan="2">play_speaker(sound_BELL_RINGER); return; %&gt; // args=BC // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a0c4"></a>A0C4</td>
-<td class="instruction">JR <a class="link" href="A11D.html">$A11D</a></td>
+<td class="address-1"><span id="a0c4"></span>A0C4</td>
+<td class="instruction">JR <a href="A11D.html">$A11D</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a0c6"></a>
+<span id="a0c6"></span>
 <div class="comments">
 <div class="paragraph">
 Plot ringer "off".
@@ -232,7 +229,7 @@ Plot ringer "off".
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a0c6"></a>A0C6</td>
+<td class="address-2"><span id="a0c6"></span>A0C6</td>
 <td class="instruction">LD DE,$A147</td>
 <td class="comment-11" rowspan="1">else &lt;% DE = bell_ringer_bitmap_off;</td>
 </tr>
@@ -249,15 +246,15 @@ FALL THROUGH to plot_ringer.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A095.html">A095</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a09e">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A0C9.html">A0C9</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A095.html">A095</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a09e">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A0C9.html">A0C9</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

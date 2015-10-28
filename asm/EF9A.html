@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at EF9A</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="EED3.html">EED3</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#ef9a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="EFCB.html">EFCB</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="EED3.html">EED3</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#ef9a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="EFCB.html">EFCB</a></span></td>
 </tr>
 </table>
 <div class="description">EF9A: Event: roll call.</div>
@@ -49,7 +46,7 @@ Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="ef9a"></a>
+<span id="ef9a"></span>
 <div class="comments">
 <div class="paragraph">
 Is the hero within the roll call area bounds?
@@ -59,73 +56,73 @@ Is the hero within the roll call area bounds?
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="ef9a"></a>EF9A</td>
+<td class="address-2"><span id="ef9a"></span>EF9A</td>
 <td class="instruction">LD DE,$727C</td>
 <td class="comment-11" rowspan="1">DE = map_ROLL_CALL_X;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="ef9d"></a>EF9D</td>
+<td class="address-1"><span id="ef9d"></span>EF9D</td>
 <td class="instruction">LD HL,$81B8</td>
 <td class="comment-11" rowspan="1">HL = &amp;hero_map_position.y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efa0"></a>EFA0</td>
+<td class="address-1"><span id="efa0"></span>EFA0</td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">B = 2; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="efa2"></a>EFA2</td>
+<td class="address-2"><span id="efa2"></span>EFA2</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efa3"></a>EFA3</td>
+<td class="address-1"><span id="efa3"></span>EFA3</td>
 <td class="instruction">CP D</td>
 <td class="comment-11" rowspan="5">if (A &lt; D || A &gt;= E) goto not_at_roll_call;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efa4"></a>EFA4</td>
+<td class="address-1"><span id="efa4"></span>EFA4</td>
 <td class="instruction">JR C,$EFC0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efa6"></a>EFA6</td>
+<td class="address-1"><span id="efa6"></span>EFA6</td>
 <td class="instruction">CP E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efa7"></a>EFA7</td>
+<td class="address-1"><span id="efa7"></span>EFA7</td>
 <td class="instruction">JR NC,$EFC0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efa9"></a>EFA9</td>
+<td class="address-1"><span id="efa9"></span>EFA9</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efaa"></a>EFAA</td>
+<td class="address-1"><span id="efaa"></span>EFAA</td>
 <td class="instruction">LD DE,$6A72</td>
 <td class="comment-11" rowspan="1">DE = map_ROLL_CALL_Y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efad"></a>EFAD</td>
+<td class="address-1"><span id="efad"></span>EFAD</td>
 <td class="instruction">DJNZ $EFA2</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="efaf"></a>
+<span id="efaf"></span>
 <div class="comments">
 <div class="paragraph">
 All visible characters turn forward.
@@ -135,106 +132,106 @@ All visible characters turn forward.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efaf"></a>EFAF</td>
+<td class="address-1"><span id="efaf"></span>EFAF</td>
 <td class="instruction">LD HL,$800D</td>
 <td class="comment-11" rowspan="1">HL = $800D;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efb2"></a>EFB2</td>
+<td class="address-1"><span id="efb2"></span>EFB2</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="efb4"></a>EFB4</td>
+<td class="address-2"><span id="efb4"></span>EFB4</td>
 <td class="instruction">LD (HL),$80</td>
 <td class="comment-11" rowspan="2">do &lt;% *HL++ = input_KICK;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efb6"></a>EFB6</td>
+<td class="address-1"><span id="efb6"></span>EFB6</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efb7"></a>EFB7</td>
+<td class="address-1"><span id="efb7"></span>EFB7</td>
 <td class="instruction">LD (HL),$03</td>
 <td class="comment-11" rowspan="1">*HL = 0x03; // direction (3 =&gt; face bottom left)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efb9"></a>EFB9</td>
+<td class="address-1"><span id="efb9"></span>EFB9</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">HL += 31;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efba"></a>EFBA</td>
+<td class="address-1"><span id="efba"></span>EFBA</td>
 <td class="instruction">ADD A,$1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efbc"></a>EFBC</td>
+<td class="address-1"><span id="efbc"></span>EFBC</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efbd"></a>EFBD</td>
+<td class="address-1"><span id="efbd"></span>EFBD</td>
 <td class="instruction">DJNZ $EFB4</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efbf"></a>EFBF</td>
+<td class="address-1"><span id="efbf"></span>EFBF</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="efc0"></a>EFC0</td>
+<td class="address-2"><span id="efc0"></span>EFC0</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">not_at_roll_call: bell = bell_RING_PERPETUAL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efc1"></a>EFC1</td>
+<td class="address-1"><span id="efc1"></span>EFC1</td>
 <td class="instruction">LD ($A130),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efc4"></a>EFC4</td>
+<td class="address-1"><span id="efc4"></span>EFC4</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="2">queue_message_for_display(message_MISSED_ROLL_CALL);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efc5"></a>EFC5</td>
-<td class="instruction">CALL <a class="link" href="7D15.html">$7D15</a></td>
+<td class="address-1"><span id="efc5"></span>EFC5</td>
+<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="efc8"></a>EFC8</td>
-<td class="instruction">JP <a class="link" href="CCAB.html">$CCAB</a></td>
+<td class="address-1"><span id="efc8"></span>EFC8</td>
+<td class="instruction">JP <a href="CCAB.html">$CCAB</a></td>
 <td class="comment-11" rowspan="1">hostiles_persue(); // exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="EED3.html">EED3</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#ef9a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="EFCB.html">EFCB</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="EED3.html">EED3</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#ef9a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="EFCB.html">EFCB</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

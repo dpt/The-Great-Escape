@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at C41C</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="C41A.html">C41A</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#c41c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="C47E.html">C47E</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="C41A.html">C41A</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#c41c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="C47E.html">C47E</a></span></td>
 </tr>
 </table>
 <div class="description">C41C: Spawn characters.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="6939.html">6939</a> and <a class="link" href="9D7B.html">9D7B</a>.
+Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7B</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,7 +46,7 @@ Used by the routines at <a class="link" href="6939.html">6939</a> and <a class="
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c41c"></a>
+<span id="c41c"></span>
 <div class="comments">
 <div class="paragraph">
 Form a clamped map position in DE.
@@ -59,73 +56,73 @@ Form a clamped map position in DE.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c41c"></a>C41C</td>
+<td class="address-2"><span id="c41c"></span>C41C</td>
 <td class="instruction">LD HL,($81BB)</td>
 <td class="comment-11" rowspan="1">HL = map_position;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c41f"></a>C41F</td>
+<td class="address-1"><span id="c41f"></span>C41F</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="5">E = (L &lt; 8) ? 0 : L;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c420"></a>C420</td>
+<td class="address-1"><span id="c420"></span>C420</td>
 <td class="instruction">SUB $08</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c422"></a>C422</td>
+<td class="address-1"><span id="c422"></span>C422</td>
 <td class="instruction">JR NC,$C425</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c424"></a>C424</td>
+<td class="address-1"><span id="c424"></span>C424</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c425"></a>C425</td>
+<td class="address-2"><span id="c425"></span>C425</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c426"></a>C426</td>
+<td class="address-1"><span id="c426"></span>C426</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="5">D = (H &lt; 8) ? 0 : H;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c427"></a>C427</td>
+<td class="address-1"><span id="c427"></span>C427</td>
 <td class="instruction">SUB $08</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c429"></a>C429</td>
+<td class="address-1"><span id="c429"></span>C429</td>
 <td class="instruction">JR NC,$C42C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c42b"></a>C42B</td>
+<td class="address-1"><span id="c42b"></span>C42B</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c42c"></a>C42C</td>
+<td class="address-2"><span id="c42c"></span>C42C</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c42d"></a>
+<span id="c42d"></span>
 <div class="comments">
 <div class="paragraph">
 Walk all character structs.
@@ -135,31 +132,31 @@ Walk all character structs.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c42d"></a>C42D</td>
+<td class="address-1"><span id="c42d"></span>C42D</td>
 <td class="instruction">LD HL,$7612</td>
 <td class="comment-11" rowspan="1">HL = &amp;character_structs[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c430"></a>C430</td>
+<td class="address-1"><span id="c430"></span>C430</td>
 <td class="instruction">LD B,$1A</td>
 <td class="comment-11" rowspan="1">B = character_26_STOVE_1; // the 26 'real' characters</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c432"></a>C432</td>
+<td class="address-2"><span id="c432"></span>C432</td>
 <td class="instruction">BIT 6,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% if (*HL &amp; characterstruct_FLAG_DISABLED) goto skip;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c434"></a>C434</td>
+<td class="address-1"><span id="c434"></span>C434</td>
 <td class="instruction">JR NZ,$C474</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c436"></a>
+<span id="c436"></span>
 <div class="comments">
 <div class="paragraph">
 Is the character in this room?
@@ -169,49 +166,49 @@ Is the character in this room?
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c436"></a>C436</td>
+<td class="address-1"><span id="c436"></span>C436</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">(stash HL)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c437"></a>C437</td>
+<td class="address-1"><span id="c437"></span>C437</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // $7613</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c438"></a>C438</td>
+<td class="address-1"><span id="c438"></span>C438</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c43b"></a>C43B</td>
+<td class="address-1"><span id="c43b"></span>C43B</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A != *HL) goto unstash_skip; // not in the visible room</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c43c"></a>C43C</td>
+<td class="address-1"><span id="c43c"></span>C43C</td>
 <td class="instruction">JR NZ,$C473</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c43e"></a>C43E</td>
+<td class="address-1"><span id="c43e"></span>C43E</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A != 0) goto indoors;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c43f"></a>C43F</td>
+<td class="address-1"><span id="c43f"></span>C43F</td>
 <td class="instruction">JR NZ,$C46A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c441"></a>
+<span id="c441"></span>
 <div class="comments">
 <div class="paragraph">
 Outdoors.
@@ -221,13 +218,13 @@ Outdoors.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c441"></a>C441</td>
+<td class="address-1"><span id="c441"></span>C441</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // $7614</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c442"></a>
+<span id="c442"></span>
 <div class="comments">
 <div class="paragraph">
 Screen Y calculation.
@@ -240,97 +237,97 @@ A is zero here, and represents 0x200.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c442"></a>C442</td>
+<td class="address-1"><span id="c442"></span>C442</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">A -= *HL; // charstr-&gt;pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c443"></a>C443</td>
+<td class="address-1"><span id="c443"></span>C443</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // $7615</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c444"></a>C444</td>
+<td class="address-1"><span id="c444"></span>C444</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">A -= *HL; // charstr-&gt;pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c445"></a>C445</td>
+<td class="address-1"><span id="c445"></span>C445</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // $7616</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c446"></a>C446</td>
+<td class="address-1"><span id="c446"></span>C446</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">A -= *HL; // charstr-&gt;pos.height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c447"></a>C447</td>
+<td class="address-1"><span id="c447"></span>C447</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">C = A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c448"></a>C448</td>
+<td class="address-1"><span id="c448"></span>C448</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="1">A = D;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c449"></a>C449</td>
+<td class="address-1"><span id="c449"></span>C449</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="2">if (C &lt;= A) goto unstash_skip; // check</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c44a"></a>C44A</td>
+<td class="address-1"><span id="c44a"></span>C44A</td>
 <td class="instruction">JR NC,$C473</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c44c"></a>C44C</td>
+<td class="address-1"><span id="c44c"></span>C44C</td>
 <td class="instruction">ADD A,$20</td>
 <td class="comment-11" rowspan="1">A += 32;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c44e"></a>C44E</td>
+<td class="address-1"><span id="c44e"></span>C44E</td>
 <td class="instruction">JR NC,$C452</td>
 <td class="comment-11" rowspan="2">if (A &gt; 0xFF) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c450"></a>C450</td>
+<td class="address-1"><span id="c450"></span>C450</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c452"></a>C452</td>
+<td class="address-2"><span id="c452"></span>C452</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="2">if (C &gt; A) goto unstash_skip; // check</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c453"></a>C453</td>
+<td class="address-1"><span id="c453"></span>C453</td>
 <td class="instruction">JR C,$C473</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c455"></a>C455</td>
+<td class="address-1"><span id="c455"></span>C455</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">HL--; // $7615</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c456"></a>
+<span id="c456"></span>
 <div class="comments">
 <div class="paragraph">
 move down and to the left
@@ -343,31 +340,31 @@ why move the character here?
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c456"></a>C456</td>
+<td class="address-1"><span id="c456"></span>C456</td>
 <td class="instruction">LD A,$40</td>
 <td class="comment-11" rowspan="1">A = 64;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c458"></a>C458</td>
+<td class="address-1"><span id="c458"></span>C458</td>
 <td class="instruction">ADD A,(HL)</td>
 <td class="comment-11" rowspan="1">*HL += A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c459"></a>C459</td>
+<td class="address-1"><span id="c459"></span>C459</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">HL--; // $7614</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c45a"></a>C45A</td>
+<td class="address-1"><span id="c45a"></span>C45A</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">*HL -= A;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="c45b"></a>
+<span id="c45b"></span>
 <div class="comments">
 <div class="paragraph">
 Screen X calculation.
@@ -377,166 +374,166 @@ Screen X calculation.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c45b"></a>C45B</td>
+<td class="address-1"><span id="c45b"></span>C45B</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="1">A *= 2; // A == 128</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c45c"></a>C45C</td>
+<td class="address-1"><span id="c45c"></span>C45C</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">C = A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c45d"></a>C45D</td>
+<td class="address-1"><span id="c45d"></span>C45D</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="1">A = E;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c45e"></a>C45E</td>
+<td class="address-1"><span id="c45e"></span>C45E</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="2">if (C &lt;= A) goto unstash_skip; // check</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c45f"></a>C45F</td>
+<td class="address-1"><span id="c45f"></span>C45F</td>
 <td class="instruction">JR NC,$C473</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c461"></a>C461</td>
+<td class="address-1"><span id="c461"></span>C461</td>
 <td class="instruction">ADD A,$28</td>
 <td class="comment-11" rowspan="1">A += 40;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c463"></a>C463</td>
+<td class="address-1"><span id="c463"></span>C463</td>
 <td class="instruction">JR NC,$C467</td>
 <td class="comment-11" rowspan="2">if (A &gt; 0xFF) A = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c465"></a>C465</td>
+<td class="address-1"><span id="c465"></span>C465</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c467"></a>C467</td>
+<td class="address-2"><span id="c467"></span>C467</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="2">if (C &gt; A) goto unstash_skip; // check</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c468"></a>C468</td>
+<td class="address-1"><span id="c468"></span>C468</td>
 <td class="instruction">JR C,$C473</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c46a"></a>C46A</td>
+<td class="address-2"><span id="c46a"></span>C46A</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">indoors: (unstash HL)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c46b"></a>C46B</td>
+<td class="address-1"><span id="c46b"></span>C46B</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="3">(stash HL, DE, BC)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c46c"></a>C46C</td>
+<td class="address-1"><span id="c46c"></span>C46C</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c46d"></a>C46D</td>
+<td class="address-1"><span id="c46d"></span>C46D</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c46e"></a>C46E</td>
-<td class="instruction">CALL <a class="link" href="C4E0.html">$C4E0</a></td>
+<td class="address-1"><span id="c46e"></span>C46E</td>
+<td class="instruction">CALL <a href="C4E0.html">$C4E0</a></td>
 <td class="comment-11" rowspan="1">spawn_character();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c471"></a>C471</td>
+<td class="address-1"><span id="c471"></span>C471</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="2">(unstash BC, DE)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c472"></a>C472</td>
+<td class="address-1"><span id="c472"></span>C472</td>
 <td class="instruction">POP DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c473"></a>C473</td>
+<td class="address-2"><span id="c473"></span>C473</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">unstash_skip: (unstash HL)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c474"></a>C474</td>
+<td class="address-2"><span id="c474"></span>C474</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="5">skip: HL += 7; // stride</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c475"></a>C475</td>
+<td class="address-1"><span id="c475"></span>C475</td>
 <td class="instruction">ADD A,$07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c477"></a>C477</td>
+<td class="address-1"><span id="c477"></span>C477</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c478"></a>C478</td>
+<td class="address-1"><span id="c478"></span>C478</td>
 <td class="instruction">JR NC,$C47B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c47a"></a>C47A</td>
+<td class="address-1"><span id="c47a"></span>C47A</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="c47b"></a>C47B</td>
+<td class="address-2"><span id="c47b"></span>C47B</td>
 <td class="instruction">DJNZ $C432</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="c47d"></a>C47D</td>
+<td class="address-1"><span id="c47d"></span>C47D</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="C41A.html">C41A</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#c41c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="C47E.html">C47E</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="C41A.html">C41A</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#c41c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="C47E.html">C47E</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

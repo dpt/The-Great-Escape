@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 7CD4</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7CBE.html">7CBE</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7cd4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7CE9.html">7CE9</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7CBE.html">7CBE</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7cd4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7CE9.html">7CE9</a></span></td>
 </tr>
 </table>
 <div class="description">7CD4: Wipe the screen.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="7C46.html">7C46</a>.
+Used by the routine at <a href="7C46.html">7C46</a>.
 </div>
 </div>
 <table class="input-1">
@@ -60,88 +57,88 @@ Used by the routine at <a class="link" href="7C46.html">7C46</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7cd4"></a>7CD4</td>
+<td class="address-2"><span id="7cd4"></span>7CD4</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-11" rowspan="1">A = B;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cd5"></a>7CD5</td>
+<td class="address-1"><span id="7cd5"></span>7CD5</td>
 <td class="instruction">LD ($7CD9),A</td>
 <td class="comment-11" rowspan="1">(loopcounter + 1) = A; // self modifying</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7cd8"></a>7CD8</td>
+<td class="address-2"><span id="7cd8"></span>7CD8</td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">do &lt;% loopcounter: B = 2; // modified</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cda"></a>7CDA</td>
+<td class="address-1"><span id="7cda"></span>7CDA</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">dst = HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7cdb"></a>7CDB</td>
+<td class="address-2"><span id="7cdb"></span>7CDB</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="4">do &lt;% *dst++ = 0; %&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cdd"></a>7CDD</td>
+<td class="address-1"><span id="7cdd"></span>7CDD</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7cde"></a>7CDE</td>
+<td class="address-1"><span id="7cde"></span>7CDE</td>
 <td class="instruction">DJNZ $7CDB</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ce0"></a>7CE0</td>
+<td class="address-1"><span id="7ce0"></span>7CE0</td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ce1"></a>7CE1</td>
-<td class="instruction">CALL <a class="link" href="7CE9.html">$7CE9</a></td>
+<td class="address-1"><span id="7ce1"></span>7CE1</td>
+<td class="instruction">CALL <a href="7CE9.html">$7CE9</a></td>
 <td class="comment-11" rowspan="1">get_next_scanline();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ce4"></a>7CE4</td>
+<td class="address-1"><span id="7ce4"></span>7CE4</td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="2">%&gt; while (--C);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ce5"></a>7CE5</td>
+<td class="address-1"><span id="7ce5"></span>7CE5</td>
 <td class="instruction">JP NZ,$7CD8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ce8"></a>7CE8</td>
+<td class="address-1"><span id="7ce8"></span>7CE8</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7CBE.html">7CBE</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7cd4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7CE9.html">7CE9</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7CBE.html">7CBE</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7cd4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7CE9.html">7CE9</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

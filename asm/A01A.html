@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A01A</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A007.html">A007</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a01a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A035.html">A035</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A007.html">A007</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a01a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A035.html">A035</a></span></td>
 </tr>
 </table>
 <div class="description">A01A: Is the specified position within the bounds of the indexed area?</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="CB98.html">CB98</a>.
+Used by the routine at <a href="CB98.html">CB98</a>.
 </div>
 </div>
 <table class="input-1">
@@ -56,136 +53,136 @@ Used by the routine at <a class="link" href="CB98.html">CB98</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a01a"></a>A01A</td>
+<td class="address-2"><span id="a01a"></span>A01A</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="6">HL = &amp;permitted_bounds[A * 4];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a01b"></a>A01B</td>
+<td class="address-1"><span id="a01b"></span>A01B</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a01c"></a>A01C</td>
+<td class="address-1"><span id="a01c"></span>A01C</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a01d"></a>A01D</td>
+<td class="address-1"><span id="a01d"></span>A01D</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a01f"></a>A01F</td>
+<td class="address-1"><span id="a01f"></span>A01F</td>
 <td class="instruction">LD HL,$9F15</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a022"></a>A022</td>
+<td class="address-1"><span id="a022"></span>A022</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a023"></a>A023</td>
+<td class="address-1"><span id="a023"></span>A023</td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">B = 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a025"></a>A025</td>
+<td class="address-2"><span id="a025"></span>A025</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *DE++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a026"></a>A026</td>
+<td class="address-1"><span id="a026"></span>A026</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A &lt; HL[0]) return; // return with flags NZ</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a027"></a>A027</td>
+<td class="address-1"><span id="a027"></span>A027</td>
 <td class="instruction">RET C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a028"></a>A028</td>
+<td class="address-1"><span id="a028"></span>A028</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="6">if (A &gt;= HL[1]) &lt;% A |= 1; return; %&gt; // return with flags NZ</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a029"></a>A029</td>
+<td class="address-1"><span id="a029"></span>A029</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a02a"></a>A02A</td>
+<td class="address-1"><span id="a02a"></span>A02A</td>
 <td class="instruction">JR C,$A02F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a02c"></a>A02C</td>
+<td class="address-1"><span id="a02c"></span>A02C</td>
 <td class="instruction">OR $01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a02e"></a>A02E</td>
+<td class="address-1"><span id="a02e"></span>A02E</td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a02f"></a>A02F</td>
+<td class="address-2"><span id="a02f"></span>A02F</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a030"></a>A030</td>
+<td class="address-1"><span id="a030"></span>A030</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL += 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a031"></a>A031</td>
+<td class="address-1"><span id="a031"></span>A031</td>
 <td class="instruction">DJNZ $A025</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a033"></a>A033</td>
+<td class="address-1"><span id="a033"></span>A033</td>
 <td class="instruction">AND B</td>
 <td class="comment-11" rowspan="1">A &amp;= B;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a034"></a>A034</td>
+<td class="address-1"><span id="a034"></span>A034</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; // return with flags Z</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A007.html">A007</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a01a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A035.html">A035</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A007.html">A007</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a01a">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A035.html">A035</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

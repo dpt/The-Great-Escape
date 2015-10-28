@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A3BB</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A38C.html">A38C</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a3bb">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A3ED.html">A3ED</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A38C.html">A38C</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a3bb">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A3ED.html">A3ED</a></span></td>
 </tr>
 </table>
 <div class="description">A3BB: Not yet understood.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="A33F.html">A33F</a>.
+Used by the routine at <a href="A33F.html">A33F</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,208 +46,208 @@ Used by the routine at <a class="link" href="A33F.html">A33F</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a3bb"></a>A3BB</td>
+<td class="address-2"><span id="a3bb"></span>A3BB</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">entered_move_characters = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3bc"></a>A3BC</td>
+<td class="address-1"><span id="a3bc"></span>A3BC</td>
 <td class="instruction">LD ($A13E),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3bf"></a>A3BF</td>
+<td class="address-1"><span id="a3bf"></span>A3BF</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3c0"></a>A3C0</td>
+<td class="address-1"><span id="a3c0"></span>A3C0</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3c1"></a>A3C1</td>
+<td class="address-1"><span id="a3c1"></span>A3C1</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="1">HL--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3c2"></a>A3C2</td>
-<td class="instruction">CALL <a class="link" href="C651.html">$C651</a></td>
+<td class="address-1"><span id="a3c2"></span>A3C2</td>
+<td class="instruction">CALL <a href="C651.html">$C651</a></td>
 <td class="comment-11" rowspan="1">sub_C651();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3c5"></a>A3C5</td>
+<td class="address-1"><span id="a3c5"></span>A3C5</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1">POP DE  // DE = the HL stored at $A3C0</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3c6"></a>A3C6</td>
+<td class="address-1"><span id="a3c6"></span>A3C6</td>
 <td class="instruction">INC E</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3c7"></a>A3C7</td>
+<td class="address-1"><span id="a3c7"></span>A3C7</td>
 <td class="instruction">LDI</td>
 <td class="comment-11" rowspan="1">LDI // *DE++ = *HL++; BC--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3c9"></a>A3C9</td>
+<td class="address-1"><span id="a3c9"></span>A3C9</td>
 <td class="instruction">LDI</td>
 <td class="comment-11" rowspan="1">LDI // *DE++ = *HL++; BC--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3cb"></a>A3CB</td>
+<td class="address-1"><span id="a3cb"></span>A3CB</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == 255) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3cd"></a>A3CD</td>
+<td class="address-1"><span id="a3cd"></span>A3CD</td>
 <td class="instruction">JP NZ,$A3DF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d0"></a>A3D0</td>
+<td class="address-1"><span id="a3d0"></span>A3D0</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="3">DE -= 6;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d1"></a>A3D1</td>
+<td class="address-1"><span id="a3d1"></span>A3D1</td>
 <td class="instruction">SUB $06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d3"></a>A3D3</td>
+<td class="address-1"><span id="a3d3"></span>A3D3</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d4"></a>A3D4</td>
+<td class="address-1"><span id="a3d4"></span>A3D4</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="2">IY = DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d5"></a>A3D5</td>
+<td class="address-1"><span id="a3d5"></span>A3D5</td>
 <td class="instruction">POP IY</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d7"></a>A3D7</td>
+<td class="address-1"><span id="a3d7"></span>A3D7</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">EX DE,HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d8"></a>A3D8</td>
+<td class="address-1"><span id="a3d8"></span>A3D8</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="2">HL += 2;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3d9"></a>A3D9</td>
+<td class="address-1"><span id="a3d9"></span>A3D9</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3da"></a>A3DA</td>
-<td class="instruction">CALL <a class="link" href="CB23.html">$CB23</a></td>
+<td class="address-1"><span id="a3da"></span>A3DA</td>
+<td class="instruction">CALL <a href="CB23.html">$CB23</a></td>
 <td class="comment-11" rowspan="1">sub_CB23();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3dd"></a>A3DD</td>
+<td class="address-1"><span id="a3dd"></span>A3DD</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC // could have just ended the block here</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3de"></a>A3DE</td>
+<td class="address-1"><span id="a3de"></span>A3DE</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a3df"></a>A3DF</td>
+<td class="address-2"><span id="a3df"></span>A3DF</td>
 <td class="instruction">CP $80</td>
 <td class="comment-11" rowspan="2">else if (A == 128) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3e1"></a>A3E1</td>
+<td class="address-1"><span id="a3e1"></span>A3E1</td>
 <td class="instruction">JP NZ,$A3EB</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3e4"></a>A3E4</td>
+<td class="address-1"><span id="a3e4"></span>A3E4</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="3">DE -= 5;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3e5"></a>A3E5</td>
+<td class="address-1"><span id="a3e5"></span>A3E5</td>
 <td class="instruction">SUB $05</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3e7"></a>A3E7</td>
+<td class="address-1"><span id="a3e7"></span>A3E7</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3e8"></a>A3E8</td>
+<td class="address-1"><span id="a3e8"></span>A3E8</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">EX DE,HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3e9"></a>A3E9</td>
+<td class="address-1"><span id="a3e9"></span>A3E9</td>
 <td class="instruction">SET 6,(HL)</td>
 <td class="comment-11" rowspan="1">*HL |= vischar_FLAGS_BIT6; %&gt; // sample = HL = $8001</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a3eb"></a>A3EB</td>
+<td class="address-2"><span id="a3eb"></span>A3EB</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3ec"></a>A3EC</td>
+<td class="address-1"><span id="a3ec"></span>A3EC</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A38C.html">A38C</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a3bb">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A3ED.html">A3ED</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A38C.html">A38C</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a3bb">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A3ED.html">A3ED</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

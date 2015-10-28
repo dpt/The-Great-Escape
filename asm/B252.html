@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at B252</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B1F5.html">B1F5</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b252">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B295.html">B295</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B1F5.html">B1F5</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b252">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B295.html">B295</a></span></td>
 </tr>
 </table>
 <div class="description">B252: Door in range.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="B1F5.html">B1F5</a> and <a class="link" href="B4D0.html">B4D0</a>.
+Used by the routines at <a href="B1F5.html">B1F5</a> and <a href="B4D0.html">B4D0</a>.
 </div>
 <div class="paragraph">
 (saved_X,saved_Y) within (-2,+2) of HL[1..] scaled &lt;&lt; 2
@@ -62,274 +59,274 @@ Used by the routines at <a class="link" href="B1F5.html">B1F5</a> and <a class="
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b252"></a>B252</td>
+<td class="address-2"><span id="b252"></span>B252</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">A = HL[1];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b253"></a>B253</td>
+<td class="address-1"><span id="b253"></span>B253</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b254"></a>B254</td>
+<td class="address-1"><span id="b254"></span>B254</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b255"></a>B255</td>
-<td class="instruction">CALL <a class="link" href="B295.html">$B295</a></td>
+<td class="address-1"><span id="b255"></span>B255</td>
+<td class="instruction">CALL <a href="B295.html">$B295</a></td>
 <td class="comment-11" rowspan="1">multiply_by_4();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b258"></a>B258</td>
+<td class="address-1"><span id="b258"></span>B258</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="17">if (saved_pos_x &lt; BC - 3 || saved_pos_x &gt;= BC + 3) return; // with C set</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b259"></a>B259</td>
+<td class="address-1"><span id="b259"></span>B259</td>
 <td class="instruction">SUB $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b25b"></a>B25B</td>
+<td class="address-1"><span id="b25b"></span>B25B</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b25c"></a>B25C</td>
+<td class="address-1"><span id="b25c"></span>B25C</td>
 <td class="instruction">JR NC,$B25F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b25e"></a>B25E</td>
+<td class="address-1"><span id="b25e"></span>B25E</td>
 <td class="instruction">DEC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b25f"></a>B25F</td>
+<td class="address-2"><span id="b25f"></span>B25F</td>
 <td class="instruction">LD HL,($81A4)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b262"></a>B262</td>
+<td class="address-1"><span id="b262"></span>B262</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b264"></a>B264</td>
+<td class="address-1"><span id="b264"></span>B264</td>
 <td class="instruction">RET C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b265"></a>B265</td>
+<td class="address-1"><span id="b265"></span>B265</td>
 <td class="instruction">LD A,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b267"></a>B267</td>
+<td class="address-1"><span id="b267"></span>B267</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b268"></a>B268</td>
+<td class="address-1"><span id="b268"></span>B268</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b269"></a>B269</td>
+<td class="address-1"><span id="b269"></span>B269</td>
 <td class="instruction">JR NC,$B26C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b26b"></a>B26B</td>
+<td class="address-1"><span id="b26b"></span>B26B</td>
 <td class="instruction">INC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b26c"></a>B26C</td>
+<td class="address-2"><span id="b26c"></span>B26C</td>
 <td class="instruction">LD HL,($81A4)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b26f"></a>B26F</td>
+<td class="address-1"><span id="b26f"></span>B26F</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b271"></a>B271</td>
+<td class="address-1"><span id="b271"></span>B271</td>
 <td class="instruction">CCF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b272"></a>B272</td>
+<td class="address-1"><span id="b272"></span>B272</td>
 <td class="instruction">RET C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b273"></a>B273</td>
+<td class="address-1"><span id="b273"></span>B273</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b274"></a>B274</td>
+<td class="address-1"><span id="b274"></span>B274</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">A = HL[2];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b275"></a>B275</td>
+<td class="address-1"><span id="b275"></span>B275</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b276"></a>B276</td>
-<td class="instruction">CALL <a class="link" href="B295.html">$B295</a></td>
+<td class="address-1"><span id="b276"></span>B276</td>
+<td class="instruction">CALL <a href="B295.html">$B295</a></td>
 <td class="comment-11" rowspan="1">multiply_by_4();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b279"></a>B279</td>
+<td class="address-1"><span id="b279"></span>B279</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b27a"></a>B27A</td>
+<td class="address-1"><span id="b27a"></span>B27A</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="16">if (saved_pos_y &lt; BC - 3 || saved_pos_y &gt;= BC + 3) return; // with C set</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b27b"></a>B27B</td>
+<td class="address-1"><span id="b27b"></span>B27B</td>
 <td class="instruction">SUB $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b27d"></a>B27D</td>
+<td class="address-1"><span id="b27d"></span>B27D</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b27e"></a>B27E</td>
+<td class="address-1"><span id="b27e"></span>B27E</td>
 <td class="instruction">JR NC,$B281</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b280"></a>B280</td>
+<td class="address-1"><span id="b280"></span>B280</td>
 <td class="instruction">DEC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b281"></a>B281</td>
+<td class="address-2"><span id="b281"></span>B281</td>
 <td class="instruction">LD HL,($81A6)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b284"></a>B284</td>
+<td class="address-1"><span id="b284"></span>B284</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b286"></a>B286</td>
+<td class="address-1"><span id="b286"></span>B286</td>
 <td class="instruction">RET C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b287"></a>B287</td>
+<td class="address-1"><span id="b287"></span>B287</td>
 <td class="instruction">LD A,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b289"></a>B289</td>
+<td class="address-1"><span id="b289"></span>B289</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b28a"></a>B28A</td>
+<td class="address-1"><span id="b28a"></span>B28A</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b28b"></a>B28B</td>
+<td class="address-1"><span id="b28b"></span>B28B</td>
 <td class="instruction">JR NC,$B28E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b28d"></a>B28D</td>
+<td class="address-1"><span id="b28d"></span>B28D</td>
 <td class="instruction">INC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b28e"></a>B28E</td>
+<td class="address-2"><span id="b28e"></span>B28E</td>
 <td class="instruction">LD HL,($81A6)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b291"></a>B291</td>
+<td class="address-1"><span id="b291"></span>B291</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b293"></a>B293</td>
+<td class="address-1"><span id="b293"></span>B293</td>
 <td class="instruction">CCF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b294"></a>B294</td>
+<td class="address-1"><span id="b294"></span>B294</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; // C not set</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B1F5.html">B1F5</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b252">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B295.html">B295</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B1F5.html">B1F5</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b252">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B295.html">B295</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

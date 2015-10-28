@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 68F4</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="68A2.html">68A2</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#68f4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="691A.html">691A</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="68A2.html">68A2</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#68f4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="691A.html">691A</a></span></td>
 </tr>
 </table>
 <div class="description">68F4: The hero enters a room.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="68A2.html">68A2</a>, <a class="link" href="9D78.html">9D78</a>, <a class="link" href="9DE5.html">9DE5</a> and <a class="link" href="B75A.html">B75A</a>.
+Used by the routines at <a href="68A2.html">68A2</a>, <a href="9D78.html">9D78</a>, <a href="9DE5.html">9DE5</a> and <a href="B75A.html">B75A</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,80 +46,80 @@ Used by the routines at <a class="link" href="68A2.html">68A2</a>, <a class="lin
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="68f4"></a>68F4</td>
+<td class="address-2"><span id="68f4"></span>68F4</td>
 <td class="instruction">LD HL,$0000</td>
 <td class="comment-11" rowspan="2">game_window_offset = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="68f7"></a>68F7</td>
+<td class="address-1"><span id="68f7"></span>68F7</td>
 <td class="instruction">LD ($A7C7),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="68fa"></a>68FA</td>
-<td class="instruction">CALL <a class="link" href="6A35.html">$6A35</a></td>
+<td class="address-1"><span id="68fa"></span>68FA</td>
+<td class="instruction">CALL <a href="6A35.html">$6A35</a></td>
 <td class="comment-11" rowspan="1">setup_room();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="68fd"></a>68FD</td>
-<td class="instruction">CALL <a class="link" href="6B42.html">$6B42</a></td>
+<td class="address-1"><span id="68fd"></span>68FD</td>
+<td class="instruction">CALL <a href="6B42.html">$6B42</a></td>
 <td class="comment-11" rowspan="1">plot_interior_tiles();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6900"></a>6900</td>
+<td class="address-1"><span id="6900"></span>6900</td>
 <td class="instruction">LD HL,$EA74</td>
 <td class="comment-11" rowspan="2">map_position = 0xEA74;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6903"></a>6903</td>
+<td class="address-1"><span id="6903"></span>6903</td>
 <td class="instruction">LD ($81BB),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6906"></a>6906</td>
-<td class="instruction">CALL <a class="link" href="6920.html">$6920</a></td>
+<td class="address-1"><span id="6906"></span>6906</td>
+<td class="instruction">CALL <a href="6920.html">$6920</a></td>
 <td class="comment-11" rowspan="1">set_hero_sprite_for_room();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6909"></a>6909</td>
+<td class="address-1"><span id="6909"></span>6909</td>
 <td class="instruction">LD HL,$8000</td>
 <td class="comment-11" rowspan="1">HL = $8000;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="690c"></a>690C</td>
-<td class="instruction">CALL <a class="link" href="B71B.html">$B71B</a></td>
+<td class="address-1"><span id="690c"></span>690C</td>
+<td class="instruction">CALL <a href="B71B.html">$B71B</a></td>
 <td class="comment-11" rowspan="1">reset_position(); // reset hero</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="690f"></a>690F</td>
-<td class="instruction">CALL <a class="link" href="6939.html">$6939</a></td>
+<td class="address-1"><span id="690f"></span>690F</td>
+<td class="instruction">CALL <a href="6939.html">$6939</a></td>
 <td class="comment-11" rowspan="1">setup_movable_items();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6912"></a>6912</td>
-<td class="instruction">CALL <a class="link" href="ABA0.html">$ABA0</a></td>
+<td class="address-1"><span id="6912"></span>6912</td>
+<td class="instruction">CALL <a href="ABA0.html">$ABA0</a></td>
 <td class="comment-11" rowspan="1">zoombox();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6915"></a>6915</td>
+<td class="address-1"><span id="6915"></span>6915</td>
 <td class="instruction">LD B,$01</td>
 <td class="comment-11" rowspan="2">increase_score(1);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6917"></a>6917</td>
-<td class="instruction">CALL <a class="link" href="A0F9.html">$A0F9</a></td>
+<td class="address-1"><span id="6917"></span>6917</td>
+<td class="instruction">CALL <a href="A0F9.html">$A0F9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -138,15 +135,15 @@ FALL THROUGH into squash_stack_goto_main.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="68A2.html">68A2</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#68f4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="691A.html">691A</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="68A2.html">68A2</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#68f4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="691A.html">691A</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

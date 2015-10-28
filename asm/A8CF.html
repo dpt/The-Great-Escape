@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A8CF</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A8A2.html">A8A2</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a8cf">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A8E7.html">A8E7</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A8A2.html">A8A2</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a8cf">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A8E7.html">A8E7</a></span></td>
 </tr>
 </table>
 <div class="description">A8CF: Plot the complete rightmost column of tiles.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="A9E4.html">A9E4</a> and <a class="link" href="AA8D.html">AA8D</a>.
+Used by the routines at <a href="A9E4.html">A9E4</a> and <a href="AA8D.html">AA8D</a>.
 </div>
 </div>
 <table class="input-0">
@@ -49,82 +46,82 @@ Used by the routines at <a class="link" href="A9E4.html">A9E4</a> and <a class="
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a8cf"></a>A8CF</td>
+<td class="address-2"><span id="a8cf"></span>A8CF</td>
 <td class="instruction">LD DE,$F10F</td>
-<td class="comment-11" rowspan="1">DE = $F10F;</td>
+<td class="comment-11" rowspan="1">DE = &amp;tile_buf[23];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8d2"></a>A8D2</td>
+<td class="address-1"><span id="a8d2"></span>A8D2</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">EXX // unpaired</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8d3"></a>A8D3</td>
+<td class="address-1"><span id="a8d3"></span>A8D3</td>
 <td class="instruction">LD HL,$FF5E</td>
-<td class="comment-11" rowspan="1">HL = $FF5E;</td>
+<td class="comment-11" rowspan="1">HL = &amp;map_buf[6];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8d6"></a>A8D6</td>
+<td class="address-1"><span id="a8d6"></span>A8D6</td>
 <td class="instruction">LD DE,$F2A7</td>
-<td class="comment-11" rowspan="1">DE = $F2A7;</td>
+<td class="comment-11" rowspan="1">DE = &amp;window_buf[23];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8d9"></a>A8D9</td>
+<td class="address-1"><span id="a8d9"></span>A8D9</td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="2">A = map_position[0] &amp; 3; // map_position lo</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8dc"></a>A8DC</td>
+<td class="address-1"><span id="a8dc"></span>A8DC</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8de"></a>A8DE</td>
+<td class="address-1"><span id="a8de"></span>A8DE</td>
 <td class="instruction">JR NZ,$A8E1</td>
 <td class="comment-11" rowspan="2">if (A == 0) HL--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8e0"></a>A8E0</td>
+<td class="address-1"><span id="a8e0"></span>A8E0</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a8e1"></a>A8E1</td>
+<td class="address-2"><span id="a8e1"></span>A8E1</td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="2">A = map_position[0] - 1; // map_position lo</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8e4"></a>A8E4</td>
+<td class="address-1"><span id="a8e4"></span>A8E4</td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a8e5"></a>A8E5</td>
-<td class="instruction">JR <a class="link" href="A8F4.html">$A8F4</a></td>
+<td class="address-1"><span id="a8e5"></span>A8E5</td>
+<td class="instruction">JR <a href="A8F4.html">$A8F4</a></td>
 <td class="comment-11" rowspan="1">goto plot_vertical_tiles_common;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A8A2.html">A8A2</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a8cf">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A8E7.html">A8E7</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A8A2.html">A8A2</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a8cf">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A8E7.html">A8E7</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

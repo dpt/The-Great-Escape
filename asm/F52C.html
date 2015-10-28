@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at F52C</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F4B7.html">F4B7</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f52c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F541.html">F541</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F4B7.html">F4B7</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f52c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F541.html">F541</a></span></td>
 </tr>
 </table>
 <div class="description">F52C: Get tuning.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="F4B7.html">F4B7</a>.
+Used by the routine at <a href="F4B7.html">F4B7</a>.
 </div>
 </div>
 <table class="input-1">
@@ -63,112 +60,112 @@ Used by the routine at <a class="link" href="F4B7.html">F4B7</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f52c"></a>F52C</td>
+<td class="address-2"><span id="f52c"></span>F52C</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="8">BC = music_tuning_table[A];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f52d"></a>F52D</td>
+<td class="address-1"><span id="f52d"></span>F52D</td>
 <td class="instruction">LD HL,$FA48</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f530"></a>F530</td>
+<td class="address-1"><span id="f530"></span>F530</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f531"></a>F531</td>
+<td class="address-1"><span id="f531"></span>F531</td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f533"></a>F533</td>
+<td class="address-1"><span id="f533"></span>F533</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f534"></a>F534</td>
+<td class="address-1"><span id="f534"></span>F534</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f535"></a>F535</td>
+<td class="address-1"><span id="f535"></span>F535</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f536"></a>F536</td>
+<td class="address-1"><span id="f536"></span>F536</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f537"></a>F537</td>
+<td class="address-1"><span id="f537"></span>F537</td>
 <td class="instruction">INC C</td>
 <td class="comment-11" rowspan="1">C++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f538"></a>F538</td>
+<td class="address-1"><span id="f538"></span>F538</td>
 <td class="instruction">INC B</td>
 <td class="comment-11" rowspan="1">B++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f539"></a>F539</td>
+<td class="address-1"><span id="f539"></span>F539</td>
 <td class="instruction">JR NZ,$F53C</td>
 <td class="comment-11" rowspan="2">if (B == 0) C++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f53b"></a>F53B</td>
+<td class="address-1"><span id="f53b"></span>F53B</td>
 <td class="instruction">INC C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f53c"></a>F53C</td>
+<td class="address-2"><span id="f53c"></span>F53C</td>
 <td class="instruction">LD L,$00</td>
 <td class="comment-11" rowspan="1">L = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f53e"></a>F53E</td>
+<td class="address-1"><span id="f53e"></span>F53E</td>
 <td class="instruction">LD D,B</td>
 <td class="comment-11" rowspan="2">DE = BC;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f53f"></a>F53F</td>
+<td class="address-1"><span id="f53f"></span>F53F</td>
 <td class="instruction">LD E,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f540"></a>F540</td>
+<td class="address-1"><span id="f540"></span>F540</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F4B7.html">F4B7</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f52c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F541.html">F541</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F4B7.html">F4B7</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f52c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F541.html">F541</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

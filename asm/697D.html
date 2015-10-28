@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 697D</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="6939.html">6939</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#697d">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="69AE.html">69AE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="6939.html">6939</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#697d">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="69AE.html">69AE</a></span></td>
 </tr>
 </table>
 <div class="description">697D: Setup the second vischar as a movable item.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="6939.html">6939</a>.
+Used by the routine at <a href="6939.html">6939</a>.
 </div>
 </div>
 <table class="input-1">
@@ -52,85 +49,85 @@ Used by the routine at <a class="link" href="6939.html">6939</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="697d"></a>697D</td>
+<td class="address-2"><span id="697d"></span>697D</td>
 <td class="instruction">LD ($8020),A</td>
 <td class="comment-11" rowspan="1">setup_movable_item: $8020 = A; // character index</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6980"></a>6980</td>
+<td class="address-1"><span id="6980"></span>6980</td>
 <td class="instruction">LD BC,$0009</td>
 <td class="comment-11" rowspan="3">memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6983"></a>6983</td>
+<td class="address-1"><span id="6983"></span>6983</td>
 <td class="instruction">LD DE,$802F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6986"></a>6986</td>
+<td class="address-1"><span id="6986"></span>6986</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6988"></a>6988</td>
+<td class="address-1"><span id="6988"></span>6988</td>
 <td class="instruction">LD HL,$69A0</td>
 <td class="comment-11" rowspan="4">memcpy($8021, movable_item_reset_data, 14);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="698b"></a>698B</td>
+<td class="address-1"><span id="698b"></span>698B</td>
 <td class="instruction">LD DE,$8021</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="698e"></a>698E</td>
+<td class="address-1"><span id="698e"></span>698E</td>
 <td class="instruction">LD BC,$000E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6991"></a>6991</td>
+<td class="address-1"><span id="6991"></span>6991</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6993"></a>6993</td>
+<td class="address-1"><span id="6993"></span>6993</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="2">$803C = room_index;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6996"></a>6996</td>
+<td class="address-1"><span id="6996"></span>6996</td>
 <td class="instruction">LD ($803C),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="6999"></a>6999</td>
+<td class="address-1"><span id="6999"></span>6999</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment-11" rowspan="1">HL = $8020;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="699c"></a>699C</td>
-<td class="instruction">CALL <a class="link" href="B71B.html">$B71B</a></td>
+<td class="address-1"><span id="699c"></span>699C</td>
+<td class="instruction">CALL <a href="B71B.html">$B71B</a></td>
 <td class="comment-11" rowspan="1">reset_position(); // reset item vischar</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="699f"></a>699F</td>
+<td class="address-1"><span id="699f"></span>699F</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="69a0"></a>
+<span id="69a0"></span>
 <div class="comments">
 <div class="paragraph">
 Fourteen bytes of reset data.
@@ -140,70 +137,70 @@ Fourteen bytes of reset data.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69a0"></a>69A0</td>
+<td class="address-1"><span id="69a0"></span>69A0</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">flags</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69a1"></a>69A1</td>
+<td class="address-1"><span id="69a1"></span>69A1</td>
 <td class="instruction">DEFW $0000</td>
 <td class="comment-11" rowspan="1">target</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69a3"></a>69A3</td>
+<td class="address-1"><span id="69a3"></span>69A3</td>
 <td class="instruction">DEFB $00,$00,$00</td>
 <td class="comment-11" rowspan="1">p04</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69a6"></a>69A6</td>
+<td class="address-1"><span id="69a6"></span>69A6</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b07</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69a7"></a>69A7</td>
-<td class="instruction">DEFW <a class="link" href="CDF2.html">$CDF2</a></td>
+<td class="address-1"><span id="69a7"></span>69A7</td>
+<td class="instruction">DEFW <a href="CDF2.html">$CDF2</a></td>
 <td class="comment-11" rowspan="1">w08</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69a9"></a>69A9</td>
-<td class="instruction">DEFW <a class="link" href="CF06.html#cf76">$CF76</a></td>
+<td class="address-1"><span id="69a9"></span>69A9</td>
+<td class="instruction">DEFW <a href="CF06.html#cf76">$CF76</a></td>
 <td class="comment-11" rowspan="1">w0A</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69ab"></a>69AB</td>
+<td class="address-1"><span id="69ab"></span>69AB</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b0C</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69ac"></a>69AC</td>
+<td class="address-1"><span id="69ac"></span>69AC</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b0D</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="69ad"></a>69AD</td>
+<td class="address-1"><span id="69ad"></span>69AD</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b0E</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="6939.html">6939</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#697d">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="69AE.html">69AE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="6939.html">6939</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#697d">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="69AE.html">69AE</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

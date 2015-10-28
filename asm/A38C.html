@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A38C</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A373.html">A373</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a38c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A3BB.html">A3BB</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A373.html">A373</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a38c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A3BB.html">A3BB</a></span></td>
 </tr>
 </table>
 <div class="description">A38C: Set location of a character.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="A26A.html">A26A</a>, <a class="link" href="A35F.html">A35F</a> and <a class="link" href="A373.html">A373</a>.
+Used by the routines at <a href="A26A.html">A26A</a>, <a href="A35F.html">A35F</a> and <a href="A373.html">A373</a>.
 </div>
 <div class="paragraph">
 Finds a charstruct, or a vischar, and stores a location in its target.
@@ -63,43 +60,43 @@ Finds a charstruct, or a vischar, and stores a location in its target.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a38c"></a>A38C</td>
-<td class="instruction">CALL <a class="link" href="C7B9.html">$C7B9</a></td>
+<td class="address-2"><span id="a38c"></span>A38C</td>
+<td class="instruction">CALL <a href="C7B9.html">$C7B9</a></td>
 <td class="comment-11" rowspan="1">HL = get_character_struct(A);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a38f"></a>A38F</td>
+<td class="address-1"><span id="a38f"></span>A38F</td>
 <td class="instruction">BIT 6,(HL)</td>
 <td class="comment-11" rowspan="2">if ((*HL &amp; characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a391"></a>A391</td>
+<td class="address-1"><span id="a391"></span>A391</td>
 <td class="instruction">JP Z,$A3AA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a394"></a>A394</td>
+<td class="address-1"><span id="a394"></span>A394</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">PUSH BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a395"></a>A395</td>
+<td class="address-1"><span id="a395"></span>A395</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL &amp; characterstruct_BYTE0_MASK;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a396"></a>A396</td>
+<td class="address-1"><span id="a396"></span>A396</td>
 <td class="instruction">AND $1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a398"></a>
+<span id="a398"></span>
 <div class="comments">
 <div class="paragraph">
 Search non-player characters to see if this character is already on-screen.
@@ -109,134 +106,134 @@ Search non-player characters to see if this character is already on-screen.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a398"></a>A398</td>
+<td class="address-1"><span id="a398"></span>A398</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a39a"></a>A39A</td>
+<td class="address-1"><span id="a39a"></span>A39A</td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="1">DE = 32; // stride</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a39d"></a>A39D</td>
+<td class="address-1"><span id="a39d"></span>A39D</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a3a0"></a>A3A0</td>
+<td class="address-2"><span id="a3a0"></span>A3A0</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% if (A == *HL) goto found;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3a1"></a>A3A1</td>
+<td class="address-1"><span id="a3a1"></span>A3A1</td>
 <td class="instruction">JR Z,$A3B3</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3a3"></a>A3A3</td>
+<td class="address-1"><span id="a3a3"></span>A3A3</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3a4"></a>A3A4</td>
+<td class="address-1"><span id="a3a4"></span>A3A4</td>
 <td class="instruction">DJNZ $A3A0</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3a6"></a>A3A6</td>
+<td class="address-1"><span id="a3a6"></span>A3A6</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3a7"></a>A3A7</td>
+<td class="address-1"><span id="a3a7"></span>A3A7</td>
 <td class="instruction">JR $A3B2</td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3a9"></a>A3A9</td>
+<td class="address-1"><span id="a3a9"></span>A3A9</td>
 <td class="instruction">DEFB $19</td>
 <td class="comment-11" rowspan="1">Unreferenced byte.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a3aa"></a>A3AA</td>
+<td class="address-2"><span id="a3aa"></span>A3AA</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="5">not_set: HL += 5; // HL = charstruct-&gt;target</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3ab"></a>A3AB</td>
+<td class="address-1"><span id="a3ab"></span>A3AB</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3ac"></a>A3AC</td>
+<td class="address-1"><span id="a3ac"></span>A3AC</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3ad"></a>A3AD</td>
+<td class="address-1"><span id="a3ad"></span>A3AD</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3ae"></a>A3AE</td>
+<td class="address-1"><span id="a3ae"></span>A3AE</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3af"></a>A3AF</td>
-<td class="instruction">CALL <a class="link" href="A3ED.html">$A3ED</a></td>
+<td class="address-1"><span id="a3af"></span>A3AF</td>
+<td class="instruction">CALL <a href="A3ED.html">$A3ED</a></td>
 <td class="comment-11" rowspan="1">store_location();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a3b2"></a>A3B2</td>
+<td class="address-2"><span id="a3b2"></span>A3B2</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">exit: return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a3b3"></a>A3B3</td>
+<td class="address-2"><span id="a3b3"></span>A3B3</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">found: POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3b4"></a>A3B4</td>
+<td class="address-1"><span id="a3b4"></span>A3B4</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3b5"></a>A3B5</td>
+<td class="address-1"><span id="a3b5"></span>A3B5</td>
 <td class="instruction">RES 6,(HL)</td>
 <td class="comment-11" rowspan="2">*HL++ &amp;= ~vischar_FLAGS_BIT6;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3b7"></a>A3B7</td>
+<td class="address-1"><span id="a3b7"></span>A3B7</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a3b8"></a>A3B8</td>
-<td class="instruction">CALL <a class="link" href="A3ED.html">$A3ED</a></td>
+<td class="address-1"><span id="a3b8"></span>A3B8</td>
+<td class="instruction">CALL <a href="A3ED.html">$A3ED</a></td>
 <td class="comment-11" rowspan="1">store_location(); // HL = vischar-&gt;target</td>
 </tr>
 <tr>
@@ -252,15 +249,15 @@ FALL THROUGH into sub_A3BB.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A373.html">A373</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a38c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A3BB.html">A3BB</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A373.html">A373</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a38c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A3BB.html">A3BB</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

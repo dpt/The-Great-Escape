@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at 7AC9</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7AC6.html">7AC6</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7ac9">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7B36.html">7B36</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7AC6.html">7AC6</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7ac9">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7B36.html">7B36</a></span></td>
 </tr>
 </table>
 <div class="description">7AC9: Check for 'pick up', 'drop' and 'use' input.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="9E07.html">9E07</a>.
+Used by the routine at <a href="9E07.html">9E07</a>.
 </div>
 </div>
 <table class="input-1">
@@ -52,103 +49,103 @@ Used by the routine at <a class="link" href="9E07.html">9E07</a>.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7ac9"></a>7AC9</td>
+<td class="address-2"><span id="7ac9"></span>7AC9</td>
 <td class="instruction">CP $0A</td>
 <td class="comment-11" rowspan="4">if (A == input_UP_FIRE) pick_up_item();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7acb"></a>7ACB</td>
+<td class="address-1"><span id="7acb"></span>7ACB</td>
 <td class="instruction">JP NZ,$7AD3</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ace"></a>7ACE</td>
-<td class="instruction">CALL <a class="link" href="7B36.html">$7B36</a></td>
+<td class="address-1"><span id="7ace"></span>7ACE</td>
+<td class="instruction">CALL <a href="7B36.html">$7B36</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ad1"></a>7AD1</td>
+<td class="address-1"><span id="7ad1"></span>7AD1</td>
 <td class="instruction">JR $7AEF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7ad3"></a>7AD3</td>
+<td class="address-2"><span id="7ad3"></span>7AD3</td>
 <td class="instruction">CP $0B</td>
 <td class="comment-11" rowspan="4">else if (A == input_DOWN_FIRE) drop_item();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ad5"></a>7AD5</td>
+<td class="address-1"><span id="7ad5"></span>7AD5</td>
 <td class="instruction">JP NZ,$7ADD</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ad8"></a>7AD8</td>
-<td class="instruction">CALL <a class="link" href="7B8B.html">$7B8B</a></td>
+<td class="address-1"><span id="7ad8"></span>7AD8</td>
+<td class="instruction">CALL <a href="7B8B.html">$7B8B</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7adb"></a>7ADB</td>
+<td class="address-1"><span id="7adb"></span>7ADB</td>
 <td class="instruction">JR $7AEF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7add"></a>7ADD</td>
+<td class="address-2"><span id="7add"></span>7ADD</td>
 <td class="instruction">CP $0C</td>
 <td class="comment-11" rowspan="4">else if (A == input_LEFT_FIRE) use_item_A();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7adf"></a>7ADF</td>
+<td class="address-1"><span id="7adf"></span>7ADF</td>
 <td class="instruction">JP NZ,$7AE7</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ae2"></a>7AE2</td>
+<td class="address-1"><span id="7ae2"></span>7AE2</td>
 <td class="instruction">CALL $7AF5</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ae5"></a>7AE5</td>
+<td class="address-1"><span id="7ae5"></span>7AE5</td>
 <td class="instruction">JR $7AEF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7ae7"></a>7AE7</td>
+<td class="address-2"><span id="7ae7"></span>7AE7</td>
 <td class="instruction">CP $0F</td>
 <td class="comment-11" rowspan="3">else if (A == input_RIGHT_FIRE) use_item_B();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7ae9"></a>7AE9</td>
+<td class="address-1"><span id="7ae9"></span>7AE9</td>
 <td class="instruction">JP NZ,$7AEF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7aec"></a>7AEC</td>
+<td class="address-1"><span id="7aec"></span>7AEC</td>
 <td class="instruction">CALL $7AF0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7aef"></a>7AEF</td>
+<td class="address-2"><span id="7aef"></span>7AEF</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7af0"></a>
+<span id="7af0"></span>
 <div class="comments">
 <div class="paragraph">
 Use item 'B'.
@@ -158,19 +155,19 @@ Use item 'B'.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7af0"></a>7AF0</td>
+<td class="address-2"><span id="7af0"></span>7AF0</td>
 <td class="instruction">LD A,($8216)</td>
 <td class="comment-11" rowspan="1">A = items_held[1]; // $8216</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7af3"></a>7AF3</td>
+<td class="address-1"><span id="7af3"></span>7AF3</td>
 <td class="instruction">JR $7AF8</td>
 <td class="comment-11" rowspan="1">goto use_item_common;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7af5"></a>
+<span id="7af5"></span>
 <div class="comments">
 <div class="paragraph">
 Use item 'A'.
@@ -180,13 +177,13 @@ Use item 'A'.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7af5"></a>7AF5</td>
+<td class="address-2"><span id="7af5"></span>7AF5</td>
 <td class="instruction">LD A,($8215)</td>
 <td class="comment-11" rowspan="1">A = items_held[0]; // $8215</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7af8"></a>
+<span id="7af8"></span>
 <div class="comments">
 <div class="paragraph">
 Use item common.
@@ -196,115 +193,115 @@ Use item common.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7af8"></a>7AF8</td>
+<td class="address-2"><span id="7af8"></span>7AF8</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == item_NONE) return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7afa"></a>7AFA</td>
+<td class="address-1"><span id="7afa"></span>7AFA</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7afb"></a>7AFB</td>
+<td class="address-1"><span id="7afb"></span>7AFB</td>
 <td class="instruction">JR $7AFD</td>
 <td class="comment-11" rowspan="1">Bug: Pointless jump to adjacent instruction.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="7afd"></a>7AFD</td>
+<td class="address-2"><span id="7afd"></span>7AFD</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="5">HL = &amp;item_actions_jump_table[A];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7afe"></a>7AFE</td>
+<td class="address-1"><span id="7afe"></span>7AFE</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7aff"></a>7AFF</td>
+<td class="address-1"><span id="7aff"></span>7AFF</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b01"></a>7B01</td>
+<td class="address-1"><span id="7b01"></span>7B01</td>
 <td class="instruction">LD HL,$7B16</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b04"></a>7B04</td>
+<td class="address-1"><span id="7b04"></span>7B04</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b05"></a>7B05</td>
+<td class="address-1"><span id="7b05"></span>7B05</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">L = *HL++;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b06"></a>7B06</td>
+<td class="address-1"><span id="7b06"></span>7B06</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b07"></a>7B07</td>
+<td class="address-1"><span id="7b07"></span>7B07</td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-11" rowspan="2">H = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b08"></a>7B08</td>
+<td class="address-1"><span id="7b08"></span>7B08</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b09"></a>7B09</td>
+<td class="address-1"><span id="7b09"></span>7B09</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HL // exit via stacked jump table entry</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b0a"></a>7B0A</td>
+<td class="address-1"><span id="7b0a"></span>7B0A</td>
 <td class="instruction">LD DE,$81A4</td>
 <td class="comment-11" rowspan="4">memcpy(&amp;saved_pos_x, $800F, 6); // copy X,Y and height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b0d"></a>7B0D</td>
+<td class="address-1"><span id="7b0d"></span>7B0D</td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b10"></a>7B10</td>
+<td class="address-1"><span id="7b10"></span>7B10</td>
 <td class="instruction">LD BC,$0006</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b13"></a>7B13</td>
+<td class="address-1"><span id="7b13"></span>7B13</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b15"></a>7B15</td>
+<td class="address-1"><span id="7b15"></span>7B15</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="7b16"></a>
+<span id="7b16"></span>
 <div class="comments">
 <div class="paragraph">
 Item actions jump table.
@@ -314,112 +311,112 @@ Item actions jump table.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b16"></a>7B16</td>
-<td class="instruction">DEFW <a class="link" href="B417.html">$B417</a></td>
+<td class="address-1"><span id="7b16"></span>7B16</td>
+<td class="instruction">DEFW <a href="B417.html">$B417</a></td>
 <td class="comment-11" rowspan="1">action_wiresnips</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b18"></a>7B18</td>
-<td class="instruction">DEFW <a class="link" href="B3F6.html">$B3F6</a></td>
+<td class="address-1"><span id="7b18"></span>7B18</td>
+<td class="instruction">DEFW <a href="B3F6.html">$B3F6</a></td>
 <td class="comment-11" rowspan="1">action_shovel</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b1a"></a>7B1A</td>
-<td class="instruction">DEFW <a class="link" href="B495.html">$B495</a></td>
+<td class="address-1"><span id="7b1a"></span>7B1A</td>
+<td class="instruction">DEFW <a href="B495.html">$B495</a></td>
 <td class="comment-11" rowspan="1">action_lockpick</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b1c"></a>7B1C</td>
-<td class="instruction">DEFW <a class="link" href="EFCB.html">$EFCB</a></td>
+<td class="address-1"><span id="7b1c"></span>7B1C</td>
+<td class="instruction">DEFW <a href="EFCB.html">$EFCB</a></td>
 <td class="comment-11" rowspan="1">action_papers</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b1e"></a>7B1E</td>
+<td class="address-1"><span id="7b1e"></span>7B1E</td>
 <td class="instruction">DEFW $7AEF</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b20"></a>7B20</td>
-<td class="instruction">DEFW <a class="link" href="B3A8.html">$B3A8</a></td>
+<td class="address-1"><span id="7b20"></span>7B20</td>
+<td class="instruction">DEFW <a href="B3A8.html">$B3A8</a></td>
 <td class="comment-11" rowspan="1">action_bribe</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b22"></a>7B22</td>
-<td class="instruction">DEFW <a class="link" href="B3E1.html">$B3E1</a></td>
+<td class="address-1"><span id="7b22"></span>7B22</td>
+<td class="instruction">DEFW <a href="B3E1.html">$B3E1</a></td>
 <td class="comment-11" rowspan="1">action_uniform</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b24"></a>7B24</td>
+<td class="address-1"><span id="7b24"></span>7B24</td>
 <td class="instruction">DEFW $7AEF</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b26"></a>7B26</td>
-<td class="instruction">DEFW <a class="link" href="B3C4.html">$B3C4</a></td>
+<td class="address-1"><span id="7b26"></span>7B26</td>
+<td class="instruction">DEFW <a href="B3C4.html">$B3C4</a></td>
 <td class="comment-11" rowspan="1">action_poison</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b28"></a>7B28</td>
-<td class="instruction">DEFW <a class="link" href="B4AE.html">$B4AE</a></td>
+<td class="address-1"><span id="7b28"></span>7B28</td>
+<td class="instruction">DEFW <a href="B4AE.html">$B4AE</a></td>
 <td class="comment-11" rowspan="1">action_red_key</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b2a"></a>7B2A</td>
-<td class="instruction">DEFW <a class="link" href="B4B2.html">$B4B2</a></td>
+<td class="address-1"><span id="7b2a"></span>7B2A</td>
+<td class="instruction">DEFW <a href="B4B2.html">$B4B2</a></td>
 <td class="comment-11" rowspan="1">action_yellow_key</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b2c"></a>7B2C</td>
-<td class="instruction">DEFW <a class="link" href="B4B6.html">$B4B6</a></td>
+<td class="address-1"><span id="7b2c"></span>7B2C</td>
+<td class="instruction">DEFW <a href="B4B6.html">$B4B6</a></td>
 <td class="comment-11" rowspan="1">action_green_key</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b2e"></a>7B2E</td>
-<td class="instruction">DEFW <a class="link" href="B387.html">$B387</a></td>
+<td class="address-1"><span id="7b2e"></span>7B2E</td>
+<td class="instruction">DEFW <a href="B387.html">$B387</a></td>
 <td class="comment-11" rowspan="1">action_red_cross_parcel</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b30"></a>7B30</td>
+<td class="address-1"><span id="7b30"></span>7B30</td>
 <td class="instruction">DEFW $7AEF</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b32"></a>7B32</td>
+<td class="address-1"><span id="7b32"></span>7B32</td>
 <td class="instruction">DEFW $7AEF</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="7b34"></a>7B34</td>
+<td class="address-1"><span id="7b34"></span>7B34</td>
 <td class="instruction">DEFW $7AEF</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="7AC6.html">7AC6</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#7ac9">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="7B36.html">7B36</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7AC6.html">7AC6</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#7ac9">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="7B36.html">7B36</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A51C</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A50B.html">A50B</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a51c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A58C.html">A58C</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A50B.html">A50B</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a51c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A58C.html">A58C</a></span></td>
 </tr>
 </table>
 <div class="description">A51C: Hero has escaped.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="9F21.html">9F21</a>.
+Used by the routine at <a href="9F21.html">9F21</a>.
 </div>
 <div class="paragraph">
 Print 'well done' message then test to see if the correct objects were used in the escape attempt.
@@ -52,13 +49,13 @@ Print 'well done' message then test to see if the correct objects were used in t
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a51c"></a>A51C</td>
-<td class="instruction">CALL <a class="link" href="A50B.html">$A50B</a></td>
+<td class="address-2"><span id="a51c"></span>A51C</td>
+<td class="instruction">CALL <a href="A50B.html">$A50B</a></td>
 <td class="comment-11" rowspan="1">screen_reset();</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a51f"></a>
+<span id="a51f"></span>
 <div class="comments">
 <div class="paragraph">
 Print standard prefix messages.
@@ -68,31 +65,31 @@ Print standard prefix messages.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a51f"></a>A51F</td>
+<td class="address-1"><span id="a51f"></span>A51F</td>
 <td class="instruction">LD HL,$A5CE</td>
 <td class="comment-11" rowspan="1">HL = &amp;escape_strings[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a522"></a>A522</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="a522"></span>A522</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot(); // WELL DONE</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a525"></a>A525</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="a525"></span>A525</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot(); // YOU HAVE ESCAPED</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a528"></a>A528</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="a528"></span>A528</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot(); // FROM THE CAMP</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a52b"></a>
+<span id="a52b"></span>
 <div class="comments">
 <div class="paragraph">
 Form escape items bitfield.
@@ -102,37 +99,37 @@ Form escape items bitfield.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a52b"></a>A52B</td>
+<td class="address-1"><span id="a52b"></span>A52B</td>
 <td class="instruction">LD C,$00</td>
 <td class="comment-11" rowspan="1">C = 0; // zero flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a52d"></a>A52D</td>
+<td class="address-1"><span id="a52d"></span>A52D</td>
 <td class="instruction">LD HL,$8215</td>
 <td class="comment-11" rowspan="1">HL = &amp;items_held[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a530"></a>A530</td>
-<td class="instruction">CALL <a class="link" href="A59C.html">$A59C</a></td>
+<td class="address-1"><span id="a530"></span>A530</td>
+<td class="instruction">CALL <a href="A59C.html">$A59C</a></td>
 <td class="comment-11" rowspan="1">join_item_to_escapeitem();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a533"></a>A533</td>
+<td class="address-1"><span id="a533"></span>A533</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // &amp;items_held[1];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a534"></a>A534</td>
-<td class="instruction">CALL <a class="link" href="A59C.html">$A59C</a></td>
+<td class="address-1"><span id="a534"></span>A534</td>
+<td class="instruction">CALL <a href="A59C.html">$A59C</a></td>
 <td class="comment-11" rowspan="1">join_item_to_escapeitem();</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a537"></a>
+<span id="a537"></span>
 <div class="comments">
 <div class="paragraph">
 Print item-tailored messages.
@@ -142,175 +139,175 @@ Print item-tailored messages.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a537"></a>A537</td>
+<td class="address-1"><span id="a537"></span>A537</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">A = C;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a538"></a>A538</td>
+<td class="address-1"><span id="a538"></span>A538</td>
 <td class="instruction">CP $05</td>
 <td class="comment-11" rowspan="2">if (A == escapeitem_COMPASS + escapeitem_PURSE) goto success;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a53a"></a>A53A</td>
+<td class="address-1"><span id="a53a"></span>A53A</td>
 <td class="instruction">JR Z,$A540</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a53c"></a>A53C</td>
+<td class="address-1"><span id="a53c"></span>A53C</td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="2">else if (A != escapeitem_COMPASS + escapeitem_PAPERS) goto captured;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a53e"></a>A53E</td>
+<td class="address-1"><span id="a53e"></span>A53E</td>
 <td class="instruction">JR NZ,$A54E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a540"></a>A540</td>
+<td class="address-2"><span id="a540"></span>A540</td>
 <td class="instruction">LD HL,$A5FD</td>
 <td class="comment-11" rowspan="1">success: HL = &amp;escape_strings[3];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a543"></a>A543</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="a543"></span>A543</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot(); // AND WILL CROSS THE</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a546"></a>A546</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="a546"></span>A546</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot(); // BORDER SUCCESSFULLY</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a549"></a>A549</td>
+<td class="address-1"><span id="a549"></span>A549</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">A = 0xFF; // success - reset game</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a54b"></a>A54B</td>
+<td class="address-1"><span id="a54b"></span>A54B</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">PUSH AF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a54c"></a>A54C</td>
+<td class="address-1"><span id="a54c"></span>A54C</td>
 <td class="instruction">JR $A56E</td>
 <td class="comment-11" rowspan="1">goto press_any_key;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a54e"></a>A54E</td>
+<td class="address-2"><span id="a54e"></span>A54E</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">captured: PUSH AF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a54f"></a>A54F</td>
+<td class="address-1"><span id="a54f"></span>A54F</td>
 <td class="instruction">LD HL,$A628</td>
 <td class="comment-11" rowspan="1">HL = &amp;escape_strings[5];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a552"></a>A552</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="a552"></span>A552</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot(); // BUT WERE RECAPTURED</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a555"></a>A555</td>
+<td class="address-1"><span id="a555"></span>A555</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">POP AF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a556"></a>A556</td>
+<td class="address-1"><span id="a556"></span>A556</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">PUSH AF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a557"></a>A557</td>
+<td class="address-1"><span id="a557"></span>A557</td>
 <td class="instruction">CP $08</td>
 <td class="comment-11" rowspan="2">if (A &gt;= escapeitem_UNIFORM) goto plot; // at least a uniform =&gt; 'but were recaptured' // bug? plotting twice</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a559"></a>A559</td>
+<td class="address-1"><span id="a559"></span>A559</td>
 <td class="instruction">JR NC,$A56B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a55b"></a>A55B</td>
+<td class="address-1"><span id="a55b"></span>A55B</td>
 <td class="instruction">LD HL,$A652</td>
 <td class="comment-11" rowspan="1">HL = &amp;escape_strings[7];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a55e"></a>A55E</td>
+<td class="address-1"><span id="a55e"></span>A55E</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) goto plot; // no objects =&gt; 'totally unprepared'</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a55f"></a>A55F</td>
+<td class="address-1"><span id="a55f"></span>A55F</td>
 <td class="instruction">JR Z,$A56B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a561"></a>A561</td>
+<td class="address-1"><span id="a561"></span>A561</td>
 <td class="instruction">LD HL,$A667</td>
 <td class="comment-11" rowspan="1">HL = &amp;escape_strings[8];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a564"></a>A564</td>
+<td class="address-1"><span id="a564"></span>A564</td>
 <td class="instruction">BIT 0,A</td>
 <td class="comment-11" rowspan="2">if ((A &amp; escapeitem_COMPASS) == 0) goto plot; // no compass =&gt; 'totally lost'</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a566"></a>A566</td>
+<td class="address-1"><span id="a566"></span>A566</td>
 <td class="instruction">JR Z,$A56B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a568"></a>A568</td>
+<td class="address-1"><span id="a568"></span>A568</td>
 <td class="instruction">LD HL,$A676</td>
 <td class="comment-11" rowspan="1">HL = &amp;escape_strings[9];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a56b"></a>A56B</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-2"><span id="a56b"></span>A56B</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">plot: screenlocstring_plot();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a56e"></a>A56E</td>
+<td class="address-2"><span id="a56e"></span>A56E</td>
 <td class="instruction">LD HL,$A68E</td>
 <td class="comment-11" rowspan="1">press_any_key: HL = &amp;escape_strings[10];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a571"></a>A571</td>
-<td class="instruction">CALL <a class="link" href="A5BF.html">$A5BF</a></td>
+<td class="address-1"><span id="a571"></span>A571</td>
+<td class="instruction">CALL <a href="A5BF.html">$A5BF</a></td>
 <td class="comment-11" rowspan="1">screenlocstring_plot(); // PRESS ANY KEY</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a574"></a>
+<span id="a574"></span>
 <div class="comments">
 <div class="paragraph">
 Wait for a keypress.
@@ -320,37 +317,37 @@ Wait for a keypress.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a574"></a>A574</td>
-<td class="instruction">CALL <a class="link" href="A58C.html">$A58C</a></td>
+<td class="address-2"><span id="a574"></span>A574</td>
+<td class="instruction">CALL <a href="A58C.html">$A58C</a></td>
 <td class="comment-11" rowspan="2">do &lt;% keyscan_all(); %&gt; while (!Z); // down press</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a577"></a>A577</td>
+<td class="address-1"><span id="a577"></span>A577</td>
 <td class="instruction">JR NZ,$A574</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a579"></a>A579</td>
-<td class="instruction">CALL <a class="link" href="A58C.html">$A58C</a></td>
+<td class="address-2"><span id="a579"></span>A579</td>
+<td class="instruction">CALL <a href="A58C.html">$A58C</a></td>
 <td class="comment-11" rowspan="2">do &lt;% keyscan_all(); %&gt; while (Z); // up press</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a57c"></a>A57C</td>
+<td class="address-1"><span id="a57c"></span>A57C</td>
 <td class="instruction">JR Z,$A579</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a57e"></a>A57E</td>
+<td class="address-1"><span id="a57e"></span>A57E</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">POP AF</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="a57f"></a>
+<span id="a57f"></span>
 <div class="comments">
 <div class="paragraph">
 Reset the game, or send the hero to solitary.
@@ -360,46 +357,46 @@ Reset the game, or send the hero to solitary.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a57f"></a>A57F</td>
+<td class="address-1"><span id="a57f"></span>A57F</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="4">if (A == 0xFF || A &gt;= escapeitem_UNIFORM) &lt;% reset_game(); return; %&gt; // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a581"></a>A581</td>
-<td class="instruction">JP Z,<a class="link" href="B75A.html">$B75A</a></td>
+<td class="address-1"><span id="a581"></span>A581</td>
+<td class="instruction">JP Z,<a href="B75A.html">$B75A</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a584"></a>A584</td>
+<td class="address-1"><span id="a584"></span>A584</td>
 <td class="instruction">CP $08</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a586"></a>A586</td>
-<td class="instruction">JP NC,<a class="link" href="B75A.html">$B75A</a></td>
+<td class="address-1"><span id="a586"></span>A586</td>
+<td class="instruction">JP NC,<a href="B75A.html">$B75A</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a589"></a>A589</td>
-<td class="instruction">JP <a class="link" href="CB98.html">$CB98</a></td>
+<td class="address-1"><span id="a589"></span>A589</td>
+<td class="instruction">JP <a href="CB98.html">$CB98</a></td>
 <td class="comment-11" rowspan="1">solitary(); return; // exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A50B.html">A50B</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a51c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A58C.html">A58C</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A50B.html">A50B</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a51c">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A58C.html">A58C</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

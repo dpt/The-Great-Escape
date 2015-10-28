@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at B4B8</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B4B6.html">B4B6</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b4b8">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B4D0.html">B4D0</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B4B6.html">B4B6</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b4b8">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B4D0.html">B4D0</a></span></td>
 </tr>
 </table>
 <div class="description">B4B8: Use a key.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="B4AE.html">B4AE</a> and <a class="link" href="B4B2.html">B4B2</a>.
+Used by the routines at <a href="B4AE.html">B4AE</a> and <a href="B4B2.html">B4B2</a>.
 </div>
 </div>
 <table class="input-1">
@@ -52,80 +49,80 @@ Used by the routines at <a class="link" href="B4AE.html">B4AE</a> and <a class="
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b4b8"></a>B4B8</td>
+<td class="address-2"><span id="b4b8"></span>B4B8</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">PUSH AF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4b9"></a>B4B9</td>
-<td class="instruction">CALL <a class="link" href="B4D0.html">$B4D0</a></td>
+<td class="address-1"><span id="b4b9"></span>B4B9</td>
+<td class="instruction">CALL <a href="B4D0.html">$B4D0</a></td>
 <td class="comment-11" rowspan="1">open_door();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4bc"></a>B4BC</td>
+<td class="address-1"><span id="b4bc"></span>B4BC</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BC</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4bd"></a>B4BD</td>
+<td class="address-1"><span id="b4bd"></span>B4BD</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">if (!Z) return; /* Wrong door? */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4be"></a>B4BE</td>
+<td class="address-1"><span id="b4be"></span>B4BE</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL &amp; ~gates_and_doors_LOCKED; // mask off locked flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4bf"></a>B4BF</td>
+<td class="address-1"><span id="b4bf"></span>B4BF</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4c1"></a>B4C1</td>
+<td class="address-1"><span id="b4c1"></span>B4C1</td>
 <td class="instruction">CP B</td>
 <td class="comment-11" rowspan="1">if (A != B) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4c2"></a>B4C2</td>
+<td class="address-1"><span id="b4c2"></span>B4C2</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = message_INCORRECT_KEY; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4c4"></a>B4C4</td>
+<td class="address-1"><span id="b4c4"></span>B4C4</td>
 <td class="instruction">JR NZ,$B4CD</td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4c6"></a>B4C6</td>
+<td class="address-1"><span id="b4c6"></span>B4C6</td>
 <td class="instruction">RES 7,(HL)</td>
 <td class="comment-11" rowspan="1">*HL &amp;= ~gates_and_doors_LOCKED; /* Unlock. */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4c8"></a>B4C8</td>
-<td class="instruction">CALL <a class="link" href="A0E9.html">$A0E9</a></td>
+<td class="address-1"><span id="b4c8"></span>B4C8</td>
+<td class="instruction">CALL <a href="A0E9.html">$A0E9</a></td>
 <td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="b4cb"></a>B4CB</td>
+<td class="address-1"><span id="b4cb"></span>B4CB</td>
 <td class="instruction">LD B,$06</td>
 <td class="comment-11" rowspan="1">B = message_IT_IS_OPEN; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="b4cd"></a>B4CD</td>
-<td class="instruction">JP <a class="link" href="7D15.html">$7D15</a></td>
+<td class="address-2"><span id="b4cd"></span>B4CD</td>
+<td class="instruction">JP <a href="7D15.html">$7D15</a></td>
 <td class="comment-11" rowspan="1">queue_message_for_display(B);</td>
 </tr>
 <tr>
@@ -141,15 +138,15 @@ FALL THROUGH into open_door.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="B4B6.html">B4B6</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#b4b8">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="B4D0.html">B4D0</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B4B6.html">B4B6</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#b4b8">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="B4D0.html">B4D0</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at A4E4</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A4D8.html">A4D8</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a4e4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A4FD.html">A4FD</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A4D8.html">A4D8</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a4e4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A4FD.html">A4FD</a></span></td>
 </tr>
 </table>
 <div class="description">A4E4: Common end of above two routines.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a class="link" href="A4D3.html">A4D3</a> and <a class="link" href="A4D8.html">A4D8</a>.
+Used by the routines at <a href="A4D3.html">A4D3</a> and <a href="A4D8.html">A4D8</a>.
 </div>
 </div>
 <table class="input-1">
@@ -56,100 +53,100 @@ Used by the routines at <a class="link" href="A4D3.html">A4D3</a> and <a class="
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a4e4"></a>A4E4</td>
+<td class="address-2"><span id="a4e4"></span>A4E4</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">HL[1] = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4e5"></a>A4E5</td>
+<td class="address-1"><span id="a4e5"></span>A4E5</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4e7"></a>A4E7</td>
+<td class="address-1"><span id="a4e7"></span>A4E7</td>
 <td class="instruction">CP $13</td>
 <td class="comment-11" rowspan="3">if (A &gt; 19) &lt;% // change this to 20 and character_21? stands in place of a guard</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4e9"></a>A4E9</td>
+<td class="address-1"><span id="a4e9"></span>A4E9</td>
 <td class="instruction">JP Z,$A4F3</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4ec"></a>A4EC</td>
+<td class="address-1"><span id="a4ec"></span>A4EC</td>
 <td class="instruction">JP C,$A4F3</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4ef"></a>A4EF</td>
+<td class="address-1"><span id="a4ef"></span>A4EF</td>
 <td class="instruction">SUB $02</td>
 <td class="comment-11" rowspan="1">tmp_A = A - 2; %&gt; // seems to affect position at table // 20.. =&gt; 18..</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4f1"></a>A4F1</td>
+<td class="address-1"><span id="a4f1"></span>A4F1</td>
 <td class="instruction">JR $A4FA</td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a4f3"></a>A4F3</td>
+<td class="address-2"><span id="a4f3"></span>A4F3</td>
 <td class="instruction">BIT 0,A</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4f5"></a>A4F5</td>
+<td class="address-1"><span id="a4f5"></span>A4F5</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="1">tmp_A = 24; // interleaved // guard character?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4f7"></a>A4F7</td>
+<td class="address-1"><span id="a4f7"></span>A4F7</td>
 <td class="instruction">JR Z,$A4FA</td>
 <td class="comment-11" rowspan="2">if (A &amp; (1&lt;&lt;0)) tmp_A++; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4f9"></a>A4F9</td>
+<td class="address-1"><span id="a4f9"></span>A4F9</td>
 <td class="instruction">INC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="a4fa"></a>A4FA</td>
+<td class="address-2"><span id="a4fa"></span>A4FA</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">HL[0] = tmp_A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4fb"></a>A4FB</td>
+<td class="address-1"><span id="a4fb"></span>A4FB</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="a4fc"></a>A4FC</td>
+<td class="address-1"><span id="a4fc"></span>A4FC</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="A4D8.html">A4D8</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#a4e4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="A4FD.html">A4FD</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="A4D8.html">A4D8</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#a4e4">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="A4FD.html">A4FD</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>

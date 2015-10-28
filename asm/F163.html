@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <title>The Great Escape: Routine at F163</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
@@ -13,15 +10,15 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a class="link" href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F076.html">F076</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f163">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F1E0.html">F1E0</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F076.html">F076</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f163">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F1E0.html">F1E0</a></span></td>
 </tr>
 </table>
 <div class="description">F163: Main.</div>
@@ -30,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a class="link" href="F068.html">F068</a>.
+Used by the routine at <a href="F068.html">F068</a>.
 </div>
 <div class="paragraph">
 Disable interrupts and set up stack pointer.
@@ -52,19 +49,19 @@ Disable interrupts and set up stack pointer.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f163"></a>F163</td>
+<td class="address-2"><span id="f163"></span>F163</td>
 <td class="instruction">DI</td>
 <td class="comment-11" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f164"></a>F164</td>
+<td class="address-1"><span id="f164"></span>F164</td>
 <td class="instruction">LD SP,$FFFE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f167"></a>
+<span id="f167"></span>
 <div class="comments">
 <div class="paragraph">
 Set up screen.
@@ -74,55 +71,55 @@ Set up screen.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f167"></a>F167</td>
-<td class="instruction">CALL <a class="link" href="F257.html">$F257</a></td>
+<td class="address-1"><span id="f167"></span>F167</td>
+<td class="instruction">CALL <a href="F257.html">$F257</a></td>
 <td class="comment-11" rowspan="1">wipe_full_screen_and_attributes();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f16a"></a>F16A</td>
+<td class="address-1"><span id="f16a"></span>F16A</td>
 <td class="instruction">LD A,$44</td>
 <td class="comment-11" rowspan="2">set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f16c"></a>F16C</td>
-<td class="instruction">CALL <a class="link" href="A071.html">$A071</a></td>
+<td class="address-1"><span id="f16c"></span>F16C</td>
+<td class="instruction">CALL <a href="A071.html">$A071</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f16f"></a>F16F</td>
+<td class="address-1"><span id="f16f"></span>F16F</td>
 <td class="instruction">LD E,$46</td>
 <td class="comment-11" rowspan="2">set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f171"></a>F171</td>
-<td class="instruction">CALL <a class="link" href="F408.html">$F408</a></td>
+<td class="address-1"><span id="f171"></span>F171</td>
+<td class="instruction">CALL <a href="F408.html">$F408</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f174"></a>F174</td>
-<td class="instruction">CALL <a class="link" href="F1E0.html">$F1E0</a></td>
+<td class="address-1"><span id="f174"></span>F174</td>
+<td class="instruction">CALL <a href="F1E0.html">$F1E0</a></td>
 <td class="comment-11" rowspan="1">plot_statics_and_menu_text();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f177"></a>F177</td>
-<td class="instruction">CALL <a class="link" href="A10B.html">$A10B</a></td>
+<td class="address-1"><span id="f177"></span>F177</td>
+<td class="instruction">CALL <a href="A10B.html">$A10B</a></td>
 <td class="comment-11" rowspan="1">plot_score();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f17a"></a>F17A</td>
-<td class="instruction">CALL <a class="link" href="F4B7.html">$F4B7</a></td>
+<td class="address-1"><span id="f17a"></span>F17A</td>
+<td class="instruction">CALL <a href="F4B7.html">$F4B7</a></td>
 <td class="comment-11" rowspan="1">menu_screen();</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f17d"></a>
+<span id="f17d"></span>
 <div class="comments">
 <div class="paragraph">
 Construct a table of 256 bit-reversed bytes at 0x7F00.
@@ -132,73 +129,73 @@ Construct a table of 256 bit-reversed bytes at 0x7F00.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f17d"></a>F17D</td>
+<td class="address-1"><span id="f17d"></span>F17D</td>
 <td class="instruction">LD HL,$7F00</td>
 <td class="comment-11" rowspan="1">HL = 0x7F00;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f180"></a>F180</td>
+<td class="address-2"><span id="f180"></span>F180</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="1">do &lt;% A = L;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f181"></a>F181</td>
+<td class="address-1"><span id="f181"></span>F181</td>
 <td class="instruction">LD C,$00</td>
 <td class="comment-11" rowspan="1">C = 0;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f183"></a>F183</td>
+<td class="address-1"><span id="f183"></span>F183</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f185"></a>F185</td>
+<td class="address-2"><span id="f185"></span>F185</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">do &lt;% carry = A &amp; 1; A &gt;&gt;= 1; // flips a byte</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f186"></a>F186</td>
+<td class="address-1"><span id="f186"></span>F186</td>
 <td class="instruction">RL C</td>
 <td class="comment-11" rowspan="1">C = (C &lt;&lt; 1) | carry;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f188"></a>F188</td>
+<td class="address-1"><span id="f188"></span>F188</td>
 <td class="instruction">DJNZ $F185</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f18a"></a>F18A</td>
+<td class="address-1"><span id="f18a"></span>F18A</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-11" rowspan="3">*HL++ = C;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f18b"></a>F18B</td>
+<td class="address-1"><span id="f18b"></span>F18B</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f18c"></a>F18C</td>
+<td class="address-1"><span id="f18c"></span>F18C</td>
 <td class="instruction">JP NZ,$F180</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f18f"></a>F18F</td>
+<td class="address-1"><span id="f18f"></span>F18F</td>
 <td class="instruction">INC H</td>
 <td class="comment-11" rowspan="1">%&gt; while ((HL &amp; 0xFF) != 0);</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f190"></a>
+<span id="f190"></span>
 <div class="comments">
 <div class="paragraph">
 Initialise visible characters (HL is $8000).
@@ -208,97 +205,97 @@ Initialise visible characters (HL is $8000).
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f190"></a>F190</td>
+<td class="address-1"><span id="f190"></span>F190</td>
 <td class="instruction">LD DE,$F1C9</td>
 <td class="comment-11" rowspan="1">DE = &amp;vischar_initial;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f193"></a>F193</td>
+<td class="address-1"><span id="f193"></span>F193</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f195"></a>F195</td>
+<td class="address-2"><span id="f195"></span>F195</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% -</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f196"></a>F196</td>
+<td class="address-1"><span id="f196"></span>F196</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="2">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f197"></a>F197</td>
+<td class="address-1"><span id="f197"></span>F197</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f198"></a>F198</td>
+<td class="address-1"><span id="f198"></span>F198</td>
 <td class="instruction">LD BC,$0017</td>
 <td class="comment-11" rowspan="3">memcpy(HL, DE, 23);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f19b"></a>F19B</td>
+<td class="address-1"><span id="f19b"></span>F19B</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f19c"></a>F19C</td>
+<td class="address-1"><span id="f19c"></span>F19C</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f19e"></a>F19E</td>
+<td class="address-1"><span id="f19e"></span>F19E</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f19f"></a>F19F</td>
+<td class="address-1"><span id="f19f"></span>F19F</td>
 <td class="instruction">LD A,$20</td>
 <td class="comment-11" rowspan="3">HL += 32;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1a1"></a>F1A1</td>
+<td class="address-1"><span id="f1a1"></span>F1A1</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1a2"></a>F1A2</td>
+<td class="address-1"><span id="f1a2"></span>F1A2</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1a3"></a>F1A3</td>
+<td class="address-1"><span id="f1a3"></span>F1A3</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1a4"></a>F1A4</td>
+<td class="address-1"><span id="f1a4"></span>F1A4</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="2">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1a5"></a>F1A5</td>
+<td class="address-1"><span id="f1a5"></span>F1A5</td>
 <td class="instruction">DJNZ $F195</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f1a7"></a>
+<span id="f1a7"></span>
 <div class="comments">
 <div class="paragraph">
 Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
@@ -308,61 +305,61 @@ Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1a7"></a>F1A7</td>
+<td class="address-1"><span id="f1a7"></span>F1A7</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = 7; // iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1a9"></a>F1A9</td>
+<td class="address-1"><span id="f1a9"></span>F1A9</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment-11" rowspan="1">HL = 0x8020; // iterate over non-player characters</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1ac"></a>F1AC</td>
+<td class="address-1"><span id="f1ac"></span>F1AC</td>
 <td class="instruction">LD DE,$001F</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1af"></a>F1AF</td>
+<td class="address-1"><span id="f1af"></span>F1AF</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f1b1"></a>F1B1</td>
+<td class="address-2"><span id="f1b1"></span>F1B1</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="2">do &lt;% HL[0] = character_NONE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1b2"></a>F1B2</td>
+<td class="address-1"><span id="f1b2"></span>F1B2</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1b3"></a>F1B3</td>
+<td class="address-1"><span id="f1b3"></span>F1B3</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">HL[1] = 0xFF; // flags</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1b4"></a>F1B4</td>
+<td class="address-1"><span id="f1b4"></span>F1B4</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += 32;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1b5"></a>F1B5</td>
+<td class="address-1"><span id="f1b5"></span>F1B5</td>
 <td class="instruction">DJNZ $F1B1</td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f1b7"></a>
+<span id="f1b7"></span>
 <div class="comments">
 <div class="paragraph">
 Zero 0x118 bytes at HL (== $8100) onwards.
@@ -375,61 +372,61 @@ This is likely wiping everything up until the start of tiles ($8218).
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1b7"></a>F1B7</td>
+<td class="address-1"><span id="f1b7"></span>F1B7</td>
 <td class="instruction">LD BC,$0118</td>
 <td class="comment-11" rowspan="1">BC = 0x118;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-2"><a name="f1ba"></a>F1BA</td>
+<td class="address-2"><span id="f1ba"></span>F1BA</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="6">do &lt;% *HL++ = 0; %&gt; while (--BC != 0); // turn into memset</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1bc"></a>F1BC</td>
+<td class="address-1"><span id="f1bc"></span>F1BC</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1bd"></a>F1BD</td>
+<td class="address-1"><span id="f1bd"></span>F1BD</td>
 <td class="instruction">DEC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1be"></a>F1BE</td>
+<td class="address-1"><span id="f1be"></span>F1BE</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1bf"></a>F1BF</td>
+<td class="address-1"><span id="f1bf"></span>F1BF</td>
 <td class="instruction">OR B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1c0"></a>F1C0</td>
+<td class="address-1"><span id="f1c0"></span>F1C0</td>
 <td class="instruction">JP NZ,$F1BA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1c3"></a>F1C3</td>
-<td class="instruction">CALL <a class="link" href="B75A.html">$B75A</a></td>
+<td class="address-1"><span id="f1c3"></span>F1C3</td>
+<td class="instruction">CALL <a href="B75A.html">$B75A</a></td>
 <td class="comment-11" rowspan="1">reset_game();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1c6"></a>F1C6</td>
-<td class="instruction">JP <a class="link" href="9D78.html">$9D78</a></td>
+<td class="address-1"><span id="f1c6"></span>F1C6</td>
+<td class="instruction">JP <a href="9D78.html">$9D78</a></td>
 <td class="comment-11" rowspan="1">goto main_loop_setup;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<a name="f1c9"></a>
+<span id="f1c9"></span>
 <div class="comments">
 <div class="paragraph">
 Initial state of a visible character.
@@ -439,88 +436,88 @@ Initial state of a visible character.
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1c9"></a>F1C9</td>
+<td class="address-1"><span id="f1c9"></span>F1C9</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">character</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1ca"></a>F1CA</td>
+<td class="address-1"><span id="f1ca"></span>F1CA</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">flags</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1cb"></a>F1CB</td>
+<td class="address-1"><span id="f1cb"></span>F1CB</td>
 <td class="instruction">DEFW $012C</td>
 <td class="comment-11" rowspan="1">target</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1cd"></a>F1CD</td>
+<td class="address-1"><span id="f1cd"></span>F1CD</td>
 <td class="instruction">DEFB $2E,$2E,$18</td>
 <td class="comment-11" rowspan="1">p04</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1d0"></a>F1D0</td>
+<td class="address-1"><span id="f1d0"></span>F1D0</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b07</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1d1"></a>F1D1</td>
-<td class="instruction">DEFW <a class="link" href="CDF2.html">$CDF2</a></td>
+<td class="address-1"><span id="f1d1"></span>F1D1</td>
+<td class="instruction">DEFW <a href="CDF2.html">$CDF2</a></td>
 <td class="comment-11" rowspan="1">w08</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1d3"></a>F1D3</td>
-<td class="instruction">DEFW <a class="link" href="CF06.html#cf76">$CF76</a></td>
+<td class="address-1"><span id="f1d3"></span>F1D3</td>
+<td class="instruction">DEFW <a href="CF06.html#cf76">$CF76</a></td>
 <td class="comment-11" rowspan="1">w0A</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1d5"></a>F1D5</td>
+<td class="address-1"><span id="f1d5"></span>F1D5</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b0C</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1d6"></a>F1D6</td>
+<td class="address-1"><span id="f1d6"></span>F1D6</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b0D</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1d7"></a>F1D7</td>
+<td class="address-1"><span id="f1d7"></span>F1D7</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">b0E</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1d8"></a>F1D8</td>
+<td class="address-1"><span id="f1d8"></span>F1D8</td>
 <td class="instruction">DEFW $0000,$0000,$0018</td>
 <td class="comment-11" rowspan="1">mi.pos</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
-<td class="address-1"><a name="f1de"></a>F1DE</td>
-<td class="instruction">DEFW <a class="link" href="CE22.html#ce2e">$CE2E</a></td>
+<td class="address-1"><span id="f1de"></span>F1DE</td>
+<td class="instruction">DEFW <a href="CE22.html#ce2e">$CE2E</a></td>
 <td class="comment-11" rowspan="1">mi.spriteset</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a class="link" href="F076.html">F076</a></span></td>
-<td class="up">Up: <a class="link" href="../maps/all.html#f163">Map</a></td>
-<td class="next"><span class="next-1">Next: <a class="link" href="F1E0.html">F1E0</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="F076.html">F076</a></span></td>
+<td class="up">Up: <a href="../maps/all.html#f163">Map</a></td>
+<td class="next"><span class="next-1">Next: <a href="F1E0.html">F1E0</a></span></td>
 </tr>
 </table>
-<div class="footer">
-<div class="release">The incomplete The Great Escape disassembly 20150622</div>
+<footer>
+<div class="release">The incomplete The Great Escape disassembly 20151028</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a class="link" href="http://skoolkit.ca/">SkoolKit</a> 4.4.</div>
-</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+</footer>
 </body>
 </html>
