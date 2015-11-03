@@ -21,6 +21,31 @@ Changelog begun.
 [Changelog:20151028]
 28th October 2015 update.
 
+The disassembly was migrated from a control file to a skool file.
+
+The disassembly is now built with SkoolKit 5.
+
+The searchlight movement block at #R$AD29 was decoded and renamed to searchlight_states.
+
+Documented the mystery data block at #R$FEF4 as much as possible.
+  Modified from a contribution from Richard Dymond.
+
+Added a tap2sna script.
+  Contributed by Richard Dymond.
+
+On the objects page unused objects are now ignored rather than producing duplicated images.
+
+Masks are now decoded to a #LINK:Masks(Masks page). [DPT: This was an earlier release].
+
+Rooms are now decoded to a #LINK:Rooms(Rooms page).
+  Statistics are given for each room including object counts and highlighting when an object's use is unique to that room.
+
+Sprite definitions were renamed to match the C version:
+  'away' or 'towards' rather than 'top left' or 'bottom right'.
+
+Room and interior object naming was rationalised for the benefit of room decoding.
+  We now suffix compass directions to indicate where an interior object faces (NW, NE, SE, SW).
+
 [Changelog:20150622]
 22nd June 2015 update.
 
