@@ -35,8 +35,6 @@ Added a tap2sna script.
 
 On the objects page unused objects are now ignored rather than producing duplicated images.
 
-Masks are now decoded to a #LINK:Masks(Masks page). [DPT: This was an earlier release].
-
 Rooms are now decoded to a #LINK:Rooms(Rooms page).
   Statistics are given for each room including object counts and highlighting when an object's use is unique to that room.
 
@@ -48,6 +46,54 @@ Room and interior object naming was rationalised for the benefit of room decodin
 
 [Changelog:20150622]
 22nd June 2015 update.
+
+Masks are now decoded to a #LINK:Masks(Masks page).
+
+Added the #FACT#alternatingSpeed(game speed varies) trivia entry.
+
+Since I began the disassembly the coordinates have been stored in y,x order not x,y as is normal and were left that way for fear of breaking something. This is now fixed.
+
+The stru_EA7C block at #R$EA7C was decoded and renamed to interior_mask_data_source.
+
+Various input flags were decoded:
+  vischar_BYTE13_BIT7 and various mystery 0x80's in the disassembly were replaced with input_KICK, set to kick the game into processing a (faked) input event.
+  The table at #R$9EE0 was decoded as a table of new inputs used by #R$9EB2(snipping_wire) and renamed to snipping_wire_new_inputs.
+  The table at #R$B0F8 was decoded as a table of new inputs used by #R$AF8F(touch) and renamed to collision_new_inputs.
+
+Numerous things got renamed:
+  check_for_pick_up_keypress becomes #R$7AC9(process_player_input_fire)
+  increment_DE_by_diff becomes #R$C79A(change_by_delta)
+  is_door_open becomes #R$B1D4(is_door_locked)
+  locate_thing_to_plot becomes #R$B89C(locate_vischar_or_itemstruct)
+  locate_thing_to_plot_then_plot becomes #R$B866(locate_vischar_or_itemstruct_then_plot)
+  map_shunt_(vague name) becomes shunt_map_(better name)
+  mystery_FEF4 becomes #R$FEF4(stack)
+  plot_game_window_x becomes #R$A7C7(game_window_offset)
+  scale_val becomes #R$BACD(multiply)
+  searchlight_STATE_00/1F/OFF enum becomes searchlight_STATE_CAUGHT/SEARCHING
+  searchlight_sub becomes #R$B83B(searchlight_mask_test)
+  sub_AF8F becomes #R$AF8F(touch)
+  sub_DBEB becomes #R$DBEB(get_greatest_itemstruct)
+  zoombox_draw becomes #R$AC6F(zoombox_draw_border)
+
+The interior_object_defs at #R$7095 are now expanded out into width, height and tile refs fields.
+
+Did some preparation for SkoolKit 5.
+
+Did a round-trip of the control to a skool file then back again in preparation for retiring the control file.
+  Fixed various things which don't roundtrip correctly, e.g. stuff which is auto-generated anyway.
+
+Fixed some nowarns.
+
+The generated disassembly's filenames now use hex (SkoolKit 4.3+).
+
+Did a big sync-up between the C and SkoolKit versions.
+
+TheGreatEscape.py got some syntax tweaks and improved comments.
+
+Mistake: #R$BA5B tests HL, not DE. #R$BAA9 doesn't affect flags, so test B.
+
+Noted that the #R$BAC9 fallthrough at the end of #R$B916(mask_stuff) looks like a mistake.
 
 [Changelog:20150123]
 23rd January 2015 update.
