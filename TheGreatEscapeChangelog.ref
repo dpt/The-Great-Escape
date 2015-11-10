@@ -103,6 +103,25 @@ Noted that the #R$BAC9 fallthrough at the end of #R$B916(mask_stuff) looks like 
 [Changelog:20150123]
 23rd January 2015 update.
 
+The super tiles are now coloured by their group. The #LINK:Map(exterior map) is now additionally presented with the supertile groups coloured.
+
+Fixed: An earlier change to set_game_window_attributes/#R$A15F to replace the routine with memset() was incorrect.
+
+Moved all game state variables to #LINK:GameStatusBuffer(game status buffer) directives.
+
+CSS: Fixed various mis-coloured elements, changed to Cambria for the main font.
+
+Assembly improvements:
+  Added isubs.
+  Suppressed any and all .ctl warnings with @nowarn or @keep.
+  Wrapped CALL directives in HTML[].
+  Added labels for directly-referenced objects, like bed objects.
+  Set line width and warning directives.
+
+Changed "TBD" bytes to mask bytes.
+
+Fixed incorrect makefile dependency.
+
 [Changelog:20141125]
 15th November 2014 update.
 
