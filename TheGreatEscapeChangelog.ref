@@ -15,13 +15,13 @@
 ; Second top-level item.
 ; ...
 
-[Changelog:pending]
+[Changelog:Upcoming]
 Added facts about #FACT#unusedRooms(unused rooms) and #FACT#unusedInteriorObjects(unused interior objects).
 
 CSS: Re-enabled the input and output register headings.
 
 [Changelog:20151102]
-Changelog begun.
+Changelog begun and populated retrospectively.
 
 [Changelog:20151028]
 28th October 2015 update.
@@ -122,8 +122,77 @@ Changed "TBD" bytes to mask bytes.
 
 Fixed incorrect makefile dependency.
 
+
+
 [Changelog:20141125]
 15th November 2014 update.
+
+Documented the map tiling / tokenisation / compression technique on #LINK:Map(the map page).
+
+Separated the concepts of player and hero. The player is the player and the hero is the guy on the screen. Formerly everything was described in terms of player.
+
+I was using 'vertical offset' or 'vo' in places when this can be more simply be called 'height'.
+
+Changes were made to get assembly output working:
+  Many labels were added for the benefit of the generated assembly listing.
+  Wrapped HTML-only elements in HTML or UDGTABLE.
+
+Makefile:
+  Added an 'all' rule which builds everything
+  Made rules more generic
+  Added bin and tap rules.
+  Made project name a variable in the Makefile.
+  Renamed rules (make tge -> make disasm).
+
+New functions:
+  #R$A01A becomes its own function, within_camp_bounds.
+  #R$A0C9(plot_ringer) is promoted to its own function.
+  #R$A0DC(set_morale_from_A) is promoted to its own function.
+  Split #R$9D7B(main_loop) out of main_loop_setup.
+
+Renamed:
+  #R$7AC6(solitary_transition_thing) becomes solitary_pos.
+  #R$9F15(byte_9F15) becomes permitted_bounds.
+  #R$A095(indoors_delay_loop) becomes interior_delay_loop.
+  #R$DD02(sub_DD02) becomes item_visible.
+  #R$E420(setup_sprite_plotting) becomes setup_vischar_plotting.
+  #R$EC01(outdoors_mask_data) becomes exterior_mask_data.
+
+Broke the following structures down so that each field is listed:
+  #R$4000(screen)
+  #R$69A0(movable_item_reset_data)
+  #R$69AE(movable_items)
+  #R$A259(red_cross_parcel_reset_data) & co.
+  #R$A27F(prisoners_and_guards)
+  #R$F1C9(vischar_initial)
+
+Turned inline C++-style comments into 'D' lines in various places including:
+  #R$7D48(message_display)
+  #R$9F21(in_permitted_area)
+  #R$A071(set_morale_flag_screen_attributes)
+
+Fixes:
+  #R$DC98 in setup_item_plotting is an exclusive-or, not an or.
+  #R$6AB5(expand_object): An essential width counter assignment line went walkabout.
+
+Self-modified addresses are expressed as '<instruction address> + 1' in #R$A8F4(supertile_plot_vertical_common) and #R$6AB5(expand_object).
+
+Split the three entries in #R$9F15(permitted_bounds) up.
+
+Added lists of readers and writers to important variables.
+
+Split #R$7DCD(messages_table) and the adjacent game messages apart.
+
+#R$6B85(roomdef_bounds): These are room bounds; this was previously just a suspicion.
+
+Split #R$81BF(roomdef_object_bounds) into #R$81BF(roomdef_object_bounds_count) and #R$81C0(roomdef_object_bounds).
+  Note that $81D0 onwards is unreferenced bytes.
+
+item_bitmaps_and_masks: Provided dimensions for bitmap and mask blocks.
+
+Added note about #R$F271(check_menu_keys) exiting by using POP BC to remove the outer calling function's return address off the stack.
+
+Also noted that #R$F350(choose_keys) relies on A' being zero which happens only because the keyboard routine is at $FE00.
 
 [Changelog:20141019]
 19th October 2014 update.
