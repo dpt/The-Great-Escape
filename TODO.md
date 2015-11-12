@@ -21,14 +21,15 @@ TODO
 24-Jun-2015
 -----------
 
-- [ ] Start a proper [changelog](http://keepachangelog.com/)
-  - [ ] Including a retrospective changes for earlier releases
+- [x] Start a proper [changelog](http://keepachangelog.com/)
+  - [x] Including a retrospective changes for earlier releases
 - [x] Migrate from a [control file](http://skoolkit.ca/docs/skoolkit/control-files.html) to a [skool file](http://skoolkit.ca/docs/skoolkit/skool-files.html)
   - [x] Add a build rule for skool -> ctl.
   - [x] Preserve `;` comments which won't make it across
   - [ ] Change direct address references into label references
   - [ ] Split skool file up into parts
 - [x] Create images of every room in the HTML disassembly
+  - [ ] Point out rooms which share definitions (e.g. 7 and 17 are the same definition)
   - [ ] Illustrate the room bounds too
 - [x] Add stats for the room objects (e.g. 'foo' used in 12 rooms, 'bar' used in 5 rooms)
   - [ ] Totals for every object
