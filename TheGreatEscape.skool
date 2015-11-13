@@ -4641,7 +4641,7 @@ c$7BB5 CALL $7C26    ; HL = item_to_itemstruct(A);
 ; HL is incremented here but then immediately overwritten by $7BC5.
  $7BC2 INC HL        ; {  HL += 2; // -> .unk1
  $7BC3 INC HL        ; }
- $7BC4 POP DE        ;   POP DE
+ $7BC4 POP DE
  $7BC5 LD HL,$800F   ;   HL = $800F;
  $7BC8 CALL $E542    ;   pos_to_tinypos(HL,DE);
  $7BCB DEC DE        ;   DE--;
@@ -4935,14 +4935,14 @@ c$7CE9 INC H         ; HL += 256;
  $7CEA LD A,H        ; {if ((H & 7) != 0) return;
  $7CEB AND $07       ;
  $7CED RET NZ        ; }
- $7CEE PUSH DE       ; PUSH DE
+ $7CEE PUSH DE
  $7CEF LD DE,$F820   ; DE = 0xF820;
  $7CF2 LD A,L        ; {if (L >= 0xE0) D = 0xFF;
  $7CF3 CP $E0        ;
  $7CF5 JR C,$7CF9    ;
  $7CF7 LD D,$FF      ; }
 *$7CF9 ADD HL,DE     ; HL += DE;
- $7CFA POP DE        ; POP DE
+ $7CFA POP DE
  $7CFB RET           ; return;
 
 ; Message queue stuff.
@@ -6770,12 +6770,12 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
 *$9FA4 LD E,(HL)     ; {found: E = *HL++; // fetch offset
  $9FA5 INC HL        ; }
  $9FA6 LD D,(HL)     ; D = *HL;
- $9FA7 PUSH DE       ; PUSH DE
+ $9FA7 PUSH DE
  $9FA8 POP HL        ; POP HL   // HL = DE;
  $9FA9 LD B,$00      ; B = 0;
  $9FAB ADD HL,BC     ; HL += BC;
  $9FAC LD A,(HL)     ; A = *HL;
- $9FAD PUSH DE       ; PUSH DE
+ $9FAD PUSH DE
  $9FAE CALL $A007    ; in_permitted_area_end_bit();
  $9FB1 POP HL        ; POP HL
  $9FB2 JR Z,$9FDE    ; JR Z,set_flag_green;
@@ -7832,7 +7832,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3C0 PUSH HL       ; PUSH HL
  $A3C1 DEC L         ; HL--;
  $A3C2 CALL $C651    ; sub_C651();
- $A3C5 POP DE        ; POP DE  // DE = the HL stored at $A3C0
+ $A3C5 POP DE        ; // DE = the HL stored at $A3C0
  $A3C6 INC E         ; DE++;
  $A3C7 LDI           ; LDI // *DE++ = *HL++; BC--;
  $A3C9 LDI           ; LDI // *DE++ = *HL++; BC--;
@@ -8595,11 +8595,11 @@ c$A8A2 LD DE,$F0F8   ; DE = &tile_buf[0]; // visible tiles array
  $A8B3 PUSH HL       ;   PUSH HLdash
  $A8B4 PUSH AF       ;   PUSH AFdash
  $A8B5 EXX           ;   -
- $A8B6 PUSH DE       ;   PUSH DE
+ $A8B6 PUSH DE
  $A8B7 EXX           ;   -
  $A8B8 CALL $A8F4    ;   plot_vertical_tiles_common();
  $A8BB EXX           ;   -
- $A8BC POP DE        ;   POP DE
+ $A8BC POP DE
  $A8BD INC DE        ;   DE++;
  $A8BE EXX           ;   -
  $A8BF POP AF
@@ -9236,7 +9236,7 @@ c$ABF9 LD A,($AB68)  ; A = zoombox_y;
  $AC3B LD A,($AB69)  ; A = zoombox_vertical_count;
  $AC3E LD B,A        ; B = A; // iterations
 *$AC3F PUSH BC       ; do <%
- $AC40 PUSH DE       ;   PUSH DE
+ $AC40 PUSH DE
  $AC41 LD A,$08      ;   A = 8; // 8 iterations
 *$AC43 EX AF,AF'     ;   do <%
  $AC44 LD A,($AB67)  ; {    BC = zoombox_horizontal_count;
@@ -9255,7 +9255,7 @@ c$ABF9 LD A,($AB68)  ; A = zoombox_y;
  $AC58 EX AF,AF'
  $AC59 DEC A         ; {  %> while (--A);
  $AC5A JP NZ,$AC43   ; }
- $AC5D POP DE        ;   POP DE
+ $AC5D POP DE
  $AC5E EX DE,HL
  $AC5F LD BC,$0020   ;   BC = 0x0020;
  $AC62 LD A,L        ; {  if (L >= 224) B = 0x07;
@@ -9713,7 +9713,7 @@ c$AEB8 EXX                                  ; -
 *$AED2 SBC HL,DE                            ;   SBC HL,DE
  $AED4 RET C                                ;   RET C  // if (HL < DE) return;
                                             ; // what about carry?
- $AED5 PUSH DE                              ;   PUSH DE
+ $AED5 PUSH DE
 @nowarn
  $AED6 LD HL,$5840                          ;   HL = 0x5840; // screen
                                             ; attribute address (column 0 + top
@@ -10243,9 +10243,9 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
  $B211 JR NZ,$B21E   ; }
  $B213 PUSH BC
  $B214 PUSH HL       ;     PUSH HL
- $B215 PUSH DE       ;     PUSH DE
+ $B215 PUSH DE
  $B216 CALL $B252    ;     door_in_range();
- $B219 POP DE        ;     POP DE
+ $B219 POP DE
  $B21A POP HL        ;     POP HL
  $B21B POP BC
  $B21C JR NC,$B229   ;     if (!C) goto found; %>
@@ -11049,7 +11049,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B708 INC DE          ; {  DE += 3; // point to groups of four
  $B709 INC DE          ;
  $B70A INC DE          ; }
- $B70B PUSH DE         ;   PUSH DE
+ $B70B PUSH DE
  $B70C EX DE,HL
  $B70D LD A,C          ; {  HL += C * 4 - 1;
  $B70E ADD A,A         ;
@@ -11642,7 +11642,7 @@ c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
  $BA37 LD A,$20      ; {  ($BABA) = 32 - H; // self modify
  $BA39 SUB H         ;
  $BA3A LD ($BABA),A  ; }
- $BA3D PUSH DE       ;   PUSH DE
+ $BA3D PUSH DE
  $BA3E LD A,(DE)     ; {  E = *DE;
  $BA3F LD E,A        ; }
  $BA40 LD A,($B838)  ;   A = byte_B838;
@@ -11650,7 +11650,7 @@ c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
  $BA46 LD A,($B837)  ; {  E = byte_B837;
  $BA49 LD E,A        ; }
  $BA4A ADD HL,DE     ;   HL += DE;
- $BA4B POP DE        ;   POP DE
+ $BA4B POP DE
  $BA4C INC HL        ;   HL++; // iterations
 *$BA4D LD A,(DE)     ;   do <% A = *DE; // DE -> $E560 upwards (in
                      ; exterior_mask_data)
@@ -12333,11 +12333,11 @@ c$C47E LD HL,($81BB) ; HL = &map_position;
  $C4CD JR NC,$C4D8   ; }
 *$C4CF POP HL        ;   reset: POP HL
  $C4D0 PUSH HL       ;   PUSH HL
- $C4D1 PUSH DE       ;   PUSH DE
+ $C4D1 PUSH DE
  $C4D2 PUSH BC
  $C4D3 CALL $C5D3    ;   reset_visible_character();
  $C4D6 POP BC
- $C4D7 POP DE        ;   POP DE
+ $C4D7 POP DE
 *$C4D8 POP HL        ;   pop_next: POP HL
 *$C4D9 LD A,$20      ; {  next: HL += 32;
  $C4DB ADD A,L       ;
@@ -12367,13 +12367,13 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C4F4 POP HL         ; POP HL
  $C4F5 RET            ; return;
 ; Empty slot found.
-*$C4F6 POP DE         ; found_empty_slot: POP DE  // DE = HL (-> character
+*$C4F6 POP DE         ; found_empty_slot: // DE = HL (-> character
                       ; struct)
  $C4F7 PUSH HL        ; PUSH HL // resave
  $C4F8 POP IY         ; POP IY  // IY = HL (-> empty slot in visible character
                       ; list)
  $C4FA PUSH HL        ; PUSH HL // resave
- $C4FB PUSH DE        ; PUSH DE
+ $C4FB PUSH DE
  $C4FC INC DE         ; DE++;
 ; Scale coords dependent on which room the character is in.
  $C4FD LD HL,$81A4    ; HL = &saved_pos_x;
@@ -12404,7 +12404,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C521 DJNZ $C51A     ; %> while (--B); %>
 *$C523 CALL $AFDF     ; collision();
  $C526 CALL Z,$B14C   ; if (Z) bounds_check();
- $C529 POP DE         ; POP DE
+ $C529 POP DE
  $C52A POP HL         ; POP HL
  $C52B RET NZ         ; RET NZ // if collision or bounds_check is nonzero, then
                       ; return
@@ -12415,7 +12415,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C532 LD (HL),A      ; {*HL++ = A;
  $C533 INC L          ; }
  $C534 LD (HL),$00    ; *HL = 0;
- $C536 PUSH DE        ; PUSH DE
+ $C536 PUSH DE
  $C537 LD DE,$CD9A    ; DE = &character_meta_data[0]; /* Commandant */
  $C53A AND A          ; {if (A) <%
  $C53B JR Z,$C54E     ; }
@@ -12478,7 +12478,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C59A JR $C5C4       ; else <%
 *$C59C XOR A          ; {  entered_move_characters = 0;
  $C59D LD ($A13E),A   ; }
- $C5A0 PUSH DE        ;   PUSH DE
+ $C5A0 PUSH DE
  $C5A1 CALL $C651     ;   sub_C651();
  $C5A4 CP $FF         ; {  if (A == 255) <%
  $C5A6 JR NZ,$C5B6    ; }
@@ -12496,7 +12496,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
 *$C5B6 CP $80         ; {  if (A == 128) IY[1] |= vischar_FLAGS_BIT6; // $8021
  $C5B8 JR NZ,$C5BE    ;
  $C5BA SET 6,(IY+$01) ; }
-*$C5BE POP DE         ;   POP DE
+*$C5BE POP DE
  $C5BF LD BC,$0003    ; {  memcpy(DE, HL, 3); %>
  $C5C2 LDIR           ; }
 *$C5C4 XOR A          ; {*DE = 0;
@@ -12734,20 +12734,20 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
                      ; location}
  $C6F5 CP $24        ; {  if (A != 36) goto back;
  $C6F7 JR NZ,$C6E4   ; }
-*$C6F9 POP DE        ;   character_12_or_higher: POP DE
+*$C6F9 POP DE        ;   character_12_or_higher:
  $C6FA JP $C7C6      ;   goto character_event; // exit via
 ;   Two unused bytes.
  $C6FD DEFB $18,$6F  ;   %>
 *$C6FF CP $80        ; {if (A == 0x80) <%
  $C701 JP NZ,$C76E   ; }
- $C704 POP DE        ;   POP DE // points at characterstruct.pos
+ $C704 POP DE        ;   // points at characterstruct.pos
  $C705 DEC DE        ; {  A = DE[-1]; // read one byte earlier
  $C706 LD A,(DE)     ;
  $C707 INC DE        ; }
  $C708 PUSH HL       ;   PUSH HL
  $C709 AND A         ; {  if (A == 0) <%
  $C70A JP NZ,$C71F   ; }
- $C70D PUSH DE       ;     PUSH DE
+ $C70D PUSH DE
  $C70E LD DE,$81A4   ;     DE = &saved_pos_x;
  $C711 LD B,$02      ;     B = 2; // 2 iters
 *$C713 LD A,(HL)     ; {    do <% *DE++ = *HL++ >> 1;
@@ -12758,7 +12758,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C718 INC DE        ; }
  $C719 DJNZ $C713    ;     %> while (--B);
  $C71B LD HL,$81A4   ;     HL = &saved_pos_x;
- $C71E POP DE        ;     POP DE %>
+ $C71E POP DE        ;     %>
 *$C71F DEC DE        ; {  if (DE[-1] == 0) A = 2; else A = 6;
  $C720 LD A,(DE)     ;
  $C721 INC DE        ;
@@ -12817,7 +12817,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C769 DJNZ $C763    ;     %> while (--B)
  $C76B DEC DE        ;     DE--; %> %>
  $C76C JR $C78B      ; else <%
-*$C76E POP DE        ;   POP DE
+*$C76E POP DE
  $C76F DEC DE        ; {  tmpA = DE[-1];
  $C770 LD A,(DE)     ;
  $C771 INC DE        ; }
@@ -13260,8 +13260,8 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
 *$C99C LD A,$0F       ; {found_bribed: HL += 15;
  $C99E ADD A,L        ;
  $C99F LD L,A         ; }
- $C9A0 POP DE         ;     POP DE
- $C9A1 PUSH DE        ;     PUSH DE
+ $C9A0 POP DE
+ $C9A1 PUSH DE
  $C9A2 LD A,E         ; {    DE += 3;
  $C9A3 ADD A,$03      ;
  $C9A5 LD E,A         ; }
@@ -13607,7 +13607,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
 c$CB61 CP $80         ; {if (A == 128) <%
  $CB63 JP NZ,$CB6A    ; }
  $CB66 SET 6,(IY+$01) ;   IY[1] |= vischar_FLAGS_BIT6; %>
-*$CB6A POP DE         ; POP DE
+*$CB6A POP DE
  $CB6B INC E          ; {memcpy(DE + 2, HL, 2);
  $CB6C INC E          ;
  $CB6D LD BC,$0002    ;
@@ -13695,17 +13695,17 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
  $CBC2 EX AF,AF'
  $CBC3 XOR A           ;     A = 0;
 *$CBC4 PUSH AF         ;     do <%
- $CBC5 PUSH DE         ;       PUSH DE
+ $CBC5 PUSH DE
 ; If the item is within the camp bounds then it will be discovered.
  $CBC6 CALL $A01A      ;       within_camp_bounds();
  $CBC9 JR Z,$CBD5      ;       if (Z) goto $CBD5;
- $CBCB POP DE          ;       POP DE
+ $CBCB POP DE
  $CBCC POP AF
  $CBCD INC A           ; {    %> while (++A != 3);
  $CBCE CP $03          ;
  $CBD0 JP NZ,$CBC4     ; }
  $CBD3 JR $CBDC        ;     goto next;
-*$CBD5 POP DE          ;     POP DE
+*$CBD5 POP DE
  $CBD6 POP AF
  $CBD7 EX AF,AF'
  $CBD8 LD C,A          ;     C = A;
@@ -15215,7 +15215,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC6C CALL $DD02    ; item_visible();
  $DC6F RET NZ        ; if (!Z) return; /* invisible */
  $DC70 PUSH BC
- $DC71 PUSH DE       ; PUSH DE
+ $DC71 PUSH DE
  $DC72 LD A,E        ; A = E;
  $DC73 LD ($E2C2),A  ; ($E2C1 + 1) = A; // self modify
                      ; masked_sprite_plotter_16_wide_left
@@ -15284,16 +15284,16 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DCCF LD ($81A2),HL ; ($81A2) = HL;  // screen buffer pointer
 @nowarn
  $DCD2 LD HL,$8100   ; HL = $8100;
- $DCD5 POP DE        ; POP DE
- $DCD6 PUSH DE       ; PUSH DE
+ $DCD5 POP DE
+ $DCD6 PUSH DE
  $DCD7 LD A,D        ; {L += D * 4;
  $DCD8 ADD A,A       ;
  $DCD9 ADD A,A       ;
  $DCDA ADD A,L       ;
  $DCDB LD L,A        ; }
  $DCDC LD ($81B0),HL ; ($81B0) = HL;
- $DCDF POP DE        ; POP DE
- $DCE0 PUSH DE       ; PUSH DE
+ $DCDF POP DE
+ $DCE0 PUSH DE
  $DCE1 LD A,D        ; A = D;
  $DCE2 AND A         ; {if (A) <%
  $DCE3 JR Z,$DCEF    ; }
@@ -15315,7 +15315,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DCFA ADD HL,DE     ;
  $DCFB LD ($81AE),HL ; }
  $DCFE POP BC
- $DCFF POP DE        ; POP DE
+ $DCFF POP DE
  $DD00 XOR A         ; A = 0;
  $DD01 RET           ; return; /* visible */
 
@@ -16806,7 +16806,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E463 INC DE        ; }
  $E464 DJNZ $E45B    ; %> while (--B);
  $E466 EX AF,AF'
- $E467 POP DE        ; POP DE
+ $E467 POP DE
  $E468 ADD A,A       ; {DE += A * 6;
  $E469 LD C,A        ;
  $E46A ADD A,A       ;
@@ -16827,7 +16827,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E483 AND A         ; {if (A) return; /* invisible */
  $E484 RET NZ        ; }
  $E485 PUSH BC
- $E486 PUSH DE       ; PUSH DE
+ $E486 PUSH DE
  $E487 LD A,(IY+$1E) ; A = IY[30];
  $E48A CP $03        ; {if (A == 3) <% // 3 => 16 wide (4 => 24 wide)
  $E48C JR NZ,$E49C   ; }
@@ -16918,8 +16918,8 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E508 LD ($81A2),HL ; ($81A2) = HL;
 @nowarn
  $E50B LD HL,$8100   ; HL = 0x8100;
- $E50E POP DE        ; POP DE
- $E50F PUSH DE       ; PUSH DE
+ $E50E POP DE
+ $E50F PUSH DE
  $E510 LD A,D        ; {L += D * 4 + (IY[26] & 7) * 4;
  $E511 ADD A,A       ;
  $E512 ADD A,A       ;
@@ -16932,7 +16932,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E51C ADD A,L       ;
  $E51D LD L,A        ; }
  $E51E LD ($81B0),HL ; foreground_mask_pointer = HL;
- $E521 POP DE        ; POP DE
+ $E521 POP DE
  $E522 LD A,D        ; A = D;
  $E523 AND A         ; {if (A) <%
  $E524 JR Z,$E531    ; }
@@ -17618,7 +17618,7 @@ c$EED3 LD ($EDD1),SP ; saved_sp = SP;
  $EF37 EXX           ; {Bdash = 128; // 128 rows
  $EF38 LD B,$80      ; }
 *$EF3A EXX           ; do <%
- $EF3B POP DE        ;   POP DE // output address
+ $EF3B POP DE        ;   // output address
  $EF3C LD B,$04      ;   B = 4; // 4 iterations of 5 plus 3 at the end == 23
 *$EF3E LD C,(HL)     ;   do <% C = *HL;
  $EF3F RRD           ; {    RRD             // tmp = *HL & 0x0F; *HL = (*HL >>
@@ -18050,7 +18050,7 @@ c$F20B LD ($F075),A  ; static_tiles_plot_direction = A;
  $F20F AND $7F       ;
  $F211 LD B,A        ;
  $F212 INC HL        ; }
- $F213 PUSH DE       ; PUSH DE
+ $F213 PUSH DE
  $F214 EXX           ; -
  $F215 POP DE        ; POP DEdash
  $F216 EXX           ; -
