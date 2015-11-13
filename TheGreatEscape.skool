@@ -8843,12 +8843,12 @@ c$A9E4 LD HL,$81BB   ; HL = &map_position;
  $A9EB LD HL,$F0F9   ; HL = &tile_buf[1];
  $A9EE LD DE,$F0F8   ; DE = &tile_buf[0];
  $A9F1 LD BC,$0197   ; BC = tile_buf_length - 1;
- $A9F4 LDIR          ; LDIR
+ $A9F4 LDIR
 @nowarn
  $A9F6 LD HL,$F291   ; HL = &window_buf[1];
  $A9F9 LD DE,$F290   ; DE = &window_buf[0];
  $A9FC LD BC,$0CBF   ; BC = window_buf_length - 1;
- $A9FF LDIR          ; LDIR
+ $A9FF LDIR
  $AA01 CALL $A8CF    ; plot_rightmost_tiles();
  $AA04 RET           ; return;
 
@@ -8882,13 +8882,13 @@ c$AA26 DEC L         ; L--;
  $AA2E LD HL,$F110   ; HL = &tile_buf[24];
  $AA31 LD DE,$F0F9   ; DE = &tile_buf[1];
  $AA34 LD BC,$0180   ; BC = tile_buf_length - 24;
- $AA37 LDIR          ; LDIR
+ $AA37 LDIR
 @nowarn
  $AA39 LD HL,$F350   ; HL = &window_buf[24 * 8];
 @nowarn
  $AA3C LD DE,$F291   ; DE = &window_buf[1];
  $AA3F LD BC,$0C00   ; BC = window_buf_length - 24 * 8;
- $AA42 LDIR          ; LDIR
+ $AA42 LDIR
  $AA44 CALL $A80A    ; plot_bottommost_tiles();
  $AA47 CALL $A8E7    ; plot_leftmost_tiles();
  $AA4A RET           ; return;
@@ -8903,12 +8903,12 @@ c$AA4B LD HL,$81BC   ; HL = &map_position[1];
  $AA52 LD HL,$F110   ; HL = &tile_buf[24];
  $AA55 LD DE,$F0F8   ; DE = &tile_buf[0];
  $AA58 LD BC,$0180   ; BC = tile_buf_length - 24;
- $AA5B LDIR          ; LDIR
+ $AA5B LDIR
 @nowarn
  $AA5D LD HL,$F350   ; HL = &window_buf[24 * 8];
  $AA60 LD DE,$F290   ; DE = &window_buf[0];
  $AA63 LD BC,$0C00   ; BC = window_buf_length - 24 * 8;
- $AA66 LDIR          ; LDIR
+ $AA66 LDIR
  $AA68 CALL $A80A    ; plot_bottommost_tiles();
  $AA6B RET           ; return;
 
@@ -15194,7 +15194,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC4A INC HL        ; }
  $DC4B LD DE,$81B2   ; DE = &tinypos_stash_x;
  $DC4E LD BC,$0005   ; BC = 5;
- $DC51 LDIR          ; LDIR
+ $DC51 LDIR
  $DC53 EX DE,HL
  $DC54 LD (HL),B     ; *HL = B; // B == 0 due to LDIR /* Items are never drawn
                      ; flipped. */
