@@ -1996,7 +1996,7 @@ c$69DC LD A,$FF      ; -
  $69F4 LD B,$7C      ; Bdash = 124; // length of door_positions
  $69F6 LD DE,$0004   ; -
 *$69F9 LD A,(HL)     ; {do <% if (HLdash[0] & 0xFC == B) <%
- $69FA EXX           ;
+ $69FA EXX
  $69FB AND $FC       ;
  $69FD CP B          ;
  $69FE JR NZ,$6A05   ; }
@@ -2310,7 +2310,7 @@ c$6B42 LD HL,$F290   ; HL = $F290;  // screen buffer start address
 *$6B4A LD B,$18      ; do <% B = 24; // columns
 *$6B4C PUSH HL       ;   do <%
  $6B4D LD A,(DE)     ; {    tileptr = &interior_tiles[*DE];
- $6B4E EXX           ;
+ $6B4E EXX
  $6B4F LD L,A        ;
  $6B50 LD H,$00      ;
  $6B52 ADD HL,HL     ;
@@ -8622,7 +8622,7 @@ c$A8A2 LD DE,$F0F8   ; DE = &tile_buf[0]; // visible tiles array
 @label=plot_rightmost_tiles
 @nowarn
 c$A8CF LD DE,$F10F   ; DE = &tile_buf[23];
- $A8D2 EXX           ; EXX // unpaired
+ $A8D2 EXX           ; // unpaired
  $A8D3 LD HL,$FF5E   ; HL = &map_buf[6];
  $A8D6 LD DE,$F2A7   ; DE = &window_buf[23];
  $A8D9 LD A,($81BB)  ; {A = map_position[0] & 3; // map_position lo
@@ -8692,7 +8692,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A92F DEC A         ; {%> while (--A);
  $A930 JP NZ,$A923   ; }
  $A933 EX DE,HL
- $A934 EXX           ; EXX
+ $A934 EXX
  $A935 LD A,L        ; {HL += 7;
  $A936 ADD A,$07     ;
  $A938 LD L,A        ;
@@ -8702,7 +8702,7 @@ c$A8F4 AND $03       ; A &= 3;
 *$A93C LD B,$03      ; B = 3; // 3 iterations
 *$A93E PUSH BC       ; do <%
  $A93F LD A,(HL)     ;   A = *HL;
- $A940 EXX           ;   EXX
+ $A940 EXX
  $A941 LD L,A        ; {  HL = &super_tiles[0] + A * 16; // supertiles
  $A942 LD H,$00      ;
  $A944 ADD HL,HL     ;
@@ -8730,7 +8730,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A962 DEC A         ; {  %> while (--A);
  $A963 JP NZ,$A956   ; }
  $A966 EX DE,HL
- $A967 EXX           ;   EXX
+ $A967 EXX
  $A968 LD A,L        ; {  HL += 7;
  $A969 ADD A,$07     ;
  $A96B LD L,A        ;
@@ -8740,7 +8740,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A970 DJNZ $A93E    ; %> while (--B);
 ; Trailing edge.
  $A972 LD A,(HL)     ; A = *HL;
- $A973 EXX           ; EXX
+ $A973 EXX
  $A974 LD L,A        ; {HL = &super_tiles[0] + A * 16; // supertiles
  $A975 LD H,$00      ;
  $A977 ADD HL,HL     ;
@@ -10261,10 +10261,10 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
 *$B229 LD A,$10      ; {found: A = 16 - B;
  $B22B SUB B         ; }
  $B22C LD ($68A1),A  ; current_door = A;
- $B22F EXX           ; EXX
+ $B22F EXX
  $B230 CALL $B1D4    ; is_door_locked();
  $B233 RET NZ        ; if (!Z) return; // door was locked - return nonzero?
- $B234 EXX           ; EXX
+ $B234 EXX
  $B235 LD A,(HL)     ; {IY[28] = (*HL >> 2) & 0x3F; // sampled HL = $792E (in
  $B236 RRA           ; door_positions[])
  $B237 RRA           ;
@@ -10477,7 +10477,7 @@ c$B32D LD HL,$81D6   ; HL = &door_related;
 *$B330 LD A,(HL)     ; for (;;) <% A = *HL;
  $B331 CP $FF        ; {  if (A == 255) return; /* Reached end of list. */
  $B333 RET Z         ; }
- $B334 EXX           ;   // EXX
+ $B334 EXX
  $B335 LD ($68A1),A  ;   current_door = A;
  $B338 CALL $6A12    ;   get_door_position();
  $B33B LD A,(HL)     ;   A = *HLdash;
@@ -10776,7 +10776,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B4DB LD HL,$F05D   ; HL = &gates_flags;
 *$B4DE LD A,(HL)     ; {do <% A = *HL & ~gates_and_doors_LOCKED;
  $B4DF AND $7F       ; }
- $B4E1 EXX           ;   EXX
+ $B4E1 EXX
  $B4E2 CALL $6A12    ;   get_door_position();
  $B4E5 PUSH HL
  $B4E6 CALL $B252    ;   door_in_range();
@@ -10788,11 +10788,11 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B4EF INC HL        ; }
  $B4F0 CALL $B252    ;   door_in_range();
  $B4F3 JR NC,$B4FA   ;   if (!C) goto not_in_range;
- $B4F5 EXX           ;   EXX
+ $B4F5 EXX
  $B4F6 INC HL        ;   HL++;
  $B4F7 DJNZ $B4DE    ; %> while (--B);
  $B4F9 RET           ; return;
-*$B4FA EXX           ; not_in_range: EXX
+*$B4FA EXX           ; not_in_range:
  $B4FB XOR A         ; A = 0;
  $B4FC RET           ; return;
 ; Indoors.
@@ -10818,7 +10818,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B519 OR $01        ; A |= 1;
  $B51B RET           ; return;
 *$B51C LD A,(DE)     ; found: A = *DE;
- $B51D EXX           ; EXX
+ $B51D EXX
  $B51E CALL $6A12    ; get_door_position();
  $B521 INC HL        ; HL++;
  $B522 EX DE,HL
@@ -10837,10 +10837,10 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B534 INC HL        ; }
  $B535 INC DE        ;   DE++;
  $B536 DJNZ $B528    ; %> while (--B);
- $B538 EXX           ; EXX
+ $B538 EXX
  $B539 XOR A         ; A = 0; // ok
  $B53A RET           ; return;
-*$B53B EXX           ; exx_next: EXX
+*$B53B EXX           ; exx_next:
  $B53C JR $B516      ; goto next;
 
 ; Wall boundaries.
@@ -11352,7 +11352,7 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B8A0 LD E,C         ; }
  $B8A1 LD A,$FF       ; A = 0xFF; // 'nothing found' marker 0xFF
  $B8A3 EX AF,AF'
- $B8A4 EXX            ; EXX
+ $B8A4 EXX
  $B8A5 LD DE,$0000    ; DE = 0;
  $B8A8 LD BC,$0820    ; B = 8; C = 32; // iterations, stride
  $B8AB LD HL,$8007    ; HL = $8007; // vischar byte7
@@ -11371,10 +11371,10 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B8BD INC BC         ;
  $B8BE INC BC         ; }
  $B8BF PUSH BC
- $B8C0 EXX            ;   EXX
+ $B8C0 EXX
  $B8C1 POP HL
  $B8C2 SBC HL,BC      ;   SBC HL,BC
- $B8C4 EXX            ;   EXX
+ $B8C4 EXX
  $B8C5 JR C,$B8F5     ;   JR C,pop_next
  $B8C7 INC L          ;   HL++;
  $B8C8 LD C,(HL)      ; {  C = *HL++;
@@ -11385,10 +11385,10 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B8CD INC BC         ;
  $B8CE INC BC         ; }
  $B8CF PUSH BC
- $B8D0 EXX            ;   EXX
+ $B8D0 EXX
  $B8D1 POP HL
  $B8D2 SBC HL,DE      ;   SBC HL,DE
- $B8D4 EXX            ;   EXX
+ $B8D4 EXX
  $B8D5 JR C,$B8F5     ;   JR C,pop_next
  $B8D7 INC L          ;   HL++;
  $B8D8 POP BC
@@ -11400,7 +11400,7 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B8DF INC L          ; }
  $B8E0 LD D,(HL)      ;   D = *HL;
  $B8E1 PUSH HL
- $B8E2 EXX            ;   EXX
+ $B8E2 EXX
  $B8E3 POP HL
  $B8E4 DEC L          ; {  L -= 2;
  $B8E5 DEC L          ; }
@@ -11416,7 +11416,7 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B8F0 LD L,A         ; }
  $B8F1 PUSH HL        ; {  IY = HL;
  $B8F2 POP IY         ; }
- $B8F4 EXX            ;   EXX
+ $B8F4 EXX
 *$B8F5 POP BC         ;   pop_next:
  $B8F6 POP HL
 *$B8F7 LD A,L         ; {  next: HL += C;
@@ -15124,11 +15124,11 @@ c$DBEB LD BC,$1007   ; B = item_LIMIT; // iterations
  $DBFC LD A,(HL)     ;
  $DBFD CALL $B1C7    ; }
  $DC00 PUSH BC       ;
- $DC01 EXX           ;
+ $DC01 EXX
  $DC02 POP HL        ;
  $DC03 AND A         ;   A &= A; // Clear carry flag.
  $DC04 SBC HL,BC     ;   HLdash -= BCdash; // itemstr->pos.x * 8 - x
- $DC06 EXX           ;
+ $DC06 EXX
  $DC07 JR Z,$DC36    ; {  if (HLdash > 0) <%
  $DC09 JR C,$DC36    ; }
  $DC0B INC HL        ;     HL++; // y position
@@ -15138,11 +15138,11 @@ c$DBEB LD BC,$1007   ; B = item_LIMIT; // iterations
  $DC11 EXX           ;     -
  $DC12 POP HL        ;     // not clearing carry?
  $DC13 SBC HL,DE     ;     HLdash -= BCdash; // itemstr->pos.y * 8 - y
- $DC15 EXX           ;
+ $DC15 EXX
  $DC16 JR Z,$DC36    ; {    if (HLdash > 0) <%
  $DC18 JR C,$DC36    ; }
  $DC1A PUSH HL       ; {      HLdash = HL;
- $DC1B EXX           ;
+ $DC1B EXX
  $DC1C POP HL        ; }
 ; Get x,y for the next iteration.
  $DC1D LD A,(HL)     ; {      DEdash = *HLdash-- * 8; // y position
@@ -15156,7 +15156,7 @@ c$DBEB LD BC,$1007   ; B = item_LIMIT; // iterations
  $DC29 DEC HL        ; }
  $DC2A PUSH HL       ; {      IY = HLdash; // IY is not banked // sampled IY =
  $DC2B POP IY        ; $771C,7715 (pointing into item_structs)}
- $DC2D EXX           ;
+ $DC2D EXX
  $DC2E POP BC        ;       - // fetch iter count
  $DC2F PUSH BC       ;       -
  $DC30 LD A,$10      ; {      A = (16 - B) | (1<<6); // item found flag
@@ -15228,7 +15228,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC82 EX AF,AF'     ; {  Adash = 3 - C; %>
  $DC83 LD A,$03      ;
  $DC85 SUB C         ; }
-*$DC86 EXX           ;
+*$DC86 EXX
  $DC87 LD C,A        ; Cdash = Adash;
  $DC88 EX AF,AF'
  $DC89 LD HL,$E0E0   ; HLdash = &masked_sprite_plotter_16_enables[0];
@@ -15247,7 +15247,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC99 JR NZ,$DC9D   ; (HL),A and NOP. */
  $DC9B XOR $77       ; }
 *$DC9D DJNZ $DC8E    ; %> while (--Bdash);
- $DC9F EXX           ;
+ $DC9F EXX
  $DCA0 LD A,D        ; A = D;
  $DCA1 AND A         ; A &= A;
  $DCA2 LD DE,$0000   ; DE = 0;
@@ -16129,11 +16129,11 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E17A LD A,(HL)     ; {  A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 &
  $E17B CPL           ; *foremaskptr);
  $E17C OR B          ;
- $E17D EXX           ;
+ $E17D EXX
  $E17E AND (HL)      ;
  $E17F EX AF,AF'
  $E180 LD A,B        ;
- $E181 EXX           ;
+ $E181 EXX
  $E182 AND (HL)      ;
  $E183 LD B,A        ;
  $E184 EX AF,AF'
@@ -16147,11 +16147,11 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E18B LD A,(HL)     ; {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 &
  $E18C CPL           ; *foremaskptr);
  $E18D OR C          ;
- $E18E EXX           ;
+ $E18E EXX
  $E18F AND (HL)      ;
  $E190 EX AF,AF'
  $E191 LD A,C        ;
- $E192 EXX           ;
+ $E192 EXX
  $E193 AND (HL)      ;
  $E194 LD C,A        ;
  $E195 EX AF,AF'
@@ -16165,11 +16165,11 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E19C LD A,(HL)     ; {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 &
  $E19D CPL           ; *foremaskptr);
  $E19E OR E          ;
- $E19F EXX           ;
+ $E19F EXX
  $E1A0 AND (HL)      ;
  $E1A1 EX AF,AF'
  $E1A2 LD A,E        ;
- $E1A3 EXX           ;
+ $E1A3 EXX
  $E1A4 AND (HL)      ;
  $E1A5 LD E,A        ;
  $E1A6 EX AF,AF'
@@ -16183,11 +16183,11 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E1AD LD A,(HL)     ; {  A = ((~*foremaskptr | mask3) & *screenptr) | (bm3 &
  $E1AE CPL           ; *foremaskptr);
  $E1AF OR D          ;
- $E1B0 EXX           ;
+ $E1B0 EXX
  $E1B1 AND (HL)      ;
  $E1B2 EX AF,AF'
  $E1B3 LD A,D        ;
- $E1B4 EXX           ;
+ $E1B4 EXX
  $E1B5 AND (HL)      ;
  $E1B6 LD D,A        ;
  $E1B7 EX AF,AF'
@@ -16231,7 +16231,7 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E1E8 LD E,(HL)     ; {  E = *HL++;
  $E1E9 INC HL        ; }
  $E1EA PUSH HL
- $E1EB EXX           ;   EXX
+ $E1EB EXX
 ; Load mask bytes into B',C',E'.
  $E1EC LD B,(HL)     ; {  B = *HL++;
  $E1ED INC HL        ; }
@@ -16244,7 +16244,7 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E1F6 AND A         ;
  $E1F7 CALL M,$E3FA  ; }
  $E1FA LD HL,($81B0) ;   HL = foreground_mask_pointer;
- $E1FD EXX           ;   EXX
+ $E1FD EXX
 @nowarn
  $E1FE LD HL,($81A2) ;   HL = ($81A2); // screen pointer
 ; Shift bitmap.
@@ -16267,7 +16267,7 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E21F RL C          ;   RL C
  $E221 RL B          ;   RL B
  $E223 RL D          ;   RL D
- $E225 EXX           ;   EXX
+ $E225 EXX
 ; Shift mask.
  $E226 LD D,$FF      ;   D = 255;
  $E228 SCF           ;   SCF
@@ -16293,65 +16293,65 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E24B LD A,(HL)     ; {  A = ~*HL | D;       // 1
  $E24C CPL           ;
  $E24D OR D          ; }
- $E24E EXX           ;   EXX
+ $E24E EXX
  $E24F AND (HL)      ;   A &= *HL;
  $E250 EX AF,AF'
  $E251 LD A,D        ;   A = D;
- $E252 EXX           ;   EXX
+ $E252 EXX
  $E253 AND (HL)      ;   A &= *HL;
  $E254 LD D,A        ;   D = A;
  $E255 EX AF,AF'
  $E256 OR D          ;   A |= D;
  $E257 INC L         ;   L++;
- $E258 EXX           ;   EXX
+ $E258 EXX
 @label=masked_sprite_plotter_24_wide_enable1
  $E259 LD (HL),A     ; {  *HL++ = A;          // enable/disable 1
  $E25A INC HL        ; }
- $E25B EXX           ;   EXX
+ $E25B EXX
  $E25C LD A,(HL)     ; {  A = ~*HL | B;       // 2
  $E25D CPL           ;
  $E25E OR B          ; }
- $E25F EXX           ;   EXX
+ $E25F EXX
  $E260 AND (HL)      ;   A &= *HL;
  $E261 EX AF,AF'
  $E262 LD A,B        ;   A = B;
- $E263 EXX           ;   EXX
+ $E263 EXX
  $E264 AND (HL)      ;   A &= *HL;
  $E265 LD B,A        ;   B = A;
  $E266 EX AF,AF'
  $E267 OR B          ;   A |= B;
  $E268 INC L         ;   L++;
- $E269 EXX           ;   EXX
+ $E269 EXX
 @label=masked_sprite_plotter_24_wide_enable3
  $E26A LD (HL),A     ; {  *HL++ = A;          // enable/disable 3
  $E26B INC HL        ; }
- $E26C EXX           ;   EXX
+ $E26C EXX
  $E26D LD A,(HL)     ; {  A = ~*HL | C;       // 3
  $E26E CPL           ;
  $E26F OR C          ; }
- $E270 EXX           ;   EXX
+ $E270 EXX
  $E271 AND (HL)      ;   A &= *HL;
  $E272 EX AF,AF'
  $E273 LD A,C        ;   A = C;
- $E274 EXX           ;   EXX
+ $E274 EXX
  $E275 AND (HL)      ;   A &= *HL;
  $E276 LD C,A        ;   C = A;
  $E277 EX AF,AF'
  $E278 OR C          ;   A |= C;
  $E279 INC L         ;   L++;
- $E27A EXX           ;   EXX
+ $E27A EXX
 @label=masked_sprite_plotter_24_wide_enable5
  $E27B LD (HL),A     ; {  *HL++ = A;          // enable/disable 5
  $E27C INC HL        ; }
- $E27D EXX           ;   EXX
+ $E27D EXX
  $E27E LD A,(HL)     ; {  A = ~*HL | E;       // 4
  $E27F CPL           ;
  $E280 OR E          ; }
- $E281 EXX           ;   EXX
+ $E281 EXX
  $E282 AND (HL)      ;   A &= *HL;
  $E283 EX AF,AF'
  $E284 LD A,E        ;   A = E;
- $E285 EXX           ;   EXX
+ $E285 EXX
  $E286 AND (HL)      ;   A &= *HL;
  $E287 LD E,A        ;   E = A;
  $E288 EX AF,AF'
@@ -16359,7 +16359,7 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E28A INC L         ;   L++;
  $E28B LD ($81B0),HL ;   foreground_mask_pointer = HL;
  $E28E POP HL
- $E28F EXX           ;   EXX
+ $E28F EXX
 @label=masked_sprite_plotter_24_wide_enable7
  $E290 LD (HL),A     ;   *HL = A;            // enable/disable 7
  $E291 LD BC,$0015   ; {  HL += 21;
@@ -16425,7 +16425,7 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
  $E2C6 INC HL        ; }
 ; Load mask bytes into D',E'.
  $E2C7 PUSH HL       ; {  mask0 = *maskptr++; // D'
- $E2C8 EXX           ;
+ $E2C8 EXX
  $E2C9 LD D,(HL)     ;
  $E2CA INC HL        ; }
  $E2CB LD E,(HL)     ; {  mask1 = *maskptr++; // E'
@@ -16481,11 +16481,11 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
  $E30B LD A,(HL)     ; *foremaskptr);
  $E30C CPL           ;
  $E30D OR D          ;
- $E30E EXX           ;
+ $E30E EXX
  $E30F AND (HL)      ;
  $E310 EX AF,AF'
  $E311 LD A,D        ;
- $E312 EXX           ;
+ $E312 EXX
  $E313 AND (HL)      ;
  $E314 LD D,A        ;
  $E315 EX AF,AF'
@@ -16499,11 +16499,11 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
  $E31C LD A,(HL)     ; *foremaskptr);
  $E31D CPL           ;
  $E31E OR E          ;
- $E31F EXX           ;
+ $E31F EXX
  $E320 AND (HL)      ;
  $E321 EX AF,AF'
  $E322 LD A,E        ;
- $E323 EXX           ;
+ $E323 EXX
  $E324 AND (HL)      ;
  $E325 LD E,A        ;
  $E326 EX AF,AF'
@@ -16517,11 +16517,11 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
  $E32D LD A,(HL)     ; *foremaskptr);
  $E32E CPL           ;
  $E32F OR C          ;
- $E330 EXX           ;
+ $E330 EXX
  $E331 AND (HL)      ;
  $E332 EX AF,AF'
  $E333 LD A,C        ;
- $E334 EXX           ;
+ $E334 EXX
  $E335 AND (HL)      ;
  $E336 LD C,A        ;
  $E337 EX AF,AF'
@@ -16566,7 +16566,7 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
  $E366 LD E,(HL)     ; {  bm2 = *bitmapptr++;
  $E367 INC HL        ; }
  $E368 PUSH HL       ; {  mask1 = *maskptr++;
- $E369 EXX           ;
+ $E369 EXX
  $E36A LD D,(HL)     ;
  $E36B INC HL        ; }
  $E36C LD E,(HL)     ; {  mask2 = *maskptr++;
@@ -16625,11 +16625,11 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
  $E3B7 LD A,(HL)     ; *foremaskptr);
  $E3B8 CPL           ;
  $E3B9 OR C          ;
- $E3BA EXX           ;
+ $E3BA EXX
  $E3BB AND (HL)      ;
  $E3BC EX AF,AF'
  $E3BD LD A,C        ;
- $E3BE EXX           ;
+ $E3BE EXX
  $E3BF AND (HL)      ;
  $E3C0 LD C,A        ;
  $E3C1 EX AF,AF'
@@ -16643,11 +16643,11 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
  $E3C8 LD A,(HL)     ; *foremaskptr);
  $E3C9 CPL           ;
  $E3CA OR D          ;
- $E3CB EXX           ;
+ $E3CB EXX
  $E3CC AND (HL)      ;
  $E3CD EX AF,AF'
  $E3CE LD A,D        ;
- $E3CF EXX           ;
+ $E3CF EXX
  $E3D0 AND (HL)      ;
  $E3D1 LD D,A        ;
  $E3D2 EX AF,AF'
@@ -16661,11 +16661,11 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
  $E3D9 LD A,(HL)     ; *foremaskptr);
  $E3DA CPL           ;
  $E3DB OR E          ;
- $E3DC EXX           ;
+ $E3DC EXX
  $E3DD AND (HL)      ;
  $E3DE EX AF,AF'
  $E3DF LD A,E        ;
- $E3E0 EXX           ;
+ $E3E0 EXX
  $E3E1 AND (HL)      ;
  $E3E2 LD E,A        ;
  $E3E3 EX AF,AF'
