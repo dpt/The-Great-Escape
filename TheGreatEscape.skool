@@ -1752,7 +1752,7 @@ g$68A1 DEFB $00
 ; I:HL Pointer to pos.
 ; I:IY Pointer to visible character.
 @label=transition
-c$68A2 EX DE,HL      ; EX DE,HL
+c$68A2 EX DE,HL
  $68A3 PUSH IY       ; {HL = IY;
  $68A5 POP HL        ; }
  $68A6 LD A,L        ; A = L; // stash vischar index/offset
@@ -4647,7 +4647,7 @@ c$7BB5 CALL $7C26    ; HL = item_to_itemstruct(A);
  $7BCB DEC DE        ;   DE--;
  $7BCC LD A,$00      ; {  *DE = 0; // ->vo ?
  $7BCE LD (DE),A     ; }
- $7BCF EX DE,HL      ;   EX DE,HL
+ $7BCF EX DE,HL
 ; FALL THROUGH into calc_exterior_item_screenpos.
 
 ; Assign target member for dropped exterior objects.
@@ -4699,7 +4699,7 @@ c$7BE4 INC HL        ; else <% HL++; // The else is logically here when consider
 c$7BF2 DEC HL        ;   HL--;
  $7BF3 LD D,$02      ; {  DE = 0x0200 + HL[0];  // 512 / 8 = 64
  $7BF5 LD E,(HL)     ; }
- $7BF6 EX DE,HL      ;   EX DE,HL
+ $7BF6 EX DE,HL
  $7BF7 DEC DE        ;   DE--;
  $7BF8 LD A,(DE)     ; {  HL = (HL - DE[0]) * 2;
  $7BF9 LD C,A        ;
@@ -7843,7 +7843,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3D3 LD E,A        ; }
  $A3D4 PUSH DE       ; {  IY = DE;
  $A3D5 POP IY        ; }
- $A3D7 EX DE,HL      ;   EX DE,HL
+ $A3D7 EX DE,HL
  $A3D8 INC L         ; {  HL += 2;
  $A3D9 INC L         ; }
  $A3DA CALL $CB23    ;   sub_CB23();
@@ -7854,7 +7854,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3E4 LD A,E        ; {  DE -= 5;
  $A3E5 SUB $05       ;
  $A3E7 LD E,A        ; }
- $A3E8 EX DE,HL      ;   EX DE,HL
+ $A3E8 EX DE,HL
  $A3E9 SET 6,(HL)    ;   *HL |= vischar_FLAGS_BIT6; %> // sample = HL = $8001
 *$A3EB POP BC        ; POP BC
  $A3EC RET           ; return;
@@ -7925,7 +7925,7 @@ c$A404 INC HL        ; {HL[1] = 0; // HL=$766B,$7672 characterstruct + 5
 ; I:HL Pointer to location.
 @label=character_sits
 c$A420 PUSH AF       ; PUSH AF
- $A421 EX DE,HL      ; EX DE,HL
+ $A421 EX DE,HL
  $A422 SUB $12       ; A -= 18; // first three characters
  $A424 LD HL,$6F4F   ; HL = &roomdef_25_breakfast.bench_D;
  $A427 CP $03        ; {if (A >= 3) <% // second three characters
@@ -7957,7 +7957,7 @@ c$A420 PUSH AF       ; PUSH AF
 c$A444 PUSH AF       ; PUSH AF
  $A445 SUB $07       ; {A -= 7;
  $A447 ADD A,A       ; }
- $A448 EX DE,HL      ; EX DE,HL
+ $A448 EX DE,HL
 ; Poke object.
  $A449 LD C,A        ; {BC = beds[A];
  $A44A LD B,$00      ;
@@ -7986,7 +7986,7 @@ c$A444 PUSH AF       ; PUSH AF
 ; .
 ; I:DE Pointer to location.
 @label=character_sit_sleep_common
-c$A462 EX DE,HL      ; EX DE,HL
+c$A462 EX DE,HL
  $A463 LD (HL),$00   ; *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar
                      ; OR characterstruct - weird)
  $A465 EX AF,AF'     ; EX AF,AF'
@@ -8678,7 +8678,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A919 AND $03       ; }
  $A91B JR NZ,$A91F   ; {if (A == 0) A = 4;
  $A91D LD A,$04      ; }
-*$A91F EX DE,HL      ; EX DE,HL
+*$A91F EX DE,HL
  $A920 LD BC,$0018   ; BC = 24; // 24 iterations (screen rows?)
 *$A923 PUSH AF       ; do <% PUSH AF
  $A924 LD A,(DE)     ;   A = *DE;
@@ -8691,7 +8691,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A92E POP AF        ;   POP AF
  $A92F DEC A         ; {%> while (--A);
  $A930 JP NZ,$A923   ; }
- $A933 EX DE,HL      ; EX DE,HL
+ $A933 EX DE,HL
  $A934 EXX           ; EXX
  $A935 LD A,L        ; {HL += 7;
  $A936 ADD A,$07     ;
@@ -8716,7 +8716,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A94E ADD A,L       ;   A += L;
  $A94F LD L,A        ;   L = A;
  $A950 LD BC,$0018   ;   BC = 24; // stride
- $A953 EX DE,HL      ;   EX DE,HL
+ $A953 EX DE,HL
  $A954 LD A,$04      ;   A = 4;
 *$A956 PUSH AF       ;   do <% PUSH AF
  $A957 LD A,(DE)     ;     A = *DE;
@@ -8729,7 +8729,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A961 POP AF        ;     POP AF
  $A962 DEC A         ; {  %> while (--A);
  $A963 JP NZ,$A956   ; }
- $A966 EX DE,HL      ;   EX DE,HL
+ $A966 EX DE,HL
  $A967 EXX           ;   EXX
  $A968 LD A,L        ; {  HL += 7;
  $A969 ADD A,$07     ;
@@ -8756,7 +8756,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A987 AND $03       ;
  $A989 INC A         ; }
  $A98A LD BC,$0018   ; BC = 24;
- $A98D EX DE,HL      ; EX DE,HL
+ $A98D EX DE,HL
 *$A98E PUSH AF       ; do <% PUSH AF
  $A98F LD A,(DE)     ;   A = *DE;
  $A990 LD (HL),A     ;   *HL = A;
@@ -8768,7 +8768,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A999 POP AF        ;   POP AF
  $A99A DEC A         ; {%> while (--A);
  $A99B JP NZ,$A98E   ; }
- $A99E EX DE,HL      ; EX DE,HL
+ $A99E EX DE,HL
  $A99F RET           ; return;
 
 ; Call plot_tile then advance DE' by a row.
@@ -9025,7 +9025,7 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when
  $AB10 DEC A         ; }
 *$AB11 AND $03       ; A &= 3;
  $AB13 LD (HL),A     ; *HL = A;
- $AB14 EX DE,HL      ; EX DE,HL
+ $AB14 EX DE,HL
  $AB15 LD HL,$0000   ; HL = 0x0000;
  $AB18 AND A         ; {if (A == 0) goto $AB2A;
  $AB19 JR Z,$AB2A    ; }
@@ -9208,7 +9208,7 @@ c$ABF9 LD A,($AB68)  ; A = zoombox_y;
 @nowarn
 *$AC10 LD DE,$F291   ; DE = &state->window_buf[1];
  $AC13 ADD HL,DE     ; HL += DE;
- $AC14 EX DE,HL      ; EX DE,HL
+ $AC14 EX DE,HL
 @nowarn
  $AC15 LD A,($AB68)  ; {HL = game_window_start_addresses[zoombox_y * 8]; // ie.
  $AC18 ADD A,A       ; * 16
@@ -9227,7 +9227,7 @@ c$ABF9 LD A,($AB68)  ; A = zoombox_y;
  $AC28 LD A,($AB66)  ; {HL += zoombox_x;
  $AC2B ADD A,L       ;
  $AC2C LD L,A        ; }
- $AC2D EX DE,HL      ; EX DE,HL
+ $AC2D EX DE,HL
  $AC2E LD A,($AB67)  ; A = zoombox_horizontal_count;
  $AC31 LD ($AC55),A  ; ($AC55) = A; // self modify
  $AC34 NEG           ; {A = -A + 24;
@@ -9256,14 +9256,14 @@ c$ABF9 LD A,($AB68)  ; A = zoombox_y;
  $AC59 DEC A         ; {  %> while (--A);
  $AC5A JP NZ,$AC43   ; }
  $AC5D POP DE        ;   POP DE
- $AC5E EX DE,HL      ;   EX DE,HL
+ $AC5E EX DE,HL
  $AC5F LD BC,$0020   ;   BC = 0x0020;
  $AC62 LD A,L        ; {  if (L >= 224) B = 0x07;
  $AC63 CP $E0        ;
  $AC65 JR C,$AC69    ;
  $AC67 LD B,$07      ; }
 *$AC69 ADD HL,BC     ;   HL += BC;
- $AC6A EX DE,HL      ;   EX DE,HL
+ $AC6A EX DE,HL
  $AC6B POP BC        ;   POP BC
  $AC6C DJNZ $AC3F    ; %> while (--B);
  $AC6E RET           ; return;
@@ -9369,7 +9369,7 @@ c$AC6F LD A,($AB68)  ; {HL = game_window_start_addresses[(zoombox_y - 1) * 8];
 c$ACFC PUSH BC       ; PUSH BC
  $ACFD PUSH AF       ; PUSH AF
  $ACFE PUSH HL       ; PUSH HL
- $ACFF EX DE,HL      ; EX DE,HL
+ $ACFF EX DE,HL
  $AD00 LD L,A        ; {HL = &zoombox_tiles[A];
  $AD01 LD H,$00      ;
  $AD03 ADD HL,HL     ;
@@ -9618,7 +9618,7 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
  $AE5F ADD HL,BC     ;   HL += BC;
  $AE60 LD BC,$5846   ; {  HL += 0x5846; // address of top-left game window
  $AE63 ADD HL,BC     ; attribute}
- $AE64 EX DE,HL      ;   EX DE,HL
+ $AE64 EX DE,HL
  $AE65 EX AF,AF'     ;   -
  $AE66 LD ($AE75),A  ;   searchlight_related = A;
  $AE69 CALL $AEB8    ;   searchlight_plot();
@@ -9733,7 +9733,7 @@ c$AEB8 EXX                                  ; -
  $AEEC INC DE                               ; }
  $AEED EXX                                  ;   -
  $AEEE JR $AF32                             ;   goto nextrow;
-*$AEF0 EX DE,HL                             ;   EX DE,HL
+*$AEF0 EX DE,HL
  $AEF1 EXX                                  ;   -
  $AEF2 LD B,$02                             ;   Bdash = 2;
 *$AEF4 LD A,(DE)                            ;   do <% A = *DEdash;
@@ -9780,7 +9780,7 @@ c$AEB8 EXX                                  ; -
 *$AF32 POP HL                               ;   nextrow: POP HL
  $AF33 LD DE,$0020                          ; {  HL += 32;
  $AF36 ADD HL,DE                            ; }
- $AF37 EX DE,HL                             ;   EX DE,HL
+ $AF37 EX DE,HL
  $AF38 EXX                                  ;   -
  $AF39 DEC C                                ; {%> while (--Cdash);
  $AF3A JP NZ,$AEBE                          ; }
@@ -9874,7 +9874,7 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
  $AFEF LD C,(HL)       ; {  C = *HL++;
  $AFF0 INC L           ; }
  $AFF1 LD B,(HL)       ;   B = *HL;
- $AFF2 EX DE,HL        ;   EX DE,HL
+ $AFF2 EX DE,HL
  $AFF3 LD HL,($81A4)   ;   HL = saved_pos_x;
  $AFF6 LD A,$04        ; {  BC += 4;
  $AFF8 ADD A,C         ;
@@ -9893,13 +9893,13 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
 *$B00C LD HL,($81A4)   ; {    HL = saved_pos_x;
  $B00F SBC HL,BC       ; }
  $B011 JP C,$B0FC      ;     if (HL < BC) goto pop_next; %>
-*$B014 EX DE,HL        ;   EX DE,HL
+*$B014 EX DE,HL
  $B015 INC L           ;   HL++;
 ; --------
  $B016 LD C,(HL)       ; {  C = *HL++;
  $B017 INC L           ; }
  $B018 LD B,(HL)       ;   B = *HL;
- $B019 EX DE,HL        ;   EX DE,HL
+ $B019 EX DE,HL
  $B01A LD HL,($81A6)   ;   HL = saved_pos_y;
  $B01D LD A,$04        ; {  BC += 4;
  $B01F ADD A,C         ;
@@ -9918,7 +9918,7 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
 *$B033 LD HL,($81A6)   ; {    HL = saved_pos_y;
  $B036 SBC HL,BC       ; }
  $B038 JP C,$B0FC      ;     if (HL < BC) goto pop_next; %>
-*$B03B EX DE,HL        ;   EX DE,HL
+*$B03B EX DE,HL
  $B03C INC L           ;   HL++;
 ; --------
  $B03D LD C,(HL)       ;   C = *HL;
@@ -10298,7 +10298,7 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
 @label=door_in_range
 c$B252 INC HL        ; {A = HL[1];
  $B253 LD A,(HL)     ; }
- $B254 EX DE,HL      ; -
+ $B254 EX DE,HL
  $B255 CALL $B295    ; multiply_by_4();
  $B258 LD A,C        ; {if (saved_pos_x < BC - 3 || saved_pos_x >= BC + 3)
  $B259 SUB $03       ; return; // with C set
@@ -10317,11 +10317,11 @@ c$B252 INC HL        ; {A = HL[1];
  $B26F SBC HL,BC     ;
  $B271 CCF           ;
  $B272 RET C         ; }
- $B273 EX DE,HL      ; -
+ $B273 EX DE,HL
  $B274 INC HL        ; {A = HL[2];
  $B275 LD A,(HL)     ; }
  $B276 CALL $B295    ; multiply_by_4();
- $B279 EX DE,HL      ; -
+ $B279 EX DE,HL
  $B27A LD A,C        ; {if (saved_pos_y < BC - 3 || saved_pos_y >= BC + 3)
  $B27B SUB $03       ; return; // with C set
  $B27D LD C,A        ;
@@ -10489,7 +10489,7 @@ c$B32D LD HL,$81D6   ; HL = &door_related;
  $B345 CP B          ;
  $B346 JR NZ,$B383   ; }
  $B348 INC HL        ;   HLdash++;
- $B349 EX DE,HL      ;   -
+ $B349 EX DE,HL
  $B34A LD HL,$81A4   ;   DEdash = &saved_pos_x; // reusing saved_pos as 8-bit
                      ; here?
  $B34D LD B,$02      ;   Bdash = 2; // 2 iterations
@@ -10505,7 +10505,7 @@ c$B32D LD HL,$81D6   ; HL = &door_related;
  $B35C INC DE        ;     HLdash++;
  $B35D DJNZ $B34F    ;   %> while (--Bdash);
  $B35F INC DE        ;   HLdash++;
- $B360 EX DE,HL      ;   -
+ $B360 EX DE,HL
  $B361 PUSH HL       ;   PUSH HLdash
  $B362 PUSH BC       ;   PUSH BCdash
  $B363 CALL $B1D4    ;   is_door_locked();
@@ -10821,7 +10821,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B51D EXX           ; EXX
  $B51E CALL $6A12    ; get_door_position();
  $B521 INC HL        ; HL++;
- $B522 EX DE,HL      ; EX DE,HL
+ $B522 EX DE,HL
 ; Range check pattern (-2..+3).
  $B523 LD HL,$81A4   ; HL = &saved_pos_x; // note: 16-bit values holding 8-bit
                      ; values
@@ -10904,7 +10904,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B602 LD A,(HL)       ;     A = *HL++; // a spriteindex_t
  $B603 EX AF,AF'       ; {    EX AF,AF'
  $B604 INC HL          ; }
-*$B605 EX DE,HL        ;     decrement: EX DE,HL
+*$B605 EX DE,HL        ;     decrement:
  $B606 LD L,(IY+$0F)   ;     L = IY[0x0F]; // X axis
  $B609 LD H,(IY+$10)   ;     H = IY[0x10];
  $B60C LD A,(DE)       ;     A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE,
@@ -10951,7 +10951,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B656 LD C,A          ;
  $B657 LD B,$00        ;
  $B659 ADD HL,BC       ; }
-*$B65A EX DE,HL        ;     increment: EX DE,HL
+*$B65A EX DE,HL        ;     increment:
  $B65B LD A,(DE)       ;     A = *DE;
  $B65C LD L,A          ;     L = A;
  $B65D AND $80         ;     A &= 0x80;
@@ -11037,7 +11037,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B6F3 LD (IY+$0E),A   ; }
  $B6F6 INC DE          ; {  DE += 2; // point to groups of four
  $B6F7 INC DE          ; }
- $B6F8 EX DE,HL        ;   EX DE,HL
+ $B6F8 EX DE,HL
  $B6F9 JP $B65A        ;   goto increment; %>
 *$B6FC LD A,(DE)       ; else <% A = *DE; // count of four-byte groups
  $B6FD LD C,A          ;   C = A;
@@ -11050,7 +11050,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B709 INC DE          ;
  $B70A INC DE          ; }
  $B70B PUSH DE         ;   PUSH DE
- $B70C EX DE,HL        ;   EX DE,HL
+ $B70C EX DE,HL
  $B70D LD A,C          ; {  HL += C * 4 - 1;
  $B70E ADD A,A         ;
  $B70F ADD A,A         ;
@@ -11088,7 +11088,7 @@ c$B71B PUSH HL       ; -
 ;
 ; I:HL Pointer to visible character.
 @label=calc_vischar_screenpos
-c$B729 EX DE,HL      ; -
+c$B729 EX DE,HL
  $B72A LD A,$18      ; {HL += 0x18; // vischar->scrx/y
  $B72C ADD A,E       ;
  $B72D LD E,A        ; }
@@ -11099,12 +11099,12 @@ c$B729 EX DE,HL      ; -
  $B739 AND A         ; -
  $B73A SBC HL,BC     ; {DE = (DE - saved_pos_x) * 2;
  $B73C ADD HL,HL     ; }
- $B73D EX DE,HL      ; -
+ $B73D EX DE,HL
  $B73E LD (HL),E     ; {*HL++ = E;
  $B73F INC L         ; }
  $B740 LD (HL),D     ; {*HL++ = D;
  $B741 INC L         ; }
- $B742 EX DE,HL      ; -
+ $B742 EX DE,HL
  $B743 LD HL,$0800   ; {DE = 0x0800 - saved_pos_x - saved_height -
  $B746 AND A         ; saved_pos_y;
  $B747 SBC HL,BC     ;
@@ -11112,7 +11112,7 @@ c$B729 EX DE,HL      ; -
  $B74D SBC HL,BC     ;
  $B74F LD BC,($81A6) ;
  $B753 SBC HL,BC     ; }
- $B755 EX DE,HL      ; -
+ $B755 EX DE,HL
  $B756 LD (HL),E     ; {*HL++ = E;
  $B757 INC L         ; }
  $B758 LD (HL),D     ; *HL = D;
@@ -11985,7 +11985,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC40 ADD HL,DE     ;
  $BC41 LD DE,$F290   ;
  $BC44 ADD HL,DE     ; }
- $BC45 EX DE,HL      ;   EX DE,HL
+ $BC45 EX DE,HL
  $BC46 PUSH BC       ;   PUSH BC
  $BC47 EXX           ;   -
  $BC48 POP HL        ;   POP HLdash
@@ -12005,7 +12005,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC58 ADD HL,BC     ;
  $BC59 LD BC,$F0F8   ;
  $BC5C ADD HL,BC     ; }
- $BC5D EX DE,HL      ;   EX DE,HL
+ $BC5D EX DE,HL
  $BC5E LD C,$05      ;   C = 5; // iterations // self modified $BC5F
 *$BC60 LD B,$04      ;   do <% B = 4; // iterations // self modified $BC61
 *$BC62 PUSH HL       ;     do <% PUSH HL
@@ -12430,7 +12430,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C549 JR C,$C54E     ; }
  $C54B LD DE,$CDA6    ;       DE = &character_meta_data[3]; %> %> %> /*
                       ; Prisoner */
-*$C54E EX DE,HL       ; EX DE,HL
+*$C54E EX DE,HL
  $C54F LD A,$07       ; {DE += 7;
  $C551 ADD A,E        ;
  $C552 LD E,A         ; }
@@ -12506,7 +12506,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C5C6 LD A,E         ; {DE -= 7;
  $C5C7 SUB $07        ;
  $C5C9 LD E,A         ; }
- $C5CA EX DE,HL       ; EX DE,HL
+ $C5CA EX DE,HL
  $C5CB PUSH HL        ; PUSH HL
  $C5CC CALL $B71B     ; reset_position();
  $C5CF POP HL         ; POP HL
@@ -12547,7 +12547,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
  $C5FF LDIR          ; }
  $C601 RET           ;   return; %>
 ; A non-object character.
-*$C602 EX DE,HL      ; else <% -
+*$C602 EX DE,HL      ; else <%
  $C603 CALL $C7B9    ;   DE = get_character_struct(A);
  $C606 RES 6,(HL)    ;   *DE &= ~characterstruct_FLAG_DISABLED;
  $C608 LD A,$1C      ; {  -
@@ -12557,7 +12557,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
  $C60D INC HL        ; {  *++DE = A; // characterstruct.room = room index;
  $C60E LD (HL),A     ;
  $C60F EX AF,AF'     ; }
- $C610 EX DE,HL      ;   -
+ $C610 EX DE,HL
  $C611 LD A,L        ; {  HL[7] = 0; // more flags
  $C612 SUB $15       ;
  $C614 LD L,A        ;
@@ -12637,7 +12637,7 @@ c$C651 LD A,(HL)     ; A = *HL;
  $C671 DEC H         ; }
 *$C672 LD L,A        ;   L = A;
  $C673 ADD HL,DE     ;   HL += DE;
- $C674 EX DE,HL      ;   EX DE,HL
+ $C674 EX DE,HL
  $C675 LD A,(DE)     ;   A = *DE;
  $C676 CP $FF        ;   if (A == 0xFF) ...
  $C678 POP HL        ;   POP HL // interleaved
@@ -12839,7 +12839,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C788 JR Z,$C78B    ;
  $C78A RET           ; }
 *$C78B INC DE        ; DE++;
- $C78C EX DE,HL      ; EX DE,HL
+ $C78C EX DE,HL
  $C78D LD A,(HL)     ; A = *HL; // address? 761e 7625 768e 7695 7656 7695 7680
                      ; // => character struct entry + 5
  $C78E CP $FF        ; {if (A == 0xFF) return;
@@ -13214,7 +13214,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
 *$C953 CP $03         ; {  else if (A == (vischar_FLAGS_BRIBE_PENDING +
  $C955 JR NZ,$C979    ; vischar_FLAGS_BIT1)) <%}
  $C957 PUSH HL        ;     PUSH HL
- $C958 EX DE,HL       ;     EX DE,HL
+ $C958 EX DE,HL
  $C959 LD HL,$76FA    ; {    if (item_structs[item_FOOD].room &
  $C95C BIT 7,(HL)     ; itemstruct_ROOM_FLAG_NEARBY_7) <%
  $C95E JR Z,$C96C     ; }
@@ -13229,7 +13229,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C96A JR $C9C0       ;       goto jump_c9c0; %>
 *$C96C XOR A          ;     else <% A = 0;
  $C96D LD (DE),A      ;       *DE = A;
- $C96E EX DE,HL       ;       EX DE,HL
+ $C96E EX DE,HL
  $C96F INC L          ; {      *++HL = 0xFF;
  $C970 LD (HL),$FF    ; }
  $C972 INC L          ; {      *++HL = 0;
@@ -13348,7 +13348,7 @@ c$CA11 LD A,(HL)      ; A = *HL; // sampled HL=$8004,$8044,$8064,$8084
  $CA19 LD E,(HL)      ; {E = *HL++;
  $CA1A INC L          ; }
  $CA1B LD D,(HL)      ; D = *HL;
- $CA1C EX DE,HL       ; -
+ $CA1C EX DE,HL
  $CA1D SBC HL,BC      ; DE -= BC;
  $CA1F JR Z,$CA3E     ; if (DE) <%
  $CA21 JP M,$CA30     ;   if (DE > 0) <% // +ve
@@ -13368,7 +13368,7 @@ c$CA11 LD A,(HL)      ; A = *HL; // sampled HL=$8004,$8044,$8064,$8084
  $CA38 JP NC,$CA3E    ;
 *$CA3B LD A,$04       ;
  $CA3D RET            ; }
-*$CA3E EX DE,HL       ; -
+*$CA3E EX DE,HL
  $CA3F LD A,L         ; {HL -= 11;
  $CA40 SUB $0B        ;
  $CA42 LD L,A         ; }
@@ -13395,7 +13395,7 @@ c$CA49 LD A,(HL)      ; A = *HL; // sampled HL=$8025,$8065,$8005
  $CA51 LD E,(HL)      ; {E = *HL++;
  $CA52 INC L          ; }
  $CA53 LD D,(HL)      ; D = *HL;
- $CA54 EX DE,HL       ; -
+ $CA54 EX DE,HL
  $CA55 SBC HL,BC      ; DE -= BC;
  $CA57 JR Z,$CA76     ; if (DE) <%
  $CA59 JP M,$CA68     ;   if (DE > 0) <% // +ve
@@ -13415,7 +13415,7 @@ c$CA49 LD A,(HL)      ; A = *HL; // sampled HL=$8025,$8065,$8005
  $CA70 JP NC,$CA76    ;
 *$CA73 LD A,$07       ;
  $CA75 RET            ; }
-*$CA76 EX DE,HL       ; -
+*$CA76 EX DE,HL
  $CA77 LD A,L         ; {HL -= 14;
  $CA78 SUB $0E        ;
  $CA7A LD L,A         ; }
@@ -13693,7 +13693,7 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
  $CBBE LD A,(HL)       ; }
  $CBBF INC HL          ; {    HL += 2;
  $CBC0 INC HL          ; }
- $CBC1 EX DE,HL        ;     EX DE,HL
+ $CBC1 EX DE,HL
  $CBC2 EX AF,AF'       ;     EX AF,AF'
  $CBC3 XOR A           ;     A = 0;
 *$CBC4 PUSH AF         ;     do <% PUSH AF
@@ -13999,17 +13999,17 @@ c$CD31 LD A,C        ; A = C;
  $CD4A LD E,A        ;
  $CD4B ADD HL,DE     ; }
  $CD4C LD A,(HL)     ; A = HL->room_and_flags;
- $CD4D EX DE,HL      ; EX DE,HL
+ $CD4D EX DE,HL
  $CD4E EX AF,AF'     ;
 ; Bug: This is not masked, so goes out of range.
  $CD4F LD A,C        ; Adash = C;
  $CD50 CALL $7C26    ; HL = item_to_itemstruct(Adash);
  $CD53 RES 7,(HL)    ; *HL &= ~itemstruct_ITEM_FLAG_HELD;
- $CD55 EX DE,HL      ; EX DE,HL
+ $CD55 EX DE,HL
  $CD56 INC DE        ; DE++;
  $CD57 LD BC,$0003   ; {memcpy(DE, HL, 3); DE += 3; HL += 3; // reset
  $CD5A LDIR          ; location?}
- $CD5C EX DE,HL      ; EX DE,HL
+ $CD5C EX DE,HL
  $CD5D EX AF,AF'     ;
  $CD5E AND A         ; {if (A == room_0_OUTDOORS) <%
  $CD5F JR NZ,$CD65   ; }
@@ -15198,7 +15198,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC4B LD DE,$81B2   ; DE = &tinypos_stash_x;
  $DC4E LD BC,$0005   ; BC = 5;
  $DC51 LDIR          ; LDIR
- $DC53 EX DE,HL      ; EX DE,HL
+ $DC53 EX DE,HL
  $DC54 LD (HL),B     ; *HL = B; // B == 0 due to LDIR /* Items are never drawn
                      ; flipped. */
  $DC55 LD HL,$DD7D   ; {HL = &item_definitions[A];
@@ -15272,7 +15272,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DCB8 LD D,H        ;
  $DCB9 ADD HL,HL     ;
  $DCBA ADD HL,DE     ; }
- $DCBB EX DE,HL      ;   EX DE,HL %>
+ $DCBB EX DE,HL      ; %>
 *$DCBC LD A,($81B5)  ; A = map_position_related_x;
  $DCBF LD HL,$81BB   ; HL = $81BB; // &map_position;
  $DCC2 SUB (HL)      ; A -= *HL; // x
@@ -16820,7 +16820,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E470 INC D         ; }
 *$E471 INC L         ; {L += 2;
  $E472 INC L         ; }
- $E473 EX DE,HL      ; EX DE,HL
+ $E473 EX DE,HL
  $E474 LDI           ; *DE++ = *HL++; // width in bytes
  $E476 LDI           ; *DE++ = *HL++; // height in rows
  $E478 LD DE,$81AC   ; {memcpy(bitmap_pointer, HL, 4); // copy bitmap pointer
@@ -16894,7 +16894,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E4E0 ADD HL,HL     ;
  $E4E1 ADD HL,HL     ;
  $E4E2 ADD HL,HL     ; }
- $E4E3 EX DE,HL      ;   EX DE,HL
+ $E4E3 EX DE,HL
  $E4E4 LD L,(IY+$1A) ;   L = IY[26];
  $E4E7 LD H,(IY+$1B) ;   H = IY[27];
  $E4EA AND A         ;   A &= A;
@@ -16906,7 +16906,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E4F1 LD D,H        ;
  $E4F2 ADD HL,HL     ;
  $E4F3 ADD HL,DE     ; }
- $E4F4 EX DE,HL      ;   EX DE,HL %>
+ $E4F4 EX DE,HL      ; %>
 *$E4F5 LD A,($81B5)  ; {HL = map_position_related_x - (map_position & 0xFF); //
  $E4F8 LD HL,$81BB   ; ie. low byte of map_position // signed subtract + extend
  $E4FB SUB (HL)      ; to 16-bit
@@ -17945,7 +17945,7 @@ c$F163 DI                     ; {-
  $F196 PUSH DE                ; {  -
  $F197 PUSH HL                ; }
  $F198 LD BC,$0017            ; {  memcpy(HL, DE, 23);
- $F19B EX DE,HL               ;
+ $F19B EX DE,HL
  $F19C LDIR                   ; }
  $F19E POP HL                 ;   -
  $F19F LD A,$20               ; {  HL += 32;
