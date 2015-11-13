@@ -12370,8 +12370,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
 *$C4F6 POP DE         ; found_empty_slot: // DE = HL (-> character
                       ; struct)
  $C4F7 PUSH HL        ; // resave
- $C4F8 POP IY         ; POP IY  // IY = HL (-> empty slot in visible character
-                      ; list)
+ $C4F8 POP IY         ; // IY = HL (-> empty slot in visible character list)
  $C4FA PUSH HL        ; // resave
  $C4FB PUSH DE
  $C4FC INC DE         ; DE++;
