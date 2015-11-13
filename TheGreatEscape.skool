@@ -1756,7 +1756,7 @@ c$68A2 EX DE,HL
  $68A3 PUSH IY       ; {HL = IY;
  $68A5 POP HL        ; }
  $68A6 LD A,L        ; A = L; // stash vischar index/offset
- $68A7 PUSH AF       ; PUSH AF
+ $68A7 PUSH AF
  $68A8 ADD A,$0F     ; {L = A + 0x0F; // $8xxF (position on X axis)
  $68AA LD L,A        ; }
  $68AB LD A,(IY+$1C) ; A = IY[0x1C]; // $8x1C (likely room index)
@@ -1784,7 +1784,7 @@ c$68A2 EX DE,HL
  $68CA INC L         ;
  $68CB INC DE        ; }
  $68CC DJNZ $68C5    ;   %> while (--B); %>
-*$68CE POP AF        ; POP AF
+*$68CE POP AF
  $68CF LD L,A        ; L = A;
  $68D0 AND A         ; {if (A) <% reset_visible_character(); return; %> // exit
  $68D1 JP Z,$68D7    ; via
@@ -4607,7 +4607,7 @@ c$7B8B LD A,($8215)  ; A = items_held[0];
  $7B93 JP NZ,$7B9C   ;
  $7B96 LD HL,$CE2E   ;
  $7B99 LD ($8015),HL ; }
-*$7B9C PUSH AF       ; PUSH AF
+*$7B9C PUSH AF
 ; Shuffle items down.
 @isub=LD HL,items_held + 1
  $7B9D LD HL,$8216   ; HL = &items_held[1];  // item slot B
@@ -4620,7 +4620,7 @@ c$7B8B LD A,($8215)  ; A = items_held[0];
  $7BAB CALL $A11D    ; }
  $7BAE CALL $AB6B    ; choose_game_window_attributes();
  $7BB1 CALL $A15F    ; set_game_window_attributes();
- $7BB4 POP AF        ; POP AF
+ $7BB4 POP AF
 ; FALL THROUGH into drop_item_tail.
 
 ; Drop item, tail part.
@@ -4789,7 +4789,7 @@ c$7C46 PUSH HL       ; PUSH HL
  $7C54 PUSH HL       ; PUSH HL
  $7C55 LD H,$5A      ; HL = (HL & ~0xFF00) | 0x5A00; // point to screen
                      ; attributes
- $7C57 PUSH AF       ; PUSH AF
+ $7C57 PUSH AF
  $7C58 LD BC,$DD69   ; {A = item_attributes[A];
  $7C5B ADD A,C       ;
  $7C5C LD C,A        ;
@@ -4805,7 +4805,7 @@ c$7C46 PUSH HL       ; PUSH HL
  $7C67 LD (HL),A     ; {*HL++ = A;
  $7C68 INC L         ; }
  $7C69 LD (HL),A     ; *HL = A;
- $7C6A POP AF        ; POP AF
+ $7C6A POP AF
 ; Plot bitmap.
  $7C6B ADD A,A       ; {HL = &item_definitions[A]; // elements are six bytes
  $7C6C LD C,A        ; wide
@@ -7554,9 +7554,9 @@ c$A26A LD A,$26      ; A = 0x26;
 *$A26E EX AF,AF'
  $A26F LD A,$0C      ; Adash = 12;
  $A271 LD B,$04      ; B = 4; // 4 iterations
-*$A273 PUSH AF       ; do <% PUSH AF
+*$A273 PUSH AF       ; do <%
  $A274 CALL $A38C    ;   set_character_location();
- $A277 POP AF        ;   POP AF
+ $A277 POP AF
  $A278 INC A         ;   Adash++;
  $A279 EX AF,AF'
  $A27A INC A         ;   A++;
@@ -7924,7 +7924,7 @@ c$A404 INC HL        ; {HL[1] = 0; // HL=$766B,$7672 characterstruct + 5
 ; I:A Character.
 ; I:HL Pointer to location.
 @label=character_sits
-c$A420 PUSH AF       ; PUSH AF
+c$A420 PUSH AF
  $A421 EX DE,HL
  $A422 SUB $12       ; A -= 18; // first three characters
  $A424 LD HL,$6F4F   ; HL = &roomdef_25_breakfast.bench_D;
@@ -7940,7 +7940,7 @@ c$A420 PUSH AF       ; PUSH AF
  $A435 LD C,A        ;
  $A436 ADD HL,BC     ; }
  $A437 LD (HL),$05   ; *HL = interiorobject_PRISONER_SAT_DOWN_MID_TABLE;
- $A439 POP AF        ; POP AF
+ $A439 POP AF
  $A43A LD C,$19      ; C = room_25_BREAKFAST;
  $A43C CP $15        ; {if (A >= character_21_PRISONER_2) C =
  $A43E JR C,$A462    ; room_23_BREAKFAST;
@@ -7954,7 +7954,7 @@ c$A420 PUSH AF       ; PUSH AF
 ; I:A Character.
 ; I:HL Pointer to location.
 @label=character_sleeps
-c$A444 PUSH AF       ; PUSH AF
+c$A444 PUSH AF
  $A445 SUB $07       ; {A -= 7;
  $A447 ADD A,A       ; }
  $A448 EX DE,HL
@@ -7968,7 +7968,7 @@ c$A444 PUSH AF       ; PUSH AF
  $A452 LD B,(HL)     ; }
  $A453 LD A,$17      ; {*BC = interiorobject_OCCUPIED_BED;
  $A455 LD (BC),A     ; }
- $A456 POP AF        ; POP AF
+ $A456 POP AF
  $A457 CP $0A        ; {if (A < character_10_GUARD_10)
  $A459 JP NC,$A460   ; }
  $A45C LD C,$03      ;   C = room_3_hut2_right;
@@ -8186,15 +8186,15 @@ c$A51C CALL $A50B    ; screen_reset();
  $A543 CALL $A5BF    ; screenlocstring_plot(); // AND WILL CROSS THE
  $A546 CALL $A5BF    ; screenlocstring_plot(); // BORDER SUCCESSFULLY
  $A549 LD A,$FF      ; A = 0xFF; // success - reset game
- $A54B PUSH AF       ; PUSH AF
+ $A54B PUSH AF
  $A54C JR $A56E      ; goto press_any_key;
 @label=escaped_captured
-*$A54E PUSH AF       ; captured: PUSH AF
+*$A54E PUSH AF       ; captured:
 @nowarn
  $A54F LD HL,$A628   ; HL = &escape_strings[5];
  $A552 CALL $A5BF    ; screenlocstring_plot(); // BUT WERE RECAPTURED
- $A555 POP AF        ; POP AF
- $A556 PUSH AF       ; PUSH AF
+ $A555 POP AF
+ $A556 PUSH AF
  $A557 CP $08        ; {if (A >= escapeitem_UNIFORM) goto plot; // at least a
  $A559 JR NC,$A56B   ; uniform => 'but were recaptured' // bug? plotting twice}
 @nowarn
@@ -8218,7 +8218,7 @@ c$A51C CALL $A50B    ; screen_reset();
  $A577 JR NZ,$A574   ; }
 *$A579 CALL $A58C    ; {do <% keyscan_all(); %> while (Z); // up press
  $A57C JR Z,$A579    ; }
- $A57E POP AF        ; POP AF
+ $A57E POP AF
 ; Reset the game, or send the hero to solitary.
  $A57F CP $FF        ; {if (A == 0xFF || A >= escapeitem_UNIFORM) <%
  $A581 JP Z,$B75A    ; reset_game(); return; %> // exit via
@@ -8602,7 +8602,7 @@ c$A8A2 LD DE,$F0F8   ; DE = &tile_buf[0]; // visible tiles array
  $A8BC POP DE        ;   POP DE
  $A8BD INC DE        ;   DE++;
  $A8BE EXX           ;   -
- $A8BF POP AF        ;   POP AF
+ $A8BF POP AF
  $A8C0 POP HL        ;   POP HLdash
  $A8C1 INC A         ; {  Cdash = ++A;
  $A8C2 LD C,A        ; }
@@ -8680,7 +8680,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A91D LD A,$04      ; }
 *$A91F EX DE,HL
  $A920 LD BC,$0018   ; BC = 24; // 24 iterations (screen rows?)
-*$A923 PUSH AF       ; do <% PUSH AF
+*$A923 PUSH AF       ; do <%
  $A924 LD A,(DE)     ;   A = *DE;
  $A925 LD (HL),A     ;   *HL = A;
  $A926 CALL $A9A0    ;   plot_tile_then_advance();
@@ -8688,7 +8688,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A92B ADD A,E       ;
  $A92C LD E,A        ; }
  $A92D ADD HL,BC     ;   HL += BC;
- $A92E POP AF        ;   POP AF
+ $A92E POP AF
  $A92F DEC A         ; {%> while (--A);
  $A930 JP NZ,$A923   ; }
  $A933 EX DE,HL
@@ -8718,7 +8718,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A950 LD BC,$0018   ;   BC = 24; // stride
  $A953 EX DE,HL
  $A954 LD A,$04      ;   A = 4;
-*$A956 PUSH AF       ;   do <% PUSH AF
+*$A956 PUSH AF       ;   do <%
  $A957 LD A,(DE)     ;     A = *DE;
  $A958 LD (HL),A     ;     *HL = A;
  $A959 CALL $A9A0    ;     plot_tile_then_advance();
@@ -8726,7 +8726,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A95D LD A,$04      ; {    DE += 4; // stride
  $A95F ADD A,E       ;
  $A960 LD E,A        ; }
- $A961 POP AF        ;     POP AF
+ $A961 POP AF
  $A962 DEC A         ; {  %> while (--A);
  $A963 JP NZ,$A956   ; }
  $A966 EX DE,HL
@@ -8757,7 +8757,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A989 INC A         ; }
  $A98A LD BC,$0018   ; BC = 24;
  $A98D EX DE,HL
-*$A98E PUSH AF       ; do <% PUSH AF
+*$A98E PUSH AF       ; do <%
  $A98F LD A,(DE)     ;   A = *DE;
  $A990 LD (HL),A     ;   *HL = A;
  $A991 CALL $A9A0    ;   plot_tile_then_advance();
@@ -8765,7 +8765,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A996 ADD A,E       ;   A += E;
  $A997 LD E,A        ;   E = A;
  $A998 ADD HL,BC     ;   HL += BC;
- $A999 POP AF        ;   POP AF
+ $A999 POP AF
  $A99A DEC A         ; {%> while (--A);
  $A99B JP NZ,$A98E   ; }
  $A99E EX DE,HL
@@ -8980,7 +8980,7 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when
  $AACC BIT 7,C       ; {if (C & (1<<7)) A ^= 2; // exchange up and down
  $AACE JR Z,$AAD2    ;
  $AAD0 XOR $02       ; }
-*$AAD2 PUSH AF       ; PUSH AF
+*$AAD2 PUSH AF
  $AAD3 ADD A,A       ; {HL = &move_map_jump_table[A];
  $AAD4 LD C,A        ;
  $AAD5 LD B,$00      ;
@@ -8991,9 +8991,9 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when
  $AADC INC HL        ; }
  $AADD LD H,(HL)     ; H = *HL;
  $AADE LD L,A        ; L = A;
- $AADF POP AF        ; POP AF
+ $AADF POP AF
  $AAE0 PUSH HL       ; PUSH HL
- $AAE1 PUSH AF       ; PUSH AF
+ $AAE1 PUSH AF
 @keep
  $AAE2 LD BC,$7C00   ; B, C = 0x7C, 0x00;
  $AAE5 CP $02        ; {if (A >= 2) B = 0x00; // bottom of the map clamp
@@ -9008,13 +9008,13 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when
  $AAF8 LD A,L        ; {if (L == C || H == B) <%
  $AAF9 CP C          ;
  $AAFA JR NZ,$AAFF   ; }
-*$AAFC POP AF        ;   popret: POP AF
+*$AAFC POP AF        ;   popret:
  $AAFD POP HL        ;   POP HL
  $AAFE RET           ; {  return; %>
 *$AAFF LD A,H        ;
  $AB00 CP B          ;
  $AB01 JR Z,$AAFC    ; }
- $AB03 POP AF        ; POP AF
+ $AB03 POP AF
  $AB04 LD HL,$A7C6   ; HL = &move_map_y; // screen offset of some sort?
  $AB07 CP $02        ; {if (A >= 2) <%
  $AB09 JR NC,$AB0F   ; }
@@ -9367,7 +9367,7 @@ c$AC6F LD A,($AB68)  ; {HL = game_window_start_addresses[(zoombox_y - 1) * 8];
 ; I:HL Destination address.
 @label=zoombox_draw_tile
 c$ACFC PUSH BC       ; PUSH BC
- $ACFD PUSH AF       ; PUSH AF
+ $ACFD PUSH AF
  $ACFE PUSH HL       ; PUSH HL
  $ACFF EX DE,HL
  $AD00 LD L,A        ; {HL = &zoombox_tiles[A];
@@ -9396,7 +9396,7 @@ c$ACFC PUSH BC       ; PUSH BC
 *$AD21 LD A,($AB6A)  ; {*HL = game_window_attribute;
  $AD24 LD (HL),A     ; }
  $AD25 POP HL        ; POP HL
- $AD26 POP AF        ; POP AF
+ $AD26 POP AF
  $AD27 POP BC        ; POP BC
  $AD28 RET           ; return;
 
@@ -10743,7 +10743,7 @@ c$B4B6 LD A,$0E      ; A = room_14_TORCH;
 ;
 ; I:A Room number to which the key applies.
 @label=action_key
-c$B4B8 PUSH AF       ; PUSH AF
+c$B4B8 PUSH AF
  $B4B9 CALL $B4D0    ; open_door();
  $B4BC POP BC        ; POP BC
  $B4BD RET NZ        ; if (!Z) return; /* Wrong door? */
@@ -11923,7 +11923,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBD6 RRA           ;
  $BBD7 AND $1F       ;
  $BBD9 ADD A,$02     ; }
- $BBDB PUSH AF       ;   PUSH AF
+ $BBDB PUSH AF
  $BBDC LD HL,$81B6   ; {  A += map_position_related_y - ((map_position &
  $BBDF ADD A,(HL)    ; 0xFF00) >> 8);
  $BBE0 LD HL,$81BC   ;
@@ -11933,12 +11933,12 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBE8 JR Z,$BBF7    ; {    if (A > 0) <%
  $BBEA JR C,$BBF7    ; }
  $BBEC LD E,A        ;       E = A;
- $BBED POP AF        ;       POP AF
+ $BBED POP AF
  $BBEE SUB E         ;       A -= E;
  $BBEF JP C,$BC9F    ;       if (carry) goto next;
  $BBF2 JR NZ,$BBF8   ;       if (!Z) goto $BBF8;
  $BBF4 JP $BC9F      ;       goto next; %> %>
-*$BBF7 POP AF        ;   POP AF
+*$BBF7 POP AF
 *$BBF8 CP $05        ; {  if (A > 5) A = 5;
  $BBFA JP Z,$BC02    ;
  $BBFD JP C,$BC02    ;
@@ -13477,7 +13477,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CACA BIT 7,(HL)    ; {  if (*HL & vischar_BYTE2_BIT7) A ^= 0x80;
  $CACC JR Z,$CAD0    ;
  $CACE XOR $80       ; }
-*$CAD0 PUSH AF       ;   PUSH AF
+*$CAD0 PUSH AF
  $CAD1 LD A,(HL)     ; {  A = *HL++; // $8002, ...
  $CAD2 INC L         ; }
 ; Pattern: [-2]+1
@@ -13486,7 +13486,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CAD7 DEC (HL)      ;
  $CAD8 DEC (HL)      ; }
 *$CAD9 INC (HL)      ;   (*HL)++; // likely target location
- $CADA POP AF        ;   POP AF
+ $CADA POP AF
  $CADB CALL $6A12    ;   get_door_position(); // door related
  $CADE LD A,(HL)     ; {  IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C
  $CADF RRA           ; (room index) // HL=$790E,$7962,$795E => door position
@@ -13694,19 +13694,19 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
  $CBC1 EX DE,HL
  $CBC2 EX AF,AF'
  $CBC3 XOR A           ;     A = 0;
-*$CBC4 PUSH AF         ;     do <% PUSH AF
+*$CBC4 PUSH AF         ;     do <%
  $CBC5 PUSH DE         ;       PUSH DE
 ; If the item is within the camp bounds then it will be discovered.
  $CBC6 CALL $A01A      ;       within_camp_bounds();
  $CBC9 JR Z,$CBD5      ;       if (Z) goto $CBD5;
  $CBCB POP DE          ;       POP DE
- $CBCC POP AF          ;       POP AF
+ $CBCC POP AF
  $CBCD INC A           ; {    %> while (++A != 3);
  $CBCE CP $03          ;
  $CBD0 JP NZ,$CBC4     ; }
  $CBD3 JR $CBDC        ;     goto next;
 *$CBD5 POP DE          ;     POP DE
- $CBD6 POP AF          ;     POP AF
+ $CBD6 POP AF
  $CBD7 EX AF,AF'
  $CBD8 LD C,A          ;     C = A;
  $CBD9 CALL $CD31      ;     item_discovered(); %>
@@ -18138,11 +18138,11 @@ c$F271 CALL $F41C    ; A = menu_keyscan();
  $F278 JR Z,$F28E    ; }
  $F27A DEC A         ;   A--; // 1..4 -> 0..3
 ; Clear old selection.
- $F27B PUSH AF       ;   PUSH AF
+ $F27B PUSH AF
  $F27C LD A,($F445)  ;   A = chosen_input_device;
  $F27F LD E,$07      ; {
  $F281 CALL $F408    ; set_menu_item_attributes(attribute_WHITE_OVER_BLACK);}
- $F284 POP AF        ;   POP AF
+ $F284 POP AF
 ; Highlight new selection.
  $F285 LD ($F445),A  ;   chosen_input_device = A;
  $F288 LD E,$46      ; {
