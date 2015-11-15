@@ -10609,7 +10609,7 @@ c$B3E1 LD HL,$8015   ; HL = $8015; // current character sprite set
  $B3F3 JP $A0E9      ; increase_morale_by_10_score_by_50(); return;
 
 ; Use shovel.
-@label=action_shove
+@label=action_shovel
 c$B3F6 LD A,($68A0)  ; {if (room_index != room_50_BLOCKED_TUNNEL) return; /*
  $B3F9 CP $32        ; Shovel only works in the blocked tunnel room. */
  $B3FB RET NZ        ; }
