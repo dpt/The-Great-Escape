@@ -11332,7 +11332,7 @@ c$B866 CALL $B89C    ; locate_vischar_or_itemstruct();
  $B883 JR Z,$B88A    ; }
  $B885 CALL $E102    ;     masked_sprite_plotter_24_wide();
  $B888 JR $B866      ;     goto locate_vischar_or_itemstruct_then_plot; %>
-*$B88A CALL Z,$E2A2  ;   if (Z) masked_sprite_plotter_16_wide_case_1(); // odd
+*$B88A CALL Z,$E2A2  ;   if (Z) masked_sprite_plotter_16_wide(); // odd
                      ; to test for Z since it's always set
  $B88D JR $B866      ;   goto locate_vischar_or_itemstruct_then_plot; %>
 *$B88F CALL $DC41    ; else <% setup_item_plotting();
@@ -16025,7 +16025,7 @@ w$E0EC DEFW $E188    ; masked_sprite_plotter_24_wide_enable0
  $E0F8 DEFW $E1BF    ; masked_sprite_plotter_24_wide_enable6
  $E0FA DEFW $E290    ; masked_sprite_plotter_24_wide_enable7
 ; These two look different. Unused?
- $E0FC DEFW $E2A2    ; masked_sprite_plotter_16_wide_case_1
+ $E0FC DEFW $E2A2    ; masked_sprite_plotter_16_wide
  $E0FE DEFW $E102    ; masked_sprite_plotter_24_wide
 
 ; Unused word?
