@@ -5167,66 +5167,44 @@ w$7DCD DEFW $7DF5
 ;
 ; Non-ASCII: encoded to match the font; $FF terminated.
 @label=messages_missed_roll_call
-t$7DF5 DEFB $16,$12,$1B,$1B,$0E,$0D,$23,$1A ; {"MISSED ROLL CALL" /
- $7DFD DEFB $00,$15,$15,$23,$0C,$0A,$15,$15 ; #HTML[#CALL:decode_stringFF($7DF5)]
- $7E05 DEFB $FF                             ; }
+t$7DF5 DEFB $16,$12,$1B,$1B,$0E,$0D,$23,$1A,$00,$15,$15,$23,$0C,$0A,$15,$15,$FF             ; "MISSED ROLL CALL" #HTML[/ #CALL:decode_stringFF($7DF5)]
 @label=messages_time_to_wake_up
- $7E06 DEFB $1C,$12,$16,$0E,$23,$1C,$00,$23 ; {"TIME TO WAKE UP" /
- $7E0E DEFB $1F,$0A,$14,$0E,$23,$1D,$18,$FF ; #HTML[#CALL:decode_stringFF($7E06)]}
+ $7E06 DEFB $1C,$12,$16,$0E,$23,$1C,$00,$23,$1F,$0A,$14,$0E,$23,$1D,$18,$FF                 ; "TIME TO WAKE UP" #HTML[/ #CALL:decode_stringFF($7E06)]
 @label=messages_breakfast_time
- $7E16 DEFB $0B,$1A,$0E,$0A,$14,$0F,$0A,$1B ; {"BREAKFAST TIME" /
- $7E1E DEFB $1C,$23,$1C,$12,$16,$0E,$FF     ; #HTML[#CALL:decode_stringFF($7E16)]}
+ $7E16 DEFB $0B,$1A,$0E,$0A,$14,$0F,$0A,$1B,$1C,$23,$1C,$12,$16,$0E,$FF                     ; "BREAKFAST TIME" #HTML[/ #CALL:decode_stringFF($7E16)]
 @label=messages_exercise_time
- $7E25 DEFB $0E,$20,$0E,$1A,$0C,$12,$1B,$0E ; {"EXERCISE TIME" /
- $7E2D DEFB $23,$1C,$12,$16,$0E,$FF         ; #HTML[#CALL:decode_stringFF($7E25)]}
+ $7E25 DEFB $0E,$20,$0E,$1A,$0C,$12,$1B,$0E,$23,$1C,$12,$16,$0E,$FF                         ; "EXERCISE TIME" #HTML[/ #CALL:decode_stringFF($7E25)]
 @label=messages_time_for_bed
- $7E33 DEFB $1C,$12,$16,$0E,$23,$0F,$00,$1A ; {"TIME FOR BED" /
- $7E3B DEFB $23,$0B,$0E,$0D,$FF             ; #HTML[#CALL:decode_stringFF($7E33)]}
+ $7E33 DEFB $1C,$12,$16,$0E,$23,$0F,$00,$1A,$23,$0B,$0E,$0D,$FF                             ; "TIME FOR BED" #HTML[/ #CALL:decode_stringFF($7E33)]
 @label=messages_the_door_is_locked
- $7E40 DEFB $1C,$11,$0E,$23,$0D,$00,$00,$1A ; {"THE DOOR IS LOCKED" /
- $7E48 DEFB $23,$12,$1B,$23,$15,$00,$0C,$14 ; #HTML[#CALL:decode_stringFF($7E40)]
- $7E50 DEFB $0E,$0D,$FF                     ; }
+ $7E40 DEFB $1C,$11,$0E,$23,$0D,$00,$00,$1A,$23,$12,$1B,$23,$15,$00,$0C,$14,$0E,$0D,$FF     ; "THE DOOR IS LOCKED" #HTML[/ #CALL:decode_stringFF($7E40)]
 @label=messages_it_is_open
- $7E53 DEFB $12,$1C,$23,$12,$1B,$23,$00,$18 ; {"IT IS OPEN" /
- $7E5B DEFB $0E,$17,$FF                     ; #HTML[#CALL:decode_stringFF($7E53)]}
+ $7E53 DEFB $12,$1C,$23,$12,$1B,$23,$00,$18,$0E,$17,$FF                                     ; "IT IS OPEN" #HTML[/ #CALL:decode_stringFF($7E53)]
 @label=messages_incorrect_key
- $7E5E DEFB $12,$17,$0C,$00,$1A,$1A,$0E,$0C ; {"INCORRECT KEY" /
- $7E66 DEFB $1C,$23,$14,$0E,$21,$FF         ; #HTML[#CALL:decode_stringFF($7E5E)]}
+ $7E5E DEFB $12,$17,$0C,$00,$1A,$1A,$0E,$0C,$1C,$23,$14,$0E,$21,$FF                         ; "INCORRECT KEY" #HTML[/ #CALL:decode_stringFF($7E5E)]
 @label=messages_roll_call
- $7E6C DEFB $1A,$00,$15,$15,$23,$0C,$0A,$15 ; {"ROLL CALL" /
- $7E74 DEFB $15,$FF                         ; #HTML[#CALL:decode_stringFF($7E6C)]}
+ $7E6C DEFB $1A,$00,$15,$15,$23,$0C,$0A,$15,$15,$FF                                         ; "ROLL CALL" #HTML[/ #CALL:decode_stringFF($7E6C)]
 @label=messages_red_cross_parcel
- $7E76 DEFB $1A,$0E,$0D,$23,$0C,$1A,$00,$1B ; {"RED CROSS PARCEL" /
- $7E7E DEFB $1B,$23,$18,$0A,$1A,$0C,$0E,$15 ; #HTML[#CALL:decode_stringFF($7E76)]
- $7E86 DEFB $FF                             ; }
+ $7E76 DEFB $1A,$0E,$0D,$23,$0C,$1A,$00,$1B,$1B,$23,$18,$0A,$1A,$0C,$0E,$15,$FF             ; "RED CROSS PARCEL" #HTML[/ #CALL:decode_stringFF($7E76)]
 @label=messages_picking_the_lock
- $7E87 DEFB $18,$12,$0C,$14,$12,$17,$10,$23 ; {"PICKING THE LOCK" /
- $7E8F DEFB $1C,$11,$0E,$23,$15,$00,$0C,$14 ; #HTML[#CALL:decode_stringFF($7E87)]
- $7E97 DEFB $FF                             ; }
+ $7E87 DEFB $18,$12,$0C,$14,$12,$17,$10,$23,$1C,$11,$0E,$23,$15,$00,$0C,$14,$FF             ; "PICKING THE LOCK" #HTML[/ #CALL:decode_stringFF($7E87)]
 @label=messages_cutting_the_wire
- $7E98 DEFB $0C,$1D,$1C,$1C,$12,$17,$10,$23 ; {"CUTTING THE WIRE" /
- $7EA0 DEFB $1C,$11,$0E,$23,$1F,$12,$1A,$0E ; #HTML[#CALL:decode_stringFF($7E98)]
- $7EA8 DEFB $FF                             ; }
+ $7E98 DEFB $0C,$1D,$1C,$1C,$12,$17,$10,$23,$1C,$11,$0E,$23,$1F,$12,$1A,$0E,$FF             ; "CUTTING THE WIRE" #HTML[/ #CALL:decode_stringFF($7E98)]
 @label=messages_you_open_the_box
- $7EA9 DEFB $21,$00,$1D,$23,$00,$18,$0E,$17 ; {"YOU OPEN THE BOX" /
- $7EB1 DEFB $23,$1C,$11,$0E,$23,$0B,$00,$20 ; #HTML[#CALL:decode_stringFF($7EA9)]
- $7EB9 DEFB $FF                             ; }
+ $7EA9 DEFB $21,$00,$1D,$23,$00,$18,$0E,$17,$23,$1C,$11,$0E,$23,$0B,$00,$20,$FF             ; "YOU OPEN THE BOX" #HTML[/ #CALL:decode_stringFF($7EA9)]
 @label=messages_you_are_in_solitary
- $7EBA DEFB $21,$00,$1D,$23,$0A,$1A,$0E,$23 ; {"YOU ARE IN SOLITARY" /
- $7EC2 DEFB $12,$17,$23,$1B,$00,$15,$12,$1C ; #HTML[#CALL:decode_stringFF($7EBA)]
- $7ECA DEFB $0A,$1A,$21,$FF                 ; }
+ $7EBA DEFB $21,$00,$1D,$23,$0A,$1A,$0E,$23,$12,$17,$23,$1B,$00,$15,$12,$1C,$0A,$1A,$21,$FF ; "YOU ARE IN SOLITARY" #HTML[/ #CALL:decode_stringFF($7EBA)]
 @label=messages_wait_for_release
- $7ECE DEFB $1F,$0A,$12,$1C,$23,$0F,$00,$1A ; {"WAIT FOR RELEASE" /
- $7ED6 DEFB $23,$1A,$0E,$15,$0E,$0A,$1B,$0E ; #HTML[#CALL:decode_stringFF($7ECE)]
- $7EDE DEFB $FF                             ; }
+ $7ECE DEFB $1F,$0A,$12,$1C,$23,$0F,$00,$1A,$23,$1A,$0E,$15,$0E,$0A,$1B,$0E,$FF             ; "WAIT FOR RELEASE" #HTML[/ #CALL:decode_stringFF($7ECE)]
 @label=messages_morale_is_zero
- $7EDF DEFB $16,$00,$1A,$0A,$15,$0E,$23,$12 ; {"MORALE IS ZERO" /
- $7EE7 DEFB $1B,$23,$22,$0E,$1A,$00,$FF     ; #HTML[#CALL:decode_stringFF($7EDF)]}
+ $7EDF DEFB $16,$00,$1A,$0A,$15,$0E,$23,$12,$1B,$23,$22,$0E,$1A,$00,$FF                     ; "MORALE IS ZERO" #HTML[/ #CALL:decode_stringFF($7EDF)]
 @label=messages_item_discovered
- $7EEE DEFB $12,$1C,$0E,$16,$23,$0D,$12,$1B ; {"ITEM DISCOVERED" /
- $7EF6 DEFB $0C,$00,$1E,$0E,$1A,$0E,$0D,$FF ; #HTML[#CALL:decode_stringFF($7EEE)]}
- $7EFE DEFB $00
- $7EFF DEFB $00
+ $7EEE DEFB $12,$1C,$0E,$16,$23,$0D,$12,$1B,$0C,$00,$1E,$0E,$1A,$0E,$0D,$FF                 ; "ITEM DISCOVERED" #HTML[/ #CALL:decode_stringFF($7EEE)]
+
+; Unreferenced bytes.
+;
+; Two alignment bytes to make static_tiles start at $7F00.
+g$7EFE DEFB $00,$00 ; unused_7EFE
 
 ; Static tiles.
 ;
