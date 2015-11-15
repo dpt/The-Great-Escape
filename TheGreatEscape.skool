@@ -19,7 +19,8 @@
 ;
 @bfix+end
 @rfix+begin
-; This disassembly contains rfix changes.
+; This disassembly contains rfix changes:
+;   * Removes the redundant self-modifying code at $6B19.
 ;
 @rfix+end
 
@@ -2253,11 +2254,14 @@ c$6AB5 ADD A,A       ; {HL = interior_object_defs[A];
  $6B17 JR $6AC9      ; goto expand;
 ; 64..127 case.
 @label=range
+@rfix-begin
+; Bug: This self-modifies the INC A at the end of the loop body, but nothing
+; else in the code modifies it! Possible evidence that other encodings (e.g.
+; 'DEC A') were attempted.
 *$6B19 LD A,$3C      ; A = 60; // opcode of 'INC A'
-; Bug: Self modify, but nothing else modifies it! Possible evidence that other
-; encodings (e.g. 'DEC A') were attempted.
 @nowarn
  $6B1B LD ($6B28),A  ; ($6B28) = A;
+@rfix-end
  $6B1E LD A,(HL)     ; {A = *HL++ & 0x0F;
  $6B1F AND $0F       ; }
  $6B21 EX AF,AF'
