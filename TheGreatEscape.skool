@@ -14,7 +14,8 @@
 ;
 @ofix+end
 @bfix+begin
-; This disassembly contains bfix changes.
+; This disassembly contains bfix changes:
+;   * Fix the $A2C6 incorrect iteration count resulting in a ROM write to $1A42.
 ;
 @bfix+end
 @rfix+begin
@@ -7618,9 +7619,13 @@ c$A289 LD A,($A13F)  ; {if (hero_in_bed) <% // odd that this jumps into a point
 ; Update all the bed objects to be empty.
  $A2C1 LD A,$09
  $A2C3 LD HL,$6B79   ; HL = &beds[0];
-; Bug: 7 iterations BUT only six beds in the data structure resulting in write
-; to ROM location $1A42.
+@bfix-begin
+; Bug: Seven iterations are specified here BUT there are only six beds in the
+; 'beds' array. This results in a spurious write to ROM location $1A42.
  $A2C6 LD B,$07      ; B = 7; // 7 iterations
+@bfix+else
+ $A2C6 LD B,$06      ; B = 6; // 6 iterations
+@bfix+end
 *$A2C8 LD E,(HL)     ; {do <% E = *HL++;
  $A2C9 INC HL        ; }
  $A2CA LD D,(HL)     ; {  D = *HL++;
