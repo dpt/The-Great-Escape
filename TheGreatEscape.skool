@@ -2231,7 +2231,7 @@ c$6AB5 ADD A,A       ; {HL = interior_object_defs[A];
  $6AFD JR Z,$6B00    ;
  $6AFF LD (DE),A     ; }
 *$6B00 INC DE        ;   DE++;
- $6B01 DJNZ $6B12    ;   DJNZ $6B12
+ $6B01 DJNZ $6B12
 ; Ran out of width.
 @isub=LD A,(expand_object_width + 1)
  $6B03 LD A,($6AE7)  ;   LD Adash,($6AE6 + 1)  // Adash = width
@@ -2268,7 +2268,7 @@ c$6AB5 ADD A,A       ; {HL = interior_object_defs[A];
  $6B27 INC DE        ; }
 @label=expand_object_increment
  $6B28 INC A         ;   INC Adash // self modified
- $6B29 DJNZ $6B3B    ;   DJNZ $6B3B
+ $6B29 DJNZ $6B3B
 ; Ran out of width.
  $6B2B PUSH AF       ;   PUSH AFdash
 @isub=LD A,(expand_object_width + 1)
