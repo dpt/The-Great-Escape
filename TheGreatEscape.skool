@@ -2244,7 +2244,7 @@ c$6AB5 ADD A,A       ; {HL = interior_object_defs[A];
  $6B0B LD E,A        ;
  $6B0C JR NC,$6B0F   ;
  $6B0E INC D         ; }
-*$6B0F LD A,(HL)     ;   Adash = *HL; // Bug: Needless reload.
+*$6B0F LD A,(HL)     ;   Adash = *HL;
  $6B10 DEC C         ; {  if (--C == 0) return;
  $6B11 RET Z         ; }
 *$6B12 EX AF,AF'
