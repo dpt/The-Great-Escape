@@ -17811,17 +17811,11 @@ t$F014 DEFB $0B,$50,$0F,$0C,$00,$17,$0F,$12 ; {"CONFIRM. Y OR N" /
 
 ; Further game messages.
 @label=more_messages_he_takes_the_bribe
-t$F026 DEFB $11,$0E,$23,$1C,$0A,$14,$0E,$1B ; {"HE TAKES THE BRIBE" /
- $F02E DEFB $23,$1C,$11,$0E,$23,$0B,$1A,$12 ; #HTML[#CALL:decode_stringFF($F026)]
- $F036 DEFB $0B,$0E,$FF                     ; }
+t$F026 DEFB $11,$0E,$23,$1C,$0A,$14,$0E,$1B,$23,$1C,$11,$0E,$23,$0B,$1A,$12,$0B,$0E,$FF ; "HE TAKES THE BRIBE" #HTML[/ #CALL:decode_stringFF($F026)]
 @label=more_messages_and_acts_as_decoy
- $F039 DEFB $0A,$17,$0D,$23,$0A,$0C,$1C,$1B ; {"AND ACTS AS DECOY" /
- $F041 DEFB $23,$0A,$1B,$23,$0D,$0E,$0C,$00 ; #HTML[#CALL:decode_stringFF($F039)]
- $F049 DEFB $21,$FF                         ; }
+ $F039 DEFB $0A,$17,$0D,$23,$0A,$0C,$1C,$1B,$23,$0A,$1B,$23,$0D,$0E,$0C,$00,$21,$FF     ; "AND ACTS AS DECOY" #HTML[/ #CALL:decode_stringFF($F039)]
 @label=more_messages_another_day_dawns
- $F04B DEFB $0A,$17,$00,$1C,$11,$0E,$1A,$23 ; {"ANOTHER DAY DAWNS" /
- $F053 DEFB $0D,$0A,$21,$23,$0D,$0A,$1F,$17 ; #HTML[#CALL:decode_stringFF($F04B)]
- $F05B DEFB $1B,$FF                         ; }
+ $F04B DEFB $0A,$17,$00,$1C,$11,$0E,$1A,$23,$0D,$0A,$21,$23,$0D,$0A,$1F,$17,$1B,$FF     ; "ANOTHER DAY DAWNS" #HTML[/ #CALL:decode_stringFF($F04B)]
 
 ; Gates and doors.
 @label=gates_and_doors
