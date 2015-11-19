@@ -3946,51 +3946,23 @@ b$7612 DEFB $00,$0B,$2E,$2E,$18,$03,$00 ; character_0_COMMANDANT,
 ; struct { byte item_and_flags; byte room_and_flags; byte x,y,height; byte
 ; screen_x,screen_y; }
 @label=item_structs
-b$76C8 DEFB $00,$FF,$40,$20,$02,$78,$F4 ; item_WIRESNIPS,        room_NONE,
-                                        ; 64,32, 0x02, 0x78, 0xF4 // <-
-                                        ; item_to_itemstruct, find_nearby_item
- $76CF DEFB $01,$09,$3E,$30,$00,$7C,$F2 ; item_SHOVEL,           room_9_CRATE,
-                                        ; 62,48, 0x00, 0x7C, 0xF2
- $76D6 DEFB $02,$0A,$49,$24,$10,$77,$F0 ; item_LOCKPICK,
-                                        ; room_10_LOCKPICK, 73,36, 0x10, 0x77,
-                                        ; 0xF0
- $76DD DEFB $03,$0B,$2A,$3A,$04,$84,$F3 ; item_PAPERS,
-                                        ; room_11_PAPERS,   42,58, 0x04, 0x84,
-                                        ; 0xF3
- $76E4 DEFB $04,$0E,$32,$18,$02,$7A,$F6 ; item_TORCH,            room_14_TORCH,
-                                        ; 34,24, 0x02, 0x7A, 0xF6
- $76EB DEFB $05,$FF,$24,$2C,$04,$7E,$F4 ; item_BRIBE,            room_NONE,
-                                        ; 36,44, 0x04, 0x7E, 0xF4 // <-
-                                        ; accept_bribe
- $76F2 DEFB $06,$0F,$2C,$41,$10,$87,$F1 ; item_UNIFORM,
-                                        ; room_15_UNIFORM,  44,65, 0x10, 0x87,
-                                        ; 0xF1
+b$76C8 DEFB $00,$FF,$40,$20,$02,$78,$F4 ; item_WIRESNIPS,        room_NONE,        64,32, 0x02, 0x78, 0xF4 // <- item_to_itemstruct, find_nearby_item
+ $76CF DEFB $01,$09,$3E,$30,$00,$7C,$F2 ; item_SHOVEL,           room_9_CRATE,     62,48, 0x00, 0x7C, 0xF2
+ $76D6 DEFB $02,$0A,$49,$24,$10,$77,$F0 ; item_LOCKPICK,         room_10_LOCKPICK, 73,36, 0x10, 0x77, 0xF0
+ $76DD DEFB $03,$0B,$2A,$3A,$04,$84,$F3 ; item_PAPERS,           room_11_PAPERS,   42,58, 0x04, 0x84, 0xF3
+ $76E4 DEFB $04,$0E,$32,$18,$02,$7A,$F6 ; item_TORCH,            room_14_TORCH,    34,24, 0x02, 0x7A, 0xF6
+ $76EB DEFB $05,$FF,$24,$2C,$04,$7E,$F4 ; item_BRIBE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4 // <- accept_bribe
+ $76F2 DEFB $06,$0F,$2C,$41,$10,$87,$F1 ; item_UNIFORM,          room_15_UNIFORM,  44,65, 0x10, 0x87, 0xF1
 @label=item_structs_food
- $76F9 DEFB $07,$13,$40,$30,$10,$7E,$F0 ; item_FOOD,             room_19_FOOD,
-                                        ; 64,48, 0x10, 0x7E, 0xF0 // <-
-                                        ; action_poison, called_from_main_loop
- $7700 DEFB $08,$01,$42,$34,$04,$7C,$F1 ; item_POISON,
-                                        ; room_1_HUT1RIGHT, 66,52, 0x04, 0x7C,
-                                        ; 0xF1
- $7707 DEFB $09,$16,$3C,$2A,$00,$7B,$F2 ; item_RED_KEY,
-                                        ; room_22_REDKEY,   60,42, 0x00, 0x7B,
-                                        ; 0xF2
- $770E DEFB $0A,$0B,$1C,$22,$00,$81,$F8 ; item_YELLOW_KEY,
-                                        ; room_11_PAPERS,   28,34, 0x00, 0x81,
-                                        ; 0xF8
- $7715 DEFB $0B,$00,$4A,$48,$00,$7A,$6E ; item_GREEN_KEY,
-                                        ; room_0_OUTDOORS,  74,72, 0x00, 0x7A,
-                                        ; 0x6E
- $771C DEFB $0C,$FF,$1C,$32,$0C,$85,$F6 ; item_RED_CROSS_PARCEL, room_NONE,
-                                        ; 28,50, 0x0C, 0x85, 0xF6 // <-
-                                        ; event_new_red_cross_parcel,
-                                        ; new_red_cross_parcel
- $7723 DEFB $0D,$12,$24,$3A,$08,$85,$F4 ; item_RADIO,            room_18_RADIO,
-                                        ; 36,58, 0x08, 0x85, 0xF4
- $772A DEFB $0E,$FF,$24,$2C,$04,$7E,$F4 ; item_PURSE,            room_NONE,
-                                        ; 36,44, 0x04, 0x7E, 0xF4
- $7731 DEFB $0F,$FF,$34,$1C,$04,$7E,$F4 ; item_COMPASS,          room_NONE,
-                                        ; 52,28, 0x04, 0x7E, 0xF4
+ $76F9 DEFB $07,$13,$40,$30,$10,$7E,$F0 ; item_FOOD,             room_19_FOOD,     64,48, 0x10, 0x7E, 0xF0 // <- action_poison, called_from_main_loop
+ $7700 DEFB $08,$01,$42,$34,$04,$7C,$F1 ; item_POISON,           room_1_HUT1RIGHT, 66,52, 0x04, 0x7C, 0xF1
+ $7707 DEFB $09,$16,$3C,$2A,$00,$7B,$F2 ; item_RED_KEY,          room_22_REDKEY,   60,42, 0x00, 0x7B, 0xF2
+ $770E DEFB $0A,$0B,$1C,$22,$00,$81,$F8 ; item_YELLOW_KEY,       room_11_PAPERS,   28,34, 0x00, 0x81, 0xF8
+ $7715 DEFB $0B,$00,$4A,$48,$00,$7A,$6E ; item_GREEN_KEY,        room_0_OUTDOORS,  74,72, 0x00, 0x7A, 0x6E
+ $771C DEFB $0C,$FF,$1C,$32,$0C,$85,$F6 ; item_RED_CROSS_PARCEL, room_NONE,        28,50, 0x0C, 0x85, 0xF6 // <- event_new_red_cross_parcel, new_red_cross_parcel
+ $7723 DEFB $0D,$12,$24,$3A,$08,$85,$F4 ; item_RADIO,            room_18_RADIO,    36,58, 0x08, 0x85, 0xF4
+ $772A DEFB $0E,$FF,$24,$2C,$04,$7E,$F4 ; item_PURSE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4
+ $7731 DEFB $0F,$FF,$34,$1C,$04,$7E,$F4 ; item_COMPASS,          room_NONE,        52,28, 0x04, 0x7E, 0xF4
 
 ; Not yet understood table.
 @label=table_7738
