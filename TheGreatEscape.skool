@@ -17805,9 +17805,7 @@ c$EFFC LD HL,$F014   ; HL = &screenlocstring_confirm_y_or_n[0];
  $F012 JR $F002      ; %>
 
 ; Confirm query.
-t$F014 DEFB $0B,$50,$0F,$0C,$00,$17,$0F,$12 ; {"CONFIRM. Y OR N" /
- $F01C DEFB $1A,$16,$24,$23,$21,$23,$00,$1A ; #HTML[#CALL:decode_screenlocstring($F014)]
- $F024 DEFB $23,$17                         ; }
+t$F014 DEFB $0B,$50,$0F,$0C,$00,$17,$0F,$12,$1A,$16,$24,$23,$21,$23,$00,$1A,$23,$17 ; "CONFIRM. Y OR N" #HTML[/ #CALL:decode_screenlocstring($F014)]
 
 ; Further game messages.
 @label=more_messages_he_takes_the_bribe
