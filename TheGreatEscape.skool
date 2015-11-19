@@ -18181,31 +18181,12 @@ c$F271 CALL $F41C    ; A = menu_keyscan();
 
 ; Key choice prompt strings.
 ;
-; "CHOOSE KEYS"
-t$F2AD DEFB $6D,$40,$0B,$0C,$11,$00,$00,$1B ; {#HTML[#CALL:decode_screenlocstring($F2AD)]
- $F2B5 DEFB $0E,$23,$14
- $F2B8 DEFB $0E
- $F2B9 DEFM "!"
- $F2BA DEFB $1B
- $F2BB DEFB $CD,$40,$05,$15,$0E
- $F2C0 DEFB $0F
- $F2C1 DEFB $1C
- $F2C2 DEFM "$"
- $F2C3 DEFB $0D,$48,$06,$1A,$12,$10
- $F2C9 DEFB $11
- $F2CA DEFB $1C
- $F2CB DEFM "$"
- $F2CC DEFB $4D,$48,$03
- $F2CF DEFB $1D
- $F2D0 DEFB $18
- $F2D1 DEFM "$"
- $F2D2 DEFB $8D,$48,$05,$0D,$00
- $F2D7 DEFB $1F
- $F2D8 DEFB $17
- $F2D9 DEFM "$"
- $F2DA DEFB $CD,$48,$05,$0F,$12
- $F2DF DEFB $1A
- $F2E0 DEFB $0E                             ; }
+t$F2AD DEFB $6D,$40,$0B,$0C,$11,$00,$00,$1B,$0E,$23,$14,$0E,"!",$1B ; "CHOOSE KEYS" #HTML[/ #CALL:decode_screenlocstring($F2AD)]
+ $F2BB DEFB $CD,$40,$05,$15,$0E,$0F,$1C,"$"                         ; "LEFT." #HTML[/ #CALL:decode_screenlocstring($F2BB)]
+ $F2C3 DEFB $0D,$48,$06,$1A,$12,$10,$11,$1C,"$"                     ; "RIGHT." #HTML[/ #CALL:decode_screenlocstring($F2C3)]
+ $F2CC DEFB $4D,$48,$03,$1D,$18,"$"                                 ; "UP." #HTML[/ #CALL:decode_screenlocstring($F2CC)]
+ $F2D2 DEFB $8D,$48,$05,$0D,$00,$1F,$17,"$"                         ; "DOWN." #HTML[/ #CALL:decode_screenlocstring($F2D2)]
+ $F2DA DEFB $CD,$48,$05,$0F,$12,$1A,$0E                             ; "FIRE." #HTML[/ #CALL:decode_screenlocstring($F2DA)]
 
 ; byte_F2E1
 ;
