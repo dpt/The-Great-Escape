@@ -18227,39 +18227,11 @@ b$F2E2 DEFB $F7,$EF,$FB,$DF,$FD,$BF,$FE,$7F
 
 ; Table of special key name strings, prefixed by their length.
 ;
-; .
-;
-; .
-;
-; "ENTER"
-@label=F2EB
-t$F2EB DEFB $05      ; {#HTML[#CALL:decode_stringcounted($F2EB)]
- $F2EC DEFB $0E
- $F2ED DEFB $17
- $F2EE DEFB $1C
- $F2EF DEFB $0E
- $F2F0 DEFB $1A      ; }
-; "CAPS"
- $F2F1 DEFB $04      ; {#HTML[#CALL:decode_stringcounted($F2F1)]
- $F2F2 DEFB $0C
- $F2F3 DEFB $0A
- $F2F4 DEFB $18
- $F2F5 DEFB $1B      ; }
-; "SYMBOL"
- $F2F6 DEFB $06      ; {#HTML[#CALL:decode_stringcounted($F2F6)]
- $F2F7 DEFB $1B
- $F2F8 DEFB $21
- $F2F9 DEFB $16
- $F2FA DEFB $0B
- $F2FB DEFB $00
- $F2FC DEFB $15      ; }
-; "SPACE"
- $F2FD DEFB $05      ; {#HTML[#CALL:decode_stringcounted($F2FD)]
- $F2FE DEFB $1B
- $F2FF DEFB $18
- $F300 DEFB $0A
- $F301 DEFB $0C
- $F302 DEFB $0E      ; }
+@label=special_key_names
+t$F2EB DEFB $05,$0E,$17,$1C,$0E,$1A     ; "ENTER" #HTML[/ #CALL:decode_stringcounted($F2EB)]
+ $F2F1 DEFB $04,$0C,$0A,$18,$1B         ; "CAPS" #HTML[/ #CALL:decode_stringcounted($F2F1)]
+ $F2F6 DEFB $06,$1B,$21,$16,$0B,$00,$15 ; "SYMBOL" #HTML[/ #CALL:decode_stringcounted($F2F6)]
+ $F2FD DEFB $05,$1B,$18,$0A,$0C,$0E     ; "SPACE" #HTML[/ #CALL:decode_stringcounted($F2FD)]
 
 ; Table mapping key codes to glyph indices.
 ;
