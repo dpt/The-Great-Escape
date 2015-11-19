@@ -18514,36 +18514,16 @@ g$F445 DEFB $00      ; chosen_input_device
 
 ; Key choice screenlocstrings.
 ;
-; .
-;
-; .
-;
-; "CONTROLS"
-t$F446 DEFB $8E,$40,$08,$0C,$00,$17,$1C,$1A ; {#HTML[#CALL:decode_screenlocstring($F446)]
- $F44E DEFB $00,$15,$1B                     ; }
-; "0 SELECT"
- $F451 DEFB $CD,$40,$08,$00,$23,$1B,$0E,$15 ; {#HTML[#CALL:decode_screenlocstring($F451)]
- $F459 DEFB $0E,$0C,$1C                     ; }
-; "1 KEYBOARD"
- $F45C DEFB $0D,$48,$0A,$01,$23,$14,$0E,$21 ; {#HTML[#CALL:decode_screenlocstring($F45C)]
- $F464 DEFB $0B,$00,$0A,$1A,$0D             ; }
-; "2 KEMPSTON"
- $F469 DEFB $4D,$48,$0A,$02,$23,$14,$0E,$16 ; {#HTML[#CALL:decode_screenlocstring($F469)]
- $F471 DEFB $18,$1B,$1C,$00,$17             ; }
-; "3 SINCLAIR"
- $F476 DEFB $8D,$48,$0A,$03,$23,$1B,$12,$17 ; {#HTML[#CALL:decode_screenlocstring($F476)]
- $F47E DEFB $0C,$15,$0A,$12,$1A             ; }
-; "4 PROTEK"
- $F483 DEFB $CD,$48,$08,$04,$23,$18,$1A,$00 ; {#HTML[#CALL:decode_screenlocstring($F483)]
- $F48B DEFB $1C,$0E,$14                     ; }
-; "BREAK OR CAPS AND SPACE"
- $F48E DEFB $07,$50,$17,$0B,$1A,$0E,$0A,$14 ; {#HTML[#CALL:decode_screenlocstring($F48E)]
- $F496 DEFB $23,$00,$1A,$23,$0C,$0A,$18,$1B
- $F49E DEFB $23,$0A,$17,$0D,$23,$1B,$18,$0A
- $F4A6 DEFB $0C,$0E                         ; }
-; "FOR NEW GAME"
- $F4A8 DEFB $2C,$50,$0C,$0F,$00,$1A,$23,$17 ; {#HTML[#CALL:decode_screenlocstring($F4A8)]
- $F4B0 DEFB $0E,$1F,$23,$10,$0A,$16,$0E     ; }
+@label=key_choice_screenlocstrings
+t$F446 DEFB $8E,$40,$08,$0C,$00,$17,$1C,$1A,$00,$15,$1B                                                             ; "CONTROLS" #HTML[/ #CALL:decode_screenlocstring($F446)]
+ $F451 DEFB $CD,$40,$08,$00,$23,$1B,$0E,$15,$0E,$0C,$1C                                                             ; "0 SELECT" #HTML[/ #CALL:decode_screenlocstring($F451)]
+ $F45C DEFB $0D,$48,$0A,$01,$23,$14,$0E,$21,$0B,$00,$0A,$1A,$0D                                                     ; "1 KEYBOARD" #HTML[/ #CALL:decode_screenlocstring($F45C)]
+ $F469 DEFB $4D,$48,$0A,$02,$23,$14,$0E,$16,$18,$1B,$1C,$00,$17                                                     ; "2 KEMPSTON" #HTML[/ #CALL:decode_screenlocstring($F469)]
+ $F476 DEFB $8D,$48,$0A,$03,$23,$1B,$12,$17,$0C,$15,$0A,$12,$1A                                                     ; "3 SINCLAIR" #HTML[/ #CALL:decode_screenlocstring($F476)]
+ $F483 DEFB $CD,$48,$08,$04,$23,$18,$1A,$00,$1C,$0E,$14                                                             ; "4 PROTEK" #HTML[#CALL:decode_screenlocstring($F483)]
+ $F48E DEFB $07,$50,$17,$0B,$1A,$0E,$0A,$14,$23,$00,$1A,$23,$0C,$0A,$18,$1B,$23,$0A,$17,$0D,$23,$1B,$18,$0A,$0C,$0E ; "BREAK OR CAPS AND SPACE" #HTML[/ #CALL:decode_screenlocstring($F48E)]
+ $F4A8 DEFB $2C,$50,$0C,$0F,$00,$1A,$23,$17,$0E,$1F,$23,$10,$0A,$16,$0E                                             ; "FOR NEW GAME" #HTML[/ #CALL:decode_screenlocstring($F4A8)]
+
 
 ; Runs the menu screen.
 ;
