@@ -7834,8 +7834,8 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3C2 CALL $C651    ; sub_C651();
  $A3C5 POP DE        ; // DE = the HL stored at $A3C0
  $A3C6 INC E         ; DE++;
- $A3C7 LDI           ; LDI // *DE++ = *HL++; BC--;
- $A3C9 LDI           ; LDI // *DE++ = *HL++; BC--;
+ $A3C7 LDI           ; *DE++ = *HL++; BC--;
+ $A3C9 LDI           ; *DE++ = *HL++; BC--;
  $A3CB CP $FF        ; {if (A == 255) <%
  $A3CD JP NZ,$A3DF   ; }
  $A3D0 LD A,E        ; {  DE -= 6;
@@ -8863,11 +8863,11 @@ c$AA05 LD HL,$81BB   ; HL = &map_position;
  $AA0C LD HL,$F28E   ; HL = &tile_buf[0];
  $AA0F LD DE,$F28F   ; DE = &tile_buf[1];
  $AA12 LD BC,$0197   ; BC = tile_buf_length - 1;
- $AA15 LDDR          ; LDDR
+ $AA15 LDDR
  $AA17 LD HL,$FF4F   ; HL = &window_buf[0];
  $AA1A LD DE,$FF50   ; DE = &window_buf[1];
  $AA1D LD BC,$0CC0   ; BC = window_buf_length;
- $AA20 LDDR          ; LDDR
+ $AA20 LDDR
  $AA22 CALL $A8E7    ; plot_leftmost_tiles();
  $AA25 RET           ; return;
 
@@ -8923,11 +8923,11 @@ c$AA6C LD HL,$81BC   ; HL = &map_position[1];
  $AA73 LD HL,$F277   ; HL = &tile_buf[0];
  $AA76 LD DE,$F28F   ; DE = &tile_buf[24];
  $AA79 LD BC,$0180   ; BC = tile_buf_length - 24;
- $AA7C LDDR          ; LDDR
+ $AA7C LDDR
  $AA7E LD HL,$FE8F   ; HL = &window_buf[0];
  $AA81 LD DE,$FF4F   ; DE = &window_buf[24 * 8];
  $AA84 LD BC,$0C00   ; BC = window_buf_length - 24 * 8;
- $AA87 LDDR          ; LDDR
+ $AA87 LDDR
  $AA89 CALL $A819    ; plot_topmost_tiles();
  $AA8C RET           ; return;
 
@@ -8944,11 +8944,11 @@ c$AA8D INC L         ; L++;
 @nowarn
  $AA98 LD DE,$F28E   ; DE = &tile_buf[24];
  $AA9B LD BC,$017F   ; BC = tile_buf_length - 24 - 1;
- $AA9E LDDR          ; LDDR
+ $AA9E LDDR
  $AAA0 LD HL,$FE8F   ; HL = &window_buf[1];
  $AAA3 LD DE,$FF4E   ; DE = &window_buf[24 * 8];
  $AAA6 LD BC,$0BFF   ; BC = window_buf_length - 24 * 8 - 1;
- $AAA9 LDDR          ; LDDR
+ $AAA9 LDDR
  $AAAB CALL $A819    ; plot_topmost_tiles();
  $AAAE CALL $A8CF    ; plot_rightmost_tiles();
  $AAB1 RET           ; return;
@@ -9242,7 +9242,7 @@ c$ABF9 LD A,($AB68)  ; A = zoombox_y;
  $AC44 LD A,($AB67)  ; {    BC = zoombox_horizontal_count;
  $AC47 LD C,A        ;
  $AC48 LD B,$00      ; }
- $AC4A LDIR          ;     LDIR
+ $AC4A LDIR          ;
  $AC4C LD A,$00      ;     Adash = 0; // self modified
  $AC4E ADD A,L       ; {    HL += Adash;
  $AC4F LD L,A        ;
@@ -9710,7 +9710,7 @@ c$AEB8 EXX                                  ; -
  $AECC CP $16                               ;
  $AECE JR C,$AED2                           ;
  $AED0 LD L,$20                             ; }
-*$AED2 SBC HL,DE                            ;   SBC HL,DE
+*$AED2 SBC HL,DE                            ;
  $AED4 RET C                                ;   RET C  // if (HL < DE) return;
                                             ; // what about carry?
  $AED5 PUSH DE
@@ -9725,7 +9725,7 @@ c$AEB8 EXX                                  ; -
  $AEE0 CP $07                               ;
  $AEE2 JR C,$AEE6                           ;
  $AEE4 LD L,$20                             ; }
-*$AEE6 SBC HL,DE                            ;   SBC HL,DE
+*$AEE6 SBC HL,DE                            ;
  $AEE8 JR C,$AEF0                           ;   JR C,$AEF0  // if (HL < DE)
                                             ; goto $AEF0;
  $AEEA EXX                                  ;   -
@@ -11373,7 +11373,7 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B8BF PUSH BC
  $B8C0 EXX
  $B8C1 POP HL
- $B8C2 SBC HL,BC      ;   SBC HL,BC
+ $B8C2 SBC HL,BC      ;
  $B8C4 EXX
  $B8C5 JR C,$B8F5     ;   JR C,pop_next
  $B8C7 INC L          ;   HL++;
@@ -11387,7 +11387,7 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B8CF PUSH BC
  $B8D0 EXX
  $B8D1 POP HL
- $B8D2 SBC HL,DE      ;   SBC HL,DE
+ $B8D2 SBC HL,DE      ;
  $B8D4 EXX
  $B8D5 JR C,$B8F5     ;   JR C,pop_next
  $B8D7 INC L          ;   HL++;
@@ -16893,7 +16893,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E4E4 LD L,(IY+$1A) ;   L = IY[26];
  $E4E7 LD H,(IY+$1B) ;   H = IY[27];
  $E4EA AND A         ;   A &= A;
- $E4EB SBC HL,DE     ;   SBC HL,DE
+ $E4EB SBC HL,DE     ;
  $E4ED ADD HL,HL     ; {  HL *= 24;
  $E4EE ADD HL,HL     ;
  $E4EF ADD HL,HL     ;
