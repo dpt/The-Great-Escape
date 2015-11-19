@@ -6680,20 +6680,13 @@ b$9EE4 DEFB $2A,$F9,$9E                 ; byte_to_offset { 42, &byte_9EF9[0] }
  $9EF3 DEFB $2B,$11,$9F                 ; byte_to_offset { 43, &byte_9F11[0] }
  $9EF6 DEFB $2D,$13,$9F                 ; byte_to_offset { 45, &byte_9F13[0] }
 ; Variable-length arrays, 0xFF terminated.
- $9EF9 DEFB $82,$82,$FF                 ; byte_9EF9 = { 0x82,0x82,0xFF
-                                        ; }
- $9EFC DEFB $83,$01,$01,$01,$FF         ; byte_9EFC = {
-                                        ; 0x83,0x01,0x01,0x01,0xFF           }
- $9F01 DEFB $01,$01,$01,$00,$02,$02,$FF ; byte_9F01 = {
-                                        ; 0x01,0x01,0x01,0x00,0x02,0x02,0xFF }
- $9F08 DEFB $01,$01,$95,$97,$99,$FF     ; byte_9F08 = {
-                                        ; 0x01,0x01,0x95,0x97,0x99,0xFF      }
- $9F0E DEFB $83,$82,$FF                 ; byte_9F0E = { 0x83,0x82,0xFF
-                                        ; }
- $9F11 DEFB $99,$FF                     ; byte_9F11 = { 0x99,0xFF
-                                        ; }
- $9F13 DEFB $01,$FF                     ; byte_9F13 = { 0x01,0xFF
-                                        ; }
+ $9EF9 DEFB $82,$82,$FF                 ; byte_9EF9 = { 0x82,0x82,0xFF }
+ $9EFC DEFB $83,$01,$01,$01,$FF         ; byte_9EFC = { 0x83,0x01,0x01,0x01,0xFF }
+ $9F01 DEFB $01,$01,$01,$00,$02,$02,$FF ; byte_9F01 = { 0x01,0x01,0x01,0x00,0x02,0x02,0xFF }
+ $9F08 DEFB $01,$01,$95,$97,$99,$FF     ; byte_9F08 = { 0x01,0x01,0x95,0x97,0x99,0xFF }
+ $9F0E DEFB $83,$82,$FF                 ; byte_9F0E = { 0x83,0x82,0xFF }
+ $9F11 DEFB $99,$FF                     ; byte_9F11 = { 0x99,0xFF }
+ $9F13 DEFB $01,$FF                     ; byte_9F13 = { 0x01,0xFF }
 
 ; Boundings of the three main exterior areas.
 @label=permitted_bounds
