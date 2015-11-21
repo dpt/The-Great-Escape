@@ -2441,833 +2441,574 @@ w$6BAD DEFW $6C15    ; &roomdef_1_hut1_right,
 
 ; Room 1: Hut 1, far side.
 @label=roomdef_1_hut1_right
-b$6C15 DEFB $00             ; 0
- $6C16 DEFB $03             ; 3 // count of boundaries
- $6C17 DEFB $36,$44,$17,$22 ; { 54, 68, 23, 34 }, // boundary
- $6C1B DEFB $36,$44,$27,$32 ; { 54, 68, 39, 50 }, // boundary
- $6C1F DEFB $36,$44,$37,$44 ; { 54, 68, 55, 68 }, // boundary
- $6C23 DEFB $04             ; 4 // count of mask bytes
- $6C24 DEFB $00,$01,$03,$0A ; [0, 1, 3, 10] // data mask bytes
- $6C28 DEFB $0A             ; 10 // count of objects
- $6C29 DEFB $02,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_A,              1,
-                            ; 4 },
- $6C2C DEFB $08,$08,$00     ; { interiorobject_WIDE_WINDOW,                 8,
-                            ; 0 },
- $6C2F DEFB $08,$02,$03     ; { interiorobject_WIDE_WINDOW,                 2,
-                            ; 3 },
- $6C32 DEFB $17,$0A,$05     ; { interiorobject_OCCUPIED_BED,               10,
-                            ; 5 },
- $6C35 DEFB $17,$06,$07     ; { interiorobject_OCCUPIED_BED,                6,
-                            ; 7 },
- $6C38 DEFB $0F,$0F,$08     ; { interiorobject_DOOR_FRAME_SW_NE,              15,
-                            ; 8 },
- $6C3B DEFB $18,$12,$05     ; { interiorobject_ORNATE_WARDROBE_FACING_SW,     18,
-                            ; 5 },
- $6C3E DEFB $18,$14,$06     ; { interiorobject_ORNATE_WARDROBE_FACING_SW,     20,
-                            ; 6 },
- $6C41 DEFB $09,$02,$09     ; { interiorobject_EMPTY_BED,                   2,
-                            ; 9 },
- $6C44 DEFB $10,$07,$0A     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 10 },
+b$6C15 DEFB $00                         ; 0
+ $6C16 DEFB $03                         ; 3 // count of boundaries
+ $6C17 DEFB $36,$44,$17,$22             ; { 54, 68, 23, 34 }, // boundary
+ $6C1B DEFB $36,$44,$27,$32             ; { 54, 68, 39, 50 }, // boundary
+ $6C1F DEFB $36,$44,$37,$44             ; { 54, 68, 55, 68 }, // boundary
+ $6C23 DEFB $04                         ; 4 // count of mask bytes
+ $6C24 DEFB $00,$01,$03,$0A             ; [0, 1, 3, 10] // data mask bytes
+ $6C28 DEFB $0A                         ; 10 // count of objects
+ $6C29 DEFB $02,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
+ $6C2C DEFB $08,$08,$00                 ; { interiorobject_WIDE_WINDOW,                  8,  0 },
+ $6C2F DEFB $08,$02,$03                 ; { interiorobject_WIDE_WINDOW,                  2,  3 },
+ $6C32 DEFB $17,$0A,$05                 ; { interiorobject_OCCUPIED_BED,                10,  5 },
+ $6C35 DEFB $17,$06,$07                 ; { interiorobject_OCCUPIED_BED,                 6,  7 },
+ $6C38 DEFB $0F,$0F,$08                 ; { interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
+ $6C3B DEFB $18,$12,$05                 ; { interiorobject_ORNATE_WARDROBE_FACING_SW,   18,  5 },
+ $6C3E DEFB $18,$14,$06                 ; { interiorobject_ORNATE_WARDROBE_FACING_SW,   20,  6 },
+ $6C41 DEFB $09,$02,$09                 ; { interiorobject_EMPTY_BED,                    2,  9 },
+ $6C44 DEFB $10,$07,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 
 ; Room 2: Hut 2, near side.
 @label=roomdef_2_hut2_left
-b$6C47 DEFB $01             ; 1
- $6C48 DEFB $02             ; 2 // count of boundaries
- $6C49 DEFB $30,$40,$2B,$38 ; { 48, 64, 43, 56 }, // boundary
- $6C4D DEFB $18,$26,$1A,$28 ; { 24, 38, 26, 40 }, // boundary
- $6C51 DEFB $02             ; 2 // count of mask bytes
- $6C52 DEFB $0D,$08         ; [13, 8] // data mask bytes
- $6C54 DEFB $08             ; 8 // count of objects
- $6C55 DEFB $1B,$03,$06     ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,
-                            ; 6 },
- $6C58 DEFB $08,$06,$02     ; { interiorobject_WIDE_WINDOW,                 6,
-                            ; 2 },
- $6C5B DEFB $28,$10,$05     ; { interiorobject_END_DOOR_FRAME_NW_SE,              16,
-                            ; 5 },
- $6C5E DEFB $1E,$04,$05     ; { interiorobject_STOVE_PIPE,                  4,
-                            ; 5 },
-@label=roomdef_2_hut2_left_heros_bed
- $6C61 DEFB $17,$08,$07     ; { interiorobject_OCCUPIED_BED,                8,
-                            ; 7 },
- $6C64 DEFB $10,$07,$09     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 9 },
- $6C67 DEFB $1D,$0B,$0C     ; { interiorobject_TABLE,                      11,
-                            ; 12 },
- $6C6A DEFB $01,$05,$09     ; { interiorobject_SMALL_TUNNEL_ENTRANCE,       5,
-                            ; 9 },
+b$6C47 DEFB $01                         ; 1
+ $6C48 DEFB $02                         ; 2 // count of boundaries
+ $6C49 DEFB $30,$40,$2B,$38             ; { 48, 64, 43, 56 }, // boundary
+ $6C4D DEFB $18,$26,$1A,$28             ; { 24, 38, 26, 40 }, // boundary
+ $6C51 DEFB $02                         ; 2 // count of mask bytes
+ $6C52 DEFB $0D,$08                     ; [13, 8] // data mask bytes
+ $6C54 DEFB $08                         ; 8 // count of objects
+ $6C55 DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6C58 DEFB $08,$06,$02                 ; { interiorobject_WIDE_WINDOW,                  6,  2 },
+ $6C5B DEFB $28,$10,$05                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
+ $6C5E DEFB $1E,$04,$05                 ; { interiorobject_STOVE_PIPE,                   4,  5 },
+@label=roomdef_2_hut2_left_heros_bed                                                    
+ $6C61 DEFB $17,$08,$07                 ; { interiorobject_OCCUPIED_BED,                 8,  7 },
+ $6C64 DEFB $10,$07,$09                 ; { interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+ $6C67 DEFB $1D,$0B,$0C                 ; { interiorobject_TABLE,                       11, 12 },
+ $6C6A DEFB $01,$05,$09                 ; { interiorobject_SMALL_TUNNEL_ENTRANCE,        5,  9 },
 
 ; Room 3: Hut 2, far side.
 @label=roomdef_3_hut2_right
-b$6C6D DEFB $00             ; 0
- $6C6E DEFB $03             ; 3 // count of boundaries
- $6C6F DEFB $36,$44,$17,$22 ; { 54, 68, 23, 34 }, // boundary
- $6C73 DEFB $36,$44,$27,$32 ; { 54, 68, 39, 50 }, // boundary
- $6C77 DEFB $36,$44,$37,$44 ; { 54, 68, 55, 68 }, // boundary
- $6C7B DEFB $04             ; 4 // count of mask bytes
- $6C7C DEFB $00,$01,$03,$0A ; [0, 1, 3, 10] // data mask bytes
- $6C80 DEFB $0A             ; 10 // count of objects
- $6C81 DEFB $02,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_A,              1,
-                            ; 4 },
- $6C84 DEFB $08,$08,$00     ; { interiorobject_WIDE_WINDOW,                 8,
-                            ; 0 },
- $6C87 DEFB $08,$02,$03     ; { interiorobject_WIDE_WINDOW,                 2,
-                            ; 3 },
+b$6C6D DEFB $00                         ; 0
+ $6C6E DEFB $03                         ; 3 // count of boundaries
+ $6C6F DEFB $36,$44,$17,$22             ; { 54, 68, 23, 34 }, // boundary
+ $6C73 DEFB $36,$44,$27,$32             ; { 54, 68, 39, 50 }, // boundary
+ $6C77 DEFB $36,$44,$37,$44             ; { 54, 68, 55, 68 }, // boundary
+ $6C7B DEFB $04                         ; 4 // count of mask bytes
+ $6C7C DEFB $00,$01,$03,$0A             ; [0, 1, 3, 10] // data mask bytes
+ $6C80 DEFB $0A                         ; 10 // count of objects
+ $6C81 DEFB $02,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
+ $6C84 DEFB $08,$08,$00                 ; { interiorobject_WIDE_WINDOW,                  8,  0 },
+ $6C87 DEFB $08,$02,$03                 ; { interiorobject_WIDE_WINDOW,                  2,  3 },
 @label=roomdef_3_hut2_right_bed_A
- $6C8A DEFB $17,$0A,$05     ; { interiorobject_OCCUPIED_BED,               10,
-                            ; 5 },
+ $6C8A DEFB $17,$0A,$05                 ; { interiorobject_OCCUPIED_BED,                10,  5 },
 @label=roomdef_3_hut2_right_bed_B
- $6C8D DEFB $17,$06,$07     ; { interiorobject_OCCUPIED_BED,                6,
-                            ; 7 },
+ $6C8D DEFB $17,$06,$07                 ; { interiorobject_OCCUPIED_BED,                 6,  7 },
 @label=roomdef_3_hut2_right_bed_C
- $6C90 DEFB $17,$02,$09     ; { interiorobject_OCCUPIED_BED,                2,
-                            ; 9 },
- $6C93 DEFB $0B,$10,$05     ; { interiorobject_CHEST_OF_DRAWERS,           16,
-                            ; 5 },
- $6C96 DEFB $0F,$0F,$08     ; { interiorobject_DOOR_FRAME_SW_NE,              15,
-                            ; 8 },
- $6C99 DEFB $0A,$12,$05     ; { interiorobject_SHORT_WARDROBE,             18,
-                            ; 5 },
- $6C9C DEFB $10,$07,$0A     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 10 },
+ $6C90 DEFB $17,$02,$09                 ; { interiorobject_OCCUPIED_BED,                 2,  9 },
+ $6C93 DEFB $0B,$10,$05                 ; { interiorobject_CHEST_OF_DRAWERS,            16,  5 },
+ $6C96 DEFB $0F,$0F,$08                 ; { interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
+ $6C99 DEFB $0A,$12,$05                 ; { interiorobject_SHORT_WARDROBE,              18,  5 },
+ $6C9C DEFB $10,$07,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 
 ; Room 4: Hut 3, near side.
 @label=roomdef_4_hut3_left
-b$6C9F DEFB $01             ; 1
- $6CA0 DEFB $02             ; 2 // count of boundaries
- $6CA1 DEFB $18,$28,$18,$2A ; { 24, 40, 24, 42 }, // boundary
- $6CA5 DEFB $30,$40,$2B,$38 ; { 48, 64, 43, 56 }, // boundary
- $6CA9 DEFB $03             ; 3 // count of mask bytes
- $6CAA DEFB $12,$14,$08     ; [18, 20, 8] // data mask bytes
- $6CAD DEFB $09             ; 9 // count of objects
- $6CAE DEFB $1B,$03,$06     ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,
-                            ; 6 },
- $6CB1 DEFB $28,$10,$05     ; { interiorobject_END_DOOR_FRAME_NW_SE,              16,
-                            ; 5 },
- $6CB4 DEFB $08,$06,$02     ; { interiorobject_WIDE_WINDOW,                 6,
-                            ; 2 },
- $6CB7 DEFB $1E,$04,$05     ; { interiorobject_STOVE_PIPE,                  4,
-                            ; 5 },
- $6CBA DEFB $09,$08,$07     ; { interiorobject_EMPTY_BED,                   8,
-                            ; 7 },
- $6CBD DEFB $10,$07,$09     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 9 },
- $6CC0 DEFB $16,$0B,$0B     ; { interiorobject_CHAIR_FACING_SE,11,
-                            ; 11 },
- $6CC3 DEFB $19,$0D,$0A     ; { interiorobject_CHAIR_FACING_SW, 13,
-                            ; 10 },
- $6CC6 DEFB $1F,$0E,$0E     ; { interiorobject_STUFF,                      14,
-                            ; 14 },
+b$6C9F DEFB $01                         ; 1
+ $6CA0 DEFB $02                         ; 2 // count of boundaries
+ $6CA1 DEFB $18,$28,$18,$2A             ; { 24, 40, 24, 42 }, // boundary
+ $6CA5 DEFB $30,$40,$2B,$38             ; { 48, 64, 43, 56 }, // boundary
+ $6CA9 DEFB $03                         ; 3 // count of mask bytes
+ $6CAA DEFB $12,$14,$08                 ; [18, 20, 8] // data mask bytes
+ $6CAD DEFB $09                         ; 9 // count of objects
+ $6CAE DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6CB1 DEFB $28,$10,$05                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
+ $6CB4 DEFB $08,$06,$02                 ; { interiorobject_WIDE_WINDOW,                  6,  2 },
+ $6CB7 DEFB $1E,$04,$05                 ; { interiorobject_STOVE_PIPE,                   4,  5 },
+ $6CBA DEFB $09,$08,$07                 ; { interiorobject_EMPTY_BED,                    8,  7 },
+ $6CBD DEFB $10,$07,$09                 ; { interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+ $6CC0 DEFB $16,$0B,$0B                 ; { interiorobject_CHAIR_FACING_SE,             11, 11 },
+ $6CC3 DEFB $19,$0D,$0A                 ; { interiorobject_CHAIR_FACING_SW,             13, 10 },
+ $6CC6 DEFB $1F,$0E,$0E                 ; { interiorobject_STUFF,                       14, 14 },
 
 ; Room 5: Hut 3, far side.
 @label=roomdef_5_hut3_right
-b$6CC9 DEFB $00             ; 0
- $6CCA DEFB $03             ; 3 // count of boundaries
- $6CCB DEFB $36,$44,$17,$22 ; { 54, 68, 23, 34 }, // boundary
- $6CCF DEFB $36,$44,$27,$32 ; { 54, 68, 39, 50 }, // boundary
- $6CD3 DEFB $36,$44,$37,$44 ; { 54, 68, 55, 68 }, // boundary
- $6CD7 DEFB $04             ; 4 // count of mask bytes
- $6CD8 DEFB $00,$01,$03,$0A ; [0, 1, 3, 10] // data mask bytes
- $6CDC DEFB $0A             ; 10 // count of objects
- $6CDD DEFB $02,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_A,              1,
-                            ; 4 },
- $6CE0 DEFB $08,$08,$00     ; { interiorobject_WIDE_WINDOW,                 8,
-                            ; 0 },
- $6CE3 DEFB $08,$02,$03     ; { interiorobject_WIDE_WINDOW,                 2,
-                            ; 3 },
+b$6CC9 DEFB $00                         ; 0
+ $6CCA DEFB $03                         ; 3 // count of boundaries
+ $6CCB DEFB $36,$44,$17,$22             ; { 54, 68, 23, 34 }, // boundary
+ $6CCF DEFB $36,$44,$27,$32             ; { 54, 68, 39, 50 }, // boundary
+ $6CD3 DEFB $36,$44,$37,$44             ; { 54, 68, 55, 68 }, // boundary
+ $6CD7 DEFB $04                         ; 4 // count of mask bytes
+ $6CD8 DEFB $00,$01,$03,$0A             ; [0, 1, 3, 10] // data mask bytes
+ $6CDC DEFB $0A                         ; 10 // count of objects
+ $6CDD DEFB $02,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
+ $6CE0 DEFB $08,$08,$00                 ; { interiorobject_WIDE_WINDOW,                  8,  0 },
+ $6CE3 DEFB $08,$02,$03                 ; { interiorobject_WIDE_WINDOW,                  2,  3 },
 @label=roomdef_5_hut2_right_bed_D
- $6CE6 DEFB $17,$0A,$05     ; { interiorobject_OCCUPIED_BED,               10,
-                            ; 5 },
+ $6CE6 DEFB $17,$0A,$05                 ; { interiorobject_OCCUPIED_BED,                10,  5 },
 @label=roomdef_5_hut2_right_bed_E
- $6CE9 DEFB $17,$06,$07     ; { interiorobject_OCCUPIED_BED,                6,
-                            ; 7 },
+ $6CE9 DEFB $17,$06,$07                 ; { interiorobject_OCCUPIED_BED,                 6,  7 },
 @label=roomdef_5_hut2_right_bed_F
- $6CEC DEFB $17,$02,$09     ; { interiorobject_OCCUPIED_BED,                2,
-                            ; 9 },
- $6CEF DEFB $0F,$0F,$08     ; { interiorobject_DOOR_FRAME_SW_NE,              15,
-                            ; 8 },
- $6CF2 DEFB $0B,$10,$05     ; { interiorobject_CHEST_OF_DRAWERS,           16,
-                            ; 5 },
- $6CF5 DEFB $0B,$14,$07     ; { interiorobject_CHEST_OF_DRAWERS,           20,
-                            ; 7 },
- $6CF8 DEFB $10,$07,$0A     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 10 },
+ $6CEC DEFB $17,$02,$09                 ; { interiorobject_OCCUPIED_BED,                 2,  9 },
+ $6CEF DEFB $0F,$0F,$08                 ; { interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
+ $6CF2 DEFB $0B,$10,$05                 ; { interiorobject_CHEST_OF_DRAWERS,            16,  5 },
+ $6CF5 DEFB $0B,$14,$07                 ; { interiorobject_CHEST_OF_DRAWERS,            20,  7 },
+ $6CF8 DEFB $10,$07,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 
 ; Room 8: Corridor.
 @label=roomdef_8_corridor
-b$6CFB DEFB $02         ; 2
- $6CFC DEFB $00         ; 0 // count of boundaries
- $6CFD DEFB $01         ; 1 // count of mask bytes
- $6CFE DEFB $09         ; [9] // data mask bytes
- $6CFF DEFB $05         ; 5 // count of objects
- $6D00 DEFB $2E,$03,$06 ; { interiorobject_ROOM_OUTLINE_18x10_B,             3,  6
-                        ; },
- $6D03 DEFB $26,$0A,$03 ; { interiorobject_END_DOOR_FRAME_SW_NE,              10,  3
-                        ; },
- $6D06 DEFB $26,$04,$06 ; { interiorobject_END_DOOR_FRAME_SW_NE,               4,  6
-                        ; },
- $6D09 DEFB $10,$05,$0A ; { interiorobject_DOOR_FRAME_NW_SE,               5, 10
-                        ; },
- $6D0C DEFB $0A,$12,$06 ; { interiorobject_SHORT_WARDROBE,             18,  6
-                        ; },
+b$6CFB DEFB $02                         ; 2
+ $6CFC DEFB $00                         ; 0 // count of boundaries
+ $6CFD DEFB $01                         ; 1 // count of mask bytes
+ $6CFE DEFB $09                         ; [9] // data mask bytes
+ $6CFF DEFB $05                         ; 5 // count of objects
+ $6D00 DEFB $2E,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_B,         3,  6 },
+ $6D03 DEFB $26,$0A,$03                 ; { interiorobject_END_DOOR_FRAME_SW_NE,        10,  3 },
+ $6D06 DEFB $26,$04,$06                 ; { interiorobject_END_DOOR_FRAME_SW_NE,         4,  6 },
+ $6D09 DEFB $10,$05,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             5, 10 },
+ $6D0C DEFB $0A,$12,$06                 ; { interiorobject_SHORT_WARDROBE,              18,  6 },
 
 ; Room 9: Room with crate.
 @label=roomdef_9_crate
-b$6D0F DEFB $01             ; 1
- $6D10 DEFB $01             ; 1 // count of boundaries
- $6D11 DEFB $3A,$40,$1C,$2A ; { 58, 64, 28, 42 }, // boundary
- $6D15 DEFB $02             ; 2 // count of mask bytes
- $6D16 DEFB $04,$15         ; [4, 21] // data mask bytes
- $6D18 DEFB $0A             ; 10 // count of objects
- $6D19 DEFB $1B,$03,$06     ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,
-                            ; 6 },
- $6D1C DEFB $23,$06,$03     ; { interiorobject_SMALL_WINDOW,                6,
-                            ; 3 },
- $6D1F DEFB $21,$09,$04     ; { interiorobject_SMALL_SHELF,                 9,
-                            ; 4 },
- $6D22 DEFB $24,$0C,$06     ; { interiorobject_TINY_DOOR_FRAME_NW_SE,              12,
-                            ; 6 },
- $6D25 DEFB $0F,$0D,$0A     ; { interiorobject_DOOR_FRAME_SW_NE,              13,
-                            ; 10 },
- $6D28 DEFB $20,$10,$06     ; { interiorobject_TALL_WARDROBE,              16,
-                            ; 6 },
- $6D2B DEFB $0A,$12,$08     ; { interiorobject_SHORT_WARDROBE,             18,
-                            ; 8 },
- $6D2E DEFB $1A,$03,$06     ; { interiorobject_CUPBOARD,                    3,
-                            ; 6 },
- $6D31 DEFB $22,$06,$08     ; { interiorobject_SMALL_CRATE,                 6,
-                            ; 8 },
- $6D34 DEFB $22,$04,$09     ; { interiorobject_SMALL_CRATE,                 4,
-                            ; 9 },
+b$6D0F DEFB $01                         ; 1
+ $6D10 DEFB $01                         ; 1 // count of boundaries
+ $6D11 DEFB $3A,$40,$1C,$2A             ; { 58, 64, 28, 42 }, // boundary
+ $6D15 DEFB $02                         ; 2 // count of mask bytes
+ $6D16 DEFB $04,$15                     ; [4, 21] // data mask bytes
+ $6D18 DEFB $0A                         ; 10 // count of objects
+ $6D19 DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6D1C DEFB $23,$06,$03                 ; { interiorobject_SMALL_WINDOW,                 6,  3 },
+ $6D1F DEFB $21,$09,$04                 ; { interiorobject_SMALL_SHELF,                  9,  4 },
+ $6D22 DEFB $24,$0C,$06                 ; { interiorobject_TINY_DOOR_FRAME_NW_SE,       12,  6 },
+ $6D25 DEFB $0F,$0D,$0A                 ; { interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
+ $6D28 DEFB $20,$10,$06                 ; { interiorobject_TALL_WARDROBE,               16,  6 },
+ $6D2B DEFB $0A,$12,$08                 ; { interiorobject_SHORT_WARDROBE,              18,  8 },
+ $6D2E DEFB $1A,$03,$06                 ; { interiorobject_CUPBOARD,                     3,  6 },
+ $6D31 DEFB $22,$06,$08                 ; { interiorobject_SMALL_CRATE,                  6,  8 },
+ $6D34 DEFB $22,$04,$09                 ; { interiorobject_SMALL_CRATE,                  4,  9 },
 
 ; Room 10: Room with lockpick.
 @label=roomdef_10_lockpick
-b$6D37 DEFB $04             ; 4
- $6D38 DEFB $02             ; 2 // count of boundaries
- $6D39 DEFB $45,$4B,$20,$36 ; { 69, 75, 32, 54 }, // boundary
- $6D3D DEFB $24,$2F,$30,$3C ; { 36, 47, 48, 60 }, // boundary
- $6D41 DEFB $03             ; 3 // count of mask bytes
- $6D42 DEFB $06,$0E,$16     ; [6, 14, 22] // data mask bytes
- $6D45 DEFB $0E             ; 14 // count of objects
- $6D46 DEFB $2F,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_B,             1,
-                            ; 4 },
- $6D49 DEFB $0F,$0F,$0A     ; { interiorobject_DOOR_FRAME_SW_NE,              15,
-                            ; 10 },
- $6D4C DEFB $23,$04,$01     ; { interiorobject_SMALL_WINDOW,                4,
-                            ; 1 },
- $6D4F DEFB $35,$02,$03     ; { interiorobject_KEY_RACK,                    2,
-                            ; 3 },
- $6D52 DEFB $35,$07,$02     ; { interiorobject_KEY_RACK,                    7,
-                            ; 2 },
- $6D55 DEFB $20,$0A,$02     ; { interiorobject_TALL_WARDROBE,              10,
-                            ; 2 },
- $6D58 DEFB $2A,$0D,$03     ; { interiorobject_CUPBOARD_42,                13,
-                            ; 3 },
- $6D5B DEFB $2A,$0F,$04     ; { interiorobject_CUPBOARD_42,                15,
-                            ; 4 },
- $6D5E DEFB $2A,$11,$05     ; { interiorobject_CUPBOARD_42,                17,
-                            ; 5 },
- $6D61 DEFB $1D,$0E,$08     ; { interiorobject_TABLE,                      14,
-                            ; 8 },
- $6D64 DEFB $0B,$12,$08     ; { interiorobject_CHEST_OF_DRAWERS,           18,
-                            ; 8 },
- $6D67 DEFB $0B,$14,$09     ; { interiorobject_CHEST_OF_DRAWERS,           20,
-                            ; 9 },
- $6D6A DEFB $22,$06,$05     ; { interiorobject_SMALL_CRATE,                 6,
-                            ; 5 },
- $6D6D DEFB $1D,$02,$06     ; { interiorobject_TABLE,                       2,
-                            ; 6 },
+b$6D37 DEFB $04                         ; 4
+ $6D38 DEFB $02                         ; 2 // count of boundaries
+ $6D39 DEFB $45,$4B,$20,$36             ; { 69, 75, 32, 54 }, // boundary
+ $6D3D DEFB $24,$2F,$30,$3C             ; { 36, 47, 48, 60 }, // boundary
+ $6D41 DEFB $03                         ; 3 // count of mask bytes
+ $6D42 DEFB $06,$0E,$16                 ; [6, 14, 22] // data mask bytes
+ $6D45 DEFB $0E                         ; 14 // count of objects
+ $6D46 DEFB $2F,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
+ $6D49 DEFB $0F,$0F,$0A                 ; { interiorobject_DOOR_FRAME_SW_NE,            15, 10 },
+ $6D4C DEFB $23,$04,$01                 ; { interiorobject_SMALL_WINDOW,                 4,  1 },
+ $6D4F DEFB $35,$02,$03                 ; { interiorobject_KEY_RACK,                     2,  3 },
+ $6D52 DEFB $35,$07,$02                 ; { interiorobject_KEY_RACK,                     7,  2 },
+ $6D55 DEFB $20,$0A,$02                 ; { interiorobject_TALL_WARDROBE,               10,  2 },
+ $6D58 DEFB $2A,$0D,$03                 ; { interiorobject_CUPBOARD_42,                 13,  3 },
+ $6D5B DEFB $2A,$0F,$04                 ; { interiorobject_CUPBOARD_42,                 15,  4 },
+ $6D5E DEFB $2A,$11,$05                 ; { interiorobject_CUPBOARD_42,                 17,  5 },
+ $6D61 DEFB $1D,$0E,$08                 ; { interiorobject_TABLE,                       14,  8 },
+ $6D64 DEFB $0B,$12,$08                 ; { interiorobject_CHEST_OF_DRAWERS,            18,  8 },
+ $6D67 DEFB $0B,$14,$09                 ; { interiorobject_CHEST_OF_DRAWERS,            20,  9 },
+ $6D6A DEFB $22,$06,$05                 ; { interiorobject_SMALL_CRATE,                  6,  5 },
+ $6D6D DEFB $1D,$02,$06                 ; { interiorobject_TABLE,                        2,  6 },
 
 ; Room 11: Room with papers.
 @label=roomdef_11_papers
-b$6D70 DEFB $04             ; 4
- $6D71 DEFB $01             ; 1 // count of boundaries
- $6D72 DEFB $1B,$2C,$24,$30 ; { 27, 44, 36, 48 }, // boundary
- $6D76 DEFB $01             ; 1 // count of mask bytes
- $6D77 DEFB $17             ; [23] // data mask bytes
- $6D78 DEFB $09             ; 9 // count of objects
- $6D79 DEFB $2F,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_B,             1,
-                            ; 4 },
- $6D7C DEFB $21,$06,$03     ; { interiorobject_SMALL_SHELF,                 6,
-                            ; 3 },
- $6D7F DEFB $20,$0C,$03     ; { interiorobject_TALL_WARDROBE,              12,
-                            ; 3 },
- $6D82 DEFB $32,$0A,$03     ; { interiorobject_TALL_DRAWERS,               10,
-                            ; 3 },
- $6D85 DEFB $0A,$0E,$05     ; { interiorobject_SHORT_WARDROBE,             14,
-                            ; 5 },
- $6D88 DEFB $26,$02,$02     ; { interiorobject_END_DOOR_FRAME_SW_NE,               2,
-                            ; 2 },
- $6D8B DEFB $32,$12,$07     ; { interiorobject_TALL_DRAWERS,               18,
-                            ; 7 },
- $6D8E DEFB $32,$14,$08     ; { interiorobject_TALL_DRAWERS,               20,
-                            ; 8 },
- $6D91 DEFB $33,$0C,$0A     ; { interiorobject_DESK,                       12,
-                            ; 10 },
+b$6D70 DEFB $04                         ; 4
+ $6D71 DEFB $01                         ; 1 // count of boundaries
+ $6D72 DEFB $1B,$2C,$24,$30             ; { 27, 44, 36, 48 }, // boundary
+ $6D76 DEFB $01                         ; 1 // count of mask bytes
+ $6D77 DEFB $17                         ; [23] // data mask bytes
+ $6D78 DEFB $09                         ; 9 // count of objects
+ $6D79 DEFB $2F,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
+ $6D7C DEFB $21,$06,$03                 ; { interiorobject_SMALL_SHELF,                  6,  3 },
+ $6D7F DEFB $20,$0C,$03                 ; { interiorobject_TALL_WARDROBE,               12,  3 },
+ $6D82 DEFB $32,$0A,$03                 ; { interiorobject_TALL_DRAWERS,                10,  3 },
+ $6D85 DEFB $0A,$0E,$05                 ; { interiorobject_SHORT_WARDROBE,              14,  5 },
+ $6D88 DEFB $26,$02,$02                 ; { interiorobject_END_DOOR_FRAME_SW_NE,         2,  2 },
+ $6D8B DEFB $32,$12,$07                 ; { interiorobject_TALL_DRAWERS,                18,  7 },
+ $6D8E DEFB $32,$14,$08                 ; { interiorobject_TALL_DRAWERS,                20,  8 },
+ $6D91 DEFB $33,$0C,$0A                 ; { interiorobject_DESK,                        12, 10 },
 
 ; Room 12: Corridor.
 @label=roomdef_12_corridor
-b$6D94 DEFB $01         ; 1
- $6D95 DEFB $00         ; 0 // count of boundaries
- $6D96 DEFB $02         ; 2 // count of mask bytes
- $6D97 DEFB $04,$07     ; [4, 7] // data mask bytes
- $6D99 DEFB $04         ; 4 // count of objects
- $6D9A DEFB $1B,$03,$06 ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,  6
-                        ; },
- $6D9D DEFB $23,$06,$03 ; { interiorobject_SMALL_WINDOW,                6,  3
-                        ; },
- $6DA0 DEFB $10,$09,$0A ; { interiorobject_DOOR_FRAME_NW_SE,               9, 10
-                        ; },
- $6DA3 DEFB $0F,$0D,$0A ; { interiorobject_DOOR_FRAME_SW_NE,              13, 10
-                        ; },
+b$6D94 DEFB $01                         ; 1
+ $6D95 DEFB $00                         ; 0 // count of boundaries
+ $6D96 DEFB $02                         ; 2 // count of mask bytes
+ $6D97 DEFB $04,$07                     ; [4, 7] // data mask bytes
+ $6D99 DEFB $04                         ; 4 // count of objects
+ $6D9A DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6D9D DEFB $23,$06,$03                 ; { interiorobject_SMALL_WINDOW,                 6,  3 },
+ $6DA0 DEFB $10,$09,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
+ $6DA3 DEFB $0F,$0D,$0A                 ; { interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
 
 ; Room 13: Corridor.
 @label=roomdef_13_corridor
-b$6DA6 DEFB $01         ; 1
- $6DA7 DEFB $00         ; 0 // count of boundaries
- $6DA8 DEFB $02         ; 2 // count of mask bytes
- $6DA9 DEFB $04,$08     ; [4, 8] // data mask bytes
- $6DAB DEFB $06         ; 6 // count of objects
- $6DAC DEFB $1B,$03,$06 ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,  6
-                        ; },
- $6DAF DEFB $26,$06,$03 ; { interiorobject_END_DOOR_FRAME_SW_NE,               6,  3
-                        ; },
- $6DB2 DEFB $10,$07,$09 ; { interiorobject_DOOR_FRAME_NW_SE,               7,  9
-                        ; },
- $6DB5 DEFB $0F,$0D,$0A ; { interiorobject_DOOR_FRAME_SW_NE,              13, 10
-                        ; },
- $6DB8 DEFB $32,$0C,$05 ; { interiorobject_TALL_DRAWERS,               12,  5
-                        ; },
- $6DBB DEFB $0B,$0E,$07 ; { interiorobject_CHEST_OF_DRAWERS,           14,  7
-                        ; },
+b$6DA6 DEFB $01                         ; 1
+ $6DA7 DEFB $00                         ; 0 // count of boundaries
+ $6DA8 DEFB $02                         ; 2 // count of mask bytes
+ $6DA9 DEFB $04,$08                     ; [4, 8] // data mask bytes
+ $6DAB DEFB $06                         ; 6 // count of objects
+ $6DAC DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6DAF DEFB $26,$06,$03                 ; { interiorobject_END_DOOR_FRAME_SW_NE,         6,  3 },
+ $6DB2 DEFB $10,$07,$09                 ; { interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+ $6DB5 DEFB $0F,$0D,$0A                 ; { interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
+ $6DB8 DEFB $32,$0C,$05                 ; { interiorobject_TALL_DRAWERS,                12,  5 },
+ $6DBB DEFB $0B,$0E,$07                 ; { interiorobject_CHEST_OF_DRAWERS,            14,  7 },
 
 ; Room 14: Room with torch.
 @label=roomdef_14_torch
-b$6DBE DEFB $00             ; 0
- $6DBF DEFB $03             ; 3 // count of boundaries
- $6DC0 DEFB $36,$44,$16,$20 ; { 54, 68, 22, 32 }, // boundary
- $6DC4 DEFB $3E,$44,$30,$3A ; { 62, 68, 48, 58 }, // boundary
- $6DC8 DEFB $36,$44,$36,$44 ; { 54, 68, 54, 68 }, // boundary
- $6DCC DEFB $01             ; 1 // count of mask bytes
- $6DCD DEFB $01             ; [1] // data mask bytes
- $6DCE DEFB $09             ; 9 // count of objects
- $6DCF DEFB $02,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_A,              1,
-                            ; 4 },
- $6DD2 DEFB $26,$04,$03     ; { interiorobject_END_DOOR_FRAME_SW_NE,               4,
-                            ; 3 },
- $6DD5 DEFB $31,$08,$05     ; { interiorobject_TINY_DRAWERS,                8,
-                            ; 5 },
- $6DD8 DEFB $09,$0A,$05     ; { interiorobject_EMPTY_BED,                  10,
-                            ; 5 },
- $6DDB DEFB $0B,$10,$05     ; { interiorobject_CHEST_OF_DRAWERS,           16,
-                            ; 5 },
- $6DDE DEFB $0A,$12,$05     ; { interiorobject_SHORT_WARDROBE,             18,
-                            ; 5 },
- $6DE1 DEFB $28,$14,$04     ; { interiorobject_END_DOOR_FRAME_NW_SE,              20,
-                            ; 4 },
- $6DE4 DEFB $21,$02,$07     ; { interiorobject_SMALL_SHELF,                 2,
-                            ; 7 },
- $6DE7 DEFB $09,$02,$09     ; { interiorobject_EMPTY_BED,                   2,
-                            ; 9 },
+b$6DBE DEFB $00                         ; 0
+ $6DBF DEFB $03                         ; 3 // count of boundaries
+ $6DC0 DEFB $36,$44,$16,$20             ; { 54, 68, 22, 32 }, // boundary
+ $6DC4 DEFB $3E,$44,$30,$3A             ; { 62, 68, 48, 58 }, // boundary
+ $6DC8 DEFB $36,$44,$36,$44             ; { 54, 68, 54, 68 }, // boundary
+ $6DCC DEFB $01                         ; 1 // count of mask bytes
+ $6DCD DEFB $01                         ; [1] // data mask bytes
+ $6DCE DEFB $09                         ; 9 // count of objects
+ $6DCF DEFB $02,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
+ $6DD2 DEFB $26,$04,$03                 ; { interiorobject_END_DOOR_FRAME_SW_NE,         4,  3 },
+ $6DD5 DEFB $31,$08,$05                 ; { interiorobject_TINY_DRAWERS,                 8,  5 },
+ $6DD8 DEFB $09,$0A,$05                 ; { interiorobject_EMPTY_BED,                   10,  5 },
+ $6DDB DEFB $0B,$10,$05                 ; { interiorobject_CHEST_OF_DRAWERS,            16,  5 },
+ $6DDE DEFB $0A,$12,$05                 ; { interiorobject_SHORT_WARDROBE,              18,  5 },
+ $6DE1 DEFB $28,$14,$04                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        20,  4 },
+ $6DE4 DEFB $21,$02,$07                 ; { interiorobject_SMALL_SHELF,                  2,  7 },
+ $6DE7 DEFB $09,$02,$09                 ; { interiorobject_EMPTY_BED,                    2,  9 },
 
 ; Room 15: Room with uniform.
 @label=roomdef_15_uniform
-b$6DEA DEFB $00             ; 0
- $6DEB DEFB $04             ; 4 // count of boundaries
- $6DEC DEFB $36,$44,$16,$20 ; { 54, 68, 22, 32 }, // boundary
- $6DF0 DEFB $36,$44,$36,$44 ; { 54, 68, 54, 68 }, // boundary
- $6DF4 DEFB $3E,$44,$28,$3A ; { 62, 68, 40, 58 }, // boundary
- $6DF8 DEFB $1E,$28,$38,$43 ; { 30, 40, 56, 67 }, // boundary
- $6DFC DEFB $04             ; 4 // count of mask bytes
- $6DFD DEFB $01,$05,$0A,$0F ; [1, 5, 10, 15] // data mask bytes
- $6E01 DEFB $0A             ; 10 // count of objects
- $6E02 DEFB $02,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_A,              1,
-                            ; 4 },
- $6E05 DEFB $0A,$10,$04     ; { interiorobject_SHORT_WARDROBE,             16,
-                            ; 4 },
- $6E08 DEFB $09,$0A,$05     ; { interiorobject_EMPTY_BED,                  10,
-                            ; 5 },
- $6E0B DEFB $31,$08,$05     ; { interiorobject_TINY_DRAWERS,                8,
-                            ; 5 },
- $6E0E DEFB $31,$06,$06     ; { interiorobject_TINY_DRAWERS,                6,
-                            ; 6 },
- $6E11 DEFB $21,$02,$07     ; { interiorobject_SMALL_SHELF,                 2,
-                            ; 7 },
- $6E14 DEFB $09,$02,$09     ; { interiorobject_EMPTY_BED,                   2,
-                            ; 9 },
- $6E17 DEFB $10,$07,$0A     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 10 },
- $6E1A DEFB $0F,$0D,$09     ; { interiorobject_DOOR_FRAME_SW_NE,              13,
-                            ; 9 },
- $6E1D DEFB $1D,$12,$08     ; { interiorobject_TABLE,                      18,
-                            ; 8 },
+b$6DEA DEFB $00                         ; 0
+ $6DEB DEFB $04                         ; 4 // count of boundaries
+ $6DEC DEFB $36,$44,$16,$20             ; { 54, 68, 22, 32 }, // boundary
+ $6DF0 DEFB $36,$44,$36,$44             ; { 54, 68, 54, 68 }, // boundary
+ $6DF4 DEFB $3E,$44,$28,$3A             ; { 62, 68, 40, 58 }, // boundary
+ $6DF8 DEFB $1E,$28,$38,$43             ; { 30, 40, 56, 67 }, // boundary
+ $6DFC DEFB $04                         ; 4 // count of mask bytes
+ $6DFD DEFB $01,$05,$0A,$0F             ; [1, 5, 10, 15] // data mask bytes
+ $6E01 DEFB $0A                         ; 10 // count of objects
+ $6E02 DEFB $02,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
+ $6E05 DEFB $0A,$10,$04                 ; { interiorobject_SHORT_WARDROBE,              16,  4 },
+ $6E08 DEFB $09,$0A,$05                 ; { interiorobject_EMPTY_BED,                   10,  5 },
+ $6E0B DEFB $31,$08,$05                 ; { interiorobject_TINY_DRAWERS,                 8,  5 },
+ $6E0E DEFB $31,$06,$06                 ; { interiorobject_TINY_DRAWERS,                 6,  6 },
+ $6E11 DEFB $21,$02,$07                 ; { interiorobject_SMALL_SHELF,                  2,  7 },
+ $6E14 DEFB $09,$02,$09                 ; { interiorobject_EMPTY_BED,                    2,  9 },
+ $6E17 DEFB $10,$07,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
+ $6E1A DEFB $0F,$0D,$09                 ; { interiorobject_DOOR_FRAME_SW_NE,            13,  9 },
+ $6E1D DEFB $1D,$12,$08                 ; { interiorobject_TABLE,                       18,  8 },
 
 ; Room 16: Corridor.
 @label=roomdef_16_corridor
-b$6E20 DEFB $01         ; 1
- $6E21 DEFB $00         ; 0 // count of boundaries
- $6E22 DEFB $02         ; 2 // count of mask bytes
- $6E23 DEFB $04,$07     ; [4, 7] // data mask bytes
- $6E25 DEFB $04         ; 4 // count of objects
- $6E26 DEFB $1B,$03,$06 ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,  6
-                        ; },
- $6E29 DEFB $26,$04,$04 ; { interiorobject_END_DOOR_FRAME_SW_NE,               4,  4
-                        ; },
- $6E2C DEFB $10,$09,$0A ; { interiorobject_DOOR_FRAME_NW_SE,               9, 10
-                        ; },
- $6E2F DEFB $0F,$0D,$0A ; { interiorobject_DOOR_FRAME_SW_NE,              13, 10
-                        ; },
+b$6E20 DEFB $01                         ; 1
+ $6E21 DEFB $00                         ; 0 // count of boundaries
+ $6E22 DEFB $02                         ; 2 // count of mask bytes
+ $6E23 DEFB $04,$07                     ; [4, 7] // data mask bytes
+ $6E25 DEFB $04                         ; 4 // count of objects
+ $6E26 DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6E29 DEFB $26,$04,$04                 ; { interiorobject_END_DOOR_FRAME_SW_NE,         4,  4 },
+ $6E2C DEFB $10,$09,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
+ $6E2F DEFB $0F,$0D,$0A                 ; { interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
 
 ; Room 7: Corridor.
 @label=roomdef_7_corridor
-b$6E32 DEFB $01         ; 1
- $6E33 DEFB $00         ; 0 // count of boundaries
- $6E34 DEFB $01         ; 1 // count of mask bytes
- $6E35 DEFB $04         ; [4] // data mask bytes
- $6E36 DEFB $04         ; 4 // count of objects
- $6E37 DEFB $1B,$03,$06 ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,  6
-                        ; },
- $6E3A DEFB $26,$04,$04 ; { interiorobject_END_DOOR_FRAME_SW_NE,               4,  4
-                        ; },
- $6E3D DEFB $0F,$0D,$0A ; { interiorobject_DOOR_FRAME_SW_NE,              13, 10
-                        ; },
- $6E40 DEFB $20,$0C,$04 ; { interiorobject_TALL_WARDROBE,              12,  4
-                        ; },
+b$6E32 DEFB $01                         ; 1
+ $6E33 DEFB $00                         ; 0 // count of boundaries
+ $6E34 DEFB $01                         ; 1 // count of mask bytes
+ $6E35 DEFB $04                         ; [4] // data mask bytes
+ $6E36 DEFB $04                         ; 4 // count of objects
+ $6E37 DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6E3A DEFB $26,$04,$04                 ; { interiorobject_END_DOOR_FRAME_SW_NE,         4,  4 },
+ $6E3D DEFB $0F,$0D,$0A                 ; { interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
+ $6E40 DEFB $20,$0C,$04                 ; { interiorobject_TALL_WARDROBE,               12,  4 },
 
 ; Room 18: Room with radio.
 @label=roomdef_18_radio
-b$6E43 DEFB $04                 ; 4
- $6E44 DEFB $03                 ; 3 // count of boundaries
- $6E45 DEFB $26,$38,$30,$3C     ; { 38, 56, 48, 60 }, // boundary
- $6E49 DEFB $26,$2E,$27,$3C     ; { 38, 46, 39, 60 }, // boundary
- $6E4D DEFB $16,$20,$30,$3C     ; { 22, 32, 48, 60 }, // boundary
- $6E51 DEFB $05                 ; 5 // count of mask bytes
- $6E52 DEFB $0B,$11,$10,$18,$19 ; [11, 17, 16, 24, 25] // data mask bytes
- $6E57 DEFB $0A                 ; 10 // count of objects
- $6E58 DEFB $2F,$01,$04         ; { interiorobject_ROOM_OUTLINE_22x12_B,
-                                ; 1,  4 },
- $6E5B DEFB $1A,$01,$04         ; { interiorobject_CUPBOARD,
-                                ; 1,  4 },
- $6E5E DEFB $23,$04,$01         ; { interiorobject_SMALL_WINDOW,
-                                ; 4,  1 },
- $6E61 DEFB $21,$07,$02         ; { interiorobject_SMALL_SHELF,
-                                ; 7,  2 },
- $6E64 DEFB $28,$0A,$01         ; { interiorobject_END_DOOR_FRAME_NW_SE,
-                                ; 10,  1 },
- $6E67 DEFB $1D,$0C,$07         ; { interiorobject_TABLE,
-                                ; 12,  7 },
- $6E6A DEFB $2D,$0C,$09         ; { interiorobject_MESS_BENCH_SHORT,
-                                ; 12,  9 },
- $6E6D DEFB $1D,$12,$0A         ; { interiorobject_TABLE,
-                                ; 18, 10 },
- $6E70 DEFB $30,$10,$0C         ; { interiorobject_TINY_TABLE,
-                                ; 16, 12 },
- $6E73 DEFB $10,$05,$07         ; { interiorobject_DOOR_FRAME_NW_SE,
-                                ; 5,  7 },
+b$6E43 DEFB $04                         ; 4
+ $6E44 DEFB $03                         ; 3 // count of boundaries
+ $6E45 DEFB $26,$38,$30,$3C             ; { 38, 56, 48, 60 }, // boundary
+ $6E49 DEFB $26,$2E,$27,$3C             ; { 38, 46, 39, 60 }, // boundary
+ $6E4D DEFB $16,$20,$30,$3C             ; { 22, 32, 48, 60 }, // boundary
+ $6E51 DEFB $05                         ; 5 // count of mask bytes
+ $6E52 DEFB $0B,$11,$10,$18,$19         ; [11, 17, 16, 24, 25] // data mask bytes
+ $6E57 DEFB $0A                         ; 10 // count of objects
+ $6E58 DEFB $2F,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
+ $6E5B DEFB $1A,$01,$04                 ; { interiorobject_CUPBOARD,                     1,  4 },
+ $6E5E DEFB $23,$04,$01                 ; { interiorobject_SMALL_WINDOW,                 4,  1 },
+ $6E61 DEFB $21,$07,$02                 ; { interiorobject_SMALL_SHELF,                  7,  2 },
+ $6E64 DEFB $28,$0A,$01                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        10,  1 },
+ $6E67 DEFB $1D,$0C,$07                 ; { interiorobject_TABLE,                       12,  7 },
+ $6E6A DEFB $2D,$0C,$09                 ; { interiorobject_MESS_BENCH_SHORT,            12,  9 },
+ $6E6D DEFB $1D,$12,$0A                 ; { interiorobject_TABLE,                       18, 10 },
+ $6E70 DEFB $30,$10,$0C                 ; { interiorobject_TINY_TABLE,                  16, 12 },
+ $6E73 DEFB $10,$05,$07                 ; { interiorobject_DOOR_FRAME_NW_SE,             5,  7 },
 
 ; Room 19: Room with food.
 @label=roomdef_19_food
-b$6E76 DEFB $01             ; 1
- $6E77 DEFB $01             ; 1 // count of boundaries
- $6E78 DEFB $34,$40,$2F,$38 ; { 52, 64, 47, 56 }, // boundary
- $6E7C DEFB $01             ; 1 // count of mask bytes
- $6E7D DEFB $07             ; [7] // data mask bytes
- $6E7E DEFB $0B             ; 11 // count of objects
- $6E7F DEFB $1B,$03,$06     ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,
-                            ; 6 },
- $6E82 DEFB $23,$06,$03     ; { interiorobject_SMALL_WINDOW,                6,
-                            ; 3 },
- $6E85 DEFB $1A,$09,$03     ; { interiorobject_CUPBOARD,                    9,
-                            ; 3 },
- $6E88 DEFB $2A,$0C,$03     ; { interiorobject_CUPBOARD_42,                12,
-                            ; 3 },
- $6E8B DEFB $2A,$0E,$04     ; { interiorobject_CUPBOARD_42,                14,
-                            ; 4 },
- $6E8E DEFB $1D,$09,$06     ; { interiorobject_TABLE,                       9,
-                            ; 6 },
- $6E91 DEFB $21,$03,$05     ; { interiorobject_SMALL_SHELF,                 3,
-                            ; 5 },
- $6E94 DEFB $34,$03,$07     ; { interiorobject_SINK,                        3,
-                            ; 7 },
- $6E97 DEFB $0B,$0E,$07     ; { interiorobject_CHEST_OF_DRAWERS,           14,
-                            ; 7 },
- $6E9A DEFB $28,$10,$05     ; { interiorobject_END_DOOR_FRAME_NW_SE,              16,
-                            ; 5 },
- $6E9D DEFB $10,$09,$0A     ; { interiorobject_DOOR_FRAME_NW_SE,               9,
-                            ; 10 },
+b$6E76 DEFB $01                         ; 1
+ $6E77 DEFB $01                         ; 1 // count of boundaries
+ $6E78 DEFB $34,$40,$2F,$38             ; { 52, 64, 47, 56 }, // boundary
+ $6E7C DEFB $01                         ; 1 // count of mask bytes
+ $6E7D DEFB $07                         ; [7] // data mask bytes
+ $6E7E DEFB $0B                         ; 11 // count of objects
+ $6E7F DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6E82 DEFB $23,$06,$03                 ; { interiorobject_SMALL_WINDOW,                 6,  3 },
+ $6E85 DEFB $1A,$09,$03                 ; { interiorobject_CUPBOARD,                     9,  3 },
+ $6E88 DEFB $2A,$0C,$03                 ; { interiorobject_CUPBOARD_42,                 12,  3 },
+ $6E8B DEFB $2A,$0E,$04                 ; { interiorobject_CUPBOARD_42,                 14,  4 },
+ $6E8E DEFB $1D,$09,$06                 ; { interiorobject_TABLE,                        9,  6 },
+ $6E91 DEFB $21,$03,$05                 ; { interiorobject_SMALL_SHELF,                  3,  5 },
+ $6E94 DEFB $34,$03,$07                 ; { interiorobject_SINK,                         3,  7 },
+ $6E97 DEFB $0B,$0E,$07                 ; { interiorobject_CHEST_OF_DRAWERS,            14,  7 },
+ $6E9A DEFB $28,$10,$05                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
+ $6E9D DEFB $10,$09,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
 
 ; Room 20: Room with red cross parcel.
 @label=roomdef_20_redcross
-b$6EA0 DEFB $01             ; 1
- $6EA1 DEFB $02             ; 2 // count of boundaries
- $6EA2 DEFB $3A,$40,$1A,$2A ; { 58, 64, 26, 42 }, // boundary
- $6EA6 DEFB $32,$40,$2E,$36 ; { 50, 64, 46, 54 }, // boundary
- $6EAA DEFB $02             ; 2 // count of mask bytes
- $6EAB DEFB $15,$04         ; [21, 4] // data mask bytes
- $6EAD DEFB $0B             ; 11 // count of objects
- $6EAE DEFB $1B,$03,$06     ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,
-                            ; 6 },
- $6EB1 DEFB $0F,$0D,$0A     ; { interiorobject_DOOR_FRAME_SW_NE,              13,
-                            ; 10 },
- $6EB4 DEFB $21,$09,$04     ; { interiorobject_SMALL_SHELF,                 9,
-                            ; 4 },
- $6EB7 DEFB $1A,$03,$06     ; { interiorobject_CUPBOARD,                    3,
-                            ; 6 },
- $6EBA DEFB $22,$06,$08     ; { interiorobject_SMALL_CRATE,                 6,
-                            ; 8 },
- $6EBD DEFB $22,$04,$09     ; { interiorobject_SMALL_CRATE,                 4,
-                            ; 9 },
- $6EC0 DEFB $1D,$09,$06     ; { interiorobject_TABLE,                       9,
-                            ; 6 },
- $6EC3 DEFB $20,$0E,$05     ; { interiorobject_TALL_WARDROBE,              14,
-                            ; 5 },
- $6EC6 DEFB $20,$10,$06     ; { interiorobject_TALL_WARDROBE,              16,
-                            ; 6 },
- $6EC9 DEFB $18,$12,$08     ; { interiorobject_ORNATE_WARDROBE_FACING_SW,     18,
-                            ; 8 },
- $6ECC DEFB $30,$0B,$08     ; { interiorobject_TINY_TABLE,                 11,
-                            ; 8 },
+b$6EA0 DEFB $01                         ; 1
+ $6EA1 DEFB $02                         ; 2 // count of boundaries
+ $6EA2 DEFB $3A,$40,$1A,$2A             ; { 58, 64, 26, 42 }, // boundary
+ $6EA6 DEFB $32,$40,$2E,$36             ; { 50, 64, 46, 54 }, // boundary
+ $6EAA DEFB $02                         ; 2 // count of mask bytes
+ $6EAB DEFB $15,$04                     ; [21, 4] // data mask bytes
+ $6EAD DEFB $0B                         ; 11 // count of objects
+ $6EAE DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6EB1 DEFB $0F,$0D,$0A                 ; { interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
+ $6EB4 DEFB $21,$09,$04                 ; { interiorobject_SMALL_SHELF,                  9,  4 },
+ $6EB7 DEFB $1A,$03,$06                 ; { interiorobject_CUPBOARD,                     3,  6 },
+ $6EBA DEFB $22,$06,$08                 ; { interiorobject_SMALL_CRATE,                  6,  8 },
+ $6EBD DEFB $22,$04,$09                 ; { interiorobject_SMALL_CRATE,                  4,  9 },
+ $6EC0 DEFB $1D,$09,$06                 ; { interiorobject_TABLE,                        9,  6 },
+ $6EC3 DEFB $20,$0E,$05                 ; { interiorobject_TALL_WARDROBE,               14,  5 },
+ $6EC6 DEFB $20,$10,$06                 ; { interiorobject_TALL_WARDROBE,               16,  6 },
+ $6EC9 DEFB $18,$12,$08                 ; { interiorobject_ORNATE_WARDROBE_FACING_SW,   18,  8 },
+ $6ECC DEFB $30,$0B,$08                 ; { interiorobject_TINY_TABLE,                  11,  8 },
 
 ; Room 22: Room with red key.
 @label=roomdef_22_red_key
-b$6ECF DEFB $03             ; 3
- $6ED0 DEFB $02             ; 2 // count of boundaries
- $6ED1 DEFB $36,$40,$2E,$38 ; { 54, 64, 46, 56 }, // boundary
- $6ED5 DEFB $3A,$40,$24,$2C ; { 58, 64, 36, 44 }, // boundary
- $6ED9 DEFB $02             ; 2 // count of mask bytes
- $6EDA DEFB $0C,$15         ; [12, 21] // data mask bytes
- $6EDC DEFB $07             ; 7 // count of objects
- $6EDD DEFB $29,$05,$06     ; { interiorobject_ROOM_OUTLINE_15x8,             5,
-                            ; 6 },
- $6EE0 DEFB $25,$04,$04     ; { interiorobject_NOTICEBOARD,                 4,
-                            ; 4 },
- $6EE3 DEFB $21,$09,$04     ; { interiorobject_SMALL_SHELF,                 9,
-                            ; 4 },
- $6EE6 DEFB $22,$06,$08     ; { interiorobject_SMALL_CRATE,                 6,
-                            ; 8 },
- $6EE9 DEFB $10,$09,$08     ; { interiorobject_DOOR_FRAME_NW_SE,               9,
-                            ; 8 },
- $6EEC DEFB $1D,$09,$06     ; { interiorobject_TABLE,                       9,
-                            ; 6 },
- $6EEF DEFB $28,$0E,$04     ; { interiorobject_END_DOOR_FRAME_NW_SE,              14,
-                            ; 4 },
+b$6ECF DEFB $03                         ; 3
+ $6ED0 DEFB $02                         ; 2 // count of boundaries
+ $6ED1 DEFB $36,$40,$2E,$38             ; { 54, 64, 46, 56 }, // boundary
+ $6ED5 DEFB $3A,$40,$24,$2C             ; { 58, 64, 36, 44 }, // boundary
+ $6ED9 DEFB $02                         ; 2 // count of mask bytes
+ $6EDA DEFB $0C,$15                     ; [12, 21] // data mask bytes
+ $6EDC DEFB $07                         ; 7 // count of objects
+ $6EDD DEFB $29,$05,$06                 ; { interiorobject_ROOM_OUTLINE_15x8,            5,  6 },
+ $6EE0 DEFB $25,$04,$04                 ; { interiorobject_NOTICEBOARD,                  4,  4 },
+ $6EE3 DEFB $21,$09,$04                 ; { interiorobject_SMALL_SHELF,                  9,  4 },
+ $6EE6 DEFB $22,$06,$08                 ; { interiorobject_SMALL_CRATE,                  6,  8 },
+ $6EE9 DEFB $10,$09,$08                 ; { interiorobject_DOOR_FRAME_NW_SE,             9,  8 },
+ $6EEC DEFB $1D,$09,$06                 ; { interiorobject_TABLE,                        9,  6 },
+ $6EEF DEFB $28,$0E,$04                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
 
 ; Room 23: Breakfast room.
 @label=roomdef_23_breakfast
-b$6EF2 DEFB $00             ; 0
- $6EF3 DEFB $01             ; 1 // count of boundaries
- $6EF4 DEFB $36,$44,$22,$44 ; { 54, 68, 34, 68 }, // boundary
- $6EF8 DEFB $02             ; 2 // count of mask bytes
- $6EF9 DEFB $0A,$03         ; [10, 3] // data mask bytes
- $6EFB DEFB $0C             ; 12 // count of objects
- $6EFC DEFB $02,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_A,              1,
-                            ; 4 },
- $6EFF DEFB $23,$08,$00     ; { interiorobject_SMALL_WINDOW,                8,
-                            ; 0 },
- $6F02 DEFB $23,$02,$03     ; { interiorobject_SMALL_WINDOW,                2,
-                            ; 3 },
- $6F05 DEFB $10,$07,$0A     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 10 },
- $6F08 DEFB $2C,$05,$04     ; { interiorobject_MESS_TABLE,                  5,
-                            ; 4 },
- $6F0B DEFB $2A,$12,$04     ; { interiorobject_CUPBOARD_42,                18,
-                            ; 4 },
- $6F0E DEFB $28,$14,$04     ; { interiorobject_END_DOOR_FRAME_NW_SE,              20,
-                            ; 4 },
- $6F11 DEFB $0F,$0F,$08     ; { interiorobject_DOOR_FRAME_SW_NE,              15,
-                            ; 8 },
- $6F14 DEFB $2B,$07,$06     ; { interiorobject_MESS_BENCH,                  7,
-                            ; 6 },
-@label=roomdef_23_breakfast_bench_A
- $6F17 DEFB $0D,$0C,$05     ; { interiorobject_EMPTY_BENCH,                12,
-                            ; 5 },
-@label=roomdef_23_breakfast_bench_B
- $6F1A DEFB $0D,$0A,$06     ; { interiorobject_EMPTY_BENCH,                10,
-                            ; 6 },
-@label=roomdef_23_breakfast_bench_C
- $6F1D DEFB $0D,$08,$07     ; { interiorobject_EMPTY_BENCH,                 8,
-                            ; 7 },
+b$6EF2 DEFB $00                         ; 0
+ $6EF3 DEFB $01                         ; 1 // count of boundaries
+ $6EF4 DEFB $36,$44,$22,$44             ; { 54, 68, 34, 68 }, // boundary
+ $6EF8 DEFB $02                         ; 2 // count of mask bytes
+ $6EF9 DEFB $0A,$03                     ; [10, 3] // data mask bytes
+ $6EFB DEFB $0C                         ; 12 // count of objects
+ $6EFC DEFB $02,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
+ $6EFF DEFB $23,$08,$00                 ; { interiorobject_SMALL_WINDOW,                 8,  0 },
+ $6F02 DEFB $23,$02,$03                 ; { interiorobject_SMALL_WINDOW,                 2,  3 },
+ $6F05 DEFB $10,$07,$0A                 ; { interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
+ $6F08 DEFB $2C,$05,$04                 ; { interiorobject_MESS_TABLE,                   5,  4 },
+ $6F0B DEFB $2A,$12,$04                 ; { interiorobject_CUPBOARD_42,                 18,  4 },
+ $6F0E DEFB $28,$14,$04                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        20,  4 },
+ $6F11 DEFB $0F,$0F,$08                 ; { interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
+ $6F14 DEFB $2B,$07,$06                 ; { interiorobject_MESS_BENCH,                   7,  6 },
+@label=roomdef_23_breakfast_bench_A                                                         
+ $6F17 DEFB $0D,$0C,$05                 ; { interiorobject_EMPTY_BENCH,                 12,  5 },
+@label=roomdef_23_breakfast_bench_B                                                         
+ $6F1A DEFB $0D,$0A,$06                 ; { interiorobject_EMPTY_BENCH,                 10,  6 },
+@label=roomdef_23_breakfast_bench_C                                                         
+ $6F1D DEFB $0D,$08,$07                 ; { interiorobject_EMPTY_BENCH,                  8,  7 },
 
 ; Room 24: Solitary confinement cell.
 @label=roomdef_24_solitary
-b$6F20 DEFB $03             ; 3
- $6F21 DEFB $01             ; 1 // count of boundaries
- $6F22 DEFB $30,$36,$26,$2E ; { 48, 54, 38, 46 }, // boundary
- $6F26 DEFB $01             ; 1 // count of mask bytes
- $6F27 DEFB $1A             ; [26] // data mask bytes
- $6F28 DEFB $03             ; 3 // count of objects
- $6F29 DEFB $29,$05,$06     ; { interiorobject_ROOM_OUTLINE_15x8,             5,
-                            ; 6 },
- $6F2C DEFB $28,$0E,$04     ; { interiorobject_END_DOOR_FRAME_NW_SE,              14,
-                            ; 4 },
- $6F2F DEFB $30,$0A,$09     ; { interiorobject_TINY_TABLE,                 10,
-                            ; 9 },
+b$6F20 DEFB $03                         ; 3
+ $6F21 DEFB $01                         ; 1 // count of boundaries
+ $6F22 DEFB $30,$36,$26,$2E             ; { 48, 54, 38, 46 }, // boundary
+ $6F26 DEFB $01                         ; 1 // count of mask bytes
+ $6F27 DEFB $1A                         ; [26] // data mask bytes
+ $6F28 DEFB $03                         ; 3 // count of objects
+ $6F29 DEFB $29,$05,$06                 ; { interiorobject_ROOM_OUTLINE_15x8,            5,  6 },
+ $6F2C DEFB $28,$0E,$04                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
+ $6F2F DEFB $30,$0A,$09                 ; { interiorobject_TINY_TABLE,                  10,  9 },
 
 ; Room 25: Breakfast room.
 @label=roomdef_25_breakfast
-b$6F32 DEFB $00             ; 0
- $6F33 DEFB $01             ; 1 // count of boundaries
- $6F34 DEFB $36,$44,$22,$44 ; { 54, 68, 34, 68 }, // boundary
- $6F38 DEFB $00             ; 0 // count of mask bytes
- $6F39 DEFB $0B             ; 11 // count of objects
- $6F3A DEFB $02,$01,$04     ; { interiorobject_ROOM_OUTLINE_22x12_A,              1,
-                            ; 4 },
- $6F3D DEFB $23,$08,$00     ; { interiorobject_SMALL_WINDOW,                8,
-                            ; 0 },
- $6F40 DEFB $1A,$05,$03     ; { interiorobject_CUPBOARD,                    5,
-                            ; 3 },
- $6F43 DEFB $23,$02,$03     ; { interiorobject_SMALL_WINDOW,                2,
-                            ; 3 },
- $6F46 DEFB $28,$12,$03     ; { interiorobject_END_DOOR_FRAME_NW_SE,              18,
-                            ; 3 },
- $6F49 DEFB $2C,$05,$04     ; { interiorobject_MESS_TABLE,                  5,
-                            ; 4 },
- $6F4C DEFB $2B,$07,$06     ; { interiorobject_MESS_BENCH,                  7,
-                            ; 6 },
-@label=roomdef_25_breakfast_bench_D
- $6F4F DEFB $0D,$0C,$05     ; { interiorobject_EMPTY_BENCH,                12,
-                            ; 5 },
-@label=roomdef_25_breakfast_bench_E
- $6F52 DEFB $0D,$0A,$06     ; { interiorobject_EMPTY_BENCH,                10,
-                            ; 6 },
-@label=roomdef_25_breakfast_bench_F
- $6F55 DEFB $0D,$08,$07     ; { interiorobject_EMPTY_BENCH,                 8,
-                            ; 7 },
-@label=roomdef_25_breakfast_bench_G
- $6F58 DEFB $0D,$0E,$04     ; { interiorobject_EMPTY_BENCH,                14,
-                            ; 4 },
+b$6F32 DEFB $00                         ; 0
+ $6F33 DEFB $01                         ; 1 // count of boundaries
+ $6F34 DEFB $36,$44,$22,$44             ; { 54, 68, 34, 68 }, // boundary
+ $6F38 DEFB $00                         ; 0 // count of mask bytes
+ $6F39 DEFB $0B                         ; 11 // count of objects
+ $6F3A DEFB $02,$01,$04                 ; { interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
+ $6F3D DEFB $23,$08,$00                 ; { interiorobject_SMALL_WINDOW,                 8,  0 },
+ $6F40 DEFB $1A,$05,$03                 ; { interiorobject_CUPBOARD,                     5,  3 },
+ $6F43 DEFB $23,$02,$03                 ; { interiorobject_SMALL_WINDOW,                 2,  3 },
+ $6F46 DEFB $28,$12,$03                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        18,  3 },
+ $6F49 DEFB $2C,$05,$04                 ; { interiorobject_MESS_TABLE,                   5,  4 },
+ $6F4C DEFB $2B,$07,$06                 ; { interiorobject_MESS_BENCH,                   7,  6 },
+@label=roomdef_25_breakfast_bench_D                                                         
+ $6F4F DEFB $0D,$0C,$05                 ; { interiorobject_EMPTY_BENCH,                 12,  5 },
+@label=roomdef_25_breakfast_bench_E                                                         
+ $6F52 DEFB $0D,$0A,$06                 ; { interiorobject_EMPTY_BENCH,                 10,  6 },
+@label=roomdef_25_breakfast_bench_F                                                         
+ $6F55 DEFB $0D,$08,$07                 ; { interiorobject_EMPTY_BENCH,                  8,  7 },
+@label=roomdef_25_breakfast_bench_G                                                         
+ $6F58 DEFB $0D,$0E,$04                 ; { interiorobject_EMPTY_BENCH,                 14,  4 },
 
 ; Room 28: Hut 1, near side.
 @label=roomdef_28_hut1_left
-b$6F5B DEFB $01             ; 1
- $6F5C DEFB $02             ; 2 // count of boundaries
- $6F5D DEFB $1C,$28,$1C,$34 ; { 28, 40, 28, 52 }, // boundary
- $6F61 DEFB $30,$3F,$2C,$38 ; { 48, 63, 44, 56 }, // boundary
- $6F65 DEFB $03             ; 3 // count of mask bytes
- $6F66 DEFB $08,$0D,$13     ; [8, 13, 19] // data mask bytes
- $6F69 DEFB $08             ; 8 // count of objects
- $6F6A DEFB $1B,$03,$06     ; { interiorobject_ROOM_OUTLINE_18x10_A,             3,
-                            ; 6 },
- $6F6D DEFB $08,$06,$02     ; { interiorobject_WIDE_WINDOW,                 6,
-                            ; 2 },
- $6F70 DEFB $28,$0E,$04     ; { interiorobject_END_DOOR_FRAME_NW_SE,              14,
-                            ; 4 },
- $6F73 DEFB $1A,$03,$06     ; { interiorobject_CUPBOARD,                    3,
-                            ; 6 },
- $6F76 DEFB $17,$08,$07     ; { interiorobject_OCCUPIED_BED,                8,
-                            ; 7 },
- $6F79 DEFB $10,$07,$09     ; { interiorobject_DOOR_FRAME_NW_SE,               7,
-                            ; 9 },
- $6F7C DEFB $19,$0F,$0A     ; { interiorobject_CHAIR_FACING_SW, 15,
-                            ; 10 },
- $6F7F DEFB $1D,$0B,$0C     ; { interiorobject_TABLE,                      11,
-                            ; 12 },
+b$6F5B DEFB $01                         ; 1
+ $6F5C DEFB $02                         ; 2 // count of boundaries
+ $6F5D DEFB $1C,$28,$1C,$34             ; { 28, 40, 28, 52 }, // boundary
+ $6F61 DEFB $30,$3F,$2C,$38             ; { 48, 63, 44, 56 }, // boundary
+ $6F65 DEFB $03                         ; 3 // count of mask bytes
+ $6F66 DEFB $08,$0D,$13                 ; [8, 13, 19] // data mask bytes
+ $6F69 DEFB $08                         ; 8 // count of objects
+ $6F6A DEFB $1B,$03,$06                 ; { interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+ $6F6D DEFB $08,$06,$02                 ; { interiorobject_WIDE_WINDOW,                  6,  2 },
+ $6F70 DEFB $28,$0E,$04                 ; { interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
+ $6F73 DEFB $1A,$03,$06                 ; { interiorobject_CUPBOARD,                     3,  6 },
+ $6F76 DEFB $17,$08,$07                 ; { interiorobject_OCCUPIED_BED,                 8,  7 },
+ $6F79 DEFB $10,$07,$09                 ; { interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+ $6F7C DEFB $19,$0F,$0A                 ; { interiorobject_CHAIR_FACING_SW,             15, 10 },
+ $6F7F DEFB $1D,$0B,$0C                 ; { interiorobject_TABLE,                       11, 12 },
 
 ; Room 29: Start of second tunnel.
 @label=roomdef_29_second_tunnel_start
-b$6F82 DEFB $05                     ; 5
- $6F83 DEFB $00                     ; 0 // count of boundaries
- $6F84 DEFB $06                     ; 6 // count of mask bytes
- $6F85 DEFB $1E,$1F,$20,$21,$22,$23 ; [30, 31, 32, 33, 34, 35] // data mask
-                                    ; bytes
- $6F8B DEFB $06                     ; 6 // count of objects
- $6F8C DEFB $00,$14,$00             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 20,  0 },
- $6F8F DEFB $00,$10,$02             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 16,  2 },
- $6F92 DEFB $00,$0C,$04             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 12,  4 },
- $6F95 DEFB $00,$08,$06             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 8,  6 },
- $6F98 DEFB $00,$04,$08             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 4,  8 },
- $6F9B DEFB $00,$00,$0A             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 0, 10 },
+b$6F82 DEFB $05                         ; 5
+ $6F83 DEFB $00                         ; 0 // count of boundaries
+ $6F84 DEFB $06                         ; 6 // count of mask bytes
+ $6F85 DEFB $1E,$1F,$20,$21,$22,$23     ; [30, 31, 32, 33, 34, 35] // data mask bytes
+ $6F8B DEFB $06                         ; 6 // count of objects
+ $6F8C DEFB $00,$14,$00                 ; { interiorobject_TUNNEL_SW_NE,                20,  0 },
+ $6F8F DEFB $00,$10,$02                 ; { interiorobject_TUNNEL_SW_NE,                16,  2 },
+ $6F92 DEFB $00,$0C,$04                 ; { interiorobject_TUNNEL_SW_NE,                12,  4 },
+ $6F95 DEFB $00,$08,$06                 ; { interiorobject_TUNNEL_SW_NE,                 8,  6 },
+ $6F98 DEFB $00,$04,$08                 ; { interiorobject_TUNNEL_SW_NE,                 4,  8 },
+ $6F9B DEFB $00,$00,$0A                 ; { interiorobject_TUNNEL_SW_NE,                 0, 10 },
 
 ; Room 31.
 @label=roomdef_31
-b$6F9E DEFB $06                     ; 6
- $6F9F DEFB $00                     ; 0 // count of boundaries
- $6FA0 DEFB $06                     ; 6 // count of mask bytes
- $6FA1 DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] // data mask
-                                    ; bytes
- $6FA7 DEFB $06                     ; 6 // count of objects
- $6FA8 DEFB $03,$00,$00             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 0,  0 },
- $6FAB DEFB $03,$04,$02             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 4,  2 },
- $6FAE DEFB $03,$08,$04             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 8,  4 },
- $6FB1 DEFB $03,$0C,$06             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 12,  6 },
- $6FB4 DEFB $03,$10,$08             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 16,  8 },
- $6FB7 DEFB $03,$14,$0A             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 20, 10 },
+b$6F9E DEFB $06                         ; 6
+ $6F9F DEFB $00                         ; 0 // count of boundaries
+ $6FA0 DEFB $06                         ; 6 // count of mask bytes
+ $6FA1 DEFB $24,$25,$26,$27,$28,$29     ; [36, 37, 38, 39, 40, 41] // data mask bytes
+ $6FA7 DEFB $06                         ; 6 // count of objects
+ $6FA8 DEFB $03,$00,$00                 ; { interiorobject_TUNNEL_NW_SE,                 0,  0 },
+ $6FAB DEFB $03,$04,$02                 ; { interiorobject_TUNNEL_NW_SE,                 4,  2 },
+ $6FAE DEFB $03,$08,$04                 ; { interiorobject_TUNNEL_NW_SE,                 8,  4 },
+ $6FB1 DEFB $03,$0C,$06                 ; { interiorobject_TUNNEL_NW_SE,                12,  6 },
+ $6FB4 DEFB $03,$10,$08                 ; { interiorobject_TUNNEL_NW_SE,                16,  8 },
+ $6FB7 DEFB $03,$14,$0A                 ; { interiorobject_TUNNEL_NW_SE,                20, 10 },
 
 ; Room 36.
 @label=roomdef_36
-b$6FBA DEFB $07                     ; 7
- $6FBB DEFB $00                     ; 0 // count of boundaries
- $6FBC DEFB $06                     ; 6 // count of mask bytes
- $6FBD DEFB $1F,$20,$21,$22,$23,$2D ; [31, 32, 33, 34, 35, 45] // data mask
-                                    ; bytes
- $6FC3 DEFB $05                     ; 5 // count of objects
- $6FC4 DEFB $00,$14,$00             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 20,  0 },
- $6FC7 DEFB $00,$10,$02             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 16,  2 },
- $6FCA DEFB $00,$0C,$04             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 12,  4 },
- $6FCD DEFB $00,$08,$06             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 8,  6 },
- $6FD0 DEFB $0E,$04,$08             ; { interiorobject_TUNNEL_14,
-                                    ; 4,  8 },
-
+b$6FBA DEFB $07                         ; 7
+ $6FBB DEFB $00                         ; 0 // count of boundaries
+ $6FBC DEFB $06                         ; 6 // count of mask bytes
+ $6FBD DEFB $1F,$20,$21,$22,$23,$2D     ; [31, 32, 33, 34, 35, 45] // data mask
+                                        ; bytes
+ $6FC3 DEFB $05                         ; 5 // count of objects
+ $6FC4 DEFB $00,$14,$00                 ; { interiorobject_TUNNEL_SW_NE,                20,  0 },
+ $6FC7 DEFB $00,$10,$02                 ; { interiorobject_TUNNEL_SW_NE,                16,  2 },
+ $6FCA DEFB $00,$0C,$04                 ; { interiorobject_TUNNEL_SW_NE,                12,  4 },
+ $6FCD DEFB $00,$08,$06                 ; { interiorobject_TUNNEL_SW_NE,                 8,  6 },
+ $6FD0 DEFB $0E,$04,$08                 ; { interiorobject_TUNNEL_14,                    4,  8 },
+                                       
 ; Room 32.
 @label=roomdef_32
-b$6FD3 DEFB $08                     ; 8
- $6FD4 DEFB $00                     ; 0 // count of boundaries
- $6FD5 DEFB $06                     ; 6 // count of mask bytes
- $6FD6 DEFB $24,$25,$26,$27,$28,$2A ; [36, 37, 38, 39, 40, 42] // data mask
-                                    ; bytes
- $6FDC DEFB $05                     ; 5 // count of objects
- $6FDD DEFB $03,$00,$00             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 0,  0 },
- $6FE0 DEFB $03,$04,$02             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 4,  2 },
- $6FE3 DEFB $03,$08,$04             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 8,  4 },
- $6FE6 DEFB $03,$0C,$06             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 12,  6 },
- $6FE9 DEFB $11,$10,$08             ; { interiorobject_TUNNEL_17,
-                                    ; 16,  8 },
-
+b$6FD3 DEFB $08                         ; 8
+ $6FD4 DEFB $00                         ; 0 // count of boundaries
+ $6FD5 DEFB $06                         ; 6 // count of mask bytes
+ $6FD6 DEFB $24,$25,$26,$27,$28,$2A     ; [36, 37, 38, 39, 40, 42] // data mask bytes
+ $6FDC DEFB $05                         ; 5 // count of objects
+ $6FDD DEFB $03,$00,$00                 ; { interiorobject_TUNNEL_NW_SE,                 0,  0 },
+ $6FE0 DEFB $03,$04,$02                 ; { interiorobject_TUNNEL_NW_SE,                 4,  2 },
+ $6FE3 DEFB $03,$08,$04                 ; { interiorobject_TUNNEL_NW_SE,                 8,  4 },
+ $6FE6 DEFB $03,$0C,$06                 ; { interiorobject_TUNNEL_NW_SE,                12,  6 },
+ $6FE9 DEFB $11,$10,$08                 ; { interiorobject_TUNNEL_17,                   16,  8 },
+                                       
 ; Room 34.
 @label=roomdef_34
-b$6FEC DEFB $06                     ; 6
- $6FED DEFB $00                     ; 0 // count of boundaries
- $6FEE DEFB $06                     ; 6 // count of mask bytes
- $6FEF DEFB $24,$25,$26,$27,$28,$2E ; [36, 37, 38, 39, 40, 46] // data mask
-                                    ; bytes
- $6FF5 DEFB $06                     ; 6 // count of objects
- $6FF6 DEFB $03,$00,$00             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 0,  0 },
- $6FF9 DEFB $03,$04,$02             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 4,  2 },
- $6FFC DEFB $03,$08,$04             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 8,  4 },
- $6FFF DEFB $03,$0C,$06             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 12,  6 },
- $7002 DEFB $03,$10,$08             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 16,  8 },
- $7005 DEFB $12,$14,$0A             ; { interiorobject_TUNNEL_JOIN_18,
-                                    ; 20, 10 },
+b$6FEC DEFB $06                         ; 6
+ $6FED DEFB $00                         ; 0 // count of boundaries
+ $6FEE DEFB $06                         ; 6 // count of mask bytes
+ $6FEF DEFB $24,$25,$26,$27,$28,$2E     ; [36, 37, 38, 39, 40, 46] // data mask
+                                        ; bytes
+ $6FF5 DEFB $06                         ; 6 // count of objects
+ $6FF6 DEFB $03,$00,$00                 ; { interiorobject_TUNNEL_NW_SE,                 0,  0 },
+ $6FF9 DEFB $03,$04,$02                 ; { interiorobject_TUNNEL_NW_SE,                 4,  2 },
+ $6FFC DEFB $03,$08,$04                 ; { interiorobject_TUNNEL_NW_SE,                 8,  4 },
+ $6FFF DEFB $03,$0C,$06                 ; { interiorobject_TUNNEL_NW_SE,                12,  6 },
+ $7002 DEFB $03,$10,$08                 ; { interiorobject_TUNNEL_NW_SE,                16,  8 },
+ $7005 DEFB $12,$14,$0A                 ; { interiorobject_TUNNEL_JOIN_18,              20, 10 },
 
 ; Room 35.
 @label=roomdef_35
-b$7008 DEFB $06                     ; 6
- $7009 DEFB $00                     ; 0 // count of boundaries
- $700A DEFB $06                     ; 6 // count of mask bytes
- $700B DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] // data mask
-                                    ; bytes
- $7011 DEFB $06                     ; 6 // count of objects
- $7012 DEFB $03,$00,$00             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 0,  0 },
- $7015 DEFB $03,$04,$02             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 4,  2 },
- $7018 DEFB $04,$08,$04             ; { interiorobject_TUNNEL_T_JOIN_NW_SE,
-                                    ; 8,  4 },
- $701B DEFB $03,$0C,$06             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 12,  6 },
- $701E DEFB $03,$10,$08             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 16,  8 },
- $7021 DEFB $03,$14,$0A             ; { interiorobject_TUNNEL_NW_SE,
-                                    ; 20, 10 },
+b$7008 DEFB $06                         ; 6
+ $7009 DEFB $00                         ; 0 // count of boundaries
+ $700A DEFB $06                         ; 6 // count of mask bytes
+ $700B DEFB $24,$25,$26,$27,$28,$29     ; [36, 37, 38, 39, 40, 41] // data mask bytes
+ $7011 DEFB $06                         ; 6 // count of objects
+ $7012 DEFB $03,$00,$00                 ; { interiorobject_TUNNEL_NW_SE,                 0,  0 },
+ $7015 DEFB $03,$04,$02                 ; { interiorobject_TUNNEL_NW_SE,                 4,  2 },
+ $7018 DEFB $04,$08,$04                 ; { interiorobject_TUNNEL_T_JOIN_NW_SE,          8,  4 },
+ $701B DEFB $03,$0C,$06                 ; { interiorobject_TUNNEL_NW_SE,                12,  6 },
+ $701E DEFB $03,$10,$08                 ; { interiorobject_TUNNEL_NW_SE,                16,  8 },
+ $7021 DEFB $03,$14,$0A                 ; { interiorobject_TUNNEL_NW_SE,                20, 10 },
 
 ; Room 30.
 @label=roomdef_30
 b$7024 DEFB $05                         ; 5
  $7025 DEFB $00                         ; 0 // count of boundaries
  $7026 DEFB $07                         ; 7 // count of mask bytes
- $7027 DEFB $1E,$1F,$20,$21,$22,$23,$2C ; [30, 31, 32, 33, 34, 35, 44] // data
-                                        ; mask bytes
+ $7027 DEFB $1E,$1F,$20,$21,$22,$23,$2C ; [30, 31, 32, 33, 34, 35, 44] // data mask bytes
  $702E DEFB $06                         ; 6 // count of objects
- $702F DEFB $00,$14,$00                 ; { interiorobject_TUNNEL_SW_NE,
-                                        ; 20,  0 },
- $7032 DEFB $00,$10,$02                 ; { interiorobject_TUNNEL_SW_NE,
-                                        ; 16,  2 },
- $7035 DEFB $00,$0C,$04                 ; { interiorobject_TUNNEL_SW_NE,
-                                        ; 12,  4 },
- $7038 DEFB $06,$08,$06                 ; { interiorobject_TUNNEL_CORNER_6,
-                                        ; 8,  6 },
- $703B DEFB $00,$04,$08                 ; { interiorobject_TUNNEL_SW_NE,
-                                        ; 4,  8 },
- $703E DEFB $00,$00,$0A                 ; { interiorobject_TUNNEL_SW_NE,
-                                        ; 0, 10 },
+ $702F DEFB $00,$14,$00                 ; { interiorobject_TUNNEL_SW_NE,                20,  0 },
+ $7032 DEFB $00,$10,$02                 ; { interiorobject_TUNNEL_SW_NE,                16,  2 },
+ $7035 DEFB $00,$0C,$04                 ; { interiorobject_TUNNEL_SW_NE,                12,  4 },
+ $7038 DEFB $06,$08,$06                 ; { interiorobject_TUNNEL_CORNER_6,              8,  6 },
+ $703B DEFB $00,$04,$08                 ; { interiorobject_TUNNEL_SW_NE,                 4,  8 },
+ $703E DEFB $00,$00,$0A                 ; { interiorobject_TUNNEL_SW_NE,                 0, 10 },
 
 ; Room 40.
 @label=roomdef_40
-b$7041 DEFB $09                     ; 9
- $7042 DEFB $00                     ; 0 // count of boundaries
- $7043 DEFB $06                     ; 6 // count of mask bytes
- $7044 DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] // data mask
-                                    ; bytes
- $704A DEFB $06                     ; 6 // count of objects
- $704B DEFB $07,$14,$00             ; { interiorobject_TUNNEL_CORNER_7,
-                                    ; 20,  0 },
- $704E DEFB $00,$10,$02             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 16,  2 },
- $7051 DEFB $00,$0C,$04             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 12,  4 },
- $7054 DEFB $00,$08,$06             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 8,  6 },
- $7057 DEFB $00,$04,$08             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 4,  8 },
- $705A DEFB $00,$00,$0A             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 0, 10 },
+b$7041 DEFB $09                         ; 9
+ $7042 DEFB $00                         ; 0 // count of boundaries
+ $7043 DEFB $06                         ; 6 // count of mask bytes
+ $7044 DEFB $1E,$1F,$20,$21,$22,$2B     ; [30, 31, 32, 33, 34, 43] // data mask bytes
+ $704A DEFB $06                         ; 6 // count of objects
+ $704B DEFB $07,$14,$00                 ; { interiorobject_TUNNEL_CORNER_7,             20,  0 },
+ $704E DEFB $00,$10,$02                 ; { interiorobject_TUNNEL_SW_NE,                16,  2 },
+ $7051 DEFB $00,$0C,$04                 ; { interiorobject_TUNNEL_SW_NE,                12,  4 },
+ $7054 DEFB $00,$08,$06                 ; { interiorobject_TUNNEL_SW_NE,                 8,  6 },
+ $7057 DEFB $00,$04,$08                 ; { interiorobject_TUNNEL_SW_NE,                 4,  8 },
+ $705A DEFB $00,$00,$0A                 ; { interiorobject_TUNNEL_SW_NE,                 0, 10 },
 
 ; Room 44.
 @label=roomdef_44
-b$705D DEFB $08                 ; 8
- $705E DEFB $00                 ; 0 // count of boundaries
- $705F DEFB $05                 ; 5 // count of mask bytes
- $7060 DEFB $24,$25,$26,$27,$28 ; [36, 37, 38, 39, 40] // data mask bytes
- $7065 DEFB $05                 ; 5 // count of objects
- $7066 DEFB $03,$00,$00         ; { interiorobject_TUNNEL_NW_SE,
-                                ; 0,  0 },
- $7069 DEFB $03,$04,$02         ; { interiorobject_TUNNEL_NW_SE,
-                                ; 4,  2 },
- $706C DEFB $03,$08,$04         ; { interiorobject_TUNNEL_NW_SE,
-                                ; 8,  4 },
- $706F DEFB $03,$0C,$06         ; { interiorobject_TUNNEL_NW_SE,
-                                ; 12,  6 },
- $7072 DEFB $0C,$10,$08         ; { interiorobject_TUNNEL_CORNER_NW_NE,
-                                ; 16,  8 },
+b$705D DEFB $08                         ; 8
+ $705E DEFB $00                         ; 0 // count of boundaries
+ $705F DEFB $05                         ; 5 // count of mask bytes
+ $7060 DEFB $24,$25,$26,$27,$28         ; [36, 37, 38, 39, 40] // data mask bytes
+ $7065 DEFB $05                         ; 5 // count of objects
+ $7066 DEFB $03,$00,$00                 ; { interiorobject_TUNNEL_NW_SE,                 0,  0 },
+ $7069 DEFB $03,$04,$02                 ; { interiorobject_TUNNEL_NW_SE,                 4,  2 },
+ $706C DEFB $03,$08,$04                 ; { interiorobject_TUNNEL_NW_SE,                 8,  4 },
+ $706F DEFB $03,$0C,$06                 ; { interiorobject_TUNNEL_NW_SE,                12,  6 },
+ $7072 DEFB $0C,$10,$08                 ; { interiorobject_TUNNEL_CORNER_NW_NE,         16,  8 },
 
 ; Room 50: Blocked tunnel.
 @label=roomdef_50_blocked_tunnel
-b$7075 DEFB $05                     ; 5
- $7076 DEFB $01                     ; 1 // count of boundaries
+b$7075 DEFB $05                         ; 5
+ $7076 DEFB $01                         ; 1 // count of boundaries
 @label=roomdef_50_blocked_tunnel_boundary
- $7077 DEFB $34,$3A,$20,$36         ; { 52, 58, 32, 54 }, // boundary
- $707B DEFB $06                     ; 6 // count of mask bytes
- $707C DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] // data mask
-                                    ; bytes
- $7082 DEFB $06                     ; 6 // count of objects
- $7083 DEFB $07,$14,$00             ; { interiorobject_TUNNEL_CORNER_7,
-                                    ; 20,  0 },
- $7086 DEFB $00,$10,$02             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 16,  2 },
- $7089 DEFB $00,$0C,$04             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 12,  4 },
+ $7077 DEFB $34,$3A,$20,$36             ; { 52, 58, 32, 54 }, // boundary
+ $707B DEFB $06                         ; 6 // count of mask bytes
+ $707C DEFB $1E,$1F,$20,$21,$22,$2B     ; [30, 31, 32, 33, 34, 43] // data mask bytes
+ $7082 DEFB $06                         ; 6 // count of objects
+ $7083 DEFB $07,$14,$00                 ; { interiorobject_TUNNEL_CORNER_7,             20,  0 },
+ $7086 DEFB $00,$10,$02                 ; { interiorobject_TUNNEL_SW_NE,                16,  2 },
+ $7089 DEFB $00,$0C,$04                 ; { interiorobject_TUNNEL_SW_NE,                12,  4 },
 @label=roomdef_50_blocked_tunnel_collapsed_tunnel
- $708C DEFB $14,$08,$06             ; { interiorobject_COLLAPSED_TUNNEL,
-                                    ; 8,  6 },
- $708F DEFB $00,$04,$08             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 4,  8 },
- $7092 DEFB $00,$00,$0A             ; { interiorobject_TUNNEL_SW_NE,
-                                    ; 0, 10 },
+ $708C DEFB $14,$08,$06                 ; { interiorobject_COLLAPSED_TUNNEL,             8,  6 },
+ $708F DEFB $00,$04,$08                 ; { interiorobject_TUNNEL_SW_NE,                 4,  8 },
+ $7092 DEFB $00,$00,$0A                 ; { interiorobject_TUNNEL_SW_NE,                 0, 10 },
 
 ; Interior object definitions.
 @label=interior_object_defs
