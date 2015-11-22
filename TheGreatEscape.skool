@@ -14031,29 +14031,23 @@ c$CD31 LD A,C        ; A = C;
 ; .
 ; #define ITEM_ROOM(item_no, flags) ((item_no & 0x3F) | (flags << 6))
 @label=default_item_locations
-b$CD6A DEFB $FF,$40,$20 ; item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3), ...
-                        ; } // do these flags mean that the wiresnips are
-                        ; always or /never/ found?
- $CD6D DEFB $09,$3E,$30 ; item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }
- $CD70 DEFB $0A,$49,$24 ; item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }
- $CD73 DEFB $0B,$2A,$3A ; item_PAPERS           { ITEM_ROOM(room_11, 0), ... }
- $CD76 DEFB $0E,$32,$18 ; item_TORCH            { ITEM_ROOM(room_14, 0), ... }
- $CD79 DEFB $3F,$24,$2C ; item_BRIBE            { ITEM_ROOM(room_NONE, 0), ...
-                        ; }
- $CD7C DEFB $0F,$2C,$41 ; item_UNIFORM          { ITEM_ROOM(room_15, 0),  ... }
- $CD7F DEFB $13,$40,$30 ; item_FOOD             { ITEM_ROOM(room_19, 0), ... }
- $CD82 DEFB $01,$42,$34 ; item_POISON           { ITEM_ROOM(room_1, 0), ... }
- $CD85 DEFB $16,$3C,$2A ; item_RED_KEY          { ITEM_ROOM(room_22, 0), ... }
- $CD88 DEFB $0B,$1C,$22 ; item_YELLOW_KEY       { ITEM_ROOM(room_11, 0), ... }
- $CD8B DEFB $00,$4A,$48 ; item_GREEN_KEY        { ITEM_ROOM(room_0_OUTDOORS,
-                        ; 0), ... }
- $CD8E DEFB $3F,$1C,$32 ; item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0), ...
-                        ; }
- $CD91 DEFB $12,$24,$3A ; item_RADIO            { ITEM_ROOM(room_18, 0), ... }
- $CD94 DEFB $3F,$1E,$22 ; item_PURSE            { ITEM_ROOM(room_NONE, 0), ...
-                        ; }
- $CD97 DEFB $3F,$34,$1C ; item_COMPASS          { ITEM_ROOM(room_NONE, 0), ...
-                        ; }
+; do the next flags mean that the wiresnips are always or /never/ found?
+b$CD6A DEFB $FF,$40,$20 ; item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),       ... }
+ $CD6D DEFB $09,$3E,$30 ; item_SHOVEL           { ITEM_ROOM(room_9, 0),          ... }
+ $CD70 DEFB $0A,$49,$24 ; item_LOCKPICK         { ITEM_ROOM(room_10, 0),         ... }
+ $CD73 DEFB $0B,$2A,$3A ; item_PAPERS           { ITEM_ROOM(room_11, 0),         ... }
+ $CD76 DEFB $0E,$32,$18 ; item_TORCH            { ITEM_ROOM(room_14, 0),         ... }
+ $CD79 DEFB $3F,$24,$2C ; item_BRIBE            { ITEM_ROOM(room_NONE, 0),       ... }
+ $CD7C DEFB $0F,$2C,$41 ; item_UNIFORM          { ITEM_ROOM(room_15, 0),         ... }
+ $CD7F DEFB $13,$40,$30 ; item_FOOD             { ITEM_ROOM(room_19, 0),         ... }
+ $CD82 DEFB $01,$42,$34 ; item_POISON           { ITEM_ROOM(room_1, 0),          ... }
+ $CD85 DEFB $16,$3C,$2A ; item_RED_KEY          { ITEM_ROOM(room_22, 0),         ... }
+ $CD88 DEFB $0B,$1C,$22 ; item_YELLOW_KEY       { ITEM_ROOM(room_11, 0),         ... }
+ $CD8B DEFB $00,$4A,$48 ; item_GREEN_KEY        { ITEM_ROOM(room_0_OUTDOORS, 0), ... }
+ $CD8E DEFB $3F,$1C,$32 ; item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0),       ... }
+ $CD91 DEFB $12,$24,$3A ; item_RADIO            { ITEM_ROOM(room_18, 0),         ... }
+ $CD94 DEFB $3F,$1E,$22 ; item_PURSE            { ITEM_ROOM(room_NONE, 0),       ... }
+ $CD97 DEFB $3F,$34,$1C ; item_COMPASS          { ITEM_ROOM(room_NONE, 0),       ... }
 
 ; Data for the four classes of characters.
 @label=character_meta_data_commandant
