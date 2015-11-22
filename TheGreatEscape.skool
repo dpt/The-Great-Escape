@@ -8233,7 +8233,7 @@ c$A51C CALL $A50B    ; screen_reset();
 ; O:A Pressed key.
 @label=keyscan_all
 c$A58C LD BC,$FEFE   ; BC = $FEFE;
-*$A58F IN A,(C)      ; do <% IN A,(C)
+*$A58F IN A,(C)      ; do <%
  $A591 CPL           ; {  A = ~A & 0x1F;
  $A592 AND $1F       ; }
  $A594 RET NZ        ;   if (A) return;
@@ -17785,11 +17785,11 @@ c$EFCB LD DE,$696D      ; DE = map_MAIN_GATE_X;
 c$EFFC LD HL,$F014   ; HL = &screenlocstring_confirm_y_or_n[0];
  $EFFF CALL $A5BF    ; screenlocstring_plot();
 *$F002 LD BC,$DFFE   ; for (;;) <% BC = port_KEYBOARD_POIUY;
- $F005 IN A,(C)      ;   IN A,(C)
+ $F005 IN A,(C)      ;
  $F007 BIT 4,A       ; {  if ((A & (1<<4)) == 0) return; // is 'Y' pressed?
  $F009 RET Z         ; return Z}
  $F00A LD B,$7F      ;   BC = port_KEYBOARD_SPACESYMSHFTMNB;
- $F00C IN A,(C)      ;   IN A,(C)
+ $F00C IN A,(C)      ;
  $F00E CPL           ;   A = ~A;
  $F00F BIT 3,A       ; {  if ((A & (1<<3)) != 0) return; // is 'N' pressed?
  $F011 RET NZ        ; return NZ}
@@ -18463,7 +18463,7 @@ c$F408 LD HL,$590D   ; HL = 0x590D; // initial screen attribute address
 @label=menu_keyscan
 c$F41C LD BC,$F7FE   ; BC = port_KEYBOARD_12345;
  $F41F LD E,$00      ; E = 0;
- $F421 IN A,(C)      ; IN A,(C)
+ $F421 IN A,(C)      ;
  $F423 CPL           ; {A = ~A & 0x0F;
  $F424 AND $0F       ; }
  $F426 JR Z,$F432    ; if (A) <%
@@ -18475,7 +18475,7 @@ c$F41C LD BC,$F7FE   ; BC = port_KEYBOARD_12345;
 *$F430 LD A,E        ;   found: A = E;
  $F431 RET           ;   return; %> /* 1..4 */
 *$F432 LD B,$EF      ; else <% B = 0xEF; /* port_KEYBOARD_09876 */
- $F434 IN A,(C)      ;   IN A,(C)
+ $F434 IN A,(C)      ;
  $F436 AND $01       ;   A &= 1;
  $F438 LD A,E        ;   A = E; /* interleaved */
  $F439 RET Z         ;   if (Z) return; /* always zero */
@@ -19020,7 +19020,7 @@ c$FE00 LD HL,$F06B   ; HL = keydefs; /* A list of (port high byte, key mask) */
  $FE03 LD C,$FE      ; C = 0xFE; /* Port 0xXXFE */
  $FE05 LD B,(HL)     ; {B = *HL++;
  $FE06 INC HL        ; }
- $FE07 IN A,(C)      ; IN A,(C)
+ $FE07 IN A,(C)      ;
  $FE09 CPL           ; {A = ~A & *HL++;
  $FE0A AND (HL)      ;
  $FE0B INC HL        ; }
@@ -19032,7 +19032,7 @@ c$FE00 LD HL,$F06B   ; HL = keydefs; /* A list of (port high byte, key mask) */
 ; Right.
 *$FE14 LD B,(HL)     ; {else <% B = *HL++;
  $FE15 INC HL        ; }
- $FE16 IN A,(C)      ;   IN A,(C)
+ $FE16 IN A,(C)      ;
  $FE18 CPL           ; {  A = ~A & *HL++;
  $FE19 AND (HL)      ;
  $FE1A INC HL        ; }
@@ -19043,7 +19043,7 @@ c$FE00 LD HL,$F06B   ; HL = keydefs; /* A list of (port high byte, key mask) */
 ; Up or down?
 *$FE22 LD B,(HL)     ; {B = *HL++;
  $FE23 INC HL        ; }
- $FE24 IN A,(C)      ; IN A,(C)
+ $FE24 IN A,(C)      ;
  $FE26 CPL           ; {A = ~A & *HL++;
  $FE27 AND (HL)      ;
  $FE28 INC HL        ; }
@@ -19055,7 +19055,7 @@ c$FE00 LD HL,$F06B   ; HL = keydefs; /* A list of (port high byte, key mask) */
 ; Down.
 *$FE30 LD B,(HL)     ; {else <% B = *HL++;
  $FE31 INC HL        ; }
- $FE32 IN A,(C)      ;   IN A,(C)
+ $FE32 IN A,(C)      ;
  $FE34 CPL           ; {  A = ~A & *HL++;
  $FE35 AND (HL)      ;
  $FE36 INC HL        ; }
@@ -19065,7 +19065,7 @@ c$FE00 LD HL,$F06B   ; HL = keydefs; /* A list of (port high byte, key mask) */
 ; Fire?
 *$FE3B LD B,(HL)     ; {B = *HL++;
  $FE3C INC HL        ; }
- $FE3D IN A,(C)      ; IN A,(C)
+ $FE3D IN A,(C)      ;
  $FE3F CPL           ; {A = ~A & *HL++;
  $FE40 AND (HL)      ;
  $FE41 INC HL        ; }
@@ -19083,20 +19083,20 @@ c$FE00 LD HL,$F06B   ; HL = keydefs; /* A list of (port high byte, key mask) */
 ; Horizontal.
 @label=inputroutine_protek
 c$FE47 LD BC,$F7FE   ; BC = port_KEYBOARD_12345;
- $FE4A IN A,(C)      ; IN A,(C)
+ $FE4A IN A,(C)      ;
  $FE4C CPL           ; {A = ~A & (1<<4); /* 5 == left */
  $FE4D AND $10       ; }
  $FE4F LD E,$03      ; E = input_LEFT;
  $FE51 LD B,$EF      ; B = 0xEF; /* port_KEYBOARD_09876 */
  $FE53 JR NZ,$FE60   ; if (Z) <%
- $FE55 IN A,(C)      ;   IN A,(C)
+ $FE55 IN A,(C)      ;
  $FE57 CPL           ; {  A = ~A & (1<<2);
  $FE58 AND $04       ; }
  $FE5A LD E,$06      ;   E = input_RIGHT;
  $FE5C JR NZ,$FE60   ;   if (Z)
  $FE5E LD E,$00      ;     E = 0; %>
 ; Vertical.
-*$FE60 IN A,(C)      ; IN A,(C)
+*$FE60 IN A,(C)      ;
  $FE62 CPL           ; A = ~A;
  $FE63 LD D,A        ; D = A;
  $FE64 AND $08       ; A &= (1<<3);
@@ -19125,7 +19125,7 @@ c$FE47 LD BC,$F7FE   ; BC = port_KEYBOARD_12345;
 ; O:A Input value (as per enum input).
 @label=inputroutine_kempston
 c$FE7E LD BC,$001F   ; BC = 0x001F;
- $FE81 IN A,(C)      ; IN A,(C)
+ $FE81 IN A,(C)      ;
  $FE83 LD BC,$0000   ; BC = 0;
  $FE86 RRA           ; carry = A & 1; A >>= 1;
  $FE87 JR NC,$FE8B   ; {if (carry) B = input_RIGHT;
@@ -19155,7 +19155,7 @@ c$FE7E LD BC,$001F   ; BC = 0x001F;
 ; O:A Input value (as per enum input).
 @label=inputroutine_fuller
 c$FEA3 LD BC,$007F   ; BC = 0x007F;
- $FEA6 IN A,(C)      ; IN A,(C)
+ $FEA6 IN A,(C)      ;
  $FEA8 LD BC,$0000   ; BC = 0;
  $FEAB BIT 4,A       ; {if (A & (1<<4)) A = ~A;
  $FEAD JR Z,$FEB0    ;
@@ -19186,7 +19186,7 @@ c$FEA3 LD BC,$007F   ; BC = 0x007F;
 ; O:A Input value (as per enum input).
 @label=inputroutine_sinclair
 c$FECD LD BC,$EFFE   ; BC = port_KEYBOARD_09876;
- $FED0 IN A,(C)      ; IN A,(C)
+ $FED0 IN A,(C)      ;
  $FED2 CPL           ; A = ~A; /* xxx67890 */
  $FED3 LD BC,$0000   ; BC = 0;
  $FED6 RRCA          ; RRCA /* 0xxx6789 */
