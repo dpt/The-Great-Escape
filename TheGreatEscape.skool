@@ -602,12 +602,41 @@
 ; GAME STATE
 ; //////////////////////////////////////////////////////////////////////////////
 ;
-; game state which overlaps with tiles etc.
+; There are eight visible character (vischar) structures living at $8000
+; onwards. The game therefore supports up to eight characters on-screen at
+; once. The stove and crate items count as characters too.
 ;
-; vars referenced as $8015 etc.
+; These structures occupy the same addresses as some of the static tiles. This
+; is fine as the static tiles are never referenced once they're plotted to the
+; screen at startup.
 ;
-; $8000 seems to be an array of eight 32-wide visible character blocks. the first is likely the hero character.
-
+; The structures are 32 bytes long. Each structure is laid out as follows:
+;
+; +-----+---------+-------------------------------------------------------------------------------+
+; | off | size    | purpose                                                                       |
+; +-----+---------+-------------------------------------------------------------------------------+
+; | $00 | byte    | character index, or $FF for none                                              |
+; | $01 | byte    | flags                                                                         |
+; | $02 | byte[2] | target location                                                               |
+; | $04 | byte[3] | position                                                                      |
+; | $07 | byte    | top nibble = flags, bottom nibble = counter used by character_behaviour only  |
+; | $08 | pointer | pointer to character_related_pointers                                         |
+; | $0A | pointer | pointer to value in character_related_pointers                                |
+; | $0C | byte    | up/down flag                                                                  |
+; | $0D | byte    | input .. previous direction?                                                  |
+; | $0E | byte    | direction and walk/crawl flag                                                 |
+; | $0F | movitem | movable item struct (pos, cur sprite, sprite index)                           |
+; | $18 | word[2] | screen x, y coord                                                             |
+; | $1C | byte    | current room index                                                            |
+; | $1D | byte    | (unused)                                                                      |
+; | $1E | byte    | copy of sprite width in bytes + 1                                             |
+; | $1F | byte    | copt of sprite height in rows                                                 |
+; +-----+---------+-------------------------------------------------------------------------------+
+;
+; The first entry in the array is the hero.
+;
+; Further notes:
+;
 ; b $8000 character index? ($FF if no visible character)
 ; b $8001 flags: bit 6 gets toggled in set_hero_target_location /  bit 0: picking lock /  bit 1: cutting wire  ($FF when reset)
 ; w $8002 could be a target location (set in set_hero_target_location, process_player_input)
@@ -652,6 +681,8 @@
 ;   $8023 likely a position
 ;   $8024 likely a position
 ;   $803C room index within struct at $8020
+;
+; Other things:
 ;
 ; $8100 mask buffer thing
 ;
