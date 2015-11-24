@@ -5487,8 +5487,10 @@ g$81BF DEFB $38      ; roomdef_object_bounds_count
 
 ; Copy of current room def's additional bounds (allows for four room objects).
 @label=roomdef_object_bounds
-g$81C0 DEFB $44,$CA,$D2,$E2,$7C,$38,$47,$00 ; {roomdef_object_bounds
- $81C8 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; }
+g$81C0 DEFB $44,$CA,$D2,$E2
+ $81C4 DEFB $7C,$38,$47,$00
+ $81C8 DEFB $00,$00,$00,$00
+ $81CC DEFB $00,$00,$00,$00
 
 ; Unreferenced bytes.
 ;
