@@ -14845,7 +14845,7 @@ b$DD7D DEFB $02      ; width
 ; { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) }
 ; TABLE#
 @label=bitmap_shovel
-b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
+b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL (16x13)
  $DDDF DEFB $00,$02
  $DDE1 DEFB $00,$05
  $DDE3 DEFB $00,$0E
@@ -14862,7 +14862,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) }
 ; TABLE#
 @label=bitmap_key
- $DDF7 DEFB $00,$00  ; {item_bitmap: KEY (shared for all keys)
+ $DDF7 DEFB $00,$00  ; {item_bitmap: KEY (shared for all keys) (16x13)
  $DDF9 DEFB $00,$00
  $DDFB DEFB $00,$00
  $DDFD DEFB $00,$18
@@ -14879,7 +14879,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) }
 ; TABLE#
 @label=bitmap_lockpick
- $DE11 DEFB $01,$80  ; {item_bitmap: LOCKPICK
+ $DE11 DEFB $01,$80  ; {item_bitmap: LOCKPICK (16x16)
  $DE13 DEFB $00,$C0
  $DE15 DEFB $03,$70
  $DE17 DEFB $0C,$60
@@ -14899,7 +14899,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) }
 ; TABLE#
 @label=bitmap_compass
- $DE31 DEFB $00,$00  ; {item_bitmap: COMPASS
+ $DE31 DEFB $00,$00  ; {item_bitmap: COMPASS (16x12)
  $DE33 DEFB $07,$E0
  $DE35 DEFB $18,$18
  $DE37 DEFB $24,$24
@@ -14915,7 +14915,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) }
 ; TABLE#
 @label=bitmap_purse
- $DE49 DEFB $00,$00  ; {item_bitmap: PURSE
+ $DE49 DEFB $00,$00  ; {item_bitmap: PURSE (16x12)
  $DE4B DEFB $01,$80
  $DE4D DEFB $07,$40
  $DE4F DEFB $03,$80
@@ -14931,7 +14931,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) }
 ; TABLE#
 @label=bitmap_papers
- $DE61 DEFB $00,$00  ; {item_bitmap: PAPERS
+ $DE61 DEFB $00,$00  ; {item_bitmap: PAPERS (16x15)
  $DE63 DEFB $0C,$00
  $DE65 DEFB $07,$00
  $DE67 DEFB $06,$C0
@@ -14950,7 +14950,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) }
 ; TABLE#
 @label=bitmap_wiresnips
- $DE7F DEFB $00,$00  ; {item_bitmap: WIRESNIPS
+ $DE7F DEFB $00,$00  ; {item_bitmap: WIRESNIPS (16x11)
  $DE81 DEFB $00,$18
  $DE83 DEFB $00,$36
  $DE85 DEFB $00,$60
@@ -14965,7 +14965,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) }
 ; TABLE#
 @label=mask_shovel_key
- $DE95 DEFB $FF,$FD  ; {item_mask: SHOVEL or KEY (shared)
+ $DE95 DEFB $FF,$FD  ; {item_mask: SHOVEL or KEY (shared) (16x13)
  $DE97 DEFB $FF,$F8
  $DE99 DEFB $FF,$E0
  $DE9B DEFB $FF,$80
@@ -14982,7 +14982,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) }
 ; TABLE#
 @label=mask_lockpick
- $DEAF DEFB $FC,$3F  ; {item_mask: LOCKPICK
+ $DEAF DEFB $FC,$3F  ; {item_mask: LOCKPICK (16x16)
  $DEB1 DEFB $FC,$0F
  $DEB3 DEFB $F0,$07
  $DEB5 DEFB $C0,$0F
@@ -15002,7 +15002,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) }
 ; TABLE#
 @label=mask_compass
- $DECF DEFB $F8,$1F  ; {item_mask: COMPASS
+ $DECF DEFB $F8,$1F  ; {item_mask: COMPASS (16x12)
  $DED1 DEFB $E0,$07
  $DED3 DEFB $C0,$03
  $DED5 DEFB $80,$01
@@ -15018,7 +15018,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) }
 ; TABLE#
 @label=mask_purse
- $DEE7 DEFB $FE,$7F  ; {item_mask: PURSE
+ $DEE7 DEFB $FE,$7F  ; {item_mask: PURSE (16x12)
  $DEE9 DEFB $F8,$3F
  $DEEB DEFB $F0,$1F
  $DEED DEFB $F8,$3F
@@ -15034,7 +15034,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) }
 ; TABLE#
 @label=mask_papers
- $DEFF DEFB $F3,$FF  ; {item_mask: PAPERS
+ $DEFF DEFB $F3,$FF  ; {item_mask: PAPERS (16x15)
  $DF01 DEFB $E0,$FF
  $DF03 DEFB $F0,$3F
  $DF05 DEFB $F0,$0F
@@ -15053,7 +15053,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) }
 ; TABLE#
 @label=mask_wiresnips
- $DF1D DEFB $FF,$E7  ; {item_mask: WIRESNIPS
+ $DF1D DEFB $FF,$E7  ; {item_mask: WIRESNIPS (16x11)
  $DF1F DEFB $FF,$C1
  $DF21 DEFB $FF,$80
  $DF23 DEFB $FC,$00
@@ -15068,7 +15068,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) }
 ; TABLE#
 @label=bitmap_food
- $DF33 DEFB $00,$30  ; {item_bitmap: FOOD
+ $DF33 DEFB $00,$30  ; {item_bitmap: FOOD (16x16)
  $DF35 DEFB $00,$00
  $DF37 DEFB $00,$30
  $DF39 DEFB $00,$30
@@ -15088,7 +15088,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) }
 ; TABLE#
 @label=bitmap_poison
- $DF53 DEFB $00,$00  ; {item_bitmap: POISON
+ $DF53 DEFB $00,$00  ; {item_bitmap: POISON (16x16)
  $DF55 DEFB $00,$80
  $DF57 DEFB $00,$80
  $DF59 DEFB $01,$40
@@ -15108,7 +15108,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) }
 ; TABLE#
 @label=bitmap_torch
- $DF73 DEFB $00,$00  ; {item_bitmap: TORCH
+ $DF73 DEFB $00,$00  ; {item_bitmap: TORCH (16x12)
  $DF75 DEFB $00,$08
  $DF77 DEFB $00,$3C
  $DF79 DEFB $02,$FC
@@ -15124,7 +15124,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) }
 ; TABLE#
 @label=bitmap_uniform
- $DF8B DEFB $01,$E0  ; {item_bitmap: UNIFORM
+ $DF8B DEFB $01,$E0  ; {item_bitmap: UNIFORM (16x16)
  $DF8D DEFB $07,$F0
  $DF8F DEFB $0F,$F8
  $DF91 DEFB $0F,$F8
@@ -15144,7 +15144,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) }
 ; TABLE#
 @label=bitmap_bribe
- $DFAB DEFB $00,$00  ; {item_bitmap: BRIBE
+ $DFAB DEFB $00,$00  ; {item_bitmap: BRIBE (16x13)
  $DFAD DEFB $00,$00
  $DFAF DEFB $03,$00
  $DFB1 DEFB $0F,$C0
@@ -15161,7 +15161,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) }
 ; TABLE#
 @label=bitmap_radio
- $DFC5 DEFB $00,$10  ; {item_bitmap: RADIO
+ $DFC5 DEFB $00,$10  ; {item_bitmap: RADIO (16x16)
  $DFC7 DEFB $00,$10
  $DFC9 DEFB $38,$10
  $DFCB DEFB $C6,$10
@@ -15181,7 +15181,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) }
 ; TABLE#
 @label=bitmap_parcel
- $DFE5 DEFB $00,$00  ; {item_bitmap: PARCEL
+ $DFE5 DEFB $00,$00  ; {item_bitmap: PARCEL (16x16)
  $DFE7 DEFB $03,$00
  $DFE9 DEFB $0E,$40
  $DFEB DEFB $39,$F0
@@ -15201,7 +15201,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) }
 ; TABLE#
 @label=mask_bribe
- $E005 DEFB $FC,$FF  ; {item_mask: BRIBE
+ $E005 DEFB $FC,$FF  ; {item_mask: BRIBE (16x13)
  $E007 DEFB $F0,$3F
  $E009 DEFB $C0,$0F
  $E00B DEFB $80,$03
@@ -15218,7 +15218,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,64}(item-mask-uniform) }
 ; TABLE#
 @label=mask_uniform
- $E01F DEFB $F8,$0F  ; {item_mask: UNIFORM
+ $E01F DEFB $F8,$0F  ; {item_mask: UNIFORM (16x16)
  $E021 DEFB $F0,$07
  $E023 DEFB $E0,$03
  $E025 DEFB $E0,$03
@@ -15238,7 +15238,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) }
 ; TABLE#
 @label=mask_parcel
- $E03F DEFB $FC,$FF  ; {item_mask: PARCEL
+ $E03F DEFB $FC,$FF  ; {item_mask: PARCEL (16x16)
  $E041 DEFB $F0,$3F
  $E043 DEFB $C0,$0F
  $E045 DEFB $00,$03
@@ -15258,7 +15258,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) }
 ; TABLE#
 @label=mask_poison
- $E05F DEFB $FF,$7F  ; {item_mask: POISON
+ $E05F DEFB $FF,$7F  ; {item_mask: POISON (16x16)
  $E061 DEFB $FE,$3F
  $E063 DEFB $FE,$3F
  $E065 DEFB $FC,$1F
@@ -15278,7 +15278,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) }
 ; TABLE#
 @label=mask_torch
- $E07F DEFB $FF,$F7  ; {item_mask: TORCH
+ $E07F DEFB $FF,$F7  ; {item_mask: TORCH (16x12)
  $E081 DEFB $FF,$C3
  $E083 DEFB $FD,$01
  $E085 DEFB $F0,$01
@@ -15294,7 +15294,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) }
 ; TABLE#
 @label=mask_radio
- $E097 DEFB $FF,$C7  ; {item_mask: RADIO
+ $E097 DEFB $FF,$C7  ; {item_mask: RADIO (16x16)
  $E099 DEFB $C7,$C7
  $E09B DEFB $01,$C7
  $E09D DEFB $00,$47
@@ -15314,7 +15314,7 @@ b$DDDD DEFB $00,$00  ; {item_bitmap: SHOVEL
 ; { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) }
 ; TABLE#
 @label=mask_food
- $E0B7 DEFB $FF,$87  ; {item_mask: FOOD
+ $E0B7 DEFB $FF,$87  ; {item_mask: FOOD (16x16)
  $E0B9 DEFB $FF,$CF
  $E0BB DEFB $FF,$87
  $E0BD DEFB $F1,$87
