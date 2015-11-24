@@ -46,20 +46,28 @@
 ; STYLE
 ; //////////////////////////////////////////////////////////////////////////////
 ;
+; The disassembly is (presently) not written as a plain English explanation but
+; instead in a C style of pseudocode.
+;
 ; Using C style braces { } conflict with SkoolKit's own use of braces, so we
 ; use the C99 digraphs <% and %> instead.
 ;
-; Pseudo-C code is formatted in an uneven way to best fit the lines to which it
-; is assigned. e.g.
+; Braces, 'do' keywords and the like are syntactic sugar and have no
+; corresponding assembly instruction so must share a line with another op. For
+; this reason the C style pseudocode is formatted in an uneven way to best fit
+; the lines to which it is assigned.
+; e.g.
 ;     if (condition) <%
 ;         statement; %>
 ;     else <% statement;
 ;     %>
 ;
-; A single dash '-' indicates a statement has been omitted.
+; A single dash '-' indicates a statement has been omitted (though I'm trying
+; to remove all that as it was useful in the .ctl file version, but not so much
+; in the .skool version).
 ;
-; Replace registers with constants when the value is used once (e.g. for
-; strides).
+; I replace registers with constants when the value is used once (e.g. for
+; strides when walking through arrays).
 ;
 ; //////////////////////////////////////////////////////////////////////////////
 ; ASSEMBLY PATTERNS
