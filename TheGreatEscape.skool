@@ -8311,52 +8311,18 @@ c$A5BF LD E,(HL)     ; {E = *HL++; // read screen address into DE
  $A5CD RET           ; return;
 
 ; Escape messages.
-;
-; .
-;
-; .
-;
-; "WELL DONE"
 @label=escape_strings
-t$A5CE DEFB $6E,$40,$09,$1F,$0E,$15,$15,$23 ; {#HTML[#CALL:decode_screenlocstring($A5CE)]
- $A5D6 DEFB $0D,$00,$17,$0E                 ; }
-; "YOU HAVE ESCAPED"
- $A5DA DEFB $AA,$40,$10,$21,$00,$1D,$23,$11 ; {#HTML[#CALL:decode_screenlocstring($A5DA)]
- $A5E2 DEFB $0A,$1E,$0E,$23,$0E,$1B,$0C,$0A
- $A5EA DEFB $18,$0E,$0D                     ; }
-; "FROM THE CAMP"
- $A5ED DEFB $CC,$40,$0D,$0F,$1A,$00,$16,$23 ; {#HTML[#CALL:decode_screenlocstring($A5ED)]
- $A5F5 DEFB $1C,$11,$0E,$23,$0C,$0A,$16,$18 ; }
-; "AND WILL CROSS THE"
- $A5FD DEFB $09,$48,$12,$0A,$17,$0D,$23,$1F ; {#HTML[#CALL:decode_screenlocstring($A5FD)]
- $A605 DEFB $12,$15,$15,$23,$0C,$1A,$00,$1B
- $A60D DEFB $1B,$23,$1C,$11,$0E             ; }
-; "BORDER SUCCESSFULLY"
- $A612 DEFB $29,$48,$13,$0B,$00,$1A,$0D,$0E ; {#HTML[#CALL:decode_screenlocstring($A612)]
- $A61A DEFB $1A,$23,$1B,$1D,$0C,$0C,$0E,$1B
- $A622 DEFB $1B,$0F,$1D,$15,$15,$21         ; }
-; "BUT WERE RECAPTURED"
- $A628 DEFB $09,$48,$13,$0B,$1D,$1C,$23,$1F ; {#HTML[#CALL:decode_screenlocstring($A628)]
- $A630 DEFB $0E,$1A,$0E,$23,$1A,$0E,$0C,$0A
- $A638 DEFB $18,$1C,$1D,$1A,$0E,$0D         ; }
-; "AND SHOT AS A SPY"
- $A63E DEFB $2A,$48,$11,$0A,$17,$0D,$23,$1B ; {#HTML[#CALL:decode_screenlocstring($A63E)]
- $A646 DEFB $11,$00,$1C,$23,$0A,$1B,$23,$0A
- $A64E DEFB $23,$1B,$18,$21                 ; }
-; "TOTALLY UNPREPARED"
- $A652 DEFB $29,$48,$12,$1C,$00,$1C,$0A,$15 ; {#HTML[#CALL:decode_screenlocstring($A652)]
- $A65A DEFB $15,$21,$23,$1D,$17,$18,$1A,$0E
- $A662 DEFB $18,$0A,$1A,$0E,$0D             ; }
-; "TOTALLY LOST"
- $A667 DEFB $2C,$48,$0C,$1C,$00,$1C,$0A,$15 ; {#HTML[#CALL:decode_screenlocstring($A667)]
- $A66F DEFB $15,$21,$23,$15,$00,$1B,$1C     ; }
-; "DUE TO LACK OF PAPERS"
- $A676 DEFB $28,$48,$15,$0D,$1D,$0E,$23,$1C ; {#HTML[#CALL:decode_screenlocstring($A676)]
- $A67E DEFB $00,$23,$15,$0A,$0C,$14,$23,$00
- $A686 DEFB $0F,$23,$18,$0A,$18,$0E,$1A,$1B ; }
-; "PRESS ANY KEY"
- $A68E DEFB $0D,$50,$0D,$18,$1A,$0E,$1B,$1B ; {#HTML[#CALL:decode_screenlocstring($A68E)]
- $A696 DEFB $23,$0A,$17,$21,$23,$14,$0E,$21 ; }
+t$A5CE DEFB $6E,$40,$09,$1F,$0E,$15,$15,$23,$0D,$00,$17,$0E                                                 ; "WELL DONE"  [/ #HTML[#CALL:decode_screenlocstring($A5CE)]]
+ $A5DA DEFB $AA,$40,$10,$21,$00,$1D,$23,$11,$0A,$1E,$0E,$23,$0E,$1B,$0C,$0A,$18,$0E,$0D                     ; "YOU HAVE ESCAPED"  #HTML[/ #CALL:decode_screenlocstring($A5DA)]
+ $A5ED DEFB $CC,$40,$0D,$0F,$1A,$00,$16,$23,$1C,$11,$0E,$23,$0C,$0A,$16,$18                                 ; "FROM THE CAMP"  #HTML[/ #CALL:decode_screenlocstring($A5ED)]
+ $A5FD DEFB $09,$48,$12,$0A,$17,$0D,$23,$1F,$12,$15,$15,$23,$0C,$1A,$00,$1B,$1B,$23,$1C,$11,$0E             ; "AND WILL CROSS THE"  #HTML[/ #CALL:decode_screenlocstring($A5FD)]
+ $A612 DEFB $29,$48,$13,$0B,$00,$1A,$0D,$0E,$1A,$23,$1B,$1D,$0C,$0C,$0E,$1B,$1B,$0F,$1D,$15,$15,$21         ; "BORDER SUCCESSFULLY"  #HTML[/ #CALL:decode_screenlocstring($A612)]
+ $A628 DEFB $09,$48,$13,$0B,$1D,$1C,$23,$1F,$0E,$1A,$0E,$23,$1A,$0E,$0C,$0A,$18,$1C,$1D,$1A,$0E,$0D         ; "BUT WERE RECAPTURED"  #HTML[/ #CALL:decode_screenlocstring($A628)]
+ $A63E DEFB $2A,$48,$11,$0A,$17,$0D,$23,$1B,$11,$00,$1C,$23,$0A,$1B,$23,$0A,$23,$1B,$18,$21                 ; "AND SHOT AS A SPY"  #HTML[/ #CALL:decode_screenlocstring($A63E)]
+ $A652 DEFB $29,$48,$12,$1C,$00,$1C,$0A,$15,$15,$21,$23,$1D,$17,$18,$1A,$0E,$18,$0A,$1A,$0E,$0D             ; "TOTALLY UNPREPARED"  #HTML[/ #CALL:decode_screenlocstring($A652)]
+ $A667 DEFB $2C,$48,$0C,$1C,$00,$1C,$0A,$15,$15,$21,$23,$15,$00,$1B,$1C                                     ; "TOTALLY LOST"  #HTML[/ #CALL:decode_screenlocstring($A667)]
+ $A676 DEFB $28,$48,$15,$0D,$1D,$0E,$23,$1C,$00,$23,$15,$0A,$0C,$14,$23,$00,$0F,$23,$18,$0A,$18,$0E,$1A,$1B ; "DUE TO LACK OF PAPERS"  #HTML[/ #CALL:decode_screenlocstring($A676)]
+ $A68E DEFB $0D,$50,$0D,$18,$1A,$0E,$1B,$1B,$23,$0A,$17,$21,$23,$14,$0E,$21                                 ; "PRESS ANY KEY"  #HTML[/ #CALL:decode_screenlocstring($A68E)]
 
 ; Bitmap font definition.
 ;
