@@ -7176,20 +7176,13 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
  $A317 CALL $A373    ; set_prisoners_and_guards_location_B();
  $A31A LD A,$0D
 ; Update all the benches to be empty.
- $A31C LD ($6F17),A  ; roomdef_23_breakfast.bench_A =
-                     ; interiorobject_EMPTY_BENCH;
- $A31F LD ($6F1A),A  ; roomdef_23_breakfast.bench_B =
-                     ; interiorobject_EMPTY_BENCH;
- $A322 LD ($6F1D),A  ; roomdef_23_breakfast.bench_C =
-                     ; interiorobject_EMPTY_BENCH;
- $A325 LD ($6F4F),A  ; roomdef_25_breakfast.bench_D =
-                     ; interiorobject_EMPTY_BENCH;
- $A328 LD ($6F52),A  ; roomdef_25_breakfast.bench_E =
-                     ; interiorobject_EMPTY_BENCH;
- $A32B LD ($6F55),A  ; roomdef_25_breakfast.bench_F =
-                     ; interiorobject_EMPTY_BENCH;
- $A32E LD ($6F58),A  ; roomdef_25_breakfast.bench_G =
-                     ; interiorobject_EMPTY_BENCH;
+ $A31C LD ($6F17),A  ; roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
+ $A31F LD ($6F1A),A  ; roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
+ $A322 LD ($6F1D),A  ; roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
+ $A325 LD ($6F4F),A  ; roomdef_25_breakfast.bench_D = interiorobject_EMPTY_BENCH;
+ $A328 LD ($6F52),A  ; roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
+ $A32B LD ($6F55),A  ; roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
+ $A32E LD ($6F58),A  ; roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
  $A331 LD A,($68A0)  ; {if (room_index == room_0_OUTDOORS || room_index >=
  $A334 AND A         ; room_29_SECOND_TUNNEL_START) return;
  $A335 RET Z         ;
@@ -10687,18 +10680,12 @@ c$B79B LD B,$07         ; B = 7; // iterations
 ; Clear the mess halls.
  $B7DB LD A,$0D         ; {roomdef_23_breakfast.bench_A =
  $B7DD LD ($6F17),A     ; interiorobject_EMPTY_BENCH;}
- $B7E0 LD ($6F1A),A     ; roomdef_23_breakfast.bench_B =
-                        ; interiorobject_EMPTY_BENCH;
- $B7E3 LD ($6F1D),A     ; roomdef_23_breakfast.bench_C =
-                        ; interiorobject_EMPTY_BENCH;
- $B7E6 LD ($6F4F),A     ; roomdef_25_breakfast.bench_D =
-                        ; interiorobject_EMPTY_BENCH;
- $B7E9 LD ($6F52),A     ; roomdef_25_breakfast.bench_E =
-                        ; interiorobject_EMPTY_BENCH;
- $B7EC LD ($6F55),A     ; roomdef_25_breakfast.bench_F =
-                        ; interiorobject_EMPTY_BENCH;
- $B7EF LD ($6F58),A     ; roomdef_25_breakfast.bench_G =
-                        ; interiorobject_EMPTY_BENCH;
+ $B7E0 LD ($6F1A),A     ; roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
+ $B7E3 LD ($6F1D),A     ; roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
+ $B7E6 LD ($6F4F),A     ; roomdef_25_breakfast.bench_D = interiorobject_EMPTY_BENCH;
+ $B7E9 LD ($6F52),A     ; roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
+ $B7EC LD ($6F55),A     ; roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
+ $B7EF LD ($6F58),A     ; roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
 ; Reset characters 12..15 (guards) and 20..25 (prisoners).
  $B7F2 LD DE,$7667      ; DE = &character_structs[12].BYTE1;
  $B7F5 LD C,$0A         ; C = 10; // iterations
