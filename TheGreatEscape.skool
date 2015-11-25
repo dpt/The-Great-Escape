@@ -2177,8 +2177,7 @@ c$6A35 CALL $6A27    ; wipe_visible_tiles();
  $6A89 POP BC        ;     - %>
  $6A8A DJNZ $6A6D    ;   while (--B); %>
 ; Plot all objects (as tiles).
-*$6A8C LD B,(HL)     ; B = *HL; // count of objects // sample: HL -> $6E25
-                     ; (room_16_CORRIDOR + 5)
+*$6A8C LD B,(HL)     ; B = *HL; // count of objects // sample: HL -> $6E25 (room_16_CORRIDOR + 5)
  $6A8D LD A,B        ; {if (B == 0) return;
  $6A8E AND A         ;
  $6A8F RET Z         ; }
@@ -2473,8 +2472,7 @@ w$6BAD DEFW $6C15    ; &roomdef_1_hut1_right,
  $6BE7 DEFW $7024    ; &roomdef_30,
  $6BE9 DEFW $6F9E    ; &roomdef_31,
  $6BEB DEFW $6FD3    ; &roomdef_32,
- $6BED DEFW $6F82    ; &roomdef_29_second_tunnel_start, // room 33 same defn as
-                     ; room 29
+ $6BED DEFW $6F82    ; &roomdef_29_second_tunnel_start, // room 33 same defn as room 29
  $6BEF DEFW $6FEC    ; &roomdef_34,
  $6BF1 DEFW $7008    ; &roomdef_35,
  $6BF3 DEFW $6FBA    ; &roomdef_36,
@@ -2484,8 +2482,7 @@ w$6BAD DEFW $6C15    ; &roomdef_1_hut1_right,
  $6BFB DEFW $7041    ; &roomdef_40,
  $6BFD DEFW $7024    ; &roomdef_30, // room 41 same defn as 30
  $6BFF DEFW $6FD3    ; &roomdef_32, // room 42 same defn as 32
- $6C01 DEFW $6F82    ; &roomdef_29_second_tunnel_start, // room 43 same defn as
-                     ; 29
+ $6C01 DEFW $6F82    ; &roomdef_29_second_tunnel_start, // room 43 same defn as 29
  $6C03 DEFW $705D    ; &roomdef_44,
  $6C05 DEFW $6FBA    ; &roomdef_36, // room 45 same defn as 36
  $6C07 DEFW $6FBA    ; &roomdef_36, // room 46 same defn as 36
@@ -4386,8 +4383,7 @@ c$7C46 PUSH HL
  $7C53 RET Z         ; }
 ; Set screen attributes.
  $7C54 PUSH HL
- $7C55 LD H,$5A      ; HL = (HL & ~0xFF00) | 0x5A00; // point to screen
-                     ; attributes
+ $7C55 LD H,$5A      ; HL = (HL & ~0xFF00) | 0x5A00; // point to screen attributes
  $7C57 PUSH AF
  $7C58 LD BC,$DD69   ; {A = item_attributes[A];
  $7C5B ADD A,C       ;
@@ -6009,8 +6005,7 @@ c$9DE5 LD BC,$FEFE   ; {if (!(shift_pressed && space_pressed)) return;
  $9DFD LD A,($68A0)  ; {if (room_index == 0) <% reset_outdoors(); return; %> //
  $9E00 AND A         ; exit via
  $9E01 JP Z,$B2FC    ; }
- $9E04 JP $68F4      ; else enter_room(); // doesn't return (jumps to
-                     ; main_loop)
+ $9E04 JP $68F4      ; else enter_room(); // doesn't return (jumps to main_loop)
 
 ; Process player input.
 ;
@@ -6038,8 +6033,7 @@ c$9E07 LD HL,($A13A) ; {if (morale_1 || morale_2) return; // none remains -
  $9E1A CP $01        ; {  if ($8001 == vischar_FLAGS_PICKING_LOCK) goto
  $9E1C JP Z,$9E98    ; picking_a_lock; // exit via}
  $9E1F JP $9EB2      ;   else goto snipping_wire; %> // exit via
-*$9E22 CALL $F075    ; A = input_routine(); // lives at same address as
-                     ; static_tiles_plot_direction
+*$9E22 CALL $F075    ; A = input_routine(); // lives at same address as static_tiles_plot_direction
  $9E25 LD HL,$A139   ; {- // subsumed into following code
  $9E28 CP $00        ; }
  $9E2A JP NZ,$9E34   ; if (A == input_NONE) <%
@@ -6091,8 +6085,7 @@ c$9E07 LD HL,($A13A) ; {if (morale_1 || morale_2) return; // none remains -
 *$9E7D LD (HL),$00   ;   *HL = 0;
  $9E7F CALL $6A35    ;   setup_room();
  $9E82 CALL $6B42    ;   plot_interior_tiles();
-*$9E85 POP AF        ; not_bed_or_breakfast: // ... (pop af -- restores user
-                     ; input value stored at $9E36)
+*$9E85 POP AF        ; not_bed_or_breakfast: // ... (pop af -- restores user input value stored at $9E36)
  $9E86 CP $09        ; {  if (A >= input_FIRE) <%
  $9E88 JR C,$9E8F    ; }
  $9E8A CALL $7AC9    ;     process_player_input_fire();
@@ -6198,8 +6191,7 @@ b$9F15 DEFB $56,$5E,$3D,$48 ; Corridor to yard.
 ; Used by the routine at #R$9D7B.
 @label=in_permitted_area
 c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
- $9F24 LD DE,$81B8   ; DE = &hero_map_position.y; // x/y confusion here -
-                     ; mislabeling
+ $9F24 LD DE,$81B8   ; DE = &hero_map_position.y; // x/y confusion here - mislabeling
  $9F27 LD A,($68A0)  ; {if (room_index == 0) <% // outdoors
  $9F2A AND A         ;
  $9F2B JP NZ,$9F49   ; }
@@ -6254,8 +6246,7 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
  $9F8F JR Z,$9FDE    ; {  if (Z) goto set_flag_green; else goto set_flag_red;
  $9F91 JR $9FF8      ; %>}
 *$9F93 AND $7F       ; else <% A &= 0x7F;
- $9F95 LD HL,$9EE4   ;   HL = &byte_to_pointer[0]; // table mapping bytes to
-                     ; offsets
+ $9F95 LD HL,$9EE4   ;   HL = &byte_to_pointer[0]; // table mapping bytes to offsets
  $9F98 LD B,$07      ;   B = 7; // 7 iterations
 *$9F9A CP (HL)       ; {  do <% if (A == *HL++) goto found;
  $9F9B INC HL        ;
@@ -6290,8 +6281,7 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
  $9FC7 CALL $A007    ;   in_permitted_area_end_bit();
  $9FCA POP HL
  $9FCB POP BC
- $9FCC JR Z,$9FD1    ;   if (Z) goto set_target_then_set_flag_green; // if (Z)
-                     ; break; equivalent?
+ $9FCC JR Z,$9FD1    ;   if (Z) goto set_target_then_set_flag_green; // if (Z) break; equivalent?
  $9FCE INC C         ;   BC++;
  $9FCF JR $9FBF      ; %>
 *$9FD1 LD A,($8002)  ; {set_target_then_set_flag_green: B = $8002;
@@ -6407,8 +6397,7 @@ c$A035 LD HL,$A12F   ; HL = &game_counter;
  $A065 LD DE,$DA29   ; }
 *$A068 LD HL,($A141) ; {HL = moraleflag_screen_address;
  $A06B LD BC,$0319   ; }
- $A06E JP $7CBE      ; plot_bitmap(0x0319); return; // dimensions: 24 x 25 //
-                     ; args-BC // exit via
+ $A06E JP $7CBE      ; plot_bitmap(0x0319); return; // dimensions: 24 x 25 // args-BC // exit via
 
 ; Set the screen attributes of the morale flag.
 ;
@@ -7107,8 +7096,7 @@ c$A289 LD A,($A13F)  ; {if (hero_in_bed) <% // odd that this jumps into a point
 *$A2B5 LD (HL),A     ; do <% *HL = room_5_HUT3RIGHT;
  $A2B6 ADD HL,DE     ;   HL += 7; // characterstruct stride
  $A2B7 DJNZ $A2B5    ; %> while (--B);
- $A2B9 LD A,$05      ; A = 5; // incremented by
-                     ; set_prisoners_and_guards_location_B
+ $A2B9 LD A,$05      ; A = 5; // incremented by set_prisoners_and_guards_location_B
  $A2BB EX AF,AF'
  $A2BC LD C,$00      ; C = 0; // BC = 0
  $A2BE CALL $A373    ; set_prisoners_and_guards_location_B();
@@ -7156,8 +7144,7 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
  $A2F3 LD ($A137),A  ; }
  $A2F6 LD BC,$9003   ; {set_hero_target_location(location_0390);
  $A2F9 CALL $A33F    ; }
- $A2FC LD HL,$769F   ; HL = &characterstruct_20.room; //
-                     ; character_20_PRISONER_1
+ $A2FC LD HL,$769F   ; HL = &characterstruct_20.room; // character_20_PRISONER_1
  $A2FF LD DE,$0007
  $A302 LD A,$19
  $A304 LD B,$03      ; B = 3; // 3 iterations
@@ -7169,8 +7156,7 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
 *$A30E LD (HL),A     ; do <% *HL = room_23_BREAKFAST;
  $A30F ADD HL,DE     ;   HL += 7; // stride
  $A310 DJNZ $A30E    ; %> while (--B);
- $A312 LD A,$90      ; A = 144; // incremented by
-                     ; set_prisoners_and_guards_location_B
+ $A312 LD A,$90      ; A = 144; // incremented by set_prisoners_and_guards_location_B
  $A314 EX AF,AF'
  $A315 LD C,$03      ; C = 3;
  $A317 CALL $A373    ; set_prisoners_and_guards_location_B();
@@ -7189,8 +7175,7 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
  $A336 CP $1D        ;
  $A338 RET NC        ; }
  $A339 CALL $6A35    ; setup_room();
- $A33C JP $6B42      ; plot_interior_tiles(); return; // exit via // note that
-                     ; this differs to wake_up's ending
+ $A33C JP $6B42      ; plot_interior_tiles(); return; // exit via // note that this differs to wake_up's ending
 
 ; Set the hero's target location.
 ;
@@ -7219,8 +7204,7 @@ c$A351 LD BC,$8502   ; {set_hero_target_location(location_0285);
  $A357 LD A,$85      ; Adash = 133;
  $A359 EX AF,AF'
  $A35A LD C,$02      ; C = 2;
- $A35C JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit
-                     ; via
+ $A35C JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
 
 ; Set the location of the prisoners_and_guards.
 ;
@@ -7404,8 +7388,7 @@ c$A404 INC HL        ; {HL[1] = 0; // HL=$766B,$7672 characterstruct + 5
 *$A413 BIT 0,A       ; {  old_A = A; A = 13; if (old_A & (1<<0)) <% // tmp
  $A415 LD A,$0D      ; introduced to avoid interleaving
  $A417 JR Z,$A41D    ; }
- $A419 LD (HL),$01   ;     HL[1] = 1; // HL=$7681,$7673 // characterstruct_N +
-                     ; 6
+ $A419 LD (HL),$01   ;     HL[1] = 1; // HL=$7681,$7673 // characterstruct_N + 6
  $A41B OR $80        ;     A |= 0x80; %> %>
 *$A41D DEC HL        ; {HL[0] = A; // characterstruct_N + 5
  $A41E LD (HL),A     ; }
@@ -7481,8 +7464,7 @@ c$A444 PUSH AF
 ; I:DE Pointer to location.
 @label=character_sit_sleep_common
 c$A462 EX DE,HL
- $A463 LD (HL),$00   ; *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar
-                     ; OR characterstruct - weird)
+ $A463 LD (HL),$00   ; *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)
  $A465 EX AF,AF'
  $A466 LD A,($68A0)  ; {if (room_index != C) <%
  $A469 CP C          ;
@@ -7554,8 +7536,7 @@ c$A4A9 LD BC,$0E00   ; {set_hero_target_location(0x000E);
  $A4AF LD A,$0E      ; A = 0x0E;
  $A4B1 EX AF,AF'
  $A4B2 LD C,$00      ; C = 0;
- $A4B4 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit
-                     ; via
+ $A4B4 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
 
 ; Set location 0x048E.
 ;
@@ -7566,8 +7547,7 @@ c$A4B7 LD BC,$8E04   ; {set_hero_target_location(0x048E);
  $A4BD LD A,$8E      ; A = 0x8E;
  $A4BF EX AF,AF'
  $A4C0 LD C,$04      ; C = 4;
- $A4C2 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit
-                     ; via
+ $A4C2 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
 
 ; Set location 0x0010.
 ;
@@ -7578,8 +7558,7 @@ c$A4C5 LD BC,$1000   ; {set_hero_target_location(0x0010);
  $A4CB LD A,$10      ; A = 0x10;
  $A4CD EX AF,AF'
  $A4CE LD C,$00      ; C = 0;
- $A4D0 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit
-                     ; via
+ $A4D0 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
 
 ; entered_move_characters is non-zero (another one).
 ;
@@ -7616,8 +7595,7 @@ c$A4E4 INC HL        ; {HL[1] = 0;
  $A4E7 CP $13        ; {if (A > 19) <% // change this to 20 and character_21?
  $A4E9 JP Z,$A4F3    ; stands in place of a guard
  $A4EC JP C,$A4F3    ; }
- $A4EF SUB $02       ;   tmp_A = A - 2; %> // seems to affect position at table
-                     ; // 20.. => 18..
+ $A4EF SUB $02       ;   tmp_A = A - 2; %> // seems to affect position at table 20.. => 18..
  $A4F1 JR $A4FA      ; else <%
 *$A4F3 BIT 0,A
  $A4F5 LD A,$18      ;   tmp_A = 24; // interleaved // guard character?
@@ -8498,8 +8476,7 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when
  $AB28 LD L,$90      ; L = 0x90;
 *$AB2A LD ($A7C7),HL ; game_window_offset = HL;
  $AB2D LD HL,($81BB) ; HL = map_position;
- $AB30 RET           ; return; // pops and calls move_map_* routine pushed at
-                     ; $AAE0
+ $AB30 RET           ; return; // pops and calls move_map_* routine pushed at $AAE0
 ; move_map jump table.
 @label=move_map_jump_table
  $AB31 DEFW $AB39    ; move_map_up_left
@@ -8894,8 +8871,7 @@ c$AD59 LD E,(HL)     ; {E = *HL++;
  $AD66 JP Z,$AD76    ; }
  $AD69 AND $7F       ;     A &= 0x7F;
  $AD6B JP NZ,$AD72   ;     if (A == 0) <%
- $AD6E RES 7,(HL)    ;       *HL &= ~(1<<7); %> // clear sign bit when
-                     ; magnitude hits zero
+ $AD6E RES 7,(HL)    ;       *HL &= ~(1<<7); %> // clear sign bit when magnitude hits zero
  $AD70 JR $AD74      ;     else <%
 *$AD72 DEC (HL)      ;       (*HL)--; // count down
  $AD73 DEC A         ;       A--; %> %> // just a copy
@@ -8920,8 +8896,7 @@ c$AD59 LD E,(HL)     ; {E = *HL++;
  $AD8B SET 7,(HL)    ;     *HL |= 1<<7; // go negative
  $AD8D DEC BC        ; {    BC -= 2;
  $AD8E DEC BC        ; }
- $AD8F LD A,(BC)     ;     A = *BC; %>/* This is a flaw in original code: A is
-                     ; fetched but never used again. */
+ $AD8F LD A,(BC)     ;     A = *BC; %>/* This is a flaw in original code: A is fetched but never used again. */
 *$AD90 DEC HL        ; {  HL -= 2;
  $AD91 DEC HL        ; }
 ; Copy counter + direction_t.
@@ -9013,8 +8988,7 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
 *$ADFC LD H,A        ;   %>
 *$ADFD LD ($AE76),HL ;   searchlight_caught_coord = HL; %>
 *$AE00 LD DE,($81BB) ; DE = map_position;
- $AE04 LD HL,$AE77   ; HL = $AE77; // &searchlight_caught_coord + 1 byte; //
-                     ; compensating for HL--; jumped into
+ $AE04 LD HL,$AE77   ; HL = $AE77; // &searchlight_caught_coord + 1 byte; // compensating for HL--; jumped into
  $AE07 LD B,$01      ; B = 1; // 1 iteration
  $AE09 PUSH BC
  $AE0A PUSH HL
@@ -9727,8 +9701,7 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
  $B222 JR NC,$B225   ;
  $B224 INC H         ; }
 *$B225 DJNZ $B20E    ; %> while (--B);
- $B227 AND B         ; A &= B; // set Z (B is zero) // seems to exist to set Z,
-                     ; but routine doesn't return anything?
+ $B227 AND B         ; A &= B; // set Z (B is zero) // seems to exist to set Z, but routine doesn't return anything?
  $B228 RET           ; return;
 *$B229 LD A,$10      ; {found: A = 16 - B;
  $B22B SUB B         ; }
@@ -9751,8 +9724,7 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
  $B246 INC HL        ;
  $B247 INC HL        ;
  $B248 INC HL        ; }
- $B249 JP $68A2      ;   transition(); return; %> // seems to goto reset then
-                     ; jump back to main (icky)
+ $B249 JP $68A2      ;   transition(); return; %> // seems to goto reset then jump back to main (icky)
 *$B24C DEC HL        ; {else <% HL -= 3; // point at the previous door's pos
  $B24D DEC HL        ;
  $B24E DEC HL        ; }
@@ -9885,8 +9857,7 @@ c$B29F LD A,($81BE)  ; {BC = &roomdef_bounds[roomdef_bounds_index];
  $B2DE JR NC,$B2F2   ; }
  $B2E0 INC DE        ; {    DE += 2;
  $B2E1 INC DE        ; }
- $B2E2 INC HL        ;     HL += 2; // increment moved - hope it's still
-                     ; correct
+ $B2E2 INC HL        ;     HL += 2; // increment moved - hope it's still correct
  $B2E3 DJNZ $B2D8    ;   %> while (--B);
 ; Found.
  $B2E5 POP HL
@@ -9962,8 +9933,7 @@ c$B32D LD HL,$81D6   ; HL = &door_related;
  $B346 JR NZ,$B383   ; }
  $B348 INC HL        ;   HLdash++;
  $B349 EX DE,HL
- $B34A LD HL,$81A4   ;   DEdash = &saved_pos_x; // reusing saved_pos as 8-bit
-                     ; here?
+ $B34A LD HL,$81A4   ;   DEdash = &saved_pos_x; // reusing saved_pos as 8-bit here?
  $B34D LD B,$02      ;   Bdash = 2; // 2 iterations
 *$B34F LD A,(DE)     ; {  do <% A = *HLdash - 3;
  $B350 SUB $03       ; }
@@ -9998,8 +9968,7 @@ c$B32D LD HL,$81D6   ; HL = &door_related;
  $B37C LD L,A        ;
  $B37D JR NC,$B380   ;
  $B37F DEC H         ; }
-*$B380 JP $68A2      ;   transition(); return; // exit via // with banked
-                     ; registers...
+*$B380 JP $68A2      ;   transition(); return; // exit via // with banked registers...
 *$B383 EXX           ;   next:
  $B384 INC HL        ;   HL++;
  $B385 JR $B330      ; %>
@@ -10243,8 +10212,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 ; Bug: Needless jump.
 ; .
 ; Outdoors.
-*$B4D9 LD B,$05      ; outdoors: B = 5; // 5 iterations // do the gate and door
-                     ; ranges overlap?
+*$B4D9 LD B,$05      ; outdoors: B = 5; // 5 iterations // do the gate and door ranges overlap?
  $B4DB LD HL,$F05D   ; HL = &gates_flags;
 *$B4DE LD A,(HL)     ; {do <% A = *HL & ~gates_and_doors_LOCKED;
  $B4DF AND $7F       ; }
@@ -10269,8 +10237,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B4FC RET           ; return;
 ; Indoors.
 @nowarn
-*$B4FD LD HL,$F05F   ; indoors: HL = &door_flags; // door flags // why start at
-                     ; offset 2?
+*$B4FD LD HL,$F05F   ; indoors: HL = &door_flags; // door flags // why start at offset 2?
  $B500 LD B,$08      ; B = 8; // 8 iterations
 *$B502 LD A,(HL)     ; {do <% C = *HL & ~gates_and_doors_LOCKED;
  $B503 AND $7F       ;
@@ -10295,8 +10262,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B521 INC HL        ; HL++;
  $B522 EX DE,HL
 ; Range check pattern (-2..+3).
- $B523 LD HL,$81A4   ; HL = &saved_pos_x; // note: 16-bit values holding 8-bit
-                     ; values
+ $B523 LD HL,$81A4   ; HL = &saved_pos_x; // note: 16-bit values holding 8-bit values
  $B526 LD B,$02      ; B = 2; // 2 iterations
 *$B528 LD A,(DE)     ; {do <% if (*HL <= *DE - 3 || *HL > *DE + 3) goto
  $B529 SUB $03       ; exx_next;
@@ -10320,8 +10286,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 b$B53E DEFB $6A,$6E,$52,$62,$00,$0B ; 0x6A, 0x6E, 0x52, 0x62, 0, 11
  $B544 DEFB $5E,$62,$52,$62,$00,$0B ; 0x5E, 0x62, 0x52, 0x62, 0, 11
  $B54A DEFB $52,$56,$52,$62,$00,$0B ; 0x52, 0x56, 0x52, 0x62, 0, 11
- $B550 DEFB $3E,$5A,$6A,$80,$00,$30 ; 0x3E, 0x5A, 0x6A, 0x80, 0, 48 // 48 is
-                                    ; high... main gate?
+ $B550 DEFB $3E,$5A,$6A,$80,$00,$30 ; 0x3E, 0x5A, 0x6A, 0x80, 0, 48 // 48 is high... main gate?
  $B556 DEFB $34,$80,$72,$80,$00,$30 ; 0x34, 0x80, 0x72, 0x80, 0, 48
  $B55C DEFB $7E,$98,$5E,$80,$00,$30 ; 0x7E, 0x98, 0x5E, 0x80, 0, 48
  $B562 DEFB $82,$98,$5A,$80,$00,$30 ; 0x82, 0x98, 0x5A, 0x80, 0, 48
@@ -10798,8 +10763,7 @@ c$B866 CALL $B89C    ; locate_vischar_or_itemstruct();
  $B883 JR Z,$B88A    ; }
  $B885 CALL $E102    ;     masked_sprite_plotter_24_wide();
  $B888 JR $B866      ;     goto locate_vischar_or_itemstruct_then_plot; %>
-*$B88A CALL Z,$E2A2  ;   if (Z) masked_sprite_plotter_16_wide(); // odd
-                     ; to test for Z since it's always set
+*$B88A CALL Z,$E2A2  ;   if (Z) masked_sprite_plotter_16_wide(); // odd to test for Z since it's always set
  $B88D JR $B866      ;   goto locate_vischar_or_itemstruct_then_plot; %>
 *$B88F CALL $DC41    ; else <% setup_item_plotting();
  $B892 JR NZ,$B866   ;   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
@@ -10903,11 +10867,11 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B90E RET            ;   return; %>
 *$B90F INC HL         ; {else <% HL[1] &= ~itemstruct_ROOM_FLAG_NEARBY_6; //
  $B910 RES 6,(HL)     ; looks wrong: HL points to a vischar here}
- $B912 BIT 6,(HL)     ; {  BIT 6,HL[1] // odd. this tests the bit we've just
- $B914 DEC HL         ; cleared as if we're setting flags for return. but we
-                      ; can't be as we're followed by another instruction..
-                      ; unless DEC HL doesn't alter the Z flag .. which is
-                      ; true, it doesn't.}
+; This is odd. It tests the bit we've just cleared as if we're setting flags
+; for return, but we can't be as we're followed by another instruction...
+; unless DEC HL doesn't alter the Z flag... which is true, it doesn't.
+ $B912 BIT 6,(HL)     ; {  BIT 6,HL[1]
+ $B914 DEC HL         ; }
  $B915 RET            ;   return; %>
 
 ; Mask stuff.
@@ -11118,8 +11082,7 @@ c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
  $BA4A ADD HL,DE     ;   HL += DE;
  $BA4B POP DE
  $BA4C INC HL        ;   HL++; // iterations
-*$BA4D LD A,(DE)     ;   do <% A = *DE; // DE -> $E560 upwards (in
-                     ; exterior_mask_data)
+*$BA4D LD A,(DE)     ;   do <% A = *DE; // DE -> $E560 upwards (in exterior_mask_data)
  $BA4E AND A         ; {    if (A >= 128) <%
  $BA4F JP P,$BA60    ; }
  $BA52 AND $7F       ;       A &= 0x7F;
@@ -11218,8 +11181,7 @@ c$BACD LD B,$08      ; B = 8; // iterations
  $BACF LD HL,$0000   ; HL = 0;
  $BAD2 LD D,H        ; D = 0; // e.g. DE = 8;
 *$BAD3 ADD HL,HL     ; do <% HL += HL;
- $BAD4 RLA           ;   RLA  // carry = (A >> 7); A <<= 1; /* shift out of
-                     ; high end */
+ $BAD4 RLA           ;   RLA  // carry = (A >> 7); A <<= 1; /* shift out of high end */
  $BAD5 JP NC,$BAD9   ; {  if (carry) HL += DE; /* shift into low end */
  $BAD8 ADD HL,DE     ; }
 *$BAD9 DJNZ $BAD3    ; %> while (--B);
@@ -11362,8 +11324,8 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BB9F LD A,(IY+$01) ; {  if (IY[1] == room_NONE) goto next;
  $BBA2 CP $FF        ;
  $BBA4 JP Z,$BC9F    ; }
- $BBA7 LD H,(IY+$1B) ; {  map_position_related_y = (IY[26] >> 3) | (IY[27] <<
- $BBAA LD A,(IY+$1A) ; 5); // divide by 8
+ $BBA7 LD H,(IY+$1B) ; {  map_position_related_y = (IY[26] >> 3) | (IY[27] << 5); // divide by 8
+ $BBAA LD A,(IY+$1A) ;
  $BBAD SRL H         ;
  $BBAF RRA           ;
  $BBB0 SRL H         ;
@@ -11371,8 +11333,8 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBB3 SRL H         ;
  $BBB5 RRA           ;
  $BBB6 LD ($81B6),A  ; }
- $BBB9 LD H,(IY+$19) ; {  map_position_related_x = (IY[24] >> 3) | (IY[25] <<
- $BBBC LD A,(IY+$18) ; 5); // divide by 8
+ $BBB9 LD H,(IY+$19) ; {  map_position_related_x = (IY[24] >> 3) | (IY[25] << 5); // divide by 8
+ $BBBC LD A,(IY+$18) ;
  $BBBF SRL H         ;
  $BBC1 RRA           ;
  $BBC2 SRL H         ;
@@ -11390,8 +11352,8 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBD7 AND $1F       ;
  $BBD9 ADD A,$02     ; }
  $BBDB PUSH AF
- $BBDC LD HL,$81B6   ; {  A += map_position_related_y - ((map_position &
- $BBDF ADD A,(HL)    ; 0xFF00) >> 8);
+ $BBDC LD HL,$81B6   ; {  A += map_position_related_y - ((map_position & 0xFF00) >> 8);
+ $BBDF ADD A,(HL)    ;
  $BBE0 LD HL,$81BC   ;
  $BBE3 SUB (HL)      ; }
  $BBE4 JR C,$BBF7    ;   if (A >= 0) <%
@@ -11833,8 +11795,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C4F4 POP HL
  $C4F5 RET            ; return;
 ; Empty slot found.
-*$C4F6 POP DE         ; found_empty_slot: // DE = HL (-> character
-                      ; struct)
+*$C4F6 POP DE         ; found_empty_slot: // DE = HL (-> character struct)
  $C4F7 PUSH HL        ; // resave
  $C4F8 POP IY         ; // IY = HL (-> empty slot in visible character list)
  $C4FA PUSH HL        ; // resave
@@ -11871,8 +11832,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C526 CALL Z,$B14C   ; if (Z) bounds_check();
  $C529 POP DE
  $C52A POP HL
- $C52B RET NZ         ; RET NZ // if collision or bounds_check is nonzero, then
-                      ; return
+ $C52B RET NZ         ; RET NZ // if collision or bounds_check is nonzero, then return
  $C52C LD A,(DE)      ; {A = *DE | characterstruct_FLAG_DISABLED; /* Disable
  $C52D OR $40         ; character */}
  $C52F LD (DE),A      ; *DE = A;
@@ -11891,8 +11851,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C544 LD DE,$CDA2    ;     DE = &character_meta_data[2]; /* Dog */
  $C547 CP $14         ; {    if (A >= 20) <%
  $C549 JR C,$C54E     ; }
- $C54B LD DE,$CDA6    ;       DE = &character_meta_data[3]; %> %> %> /*
-                      ; Prisoner */
+ $C54B LD DE,$CDA6    ;       DE = &character_meta_data[3]; %> %> %> /* Prisoner */
 *$C54E EX DE,HL
  $C54F LD A,$07       ; {DE += 7;
  $C551 ADD A,E        ;
@@ -12046,8 +12005,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
 *$C62D LD A,L        ; {  HL -= 21; // reset HL to point to original vischar
  $C62E SUB $15       ;
  $C630 LD L,A        ; }
- $C631 LD A,(HL)     ;   A = *HL; // HL points to vischar // sampled HL =
-                     ; $8040, $8020, $8080, $80A0
+ $C631 LD A,(HL)     ;   A = *HL; // HL points to vischar // sampled HL = $8040, $8020, $8080, $80A0
  $C632 LD (HL),$FF   ; {  *HL++ = character_NONE;
  $C634 INC L         ; }
  $C635 LD (HL),$FF   ; {  *HL++ = vischar_FLAGS_EMPTY_SLOT;
@@ -12144,8 +12102,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C6AD XOR A         ;
 *$C6AE LD ($8217),A  ; }
 ; Get its chararacter struct, exiting if it's not enabled.
- $C6B1 CALL $C7B9    ; HL = get_character_struct(character_index); // pass
-                     ; character_index as A
+ $C6B1 CALL $C7B9    ; HL = get_character_struct(character_index); // pass character_index as A
  $C6B4 BIT 6,(HL)    ; {if (*HL & characterstruct_FLAG_DISABLED) return; /*
  $C6B6 RET NZ        ; Disabled character. */}
  $C6B7 PUSH HL
@@ -12195,8 +12152,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C6F1 RET           ;     return; %>
 ; Commandant.
 *$C6F2 LD A,(HL)     ; {  char_is_zero: A = *HL & characterstruct_BYTE5_MASK;
- $C6F3 AND $7F       ; // sampled = HL = $7617 (characterstruct + 5) //
-                     ; location}
+ $C6F3 AND $7F       ; // sampled = HL = $7617 (characterstruct + 5) // location}
  $C6F5 CP $24        ; {  if (A != 36) goto back;
  $C6F7 JR NZ,$C6E4   ; }
 *$C6F9 POP DE        ;   character_12_or_higher:
@@ -12303,8 +12259,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C78A RET           ; }
 *$C78B INC DE        ; DE++;
  $C78C EX DE,HL
- $C78D LD A,(HL)     ; A = *HL; // address? 761e 7625 768e 7695 7656 7695 7680
-                     ; // => character struct entry + 5
+ $C78D LD A,(HL)     ; A = *HL; // address? 761e 7625 768e 7695 7656 7695 7680 // => character struct entry + 5
  $C78E CP $FF        ; {if (A == 0xFF) return;
  $C790 RET Z         ; }
  $C791 BIT 7,A       ; if ((A & (1<<7)) != 0) ...
@@ -12393,8 +12348,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
 *$C7D9 PUSH HL       ; // POPped by handlers
 @nowarn
  $C7DA LD HL,$C7F9   ; map = &character_to_event_handler_index_map[0];
- $C7DD LD B,$18      ; B = NELEMS(character_to_event_handler_index_map); // 24
-                     ; iterations
+ $C7DD LD B,$18      ; B = NELEMS(character_to_event_handler_index_map); // 24 iterations
 ; Locate the character in the map.
 *$C7DF CP (HL)       ; {do <% if (A == map->character) goto call_action;
  $C7E0 JR Z,$C7EA    ; }
@@ -12427,39 +12381,29 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C7FF DEFW $01A9    ; character_9_GUARD_9       | 0b10100000, charevnt_1,
  $C801 DEFW $0005    ; character_5_GUARD_5       | 0b00000000, charevnt_0,
  $C803 DEFW $0106    ; character_6_GUARD_6       | 0b00000000, charevnt_1,
- $C805 DEFW $0385    ; character_5_GUARD_5       | 0b10000000, charevnt_3, //
-                     ; checks byte_A13E case 1
- $C807 DEFW $0386    ; character_6_GUARD_6       | 0b10000000, charevnt_3, //
-                     ; checks byte_A13E case 1
+ $C805 DEFW $0385    ; character_5_GUARD_5       | 0b10000000, charevnt_3,  // checks byte_A13E case 1
+ $C807 DEFW $0386    ; character_6_GUARD_6       | 0b10000000, charevnt_3,  // checks byte_A13E case 1
  $C809 DEFW $020E    ; character_14_GUARD_14     | 0b00000000, charevnt_2,
  $C80B DEFW $020F    ; character_15_GUARD_15     | 0b00000000, charevnt_2,
  $C80D DEFW $008E    ; character_14_GUARD_14     | 0b10000000, charevnt_0,
  $C80F DEFW $018F    ; character_15_GUARD_15     | 0b10000000, charevnt_1,
- $C811 DEFW $0510    ; character_16_GUARD_DOG_1  | 0b00000000, charevnt_5, //
-                     ; checks byte_A13E case 2
- $C813 DEFW $0511    ; character_16_GUARD_DOG_2  | 0b00000000, charevnt_5, //
-                     ; checks byte_A13E case 2
+ $C811 DEFW $0510    ; character_16_GUARD_DOG_1  | 0b00000000, charevnt_5,  // checks byte_A13E case 2
+ $C813 DEFW $0511    ; character_16_GUARD_DOG_2  | 0b00000000, charevnt_5,  // checks byte_A13E case 2
  $C815 DEFW $0090    ; character_16_GUARD_DOG_1  | 0b10000000, charevnt_0,
  $C817 DEFW $0191    ; character_16_GUARD_DOG_2  | 0b10000000, charevnt_1,
  $C819 DEFW $00A0    ; character_0_COMMANDANT    | 0b10100000, charevnt_0,
  $C81B DEFW $01A1    ; character_1_GUARD_1       | 0b10100000, charevnt_1,
  $C81D DEFW $072A    ; character_10_GUARD_10     | 0b00100000, charevnt_7,
- $C81F DEFW $082C    ; character_12_GUARD_12     | 0b00100000, charevnt_8, //
-                     ; hero sleeps
- $C821 DEFW $092B    ; character_11_GUARD_11     | 0b00100000, charevnt_9, //
-                     ; hero sits
- $C823 DEFW $06A4    ; character_4_GUARD_4       | 0b10100000, charevnt_6, //
-                     ; go to 0x0315
- $C825 DEFW $0A24    ; character_4_GUARD_4       | 0b00100000, charevnt_10,//
-                     ; released from solitary
- $C827 DEFW $0425    ; character_5_GUARD_5       | 0b00100000, charevnt_4, //
-                     ; zero morale_1
+ $C81F DEFW $082C    ; character_12_GUARD_12     | 0b00100000, charevnt_8,  // hero sleeps
+ $C821 DEFW $092B    ; character_11_GUARD_11     | 0b00100000, charevnt_9,  // hero sits
+ $C823 DEFW $06A4    ; character_4_GUARD_4       | 0b10100000, charevnt_6,  // go to 0x0315
+ $C825 DEFW $0A24    ; character_4_GUARD_4       | 0b00100000, charevnt_10, // released from solitary
+ $C827 DEFW $0425    ; character_5_GUARD_5       | 0b00100000, charevnt_4,  // zero morale_1
 ; character_event_handlers
 ; .
 ; Array of pointers to character event handlers.
 @label=character_event_handlers
- $C829 DEFW $C864    ; charevnt_handler *character_event_handlers[] = {
-                     ; &charevnt_handler_0,
+ $C829 DEFW $C864    ; charevnt_handler *character_event_handlers[] = { &charevnt_handler_0,
  $C82B DEFW $C85C    ;   &charevnt_handler_1,
  $C82D DEFW $C860    ;   &charevnt_handler_2,
  $C82F DEFW $C86C    ;   &charevnt_handler_3_check_var_A13E,
@@ -12502,8 +12446,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C862 JR $C866      ; goto exit;
 ; charevnt_handler_0
 @label=charevnt_handler_0
-*$C864 LD C,$08      ; C = 0x08; // 0xFF08 // sampled
-                     ; HL=$8022,$8042,$8002,$8062
+*$C864 LD C,$08      ; C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062
 *$C866 POP HL        ; exit:
  $C867 LD (HL),$FF   ; {*HL++ = 0xFF;
  $C869 INC HL        ; }
@@ -12774,8 +12717,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C9EA CALL $CA11     ; move_character_x();
  $C9ED JR NZ,$C9F5    ; if (Z) <%
  $C9EF CALL $CA49     ;   move_character_y();
- $C9F2 JP Z,$CA81     ;   if (Z) goto bribes_solitary_food; %> // exit via //
-                      ; character couldn't move?
+ $C9F2 JP Z,$CA81     ;   if (Z) goto bribes_solitary_food; %> // exit via // character couldn't move?
 ; This entry point is used by the routine at #R$CA81.
 *$C9F5 CP (IY+$0D)    ; {character_behaviour_end_1: if (A != IY[13]) IY[13] = A
  $C9F8 RET Z          ; | input_KICK; // sampled IY=$8040,$8020,$8000
@@ -12788,8 +12730,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $CA03 CALL $CA49     ; move_character_y();
  $CA06 JR NZ,$C9F5    ; {if (Z) move_character_x();
  $CA08 CALL $CA11     ; }
- $CA0B JR NZ,$C9F5    ; if (!Z) goto character_behaviour_end_1; // likely:
-                      ; couldn't move, so .. do something
+ $CA0B JR NZ,$C9F5    ; if (!Z) goto character_behaviour_end_1; // likely: couldn't move, so .. do something
  $CA0D DEC L          ; HL--;
  $CA0E JP $CA81       ; bribes_solitary_food(); return; // exit via
 
@@ -12901,8 +12842,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CA8D LD A,($AF8E)  ; {    if (IY[0] == bribed_character) <% accept_bribe();
  $CA90 CP (IY+$00)   ; return; %> // exit via
  $CA93 JP Z,$B107    ; }
- $CA96 JP $CB98      ;     else <% solitary(); return; %> %> // failed to
-                     ; bribe? // exit via
+ $CA96 JP $CB98      ;     else <% solitary(); return; %> %> // failed to bribe? // exit via
 *$CA99 CP $02        ; {  else if (A == vischar_FLAGS_BIT1 || A ==
  $CA9B RET Z         ; vischar_FLAGS_SAW_BRIBE) <% return; %>
  $CA9C CP $04        ;
@@ -13035,8 +12975,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB3B AND $7F       ; }
  $CB3D CP $24        ; {      if (A == 36) goto $CB46; // character index
  $CB3F JR Z,$CB46    ; }
- $CB41 XOR A         ;       A = 0; %> // self modified? (suspect not - just
-                     ; countering next if statement)
+ $CB41 XOR A         ;       A = 0; %> // self modified? (suspect not - just countering next if statement)
 *$CB42 CP $0C        ; {    if (A == character_12_GUARD_12) goto $CB50; %>
  $CB44 JR C,$CB50    ; }
 ; arrive here if (character == 0 && (location low byte & 7F) == 36)
@@ -13060,8 +12999,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
 *$CB5B INC (HL)      ;   (*HL)++
  $CB5C DEC HL        ;   HL--;
  $CB5D XOR A         ;   A = 0;
- $CB5E RET           ;   return; %> // strictly the terminating brace is after
-                     ; the following unreferenced bytes
+ $CB5E RET           ;   return; %> // strictly the terminating brace is after the following unreferenced bytes
  $CB5F DEFB $18,$09  ; Unreferenced bytes.
 
 ; (unknown) sub_CB61
@@ -14420,8 +14358,7 @@ c$DB9E LD A,($68A0)  ; A = room_index;
  $DBD3 JR C,$DBDC    ; }
  $DBD5 POP HL
  $DBD6 SET 7,(HL)    ; {        *HL |= itemstruct_ROOM_FLAG_NEARBY_6 |
- $DBD8 SET 6,(HL)    ; itemstruct_ROOM_FLAG_NEARBY_7; // sampled HL=$772B
-                     ; &itemstruct_14.room}
+ $DBD8 SET 6,(HL)    ; itemstruct_ROOM_FLAG_NEARBY_7; // sampled HL=$772B &itemstruct_14.room}
  $DBDA JR $DBE1      ;         goto next; %> %> %>
 ; Reset.
 *$DBDC POP HL
@@ -14530,8 +14467,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC4E LD BC,$0005   ; BC = 5;
  $DC51 LDIR
  $DC53 EX DE,HL
- $DC54 LD (HL),B     ; *HL = B; // B == 0 due to LDIR /* Items are never drawn
-                     ; flipped. */
+ $DC54 LD (HL),B     ; *HL = B; // B == 0 due to LDIR /* Items are never drawn flipped. */
  $DC55 LD HL,$DD7D   ; {HL = &item_definitions[A];
  $DC58 ADD A,A       ;
  $DC59 LD C,A        ;
@@ -14551,8 +14487,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC70 PUSH BC
  $DC71 PUSH DE
  $DC72 LD A,E        ; A = E;
- $DC73 LD ($E2C2),A  ; ($E2C1 + 1) = A; // self modify
-                     ; masked_sprite_plotter_16_wide_left
+ $DC73 LD ($E2C2),A  ; ($E2C1 + 1) = A; // self modify masked_sprite_plotter_16_wide_left
  $DC76 LD A,B        ; A = B;
  $DC77 AND A         ; {if (A == 0) <%
  $DC78 JP NZ,$DC81   ; }
@@ -14634,8 +14569,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
 ; Bug: Generic multiply loop which only ever multiplies by two...
  $DCE5 LD D,A        ;   D = A;
  $DCE6 XOR A         ;   A = 0;
- $DCE7 LD E,$03      ;   E = 3; // unusual (or self modified and i've not
-                     ; spotted the setter)
+ $DCE7 LD E,$03      ;   E = 3; // unusual (or self modified and i've not spotted the setter)
  $DCE9 DEC E         ;   E--;
 *$DCEA ADD A,E       ; {  do <% A += E; %> while (--D); %>
  $DCEB DEC D         ;
@@ -15392,8 +15326,7 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E11C EXX           ; {bitmapptr = bitmap_pointer;
  $E11D LD HL,($81AC) ; }
 @label=masked_sprite_plotter_24_wide_height_iters
- $E120 LD B,$20      ; iters = 32; // iterations // clipped_height & 0xFF //
-                     ; self modified
+ $E120 LD B,$20      ; iters = 32; // iterations // clipped_height & 0xFF // self modified
 ; Load bitmap bytes into B,C,E.
 *$E122 PUSH BC       ; {do <% bm0 = *bitmapptr++; // bitmap bytes
  $E123 LD B,(HL)     ;
@@ -15418,19 +15351,15 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E139 LD HL,($81B0) ; {  foremaskptr = foreground_mask_pointer;
  $E13C EXX           ; }
 @nowarn
- $E13D LD HL,($81A2) ;   screenptr = ($81A2); // moved compared to the other
-                     ; routines
+ $E13D LD HL,($81A2) ;   screenptr = ($81A2); // moved compared to the other routines
 ; Shift bitmap.
  $E140 LD D,$00      ;   bm3 = 0;
 @label=masked_sprite_plotter_24_wide_jump0
  $E142 JR $E144      ;   goto $E144; // self-modified // jump table
 *$E144 SRL B         ;   SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
- $E146 RR C          ;   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1)
-                     ; | (carry << 7); carry = new_carry;
- $E148 RR E          ;   RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1)
-                     ; | (carry << 7); carry = new_carry;
- $E14A RR D          ;   RR bm3       // new_carry = bm3 & 1; bm3 = (bm3 >> 1)
-                     ; | (carry << 7); carry = new_carry;
+ $E146 RR C          ;   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
+ $E148 RR E          ;   RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry;
+ $E14A RR D          ;   RR bm3       // new_carry = bm3 & 1; bm3 = (bm3 >> 1) | (carry << 7); carry = new_carry;
  $E14C SRL B         ;   SRL bm0 // 1
  $E14E RR C          ;   RR bm1
  $E150 RR E          ;   RR bm2
@@ -15445,14 +15374,10 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E15F SCF           ;   carry = 1;
 @label=masked_sprite_plotter_24_wide_jump1
  $E160 JR $E162      ;   goto $E162; // self-modified // jump table
-*$E162 RR B          ;   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0
-                     ; >> 1) | (carry << 7); carry = new_carry;
- $E164 RR C          ;   RR mask1      // new_carry = mask1 & 1; mask1 = (mask1
-                     ; >> 1) | (carry << 7); carry = new_carry;
- $E166 RR E          ;   RR mask2      // new_carry = mask2 & 1; mask2 = (mask2
-                     ; >> 1) | (carry << 7); carry = new_carry;
- $E168 RR D          ;   RR mask3      // new_carry = mask3 & 1; mask3 = (mask3
-                     ; >> 1) | (carry << 7); carry = new_carry;
+*$E162 RR B          ;   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
+ $E164 RR C          ;   RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
+ $E166 RR E          ;   RR mask2      // new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry;
+ $E168 RR D          ;   RR mask3      // new_carry = mask3 & 1; mask3 = (mask3 >> 1) | (carry << 7); carry = new_carry;
  $E16A RR B          ;   RR mask0 // 1
  $E16C RR C          ;   RR mask1
  $E16E RR E          ;   RR mask2
@@ -15556,8 +15481,7 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E1DD EXX           ; {HL = bitmap_pointer;
  $E1DE LD HL,($81AC) ; }
 @label=masked_sprite_plotter_24_wide_unaligned_height_iters
- $E1E1 LD B,$20      ; B = 32; // iterations // clipped_height & 0xFF // self
-                     ; modified
+ $E1E1 LD B,$20      ; B = 32; // iterations // clipped_height & 0xFF // self modified
 ; Load bitmap bytes into B,C,E.
 *$E1E3 PUSH BC       ; do <%
  $E1E4 LD B,(HL)     ; {  B = *HL++;
@@ -15750,8 +15674,7 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
  $E2B9 EXX           ; {maskptr = mask_pointer; // maskptr = HL'  // observed:
  $E2BA LD HL,($81AE) ; $D505 (a mask)
  $E2BD EXX           ; }
- $E2BE LD HL,($81AC) ; bitmapptr = bitmap_pointer; // bitmapptr = HL  //
-                     ; observed: $D256 (a bitmap)
+ $E2BE LD HL,($81AC) ; bitmapptr = bitmap_pointer; // bitmapptr = HL  // observed: $D256 (a bitmap)
 @label=masked_sprite_plotter_16_wide_case_1_height_iters
  $E2C1 LD B,$20      ; B = 32; // iterations // height? // self modified
 ; Load bitmap bytes into D,E.
@@ -15770,23 +15693,18 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
  $E2CE LD A,($81B7)  ; {  if (flip_sprite & (1<<7)) flip_16_masked_pixels();
  $E2D1 AND A         ;
  $E2D2 CALL M,$E40F  ; }
- $E2D5 LD HL,($81B0) ;   foremaskptr = foreground_mask_pointer;  // observed:
-                     ; $8100 (mask buffer)
+ $E2D5 LD HL,($81B0) ;   foremaskptr = foreground_mask_pointer;  // observed: $8100 (mask buffer)
 ; Shift mask.
 ; .
 ; 24 version does bitmap rotates then mask rotates. Is this the opposite way
 ; around to save a bank switch?
- $E2D8 LD C,$FF      ;   mask2 = 0xFF; // all bits set => mask OFF (that would
-                     ; match the observed stored mask format)
+ $E2D8 LD C,$FF      ;   mask2 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
  $E2DA SCF           ;   carry = 1; // mask OFF
 @label=masked_sprite_plotter_16_wide_case_1_jump0
  $E2DB JR $E2DD      ;   goto $E2DD; // self modified // jump table
-*$E2DD RR D          ;   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0
-                     ; >> 1) | (carry << 7); carry = new_carry;
- $E2DF RR E          ;   RR mask1      // new_carry = mask1 & 1; mask1 = (mask1
-                     ; >> 1) | (carry << 7); carry = new_carry;
- $E2E1 RR C          ;   RR mask2      // new_carry = mask2 & 1; mask2 = (mask2
-                     ; >> 1) | (carry << 7); carry = new_carry;
+*$E2DD RR D          ;   RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
+ $E2DF RR E          ;   RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
+ $E2E1 RR C          ;   RR mask2      // new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry;
  $E2E3 RR D          ;   RR mask0 // 1
  $E2E5 RR E          ;   RR mask1
  $E2E7 RR C          ;   RR mask2
@@ -15800,10 +15718,8 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
 @label=masked_sprite_plotter_16_wide_case_1_jump1
  $E2F3 JR $E2F5      ;   goto $E2F5; // self modified // jump table
 *$E2F5 SRL D         ;   SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
- $E2F7 RR E          ;   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1)
-                     ; | (carry << 7); carry = new_carry;
- $E2F9 RR C          ;   RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1)
-                     ; | (carry << 7); carry = new_carry;
+ $E2F7 RR E          ;   RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
+ $E2F9 RR C          ;   RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry;
  $E2FB SRL D         ;   SRL bm0 // 1
  $E2FD RR E          ;   RR bm1
  $E2FF RR C          ;   RR bm2
@@ -15813,8 +15729,8 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
 ; Plot, using foreground mask.
 @nowarn
  $E307 LD HL,($81A2) ;   screenptr = ($81A2);
- $E30A EXX           ; {  A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 &
- $E30B LD A,(HL)     ; *foremaskptr);
+ $E30A EXX           ; {  A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
+ $E30B LD A,(HL)     ;
  $E30C CPL           ;
  $E30D OR D          ;
  $E30E EXX
@@ -15831,8 +15747,8 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
 @label=masked_sprite_plotter_16_wide_case_1_enable0
  $E319 LD (HL),A     ; {  *screenptr++ = A; // entry point jump0
  $E31A INC HL        ; }
- $E31B EXX           ; {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 &
- $E31C LD A,(HL)     ; *foremaskptr);
+ $E31B EXX           ; {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
+ $E31C LD A,(HL)     ;
  $E31D CPL           ;
  $E31E OR E          ;
  $E31F EXX
@@ -15849,8 +15765,8 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
 @label=masked_sprite_plotter_16_wide_case_1_enable2
  $E32A LD (HL),A     ; {  *screenptr++ = A; // entry point jump2
  $E32B INC HL        ; }
- $E32C EXX           ; {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 &
- $E32D LD A,(HL)     ; *foremaskptr);
+ $E32C EXX           ; {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
+ $E32D LD A,(HL)     ;
  $E32E CPL           ;
  $E32F OR C          ;
  $E330 EXX
@@ -15913,25 +15829,20 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
  $E373 CALL M,$E40F  ; }
  $E376 LD HL,($81B0) ;   foremaskptr = foreground_mask_pointer;
 ;   Shift mask.
- $E379 LD C,$FF      ;   mask0 = 0xFF; // all bits set => mask OFF (that would
-                     ; match the observed stored mask format)
+ $E379 LD C,$FF      ;   mask0 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
  $E37B SCF           ;   carry = 1; // mask OFF
 @label=masked_sprite_plotter_16_wide_case_2_jump0
  $E37C JR $E37E      ;   goto $E37E; // self modified // jump table
-*$E37E RL E          ;   RL mask2 // 0 // new_carry = mask2 >> 7; mask2 =
-                     ; (mask2 << 1) | (carry << 0); carry = new_carry;
- $E380 RL D          ;   RL mask1      // new_carry = mask1 >> 7; mask1 =
-                     ; (mask1 << 1) | (carry << 0); carry = new_carry;
- $E382 RL C          ;   RL mask0      // new_carry = mask0 >> 7; mask0 =
-                     ; (mask0 << 1) | (carry << 0); carry = new_carry;
+*$E37E RL E          ;   RL mask2 // 0 // new_carry = mask2 >> 7; mask2 = (mask2 << 1) | (carry << 0); carry = new_carry;
+ $E380 RL D          ;   RL mask1      // new_carry = mask1 >> 7; mask1 = (mask1 << 1) | (carry << 0); carry = new_carry;
+ $E382 RL C          ;   RL mask0      // new_carry = mask0 >> 7; mask0 = (mask0 << 1) | (carry << 0); carry = new_carry;
  $E384 RL E          ;   RL mask2 // 1
  $E386 RL D          ;   RL mask1
  $E388 RL C          ;   RL mask0
  $E38A RL E          ;   RL mask2 // 2
  $E38C RL D          ;   RL mask1
  $E38E RL C          ;   RL mask0
- $E390 RL E          ;   RL mask2 // 3 // four groups of shifting in this
-                     ; routine, compared to three above.
+ $E390 RL E          ;   RL mask2 // 3 // four groups of shifting in this routine, compared to three above.
  $E392 RL D          ;   RL mask1
  $E394 RL C          ;   RL mask0
 ; Shift bitmap.
@@ -15941,10 +15852,8 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
 @label=masked_sprite_plotter_16_wide_case_2_jump1
  $E399 JR $E39B      ;   goto $E39B; // self modified // jump table
 *$E39B SLA E         ;   SLA bm2 // 0 // carry = bm2 >> 7; bm2 <<= 1;
- $E39D RL D          ;   RL bm1       // new_carry = bm1 >> 7; bm1 = (bm1 << 1)
-                     ; | (carry << 0); carry = new_carry;
- $E39F RL C          ;   RL bm0       // new_carry = bm0 >> 7; bm0 = (bm0 << 1)
-                     ; | (carry << 0); carry = new_carry;
+ $E39D RL D          ;   RL bm1       // new_carry = bm1 >> 7; bm1 = (bm1 << 1) | (carry << 0); carry = new_carry;
+ $E39F RL C          ;   RL bm0       // new_carry = bm0 >> 7; bm0 = (bm0 << 1) | (carry << 0); carry = new_carry;
  $E3A1 SLA E         ;   SLA bm2
  $E3A3 RL D          ;   RL bm1
  $E3A5 RL C          ;   RL bm0
@@ -15957,8 +15866,8 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
 ; Plot, using foreground mask.
 @nowarn
  $E3B3 LD HL,($81A2) ;   screenptr = ($81A2);
- $E3B6 EXX           ; {  A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 &
- $E3B7 LD A,(HL)     ; *foremaskptr);
+ $E3B6 EXX           ; {  A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
+ $E3B7 LD A,(HL)     ;
  $E3B8 CPL           ;
  $E3B9 OR C          ;
  $E3BA EXX
@@ -15975,8 +15884,8 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
 @label=masked_sprite_plotter_16_wide_case_2_enable1
  $E3C5 LD (HL),A     ; {  *screenptr++ = A; // entry point jump1
  $E3C6 INC HL        ; }
- $E3C7 EXX           ; {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 &
- $E3C8 LD A,(HL)     ; *foremaskptr);
+ $E3C7 EXX           ; {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
+ $E3C8 LD A,(HL)     ;
  $E3C9 CPL           ;
  $E3CA OR D          ;
  $E3CB EXX
@@ -15993,8 +15902,8 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
 @label=masked_sprite_plotter_16_wide_case_2_enable3
  $E3D6 LD (HL),A     ; {  *screenptr++ = A; // entry point jump3
  $E3D7 INC HL        ; }
- $E3D8 EXX           ; {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 &
- $E3D9 LD A,(HL)     ; *foremaskptr);
+ $E3D8 EXX           ; {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
+ $E3D9 LD A,(HL)     ;
  $E3DA CPL           ;
  $E3DB OR E          ;
  $E3DC EXX
@@ -16033,8 +15942,7 @@ c$E34E SUB $04       ; {A = (A - 4) * 6; // jump table offset
 ;
 ; Reverse the bitmap bytes.
 @label=flip_24_masked_pixels
-c$E3FA LD H,$7F      ; H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 ->
-                     ; table of bit reversed bytes
+c$E3FA LD H,$7F      ; H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 -> table of bit reversed bytes
  $E3FC LD L,E        ; L = E;
  $E3FD LD E,B        ; E = B;     // DE = (DE & 0xFF00) | (BC >> 8);
  $E3FE LD B,(HL)     ; B = *HL;   // BC = (*HL << 8) | (BC & 0xFF);
@@ -16064,8 +15972,7 @@ c$E3FA LD H,$7F      ; H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 ->
 ;
 ; Reverse the bitmap bytes.
 @label=flip_16_masked_pixels
-c$E40F LD H,$7F      ; H = 0x7F;  // HL = 0x7F00 | (DE >> 8); // 0x7F00 ->
-                     ; table of bit reversed bytes
+c$E40F LD H,$7F      ; H = 0x7F;  // HL = 0x7F00 | (DE >> 8); // 0x7F00 -> table of bit reversed bytes
  $E411 LD L,D        ; L = D;
  $E412 LD D,E        ; D = E;     // DE = (E << 8) | *HL;
  $E413 LD E,(HL)     ; E = *HL;
@@ -16167,16 +16074,13 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E48C JR NZ,$E49C   ; }
  $E48E LD A,E        ; {  ($E2C1 + 1) = E; // self modify
  $E48F LD ($E2C2),A  ; masked_sprite_plotter_16_wide_left}
- $E492 LD ($E363),A  ;   ($E362 + 1) = E; // self-modify
-                     ; masked_sprite_plotter_16_wide_right
+ $E492 LD ($E363),A  ;   ($E362 + 1) = E; // self-modify masked_sprite_plotter_16_wide_right
  $E495 LD A,$03      ;   A = 3;
  $E497 LD HL,$E0E0   ;   HL = masked_sprite_plotter_16_enables; %>
  $E49A JR $E4A8      ; else <%
 *$E49C LD A,E
- $E49D LD ($E121),A  ;   ($E120 + 1) = E; // self-modify
-                     ; masked_sprite_plotter_24_wide (shift right case)
- $E4A0 LD ($E1E2),A  ;   ($E1E1 + 1) = E; // self-modify
-                     ; masked_sprite_plotter_24_wide (shift left case)
+ $E49D LD ($E121),A  ;   ($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide (shift right case)
+ $E4A0 LD ($E1E2),A  ;   ($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide (shift left case)
  $E4A3 LD A,$04      ;   A = 4;
  $E4A5 LD HL,$E0EC   ;   HL = masked_sprite_plotter_24_enables; %>
 *$E4A8 PUSH HL
@@ -16908,8 +16812,8 @@ c$EED3 LD ($EDD1),SP ; saved_sp = SP;
  $EF3B POP DE        ;   // output address
  $EF3C LD B,$04      ;   B = 4; // 4 iterations of 5 plus 3 at the end == 23
 *$EF3E LD C,(HL)     ;   do <% C = *HL;
- $EF3F RRD           ; {    RRD             // tmp = *HL & 0x0F; *HL = (*HL >>
- $EF41 EX AF,AF'     ; 4) | (A << 4); A = (A & 0xF0) | tmp;}
+ $EF3F RRD           ; RRD does this: tmp = *HL & 0x0F; *HL = (*HL >> 4) | (A << 4); A = (A & 0xF0) | tmp;
+ $EF41 EX AF,AF'     ;
  $EF42 LD A,(HL)     ;     Adash = *HL;
  $EF43 LD (DE),A     ;     *DE++ = Adash;
  $EF44 LD (HL),C     ; {    *HL++ = C;
@@ -17214,8 +17118,7 @@ c$F163 DI                     ; {-
 ; Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
  $F1A7 LD B,$07               ; B = 7; // iterations
 @nowarn
- $F1A9 LD HL,$8020            ; HL = 0x8020; // iterate over non-player
-                              ; characters
+ $F1A9 LD HL,$8020            ; HL = 0x8020; // iterate over non-player characters
  $F1AC LD DE,$001F
  $F1AF LD A,$FF
 *$F1B1 LD (HL),A              ; {do <% HL[0] = character_NONE;
@@ -17569,8 +17472,7 @@ c$F350 CALL $F335    ; for (;;) <% wipe_game_window();
  $F39D LD E,A        ;         E = Adash;
  $F39E LD C,$20      ;         C = 0x20; // mask
 *$F3A0 SRL C         ;         C >>= 1;
- $F3A2 JR C,$F391    ;       %> while (carry);  // loop structure is not quite
-                     ; right
+ $F3A2 JR C,$F391    ;       %> while (carry);  // loop structure is not quite right
  $F3A4 LD A,C        ; {      Adash = C & E;
  $F3A5 AND E         ; }
  $F3A6 JR Z,$F3A0    ;       if (Adash == 0) goto $F3A0;
@@ -17602,8 +17504,7 @@ c$F350 CALL $F335    ; for (;;) <% wipe_game_window();
  $F3C7 ADD A,A       ;
  $F3C8 ADD A,B       ; }
 @nowarn
- $F3C9 LD HL,$F302   ;     HL = 0xF302;  // &key_tables[0] - 1 byte + A //
-                     ; strange: off by one
+ $F3C9 LD HL,$F302   ;     HL = 0xF302;  // &key_tables[0] - 1 byte + A // strange: off by one
  $F3CC ADD A,L       ; {    HL += A;
  $F3CD LD L,A        ;
  $F3CE JR NC,$F3D1   ;
@@ -17777,8 +17678,7 @@ c$F4B7 CALL $F271    ; for (;;) <% check_menu_keys();
  $F4F9 EXX           ;     - %>
  $F4FA JR $F4FD      ;   else <%
 *$F4FC POP BC        ;     %>
-*$F4FD LD A,$18      ;   A = 24; /* overall tune speed (a delay: lower values
-                     ; are faster) */
+*$F4FD LD A,$18      ;   A = 24; /* overall tune speed (a delay: lower values are faster) */
 *$F4FF EX AF,AF'     ;   do <%
  $F500 LD H,$FF      ;     H = 0xFF; /* iterations */
 *$F502 DJNZ $F510    ;     do <% if (--B == 0) <%
