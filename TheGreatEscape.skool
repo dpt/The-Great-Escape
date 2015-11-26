@@ -925,9 +925,8 @@ b$4000 DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,
 
 ; Super tiles.
 ;
-; The game's exterior map (at $BCEE) is constructed of references to these.
-; .
-; Each super tile is a 4x4 array of tile indices.
+; The game's exterior map (at $BCEE) is constructed of references to these
+; "super tiles" which are in turn a 4x4 array of tile indices.
 @label=super_tiles
 b$5B00 DEFB $94,$93,$92,$94 ; {super_tile $00 #HTML[#CALL:supertile($5B00, 0)]
  $5B04 DEFB $92,$92,$94,$93
@@ -2284,7 +2283,7 @@ c$6AB5 ADD A,A       ; {HL = interior_object_defs[A];
  $6AF3 RET           ; return;
 ; 128..255 case
 @label=run
-*$6AF4 LD A,(HL)     ; {A = *HL++ & 0x7F;
+*$6AF4 LD A,(HL)     ; {A = *HL++ & 0x7F; // run length
  $6AF5 AND $7F       ; }
  $6AF7 EX AF,AF'
  $6AF8 INC HL
@@ -2317,6 +2316,7 @@ c$6AB5 ADD A,A       ; {HL = interior_object_defs[A];
 ; 64..127 case.
 @label=range
 @rfix-begin
+; .
 ; Bug: This self-modifies the INC A at the end of the loop body, but nothing
 ; else in the code modifies it! Possible evidence that other encodings (e.g.
 ; 'DEC A') were attempted.
@@ -4249,7 +4249,7 @@ c$7BB5 CALL $7C26    ; HL = item_to_itemstruct(A);
  $7BC5 LD HL,$800F   ;   HL = $800F;
  $7BC8 CALL $E542    ;   pos_to_tinypos(HL,DE);
  $7BCB DEC DE        ;   DE--;
- $7BCC LD A,$00      ; {  *DE = 0; // ->vo ?
+ $7BCC LD A,$00      ; {  *DE = 0; // ->height ?
  $7BCE LD (DE),A     ; }
  $7BCF EX DE,HL
 ; FALL THROUGH into calc_exterior_item_screenpos.
@@ -6020,10 +6020,10 @@ c$9DE5 LD BC,$FEFE   ; {if (!(shift_pressed && space_pressed)) return;
 ;
 ; .
 ;
-; Is morale remaining?
-; .
-; Note combined read of morale_1 and morale_2 as a word.
 @label=process_player_input
+; Morale exhausted? If so then don't allow input.
+; .
+; Note the combined read of morale_1 and morale_2 as a word.
 c$9E07 LD HL,($A13A) ; {if (morale_1 || morale_2) return;
  $9E0A XOR A         ;
  $9E0B OR H          ;
@@ -6150,7 +6150,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
 @nowarn
  $9ECC LD ($800D),A  ; }
  $9ECF RET           ;   return; %>
-; Countdown reached: Snip the wire.
+; Countdown reached zero: Snip the wire.
 ; .
 ; Bug: A is always zero here, so $800E is always set to zero.
 @nowarn
@@ -9535,7 +9535,7 @@ c$B107 CALL $A0E9      ; increase_morale_by_10_score_by_50();
  $B142 LD B,$11        ; {queue_message_for_display(message_HE_TAKES_THE_BRIBE);
  $B144 CALL $7D15      ; }
  $B147 LD B,$12        ; queue_message_for_display(message_AND_ACTS_AS_DECOY);
- $B149 JP $7D15        ; return;
+ $B149 JP $7D15        ; return; // exit via
 
 ; Check the character is inside of permitted areas.
 ;
@@ -17634,8 +17634,8 @@ t$F446 DEFB $8E,$40,$08,$0C,$00,$17,$1C,$1A,$00,$15,$1B                         
 ;
 ; Used by the routine at #R$F163.
 ; .
-; Waits for user to select an input device, waves the morale flag and plays the
-; title tune.
+; While waiting for user to select an input device this waves the morale flag
+; and plays the title tune.
 @label=menu_screen
 c$F4B7 CALL $F271    ; for (;;) <% check_menu_keys();
  $F4BA CALL $A035    ;   wave_morale_flag();
