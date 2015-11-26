@@ -7343,7 +7343,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3E5 SUB $05       ;
  $A3E7 LD E,A        ; }
  $A3E8 EX DE,HL
- $A3E9 SET 6,(HL)    ;   *HL |= vischar_FLAGS_BIT6; %> // sample = HL = $8001
+ $A3E9 SET 6,(HL)    ;   *HL |= vischar_FLAGS_BIT6; %> // sampled HL=$8001
 *$A3EB POP BC
  $A3EC RET           ; return;
 
@@ -8876,7 +8876,7 @@ c$AD59 LD E,(HL)     ; {E = *HL++;
  $AD5E JP NZ,$AD99   ; if (Z) <%
  $AD61 INC HL        ; {  HL += 2;
  $AD62 INC HL        ; }
- $AD63 LD A,(HL)     ;   A = *HL; // sampled HL = $AD3B, $AD34, $AD2D
+ $AD63 LD A,(HL)     ;   A = *HL; // sampled HL=$AD3B,$AD34,$AD2D
  $AD64 BIT 7,A       ; {  if (A & (1<<7)) <% // sign
  $AD66 JP Z,$AD76    ; }
  $AD69 AND $7F       ;     A &= 0x7F;
@@ -9373,13 +9373,13 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
 *$B046 CP $18          ; {  if (A >= 24) goto pop_next;
  $B048 JP NC,$B0FC     ; }
 ; If specified vischar character has a bribe pending...
- $B04B LD A,(IY+$01)   ; {  A = IY[1] & 0x0F; // sampled IY=$8020, $8040, $8060, $8000 // but this is *not* vischar_FLAGS_MASK, which is 0x1F
+ $B04B LD A,(IY+$01)   ; {  A = IY[1] & 0x0F; // sampled IY=$8020,$8040,$8060,$8000 // but this is *not* vischar_FLAGS_MASK, which is 0x1F
  $B04E AND $0F         ; }
  $B050 CP $01          ; {  if (A == 1) <%
  $B052 JR NZ,$B071     ; }
 ; and current vischar is not the hero...
  $B054 POP HL
- $B055 PUSH HL         ;     // sampled HL=$8021, $8041, $8061, $80A1
+ $B055 PUSH HL         ;     // sampled HL=$8021,$8041,$8061,$80A1
  $B056 DEC L           ;     HL--;
  $B057 LD A,L          ; {    if ((HL & 0xFF) == 0) <% // ie. $8000
  $B058 AND A           ;
@@ -9398,7 +9398,7 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
  $B06E JP $CB98        ;         solitary(); return; // exit via %> %> %>
 *$B071 POP HL
  $B072 DEC L           ;   HL--;
- $B073 LD A,(HL)       ;   A = *HL; // sampled HL = $80C0, $8040, $8000, $8020, $8060 // vischar_BYTE0
+ $B073 LD A,(HL)       ;   A = *HL; // sampled HL=$80C0,$8040,$8000,$8020,$8060 // vischar_BYTE0
  $B074 CP $1A          ; {  if (A >= 26) <%
  $B076 JR C,$B0B9      ; }
  $B078 PUSH HL
@@ -9449,7 +9449,7 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
  $B0BA LD A,L          ; {  HL += 13;
  $B0BB ADD A,$0D       ;
  $B0BD LD L,A          ; }
- $B0BE LD A,(HL)       ; {  A = *HL & vischar_INPUT_MASK; // mask off kick flag // sampled HL = $806D, $804D, $802D, $808D, $800D}
+ $B0BE LD A,(HL)       ; {  A = *HL & vischar_INPUT_MASK; // mask off kick flag // sampled HL=$806D,$804D,$802D,$808D,$800D}
  $B0BF AND $7F         ;
  $B0C1 JR Z,$B0DB      ;   if (A) <%
  $B0C3 INC L           ;     HL++;
@@ -9458,12 +9458,12 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
  $B0C7 CP (IY+$0E)     ; {    if (A != IY[14]) <%
  $B0CA JR Z,$B0DB      ; }
  $B0CC LD (IY+$0D),$80 ;       IY[13] = input_KICK;
-*$B0D0 LD A,(IY+$07)   ; {      IY[7] = (IY[7] & vischar_BYTE7_MASK_HI) | 5; // preserve flags and set 5? // sampled IY = $8000, $80E0
+*$B0D0 LD A,(IY+$07)   ; {      IY[7] = (IY[7] & vischar_BYTE7_MASK_HI) | 5; // preserve flags and set 5? // sampled IY=$8000,$80E0
  $B0D3 AND $F0         ;
  $B0D5 OR $05          ;
  $B0D7 LD (IY+$07),A   ; }
  $B0DA RET NZ          ;       if (!Z) return; /* odd */ %> %>
-*$B0DB LD C,(IY+$0E)   ; {  BC = IY[14]; // sampled IY = $8000, $8040, $80E0
+*$B0DB LD C,(IY+$0E)   ; {  BC = IY[14]; // sampled IY=$8000,$8040,$80E0
  $B0DE LD B,$00        ; }
 @nowarn
  $B0E0 LD HL,$B0F8     ; {  IY[13] = collision_new_inputs[BC];
@@ -9600,7 +9600,7 @@ c$B14C LD A,($68A0)  ; {if (room_index) <% interior_bounds_check(); return; %>
 ; Found it.
  $B1AD POP DE
  $B1AE POP BC
- $B1AF LD A,(IY+$07) ; {    IY[7] ^= vischar_BYTE7_IMPEDED; // sampled IY = $80A0, $8080, $8060
+ $B1AF LD A,(IY+$07) ; {    IY[7] ^= vischar_BYTE7_IMPEDED; // sampled IY=$80A0,$8080,$8060
  $B1B2 XOR $20       ;
  $B1B4 LD (IY+$07),A ; }
  $B1B7 OR $01        ;     A |= 1; // return NZ
@@ -9706,7 +9706,7 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
  $B230 CALL $B1D4    ; is_door_locked();
  $B233 RET NZ        ; if (!Z) return; // door was locked - return nonzero?
  $B234 EXX
- $B235 LD A,(HL)     ; {IY[28] = (*HL >> 2) & 0x3F; // sampled HL = $792E (in door_positions[])
+ $B235 LD A,(HL)     ; {IY[28] = (*HL >> 2) & 0x3F; // sampled HL=$792E (in door_positions[])
  $B236 RRA           ;
  $B237 RRA           ;
  $B238 AND $3F       ;
@@ -10340,7 +10340,7 @@ c$B5CE LD B,$08        ; B = 8;
 *$B605 EX DE,HL        ;     decrement:
  $B606 LD L,(IY+$0F)   ;     L = IY[0x0F]; // X axis
  $B609 LD H,(IY+$10)   ;     H = IY[0x10];
- $B60C LD A,(DE)       ;     A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data)
+ $B60C LD A,(DE)       ;     A = *DE; // sampled DE=$CF9A,$CF9E,$CFBE,$CFC2,$CFB2,$CFB6,$CFA6,$CFAA (character_related_data)
  $B60D LD C,A          ;     C = A;
  $B60E AND $80         ;     A &= 0x80;
  $B610 JR Z,$B614      ; {    if (A) A = 0xFF;
@@ -10434,7 +10434,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B6B9 DEC B           ; {%> while (--B);
  $B6BA JP NZ,$B5D4     ; }
  $B6BD RET             ; return;
-*$B6BE RES 7,(IY+$0D)  ; kicked: IY[0x0D] &= ~input_KICK; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,
+*$B6BE RES 7,(IY+$0D)  ; kicked: IY[0x0D] &= ~input_KICK; // sampled IY=$8020,$80A0,$8060,$80E0,$8080
 *$B6C2 LD A,(IY+$0E)   ; {end_bit: A = byte_CDAA[IY[0x0E] * 9 + IY[0x0D]];
  $B6C5 LD D,A          ;
  $B6C6 ADD A,A         ;
@@ -10952,7 +10952,7 @@ c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
  $B987 LD C,A        ;   C = A;
  $B988 CP (HL)       ; {  if (A >= *HL) <%
  $B989 JP C,$B99F    ; }
- $B98C SUB (HL)      ;     A -= *HL; // sampled HL points to $81EC $81F4 $EC12
+ $B98C SUB (HL)      ;     A -= *HL; // sampled HL=$81EC,$81F4,$EC12
  $B98D LD ($B837),A  ;     byte_B837 = A;
  $B990 INC HL        ;     HL++;
  $B991 LD A,(HL)     ; {    A = *HL - C;
@@ -11879,7 +11879,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /* cha
  $C573 ADD A,E        ;
  $C574 LD E,A         ; }
  $C575 LD A,($68A0)   ; A = room_index;
- $C578 LD (DE),A      ; *DE = A; // sampled DE = $803C (vischar->room)
+ $C578 LD (DE),A      ; *DE = A; // sampled DE=$803C (vischar->room)
  $C579 AND A          ; {if (A) <%
  $C57A JR Z,$C588     ; }
  $C57C LD BC,$2040    ; {  play_speaker(sound_CHARACTER_ENTERS_2);
@@ -12005,7 +12005,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
 *$C62D LD A,L        ; {  HL -= 21; // reset HL to point to original vischar
  $C62E SUB $15       ;
  $C630 LD L,A        ; }
- $C631 LD A,(HL)     ;   A = *HL; // HL points to vischar // sampled HL = $8040, $8020, $8080, $80A0
+ $C631 LD A,(HL)     ;   A = *HL; // HL points to vischar // sampled HL=$8040,$8020,$8080,$80A0
  $C632 LD (HL),$FF   ; {  *HL++ = character_NONE;
  $C634 INC L         ; }
  $C635 LD (HL),$FF   ; {  *HL++ = vischar_FLAGS_EMPTY_SLOT;
@@ -12030,7 +12030,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
 ;
 ; Used by the routines at #R$A3BB, #R$C4E0, #R$C6A0 and #R$CB23.
 ;
-; I:HL Pointer to characterstruct + 5. // sampled = $768E, 7695, 769C, 7617,
+; I:HL Pointer to characterstruct + 5. // sampled HL=$768E,$7695,$769C,$7617
 ; .    761E, 7625, 762C, 7633, 7656, 765D
 ; O:A  0/128/255
 ; O:HL Pointer to somewhere in word_783A.
@@ -12067,7 +12067,7 @@ c$C651 LD A,(HL)     ; A = *HL;
  $C67D CP $28        ; {  if (A < 40) <%
  $C67F JR NC,$C68F   ; }
  $C681 LD A,(DE)     ;     A = *DE;
- $C682 BIT 7,(HL)    ; {    if (*HL & (1<<7)) A ^= 0x80; // sampled HL=$762C, $8002, $7672, $7679, $7680, $76A3, $76AA, $76B1, $76B8, $76BF, ... looks quite general
+ $C682 BIT 7,(HL)    ; {    if (*HL & (1<<7)) A ^= 0x80; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general
  $C684 JR Z,$C688    ;
  $C686 XOR $80       ; }
 *$C688 CALL $6A12    ;     transition();
@@ -12151,7 +12151,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C6F0 POP HL
  $C6F1 RET           ;     return; %>
 ; Commandant.
-*$C6F2 LD A,(HL)     ; {  char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // sampled = HL = $7617 (characterstruct + 5) // location
+*$C6F2 LD A,(HL)     ; {  char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // sampled HL=$7617 (characterstruct + 5) // location
  $C6F3 AND $7F       ; }
  $C6F5 CP $24        ; {  if (A != 36) goto back;
  $C6F7 JR NZ,$C6E4   ; }
@@ -12206,7 +12206,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C740 RRA           ;
  $C741 LD (DE),A     ; }
 ; Stuff reading from door_positions.
- $C742 LD A,(HL)     ; {  if ((*HL & doorposition_FLAGS_MASK_LO) < 2) <% // sampled HL = 78fa,794a,78da,791e,78e2,790e,796a,790e,791e,7962,791a
+ $C742 LD A,(HL)     ; {  if ((*HL & doorposition_FLAGS_MASK_LO) < 2) <% // sampled HL=$78FA,$794A,$78DA,$791E,$78E2,$790E,$796A,$790E,$791E,$7962,$791A
  $C743 AND $03       ;
  $C745 CP $02        ;
  $C747 JR NC,$C750   ; }
@@ -12421,7 +12421,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C843 JR $C864      ; goto charevnt_handler_0;
 ; charevnt_handler_6
 @label=charevnt_handler_6
- $C845 POP HL        ; // (popped) sampled HL = $80C2 (x2), $8042  // likely target location
+ $C845 POP HL        ; // (popped) sampled HL=$80C2 (x2),$8042  // likely target location
  $C846 LD (HL),$03   ; {*HL++ = 0x03;
  $C848 INC HL        ; }
  $C849 LD (HL),$15   ; *HL   = 0x15;
@@ -13049,7 +13049,7 @@ c$CB79 ADD A,A       ; {DE = table_7738[A];
 c$CB85 PUSH HL
  $CB86 LD HL,($C41A) ; {HL = prng_pointer + 1;
  $CB89 INC L         ; }
-; sampled HL = $902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like
+; sampled HL=$902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like
 ; it's fetching exterior tiles
  $CB8A LD A,(HL)     ; {A = *HL & 0x0F;
  $CB8B AND $0F       ; }
@@ -13308,7 +13308,7 @@ c$CCCD LD A,($68A0)  ; A = room_index;
 ; So it must be reading a byte early when iteration is resumed. Consequences? I
 ; think it'll screw up when multiple items are in range.
 *$CCEB DEC HL        ; nearby: HL--;
- $CCEC LD A,(HL)     ; {A = *HL & itemstruct_ITEM_MASK; // sampled HL = $772A (&item_structs[item_PURSE].item)
+ $CCEC LD A,(HL)     ; {A = *HL & itemstruct_ITEM_MASK; // sampled HL=$772A (&item_structs[item_PURSE].item)
  $CCED AND $0F       ; }
 @rfix+begin
        INC HL        ; potentially a bug fix but needs thinking about
