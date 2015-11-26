@@ -10,17 +10,23 @@
 ; Copyright 2012-2015 David Thomas <dave@davespace.co.uk> (this disassembly)
 ;
 @ofix+begin
-; This disassembly contains ofix changes.
+; This disassembly contains ofix changes:
 ;
 @ofix+end
 @bfix+begin
 ; This disassembly contains bfix changes:
 ;   * Fix the $A2C6 incorrect iteration count resulting in a ROM write to $1A42.
+;   * Makes unconditional a needless conditional return at $7CAF.
+;   * Corrects the exterior_mask_data iteration count in mask_stuff/$B935.
 ;
 @bfix+end
 @rfix+begin
 ; This disassembly contains rfix changes:
 ;   * Removes the redundant self-modifying code at $6B19.
+;   * Removes a redundant jump at $7AFB.
+;   * Removes a redundant jump at $A0B8.
+;   * Inserts the missing RET at the end of mask_stuff/$B916.
+;   * $CCED potential bug fix for is_item_discoverable.
 ;
 @rfix+end
 ; //////////////////////////////////////////////////////////////////////////////
@@ -4097,7 +4103,9 @@ c$7AC9 CP $0A        ; {if (A == input_UP_FIRE) pick_up_item();
 @label=use_item_common
 *$7AF8 CP $FF        ; {if (A == item_NONE) return;
  $7AFA RET Z         ; }
+@rfix-begin
  $7AFB JR $7AFD      ; Bug: Pointless jump to adjacent instruction.
+@rfix-end
 *$7AFD ADD A,A       ; {HL = &item_actions_jump_table[A];
  $7AFE LD C,A        ;
  $7AFF LD B,$00      ;
@@ -4461,9 +4469,13 @@ c$7C82 LD C,$01      ; C = 1; // outdoors
  $7CAC DEC HL        ;     HL--; // compensate for overshoot
  $7CAD POP BC
  $7CAE XOR A         ;     A = 0; // set Z (found)
+@bfix-begin
 ; Bug: The next instruction is written as RET Z but there's no need for it to
 ; be conditional.
  $7CAF RET Z         ;     return;
+@bfix+else
+ $7CAF RET           ;     return;
+@bfix+end
 *$7CB0 POP HL        ;     popnext:
  $7CB1 POP BC        ;     %>
 *$7CB2 LD A,$07      ; {  HL += 7; // stride
@@ -4697,9 +4709,11 @@ c$7D99 LD HL,($7D11) ; HL = message_queue_pointer;
  $7DA2 EX DE,HL      ; }
  $7DA3 LD A,(HL)     ; {A = *DE++;
  $7DA4 INC HL        ; }
+@rsub-begin
 ; Bug: C is loaded here but not used. This could be a hangover from 16-bit
 ; message IDs.
  $7DA5 LD C,(HL)     ; C = *DE;
+@rsub-end
  $7DA6 ADD A,A       ; {HL = messages_table[A];
  $7DA7 LD HL,$7DCD   ;
  $7DAA LD E,A        ;
@@ -6141,6 +6155,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
 ; Bug: A is always zero here, so $800E is always set to zero.
 @nowarn
 *$9ED0 LD HL,$800E   ; {else <% $800E = A & 3; // set direction
+; LD A,(HL) missing here?
  $9ED3 AND $03       ;
  $9ED5 LD (HL),A     ; }
  $9ED6 DEC L         ; {  $800D = input_KICK;
@@ -6469,8 +6484,10 @@ c$A09E LD HL,$A130   ; HL = &bell;
 *$A0B0 LD A,($518E)  ; A = screenaddr_bell_ringer;
  $A0B3 CP $3F        ; {if (A != 63) <%
  $A0B5 JP Z,$A0C6    ; }
-; Bug: Needless jump.
+@rfix-begin
+; Bug: Pointless jump to adjacent instruction.
  $A0B8 JP $A0BB
+@rfix-end
 ; Plot ringer "on".
 *$A0BB LD DE,$A153   ;   DE = bell_ringer_bitmap_on;
  $A0BE CALL $A0C9    ;   plot_ringer();
@@ -10879,9 +10896,12 @@ c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
  $B932 INC HL        ;
  $B933 JR $B93A      ; }
 ; Outdoors.
-; .
+@bfix-begin
 ; Bug? This count of 59 doesn't match NELEMS(exterior_mask_data); which is 58.
-*$B935 LD B,$3B      ; else <% B = NELEMS(exterior_mask_data); // 59 iterations
+*$B935 LD B,$3B      ; else <% B = 59; // 59 iterations
+@bfix+else
+*$B935 LD B,$3A      ; else <% B = NELEMS(exterior_mask_data); // 58 iterations
+@bfix+end
  $B937 LD HL,$EC03   ;   HL = $EC03; // exterior_mask_data + 2 bytes %>
 ; Mask against all.
 *$B93A PUSH BC       ; do <%
@@ -11143,7 +11163,11 @@ c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
  $BAC8 ADD HL,DE     ; }
  $BAC9 DEC B         ; {%> while (--B);
  $BACA JP NZ,$B93A   ; }
-; Bug: Looks like a RET is missing here. We fall through into multiply.
+@rfix-begin
+; Bug: RET is missing here. We fall through into multiply.
+@rfix+else
+       RET
+@rfix+end
 
 ; Multiply the two input values, A and E, returning a widened result in HL.
 ;
@@ -13286,6 +13310,9 @@ c$CCCD LD A,($68A0)  ; A = room_index;
 *$CCEB DEC HL        ; nearby: HL--;
  $CCEC LD A,(HL)     ; {A = *HL & itemstruct_ITEM_MASK; // sampled HL = $772A (&item_structs[item_PURSE].item)
  $CCED AND $0F       ; }
+@rfix+begin
+       INC HL        ; potentially a bug fix but needs thinking about
+@rfix+end
 ; The green key and food items are ignored.
  $CCEF CP $0B        ; {if (A == item_GREEN_KEY || A == item_FOOD) goto next;
  $CCF1 JR Z,$CCE7    ;
