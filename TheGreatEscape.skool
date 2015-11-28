@@ -179,9 +179,9 @@
 ; character_23_PRISONER_4                       = 23,
 ; character_24_PRISONER_5                       = 24,
 ; character_25_PRISONER_6                       = 25,
-; character_26_STOVE_1                          = 26,   ; start of non-characters
-; character_27_STOVE_2                          = 27,
-; character_28_CRATE                            = 28,
+; character_26_STOVE_1                          = 26,   ; movable item
+; character_27_STOVE_2                          = 27,   ; movable item
+; character_28_CRATE                            = 28,   ; movable item
 ; character_NONE                                = 255,
 ;
 ; room_0_OUTDOORS                               = 0,
@@ -190,7 +190,7 @@
 ; room_3_HUT2RIGHT                              = 3,
 ; room_4_HUT3LEFT                               = 4,
 ; room_5_HUT3RIGHT                              = 5,
-; room_6                                        = 6,    ; unused
+; room_6                                        = 6,    ; unused room
 ; room_7_CORRIDOR                               = 7,
 ; room_8_CORRIDOR                               = 8,
 ; room_9_CRATE                                  = 9,
@@ -210,8 +210,8 @@
 ; room_23_BREAKFAST                             = 23,
 ; room_24_SOLITARY                              = 24,
 ; room_25_BREAKFAST                             = 25,
-; room_26                                       = 26,   ; unused
-; room_27                                       = 27,   ; unused
+; room_26                                       = 26,   ; unused room
+; room_27                                       = 27,   ; unused room
 ; room_28_HUT1LEFT                              = 28,
 ; room_29_SECOND_TUNNEL_START                   = 29,
 ; many of the tunnels are displayed duplicated
@@ -394,25 +394,25 @@
 ; interiorobject_TUNNEL_ENTRANCE                = 18,
 ; interiorobject_PRISONER_SAT_END_TABLE         = 19,
 ; interiorobject_COLLAPSED_TUNNEL_SW_NE         = 20,
-; interiorobject_UNUSED_21                      = 21, // unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
+; interiorobject_UNUSED_21                      = 21,   ; object unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
 ; interiorobject_CHAIR_FACING_SE                = 22,
 ; interiorobject_OCCUPIED_BED                   = 23,
 ; interiorobject_ORNATE_WARDROBE_FACING_SW      = 24,
 ; interiorobject_CHAIR_FACING_SW                = 25,
 ; interiorobject_CUPBOARD_FACING_SE             = 26,
 ; interiorobject_ROOM_OUTLINE_18x10_A           = 27,
-; interiorobject_UNUSED_28                      = 28, // unused by game, draws as interiorobject_TABLE
+; interiorobject_UNUSED_28                      = 28,   ; object unused by game, draws as interiorobject_TABLE
 ; interiorobject_TABLE                          = 29,
 ; interiorobject_STOVE_PIPE                     = 30,
 ; interiorobject_PAPERS_ON_FLOOR                = 31,
 ; interiorobject_TALL_WARDROBE_FACING_SW        = 32,
 ; interiorobject_SMALL_SHELF_FACING_SE          = 33,
 ; interiorobject_SMALL_CRATE                    = 34,
-; interiorobject_SMALL_WINDOW_WITH_BARS_FACING_SE = 35,
-; interiorobject_TINY_DOOR_FRAME_NE             = 36, // tunnel entrance
+; interiorobject_SMALL_WINDOW_WITH_BARS_FACING_SE = 35
+; interiorobject_TINY_DOOR_FRAME_NE             = 36,   ; tunnel entrance
 ; interiorobject_NOTICEBOARD_FACING_SE          = 37,
 ; interiorobject_DOOR_FRAME_NW                  = 38,
-; interiorobject_UNUSED_39                      = 39, // unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
+; interiorobject_UNUSED_39                      = 39,   ; object unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
 ; interiorobject_DOOR_FRAME_NE                  = 40,
 ; interiorobject_ROOM_OUTLINE_15x8              = 41,
 ; interiorobject_CUPBOARD_FACING_SW             = 42,
@@ -472,21 +472,21 @@
 ;
 ; ; $800x flags (and $802x, $804x, ...)
 ; vischar_CHARACTER_EMPTY_SLOT                  = $FF,
-; vischar_CHARACTER_MASK                        = $1F,  ; character index
+; vischar_CHARACTER_MASK                        = $1F,          ; character index
 ; vischar_FLAGS_EMPTY_SLOT                      = $FF,
 ; vischar_FLAGS_MASK                            = $3F,
-; vischar_FLAGS_PICKING_LOCK                    = 1 << 0,   ; hero only
-; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,   ; hero only
-; vischar_FLAGS_BRIBE_PENDING                   = 1 << 0,   ; AI only
-; vischar_FLAGS_BIT1                            = 1 << 1,   ; AI only
-; vischar_FLAGS_SAW_BRIBE                       = 1 << 2,   ; set when bribe taken ('gone mad' flag)
-; vischar_FLAGS_BIT6                            = 1 << 6,   ; seems to affect coordinate scaling
-; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,   ; set in called_from_main_loop_9
+; vischar_FLAGS_PICKING_LOCK                    = 1 << 0,       ; hero only
+; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,       ; hero only
+; vischar_FLAGS_BRIBE_PENDING                   = 1 << 0,       ; AI only
+; vischar_FLAGS_BIT1                            = 1 << 1,       ; AI only
+; vischar_FLAGS_SAW_BRIBE                       = 1 << 2,       ; set when bribe taken ('gone mad' flag)
+; vischar_FLAGS_BIT6                            = 1 << 6,       ; seems to affect coordinate scaling
+; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; set in called_from_main_loop_9
 ; vischar_BYTE2_MASK                            = $7F,
 ; vischar_BYTE2_BIT7                            = 1 << 7,
 ; vischar_BYTE7_MASK_LO                         = $0F,
 ; vischar_BYTE7_MASK_HI                         = $F0,
-; vischar_BYTE7_IMPEDED                         = 1 << 5,   ; bounds related, perhaps stopping movement
+; vischar_BYTE7_IMPEDED                         = 1 << 5,w      ; bounds related, perhaps stopping movement
 ; vischar_BYTE7_BIT6                            = 1 << 6,
 ; vischar_BYTE7_LOCATABLE                       = 1 << 7,
 ; vischar_BYTE12_MASK                           = $7F,
@@ -495,15 +495,15 @@
 ;
 ; itemstruct_ITEM_MASK                          = $0F,
 ; itemstruct_ITEM_FLAG_POISONED                 = 1 << 5,
-; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,   ; set when the item is picked up (maybe)
+; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,       ; set when the item is picked up (maybe)
 ; itemstruct_ROOM_MASK                          = $3F,
-; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,   ; unknown
-; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,   ; set when the item is nearby
+; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; unknown
+; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
 ;
 ; gates_and_doors_MASK                          = $7F,
 ; gates_and_doors_LOCKED                        = 1 << 7,
 ;
-; characterstruct_FLAG_DISABLED                 = 1 << 6,   ; this disables the character
+; characterstruct_FLAG_DISABLED                 = 1 << 6,       ; this disables the character
 ; characterstruct_BYTE0_MASK                    = $1F,
 ; characterstruct_BYTE5_MASK                    = $7F,
 ; characterstruct_BYTE6_MASK_HI                 = $F8,
@@ -513,7 +513,7 @@
 ; doorposition_FLAGS_MASK_HI                    = $FC,
 ;
 ; searchlight_STATE_CAUGHT                      = $1F,
-; searchlight_STATE_SEARCHING                   = $FF,  ; hunting for hero
+; searchlight_STATE_SEARCHING                   = $FF,          ; hunting for hero
 ;
 ; bell_RING_PERPETUAL                           = $00,
 ; bell_RING_40_TIMES                            = $28,
@@ -525,9 +525,9 @@
 ; escapeitem_UNIFORM                            = 8,
 ;
 ; statictiles_COUNT_MASK                        = $7F,
-; statictiles_VERTICAL                          = 1 << 7,   ; otherwise horizontal
+; statictiles_VERTICAL                          = 1 << 7,       ; otherwise horizontal
 ;
-; map_MAIN_GATE_X                               = $696D,    ; coords: $69..$6D
+; map_MAIN_GATE_X                               = $696D,        ; coords: $69..$6D
 ; map_MAIN_GATE_Y                               = $494B,
 ; map_ROLL_CALL_X                               = $727C,
 ; map_ROLL_CALL_Y                               = $6A72,
