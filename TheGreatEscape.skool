@@ -509,8 +509,8 @@
 ; characterstruct_BYTE6_MASK_HI                 = $F8,
 ; characterstruct_BYTE6_MASK_LO                 = $07,
 ;
-; doorposition_FLAGS_MASK_LO                    = $03,
-; doorposition_FLAGS_MASK_HI                    = $FC,
+; doorpos_FLAGS_MASK_DIRECTION                  = $03,          ; up/down or direction field?
+; doorpos_FLAGS_MASK_ROOM                       = $FC,
 ;
 ; searchlight_STATE_CAUGHT                      = $1F,
 ; searchlight_STATE_SEARCHING                   = $FF,          ; hunting for hero
@@ -12200,13 +12200,13 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C739 DEC DE        ; {  DE -= 2;
  $C73A DEC DE        ; }
  $C73B DEC HL        ;   HL--;
- $C73C LD A,(HL)     ; {  *DE = (*HL & doorposition_FLAGS_MASK_HI) >> 2; // mask
+ $C73C LD A,(HL)     ; {  *DE = (*HL & doorpos_FLAGS_MASK_ROOM) >> 2; // mask
  $C73D AND $FC       ;
  $C73F RRA           ;
  $C740 RRA           ;
  $C741 LD (DE),A     ; }
 ; Stuff reading from door_positions.
- $C742 LD A,(HL)     ; {  if ((*HL & doorposition_FLAGS_MASK_LO) < 2) <% // sampled HL=$78FA,$794A,$78DA,$791E,$78E2,$790E,$796A,$790E,$791E,$7962,$791A
+ $C742 LD A,(HL)     ; {  if ((*HL & doorpos_FLAGS_MASK_DIRECTION) < 2) <% // sampled HL=$78FA,$794A,$78DA,$791E,$78E2,$790E,$796A,$790E,$791E,$7962,$791A
  $C743 AND $03       ;
  $C745 CP $02        ;
  $C747 JR NC,$C750   ; }
@@ -12900,7 +12900,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
 ; TOP_LEFT or TOP_RIGHT => next door pos
 ; .
 ; BOTTOM_RIGHT or BOTTOM_LEFT => current door pos
- $CAE6 LD A,(HL)     ; {  A = *HL & doorposition_FLAGS_MASK_LO; // door position thingy, lowest two bits -- index?
+ $CAE6 LD A,(HL)     ; {  A = *HL & doorpos_FLAGS_MASK_DIRECTION; // door position thingy, lowest two bits -- index?
  $CAE7 AND $03       ; }
  $CAE9 CP $02        ; {  if (A < 2) HL += 5; else HL -= 3;
  $CAEB JP NC,$CAF5   ;
