@@ -12095,80 +12095,84 @@ c$C651 LD A,(HL)     ; A = *HL;
 c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C6A2 LD ($A13E),A  ; }
 ; Move to the next character, wrapping around after character 26.
- $C6A5 LD A,($8217)  ; {character_index = (character_index + 1) % character_26; // 26 = highest + 1 character
- $C6A8 INC A         ;
- $C6A9 CP $1A        ;
+ $C6A5 LD A,($8217)  ; {character = character_index + 1;
+ $C6A8 INC A         ; }
+ $C6A9 CP $1A        ; {if (character == character_26_STOVE_1)
  $C6AB JR NZ,$C6AE   ;
- $C6AD XOR A         ;
-*$C6AE LD ($8217),A  ; }
+ $C6AD XOR A         ;   character = character_0_COMMANDANT;}
+*$C6AE LD ($8217),A  ; character_index = character;
 ; Get its chararacter struct, exiting if it's not enabled.
- $C6B1 CALL $C7B9    ; HL = get_character_struct(character_index); // pass character_index as A
- $C6B4 BIT 6,(HL)    ; {if (*HL & characterstruct_FLAG_DISABLED) return; /* Disabled character. */
- $C6B6 RET NZ        ; }
+ $C6B1 CALL $C7B9    ; HL = get_character_struct(character); // passing character in A
+ $C6B4 BIT 6,(HL)    ; {if (*HL & characterstruct_FLAG_DISABLED)
+ $C6B6 RET NZ        ;   return; /* Disabled character. */}
  $C6B7 PUSH HL
 ; Are any items to be found in the same room as the character?
- $C6B8 INC HL        ; {A = *++HL; // characterstruct byte1 == room
+ $C6B8 INC HL        ; {room = *++HL; // characterstruct room
  $C6B9 LD A,(HL)     ; }
- $C6BA AND A         ; {if (A != room_0_OUTDOORS) <%
+ $C6BA AND A         ; {if (room != room_0_OUTDOORS) <%
  $C6BB JR Z,$C6C5    ; }
 ; This discovers one item at a time.
- $C6BD CALL $CCFB    ;   is_item_discoverable_interior(A);
- $C6C0 JR NZ,$C6C5   ; {  if (Z) item_discovered(); %>
+ $C6BD CALL $CCFB    ;   is_item_discoverable_interior(room); // passing room in A, returning item in ?
+ $C6C0 JR NZ,$C6C5   ; {  if (Z) item_discovered(item); %> // passing item in C
  $C6C2 CALL $CD31    ; }
-*$C6C5 POP HL
- $C6C6 INC HL        ; {HL += 2; // point at characterstruct X,Y coords
+*$C6C5 POP HL        ; HL = characterstruct
+ $C6C6 INC HL        ; {HL += 2; // point at characterstruct pos
  $C6C7 INC HL        ; }
  $C6C8 PUSH HL
- $C6C9 INC HL        ; {HL += 3; // point at characterstruct byte2
+ $C6C9 INC HL        ; {HL += 3; // point at characterstruct target
  $C6CA INC HL        ;
  $C6CB INC HL        ; }
 ; No target? Not yet understood.
- $C6CC LD A,(HL)     ; A = *HL;
+ $C6CC LD A,(HL)     ; A = *HL; // charstr->target.x
  $C6CD AND A         ; {if (A == 0) <%
  $C6CE JR NZ,$C6D2   ; }
  $C6D0 POP HL
  $C6D1 RET           ;   return; %>
-*$C6D2 CALL $C651    ; sub_C651(); // "move towards" ?
+*$C6D2 CALL $C651    ; sub_C651(); // "move towards" ? // returning ? in A, ? in HL
  $C6D5 CP $FF        ; {if (A == 0xFF) <%
  $C6D7 JP NZ,$C6FF   ; }
- $C6DA LD A,($8217)  ;   A = character_index;
-; Not the commandant.
- $C6DD AND A         ; {  if (A != character_0_COMMANDANT) <%
+ $C6DA LD A,($8217)  ;   character = character_index;
+ $C6DD AND A         ; {  if (character != character_0_COMMANDANT) <%
  $C6DE JR Z,$C6F2    ; }
- $C6E0 CP $0C        ; {    if (A >= character_12_GUARD_12) goto character_12_or_higher;
- $C6E2 JR NC,$C6F9   ; }
+; Not the commandant.
+ $C6E0 CP $0C        ; {    if (character >= character_12_GUARD_12)
+ $C6E2 JR NC,$C6F9   ;   goto character_12_or_higher;}
 ; Characters 1..11.
-*$C6E4 LD A,(HL)     ; {    back: *HL++ ^= 0x80;
+@label=character_1_to_11
+*$C6E4 LD A,(HL)     ; {    *HL++ ^= (1 << 7); // HLlocation->x
  $C6E5 XOR $80       ;
  $C6E7 LD (HL),A     ;
  $C6E8 INC HL        ; }
 ; Pattern: [-2]+1
- $C6E9 BIT 7,A       ; {    if (A & 7) (*HL) -= 2;
+ $C6E9 BIT 7,A       ; {    if (A & (1 << 7)) (*HL) -= 2;
  $C6EB JR Z,$C6EF    ;
  $C6ED DEC (HL)      ;
  $C6EE DEC (HL)      ; }
-*$C6EF INC (HL)      ;     (*HL)++; // i.e -1 or +1
+*$C6EF INC (HL)      ;     (*HL)++; // i.e -1 or +1 // HLlocation->y
  $C6F0 POP HL
  $C6F1 RET           ;     return; %>
 ; Commandant.
-*$C6F2 LD A,(HL)     ; {  char_is_zero: A = *HL & characterstruct_BYTE5_MASK; // sampled HL=$7617 (characterstruct + 5) // location
+@label=commandant
+*$C6F2 LD A,(HL)     ; {  A = *HL & characterstruct_BYTE5_MASK; // sampled HL=$7617 (characterstruct + 5) // location
  $C6F3 AND $7F       ; }
- $C6F5 CP $24        ; {  if (A != 36) goto back;
+ $C6F5 CP $24        ; {  if (A != 36) goto character_1_to_11;
  $C6F7 JR NZ,$C6E4   ; }
-*$C6F9 POP DE        ;   character_12_or_higher:
+@label=character_12_or_higher
+*$C6F9 POP DE        ;
  $C6FA JP $C7C6      ;   goto character_event; // exit via
 ;   Two unused bytes.
  $C6FD DEFB $18,$6F  ;   %>
 *$C6FF CP $80        ; {if (A == 0x80) <%
  $C701 JP NZ,$C76E   ; }
- $C704 POP DE        ;   // points at characterstruct.pos
- $C705 DEC DE        ; {  A = DE[-1]; // read one byte earlier
+ $C704 POP DE        ;   // DE points at characterstruct.pos - PUSH at $C6C8
+ $C705 DEC DE        ; {  room = DE[-1];
  $C706 LD A,(DE)     ;
  $C707 INC DE        ; }
  $C708 PUSH HL
- $C709 AND A         ; {  if (A == 0) <%
+ $C709 AND A         ; {  if (room == room_0_OUTDOORS) <%
  $C70A JP NZ,$C71F   ; }
  $C70D PUSH DE
+; Divide the location at HL by 2 and store it to saved_pos.
  $C70E LD DE,$81A4   ;     DE = &saved_pos_x;
  $C711 LD B,$02      ;     B = 2; // 2 iters
 *$C713 LD A,(HL)     ; {    do <% *DE++ = *HL++ >> 1;
@@ -12180,13 +12184,14 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C719 DJNZ $C713    ;     %> while (--B);
  $C71B LD HL,$81A4   ;     HL = &saved_pos_x;
  $C71E POP DE        ;     %>
-*$C71F DEC DE        ; {  if (DE[-1] == 0) A = 2; else A = 6;
+; Establish a maximum for passing into change_by_delta.
+*$C71F DEC DE        ; {  if (DE[-1] == room_0_OUTDOORS)
  $C720 LD A,(DE)     ;
  $C721 INC DE        ;
  $C722 AND A         ;
- $C723 LD A,$02      ;
+ $C723 LD A,$02      ; A = 2;
  $C725 JR Z,$C729    ;
- $C727 LD A,$06      ; }
+ $C727 LD A,$06      ; else A = 6;}
 *$C729 EX AF,AF'
  $C72A LD B,$00      ;   B = 0;
  $C72C CALL $C79A    ;   change_by_delta(A, B, HL, DE);
@@ -12197,10 +12202,13 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C735 LD A,B        ; {  if (B != 2) return; // managed to move
  $C736 CP $02        ;
  $C738 RET NZ        ; }
- $C739 DEC DE        ; {  DE -= 2;
+; So when we reach here a character is stuck.
+; .
+; Are we checking to see if a door is adjacent?
+ $C739 DEC DE        ; {  DE -= 2; // DE -> charstr->room
  $C73A DEC DE        ; }
- $C73B DEC HL        ;   HL--;
- $C73C LD A,(HL)     ; {  *DE = (*HL & doorpos_FLAGS_MASK_ROOM) >> 2; // mask
+ $C73B DEC HL        ;   HL--; // HL -> doorpos
+ $C73C LD A,(HL)     ; {  *DE = (*HL & doorpos_FLAGS_MASK_ROOM) >> 2; // extract room field
  $C73D AND $FC       ;
  $C73F RRA           ;
  $C740 RRA           ;
@@ -12210,24 +12218,26 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C743 AND $03       ;
  $C745 CP $02        ;
  $C747 JR NC,$C750   ; }
- $C749 INC HL        ; {    HL += 5; %>
+ $C749 INC HL        ; {    HL += 5; %> // next door's pos
  $C74A INC HL        ;
  $C74B INC HL        ;
  $C74C INC HL        ;
  $C74D INC HL        ; }
  $C74E JR $C753      ;   else <%
-*$C750 DEC HL        ; {    HL -= 3; %>
+*$C750 DEC HL        ; {    HL -= 3; %> // previous door's pos
  $C751 DEC HL        ;
  $C752 DEC HL        ; }
-*$C753 LD A,(DE)     ; {  A = *DE++
+*$C753 LD A,(DE)     ; {  room = *DE++;
  $C754 INC DE        ; }
- $C755 AND A         ; {  if (A) <%
+ $C755 AND A         ; {  if (room != room_0_OUTDOORS) <%
  $C756 JR Z,$C761    ; }
- $C758 LDI           ;     *DE++ = *HL++;
- $C75A LDI           ;     *DE++ = *HL++;
- $C75C LDI           ;     *DE++ = *HL++;
+; Indoors. Copy the door's tinypos into the charstr's tinypos.
+ $C758 LDI           ;     *DE++ = *HL++; // x
+ $C75A LDI           ;     *DE++ = *HL++; // y
+ $C75C LDI           ;     *DE++ = *HL++; // height
  $C75E DEC DE        ;     DE--; %>
  $C75F JR $C78B      ;   else <%
+; Outdoors. Copy the door's tinypos into the charstr's tinypos, dividing by two.
 *$C761 LD B,$03      ;     B = 3;
 *$C763 LD A,(HL)     ; {    do <% *DE++ = *HL++ >> 1;
  $C764 AND A         ;
@@ -12239,27 +12249,29 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C76B DEC DE        ;     DE--; %> %>
  $C76C JR $C78B      ; else <%
 *$C76E POP DE
- $C76F DEC DE        ; {  tmpA = DE[-1];
+; Establish a maximum for passing into change_by_delta.
+ $C76F DEC DE        ; {  room = DE[-1]; // DE -> charstr
  $C770 LD A,(DE)     ;
  $C771 INC DE        ; }
- $C772 AND A
- $C773 LD A,$02      ;   A = 2;
- $C775 JR Z,$C779    ; {  if (tmpA) A = 6;
+ $C772 AND A         ; {  if (room == room_0_OUTDOORS) A = 2; else A = 6;
+ $C773 LD A,$02      ;
+ $C775 JR Z,$C779    ;
  $C777 LD A,$06      ; }
 *$C779 EX AF,AF'
  $C77A LD B,$00      ;   B = 0;
- $C77C CALL $C79A    ;   change_by_delta()
+ $C77C CALL $C79A    ;   change_by_delta(A, B, HL, DE);
  $C77F INC HL        ;   HL++;
  $C780 INC DE        ;   DE++;
- $C781 CALL $C79A    ;   change_by_delta()
+ $C781 CALL $C79A    ;   change_by_delta(A, B, HL, DE);
  $C784 INC DE        ;   DE++;
- $C785 LD A,B        ; {  if (B != 2) return; %>
+ $C785 LD A,B        ; {  if (B != 2) return; %> // managed to move
  $C786 CP $02        ;
  $C788 JR Z,$C78B    ;
  $C78A RET           ; }
-*$C78B INC DE        ; DE++;
+; So when we reach here a character is stuck.
+*$C78B INC DE        ; DE++; // DE -> charstr->target
  $C78C EX DE,HL
- $C78D LD A,(HL)     ; A = *HL; // address? 761e 7625 768e 7695 7656 7695 7680 // => character struct entry + 5
+ $C78D LD A,(HL)     ; A = *HL; // sampled HL=$761E $7625 $768E $7695 $7656 $7695 $7680 // => character struct entry + 5 // target field
  $C78E CP $FF        ; {if (A == 0xFF) return;
  $C790 RET Z         ; }
  $C791 BIT 7,A       ; if ((A & (1<<7)) != 0) ...
