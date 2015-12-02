@@ -13346,7 +13346,7 @@ c$CCCD LD A,($68A0)  ; A = room_index;
 @label=is_item_discoverable_interior
 c$CCFB LD C,A        ; C = A; // room ref
  $CCFC LD HL,$76C9   ; HL = &item_structs[0].room; // pointer to room ref
- $CCFF LD B,$10      ; B = 16; // items__LIMIT
+ $CCFF LD B,$10      ; B = 16; // item__LIMIT
 *$CD01 LD A,(HL)     ; {do <% A = *HL & itemstruct_ROOM_MASK;
  $CD02 AND $3F       ; }
 ; Is the item in the specified room?
