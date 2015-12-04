@@ -10,18 +10,18 @@
 ; Copyright 2012-2015 David Thomas <dave@davespace.co.uk> (this disassembly)
 ;
 @ofix+begin
-; This disassembly contains ofix changes:
+; This disassembly contains ofix changes (operand fixes):
 ;
 @ofix+end
 @bfix+begin
-; This disassembly contains bfix changes:
+; This disassembly contains bfix changes (bug fixes):
 ;   * Fix the $A2C6 incorrect iteration count resulting in a ROM write to $1A42.
 ;   * Makes unconditional a needless conditional return at $7CAF.
 ;   * Corrects the exterior_mask_data iteration count in mask_stuff/$B935.
 ;
 @bfix+end
 @rfix+begin
-; This disassembly contains rfix changes:
+; This disassembly contains rfix changes (code movement):
 ;   * Removes the redundant self-modifying code at $6B19.
 ;   * Removes a redundant jump at $7AFB.
 ;   * Removes a redundant jump at $A0B8.
@@ -38,12 +38,13 @@
 ;
 ; * Any terminology used herein such as 'super tiles' or 'vischars' is my own
 ;   and has been invented for the purposes of the disassembly. I have seen none
-;   of the original source, nor know anything of how it was built. When I
-;   contacted the original author and he informed me that the original source
-;   is probably now lost forever. :-S
+;   of the original source, nor know anything of how it was built.
 ;
-; * The md5sum of the original tape image used is
-;   a6e5d50ab065accb017ecc957a954b53 and was taken from
+;   When I contacted the author he informed me that the original source is
+;   probably now lost forever. :-(
+;
+; * The md5sum of the original tape image this disassembly was taken from is
+;   a6e5d50ab065accb017ecc957a954b53 and was sourced from
 ;   http://www.worldofspectrum.org/pub/sinclair/games/g/GreatEscapeThe.tzx.zip
 ;   but you may see slight differences towards the end of the file if you
 ;   attempt to recreate the disassembly yourself.
@@ -72,17 +73,20 @@
 ; to remove all that as it was useful in the .ctl file version, but not so much
 ; in the .skool version).
 ;
-; I replace registers with constants when the value is used once (e.g. for
+; I replace registers with constants when the value is used only once (e.g. for
 ; strides when walking through arrays).
 ;
 ; //////////////////////////////////////////////////////////////////////////////
 ; ASSEMBLY PATTERNS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
+; Here are a selection of Z80 assembly language patterns which occur throughout
+; the code.
+;
 ; Multiply A by 2^N:
 ;   ADD A,A ; A += A (N times)
 ;
-; Increment HL by 8-bit delta:
+; Increment HL by an 8-bit delta:
 ;   A = L
 ;   A += delta
 ;   L = A
@@ -99,7 +103,7 @@
 ;   elsepart: <elsework>
 ;   endifpart:
 ;
-; Less than or equal:
+; Jump if less than or equal:
 ;   CP $0F
 ;   JP Z,$C8F1
 ;   JP C,$C8F1
