@@ -4588,7 +4588,7 @@ c$7D48 LD A,($7D0F)  ; {if (message_display_delay > 0) <%
  $7D5B JR NC,$7D87   ; else if (A > 128) goto wipe_message; // exit via
  $7D5D LD HL,($7D13) ; else <% HL = current_message_character;
 @nowarn
- $7D60 LD DE,$50E0   ; {  DE = screen_text_start_address + A;
+ $7D60 LD DE,$50E0   ; {  DE = message_text_screen_address + A;
  $7D63 OR E          ;
  $7D64 LD E,A        ; }
  $7D65 CALL $7D2F    ;   plot_glyph();
@@ -4617,7 +4617,7 @@ c$7D87 LD A,($7D10)  ; A = message_display_index;
  $7D8A DEC A         ; {message_display_index = --A;
  $7D8B LD ($7D10),A  ; }
 @nowarn
- $7D8E LD DE,$50E0   ; {DE = screen_text_start_address + A;
+ $7D8E LD DE,$50E0   ; {DE = message_text_screen_address + A;
  $7D91 OR E          ;
  $7D92 LD E,A        ; }
 ; Plot a single space character.
