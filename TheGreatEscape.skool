@@ -9476,7 +9476,7 @@ c$B107 CALL $A0E9      ; increase_morale_by_10_score_by_50();
 c$B14C LD A,($68A0)  ; {if (room_index) <% interior_bounds_check(); return; %>
  $B14F AND A         ;
  $B150 JP NZ,$B29F   ; }
- $B153 LD B,$18      ; B = 24; // 24 iterations (includes walls and fences)
+ $B153 LD B,$18      ; B = 24; // 24 iterations
  $B155 LD DE,$B53E   ; DE = &walls[0];
 *$B158 PUSH BC       ; do <%
  $B159 PUSH DE
