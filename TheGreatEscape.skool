@@ -9996,7 +9996,7 @@ c$B3F6 LD A,($68A0)  ; {if (room_index != room_50_BLOCKED_TUNNEL) return; /* Sho
 
 ; Use wiresnips.
 @label=action_wiresnips
-c$B417 LD HL,$B589   ; HL = &fences[0] + 3;
+c$B417 LD HL,$B589   ; HL = &walls[12] + 3;
  $B41A LD DE,$81B9   ; DE = &hero_map_position.x;
  $B41D LD B,$04      ; B = 4; // iterations
 *$B41F PUSH HL       ; do <% ...
@@ -10209,33 +10209,30 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 
 ; Wall boundaries.
 @label=walls
-b$B53E DEFB $6A,$6E,$52,$62,$00,$0B ; 0x6A, 0x6E, 0x52, 0x62, 0, 11
- $B544 DEFB $5E,$62,$52,$62,$00,$0B ; 0x5E, 0x62, 0x52, 0x62, 0, 11
- $B54A DEFB $52,$56,$52,$62,$00,$0B ; 0x52, 0x56, 0x52, 0x62, 0, 11
- $B550 DEFB $3E,$5A,$6A,$80,$00,$30 ; 0x3E, 0x5A, 0x6A, 0x80, 0, 48 // 48 is high... main gate?
- $B556 DEFB $34,$80,$72,$80,$00,$30 ; 0x34, 0x80, 0x72, 0x80, 0, 48
- $B55C DEFB $7E,$98,$5E,$80,$00,$30 ; 0x7E, 0x98, 0x5E, 0x80, 0, 48
- $B562 DEFB $82,$98,$5A,$80,$00,$30 ; 0x82, 0x98, 0x5A, 0x80, 0, 48
- $B568 DEFB $86,$8C,$46,$80,$00,$0A ; 0x86, 0x8C, 0x46, 0x80, 0, 10
- $B56E DEFB $82,$86,$46,$4A,$00,$12 ; 0x82, 0x86, 0x46, 0x4A, 0, 18
- $B574 DEFB $6E,$82,$46,$47,$00,$0A ; 0x6E, 0x82, 0x46, 0x47, 0, 10
- $B57A DEFB $6D,$6F,$45,$49,$00,$12 ; 0x6D, 0x6F, 0x45, 0x49, 0, 18
- $B580 DEFB $67,$69,$45,$49,$00,$12 ; 0x67, 0x69, 0x45, 0x49, 0, 18
-
-; Fence boundaries.
-@label=fences
-b$B586 DEFB $46,$46,$46,$6A,$00,$08 ; 0x46, 0x46, 0x46, 0x6A, 0, 8
- $B58C DEFB $3E,$3E,$3E,$6A,$00,$08 ; 0x3E, 0x3E, 0x3E, 0x6A, 0, 8
- $B592 DEFB $4E,$4E,$2E,$3E,$00,$08 ; 0x4E, 0x4E, 0x2E, 0x3E, 0, 8
- $B598 DEFB $68,$68,$2E,$45,$00,$08 ; 0x68, 0x68, 0x2E, 0x45, 0, 8
- $B59E DEFB $3E,$68,$3E,$3E,$00,$08 ; 0x3E, 0x68, 0x3E, 0x3E, 0, 8
- $B5A4 DEFB $4E,$68,$2E,$2E,$00,$08 ; 0x4E, 0x68, 0x2E, 0x2E, 0, 8
- $B5AA DEFB $46,$67,$46,$46,$00,$08 ; 0x46, 0x67, 0x46, 0x46, 0, 8
- $B5B0 DEFB $68,$6A,$38,$3A,$00,$08 ; 0x68, 0x6A, 0x38, 0x3A, 0, 8
- $B5B6 DEFB $4E,$50,$2E,$30,$00,$08 ; 0x4E, 0x50, 0x2E, 0x30, 0, 8
- $B5BC DEFB $46,$48,$46,$48,$00,$08 ; 0x46, 0x48, 0x46, 0x48, 0, 8
- $B5C2 DEFB $46,$48,$5E,$60,$00,$08 ; 0x46, 0x48, 0x5E, 0x60, 0, 8
- $B5C8 DEFB $69,$6D,$46,$49,$00,$08 ; 0x69, 0x6D, 0x46, 0x49, 0, 8
+b$B53E DEFB $6A,$6E,$52,$62,$00,$0B ; 0x6A, 0x6E, 0x52, 0x62, 0, 11 ;  0: hut 1 (leftmost on main map)
+ $B544 DEFB $5E,$62,$52,$62,$00,$0B ; 0x5E, 0x62, 0x52, 0x62, 0, 11 ;  1: hut 2
+ $B54A DEFB $52,$56,$52,$62,$00,$0B ; 0x52, 0x56, 0x52, 0x62, 0, 11 ;  2: hut 3 (rightmost on main map)
+ $B550 DEFB $3E,$5A,$6A,$80,$00,$30 ; 0x3E, 0x5A, 0x6A, 0x80, 0, 48 ;  3: main building
+ $B556 DEFB $34,$80,$72,$80,$00,$30 ; 0x34, 0x80, 0x72, 0x80, 0, 48 ;  4: main building
+ $B55C DEFB $7E,$98,$5E,$80,$00,$30 ; 0x7E, 0x98, 0x5E, 0x80, 0, 48 ;  5: main building
+ $B562 DEFB $82,$98,$5A,$80,$00,$30 ; 0x82, 0x98, 0x5A, 0x80, 0, 48 ;  6: main building
+ $B568 DEFB $86,$8C,$46,$80,$00,$0A ; 0x86, 0x8C, 0x46, 0x80, 0, 10 ;  7: west wall
+ $B56E DEFB $82,$86,$46,$4A,$00,$12 ; 0x82, 0x86, 0x46, 0x4A, 0, 18 ;  8: west turret wall
+ $B574 DEFB $6E,$82,$46,$47,$00,$0A ; 0x6E, 0x82, 0x46, 0x47, 0, 10 ;  9: south wall
+ $B57A DEFB $6D,$6F,$45,$49,$00,$12 ; 0x6D, 0x6F, 0x45, 0x49, 0, 18 ; 10: gate wall left
+ $B580 DEFB $67,$69,$45,$49,$00,$12 ; 0x67, 0x69, 0x45, 0x49, 0, 18 ; 11: gate wall right
+ $B586 DEFB $46,$46,$46,$6A,$00,$08 ; 0x46, 0x46, 0x46, 0x6A, 0, 8  ; 12: fence inner (vertical)
+ $B58C DEFB $3E,$3E,$3E,$6A,$00,$08 ; 0x3E, 0x3E, 0x3E, 0x6A, 0, 8  ; 13: fence outer (vertical)
+ $B592 DEFB $4E,$4E,$2E,$3E,$00,$08 ; 0x4E, 0x4E, 0x2E, 0x3E, 0, 8  ; 14: fence outer exercise (vertical)
+ $B598 DEFB $68,$68,$2E,$45,$00,$08 ; 0x68, 0x68, 0x2E, 0x45, 0, 8  ; 15: fence outer exercise (vertical)
+ $B59E DEFB $3E,$68,$3E,$3E,$00,$08 ; 0x3E, 0x68, 0x3E, 0x3E, 0, 8  ; 16: fence inner exercise (horizontal)
+ $B5A4 DEFB $4E,$68,$2E,$2E,$00,$08 ; 0x4E, 0x68, 0x2E, 0x2E, 0, 8  ; 17: fence outer exercise (horizontal)
+ $B5AA DEFB $46,$67,$46,$46,$00,$08 ; 0x46, 0x67, 0x46, 0x46, 0, 8  ; 18: fence inner (horizontal)
+ $B5B0 DEFB $68,$6A,$38,$3A,$00,$08 ; 0x68, 0x6A, 0x38, 0x3A, 0, 8  ; 19: tower outside exercise yard
+ $B5B6 DEFB $4E,$50,$2E,$30,$00,$08 ; 0x4E, 0x50, 0x2E, 0x30, 0, 8  ; 20: tower inside exercise yard
+ $B5BC DEFB $46,$48,$46,$48,$00,$08 ; 0x46, 0x48, 0x46, 0x48, 0, 8  ; 21: tower at corner of main yard
+ $B5C2 DEFB $46,$48,$5E,$60,$00,$08 ; 0x46, 0x48, 0x5E, 0x60, 0, 8  ; 22: tower at north east of main yard
+ $B5C8 DEFB $69,$6D,$46,$49,$00,$08 ; 0x69, 0x6D, 0x46, 0x49, 0, 8  ; 23: gate wall middle
 
 ; (unknown) called_from_main_loop_9
 ;
