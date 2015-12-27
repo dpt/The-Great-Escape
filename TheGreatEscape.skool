@@ -9951,7 +9951,7 @@ c$B3C4 LD HL,($8215) ; Load items_held.
  $B3CC CP H          ; Is 'high' slot item_FOOD?
  $B3CD RET NZ        ; No - return.
 @label=action_poison_have_food
-*$B3CE LD HL,$76F9   ; have_food: (test a character flag?)
+*$B3CE LD HL,$76F9   ; have_food: &item_structs[item_FOOD].item
  $B3D1 BIT 5,(HL)    ; Bit 5 set?
  $B3D3 RET NZ        ; Yes - return.
  $B3D4 SET 5,(HL)    ; Set bit 5.
