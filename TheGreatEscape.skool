@@ -174,7 +174,7 @@
 ; character_14_GUARD_14                         = 14,
 ; character_15_GUARD_15                         = 15,
 ; character_16_GUARD_DOG_1                      = 16,
-; character_16_GUARD_DOG_2                      = 17,
+; character_17_GUARD_DOG_2                      = 17,
 ; character_18_GUARD_DOG_3                      = 18,
 ; character_19_GUARD_DOG_4                      = 19,
 ; character_20_PRISONER_1                       = 20,
@@ -348,9 +348,9 @@
 ; interiorobject_KEY_RACK_FACING_SE             = 53,
 ; interiorobject__LIMIT                         = 54
 ;
-; interiorobjecttile_MAX                        = 194,
+; interiorobjecttile_MAX                        = 194,  ; number of tiles at $9768 interior_tiles
 ; interiorobjecttile_ESCAPE                     = 255,  ; escape character
-;
+
 ; location_000E                                 = $000E,
 ; location_0010                                 = $0010,
 ; location_002A                                 = $002A,
@@ -389,27 +389,38 @@
 ; input_LEFT_FIRE                               = input_LEFT  + input_FIRE,
 ; input_RIGHT_FIRE                              = input_RIGHT + input_FIRE,
 ;
-; ; $800x flags (and $802x, $804x, ...)
-; vischar_CHARACTER_EMPTY_SLOT                  = $FF,
-; vischar_CHARACTER_MASK                        = $1F,          ; character index
+; ; $8000, $8020, $8040, ...
+; vischar_CHARACTER_MASK                        = $1F,          ; character index mask. this is used in a couple of places but it's not consistently applied. i've not spotted anything else sharing the this field.
+;
+; ; $8001, $8021, $8041, ...
 ; vischar_FLAGS_EMPTY_SLOT                      = $FF,
 ; vischar_FLAGS_MASK                            = $3F,
 ; vischar_FLAGS_PICKING_LOCK                    = 1 << 0,       ; hero only
 ; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,       ; hero only
-; vischar_FLAGS_BRIBE_PENDING                   = 1 << 0,       ; AI only
-; vischar_FLAGS_BIT1                            = 1 << 1,       ; AI only
-; vischar_FLAGS_SAW_BRIBE                       = 1 << 2,       ; set when bribe taken ('gone mad' flag)
-; vischar_FLAGS_BIT6                            = 1 << 6,       ; seems to affect coordinate scaling
-; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; set in called_from_main_loop_9
-; vischar_BYTE2_MASK                            = $7F,
-; vischar_BYTE2_BIT7                            = 1 << 7,
+; vischar_FLAGS_BRIBE_PENDING                   = 1 << 0,       ; non-hero only
+; vischar_FLAGS_BIT1                            = 1 << 1,       ; non-hero only (dog + food flag)
+; vischar_FLAGS_SAW_BRIBE                       = 1 << 2,       ; set when a hostile 'saw' a bribe being used (was nearby) or perhaps distracted
+; vischar_FLAGS_BIT6                            = 1 << 6,       ; affects scaling
+; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
+;
+; ; $8002, $8022, $8042, ...
+; vischar_BYTE2_MASK                            = $7F,          ; target mask
+; vischar_BYTE2_BIT7                            = 1 << 7,       ; target mask
+;
+; ; $8007, $8027, $8047, ...
 ; vischar_BYTE7_MASK_LO                         = $0F,
 ; vischar_BYTE7_MASK_HI                         = $F0,
-; vischar_BYTE7_IMPEDED                         = 1 << 5,w      ; bounds related, perhaps stopping movement
-; vischar_BYTE7_BIT6                            = 1 << 6,
-; vischar_BYTE7_LOCATABLE                       = 1 << 7,
-; vischar_BYTE12_MASK                           = $7F,
+; vischar_BYTE7_IMPEDED                         = 1 << 5,       ; set when hero hits an obstacle
+; vischar_BYTE7_BIT6                            = 1 << 6,       ; set while touch() entered
+; vischar_BYTE7_LOCATABLE                       = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
+;
+; ; $800C, $802C, $804C, ...
+; vischar_BYTE12_BIT7                           = 1 << 7,       ;
+;
+; ; $800D, $802D, $804D, ...
 ; vischar_INPUT_MASK                            = $7F,
+;
+; ; $800E, $802E, $804E, ...
 ; vischar_BYTE14_CRAWL                          = 1 << 2,
 ;
 ; itemstruct_ITEM_MASK                          = $0F,
@@ -2172,11 +2183,11 @@ c$6AB5 ADD A,A       ; {HL = interior_object_defs[A];
 @isub=LD (expand_object_width + 1),A
  $6AC6 LD ($6AE7),A  ; }
 *$6AC9 LD A,(HL)     ; do <% do <% expand: A = *HL;
- $6ACA CP $FF        ; {    if (A == objecttile_ESCAPE) <%
+ $6ACA CP $FF        ; {    if (A == interiorobjecttile_ESCAPE) <%
  $6ACC JR NZ,$6ADE   ; }
  $6ACE INC HL        ;       HL++;
  $6ACF LD A,(HL)     ;       A = *HL;
- $6AD0 CP $FF        ; {      if (A != objecttile_ESCAPE) <% // FF FF => FF
+ $6AD0 CP $FF        ; {      if (A != interiorobjecttile_ESCAPE) <% // FF FF => FF
  $6AD2 JR Z,$6ADE    ; }
  $6AD4 AND $F0       ;         A &= 0xF0;
  $6AD6 CP $80        ; {        if (A >= 128) goto run;
@@ -8344,7 +8355,7 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when indoo
  $AAC8 LD A,(DE)     ; A = *DE;
  $AAC9 CP $FF        ; {if (A == 255) return; // don't move
  $AACB RET Z         ; }
- $AACC BIT 7,C       ; {if (C & (1<<7)) A ^= 2; // exchange up and down
+ $AACC BIT 7,C       ; {if (C & vischar_BYTE12_BIT7) A ^= 2; // exchange up and down
  $AACE JR Z,$AAD2    ;
  $AAD0 XOR $02       ; }
 *$AAD2 PUSH AF
@@ -10244,7 +10255,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B5EE LD A,(IY+$0C)   ;   A = IY[0x0C];
  $B5F1 AND A           ; {  if (A & vischar_BYTE12_BIT7) <% // up/down flag
  $B5F2 JP P,$B64F      ; }
- $B5F5 AND $7F         ;     A &= vischar_BYTE12_MASK;
+ $B5F5 AND $7F         ;     A &= ~vischar_BYTE12_BIT7;
  $B5F7 JP Z,$B6C2      ;     if (A == 0) goto end_bit;
  $B5FA INC A           ; {    HL += (A + 1) * 4 - 1;
  $B5FB ADD A,A         ;
