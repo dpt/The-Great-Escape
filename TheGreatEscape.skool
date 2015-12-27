@@ -10572,7 +10572,7 @@ c$B79B LD B,$07         ; B = 7; // iterations
  $B7EC LD ($6F55),A     ; roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
  $B7EF LD ($6F58),A     ; roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
 ; Reset characters 12..15 (guards) and 20..25 (prisoners).
- $B7F2 LD DE,$7667      ; DE = &character_structs[12].BYTE1;
+ $B7F2 LD DE,$7667      ; DE = &character_structs[12].room;
  $B7F5 LD C,$0A         ; C = 10; // iterations
 @nowarn
  $B7F7 LD HL,$B819      ; HL = &character_reset_data[0];
@@ -10590,7 +10590,7 @@ c$B79B LD B,$07         ; B = 7; // iterations
  $B809 INC HL           ; {  DE += 2;
  $B80A INC HL           ;
  $B80B EX DE,HL         ; }
- $B80C LD A,C           ; {  if (C == 7) DE = &character_structs[20].BYTE1;
+ $B80C LD A,C           ; {  if (C == 7) DE = &character_structs[20].room;
  $B80D CP $07           ;
  $B80F JR NZ,$B814      ;
  $B811 LD DE,$769F      ; }
