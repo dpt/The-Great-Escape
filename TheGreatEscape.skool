@@ -12441,8 +12441,8 @@ g$C891 DEFB $00      ; food_discovered_counter
 @label=follow_suspicious_character
 c$C892 XOR A         ; {entered_move_characters = 0;
  $C893 LD ($A13E),A  ; }
-; If the bell is ringing, hostiles persue.
- $C896 LD A,($A130)  ; {if (bell) hostiles_persue();
+; If the bell is not ringing, hostiles persue.
+ $C896 LD A,($A130)  ; {if (bell == 0) hostiles_persue();
  $C899 AND A         ;
  $C89A CALL Z,$CCAB  ; }
 ; If food was dropped then count down until it is discovered.
