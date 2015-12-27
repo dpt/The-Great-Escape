@@ -13283,7 +13283,7 @@ c$CCFB LD C,A        ; C = A; // room ref
 ; Has the item been moved to a different room?
 ; .
 ; Bug? Note that room_and_flags doesn't get its flags masked off. Does it need
-; & 0x3F ?
+; & 0x3F ? (DOS version has it)
  $CD08 DEC HL        ; {    A = default_item_locations[HL[-1] & itemstruct_ITEM_MASK].room_and_flags; // HL[-1] = itemstruct.item
  $CD09 LD A,(HL)     ;
  $CD0A AND $0F       ;
