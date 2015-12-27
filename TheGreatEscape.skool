@@ -415,10 +415,7 @@
 ; vischar_BYTE7_LOCATABLE                       = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
 ;
 ; ; $800C, $802C, $804C, ...
-; vischar_BYTE12_BIT7                           = 1 << 7,       ;
-;
-; ; $800D, $802D, $804D, ...
-; vischar_INPUT_MASK                            = $7F,
+; vischar_BYTE12_BIT7                           = 1 << 7,       ; is this a kick flag?
 ;
 ; ; $800E, $802E, $804E, ...
 ; vischar_BYTE14_CRAWL                          = 1 << 2,
@@ -558,7 +555,7 @@
 ; | $07 | byte    | top nibble = flags, bottom nibble = counter used by character_behaviour only  |
 ; | $08 | pointer | pointer to character_related_pointers                                         |
 ; | $0A | pointer | pointer to value in character_related_pointers                                |
-; | $0C | byte    | up/down flag                                                                  |
+; | $0C | byte    | bit 7 is up/down flag, other bits are a counter                               |
 ; | $0D | byte    | input .. previous direction?                                                  |
 ; | $0E | byte    | direction and walk/crawl flag                                                 |
 ; | $0F | movitem | movable item struct (pos, cur sprite, sprite index)                           |
@@ -9602,7 +9599,7 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
 ; Select start position in door_positions based on the direction the hero is
 ; facing.
  $B1FC LD HL,$78D6   ; HL = &door_positions[0];
- $B1FF LD E,(IY+$0E) ; E = IY[14];
+ $B1FF LD E,(IY+$0E) ; E = IY[14]; // walk/crawl flag byte
  $B202 LD A,E        ; {if (E >= 2) HL = &door_position[1]; /* BOTTOM_RIGHT or BOTTOM_LEFT */
  $B203 CP $02        ;
  $B205 JR C,$B20A    ;
