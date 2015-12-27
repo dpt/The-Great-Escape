@@ -2996,7 +2996,7 @@ b$7075 DEFB $05                         ; 5
  $7086 DEFB $00,$10,$02                 ; { interiorobject_TUNNEL_SW_NE,                16,  2 },
  $7089 DEFB $00,$0C,$04                 ; { interiorobject_TUNNEL_SW_NE,                12,  4 },
 @label=roomdef_50_blocked_tunnel_collapsed_tunnel
- $708C DEFB $14,$08,$06                 ; { interiorobject_COLLAPSED_TUNNEL,             8,  6 },
+ $708C DEFB $14,$08,$06                 ; { interiorobject_COLLAPSED_TUNNEL_SW_NE,       8,  6 },
  $708F DEFB $00,$04,$08                 ; { interiorobject_TUNNEL_SW_NE,                 4,  8 },
  $7092 DEFB $00,$00,$0A                 ; { interiorobject_TUNNEL_SW_NE,                 0, 10 },
 
@@ -10544,7 +10544,7 @@ c$B79B LD B,$07         ; B = 7; // iterations
  $B7B2 XOR A            ; {day_or_night = 0;
  $B7B3 LD ($A146),A     ; }
  $B7B6 LD ($8001),A     ; ($8001) = 0; // flags
- $B7B9 LD A,$14         ; {roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL;
+ $B7B9 LD A,$14         ; {roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL_SW_NE;
  $B7BB LD ($708C),A     ; }
  $B7BE LD A,$34         ; {blockage = 0x34; /* Reset boundary. */
 @nowarn
