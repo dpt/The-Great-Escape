@@ -9379,7 +9379,7 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
  $B0BA LD A,L          ; {  HL += 13;
  $B0BB ADD A,$0D       ;
  $B0BD LD L,A          ; }
- $B0BE LD A,(HL)       ; {  A = *HL & vischar_INPUT_MASK; // mask off kick flag // sampled HL=$806D,$804D,$802D,$808D,$800D}
+ $B0BE LD A,(HL)       ; {  A = *HL & ~input_KICK; // mask off kick flag // sampled HL=$806D,$804D,$802D,$808D,$800D}
  $B0BF AND $7F         ;
  $B0C1 JR Z,$B0DB      ;   if (A) <%
  $B0C3 INC L           ;     HL++;
