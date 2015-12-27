@@ -8778,7 +8778,7 @@ c$ACFC PUSH BC
  $AD28 RET           ; return;
 
 ; Searchlight movement data.
-@label=searchlight_states
+@label=searchlight_movements
 w$AD29 DEFB $24, $52, $2C, $02, $00 ; x, y, step, direction, counter
  $AD2D DEFW $AD54   ; searchlight_path_2
  $AD2F DEFB $78, $52, $18, $01, $00 ; x, y, step, direction, counter
@@ -8933,7 +8933,7 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
  $AE09 PUSH BC
  $AE0A PUSH HL
  $AE0B JR $AE3F      ; goto $AE3F;
-*$AE0D LD HL,$AD29   ; not_tracking: HL = &searchlight_states[0];
+*$AE0D LD HL,$AD29   ; not_tracking: HL = &searchlight_movements[0];
  $AE10 LD B,$03      ; B = 3; // 3 iterations == three searchlights
 *$AE12 PUSH BC       ; do <%
  $AE13 PUSH HL
