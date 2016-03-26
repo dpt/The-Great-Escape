@@ -171,10 +171,7 @@ Indoors.
 <span id="b935"></span>
 <div class="comments">
 <div class="paragraph">
-Outdoors.
-</div>
-<div class="paragraph">
-Bug? This count of 59 doesn't match NELEMS(exterior_mask_data); which is 58.
+Outdoors. Bug? This count of 59 doesn't match NELEMS(exterior_mask_data); which is 58.
 </div>
 </div>
 </td>
@@ -183,7 +180,7 @@ Bug? This count of 59 doesn't match NELEMS(exterior_mask_data); which is 58.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b935"></span>B935</td>
 <td class="instruction">LD B,$3B</td>
-<td class="comment-11" rowspan="1">else &lt;% B = NELEMS(exterior_mask_data); // 59 iterations</td>
+<td class="comment-11" rowspan="1">else &lt;% B = 59; // 59 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -205,13 +202,13 @@ Mask against all.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b93a"></span>B93A</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;% PUSH BC</td>
+<td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b93b"></span>B93B</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">PUSH HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -265,7 +262,7 @@ Mask against all.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b94b"></span>B94B</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="3">-</td>
+<td class="comment-11" rowspan="3"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -331,7 +328,7 @@ Mask against all.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b95d"></span>B95D</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">-</td>
+<td class="comment-11" rowspan="2"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -497,7 +494,7 @@ Clipping.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b98c"></span>B98C</td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-11" rowspan="1">A -= *HL; // sampled HL points to $81EC $81F4 $EC12</td>
+<td class="comment-11" rowspan="1">A -= *HL; // sampled HL=$81EC,$81F4,$EC12</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -983,7 +980,7 @@ Clipping.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba0b"></span>BA0B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1055,7 +1052,7 @@ Clipping.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba1b"></span>BA1B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -1185,7 +1182,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba3d"></span>BA3D</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">PUSH DE</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1233,7 +1230,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba4b"></span>BA4B</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">POP DE</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1383,7 +1380,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="ba73"></span>BA73</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">do &lt;% -</td>
+<td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1413,7 +1410,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba7b"></span>BA7B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1449,7 +1446,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba83"></span>BA83</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF' // unpaired?</td>
+<td class="comment-11" rowspan="1">// unpaired?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1497,7 +1494,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba8e"></span>BA8E</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">PUSH BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1509,7 +1506,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba91"></span>BA91</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1533,7 +1530,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ba97"></span>BA97</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1623,7 +1620,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="baac"></span>BAAC</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF' // why not just jump instr earlier? // bank</td>
+<td class="comment-11" rowspan="1">// why not just jump instr earlier? // bank</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1653,7 +1650,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bab3"></span>BAB3</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF' // why not just jump instr earlier? // bank</td>
+<td class="comment-11" rowspan="1">// why not just jump instr earlier? // bank</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1671,7 +1668,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bab8"></span>BAB8</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF' // bank %&gt;</td>
+<td class="comment-11" rowspan="1">// bank %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1695,13 +1692,13 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="babd"></span>BABD</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF'  // unbank</td>
+<td class="comment-11" rowspan="1">// unbank</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="babe"></span>BABE</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">POP BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1719,13 +1716,13 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="bac3"></span>BAC3</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">pop_next: POP HL</td>
+<td class="comment-11" rowspan="1">pop_next:</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bac4"></span>BAC4</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">POP BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1756,7 +1753,7 @@ If I break this bit then the character gets drawn on top of *indoors* objects.
 
 <div class="comments">
 <div class="paragraph">
-Bug: Looks like a RET is missing here. We fall through into multiply.
+Bug: RET is missing here. We fall through into multiply.
 </div>
 </div>
 </td>
@@ -1770,9 +1767,9 @@ Bug: Looks like a RET is missing here. We fall through into multiply.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

@@ -36,7 +36,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to characterstruct + 5. // sampled = $768E, 7695, 769C, 7617, 761E, 7625, 762C, 7633, 7656, 765D</td>
+<td class="register-desc">Pointer to characterstruct + 5. // sampled HL=$768E,$7695,$769C,$7617 761E, 7625, 762C, 7633, 7656, 765D</td>
 </tr>
 </table>
 <table class="output-1">
@@ -130,7 +130,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c664"></span>C664</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">else &lt;% PUSH HL</td>
+<td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -196,7 +196,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c674"></span>C674</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">EX DE,HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -214,7 +214,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c678"></span>C678</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL // interleaved</td>
+<td class="comment-11" rowspan="1">// interleaved</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -250,7 +250,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c682"></span>C682</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="3">if (*HL &amp; (1&lt;&lt;7)) A ^= 0x80; // 762C, 8002, 7672, 7679, 7680, 76A3, 76AA, 76B1, 76B8, 76BF, ... looks quite general</td>
+<td class="comment-11" rowspan="3">if (*HL &amp; (1&lt;&lt;7)) A ^= 0x80; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -305,7 +305,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <span id="c692"></span>
 <div class="comments">
 <div class="paragraph">
-sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
+sampled A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
 </div>
 </div>
 </td>
@@ -379,9 +379,9 @@ sample A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

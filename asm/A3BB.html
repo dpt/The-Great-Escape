@@ -60,13 +60,13 @@ Used by the routine at <a href="A33F.html">A33F</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3bf"></span>A3BF</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">PUSH BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3c0"></span>A3C0</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">PUSH HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -84,7 +84,7 @@ Used by the routine at <a href="A33F.html">A33F</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3c5"></span>A3C5</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">POP DE  // DE = the HL stored at $A3C0</td>
+<td class="comment-11" rowspan="1">// DE = the HL stored at $A3C0</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -96,13 +96,13 @@ Used by the routine at <a href="A33F.html">A33F</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3c7"></span>A3C7</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">LDI // *DE++ = *HL++; BC--;</td>
+<td class="comment-11" rowspan="1">*DE++ = *HL++; BC--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3c9"></span>A3C9</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">LDI // *DE++ = *HL++; BC--;</td>
+<td class="comment-11" rowspan="1">*DE++ = *HL++; BC--;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -150,7 +150,7 @@ Used by the routine at <a href="A33F.html">A33F</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3d7"></span>A3D7</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">EX DE,HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -174,7 +174,7 @@ Used by the routine at <a href="A33F.html">A33F</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3dd"></span>A3DD</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">POP BC // could have just ended the block here</td>
+<td class="comment-11" rowspan="1">// could have just ended the block here</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -216,19 +216,19 @@ Used by the routine at <a href="A33F.html">A33F</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3e8"></span>A3E8</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">EX DE,HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3e9"></span>A3E9</td>
 <td class="instruction">SET 6,(HL)</td>
-<td class="comment-11" rowspan="1">*HL |= vischar_FLAGS_BIT6; %&gt; // sample = HL = $8001</td>
+<td class="comment-11" rowspan="1">*HL |= vischar_FLAGS_BIT6; %&gt; // sampled HL=$8001</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="a3eb"></span>A3EB</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">POP BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -245,9 +245,9 @@ Used by the routine at <a href="A33F.html">A33F</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

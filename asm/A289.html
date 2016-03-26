@@ -146,13 +146,13 @@ Position all six prisoners.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a2a6"></span>A2A6</td>
 <td class="instruction">LD DE,$0007</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a2a9"></span>A2A9</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -182,7 +182,7 @@ Position all six prisoners.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a2b1"></span>A2B1</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -218,7 +218,7 @@ Position all six prisoners.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a2bb"></span>A2BB</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF'</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -246,7 +246,7 @@ Update all the bed objects to be empty.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a2c1"></span>A2C1</td>
 <td class="instruction">LD A,$09</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -259,7 +259,7 @@ Update all the bed objects to be empty.
 <span id="a2c6"></span>
 <div class="comments">
 <div class="paragraph">
-Bug: 7 iterations BUT only six beds in the data structure resulting in write to ROM location $1A42.
+Bug: Seven iterations are specified here BUT there are only six beds in the 'beds' array. This results in a spurious write to ROM location $1A42.
 </div>
 </div>
 </td>
@@ -385,9 +385,9 @@ Update the hero's bed object to be empty and redraw if required.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

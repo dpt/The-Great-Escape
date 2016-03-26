@@ -144,7 +144,7 @@ Used by the routines at <a href="B75A.html">B75A</a> and <a href="CB98.html">CB9
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b7b9"></span>B7B9</td>
 <td class="instruction">LD A,$14</td>
-<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL;</td>
+<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL_SW_NE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -340,7 +340,7 @@ Reset characters 12..15 (guards) and 20..25 (prisoners).
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b7f2"></span>B7F2</td>
 <td class="instruction">LD DE,$7667</td>
-<td class="comment-11" rowspan="1">DE = &amp;character_structs[12].BYTE1;</td>
+<td class="comment-11" rowspan="1">DE = &amp;character_structs[12].room;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -442,7 +442,7 @@ Reset characters 12..15 (guards) and 20..25 (prisoners).
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b80c"></span>B80C</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="4">if (C == 7) DE = &amp;character_structs[20].BYTE1;</td>
+<td class="comment-11" rowspan="4">if (C == 7) DE = &amp;character_structs[20].room;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -562,9 +562,9 @@ struct { byte room; byte x; byte y; }; // partial of character_struct
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

@@ -145,7 +145,7 @@ Used by the routine at <a href="9E07.html">9E07</a>.
 <span id="9ed0"></span>
 <div class="comments">
 <div class="paragraph">
-Countdown reached: Snip the wire.
+Countdown reached zero: Snip the wire.
 </div>
 <div class="paragraph">
 Bug: A is always zero here, so $800E is always set to zero.
@@ -157,19 +157,29 @@ Bug: A is always zero here, so $800E is always set to zero.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="9ed0"></span>9ED0</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment-11" rowspan="3">else &lt;% $800E = A &amp; 3; // set direction</td>
+<td class="comment-11" rowspan="1">else &lt;% $800E = A &amp; 3; // set direction</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="9ed3"></span>
+<div class="comments">
+<div class="paragraph">
+LD A,(HL) missing here?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9ed3"></span>9ED3</td>
 <td class="instruction">AND $03</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9ed5"></span>9ED5</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">}</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -244,9 +254,9 @@ New inputs table.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

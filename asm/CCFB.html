@@ -73,7 +73,7 @@ A discoverable item is one moved away from its default room, and one that isn't 
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ccff"></span>CCFF</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment-11" rowspan="1">B = 16; // items__LIMIT</td>
+<td class="comment-11" rowspan="1">B = 16; // item__LIMIT</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -113,7 +113,7 @@ Is the item in the specified room?
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd07"></span>CD07</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -123,7 +123,7 @@ Is the item in the specified room?
 Has the item been moved to a different room?
 </div>
 <div class="paragraph">
-Bug? Note that room_and_flags doesn't get its flags masked off. Does it need &amp; 0x3F ?
+Bug? Note that room_and_flags doesn't get its flags masked off. Does it need &amp; 0x3F ? (DOS version has it)
 </div>
 </div>
 </td>
@@ -240,7 +240,7 @@ Bug? Note that room_and_flags doesn't get its flags masked off. Does it need &am
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="cd22"></span>CD22</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">not_in_default_room: -</td>
+<td class="comment-11" rowspan="1">not_in_default_room:</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -286,7 +286,7 @@ Ignore red cross parcel.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd2b"></span>CD2B</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -321,9 +321,9 @@ Ignore red cross parcel.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

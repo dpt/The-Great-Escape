@@ -55,13 +55,13 @@ Used by the routine at <a href="B5CE.html">B5CE</a>.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="af8f"></span>AF8F</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF'</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="af90"></span>AF90</td>
 <td class="instruction">LD ($81AA),A</td>
-<td class="comment-11" rowspan="1">stashed_A = A;</td>
+<td class="comment-11" rowspan="1">touch_stashed_A = A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -91,7 +91,7 @@ Used by the routine at <a href="B5CE.html">B5CE</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="af9e"></span>AF9E</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -305,7 +305,7 @@ noncolliding characters and items only at this point
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="afd7"></span>AFD7</td>
 <td class="instruction">LD A,($81AA)</td>
-<td class="comment-11" rowspan="2">IY[0x17] = stashed_A; // left/right flip flag / sprite offset</td>
+<td class="comment-11" rowspan="2">IY[0x17] = touch_stashed_A; // left/right flip flag / sprite offset</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -334,9 +334,9 @@ noncolliding characters and items only at this point
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

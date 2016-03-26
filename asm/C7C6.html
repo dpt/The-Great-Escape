@@ -108,7 +108,7 @@ Makes characters sit, sleep or other things TBD.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c7d9"></span>C7D9</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">PUSH HL // POPped by handlers</td>
+<td class="comment-11" rowspan="1">// POPped by handlers</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -166,7 +166,7 @@ Locate the character in the map.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c7e6"></span>C7E6</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -305,13 +305,13 @@ Array of (character + flags, character event handler index) mappings.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c805"></span>C805</td>
 <td class="instruction">DEFW $0385</td>
-<td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b10000000, charevnt_3, // checks byte_A13E case 1</td>
+<td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b10000000, charevnt_3,  // checks byte_A13E case 1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c807"></span>C807</td>
 <td class="instruction">DEFW $0386</td>
-<td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b10000000, charevnt_3, // checks byte_A13E case 1</td>
+<td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b10000000, charevnt_3,  // checks byte_A13E case 1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -341,13 +341,13 @@ Array of (character + flags, character event handler index) mappings.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c811"></span>C811</td>
 <td class="instruction">DEFW $0510</td>
-<td class="comment-11" rowspan="1">character_16_GUARD_DOG_1  | 0b00000000, charevnt_5, // checks byte_A13E case 2</td>
+<td class="comment-11" rowspan="1">character_16_GUARD_DOG_1  | 0b00000000, charevnt_5,  // checks byte_A13E case 2</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c813"></span>C813</td>
 <td class="instruction">DEFW $0511</td>
-<td class="comment-11" rowspan="1">character_16_GUARD_DOG_2  | 0b00000000, charevnt_5, // checks byte_A13E case 2</td>
+<td class="comment-11" rowspan="1">character_16_GUARD_DOG_2  | 0b00000000, charevnt_5,  // checks byte_A13E case 2</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -383,31 +383,31 @@ Array of (character + flags, character event handler index) mappings.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c81f"></span>C81F</td>
 <td class="instruction">DEFW $082C</td>
-<td class="comment-11" rowspan="1">character_12_GUARD_12     | 0b00100000, charevnt_8, // hero sleeps</td>
+<td class="comment-11" rowspan="1">character_12_GUARD_12     | 0b00100000, charevnt_8,  // hero sleeps</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c821"></span>C821</td>
 <td class="instruction">DEFW $092B</td>
-<td class="comment-11" rowspan="1">character_11_GUARD_11     | 0b00100000, charevnt_9, // hero sits</td>
+<td class="comment-11" rowspan="1">character_11_GUARD_11     | 0b00100000, charevnt_9,  // hero sits</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c823"></span>C823</td>
 <td class="instruction">DEFW $06A4</td>
-<td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b10100000, charevnt_6, // go to 0x0315</td>
+<td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b10100000, charevnt_6,  // go to 0x0315</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c825"></span>C825</td>
 <td class="instruction">DEFW $0A24</td>
-<td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b00100000, charevnt_10,// released from solitary</td>
+<td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b00100000, charevnt_10, // released from solitary</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c827"></span>C827</td>
 <td class="instruction">DEFW $0425</td>
-<td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b00100000, charevnt_4, // zero morale_1</td>
+<td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b00100000, charevnt_4,  // zero morale_1</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -530,7 +530,7 @@ charevnt_handler_6
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c845"></span>C845</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL // (popped) sampled HL = $80C2 (x2), $8042  // likely target location</td>
+<td class="comment-11" rowspan="1">// (popped) sampled HL=$80C2 (x2),$8042  // likely target location</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -570,7 +570,7 @@ charevnt_handler_10_hero_released_from_solitary
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c84c"></span>C84C</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -678,7 +678,7 @@ charevnt_handler_0
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c866"></span>C866</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">exit: POP HL</td>
+<td class="comment-11" rowspan="1">exit:</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -718,7 +718,7 @@ charevnt_handler_3_check_var_A13E
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c86c"></span>C86C</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -758,7 +758,7 @@ charevnt_handler_5_check_var_A13E_anotherone
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c877"></span>C877</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -798,7 +798,7 @@ charevnt_handler_7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c882"></span>C882</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -838,7 +838,7 @@ charevnt_handler_9_hero_sits
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c889"></span>C889</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -860,7 +860,7 @@ charevnt_handler_8_hero_sleeps
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c88d"></span>C88D</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -877,9 +877,9 @@ charevnt_handler_8_hero_sleeps
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

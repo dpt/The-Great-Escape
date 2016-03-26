@@ -77,7 +77,7 @@ Also: Automatic hero behaviour.
 <span id="c896"></span>
 <div class="comments">
 <div class="paragraph">
-If the bell is ringing, hostiles persue.
+If the bell is not ringing, hostiles persue.
 </div>
 </div>
 </td>
@@ -86,7 +86,7 @@ If the bell is ringing, hostiles persue.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c896"></span>C896</td>
 <td class="instruction">LD A,($A130)</td>
-<td class="comment-11" rowspan="3">if (bell) hostiles_persue();</td>
+<td class="comment-11" rowspan="3">if (bell == 0) hostiles_persue();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -206,7 +206,7 @@ Make supporting characters react.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c8b7"></span>C8B7</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;% -</td>
+<td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -242,13 +242,13 @@ Make supporting characters react.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c8c5"></span>C8C5</td>
 <td class="instruction">CP $14</td>
-<td class="comment-11" rowspan="2">if (A &lt;= character_19_GUARD_DOG_4) &lt;% // Hostile characters only.</td>
+<td class="comment-11" rowspan="1">if (A &lt;= character_19_GUARD_DOG_4) &lt;% // Hostile characters only.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c8c7"></span>C8C7</td>
 <td class="instruction">JP NC,$C8F1</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -264,7 +264,7 @@ Characters 0..19.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c8ca"></span>C8CA</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -312,7 +312,7 @@ Characters 0..19.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c8db"></span>C8DB</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -404,7 +404,7 @@ Is the food nearby?
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c8f4"></span>C8F4</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -444,13 +444,13 @@ Inhibit hero automatic behaviour when the flag is red, or otherwise inhibited.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c8fe"></span>C8FE</td>
 <td class="instruction">LD A,($A138)</td>
-<td class="comment-11" rowspan="2">if (!red_flag &amp;&amp; (morale_1 || automatic_player_counter == 0)) &lt;%</td>
+<td class="comment-11" rowspan="1">if (!red_flag &amp;&amp; (morale_1 || automatic_player_counter == 0)) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c901"></span>C901</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -531,9 +531,9 @@ Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

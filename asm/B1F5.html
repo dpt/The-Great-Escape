@@ -95,7 +95,7 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b1ff"></span>B1FF</td>
 <td class="instruction">LD E,(IY+$0E)</td>
-<td class="comment-11" rowspan="1">E = IY[14];</td>
+<td class="comment-11" rowspan="1">E = IY[14]; // walk/crawl flag byte</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -161,19 +161,19 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b213"></span>B213</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">PUSH BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b214"></span>B214</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">PUSH HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b215"></span>B215</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">PUSH DE</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -185,19 +185,19 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b219"></span>B219</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">POP DE</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b21a"></span>B21A</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b21b"></span>B21B</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">POP BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -275,7 +275,7 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b22f"></span>B22F</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">EXX</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -293,13 +293,13 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b234"></span>B234</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">EXX</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b235"></span>B235</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="5">IY[28] = (*HL &gt;&gt; 2) &amp; 0x3F; // sampled HL = $792E (in door_positions[])</td>
+<td class="comment-11" rowspan="5">IY[28] = (*HL &gt;&gt; 2) &amp; 0x3F; // sampled HL=$792E (in door_positions[])</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -418,9 +418,9 @@ Select start position in door_positions based on the direction the hero is facin
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

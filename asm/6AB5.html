@@ -188,7 +188,7 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6aca"></span>6ACA</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == objecttile_ESCAPE) &lt;%</td>
+<td class="comment-11" rowspan="2">if (A == interiorobjecttile_ESCAPE) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -212,7 +212,7 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6ad0"></span>6AD0</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A != objecttile_ESCAPE) &lt;% // FF FF =&gt; FF</td>
+<td class="comment-11" rowspan="2">if (A != interiorobjecttile_ESCAPE) &lt;% // FF FF =&gt; FF</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -360,7 +360,7 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6af4"></span>6AF4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++ &amp; 0x7F;</td>
+<td class="comment-11" rowspan="2">A = *HL++ &amp; 0x7F; // run length</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -372,13 +372,13 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6af7"></span>6AF7</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="2">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6af8"></span>6AF8</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -390,7 +390,7 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6afa"></span>6AFA</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -426,7 +426,7 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6b01"></span>6B01</td>
 <td class="instruction">DJNZ $6B12</td>
-<td class="comment-11" rowspan="1">DJNZ $6B12</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -490,7 +490,7 @@ Ran out of width.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6b0f"></span>6B0F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL; // Bug: Needless reload.</td>
+<td class="comment-11" rowspan="1">Adash = *HL;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -508,7 +508,7 @@ Ran out of width.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6b12"></span>6B12</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -541,6 +541,9 @@ Ran out of width.
 <div class="paragraph">
 64..127 case.
 </div>
+<div class="paragraph">
+Bug: This self-modifies the INC A at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+</div>
 </div>
 </td>
 </tr>
@@ -549,16 +552,6 @@ Ran out of width.
 <td class="address-2"><span id="6b19"></span>6B19</td>
 <td class="instruction">LD A,$3C</td>
 <td class="comment-11" rowspan="1">A = 60; // opcode of 'INC A'</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="6b1b"></span>
-<div class="comments">
-<div class="paragraph">
-Bug: Self modify, but nothing else modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
-</div>
-</div>
-</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -582,13 +575,13 @@ Bug: Self modify, but nothing else modifies it! Possible evidence that other enc
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6b21"></span>6B21</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="2">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6b22"></span>6B22</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -600,13 +593,13 @@ Bug: Self modify, but nothing else modifies it! Possible evidence that other enc
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6b24"></span>6B24</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6b25"></span>6B25</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">do &lt;% -</td>
+<td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -630,7 +623,7 @@ Bug: Self modify, but nothing else modifies it! Possible evidence that other enc
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6b29"></span>6B29</td>
 <td class="instruction">DJNZ $6B3B</td>
-<td class="comment-11" rowspan="1">DJNZ $6B3B</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -718,13 +711,13 @@ Ran out of width.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6b3b"></span>6B3B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="2">-</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6b3c"></span>6B3C</td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -753,9 +746,9 @@ Ran out of width.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

@@ -33,7 +33,7 @@ Array of 16 three-byte structures.
 struct default_item_location { byte room_and_flags; byte x; byte y; };
 </div>
 <div class="paragraph">
-#define ITEM_ROOM(item_no, flags) ((item_no &amp; 0x3F) | (flags &lt;&lt; 6))
+#define ITEM_ROOM(item_no, flags) ((item_no &amp; 0x3F) | (flags &lt;&lt; 6)) do the next flags mean that the wiresnips are always or /never/ found?
 </div>
 </div>
 <table class="input-0">
@@ -54,67 +54,67 @@ struct default_item_location { byte room_and_flags; byte x; byte y; };
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd6a"></span>CD6A</td>
 <td class="instruction">DEFB $FF,$40,$20</td>
-<td class="comment-11" rowspan="1">item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3), ... } // do these flags mean that the wiresnips are always or /never/ found?</td>
+<td class="comment-11" rowspan="1">item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),       ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd6d"></span>CD6D</td>
 <td class="instruction">DEFB $09,$3E,$30</td>
-<td class="comment-11" rowspan="1">item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_SHOVEL           { ITEM_ROOM(room_9, 0),          ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd70"></span>CD70</td>
 <td class="instruction">DEFB $0A,$49,$24</td>
-<td class="comment-11" rowspan="1">item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_LOCKPICK         { ITEM_ROOM(room_10, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd73"></span>CD73</td>
 <td class="instruction">DEFB $0B,$2A,$3A</td>
-<td class="comment-11" rowspan="1">item_PAPERS           { ITEM_ROOM(room_11, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_PAPERS           { ITEM_ROOM(room_11, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd76"></span>CD76</td>
 <td class="instruction">DEFB $0E,$32,$18</td>
-<td class="comment-11" rowspan="1">item_TORCH            { ITEM_ROOM(room_14, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_TORCH            { ITEM_ROOM(room_14, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd79"></span>CD79</td>
 <td class="instruction">DEFB $3F,$24,$2C</td>
-<td class="comment-11" rowspan="1">item_BRIBE            { ITEM_ROOM(room_NONE, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_BRIBE            { ITEM_ROOM(room_NONE, 0),       ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd7c"></span>CD7C</td>
 <td class="instruction">DEFB $0F,$2C,$41</td>
-<td class="comment-11" rowspan="1">item_UNIFORM          { ITEM_ROOM(room_15, 0),  ... }</td>
+<td class="comment-11" rowspan="1">item_UNIFORM          { ITEM_ROOM(room_15, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd7f"></span>CD7F</td>
 <td class="instruction">DEFB $13,$40,$30</td>
-<td class="comment-11" rowspan="1">item_FOOD             { ITEM_ROOM(room_19, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_FOOD             { ITEM_ROOM(room_19, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd82"></span>CD82</td>
 <td class="instruction">DEFB $01,$42,$34</td>
-<td class="comment-11" rowspan="1">item_POISON           { ITEM_ROOM(room_1, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_POISON           { ITEM_ROOM(room_1, 0),          ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd85"></span>CD85</td>
 <td class="instruction">DEFB $16,$3C,$2A</td>
-<td class="comment-11" rowspan="1">item_RED_KEY          { ITEM_ROOM(room_22, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_RED_KEY          { ITEM_ROOM(room_22, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd88"></span>CD88</td>
 <td class="instruction">DEFB $0B,$1C,$22</td>
-<td class="comment-11" rowspan="1">item_YELLOW_KEY       { ITEM_ROOM(room_11, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_YELLOW_KEY       { ITEM_ROOM(room_11, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -126,25 +126,25 @@ struct default_item_location { byte room_and_flags; byte x; byte y; };
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd8e"></span>CD8E</td>
 <td class="instruction">DEFB $3F,$1C,$32</td>
-<td class="comment-11" rowspan="1">item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0),       ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd91"></span>CD91</td>
 <td class="instruction">DEFB $12,$24,$3A</td>
-<td class="comment-11" rowspan="1">item_RADIO            { ITEM_ROOM(room_18, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_RADIO            { ITEM_ROOM(room_18, 0),         ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd94"></span>CD94</td>
 <td class="instruction">DEFB $3F,$1E,$22</td>
-<td class="comment-11" rowspan="1">item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_PURSE            { ITEM_ROOM(room_NONE, 0),       ... }</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd97"></span>CD97</td>
 <td class="instruction">DEFB $3F,$34,$1C</td>
-<td class="comment-11" rowspan="1">item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }</td>
+<td class="comment-11" rowspan="1">item_COMPASS          { ITEM_ROOM(room_NONE, 0),       ... }</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -155,9 +155,9 @@ struct default_item_location { byte room_and_flags; byte x; byte y; };
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>

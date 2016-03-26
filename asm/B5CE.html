@@ -16,7 +16,7 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B586.html">B586</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B53E.html">B53E</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#b5ce">Map</a></td>
 <td class="next"><span class="next-1">Next: <a href="B71B.html">B71B</a></span></td>
 </tr>
@@ -78,7 +78,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5dc"></span>B5DC</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">PUSH BC</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -132,7 +132,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5f5"></span>B5F5</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1">A &amp;= vischar_BYTE12_MASK;</td>
+<td class="comment-11" rowspan="1">A &amp;= ~vischar_BYTE12_BIT7;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -192,19 +192,19 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b603"></span>B603</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="2">EX AF,AF'</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b604"></span>B604</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b605"></span>B605</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">decrement: EX DE,HL</td>
+<td class="comment-11" rowspan="1">decrement:</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -222,7 +222,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b60c"></span>B60C</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE; // sampled DE = $CF9A, $CF9E, $CFBE, $CFC2, $CFB2, $CFB6, $CFA6, $CFAA (character_related_data)</td>
+<td class="comment-11" rowspan="1">A = *DE; // sampled DE=$CF9A,$CF9E,$CFBE,$CFC2,$CFB2,$CFB6,$CFA6,$CFAA (character_related_data)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -474,7 +474,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b65a"></span>B65A</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">increment: EX DE,HL</td>
+<td class="comment-11" rowspan="1">increment:</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -684,7 +684,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b698"></span>B698</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF'</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -726,7 +726,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b6a8"></span>B6A8</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">pop_next: POP BC</td>
+<td class="comment-11" rowspan="1">pop_next:</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -786,7 +786,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b6be"></span>B6BE</td>
 <td class="instruction">RES 7,(IY+$0D)</td>
-<td class="comment-11" rowspan="1">kicked: IY[0x0D] &amp;= ~input_KICK; // sampled IY = $8020, $80A0, $8060, $80E0, $8080,</td>
+<td class="comment-11" rowspan="1">kicked: IY[0x0D] &amp;= ~input_KICK; // sampled IY=$8020,$80A0,$8060,$80E0,$8080</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -984,7 +984,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6f8"></span>B6F8</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">EX DE,HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1056,13 +1056,13 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b70b"></span>B70B</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">PUSH DE</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b70c"></span>B70C</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">EX DE,HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1116,13 +1116,13 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b716"></span>B716</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">EX AF,AF'</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b717"></span>B717</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HL</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1133,15 +1133,15 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B586.html">B586</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="B53E.html">B53E</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#b5ce">Map</a></td>
 <td class="next"><span class="next-1">Next: <a href="B71B.html">B71B</a></span></td>
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20151028</div>
+<div class="release">The incomplete The Great Escape disassembly 20160326</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.0.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
 </footer>
 </body>
 </html>
