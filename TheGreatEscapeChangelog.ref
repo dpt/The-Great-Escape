@@ -6,19 +6,66 @@
 
 ; [Changelog:20151103]
 ; Intro text.
-; 
+;
 ; First top-level item.
 ;   First subitem.
 ;   Second subitem.
 ;     First subsubitem.
-; 
+;
 ; Second top-level item.
 ; ...
 
-[Changelog:Upcoming]
-Added facts about #FACT#unusedRooms(unused rooms) and #FACT#unusedInteriorObjects(unused interior objects).
+[Changelog:20160326]
+The disassembly is now built with SkoolKit 5.1.
 
-CSS: Re-enabled the input and output register headings.
+Added a couple of short facts to Trivia about #FACT#unusedRooms(unused room indices) and #FACT#unusedInteriorObjects(unused interior object indices).
+
+Re-enabled the input and output register headings in the stylesheet.
+
+Did a big reformat pass to unwrap lines.
+  Stripped trailing whitespace too.
+  Tidied up all the 'sampled' lines where I've recorded addresses in use.
+
+Removed:
+  All comments which duplicated the adjacent instruction.
+    These were useful in the control file which didn't list an instruction but not in the skool file which does.
+  All single dash comments.
+    These were only used in the control file to stop regions coalescing.
+  Unused statictile defs.
+
+Named / renamed:
+  #R$FF58 is map_buf - added a label.
+  Fix: #R$6CF8 roomdef_6_corridor -> roomdef_8_corridor.
+  Fix: #R$6CE6 roomdef_3 beds -> roomdef_5 beds.
+  Fix: character_16_GUARD_DOG_2 -> character_17_...
+  searchlight_states -> searchlight_movements.
+  Fix: References in comments to #R$E2A2 missed when it was renamed masked_sprite_plotter_16_wide.
+  Fix: Some old names had crept in.
+  Typo: action_shove -> action_shovel.
+  stashed_A -> touch_stashed_A.
+
+Patches:
+  Added @bfix for #R$A2C6 incorrect iteration count resulting in a ROM write to $1A42.
+  Added @rfix for #R$6B19 redundant self-modifying code.
+  Added @rfix fixes for redundant jumps, missing RET, bug fix for item_is_discoverable.
+    But note that currently enabling these fixes will create a broken TAP file.
+
+Commentary:
+  #R$6B0F is *not* a needless reload (but it is in the C conversion).
+  Added comments to the bitmap_font at #R$A69E.
+  Added overall notes to the disassembly.
+  Updated style notes.
+  Game notes whipped into nicer state.
+  Item bitmap descriptions now show the dimensions.
+  Commented the zoombox_tile definitions.
+  Annotated the wall defs.
+    Stopped having fences as a separate array.
+  Fix: Comment on exterior_tiles_3 had wrong number of tiles.
+  Fix: Old names for the collapsed tunnel object were kicking around.
+  Fix: The #R$C896 bell ringing test was inverted.
+  Synced doorpos_FLAGS with C version.
+
++ Various fixes.
 
 [Changelog:20151102]
 Changelog begun and populated retrospectively.
