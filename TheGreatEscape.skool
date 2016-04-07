@@ -11994,7 +11994,7 @@ c$C651 LD A,(HL)     ; A = *HL;
  $C682 BIT 7,(HL)    ; {    if (*HL & (1<<7)) A ^= 0x80; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general
  $C684 JR Z,$C688    ;
  $C686 XOR $80       ; }
-*$C688 CALL $6A12    ;     transition();
+*$C688 CALL $6A12    ;     get_door_position();
  $C68B INC HL        ;     HL++;
  $C68C LD A,$80      ;     A = 0x80;
  $C68E RET           ;     return; %>
