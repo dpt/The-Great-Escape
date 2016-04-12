@@ -404,7 +404,6 @@
 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
 ;
 ; ; $8002, $8022, $8042, ...
-; vischar_BYTE2_MASK                            = $7F,          ; target mask
 ; vischar_BYTE2_BIT7                            = 1 << 7,       ; target mask
 ;
 ; ; $8007, $8027, $8047, ...
@@ -12907,7 +12906,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB33 LD A,(IY+$00) ; {    if (IY[0] & vischar_CHARACTER_MASK == 0) <%
  $CB36 AND $1F       ;
  $CB38 JR NZ,$CB42   ; }
- $CB3A LD A,(HL)     ; {      A = *HL & vischar_BYTE2_MASK;
+ $CB3A LD A,(HL)     ; {      A = *HL & ~vischar_BYTE2_BIT7;
  $CB3B AND $7F       ; }
  $CB3D CP $24        ; {      if (A == 36) goto $CB46; // character index
  $CB3F JR Z,$CB46    ; }
