@@ -12910,7 +12910,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB3B AND $7F       ; }
  $CB3D CP $24        ; {      if (A == 36) goto $CB46; // character index
  $CB3F JR Z,$CB46    ; }
- $CB41 XOR A         ;       A = 0; %> // self modified? (suspect not - just countering next if statement)
+ $CB41 XOR A         ;       A = 0; %> // self modified? (suspect not - just forcing next if statement to be taken)
 *$CB42 CP $0C        ; {    if (A <= character_11_GUARD_11) goto $CB50; %>
  $CB44 JR C,$CB50    ; }
 ; arrive here if (character == 0 && (location low byte & 7F) == 36)
