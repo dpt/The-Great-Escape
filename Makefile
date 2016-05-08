@@ -59,6 +59,12 @@ tap: $(BUILD)/$(GAME).tap
 %.tap: %.bin
 	bin2tap.py --org 16384 --stack 65535 --start 61795 $<
 
+.PHONY: z80
+z80: $(BUILD)/$(GAME).z80
+
+%.z80: ../%.skool
+	skool2bin.py $< - | bin2sna.py --org 16384 --stack 65535 --start 61795 - $@
+
 .PHONY: clean
 clean:
 	@echo 'Cleaning...'
