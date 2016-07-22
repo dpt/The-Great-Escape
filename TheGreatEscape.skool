@@ -5874,7 +5874,7 @@ c$9D7B CALL $9DCF    ; main_loop: for (;;) <% check_morale();
  $9D81 CALL $7D48    ;   message_display();
  $9D84 CALL $9E07    ;   process_player_input();
  $9D87 CALL $9F21    ;   in_permitted_area();
- $9D8A CALL $BB98    ;   called_from_main_loop_3();
+ $9D8A CALL $BB98    ;   restore_tiles();
  $9D8D CALL $C6A0    ;   move_characters();
  $9D90 CALL $C892    ;   follow_suspicious_character();
  $9D93 CALL $C47E    ;   purge_visible_characters();
@@ -11235,12 +11235,10 @@ c$BAF7 LD HL,$81B5    ; HL = &map_position_related_x;
  $BB96 AND A          ; A &= A; // return NZ (vischar is not visible)
  $BB97 RET            ; return;
 
-; (unknown) Called from main loop 3.
+; Re-paints any tiles occupied by visible characters.
 ;
 ; Used by the routine at #R$9D7B.
-; .
-; Plots tiles. Checks that characters are visible.
-@label=called_from_main_loop_3
+@label=restore_tiles
 c$BB98 LD B,$08      ; B = 8; // iterations
  $BB9A LD IY,$8000   ; IY = $8000;
 *$BB9E PUSH BC       ; do <%
