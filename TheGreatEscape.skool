@@ -85,6 +85,8 @@
 ;
 ; Multiply A by 2^N:
 ;   ADD A,A ; A += A (N times)
+; Note that this disposes of the topmost bit of A. Some routines discard of
+; flag bits this way.
 ;
 ; Increment HL by an 8-bit delta:
 ;   A = L
