@@ -7247,7 +7247,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3BF PUSH BC
  $A3C0 PUSH HL
  $A3C1 DEC L         ; HL--;
- $A3C2 CALL $C651    ; sub_C651();
+ $A3C2 CALL $C651    ; get_next_target();
  $A3C5 POP DE        ; // DE = the HL stored at $A3C0
  $A3C6 INC E         ; DE++;
  $A3C7 LDI           ; *DE++ = *HL++; BC--;
@@ -11826,7 +11826,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /* cha
 *$C59C XOR A          ; {  entered_move_characters = 0;
  $C59D LD ($A13E),A   ; }
  $C5A0 PUSH DE
- $C5A1 CALL $C651     ;   sub_C651();
+ $C5A1 CALL $C651     ;   get_next_target();
  $C5A4 CP $FF         ; {  if (A == 255) <%
  $C5A6 JR NZ,$C5B6    ; }
  $C5A8 POP HL
@@ -11957,7 +11957,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
 ; .    761E, 7625, 762C, 7633, 7656, 765D
 ; O:A  0/128/255
 ; O:HL Pointer to somewhere in word_783A.
-@label=sub_C651
+@label=get_next_target
 c$C651 LD A,(HL)     ; A = *HL;
  $C652 CP $FF        ; {if (A == 0xFF) <%
  $C654 JR NZ,$C664   ; }
@@ -12051,7 +12051,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C6CE JR NZ,$C6D2   ; }
  $C6D0 POP HL
  $C6D1 RET           ;   return; %>
-*$C6D2 CALL $C651    ; sub_C651(); // "move towards" ? // returning ? in A, ? in HL
+*$C6D2 CALL $C651    ; get_next_target(); // "move towards" ? // returning ? in A, ? in HL
  $C6D5 CP $FF        ; {if (A == 0xFF) <%
  $C6D7 JP NZ,$C6FF   ; }
  $C6DA LD A,($8217)  ;   character = character_index;
@@ -12886,7 +12886,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
 ; I:HL ?
 @label=sub_CB23
 c$CB23 PUSH HL
- $CB24 CALL $C651    ; sub_C651();
+ $CB24 CALL $C651    ; get_next_target();
  $CB27 CP $FF        ; {if (A == 0xFF) <%
  $CB29 JP NZ,$CB61   ; }
  $CB2C POP HL
