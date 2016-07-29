@@ -9,6 +9,17 @@ from skoolkit.skoolhtml import HtmlWriter, Udg
 from skoolkit.skoolasm import AsmWriter
 
 
+ZX_ATTRIBUTE_BRIGHT                   = 64
+
+ZX_ATTRIBUTE_GREEN_OVER_BLACK         = 4
+ZX_ATTRIBUTE_CYAN_OVER_BLACK          = 5
+ZX_ATTRIBUTE_YELLOW_OVER_BLACK        = 6
+ZX_ATTRIBUTE_WHITE_OVER_BLACK         = 7
+ZX_ATTRIBUTE_BRIGHT_GREEN_OVER_BLACK  = ZX_ATTRIBUTE_BRIGHT | 4
+ZX_ATTRIBUTE_BRIGHT_CYAN_OVER_BLACK   = ZX_ATTRIBUTE_BRIGHT | 5
+ZX_ATTRIBUTE_BRIGHT_YELLOW_OVER_BLACK = ZX_ATTRIBUTE_BRIGHT | 6
+
+
 class TheGreatEscapeHtmlWriter(HtmlWriter):
     def init(self):
         self.font = {}
@@ -46,25 +57,31 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         str     = self.decode_string(cwd, addr + 3, nbytes)
         return "screen address $%X, length $%X, string='%s'" % (scraddr, nbytes, str)
 
-    def tile(self, cwd, tile_index, supertile_index, mode):
+    def tile(self, cwd, tile_index, supertile_index, colour_supertiles, override_bright):
         """ Tile and supertile index -> Udg. """
 
         if supertile_index < 45:
             data = 0x8590  # ext tiles 1
-            attr = 70  # bright yellow over black
+            attr = ZX_ATTRIBUTE_BRIGHT_YELLOW_OVER_BLACK
         elif supertile_index < 139 or supertile_index >= 204:
             data = 0x8A18  # ext tiles 2
-            attr = 68  # bright green over black
+            attr = ZX_ATTRIBUTE_BRIGHT_GREEN_OVER_BLACK
         else:
             data = 0x90F8  # ext tiles 3
-            attr = 69  # bright cyan over black
+            attr = ZX_ATTRIBUTE_BRIGHT_CYAN_OVER_BLACK
 
-        if mode == 0:
-            attr = 7  # white over black
-        a = data + tile_index * 8
-        return Udg(attr, self.snapshot[a: a + 8])
+        if colour_supertiles == 0:
+            # assume coloured tiles unless off
+            attr = ZX_ATTRIBUTE_WHITE_OVER_BLACK
 
-    def supertile(self, cwd, addr, mode):
+        if override_bright is not None:
+            # force bright bit to the specified state
+            attr = (attr & ~ZX_ATTRIBUTE_BRIGHT) | (override_bright * ZX_ATTRIBUTE_BRIGHT)
+
+        offset = data + tile_index * 8
+        return Udg(attr, self.snapshot[offset: offset + 8])
+
+    def supertile_prime(self, cwd, addr, colour_supertiles, checkerboard):
         """ Supertile address -> image. """
 
         stile = (addr - 0x5B00) // 16
@@ -75,25 +92,32 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         for i in range(4 * 4):
             if i % 4 == 0:
                 udg_array.append([])  # start new row
-            udg_array[-1].append(self.tile(cwd, self.snapshot[addr + i],
-                                 stile,
-                                 mode))
+            bright = ((i // 4) & 1 ^ i & 1) if checkerboard else False
+            tile = self.tile(cwd,
+                             self.snapshot[addr + i],
+                             stile,
+                             colour_supertiles,
+                             bright)
+            udg_array[-1].append(tile)
 
         img_path_id = 'ScreenshotImagePath'
-        fname = 'supertile-%X' % stile
+        fname = 'supertile-%X-%d-%d' % (stile, colour_supertiles, checkerboard)
         img_path = self.image_path(fname, img_path_id)
         self.write_image(img_path, udg_array)
 
         return self.img_element(cwd, img_path)
 
+    def supertile(self, cwd, addr, colour_supertiles):
+        return self.supertile_prime(cwd, addr, colour_supertiles, True)
+
     def all_supertiles(self, cwd, unused_arg):
         s = ""
         for addr in range(0x5B00, 0x68A0, 16):
-            s += self.supertile(cwd, addr, 0)
+            s += self.supertile(cwd, addr, 0, None)
 
         return s
 
-    def map(self, cwd, addr, width, height, mode):
+    def map(self, cwd, addr, width, height, colour_supertiles, checkerboard):
 
         # Build tile UDG array
         udg_array = []
@@ -102,10 +126,16 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             udg_array.append([])  # start new row
             for x in range(width * 4):
                 stileidx = self.snapshot[addr + (y // 4) * width + (x // 4)]
-                udg_array[-1].append(self.tile(cwd, self.snapshot[0x5B00 + stileidx * 16 + (y & 3) * 4 + (x & 3)], stileidx, mode))
+                bright = ((x // 4) ^ (y // 4)) & 1 if checkerboard else False
+                tile = self.tile(cwd,
+                                 self.snapshot[0x5B00 + stileidx * 16 + (y & 3) * 4 + (x & 3)],
+                                 stileidx,
+                                 colour_supertiles,
+                                 bright)
+                udg_array[-1].append(tile)
 
         img_path_id = 'ScreenshotImagePath'
-        fname = 'map-%d' % mode
+        fname = 'map-%d-%d' % (colour_supertiles, checkerboard)
         img_path = self.image_path(fname, img_path_id)
         self.write_image(img_path, udg_array, scale=1)
 

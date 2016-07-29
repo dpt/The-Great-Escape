@@ -36,7 +36,7 @@ TODO
   - [ ] Totals per room
 - [x] Decode masks into images in the HTML disassembly
   - [ ] Include a variant of the exterior map with the masks shown atop it
-- [ ] Add a a variant of the exterior map with a checkerboard pattern showing the supertiles (using the BRIGHT bit)
+- [x] Add a a variant of the exterior map with a checkerboard pattern showing the supertiles (using the BRIGHT bit)
 - [ ] Document the game rules
   - [ ] All items and their uses
   - [ ] The escape conditions
