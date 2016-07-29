@@ -569,3 +569,5 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
 class TheGreatEscapeAsmWriter(AsmWriter):
     pass
+
+# vim: ts=8 sts=4 sw=4 et
