@@ -1,12 +1,13 @@
 # SkoolKit extension for The Great Escape by Denton Designs.
 #
-# This file copyright (c) David Thomas, 2013-2015. <dave@davespace.co.uk>
+# This file copyright (c) David Thomas, 2013-2016. <dave@davespace.co.uk>
 #
 
 import string
 
 from skoolkit.skoolhtml import HtmlWriter, Udg
 from skoolkit.skoolasm import AsmWriter
+
 
 class TheGreatEscapeHtmlWriter(HtmlWriter):
     def init(self):
@@ -49,19 +50,19 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         """ Tile and supertile index -> Udg. """
 
         if supertile_index < 45:
-            data = 0x8590 # ext tiles 1
-            attr = 70 # bright yellow over black
+            data = 0x8590  # ext tiles 1
+            attr = 70  # bright yellow over black
         elif supertile_index < 139 or supertile_index >= 204:
-            data = 0x8A18 # ext tiles 2
-            attr = 68 # bright green over black
+            data = 0x8A18  # ext tiles 2
+            attr = 68  # bright green over black
         else:
-            data = 0x90F8 # ext tiles 3
-            attr = 69 # bright cyan over black
+            data = 0x90F8  # ext tiles 3
+            attr = 69  # bright cyan over black
 
         if mode == 0:
-            attr = 7 # white over black
+            attr = 7  # white over black
         a = data + tile_index * 8
-        return Udg(attr, self.snapshot[a : a + 8])
+        return Udg(attr, self.snapshot[a: a + 8])
 
     def supertile(self, cwd, addr, mode):
         """ Supertile address -> image. """
@@ -73,8 +74,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         for i in range(4 * 4):
             if i % 4 == 0:
-                udg_array.append([]) # start new row
-            udg_array[-1].append(self.tile(cwd, self.snapshot[addr + i], stile, mode))
+                udg_array.append([])  # start new row
+            udg_array[-1].append(self.tile(cwd, self.snapshot[addr + i],
+                                 stile,
+                                 mode))
 
         img_path_id = 'ScreenshotImagePath'
         fname = 'supertile-%X' % stile
@@ -96,7 +99,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         udg_array = []
 
         for y in range(height * 4):
-            udg_array.append([]) # start new row
+            udg_array.append([])  # start new row
             for x in range(width * 4):
                 stileidx = self.snapshot[addr + (y // 4) * width + (x // 4)]
                 udg_array[-1].append(self.tile(cwd, self.snapshot[0x5B00 + stileidx * 16 + (y & 3) * 4 + (x & 3)], stileidx, mode))
@@ -116,15 +119,17 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         data = 0x9768
         attr = 7
         a = data + tile_index * 8
-        return Udg(attr, self.snapshot[a : a + 8])
+        return Udg(attr, self.snapshot[a: a + 8])
 
     def decode_all_objects(self, cwd, base, ents):
         unused = (21, 28, 39)
         s = ""
-        for index,i in enumerate(range(base, base + ents * 2, 2)):
-            if index in unused: continue
+        for index, i in enumerate(range(base, base + ents * 2, 2)):
+            if index in unused:
+                continue
             addr = self.snapshot[i + 0] + self.snapshot[i + 1] * 256
-            s += "<h3>%s @ $%.4x</h3>" % (self.interiorobject_name(index), addr)
+            s += "<h3>%s @ $%.4x</h3>" % (self.interiorobject_name(index),
+                                          addr)
             s += "<p>" + self.decode_object(cwd, addr, index) + "</p>"
         return s
 
@@ -137,7 +142,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         udg_array = []
 
         for y in range(height):
-            udg_array.append([]) # start new row
+            udg_array.append([])  # start new row
             for x in range(width):
                 udg_array[-1].append(self.interior_tile(cwd, tiles.pop()))
 
@@ -166,13 +171,13 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 if c == 0xFF:
                     s.append(c)
                     iters -= 1
-                elif c >= 128: # repeat the next byte (c - 128) times
+                elif c >= 128:  # repeat the next byte (c - 128) times
                     d = self.snapshot[p]
                     p += 1
                     for i in range(1, 1 + c - 128):
                         s.append(d)
                         iters -= 1
-                elif c >= 64: # generate a range starting at <next byte> (c - 64) times
+                elif c >= 64:  # generate a range starting at <next byte> (c - 64) times
                     d = self.snapshot[p]
                     p += 1
                     for i in range(d, d + c - 64):
@@ -195,7 +200,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         data = 0x8218
         attr = 7
         a = data + tile_index * 8
-        return Udg(attr, self.snapshot[a : a + 8])
+        return Udg(attr, self.snapshot[a: a + 8])
 
     def decode_all_masks(self, cwd, base, ents):
         """ Decode all masks. """
@@ -217,7 +222,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         # The structures at $EA7C stride is one byte shorter than mask_t since
         # the constant final byte is removed.
-        for data, dataend, stride in [(0xEC01, 0xEDD1, 8), (0xEA7C, 0xEBC5, 7)]:
+        for data, dataend, stride in [(0xEC01, 0xEDD1, 8),
+                                      (0xEA7C, 0xEBC5, 7)]:
             while data < dataend:
                 ref = self.snapshot[data + 0]
                 x0 = self.snapshot[data + 1]
@@ -229,10 +235,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 widths[ref].append(x1 - x0)
                 heights[ref].append(y1 - y0)
 
-        max_widths = [max(widths[key] + [0]) + 1 for key in widths]
+        max_widths  = [max(widths[key]  + [0]) + 1 for key in widths]
         max_heights = [max(heights[key] + [0]) + 1 for key in heights]
-        #for i, wh in enumerate(zip(max_widths, max_heights)):
-        #    print "%d: %d x %d" % (i, wh[0], wh[1])
+        # for i, wh in enumerate(zip(max_widths, max_heights)):
+        #     print "%d: %d x %d" % (i, wh[0], wh[1])
 
         s = ""
         for ref, base in enumerate(range(base, base + ents * 2, 2)):
@@ -242,7 +248,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         return s
 
     def decode_mask(self, cwd, addr, index, suggested_width, suggested_height):
-        width, height, tiles = self.expand_mask(cwd, addr, suggested_width, suggested_height)
+        width, height, tiles = self.expand_mask(cwd,
+                                                addr,
+                                                suggested_width,
+                                                suggested_height)
 
         tiles.reverse()
 
@@ -250,7 +259,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         udg_array = []
 
         for y in range(height):
-            udg_array.append([]) # start new row
+            udg_array.append([])  # start new row
             for x in range(width):
                 udg_array[-1].append(self.mask_tile(cwd, tiles.pop()))
 
@@ -388,7 +397,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 "Object 33: Small shelf facing SE",
                 "Object 34: Small crate",
                 "Object 35: Small window with bars facing SE",
-                "Object 36: Tiny door frame NE", # tunnel entrance
+                "Object 36: Tiny door frame NE",  # tunnel entrance
                 "Object 37: Noticeboard facing SE",
                 "Object 38: Door frame NW",
                 "Object 39: (unused)",
@@ -419,12 +428,13 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         # Build a dictionary of room data
 
-        unused_rooms = (6, 26, 27) # room numbers to skip
+        unused_rooms = (6, 26, 27)  # room numbers to skip
 
         all_rooms = {}
         for index, roomdef in enumerate(roomdefs):
             room_no = index + 1
-            if room_no in unused_rooms: continue
+            if room_no in unused_rooms:
+                continue
             all_rooms[room_no] = self.decode_room(cwd, room_no, roomdef)
 
         # Produce a list of objects and the rooms which use them
@@ -440,7 +450,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         s = ""
         for _, room in all_rooms.items():
-            s += "<h3>%s at $%X</h3>" % (self.room_name(room['room_no']), room['roomdef'])
+            s += "<h3>%s at $%X</h3>" % (self.room_name(room['room_no']),
+                                         room['roomdef'])
             s += "<p>" + self.render_room(cwd, room) + "</p>"
             s += "<ul>"
             for func in [self.room_dimensions_info,
@@ -473,14 +484,14 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         p += 1
         boundaries = []
         for i in range(nboundaries):
-            boundaries.append(self.snapshot[p : p + 4])
+            boundaries.append(self.snapshot[p: p + 4])
             p += 4
 
         # Unpack masks
 
         nmasks = self.snapshot[p]
         p += 1
-        masks = self.snapshot[p : p + nmasks]
+        masks = self.snapshot[p: p + nmasks]
         p += nmasks
 
         # Unpack objects
@@ -489,15 +500,15 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         p += 1
         objects = []
         for i in range(nobjs):
-            objects.append(self.snapshot[p : p + 3])
+            objects.append(self.snapshot[p: p + 3])
             p += 3
 
-        return { "room_no": room_no,
-                 "roomdef": roomdef,
-                 "dimensions": room_dims,
-                 "boundaries": boundaries,
-                 "masks": masks,
-                 "objects": objects }
+        return {"room_no": room_no,
+                "roomdef": roomdef,
+                "dimensions": room_dims,
+                "boundaries": boundaries,
+                "masks": masks,
+                "objects": objects}
 
     def room_dimensions_info(self, cwd, all_rooms, room, object_rooms):
         s = "Dimensions: " + str(room['dimensions'])
@@ -515,8 +526,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         s = "Number of objects: %d" % len(room['objects'])
         s += "<ul>"
         roomobjects = [r[0] for r in room['objects']]
-        for obj in set(roomobjects): # deduplicate the objs
-            ninroom = roomobjects.count(obj) # number in this room
+        for obj in set(roomobjects):  # deduplicate the objs
+            ninroom = roomobjects.count(obj)  # number in this room
             notherrooms = len(object_rooms[obj]) - 1
             if notherrooms:
                 s += "<li>" + "%d x '%s' - present in %d other rooms.<br>" % (ninroom, self.interiorobject_name(obj), notherrooms)
@@ -545,7 +556,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             for yy in range(height):
                 for xx in range(width):
                     t = tiles.pop()
-                    if t: udg_array[y + yy][x + xx] = self.interior_tile(cwd, t)
+                    if t:
+                        udg_array[y + yy][x + xx] = self.interior_tile(cwd, t)
 
         img_path_id = 'ScreenshotImagePath'
         fname = 'room-%d' % roomdata['room_no']
@@ -554,6 +566,6 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return self.img_element(cwd, img_path)
 
+
 class TheGreatEscapeAsmWriter(AsmWriter):
     pass
-
