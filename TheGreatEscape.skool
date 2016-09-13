@@ -17,7 +17,7 @@
 ; This disassembly contains bfix changes (bug fixes):
 ;   * Fix the $A2C6 incorrect iteration count resulting in a ROM write to $1A42.
 ;   * Makes unconditional a needless conditional return at $7CAF.
-;   * Corrects the exterior_mask_data iteration count in mask_stuff/$B935.
+;   * Corrects the exterior_mask_data iteration count in render_mask_buffer/$B935.
 ;
 @bfix+end
 @rfix+begin
@@ -25,7 +25,7 @@
 ;   * Removes the redundant self-modifying code at $6B19.
 ;   * Removes a redundant jump at $7AFB.
 ;   * Removes a redundant jump at $A0B8.
-;   * Inserts the missing RET at the end of mask_stuff/$B916.
+;   * Inserts the missing RET at the end of render_mask_buffer/$B916.
 ;   * $CCED potential bug fix for is_item_discoverable.
 ;
 @rfix+end
@@ -622,7 +622,7 @@
 ;
 ; $8131 <- searchlight_mask_test
 ;
-; $81A0 mystery (mask_stuff)
+; $81A0 mystery (render_mask_buffer)
 ;
 ; w $81A2 (<- masked_sprite_plotter_*)  likely screen buffer pointer
 
@@ -4853,7 +4853,7 @@ g$81AC DEFW $0810    ; bitmap_pointer
 ; .
 ; Written by setup_item_plotting, setup_vischar_plotting.
 ; .
-; Read by mask_stuff, guards_follow_suspicious_character.
+; Read by render_mask_buffer, guards_follow_suspicious_character.
 @label=tinypos_stash_x
 g$81B2 DEFB $01      ; tinypos_stash_x
 @label=tinypos_stash_y
@@ -10610,7 +10610,7 @@ c$B79B LD B,$07         ; B = 7; // iterations
  $B831 DEFB $FF,$34,$2C ; room_NONE,        52,44 // for character 24
  $B834 DEFB $FF,$34,$1C ; room_NONE,        52,28 // for character 25
 
-; mask_stuff stuff.
+; render_mask_buffer stuff.
 @label=byte_B837
 g$B837 DEFB $00      ; clip_x0
 @label=byte_B838
@@ -10672,7 +10672,7 @@ c$B866 CALL $B89C    ; locate_vischar_or_itemstruct();
  $B86C JR NZ,$B88F   ; }
  $B86E CALL $E420    ;   setup_vischar_plotting();
  $B871 JR NZ,$B866   ;   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
- $B873 CALL $B916    ;   mask_stuff();
+ $B873 CALL $B916    ;   render_mask_buffer();
  $B876 LD A,($81BD)  ; {  if (searchlight_state != searchlight_STATE_SEARCHING)
  $B879 CP $FF        ; searchlight_mask_test();
  $B87B CALL NZ,$B83B ; }
@@ -10685,7 +10685,7 @@ c$B866 CALL $B89C    ; locate_vischar_or_itemstruct();
  $B88D JR $B866      ;   goto locate_vischar_or_itemstruct_then_plot; %>
 *$B88F CALL $DC41    ; else <% setup_item_plotting();
  $B892 JR NZ,$B866   ;   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
- $B894 CALL $B916    ;   mask_stuff();
+ $B894 CALL $B916    ;   render_mask_buffer();
  $B897 CALL $E29F    ;   masked_sprite_plotter_16_wide_case_1_searchlight();
  $B89A JR $B866      ;   goto locate_vischar_or_itemstruct_then_plot; %>
 
@@ -10792,16 +10792,16 @@ c$B89C LD BC,$0000    ; BC = 0; // prev-x
  $B914 DEC HL         ; }
  $B915 RET            ;   return; %>
 
-; Mask stuff.
+; Render the mask buffer.
 ;
 ; Used by the routine at #R$B866.
 ;
 ; .
 ;
 ; Clear the mask buffer.
-@label=mask_stuff
+@label=render_mask_buffer
 @nowarn
-c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
+c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B919 LD (HL),$FF   ;
 @nowarn
  $B91B LD DE,$8101   ;
@@ -10967,7 +10967,7 @@ c$B916 LD HL,$8100   ; {memset($8100, 0xFF, 0xA0);
  $BA11 ADD A,A       ;
  $BA12 ADD A,B       ; }
 @nowarn
- $BA13 LD HL,$8100   ; {  HL = $8100 + Adash;
+ $BA13 LD HL,$8100   ; {  HL = mask_buffer + Adash;
  $BA16 ADD A,L       ;
  $BA17 LD L,A        ; }
  $BA18 LD ($81A0),HL ;   ($81A0) = HL; // $81A0 is a mystery location
@@ -14487,7 +14487,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
 @nowarn
  $DCCF LD ($81A2),HL ; ($81A2) = HL;  // screen buffer pointer
 @nowarn
- $DCD2 LD HL,$8100   ; HL = $8100;
+ $DCD2 LD HL,$8100   ; HL = mask_buffer;
  $DCD5 POP DE
  $DCD6 PUSH DE
  $DCD7 LD A,D        ; {L += D * 4;
@@ -15628,7 +15628,7 @@ c$E2AC CPL           ; {A = (~A & 3) * 6; // jump table offset
  $E2CE LD A,($81B7)  ; {  if (flip_sprite & (1<<7)) flip_16_masked_pixels();
  $E2D1 AND A         ;
  $E2D2 CALL M,$E40F  ; }
- $E2D5 LD HL,($81B0) ;   foremaskptr = foreground_mask_pointer;  // observed: $8100 (mask buffer)
+ $E2D5 LD HL,($81B0) ;   foremaskptr = foreground_mask_pointer;  // observed: $8100 = mask_buffer
 ; Shift mask.
 ; .
 ; 24 version does bitmap rotates then mask rotates. Is this the opposite way
@@ -16090,7 +16090,7 @@ c$E420 LD A,$0F      ; {HL += 15;
 @nowarn
  $E508 LD ($81A2),HL ; ($81A2) = HL;
 @nowarn
- $E50B LD HL,$8100   ; HL = 0x8100;
+ $E50B LD HL,$8100   ; HL = mask_buffer;
  $E50E POP DE
  $E50F PUSH DE
  $E510 LD A,D        ; {L += D * 4 + (IY[26] & 7) * 4;
@@ -16486,7 +16486,7 @@ w$EBC5 DEFW $E55F
 ;
 ; 58 mask_t structs.
 ; .
-; Used by mask_stuff. Used in outdoor mode only.
+; Used by render_mask_buffer. Used in outdoor mode only.
 @label=exterior_mask_data
 b$EC01 DEFB $00,$47,$70,$27,$3F,$6A,$52,$0C
  $EC09 DEFB $00,$5F,$88,$33,$4B,$5E,$52,$0C
@@ -17060,7 +17060,7 @@ c$F163 DI                     ; {-
  $F1B3 LD (HL),A              ;   HL[1] = 0xFF; // flags
  $F1B4 ADD HL,DE              ;   HL += 32;
  $F1B5 DJNZ $F1B1             ; %> while (--B);
-; Zero 0x118 bytes at HL (== $8100) onwards.
+; Zero 0x118 bytes at HL (== $8100 == mask_buffer) onwards.
 ; .
 ; This is likely wiping everything up until the start of tiles ($8218).
  $F1B7 LD BC,$0118            ; BC = 0x118;
