@@ -4630,7 +4630,7 @@ c$7D87 LD A,($7D10)  ; A = message_display_index;
 ; Called when messages.display_index == 128.
 @label=next_message
 c$7D99 LD HL,($7D11) ; HL = message_queue_pointer;
- $7D9C LD DE,$7CFE   ; DE = &message_queue[0];
+ $7D9C LD DE,$7CFE   ; DE = &message_queue[2];
  $7D9F LD A,L        ; {if (L == E) return; // cheap test -- no more messages?
  $7DA0 CP E          ;
  $7DA1 RET Z         ;
