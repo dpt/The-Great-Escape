@@ -24,6 +24,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
     def init(self):
         self.font = {}
 
+    # Internal
     def decode_string(self, cwd, addr, nbytes):
         """ Decode a string. """
         alphabet = string.digits + string.uppercase[:14] + string.uppercase[15:] + " ."
@@ -35,6 +36,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 s += "[%d]" % (self.snapshot[i])
         return s
 
+    # API
     def decode_stringterminated(self, cwd, addr, terminator):
         """ Decode a string with the specified terminator. """
         nbytes = 0
@@ -42,14 +44,17 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             nbytes += 1
         return self.decode_string(cwd, addr, nbytes)
 
+    # API
     def decode_stringFF(self, cwd, addr):
         """ Decode a string with an 0xFF terminator. """
         return self.decode_stringterminated(cwd, addr, 0xFF)
 
+    # API
     def decode_stringcounted(self, cwd, addr):
         """ Decode a counted string (first byte of string is length). """
         return self.decode_string(cwd, addr + 1, self.snapshot[addr])
 
+    # API
     def decode_screenlocstring(self, cwd, addr):
         """ Decode a screenlocstring. """
         scraddr = self.snapshot[addr] + self.snapshot[addr + 1] * 256
@@ -57,6 +62,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         str     = self.decode_string(cwd, addr + 3, nbytes)
         return "screen address $%X, length $%X, string='%s'" % (scraddr, nbytes, str)
 
+    # Internal
     def tile(self, cwd, tile_index, supertile_index, colour_supertiles, override_bright):
         """ Tile and supertile index -> Udg. """
 
@@ -81,6 +87,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         offset = data + tile_index * 8
         return Udg(attr, self.snapshot[offset: offset + 8])
 
+    # Internal
     def supertile_prime(self, cwd, addr, colour_supertiles, checkerboard):
         """ Supertile address -> image. """
 
@@ -107,9 +114,11 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return self.img_element(cwd, img_path)
 
+    # API
     def supertile(self, cwd, addr, colour_supertiles):
         return self.supertile_prime(cwd, addr, colour_supertiles, True)
 
+    # Unused
     def all_supertiles(self, cwd, unused_arg):
         s = ""
         for addr in range(0x5B00, 0x68A0, 16):
@@ -117,6 +126,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return s
 
+    # API
     def map(self, cwd, addr, width, height, colour_supertiles, checkerboard):
 
         # Build tile UDG array
@@ -143,6 +153,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
 # -----------------------------------------------------------------------------
 
+    # Internal
     def interior_tile(self, cwd, tile_index):
         """ Interior tile -> Udg. """
 
@@ -151,6 +162,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         a = data + tile_index * 8
         return Udg(attr, self.snapshot[a: a + 8])
 
+    # API
     def decode_all_objects(self, cwd, base, ents):
         unused = (21, 28, 39)
         s = ""
@@ -163,6 +175,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             s += "<p>" + self.decode_object(cwd, addr, index) + "</p>"
         return s
 
+    # API
     def decode_object(self, cwd, addr, index):
         width, height, tiles = self.expand_object(cwd, addr)
 
@@ -183,6 +196,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return self.img_element(cwd, img_path)
 
+    # Internal
     def expand_object(self, cwd, addr):
         width  = self.snapshot[addr + 0]
         height = self.snapshot[addr + 1]
@@ -224,6 +238,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
 # -----------------------------------------------------------------------------
 
+    # Internal
     def mask_tile(self, cwd, tile_index):
         """ Mask tile -> Udg. """
 
@@ -232,6 +247,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         a = data + tile_index * 8
         return Udg(attr, self.snapshot[a: a + 8])
 
+    # API
     def decode_all_masks(self, cwd, base, ents):
         """ Decode all masks. """
 
@@ -277,7 +293,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             s += "<p>" + self.decode_mask(cwd, addr, ref, max_widths[ref], max_heights[ref]) + "</p>"
         return s
 
-    def decode_mask(self, cwd, addr, index, suggested_width, suggested_height):
+    # Internal
+    def decode_mask(self, cwd, addr, suggested_width, suggested_height):
         width, height, tiles = self.expand_mask(cwd,
                                                 addr,
                                                 suggested_width,
@@ -300,6 +317,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return self.img_element(cwd, img_path)
 
+    # Internal
     def expand_mask(self, cwd, addr, suggested_width, suggested_height):
         width = self.snapshot[addr + 0]
         height = suggested_height
@@ -446,6 +464,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 "Object 52: Sink facing SE",
                 "Object 53: Key rack facing SE")[index]
 
+    # API
     def decode_all_rooms(self, cwd, base, nrooms):
         """ Decode all rooms. """
 
@@ -493,6 +512,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         return s
 
+    # Internal
     def decode_room(self, cwd, room_no, roomdef):
         """ Decode a single room. """
 
@@ -540,18 +560,22 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
                 "masks": masks,
                 "objects": objects}
 
+    # Internal
     def room_dimensions_info(self, cwd, all_rooms, room, object_rooms):
         s = "Dimensions: " + str(room['dimensions'])
         return s
 
+    # Internal
     def room_boundary_info(self, cwd, all_rooms, room, object_rooms):
         s = "Number of boundaries: %d" % len(room['boundaries'])
         return s
 
+    # Internal
     def room_mask_info(self, cwd, all_rooms, room, object_rooms):
         s = "Number of masks: %d" % len(room['masks'])
         return s
 
+    # Internal
     def room_object_info(self, cwd, all_rooms, room, object_rooms):
         s = "Number of objects: %d" % len(room['objects'])
         s += "<ul>"
@@ -566,6 +590,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         s += "</ul>"
         return s
 
+    # Internal
     def render_room(self, cwd, roomdata):
         # room_dims is not comprehendible to me right now .. could use a
         # worst-size case of the screen size
