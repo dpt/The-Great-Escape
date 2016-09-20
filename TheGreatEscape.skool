@@ -11319,15 +11319,18 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC2C LD A,($81B6)  ;     A = map_position_related_y;
  $BC2F SUB (HL)      ;     A -= *HL; %>
 *$BC30 LD C,A        ;   C = A;
- $BC31 LD H,C        ;   H = C;
- $BC32 XOR A         ;   A = 0;
- $BC33 SRL H         ;   SRL H
- $BC35 RRA           ;   RRA
- $BC36 LD E,A        ;   E = A;
- $BC37 LD D,H        ;   D = H;
- $BC38 SRL H         ;   SRL H
- $BC3A RRA           ;   RRA
- $BC3B LD L,A        ;   L = A;
+
+; Calculate the offset into screen buffer.
+; C * 192 == C * 24 * 8
+ $BC31 LD H,C        ; {  DE = C << 7;
+ $BC32 XOR A         ;
+ $BC33 SRL H         ;
+ $BC35 RRA           ;
+ $BC36 LD E,A        ;
+ $BC37 LD D,H        ; }
+ $BC38 SRL H         ; {  HL = C << 6;
+ $BC3A RRA           ;
+ $BC3B LD L,A        ; }
  $BC3C ADD HL,DE     ; {  HL += DE + B + $F290; // screen buffer start address
  $BC3D LD E,B        ;
  $BC3E LD D,$00      ;
