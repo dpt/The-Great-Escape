@@ -8565,15 +8565,15 @@ c$ABA0 LD A,$0C      ; {zoombox_x = 12;
 ; Used by the routine at #R$ABA0.
 @label=zoombox_fill
 c$ABF9 LD A,($AB68)  ; A = zoombox_y;
- $ABFC LD H,A        ; H = A;
- $ABFD XOR A         ; A = 0;
- $ABFE SRL H         ; SRL H
- $AC00 RRA           ; RRA
- $AC01 LD E,A        ; E = A;
- $AC02 LD D,H        ; D = H;
- $AC03 SRL H         ; SRL H
- $AC05 RRA           ; RRA
- $AC06 LD L,A        ; L = A;
+ $ABFC LD H,A        ; { DE = zoombox_y * 128
+ $ABFD XOR A         ;
+ $ABFE SRL H         ;
+ $AC00 RRA           ;
+ $AC01 LD E,A        ;
+ $AC02 LD D,H        ; }
+ $AC03 SRL H         ; { HL = zoombox_y * 64
+ $AC05 RRA           ;
+ $AC06 LD L,A        ; }
  $AC07 ADD HL,DE     ; {HL += DE + zoombox_x;
  $AC08 LD A,($AB66)  ;
  $AC0B ADD A,L       ;
