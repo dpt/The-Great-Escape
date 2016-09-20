@@ -11417,9 +11417,10 @@ c$BB98 LD B,$08      ; B = 8; // iterations
 ;
 ; Used by the routine at #R$BB98.
 ;
+; I:H X shift.
+; I:L Y shift.
+; O:A  Preserved.
 ; O:BC Pointer to tile set.
-; O:H X shift.
-; O:L Y shift.
 @label=select_tile_set
 c$BCAA EX AF,AF'
  $BCAB LD A,($68A0)  ; {if (room_index) <%
