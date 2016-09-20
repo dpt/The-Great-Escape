@@ -11244,7 +11244,7 @@ c$BAF7 LD HL,$81B5    ; HL = &map_position_related_x;
 c$BB98 LD B,$08      ; B = 8; // iterations
  $BB9A LD IY,$8000   ; IY = $8000;
 *$BB9E PUSH BC       ; do <%
- $BB9F LD A,(IY+$01) ; {  if (IY[1] == room_NONE) goto next;
+ $BB9F LD A,(IY+$01) ; {  if (IY[1] == vischar_FLAGS_EMPTY_SLOT) goto next;
  $BBA2 CP $FF        ;
  $BBA4 JP Z,$BC9F    ; }
  $BBA7 LD H,(IY+$1B) ; {  map_position_related_y = (IY[26] >> 3) | (IY[27] << 5); // divide by 8
