@@ -584,9 +584,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
             ninroom = roomobjects.count(obj)  # number in this room
             notherrooms = len(object_rooms[obj]) - 1
             if notherrooms:
-                s += "<li>" + "%d x '%s' - present in %d other rooms.<br>" % (ninroom, self.interiorobject_name(obj), notherrooms)
+                use = "present in %d other rooms" % (notherrooms)
             else:
-                s += "<li>" + "%d x '%s' - <strong>unique to this room</strong>.<br>" % (ninroom, self.interiorobject_name(obj))
+                use = "<strong>unique to this room</strong>"
+            s += "<li>" + "%d x '%s' - %s.<br>" % (ninroom, self.interiorobject_name(obj), use)
         s += "</ul>"
         return s
 
