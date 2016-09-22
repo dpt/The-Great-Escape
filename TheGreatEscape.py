@@ -89,7 +89,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
     # Internal
     def supertile_prime(self, cwd, addr, colour_supertiles, checkerboard):
-        """ Supertile address -> image. """
+        """ Return an image for the supertile at the specified address. """
 
         stile = (addr - 0x5B00) // 16
 
@@ -116,6 +116,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
     # API
     def supertile(self, cwd, addr, colour_supertiles):
+        """ Return an image for the supertile at the specified address. """
         return self.supertile_prime(cwd, addr, colour_supertiles, True)
 
     # Unused
@@ -295,6 +296,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
     # Internal
     def decode_mask(self, cwd, addr, suggested_width, suggested_height):
+        " Decode a mask at the specified address to a UDG array. "
+
         width, height, tiles = self.expand_mask(cwd,
                                                 addr,
                                                 suggested_width,
@@ -319,6 +322,8 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
     # Internal
     def expand_mask(self, cwd, addr, suggested_width, suggested_height):
+        " Expand the mask bytes to a flat array. "
+
         width = self.snapshot[addr + 0]
         height = suggested_height
 
