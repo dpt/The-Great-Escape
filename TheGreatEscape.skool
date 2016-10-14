@@ -1843,7 +1843,7 @@ c$6920 LD HL,$800D   ; HL = $800D;
  $6929 CP $1D        ;
  $692B JR C,$6936    ; }
  $692D SET 2,(HL)    ;   *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag
- $692F LD HL,$CE2E   ; {  $8015 = &sprite_prisoner_tl_4; %>
+ $692F LD HL,$CE2E   ; {  $8015 = &sprite_prisoner_facing_away_4; %>
  $6932 LD ($8015),HL ; }
  $6935 RET           ; else <%
 *$6936 RES 2,(HL)    ;   *HL &= ~vischar_BYTE14_CRAWL; %> // clear crawl flag
@@ -4135,7 +4135,7 @@ c$7B8B LD A,($8215)  ; A = items_held[0];
  $7B8E CP $FF        ; {if (A == item_NONE) return;
  $7B90 RET Z         ; }
 ; When dropping the uniform reset the player sprite.
- $7B91 CP $06        ; {if (A == item_UNIFORM) $8015 = sprite_prisoner_tl_4;
+ $7B91 CP $06        ; {if (A == item_UNIFORM) $8015 = sprite_prisoner_facing_away_4;
  $7B93 JP NZ,$7B9C   ;
  $7B96 LD HL,$CE2E   ;
  $7B99 LD ($8015),HL ; }
@@ -9961,7 +9961,7 @@ c$B3C4 LD HL,($8215) ; Load items_held.
 ; Use uniform.
 @label=action_uniform
 c$B3E1 LD HL,$8015   ; HL = $8015; // current character sprite set
- $B3E4 LD DE,$CEA6   ; DE = &sprite_guard_tl_4;
+ $B3E4 LD DE,$CEA6   ; DE = &sprite_guard_facing_away_4;
  $B3E7 LD A,(HL)     ; {if (*HL == E) return; // cheap equality test /* Already in uniform. */
  $B3E8 CP E          ;
  $B3E9 RET Z         ; }
@@ -10066,7 +10066,7 @@ c$B417 LD HL,$B589   ; HL = &walls[12] + 3;
  $B47B LD (HL),$02   ; }
  $B47D LD A,$0C      ; {$8013 = 12; // set height
  $B47F LD ($8013),A  ; }
- $B482 LD HL,$CE2E   ; {$8015 = sprite_prisoner_tl_4;
+ $B482 LD HL,$CE2E   ; {$8015 = sprite_prisoner_facing_away_4;
  $B485 LD ($8015),HL ; }
  $B488 LD A,($A12F)  ; {player_locked_out_until = game_counter + 96;
  $B48B ADD A,$60     ;
@@ -10507,7 +10507,7 @@ c$B75A LD BC,$1000   ; B = item__LIMIT; C = 0;
  $B783 LD ($8215),HL ; }
  $B786 CALL $7C33    ; draw_all_items();
 ; Reset the hero's sprite.
- $B789 LD HL,$CE2E   ; {$8015 = sprite_prisoner_tl_4;
+ $B789 LD HL,$CE2E   ; {$8015 = sprite_prisoner_facing_away_4;
  $B78C LD ($8015),HL ; }
  $B78F LD A,$02      ; {room_index = room_2_HUT2LEFT;
  $B791 LD ($68A0),A  ; }
@@ -13078,7 +13078,7 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
  $CC12 LD ($A13A),A    ; }
  $CC15 XOR A           ; {automatic_player_counter = 0; // immediately take automatic control of hero
  $CC16 LD ($A139),A    ; }
- $CC19 LD HL,$CE2E     ; {$8015 = sprite_prisoner_tl_4;
+ $CC19 LD HL,$CE2E     ; {$8015 = sprite_prisoner_facing_away_4;
  $CC1C LD ($8015),HL   ; }
  $CC1F LD HL,$7AC6     ; HL = &solitary_pos;
  $CC22 LD IY,$8000     ; IY = $8000;
@@ -13105,7 +13105,7 @@ c$CC37 PUSH IY         ; {HL = IY;
  $CC39 POP HL          ; }
  $CC3A LD A,(HL)       ; A = *HL;
 ; Wearing the uniform stops anyone but the commandant from following the hero.
- $CC3B AND A           ; {if (A && *$8015 == sprite_guard_tl_4) return;
+ $CC3B AND A           ; {if (A != character_0_COMMANDANT && *$8015 == sprite_guard_facing_away_4) return;
  $CC3C JR Z,$CC46      ;
  $CC3E LD A,($8015)    ;
  $CC41 LD DE,$CEA6     ;
@@ -16890,7 +16890,7 @@ c$EFCB LD DE,$696D      ; DE = map_MAIN_GATE_X;
  $EFDC DJNZ $EFD3       ; %> while (--B);
 ; Using the papers at the main gate when not in uniform causes the hero to be
 ; sent to solitary.
- $EFDE LD DE,$CEA6      ; {if ($8015 != sprite_guard_tl_4) goto solitary; // exit via
+ $EFDE LD DE,$CEA6      ; {if ($8015 != sprite_guard_facing_away_4) goto solitary; // exit via
  $EFE1 LD A,($8015)     ;
  $EFE4 CP E             ;
  $EFE5 JP NZ,$CB98      ; }
