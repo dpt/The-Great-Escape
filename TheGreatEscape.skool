@@ -10974,7 +10974,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA1B EX AF,AF'
 ; If I break this bit then the character gets drawn on top of *indoors*
 ; objects.
- $BA1C ADD A,A       ; {  DE = exterior_mask_data_pointers[A];
+ $BA1C ADD A,A       ; {  DE = mask_pointers[A];
  $BA1D LD C,A        ;
  $BA1E LD B,$00      ;
  $BA20 LD HL,$EBC5   ;
@@ -16454,7 +16454,7 @@ b$EA7C DEFB $1B,$7B,$7F,$F1,$F3,$36,$28 ; $1B, { $7B, $7F, $F1, $F3 }, { $36, $2
 ; Pointers to run-length encoded mask data.
 ;
 ; 30 pointers to byte arrays.
-@label=exterior_mask_data_pointers
+@label=mask_pointers
 w$EBC5 DEFW $E55F
  $EBC7 DEFW $E5FF
  $EBC9 DEFW $E61E
