@@ -4970,7 +4970,7 @@ g$8217 DEFB $00      ; character_index
 ; Exterior tiles set 0. 111 tiles. Looks like mask tiles for huts. (<-
 ; plot_tile)
 @label=tiles
-@label=exterior_tiles_0
+@label=mask_tiles
 b$8218 DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF ; #HTML[#UDGARRAY1,7,4,1;$8218-$821F-8(exterior-tiles0-000)]
  $8220 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; #HTML[#UDGARRAY1,7,4,1;$8220-$8227-8(exterior-tiles0-001)]
  $8228 DEFB $FE,$FE,$FE,$FE,$FE,$FE,$FE,$FE ; #HTML[#UDGARRAY1,7,4,1;$8228-$822F-8(exterior-tiles0-002)]
@@ -11122,7 +11122,7 @@ c$BACD LD B,$08      ; B = 8; // iterations
 @label=mask_against_tile
 c$BADC PUSH HL       ; DEdash = HL
  $BADD EXX
- $BADE LD L,A        ; {HLdash = &exterior_tiles_0[A];
+ $BADE LD L,A        ; {HLdash = &mask_tiles[A];
  $BADF LD H,$00      ;
  $BAE1 ADD HL,HL     ;
  $BAE2 ADD HL,HL     ;
