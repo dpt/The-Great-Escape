@@ -7258,7 +7258,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3D7 EX DE,HL
  $A3D8 INC L         ; {  HL += 2;
  $A3D9 INC L         ; }
- $A3DA CALL $CB23    ;   sub_CB23();
+ $A3DA CALL $CB23    ;   get_next_target_and_handle_it();
  $A3DD POP BC        ;   // could have just ended the block here
  $A3DE RET           ;   return; %>
 *$A3DF CP $80        ; {else if (A == 128) <%
@@ -9427,7 +9427,7 @@ c$B107 CALL $A0E9      ; increase_morale_by_10_score_by_50();
  $B110 POP HL          ;
  $B111 INC L           ;
  $B112 INC L           ; }
- $B113 CALL $CB23      ; sub_CB23();
+ $B113 CALL $CB23      ; get_next_target_and_handle_it();
  $B116 LD DE,$8215     ; DE = &items_held[0];
  $B119 LD A,(DE)       ; {if (*DE != item_BRIBE && *++DE != item_BRIBE) return; // have no bribes
  $B11A CP $05          ;
@@ -12552,7 +12552,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C94B JR NZ,$C932    ; }
  $C94D LD (HL),$00    ; {    *HL++ = 0;
  $C94F INC L          ; }
- $C950 JP $CB23       ;     sub_CB23(); return; %> // exit via
+ $C950 JP $CB23       ;     get_next_target_and_handle_it(); return; %> // exit via
 *$C953 CP $03         ; {  else if (A == (vischar_FLAGS_BRIBE_PENDING + vischar_FLAGS_BIT1)) <%}
  $C955 JR NZ,$C979    ;
  $C957 PUSH HL
@@ -12577,7 +12577,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C972 INC L          ; {      *++HL = 0;
  $C973 LD (HL),$00    ; }
  $C975 POP HL
- $C976 JP $CB23       ;       sub_CB23(); return; %> %> // exit via
+ $C976 JP $CB23       ;       get_next_target_and_handle_it(); return; %> %> // exit via
 *$C979 CP $04         ; {  else if (A == vischar_FLAGS_SAW_BRIBE) <%
  $C97B JR NZ,$C9BA    ; }
  $C97D PUSH HL
@@ -12599,7 +12599,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
 ; Bribed character was not visible.
  $C996 LD (HL),$00    ; {    *HL++ = 0;
  $C998 INC L          ; }
- $C999 JP $CB23       ;     sub_CB23(); return; // exit via
+ $C999 JP $CB23       ;     get_next_target_and_handle_it(); return; // exit via
 ; Found bribed character.
 *$C99C LD A,$0F       ; {found_bribed: HL += 15;
  $C99E ADD A,L        ;
@@ -12860,7 +12860,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CB01 INC L         ;     HL++; // $8000 -> $8001
  $CB02 RES 6,(HL)    ; {    *HL++ &= ~vischar_FLAGS_DOOR_THING;
  $CB04 INC L         ; }
- $CB05 CALL $CB23    ;     sub_CB23(); %>
+ $CB05 CALL $CB23    ;     get_next_target_and_handle_it(); %>
 *$CB08 POP HL
  $CB09 CALL $68A2    ;   transition();
  $CB0C LD BC,$2030   ; {  play_speaker(sound_CHARACTER_ENTERS_1);
@@ -12878,15 +12878,15 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CB20 DEC (HL)      ; }
 *$CB21 INC (HL)      ;   else <% (*HL)++;
  $CB22 DEC L         ;     HL--; %> %>
-; FALL THROUGH to sub_CB23.
+; FALL THROUGH to get_next_target_and_handle_it.
 
-; (unknown) sub_CB23
+; (unknown) get_next_target_and_handle_it
 ;
 ; Used by the routines at #R$A3BB, #R$B107, #R$C918, #R$CA81 and #R$CB2D.
 ;
 ; I:A  Character index?
 ; I:HL ?
-@label=sub_CB23
+@label=get_next_target_and_handle_it
 c$CB23 PUSH HL
  $CB24 CALL $C651    ; get_next_target();
  $CB27 CP $FF        ; {if (A == 0xFF) <%
@@ -12922,7 +12922,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB4B LD A,(HL)     ;   A = *HL;
  $CB4C AND A         ; {  if (A == 0) return;
  $CB4D RET Z         ; }
- $CB4E JR $CB23      ;   sub_CB23(); return; // exit via
+ $CB4E JR $CB23      ;   get_next_target_and_handle_it(); return; // exit via
 ; arrive here if (character == character_12_GUARD_12)
 *$CB50 LD A,(HL)     ; {  *HL++ = *HL ^ 0x80;
  $CB51 XOR $80       ;
