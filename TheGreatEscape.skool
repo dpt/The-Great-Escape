@@ -402,7 +402,7 @@
 ; vischar_FLAGS_BRIBE_PENDING                   = 1 << 0,       ; non-hero only
 ; vischar_FLAGS_BIT1                            = 1 << 1,       ; non-hero only (dog + food flag)
 ; vischar_FLAGS_SAW_BRIBE                       = 1 << 2,       ; set when a hostile 'saw' a bribe being used (was nearby) or perhaps distracted
-; vischar_FLAGS_BIT6                            = 1 << 6,       ; affects scaling
+; vischar_FLAGS_DOOR_THING                      = 1 << 6,       ; affects scaling
 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
 ;
 ; ; $8002, $8022, $8042, ...
@@ -7124,7 +7124,7 @@ c$A33F LD A,($A13A)  ; {if (morale_1) return;
  $A342 AND A         ;
  $A343 RET NZ        ; }
 ; This entry point is used by the routine at #R$C7C6.
-*$A344 LD HL,$8001   ; {$8001 &= ~vischar_FLAGS_BIT6;
+*$A344 LD HL,$8001   ; {$8001 &= ~vischar_FLAGS_DOOR_THING;
  $A347 RES 6,(HL)    ; }
  $A349 INC L         ; {$8002 = B;
  $A34A LD (HL),B     ; }
@@ -7233,7 +7233,7 @@ c$A38C CALL $C7B9    ; HL = get_character_struct(A);
 *$A3B2 RET           ; exit: return;
 *$A3B3 POP BC        ; found:
  $A3B4 INC L         ; HL++;
- $A3B5 RES 6,(HL)    ; {*HL++ &= ~vischar_FLAGS_BIT6;
+ $A3B5 RES 6,(HL)    ; {*HL++ &= ~vischar_FLAGS_DOOR_THING;
  $A3B7 INC L         ; }
  $A3B8 CALL $A3ED    ; store_location(); // HL = vischar->target
 ; FALL THROUGH into sub_A3BB.
@@ -7271,7 +7271,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3E5 SUB $05       ;
  $A3E7 LD E,A        ; }
  $A3E8 EX DE,HL
- $A3E9 SET 6,(HL)    ;   *HL |= vischar_FLAGS_BIT6; %> // sampled HL=$8001
+ $A3E9 SET 6,(HL)    ;   *HL |= vischar_FLAGS_DOOR_THING; %> // sampled HL=$8001
 *$A3EB POP BC
  $A3EC RET           ; return;
 
@@ -11844,7 +11844,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /* cha
  $C5B2 INC E          ;
  $C5B3 INC E          ; }
  $C5B4 JR $C592       ;     goto $C592; %>
-*$C5B6 CP $80         ; {  if (A == 128) IY[1] |= vischar_FLAGS_BIT6; // $8021
+*$C5B6 CP $80         ; {  if (A == 128) IY[1] |= vischar_FLAGS_DOOR_THING; // $8021
  $C5B8 JR NZ,$C5BE    ;
  $C5BA SET 6,(IY+$01) ; }
 *$C5BE POP DE
@@ -12638,7 +12638,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
 @nowarn
  $C9C9 LD HL,$CB75    ;   HLdash = &multiply_by_1; %>
  $C9CC JR $C9DA       ; else <%
-*$C9CE BIT 6,C        ; {  if (Cdash & vischar_FLAGS_BIT6) <%
+*$C9CE BIT 6,C        ; {  if (Cdash & vischar_FLAGS_DOOR_THING) <%
  $C9D0 JR Z,$C9D7     ; }
 @nowarn
  $C9D2 LD HL,$B295    ;     HLdash = &multiply_by_4; %>
@@ -12801,7 +12801,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CAB1 XOR A         ; {  *HL = 0;
  $CAB2 LD (HL),A     ; }
  $CAB3 JP $C9F5      ;   goto character_behaviour_end_1; %> // exit via
-*$CAB6 BIT 6,C       ; {if (C & vischar_FLAGS_BIT6) <%
+*$CAB6 BIT 6,C       ; {if (C & vischar_FLAGS_DOOR_THING) <%
  $CAB8 JR Z,$CB13    ; }
 ; Results in character entering.
  $CABA DEC L         ; {  C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location
@@ -12860,7 +12860,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CAFE JP NZ,$CB08   ; }
 ; Hero's vischar only.
  $CB01 INC L         ;     HL++; // $8000 -> $8001
- $CB02 RES 6,(HL)    ; {    *HL++ &= ~vischar_FLAGS_BIT6;
+ $CB02 RES 6,(HL)    ; {    *HL++ &= ~vischar_FLAGS_DOOR_THING;
  $CB04 INC L         ; }
  $CB05 CALL $CB23    ;     sub_CB23(); %>
 *$CB08 POP HL
@@ -12947,7 +12947,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
 @label=sub_CB61
 c$CB61 CP $80         ; {if (A == 128) <%
  $CB63 JP NZ,$CB6A    ; }
- $CB66 SET 6,(IY+$01) ;   IY[1] |= vischar_FLAGS_BIT6; %>
+ $CB66 SET 6,(IY+$01) ;   IY[1] |= vischar_FLAGS_DOOR_THING; %>
 *$CB6A POP DE
  $CB6B INC E          ; {memcpy(DE + 2, HL, 2);
  $CB6C INC E          ;
