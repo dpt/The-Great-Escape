@@ -4858,10 +4858,10 @@ g$81B2 DEFB $01      ; tinypos_stash_x
  $81B4 DEFB $06      ; tinypos_stash_height
 
 ; Map position related variables.
-@label=map_position_related_x
-g$81B5 DEFB $81      ; map_position_related_x
-@label=map_position_related_y
- $81B6 DEFB $FF      ; map_position_related_y
+@label=screenpos_x
+g$81B5 DEFB $81      ; screenpos_x
+@label=screenpos_y
+ $81B6 DEFB $FF      ; screenpos_y
 
 ; Controls character left/right flipping.
 @label=flip_sprite
@@ -10827,7 +10827,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
 ; Mask against all.
 *$B93A PUSH BC       ; do <%
  $B93B PUSH HL
- $B93C LD A,($81B5)  ; {  A = map_position_related_x - 1;
+ $B93C LD A,($81B5)  ; {  A = screenpos_x - 1;
  $B93F DEC A         ; }
  $B940 CP (HL)       ; {  if (A >= HL[0] || A + 4 < HL[-1]) goto pop_next;
  $B941 JP NC,$BAC3   ;
@@ -10838,7 +10838,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B94B INC HL        ; {
  $B94C INC HL        ;
  $B94D INC HL        ; }
- $B94E LD A,($81B6)  ; {  A = map_position_related_y - 1;
+ $B94E LD A,($81B6)  ; {  A = screenpos_y - 1;
  $B951 DEC A         ; }
  $B952 CP (HL)       ; {  if (A >= HL[2] || A + 5 < HL[1]) goto pop_next;
  $B953 JP NC,$BAC3   ;
@@ -10869,7 +10869,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B981 JR NC,$B984   ;
  $B983 DEC H         ; }
 ; Clipping.
-*$B984 LD A,($81B5)  ;   A = map_position_related_x;
+*$B984 LD A,($81B5)  ;   A = screenpos_x;
  $B987 LD C,A        ;   C = A;
  $B988 CP (HL)       ; {  if (A >= *HL) <%
  $B989 JP C,$B99F    ; }
@@ -10902,7 +10902,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B9B2 LD A,C        ; }
 *$B9B3 LD ($B83A),A  ;     ($B83A) = A; // word_B839 + 1 %>
 *$B9B6 INC HL        ;   HL++;
- $B9B7 LD A,($81B6)  ;   A = map_position_related_y;
+ $B9B7 LD A,($81B6)  ;   A = screenpos_y;
  $B9BA LD C,A        ;   C = A;
  $B9BB CP (HL)       ; {  if (A >= *HL) <%
  $B9BC JP C,$B9D2    ; }
@@ -10936,7 +10936,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
 *$B9E6 LD ($B839),A  ;     ($B839) = A; %>
 *$B9E9 DEC HL        ;   HL--;
  $B9EA LD BC,$0000   ;   BC = 0;
- $B9ED LD A,($B838)  ; {  if (byte_B838 == 0) C = -map_position_related_y + *HL;
+ $B9ED LD A,($B838)  ; {  if (clip_y0 == 0) C = -screenpos_y + *HL;
  $B9F0 AND A         ;
  $B9F1 JR NZ,$B9FA   ;
  $B9F3 LD A,($81B6)  ;
@@ -10945,7 +10945,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B9F9 LD C,A        ; }
 *$B9FA DEC HL        ; {  HL -= 2;
  $B9FB DEC HL        ; }
- $B9FC LD A,($B837)  ; {  if (byte_B837 == 0) B = -map_position_related_x + *HL;
+ $B9FC LD A,($B837)  ; {  if (clip_x0 == 0) B = -screenpos_x + *HL;
  $B9FF AND A         ;
  $BA00 JR NZ,$BA09   ;
  $BA02 LD A,($81B5)  ;
@@ -11150,7 +11150,7 @@ c$BADC PUSH HL       ; DEdash = HL
 ;
 ; Width part.
 @label=vischar_visible
-c$BAF7 LD HL,$81B5    ; HL = &map_position_related_x;
+c$BAF7 LD HL,$81B5    ; HL = &screenpos_x;
  $BAFA LD A,($81BB)   ; {A = map_position[0] + 24;
  $BAFD ADD A,$18      ; }
  $BAFF SUB (HL)       ; A -= *HL;
@@ -11243,7 +11243,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BB9F LD A,(IY+$01) ; {  if (IY[1] == vischar_FLAGS_EMPTY_SLOT) goto next;
  $BBA2 CP $FF        ;
  $BBA4 JP Z,$BC9F    ; }
- $BBA7 LD H,(IY+$1B) ; {  map_position_related_y = (IY[26] >> 3) | (IY[27] << 5); // divide by 8
+ $BBA7 LD H,(IY+$1B) ; {  screenpos_y = (IY[26] >> 3) | (IY[27] << 5); // divide by 8
  $BBAA LD A,(IY+$1A) ;
  $BBAD SRL H         ;
  $BBAF RRA           ;
@@ -11252,7 +11252,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBB3 SRL H         ;
  $BBB5 RRA           ;
  $BBB6 LD ($81B6),A  ; }
- $BBB9 LD H,(IY+$19) ; {  map_position_related_x = (IY[24] >> 3) | (IY[25] << 5); // divide by 8
+ $BBB9 LD H,(IY+$19) ; {  screenpos_x = (IY[24] >> 3) | (IY[25] << 5); // divide by 8
  $BBBC LD A,(IY+$18) ;
  $BBBF SRL H         ;
  $BBC1 RRA           ;
@@ -11271,7 +11271,8 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBD7 AND $1F       ;
  $BBD9 ADD A,$02     ; }
  $BBDB PUSH AF
- $BBDC LD HL,$81B6   ; {  A += map_position_related_y - ((map_position & 0xFF00) >> 8);
+
+ $BBDC LD HL,$81B6   ; {  A += screenpos_y - map_position_y;
  $BBDF ADD A,(HL)    ;
  $BBE0 LD HL,$81BC   ;
  $BBE3 SUB (HL)      ; }
@@ -11304,15 +11305,16 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC1B AND A         ;   A &= A;
  $BC1C LD A,$00      ;   A = 0; // interleaved
  $BC1E JR NZ,$BC24   ;   if (Z) <%
- $BC20 LD A,($81B5)  ;     A = map_position_related_x;
+ $BC20 LD A,($81B5)  ;     A = screenpos_x;
  $BC23 SUB (HL)      ;     A -= *HL; %>
 *$BC24 LD B,A        ;   B = A;
+
  $BC25 LD A,D        ;   A = D;
  $BC26 AND A         ;   A &= A;
  $BC27 LD A,$00      ;   A = 0; // interleaved
  $BC29 JR NZ,$BC30   ;   if (Z) <%
  $BC2B INC HL        ;     HL++;
- $BC2C LD A,($81B6)  ;     A = map_position_related_y;
+ $BC2C LD A,($81B6)  ;     A = screenpos_y;
  $BC2F SUB (HL)      ;     A -= *HL; %>
 *$BC30 LD C,A        ;   C = A;
 
@@ -14474,7 +14476,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DCB9 ADD HL,HL     ;
  $DCBA ADD HL,DE     ; }
  $DCBB EX DE,HL      ; %>
-*$DCBC LD A,($81B5)  ; A = map_position_related_x;
+*$DCBC LD A,($81B5)  ; A = screenpos_x;
  $DCBF LD HL,$81BB   ; HL = $81BB; // &map_position;
  $DCC2 SUB (HL)      ; A -= *HL; // x
  $DCC3 LD L,A        ; {HL = A;
@@ -14534,7 +14536,7 @@ c$DC41 AND $3F       ; A &= 0x3F;
 ;
 ; Width part.
 @label=item_visible
-c$DD02 LD HL,$81B5   ; HL = &map_position_related_x;
+c$DD02 LD HL,$81B5   ; HL = &screenpos_x;
  $DD05 LD DE,($81BB) ; DE = map_position;
  $DD09 LD A,E        ; {A = E + 24 - HL[0]; // xoff
  $DD0A ADD A,$18     ;
@@ -16077,7 +16079,7 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E4F2 ADD HL,HL     ;
  $E4F3 ADD HL,DE     ; }
  $E4F4 EX DE,HL      ; %>
-*$E4F5 LD A,($81B5)  ; {HL = map_position_related_x - (map_position & 0xFF); // ie. low byte of map_position // signed subtract + extend to 16-bit
+*$E4F5 LD A,($81B5)  ; {HL = screenpos_x - (map_position & 0xFF); // ie. low byte of map_position // signed subtract + extend to 16-bit
  $E4F8 LD HL,$81BB   ;
  $E4FB SUB (HL)      ;
  $E4FC LD L,A        ;
