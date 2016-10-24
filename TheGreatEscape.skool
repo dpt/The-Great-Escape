@@ -618,13 +618,9 @@
 ;
 ; Other things:
 ;
-; $8100 mask buffer
-;
-; $8131 <- searchlight_mask_test
-;
-; $81A0 mystery (render_mask_buffer)
-;
-; w $81A2 (<- masked_sprite_plotter_*)  likely screen buffer pointer
+; b $8100 mask buffer (0xA0 bytes - 4 * 8 * 5)
+; w $81A0 mask buffer pointer
+; w $81A2 screen buffer pointer
 
 @org=$4000
 
