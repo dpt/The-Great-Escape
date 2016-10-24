@@ -597,7 +597,7 @@
 ;          $07 -> character faces bottom left  (crawling)
 ; w $800F position on X axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on Y axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in reset_position,  read by called_from_main_loop_9 ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_screenpos_from_mi_pos,  read by called_from_main_loop_9 ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 touch sets this to touch_stashed_A
 ; w $8018 points to something (gets $06C8 subtracted from it) (<- in_permitted_area)
@@ -1813,7 +1813,7 @@ c$68F4 LD HL,$0000   ; {game_window_offset = 0;
  $6903 LD ($81BB),HL ; }
  $6906 CALL $6920    ; set_hero_sprite_for_room();
  $6909 LD HL,$8000   ; HL = $8000;
- $690C CALL $B71B    ; reset_position(); // reset hero
+ $690C CALL $B71B    ; calc_vischar_screenpos_from_mi_pos(); // reset hero
  $690F CALL $6939    ; setup_movable_items();
  $6912 CALL $ABA0    ; zoombox();
  $6915 LD B,$01      ; {increase_score(1);
@@ -1904,7 +1904,7 @@ c$697D LD ($8020),A     ; setup_movable_item: $8020 = A; // character index
  $6996 LD ($803C),A     ; }
 @nowarn
  $6999 LD HL,$8020      ; HL = $8020;
- $699C CALL $B71B       ; reset_position(); // reset item vischar
+ $699C CALL $B71B       ; calc_vischar_screenpos_from_mi_pos(); // reset item vischar
  $699F RET              ; return;
 ; Fourteen bytes of reset data.
 @label=movable_item_reset_data
@@ -7462,7 +7462,7 @@ c$A491 LD (HL),$FF   ; *HL = 0xFF; // set in breakfast, or in bed
  $A49E INC L         ;
  $A49F DJNZ $A49D    ; }
  $A4A1 LD HL,$8000   ; HL = $8000;
- $A4A4 CALL $B71B    ; reset_position(); // reset hero
+ $A4A4 CALL $B71B    ; calc_vischar_screenpos_from_mi_pos(); // reset hero
  $A4A7 JR $A479      ; goto select_room_and_plot;
 
 ; Set location 0x000E.
@@ -9810,7 +9810,7 @@ c$B29F LD A,($81BE)  ; {BC = &roomdef_bounds[roomdef_bounds_index];
 ; Reset hero.
 @label=reset_outdoors
 c$B2FC LD HL,$8000   ; HL = $8000;
- $B2FF CALL $B71B    ; reset_position();
+ $B2FF CALL $B71B    ; calc_vischar_screenpos_from_mi_pos();
 ; Centre the screen on the hero.
  $B302 LD HL,$8018   ; HL = $8018;
  $B305 LD A,(HL)     ; {A = *HL++;
@@ -10423,7 +10423,7 @@ c$B5CE LD B,$08        ; B = 8;
 ; Used by the routines at #R$68F4, #R$697D, #R$A491, #R$B2FC and #R$C4E0.
 ;
 ; I:HL Pointer to visible character.
-@label=reset_position
+@label=calc_vischar_screenpos_from_mi_pos
 c$B71B PUSH HL
 ; Save a copy of the vischar's position + offset.
  $B71C LD A,$0F      ; {memcpy(&saved_pos_x, HL + 0x0F, 6);
@@ -11857,7 +11857,7 @@ c$C4E0 BIT 6,(HL)     ; {if (*HL & characterstruct_FLAG_DISABLED) return; /* cha
  $C5C9 LD E,A         ; }
  $C5CA EX DE,HL
  $C5CB PUSH HL
- $C5CC CALL $B71B     ; reset_position();
+ $C5CC CALL $B71B     ; calc_vischar_screenpos_from_mi_pos();
  $C5CF POP HL
  $C5D0 JP $C918       ; character_behaviour(); return; // exit via
 
