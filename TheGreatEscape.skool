@@ -12892,16 +12892,16 @@ c$CB23 PUSH HL
  $CB27 CP $FF        ; {if (A == 0xFF) <%
  $CB29 JP NZ,$CB61   ; }
  $CB2C POP HL
-; FALL THROUGH into sub_CB2D.
+; FALL THROUGH into ran_out_of_list.
 
-; (unknown) sub_CB2D
+; (unknown) ran_out_of_list
 ;
 ; Used by the routine at #R$C4E0.
 ;
 ; .
 ;
 ; If not the hero's vischar ...
-@label=sub_CB2D
+@label=ran_out_of_list
 c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB2E CP $02        ;
  $CB30 JP Z,$CB46    ; }
