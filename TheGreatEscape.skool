@@ -1751,7 +1751,7 @@ c$68A2 EX DE,HL
  $68A7 PUSH AF
  $68A8 ADD A,$0F     ; {L = A + 0x0F; // $8xxF (position on X axis)
  $68AA LD L,A        ; }
- $68AB LD A,(IY+$1C) ; A = IY[0x1C]; // $8x1C (likely room index)
+ $68AB LD A,(IY+$1C) ; A = IY[0x1C]; // $8x1C (vischar.room)
  $68AE AND A         ; {if (A == 0) <% // outdoors
  $68AF JP NZ,$68C3   ; }
 ; Set position on X axis, Y axis and height (dividing by 4).
@@ -1784,7 +1784,7 @@ c$68A2 EX DE,HL
 ; HL points to the hero vischar at this point.
 *$68D7 INC L         ; {*++HL &= ~vischar_FLAGS_NO_COLLIDE; // $8001
  $68D8 RES 7,(HL)    ; }
- $68DA LD A,($801C)  ; A = ($801C); // room index
+ $68DA LD A,($801C)  ; A = vischar.room;
  $68DD LD ($68A0),A  ; room_index = A;
  $68E0 AND A         ; {if (A == 0) <%
  $68E1 JP NZ,$68F4   ; }
@@ -9812,19 +9812,19 @@ c$B29F LD A,($81BE)  ; {BC = &roomdef_bounds[roomdef_bounds_index];
 c$B2FC LD HL,$8000   ; HL = $8000;
  $B2FF CALL $B71B    ; calc_vischar_screenpos_from_mi_pos();
 ; Centre the screen on the hero.
- $B302 LD HL,$8018   ; HL = $8018;
+ $B302 LD HL,$8018   ; HL = $8018; // (vischar.screenpos.x)
  $B305 LD A,(HL)     ; {A = *HL++;
  $B306 INC L         ; }
  $B307 LD C,(HL)     ; C = *HL;
  $B308 CALL $E555    ; divide_by_8(C,A);
- $B30B SUB $0B       ; {map_position[0] = A - 11; // 11 would be screen width minus half of character width?
+ $B30B SUB $0B       ; {map_position.x = A - 11; // 11 would be screen width minus half of character width?
  $B30D LD ($81BB),A  ; }
  $B310 INC L         ; HL++;
  $B311 LD A,(HL)     ; {A = *HL++;
  $B312 INC L         ; }
  $B313 LD C,(HL)     ; C = *HL;
  $B314 CALL $E555    ; divide_by_8(C,A);
- $B317 SUB $06       ; {map_position[1] = A - 6; // 6 would be screen height minus half of character height?
+ $B317 SUB $06       ; {map_position.y = A - 6; // 6 would be screen height minus half of character height?
  $B319 LD ($81BC),A  ; }
  $B31C XOR A         ; {room_index = room_NONE;
  $B31D LD ($68A0),A  ; }
@@ -10385,10 +10385,10 @@ c$B5CE LD B,$08        ; B = 8;
  $B6E5 LD (IY+$0B),D   ; IY[0x0B] = D;
  $B6E8 BIT 7,C         ; {if ((C & (1<<7)) == 0) <%
  $B6EA JR NZ,$B6FC     ; }
- $B6EC LD (IY+$0C),$00 ;   IY[0x0C] = 0;
+ $B6EC LD (IY+$0C),$00 ; vischar.b0C = 0
  $B6F0 INC DE          ; {  DE += 2;
  $B6F1 INC DE          ; }
- $B6F2 LD A,(DE)       ; {  IY[0x0E] = *DE;
+ $B6F2 LD A,(DE)       ; { vischar.direction = *DE;
  $B6F3 LD (IY+$0E),A   ; }
  $B6F6 INC DE          ; {  DE += 2; // point to groups of four
  $B6F7 INC DE          ; }
@@ -10396,9 +10396,9 @@ c$B5CE LD B,$08        ; B = 8;
  $B6F9 JP $B65A        ;   goto increment; %>
 *$B6FC LD A,(DE)       ; else <% A = *DE; // count of four-byte groups
  $B6FD LD C,A          ;   C = A;
- $B6FE OR $80          ; {  IY[0x0C] = A | vischar_BYTE12_BIT7;
+ $B6FE OR $80          ; {  vischar.b0C = A | vischar_BYTE12_BIT7;
  $B700 LD (IY+$0C),A   ; }
- $B703 INC DE          ; {  IY[0x0E] = *++DE;
+ $B703 INC DE          ; {  vischar.direction = *++DE;
  $B704 LD A,(DE)       ;
  $B705 LD (IY+$0E),A   ; }
  $B708 INC DE          ; {  DE += 3; // point to groups of four
@@ -10970,7 +10970,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA13 LD HL,$8100   ; {  HL = mask_buffer + Adash;
  $BA16 ADD A,L       ;
  $BA17 LD L,A        ; }
- $BA18 LD ($81A0),HL ;   ($81A0) = HL; // $81A0 is a mystery location
+ $BA18 LD ($81A0),HL ;   ($81A0) = HL; // mask buffer pointer
  $BA1B EX AF,AF'
 ; If I break this bit then the character gets drawn on top of *indoors*
 ; objects.
