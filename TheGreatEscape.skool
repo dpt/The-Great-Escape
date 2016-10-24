@@ -412,7 +412,7 @@
 ; vischar_BYTE7_MASK_LO                         = $0F,
 ; vischar_BYTE7_MASK_HI                         = $F0,
 ; vischar_BYTE7_IMPEDED                         = 1 << 5,       ; set when hero hits an obstacle
-; vischar_BYTE7_BIT6                            = 1 << 6,       ; set while touch() entered
+; vischar_BYTE7_TOUCHING                            = 1 << 6,       ; set while touch() entered
 ; vischar_BYTE7_LOCATABLE                       = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
 ;
 ; ; $800C, $802C, $804C, ...
@@ -8338,7 +8338,7 @@ c$AA8D INC L         ; L++;
 c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when indoors.
  $AAB5 AND A         ;
  $AAB6 RET NZ        ; }
- $AAB7 LD HL,$8007   ; {if ($8007 & vischar_BYTE7_BIT6) return; // don't move the map if touch() is entered?
+ $AAB7 LD HL,$8007   ; {if ($8007 & vischar_BYTE7_TOUCHING) return; // don't move the map if touch() is entered?
  $AABA BIT 6,(HL)    ;
  $AABC RET NZ        ; }
  $AABD LD HL,$800A   ; HL = $800A;
@@ -9187,7 +9187,7 @@ g$AF8E DEFB $FF      ; bribed_character
 @label=touch
 c$AF8F EX AF,AF'
  $AF90 LD ($81AA),A   ; touch_stashed_A = A;
- $AF93 SET 6,(IY+$07) ; {IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?
+ $AF93 SET 6,(IY+$07) ; {IY[7] |= vischar_BYTE7_TOUCHING | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?
  $AF97 SET 7,(IY+$07) ; }
  $AF9B PUSH IY        ; {HL = IY;
  $AF9D POP HL         ; }
@@ -9215,7 +9215,7 @@ c$AF8F EX AF,AF'
  $AFC0 CALL $AFDF     ;   collision();
  $AFC3 RET NZ         ;   if (!Z) return; %>
 ; noncolliding characters and items only at this point
-*$AFC4 RES 6,(IY+$07) ; IY[7] &= ~vischar_BYTE7_BIT6; // clear counter_and_flag
+*$AFC4 RES 6,(IY+$07) ; IY[7] &= ~vischar_BYTE7_TOUCHING; // clear counter_and_flag
  $AFC8 LD HL,$81A4    ; {memcpy(IY + 15, &saved_pos_x, 6); // $800F // vischar
  $AFCB PUSH IY        ; pos = saved_pos
  $AFCD POP DE         ;
