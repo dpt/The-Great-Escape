@@ -11108,13 +11108,12 @@ c$BACD LD B,$08      ; B = 8; // iterations
 *$BAD9 DJNZ $BAD3    ; %> while (--B);
  $BADB RET           ; return;
 
-; Masks tiles (placed in a stride-of-4 arrangement) by the specified index
-; exterior_tiles (set zero).
+; AND a tile in the mask buffer against the specified mask tile.
 ;
 ; Used by the routine at #R$B916.
 ;
 ; I:A Mask tile index.
-; I:HL Pointer to source/destination.
+; I:HL Pointer to a tile to be masked.
 @label=mask_against_tile
 c$BADC PUSH HL       ; DEdash = HL
  $BADD EXX
@@ -11131,7 +11130,7 @@ c$BADC PUSH HL       ; DEdash = HL
  $BAEC AND (HL)      ;
  $BAED LD (DE),A     ;
  $BAEE INC L         ; }
- $BAEF INC E         ; {  DEdash += 4; /* supertile stride */
+ $BAEF INC E         ; {  DEdash += 4; /* mask buffer rowbytes */
  $BAF0 INC E         ;
  $BAF1 INC E         ;
  $BAF2 INC E         ; }
