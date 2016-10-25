@@ -12911,10 +12911,13 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB3B AND $7F       ; }
  $CB3D CP $24        ; {      if (A == 36) goto $CB46; // character index
  $CB3F JR Z,$CB46    ; }
- $CB41 XOR A         ;       A = 0; %> // self modified? (suspect not - just forcing next if statement to be taken)
+ $CB41 XOR A         ;       A = 0; %> // forces next if statement to be taken
 *$CB42 CP $0C        ; {    if (A <= character_11_GUARD_11) goto $CB50; %>
  $CB44 JR C,$CB50    ; }
-; arrive here if (character == 0 && (location low byte & 7F) == 36)
+; We arrive here if:
+; - vischar is the hero, or
+; - character is character_0_COMMANDANT and (target low byte & 0x7F) == 36, or
+; - character is >= character_12_GUARD_12
 *$CB46 PUSH HL
  $CB47 CALL $C7C6    ;   character_event();
  $CB4A POP HL
@@ -12922,7 +12925,10 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB4C AND A         ; {  if (A == 0) return;
  $CB4D RET Z         ; }
  $CB4E JR $CB23      ;   get_next_target_and_handle_it(); return; // exit via
-; arrive here if (character == character_12_GUARD_12)
+; We arrive here if:
+; - vischar is not the hero, and
+;   - character is character_0_COMMANDANT and (target low byte & 0x7F) != 36, or
+;   - character is character_1_GUARD_1 .. character_11_GUARD_11
 *$CB50 LD A,(HL)     ; {  *HL++ = *HL ^ 0x80;
  $CB51 XOR $80       ;
  $CB53 LD (HL),A     ;
