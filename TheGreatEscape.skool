@@ -6123,7 +6123,7 @@ b$9F15 DEFB $56,$5E,$3D,$48 ; Corridor to yard.
 ; Used by the routine at #R$9D7B.
 @label=in_permitted_area
 c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
- $9F24 LD DE,$81B8   ; DE = &hero_map_position.y; // x/y confusion here - mislabeling
+ $9F24 LD DE,$81B8   ; DE = &hero_map_position.x;
  $9F27 LD A,($68A0)  ; {if (room_index == 0) <% // outdoors
  $9F2A AND A         ;
  $9F2B JP NZ,$9F49   ; }
@@ -12540,7 +12540,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C935 INC E          ; {    DEdash += 3;
  $C936 INC E          ;
  $C937 INC E          ; }
- $C938 LD HL,$81B8    ;     HLdash = &hero_map_position.y;
+ $C938 LD HL,$81B8    ;     HLdash = &hero_map_position.x;
  $C93B LDI            ;     *DEdash++ = *HLdash++;
  $C93D LDI            ;     *DEdash++ = *HLdash++;
  $C93F EXX
@@ -13127,7 +13127,7 @@ c$CC37 PUSH IY         ; {HL = IY;
  $CC56 AND A           ;
  $CC57 JP NZ,$CC92     ; }
  $CC5A CALL $E542      ;   pos_to_tinypos(HL,DE);
- $CC5D LD HL,$81B8     ;   HL = &hero_map_position.y;
+ $CC5D LD HL,$81B8     ;   HL = &hero_map_position.x;
  $CC60 LD DE,$81B2     ;   DE = &tinypos_stash_x;
  $CC63 LD A,(IY+$0E)   ;   A = IY[0x0E]; // ?
  $CC66 RRA             ;   carry = A & 1; A >>= 1;
@@ -16838,7 +16838,7 @@ c$EED3 LD ($EDD1),SP ; saved_sp = SP;
 @label=event_roll_call
 @keep
 c$EF9A LD DE,$727C   ; DE = map_ROLL_CALL_X;
- $EF9D LD HL,$81B8   ; HL = &hero_map_position.y;
+ $EF9D LD HL,$81B8   ; HL = &hero_map_position.x;
  $EFA0 LD B,$02      ; B = 2; // iterations
 *$EFA2 LD A,(HL)     ; do <% A = *HL++;
  $EFA3 CP D          ; {  if (A < D || A >= E) goto not_at_roll_call;
