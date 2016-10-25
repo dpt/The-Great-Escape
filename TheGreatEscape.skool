@@ -12939,10 +12939,10 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB5E RET           ;   return; %> // strictly the terminating brace is after the following unreferenced bytes
  $CB5F DEFB $18,$09  ; Unreferenced bytes.
 
-; (unknown) sub_CB61
+; (unknown) handle_target
 ;
 ; Used by the routine at #R$CB23.
-@label=sub_CB61
+@label=handle_target
 c$CB61 CP $80         ; {if (A == 128) <%
  $CB63 JP NZ,$CB6A    ; }
  $CB66 SET 6,(IY+$01) ;   IY[1] |= vischar_FLAGS_DOOR_THING; %>
