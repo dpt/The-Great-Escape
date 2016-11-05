@@ -10489,9 +10489,9 @@ c$B75A LD BC,$1000   ; B = item__LIMIT; C = 0;
  $B76B CALL $B79B    ; reset_map_and_characters();
  $B76E XOR A         ; {$8001 = 0; // vischars[0].flags = 0
  $B76F LD ($8001),A  ; }
-; Reset score.
+; Reset score digits, hero_in_breakfast, red_flag, automatic_player_counter, morale_1, morale_2.
  $B772 LD HL,$A132   ; HL = &score_digits[0];
- $B775 LD B,$0A      ; B = 10; // iterations   // CHECK why isn't this 5?
+ $B775 LD B,$0A      ; B = 10; // iterations
 *$B777 LD (HL),A     ; {do <% *HL++ = 0;
  $B778 INC HL        ; }
  $B779 DJNZ $B777    ; %> while (--B); // could do a memset
