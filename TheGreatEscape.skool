@@ -1906,7 +1906,7 @@ c$697D LD ($8020),A     ; setup_movable_item: $8020 = A; // character index
 @label=movable_item_reset_data
  $69A0 DEFB $00         ; flags
  $69A1 DEFW $0000       ; target
- $69A3 DEFB $00,$00,$00 ; p04
+ $69A3 DEFB $00,$00,$00 ; pos
  $69A6 DEFB $00         ; b07
  $69A7 DEFW $CDF2       ; w08
  $69A9 DEFW $CF76       ; w0A
@@ -17084,7 +17084,7 @@ c$F163 DI                     ; {-
  $F1C9 DEFB $00               ; character
  $F1CA DEFB $00               ; flags
  $F1CB DEFW $012C             ; target
- $F1CD DEFB $2E,$2E,$18       ; p04
+ $F1CD DEFB $2E,$2E,$18       ; pos
  $F1D0 DEFB $00               ; b07
  $F1D1 DEFW $CDF2             ; w08
  $F1D3 DEFW $CF76             ; w0A
