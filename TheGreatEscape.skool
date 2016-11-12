@@ -12628,7 +12628,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
 *$C9C0 LD A,(HL)      ; jump_c9c0: A = *HL; // HL is $8001
  $C9C1 EXX
  $C9C2 LD C,A         ; Cdash = A;
-; Self modify move_character_x/y routines.
+; Self modify vischar_at_pos_x/y routines.
  $C9C3 LD A,($68A0)   ; {if (room_index > room_0_OUTDOORS) <%
  $C9C6 AND A          ;
  $C9C7 JR Z,$C9CE     ; }
@@ -12642,17 +12642,17 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C9D5 JR $C9DA       ;   else <%
 @nowarn
 *$C9D7 LD HL,$B1C7    ;     HLdash = &multiply_by_8; %> %>
-*$C9DA LD ($CA13),HL  ; ($CA13) = HLdash; // self-modify move_character_x:$CA13
- $C9DD LD ($CA4B),HL  ; ($CA4B) = HLdash; // self-modify move_character_y:$CA4B
+*$C9DA LD ($CA13),HL  ; ($CA13) = HLdash; // self-modify vischar_at_pos_x:$CA13
+ $C9DD LD ($CA4B),HL  ; ($CA4B) = HLdash; // self-modify vischar_at_pos_y:$CA4B
  $C9E0 EXX
  $C9E1 BIT 5,(IY+$07) ; {if (IY[7] & vischar_BYTE7_IMPEDED) goto character_behaviour_end_2; // hit a wall etc.
  $C9E5 JR NZ,$C9FF    ; }
  $C9E7 INC L          ; {HL += 3;
  $C9E8 INC L          ;
  $C9E9 INC L          ; }
- $C9EA CALL $CA11     ; move_character_x();
+ $C9EA CALL $CA11     ; vischar_at_pos_x();
  $C9ED JR NZ,$C9F5    ; if (Z) <%
- $C9EF CALL $CA49     ;   move_character_y();
+ $C9EF CALL $CA49     ;   vischar_at_pos_y();
  $C9F2 JP Z,$CA81     ;   if (Z) goto bribes_solitary_food; %> // exit via // character couldn't move?
 ; This entry point is used by the routine at #R$CA81.
 *$C9F5 CP (IY+$0D)    ; {character_behaviour_end_1: if (A != IY[13]) IY[13] = A | input_KICK; // sampled IY=$8040,$8020,$8000
@@ -12663,8 +12663,8 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
 *$C9FF LD A,$04       ; {character_behaviour_end_2: L += 4;
  $CA01 ADD A,L        ;
  $CA02 LD L,A         ; }
- $CA03 CALL $CA49     ; move_character_y();
- $CA06 JR NZ,$C9F5    ; {if (Z) move_character_x();
+ $CA03 CALL $CA49     ; vischar_at_pos_y();
+ $CA06 JR NZ,$C9F5    ; {if (Z) vischar_at_pos_x();
  $CA08 CALL $CA11     ; }
  $CA0B JR NZ,$C9F5    ; if (!Z) goto character_behaviour_end_1; // likely: couldn't move, so .. do something
  $CA0D DEC L          ; HL--;
@@ -12678,7 +12678,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
 ; I:IY Pointer to visible character block.
 ; O:A  8/4/0 .. meaning ?
 ; O:HL Pointer to ?
-@label=move_character_x
+@label=vischar_at_pos_x
 c$CA11 LD A,(HL)      ; A = *HL; // sampled HL=$8004,$8044,$8064,$8084
  $CA12 CALL $B1C7     ; multiply_by_8(); // self modified by #R$C9DA
  $CA15 LD A,L         ; {HL += 11; // position on X axis ($800F etc.)
@@ -12719,13 +12719,13 @@ c$CA11 LD A,(HL)      ; A = *HL; // sampled HL=$8004,$8044,$8064,$8084
 ;
 ; Used by the routine at #R$C918.
 ; .
-; Nearly identical to move_character_x above.
+; Nearly identical to vischar_at_pos_x above.
 ;
 ; I:HL Pointer to visible character block + 5.
 ; I:IY Pointer to visible character block.
 ; O:A  5/7/0 .. meaning ?
 ; O:HL Pointer to ?
-@label=move_character_y
+@label=vischar_at_pos_y
 c$CA49 LD A,(HL)      ; A = *HL; // sampled HL=$8025,$8065,$8005
  $CA4A CALL $B1C7     ; multiply_by_8(); // self modified by #R$C918
  $CA4D LD A,L         ; {HL += 12; // position on Y axis ($8011 etc.)
