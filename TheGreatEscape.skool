@@ -580,13 +580,13 @@
 ; w $8008 (read by called_from_main_loop_9)
 ; w $800A (read/written by called_from_main_loop_9)
 ; b $800C (read/written by called_from_main_loop_9)
-; b $800D tunnel related (<- process_player_input, snipping_wire, process_player_input) assigned from snipping_wire_new_inputs table.  causes movement when set. but not when in solitary.
+; b $800D tunnel related (<- process_player_input, cutting_wire, process_player_input) assigned from cutting_wire_new_inputs table.  causes movement when set. but not when in solitary.
 ;            $81 -> move toward top left,
 ;            $82 -> move toward bottom right,
 ;            $83 -> move toward bottom left,
 ;            $84 -> TL (again)
 ;            $85 ->
-; b $800E tunnel related, direction (bottom 2 bits index snipping_wire_new_inputs) bit 2 is walk/crawl flag
+; b $800E tunnel related, direction (bottom 2 bits index cutting_wire_new_inputs) bit 2 is walk/crawl flag
 ; set to - $00 -> character faces top left
 ;          $01 -> character faces top right
 ;          $02 -> character faces bottom right
@@ -597,7 +597,7 @@
 ;          $07 -> character faces bottom left  (crawling)
 ; w $800F position on X axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on Y axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's height // set to 24 in process_player_input, snipping_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_screenpos_from_mi_pos,  read by called_from_main_loop_9 ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's height // set to 24 in process_player_input, cutting_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_screenpos_from_mi_pos,  read by called_from_main_loop_9 ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 touch sets this to touch_stashed_A
 ; w $8018 points to something (gets $06C8 subtracted from it) (<- in_permitted_area)
@@ -5963,7 +5963,7 @@ c$9E07 LD HL,($A13A) ; {if (in_solitary || morale_exhausted) return;
  $9E18 LD (HL),$1F   ; }
  $9E1A CP $01        ; {  if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_a_lock; // exit via
  $9E1C JP Z,$9E98    ; }
- $9E1F JP $9EB2      ;   else goto snipping_wire; %> // exit via
+ $9E1F JP $9EB2      ;   else goto cutting_wire; %> // exit via
 *$9E22 CALL $F075    ; A = input_routine(); // lives at same address as static_tiles_plot_direction
  $9E25 LD HL,$A139   ; {- // subsumed into following code
  $9E28 CP $00        ; }
@@ -6054,7 +6054,7 @@ c$9E98 LD HL,$A12F   ; {if (player_locked_out_until != game_counter) return;
 ; Locks the player out until the wire is snipped.
 ;
 ; Used by the routine at #R$9E07.
-@label=snipping_wire
+@label=cutting_wire
 c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
  $9EB5 LD A,($A145)  ;
  $9EB8 SUB (HL)      ; }
@@ -6062,7 +6062,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
  $9EBB CP $04        ; {  if (A < 4)
  $9EBD RET NC        ; }
 @nowarn
- $9EBE LD A,($800E)  ; {$800D = snipping_wire_new_inputs[$800E & 3]; // change direction
+ $9EBE LD A,($800E)  ; {$800D = cutting_wire_new_inputs[$800E & 3]; // change direction
 @nowarn
  $9EC1 LD HL,$9EE0   ;
  $9EC4 AND $03       ;
@@ -6088,7 +6088,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
  $9EDB LD ($8013),A  ; }
  $9EDE JR $9EAA      ;   goto clear_lockpick_wirecut_flags_and_return; %>
 ; New inputs table.
-@label=snipping_wire_new_inputs
+@label=cutting_wire_new_inputs
  $9EE0 DEFB $84      ; input_UP   + input_LEFT  + input_KICK
  $9EE1 DEFB $87      ; input_UP   + input_RIGHT + input_KICK
  $9EE2 DEFB $88      ; input_DOWN + input_RIGHT + input_KICK
@@ -6542,7 +6542,7 @@ c$A11D LD A,C        ; {delay = C; // Self-modify delay loop at $A126.
 ;
 ; Counts 00..FF then wraps.
 ; .
-; Read-only by main_loop, picking_a_lock, snipping_wire, action_wiresnips,
+; Read-only by main_loop, picking_a_lock, cutting_wire, action_wiresnips,
 ; action_lockpick.
 ; .
 ; Write/read-write by wave_morale_flag.
@@ -6706,7 +6706,7 @@ g$A143 DEFW $0000    ; ptr_to_door_being_lockpicked
 ;
 ; e.g. when picking a lock or cutting wire.
 ; .
-; Read-only by picking_a_lock, snipping_wire.
+; Read-only by picking_a_lock, cutting_wire.
 ; .
 ; Write/read-write by action_wiresnips, action_lockpick.
 @label=player_locked_out_until
