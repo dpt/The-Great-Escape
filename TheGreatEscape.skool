@@ -5908,7 +5908,7 @@ c$9DCF LD A,($A13C)  ; {if (morale >= 2) return;
  $9DD5 LD BC,$0F00   ; {queue_message_for_display(message_MORALE_IS_ZERO);
  $9DD8 CALL $7D15    ; }
 ; Inhibit user input.
- $9DDB LD A,$FF      ; {morale_2 = 0xFF;
+ $9DDB LD A,$FF      ; {morale_exhausted = 0xFF;
  $9DDD LD ($A13B),A  ; }
 ; Immediately take automatic control of hero.
  $9DE0 XOR A         ; {automatic_player_counter = 0;
@@ -5947,8 +5947,8 @@ c$9DE5 LD BC,$FEFE   ; {if (!(shift_pressed && space_pressed)) return;
 @label=process_player_input
 ; Morale exhausted? If so then don't allow input.
 ; .
-; Note the combined read of morale_1 and morale_2 as a word.
-c$9E07 LD HL,($A13A) ; {if (morale_1 || morale_2) return;
+; Note the combined read of in_solitary and morale_exhausted as a word.
+c$9E07 LD HL,($A13A) ; {if (in_solitary || morale_exhausted) return;
  $9E0A XOR A         ;
  $9E0B OR H          ;
  $9E0C OR L          ;
@@ -6156,7 +6156,7 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
  $9F63 CP $02        ;
  $9F65 JP Z,$9FDE    ;
  $9F68 JP $9FF8      ; }
-*$9F6B LD A,($A13A)  ; {if (morale_1) goto set_flag_green;
+*$9F6B LD A,($A13A)  ; {if (in_solitary) goto set_flag_green;
  $9F6E AND A         ;
  $9F6F JP NZ,$9FDE   ; }
  $9F72 LD HL,$8002   ; HL = $8002; // target location
@@ -6612,21 +6612,21 @@ g$A138 DEFB $00      ; red_flag
 @label=automatic_player_counter
 g$A139 DEFB $00      ; automatic_player_counter
 
-; Morale flags.
+; 'In solitary' flag.
 ;
 ; Stops set_hero_target_location working.
 ; .
 ; Used to set flag colour.
 ; .
-; morale_1 and morale_2 are treated as a word by process_player_input.
-; Everything else treats them as bytes.
-; .
 ; Read-only by process_player_input, in_permitted_area,
 ; set_hero_target_location, follow_suspicious_character.
 ; .
-; Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
-@label=morale_1
-g$A13A DEFB $00      ; morale_1
+; Write/read-write by charevnt_handler_4_solitary_ends, solitary.
+@label=in_solitary
+g$A13A DEFB $00      ; in_solitary
+
+; 'Morale exhausted' flag.
+;
 ; Inhibits user input when non-zero.
 ; .
 ; Set by check_morale.
@@ -6636,8 +6636,8 @@ g$A13A DEFB $00      ; morale_1
 ; Read-only by process_player_input.
 ; .
 ; Write/read-write by check_morale.
-@label=morale_2
- $A13B DEFB $00      ; morale_2
+@label=morale_exhausted
+g$A13B DEFB $00      ; morale_exhausted
 
 ; Morale 'score'.
 ;
@@ -7116,7 +7116,7 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
 ; Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8,
 ; #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
 @label=set_hero_target_location
-c$A33F LD A,($A13A)  ; {if (morale_1) return;
+c$A33F LD A,($A13A)  ; {if (in_solitary) return;
  $A342 AND A         ;
  $A343 RET NZ        ; }
 ; This entry point is used by the routine at #R$C7C6.
@@ -10489,7 +10489,7 @@ c$B75A LD BC,$1000   ; B = item__LIMIT; C = 0;
  $B76B CALL $B79B    ; reset_map_and_characters();
  $B76E XOR A         ; {$8001 = 0; // vischars[0].flags = 0
  $B76F LD ($8001),A  ; }
-; Reset score digits, hero_in_breakfast, red_flag, automatic_player_counter, morale_1, morale_2.
+; Reset score digits, hero_in_breakfast, red_flag, automatic_player_counter, in_solitary, morale_exhausted.
  $B772 LD HL,$A132   ; HL = &score_digits[0];
  $B775 LD B,$0A      ; B = 10; // iterations
 *$B777 LD (HL),A     ; {do <% *HL++ = 0;
@@ -12334,7 +12334,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C821 DEFW $092B    ; character_11_GUARD_11     | 0b00100000, charevnt_9,  // hero sits
  $C823 DEFW $06A4    ; character_4_GUARD_4       | 0b10100000, charevnt_6,  // go to 0x0315
  $C825 DEFW $0A24    ; character_4_GUARD_4       | 0b00100000, charevnt_10, // released from solitary
- $C827 DEFW $0425    ; character_5_GUARD_5       | 0b00100000, charevnt_4,  // zero morale_1
+ $C827 DEFW $0425    ; character_5_GUARD_5       | 0b00100000, charevnt_4,  // zero in_solitary
 ; character_event_handlers
 ; .
 ; Array of pointers to character event handlers.
@@ -12343,16 +12343,16 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C82B DEFW $C85C    ;   &charevnt_handler_1,
  $C82D DEFW $C860    ;   &charevnt_handler_2,
  $C82F DEFW $C86C    ;   &charevnt_handler_3_check_var_A13E,
- $C831 DEFW $C83F    ;   &charevnt_handler_4_zero_morale_1,
+ $C831 DEFW $C83F    ;   &charevnt_handler_4_solitary_ends,
  $C833 DEFW $C877    ;   &charevnt_handler_5_check_var_A13E_anotherone,
  $C835 DEFW $C845    ;   &charevnt_handler_6,
  $C837 DEFW $C882    ;   &charevnt_handler_7,
  $C839 DEFW $C88D    ;   &charevnt_handler_8_hero_sleeps,
  $C83B DEFW $C889    ;   &charevnt_handler_9_hero_sits,
  $C83D DEFW $C84C    ;   &charevnt_handler_10_hero_released_from_solitary, };
-; charevnt_handler_4_zero_morale_1
-@label=charevnt_handler_4_zero_morale_1
- $C83F XOR A         ; {morale_1 = 0;
+; charevnt_handler_4_solitary_ends
+@label=charevnt_handler_4_solitary_ends
+ $C83F XOR A         ; {in_solitary = 0;
  $C840 LD ($A13A),A  ; }
  $C843 JR $C864      ; goto charevnt_handler_0;
 ; charevnt_handler_6
@@ -12497,7 +12497,7 @@ c$C892 XOR A         ; {entered_move_characters = 0;
  $C8FB JP NZ,$C8B7   ; }
 ; Inhibit hero automatic behaviour when the flag is red, or otherwise
 ; inhibited.
- $C8FE LD A,($A138)  ; {if (!red_flag && (morale_1 || automatic_player_counter == 0)) <%}
+ $C8FE LD A,($A138)  ; {if (!red_flag && (in_solitary || automatic_player_counter == 0)) <%}
  $C901 AND A         ;
 ; Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
  $C902 JP NZ,$C917   ;
@@ -13077,7 +13077,7 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
  $CC08 CALL $7D15      ; }
  $CC0B LD B,$13        ; {queue_message_for_display(message_ANOTHER_DAY_DAWNS);
  $CC0D CALL $7D15      ; }
- $CC10 LD A,$FF        ; {morale_1 = 0xFF; // inhibit user input
+ $CC10 LD A,$FF        ; {in_solitary = 0xFF; // inhibit user input
  $CC12 LD ($A13A),A    ; }
  $CC15 XOR A           ; {automatic_player_counter = 0; // immediately take automatic control of hero
  $CC16 LD ($A139),A    ; }
