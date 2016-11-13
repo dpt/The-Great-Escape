@@ -554,8 +554,8 @@
 ; | $02 | byte[2] | target location                                                               |
 ; | $04 | byte[3] | position                                                                      |
 ; | $07 | byte    | top nibble = flags, bottom nibble = counter used by character_behaviour only  |
-; | $08 | pointer | pointer to character_related_pointers                                         |
-; | $0A | pointer | pointer to value in character_related_pointers                                |
+; | $08 | pointer | pointer to animations                                                         |
+; | $0A | pointer | pointer to value in animations                                                |
 ; | $0C | byte    | bit 7 is up/down flag, other bits are a counter                               |
 ; | $0D | byte    | input .. previous direction?                                                  |
 ; | $0E | byte    | direction and walk/crawl flag                                                 |
@@ -13388,15 +13388,15 @@ b$CD6A DEFB $FF,$40,$20 ; item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),      
 
 ; Data for the four classes of characters.
 @label=character_meta_data_commandant
-b$CD9A DEFB $F2,$CD,$D6,$CE ; &character_related_pointers[0], &sprites[30] // meta_commandant (<- spawn_character)
+b$CD9A DEFB $F2,$CD,$D6,$CE ; &animations[0], &sprites[30] // meta_commandant (<- spawn_character)
 @label=character_meta_data_guard
- $CD9E DEFB $F2,$CD,$A6,$CE ; &character_related_pointers[0], &sprites[22] // meta_guard (<- spawn_character)
+ $CD9E DEFB $F2,$CD,$A6,$CE ; &animations[0], &sprites[22] // meta_guard (<- spawn_character)
 @label=character_meta_data_dog
- $CDA2 DEFB $F2,$CD,$76,$CE ; &character_related_pointers[0], &sprites[14] // meta_dog (<- spawn_character)
+ $CDA2 DEFB $F2,$CD,$76,$CE ; &animations[0], &sprites[14] // meta_dog (<- spawn_character)
 @label=character_meta_data_prisoner
- $CDA6 DEFB $F2,$CD,$2E,$CE ; &character_related_pointers[0], &sprites[2]  // meta_prisoner (<- spawn_character)
+ $CDA6 DEFB $F2,$CD,$2E,$CE ; &animations[0], &sprites[2]  // meta_prisoner (<- spawn_character)
 
-; Indices into character_related_pointers.
+; Indices into animations.
 ;
 ; none, up, down, left, up+left, down+left, right, up+right, down+right, fire
 ; .
@@ -13411,10 +13411,10 @@ b$CDAA DEFB $08,$00,$04,$87,$00,$87,$04,$04,$04 ; TL
  $CDE0 DEFB $16,$8E,$0E,$12,$8E,$0E,$91,$91,$0E ; BR + crawl
  $CDE9 DEFB $17,$13,$92,$0F,$13,$0F,$8F,$8F,$92 ; BL + crawl
 
-; (unknown) Character related pointers.
+; Animation states.
 ;
 ; Array, 24 long, of pointers to data.
-@label=character_related_pointers
+@label=animations
 w$CDF2 DEFW $CF26
  $CDF4 DEFW $CF3A
  $CDF6 DEFW $CF4E
@@ -13529,56 +13529,56 @@ b$CE22 DEFB $03,$16,$46,$DB,$72,$DB ; { 3, 22, &bitmap_stove, &mask_stove } // (
 @label=sprite_commandant_facing_towards_4
  $CF00 DEFB $03,$1C,$B2,$D1,$3D,$D6 ; { 3, 28, &bitmap_commandant_facing_towards_4, &mask_various_facing_towards_4 } // (16x28,$D1B2,$D63D)
 
-; (unknown) Character related data.
+; Animations.
 ;
 ; Read by routine around $B64F (called_from_main_loop_9)
-@label=character_related_data_0
+@label=anim_A
 b$CF06 DEFB $01,$04,$04,$FF,$00,$00,$00,$0A
-@label=character_related_data_1
+@label=anim_B
  $CF0E DEFB $01,$05,$05,$FF,$00,$00,$00,$8A
-@label=character_related_data_2
+@label=anim_C
  $CF16 DEFB $01,$06,$06,$FF,$00,$00,$00,$88
-@label=character_related_data_3
+@label=anim_D
  $CF1E DEFB $01,$07,$07,$FF,$00,$00,$00,$08
-@label=character_related_data_4
+@label=anim_E
  $CF26 DEFB $04,$00,$00,$02,$02,$00,$00,$00,$02,$00,$00,$01,$02,$00,$00,$02,$02,$00,$00,$03
-@label=character_related_data_5
+@label=anim_F
  $CF3A DEFB $04,$01,$01,$03,$00,$02,$00,$80,$00,$02,$00,$81,$00,$02,$00,$82,$00,$02,$00,$83
-@label=character_related_data_6
+@label=anim_G
  $CF4E DEFB $04,$02,$02,$00,$FE,$00,$00,$04,$FE,$00,$00,$05,$FE,$00,$00,$06,$FE,$00,$00,$07
-@label=character_related_data_7
+@label=anim_H
  $CF62 DEFB $04,$03,$03,$01,$00,$FE,$00,$84,$00,$FE,$00,$85,$00,$FE,$00,$86,$00,$FE,$00,$87
-@label=character_related_data_8
+@label=anim_I
  $CF76 DEFB $01,$00,$00,$FF,$00,$00,$00,$00
-@label=character_related_data_9
+@label=anim_J
  $CF7E DEFB $01,$01,$01,$FF,$00,$00,$00,$80
-@label=character_related_data_10
+@label=anim_K
  $CF86 DEFB $01,$02,$02,$FF,$00,$00,$00,$04
-@label=character_related_data_11
+@label=anim_L
  $CF8E DEFB $01,$03,$03,$FF,$00,$00,$00,$84
-@label=character_related_data_12
+@label=anim_M
  $CF96 DEFB $02,$00,$01,$FF,$00,$00,$00,$00,$00,$00,$00,$80
-@label=character_related_data_13
+@label=anim_N
  $CFA2 DEFB $02,$01,$02,$FF,$00,$00,$00,$80,$00,$00,$00,$04
-@label=character_related_data_14
+@label=anim_O
  $CFAE DEFB $02,$02,$03,$FF,$00,$00,$00,$04,$00,$00,$00,$84
-@label=character_related_data_15
+@label=anim_P
  $CFBA DEFB $02,$03,$00,$FF,$00,$00,$00,$84,$00,$00,$00,$00
-@label=character_related_data_16
+@label=anim_Q
  $CFC6 DEFB $02,$04,$04,$02,$02,$00,$00,$0A,$02,$00,$00,$0B
-@label=character_related_data_17
+@label=anim_R
  $CFD2 DEFB $02,$05,$05,$03,$00,$02,$00,$8A,$00,$02,$00,$8B
-@label=character_related_data_18
+@label=anim_S
  $CFDE DEFB $02,$06,$06,$00,$FE,$00,$00,$88,$FE,$00,$00,$89
-@label=character_related_data_19
+@label=anim_T
  $CFEA DEFB $02,$07,$07,$01,$00,$FE,$00,$08,$00,$FE,$00,$09
-@label=character_related_data_20
+@label=anim_U
  $CFF6 DEFB $02,$04,$05,$FF,$00,$00,$00,$0A,$00,$00,$00,$8A
-@label=character_related_data_21
+@label=anim_V
  $D002 DEFB $02,$05,$06,$FF,$00,$00,$00,$8A,$00,$00,$00,$88
-@label=character_related_data_22
+@label=anim_W
  $D00E DEFB $02,$06,$07,$FF,$00,$00,$00,$88,$00,$00,$00,$08
-@label=character_related_data_23
+@label=anim_X
  $D01A DEFB $02,$07,$04,$FF,$00,$00,$00,$08,$00,$00,$00,$0A
 
 ; Sprite bitmaps and masks.
