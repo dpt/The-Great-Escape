@@ -11270,7 +11270,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBD7 AND $1F       ;
  $BBD9 ADD A,$02     ; }
  $BBDB PUSH AF
-
+;
  $BBDC LD HL,$81B6   ; {  A += screenpos_y - map_position_y;
  $BBDF ADD A,(HL)    ;
  $BBE0 LD HL,$81BC   ;
@@ -11307,7 +11307,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC20 LD A,($81B5)  ;     A = screenpos_x;
  $BC23 SUB (HL)      ;     A -= *HL; %>
 *$BC24 LD B,A        ;   B = A;
-
+;
  $BC25 LD A,D        ;   A = D;
  $BC26 AND A         ;   A &= A;
  $BC27 LD A,$00      ;   A = 0; // interleaved
@@ -11316,7 +11316,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC2C LD A,($81B6)  ;     A = screenpos_y;
  $BC2F SUB (HL)      ;     A -= *HL; %>
 *$BC30 LD C,A        ;   C = A;
-
+;
 ; Calculate the offset into screen buffer.
 ; C * 192 == C * 24 * 8
  $BC31 LD H,C        ; {  DE = C << 7;
