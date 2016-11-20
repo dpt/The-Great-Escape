@@ -45,7 +45,7 @@ asm: $(BUILD)/$(GAME).asm
 
 %.asm: ../%.skool
 	mkdir -p $(BUILD)
-	skool2asm.py $(OPTIONS) -c $< > $@
+	skool2asm.py -w $(OPTIONS) -c $< > $@
 
 .PHONY: bin
 bin: $(BUILD)/$(GAME).bin
