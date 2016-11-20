@@ -1839,7 +1839,7 @@ c$6920 LD HL,$800D   ; HL = $800D;
  $6929 CP $1D        ;
  $692B JR C,$6936    ; }
  $692D SET 2,(HL)    ;   *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag
- $692F LD HL,$CE2E   ; {  $8015 = &sprite_prisoner_facing_away_4; %>
+ $692F LD HL,$CE2E   ; {  $8015 = &sprite_prisoner; %>
  $6932 LD ($8015),HL ; }
  $6935 RET           ; else <%
 *$6936 RES 2,(HL)    ;   *HL &= ~vischar_BYTE14_CRAWL; %> // clear crawl flag
@@ -4131,7 +4131,7 @@ c$7B8B LD A,($8215)  ; A = items_held[0];
  $7B8E CP $FF        ; {if (A == item_NONE) return;
  $7B90 RET Z         ; }
 ; When dropping the uniform reset the player sprite.
- $7B91 CP $06        ; {if (A == item_UNIFORM) $8015 = sprite_prisoner_facing_away_4;
+ $7B91 CP $06        ; {if (A == item_UNIFORM) $8015 = sprite_prisoner;
  $7B93 JP NZ,$7B9C   ;
  $7B96 LD HL,$CE2E   ;
  $7B99 LD ($8015),HL ; }
@@ -9957,7 +9957,7 @@ c$B3C4 LD HL,($8215) ; Load items_held.
 ; Use uniform.
 @label=action_uniform
 c$B3E1 LD HL,$8015   ; HL = $8015; // current character sprite set
- $B3E4 LD DE,$CEA6   ; DE = &sprite_guard_facing_away_4;
+ $B3E4 LD DE,$CEA6   ; DE = &sprite_guard;
  $B3E7 LD A,(HL)     ; {if (*HL == E) return; // cheap equality test /* Already in uniform. */
  $B3E8 CP E          ;
  $B3E9 RET Z         ; }
@@ -10062,7 +10062,7 @@ c$B417 LD HL,$B589   ; HL = &walls[12] + 3;
  $B47B LD (HL),$02   ; }
  $B47D LD A,$0C      ; {$8013 = 12; // set height
  $B47F LD ($8013),A  ; }
- $B482 LD HL,$CE2E   ; {$8015 = sprite_prisoner_facing_away_4;
+ $B482 LD HL,$CE2E   ; {$8015 = sprite_prisoner;
  $B485 LD ($8015),HL ; }
  $B488 LD A,($A12F)  ; {player_locked_out_until = game_counter + 96;
  $B48B ADD A,$60     ;
@@ -10503,7 +10503,7 @@ c$B75A LD BC,$1000   ; B = item__LIMIT; C = 0;
  $B783 LD ($8215),HL ; }
  $B786 CALL $7C33    ; draw_all_items();
 ; Reset the hero's sprite.
- $B789 LD HL,$CE2E   ; {$8015 = sprite_prisoner_facing_away_4;
+ $B789 LD HL,$CE2E   ; {$8015 = sprite_prisoner;
  $B78C LD ($8015),HL ; }
  $B78F LD A,$02      ; {room_index = room_2_HUT2LEFT;
  $B791 LD ($68A0),A  ; }
@@ -13081,7 +13081,7 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
  $CC12 LD ($A13A),A    ; }
  $CC15 XOR A           ; {automatic_player_counter = 0; // immediately take automatic control of hero
  $CC16 LD ($A139),A    ; }
- $CC19 LD HL,$CE2E     ; {$8015 = sprite_prisoner_facing_away_4;
+ $CC19 LD HL,$CE2E     ; {$8015 = sprite_prisoner;
  $CC1C LD ($8015),HL   ; }
  $CC1F LD HL,$7AC6     ; HL = &solitary_pos;
  $CC22 LD IY,$8000     ; IY = $8000;
@@ -13108,7 +13108,7 @@ c$CC37 PUSH IY         ; {HL = IY;
  $CC39 POP HL          ; }
  $CC3A LD A,(HL)       ; A = *HL;
 ; Wearing the uniform stops anyone but the commandant from following the hero.
- $CC3B AND A           ; {if (A != character_0_COMMANDANT && *$8015 == sprite_guard_facing_away_4) return;
+ $CC3B AND A           ; {if (A != character_0_COMMANDANT && *$8015 == sprite_guard) return;
  $CC3C JR Z,$CC46      ;
  $CC3E LD A,($8015)    ;
  $CC41 LD DE,$CEA6     ;
@@ -13455,79 +13455,50 @@ w$CDF2 DEFW $CF26
 b$CE22 DEFB $03,$16,$46,$DB,$72,$DB ; { 3, 22, &bitmap_stove, &mask_stove } // (16x22,$DB46,$DB72)
 @label=sprite_crate
  $CE28 DEFB $04,$18,$B6,$DA,$FE,$DA ; { 4, 24, &bitmap_crate, &mask_crate } // (24x24,$DAB6,$DAFE)
-@label=sprite_prisoner_facing_away_4
- $CE2E DEFB $03,$1B,$8C,$D2,$45,$D5 ; { 3, 27, &bitmap_prisoner_facing_away_4, &mask_various_facing_away_4 } // (16x27,$D28C,$D545)
-@label=sprite_prisoner_facing_away_3
- $CE34 DEFB $03,$1C,$56,$D2,$05,$D5 ; { 3, 28, &bitmap_prisoner_facing_away_3, &mask_various_facing_away_3 } // (16x28,$D256,$D505)
-@label=sprite_prisoner_facing_away_2
- $CE3A DEFB $03,$1C,$20,$D2,$C5,$D4 ; { 3, 28, &bitmap_prisoner_facing_away_2, &mask_various_facing_away_2 } // (16x28,$D220,$D4C5)
-@label=sprite_prisoner_facing_away_1
- $CE40 DEFB $03,$1C,$EA,$D1,$85,$D4 ; { 3, 28, &bitmap_prisoner_facing_away_1, &mask_various_facing_away_1 } // (16x28,$D1EA,$D485)
-@label=sprite_prisoner_facing_towards_1
- $CE46 DEFB $03,$1B,$C0,$D2,$85,$D5 ; { 3, 27, &bitmap_prisoner_facing_towards_1, &mask_various_facing_towards_1 } // (16x27,$D2C0,$D585)
-@label=sprite_prisoner_facing_towards_2
- $CE4C DEFB $03,$1D,$F4,$D2,$C5,$D5 ; { 3, 29, &bitmap_prisoner_facing_towards_2, &mask_various_facing_towards_2 } // (16x29,$D2F4,$D5C5)
-@label=sprite_prisoner_facing_towards_3
- $CE52 DEFB $03,$1C,$2C,$D3,$05,$D6 ; { 3, 28, &bitmap_prisoner_facing_towards_3, &mask_various_facing_towards_3 } // (16x28,$D32C,$D605)
-@label=sprite_prisoner_facing_towards_4
- $CE58 DEFB $03,$1C,$62,$D3,$3D,$D6 ; { 3, 28, &bitmap_prisoner_facing_towards_4, &mask_various_facing_towards_4 } // (16x28,$D362,$D63D)
-@label=sprite_crawl_facing_towards_2
- $CE5E DEFB $04,$10,$C5,$D3,$77,$D6 ; { 4, 16, &bitmap_crawl_facing_towards_2, &mask_crawl_facing_towards_shared } // (24x16,$D3C5,$D677)
-@label=sprite_crawl_facing_towards_1
- $CE64 DEFB $04,$0F,$98,$D3,$77,$D6 ; { 4, 15, &bitmap_crawl_facing_towards_1, &mask_crawl_facing_towards_shared } // (24x15,$D398,$D677)
-@label=sprite_crawl_facing_away_1
- $CE6A DEFB $04,$10,$F5,$D3,$55,$D4 ; { 4, 16, &bitmap_crawl_facing_away_1, &mask_crawl_facing_away_shared } // (24x16,$D3F5,$D455)
-@label=sprite_crawl_facing_away_2
- $CE70 DEFB $04,$10,$25,$D4,$55,$D4 ; { 4, 16, &bitmap_crawl_facing_away_2, &mask_crawl_facing_away_shared } // (24x16,$D425,$D455)
-@label=sprite_dog_facing_away_1
- $CE76 DEFB $04,$10,$67,$D8,$21,$D9 ; { 4, 16, &bitmap_dog_facing_away_1, &mask_dog_facing_away_shared } // (24x16,$D867,$D921)
-@label=sprite_dog_facing_away_2
- $CE7C DEFB $04,$10,$97,$D8,$21,$D9 ; { 4, 16, &bitmap_dog_facing_away_2, &mask_dog_facing_away_shared } // (24x16,$D897,$D921)
-@label=sprite_dog_facing_away_3
- $CE82 DEFB $04,$0F,$C7,$D8,$21,$D9 ; { 4, 15, &bitmap_dog_facing_away_3, &mask_dog_facing_away_shared } // (24x15,$D8C7,$D921)
-@label=sprite_dog_facing_away_4
- $CE88 DEFB $04,$0F,$F4,$D8,$21,$D9 ; { 4, 15, &bitmap_dog_facing_away_4, &mask_dog_facing_away_shared } // (24x15,$D8F4,$D921)
-@label=sprite_dog_facing_towards_1
- $CE8E DEFB $04,$0E,$51,$D9,$F9,$D9 ; { 4, 14, &bitmap_dog_facing_towards_1, &mask_dog_facing_towards_shared } // (24x14,$D951,$D9F9)
-@label=sprite_dog_facing_towards_2
- $CE94 DEFB $04,$0F,$7B,$D9,$F9,$D9 ; { 4, 15, &bitmap_dog_facing_towards_2, &mask_dog_facing_towards_shared } // (24x15,$D97B,$D9F9)
+;
+@label=sprite_prisoner
+ $CE2E DEFB $03,$1B,$8C,$D2,$45,$D5 ; { 3, 27, &bitmap_prisoner_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x27,$D28C,$D545)
+ $CE34 DEFB $03,$1C,$56,$D2,$05,$D5 ; { 3, 28, &bitmap_prisoner_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x28,$D256,$D505)
+ $CE3A DEFB $03,$1C,$20,$D2,$C5,$D4 ; { 3, 28, &bitmap_prisoner_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x28,$D220,$D4C5)
+ $CE40 DEFB $03,$1C,$EA,$D1,$85,$D4 ; { 3, 28, &bitmap_prisoner_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x28,$D1EA,$D485)
+ $CE46 DEFB $03,$1B,$C0,$D2,$85,$D5 ; { 3, 27, &bitmap_prisoner_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x27,$D2C0,$D585)
+ $CE4C DEFB $03,$1D,$F4,$D2,$C5,$D5 ; { 3, 29, &bitmap_prisoner_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x29,$D2F4,$D5C5)
+ $CE52 DEFB $03,$1C,$2C,$D3,$05,$D6 ; { 3, 28, &bitmap_prisoner_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x28,$D32C,$D605)
+ $CE58 DEFB $03,$1C,$62,$D3,$3D,$D6 ; { 3, 28, &bitmap_prisoner_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D362,$D63D)
+;
+ $CE5E DEFB $04,$10,$C5,$D3,$77,$D6 ; { 4, 16, &bitmap_crawl_facing_bottom_left_1, &mask_crawl_facing_bottom_left } // (24x16,$D3C5,$D677)
+ $CE64 DEFB $04,$0F,$98,$D3,$77,$D6 ; { 4, 15, &bitmap_crawl_facing_bottom_left_2, &mask_crawl_facing_bottom_left } // (24x15,$D398,$D677)
+ $CE6A DEFB $04,$10,$F5,$D3,$55,$D4 ; { 4, 16, &bitmap_crawl_facing_top_left_1, &mask_crawl_facing_top_left } // (24x16,$D3F5,$D455)
+ $CE70 DEFB $04,$10,$25,$D4,$55,$D4 ; { 4, 16, &bitmap_crawl_facing_top_left_2, &mask_crawl_facing_top_left } // (24x16,$D425,$D455)
+;
+ $CE76 DEFB $04,$10,$67,$D8,$21,$D9 ; { 4, 16, &bitmap_dog_facing_top_left_1, &mask_dog_facing_top_left } // (24x16,$D867,$D921)
+ $CE7C DEFB $04,$10,$97,$D8,$21,$D9 ; { 4, 16, &bitmap_dog_facing_top_left_2, &mask_dog_facing_top_left } // (24x16,$D897,$D921)
+ $CE82 DEFB $04,$0F,$C7,$D8,$21,$D9 ; { 4, 15, &bitmap_dog_facing_top_left_3, &mask_dog_facing_top_left } // (24x15,$D8C7,$D921)
+ $CE88 DEFB $04,$0F,$F4,$D8,$21,$D9 ; { 4, 15, &bitmap_dog_facing_top_left_4, &mask_dog_facing_top_left } // (24x15,$D8F4,$D921)
+ $CE8E DEFB $04,$0E,$51,$D9,$F9,$D9 ; { 4, 14, &bitmap_dog_facing_bottom_right_1, &mask_dog_facing_bottom_right } // (24x14,$D951,$D9F9)
+ $CE94 DEFB $04,$0F,$7B,$D9,$F9,$D9 ; { 4, 15, &bitmap_dog_facing_bottom_right_2, &mask_dog_facing_bottom_right } // (24x15,$D97B,$D9F9)
 ; Height of following sprite is one row too high.
-@label=sprite_dog_facing_towards_3
- $CE9A DEFB $04,$0F,$A8,$D9,$F9,$D9 ; { 4, 15, &bitmap_dog_facing_towards_3, &mask_dog_facing_towards_shared } // (24x15,$D9A8,$D9F9)
-@label=sprite_dog_facing_towards_4
- $CEA0 DEFB $04,$0E,$CF,$D9,$F9,$D9 ; { 4, 14, &bitmap_dog_facing_towards_4, &mask_dog_facing_towards_shared } // (24x14,$D9CF,$D9F9)
-@label=sprite_guard_facing_away_4
- $CEA6 DEFB $03,$1B,$4D,$D7,$45,$D5 ; { 3, 27, &bitmap_guard_facing_away_4, &mask_various_facing_away_4 } // (16x27,$D74D,$D545)
-@label=sprite_guard_facing_away_3
- $CEAC DEFB $03,$1D,$13,$D7,$05,$D5 ; { 3, 29, &bitmap_guard_facing_away_3, &mask_various_facing_away_3 } // (16x29,$D713,$D505)
-@label=sprite_guard_facing_away_2
- $CEB2 DEFB $03,$1B,$DD,$D6,$C5,$D4 ; { 3, 27, &bitmap_guard_facing_away_2, &mask_various_facing_away_2 } // (16x27,$D6DD,$D4C5)
-@label=sprite_guard_facing_away_1
- $CEB8 DEFB $03,$1B,$A7,$D6,$85,$D4 ; { 3, 27, &bitmap_guard_facing_away_1, &mask_various_facing_away_1 } // (16x27,$D6A7,$D485)
-@label=sprite_guard_facing_towards_1
- $CEBE DEFB $03,$1D,$83,$D7,$85,$D5 ; { 3, 29, &bitmap_guard_facing_towards_1, &mask_various_facing_towards_1 } // (16x29,$D783,$D585)
-@label=sprite_guard_facing_towards_2
- $CEC4 DEFB $03,$1D,$BD,$D7,$C5,$D5 ; { 3, 29, &bitmap_guard_facing_towards_2, &mask_various_facing_towards_2 } // (16x29,$D7BD,$D5C5)
-@label=sprite_guard_facing_towards_3
- $CECA DEFB $03,$1C,$F7,$D7,$05,$D6 ; { 3, 28, &bitmap_guard_facing_towards_3, &mask_various_facing_towards_3 } // (16x28,$D7F7,$D605)
-@label=sprite_guard_facing_towards_4
- $CED0 DEFB $03,$1C,$2F,$D8,$3D,$D6 ; { 3, 28, &bitmap_guard_facing_towards_4, &mask_various_facing_towards_4 } // (16x28,$D82F,$D63D)
-@label=sprite_commandant_facing_away_4
- $CED6 DEFB $03,$1C,$D6,$D0,$45,$D5 ; { 3, 28, &bitmap_commandant_facing_away_4, &mask_various_facing_away_4 } // (16x28,$D0D6,$D545)
-@label=sprite_commandant_facing_away_3
- $CEDC DEFB $03,$1E,$9A,$D0,$05,$D5 ; { 3, 30, &bitmap_commandant_facing_away_3, &mask_various_facing_away_3 } // (16x30,$D09A,$D505)
-@label=sprite_commandant_facing_away_2
- $CEE2 DEFB $03,$1D,$60,$D0,$C5,$D4 ; { 3, 29, &bitmap_commandant_facing_away_2, &mask_various_facing_away_2 } // (16x29,$D060,$D4C5)
-@label=sprite_commandant_facing_away_1
- $CEE8 DEFB $03,$1D,$26,$D0,$85,$D4 ; { 3, 29, &bitmap_commandant_facing_away_1, &mask_various_facing_away_1 } // (16x29,$D026,$D485)
-@label=sprite_commandant_facing_towards_1
- $CEEE DEFB $03,$1B,$0E,$D1,$85,$D5 ; { 3, 27, &bitmap_commandant_facing_towards_1, &mask_various_facing_towards_1 } // (16x27,$D10E,$D585)
-@label=sprite_commandant_facing_towards_2
- $CEF4 DEFB $03,$1C,$44,$D1,$C5,$D5 ; { 3, 28, &bitmap_commandant_facing_towards_2, &mask_various_facing_towards_2 } // (16x28,$D144,$D5C5)
-@label=sprite_commandant_facing_towards_3
- $CEFA DEFB $03,$1B,$7C,$D1,$05,$D6 ; { 3, 27, &bitmap_commandant_facing_towards_3, &mask_various_facing_towards_3 } // (16x27,$D17C,$D605)
-@label=sprite_commandant_facing_towards_4
- $CF00 DEFB $03,$1C,$B2,$D1,$3D,$D6 ; { 3, 28, &bitmap_commandant_facing_towards_4, &mask_various_facing_towards_4 } // (16x28,$D1B2,$D63D)
+ $CE9A DEFB $04,$0F,$A8,$D9,$F9,$D9 ; { 4, 15, &bitmap_dog_facing_bottom_right_3, &mask_dog_facing_bottom_right } // (24x15,$D9A8,$D9F9)
+ $CEA0 DEFB $04,$0E,$CF,$D9,$F9,$D9 ; { 4, 14, &bitmap_dog_facing_bottom_right_4, &mask_dog_facing_bottom_right } // (24x14,$D9CF,$D9F9)
+;
+@label=sprite_guard
+ $CEA6 DEFB $03,$1B,$4D,$D7,$45,$D5 ; { 3, 27, &bitmap_guard_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x27,$D74D,$D545)
+ $CEAC DEFB $03,$1D,$13,$D7,$05,$D5 ; { 3, 29, &bitmap_guard_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x29,$D713,$D505)
+ $CEB2 DEFB $03,$1B,$DD,$D6,$C5,$D4 ; { 3, 27, &bitmap_guard_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x27,$D6DD,$D4C5)
+ $CEB8 DEFB $03,$1B,$A7,$D6,$85,$D4 ; { 3, 27, &bitmap_guard_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x27,$D6A7,$D485)
+ $CEBE DEFB $03,$1D,$83,$D7,$85,$D5 ; { 3, 29, &bitmap_guard_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x29,$D783,$D585)
+ $CEC4 DEFB $03,$1D,$BD,$D7,$C5,$D5 ; { 3, 29, &bitmap_guard_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x29,$D7BD,$D5C5)
+ $CECA DEFB $03,$1C,$F7,$D7,$05,$D6 ; { 3, 28, &bitmap_guard_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x28,$D7F7,$D605)
+ $CED0 DEFB $03,$1C,$2F,$D8,$3D,$D6 ; { 3, 28, &bitmap_guard_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D82F,$D63D)
+;
+ $CED6 DEFB $03,$1C,$D6,$D0,$45,$D5 ; { 3, 28, &bitmap_commandant_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x28,$D0D6,$D545)
+ $CEDC DEFB $03,$1E,$9A,$D0,$05,$D5 ; { 3, 30, &bitmap_commandant_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x30,$D09A,$D505)
+ $CEE2 DEFB $03,$1D,$60,$D0,$C5,$D4 ; { 3, 29, &bitmap_commandant_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x29,$D060,$D4C5)
+ $CEE8 DEFB $03,$1D,$26,$D0,$85,$D4 ; { 3, 29, &bitmap_commandant_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x29,$D026,$D485)
+ $CEEE DEFB $03,$1B,$0E,$D1,$85,$D5 ; { 3, 27, &bitmap_commandant_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x27,$D10E,$D585)
+ $CEF4 DEFB $03,$1C,$44,$D1,$C5,$D5 ; { 3, 28, &bitmap_commandant_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x28,$D144,$D5C5)
+ $CEFA DEFB $03,$1B,$7C,$D1,$05,$D6 ; { 3, 27, &bitmap_commandant_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x27,$D17C,$D605)
+ $CF00 DEFB $03,$1C,$B2,$D1,$3D,$D6 ; { 3, 28, &bitmap_commandant_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D1B2,$D63D)
 
 ; Animations.
 ;
@@ -13585,11 +13556,11 @@ b$CF06 DEFB $01,$04,$04,$FF,$00,$00,$00,$0A
 ;
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-away-1)
+; #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_away_1
-b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
+@label=bitmap_commandant_facing_top_left_4
+b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING TOP LEFT 4
  $D02E DEFB $00,$FC,$01,$7C,$01,$78,$00,$04
  $D036 DEFB $00,$FE,$03,$FE,$07,$FA,$07,$FA
  $D03E DEFB $06,$FA,$0E,$F6,$0E,$C6,$0E,$38
@@ -13599,11 +13570,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D05E DEFB $00,$20                         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-away-2)
+; #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_away_2
- $D060 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 2
+@label=bitmap_commandant_facing_top_left_3
+ $D060 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING TOP LEFT 3
  $D068 DEFB $00,$FC,$01,$7C,$01,$78,$00,$00
  $D070 DEFB $00,$FC,$03,$FE,$03,$FA,$07,$FA
  $D078 DEFB $06,$F6,$06,$F6,$0E,$C6,$0D,$3A
@@ -13613,11 +13584,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D098 DEFB $00,$C0                         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,120}(bitmap-commandant-facing-away-3)
+; #UDGARRAY2,7,4,2;$D09A-$D0D5-1-16{0,0,64,120}(bitmap-commandant-facing-top-left-3)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_away_3
- $D09A DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 3
+@label=bitmap_commandant_facing_top_left_2
+ $D09A DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING TOP LEFT 2
  $D0A2 DEFB $00,$FC,$01,$7C,$01,$78,$00,$04
  $D0AA DEFB $01,$FE,$03,$FE,$07,$FA,$07,$FA
  $D0B2 DEFB $06,$FA,$06,$F4,$0E,$CA,$0E,$3A
@@ -13627,11 +13598,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D0D2 DEFB $07,$80,$01,$80                 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-away-4)
+; #UDGARRAY2,7,4,2;$D0D6-$D10E-1-16{0,0,64,112}(bitmap-commandant-facing-top-left-4)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_away_4
- $D0D6 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 4
+@label=bitmap_commandant_facing_top_left_1
+ $D0D6 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING TOP LEFT 1
  $D0DE DEFB $00,$FC,$01,$7C,$01,$78,$00,$04
  $D0E6 DEFB $00,$FE,$03,$FE,$07,$FA,$06,$FA
  $D0EE DEFB $06,$FA,$07,$7A,$03,$64,$07,$18
@@ -13640,11 +13611,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D106 DEFB $07,$B8,$03,$98,$0B,$18,$07,$30 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-towards-1)
+; #UDGARRAY2,7,4,2;$D10E-$D143-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-1)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_towards_1
- $D10E DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING TOWARDS 1
+@label=bitmap_commandant_facing_bottom_right_1
+ $D10E DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING BOTTOM RIGHT 1
  $D116 DEFB $03,$B0,$00,$60,$01,$80,$06,$B0
  $D11E DEFB $0F,$78,$1F,$A8,$3F,$B0,$3B,$B0
  $D126 DEFB $77,$A8,$37,$8C,$20,$74,$17,$B0
@@ -13653,11 +13624,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D13E DEFB $07,$00,$03,$00,$03,$C0         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(bitmap-commandant-facing-towards-2)
+; #UDGARRAY2,7,4,2;$D144-$D17B-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-2)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_towards_2
- $D144 DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING TOWARDS 2
+@label=bitmap_commandant_facing_bottom_right_2
+ $D144 DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING BOTTOM RIGHT 2
  $D14C DEFB $03,$B0,$00,$60,$01,$80,$02,$B0
  $D154 DEFB $0F,$68,$1F,$B0,$1F,$B0,$1B,$B0
  $D15C DEFB $3B,$A8,$3B,$88,$34,$70,$37,$B0
@@ -13666,11 +13637,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D174 DEFB $0E,$60,$0C,$38,$0E,$00,$03,$00 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(bitmap-commandant-facing-towards-3)
+; #UDGARRAY2,7,4,2;$D17C-$D1B1-1-16{0,0,64,108}(bitmap-commandant-facing-bottom-right-3)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_towards_3
- $D17C DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING TOWARDS 3
+@label=bitmap_commandant_facing_bottom_right_3
+ $D17C DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING BOTTOM RIGHT 3
  $D184 DEFB $03,$B0,$00,$60,$01,$80,$02,$B0
  $D18C DEFB $07,$68,$0F,$B0,$0F,$B0,$1D,$B0
  $D194 DEFB $1B,$A8,$1B,$88,$1C,$74,$0A,$B4
@@ -13679,11 +13650,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D1AC DEFB $18,$E0,$18,$60,$08,$70         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(bitmap-commandant-facing-towards-4)
+; #UDGARRAY2,7,4,2;$D1B2-$D1E9-1-16{0,0,64,112}(bitmap-commandant-facing-bottom-right-4)
 ; }
 ; TABLE#
-@label=bitmap_commandant_facing_towards_4
- $D1B2 DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING TOWARDS 4
+@label=bitmap_commandant_facing_bottom_right_4
+ $D1B2 DEFB $00,$00,$01,$C0,$03,$E0,$07,$C0 ; {bitmap: COMMANDANT FACING BOTTOM RIGHT 4
  $D1BA DEFB $03,$B0,$00,$60,$01,$80,$06,$B0
  $D1C2 DEFB $0F,$68,$1F,$A8,$1F,$B0,$3B,$B0
  $D1CA DEFB $3B,$B0,$3B,$88,$30,$70,$37,$B0
@@ -13692,11 +13663,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D1E2 DEFB $06,$C0,$06,$80,$03,$60,$00,$60 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(bitmap-prisoner-facing-away-1)
+; #UDGARRAY2,7,4,2;$D1EA-$D21F-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-1)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_away_1
- $D1EA DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING AWAY 1
+@label=bitmap_prisoner_facing_top_left_4
+ $D1EA DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING TOP LEFT 4
  $D1F2 DEFB $00,$F0,$01,$00,$00,$78,$03,$FC
  $D1FA DEFB $07,$F4,$07,$F4,$06,$F4,$0E,$F4
  $D202 DEFB $0D,$E8,$0D,$94,$0C,$78,$15,$F8
@@ -13705,11 +13676,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D21A DEFB $0C,$60,$03,$00,$00,$60         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(bitmap-prisoner-facing-away-2)
+; #UDGARRAY2,7,4,2;$D220-$D255-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-2)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_away_2
- $D220 DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING AWAY 2
+@label=bitmap_prisoner_facing_top_left_3
+ $D220 DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING TOP LEFT 3
  $D228 DEFB $00,$F0,$01,$00,$00,$78,$03,$FC
  $D230 DEFB $07,$F4,$07,$F4,$0F,$EC,$0E,$EC
  $D238 DEFB $1D,$EC,$1B,$94,$54,$70,$6F,$F4
@@ -13718,11 +13689,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D250 DEFB $05,$80,$00,$40,$03,$C0         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(bitmap-prisoner-facing-away-3)
+; #UDGARRAY2,7,4,2;$D256-$D28B-1-16{0,0,64,108}(bitmap-prisoner-facing-top-left-3)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_away_3
- $D256 DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING AWAY 3
+@label=bitmap_prisoner_facing_top_left_2
+ $D256 DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING TOP LEFT 2
  $D25E DEFB $00,$F0,$01,$00,$00,$78,$01,$FC
  $D266 DEFB $03,$F4,$07,$F4,$06,$F4,$06,$F4
  $D26E DEFB $0E,$E4,$0D,$94,$0C,$78,$15,$F8
@@ -13731,11 +13702,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D286 DEFB $01,$60,$06,$00,$03,$00         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(bitmap-prisoner-facing-away-4)
+; #UDGARRAY2,7,4,2;$D28C-$D2BF-1-16{0,0,64,104}(bitmap-prisoner-facing-top-left-4)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_away_4
- $D28C DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING AWAY 4
+@label=bitmap_prisoner_facing_top_left_1
+ $D28C DEFB $00,$00,$00,$F0,$01,$F0,$01,$C0 ; {bitmap: PRISONER FACING TOP LEFT 1
  $D294 DEFB $00,$F0,$01,$00,$00,$70,$01,$F8
  $D29C DEFB $03,$F8,$07,$F8,$06,$F0,$0E,$F0
  $D2A4 DEFB $0E,$E8,$06,$88,$06,$70,$02,$F0
@@ -13744,11 +13715,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D2BC DEFB $34,$20,$18,$E0                 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(bitmap-prisoner-facing-towards-1)
+; #UDGARRAY2,7,4,2;$D2C0-$D2F3-1-16{0,0,64,104}(bitmap-prisoner-facing-bottom-right-1)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_towards_1
- $D2C0 DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING TOWARDS 1
+@label=bitmap_prisoner_facing_bottom_right_1
+ $D2C0 DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING BOTTOM RIGHT 1
  $D2C8 DEFB $04,$40,$03,$80,$0D,$60,$1E,$E0
  $D2D0 DEFB $3E,$F0,$37,$50,$35,$50,$77,$50
  $D2D8 DEFB $6F,$38,$6E,$54,$51,$CC,$5F,$C0
@@ -13757,11 +13728,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D2F0 DEFB $05,$00,$03,$80                 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-towards-2)
+; #UDGARRAY2,7,4,2;$D2F4-$D32B-1-16{0,0,64,112}(bitmap-prisoner-facing-bottom-right-2)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_towards_2
- $D2F4 DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING TOWARDS 2
+@label=bitmap_prisoner_facing_bottom_right_2
+ $D2F4 DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING BOTTOM RIGHT 2
  $D2FC DEFB $04,$40,$03,$80,$0D,$40,$1E,$E0
  $D304 DEFB $3E,$E0,$37,$50,$75,$50,$77,$50
  $D30C DEFB $77,$50,$34,$30,$33,$C0,$37,$D0
@@ -13770,11 +13741,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D324 DEFB $1A,$80,$09,$C0,$14,$00,$0E,$00 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-towards-3)
+; #UDGARRAY2,7,4,2;$D32C-$D361-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-3)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_towards_3
- $D32C DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING TOWARDS 3
+@label=bitmap_prisoner_facing_bottom_right_3
+ $D32C DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING BOTTOM RIGHT 3
  $D334 DEFB $04,$40,$03,$80,$0D,$40,$1E,$E0
  $D33C DEFB $1E,$E0,$37,$40,$35,$40,$37,$40
  $D344 DEFB $37,$40,$1A,$20,$19,$C0,$05,$C0
@@ -13783,11 +13754,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D35C DEFB $50,$40,$60,$E0,$30,$00         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-towards-4)
+; #UDGARRAY2,7,4,2;$D362-$D397-1-16{0,0,64,108}(bitmap-prisoner-facing-bottom-right-4)
 ; }
 ; TABLE#
-@label=bitmap_prisoner_facing_towards_4
- $D362 DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING TOWARDS 4
+@label=bitmap_prisoner_facing_bottom_right_4
+ $D362 DEFB $00,$00,$03,$80,$05,$C0,$07,$80 ; {bitmap: PRISONER FACING BOTTOM RIGHT 4
  $D36A DEFB $04,$40,$03,$80,$0D,$60,$1E,$E0
  $D372 DEFB $1E,$F0,$3B,$50,$39,$50,$37,$50
  $D37A DEFB $37,$50,$36,$30,$21,$C8,$2F,$E8
@@ -13796,11 +13767,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D392 DEFB $08,$00,$05,$80,$0E,$C0         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,60}(bitmap-crawl-facing-towards-1)
+; #UDGARRAY3,7,4,3;$D398-$D3C4-1-24{0,0,96,60}(bitmap-crawl-facing-bottom-right-1)
 ; }
 ; TABLE#
-@label=bitmap_crawl_facing_towards_1
- $D398 DEFB $00,$00,$00,$00,$0A,$00,$00,$39 ; {bitmap: CRAWL FACING TOWARDS 1
+@label=bitmap_crawl_facing_bottom_left_2
+ $D398 DEFB $00,$00,$00,$00,$0A,$00,$00,$39 ; {bitmap: CRAWL FACING BOTTOM RIGHT 2
  $D3A0 DEFB $80,$00,$FE,$C0,$03,$FE,$C0,$07
  $D3A8 DEFB $FE,$C0,$08,$FE,$C0,$07,$7D,$CC
  $D3B0 DEFB $0F,$7B,$D6,$2F,$B5,$F8,$37,$38
@@ -13808,11 +13779,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D3C0 DEFB $10,$00,$00,$60,$00             ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,64}(bitmap-crawl-facing-towards-2)
+; #UDGARRAY3,7,4,3;$D3C5-$D3F4-1-24{0,0,96,64}(bitmap-crawl-facing-bottom-right-2)
 ; }
 ; TABLE#
-@label=bitmap_crawl_facing_towards_2
- $D3C5 DEFB $00,$00,$00,$00,$0A,$00,$00,$3D ; {bitmap: CRAWL FACING TOWARDS 2
+@label=bitmap_crawl_facing_bottom_left_1
+ $D3C5 DEFB $00,$00,$00,$00,$0A,$00,$00,$3D ; {bitmap: CRAWL FACING BOTTOM RIGHT 1
  $D3CD DEFB $80,$00,$FE,$80,$03,$FE,$C0,$03
  $D3D5 DEFB $FE,$D8,$0D,$FD,$CC,$1E,$FB,$A0
  $D3DD DEFB $1E,$F7,$98,$1E,$77,$2C,$0C,$EF
@@ -13820,11 +13791,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D3ED DEFB $80,$00,$01,$00,$00,$06,$00,$00 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-away-1)
+; #UDGARRAY3,7,4,3;$D3F5-$D424-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-1)
 ; }
 ; TABLE#
-@label=bitmap_crawl_facing_away_1
- $D3F5 DEFB $03,$80,$00,$07,$A0,$00,$07,$78 ; {bitmap: CRAWL FACING AWAY 1
+@label=bitmap_crawl_facing_top_left_1
+ $D3F5 DEFB $03,$80,$00,$07,$A0,$00,$07,$78 ; {bitmap: CRAWL FACING TOP LEFT 1
  $D3FD DEFB $00,$06,$FE,$00,$01,$FC,$00,$07
  $D405 DEFB $F3,$80,$CF,$EF,$C0,$BE,$DF,$40
  $D40D DEFB $10,$3F,$40,$00,$3E,$C0,$00,$7D
@@ -13832,31 +13803,31 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D41D DEFB $1A,$E8,$00,$03,$2C,$00,$01,$04 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-away-2)
+; #UDGARRAY3,7,4,3;$D425-$D454-1-24{0,0,96,64}(bitmap-crawl-facing-top-left-2)
 ; }
 ; TABLE#
-@label=bitmap_crawl_facing_away_2
- $D425 DEFB $03,$80,$00,$07,$80,$00,$06,$78 ; {bitmap: CRAWL FACING AWAY 2
+@label=bitmap_crawl_facing_top_left_2
+ $D425 DEFB $03,$80,$00,$07,$80,$00,$06,$78 ; {bitmap: CRAWL FACING TOP LEFT 2
  $D42D DEFB $00,$05,$FE,$00,$03,$F8,$00,$07
  $D435 DEFB $F7,$80,$07,$6F,$C0,$03,$9F,$40
  $D43D DEFB $37,$9F,$40,$2F,$1F,$00,$00,$1F
  $D445 DEFB $00,$00,$1E,$00,$00,$0E,$C0,$00
  $D44D DEFB $0F,$00,$00,$07,$60,$00,$01,$30 ; }
 ; #UDGTABLE
-; { #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-away) }
+; { #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left) }
 ; TABLE#
-@label=mask_crawl_facing_away_shared
- $D455 DEFB $F8,$1F,$FF,$F0,$07,$FF,$F0,$01 ; {mask: CRAWL FACING AWAY (shared)
+@label=mask_crawl_facing_top_left
+ $D455 DEFB $F8,$1F,$FF,$F0,$07,$FF,$F0,$01 ; {mask: CRAWL FACING TOP LEFT (shared)
  $D45D DEFB $FF,$F0,$00,$FF,$F8,$00,$7F,$30
  $D465 DEFB $00,$3F,$00,$00,$1F,$00,$00,$1F
  $D46D DEFB $00,$00,$1F,$80,$00,$1F,$D0,$00
  $D475 DEFB $1F,$FF,$00,$3F,$FF,$00,$17,$FF
  $D47D DEFB $80,$03,$FF,$E0,$01,$FF,$F8,$01 ; }
 ; #UDGTABLE
-; { #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-away-1) }
+; { #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-top-left-1) }
 ; TABLE#
-@label=mask_various_facing_away_1
- $D485 DEFB $FE,$0F,$FC,$07,$F8,$03,$FC,$01 ; {mask: VARIOUS FACING AWAY 1
+@label=mask_various_facing_top_left_4
+ $D485 DEFB $FE,$0F,$FC,$07,$F8,$03,$FC,$01 ; {mask: VARIOUS FACING TOP LEFT 4
  $D48D DEFB $FC,$01,$F8,$01,$FC,$01,$F8,$00
  $D495 DEFB $F0,$00,$F0,$00,$E0,$00,$E0,$00
  $D49D DEFB $E0,$00,$C0,$00,$C0,$01,$C0,$03
@@ -13865,10 +13836,10 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D4B5 DEFB $C0,$07,$E0,$07,$F0,$07,$F8,$07
  $D4BD DEFB $FE,$8F,$FF,$DF,$FF,$FF,$FF,$FF ; }
 ; #UDGTABLE
-; { #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-away-2) }
+; { #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-top-left-2) }
 ; TABLE#
-@label=mask_various_facing_away_2
- $D4C5 DEFB $FE,$0F,$FC,$07,$F8,$03,$FC,$01 ; {mask: VARIOUS FACING AWAY 2
+@label=mask_various_facing_top_left_3
+ $D4C5 DEFB $FE,$0F,$FC,$07,$F8,$03,$FC,$01 ; {mask: VARIOUS FACING TOP LEFT 3
  $D4CD DEFB $FC,$01,$F8,$01,$FC,$01,$F8,$01
  $D4D5 DEFB $F0,$00,$E0,$00,$C0,$00,$C0,$00
  $D4DD DEFB $C0,$00,$00,$00,$00,$00,$00,$00
@@ -13877,10 +13848,10 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D4F5 DEFB $C0,$0F,$E0,$0F,$F0,$0F,$F8,$0F
  $D4FD DEFB $FE,$1F,$FF,$3F,$FF,$FF,$FF,$FF ; }
 ; #UDGTABLE
-; { #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-away-3) }
+; { #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-top-left-3) }
 ; TABLE#
-@label=mask_various_facing_away_3
- $D505 DEFB $FE,$0F,$FC,$07,$F8,$07,$FC,$03 ; {mask: VARIOUS FACING AWAY 3
+@label=mask_various_facing_top_left_2
+ $D505 DEFB $FE,$0F,$FC,$07,$F8,$07,$FC,$03 ; {mask: VARIOUS FACING TOP LEFT 2
  $D50D DEFB $FC,$01,$F8,$01,$FC,$01,$F8,$01
  $D515 DEFB $F0,$00,$E0,$00,$C0,$00,$C0,$00
  $D51D DEFB $C0,$00,$C0,$01,$80,$00,$80,$00
@@ -13889,10 +13860,10 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D535 DEFB $E0,$0F,$F0,$07,$F0,$0F,$E0,$1F
  $D53D DEFB $F0,$3F,$F8,$3F,$FE,$7F,$FF,$FF ; }
 ; #UDGTABLE
-; { #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-away-4) }
+; { #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-top-left-4) }
 ; TABLE#
-@label=mask_various_facing_away_4
- $D545 DEFB $FE,$0F,$FC,$07,$F8,$03,$FC,$01 ; {mask: VARIOUS FACING AWAY 4
+@label=mask_various_facing_top_left_1
+ $D545 DEFB $FE,$0F,$FC,$07,$F8,$03,$FC,$01 ; {mask: VARIOUS FACING TOP LEFT 1
  $D54D DEFB $FC,$01,$F8,$01,$FC,$01,$FC,$00
  $D555 DEFB $F8,$00,$F0,$00,$E0,$00,$E0,$01
  $D55D DEFB $E0,$03,$E0,$03,$E0,$03,$F0,$03
@@ -13901,10 +13872,10 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D575 DEFB $80,$03,$80,$03,$C0,$07,$E0,$CF
  $D57D DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF ; }
 ; #UDGTABLE
-; { #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-towards-1) }
+; { #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-bottom-right-1) }
 ; TABLE#
-@label=mask_various_facing_towards_1
- $D585 DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING TOWARDS 1
+@label=mask_various_facing_bottom_right_1
+ $D585 DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING BOTTOM RIGHT 1
  $D58D DEFB $F0,$0F,$C0,$0F,$80,$07,$C0,$03
  $D595 DEFB $80,$03,$00,$07,$00,$07,$00,$03
  $D59D DEFB $00,$01,$00,$01,$00,$01,$00,$03
@@ -13913,10 +13884,10 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D5B5 DEFB $E0,$3F,$E0,$1F,$F4,$0F,$FE,$1F
  $D5BD DEFB $FF,$7F,$FF,$FF,$FF,$FF,$FF,$FF ; }
 ; #UDGTABLE
-; { #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-towards-2) }
+; { #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-bottom-right-2) }
 ; TABLE#
-@label=mask_various_facing_towards_2
- $D5C5 DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING TOWARDS 2
+@label=mask_various_facing_bottom_right_2
+ $D5C5 DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING BOTTOM RIGHT 2
  $D5CD DEFB $F0,$0F,$E0,$0F,$C0,$07,$C0,$03
  $D5D5 DEFB $80,$07,$80,$07,$00,$07,$00,$03
  $D5DD DEFB $00,$03,$00,$07,$80,$07,$80,$03
@@ -13926,11 +13897,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D5FD DEFB $F0,$7F,$FF,$FF,$FF,$FF,$FF,$FF ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,112}(mask-various-facing-towards-3)
+; #UDGARRAY2,7,4,2;$D605-$D63C-1-16{0,0,64,112}(mask-various-facing-bottom-right-3)
 ; }
 ; TABLE#
-@label=mask_various_facing_towards_3
- $D605 DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING TOWARDS 3
+@label=mask_various_facing_bottom_right_3
+ $D605 DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING BOTTOM RIGHT 3
  $D60D DEFB $F0,$0F,$C0,$0F,$80,$07,$C0,$03
  $D615 DEFB $C0,$07,$80,$07,$80,$07,$00,$03
  $D61D DEFB $00,$03,$00,$01,$80,$01,$C0,$03
@@ -13939,11 +13910,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D635 DEFB $00,$0F,$00,$07,$83,$03,$C7,$C7 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,116}(mask-various-facing-towards-4)
+; #UDGARRAY2,7,4,2;$D63D-$D676-1-16{0,0,64,116}(mask-various-facing-bottom-right-4)
 ; }
 ; TABLE#
-@label=mask_various_facing_towards_4
- $D63D DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING TOWARDS 4
+@label=mask_various_facing_bottom_right_4
+ $D63D DEFB $F8,$1F,$F0,$0F,$E0,$0F,$E0,$07 ; {mask: VARIOUS FACING BOTTOM RIGHT 4
  $D645 DEFB $F0,$0F,$E0,$0F,$C0,$07,$C0,$03
  $D64D DEFB $C0,$03,$80,$07,$80,$07,$00,$07
  $D655 DEFB $00,$03,$00,$07,$80,$03,$80,$03
@@ -13954,8 +13925,8 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D677-$D6A6-1-24(mask-crawl-facing-bottom-left) }
 ; TABLE#
-@label=mask_crawl_facing_towards_shared
- $D677 DEFB $FF,$F5,$FF,$FF,$C0,$7F,$FF,$00 ; {mask: CRAWL FACING TOWARDS (shared)
+@label=mask_crawl_facing_bottom_left
+ $D677 DEFB $FF,$F5,$FF,$FF,$C0,$7F,$FF,$00 ; {mask: CRAWL FACING BOTTOM RIGHT (shared)
  $D67F DEFB $3F,$FC,$00,$1F,$F8,$00,$07,$F0
  $D687 DEFB $00,$03,$E0,$00,$01,$C0,$00,$01
  $D68F DEFB $C0,$00,$00,$80,$00,$01,$00,$00
@@ -13963,11 +13934,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D69F DEFB $00,$FF,$F8,$0F,$FF,$F0,$1F,$FF ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(bitmap-guard-facing-away-1)
+; #UDGARRAY2,7,4,2;$D6A7-$D6DC-1-16{0,0,64,108}(bitmap-guard-facing-top-left-1)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_away_1
- $D6A7 DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING AWAY 1
+@label=bitmap_guard_facing_top_left_4
+ $D6A7 DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING TOP LEFT 4
  $D6AF DEFB $01,$E4,$02,$F4,$01,$08,$00,$7C
  $D6B7 DEFB $07,$FC,$07,$DC,$0F,$C4,$0E,$34
  $D6BF DEFB $0E,$F4,$1D,$C4,$1C,$38,$1A,$78
@@ -13976,11 +13947,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D6D7 DEFB $18,$70,$0E,$B0,$00,$E0         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(bitmap-guard-facing-away-2)
+; #UDGARRAY2,7,4,2;$D6DD-$D712-1-16{0,0,64,108}(bitmap-guard-facing-top-left-2)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_away_2
- $D6DD DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING AWAY 2
+@label=bitmap_guard_facing_top_left_3
+ $D6DD DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING TOP LEFT 3
  $D6E5 DEFB $01,$E4,$02,$F4,$01,$04,$00,$78
  $D6ED DEFB $07,$FC,$0F,$AC,$1F,$8C,$18,$6C
  $D6F5 DEFB $1B,$E8,$3B,$C8,$B4,$30,$AC,$F0
@@ -13989,11 +13960,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D70D DEFB $1D,$00,$03,$40,$06,$00         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(bitmap-guard-facing-away-3)
+; #UDGARRAY2,7,4,2;$D713-$D74C-1-16{0,0,64,116}(bitmap-guard-facing-top-left-3)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_away_3
- $D713 DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING AWAY 3
+@label=bitmap_guard_facing_top_left_2
+ $D713 DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING TOP LEFT 2
  $D71B DEFB $01,$E4,$02,$F4,$01,$04,$00,$78
  $D723 DEFB $07,$FC,$0F,$BC,$1F,$84,$1E,$74
  $D72B DEFB $1D,$E8,$1B,$90,$38,$70,$34,$F8
@@ -14003,11 +13974,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D74B DEFB $06,$00                         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(bitmap-guard-facing-away-4)
+; #UDGARRAY2,7,4,2;$D74D-$D782-1-16{0,0,64,108}(bitmap-guard-facing-top-left-4)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_away_4
- $D74D DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING AWAY 4
+@label=bitmap_guard_facing_top_left_1
+ $D74D DEFB $00,$00,$01,$E0,$03,$F0,$01,$F0 ; {bitmap: GUARD FACING TOP LEFT 1
  $D755 DEFB $01,$E4,$02,$F4,$01,$04,$00,$78
  $D75D DEFB $03,$FC,$07,$D8,$0F,$C4,$0C,$38
  $D765 DEFB $0D,$F0,$0D,$C0,$0E,$38,$06,$78
@@ -14016,11 +13987,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D77D DEFB $27,$70,$38,$00,$18,$00         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D783-$D7BC-1-16{0,0,64,116}(bitmap-guard-facing-towards-1)
+; #UDGARRAY2,7,4,2;$D783-$D7BC-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-1)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_towards_1
- $D783 DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING TOWARDS 1
+@label=bitmap_guard_facing_bottom_right_1
+ $D783 DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING BOTTOM RIGHT 1
  $D78B DEFB $0F,$80,$07,$40,$0C,$80,$23,$A0
  $D793 DEFB $14,$70,$16,$D0,$6A,$D0,$EB,$50
  $D79B DEFB $EB,$50,$65,$38,$74,$D4,$25,$4C
@@ -14030,11 +14001,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D7BB DEFB $00,$80                         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D7BD-$D7F6-1-16{0,0,64,116}(bitmap-guard-facing-towards-2)
+; #UDGARRAY2,7,4,2;$D7BD-$D7F6-1-16{0,0,64,116}(bitmap-guard-facing-bottom-right-2)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_towards_2
- $D7BD DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING TOWARDS 2
+@label=bitmap_guard_facing_bottom_right_2
+ $D7BD DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING BOTTOM RIGHT 2
  $D7C5 DEFB $0F,$80,$07,$40,$0C,$80,$13,$A0
  $D7CD DEFB $14,$70,$16,$D0,$16,$D0,$2B,$50
  $D7D5 DEFB $6B,$50,$6B,$10,$68,$D0,$35,$68
@@ -14044,11 +14015,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D7F5 DEFB $03,$80                         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-towards-3)
+; #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-3)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_towards_3
- $D7F7 DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING TOWARDS 3
+@label=bitmap_guard_facing_bottom_right_3
+ $D7F7 DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING BOTTOM RIGHT 3
  $D7FF DEFB $0F,$80,$07,$40,$0C,$80,$23,$A0
  $D807 DEFB $14,$60,$16,$D0,$2A,$D0,$2B,$50
  $D80F DEFB $6B,$40,$75,$00,$74,$E0,$39,$60
@@ -14057,11 +14028,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D827 DEFB $1E,$70,$60,$60,$70,$70,$38,$38 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY2,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-towards-4)
+; #UDGARRAY1,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4)
 ; }
 ; TABLE#
-@label=bitmap_guard_facing_towards_4
- $D82F DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING TOWARDS 4
+@label=bitmap_guard_facing_bottom_right_4
+ $D82F DEFB $00,$00,$00,$00,$07,$80,$0F,$C0 ; {bitmap: GUARD FACING BOTTOM RIGHT 4
  $D837 DEFB $0F,$80,$07,$40,$0C,$80,$13,$A0
  $D83F DEFB $14,$70,$16,$D0,$16,$D0,$2B,$50
  $D847 DEFB $6B,$50,$6B,$10,$68,$D0,$35,$60
@@ -14069,44 +14040,44 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D857 DEFB $2B,$70,$27,$B0,$3F,$B0,$1F,$80
  $D85F DEFB $1F,$40,$0C,$80,$12,$C0,$0F,$60 ; }
 ; #UDGTABLE
-; { #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-away-1)
+; { #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_away_1
- $D867 DEFB $1A,$C0,$00,$1F,$80,$00,$0B,$80 ; {bitmap: DOG FACING AWAY 1
+@label=bitmap_dog_facing_top_left_1
+ $D867 DEFB $1A,$C0,$00,$1F,$80,$00,$0B,$80 ; {bitmap: DOG FACING TOP LEFT 1
  $D86F DEFB $00,$04,$C0,$00,$03,$F0,$00,$03
  $D877 DEFB $FC,$00,$01,$FF,$00,$0F,$FF,$C0
  $D87F DEFB $13,$FF,$E0,$00,$7F,$E0,$00,$1F
  $D887 DEFB $E0,$00,$03,$D0,$00,$01,$D0,$00
  $D88F DEFB $00,$88,$00,$00,$A0,$00,$03,$10 ; }
 ; #UDGTABLE
-; { #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-away-2)
+; { #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_away_2
- $D897 DEFB $1A,$80,$00,$1F,$C0,$00,$0B,$80 ; {bitmap: DOG FACING AWAY 2
+@label=bitmap_dog_facing_top_left_2
+ $D897 DEFB $1A,$80,$00,$1F,$C0,$00,$0B,$80 ; {bitmap: DOG FACING TOP LEFT 2
  $D89F DEFB $00,$04,$C0,$00,$03,$F0,$00,$03
  $D8A7 DEFB $F8,$00,$03,$FF,$00,$01,$FF,$C0
  $D8AF DEFB $01,$FF,$E0,$01,$7F,$E0,$03,$1B
  $D8B7 DEFB $E0,$06,$03,$D0,$00,$03,$B0,$00
  $D8BF DEFB $01,$D0,$00,$00,$40,$00,$00,$C0 ; }
 ; #UDGTABLE
-; { #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-away-3)
+; { #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_away_3
- $D8C7 DEFB $1A,$80,$00,$1F,$C0,$00,$0B,$80 ; {bitmap: DOG FACING AWAY 3
+@label=bitmap_dog_facing_top_left_3
+ $D8C7 DEFB $1A,$80,$00,$1F,$C0,$00,$0B,$80 ; {bitmap: DOG FACING TOP LEFT 3
  $D8CF DEFB $00,$04,$C0,$00,$03,$E0,$00,$03
  $D8D7 DEFB $F8,$00,$03,$FF,$00,$03,$FF,$C0
  $D8DF DEFB $01,$FF,$E0,$01,$3F,$E0,$01,$DD
  $D8E7 DEFB $E0,$00,$03,$D0,$00,$01,$B0,$00
  $D8EF DEFB $00,$90,$00,$03,$00             ; }
 ; #UDGTABLE
-; { #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-away-4)
+; { #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_away_4
- $D8F4 DEFB $1A,$C0,$00,$1F,$80,$00,$0B,$80 ; {bitmap: DOG FACING AWAY 4
+@label=bitmap_dog_facing_top_left_4
+ $D8F4 DEFB $1A,$C0,$00,$1F,$80,$00,$0B,$80 ; {bitmap: DOG FACING TOP LEFT 4
  $D8FC DEFB $00,$04,$C0,$00,$03,$F0,$00,$03
  $D904 DEFB $FC,$00,$03,$FF,$00,$01,$FF,$C0
  $D90C DEFB $01,$FF,$E0,$03,$7F,$E0,$06,$BD
@@ -14115,8 +14086,8 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D921-$D950-1-24(mask-dog-facing-top-left) }
 ; TABLE#
-@label=mask_dog_facing_away_shared
- $D921 DEFB $C0,$1F,$FF,$C0,$1F,$FF,$E0,$3F ; {mask: DOG FACING AWAY (shared)
+@label=mask_dog_facing_top_left
+ $D921 DEFB $C0,$1F,$FF,$C0,$1F,$FF,$E0,$3F ; {mask: DOG FACING TOP LEFT (shared)
  $D929 DEFB $FF,$F0,$0F,$FF,$F8,$03,$FF,$F8
  $D931 DEFB $00,$FF,$F0,$00,$3F,$E0,$00,$1F
  $D939 DEFB $C0,$00,$0F,$E8,$00,$0F,$F0,$00
@@ -14124,11 +14095,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D949 DEFB $E0,$03,$FF,$F0,$07,$FF,$F8,$07 ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,56}(bitmap-dog-facing-towards-1)
+; #UDGARRAY3,7,4,3;$D951-$D97A-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-1)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_towards_1
- $D951 DEFB $00,$00,$00,$0E,$00,$00,$1F,$80 ; {bitmap: DOG FACING TOWARDS 1
+@label=bitmap_dog_facing_bottom_right_1
+ $D951 DEFB $00,$00,$00,$0E,$00,$00,$1F,$80 ; {bitmap: DOG FACING BOTTOM RIGHT 1
  $D959 DEFB $00,$1F,$C0,$00,$1F,$F0,$00,$1F
  $D961 DEFB $F8,$00,$0F,$FD,$80,$0E,$FF,$00
  $D969 DEFB $04,$FF,$C0,$08,$7E,$C0,$08,$1D
@@ -14136,11 +14107,11 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D979 DEFB $01,$80                         ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-towards-2)
+; #UDGARRAY3,7,4,3;$D97B-$D9A7-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-2)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_towards_2
- $D97B DEFB $00,$00,$00,$0E,$00,$00,$1F,$00 ; {bitmap: DOG FACING TOWARDS 2
+@label=bitmap_dog_facing_bottom_right_2
+ $D97B DEFB $00,$00,$00,$0E,$00,$00,$1F,$00 ; {bitmap: DOG FACING BOTTOM RIGHT 2
  $D983 DEFB $00,$1F,$C0,$00,$1F,$E0,$00,$1F
  $D98B DEFB $F8,$00,$0F,$FD,$00,$1E,$FF,$00
  $D993 DEFB $68,$FF,$C0,$00,$7E,$C0,$00,$1D
@@ -14148,22 +14119,22 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
  $D9A3 DEFB $12,$00,$00,$08,$00             ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,60}(bitmap-dog-facing-towards-3)
+; #UDGARRAY3,7,4,3;$D9A8-$D9CE-1-24{0,0,96,60}(bitmap-dog-facing-bottom-right-3)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_towards_3
- $D9A8 DEFB $00,$00,$00,$0C,$00,$00,$1F,$00 ; {bitmap: DOG FACING TOWARDS 3
+@label=bitmap_dog_facing_bottom_right_3
+ $D9A8 DEFB $00,$00,$00,$0C,$00,$00,$1F,$00 ; {bitmap: DOG FACING BOTTOM RIGHT 3
  $D9B0 DEFB $00,$1F,$C0,$00,$1F,$E0,$00,$1F
  $D9B8 DEFB $F8,$00,$0F,$FD,$00,$0E,$FF,$00
  $D9C0 DEFB $18,$FF,$C0,$09,$7E,$C0,$04,$19
  $D9C8 DEFB $E0,$00,$6C,$60,$00,$1A,$00     ; }
 ; #UDGTABLE
 ; {
-; #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-towards-4)
+; #UDGARRAY3,7,4,3;$D9CF-$D9F8-1-24{0,0,96,56}(bitmap-dog-facing-bottom-right-4)
 ; }
 ; TABLE#
-@label=bitmap_dog_facing_towards_4
- $D9CF DEFB $00,$00,$00,$0C,$00,$00,$1F,$00 ; {bitmap: DOG FACING TOWARDS 4
+@label=bitmap_dog_facing_bottom_right_4
+ $D9CF DEFB $00,$00,$00,$0C,$00,$00,$1F,$00 ; {bitmap: DOG FACING BOTTOM RIGHT 4
  $D9D7 DEFB $00,$1F,$C0,$00,$1F,$F0,$00,$0F
  $D9DF DEFB $F8,$00,$0F,$FD,$80,$0E,$FF,$00
  $D9E7 DEFB $06,$7F,$C0,$04,$7E,$C0,$02,$1D
@@ -14172,8 +14143,8 @@ b$D026 DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; {bitmap: COMMANDANT FACING AWAY 1
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24(mask-dog-facing-bottom-right) }
 ; TABLE#
-@label=mask_dog_facing_towards_shared
- $D9F9 DEFB $F1,$FF,$FF,$E0,$7F,$FF,$C0,$3F ; {mask: DOG FACING TOWARDS (shared)
+@label=mask_dog_facing_bottom_right
+ $D9F9 DEFB $F1,$FF,$FF,$E0,$7F,$FF,$C0,$3F ; {mask: DOG FACING BOTTOM RIGHT (shared)
  $DA01 DEFB $FF,$C0,$0F,$FF,$C0,$07,$FF,$C0
  $DA09 DEFB $02,$7F,$E0,$00,$3F,$80,$00,$3F
  $DA11 DEFB $00,$00,$1F,$80,$00,$1F,$E0,$00
@@ -16893,7 +16864,7 @@ c$EFCB LD DE,$696D      ; DE = map_MAIN_GATE_X;
  $EFDC DJNZ $EFD3       ; %> while (--B);
 ; Using the papers at the main gate when not in uniform causes the hero to be
 ; sent to solitary.
- $EFDE LD DE,$CEA6      ; {if ($8015 != sprite_guard_facing_away_4) goto solitary; // exit via
+ $EFDE LD DE,$CEA6      ; {if ($8015 != sprite_guard) goto solitary; // exit via
  $EFE1 LD A,($8015)     ;
  $EFE4 CP E             ;
  $EFE5 JP NZ,$CB98      ; }
