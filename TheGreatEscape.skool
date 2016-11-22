@@ -10607,14 +10607,14 @@ c$B79B LD B,$07         ; B = 7; // iterations
  $B834 DEFB $FF,$34,$1C ; room_NONE,        52,28 // for character 25
 
 ; render_mask_buffer stuff.
-@label=byte_B837
-g$B837 DEFB $00      ; clip_x0
-@label=byte_B838
- $B838 DEFB $00      ; clip_y0
-@label=word_B839
- $B839 DEFB $00      ; clip_y1
-@label=word_B83A
- $B83A DEFB $00      ; clip_x1
+@label=clip_x0
+g$B837 DEFB $00
+@label=clip_y0
+ $B838 DEFB $00
+@label=clip_height
+ $B839 DEFB $00
+@label=clip_width
+ $B83A DEFB $00
 
 ; Check the mask buffer to see if the hero is hiding behind something.
 ;
@@ -10809,7 +10809,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
 ; Indoors.
  $B929 LD HL,$81DA   ;   HL = &interior_mask_data;
  $B92C LD A,(HL)     ;   A = *HL; // count byte
- $B92D AND A         ; {  if (A == 0) return;
+ $B92D AND A         ; {  if (A == 0) return; // no masks
  $B92E RET Z         ; }
  $B92F LD B,A        ;   B = A; // iterations
  $B930 INC HL        ; {  HL += 3; %> // skip count byte, then off by 2 bytes
@@ -10873,19 +10873,19 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B987 LD C,A        ;   C = A;
  $B988 CP (HL)       ; {  if (A >= *HL) <%
  $B989 JP C,$B99F    ; }
- $B98C SUB (HL)      ;     A -= *HL; // sampled HL=$81EC,$81F4,$EC12
- $B98D LD ($B837),A  ;     byte_B837 = A;
+ $B98C SUB (HL)      ;     clip_x0 = A - *HL; // sampled HL=$81EC,$81F4,$EC12
+ $B98D LD ($B837),A  ;
  $B990 INC HL        ;     HL++;
  $B991 LD A,(HL)     ; {    A = *HL - C;
  $B992 SUB C         ; }
  $B993 CP $03        ; {    if (A >= 3) A = 3;
  $B995 JR C,$B999    ;
  $B997 LD A,$03      ; }
-*$B999 INC A         ; {    ($B83A) = ++A; // word_B839 + 1 %>
+*$B999 INC A         ; {    ($B83A) = ++A; // clip_width + 1 %>
  $B99A LD ($B83A),A  ; }
  $B99D JR $B9B6      ;   else <%
 *$B99F LD B,(HL)     ;     B = *HL;
- $B9A0 XOR A         ; {    byte_B837 = 0;
+ $B9A0 XOR A         ; {    clip_x0 = 0;
  $B9A1 LD ($B837),A  ; }
  $B9A4 LD A,B        ; {    C = 4 - (B - C);
  $B9A5 SUB C         ;
@@ -10897,17 +10897,17 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B9AC LD A,(HL)     ; {    A = (*HL - B) + 1;
  $B9AD SUB B         ;
  $B9AE INC A         ; }
- $B9AF CP C          ; {    if (A > C) A = C;
+ $B9AF CP C          ; {    if (A >= C) A = C;
  $B9B0 JR C,$B9B3    ;
  $B9B2 LD A,C        ; }
-*$B9B3 LD ($B83A),A  ;     ($B83A) = A; // word_B839 + 1 %>
+*$B9B3 LD ($B83A),A  ;     ($B83A) = A; // clip_width + 1 %>
 *$B9B6 INC HL        ;   HL++;
  $B9B7 LD A,($81B6)  ;   A = screenpos_y;
  $B9BA LD C,A        ;   C = A;
  $B9BB CP (HL)       ; {  if (A >= *HL) <%
  $B9BC JP C,$B9D2    ; }
  $B9BF SUB (HL)      ;     A -= *HL;
- $B9C0 LD ($B838),A  ;     byte_B838 = A;
+ $B9C0 LD ($B838),A  ;     clip_y0 = A;
  $B9C3 INC HL        ; {    A = *++HL - C;
  $B9C4 LD A,(HL)     ;
  $B9C5 SUB C         ; }
@@ -10918,7 +10918,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $B9CD LD ($B839),A  ; {    ($B839) = A; %>
  $B9D0 JR $B9E9      ; }
 *$B9D2 LD B,(HL)     ;   else <% B = *HL;
- $B9D3 XOR A         ; {    byte_B838 = 0;
+ $B9D3 XOR A         ; {    clip_y0 = 0;
  $B9D4 LD ($B838),A  ; }
  $B9D7 LD A,B        ; {    C = 5 - (B - C);
  $B9D8 SUB C         ;
@@ -10968,8 +10968,6 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA17 LD L,A        ; }
  $BA18 LD ($81A0),HL ;   ($81A0) = HL; // mask buffer pointer
  $BA1B EX AF,AF'
-; If I break this bit then the character gets drawn on top of *indoors*
-; objects.
  $BA1C ADD A,A       ; {  DE = mask_pointers[A];
  $BA1D LD C,A        ;
  $BA1E LD B,$00      ;
@@ -10978,12 +10976,12 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA24 LD E,(HL)     ;
  $BA25 INC HL        ;
  $BA26 LD D,(HL)     ; }
- $BA27 LD HL,($B839) ;   HL = word_B839;
+ $BA27 LD HL,($B839) ;   L = clip_height; H = clip_width;
  $BA2A LD A,L        ; {  ($BA70) = L; // self modify
  $BA2B LD ($BA70),A  ; }
  $BA2E LD A,H        ; {  ($BA72) = H; // self modify
  $BA2F LD ($BA72),A  ; }
- $BA32 LD A,(DE)     ; {  ($BA90) = *DE - H; // self modify // *DE looks like a count
+ $BA32 LD A,(DE)     ; {  ($BA90) = *DE - H; // self modify // *DE is the mask's width
  $BA33 SUB H         ;
  $BA34 LD ($BA90),A  ; }
  $BA37 LD A,$20      ; {  ($BABA) = 32 - H; // self modify
@@ -10992,9 +10990,9 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA3D PUSH DE
  $BA3E LD A,(DE)     ; {  E = *DE;
  $BA3F LD E,A        ; }
- $BA40 LD A,($B838)  ;   A = byte_B838;
- $BA43 CALL $BACD    ;   multiply();
- $BA46 LD A,($B837)  ; {  E = byte_B837;
+ $BA40 LD A,($B838)  ;   A = clip_y0;
+ $BA43 CALL $BACD    ;   HL = multiply(); D = 0;
+ $BA46 LD A,($B837)  ; {  E = clip_x0;
  $BA49 LD E,A        ; }
  $BA4A ADD HL,DE     ;   HL += DE;
  $BA4B POP DE
@@ -11019,7 +11017,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA67 JR $BA6C      ;   goto $BA6C;
 *$BA69 LD A,L        ; {  A = -L;
  $BA6A NEG           ; }
-*$BA6C LD HL,($81A0) ;   HL = ($81A0); // mystery
+*$BA6C LD HL,($81A0) ;   HL = ($81A0); // mask buffer pointer
  $BA6F LD C,$01      ;   C = 1; // self modified
 *$BA71 LD B,$01      ;   do <% B = 1; // self modified
 *$BA73 EX AF,AF'     ;     do <%
@@ -11027,7 +11025,7 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA75 AND A         ;       Adash &= Adash;
  $BA76 JP P,$BA7E    ;       if (!P) <%
  $BA79 AND $7F       ;         Adash &= 0x7F;
- $BA7B EX AF,AF'
+ $BA7B EX AF,AF'     ; // bank the counter
  $BA7C INC DE        ;         DE++;
  $BA7D LD A,(DE)     ;         A = *DE; %>
 *$BA7E AND A         ;       A &= A;
@@ -11043,11 +11041,11 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA8C DJNZ $BA73    ;     %> while (--B);
  $BA8E PUSH BC
  $BA8F LD B,$01      ;     B = 1; // self modified
- $BA91 EX AF,AF'
+ $BA91 EX AF,AF'     ; bank while we test B
  $BA92 LD A,B        ; {    if (B) <%
  $BA93 AND A         ;
  $BA94 JP Z,$BAB9    ; }
- $BA97 EX AF,AF'
+ $BA97 EX AF,AF'     ; unbank
  $BA98 AND A         ; {      if (A) goto $BAA3;
  $BA99 JR NZ,$BAA3   ; }
 *$BA9B LD A,(DE)     ;       do <% A = *DE;
