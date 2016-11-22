@@ -4358,7 +4358,7 @@ c$7C46 PUSH HL
 ; Used by the routine at #R$7B36.
 ;
 ; O:AF Z set if item found.
-; O:HL If found, pointer to item.
+; O:HL If item was found contains pointer to the item.
 ;
 ; Select a pick up radius.
 @label=find_nearby_item
@@ -4930,6 +4930,9 @@ g$81D6 DEFB $FF,$FF,$FF,$FF ; doors
 ; Interior mask data.
 ;
 ; Used by the routines at #R$6A35, #R$B916.
+;
+; FIXME: First byte is a count.
+;
 @label=interior_mask_data
 g$81DA DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; {interior_mask_data
  $81E2 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -7115,6 +7118,9 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
 ;
 ; Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8,
 ; #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
+; .
+;
+; I:BC Target location (B = x, C = y).
 @label=set_hero_target_location
 c$A33F LD A,($A13A)  ; {if (in_solitary) return;
  $A342 AND A         ;
@@ -7275,6 +7281,8 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
 ;
 ; Used by the routine at #R$A38C.
 ;
+; I:A' Low byte.
+; I:C  High byte.
 ; I:HL Pointer to target.
 @label=store_location
 c$A3ED EX AF,AF'     ; {
@@ -8904,8 +8912,6 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
  $ADE6 RET Z         ; }
  $ADE7 JR $ADF1      ;   else <%
 ; Move searchlight left/right to focus on the hero.
-; .
-; Bug? Possibly missing L != E test surrounding the block.
 *$ADE9 JP NC,$ADEF   ;     if (L < E) <%
  $ADEC INC A         ;       L++; %>
  $ADED JR $ADF0      ;     else <%
@@ -9615,7 +9621,7 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
  $B21A POP HL
  $B21B POP BC
  $B21C JR NC,$B229   ;     if (!C) goto found; %>
-*$B21E LD A,$08      ; {  HL += 8;
+*$B21E LD A,$08      ; {  HL += 8; // step forward two entries
  $B220 ADD A,L       ;
  $B221 LD L,A        ;
  $B222 JR NC,$B225   ;
