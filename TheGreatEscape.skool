@@ -11094,11 +11094,12 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
 ;
 ; I:A Left hand value.
 ; I:E Right hand value.
+; O:D Zero.
 ; O:HL Multiplied result.
 @label=multiply
 c$BACD LD B,$08      ; B = 8; // iterations
  $BACF LD HL,$0000   ; HL = 0;
- $BAD2 LD D,H        ; D = 0; // e.g. DE = 8;
+ $BAD2 LD D,H        ; D = 0;
 *$BAD3 ADD HL,HL     ; do <% HL += HL;
  $BAD4 RLA           ;   RLA  // carry = (A >> 7); A <<= 1; /* shift out of high end */
  $BAD5 JP NC,$BAD9   ; {  if (carry) HL += DE; /* shift into low end */
