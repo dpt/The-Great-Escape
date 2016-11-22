@@ -10232,33 +10232,33 @@ b$B53E DEFB $6A,$6E,$52,$62,$00,$0B ; 0x6A, 0x6E, 0x52, 0x62, 0, 11 ;  0: hut 1 
 ;
 ; Used by the routines at #R$6939 and #R$9D7B.
 @label=called_from_main_loop_9
-c$B5CE LD B,$08        ; B = 8;
- $B5D0 LD IY,$8000     ; IY = $8000;
-*$B5D4 LD A,(IY+$01)   ; {do <% if (IY[1] == vischar_FLAGS_EMPTY_SLOT) goto next; // $8001 flags
- $B5D7 CP $FF          ;
- $B5D9 JP Z,$B6B4      ; }
- $B5DC PUSH BC
- $B5DD SET 7,(IY+$01)  ;   IY[1] |= vischar_FLAGS_NO_COLLIDE;
- $B5E1 BIT 7,(IY+$0D)  ; {  if (IY[0x0D] & input_KICK) goto kicked; // $800D
- $B5E5 JP NZ,$B6BE     ; }
- $B5E8 LD H,(IY+$0B)   ;   H = IY[0x0B];
- $B5EB LD L,(IY+$0A)   ;   L = IY[0x0A]; // HL = character_related_pointer
- $B5EE LD A,(IY+$0C)   ;   A = IY[0x0C];
- $B5F1 AND A           ; {  if (A & vischar_BYTE12_BIT7) <% // up/down flag
- $B5F2 JP P,$B64F      ; }
- $B5F5 AND $7F         ;     A &= ~vischar_BYTE12_BIT7;
- $B5F7 JP Z,$B6C2      ;     if (A == 0) goto end_bit;
- $B5FA INC A           ; {    HL += (A + 1) * 4 - 1;
+c$B5CE LD B,$08        ; iterate over all eight vischars
+ $B5D0 LD IY,$8000     ; set IY to first vischar
+*$B5D4 LD A,(IY+$01)   ; get vischar.flags
+ $B5D7 CP $FF          ; are flags set to vischar_FLAGS_EMPTY_SLOT?
+ $B5D9 JP Z,$B6B4      ; if so - continue to next iteration
+ $B5DC PUSH BC         ; stack counter
+ $B5DD SET 7,(IY+$01)  ; set flag vischar_FLAGS_NO_COLLIDE
+ $B5E1 BIT 7,(IY+$0D)  ; test vischar.input & input_KICK
+ $B5E5 JP NZ,$B6BE     ; if set goto 'kicked'
+ $B5E8 LD H,(IY+$0B)   ; get vischar.anim in HL
+ $B5EB LD L,(IY+$0A)   ;
+ $B5EE LD A,(IY+$0C)   ; ?anim index vischar.b0C
+ $B5F1 AND A           ; test vischar_BYTE12_BIT7  up/down flag ?
+ $B5F2 JP P,$B64F      ;
+ $B5F5 AND $7F         ; mask off vischar_BYTE12_BIT7
+ $B5F7 JP Z,$B6C2      ; if result is zero goto 'end_bit'
+ $B5FA INC A           ; { anim = HL + (A + 1) * 4 - 1
  $B5FB ADD A,A         ;
  $B5FC ADD A,A         ;
  $B5FD LD C,A          ;
  $B5FE LD B,$00        ;
  $B600 ADD HL,BC       ;
  $B601 DEC HL          ; }
- $B602 LD A,(HL)       ;     A = *HL++; // a spriteindex_t
- $B603 EX AF,AF'
- $B604 INC HL
-*$B605 EX DE,HL        ;     decrement:
+ $B602 LD A,(HL)       ; A = *HL; // a spriteindex_t
+ $B603 EX AF,AF'       ; bank A
+ $B604 INC HL          ; HL++
+*$B605 EX DE,HL        ; decrement:
  $B606 LD L,(IY+$0F)   ;     L = IY[0x0F]; // X axis
  $B609 LD H,(IY+$10)   ;     H = IY[0x10];
  $B60C LD A,(DE)       ;     A = *DE; // sampled DE=$CF9A,$CF9E,$CFBE,$CFC2,$CFB2,$CFB6,$CFA6,$CFAA (character_related_data)
@@ -10355,30 +10355,32 @@ c$B5CE LD B,$08        ; B = 8;
  $B6B9 DEC B           ; {%> while (--B);
  $B6BA JP NZ,$B5D4     ; }
  $B6BD RET             ; return;
-*$B6BE RES 7,(IY+$0D)  ; kicked: IY[0x0D] &= ~input_KICK; // sampled IY=$8020,$80A0,$8060,$80E0,$8080
-*$B6C2 LD A,(IY+$0E)   ; {end_bit: A = byte_CDAA[IY[0x0E] * 9 + IY[0x0D]];
- $B6C5 LD D,A          ;
+@label=kicked
+*$B6BE RES 7,(IY+$0D)  ; reset input_KICK flag
+@label=end_bit
+*$B6C2 LD A,(IY+$0E)   ; get vischar.direction
+ $B6C5 LD D,A          ; {multiply it by 9
  $B6C6 ADD A,A         ;
  $B6C7 ADD A,A         ;
  $B6C8 ADD A,A         ;
- $B6C9 ADD A,D         ;
- $B6CA ADD A,(IY+$0D)  ;
+ $B6C9 ADD A,D         ; }
+ $B6CA ADD A,(IY+$0D)  ; add vischar.input to it
  $B6CD LD E,A          ;
  $B6CE LD D,$00        ;
- $B6D0 LD HL,$CDAA     ;
+ $B6D0 LD HL,$CDAA     ; add it to byte_CDAA
  $B6D3 ADD HL,DE       ;
- $B6D4 LD A,(HL)       ; }
- $B6D5 LD C,A          ; C = A;
- $B6D6 LD L,(IY+$08)   ; L = IY[0x08];
- $B6D9 LD H,(IY+$09)   ; H = IY[0x09];
- $B6DC ADD A,A         ; {HL += A * 2;
+ $B6D4 LD A,(HL)       ; fetch the (table entry)
+ $B6D5 LD C,A          ;
+ $B6D6 LD L,(IY+$08)   ; HL = vischar.animbase
+ $B6D9 LD H,(IY+$09)   ;
+ $B6DC ADD A,A         ; double A (and in doing so discard the top bit!)
  $B6DD LD E,A          ;
- $B6DE ADD HL,DE       ; }
- $B6DF LD E,(HL)       ; {E = *HL++;
- $B6E0 INC HL          ; }
- $B6E1 LD (IY+$0A),E   ; IY[0x0A] = E;
- $B6E4 LD D,(HL)       ; D = *HL;
- $B6E5 LD (IY+$0B),D   ; IY[0x0B] = D;
+ $B6DE ADD HL,DE       ; (D is still zero from above)
+ $B6DF LD E,(HL)       ; { vischar.anim = *HL
+ $B6E0 INC HL          ;
+ $B6E1 LD (IY+$0A),E   ;
+ $B6E4 LD D,(HL)       ;
+ $B6E5 LD (IY+$0B),D   ; }
  $B6E8 BIT 7,C         ; {if ((C & (1<<7)) == 0) <%
  $B6EA JR NZ,$B6FC     ; }
  $B6EC LD (IY+$0C),$00 ; vischar.b0C = 0
@@ -10389,8 +10391,9 @@ c$B5CE LD B,$08        ; B = 8;
  $B6F6 INC DE          ; {  DE += 2; // point to groups of four
  $B6F7 INC DE          ; }
  $B6F8 EX DE,HL
- $B6F9 JP $B65A        ;   goto increment; %>
-*$B6FC LD A,(DE)       ; else <% A = *DE; // count of four-byte groups
+ $B6F9 JP $B65A        ; goto increment
+; else
+*$B6FC LD A,(DE)       ; A = *DE; // count of four-byte groups
  $B6FD LD C,A          ;   C = A;
  $B6FE OR $80          ; {  vischar.b0C = A | vischar_BYTE12_BIT7;
  $B700 LD (IY+$0C),A   ; }
@@ -10412,7 +10415,7 @@ c$B5CE LD B,$08        ; B = 8;
  $B715 LD A,(HL)       ;   A = *HL;
  $B716 EX AF,AF'
  $B717 POP HL
- $B718 JP $B605        ;   goto decrement; %>
+ $B718 JP $B605        ; goto decrement
 
 ; Reset position.
 ;
