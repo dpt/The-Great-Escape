@@ -9330,9 +9330,9 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
  $B07A LD A,$11        ; {    HL += 17;
  $B07C ADD A,L         ;
  $B07D LD L,A          ; }
- $B07E EX AF,AF'
+ $B07E EX AF,AF'       ;     tmpA = A;
  $B07F LD BC,$0723     ;     B = 7; C = 35;
- $B082 CP $1C          ;     tmpA = A;
+ $B082 CP $1C
  $B084 LD A,(IY+$0E)   ;     A = IY[14]; // interleaved
  $B087 JR NZ,$B08F     ;     if (tmpA == 28) <%
  $B089 DEC L           ; {      L -= 2;
@@ -9344,7 +9344,7 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
  $B092 LD A,(HL)       ;       A = *HL;
  $B093 CP C            ; {      if (A != C) <%
  $B094 JR Z,$B0B8      ; }
- $B096 JR C,$B09A      ; {        if (A >= C) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch
+ $B096 JR C,$B09A      ; {        if (C > A) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch
  $B098 DEC (HL)        ;
  $B099 DEC (HL)        ; }
 *$B09A INC (HL)        ;         (*HL)++; %> %>
