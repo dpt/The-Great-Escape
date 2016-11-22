@@ -1907,12 +1907,12 @@ c$697D LD ($8020),A     ; setup_movable_item: $8020 = A; // character index
  $69A0 DEFB $00         ; flags
  $69A1 DEFW $0000       ; target
  $69A3 DEFB $00,$00,$00 ; pos
- $69A6 DEFB $00         ; b07
- $69A7 DEFW $CDF2       ; w08
- $69A9 DEFW $CF76       ; w0A
- $69AB DEFB $00         ; b0C
- $69AC DEFB $00         ; b0D
- $69AD DEFB $00         ; b0E
+ $69A6 DEFB $00         ; counter_and_flags
+ $69A7 DEFW $CDF2       ; animbase = &animations[0]
+ $69A9 DEFW $CF76       ; anim     = animations[8] // anim_wait_tl animation
+ $69AB DEFB $00         ; animindex
+ $69AC DEFB $00         ; input
+ $69AD DEFB $00         ; direction
 
 ; Movable items.
 ;
@@ -13387,14 +13387,19 @@ b$CD6A DEFB $FF,$40,$20 ; item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),      
  $CD97 DEFB $3F,$34,$1C ; item_COMPASS          { ITEM_ROOM(room_NONE, 0),       ... }
 
 ; Data for the four classes of characters.
+; (<- spawn_character)
 @label=character_meta_data_commandant
-b$CD9A DEFB $F2,$CD,$D6,$CE ; &animations[0], &sprites[30] // meta_commandant (<- spawn_character)
+w$CD9A DEFW $CDF2 ; &animations[0]
+ $CD9C DEFW $CED6 ; sprite_commandant
 @label=character_meta_data_guard
- $CD9E DEFB $F2,$CD,$A6,$CE ; &animations[0], &sprites[22] // meta_guard (<- spawn_character)
+ $CD9E DEFW $CDF2 ; &animations[0]
+ $CDA0 DEFW $CEA6 ; sprite_guard
 @label=character_meta_data_dog
- $CDA2 DEFB $F2,$CD,$76,$CE ; &animations[0], &sprites[14] // meta_dog (<- spawn_character)
+ $CDA2 DEFW $CDF2 ; &animations[0]
+ $CDA4 DEFW $CE76 ; sprite_dog
 @label=character_meta_data_prisoner
- $CDA6 DEFB $F2,$CD,$2E,$CE ; &animations[0], &sprites[2]  // meta_prisoner (<- spawn_character)
+ $CDA6 DEFW $CDF2 ; &animations[0]
+ $CDA8 DEFW $CE2E ; sprite_prisoner
 
 ; Indices into animations.
 ;
@@ -13471,6 +13476,7 @@ b$CE22 DEFB $03,$16,$46,$DB,$72,$DB ; { 3, 22, &bitmap_stove, &mask_stove } // (
  $CE6A DEFB $04,$10,$F5,$D3,$55,$D4 ; { 4, 16, &bitmap_crawl_facing_top_left_1, &mask_crawl_facing_top_left } // (24x16,$D3F5,$D455)
  $CE70 DEFB $04,$10,$25,$D4,$55,$D4 ; { 4, 16, &bitmap_crawl_facing_top_left_2, &mask_crawl_facing_top_left } // (24x16,$D425,$D455)
 ;
+@label=sprite_dog
  $CE76 DEFB $04,$10,$67,$D8,$21,$D9 ; { 4, 16, &bitmap_dog_facing_top_left_1, &mask_dog_facing_top_left } // (24x16,$D867,$D921)
  $CE7C DEFB $04,$10,$97,$D8,$21,$D9 ; { 4, 16, &bitmap_dog_facing_top_left_2, &mask_dog_facing_top_left } // (24x16,$D897,$D921)
  $CE82 DEFB $04,$0F,$C7,$D8,$21,$D9 ; { 4, 15, &bitmap_dog_facing_top_left_3, &mask_dog_facing_top_left } // (24x15,$D8C7,$D921)
@@ -13491,6 +13497,7 @@ b$CE22 DEFB $03,$16,$46,$DB,$72,$DB ; { 3, 22, &bitmap_stove, &mask_stove } // (
  $CECA DEFB $03,$1C,$F7,$D7,$05,$D6 ; { 3, 28, &bitmap_guard_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x28,$D7F7,$D605)
  $CED0 DEFB $03,$1C,$2F,$D8,$3D,$D6 ; { 3, 28, &bitmap_guard_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D82F,$D63D)
 ;
+@label=sprite_commandant
  $CED6 DEFB $03,$1C,$D6,$D0,$45,$D5 ; { 3, 28, &bitmap_commandant_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x28,$D0D6,$D545)
  $CEDC DEFB $03,$1E,$9A,$D0,$05,$D5 ; { 3, 30, &bitmap_commandant_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x30,$D09A,$D505)
  $CEE2 DEFB $03,$1D,$60,$D0,$C5,$D4 ; { 3, 29, &bitmap_commandant_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x29,$D060,$D4C5)
