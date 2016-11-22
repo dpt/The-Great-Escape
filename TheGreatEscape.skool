@@ -11231,7 +11231,7 @@ c$BAF7 LD HL,$81B5    ; HL = &screenpos_x;
  $BB96 AND A          ; A &= A; // return NZ (vischar is not visible)
  $BB97 RET            ; return;
 
-; Re-paints any tiles occupied by visible characters.
+; Paints any tiles occupied by visible characters with tiles from tile_buf.
 ;
 ; Used by the routine at #R$9D7B.
 @label=restore_tiles
@@ -11260,7 +11260,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBC7 RRA           ;
  $BBC8 LD ($81B5),A  ; }
  $BBCB CALL $BAF7    ;   vischar_visible();
- $BBCE CP $FF        ; {  if (A == 0xFF) goto next; // possibly not found case
+ $BBCE CP $FF        ; {  if (A == 0xFF) goto next; // vischar not visible
  $BBD0 JP Z,$BC9F    ; }
  $BBD3 LD A,E        ; {  A = ((E >> 3) & 31) + 2;
  $BBD4 RRA           ;
@@ -11274,6 +11274,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBDF ADD A,(HL)    ;
  $BBE0 LD HL,$81BC   ;
  $BBE3 SUB (HL)      ; }
+;
  $BBE4 JR C,$BBF7    ;   if (A >= 0) <%
  $BBE6 SUB $11       ;     A -= 17;
  $BBE8 JR Z,$BBF7    ; {    if (A > 0) <%
@@ -11285,19 +11286,23 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BBF2 JR NZ,$BBF8   ;       if (!Z) goto $BBF8;
  $BBF4 JP $BC9F      ;       goto next; %> %>
 *$BBF7 POP AF
+;
 *$BBF8 CP $05        ; {  if (A > 5) A = 5;
  $BBFA JP Z,$BC02    ;
  $BBFD JP C,$BC02    ;
  $BC00 LD A,$05      ; }
-*$BC02 LD ($BC5F),A  ;   ($BC5F) = A; // self modify
+;
+*$BC02 LD ($BC5F),A  ;   ($BC5F) = A; // self modify outer loop counter
  $BC05 LD A,C        ;   A = C;
- $BC06 LD ($BC61),A  ;   ($BC61) = A; // self modify
+ $BC06 LD ($BC61),A  ;   ($BC61) = A; // self modify inner loop counter
  $BC09 LD ($BC89),A  ;   ($BC89) = A; // self modify
  $BC0C LD A,$18      ; {  A = 24 - C;
  $BC0E SUB C         ; }
  $BC0F LD ($BC8E),A  ;   ($BC8E) = A; // self modify
  $BC12 ADD A,$A8     ;   A += $A8;
  $BC14 LD ($BC95),A  ;   ($BC95) = A; // self modify
+;
+; Work out x,y offsets into the tile buffer.
  $BC17 LD HL,$81BB   ;   HL = &map_position;
  $BC1A LD A,B        ;   A = B;
  $BC1B AND A         ;   A &= A;
@@ -11333,11 +11338,15 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC40 ADD HL,DE     ;
  $BC41 LD DE,$F290   ;
  $BC44 ADD HL,DE     ; }
- $BC45 EX DE,HL
+;
+ $BC45 EX DE,HL      ; swap it into DE. HL about to be overwritten.
+;
+; Copy BC (x,y coord) into HL'
  $BC46 PUSH BC
  $BC47 EXX
  $BC48 POP HL        ;   POP HLdash
  $BC49 EXX
+;
  $BC4A LD A,B        ;   A = B;
  $BC4B LD L,C        ; {  HL = C * 24 + A + $F0F8; // visible tiles array
  $BC4C LD H,$00      ;
@@ -11360,7 +11369,7 @@ c$BB98 LD B,$08      ; B = 8; // iterations
  $BC63 LD A,(DE)     ;       A = *DE;
  $BC64 EXX
  $BC65 POP DE        ;       POP DEdash // visible tiles array pointer
- $BC66 PUSH HL       ;       PUSH HLdash
+ $BC66 PUSH HL       ;       PUSH HLdash // save x,y
  $BC67 CALL $BCAA    ;       select_tile_set(); // call using banked registers
  $BC6A LD L,A        ; {      HLdash = A * 8 + BCdash;
  $BC6B LD H,$00      ;
@@ -12933,7 +12942,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB53 LD (HL),A     ;
  $CB54 INC HL        ; }
 ; Pattern: [-2]+1
- $CB55 BIT 7,A       ; {  if (A & (1<<7)) <% // which flag is this?
+ $CB55 BIT 7,A       ; {  if (A & (1<<7)) <%
  $CB57 JR Z,$CB5B    ; }
  $CB59 DEC (HL)      ; {    (*HL) -= 2; %>
  $CB5A DEC (HL)      ; }
@@ -12941,6 +12950,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB5C DEC HL        ;   HL--;
  $CB5D XOR A         ;   A = 0;
  $CB5E RET           ;   return; %> // strictly the terminating brace is after the following unreferenced bytes
+;
  $CB5F DEFB $18,$09  ; Unreferenced bytes.
 
 ; (unknown) handle_target
