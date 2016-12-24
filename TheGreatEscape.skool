@@ -7858,7 +7858,7 @@ c$A80A LD DE,$F278   ; DE = &tile_buf[24 * 16];
 @label=plot_topmost_tiles
 c$A819 LD DE,$F0F8   ; DE = &state->tile_buf[0];
  $A81C EXX
- $A81D LD HL,$FF58   ; HLdash = &state->map_buf[8];
+ $A81D LD HL,$FF58   ; HLdash = &state->map_buf[0];
  $A820 LD A,($81BC)  ; A = map_position >> 8; // map_position hi
  $A823 LD DE,$F290   ; DEdash = &state->window_buf[0];
 
