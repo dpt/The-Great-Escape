@@ -8396,7 +8396,7 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when indoo
  $AB01 JR Z,$AAFC    ; }
  $AB03 POP AF
  $AB04 LD HL,$A7C6   ; HL = &move_map_y; // screen offset of some sort?
- $AB07 CP $02        ; {if (A >= 2) <%
+ $AB07 CP $02        ; {if (A < 2) <%
  $AB09 JR NC,$AB0F   ; }
  $AB0B LD A,(HL)     ; {  A = *HL + 1; %>
  $AB0C INC A         ; }
