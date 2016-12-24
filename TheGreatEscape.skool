@@ -9828,7 +9828,7 @@ c$B2FC LD HL,$8000   ; HL = $8000;
  $B314 CALL $E555    ; divide_by_8(C,A);
  $B317 SUB $06       ; {map_position.y = A - 6; // 6 would be screen height minus half of character height?
  $B319 LD ($81BC),A  ; }
- $B31C XOR A         ; {room_index = room_NONE;
+ $B31C XOR A         ; {room_index = room_0_OUTDOORS;
  $B31D LD ($68A0),A  ; }
  $B320 CALL $A7C9    ; get_supertiles();
  $B323 CALL $A8A2    ; plot_all_tiles();
