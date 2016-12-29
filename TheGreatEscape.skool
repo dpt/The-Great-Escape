@@ -428,8 +428,7 @@
 ; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; unknown
 ; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
 ;
-; gates_and_doors_MASK                          = $7F,
-; gates_and_doors_LOCKED                        = 1 << 7,
+; door_LOCKED                                   = 1 << 7,
 ;
 ; characterstruct_FLAG_DISABLED                 = 1 << 6,       ; this disables the character
 ; characterstruct_BYTE0_MASK                    = $1F,
@@ -6042,7 +6041,7 @@ c$9E98 LD HL,$A12F   ; {if (player_locked_out_until != game_counter) return;
  $9E9E CP (HL)       ;
  $9E9F RET NZ        ; }
 ; Countdown reached: Unlock the door.
- $9EA0 LD HL,($A143) ; {*ptr_to_door_being_lockpicked &= ~gates_and_doors_LOCKED;
+ $9EA0 LD HL,($A143) ; {*ptr_to_door_being_lockpicked &= ~door_LOCKED;
  $9EA3 RES 7,(HL)    ; }
  $9EA5 LD B,$06      ; {queue_message_for_display(message_IT_IS_OPEN);
  $9EA7 CALL $7D15    ; }
@@ -6697,7 +6696,7 @@ g$A140 DEFB $00      ; displayed_morale
 @label=moraleflag_screen_address
 g$A141 DEFW $5002    ; moraleflag_screen_address
 
-; Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.
+; Address of door (in locked_doors[]) in which bit 7 is cleared when picked.
 ;
 ; Read-only by picking_a_lock.
 ; .
@@ -6890,7 +6889,7 @@ c$A206 LD (BC),A     ; *BC = A; // bell = bell_RING_40_TIMES;
  $A207 LD B,$03      ; {queue_message_for_display(message_EXERCISE_TIME);
  $A209 CALL $7D15    ; }
 ; Unlock the gates.
- $A20C LD HL,$0100   ; {gates_and_doors[0] = 0x00; gates_and_doors[1] = 0x01;
+ $A20C LD HL,$0100   ; {locked_doors[0] = 0x00; locked_doors[1] = 0x01;
  $A20F LD ($F05D),HL ; }
  $A212 JP $A4A9      ; set_location_0x000E(); return; // exit via
 
@@ -6903,7 +6902,7 @@ c$A215 LD (BC),A     ; *BC = A; // bell = bell_RING_40_TIMES;
 @label=event_go_to_time_for_bed
 c$A219 LD (BC),A     ; *BC = A; // bell = bell_RING_40_TIMES;
 ; Lock the gates.
- $A21A LD HL,$8180   ; {gates_and_doors[0] = 0x80; gates_and_doors[1] = 0x81;
+ $A21A LD HL,$8180   ; {locked_doors[0] = 0x80; locked_doors[1] = 0x81;
  $A21D LD ($F05D),HL ; }
  $A220 LD B,$04      ; {queue_message_for_display(message_TIME_FOR_BED);
  $A222 CALL $7D15    ; }
@@ -9568,17 +9567,17 @@ c$B1C7 LD B,$00      ; B = 0;
 ;
 ; O:F Z set if door open.
 @label=is_door_locked
-c$B1D4 LD E,$7F      ; {C = current_door & gates_and_doors_MASK;
+c$B1D4 LD E,$7F      ; {C = current_door & ~door_LOCKED;
  $B1D6 LD A,($68A1)  ;
  $B1D9 AND E         ;
  $B1DA LD C,A        ; }
- $B1DB LD HL,$F05D   ; HL = &gates_and_doors[0];
+ $B1DB LD HL,$F05D   ; HL = &locked_doors[0];
  $B1DE LD B,$09      ; B = 9; // 9 iterations
-*$B1E0 LD A,(HL)     ; {do <% if (*HL & gates_and_doors_MASK == C) <%
+*$B1E0 LD A,(HL)     ; {do <% if (*HL & ~door_LOCKED == C) <%
  $B1E1 AND E         ;
  $B1E2 CP C          ;
  $B1E3 JR NZ,$B1F0   ; }
- $B1E5 BIT 7,(HL)    ; {    if ((*HL & gates_and_doors_LOCKED) == 0) return; // Door is open.
+ $B1E5 BIT 7,(HL)    ; {    if ((*HL & door_LOCKED) == 0) return; // Door is open.
  $B1E7 RET Z         ;
  $B1E8 LD B,$05      ; }
  $B1EA CALL $7D15    ; queue_message_for_display(message_THE_DOOR_IS_LOCKED);
@@ -10114,12 +10113,12 @@ c$B4B8 PUSH AF
  $B4B9 CALL $B4D0    ; open_door();
  $B4BC POP BC
  $B4BD RET NZ        ; if (!Z) return; /* Wrong door? */
- $B4BE LD A,(HL)     ; {A = *HL & ~gates_and_doors_LOCKED; // mask off locked flag
+ $B4BE LD A,(HL)     ; {A = *HL & ~door_LOCKED; // mask off locked flag
  $B4BF AND $7F       ; }
  $B4C1 CP B          ; if (A != B) <%
  $B4C2 LD B,$07      ;   B = message_INCORRECT_KEY; %>
  $B4C4 JR NZ,$B4CD   ; else <%
- $B4C6 RES 7,(HL)    ;   *HL &= ~gates_and_doors_LOCKED; /* Unlock. */
+ $B4C6 RES 7,(HL)    ;   *HL &= ~door_LOCKED; /* Unlock. */
  $B4C8 CALL $A0E9    ;   increase_morale_by_10_score_by_50();
  $B4CB LD B,$06      ;   B = message_IT_IS_OPEN; %>
 *$B4CD JP $7D15      ; queue_message_for_display(B);
@@ -10129,7 +10128,8 @@ c$B4B8 PUSH AF
 ;
 ; Used by the routines at #R$B495 and #R$B4B8.
 ;
-; O:HL Pointer to door in gates_and_doors.
+; O:HL Pointer to door in locked_doors.
+; O:F  Returns NZ if door not found.
 @label=open_door
 c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B4D3 AND A         ;
@@ -10138,9 +10138,9 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 ; Bug: Needless jump.
 ; .
 ; Outdoors.
-*$B4D9 LD B,$05      ; outdoors: B = 5; // 5 iterations // do the gate and door ranges overlap?
- $B4DB LD HL,$F05D   ; HL = &gates_flags;
-*$B4DE LD A,(HL)     ; {do <% A = *HL & ~gates_and_doors_LOCKED;
+*$B4D9 LD B,$05      ; outdoors: B = 5; // 5 iterations
+ $B4DB LD HL,$F05D   ; HL = &locked_doors[0];
+*$B4DE LD A,(HL)     ; {do <% A = *HL & ~door_LOCKED;
  $B4DF AND $7F       ; }
  $B4E1 EXX
  $B4E2 CALL $6A12    ;   get_door_position();
@@ -10163,9 +10163,9 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B4FC RET           ; return;
 ; Indoors.
 @nowarn
-*$B4FD LD HL,$F05F   ; indoors: HL = &door_flags; // door flags // why start at offset 2?
- $B500 LD B,$08      ; B = 8; // 8 iterations
-*$B502 LD A,(HL)     ; {do <% C = *HL & ~gates_and_doors_LOCKED;
+*$B4FD LD HL,$F05F   ; indoors: HL = &locked_doors[2];
+ $B500 LD B,$08      ; B = 8; // 8 iterations // Bug: Ought to be 7 iterations.
+*$B502 LD A,(HL)     ; {do <% C = *HL & ~door_LOCKED;
  $B503 AND $7F       ;
  $B505 LD C,A        ; }
 ; Search doors for C.
@@ -10173,7 +10173,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 *$B509 LD A,(DE)     ;   for (;;) <% A = *DE;
  $B50A CP $FF        ; {    if (A != door_NONE) <% // door_NONE => end of list
  $B50C JR Z,$B516    ; }
- $B50E AND $7F       ; {      if ((A & gates_and_doors_MASK) == C) goto found;
+ $B50E AND $7F       ; {      if ((A & ~door_LOCKED) == C) goto found;
  $B510 CP C          ;
  $B511 JR Z,$B51C    ; }
  $B513 INC DE        ; {      DE++; %> %>
@@ -10550,9 +10550,9 @@ c$B79B LD B,$07         ; B = 7; // iterations
 @nowarn
  $B7C0 LD ($7077),A     ; }
 ; Lock the gates.
- $B7C3 LD HL,$F05D      ; HL = &gates_and_doors[0];
+ $B7C3 LD HL,$F05D      ; HL = &locked_doors[0];
  $B7C6 LD B,$09         ; B = 9; // 9 iterations
-*$B7C8 SET 7,(HL)       ; {do <% *HL++ |= gates_and_doors_LOCKED;
+*$B7C8 SET 7,(HL)       ; {do <% *HL++ |= door_LOCKED;
  $B7CA INC HL           ; }
  $B7CB DJNZ $B7C8       ; %> while (--B);
 ; Reset all beds.
@@ -16935,11 +16935,11 @@ t$F026 DEFB $11,$0E,$23,$1C,$0A,$14,$0E,$1B,$23,$1C,$11,$0E,$23,$0B,$1A,$12,$0B,
 @label=more_messages_another_day_dawns
  $F04B DEFB $0A,$17,$00,$1C,$11,$0E,$1A,$23,$0D,$0A,$21,$23,$0D,$0A,$1F,$17,$1B,$FF     ; "ANOTHER DAY DAWNS" #HTML[/ #CALL:decode_stringFF($F04B)]
 
-; Gates and doors.
-@label=gates_and_doors
-b$F05D DEFB $80,$81                     ; gates_flags
- $F05F DEFB $8D,$8C,$8E,$A2,$98,$9F,$96 ; door_flags
- $F066 DEFB $00,$00                     ; unknown
+; Locked gates and doors.
+@label=locked_doors
+b$F05D DEFB $80,$81                     ; gates
+ $F05F DEFB $8D,$8C,$8E,$A2,$98,$9F,$96 ; doors
+ $F066 DEFB $00,$00                     ; unused
 
 ; Jump to main.
 ;
