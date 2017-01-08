@@ -433,7 +433,6 @@
 ; characterstruct_FLAG_DISABLED                 = 1 << 6,       ; this disables the character
 ; characterstruct_BYTE0_MASK                    = $1F,
 ; characterstruct_BYTE5_MASK                    = $7F,
-; characterstruct_BYTE6_MASK_HI                 = $F8,
 ; characterstruct_BYTE6_MASK_LO                 = $07,
 ;
 ; doorpos_FLAGS_MASK_DIRECTION                  = $03,          ; up/down or direction field?
@@ -11979,7 +11978,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
 c$C651 LD A,(HL)     ; A = *HL;
  $C652 CP $FF        ; {if (A == 0xFF) <%
  $C654 JR NZ,$C664   ; }
- $C656 INC HL        ; {  A = *++HL & characterstruct_BYTE6_MASK_HI;
+ $C656 INC HL        ; {  A = *++HL & ~characterstruct_BYTE6_MASK_LO;
  $C657 LD A,(HL)     ;
  $C658 AND $F8       ; }
  $C65A LD (HL),A     ;   *HL = A;
