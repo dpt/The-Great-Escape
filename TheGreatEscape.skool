@@ -10073,8 +10073,8 @@ c$B417 LD HL,$B589   ; HL = &walls[12] + 3;
 
 ; Use lockpick.
 @label=action_lockpick
-c$B495 CALL $B4D0    ; open_door();
- $B498 RET NZ        ; if (!Z) return; /* Wrong door? */
+c$B495 CALL $B4D0    ; get_nearest_door();
+ $B498 RET NZ        ; if (!Z) return; /* No door nearby. */
  $B499 LD ($A143),HL ; ptr_to_door_being_lockpicked = HL;
  $B49C LD A,($A12F)  ; {player_locked_out_until = game_counter + 255;
  $B49F ADD A,$FF     ;
@@ -10106,9 +10106,9 @@ c$B4B6 LD A,$0E      ; A = room_14_TORCH;
 ; I:A Room number to which the key applies.
 @label=action_key
 c$B4B8 PUSH AF
- $B4B9 CALL $B4D0    ; open_door();
+ $B4B9 CALL $B4D0    ; get_nearest_door();
  $B4BC POP BC
- $B4BD RET NZ        ; if (!Z) return; /* Wrong door? */
+ $B4BD RET NZ        ; if (!Z) return; /* No door nearby. */
  $B4BE LD A,(HL)     ; {A = *HL & ~door_LOCKED; // mask off locked flag
  $B4BF AND $7F       ; }
  $B4C1 CP B          ; if (A != B) <%
@@ -10119,13 +10119,13 @@ c$B4B8 PUSH AF
  $B4CB LD B,$06      ;   B = message_IT_IS_OPEN; %>
 *$B4CD JP $7D15      ; queue_message_for_display(B);
 
-; Open door.
+; Return the door in range of the hero.
 ;
 ; Used by the routines at #R$B495 and #R$B4B8.
 ;
 ; O:HL Pointer to door in locked_doors.
 ; O:F  Returns NZ if door not found.
-@label=open_door
+@label=get_nearest_door
 c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B4D3 AND A         ;
  $B4D4 JR Z,$B4D9    ;
