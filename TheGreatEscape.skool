@@ -1962,15 +1962,15 @@ c$69C9 LD HL,$8020   ; HL = $8020; // iterate over non-player characters
 ;
 ; .
 ;
-; Wipe doors with 0xFF.
+; Wipe interior doors with 0xFF.
 @label=setup_doors
 c$69DC LD A,$FF
- $69DE LD DE,$81D9   ; DE = doors + 3;
+ $69DE LD DE,$81D9   ; DE = interior_doors + 3;
  $69E1 LD B,$04      ; B = 4;
 *$69E3 LD (DE),A     ; {do <% *DE-- = 0xFF;
  $69E4 DEC DE        ; }
  $69E5 DJNZ $69E3    ; %> while (--B);
- $69E7 INC DE        ; DE++; // DE = &doors[0];
+ $69E7 INC DE        ; DE++; // DE = &interior_doors[0];
  $69E8 LD A,($68A0)  ; {B = room_index << 2;
  $69EB ADD A,A       ;
  $69EC ADD A,A       ;
@@ -4918,11 +4918,11 @@ g$81C0 DEFB $44,$CA,$D2,$E2
 ; These are possibly spare object bounds bytes, but not ever used.
 g$81D0 DEFB $00,$00,$00,$00,$00,$00 ; unused_81D0
 
-; Door related stuff.
+; Indices of interior doors.
 ;
 ; Used by the routines at #R$69DC, #R$B32D, #R$B4D0.
-@label=doors
-g$81D6 DEFB $FF,$FF,$FF,$FF ; doors
+@label=interior_doors
+g$81D6 DEFB $FF,$FF,$FF,$FF
 
 ; Interior mask data.
 ;
@@ -9837,7 +9837,7 @@ c$B2FC LD HL,$8000   ; HL = $8000;
 ;
 ; I:IY Pointer to visible character.
 @label=door_handling_interior
-c$B32D LD HL,$81D6   ; HL = &doors;
+c$B32D LD HL,$81D6   ; HL = &interior_doors;
 *$B330 LD A,(HL)     ; for (;;) <% A = *HL;
  $B331 CP $FF        ; {  if (A == 255) return; /* Reached end of list. */
  $B333 RET Z         ; }
@@ -10163,8 +10163,8 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 *$B502 LD A,(HL)     ; {do <% C = *HL & ~door_LOCKED;
  $B503 AND $7F       ;
  $B505 LD C,A        ; }
-; Search doors for C.
- $B506 LD DE,$81D6   ;   DE = &doors;
+; Search interior doors for C.
+ $B506 LD DE,$81D6   ;   DE = &interior_doors;
 *$B509 LD A,(DE)     ;   for (;;) <% A = *DE;
  $B50A CP $FF        ; {    if (A != door_NONE) <% // door_NONE => end of list
  $B50C JR Z,$B516    ; }
