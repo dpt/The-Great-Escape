@@ -1780,20 +1780,19 @@ c$68A2 EX DE,HL
  $68D8 RES 7,(HL)    ; }
  $68DA LD A,($801C)  ; A = vischar.room;
  $68DD LD ($68A0),A  ; room_index = A;
- $68E0 AND A         ; {if (A == 0) <%
+ $68E0 AND A         ; {if (A != 0) goto enter_room;
  $68E1 JP NZ,$68F4   ; }
 ; Outdoors.
- $68E4 LD A,$0C      ; {  HL += 12;
+ $68E4 LD A,$0C      ; {HL += 12;
  $68E6 ADD A,L       ;
  $68E7 LD L,A        ; }
- $68E8 LD (HL),$80   ; {  *HL++ = input_KICK; // $800D
+ $68E8 LD (HL),$80   ; {*HL++ = input_KICK; // $800D
  $68EA INC L         ; }
- $68EB LD A,(HL)     ; {  *HL &= 3;     // $800E // likely a sprite direction
+ $68EB LD A,(HL)     ; {*HL &= 3;     // $800E // likely a sprite direction
  $68EC AND $03       ;
  $68EE LD (HL),A     ; }
- $68EF CALL $B2FC    ;   reset_outdoors();
- $68F2 JR $691A      ;   goto squash_stack_goto_main; %>
-; FALL THROUGH into enter_room.
+ $68EF CALL $B2FC    ; reset_outdoors();
+ $68F2 JR $691A      ; goto squash_stack_goto_main;
 
 ; The hero enters a room.
 ;
@@ -7308,11 +7307,10 @@ c$A3F3 LD A,($8217)  ; A = character_index;
 ; I:HL Pointer to location.
 @label=byte_A13E_is_zero
 c$A3F8 LD A,(IY+$00) ; A = IY[0]; // IY=$8000 // must be a character index
- $A3FB AND A         ; {if (A == 0) <% set_hero_target_location(location_002C);
- $A3FC JR NZ,$A404   ; return; %> // exit via
- $A3FE LD BC,$2C00   ;
+ $A3FB AND A         ; {if (A != 0) goto byte_A13E_common;
+ $A3FC JR NZ,$A404   ; }
+ $A3FE LD BC,$2C00   ; { set_hero_target_location(location_002C); // exit via
  $A401 JP $A33F      ; }
-; FALL THROUGH into byte_A13E_common.
 
 ; Common end of above two routines.
 ;
@@ -7516,12 +7514,11 @@ c$A4D3 LD A,($8217)  ; A = character_index;
 ; Sets a target location 0x002B. Seems to get hit around breakfasting time. If
 ; I nobble this it stops him sitting for breakfast.
 @label=byte_A13E_is_zero_anotherone
-c$A4D8 LD A,(IY+$00) ; {A = IY[0]; // must be a character index
- $A4DB AND A         ; }
- $A4DC JR NZ,$A4E4   ; {if (A == 0) <% set_hero_target_location(location_002B); return; %> // exit via
- $A4DE LD BC,$2B00   ;
+c$A4D8 LD A,(IY+$00) ; A = IY[0]; // must be a character index
+ $A4DB AND A         ; {if (A != 0) goto byte_A13E_anotherone_common;
+ $A4DC JR NZ,$A4E4   ; }
+ $A4DE LD BC,$2B00   ; { set_hero_target_location(location_002B); // exit via
  $A4E1 JP $A33F      ; }
-; FALL THROUGH into byte_A13E_anotherone_common.
 
 ; Common end of above two routines.
 ;
