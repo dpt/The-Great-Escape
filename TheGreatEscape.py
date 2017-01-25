@@ -1,6 +1,6 @@
 # SkoolKit extension for The Great Escape by Denton Designs.
 #
-# This file copyright (c) David Thomas, 2013-2016. <dave@davespace.co.uk>
+# This file copyright (c) David Thomas, 2013-2017. <dave@davespace.co.uk>
 #
 
 import string
