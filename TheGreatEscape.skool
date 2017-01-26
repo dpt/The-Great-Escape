@@ -10674,14 +10674,14 @@ c$B866 CALL $B89C    ; locate_vischar_or_itemstruct();
  $B87E LD A,(IY+$1E) ;   A = IY[0x1E];
  $B881 CP $03        ; {  if (A != 3) <%
  $B883 JR Z,$B88A    ; }
- $B885 CALL $E102    ;     masked_sprite_plotter_24_wide();
+ $B885 CALL $E102    ;     masked_sprite_plotter_24_wide_vischar();
  $B888 JR $B866      ;     goto plot_sprites; %>
-*$B88A CALL Z,$E2A2  ;   if (Z) masked_sprite_plotter_16_wide(); // odd to test for Z since it's always set
+*$B88A CALL Z,$E2A2  ;   if (Z) masked_sprite_plotter_16_wide_vischar(); // odd to test for Z since it's always set
  $B88D JR $B866      ;   goto plot_sprites; %>
 *$B88F CALL $DC41    ; else <% setup_item_plotting();
  $B892 JR NZ,$B866   ;   if (!Z) goto plot_sprites;
  $B894 CALL $B916    ;   render_mask_buffer();
- $B897 CALL $E29F    ;   masked_sprite_plotter_16_wide_case_1_searchlight();
+ $B897 CALL $E29F    ;   masked_sprite_plotter_16_wide_item();
  $B89A JR $B866      ;   goto plot_sprites; %>
 
 ; Locates a vischar or item to plot.
@@ -15234,8 +15234,8 @@ w$E0EC DEFW $E188    ; masked_sprite_plotter_24_wide_enable0
  $E0F8 DEFW $E1BF    ; masked_sprite_plotter_24_wide_enable6
  $E0FA DEFW $E290    ; masked_sprite_plotter_24_wide_enable7
 ; These two look different. Unused?
- $E0FC DEFW $E2A2    ; masked_sprite_plotter_16_wide
- $E0FE DEFW $E102    ; masked_sprite_plotter_24_wide
+ $E0FC DEFW $E2A2    ; masked_sprite_plotter_16_wide_vischar
+ $E0FE DEFW $E102    ; masked_sprite_plotter_24_wide_vischar
 
 ; Unused word?
 ;
@@ -15247,7 +15247,7 @@ u$E100 DEFW $0806    ; unused_E100
 ; Used by the routine at #R$B866.
 ;
 ; I:IY Pointer to visible character.
-@label=masked_sprite_plotter_24_wide
+@label=masked_sprite_plotter_24_wide_vischar
 c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  $E105 AND $07       ;
  $E107 CP $04        ;
@@ -15575,7 +15575,7 @@ c$E102 LD A,(IY+$18) ; {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
 ; no vischar passed).
 ;
 ; Used by the routine at #R$B866.
-@label=masked_sprite_plotter_16_wide_case_1_searchlight
+@label=masked_sprite_plotter_16_wide_item
 c$E29F XOR A         ; A = 0;
  $E2A0 JR $E2AC      ; goto masked_sprite_plotter_16_wide_left;
 
@@ -15587,7 +15587,7 @@ c$E29F XOR A         ; A = 0;
 ; destination.
 ;
 ; I:IY Pointer to visible character.
-@label=masked_sprite_plotter_16_wide
+@label=masked_sprite_plotter_16_wide_vischar
 c$E2A2 LD A,(IY+$18) ; {if ((A = IY[24] & 7) >= 4) goto masked_sprite_plotter_16_wide_right.
  $E2A5 AND $07       ;
  $E2A7 CP $04        ;
@@ -16018,8 +16018,8 @@ c$E420 LD A,$0F      ; {HL += 15;
  $E497 LD HL,$E0E0   ;   HL = masked_sprite_plotter_16_enables; %>
  $E49A JR $E4A8      ; else <%
 *$E49C LD A,E
- $E49D LD ($E121),A  ;   ($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide (shift right case)
- $E4A0 LD ($E1E2),A  ;   ($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide (shift left case)
+ $E49D LD ($E121),A  ;   ($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift right case)
+ $E4A0 LD ($E1E2),A  ;   ($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift left case)
  $E4A3 LD A,$04      ;   A = 4;
  $E4A5 LD HL,$E0EC   ;   HL = masked_sprite_plotter_24_enables; %>
 *$E4A8 PUSH HL
