@@ -13438,30 +13438,30 @@ b$CDAA DEFB $08,$00,$04,$87,$00,$87,$04,$04,$04 ; TL
 ;
 ; Array, 24 long, of pointers to data.
 @label=animations
-w$CDF2 DEFW $CF26
- $CDF4 DEFW $CF3A
- $CDF6 DEFW $CF4E
- $CDF8 DEFW $CF62
- $CDFA DEFW $CF96
- $CDFC DEFW $CFA2
- $CDFE DEFW $CFAE
- $CE00 DEFW $CFBA
- $CE02 DEFW $CF76
- $CE04 DEFW $CF7E
- $CE06 DEFW $CF86
- $CE08 DEFW $CF8E
- $CE0A DEFW $CFC6
- $CE0C DEFW $CFD2
- $CE0E DEFW $CFDE
- $CE10 DEFW $CFEA
- $CE12 DEFW $CFF6
- $CE14 DEFW $D002
- $CE16 DEFW $D00E
- $CE18 DEFW $D01A
- $CE1A DEFW $CF06
- $CE1C DEFW $CF0E
- $CE1E DEFW $CF16
- $CE20 DEFW $CF1E
+w$CDF2 DEFW $CF26 ; anim_walk_tl
+ $CDF4 DEFW $CF3A ; anim_walk_tr
+ $CDF6 DEFW $CF4E ; anim_walk_br
+ $CDF8 DEFW $CF62 ; anim_walk_bl
+ $CDFA DEFW $CF96 ; anim_turn_tl
+ $CDFC DEFW $CFA2 ; anim_turn_tr
+ $CDFE DEFW $CFAE ; anim_turn_br
+ $CE00 DEFW $CFBA ; anim_turn_bl
+ $CE02 DEFW $CF76 ; anim_wait_tl
+ $CE04 DEFW $CF7E ; anim_wait_tr
+ $CE06 DEFW $CF86 ; anim_wait_br
+ $CE08 DEFW $CF8E ; anim_wait_bl
+ $CE0A DEFW $CFC6 ; anim_crawl_tl
+ $CE0C DEFW $CFD2 ; anim_crawl_tr
+ $CE0E DEFW $CFDE ; anim_crawl_br
+ $CE10 DEFW $CFEA ; anim_crawl_bl
+ $CE12 DEFW $CFF6 ; anim_crawlturn_tl
+ $CE14 DEFW $D002 ; anim_crawlturn_tr
+ $CE16 DEFW $D00E ; anim_crawlturn_br
+ $CE18 DEFW $D01A ; anim_crawlturn_bl
+ $CE1A DEFW $CF06 ; anim_crawlwait_tl
+ $CE1C DEFW $CF0E ; anim_crawlwait_tr
+ $CE1E DEFW $CF16 ; anim_crawlwait_br
+ $CE20 DEFW $CF1E ; anim_crawlwait_bl
 
 ; Sprites: objects which can move.
 ;
@@ -13528,53 +13528,58 @@ b$CE22 DEFB $03,$16,$46,$DB,$72,$DB ; { 3, 22, &bitmap_stove, &mask_stove } // (
 ; Animations.
 ;
 ; Read by routine around $B64F (called_from_main_loop_9)
-@label=anim_A
+@label=anim_crawlwait_tl
 b$CF06 DEFB $01,$04,$04,$FF,$00,$00,$00,$0A
-@label=anim_B
+@label=anim_crawlwait_tr
  $CF0E DEFB $01,$05,$05,$FF,$00,$00,$00,$8A
-@label=anim_C
+@label=anim_crawlwait_br
  $CF16 DEFB $01,$06,$06,$FF,$00,$00,$00,$88
-@label=anim_D
+@label=anim_crawlwait_bl
  $CF1E DEFB $01,$07,$07,$FF,$00,$00,$00,$08
-@label=anim_E
+;
+@label=anim_walk_tl
  $CF26 DEFB $04,$00,$00,$02,$02,$00,$00,$00,$02,$00,$00,$01,$02,$00,$00,$02,$02,$00,$00,$03
-@label=anim_F
+@label=anim_walk_tr
  $CF3A DEFB $04,$01,$01,$03,$00,$02,$00,$80,$00,$02,$00,$81,$00,$02,$00,$82,$00,$02,$00,$83
-@label=anim_G
+@label=anim_walk_br
  $CF4E DEFB $04,$02,$02,$00,$FE,$00,$00,$04,$FE,$00,$00,$05,$FE,$00,$00,$06,$FE,$00,$00,$07
-@label=anim_H
+@label=anim_walk_bl
  $CF62 DEFB $04,$03,$03,$01,$00,$FE,$00,$84,$00,$FE,$00,$85,$00,$FE,$00,$86,$00,$FE,$00,$87
-@label=anim_I
+;
+@label=anim_wait_tl
  $CF76 DEFB $01,$00,$00,$FF,$00,$00,$00,$00
-@label=anim_J
+@label=anim_wait_tr
  $CF7E DEFB $01,$01,$01,$FF,$00,$00,$00,$80
-@label=anim_K
+@label=anim_wait_br
  $CF86 DEFB $01,$02,$02,$FF,$00,$00,$00,$04
-@label=anim_L
+@label=anim_wait_bl
  $CF8E DEFB $01,$03,$03,$FF,$00,$00,$00,$84
-@label=anim_M
+;
+@label=anim_turn_tl
  $CF96 DEFB $02,$00,$01,$FF,$00,$00,$00,$00,$00,$00,$00,$80
-@label=anim_N
+@label=anim_turn_tr
  $CFA2 DEFB $02,$01,$02,$FF,$00,$00,$00,$80,$00,$00,$00,$04
-@label=anim_O
+@label=anim_turn_br
  $CFAE DEFB $02,$02,$03,$FF,$00,$00,$00,$04,$00,$00,$00,$84
-@label=anim_P
+@label=anim_turn_bl
  $CFBA DEFB $02,$03,$00,$FF,$00,$00,$00,$84,$00,$00,$00,$00
-@label=anim_Q
+;
+@label=anim_crawl_tl
  $CFC6 DEFB $02,$04,$04,$02,$02,$00,$00,$0A,$02,$00,$00,$0B
-@label=anim_R
+@label=anim_crawl_tr
  $CFD2 DEFB $02,$05,$05,$03,$00,$02,$00,$8A,$00,$02,$00,$8B
-@label=anim_S
+@label=anim_crawl_br
  $CFDE DEFB $02,$06,$06,$00,$FE,$00,$00,$88,$FE,$00,$00,$89
-@label=anim_T
+@label=anim_crawl_bl
  $CFEA DEFB $02,$07,$07,$01,$00,$FE,$00,$08,$00,$FE,$00,$09
-@label=anim_U
+;
+@label=anim_crawlturn_tl
  $CFF6 DEFB $02,$04,$05,$FF,$00,$00,$00,$0A,$00,$00,$00,$8A
-@label=anim_V
+@label=anim_crawlturn_tr
  $D002 DEFB $02,$05,$06,$FF,$00,$00,$00,$8A,$00,$00,$00,$88
-@label=anim_W
+@label=anim_crawlturn_br
  $D00E DEFB $02,$06,$07,$FF,$00,$00,$00,$88,$00,$00,$00,$08
-@label=anim_X
+@label=anim_crawlturn_bl
  $D01A DEFB $02,$07,$04,$FF,$00,$00,$00,$08,$00,$00,$00,$0A
 
 ; Sprite bitmaps and masks.
