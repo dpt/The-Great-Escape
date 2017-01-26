@@ -1863,7 +1863,7 @@ c$6939 CALL $69C9    ; reset_nonplayer_visible_characters();
  $695E CALL $DB9E    ; mark_nearby_items();
  $6961 CALL $B5CE    ; called_from_main_loop_9();
  $6964 CALL $AAB2    ; move_map();
- $6967 JP $B866      ; locate_vischar_or_itemstruct_then_plot(); return;
+ $6967 JP $B866      ; plot_sprites(); return;
 @label=setup_crate
 *$696A LD HL,$69B7   ; HL = &movable_items[movable_item_CRATE];
  $696D LD A,$1C      ; A = character_28_CRATE;
@@ -5883,7 +5883,7 @@ c$9D7B CALL $9DCF    ; main_loop: for (;;) <% check_morale();
  $9DA2 CALL $AAB2    ;   move_map();
  $9DA5 CALL $7D48    ;   message_display();
  $9DA8 CALL $A09E    ;   ring_bell();
- $9DAB CALL $B866    ;   locate_vischar_or_itemstruct_then_plot();
+ $9DAB CALL $B866    ;   plot_sprites();
  $9DAE CALL $EED3    ;   plot_game_window();
  $9DB1 CALL $A09E    ;   ring_bell();
  $9DB4 LD A,($A146)  ; {  if (day_or_night != 0) nighttime();
@@ -10657,21 +10657,20 @@ c$B83B PUSH IY       ; {HL = IY;
  $B863 LD (HL),$1F   ; }
  $B865 RET           ; return;
 
-; Seems to locate things to plot, then invoke masked sprite plotter on those
-; things.
+; Plot vischars and items in order.
 ;
 ; Used by the routines at #R$6939 and #R$9D7B.
 ;
 ; .
 ;
+@label=plot_sprites
 ; This can return a vischar OR an itemstruct, but not both.
-@label=locate_vischar_or_itemstruct_then_plot
 c$B866 CALL $B89C    ; locate_vischar_or_itemstruct();
  $B869 RET NZ        ; if (!Z) return;
  $B86A BIT 6,A       ; {if ((A & (1<<6)) == 0) <% // mysteryflagconst874 'item found' flag
  $B86C JR NZ,$B88F   ; }
  $B86E CALL $E420    ;   setup_vischar_plotting();
- $B871 JR NZ,$B866   ;   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
+ $B871 JR NZ,$B866   ;   if (!Z) goto plot_sprites;
  $B873 CALL $B916    ;   render_mask_buffer();
  $B876 LD A,($81BD)  ; {  if (searchlight_state != searchlight_STATE_SEARCHING)
  $B879 CP $FF        ; searchlight_mask_test();
@@ -10680,14 +10679,14 @@ c$B866 CALL $B89C    ; locate_vischar_or_itemstruct();
  $B881 CP $03        ; {  if (A != 3) <%
  $B883 JR Z,$B88A    ; }
  $B885 CALL $E102    ;     masked_sprite_plotter_24_wide();
- $B888 JR $B866      ;     goto locate_vischar_or_itemstruct_then_plot; %>
+ $B888 JR $B866      ;     goto plot_sprites; %>
 *$B88A CALL Z,$E2A2  ;   if (Z) masked_sprite_plotter_16_wide(); // odd to test for Z since it's always set
- $B88D JR $B866      ;   goto locate_vischar_or_itemstruct_then_plot; %>
+ $B88D JR $B866      ;   goto plot_sprites; %>
 *$B88F CALL $DC41    ; else <% setup_item_plotting();
- $B892 JR NZ,$B866   ;   if (!Z) goto locate_vischar_or_itemstruct_then_plot;
+ $B892 JR NZ,$B866   ;   if (!Z) goto plot_sprites;
  $B894 CALL $B916    ;   render_mask_buffer();
  $B897 CALL $E29F    ;   masked_sprite_plotter_16_wide_case_1_searchlight();
- $B89A JR $B866      ;   goto locate_vischar_or_itemstruct_then_plot; %>
+ $B89A JR $B866      ;   goto plot_sprites; %>
 
 ; Locates a vischar or item to plot.
 ;
