@@ -1978,8 +1978,8 @@ c$69DC LD A,$FF
  $69ED LD B,A        ; }
  $69EE LD C,$00      ; {C = 0;
  $69F0 EXX           ; }
- $69F1 LD HL,$78D6   ; HLdash = &door_positions[0];
- $69F4 LD B,$7C      ; Bdash = 124; // length of door_positions
+ $69F1 LD HL,$78D6   ; HLdash = &doors[0];
+ $69F4 LD B,$7C      ; Bdash = 124; // length of doors[]
  $69F6 LD DE,$0004
 *$69F9 LD A,(HL)     ; {do <% if ((HLdash[0] & ~doorpos_FLAGS_MASK_DIRECTION) == B) <%
  $69FA EXX
@@ -2008,7 +2008,7 @@ c$69DC LD A,$FF
 ; O:HL Pointer to doorpos.
 ; O:DE Corrupted.
 @label=get_door
-c$6A12 LD C,A        ; {HL = &door_positions[(A & ~door_REVERSE) * 2]; // are they pairs of doors?
+c$6A12 LD C,A        ; {HL = &doors[(A & ~door_REVERSE) * 2]; // are they pairs of doors?
  $6A13 ADD A,A       ;
  $6A14 LD L,A        ;
  $6A15 LD H,$00      ;
@@ -3854,7 +3854,7 @@ w$783A DEFW $6844    ; 0x44, 0x68
 ; 62 pairs of four-byte structs (<- setup_doors)
 ; .
 ; #define BYTE0(room, direction) ((room << 2) | direction)
-@label=door_positions
+@label=doors
 b$78D6 DEFB $01,$B2,$8A,$06 ; { BYTE0(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // gates
 @label=door_positions_1
  $78DA DEFB $03,$B2,$8E,$06 ; { BYTE0(room_0_OUTDOORS,             3), 0xB2, 0x8E,  6 }, // gates
@@ -9590,9 +9590,9 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
 ; Interior doors are handled by another routine.
  $B1F8 AND A         ; {if (A) goto door_handling_interior; // exit via
  $B1F9 JP NZ,$B32D   ; }
-; Select start position in door_positions based on the direction the hero is
+; Select start position in doors[] based on the direction the hero is
 ; facing.
- $B1FC LD HL,$78D6   ; HL = &door_positions[0];
+ $B1FC LD HL,$78D6   ; HL = &doors[0];
  $B1FF LD E,(IY+$0E) ; E = IY[14]; // walk/crawl flag byte
  $B202 LD A,E        ; {if (E >= 2) HL = &door_position[1]; /* BOTTOM_RIGHT or BOTTOM_LEFT */
  $B203 CP $02        ;
@@ -9627,7 +9627,7 @@ c$B1F5 LD A,($68A0)  ; A = room_index;
  $B230 CALL $B1D4    ; is_door_locked();
  $B233 RET NZ        ; if (!Z) return; // door was locked - return nonzero?
  $B234 EXX
- $B235 LD A,(HL)     ; {IY[28] = (*HL >> 2) & 0x3F; // sampled HL=$792E (in door_positions[])
+ $B235 LD A,(HL)     ; {IY[28] = (*HL >> 2) & 0x3F; // sampled HL=$792E (in doors[])
  $B236 RRA           ;
  $B237 RRA           ;
  $B238 AND $3F       ;
@@ -12150,7 +12150,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C73F RRA           ;
  $C740 RRA           ;
  $C741 LD (DE),A     ; }
-; Stuff reading from door_positions.
+; Stuff reading from doors[].
  $C742 LD A,(HL)     ; {  if ((*HL & doorpos_FLAGS_MASK_DIRECTION) < 2) <% // sampled HL=$78FA,$794A,$78DA,$791E,$78E2,$790E,$796A,$790E,$791E,$7962,$791A
  $C743 AND $03       ;
  $C745 CP $02        ;
@@ -12841,7 +12841,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
 *$CAD9 INC (HL)      ;   (*HL)++; // likely target location
  $CADA POP AF
  $CADB CALL $6A12    ;   HL = get_door();
- $CADE LD A,(HL)     ; {  IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is door_positions[0] room mask shifted right 2
+ $CADE LD A,(HL)     ; {  IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is doors[0] room mask shifted right 2
  $CADF RRA           ;
  $CAE0 RRA           ;
  $CAE1 AND $3F       ;
