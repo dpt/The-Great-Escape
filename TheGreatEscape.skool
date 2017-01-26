@@ -5078,8 +5078,8 @@ b$8218 DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF ; #HTML[#UDGARRAY1,7,4,1;$8218-$821F
  $8578 DEFB $FF,$FF,$FF,$FF,$FF,$F3,$C1,$01 ; #HTML[#UDGARRAY1,7,4,1;$8578-$857F-8(exterior-tiles0-108)]
  $8580 DEFB $FE,$FE,$FE,$FE,$FE,$FC,$F0,$C0 ; #HTML[#UDGARRAY1,7,4,1;$8580-$8587-8(exterior-tiles0-109)]
  $8588 DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FE,$FE ; #HTML[#UDGARRAY1,7,4,1;$8588-$858F-8(exterior-tiles0-110)]
-; Exterior tiles set 1. 145 tiles. Looks like tiles for huts. (<- plot_tile)
-@label=exterior_tiles_1
+; Exterior tiles. 145 + 220 + 206 tiles. (<- plot_tile)
+@label=exterior_tiles
  $8590 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; #HTML[#UDGARRAY1,7,4,1;$8590-$8597-8(exterior-tiles1-000)]
  $8598 DEFB $80,$80,$80,$80,$80,$80,$80,$80 ; #HTML[#UDGARRAY1,7,4,1;$8598-$859F-8(exterior-tiles1-001)]
  $85A0 DEFB $FF,$F0,$00,$8C,$C3,$B0,$80,$C0 ; #HTML[#UDGARRAY1,7,4,1;$85A0-$85A7-8(exterior-tiles1-002)]
@@ -5225,9 +5225,6 @@ b$8218 DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF ; #HTML[#UDGARRAY1,7,4,1;$8218-$821F
  $8A00 DEFB $00,$C0,$F0,$FC,$3E,$0F,$C2,$F1 ; #HTML[#UDGARRAY1,7,4,1;$8A00-$8A07-8(exterior-tiles1-142)]
  $8A08 DEFB $FB,$37,$0F,$1C,$30,$00,$00,$40 ; #HTML[#UDGARRAY1,7,4,1;$8A08-$8A0F-8(exterior-tiles1-143)]
  $8A10 DEFB $C0,$C4,$00,$00,$20,$18,$00,$00 ; #HTML[#UDGARRAY1,7,4,1;$8A10-$8A17-8(exterior-tiles1-144)]
-; Exterior tiles set 2. 220 tiles. Looks like main building wall tiles. (<-
-; plot_tile)
-@label=exterior_tiles_2
  $8A18 DEFB $00,$01,$00,$30,$00,$02,$00,$00 ; #HTML[#UDGARRAY1,7,4,1;$8A18-$8A1F-8(exterior-tiles2-000)]
  $8A20 DEFB $04,$00,$00,$00,$80,$00,$18,$04 ; #HTML[#UDGARRAY1,7,4,1;$8A20-$8A27-8(exterior-tiles2-001)]
  $8A28 DEFB $02,$80,$00,$08,$04,$00,$60,$00 ; #HTML[#UDGARRAY1,7,4,1;$8A28-$8A2F-8(exterior-tiles2-002)]
@@ -5448,8 +5445,6 @@ b$8218 DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF ; #HTML[#UDGARRAY1,7,4,1;$8218-$821F
  $90E0 DEFB $23,$CF,$33,$4C,$53,$5C,$2F,$23 ; #HTML[#UDGARRAY1,7,4,1;$90E0-$90E7-8(exterior-tiles2-217)]
  $90E8 DEFB $D3,$D0,$B0,$B0,$B3,$B7,$B3,$CC ; #HTML[#UDGARRAY1,7,4,1;$90E8-$90EF-8(exterior-tiles2-218)]
  $90F0 DEFB $D3,$D4,$B6,$B7,$B7,$B4,$F0,$EC ; #HTML[#UDGARRAY1,7,4,1;$90F0-$90F7-8(exterior-tiles2-219)]
-; Exterior tiles set 3. 206 tiles. Looks like main building wall tiles.
-@label=exterior_tiles_3
  $90F8 DEFB $4C,$32,$C0,$20,$04,$03,$0C,$32 ; #HTML[#UDGARRAY1,7,4,1;$90F8-$90FF-8(exterior-tiles3-000)]
  $9100 DEFB $18,$3C,$78,$B4,$E0,$CC,$A3,$44 ; #HTML[#UDGARRAY1,7,4,1;$9100-$9107-8(exterior-tiles3-001)]
  $9108 DEFB $40,$08,$08,$00,$00,$00,$20,$C0 ; #HTML[#UDGARRAY1,7,4,1;$9108-$910F-8(exterior-tiles3-002)]
@@ -8171,15 +8166,15 @@ c$A9A0 CALL $A9AD    ; plot_tile();
 c$A9AD EXX
  $A9AE EX AF,AF'
  $A9AF LD A,(HL)     ; Adash = *HLdash; // get supertile index
- $A9B0 LD BC,$8590   ; BCdash = &exterior_tiles_1[0];
+ $A9B0 LD BC,$8590   ; BCdash = &exterior_tiles[0];
  $A9B3 CP $2D        ; {if (Adash < 45) goto chosen;
  $A9B5 JR C,$A9C5    ; }
- $A9B7 LD BC,$8A18   ; BCdash = &exterior_tiles_2[0];
+ $A9B7 LD BC,$8A18   ; BCdash = &exterior_tiles[145]; // set 2
  $A9BA CP $8B        ; {if (Adash < 139 || Adash >= 204) goto chosen;
  $A9BC JR C,$A9C5    ;
  $A9BE CP $CC        ;
  $A9C0 JR NC,$A9C5   ; }
- $A9C2 LD BC,$90F8   ; BCdash = &exterior_tiles_3[0];
+ $A9C2 LD BC,$90F8   ; BCdash = &exterior_tiles[145 + 220]; // set 3
 @label=plot_tile_chosen
 *$A9C5 PUSH HL       ; chosen: PUSH HLdash;
  $A9C6 EX AF,AF'
@@ -11461,15 +11456,15 @@ c$BCAA EX AF,AF'
  $BCD4 ADD A,L       ;
  $BCD5 LD L,A        ;
  $BCD6 LD A,(HL)     ; }
- $BCD7 LD BC,$8590   ;   BC = &exterior_tiles_1[0];
+ $BCD7 LD BC,$8590   ;   BC = &exterior_tiles[0];
  $BCDA CP $2D        ; {  if (Adash >= 45) <%
  $BCDC JR C,$BCEC    ; }
- $BCDE LD BC,$8A18   ;     BC = &exterior_tiles_2[0];
+ $BCDE LD BC,$8A18   ;     BC = &exterior_tiles[145];
  $BCE1 CP $8B        ; {    if (Adash >= 139 && Adash < 204) <%
  $BCE3 JR C,$BCEC    ;
  $BCE5 CP $CC        ;
  $BCE7 JR NC,$BCEC   ; }
- $BCE9 LD BC,$90F8   ;       BC = &exterior_tiles_3[0]; %> %>
+ $BCE9 LD BC,$90F8   ;       BC = &exterior_tiles[145 + 220]; %> %>
 *$BCEC EX AF,AF'
  $BCED RET           ;   return; %>
 
