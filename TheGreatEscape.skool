@@ -6080,6 +6080,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
 @nowarn
 *$9ED0 LD HL,$800E   ; {else <% $800E = A & vischar_DIRECTION_MASK; // set direction
 ; LD A,(HL) missing here?
+; x86 version moves zero into $800E - has no AND - is that just hardcoding the bug?
  $9ED3 AND $03       ;
  $9ED5 LD (HL),A     ; }
  $9ED6 DEC L         ; {  $800D = input_KICK;
@@ -8020,6 +8021,8 @@ c$A8E7 LD DE,$F0F8   ; DE = &tile_buf[0]; // visible tiles array
 
 ; Plotting vertical tiles (common part).
 ;
+; The comments here assume banked registers on entry.
+;
 ; Used by the routines at #R$A8A2 and #R$A8CF.
 @label=plot_vertical_tiles_common
 c$A8F4 AND $03       ; A &= 3;
@@ -8130,7 +8133,7 @@ c$A8F4 AND $03       ; A &= 3;
  $A984 LD A,($81BC)  ; {A = ((map_position >> 8) & 3) + 1;
  $A987 AND $03       ;
  $A989 INC A         ; }
- $A98A LD BC,$0018   ; BC = 24;
+ $A98A LD BC,$0018   ; BC = 24; // stride
  $A98D EX DE,HL
 *$A98E PUSH AF       ; do <%
  $A98F LD A,(DE)     ;   A = *DE;
@@ -8152,7 +8155,7 @@ c$A8F4 AND $03       ; A &= 3;
 @label=plot_tile_then_advance
 c$A9A0 CALL $A9AD    ; plot_tile();
  $A9A3 EXX
- $A9A4 LD A,E        ; {DEdash += 0xBF;
+ $A9A4 LD A,E        ; {DEdash += 0xBF; // 0xBF = 24 * 8 - 1
  $A9A5 ADD A,$BF     ;
  $A9A7 LD E,A        ;
  $A9A8 JR NC,$A9AB   ;
@@ -10117,7 +10120,7 @@ c$B4B8 PUSH AF
  $B4C6 RES 7,(HL)    ;   *HL &= ~door_LOCKED; /* Unlock. */
  $B4C8 CALL $A0E9    ;   increase_morale_by_10_score_by_50();
  $B4CB LD B,$06      ;   B = message_IT_IS_OPEN; %>
-*$B4CD JP $7D15      ; queue_message_for_display(B);
+*$B4CD JP $7D15      ; queue_message_for_display(B); // exit via
 
 ; Return the door in range of the hero.
 ;
@@ -11000,9 +11003,12 @@ c$B916 LD HL,$8100   ; {memset(mask_buffer, 0xFF, 0xA0);
  $BA4A ADD HL,DE     ;   HL += DE;
  $BA4B POP DE
  $BA4C INC HL        ;   HL++; // iterations
+;
+; Skip the initial clipped mask bytes.
+;
 *$BA4D LD A,(DE)     ;   do <% A = *DE; // DE -> $E560 upwards (in exterior_mask_data)
  $BA4E AND A         ; {    if (A >= 128) <%
- $BA4F JP P,$BA60    ; }
+ $BA4F JP P,$BA60    ; }  // jump if sign bit is set
  $BA52 AND $7F       ;       A &= 0x7F;
  $BA54 INC DE        ;       DE++;
  $BA55 LD C,A        ; {      HL -= A;
@@ -12217,6 +12223,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C790 RET Z         ; }
  $C791 BIT 7,A       ; if ((A & (1<<7)) != 0) ...
  $C793 INC HL        ; HL++;       // interleaved
+; sampled HL = $7618, $762D, $7634, $7657, $766C, $76AB, $76B2, $76B9, $76C0, $76C7 => final byte of charstruct
  $C794 JR NZ,$C798   ; ... goto exit;
  $C796 INC (HL)      ; (*HL)++;
  $C797 RET           ; return;
@@ -12989,6 +12996,7 @@ c$CB75 LD C,A        ; {BC = A; return;
 ;
 ; I:A  Index.
 ; O:DE Element.
+; O:HL $7738 + A*2 + 1
 @label=element_A_of_table_7738
 c$CB79 ADD A,A       ; {DE = table_7738[A];
  $CB7A LD E,A        ;
@@ -14427,8 +14435,8 @@ c$DC41 AND $3F       ; A &= 0x3F;
  $DC6A LDIR          ; }
  $DC6C CALL $DD02    ; item_visible();
  $DC6F RET NZ        ; if (!Z) return; /* invisible */
- $DC70 PUSH BC
- $DC71 PUSH DE
+ $DC70 PUSH BC       ; // clipped width
+ $DC71 PUSH DE       ; // clipped height
  $DC72 LD A,E        ; A = E;
  $DC73 LD ($E2C2),A  ; ($E2C1 + 1) = A; // self modify masked_sprite_plotter_16_wide_left
  $DC76 LD A,B        ; A = B;
@@ -16457,38 +16465,41 @@ b$EA7C DEFB $1B,$7B,$7F,$F1,$F3,$36,$28 ; $1B, { $7B, $7F, $F1, $F3 }, { $36, $2
 
 ; Pointers to run-length encoded mask data.
 ;
+; The first half is outdoor masks, the second is indoor masks.
+;
 ; 30 pointers to byte arrays.
 @label=mask_pointers
-w$EBC5 DEFW $E55F
- $EBC7 DEFW $E5FF
- $EBC9 DEFW $E61E
- $EBCB DEFW $E6CA
- $EBCD DEFW $E74B
- $EBCF DEFW $E758
- $EBD1 DEFW $E77F
- $EBD3 DEFW $E796
- $EBD5 DEFW $E7AF
- $EBD7 DEFW $E85C
- $EBD9 DEFW $E8A3
- $EBDB DEFW $E8F0
- $EBDD DEFW $E940
- $EBDF DEFW $E972
- $EBE1 DEFW $E92F
- $EBE3 DEFW $EA67
- $EBE5 DEFW $EA53
- $EBE7 DEFW $EA5D
- $EBE9 DEFW $E99A
- $EBEB DEFW $E99F
- $EBED DEFW $E9B9
- $EBEF DEFW $E9C6
- $EBF1 DEFW $E9CB
- $EBF3 DEFW $E9E6
- $EBF5 DEFW $E9F5
- $EBF7 DEFW $EA0E
- $EBF9 DEFW $EA2B
- $EBFB DEFW $EA35
- $EBFD DEFW $EA43
- $EBFF DEFW $EA4A
+w$EBC5 DEFW $E55F ; exterior_mask
+ $EBC7 DEFW $E5FF ; exterior_mask
+ $EBC9 DEFW $E61E ; exterior_mask
+ $EBCB DEFW $E6CA ; exterior_mask
+ $EBCD DEFW $E74B ; exterior_mask
+ $EBCF DEFW $E758 ; exterior_mask
+ $EBD1 DEFW $E77F ; exterior_mask
+ $EBD3 DEFW $E796 ; exterior_mask
+ $EBD5 DEFW $E7AF ; exterior_mask
+ $EBD7 DEFW $E85C ; exterior_mask
+ $EBD9 DEFW $E8A3 ; exterior_mask
+ $EBDB DEFW $E8F0 ; exterior_mask
+ $EBDD DEFW $E940 ; exterior_mask
+ $EBDF DEFW $E972 ; exterior_mask
+ $EBE1 DEFW $E92F ; exterior_mask
+;
+ $EBE3 DEFW $EA67 ; interior_mask
+ $EBE5 DEFW $EA53 ; interior_mask
+ $EBE7 DEFW $EA5D ; interior_mask
+ $EBE9 DEFW $E99A ; interior_mask
+ $EBEB DEFW $E99F ; interior_mask
+ $EBED DEFW $E9B9 ; interior_mask
+ $EBEF DEFW $E9C6 ; interior_mask
+ $EBF1 DEFW $E9CB ; interior_mask
+ $EBF3 DEFW $E9E6 ; interior_mask
+ $EBF5 DEFW $E9F5 ; interior_mask
+ $EBF7 DEFW $EA0E ; interior_mask
+ $EBF9 DEFW $EA2B ; interior_mask
+ $EBFB DEFW $EA35 ; interior_mask
+ $EBFD DEFW $EA43 ; interior_mask
+ $EBFF DEFW $EA4A ; interior_mask
 
 ; mask_t structs for the exterior scene.
 ;

@@ -24,7 +24,7 @@ You can read the disassembly output from SkoolKit [here](http://dpt.github.com/T
 
 You can also disassemble and reassemble the game to a .TAP file which you can load into an emulator. (e.g. you can alter the game and fix 30-year-old bugs!)
 
-Other SkoolKit disassemblies are normally written in a one comment per line style but I've chosen to attempt to reconstruct the logic of the original code as pseudo-C-syle control structures. I've done this to ease the conversion to C. Wise decision? Time will tell.
+Other SkoolKit disassemblies are normally written in a one comment per line style but I've chosen to attempt to reconstruct the logic of the original code as pseudo-C-style control structures. I've done this to ease the conversion to C. Wise decision? Time will tell.
 
 Building the Cross-Referenced Disassembly
 -----------------------------------------
@@ -84,10 +84,10 @@ Building the Assembly and .tap
 
 Any of the above steps will invoke its prior step automatically.
 
-Currrent State of the Project
------------------------------
+Current State of the Project
+----------------------------
 
-Work on reverse engineering progresses but slowly as ths is a limited spare time project for me. (I've been chipping away at it since 2012...)
+Work on reverse engineering progresses but slowly as this is a limited spare time (late night) project for me. (I've been chipping away at it since 2012...)
 
 I switch between the reimplemented C version and the disassembly as while a disassembled function may make sense in of itself, transforming it into functioning C forces a great deal more detail to be thought about.
 
