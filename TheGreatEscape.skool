@@ -5875,7 +5875,7 @@ c$9D7B CALL $9DCF    ; main_loop: for (;;) <% check_morale();
  $9D8A CALL $BB98    ;   restore_tiles();
  $9D8D CALL $C6A0    ;   move_characters();
  $9D90 CALL $C892    ;   follow_suspicious_character();
- $9D93 CALL $C47E    ;   purge_visible_characters();
+ $9D93 CALL $C47E    ;   purge_invisible_characters();
  $9D96 CALL $C41C    ;   spawn_characters();
  $9D99 CALL $DB9E    ;   mark_nearby_items();
  $9D9C CALL $A09E    ;   ring_bell();
@@ -11641,7 +11641,7 @@ c$C41C LD HL,($81BB) ; HL = map_position;
 ; Run through all visible characters, resetting them if they're off-screen.
 ;
 ; Used by the routine at #R$9D7B.
-@label=purge_visible_characters
+@label=purge_invisible_characters
 c$C47E LD HL,($81BB) ; HL = &map_position;
  $C481 LD A,L        ; {E = MAX(L - 9, 0);
  $C482 SUB $09       ;
