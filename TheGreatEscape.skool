@@ -2006,7 +2006,7 @@ c$69DC LD A,$FF
 ; I:A  Index of door + lock flag in bit 7.
 ; O:HL Pointer to doorpos.
 ; O:DE Corrupted.
-@label=get_door_position
+@label=get_door
 c$6A12 LD C,A        ; {HL = &door_positions[(A * 2) & 0xFF]; // are they pairs of doors?
  $6A13 ADD A,A       ;
  $6A14 LD L,A        ;
@@ -9838,7 +9838,7 @@ c$B32D LD HL,$81D6   ; HL = &interior_doors;
  $B333 RET Z         ; }
  $B334 EXX
  $B335 LD ($68A1),A  ;   current_door = A;
- $B338 CALL $6A12    ;   get_door_position();
+ $B338 CALL $6A12    ;   HL = get_door();
  $B33B LD A,(HL)     ;   A = *HLdash;
  $B33C LD C,A        ;   Cdash = A;
  $B33D AND $03       ; {  Bdash = A & doorpos_FLAGS_MASK_DIRECTION;
@@ -10133,7 +10133,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 *$B4DE LD A,(HL)     ; {do <% A = *HL & ~door_LOCKED;
  $B4DF AND $7F       ; }
  $B4E1 EXX
- $B4E2 CALL $6A12    ;   get_door_position();
+ $B4E2 CALL $6A12    ;   HL = get_door();
  $B4E5 PUSH HL
  $B4E6 CALL $B252    ;   door_in_range();
  $B4E9 POP HL
@@ -10174,7 +10174,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
  $B51B RET           ; return;
 *$B51C LD A,(DE)     ; found: A = *DE;
  $B51D EXX
- $B51E CALL $6A12    ; get_door_position();
+ $B51E CALL $6A12    ; HL = get_door();
  $B521 INC HL        ; HL++;
  $B522 EX DE,HL
 ; Range check pattern (-2..+3).
@@ -12006,7 +12006,7 @@ c$C651 LD A,(HL)     ; A = *HL;
  $C682 BIT 7,(HL)    ; {    if (*HL & (1<<7)) A ^= 0x80; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general
  $C684 JR Z,$C688    ;
  $C686 XOR $80       ; }
-*$C688 CALL $6A12    ;     get_door_position();
+*$C688 CALL $6A12    ;     HL = get_door();
  $C68B INC HL        ;     HL++;
  $C68C LD A,$80      ;     A = 0x80;
  $C68E RET           ;     return; %>
@@ -12839,7 +12839,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CAD8 DEC (HL)      ; }
 *$CAD9 INC (HL)      ;   (*HL)++; // likely target location
  $CADA POP AF
- $CADB CALL $6A12    ;   get_door_position(); // door related
+ $CADB CALL $6A12    ;   HL = get_door();
  $CADE LD A,(HL)     ; {  IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is door_positions[0] room mask shifted right 2
  $CADF RRA           ;
  $CAE0 RRA           ;
