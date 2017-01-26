@@ -5961,7 +5961,7 @@ c$9E07 LD HL,($A13A) ; {if (in_solitary || morale_exhausted) return;
 ; Postpone automatic control for 31 turns.
  $9E15 LD HL,$A139   ; {  automatic_player_counter = 31;
  $9E18 LD (HL),$1F   ; }
- $9E1A CP $01        ; {  if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_a_lock; // exit via
+ $9E1A CP $01        ; {  if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_lock; // exit via
  $9E1C JP Z,$9E98    ; }
  $9E1F JP $9EB2      ;   else goto cutting_wire; %> // exit via
 *$9E22 CALL $F075    ; A = input_routine(); // lives at same address as static_tiles_plot_direction
@@ -6033,7 +6033,7 @@ c$9E07 LD HL,($A13A) ; {if (in_solitary || morale_exhausted) return;
 ; Locks the player out until the lock is picked.
 ;
 ; Used by the routine at #R$9E07.
-@label=picking_a_lock
+@label=picking_lock
 c$9E98 LD HL,$A12F   ; {if (player_locked_out_until != game_counter) return;
  $9E9B LD A,($A145)  ;
  $9E9E CP (HL)       ;
@@ -6542,7 +6542,7 @@ c$A11D LD A,C        ; {delay = C; // Self-modify delay loop at $A126.
 ;
 ; Counts 00..FF then wraps.
 ; .
-; Read-only by main_loop, picking_a_lock, cutting_wire, action_wiresnips,
+; Read-only by main_loop, picking_lock, cutting_wire, action_wiresnips,
 ; action_lockpick.
 ; .
 ; Write/read-write by wave_morale_flag.
@@ -6696,7 +6696,7 @@ g$A141 DEFW $5002    ; moraleflag_screen_address
 
 ; Address of door (in locked_doors[]) in which bit 7 is cleared when picked.
 ;
-; Read-only by picking_a_lock.
+; Read-only by picking_lock.
 ; .
 ; Write/read-write by action_lockpick.
 @label=ptr_to_door_being_lockpicked
@@ -6706,7 +6706,7 @@ g$A143 DEFW $0000    ; ptr_to_door_being_lockpicked
 ;
 ; e.g. when picking a lock or cutting wire.
 ; .
-; Read-only by picking_a_lock, cutting_wire.
+; Read-only by picking_lock, cutting_wire.
 ; .
 ; Write/read-write by action_wiresnips, action_lockpick.
 @label=player_locked_out_until
