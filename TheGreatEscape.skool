@@ -430,6 +430,7 @@
 ;
 ; door_REVERSE                                  = 1 << 7,       ; used to reverse door transitions
 ; door_LOCKED                                   = 1 << 7,       ; used to lock doors in locked_doors[]
+; door_NONE                                     = $FF
 ;
 ; characterstruct_FLAG_DISABLED                 = 1 << 6,       ; this disables the character
 ; characterstruct_BYTE0_MASK                    = $1F,
@@ -1967,7 +1968,7 @@ c$69C9 LD HL,$8020   ; HL = $8020; // iterate over non-player characters
 c$69DC LD A,$FF
  $69DE LD DE,$81D9   ; DE = interior_doors + 3;
  $69E1 LD B,$04      ; B = 4;
-*$69E3 LD (DE),A     ; {do <% *DE-- = 0xFF;
+*$69E3 LD (DE),A     ; {do <% *DE-- = door_NONE;
  $69E4 DEC DE        ; }
  $69E5 DJNZ $69E3    ; %> while (--B);
  $69E7 INC DE        ; DE++; // DE = &interior_doors[0];
@@ -9834,7 +9835,7 @@ c$B2FC LD HL,$8000   ; HL = $8000;
 @label=door_handling_interior
 c$B32D LD HL,$81D6   ; HL = &interior_doors;
 *$B330 LD A,(HL)     ; for (;;) <% A = *HL;
- $B331 CP $FF        ; {  if (A == 255) return; /* Reached end of list. */
+ $B331 CP $FF        ; {  if (A == door_NONE) return; /* Reached end of list. */
  $B333 RET Z         ; }
  $B334 EXX
  $B335 LD ($68A1),A  ;   current_door = A;
@@ -10121,7 +10122,7 @@ c$B4B8 PUSH AF
 ; O:HL Pointer to door in locked_doors.
 ; O:F  Returns NZ if door not found.
 @label=get_nearest_door
-c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
+c$B4D0 LD A,($68A0)  ; {if (room_index == room_0_OUTDOORS) goto outdoors; else goto indoors;
  $B4D3 AND A         ;
  $B4D4 JR Z,$B4D9    ;
  $B4D6 JP $B4FD      ; }
@@ -11996,7 +11997,7 @@ c$C651 LD A,(HL)     ; A = *HL;
  $C673 ADD HL,DE     ;   HL += DE;
  $C674 EX DE,HL
  $C675 LD A,(DE)     ;   A = *DE;
- $C676 CP $FF        ;   if (A == 0xFF) ...
+ $C676 CP $FF        ;   if (A == door_NONE) ...
  $C678 POP HL        ;   // interleaved
  $C679 JR Z,$C69D    ;   ... goto return_255;
  $C67B AND $7F       ;   A &= ~door_LOCKED;
