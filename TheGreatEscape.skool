@@ -436,7 +436,6 @@
 ; characterstruct_BYTE6_MASK_LO                 = $07,
 ;
 ; doorpos_FLAGS_MASK_DIRECTION                  = $03,          ; up/down or direction field?
-; doorpos_FLAGS_MASK_ROOM                       = $FC,
 ;
 ; searchlight_STATE_CAUGHT                      = $1F,
 ; searchlight_STATE_SEARCHING                   = $FF,          ; hunting for hero
@@ -12144,7 +12143,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C739 DEC DE        ; {  DE -= 2; // DE -> charstr->room
  $C73A DEC DE        ; }
  $C73B DEC HL        ;   HL--; // HL -> doorpos
- $C73C LD A,(HL)     ; {  *DE = (*HL & doorpos_FLAGS_MASK_ROOM) >> 2; // extract room field
+ $C73C LD A,(HL)     ; {  *DE = (*HL & ~doorpos_FLAGS_MASK_DIRECTION) >> 2; // extract room field
  $C73D AND $FC       ;
  $C73F RRA           ;
  $C740 RRA           ;
