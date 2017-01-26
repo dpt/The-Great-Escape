@@ -8241,7 +8241,7 @@ c$AA05 LD HL,$81BB   ; HL = &map_position;
  $AA15 LDDR
  $AA17 LD HL,$FF4F   ; HL = &window_buf[0];
  $AA1A LD DE,$FF50   ; DE = &window_buf[1];
- $AA1D LD BC,$0CC0   ; BC = window_buf_length;
+ $AA1D LD BC,$0CC0   ; BC = window_buf_length; // Bug: One byte too long.
  $AA20 LDDR
  $AA22 CALL $A8E7    ; plot_leftmost_tiles();
  $AA25 RET           ; return;
