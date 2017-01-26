@@ -428,7 +428,8 @@
 ; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; unknown
 ; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
 ;
-; door_LOCKED                                   = 1 << 7,
+; door_REVERSE                                  = 1 << 7,       ; used to reverse door transitions
+; door_LOCKED                                   = 1 << 7,       ; used to lock doors in locked_doors[]
 ;
 ; characterstruct_FLAG_DISABLED                 = 1 << 6,       ; this disables the character
 ; characterstruct_BYTE0_MASK                    = $1F,
@@ -1979,18 +1980,18 @@ c$69DC LD A,$FF
  $69F1 LD HL,$78D6   ; HLdash = &door_positions[0];
  $69F4 LD B,$7C      ; Bdash = 124; // length of door_positions
  $69F6 LD DE,$0004
-*$69F9 LD A,(HL)     ; {do <% if (HLdash[0] & 0xFC == B) <%
+*$69F9 LD A,(HL)     ; {do <% if ((HLdash[0] & ~doorpos_FLAGS_MASK_DIRECTION) == B) <%
  $69FA EXX
  $69FB AND $FC       ;
  $69FD CP B          ;
  $69FE JR NZ,$6A05   ; }
- $6A00 LD A,C        ; {    *DE++ = C ^ 0x80; %>
+ $6A00 LD A,C        ; {    *DE++ = C ^ door_REVERSE; %>
  $6A01 XOR $80       ;
  $6A03 LD (DE),A     ;
  $6A04 INC DE        ; }
-*$6A05 LD A,C        ; {  C ^= 0x80;
+*$6A05 LD A,C        ; {  C ^= door_REVERSE;
  $6A06 XOR $80       ; }
- $6A08 JP M,$6A0C    ; {  if (C >= 0) C++; // increment every two stops?
+ $6A08 JP M,$6A0C    ; {  if (C < door_REVERSE) C++; // increment every two stops?
  $6A0B INC A         ;
 *$6A0C LD C,A        ;
  $6A0D EXX           ; }
@@ -2006,7 +2007,7 @@ c$69DC LD A,$FF
 ; O:HL Pointer to doorpos.
 ; O:DE Corrupted.
 @label=get_door
-c$6A12 LD C,A        ; {HL = &door_positions[(A * 2) & 0xFF]; // are they pairs of doors?
+c$6A12 LD C,A        ; {HL = &door_positions[(A & ~door_REVERSE) * 2]; // are they pairs of doors?
  $6A13 ADD A,A       ;
  $6A14 LD L,A        ;
  $6A15 LD H,$00      ;
@@ -2014,7 +2015,7 @@ c$6A12 LD C,A        ; {HL = &door_positions[(A * 2) & 0xFF]; // are they pairs 
  $6A18 ADD HL,HL     ;
  $6A19 LD DE,$78D6   ;
  $6A1C ADD HL,DE     ; }
- $6A1D BIT 7,C       ; {if (A & (1<<7)) HL += 4; // if locked
+ $6A1D BIT 7,C       ; {if (A & door_REVERSE) HL += 4; // if locked
  $6A1F RET Z         ;
  $6A20 LD A,L        ;
  $6A21 ADD A,$04     ;
@@ -9557,7 +9558,7 @@ c$B1C7 LD B,$00      ; B = 0;
 ;
 ; O:F Z set if door open.
 @label=is_door_locked
-c$B1D4 LD E,$7F      ; {C = current_door & ~door_LOCKED;
+c$B1D4 LD E,$7F      ; {C = current_door & ~door_LOCKED; // probably door_REVERSE
  $B1D6 LD A,($68A1)  ;
  $B1D9 AND E         ;
  $B1DA LD C,A        ; }
@@ -9875,7 +9876,7 @@ c$B32D LD HL,$81D6   ; HL = &interior_doors;
  $B36C AND $3F       ;
  $B36E LD (IY+$1C),A ; }
  $B371 INC HL        ;   HLdash++;
- $B372 LD A,($68A1)  ; {  if (current_door & door_LOCKED) <% HLdash -= 8; %>
+ $B372 LD A,($68A1)  ; {  if (current_door & door_REVERSE) <% HLdash -= 8; %>
  $B375 BIT 7,A       ;
  $B377 JR Z,$B380    ;
  $B379 LD A,L        ;
@@ -10162,7 +10163,7 @@ c$B4D0 LD A,($68A0)  ; {if (room_index == 0) goto outdoors; else goto indoors;
 *$B509 LD A,(DE)     ;   for (;;) <% A = *DE;
  $B50A CP $FF        ; {    if (A != door_NONE) <% // door_NONE => end of list
  $B50C JR Z,$B516    ; }
- $B50E AND $7F       ; {      if ((A & ~door_LOCKED) == C) goto found;
+ $B50E AND $7F       ; {      if ((A & ~door_REVERSE) == C) goto found;
  $B510 CP C          ;
  $B511 JR Z,$B51C    ; }
  $B513 INC DE        ; {      DE++; %> %>
@@ -11998,11 +11999,11 @@ c$C651 LD A,(HL)     ; A = *HL;
  $C676 CP $FF        ;   if (A == 0xFF) ...
  $C678 POP HL        ;   // interleaved
  $C679 JR Z,$C69D    ;   ... goto return_255;
- $C67B AND $7F       ;   A &= 0x7F;
+ $C67B AND $7F       ;   A &= ~door_LOCKED;
  $C67D CP $28        ; {  if (A < 40) <%
  $C67F JR NC,$C68F   ; }
  $C681 LD A,(DE)     ;     A = *DE;
- $C682 BIT 7,(HL)    ; {    if (*HL & (1<<7)) A ^= 0x80; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general
+ $C682 BIT 7,(HL)    ; {    if (*HL & vischar_BYTE2_BIT7) A ^= door_LOCKED; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general
  $C684 JR Z,$C688    ;
  $C686 XOR $80       ; }
 *$C688 CALL $6A12    ;     HL = get_door();
@@ -12825,7 +12826,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CAC6 JR NC,$CAC9   ;
  $CAC8 INC D         ; }
 *$CAC9 LD A,(DE)     ;   A = *DE;
- $CACA BIT 7,(HL)    ; {  if (*HL & vischar_BYTE2_BIT7) A ^= 0x80;
+ $CACA BIT 7,(HL)    ; {  if (*HL & vischar_BYTE2_BIT7) A ^= door_REVERSE;
  $CACC JR Z,$CAD0    ;
  $CACE XOR $80       ; }
 *$CAD0 PUSH AF
