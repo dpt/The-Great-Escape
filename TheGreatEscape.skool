@@ -419,7 +419,8 @@
 ; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
 ;
 ; ; $800E, $802E, $804E, ...
-; vischar_BYTE14_CRAWL                          = 1 << 2,
+; vischar_DIRECTION_MASK                        = $03,
+; vischar_DIRECTION_CRAWL                       = 1 << 2,
 ;
 ; itemstruct_ITEM_MASK                          = $0F,
 ; itemstruct_ITEM_FLAG_POISONED                 = 1 << 5,
@@ -1789,7 +1790,7 @@ c$68A2 EX DE,HL
  $68E7 LD L,A        ; }
  $68E8 LD (HL),$80   ; {*HL++ = input_KICK; // $800D
  $68EA INC L         ; }
- $68EB LD A,(HL)     ; {*HL &= 3;     // $800E // likely a sprite direction
+ $68EB LD A,(HL)     ; {*HL &= vischar_DIRECTION_MASK; // $800E // likely a sprite direction
  $68EC AND $03       ;
  $68EE LD (HL),A     ; }
  $68EF CALL $B2FC    ; reset_outdoors();
@@ -1831,16 +1832,19 @@ c$691A LD SP,$FFFF   ; SP = $FFFF;
 c$6920 LD HL,$800D   ; HL = $800D;
  $6923 LD (HL),$80   ; {*HL++ = input_KICK;
  $6925 INC L         ; }
+; vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly
+; anywhere else so it must be an offset into byte_CDAA[].
+;
 ; When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl
 ; flag appropriately.
  $6926 LD A,($68A0)  ; {if (room_index >= room_29_SECOND_TUNNEL_START) <%
  $6929 CP $1D        ;
  $692B JR C,$6936    ; }
- $692D SET 2,(HL)    ;   *HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag
+ $692D SET 2,(HL)    ;   *HL |= vischar_DIRECTION_CRAWL; // $800E, set crawl flag
  $692F LD HL,$CE2E   ; {  $8015 = &sprite_prisoner; %>
  $6932 LD ($8015),HL ; }
  $6935 RET           ; else <%
-*$6936 RES 2,(HL)    ;   *HL &= ~vischar_BYTE14_CRAWL; %> // clear crawl flag
+*$6936 RES 2,(HL)    ;   *HL &= ~vischar_DIRECTION_CRAWL; %> // clear crawl flag
  $6938 RET           ; return;
 
 ; Setup movable items.
@@ -6058,7 +6062,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
  $9EBB CP $04        ; {  if (A < 4)
  $9EBD RET NC        ; }
 @nowarn
- $9EBE LD A,($800E)  ; {$800D = cutting_wire_new_inputs[$800E & 3]; // change direction
+ $9EBE LD A,($800E)  ; {$800D = cutting_wire_new_inputs[$800E & vischar_DIRECTION_MASK]; // change direction
 @nowarn
  $9EC1 LD HL,$9EE0   ;
  $9EC4 AND $03       ;
@@ -6074,7 +6078,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
 ; .
 ; Bug: A is always zero here, so $800E is always set to zero.
 @nowarn
-*$9ED0 LD HL,$800E   ; {else <% $800E = A & 3; // set direction
+*$9ED0 LD HL,$800E   ; {else <% $800E = A & vischar_DIRECTION_MASK; // set direction
 ; LD A,(HL) missing here?
  $9ED3 AND $03       ;
  $9ED5 LD (HL),A     ; }
@@ -9844,7 +9848,7 @@ c$B32D LD HL,$81D6   ; HL = &interior_doors;
  $B33C LD C,A        ;   Cdash = A;
  $B33D AND $03       ; {  Bdash = A & doorpos_FLAGS_MASK_DIRECTION;
  $B33F LD B,A        ; }
- $B340 LD A,(IY+$0E) ; {  if (IY[14] & 3 != Bdash) goto next; // could be a check for facing the same direction as the door?
+ $B340 LD A,(IY+$0E) ; {  if ((IY->direction & vischar_DIRECTION_MASK) != Bdash) goto next;
  $B343 AND $03       ;
  $B345 CP B          ;
  $B346 JR NZ,$B383   ; }
