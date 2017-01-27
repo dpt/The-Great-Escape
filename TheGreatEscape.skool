@@ -416,7 +416,7 @@
 ; vischar_BYTE7_LOCATABLE                       = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
 ;
 ; ; $800C, $802C, $804C, ...
-; vischar_BYTE12_BIT7                           = 1 << 7,       ; is this a kick flag?
+; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
 ;
 ; ; $800E, $802E, $804E, ...
 ; vischar_BYTE14_CRAWL                          = 1 << 2,
@@ -8348,7 +8348,7 @@ c$AAB2 LD A,($68A0)  ; {if (room_index) return; // Can't move the map when indoo
  $AAC8 LD A,(DE)     ; A = *DE;
  $AAC9 CP $FF        ; {if (A == 255) return; // don't move
  $AACB RET Z         ; }
- $AACC BIT 7,C       ; {if (C & vischar_BYTE12_BIT7) A ^= 2; // exchange up and down
+ $AACC BIT 7,C       ; {if (C & vischar_ANIMINDEX_BIT7) A ^= 2; // exchange up and down
  $AACE JR Z,$AAD2    ;
  $AAD0 XOR $02       ; }
 *$AAD2 PUSH AF
@@ -10240,10 +10240,10 @@ c$B5CE LD B,$08        ; iterate over all eight vischars
  $B5E5 JP NZ,$B6BE     ; if set goto 'kicked'
  $B5E8 LD H,(IY+$0B)   ; get vischar.anim in HL
  $B5EB LD L,(IY+$0A)   ;
- $B5EE LD A,(IY+$0C)   ; ?anim index vischar.b0C
- $B5F1 AND A           ; test vischar_BYTE12_BIT7  up/down flag ?
+ $B5EE LD A,(IY+$0C)   ; ?anim index vischar.animindex
+ $B5F1 AND A           ; test vischar_ANIMINDEX_BIT7  up/down flag ?
  $B5F2 JP P,$B64F      ;
- $B5F5 AND $7F         ; mask off vischar_BYTE12_BIT7
+ $B5F5 AND $7F         ; mask off vischar_ANIMINDEX_BIT7
  $B5F7 JP Z,$B6C2      ; if result is zero goto 'end_bit'
  $B5FA INC A           ; { anim = HL + (A + 1) * 4 - 1
  $B5FB ADD A,A         ;
@@ -10380,7 +10380,7 @@ c$B5CE LD B,$08        ; iterate over all eight vischars
  $B6E5 LD (IY+$0B),D   ; }
  $B6E8 BIT 7,C         ; {if ((C & (1<<7)) == 0) <%
  $B6EA JR NZ,$B6FC     ; }
- $B6EC LD (IY+$0C),$00 ; vischar.b0C = 0
+ $B6EC LD (IY+$0C),$00 ; vischar.animindex = 0
  $B6F0 INC DE          ; {  DE += 2;
  $B6F1 INC DE          ; }
  $B6F2 LD A,(DE)       ; { vischar.direction = *DE;
@@ -10392,7 +10392,7 @@ c$B5CE LD B,$08        ; iterate over all eight vischars
 ; else
 *$B6FC LD A,(DE)       ; A = *DE; // count of four-byte groups
  $B6FD LD C,A          ;   C = A;
- $B6FE OR $80          ; {  vischar.b0C = A | vischar_BYTE12_BIT7;
+ $B6FE OR $80          ; {  vischar.animindex = A | vischar_ANIMINDEX_BIT7;
  $B700 LD (IY+$0C),A   ; }
  $B703 INC DE          ; {  vischar.direction = *++DE;
  $B704 LD A,(DE)       ;
@@ -17085,7 +17085,7 @@ c$F163 DI                     ; {-
  $F1D0 DEFB $00               ; b07
  $F1D1 DEFW $CDF2             ; w08
  $F1D3 DEFW $CF76             ; w0A
- $F1D5 DEFB $00               ; b0C
+ $F1D5 DEFB $00               ; animindex
  $F1D6 DEFB $00               ; b0D
  $F1D7 DEFB $00               ; b0E
  $F1D8 DEFW $0000,$0000,$0018 ; mi.pos
