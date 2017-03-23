@@ -3640,8 +3640,8 @@ b$76C8 DEFB $00,$FF,$40,$20,$02,$78,$F4 ; item_WIRESNIPS,        room_NONE,     
  $772A DEFB $0E,$FF,$24,$2C,$04,$7E,$F4 ; item_PURSE,            room_NONE,        36,44, 0x04, 0x7E, 0xF4
  $7731 DEFB $0F,$FF,$34,$1C,$04,$7E,$F4 ; item_COMPASS,          room_NONE,        52,28, 0x04, 0x7E, 0xF4
 
-; Not yet understood table.
-@label=table_7738
+; Table of pointers to routes.
+@label=routes
 b$7738 DEFW $0000                           ; {Array, 46 long, of pointers to
  $773A DEFW $7795                           ; $FF-terminated runs.
  $773C DEFW $7799
@@ -3689,87 +3689,87 @@ b$7738 DEFW $0000                           ; {Array, 46 long, of pointers to
  $7790 DEFW $7835
  $7792 DEFW $7838                           ; }
  $7794 DEFB $FF                             ; could be a terminating $FF
-@label=byte_7738_0
- $7795 DEFB $48,$49,$4A,$FF                 ; byte_7738_0
-@label=byte_7738_1
- $7799 DEFB $4B,$4C,$4D,$4E,$4F,$50,$FF     ; byte_7738_1
-@label=byte_7738_2
- $77A0 DEFB $56,$1F,$1D,$20,$1A,$23,$99,$96 ; {byte_7738_2
+@label=route_7795
+ $7795 DEFB $48,$49,$4A,$FF                 ; route_7795
+@label=route_7799
+ $7799 DEFB $4B,$4C,$4D,$4E,$4F,$50,$FF     ; route_7799
+@label=route_commandant
+ $77A0 DEFB $56,$1F,$1D,$20,$1A,$23,$99,$96 ; {route_commandant
  $77A8 DEFB $95,$94,$97,$52,$17,$8A,$0B,$8B
  $77B0 DEFB $0C,$9B,$1C,$9D,$8D,$33,$5F,$80
  $77B8 DEFB $81,$64,$01,$00,$04,$10,$85,$33
  $77C0 DEFB $07,$91,$86,$08,$12,$89,$55,$0E
  $77C8 DEFB $22,$A2,$21,$A1,$FF             ; }
-@label=byte_7738_3
- $77CD DEFB $53,$54,$FF                     ; byte_7738_3
-@label=byte_7738_4
- $77D0 DEFB $87,$33,$34,$FF                 ; byte_7738_4
-@label=byte_7738_5
- $77D4 DEFB $89,$55,$36,$FF                 ; byte_7738_5
-@label=byte_7738_6
- $77D8 DEFB $56,$FF                         ; byte_7738_6
-@label=byte_7738_7
- $77DA DEFB $57,$FF                         ; byte_7738_7
-@label=byte_7738_8
- $77DC DEFB $58,$FF                         ; byte_7738_8
-@label=byte_7738_9
- $77DE DEFB $5C,$5D,$FF                     ; byte_7738_9
-@label=byte_7738_10
- $77E1 DEFB $33,$5F,$80,$81,$60,$FF         ; byte_7738_10
-@label=byte_7738_11
- $77E7 DEFB $34,$0A,$14,$93,$FF             ; byte_7738_11
-@label=byte_7738_12
- $77EC DEFB $38,$34,$0A,$14,$FF             ; byte_7738_12
-@label=byte_7738_13
- $77F1 DEFB $68,$FF                         ; byte_7738_13
-@label=byte_7738_14
- $77F3 DEFB $69,$FF                         ; byte_7738_14
-@label=byte_7738_15
- $77F5 DEFB $6A,$FF                         ; byte_7738_15
-@label=byte_7738_16
- $77F7 DEFB $6C,$FF                         ; byte_7738_16
-@label=byte_7738_17
- $77F9 DEFB $6D,$FF                         ; byte_7738_17
-@label=byte_7738_18
- $77FB DEFB $31,$FF                         ; byte_7738_18
-@label=byte_7738_19
- $77FD DEFB $33,$FF                         ; byte_7738_19
-@label=byte_7738_20
- $77FF DEFB $39,$FF                         ; byte_7738_20
-@label=byte_7738_21
- $7801 DEFB $59,$FF                         ; byte_7738_21
-@label=byte_7738_22
- $7803 DEFB $70,$FF                         ; byte_7738_22
-@label=byte_7738_23
- $7805 DEFB $71,$FF                         ; byte_7738_23
-@label=byte_7738_24
- $7807 DEFB $72,$FF                         ; byte_7738_24
-@label=byte_7738_25
- $7809 DEFB $73,$FF                         ; byte_7738_25
-@label=byte_7738_26
- $780B DEFB $74,$FF                         ; byte_7738_26
-@label=byte_7738_27
- $780D DEFB $75,$FF                         ; byte_7738_27
-@label=byte_7738_28
- $780F DEFB $36,$0A,$97,$98,$52,$FF         ; byte_7738_28
-@label=byte_7738_29
- $7815 DEFB $18,$17,$8A,$36,$FF             ; byte_7738_29
-@label=byte_7738_30
- $781A DEFB $34,$33,$07,$5C,$FF             ; byte_7738_30
-@label=byte_7738_31
- $781F DEFB $34,$33,$07,$91,$5D,$FF         ; byte_7738_31
-@label=byte_7738_32
- $7825 DEFB $34,$33,$55,$09,$5C,$FF         ; byte_7738_32
-@label=byte_7738_33
- $782B DEFB $34,$33,$55,$09,$5D,$FF         ; byte_7738_33
-@label=byte_7738_34
- $7831 DEFB $11,$FF                         ; byte_7738_34
-@label=byte_7738_35
- $7833 DEFB $6B,$FF                         ; byte_7738_35
-@label=byte_7738_36
- $7835 DEFB $91,$6E,$FF                     ; byte_7738_36
-@label=byte_7738_37
- $7838 DEFB $5A,$FF                         ; byte_7738_37
+@label=route_77CD
+ $77CD DEFB $53,$54,$FF                     ; route_77CD
+@label=route_exit_hut2
+ $77D0 DEFB $87,$33,$34,$FF                 ; route_exit_hut2
+@label=route_exit_hut3
+ $77D4 DEFB $89,$55,$36,$FF                 ; route_exit_hut3
+@label=route_prisoner_sleeps_1
+ $77D8 DEFB $56,$FF                         ; route_prisoner_sleeps_1
+@label=route_prisoner_sleeps_2
+ $77DA DEFB $57,$FF                         ; route_prisoner_sleeps_2
+@label=route_prisoner_sleeps_3
+ $77DC DEFB $58,$FF                         ; route_prisoner_sleeps_3
+@label=route_77DE
+ $77DE DEFB $5C,$5D,$FF                     ; route_77DE
+@label=route_77E1
+ $77E1 DEFB $33,$5F,$80,$81,$60,$FF         ; route_77E1
+@label=route_77E7
+ $77E7 DEFB $34,$0A,$14,$93,$FF             ; route_77E7
+@label=route_77EC
+ $77EC DEFB $38,$34,$0A,$14,$FF             ; route_77EC
+@label=route_prisoner_sits_1
+ $77F1 DEFB $68,$FF                         ; route_prisoner_sits_1
+@label=route_prisoner_sits_2
+ $77F3 DEFB $69,$FF                         ; route_prisoner_sits_2
+@label=route_prisoner_sits_3
+ $77F5 DEFB $6A,$FF                         ; route_prisoner_sits_3
+@label=route_guardA_breakfast
+ $77F7 DEFB $6C,$FF                         ; route_guardA_breakfast
+@label=route_guardB_breakfast
+ $77F9 DEFB $6D,$FF                         ; route_guardB_breakfast
+@label=route_guard_12_roll_call
+ $77FB DEFB $31,$FF                         ; route_guard_12_roll_call
+@label=route_guard_13_roll_call
+ $77FD DEFB $33,$FF                         ; route_guard_13_roll_call
+@label=route_guard_14_roll_call
+ $77FF DEFB $39,$FF                         ; route_guard_14_roll_call
+@label=route_guard_15_roll_call
+ $7801 DEFB $59,$FF                         ; route_guard_15_roll_call
+@label=route_prisoner_1_roll_call
+ $7803 DEFB $70,$FF                         ; route_prisoner_1_roll_call
+@label=route_prisoner_2_roll_call
+ $7805 DEFB $71,$FF                         ; route_prisoner_2_roll_call
+@label=route_prisoner_3_roll_call
+ $7807 DEFB $72,$FF                         ; route_prisoner_3_roll_call
+@label=route_prisoner_4_roll_call
+ $7809 DEFB $73,$FF                         ; route_prisoner_4_roll_call
+@label=route_prisoner_5_roll_call
+ $780B DEFB $74,$FF                         ; route_prisoner_5_roll_call
+@label=route_prisoner_6_roll_call
+ $780D DEFB $75,$FF                         ; route_prisoner_6_roll_call
+@label=route_go_to_solitary
+ $780F DEFB $36,$0A,$97,$98,$52,$FF         ; route_go_to_solitary
+@label=route_hero_leave_solitary
+ $7815 DEFB $18,$17,$8A,$36,$FF             ; route_hero_leave_solitary
+@label=route_guard_12_bed
+ $781A DEFB $34,$33,$07,$5C,$FF             ; route_guard_12_bed
+@label=route_guard_13_bed
+ $781F DEFB $34,$33,$07,$91,$5D,$FF         ; route_guard_13_bed
+@label=route_guard_14_bed
+ $7825 DEFB $34,$33,$55,$09,$5C,$FF         ; route_guard_14_bed
+@label=route_guard_15_bed
+ $782B DEFB $34,$33,$55,$09,$5D,$FF         ; route_guard_15_bed
+@label=route_hut2_left_to_right
+ $7831 DEFB $11,$FF                         ; route_hut2_left_to_right
+@label=route_7738
+ $7833 DEFB $6B,$FF                         ; route_7738
+@label=route_hut2_right_to_left
+ $7835 DEFB $91,$6E,$FF                     ; route_hut2_right_to_left
+@label=route_hero_roll_call
+ $7838 DEFB $5A,$FF                         ; route_hero_roll_call
 
 ; Locations.
 ;
@@ -12001,7 +12001,7 @@ c$C651 LD A,(HL)     ; A = *HL;
 *$C664 PUSH HL       ; else <%
  $C665 INC HL        ; {  C = *++HL; // byte6
  $C666 LD C,(HL)     ; }
- $C667 CALL $CB79    ;   DE = element_A_of_table_7738(A);
+ $C667 CALL $CB79    ;   DE = get_route(A);
  $C66A LD H,$00      ;   H = 0;
  $C66C LD A,C        ;   A = C;
  $C66D CP $FF        ; {  if (A == 0xFF) H--; // H = 0xFF
@@ -12834,7 +12834,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CABC DEC L         ; {  A = *--HL;
  $CABD LD A,(HL)     ; }
  $CABE PUSH HL
- $CABF CALL $CB79    ;   DE = element_A_of_table_7738(A);
+ $CABF CALL $CB79    ;   DE = get_route(A);
  $CAC2 POP HL
  $CAC3 LD A,E        ; {  DE += C;
  $CAC4 ADD A,C       ;
@@ -12994,15 +12994,15 @@ c$CB75 LD C,A        ; {BC = A; return;
  $CB76 LD B,$00      ;
  $CB78 RET           ; }
 
-; Return the A'th element of table_7738.
+; Return a route.
 ;
 ; Used by the routines at #R$C651 and #R$CA81.
 ;
 ; I:A  Index.
-; O:DE Element.
+; O:DE Pointer to route data.
 ; O:HL $7738 + A*2 + 1
-@label=element_A_of_table_7738
-c$CB79 ADD A,A       ; {DE = table_7738[A];
+@label=get_route
+c$CB79 ADD A,A       ; {DE = routes[A];
  $CB7A LD E,A        ;
  $CB7B LD D,$00      ;
  $CB7D LD HL,$7738   ;
