@@ -6668,8 +6668,8 @@ g$A13D DEFB $07      ; clock
 ; Read-only by charevnt_handler_3_check_var_A13E,
 ; charevnt_handler_5_check_var_A13E_anotherone.
 ; .
-; Write/read-write by sub_A3BB, spawn_character, move_characters,
-; follow_suspicious_character, sub_A3BB.
+; Write/read-write by set_target, spawn_character, move_characters,
+; follow_suspicious_character, set_target.
 @label=entered_move_characters
 g$A13E DEFB $00      ; entered_move_characters
 
@@ -6976,7 +6976,7 @@ c$A26A LD A,$26      ; A = 0x26;
  $A26F LD A,$0C      ; Adash = 12;
  $A271 LD B,$04      ; B = 4; // 4 iterations
 *$A273 PUSH AF       ; do <%
- $A274 CALL $A38C    ;   set_character_location();
+ $A274 CALL $A38C    ;   set_character_target();
  $A277 POP AF
  $A278 INC A         ;   Adash++;
  $A279 EX AF,AF'
@@ -7130,7 +7130,7 @@ c$A33F LD A,($A13A)  ; {if (in_solitary) return;
  $A34A LD (HL),B     ; }
  $A34B INC L         ; {$8003 = C;
  $A34C LD (HL),C     ; }
- $A34D CALL $A3BB    ; sub_A3BB();
+ $A34D CALL $A3BB    ; set_target();
  $A350 RET           ; return;
 
 ; Go to time for bed.
@@ -7157,7 +7157,7 @@ c$A35F LD HL,$A27F   ; HL = &prisoners_and_guards[0];
 *$A364 PUSH HL       ; do <%
  $A365 PUSH BC
  $A366 LD A,(HL)     ;   A = *HL;
- $A367 CALL $A38C    ;   set_character_location();
+ $A367 CALL $A38C    ;   set_character_target();
  $A36A EX AF,AF'     ; {
  $A36B INC A         ;   Adash++;
  $A36C EX AF,AF'     ; }
@@ -7181,7 +7181,7 @@ c$A373 LD HL,$A27F   ; HL = &prisoners_and_guards[0];
 *$A378 PUSH HL       ; do <%
  $A379 PUSH BC
  $A37A LD A,(HL)     ;   A = *HL;
- $A37B CALL $A38C    ;   set_character_location();
+ $A37B CALL $A38C    ;   set_character_target();
  $A37E POP BC
 ; When this is 6, the character being processed is character_22_PRISONER_3 and
 ; the next is character_14_GUARD_14, the start of the second half of the list.
@@ -7236,12 +7236,12 @@ c$A38C CALL $C7B9    ; HL = get_character_struct(A);
  $A3B5 RES 6,(HL)    ; {*HL++ &= ~vischar_FLAGS_DOOR_THING;
  $A3B7 INC L         ; }
  $A3B8 CALL $A3ED    ; store_location(); // HL = vischar->target
-; FALL THROUGH into sub_A3BB.
+; FALL THROUGH into set_target.
 
 ; Not yet understood.
 ;
 ; Used by the routine at #R$A33F.
-@label=sub_A3BB
+@label=set_target
 c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3BC LD ($A13E),A  ; }
  $A3BF PUSH BC
@@ -13367,9 +13367,9 @@ c$CD31 LD A,C        ; A = C;
  $CD4A LD E,A        ;
  $CD4B ADD HL,DE     ; }
  $CD4C LD A,(HL)     ; A = HL->room_and_flags;
- $CD4D EX DE,HL
- $CD4E EX AF,AF'
-; Bug: This is not masked, so goes out of range.
+ $CD4D EX DE,HL      ; bank ptr
+ $CD4E EX AF,AF'     ; bank A
+; Bug: C is not masked, so could go out of range.
  $CD4F LD A,C        ; Adash = C;
  $CD50 CALL $7C26    ; HL = item_to_itemstruct(Adash);
  $CD53 RES 7,(HL)    ; *HL &= ~itemstruct_ITEM_FLAG_HELD;
