@@ -15,12 +15,115 @@
 ; Second top-level item.
 ; ...
 
-[Changelog:201608xx]
-The disassembly is now built with SkoolKit 5.2.
+[Changelog:20170325]
+The disassembly is now built with SkoolKit 5.4.
 
-The coloured #LINK:Map(map) now uses a checkerboard pattern to show position of the supertiles. The separately listed supertiles also use a checkerboard to show the position of the UDGs.
+Added:
+  Defined door_NONE ($FF) and used it.
+  Split door_LOCKED into door_LOCKED and door_REVERSE. door_REVERSE is the flag passed around when a door is to be entered from the opposite side.
 
-...
+Fixed:
+  Merged the exterior tilesets together. It turns out that supertiles can contain tiles with indices which go beyond their respective tile set and into the next. The exterior tilesets therefore ought to be a single tileset.
+  #R$68F2 Fixed some FALL THROUGHs. These had migrated down to the end of the routine to the point where they were wrong. The original intent was to re-express the disassembly as an if-else, but that means that the commentary shows an inverted sense of of the assembly. Rewrote the commentary to follow the code.
+  #R$B4CD open_door should not have fallthrough at end.
+  #R$AB07 move_map had an inverted test.
+  #R$B31C reset_outdoors had an incorrect room_index.
+  #R$A81D plot_topmost_tiles had an incorrect map_buf offset.
+  #R$B096 incorrect test fixed.
+  #R$BB98 restore_tiles: Replaced blank lines with semis to avoid broken build.
+  TheGreatEscapeGraphics.ref: Fiddle address ranges to avoid glitchy tileset images.
+  #R$AD29 searchlight_movements: Fixed misnumbered address lines. (Showed up as a dodgy game image).
+  The ran_out_of_list "arrive here" comments were incomplete.
+  #R$BADC mask_against_tile: Increment is not a supertile stride, but the mask buffer stride.
+  Fixed various incorrect comments claiming that #R$81B8 is hero_map_position.y.
+  Fixed some incorrect sprite references.
+  #R$BCAA: Fixed register usage for select_tile_set.
+  #R$BB9F was checking for vischar_FLAGS_EMPTY_SLOT, not room_NONE.
+  $7CFE is message_queue + 2.
+  snipping_wire_new_inputs and collision_new_inputs values are summed not ORed.
+  #R$CB42 JR C means less than, not equality.
+  #R$C688 isn't a call to transition() it's a call to get_door_position().
+
+Removed:
+  vischar_BYTE2_MASK
+  gates_and_doors_MASK
+  characterstruct_BYTE6_MASK_HI. Replaced with ~characterstruct_BYTE6_MASK_LO.
+  doorpos_FLAGS_MASK_ROOM. Replaced with ~doorpos_FLAGS_MASK_DIRECTION.
+
+Named / renamed:
+  #R$F05D gates_and_doors -> locked_doors
+  vischar_BYTE14_CRAWL -> vischar_DIRECTION_CRAWL
+  Added vischar_DIRECTION_MASK to replace literal value 3 masks.
+  vischar.b0C -> animindex
+  #R$E29F masked_sprite_plotter_16_wide_searchlight -> masked_sprite_plotter_16_wide_item - It's used for items only and is nothing to do with the searchlight. No idea why I thought it was.
+  #R$E2A2 masked_sprite_plotter_16_wide -> masked_sprite_plotter_16_wide_vischar
+  #R$E102 masked_sprite_plotter_24_wide -> masked_sprite_plotter_24_wide_vischar
+  #R$78D6 door_positions -> doors
+  #R$6A12 get_door_position -> get_door
+  #R$CDF2: anim_A -> anim_walk_tl etc.
+  #R$C47E purge_visible_characters -> purge_invisible_characters
+  #R$B866 locate_vischar_or_itemstruct_then_plot -> plot_sprites
+  #R$9E98 picking_a_lock -> picking_lock
+  #R$B495 open_door -> get_nearest_door
+  Renamed all the bitmaps and masks so they're in sequence from the perspective of the sprites[] table.
+  #R$CDF2 character_related_pointers -> animations
+  #R$9EB2 snipping_wire -> cutting_wire
+  #R$A13A morale_1/2 -> in_solitary, morale_exhausted
+  #R$CA11 move_character_x/y -> vischar_at_pos_x/y
+  vischar.p04 -> pos
+  #R$CB61 sub_CB61 -> handle_target
+  #R$CB2D sub_CB2D -> ran_out_of_list
+  #R$CB23 sub_CB23 -> get_next_target_and_handle_it
+  #R$81B5 map_position_related_x/y -> screenpos_x/y
+  #R$81D6 door_related -> doors -> interior_doors
+  #R$B71B reset_position -> calc_vischar_from_mi_pos
+  vischar_BYTE7_BIT6 -> vischar_BYTE7_TOUCHING
+  vischar_FLAGS_BIT6 -> vischar_FLAGS_DOOR_THING
+  #R$EBC5 exterior_mask_data_pointers -> mask_pointers
+  #R$8218 exterior_tiles_0 -> mask_tiles
+  #R$B916 mask_stuff -> render_mask_buffer
+  #R$C651 sub_C651 -> get_next_target
+  #R$BB98 called_from_main_loop_3 -> restore_tiles
+
+Commentary:
+  #R$C5FC in reset_visible_character: Comment on how the DOS version resets stoves and crates when re-entering a room.
+  Experiment rewriting #R$B5CE called_from_main_loop_9 commentary in the usual assembly one-comment-per-line style.
+  Note that #R$BACD multiply sets D to zero.
+  #R$B75A reset_game: 'Reset score' part starting at #R$B772 resets a number of other vars too.
+  Tighten up the 'other things' list near the start of the .skool file now that we know how the mask buffer is laid out.
+  Refer to variables in commentary using structure member names.
+  #R$BC31 is multiplying C by 192.
+  #R$ABF9 is computing zoombox_y * 192.
+  Add a note about topmost bits being discarded by ADD A,A.
+  Clarified: #R$CB41 forces the subsequent jump.
+  Numerous other comment tweaks.
+
+Improved:
+  #R$BB98 restore_tiles reworking.
+  #R$B916 render_mask_buffer reworking:
+    #R$B837 byte_B837 & co. are now clip_{x0,y0,width,height}.
+    Fixed #R$B9AF comparison.
+    multiply() returns HL. Zeros D as a side effect.
+  #R$CD9A character_meta_data is now defined as words, not bytes.
+  The coloured #LINK:Map(map) now uses a checkerboard pattern to show position of the supertiles. The separately listed supertiles also use a checkerboard to show the position of the UDGs.
+
+Bugs:
+  #R$B500 get_nearest_door doing 8 iterations instead of 7.
+  #R$AA1D shunt_map_right buffer length is a byte too long.
+
+SkoolKit:
+  TheGreatEscape.py
+    Split out map and mask extraction methods.
+    Defined all (useful) attributes.
+    Improved documentation comments.
+    Marked methods as API (used from .skool) or Internal (used from .py only).
+    Fixed some, but not all, flake8 warnings.
+    room_object_info: Removed duplication in printing code.
+  Suppressed warnings from skool2asm.
+  Added a "z80" Makefile rule to exercise SkoolKit 5.2's skool2bin | bin2sna pipeline.
+
+Other:
+  Added a vim modeline.
 
 [Changelog:20160326]
 The disassembly is now built with SkoolKit 5.1.
