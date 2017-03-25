@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B53E.html">B53E</a></span></td>
 </tr>
 </table>
-<div class="description">B4D0: Open door.</div>
+<div class="description">B4D0: Return the door in range of the hero.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -42,7 +42,11 @@ Used by the routines at <a href="B495.html">B495</a> and <a href="B4B8.html">B4B
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to door in gates_and_doors.</td>
+<td class="register-desc">Pointer to door in locked_doors.</td>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Returns NZ if door not found.</td>
 </tr>
 </table>
 </td>
@@ -51,7 +55,7 @@ Used by the routines at <a href="B495.html">B495</a> and <a href="B4B8.html">B4B
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b4d0"></span>B4D0</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="4">if (room_index == 0) goto outdoors; else goto indoors;</td>
+<td class="comment-11" rowspan="4">if (room_index == room_0_OUTDOORS) goto outdoors; else goto indoors;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -88,19 +92,19 @@ Outdoors.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b4d9"></span>B4D9</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment-11" rowspan="1">outdoors: B = 5; // 5 iterations // do the gate and door ranges overlap?</td>
+<td class="comment-11" rowspan="1">outdoors: B = 5; // 5 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b4db"></span>B4DB</td>
 <td class="instruction">LD HL,$F05D</td>
-<td class="comment-11" rowspan="1">HL = &amp;gates_flags;</td>
+<td class="comment-11" rowspan="1">HL = &amp;locked_doors[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b4de"></span>B4DE</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% A = *HL &amp; ~gates_and_doors_LOCKED;</td>
+<td class="comment-11" rowspan="2">do &lt;% A = *HL &amp; ~door_LOCKED;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -118,7 +122,7 @@ Outdoors.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b4e2"></span>B4E2</td>
 <td class="instruction">CALL <a href="6A12.html">$6A12</a></td>
-<td class="comment-11" rowspan="1">get_door_position();</td>
+<td class="comment-11" rowspan="1">HL = get_door();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -236,19 +240,19 @@ Indoors.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b4fd"></span>B4FD</td>
 <td class="instruction">LD HL,$F05F</td>
-<td class="comment-11" rowspan="1">indoors: HL = &amp;door_flags; // door flags // why start at offset 2?</td>
+<td class="comment-11" rowspan="1">indoors: HL = &amp;locked_doors[2];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b500"></span>B500</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
+<td class="comment-11" rowspan="1">B = 8; // 8 iterations // Bug: Ought to be 7 iterations.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b502"></span>B502</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">do &lt;% C = *HL &amp; ~gates_and_doors_LOCKED;</td>
+<td class="comment-11" rowspan="3">do &lt;% C = *HL &amp; ~door_LOCKED;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -267,7 +271,7 @@ Indoors.
 <span id="b506"></span>
 <div class="comments">
 <div class="paragraph">
-Search door_related for C.
+Search interior doors for C.
 </div>
 </div>
 </td>
@@ -276,7 +280,7 @@ Search door_related for C.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b506"></span>B506</td>
 <td class="instruction">LD DE,$81D6</td>
-<td class="comment-11" rowspan="1">DE = &amp;door_related;</td>
+<td class="comment-11" rowspan="1">DE = &amp;interior_doors;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -300,7 +304,7 @@ Search door_related for C.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b50e"></span>B50E</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="3">if ((A &amp; gates_and_doors_MASK) == C) goto found;</td>
+<td class="comment-11" rowspan="3">if ((A &amp; ~door_REVERSE) == C) goto found;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -366,7 +370,7 @@ Search door_related for C.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b51e"></span>B51E</td>
 <td class="instruction">CALL <a href="6A12.html">$6A12</a></td>
-<td class="comment-11" rowspan="1">get_door_position();</td>
+<td class="comment-11" rowspan="1">HL = get_door();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -507,9 +511,9 @@ Range check pattern (-2..+3).
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

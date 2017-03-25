@@ -70,7 +70,7 @@ Called when changing rooms.
 <span id="6926"></span>
 <div class="comments">
 <div class="paragraph">
-When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag appropriately.
+vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywhere else so it must be an offset into byte_CDAA[]. When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag appropriately.
 </div>
 </div>
 </td>
@@ -97,13 +97,13 @@ When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag 
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="692d"></span>692D</td>
 <td class="instruction">SET 2,(HL)</td>
-<td class="comment-11" rowspan="1">*HL |= vischar_BYTE14_CRAWL; // $800E, set crawl flag</td>
+<td class="comment-11" rowspan="1">*HL |= vischar_DIRECTION_CRAWL; // $800E, set crawl flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="692f"></span>692F</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="comment-11" rowspan="2">$8015 = &amp;sprite_prisoner_tl_4; %&gt;</td>
+<td class="comment-11" rowspan="2">$8015 = &amp;sprite_prisoner; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -121,7 +121,7 @@ When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag 
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6936"></span>6936</td>
 <td class="instruction">RES 2,(HL)</td>
-<td class="comment-11" rowspan="1">*HL &amp;= ~vischar_BYTE14_CRAWL; %&gt; // clear crawl flag</td>
+<td class="comment-11" rowspan="1">*HL &amp;= ~vischar_DIRECTION_CRAWL; %&gt; // clear crawl flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -138,9 +138,9 @@ When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag 
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

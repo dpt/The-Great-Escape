@@ -51,7 +51,7 @@ Used by the routine at <a href="B1F5.html">B1F5</a>.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b32d"></span>B32D</td>
 <td class="instruction">LD HL,$81D6</td>
-<td class="comment-11" rowspan="1">HL = &amp;door_related;</td>
+<td class="comment-11" rowspan="1">HL = &amp;interior_doors;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -63,7 +63,7 @@ Used by the routine at <a href="B1F5.html">B1F5</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b331"></span>B331</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == 255) return; /* Reached end of list. */</td>
+<td class="comment-11" rowspan="2">if (A == door_NONE) return; /* Reached end of list. */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -87,7 +87,7 @@ Used by the routine at <a href="B1F5.html">B1F5</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b338"></span>B338</td>
 <td class="instruction">CALL <a href="6A12.html">$6A12</a></td>
-<td class="comment-11" rowspan="1">get_door_position();</td>
+<td class="comment-11" rowspan="1">HL = get_door();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -117,7 +117,7 @@ Used by the routine at <a href="B1F5.html">B1F5</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b340"></span>B340</td>
 <td class="instruction">LD A,(IY+$0E)</td>
-<td class="comment-11" rowspan="4">if (IY[14] &amp; 3 != Bdash) goto next; // could be a check for facing the same direction as the door?</td>
+<td class="comment-11" rowspan="4">if ((IY-&gt;direction &amp; vischar_DIRECTION_MASK) != Bdash) goto next;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -315,7 +315,7 @@ Used by the routine at <a href="B1F5.html">B1F5</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b372"></span>B372</td>
 <td class="instruction">LD A,($68A1)</td>
-<td class="comment-11" rowspan="8">if (current_door &amp; door_LOCKED) &lt;% HLdash -= 8; %&gt;</td>
+<td class="comment-11" rowspan="8">if (current_door &amp; door_REVERSE) &lt;% HLdash -= 8; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -392,9 +392,9 @@ Used by the routine at <a href="B1F5.html">B1F5</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

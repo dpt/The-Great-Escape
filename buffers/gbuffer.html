@@ -150,7 +150,7 @@ Structure type: tinypos_t.
 Written by setup_item_plotting, setup_vischar_plotting.
 </div>
 <div class="paragraph">
-Read by mask_stuff, guards_follow_suspicious_character.
+Read by render_mask_buffer, guards_follow_suspicious_character.
 </div>
 </div>
 </td>
@@ -302,7 +302,7 @@ These are possibly spare object bounds bytes, but not ever used.
 <td class="map-g"><span id="81d6"></span><a href="../asm/81D6.html">81D6</a></td>
 <td class="map-length-1">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11">Door related stuff.</div>
+<div class="map-entry-title-11">Indices of interior doors.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
 Used by the routines at <a href="../asm/69DC.html">69DC</a>, <a href="../asm/B32D.html">B32D</a>, <a href="../asm/B4D0.html">B4D0</a>.
@@ -388,7 +388,7 @@ Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
 Counts 00..FF then wraps.
 </div>
 <div class="paragraph">
-Read-only by main_loop, picking_a_lock, snipping_wire, action_wiresnips, action_lockpick.
+Read-only by main_loop, picking_lock, cutting_wire, action_wiresnips, action_lockpick.
 </div>
 <div class="paragraph">
 Write/read-write by wave_morale_flag.
@@ -533,9 +533,9 @@ Write/read-write by check_morale, process_player_input, charevnt_handler_10_hero
 <td class="map-page-0">161</td>
 <td class="map-byte-0">58</td>
 <td class="map-g"><span id="a13a"></span><a href="../asm/A13A.html">A13A</a></td>
-<td class="map-length-1">2</td>
+<td class="map-length-1">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11">Morale flags.</div>
+<div class="map-entry-title-11">'In solitary' flag.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
 Stops set_hero_target_location working.
@@ -544,13 +544,36 @@ Stops set_hero_target_location working.
 Used to set flag colour.
 </div>
 <div class="paragraph">
-morale_1 and morale_2 are treated as a word by process_player_input. Everything else treats them as bytes.
-</div>
-<div class="paragraph">
 Read-only by process_player_input, in_permitted_area, set_hero_target_location, follow_suspicious_character.
 </div>
 <div class="paragraph">
-Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
+Write/read-write by charevnt_handler_4_solitary_ends, solitary.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-0">161</td>
+<td class="map-byte-0">59</td>
+<td class="map-g"><span id="a13b"></span><a href="../asm/A13B.html">A13B</a></td>
+<td class="map-length-1">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11">'Morale exhausted' flag.</div>
+<div class="map-entry-desc-1">
+<div class="paragraph">
+Inhibits user input when non-zero.
+</div>
+<div class="paragraph">
+Set by check_morale.
+</div>
+<div class="paragraph">
+Reset by reset_game.
+</div>
+<div class="paragraph">
+Read-only by process_player_input.
+</div>
+<div class="paragraph">
+Write/read-write by check_morale.
 </div>
 </div>
 </td>
@@ -610,7 +633,7 @@ In byte_A13E_is_nonzero etc.: when non-zero, character_index is valid. Else IY p
 Read-only by charevnt_handler_3_check_var_A13E, charevnt_handler_5_check_var_A13E_anotherone.
 </div>
 <div class="paragraph">
-Write/read-write by sub_A3BB, spawn_character, move_characters, follow_suspicious_character, sub_A3BB.
+Write/read-write by set_target, spawn_character, move_characters, follow_suspicious_character, set_target.
 </div>
 </div>
 </td>
@@ -669,10 +692,10 @@ Write/read-write by wave_morale_flag.
 <td class="map-g"><span id="a143"></span><a href="../asm/A143.html">A143</a></td>
 <td class="map-length-1">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11">Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.</div>
+<div class="map-entry-title-11">Address of door (in locked_doors[]) in which bit 7 is cleared when picked.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-Read-only by picking_a_lock.
+Read-only by picking_lock.
 </div>
 <div class="paragraph">
 Write/read-write by action_lockpick.
@@ -692,7 +715,7 @@ Write/read-write by action_lockpick.
 e.g. when picking a lock or cutting wire.
 </div>
 <div class="paragraph">
-Read-only by picking_a_lock, snipping_wire.
+Read-only by picking_lock, cutting_wire.
 </div>
 <div class="paragraph">
 Write/read-write by action_wiresnips, action_lockpick.
@@ -825,7 +848,7 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="b837"></span><a href="../asm/B837.html">B837</a></td>
 <td class="map-length-1">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11">mask_stuff stuff.</div>
+<div class="map-entry-title-11">render_mask_buffer stuff.</div>
 <div class="map-entry-desc-1">
 
 </div>
@@ -963,9 +986,9 @@ Pairs of (port, key mask).
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

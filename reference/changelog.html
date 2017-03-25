@@ -15,6 +15,7 @@
 </tr>
 </table>
 <ul class="contents">
+<li><a href="#20170325">20170325</a></li>
 <li><a href="#20160326">20160326</a></li>
 <li><a href="#20151102">20151102</a></li>
 <li><a href="#20151028">20151028</a></li>
@@ -23,8 +24,146 @@
 <li><a href="#20141125">20141125</a></li>
 <li><a href="#20141019">20141019</a></li>
 </ul>
-<div><span id="20160326"></span></div>
+<div><span id="20170325"></span></div>
 <div class="changelog changelog-1">
+<div class="changelog-title">20170325</div>
+<div class="changelog-desc">The disassembly is now built with SkoolKit 5.4.</div>
+<ul class="changelog">
+<li>Added:
+<ul class="changelog1">
+<li>Defined door_NONE ($FF) and used it.</li>
+<li>Split door_LOCKED into door_LOCKED and door_REVERSE. door_REVERSE is the flag passed around when a door is to be entered from the opposite side.</li>
+</ul>
+</li>
+<li>Fixed:
+<ul class="changelog1">
+<li>Merged the exterior tilesets together. It turns out that supertiles can contain tiles with indices which go beyond their respective tile set and into the next. The exterior tilesets therefore ought to be a single tileset.</li>
+<li><a href="../asm/68A2.html#68f2">68F2</a> Fixed some FALL THROUGHs. These had migrated down to the end of the routine to the point where they were wrong. The original intent was to re-express the disassembly as an if-else, but that means that the commentary shows an inverted sense of of the assembly. Rewrote the commentary to follow the code.</li>
+<li><a href="../asm/B4B8.html#b4cd">B4CD</a> open_door should not have fallthrough at end.</li>
+<li><a href="../asm/AAB2.html#ab07">AB07</a> move_map had an inverted test.</li>
+<li><a href="../asm/B2FC.html#b31c">B31C</a> reset_outdoors had an incorrect room_index.</li>
+<li><a href="../asm/A819.html#a81d">A81D</a> plot_topmost_tiles had an incorrect map_buf offset.</li>
+<li><a href="../asm/AFDF.html#b096">B096</a> incorrect test fixed.</li>
+<li><a href="../asm/BB98.html">BB98</a> restore_tiles: Replaced blank lines with semis to avoid broken build.</li>
+<li>TheGreatEscapeGraphics.ref: Fiddle address ranges to avoid glitchy tileset images.</li>
+<li><a href="../asm/AD29.html">AD29</a> searchlight_movements: Fixed misnumbered address lines. (Showed up as a dodgy game image).</li>
+<li>The ran_out_of_list "arrive here" comments were incomplete.</li>
+<li><a href="../asm/BADC.html">BADC</a> mask_against_tile: Increment is not a supertile stride, but the mask buffer stride.</li>
+<li>Fixed various incorrect comments claiming that <a href="../asm/81B8.html">81B8</a> is hero_map_position.y.</li>
+<li>Fixed some incorrect sprite references.</li>
+<li><a href="../asm/BCAA.html">BCAA</a>: Fixed register usage for select_tile_set.</li>
+<li><a href="../asm/BB98.html#bb9f">BB9F</a> was checking for vischar_FLAGS_EMPTY_SLOT, not room_NONE.</li>
+<li>$7CFE is message_queue + 2.</li>
+<li>snipping_wire_new_inputs and collision_new_inputs values are summed not ORed.</li>
+<li><a href="../asm/CB2D.html#cb42">CB42</a> JR C means less than, not equality.</li>
+<li><a href="../asm/C651.html#c688">C688</a> isn't a call to transition() it's a call to get_door_position().</li>
+</ul>
+</li>
+<li>Removed:
+<ul class="changelog1">
+<li>vischar_BYTE2_MASK</li>
+<li>gates_and_doors_MASK</li>
+<li>characterstruct_BYTE6_MASK_HI. Replaced with ~characterstruct_BYTE6_MASK_LO.</li>
+<li>doorpos_FLAGS_MASK_ROOM. Replaced with ~doorpos_FLAGS_MASK_DIRECTION.</li>
+</ul>
+</li>
+<li>Named / renamed:
+<ul class="changelog1">
+<li><a href="../asm/F05D.html">F05D</a> gates_and_doors -> locked_doors</li>
+<li>vischar_BYTE14_CRAWL -> vischar_DIRECTION_CRAWL</li>
+<li>Added vischar_DIRECTION_MASK to replace literal value 3 masks.</li>
+<li>vischar.b0C -> animindex</li>
+<li><a href="../asm/E29F.html">E29F</a> masked_sprite_plotter_16_wide_searchlight -> masked_sprite_plotter_16_wide_item - It's used for items only and is nothing to do with the searchlight. No idea why I thought it was.</li>
+<li><a href="../asm/E2A2.html">E2A2</a> masked_sprite_plotter_16_wide -> masked_sprite_plotter_16_wide_vischar</li>
+<li><a href="../asm/E102.html">E102</a> masked_sprite_plotter_24_wide -> masked_sprite_plotter_24_wide_vischar</li>
+<li><a href="../asm/78D6.html">78D6</a> door_positions -> doors</li>
+<li><a href="../asm/6A12.html">6A12</a> get_door_position -> get_door</li>
+<li><a href="../asm/CDF2.html">CDF2</a>: anim_A -> anim_walk_tl etc.</li>
+<li><a href="../asm/C47E.html">C47E</a> purge_visible_characters -> purge_invisible_characters</li>
+<li><a href="../asm/B866.html">B866</a> locate_vischar_or_itemstruct_then_plot -> plot_sprites</li>
+<li><a href="../asm/9E98.html">9E98</a> picking_a_lock -> picking_lock</li>
+<li><a href="../asm/B495.html">B495</a> open_door -> get_nearest_door</li>
+<li>Renamed all the bitmaps and masks so they're in sequence from the perspective of the sprites[] table.</li>
+<li><a href="../asm/CDF2.html">CDF2</a> character_related_pointers -> animations</li>
+<li><a href="../asm/9EB2.html">9EB2</a> snipping_wire -> cutting_wire</li>
+<li><a href="../asm/A13A.html">A13A</a> morale_1/2 -> in_solitary, morale_exhausted</li>
+<li><a href="../asm/CA11.html">CA11</a> move_character_x/y -> vischar_at_pos_x/y</li>
+<li>vischar.p04 -> pos</li>
+<li><a href="../asm/CB61.html">CB61</a> sub_CB61 -> handle_target</li>
+<li><a href="../asm/CB2D.html">CB2D</a> sub_CB2D -> ran_out_of_list</li>
+<li><a href="../asm/CB23.html">CB23</a> sub_CB23 -> get_next_target_and_handle_it</li>
+<li><a href="../asm/81B5.html">81B5</a> map_position_related_x/y -> screenpos_x/y</li>
+<li><a href="../asm/81D6.html">81D6</a> door_related -> doors -> interior_doors</li>
+<li><a href="../asm/B71B.html">B71B</a> reset_position -> calc_vischar_from_mi_pos</li>
+<li>vischar_BYTE7_BIT6 -> vischar_BYTE7_TOUCHING</li>
+<li>vischar_FLAGS_BIT6 -> vischar_FLAGS_DOOR_THING</li>
+<li><a href="../asm/EBC5.html">EBC5</a> exterior_mask_data_pointers -> mask_pointers</li>
+<li><a href="../asm/8218.html">8218</a> exterior_tiles_0 -> mask_tiles</li>
+<li><a href="../asm/B916.html">B916</a> mask_stuff -> render_mask_buffer</li>
+<li><a href="../asm/C651.html">C651</a> sub_C651 -> get_next_target</li>
+<li><a href="../asm/BB98.html">BB98</a> called_from_main_loop_3 -> restore_tiles</li>
+</ul>
+</li>
+<li>Commentary:
+<ul class="changelog1">
+<li><a href="../asm/C5D3.html#c5fc">C5FC</a> in reset_visible_character: Comment on how the DOS version resets stoves and crates when re-entering a room.</li>
+<li>Experiment rewriting <a href="../asm/B5CE.html">B5CE</a> called_from_main_loop_9 commentary in the usual assembly one-comment-per-line style.</li>
+<li>Note that <a href="../asm/BACD.html">BACD</a> multiply sets D to zero.</li>
+<li><a href="../asm/B75A.html">B75A</a> reset_game: 'Reset score' part starting at <a href="../asm/B75A.html#b772">B772</a> resets a number of other vars too.</li>
+<li>Tighten up the 'other things' list near the start of the .skool file now that we know how the mask buffer is laid out.</li>
+<li>Refer to variables in commentary using structure member names.</li>
+<li><a href="../asm/BB98.html#bc31">BC31</a> is multiplying C by 192.</li>
+<li><a href="../asm/ABF9.html">ABF9</a> is computing zoombox_y * 192.</li>
+<li>Add a note about topmost bits being discarded by ADD A,A.</li>
+<li>Clarified: <a href="../asm/CB2D.html#cb41">CB41</a> forces the subsequent jump.</li>
+<li>Numerous other comment tweaks.</li>
+</ul>
+</li>
+<li>Improved:
+<ul class="changelog1">
+<li><a href="../asm/BB98.html">BB98</a> restore_tiles reworking.</li>
+<li><a href="../asm/B916.html">B916</a> render_mask_buffer reworking:
+<ul class="changelog2">
+<li><a href="../asm/B837.html">B837</a> byte_B837 & co. are now clip_{x0,y0,width,height}.</li>
+<li>Fixed <a href="../asm/B916.html#b9af">B9AF</a> comparison.</li>
+<li>multiply() returns HL. Zeros D as a side effect.</li>
+</ul>
+</li>
+<li><a href="../asm/CD9A.html">CD9A</a> character_meta_data is now defined as words, not bytes.</li>
+<li>The coloured <a href="../Map.html">map</a> now uses a checkerboard pattern to show position of the supertiles. The separately listed supertiles also use a checkerboard to show the position of the UDGs.</li>
+</ul>
+</li>
+<li>Bugs:
+<ul class="changelog1">
+<li><a href="../asm/B4D0.html#b500">B500</a> get_nearest_door doing 8 iterations instead of 7.</li>
+<li><a href="../asm/AA05.html#aa1d">AA1D</a> shunt_map_right buffer length is a byte too long.</li>
+</ul>
+</li>
+<li>SkoolKit:
+<ul class="changelog1">
+<li>TheGreatEscape.py
+<ul class="changelog2">
+<li>Split out map and mask extraction methods.</li>
+<li>Defined all (useful) attributes.</li>
+<li>Improved documentation comments.</li>
+<li>Marked methods as API (used from .skool) or Internal (used from .py only).</li>
+<li>Fixed some, but not all, flake8 warnings.</li>
+<li>room_object_info: Removed duplication in printing code.</li>
+</ul>
+</li>
+<li>Suppressed warnings from skool2asm.</li>
+<li>Added a "z80" Makefile rule to exercise SkoolKit 5.2's skool2bin | bin2sna pipeline.</li>
+</ul>
+</li>
+<li>Other:
+<ul class="changelog1">
+<li>Added a vim modeline.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div><span id="20160326"></span></div>
+<div class="changelog changelog-2">
 <div class="changelog-title">20160326</div>
 <div class="changelog-desc">The disassembly is now built with SkoolKit 5.1.</div>
 <ul class="changelog">
@@ -99,13 +238,13 @@
 </ul>
 </div>
 <div><span id="20151102"></span></div>
-<div class="changelog changelog-2">
+<div class="changelog changelog-1">
 <div class="changelog-title">20151102</div>
 <div class="changelog-desc">Changelog begun and populated retrospectively.</div>
 
 </div>
 <div><span id="20151028"></span></div>
-<div class="changelog changelog-1">
+<div class="changelog changelog-2">
 <div class="changelog-title">20151028</div>
 <div class="changelog-desc">28th October 2015 update.</div>
 <ul class="changelog">
@@ -141,7 +280,7 @@
 </ul>
 </div>
 <div><span id="20150622"></span></div>
-<div class="changelog changelog-2">
+<div class="changelog changelog-1">
 <div class="changelog-title">20150622</div>
 <div class="changelog-desc">22nd June 2015 update.</div>
 <ul class="changelog">
@@ -190,7 +329,7 @@
 </ul>
 </div>
 <div><span id="20150123"></span></div>
-<div class="changelog changelog-1">
+<div class="changelog changelog-2">
 <div class="changelog-title">20150123</div>
 <div class="changelog-desc">23rd January 2015 update.</div>
 <ul class="changelog">
@@ -212,7 +351,7 @@
 </ul>
 </div>
 <div><span id="20141125"></span></div>
-<div class="changelog changelog-2">
+<div class="changelog changelog-1">
 <div class="changelog-title">20141125</div>
 <div class="changelog-desc">15th November 2014 update.</div>
 <ul class="changelog">
@@ -291,15 +430,15 @@
 </ul>
 </div>
 <div><span id="20141019"></span></div>
-<div class="changelog changelog-1">
+<div class="changelog changelog-2">
 <div class="changelog-title">20141019</div>
 <div class="changelog-desc">19th October 2014 update.</div>
 
 </div>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

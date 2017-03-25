@@ -57,7 +57,7 @@ Used by the routines at <a href="B4AE.html">B4AE</a> and <a href="B4B2.html">B4B
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b4b9"></span>B4B9</td>
 <td class="instruction">CALL <a href="B4D0.html">$B4D0</a></td>
-<td class="comment-11" rowspan="1">open_door();</td>
+<td class="comment-11" rowspan="1">get_nearest_door();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -69,13 +69,13 @@ Used by the routines at <a href="B4AE.html">B4AE</a> and <a href="B4B2.html">B4B
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b4bd"></span>B4BD</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">if (!Z) return; /* Wrong door? */</td>
+<td class="comment-11" rowspan="1">if (!Z) return; /* No door nearby. */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b4be"></span>B4BE</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL &amp; ~gates_and_doors_LOCKED; // mask off locked flag</td>
+<td class="comment-11" rowspan="2">A = *HL &amp; ~door_LOCKED; // mask off locked flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -105,7 +105,7 @@ Used by the routines at <a href="B4AE.html">B4AE</a> and <a href="B4B2.html">B4B
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b4c6"></span>B4C6</td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment-11" rowspan="1">*HL &amp;= ~gates_and_doors_LOCKED; /* Unlock. */</td>
+<td class="comment-11" rowspan="1">*HL &amp;= ~door_LOCKED; /* Unlock. */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -123,17 +123,7 @@ Used by the routines at <a href="B4AE.html">B4AE</a> and <a href="B4B2.html">B4B
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b4cd"></span>B4CD</td>
 <td class="instruction">JP <a href="7D15.html">$7D15</a></td>
-<td class="comment-11" rowspan="1">queue_message_for_display(B);</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-
-<div class="comments">
-<div class="paragraph">
-FALL THROUGH into open_door.
-</div>
-</div>
-</td>
+<td class="comment-11" rowspan="1">queue_message_for_display(B); // exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -144,9 +134,9 @@ FALL THROUGH into open_door.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

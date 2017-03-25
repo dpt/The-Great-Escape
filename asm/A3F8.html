@@ -60,7 +60,7 @@ Gets hit when hero enters hut at end of day.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3fb"></span>A3FB</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="4">if (A == 0) &lt;% set_hero_target_location(location_002C); return; %&gt; // exit via</td>
+<td class="comment-11" rowspan="2">if (A != 0) goto byte_A13E_common;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -72,23 +72,13 @@ Gets hit when hero enters hut at end of day.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a3fe"></span>A3FE</td>
 <td class="instruction">LD BC,$2C00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">set_hero_target_location(location_002C); // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a401"></span>A401</td>
 <td class="instruction">JP <a href="A33F.html">$A33F</a></td>
 <td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-
-<div class="comments">
-<div class="paragraph">
-FALL THROUGH into byte_A13E_common.
-</div>
-</div>
-</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -99,9 +89,9 @@ FALL THROUGH into byte_A13E_common.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

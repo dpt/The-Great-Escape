@@ -48,103 +48,103 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b5ce"></span>B5CE</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">B = 8;</td>
+<td class="comment-11" rowspan="1">iterate over all eight vischars</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5d0"></span>B5D0</td>
 <td class="instruction">LD IY,$8000</td>
-<td class="comment-11" rowspan="1">IY = $8000;</td>
+<td class="comment-11" rowspan="1">set IY to first vischar</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b5d4"></span>B5D4</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment-11" rowspan="3">do &lt;% if (IY[1] == vischar_FLAGS_EMPTY_SLOT) goto next; // $8001 flags</td>
+<td class="comment-11" rowspan="1">get vischar.flags</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5d7"></span>B5D7</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">are flags set to vischar_FLAGS_EMPTY_SLOT?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5d9"></span>B5D9</td>
 <td class="instruction">JP Z,$B6B4</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">if so - continue to next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5dc"></span>B5DC</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">stack counter</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5dd"></span>B5DD</td>
 <td class="instruction">SET 7,(IY+$01)</td>
-<td class="comment-11" rowspan="1">IY[1] |= vischar_FLAGS_NO_COLLIDE;</td>
+<td class="comment-11" rowspan="1">set flag vischar_FLAGS_NO_COLLIDE</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5e1"></span>B5E1</td>
 <td class="instruction">BIT 7,(IY+$0D)</td>
-<td class="comment-11" rowspan="2">if (IY[0x0D] &amp; input_KICK) goto kicked; // $800D</td>
+<td class="comment-11" rowspan="1">test vischar.input &amp; input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5e5"></span>B5E5</td>
 <td class="instruction">JP NZ,$B6BE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">if set goto 'kicked'</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5e8"></span>B5E8</td>
 <td class="instruction">LD H,(IY+$0B)</td>
-<td class="comment-11" rowspan="1">H = IY[0x0B];</td>
+<td class="comment-11" rowspan="1">get vischar.anim in HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5eb"></span>B5EB</td>
 <td class="instruction">LD L,(IY+$0A)</td>
-<td class="comment-11" rowspan="1">L = IY[0x0A]; // HL = character_related_pointer</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5ee"></span>B5EE</td>
 <td class="instruction">LD A,(IY+$0C)</td>
-<td class="comment-11" rowspan="1">A = IY[0x0C];</td>
+<td class="comment-11" rowspan="1">?anim index vischar.animindex</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5f1"></span>B5F1</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A &amp; vischar_BYTE12_BIT7) &lt;% // up/down flag</td>
+<td class="comment-11" rowspan="1">test vischar_ANIMINDEX_BIT7  up/down flag ?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5f2"></span>B5F2</td>
 <td class="instruction">JP P,$B64F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5f5"></span>B5F5</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1">A &amp;= ~vischar_BYTE12_BIT7;</td>
+<td class="comment-11" rowspan="1">mask off vischar_ANIMINDEX_BIT7</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5f7"></span>B5F7</td>
 <td class="instruction">JP Z,$B6C2</td>
-<td class="comment-11" rowspan="1">if (A == 0) goto end_bit;</td>
+<td class="comment-11" rowspan="1">if result is zero goto 'end_bit'</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b5fa"></span>B5FA</td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="7">HL += (A + 1) * 4 - 1;</td>
+<td class="comment-11" rowspan="7">anim = HL + (A + 1) * 4 - 1</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -186,19 +186,19 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b602"></span>B602</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL++; // a spriteindex_t</td>
+<td class="comment-11" rowspan="1">A = *HL; // a spriteindex_t</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b603"></span>B603</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">bank A</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b604"></span>B604</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">HL++</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -786,19 +786,19 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b6be"></span>B6BE</td>
 <td class="instruction">RES 7,(IY+$0D)</td>
-<td class="comment-11" rowspan="1">kicked: IY[0x0D] &amp;= ~input_KICK; // sampled IY=$8020,$80A0,$8060,$80E0,$8080</td>
+<td class="comment-11" rowspan="1">reset input_KICK flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b6c2"></span>B6C2</td>
 <td class="instruction">LD A,(IY+$0E)</td>
-<td class="comment-11" rowspan="12">end_bit: A = byte_CDAA[IY[0x0E] * 9 + IY[0x0D]];</td>
+<td class="comment-11" rowspan="1">get vischar.direction</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6c5"></span>B6C5</td>
 <td class="instruction">LD D,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="5">multiply it by 9</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -828,79 +828,79 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6ca"></span>B6CA</td>
 <td class="instruction">ADD A,(IY+$0D)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">add vischar.input to it</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6cd"></span>B6CD</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6ce"></span>B6CE</td>
 <td class="instruction">LD D,$00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6d0"></span>B6D0</td>
 <td class="instruction">LD HL,$CDAA</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">add it to byte_CDAA</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6d3"></span>B6D3</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6d4"></span>B6D4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">fetch the (table entry)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6d5"></span>B6D5</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">C = A;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6d6"></span>B6D6</td>
 <td class="instruction">LD L,(IY+$08)</td>
-<td class="comment-11" rowspan="1">L = IY[0x08];</td>
+<td class="comment-11" rowspan="1">HL = vischar.animbase</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6d9"></span>B6D9</td>
 <td class="instruction">LD H,(IY+$09)</td>
-<td class="comment-11" rowspan="1">H = IY[0x09];</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6dc"></span>B6DC</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="3">HL += A * 2;</td>
+<td class="comment-11" rowspan="1">double A (and in doing so discard the top bit!)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6dd"></span>B6DD</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6de"></span>B6DE</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">(D is still zero from above)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6df"></span>B6DF</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="2">E = *HL++;</td>
+<td class="comment-11" rowspan="5">vischar.anim = *HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -912,19 +912,19 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6e1"></span>B6E1</td>
 <td class="instruction">LD (IY+$0A),E</td>
-<td class="comment-11" rowspan="1">IY[0x0A] = E;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6e4"></span>B6E4</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="1">D = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6e5"></span>B6E5</td>
 <td class="instruction">LD (IY+$0B),D</td>
-<td class="comment-11" rowspan="1">IY[0x0B] = D;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -942,7 +942,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6ec"></span>B6EC</td>
 <td class="instruction">LD (IY+$0C),$00</td>
-<td class="comment-11" rowspan="1">IY[0x0C] = 0;</td>
+<td class="comment-11" rowspan="1">vischar.animindex = 0</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -960,7 +960,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6f2"></span>B6F2</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">IY[0x0E] = *DE;</td>
+<td class="comment-11" rowspan="2">vischar.direction = *DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -990,13 +990,23 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6f9"></span>B6F9</td>
 <td class="instruction">JP $B65A</td>
-<td class="comment-11" rowspan="1">goto increment; %&gt;</td>
+<td class="comment-11" rowspan="1">goto increment</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b6fc"></span>
+<div class="comments">
+<div class="paragraph">
+else
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b6fc"></span>B6FC</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">else &lt;% A = *DE; // count of four-byte groups</td>
+<td class="comment-11" rowspan="1">A = *DE; // count of four-byte groups</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1008,7 +1018,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b6fe"></span>B6FE</td>
 <td class="instruction">OR $80</td>
-<td class="comment-11" rowspan="2">IY[0x0C] = A | vischar_BYTE12_BIT7;</td>
+<td class="comment-11" rowspan="2">vischar.animindex = A | vischar_ANIMINDEX_BIT7;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1020,7 +1030,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b703"></span>B703</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="3">IY[0x0E] = *++DE;</td>
+<td class="comment-11" rowspan="3">vischar.direction = *++DE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1128,7 +1138,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b718"></span>B718</td>
 <td class="instruction">JP $B605</td>
-<td class="comment-11" rowspan="1">goto decrement; %&gt;</td>
+<td class="comment-11" rowspan="1">goto decrement</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -1139,9 +1149,9 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

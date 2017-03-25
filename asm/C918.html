@@ -187,7 +187,7 @@ If the bottom nibble is set then decrement it.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c938"></span>C938</td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="comment-11" rowspan="1">HLdash = &amp;hero_map_position.y;</td>
+<td class="comment-11" rowspan="1">HLdash = &amp;hero_map_position.x;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -259,7 +259,7 @@ If the bottom nibble is set then decrement it.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c950"></span>C950</td>
 <td class="instruction">JP <a href="CB23.html">$CB23</a></td>
-<td class="comment-11" rowspan="1">sub_CB23(); return; %&gt; // exit via</td>
+<td class="comment-11" rowspan="1">get_next_target_and_handle_it(); return; %&gt; // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -413,7 +413,7 @@ Moves dog toward poisoned food?
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c976"></span>C976</td>
 <td class="instruction">JP <a href="CB23.html">$CB23</a></td>
-<td class="comment-11" rowspan="1">sub_CB23(); return; %&gt; %&gt; // exit via</td>
+<td class="comment-11" rowspan="1">get_next_target_and_handle_it(); return; %&gt; %&gt; // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -543,7 +543,7 @@ Bribed character was not visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c999"></span>C999</td>
 <td class="instruction">JP <a href="CB23.html">$CB23</a></td>
-<td class="comment-11" rowspan="1">sub_CB23(); return; // exit via</td>
+<td class="comment-11" rowspan="1">get_next_target_and_handle_it(); return; // exit via</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -736,7 +736,7 @@ Outdoors.
 <span id="c9c3"></span>
 <div class="comments">
 <div class="paragraph">
-Self modify move_character_x/y routines.
+Self modify vischar_at_pos_x/y routines.
 </div>
 </div>
 </td>
@@ -775,7 +775,7 @@ Self modify move_character_x/y routines.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c9ce"></span>C9CE</td>
 <td class="instruction">BIT 6,C</td>
-<td class="comment-11" rowspan="2">if (Cdash &amp; vischar_FLAGS_BIT6) &lt;%</td>
+<td class="comment-11" rowspan="2">if (Cdash &amp; vischar_FLAGS_DOOR_THING) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -805,13 +805,13 @@ Self modify move_character_x/y routines.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c9da"></span>C9DA</td>
 <td class="instruction">LD ($CA13),HL</td>
-<td class="comment-11" rowspan="1">($CA13) = HLdash; // self-modify move_character_x:$CA13</td>
+<td class="comment-11" rowspan="1">($CA13) = HLdash; // self-modify vischar_at_pos_x:$CA13</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c9dd"></span>C9DD</td>
 <td class="instruction">LD ($CA4B),HL</td>
-<td class="comment-11" rowspan="1">($CA4B) = HLdash; // self-modify move_character_y:$CA4B</td>
+<td class="comment-11" rowspan="1">($CA4B) = HLdash; // self-modify vischar_at_pos_y:$CA4B</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -853,7 +853,7 @@ Self modify move_character_x/y routines.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c9ea"></span>C9EA</td>
 <td class="instruction">CALL <a href="CA11.html">$CA11</a></td>
-<td class="comment-11" rowspan="1">move_character_x();</td>
+<td class="comment-11" rowspan="1">vischar_at_pos_x();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -865,7 +865,7 @@ Self modify move_character_x/y routines.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c9ef"></span>C9EF</td>
 <td class="instruction">CALL <a href="CA49.html">$CA49</a></td>
-<td class="comment-11" rowspan="1">move_character_y();</td>
+<td class="comment-11" rowspan="1">vischar_at_pos_y();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -935,13 +935,13 @@ This entry point is used by the routine at <a href="CA81.html">CA81</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ca03"></span>CA03</td>
 <td class="instruction">CALL <a href="CA49.html">$CA49</a></td>
-<td class="comment-11" rowspan="1">move_character_y();</td>
+<td class="comment-11" rowspan="1">vischar_at_pos_y();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ca06"></span>CA06</td>
 <td class="instruction">JR NZ,$C9F5</td>
-<td class="comment-11" rowspan="2">if (Z) move_character_x();</td>
+<td class="comment-11" rowspan="2">if (Z) vischar_at_pos_x();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -976,9 +976,9 @@ This entry point is used by the routine at <a href="CA81.html">CA81</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

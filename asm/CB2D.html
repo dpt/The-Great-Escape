@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="CB61.html">CB61</a></span></td>
 </tr>
 </table>
-<div class="description">CB2D: (unknown) sub_CB2D</div>
+<div class="description">CB2D: (unknown) ran_out_of_list</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -94,7 +94,7 @@ If not the hero's vischar ...
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cb3a"></span>CB3A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL &amp; vischar_BYTE2_MASK;</td>
+<td class="comment-11" rowspan="2">A = *HL &amp; ~vischar_BYTE2_BIT7;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -118,13 +118,13 @@ If not the hero's vischar ...
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cb41"></span>CB41</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0; %&gt; // self modified? (suspect not - just countering next if statement)</td>
+<td class="comment-11" rowspan="1">A = 0; %&gt; // forces next if statement to be taken</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="cb42"></span>CB42</td>
 <td class="instruction">CP $0C</td>
-<td class="comment-11" rowspan="2">if (A == character_12_GUARD_12) goto $CB50; %&gt;</td>
+<td class="comment-11" rowspan="2">if (A &lt;= character_11_GUARD_11) goto $CB50; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -137,7 +137,7 @@ If not the hero's vischar ...
 <span id="cb46"></span>
 <div class="comments">
 <div class="paragraph">
-arrive here if (character == 0 &amp;&amp; (location low byte &amp; 7F) == 36)
+We arrive here if: - vischar is the hero, or - character is character_0_COMMANDANT and (target low byte &amp; 0x7F) == 36, or - character is &gt;= character_12_GUARD_12
 </div>
 </div>
 </td>
@@ -182,14 +182,14 @@ arrive here if (character == 0 &amp;&amp; (location low byte &amp; 7F) == 36)
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cb4e"></span>CB4E</td>
 <td class="instruction">JR <a href="CB23.html">$CB23</a></td>
-<td class="comment-11" rowspan="1">sub_CB23(); return; // exit via</td>
+<td class="comment-11" rowspan="1">get_next_target_and_handle_it(); return; // exit via</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="cb50"></span>
 <div class="comments">
 <div class="paragraph">
-arrive here if (character == character_12_GUARD_12)
+We arrive here if: - vischar is not the hero, and - character is character_0_COMMANDANT and (target low byte &amp; 0x7F) != 36, or - character is character_1_GUARD_1 .. character_11_GUARD_11
 </div>
 </div>
 </td>
@@ -232,7 +232,7 @@ Pattern: [-2]+1
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cb55"></span>CB55</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="2">if (A &amp; (1&lt;&lt;7)) &lt;% // which flag is this?</td>
+<td class="comment-11" rowspan="2">if (A &amp; (1&lt;&lt;7)) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -291,9 +291,9 @@ Pattern: [-2]+1
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

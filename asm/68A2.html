@@ -97,7 +97,7 @@ Used by the routines at <a href="B1F5.html">B1F5</a>, <a href="B32D.html">B32D</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="68ab"></span>68AB</td>
 <td class="instruction">LD A,(IY+$1C)</td>
-<td class="comment-11" rowspan="1">A = IY[0x1C]; // $8x1C (likely room index)</td>
+<td class="comment-11" rowspan="1">A = IY[0x1C]; // $8x1C (vischar.room)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -307,7 +307,7 @@ HL points to the hero vischar at this point.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="68da"></span>68DA</td>
 <td class="instruction">LD A,($801C)</td>
-<td class="comment-11" rowspan="1">A = ($801C); // room index</td>
+<td class="comment-11" rowspan="1">A = vischar.room;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -319,7 +319,7 @@ HL points to the hero vischar at this point.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="68e0"></span>68E0</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
+<td class="comment-11" rowspan="2">if (A != 0) goto enter_room;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -371,7 +371,7 @@ Outdoors.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="68eb"></span>68EB</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">*HL &amp;= 3;     // $800E // likely a sprite direction</td>
+<td class="comment-11" rowspan="3">*HL &amp;= vischar_DIRECTION_MASK; // $800E // likely a sprite direction</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -395,17 +395,7 @@ Outdoors.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="68f2"></span>68F2</td>
 <td class="instruction">JR <a href="691A.html">$691A</a></td>
-<td class="comment-11" rowspan="1">goto squash_stack_goto_main; %&gt;</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-
-<div class="comments">
-<div class="paragraph">
-FALL THROUGH into enter_room.
-</div>
-</div>
-</td>
+<td class="comment-11" rowspan="1">goto squash_stack_goto_main;</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -416,9 +406,9 @@ FALL THROUGH into enter_room.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

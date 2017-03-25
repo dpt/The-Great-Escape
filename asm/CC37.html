@@ -79,7 +79,7 @@ Wearing the uniform stops anyone but the commandant from following the hero.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cc3b"></span>CC3B</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="6">if (A &amp;&amp; *$8015 == sprite_guard_tl_4) return;</td>
+<td class="comment-11" rowspan="6">if (A != character_0_COMMANDANT &amp;&amp; *$8015 == sprite_guard) return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -209,7 +209,7 @@ Which is the case here?
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cc5d"></span>CC5D</td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="comment-11" rowspan="1">HL = &amp;hero_map_position.y;</td>
+<td class="comment-11" rowspan="1">HL = &amp;hero_map_position.x;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -540,9 +540,9 @@ Range check.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

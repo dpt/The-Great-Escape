@@ -51,7 +51,7 @@ Used by the routines at <a href="B1F5.html">B1F5</a> and <a href="B32D.html">B32
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b1d4"></span>B1D4</td>
 <td class="instruction">LD E,$7F</td>
-<td class="comment-11" rowspan="4">C = current_door &amp; gates_and_doors_MASK;</td>
+<td class="comment-11" rowspan="4">C = current_door &amp; ~door_LOCKED; // probably door_REVERSE</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -75,7 +75,7 @@ Used by the routines at <a href="B1F5.html">B1F5</a> and <a href="B32D.html">B32
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b1db"></span>B1DB</td>
 <td class="instruction">LD HL,$F05D</td>
-<td class="comment-11" rowspan="1">HL = &amp;gates_and_doors[0];</td>
+<td class="comment-11" rowspan="1">HL = &amp;locked_doors[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -87,7 +87,7 @@ Used by the routines at <a href="B1F5.html">B1F5</a> and <a href="B32D.html">B32
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b1e0"></span>B1E0</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="4">do &lt;% if (*HL &amp; gates_and_doors_MASK == C) &lt;%</td>
+<td class="comment-11" rowspan="4">do &lt;% if (*HL &amp; ~door_LOCKED == C) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -111,7 +111,7 @@ Used by the routines at <a href="B1F5.html">B1F5</a> and <a href="B32D.html">B32
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b1e5"></span>B1E5</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="3">if ((*HL &amp; gates_and_doors_LOCKED) == 0) return; // Door is open.</td>
+<td class="comment-11" rowspan="3">if ((*HL &amp; door_LOCKED) == 0) return; // Door is open.</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -176,9 +176,9 @@ Used by the routines at <a href="B1F5.html">B1F5</a> and <a href="B32D.html">B32
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

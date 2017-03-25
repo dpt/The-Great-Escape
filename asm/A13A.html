@@ -18,10 +18,10 @@
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="A139.html">A139</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#a13a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A13C.html">A13C</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="A13B.html">A13B</a></span></td>
 </tr>
 </table>
-<div class="description">A13A: Morale flags.</div>
+<div class="description">A13A: 'In solitary' flag.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -33,13 +33,10 @@ Stops set_hero_target_location working.
 Used to set flag colour.
 </div>
 <div class="paragraph">
-morale_1 and morale_2 are treated as a word by process_player_input. Everything else treats them as bytes.
-</div>
-<div class="paragraph">
 Read-only by process_player_input, in_permitted_area, set_hero_target_location, follow_suspicious_character.
 </div>
 <div class="paragraph">
-Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
+Write/read-write by charevnt_handler_4_solitary_ends, solitary.
 </div>
 </div>
 <table class="input-0">
@@ -60,48 +57,20 @@ Write/read-write by charevnt_handler_4_zeroes_morale_1, solitary.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a13a"></span>A13A</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">morale_1</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="a13b"></span>
-<div class="comments">
-<div class="paragraph">
-Inhibits user input when non-zero.
-</div>
-<div class="paragraph">
-Set by check_morale.
-</div>
-<div class="paragraph">
-Reset by reset_game.
-</div>
-<div class="paragraph">
-Read-only by process_player_input.
-</div>
-<div class="paragraph">
-Write/read-write by check_morale.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label-0"></td>
-<td class="address-1"><span id="a13b"></span>A13B</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">morale_2</td>
+<td class="comment-11" rowspan="1">in_solitary</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="A139.html">A139</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#a13a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A13C.html">A13C</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="A13B.html">A13B</a></span></td>
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

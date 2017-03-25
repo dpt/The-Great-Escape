@@ -30,11 +30,14 @@
 Used by the routines at <a href="9F21.html">9F21</a>, <a href="A1C3.html">A1C3</a>, <a href="A289.html">A289</a>, <a href="A2E2.html">A2E2</a>, <a href="A351.html">A351</a>, <a href="A3F8.html">A3F8</a>, <a href="A4A9.html">A4A9</a>, <a href="A4B7.html">A4B7</a>, <a href="A4C5.html">A4C5</a>, <a href="A4D8.html">A4D8</a> and <a href="A4FD.html">A4FD</a>.
 </div>
 </div>
-<table class="input-0">
+<table class="input-1">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
-
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Target location (B = x, C = y).</td>
+</tr>
 </table>
 <table class="output-0">
 <tr class="asm-output-header">
@@ -48,7 +51,7 @@ Used by the routines at <a href="9F21.html">9F21</a>, <a href="A1C3.html">A1C3</
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="a33f"></span>A33F</td>
 <td class="instruction">LD A,($A13A)</td>
-<td class="comment-11" rowspan="3">if (morale_1) return;</td>
+<td class="comment-11" rowspan="3">if (in_solitary) return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -76,7 +79,7 @@ This entry point is used by the routine at <a href="C7C6.html">C7C6</a>.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="a344"></span>A344</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment-11" rowspan="2">$8001 &amp;= ~vischar_FLAGS_BIT6;</td>
+<td class="comment-11" rowspan="2">$8001 &amp;= ~vischar_FLAGS_DOOR_THING;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -112,7 +115,7 @@ This entry point is used by the routine at <a href="C7C6.html">C7C6</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a34d"></span>A34D</td>
 <td class="instruction">CALL <a href="A3BB.html">$A3BB</a></td>
-<td class="comment-11" rowspan="1">sub_A3BB();</td>
+<td class="comment-11" rowspan="1">set_target();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -129,9 +132,9 @@ This entry point is used by the routine at <a href="C7C6.html">C7C6</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

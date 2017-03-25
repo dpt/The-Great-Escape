@@ -80,7 +80,7 @@ Interior doors are handled by another routine.
 <span id="b1fc"></span>
 <div class="comments">
 <div class="paragraph">
-Select start position in door_positions based on the direction the hero is facing.
+Select start position in doors[] based on the direction the hero is facing.
 </div>
 </div>
 </td>
@@ -89,7 +89,7 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b1fc"></span>B1FC</td>
 <td class="instruction">LD HL,$78D6</td>
-<td class="comment-11" rowspan="1">HL = &amp;door_positions[0];</td>
+<td class="comment-11" rowspan="1">HL = &amp;doors[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -209,7 +209,7 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b21e"></span>B21E</td>
 <td class="instruction">LD A,$08</td>
-<td class="comment-11" rowspan="5">HL += 8;</td>
+<td class="comment-11" rowspan="5">HL += 8; // step forward two entries</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -299,7 +299,7 @@ Select start position in door_positions based on the direction the hero is facin
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b235"></span>B235</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="5">IY[28] = (*HL &gt;&gt; 2) &amp; 0x3F; // sampled HL=$792E (in door_positions[])</td>
+<td class="comment-11" rowspan="5">IY[28] = (*HL &gt;&gt; 2) &amp; 0x3F; // sampled HL=$792E (in doors[])</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -418,9 +418,9 @@ Select start position in door_positions based on the direction the hero is facin
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

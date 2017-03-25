@@ -227,7 +227,7 @@ Decide how long until food is discovered.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="cab6"></span>CAB6</td>
 <td class="instruction">BIT 6,C</td>
-<td class="comment-11" rowspan="2">if (C &amp; vischar_FLAGS_BIT6) &lt;%</td>
+<td class="comment-11" rowspan="2">if (C &amp; vischar_FLAGS_DOOR_THING) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -327,7 +327,7 @@ Results in character entering.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="caca"></span>CACA</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="3">if (*HL &amp; vischar_BYTE2_BIT7) A ^= 0x80;</td>
+<td class="comment-11" rowspan="3">if (*HL &amp; vischar_BYTE2_BIT7) A ^= door_REVERSE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -409,13 +409,13 @@ Pattern: [-2]+1
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cadb"></span>CADB</td>
 <td class="instruction">CALL <a href="6A12.html">$6A12</a></td>
-<td class="comment-11" rowspan="1">get_door_position(); // door related</td>
+<td class="comment-11" rowspan="1">HL = get_door();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cade"></span>CADE</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="5">IY[0x1C] = (*HL &gt;&gt; 2) &amp; 0x3F; // IY=$8000 =&gt; $801C (room index) // HL=$790E,$7962,$795E =&gt; door position thingy // 0x3F is door_positions[0] room mask shifted right 2</td>
+<td class="comment-11" rowspan="5">IY[0x1C] = (*HL &gt;&gt; 2) &amp; 0x3F; // IY=$8000 =&gt; $801C (room index) // HL=$790E,$7962,$795E =&gt; door position thingy // 0x3F is doors[0] room mask shifted right 2</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -588,7 +588,7 @@ Hero's vischar only.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cb02"></span>CB02</td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="comment-11" rowspan="2">*HL++ &amp;= ~vischar_FLAGS_BIT6;</td>
+<td class="comment-11" rowspan="2">*HL++ &amp;= ~vischar_FLAGS_DOOR_THING;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -600,7 +600,7 @@ Hero's vischar only.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cb05"></span>CB05</td>
 <td class="instruction">CALL <a href="CB23.html">$CB23</a></td>
-<td class="comment-11" rowspan="1">sub_CB23(); %&gt;</td>
+<td class="comment-11" rowspan="1">get_next_target_and_handle_it(); %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -709,7 +709,7 @@ Hero's vischar only.
 
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH to sub_CB23.
+FALL THROUGH to get_next_target_and_handle_it.
 </div>
 </div>
 </td>
@@ -723,9 +723,9 @@ FALL THROUGH to sub_CB23.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

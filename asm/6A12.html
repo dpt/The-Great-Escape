@@ -58,7 +58,7 @@ Used by the routines at <a href="B32D.html">B32D</a>, <a href="B4D0.html">B4D0</
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6a12"></span>6A12</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="8">HL = &amp;door_positions[(A * 2) &amp; 0xFF]; // are they pairs of doors?</td>
+<td class="comment-11" rowspan="8">HL = &amp;doors[(A &amp; ~door_REVERSE) * 2]; // are they pairs of doors?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -106,7 +106,7 @@ Used by the routines at <a href="B32D.html">B32D</a>, <a href="B4D0.html">B4D0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6a1d"></span>6A1D</td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment-11" rowspan="7">if (A &amp; (1&lt;&lt;7)) HL += 4; // if locked</td>
+<td class="comment-11" rowspan="7">if (A &amp; door_REVERSE) HL += 4; // if locked</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -159,9 +159,9 @@ Used by the routines at <a href="B32D.html">B32D</a>, <a href="B4D0.html">B4D0</
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

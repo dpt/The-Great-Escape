@@ -67,7 +67,7 @@ Used by the routine at <a href="B5CE.html">B5CE</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="af93"></span>AF93</td>
 <td class="instruction">SET 6,(IY+$07)</td>
-<td class="comment-11" rowspan="2">IY[7] |= vischar_BYTE7_BIT6 | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?</td>
+<td class="comment-11" rowspan="2">IY[7] |= vischar_BYTE7_TOUCHING | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -251,7 +251,7 @@ noncolliding characters and items only at this point
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="afc4"></span>AFC4</td>
 <td class="instruction">RES 6,(IY+$07)</td>
-<td class="comment-11" rowspan="1">IY[7] &amp;= ~vischar_BYTE7_BIT6; // clear counter_and_flag</td>
+<td class="comment-11" rowspan="1">IY[7] &amp;= ~vischar_BYTE7_TOUCHING; // clear counter_and_flag</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -334,9 +334,9 @@ noncolliding characters and items only at this point
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

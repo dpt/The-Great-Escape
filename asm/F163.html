@@ -362,7 +362,7 @@ Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
 <span id="f1b7"></span>
 <div class="comments">
 <div class="paragraph">
-Zero 0x118 bytes at HL (== $8100) onwards.
+Zero 0x118 bytes at HL (== $8100 == mask_buffer) onwards.
 </div>
 <div class="paragraph">
 This is likely wiping everything up until the start of tiles ($8218).
@@ -456,7 +456,7 @@ Initial state of a visible character.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="f1cd"></span>F1CD</td>
 <td class="instruction">DEFB $2E,$2E,$18</td>
-<td class="comment-11" rowspan="1">p04</td>
+<td class="comment-11" rowspan="1">pos</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -480,7 +480,7 @@ Initial state of a visible character.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="f1d5"></span>F1D5</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">b0C</td>
+<td class="comment-11" rowspan="1">animindex</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -515,9 +515,9 @@ Initial state of a visible character.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

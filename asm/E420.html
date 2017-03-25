@@ -561,13 +561,13 @@ Outdoors.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="e49d"></span>E49D</td>
 <td class="instruction">LD ($E121),A</td>
-<td class="comment-11" rowspan="1">($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide (shift right case)</td>
+<td class="comment-11" rowspan="1">($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift right case)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="e4a0"></span>E4A0</td>
 <td class="instruction">LD ($E1E2),A</td>
-<td class="comment-11" rowspan="1">($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide (shift left case)</td>
+<td class="comment-11" rowspan="1">($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift left case)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -937,7 +937,7 @@ Set the addresses in the jump table to NOP or LD (HL),A.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="e4f5"></span>E4F5</td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="comment-11" rowspan="5">HL = map_position_related_x - (map_position &amp; 0xFF); // ie. low byte of map_position // signed subtract + extend to 16-bit</td>
+<td class="comment-11" rowspan="5">HL = screenpos_x - (map_position &amp; 0xFF); // ie. low byte of map_position // signed subtract + extend to 16-bit</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1003,7 +1003,7 @@ Set the addresses in the jump table to NOP or LD (HL),A.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="e50b"></span>E50B</td>
 <td class="instruction">LD HL,$8100</td>
-<td class="comment-11" rowspan="1">HL = 0x8100;</td>
+<td class="comment-11" rowspan="1">HL = mask_buffer;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1238,9 +1238,9 @@ D ends up as zero either way.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

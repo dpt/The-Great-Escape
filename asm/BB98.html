@@ -21,16 +21,13 @@
 <td class="next"><span class="next-1">Next: <a href="BCAA.html">BCAA</a></span></td>
 </tr>
 </table>
-<div class="description">BB98: (unknown) Called from main loop 3.</div>
+<div class="description">BB98: Paints any tiles occupied by visible characters with tiles from tile_buf.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="9D7B.html">9D7B</a>.
-</div>
-<div class="paragraph">
-Plots tiles. Checks that characters are visible.
 </div>
 </div>
 <table class="input-0">
@@ -69,7 +66,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bb9f"></span>BB9F</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment-11" rowspan="3">if (IY[1] == room_NONE) goto next;</td>
+<td class="comment-11" rowspan="3">if (IY[1] == vischar_FLAGS_EMPTY_SLOT) goto next;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -87,7 +84,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bba7"></span>BBA7</td>
 <td class="instruction">LD H,(IY+$1B)</td>
-<td class="comment-11" rowspan="9">map_position_related_y = (IY[26] &gt;&gt; 3) | (IY[27] &lt;&lt; 5); // divide by 8</td>
+<td class="comment-11" rowspan="9">screenpos_y = (IY[26] &gt;&gt; 3) | (IY[27] &lt;&lt; 5); // divide by 8</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -141,7 +138,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bbb9"></span>BBB9</td>
 <td class="instruction">LD H,(IY+$19)</td>
-<td class="comment-11" rowspan="9">map_position_related_x = (IY[24] &gt;&gt; 3) | (IY[25] &lt;&lt; 5); // divide by 8</td>
+<td class="comment-11" rowspan="9">screenpos_x = (IY[24] &gt;&gt; 3) | (IY[25] &lt;&lt; 5); // divide by 8</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -201,7 +198,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bbce"></span>BBCE</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == 0xFF) goto next; // possibly not found case</td>
+<td class="comment-11" rowspan="2">if (A == 0xFF) goto next; // vischar not visible</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -255,7 +252,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bbdc"></span>BBDC</td>
 <td class="instruction">LD HL,$81B6</td>
-<td class="comment-11" rowspan="4">A += map_position_related_y - ((map_position &amp; 0xFF00) &gt;&gt; 8);</td>
+<td class="comment-11" rowspan="4">A += screenpos_y - map_position_y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -369,7 +366,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="bc02"></span>BC02</td>
 <td class="instruction">LD ($BC5F),A</td>
-<td class="comment-11" rowspan="1">($BC5F) = A; // self modify</td>
+<td class="comment-11" rowspan="1">($BC5F) = A; // self modify outer loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -381,7 +378,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc06"></span>BC06</td>
 <td class="instruction">LD ($BC61),A</td>
-<td class="comment-11" rowspan="1">($BC61) = A; // self modify</td>
+<td class="comment-11" rowspan="1">($BC61) = A; // self modify inner loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -420,6 +417,16 @@ Plots tiles. Checks that characters are visible.
 <td class="comment-11" rowspan="1">($BC95) = A; // self modify</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="bc17"></span>
+<div class="comments">
+<div class="paragraph">
+Work out x,y offsets into the tile buffer.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc17"></span>BC17</td>
 <td class="instruction">LD HL,$81BB</td>
@@ -453,7 +460,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc20"></span>BC20</td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="comment-11" rowspan="1">A = map_position_related_x;</td>
+<td class="comment-11" rowspan="1">A = screenpos_x;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -501,7 +508,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc2c"></span>BC2C</td>
 <td class="instruction">LD A,($81B6)</td>
-<td class="comment-11" rowspan="1">A = map_position_related_y;</td>
+<td class="comment-11" rowspan="1">A = screenpos_y;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -516,58 +523,68 @@ Plots tiles. Checks that characters are visible.
 <td class="comment-11" rowspan="1">C = A;</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="bc31"></span>
+<div class="comments">
+<div class="paragraph">
+Calculate the offset into screen buffer. C * 192 == C * 24 * 8
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc31"></span>BC31</td>
 <td class="instruction">LD H,C</td>
-<td class="comment-11" rowspan="1">H = C;</td>
+<td class="comment-11" rowspan="6">DE = C &lt;&lt; 7;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc32"></span>BC32</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc33"></span>BC33</td>
 <td class="instruction">SRL H</td>
-<td class="comment-11" rowspan="1">SRL H</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc35"></span>BC35</td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">RRA</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc36"></span>BC36</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1">E = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc37"></span>BC37</td>
 <td class="instruction">LD D,H</td>
-<td class="comment-11" rowspan="1">D = H;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc38"></span>BC38</td>
 <td class="instruction">SRL H</td>
-<td class="comment-11" rowspan="1">SRL H</td>
+<td class="comment-11" rowspan="3">HL = C &lt;&lt; 6;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc3a"></span>BC3A</td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">RRA</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc3b"></span>BC3B</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="1">L = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -609,7 +626,17 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc45"></span>BC45</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">swap it into DE. HL about to be overwritten.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="bc46"></span>
+<div class="comments">
+<div class="paragraph">
+Copy BC (x,y coord) into HL'
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -771,7 +798,7 @@ Plots tiles. Checks that characters are visible.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bc66"></span>BC66</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">PUSH HLdash</td>
+<td class="comment-11" rowspan="1">PUSH HLdash // save x,y</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1064,9 +1091,9 @@ Plots tiles. Checks that characters are visible.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

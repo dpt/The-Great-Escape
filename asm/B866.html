@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B89C.html">B89C</a></span></td>
 </tr>
 </table>
-<div class="description">B866: Seems to locate things to plot, then invoke masked sprite plotter on those things.</div>
+<div class="description">B866: Plot vischars and items in order.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -88,13 +88,13 @@ This can return a vischar OR an itemstruct, but not both.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b871"></span>B871</td>
 <td class="instruction">JR NZ,$B866</td>
-<td class="comment-11" rowspan="1">if (!Z) goto locate_vischar_or_itemstruct_then_plot;</td>
+<td class="comment-11" rowspan="1">if (!Z) goto plot_sprites;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b873"></span>B873</td>
 <td class="instruction">CALL <a href="B916.html">$B916</a></td>
-<td class="comment-11" rowspan="1">mask_stuff();</td>
+<td class="comment-11" rowspan="1">render_mask_buffer();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -136,25 +136,25 @@ This can return a vischar OR an itemstruct, but not both.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b885"></span>B885</td>
 <td class="instruction">CALL <a href="E102.html">$E102</a></td>
-<td class="comment-11" rowspan="1">masked_sprite_plotter_24_wide();</td>
+<td class="comment-11" rowspan="1">masked_sprite_plotter_24_wide_vischar();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b888"></span>B888</td>
 <td class="instruction">JR $B866</td>
-<td class="comment-11" rowspan="1">goto locate_vischar_or_itemstruct_then_plot; %&gt;</td>
+<td class="comment-11" rowspan="1">goto plot_sprites; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b88a"></span>B88A</td>
 <td class="instruction">CALL Z,<a href="E2A2.html">$E2A2</a></td>
-<td class="comment-11" rowspan="1">if (Z) masked_sprite_plotter_16_wide(); // odd to test for Z since it's always set</td>
+<td class="comment-11" rowspan="1">if (Z) masked_sprite_plotter_16_wide_vischar(); // odd to test for Z since it's always set</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b88d"></span>B88D</td>
 <td class="instruction">JR $B866</td>
-<td class="comment-11" rowspan="1">goto locate_vischar_or_itemstruct_then_plot; %&gt;</td>
+<td class="comment-11" rowspan="1">goto plot_sprites; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -166,25 +166,25 @@ This can return a vischar OR an itemstruct, but not both.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b892"></span>B892</td>
 <td class="instruction">JR NZ,$B866</td>
-<td class="comment-11" rowspan="1">if (!Z) goto locate_vischar_or_itemstruct_then_plot;</td>
+<td class="comment-11" rowspan="1">if (!Z) goto plot_sprites;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b894"></span>B894</td>
 <td class="instruction">CALL <a href="B916.html">$B916</a></td>
-<td class="comment-11" rowspan="1">mask_stuff();</td>
+<td class="comment-11" rowspan="1">render_mask_buffer();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b897"></span>B897</td>
 <td class="instruction">CALL <a href="E29F.html">$E29F</a></td>
-<td class="comment-11" rowspan="1">masked_sprite_plotter_16_wide_case_1_searchlight();</td>
+<td class="comment-11" rowspan="1">masked_sprite_plotter_16_wide_item();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b89a"></span>B89A</td>
 <td class="instruction">JR $B866</td>
-<td class="comment-11" rowspan="1">goto locate_vischar_or_itemstruct_then_plot; %&gt;</td>
+<td class="comment-11" rowspan="1">goto plot_sprites; %&gt;</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -195,9 +195,9 @@ This can return a vischar OR an itemstruct, but not both.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

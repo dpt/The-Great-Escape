@@ -237,13 +237,13 @@ Bug: This writes to saved_item but it's never subsequently read from.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="dc70"></span>DC70</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">// clipped width</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="dc71"></span>DC71</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">// clipped height</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -567,7 +567,7 @@ Bug: This writes to saved_item but it's never subsequently read from.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="dcbc"></span>DCBC</td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="comment-11" rowspan="1">A = map_position_related_x;</td>
+<td class="comment-11" rowspan="1">A = screenpos_x;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -633,7 +633,7 @@ Bug: This writes to saved_item but it's never subsequently read from.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="dcd2"></span>DCD2</td>
 <td class="instruction">LD HL,$8100</td>
-<td class="comment-11" rowspan="1">HL = $8100;</td>
+<td class="comment-11" rowspan="1">HL = mask_buffer;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -850,9 +850,9 @@ D ends up as zero either way.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

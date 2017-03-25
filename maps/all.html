@@ -1853,7 +1853,7 @@
 <td class="map-g"><span id="81d6"></span><a href="../asm/81D6.html">81D6</a></td>
 <td class="map-length-0">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-10">Door related stuff.</div>
+<div class="map-entry-title-10">Indices of interior doors.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2331,9 +2331,21 @@
 <td class="map-page-1">161</td>
 <td class="map-byte-1">58</td>
 <td class="map-g"><span id="a13a"></span><a href="../asm/A13A.html">A13A</a></td>
-<td class="map-length-0">2</td>
+<td class="map-length-0">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-10">Morale flags.</div>
+<div class="map-entry-title-10">'In solitary' flag.</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-1">161</td>
+<td class="map-byte-1">59</td>
+<td class="map-g"><span id="a13b"></span><a href="../asm/A13B.html">A13B</a></td>
+<td class="map-length-0">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-10">'Morale exhausted' flag.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2417,7 +2429,7 @@
 <td class="map-g"><span id="a143"></span><a href="../asm/A143.html">A143</a></td>
 <td class="map-length-0">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-10">Address of door (in gates_and_doors[]) in which bit 7 is cleared when picked.</div>
+<div class="map-entry-title-10">Address of door (in locked_doors[]) in which bit 7 is cleared when picked.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3761,7 +3773,7 @@
 <td class="map-c"><span id="b4d0"></span><a href="../asm/B4D0.html">B4D0</a></td>
 <td class="map-length-0">110</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Open door.</div>
+<div class="map-entry-title-10">Return the door in range of the hero.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3845,7 +3857,7 @@
 <td class="map-g"><span id="b837"></span><a href="../asm/B837.html">B837</a></td>
 <td class="map-length-0">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-10">mask_stuff stuff.</div>
+<div class="map-entry-title-10">render_mask_buffer stuff.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3869,7 +3881,7 @@
 <td class="map-c"><span id="b866"></span><a href="../asm/B866.html">B866</a></td>
 <td class="map-length-0">54</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Seems to locate things to plot, then invoke masked sprite plotter on those things.</div>
+<div class="map-entry-title-10">Plot vischars and items in order.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3893,7 +3905,7 @@
 <td class="map-c"><span id="b916"></span><a href="../asm/B916.html">B916</a></td>
 <td class="map-length-0">439</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Mask stuff.</div>
+<div class="map-entry-title-10">Render the mask buffer.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3917,7 +3929,7 @@
 <td class="map-c"><span id="badc"></span><a href="../asm/BADC.html">BADC</a></td>
 <td class="map-length-0">27</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Masks tiles (placed in a stride-of-4 arrangement) by the specified index exterior_tiles (set zero).</div>
+<div class="map-entry-title-10">AND a tile in the mask buffer against the specified mask tile.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -3941,7 +3953,7 @@
 <td class="map-c"><span id="bb98"></span><a href="../asm/BB98.html">BB98</a></td>
 <td class="map-length-0">274</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">(unknown) Called from main loop 3.</div>
+<div class="map-entry-title-10">Paints any tiles occupied by visible characters with tiles from tile_buf.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4169,7 +4181,7 @@
 <td class="map-c"><span id="cb23"></span><a href="../asm/CB23.html">CB23</a></td>
 <td class="map-length-0">10</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">(unknown) sub_CB23</div>
+<div class="map-entry-title-10">(unknown) get_next_target_and_handle_it</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4181,7 +4193,7 @@
 <td class="map-c"><span id="cb2d"></span><a href="../asm/CB2D.html">CB2D</a></td>
 <td class="map-length-0">52</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">(unknown) sub_CB2D</div>
+<div class="map-entry-title-10">(unknown) ran_out_of_list</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4193,7 +4205,7 @@
 <td class="map-c"><span id="cb61"></span><a href="../asm/CB61.html">CB61</a></td>
 <td class="map-length-0">20</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">(unknown) sub_CB61</div>
+<div class="map-entry-title-10">(unknown) handle_target</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4346,10 +4358,10 @@
 <tr>
 <td class="map-page-1">205</td>
 <td class="map-byte-1">154</td>
-<td class="map-b"><span id="cd9a"></span><a href="../asm/CD9A.html">CD9A</a></td>
+<td class="map-w"><span id="cd9a"></span><a href="../asm/CD9A.html">CD9A</a></td>
 <td class="map-length-0">16</td>
-<td class="map-b-desc">
-<div class="map-entry-title-10">Data for the four classes of characters.</div>
+<td class="map-w-desc">
+<div class="map-entry-title-10">Data for the four classes of characters. (&lt;- spawn_character)</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4361,7 +4373,7 @@
 <td class="map-b"><span id="cdaa"></span><a href="../asm/CDAA.html">CDAA</a></td>
 <td class="map-length-0">72</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">Indices into character_related_pointers.</div>
+<div class="map-entry-title-10">Indices into animations.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4373,7 +4385,7 @@
 <td class="map-w"><span id="cdf2"></span><a href="../asm/CDF2.html">CDF2</a></td>
 <td class="map-length-0">48</td>
 <td class="map-w-desc">
-<div class="map-entry-title-10">(unknown) Character related pointers.</div>
+<div class="map-entry-title-10">Animation states.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4397,7 +4409,7 @@
 <td class="map-b"><span id="cf06"></span><a href="../asm/CF06.html">CF06</a></td>
 <td class="map-length-0">288</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">(unknown) Character related data.</div>
+<div class="map-entry-title-10">Animations.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -4829,7 +4841,7 @@
 <td class="map-b"><span id="f05d"></span><a href="../asm/F05D.html">F05D</a></td>
 <td class="map-length-0">11</td>
 <td class="map-b-desc">
-<div class="map-entry-title-10">Gates and doors.</div>
+<div class="map-entry-title-10">Locked gates and doors.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -5293,9 +5305,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

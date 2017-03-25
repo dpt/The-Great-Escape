@@ -64,7 +64,7 @@ Reset hero.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b2ff"></span>B2FF</td>
 <td class="instruction">CALL <a href="B71B.html">$B71B</a></td>
-<td class="comment-11" rowspan="1">reset_position();</td>
+<td class="comment-11" rowspan="1">calc_vischar_screenpos_from_mi_pos();</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -80,7 +80,7 @@ Centre the screen on the hero.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b302"></span>B302</td>
 <td class="instruction">LD HL,$8018</td>
-<td class="comment-11" rowspan="1">HL = $8018;</td>
+<td class="comment-11" rowspan="1">HL = $8018; // (vischar.screenpos.x)</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -110,7 +110,7 @@ Centre the screen on the hero.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b30b"></span>B30B</td>
 <td class="instruction">SUB $0B</td>
-<td class="comment-11" rowspan="2">map_position[0] = A - 11; // 11 would be screen width minus half of character width?</td>
+<td class="comment-11" rowspan="2">map_position.x = A - 11; // 11 would be screen width minus half of character width?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -152,7 +152,7 @@ Centre the screen on the hero.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b317"></span>B317</td>
 <td class="instruction">SUB $06</td>
-<td class="comment-11" rowspan="2">map_position[1] = A - 6; // 6 would be screen height minus half of character height?</td>
+<td class="comment-11" rowspan="2">map_position.y = A - 6; // 6 would be screen height minus half of character height?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -164,7 +164,7 @@ Centre the screen on the hero.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b31c"></span>B31C</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">room_index = room_NONE;</td>
+<td class="comment-11" rowspan="2">room_index = room_0_OUTDOORS;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -211,9 +211,9 @@ Centre the screen on the hero.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

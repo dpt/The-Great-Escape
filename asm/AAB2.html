@@ -69,7 +69,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="aab7"></span>AAB7</td>
 <td class="instruction">LD HL,$8007</td>
-<td class="comment-11" rowspan="3">if ($8007 &amp; vischar_BYTE7_BIT6) return; // don't move the map if touch() is entered?</td>
+<td class="comment-11" rowspan="3">if ($8007 &amp; vischar_BYTE7_TOUCHING) return; // don't move the map if touch() is entered?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -159,7 +159,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="aacc"></span>AACC</td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment-11" rowspan="3">if (C &amp; vischar_BYTE12_BIT7) A ^= 2; // exchange up and down</td>
+<td class="comment-11" rowspan="3">if (C &amp; vischar_ANIMINDEX_BIT7) A ^= 2; // exchange up and down</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -381,7 +381,7 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="ab07"></span>AB07</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="2">if (A &gt;= 2) &lt;%</td>
+<td class="comment-11" rowspan="2">if (A &lt; 2) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -742,9 +742,9 @@ Called when player moves up-right (map is shifted down-left).
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

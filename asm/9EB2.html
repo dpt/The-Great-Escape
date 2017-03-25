@@ -84,7 +84,7 @@ Used by the routine at <a href="9E07.html">9E07</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9ebe"></span>9EBE</td>
 <td class="instruction">LD A,($800E)</td>
-<td class="comment-11" rowspan="9">$800D = snipping_wire_new_inputs[$800E &amp; 3]; // change direction</td>
+<td class="comment-11" rowspan="9">$800D = cutting_wire_new_inputs[$800E &amp; vischar_DIRECTION_MASK]; // change direction</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -157,14 +157,14 @@ Bug: A is always zero here, so $800E is always set to zero.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="9ed0"></span>9ED0</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment-11" rowspan="1">else &lt;% $800E = A &amp; 3; // set direction</td>
+<td class="comment-11" rowspan="1">else &lt;% $800E = A &amp; vischar_DIRECTION_MASK; // set direction</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="9ed3"></span>
 <div class="comments">
 <div class="paragraph">
-LD A,(HL) missing here?
+LD A,(HL) missing here? x86 version moves zero into $800E - has no AND - is that just hardcoding the bug?
 </div>
 </div>
 </td>
@@ -225,25 +225,25 @@ New inputs table.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9ee0"></span>9EE0</td>
 <td class="instruction">DEFB $84</td>
-<td class="comment-11" rowspan="1">input_UP   | input_LEFT  | input_KICK</td>
+<td class="comment-11" rowspan="1">input_UP   + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9ee1"></span>9EE1</td>
 <td class="instruction">DEFB $87</td>
-<td class="comment-11" rowspan="1">input_UP   | input_RIGHT | input_KICK</td>
+<td class="comment-11" rowspan="1">input_UP   + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9ee2"></span>9EE2</td>
 <td class="instruction">DEFB $88</td>
-<td class="comment-11" rowspan="1">input_DOWN | input_RIGHT | input_KICK</td>
+<td class="comment-11" rowspan="1">input_DOWN + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9ee3"></span>9EE3</td>
 <td class="instruction">DEFB $85</td>
-<td class="comment-11" rowspan="1">input_DOWN | input_LEFT  | input_KICK</td>
+<td class="comment-11" rowspan="1">input_DOWN + input_LEFT  + input_KICK</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -254,9 +254,9 @@ New inputs table.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

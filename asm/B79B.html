@@ -178,7 +178,7 @@ Lock the gates.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b7c3"></span>B7C3</td>
 <td class="instruction">LD HL,$F05D</td>
-<td class="comment-11" rowspan="1">HL = &amp;gates_and_doors[0];</td>
+<td class="comment-11" rowspan="1">HL = &amp;locked_doors[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -190,7 +190,7 @@ Lock the gates.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="b7c8"></span>B7C8</td>
 <td class="instruction">SET 7,(HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% *HL++ |= gates_and_doors_LOCKED;</td>
+<td class="comment-11" rowspan="2">do &lt;% *HL++ |= door_LOCKED;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -562,9 +562,9 @@ struct { byte room; byte x; byte y; }; // partial of character_struct
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

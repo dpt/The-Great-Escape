@@ -117,7 +117,7 @@ Used by the routine at <a href="6939.html">6939</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="699c"></span>699C</td>
 <td class="instruction">CALL <a href="B71B.html">$B71B</a></td>
-<td class="comment-11" rowspan="1">reset_position(); // reset item vischar</td>
+<td class="comment-11" rowspan="1">calc_vischar_screenpos_from_mi_pos(); // reset item vischar</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -151,43 +151,43 @@ Fourteen bytes of reset data.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69a3"></span>69A3</td>
 <td class="instruction">DEFB $00,$00,$00</td>
-<td class="comment-11" rowspan="1">p04</td>
+<td class="comment-11" rowspan="1">pos</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69a6"></span>69A6</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">b07</td>
+<td class="comment-11" rowspan="1">counter_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69a7"></span>69A7</td>
 <td class="instruction">DEFW <a href="CDF2.html">$CDF2</a></td>
-<td class="comment-11" rowspan="1">w08</td>
+<td class="comment-11" rowspan="1">animbase = &amp;animations[0]</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69a9"></span>69A9</td>
 <td class="instruction">DEFW <a href="CF06.html#cf76">$CF76</a></td>
-<td class="comment-11" rowspan="1">w0A</td>
+<td class="comment-11" rowspan="1">anim     = animations[8] // anim_wait_tl animation</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69ab"></span>69AB</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">b0C</td>
+<td class="comment-11" rowspan="1">animindex</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69ac"></span>69AC</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">b0D</td>
+<td class="comment-11" rowspan="1">input</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69ad"></span>69AD</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">b0E</td>
+<td class="comment-11" rowspan="1">direction</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -198,9 +198,9 @@ Fourteen bytes of reset data.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

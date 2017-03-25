@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="BAF7.html">BAF7</a></span></td>
 </tr>
 </table>
-<div class="description">BADC: Masks tiles (placed in a stride-of-4 arrangement) by the specified index exterior_tiles (set zero).</div>
+<div class="description">BADC: AND a tile in the mask buffer against the specified mask tile.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -40,7 +40,7 @@ Used by the routine at <a href="B916.html">B916</a>.
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to source/destination.</td>
+<td class="register-desc">Pointer to a tile to be masked.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -67,7 +67,7 @@ Used by the routine at <a href="B916.html">B916</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bade"></span>BADE</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="7">HLdash = &amp;exterior_tiles_0[A];</td>
+<td class="comment-11" rowspan="7">HLdash = &amp;mask_tiles[A];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -145,7 +145,7 @@ Used by the routine at <a href="B916.html">B916</a>.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="baef"></span>BAEF</td>
 <td class="instruction">INC E</td>
-<td class="comment-11" rowspan="4">DEdash += 4; /* supertile stride */</td>
+<td class="comment-11" rowspan="4">DEdash += 4; /* mask buffer rowbytes */</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -192,9 +192,9 @@ Used by the routine at <a href="B916.html">B916</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

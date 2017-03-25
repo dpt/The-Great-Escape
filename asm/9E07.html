@@ -52,7 +52,7 @@ Used by the routine at <a href="9D7B.html">9D7B</a>.
 Morale exhausted? If so then don't allow input.
 </div>
 <div class="paragraph">
-Note the combined read of morale_1 and morale_2 as a word.
+Note the combined read of in_solitary and morale_exhausted as a word.
 </div>
 </div>
 </td>
@@ -61,7 +61,7 @@ Note the combined read of morale_1 and morale_2 as a word.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="9e07"></span>9E07</td>
 <td class="instruction">LD HL,($A13A)</td>
-<td class="comment-11" rowspan="5">if (morale_1 || morale_2) return;</td>
+<td class="comment-11" rowspan="5">if (in_solitary || morale_exhausted) return;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -134,7 +134,7 @@ Postpone automatic control for 31 turns.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9e1a"></span>9E1A</td>
 <td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="2">if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_a_lock; // exit via</td>
+<td class="comment-11" rowspan="2">if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_lock; // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -146,7 +146,7 @@ Postpone automatic control for 31 turns.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="9e1f"></span>9E1F</td>
 <td class="instruction">JP <a href="9EB2.html">$9EB2</a></td>
-<td class="comment-11" rowspan="1">else goto snipping_wire; %&gt; // exit via</td>
+<td class="comment-11" rowspan="1">else goto cutting_wire; %&gt; // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -550,9 +550,9 @@ If input state has changed then kick a sprite update.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

@@ -51,41 +51,31 @@ Sets a target location 0x002B. Seems to get hit around breakfasting time. If I n
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="a4d8"></span>A4D8</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment-11" rowspan="2">A = IY[0]; // must be a character index</td>
+<td class="comment-11" rowspan="1">A = IY[0]; // must be a character index</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a4db"></span>A4DB</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">if (A != 0) goto byte_A13E_anotherone_common;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a4dc"></span>A4DC</td>
 <td class="instruction">JR NZ,<a href="A4E4.html">$A4E4</a></td>
-<td class="comment-11" rowspan="3">if (A == 0) &lt;% set_hero_target_location(location_002B); return; %&gt; // exit via</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a4de"></span>A4DE</td>
 <td class="instruction">LD BC,$2B00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">set_hero_target_location(location_002B); // exit via</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="a4e1"></span>A4E1</td>
 <td class="instruction">JP <a href="A33F.html">$A33F</a></td>
 <td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-
-<div class="comments">
-<div class="paragraph">
-FALL THROUGH into byte_A13E_anotherone_common.
-</div>
-</div>
-</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -96,9 +86,9 @@ FALL THROUGH into byte_A13E_anotherone_common.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

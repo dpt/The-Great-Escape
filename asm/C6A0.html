@@ -284,7 +284,7 @@ No target? Not yet understood.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c6d2"></span>C6D2</td>
 <td class="instruction">CALL <a href="C651.html">$C651</a></td>
-<td class="comment-11" rowspan="1">sub_C651(); // "move towards" ? // returning ? in A, ? in HL</td>
+<td class="comment-11" rowspan="1">get_next_target(); // "move towards" ? // returning ? in A, ? in HL</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -769,7 +769,7 @@ Are we checking to see if a door is adjacent?
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c73c"></span>C73C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="5">*DE = (*HL &amp; doorpos_FLAGS_MASK_ROOM) &gt;&gt; 2; // extract room field</td>
+<td class="comment-11" rowspan="5">*DE = (*HL &amp; ~doorpos_FLAGS_MASK_DIRECTION) &gt;&gt; 2; // extract room field</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -800,7 +800,7 @@ Are we checking to see if a door is adjacent?
 <span id="c742"></span>
 <div class="comments">
 <div class="paragraph">
-Stuff reading from door_positions.
+Stuff reading from doors[].
 </div>
 </div>
 </td>
@@ -1194,6 +1194,16 @@ So when we reach here a character is stuck.
 <td class="comment-11" rowspan="1">HL++;       // interleaved</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="c794"></span>
+<div class="comments">
+<div class="paragraph">
+sampled HL = $7618, $762D, $7634, $7657, $766C, $76AB, $76B2, $76B9, $76C0, $76C7 =&gt; final byte of charstruct
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c794"></span>C794</td>
 <td class="instruction">JR NZ,$C798</td>
@@ -1232,9 +1242,9 @@ So when we reach here a character is stuck.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

@@ -30,19 +30,9 @@
 Used by the routine at <a href="BB98.html">BB98</a>.
 </div>
 </div>
-<table class="input-0">
+<table class="input-1">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-1">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-<tr>
-<td class="register">BC</td>
-<td class="register-desc">Pointer to tile set.</td>
 </tr>
 <tr>
 <td class="register">H</td>
@@ -51,6 +41,19 @@ Used by the routine at <a href="BB98.html">BB98</a>.
 <tr>
 <td class="register">L</td>
 <td class="register-desc">Y shift.</td>
+</tr>
+</table>
+<table class="output-1">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Preserved.</td>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Pointer to tile set.</td>
 </tr>
 </table>
 </td>
@@ -249,7 +252,7 @@ Convert map position to an index into 7x5 supertile refs array.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bcd7"></span>BCD7</td>
 <td class="instruction">LD BC,$8590</td>
-<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles_1[0];</td>
+<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -267,7 +270,7 @@ Convert map position to an index into 7x5 supertile refs array.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bcde"></span>BCDE</td>
 <td class="instruction">LD BC,$8A18</td>
-<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles_2[0];</td>
+<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles[145];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -297,7 +300,7 @@ Convert map position to an index into 7x5 supertile refs array.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="bce9"></span>BCE9</td>
 <td class="instruction">LD BC,$90F8</td>
-<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles_3[0]; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles[145 + 220]; %&gt; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -320,9 +323,9 @@ Convert map position to an index into 7x5 supertile refs array.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

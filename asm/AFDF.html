@@ -678,7 +678,7 @@ A hostile catches the hero!
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b07e"></span>B07E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">tmpA = A;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -690,7 +690,7 @@ A hostile catches the hero!
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b082"></span>B082</td>
 <td class="instruction">CP $1C</td>
-<td class="comment-11" rowspan="1">tmpA = A;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -762,7 +762,7 @@ A hostile catches the hero!
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b096"></span>B096</td>
 <td class="instruction">JR C,$B09A</td>
-<td class="comment-11" rowspan="3">if (A &gt;= C) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch</td>
+<td class="comment-11" rowspan="3">if (C &gt; A) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1102,25 +1102,25 @@ New inputs.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b0f8"></span>B0F8</td>
 <td class="instruction">DEFB $85</td>
-<td class="comment-11" rowspan="1">input_DOWN | input_LEFT  | input_KICK</td>
+<td class="comment-11" rowspan="1">input_DOWN + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b0f9"></span>B0F9</td>
 <td class="instruction">DEFB $84</td>
-<td class="comment-11" rowspan="1">input_UP   | input_LEFT  | input_KICK</td>
+<td class="comment-11" rowspan="1">input_UP   + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b0fa"></span>B0FA</td>
 <td class="instruction">DEFB $87</td>
-<td class="comment-11" rowspan="1">input_UP   | input_RIGHT | input_KICK</td>
+<td class="comment-11" rowspan="1">input_UP   + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="b0fb"></span>B0FB</td>
 <td class="instruction">DEFB $88</td>
-<td class="comment-11" rowspan="1">input_DOWN | input_RIGHT | input_KICK</td>
+<td class="comment-11" rowspan="1">input_DOWN + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -1179,9 +1179,9 @@ New inputs.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

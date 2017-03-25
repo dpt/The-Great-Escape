@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
 
 </head>
-<body class="Asm-b">
+<body class="Asm-w">
 <table class="header">
 <tr>
 <td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="CDAA.html">CDAA</a></span></td>
 </tr>
 </table>
-<div class="description">CD9A: Data for the four classes of characters.</div>
+<div class="description">CD9A: Data for the four classes of characters. (&lt;- spawn_character)</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -45,26 +45,50 @@
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd9a"></span>CD9A</td>
-<td class="instruction">DEFB $F2,$CD,$D6,$CE</td>
-<td class="comment-11" rowspan="1">&amp;character_related_pointers[0], &amp;sprites[30] // meta_commandant (&lt;- spawn_character)</td>
+<td class="instruction">DEFW <a href="CDF2.html">$CDF2</a></td>
+<td class="comment-11" rowspan="1">&amp;animations[0]</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><span id="cd9c"></span>CD9C</td>
+<td class="instruction">DEFW <a href="CE22.html#ced6">$CED6</a></td>
+<td class="comment-11" rowspan="1">sprite_commandant</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cd9e"></span>CD9E</td>
-<td class="instruction">DEFB $F2,$CD,$A6,$CE</td>
-<td class="comment-11" rowspan="1">&amp;character_related_pointers[0], &amp;sprites[22] // meta_guard (&lt;- spawn_character)</td>
+<td class="instruction">DEFW <a href="CDF2.html">$CDF2</a></td>
+<td class="comment-11" rowspan="1">&amp;animations[0]</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><span id="cda0"></span>CDA0</td>
+<td class="instruction">DEFW <a href="CE22.html#cea6">$CEA6</a></td>
+<td class="comment-11" rowspan="1">sprite_guard</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cda2"></span>CDA2</td>
-<td class="instruction">DEFB $F2,$CD,$76,$CE</td>
-<td class="comment-11" rowspan="1">&amp;character_related_pointers[0], &amp;sprites[14] // meta_dog (&lt;- spawn_character)</td>
+<td class="instruction">DEFW <a href="CDF2.html">$CDF2</a></td>
+<td class="comment-11" rowspan="1">&amp;animations[0]</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><span id="cda4"></span>CDA4</td>
+<td class="instruction">DEFW <a href="CE22.html#ce76">$CE76</a></td>
+<td class="comment-11" rowspan="1">sprite_dog</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="cda6"></span>CDA6</td>
-<td class="instruction">DEFB $F2,$CD,$2E,$CE</td>
-<td class="comment-11" rowspan="1">&amp;character_related_pointers[0], &amp;sprites[2]  // meta_prisoner (&lt;- spawn_character)</td>
+<td class="instruction">DEFW <a href="CDF2.html">$CDF2</a></td>
+<td class="comment-11" rowspan="1">&amp;animations[0]</td>
+</tr>
+<tr>
+<td class="asm-label-0"></td>
+<td class="address-1"><span id="cda8"></span>CDA8</td>
+<td class="instruction">DEFW <a href="CE22.html#ce2e">$CE2E</a></td>
+<td class="comment-11" rowspan="1">sprite_prisoner</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -75,9 +99,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

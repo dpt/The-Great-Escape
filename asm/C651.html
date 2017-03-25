@@ -76,7 +76,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c656"></span>C656</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="3">A = *++HL &amp; characterstruct_BYTE6_MASK_HI;</td>
+<td class="comment-11" rowspan="3">A = *++HL &amp; ~characterstruct_BYTE6_MASK_LO;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -208,7 +208,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c676"></span>C676</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">if (A == 0xFF) ...</td>
+<td class="comment-11" rowspan="1">if (A == door_NONE) ...</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -226,7 +226,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c67b"></span>C67B</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1">A &amp;= 0x7F;</td>
+<td class="comment-11" rowspan="1">A &amp;= ~door_LOCKED;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -250,7 +250,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="c682"></span>C682</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="3">if (*HL &amp; (1&lt;&lt;7)) A ^= 0x80; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general</td>
+<td class="comment-11" rowspan="3">if (*HL &amp; vischar_BYTE2_BIT7) A ^= door_LOCKED; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -268,7 +268,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="C4E0.html">C4E0</
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="c688"></span>C688</td>
 <td class="instruction">CALL <a href="6A12.html">$6A12</a></td>
-<td class="comment-11" rowspan="1">transition();</td>
+<td class="comment-11" rowspan="1">HL = get_door();</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -379,9 +379,9 @@ sampled A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>

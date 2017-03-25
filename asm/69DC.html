@@ -52,7 +52,7 @@ Used by setup_room only.
 <span id="69dc"></span>
 <div class="comments">
 <div class="paragraph">
-Wipe door_related with 0xFF.
+Wipe interior doors with 0xFF.
 </div>
 </div>
 </td>
@@ -67,7 +67,7 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69de"></span>69DE</td>
 <td class="instruction">LD DE,$81D9</td>
-<td class="comment-11" rowspan="1">DE = door_related + 3;</td>
+<td class="comment-11" rowspan="1">DE = interior_doors + 3;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -79,7 +79,7 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="69e3"></span>69E3</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="2">do &lt;% *DE-- = 0xFF;</td>
+<td class="comment-11" rowspan="2">do &lt;% *DE-- = door_NONE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -97,7 +97,7 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69e7"></span>69E7</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++; // DE = &amp;door_related[0];</td>
+<td class="comment-11" rowspan="1">DE++; // DE = &amp;interior_doors[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -139,13 +139,13 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69f1"></span>69F1</td>
 <td class="instruction">LD HL,$78D6</td>
-<td class="comment-11" rowspan="1">HLdash = &amp;door_positions[0];</td>
+<td class="comment-11" rowspan="1">HLdash = &amp;doors[0];</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="69f4"></span>69F4</td>
 <td class="instruction">LD B,$7C</td>
-<td class="comment-11" rowspan="1">Bdash = 124; // length of door_positions</td>
+<td class="comment-11" rowspan="1">Bdash = 124; // length of doors[]</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -157,7 +157,7 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="69f9"></span>69F9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="5">do &lt;% if (HLdash[0] &amp; 0xFC == B) &lt;%</td>
+<td class="comment-11" rowspan="5">do &lt;% if ((HLdash[0] &amp; ~doorpos_FLAGS_MASK_DIRECTION) == B) &lt;%</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -187,7 +187,7 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6a00"></span>6A00</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="4">*DE++ = C ^ 0x80; %&gt;</td>
+<td class="comment-11" rowspan="4">*DE++ = C ^ door_REVERSE; %&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -211,7 +211,7 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-2"><span id="6a05"></span>6A05</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">C ^= 0x80;</td>
+<td class="comment-11" rowspan="2">C ^= door_REVERSE;</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -223,7 +223,7 @@ Wipe door_related with 0xFF.
 <td class="asm-label-0"></td>
 <td class="address-1"><span id="6a08"></span>6A08</td>
 <td class="instruction">JP M,$6A0C</td>
-<td class="comment-11" rowspan="4">if (C &gt;= 0) C++; // increment every two stops?</td>
+<td class="comment-11" rowspan="4">if (C &lt; door_REVERSE) C++; // increment every two stops?</td>
 </tr>
 <tr>
 <td class="asm-label-0"></td>
@@ -270,9 +270,9 @@ Wipe door_related with 0xFF.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20160326</div>
+<div class="release">The incomplete The Great Escape disassembly 20170325</div>
 <div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.1.</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
 </footer>
 </body>
 </html>
