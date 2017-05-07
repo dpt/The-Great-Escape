@@ -5,14 +5,14 @@
 ;
 
 [Fact:unusedSupertiles:Unused super tiles]
-There are two unused supertiles: $4F and $9A. The tiles themselves are defined but not used in the map.
+There are two unused supertiles: $4F and $9A. The tiles are defined but not used in the map.
 
 [Fact:alternatingSpeed:Game speed varies]
-When our hero is outdoors the speed of the game can vary depending on where he stands. Look at the flag waving rate then take a single step. You will notice the flag waving faster or slower depending on where you started.
+When our hero is outdoors the speed of the game can vary greatly depending on where he stands. Look at the rate at which the morale flag waves then take a single step. You will notice the flag waving faster or slower depending on where you started.
 
 This is because the routine which copies the back-buffered game screen to the real screen has two modes: a fast mode where the bytes are copied directly and a slow mode where the pixels are rolled by a nibble before being written. Depending on where the hero is standing the screen buffer may not be aligned with regard to the screen and require use of the slow rolling routine.
 
-In the interior maps the game runs far too fast so has a dedicated delay loop at #R$A095 to slow things down.
+Interior scenes in the game run far too fast so have a dedicated delay loop at #R$A095 to slow things down.
 
 [Fact:unusedRooms:Unused rooms]
 There are three unused room indices: 6, 26 and 27.
