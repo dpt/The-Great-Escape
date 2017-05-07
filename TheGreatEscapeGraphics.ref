@@ -85,20 +85,20 @@ PageContent=#INCLUDE(PageContent:Items)
 
 [PageContent:Items]
 #UDGTABLE(gallery)
-{ Shovel   | #UDGARRAY2,7,4,2,,,,2;$DDDD-$DDF6-1-16:$DE95-$DEAE-1-16{0,0,64,52}(sprite-shovel) }
-{ Key      | #UDGARRAY2,7,4,2,,,,2;$DDF7-$DE10-1-16:$DE95-$DEAE-1-16{0,0,64,52}(sprite-key) }
-{ Lockpick | #UDGARRAY2,7,4,2,,,,2;$DE11-$DE30-1-16:$DEAF-$DECE-1-16{0,0,64,64}(sprite-lockpick) }
-{ Compass  | #UDGARRAY2,7,4,2,,,,2;$DE31-$DE48-1-16:$DECF-$DEE6-1-16{0,0,64,48}(sprite-compass) }
-{ Purse    | #UDGARRAY2,7,4,2,,,,2;$DE49-$DE60-1-16:$DEE7-$DEFE-1-16{0,0,64,48}(sprite-purse) }
-{ Papers   | #UDGARRAY2,7,4,2,,,,2;$DE61-$DE7E-1-16:$DEFF-$DF1C-1-16{0,0,64,60}(sprite-papers) }
-{ Wiresnip | #UDGARRAY2,7,4,2,,,,2;$DE7F-$DE94-1-16:$DF1D-$DF32-1-16{0,0,64,44}(sprite-wiresnips) }
-{ Food     | #UDGARRAY2,7,4,2,,,,2;$DF33-$DF52-1-16:$E0B7-$E0D6-1-16{0,0,64,64}(sprite-food) }
-{ Poison   | #UDGARRAY2,7,4,2,,,,2;$DF53-$DF72-1-16:$E05F-$E07E-1-16{0,0,64,64}(sprite-poison) }
-{ Torch    | #UDGARRAY2,7,4,2,,,,2;$DF73-$DF8A-1-16:$E07F-$E096-1-16{0,0,64,48}(sprite-torch) }
-{ Uniform  | #UDGARRAY2,7,4,2,,,,2;$DF8B-$DFAA-1-16:$E01F-$E03E-1-16{0,0,64,64}(sprite-uniform) }
-{ Bribe    | #UDGARRAY2,7,4,2,,,,2;$DFAB-$DFC4-1-16:$E005-$E01E-1-16{0,0,64,52}(sprite-bribe) }
-{ Radio    | #UDGARRAY2,7,4,2,,,,2;$DFC5-$DFE4-1-16:$E097-$E0B6-1-16{0,0,64,64}(sprite-radio) }
-{ Parcel   | #UDGARRAY2,7,4,2,,,,2;$DFE5-$E004-1-16:$E03F-$E05E-1-16{0,0,64,64}(sprite-parcel) }
+{ Shovel   | #UDGARRAY2,7,4,2,,,,2;$DDDD-$DDF6-1-16:$DE95-$DEAE-1-16{0,0,64,52}(sprite-shovel)    | The shovel is used to clear the blockage in tunnel room 50. }
+{ Key      | #UDGARRAY2,7,4,2,,,,2;$DDF7-$DE10-1-16:$DE95-$DEAE-1-16{0,0,64,52}(sprite-key)       | Keys are used to unlock doors. There are three in the game: red, yellow and green. }
+{ Lockpick | #UDGARRAY2,7,4,2,,,,2;$DE11-$DE30-1-16:$DEAF-$DECE-1-16{0,0,64,64}(sprite-lockpick)  | The lockpick can open any locked door, but takes 255 game ticks (defined at #R$B49F). }
+{ Compass  | #UDGARRAY2,7,4,2,,,,2;$DE31-$DE48-1-16:$DECF-$DEE6-1-16{0,0,64,48}(sprite-compass)   | The compass is an escape item <link to escape conditions>. }
+{ Purse    | #UDGARRAY2,7,4,2,,,,2;$DE49-$DE60-1-16:$DEE7-$DEFE-1-16{0,0,64,48}(sprite-purse)     | The purse is an escape item <link to escape conditions>. }
+{ Papers   | #UDGARRAY2,7,4,2,,,,2;$DE61-$DE7E-1-16:$DEFF-$DF1C-1-16{0,0,64,60}(sprite-papers)    | The papers are an escape item <link to escape conditions>. }
+{ Wiresnip | #UDGARRAY2,7,4,2,,,,2;$DE7F-$DE94-1-16:$DF1D-$DF32-1-16{0,0,64,44}(sprite-wiresnips) | The wiresnips are used to break through fences. They take 96 game ticks (defined at #R$B48B). }
+{ Food     | #UDGARRAY2,7,4,2,,,,2;$DF33-$DF52-1-16:$E0B7-$E0D6-1-16{0,0,64,64}(sprite-food)      | The food attracts a guard dog. }
+{ Poison   | #UDGARRAY2,7,4,2,,,,2;$DF53-$DF72-1-16:$E05F-$E07E-1-16{0,0,64,64}(sprite-poison)    | The poison is used on the food to kill a guard dog. }
+{ Torch    | #UDGARRAY2,7,4,2,,,,2;$DF73-$DF8A-1-16:$E07F-$E096-1-16{0,0,64,48}(sprite-torch)     | The torch is illuminates tunnels when held. }
+{ Uniform  | #UDGARRAY2,7,4,2,,,,2;$DF8B-$DFAA-1-16:$E01F-$E03E-1-16{0,0,64,64}(sprite-uniform)   | The uniform disguises the hero as a guard. Guards will not recognise the hero, but the commandant will. It is also an escape item <link to escape conditions>. }
+{ Bribe    | #UDGARRAY2,7,4,2,,,,2;$DFAB-$DFC4-1-16:$E005-$E01E-1-16{0,0,64,52}(sprite-bribe)     | The bribe is used to make another prisoner cause a distraction. }
+{ Radio    | #UDGARRAY2,7,4,2,,,,2;$DFC5-$DFE4-1-16:$E097-$E0B6-1-16{0,0,64,64}(sprite-radio)     | No known use. }
+{ Parcel   | #UDGARRAY2,7,4,2,,,,2;$DFE5-$E004-1-16:$E03F-$E05E-1-16{0,0,64,64}(sprite-parcel)    | The red cross parcel contains items <link to delivery order>. }
 TABLE#
 
 [Page:Masks]
