@@ -400,9 +400,13 @@
 ; vischar_FLAGS_MASK                            = $3F,
 ; vischar_FLAGS_PICKING_LOCK                    = 1 << 0,       ; hero only
 ; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,       ; hero only
-; vischar_FLAGS_BRIBE_PENDING                   = 1 << 0,       ; non-hero only
-; vischar_FLAGS_BIT1                            = 1 << 1,       ; non-hero only (dog + food flag)
-; vischar_FLAGS_SAW_BRIBE                       = 1 << 2,       ; set when a hostile 'saw' a bribe being used (was nearby) or perhaps distracted
+;
+; Four pursuit modes:
+; vischar_FLAGS_PURSUE                          = 1 << 0,       ; non-hero only. this flag is set when a visible friendly was nearby when a bribe was used. it's also set by hostiles_pursue
+; vischar_FLAGS_HASSLE                          = 2 << 0,       ; this flag is set in guards_follow_suspicious_character when a hostile is following the hero
+; vischar_FLAGS_DOG_FOOD                        = 3 << 0,       ; set when food is in the vicinity of a dog
+; vischar_FLAGS_SAW_BRIBE                       = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
+;
 ; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,       ; affects scaling
 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
 ;
@@ -9309,7 +9313,7 @@ c$AFDF LD HL,$8001     ; HL = $8001; // &vischar[0].byte1;
 ; If specified vischar character has a bribe pending...
  $B04B LD A,(IY+$01)   ; {  A = IY[1] & 0x0F; // sampled IY=$8020,$8040,$8060,$8000 // but this is *not* vischar_FLAGS_MASK, which is 0x1F
  $B04E AND $0F         ; }
- $B050 CP $01          ; {  if (A == 1) <%
+ $B050 CP $01          ; {  if (A == vischar_FLAGS_PURSUE) <%
  $B052 JR NZ,$B071     ; }
 ; and current vischar is not the hero...
  $B054 POP HL
@@ -9942,7 +9946,7 @@ c$B3A8 LD HL,$8020   ; HL = $8020; // iterate over non-player characters
  $B3BA DJNZ $B3AD    ; %> while (--B);
  $B3BC RET           ; return;
 *$B3BD LD ($AF8E),A  ; found: bribed_character = A;
- $B3C0 INC L         ; {HL[1] = vischar_FLAGS_BRIBE_PENDING; // $8021 etc. // flag
+ $B3C0 INC L         ; {HL[1] = vischar_FLAGS_PURSUE; // $8021 etc. // flag
  $B3C1 LD (HL),$01   ; }
  $B3C3 RET           ; return;
 
@@ -12513,7 +12517,7 @@ c$C892 XOR A         ; {entered_move_characters = 0;
  $C8DE JP Z,$C8F1    ;
  $C8E1 JP C,$C8F1    ; }
 ; Is the food nearby?
- $C8E4 PUSH IY       ; {        if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_NEARBY_7) IY[1] = 3; %> %>
+ $C8E4 PUSH IY       ; {        if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_NEARBY_7) IY[1] = vischar_FLAGS_DOG_FOOD; %> %>
  $C8E6 POP HL        ;
  $C8E7 INC L         ;
  $C8E8 LD A,($76FA)  ;
@@ -12562,7 +12566,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C929 LD A,(HL)      ; }
  $C92A AND A          ; {if (A != 0) <%
  $C92B JP Z,$C9BA     ; }
- $C92E CP $01         ; {  if (A == vischar_FLAGS_BRIBE_PENDING) <%
+ $C92E CP $01         ; {  if (A == vischar_FLAGS_PURSUE) <%
  $C930 JR NZ,$C943    ; }
 *$C932 PUSH HL
  $C933 EXX
@@ -12575,7 +12579,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C93D LDI            ;     *DEdash++ = *HLdash++;
  $C93F EXX
  $C940 JP $C9C0       ;     goto end_bit; %>
-*$C943 CP $02         ; {  else if (A == vischar_FLAGS_BIT1) <%
+*$C943 CP $02         ; {  else if (A == vischar_FLAGS_HASSLE) <%
  $C945 JR NZ,$C953    ; }
  $C947 LD A,($A139)   ; {    if (automatic_player_counter) goto $C932; // jump into case 1
  $C94A AND A          ;
@@ -12583,7 +12587,7 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C94D LD (HL),$00    ; {    *HL++ = 0;
  $C94F INC L          ; }
  $C950 JP $CB23       ;     get_target_assign_pos(); return; %> // exit via
-*$C953 CP $03         ; {  else if (A == (vischar_FLAGS_BRIBE_PENDING + vischar_FLAGS_BIT1)) <%}
+*$C953 CP $03         ; {  else if (A == vischar_FLAGS_DOG_FOOD) <%}
  $C955 JR NZ,$C979    ;
  $C957 PUSH HL
  $C958 EX DE,HL
@@ -12809,13 +12813,13 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CA84 LD C,A        ; C = A;
  $CA85 AND $3F       ; A &= vischar_FLAGS_MASK;
  $CA87 JR Z,$CAB6    ; if (A) <%
- $CA89 CP $01        ; {  if (A == vischar_FLAGS_BRIBE_PENDING) <%
+ $CA89 CP $01        ; {  if (A == vischar_FLAGS_PURSUE) <%
  $CA8B JR NZ,$CA99   ; }
  $CA8D LD A,($AF8E)  ; {    if (IY[0] == bribed_character) <% accept_bribe(); return; %> // exit via
  $CA90 CP (IY+$00)   ;
  $CA93 JP Z,$B107    ; }
  $CA96 JP $CB98      ;     else <% solitary(); return; %> %> // failed to bribe? // exit via
-*$CA99 CP $02        ; {  else if (A == vischar_FLAGS_BIT1 || A == vischar_FLAGS_SAW_BRIBE) <% return; %>
+*$CA99 CP $02        ; {  else if (A == vischar_FLAGS_HASSLE || A == vischar_FLAGS_SAW_BRIBE) <% return; %>
  $CA9B RET Z         ;
  $CA9C CP $04        ;
  $CA9E RET Z         ; }
@@ -13217,7 +13221,7 @@ c$CC37 PUSH IY         ; {HL = IY;
  $CC98 LD A,(IY+$13)   ;   A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
  $CC9B CP $20          ; {  if (A < 32) // height
  $CC9D RET NC          ; }
- $CC9E LD (IY+$01),$02 ;     IY[1] = vischar_FLAGS_BIT1; // dog+food flag?
+ $CC9E LD (IY+$01),$02 ;     IY[1] = vischar_FLAGS_HASSLE;
  $CCA2 RET             ;   return; %>
 *$CCA3 XOR A           ; {bell = bell_RING_PERPETUAL;
  $CCA4 LD ($A130),A    ; }
@@ -13240,7 +13244,7 @@ c$CCAB LD HL,$8020   ; {HL = $8020; // iterate over non-player characters
 *$CCB3 PUSH HL       ; do <%
 ; HL[0x13] is the character's height, testing this excludes the guards in the
 ; towers.
- $CCB4 LD A,(HL)     ; {  if (HL[0] <= character_19_GUARD_DOG_4 && HL[0x13] < 32) HL[1] = vischar_FLAGS_BRIBE_PENDING;
+ $CCB4 LD A,(HL)     ; {  if (HL[0] <= character_19_GUARD_DOG_4 && HL[0x13] < 32) HL[1] = vischar_FLAGS_PURSUE;
  $CCB5 CP $14        ;
  $CCB7 JR NC,$CCC8   ;
  $CCB9 LD A,$13      ;
