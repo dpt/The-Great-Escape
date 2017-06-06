@@ -5879,7 +5879,7 @@ c$9D7B CALL $9DCF    ; main_loop: for (;;) <% check_morale();
  $9D87 CALL $9F21    ;   in_permitted_area();
  $9D8A CALL $BB98    ;   restore_tiles();
  $9D8D CALL $C6A0    ;   move_characters();
- $9D90 CALL $C892    ;   follow_suspicious_character();
+ $9D90 CALL $C892    ;   automatics();
  $9D93 CALL $C47E    ;   purge_invisible_characters();
  $9D96 CALL $C41C    ;   spawn_characters();
  $9D99 CALL $DB9E    ;   mark_nearby_items();
@@ -6569,7 +6569,7 @@ g$A12F DEFB $00      ; game_counter
 ; { N | Ring for N calls }
 ; TABLE#
 ; .
-; Read-only by follow_suspicious_character.
+; Read-only by automatics.
 ; .
 ; Write/read-write by in_permitted_area, ring_bell, event_wake_up,
 ; event_go_to_roll_call, event_go_to_breakfast_time, event_breakfast_time,
@@ -6605,7 +6605,7 @@ g$A137 DEFB $00      ; hero_in_breakfast
 ; { 255 | Naughty }
 ; TABLE#
 ; .
-; Read-only by follow_suspicious_character, guards_follow_suspicious_character.
+; Read-only by automatics, guards_follow_suspicious_character.
 ; .
 ; Write/read-write by in_permitted_area.
 @label=red_flag
@@ -6616,7 +6616,7 @@ g$A138 DEFB $00      ; red_flag
 ; Countdown until CPU control of the player is assumed. When it becomes zero,
 ; control is assumed. It's usually set to 31 by input events.
 ; .
-; Read-only by touch, follow_suspicious_character, character_behaviour.
+; Read-only by touch, automatics, character_behaviour.
 ; .
 ; Write/read-write by check_morale, process_player_input,
 ; charevnt_hero_release, solitary.
@@ -6630,7 +6630,7 @@ g$A139 DEFB $00      ; automatic_player_counter
 ; Used to set flag colour.
 ; .
 ; Read-only by process_player_input, in_permitted_area,
-; set_hero_target_location, follow_suspicious_character.
+; set_hero_target_location, automatics.
 ; .
 ; Write/read-write by charevnt_solitary_ends, solitary.
 @label=in_solitary
@@ -6679,7 +6679,7 @@ g$A13D DEFB $07      ; clock
 ; charevnt_breakfast.
 ; .
 ; Write/read-write by set_target, spawn_character, move_characters,
-; follow_suspicious_character, set_target.
+; automatics, set_target.
 @label=entered_move_characters
 g$A13E DEFB $00      ; entered_move_characters
 
@@ -12455,7 +12455,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
 
 ; A countdown until any food item is discovered.
 ;
-; (<- follow_suspicious_character, target_reached)
+; (<- automatics, target_reached)
 @label=food_discovered_counter
 g$C891 DEFB $00      ; food_discovered_counter
 
@@ -12470,7 +12470,7 @@ g$C891 DEFB $00      ; food_discovered_counter
 ; .
 ;
 ; (I've still no idea what this flag means).
-@label=follow_suspicious_character
+@label=automatics
 c$C892 XOR A         ; {entered_move_characters = 0;
  $C893 LD ($A13E),A  ; }
 ; If the bell is not ringing, hostiles pursue.
