@@ -12463,8 +12463,8 @@ g$C891 DEFB $00      ; food_discovered_counter
 @label=follow_suspicious_character
 c$C892 XOR A         ; {entered_move_characters = 0;
  $C893 LD ($A13E),A  ; }
-; If the bell is not ringing, hostiles persue.
- $C896 LD A,($A130)  ; {if (bell == 0) hostiles_persue();
+; If the bell is not ringing, hostiles pursue.
+ $C896 LD A,($A130)  ; {if (bell == 0) hostiles_pursue();
  $C899 AND A         ;
  $C89A CALL Z,$CCAB  ; }
 ; If food was dropped then count down until it is discovered.
@@ -13210,18 +13210,18 @@ c$CC37 PUSH IY         ; {HL = IY;
  $CCA2 RET             ;   return; %>
 *$CCA3 XOR A           ; {bell = bell_RING_PERPETUAL;
  $CCA4 LD ($A130),A    ; }
- $CCA7 CALL $CCAB      ; hostiles_persue();
+ $CCA7 CALL $CCAB      ; hostiles_pursue();
  $CCAA RET             ; return;
 
-; Guards persue prisoners.
+; Guards pursue prisoners.
 ;
 ; Used by the routines at #R$C892, #R$CC37, #R$CCCD and #R$EF9A.
 ; .
-; For all visible, hostile characters, at height < 32, set the bribed/persue
+; For all visible, hostile characters, at height < 32, set the bribed/pursue
 ; flag.
 ; .
 ; Research: If I nop this out then guards don't spot the items I drop.
-@label=hostiles_persue
+@label=hostiles_pursue
 @nowarn
 c$CCAB LD HL,$8020   ; {HL = $8020; // iterate over non-player characters
  $CCAE LD DE,$0020   ; }
@@ -13252,7 +13252,7 @@ c$CCAB LD HL,$8020   ; {HL = $8020; // iterate over non-player characters
 ; Used by the routine at #R$C892.
 ; .
 ; Searches item_structs for items dropped nearby. If items are found the
-; hostiles are made to persue the hero.
+; hostiles are made to pursue the hero.
 ; .
 ; Green key and food items are ignored.
 @label=is_item_discoverable
@@ -13261,7 +13261,7 @@ c$CCCD LD A,($68A0)  ; A = room_index;
  $CCD1 JR Z,$CCDB    ; }
 ; Interior.
  $CCD3 CALL $CCFB    ;   is_item_discoverable_interior(A);
- $CCD6 RET NZ        ; {  if (Z) hostiles_persue(); /* Item found */
+ $CCD6 RET NZ        ; {  if (Z) hostiles_pursue(); /* Item found */
  $CCD7 CALL $CCAB    ; }
  $CCDA RET           ;   return; %>
 ; Exterior.
@@ -13287,7 +13287,7 @@ c$CCCD LD A,($68A0)  ; A = room_index;
  $CCF1 JR Z,$CCE7    ;
  $CCF3 CP $07        ;
  $CCF5 JR Z,$CCE7    ; }
- $CCF7 CALL $CCAB    ; hostiles_persue();
+ $CCF7 CALL $CCAB    ; hostiles_pursue();
  $CCFA RET           ; return;
 
 ; Is an item discoverable indoors?
@@ -16883,7 +16883,7 @@ c$EF9A LD DE,$727C   ; DE = map_ROLL_CALL_X;
  $EFC1 LD ($A130),A  ; }
  $EFC4 LD B,A        ; {queue_message_for_display(message_MISSED_ROLL_CALL);
  $EFC5 CALL $7D15    ; }
- $EFC8 JP $CCAB      ; hostiles_persue(); // exit via
+ $EFC8 JP $CCAB      ; hostiles_pursue(); // exit via
 
 ; Use papers.
 ;
