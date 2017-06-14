@@ -11619,15 +11619,12 @@ c$C41C LD HL,($81BB) ; HL = map_position;
  $C450 LD A,$FF      ; }
 *$C452 CP C          ; {  if (C > A) goto unstash_skip; // check
  $C453 JR C,$C473    ; }
- $C455 DEC HL        ;   HL--; // $7615
-; move down and to the left
-; .
-; why move the character here?
- $C456 LD A,$40      ;   A = 64;
- $C458 ADD A,(HL)    ;   *HL += A;
- $C459 DEC HL        ;   HL--; // $7614
- $C45A SUB (HL)      ;   *HL -= A;
 ; Screen X calculation.
+ $C455 DEC HL        ;   HL--; // $7615
+ $C456 LD A,$40      ;   A = 64;
+ $C458 ADD A,(HL)    ;   A += *HL;
+ $C459 DEC HL        ;   HL--; // $7614
+ $C45A SUB (HL)      ;   A -= *HL;
  $C45B ADD A,A       ;   A *= 2; // A == 128
  $C45C LD C,A        ;   C = A;
  $C45D LD A,E        ;   A = E;
