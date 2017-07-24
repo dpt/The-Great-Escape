@@ -11,6 +11,8 @@ The pointers to the bitmap data are off by two bytes, so not only do the guards'
 { #UDGARRAY2,7,4,2,,,,2;$D783-$D7BC-1-16:$D585-$D5C4-1-16{0,0,64,116}(sprite-guard-facing-bottom-right-1) | #UDGARRAY2,7,4,2,,,,2;$D7BD-$D7F6-1-16:$D5C5-$D604-1-16{0,0,64,116}(sprite-guard-facing-bottom-right-2) | #UDGARRAY2,7,4,2,,,,2;$D7F7-$D82E-1-16:$D605-$D63C-1-16{0,0,64,112}(sprite-guard-facing-bottom-right-3) | #UDGARRAY2,7,4,2,,,,2;$D82F-$D866-1-16:$D63D-$D676-1-16{0,0,64,112}(sprite-guard-facing-bottom-right-4) }
 TABLE#
 
+[Page:Characters]
+PageContent=#INCLUDE(PageContent:Characters)
 
 [PageContent:Characters]
 <h3>Commandant facing away</h3>
@@ -78,6 +80,8 @@ TABLE#
 { #UDGARRAY3,7,4,3,,,,2;$DAB6-$DAFD-1-24:$DAFE-$DB45-1-24(sprite-crate) | #UDGARRAY2,7,4,2,,,,2;$DB46-$DB72-1-16:$DB72-$DB9D-1-16{0,0,64,88}(sprite-stove) }
 TABLE#
 
+[Page:Items]
+PageContent=#INCLUDE(PageContent:Items)
 
 [PageContent:Items]
 #UDGTABLE(gallery)
@@ -97,18 +101,26 @@ TABLE#
 { Parcel   | #UDGARRAY2,7,4,2,,,,2;$DFE5-$E004-1-16:$E03F-$E05E-1-16{0,0,64,64}(sprite-parcel) }
 TABLE#
 
+[Page:Masks]
+PageContent=#INCLUDE(PageContent:Masks)
 
 [PageContent:Masks]
 #CALL:decode_all_masks($EBC5, 30)
 
+[Page:RoomObjects]
+PageContent=#INCLUDE(PageContent:RoomObjects)
 
 [PageContent:RoomObjects]
 #CALL:decode_all_objects($7095, 54)
 
+[Page:Rooms]
+PageContent=#INCLUDE(PageContent:Rooms)
 
 [PageContent:Rooms]
 #CALL:decode_all_rooms($6BAD, 52)
 
+[Page:Map]
+PageContent=#INCLUDE(PageContent:Map)
 
 [PageContent:Map]
 <h3>Exterior map</h3>

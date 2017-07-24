@@ -5,7 +5,8 @@
 
 import string
 
-from skoolkit.skoolhtml import HtmlWriter, Udg
+from skoolkit.graphics import Udg
+from skoolkit.skoolhtml import HtmlWriter
 from skoolkit.skoolasm import AsmWriter
 
 ZX_ATTRIBUTE_BRIGHT                     = 64
@@ -32,7 +33,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
     # Internal
     def _decode_string(self, cwd, addr, nbytes):
         """ Decode a string. """
-        alphabet = string.digits + string.uppercase[:14] + string.uppercase[15:] + " ."
+        alphabet = string.digits + string.ascii_uppercase[:14] + string.ascii_uppercase[15:] + " ."
         s = ""
         for i in range(addr, addr + nbytes):
             try:
@@ -351,7 +352,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         height = suggested_height
 
         if suggested_width > width:
-            print "suggested width %d > actual %d" % (suggested_width, width)
+            print("suggested width %d > actual %d" % (suggested_width, width))
 
         iters = width * height
 
@@ -546,10 +547,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
 
         # There are ten possible room sizes, decode them into 'dims'.
         p = 0x6B85
-        dims = zip(self.snapshot[p + 0:p + 0 + 10 * 4:4],
-                   self.snapshot[p + 1:p + 1 + 10 * 4:4],
-                   self.snapshot[p + 2:p + 2 + 10 * 4:4],
-                   self.snapshot[p + 3:p + 3 + 10 * 4:4])
+        dims = list(zip(self.snapshot[p + 0:p + 0 + 10 * 4:4],
+                        self.snapshot[p + 1:p + 1 + 10 * 4:4],
+                        self.snapshot[p + 2:p + 2 + 10 * 4:4],
+                        self.snapshot[p + 3:p + 3 + 10 * 4:4]))
 
         p = roomdef
         dimensions_index = self.snapshot[p]
