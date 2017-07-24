@@ -577,8 +577,8 @@
 ; Further notes:
 ;
 ; b $8000 character index? ($FF if no visible character)
-; b $8001 flags: bit 6 gets toggled in set_hero_target_location /  bit 0: picking lock /  bit 1: cutting wire  ($FF when reset)
-; w $8002 could be a target location (set in set_hero_target_location, process_player_input)
+; b $8001 flags: bit 6 gets toggled in set_hero_route /  bit 0: picking lock /  bit 1: cutting wire  ($FF when reset)
+; w $8002 could be a target location (set in set_hero_route, process_player_input)
 ; w $8004 (<- process_player_input) a coordinate? (i see it getting scaled in #R$CA11)
 ; ? $8006
 ; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too) ($00 when reset)
@@ -6224,7 +6224,7 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
  $9FCF JR $9FBF      ; %>
 *$9FD1 LD A,($8002)  ; {set_target_then_set_flag_green: B = $8002;
  $9FD4 LD B,A        ; }
- $9FD5 CALL $A33F    ; set_hero_target_location(); // uses B, C
+ $9FD5 CALL $A33F    ; set_hero_route(); // uses B, C
  $9FD8 JR $9FDE      ; goto set_flag_green;
 *$9FDA POP BC        ; pop_and_set_flag_red:
  $9FDB POP HL
@@ -6625,12 +6625,12 @@ g$A139 DEFB $00      ; automatic_player_counter
 
 ; 'In solitary' flag.
 ;
-; Stops set_hero_target_location working.
+; Stops set_hero_route working.
 ; .
 ; Used to set flag colour.
 ; .
 ; Read-only by process_player_input, in_permitted_area,
-; set_hero_target_location, automatics.
+; set_hero_route, automatics.
 ; .
 ; Write/read-write by charevnt_solitary_ends, solitary.
 @label=in_solitary
@@ -6847,7 +6847,7 @@ c$A1A0 LD HL,$A13D   ; HL = &clock;
 ; Event: night time.
 @label=event_night_time
 c$A1C3 LD A,($A13F)  ; {if (hero_in_bed == 0)
- $A1C6 AND A         ; set_hero_target_location(location_012C);
+ $A1C6 AND A         ; set_hero_route(location_012C);
  $A1C7 JR NZ,$A1CF   ;
  $A1C9 LD BC,$2C01   ;
  $A1CC CALL $A33F    ; }
@@ -7026,7 +7026,7 @@ c$A289 LD A,($A13F)  ; {if (hero_in_bed) <% // odd that this jumps into a point 
  $A297 LD (HL),$2E   ; }
 *$A299 XOR A         ; {hero_in_bed = 0;
  $A29A LD ($A13F),A  ; }
- $A29D LD BC,$2A00   ; {set_hero_target_location(location_002A);
+ $A29D LD BC,$2A00   ; {set_hero_route(location_002A);
  $A2A0 CALL $A33F    ; }
 ; Position all six prisoners.
  $A2A3 LD HL,$769F   ; HL = &characterstruct_20.room;
@@ -7129,7 +7129,7 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
 ; .
 ;
 ; I:BC Target location (B = x, C = y).
-@label=set_hero_target_location
+@label=set_hero_route
 c$A33F LD A,($A13A)  ; {if (in_solitary) return;
  $A342 AND A         ;
  $A343 RET NZ        ; }
@@ -7147,7 +7147,7 @@ c$A33F LD A,($A13A)  ; {if (in_solitary) return;
 ;
 ; Used by the routine at #R$A219.
 @label=go_to_time_for_bed
-c$A351 LD BC,$8502   ; {set_hero_target_location(location_0285);
+c$A351 LD BC,$8502   ; {set_hero_route(location_0285);
  $A354 CALL $A33F    ; }
  $A357 LD A,$85      ; Adash = 133;
  $A359 EX AF,AF'
@@ -7320,7 +7320,7 @@ c$A3F3 LD A,($8217)  ; A = character_index;
 c$A3F8 LD A,(IY+$00) ; A = IY[0]; // IY=$8000 // must be a character index
  $A3FB AND A         ; {if (A != 0) goto character_bed_common;
  $A3FC JR NZ,$A404   ; }
- $A3FE LD BC,$2C00   ; { set_hero_target_location(location_002C); // exit via
+ $A3FE LD BC,$2C00   ; { set_hero_route(location_002C); // exit via
  $A401 JP $A33F      ; }
 
 ; Common end of above two routines.
@@ -7480,7 +7480,7 @@ c$A491 LD (HL),$FF   ; *HL = 0xFF; // set in breakfast, or in bed
 ;
 ; Used by the routine at #R$A206.
 @label=set_route_go_to_yard
-c$A4A9 LD BC,$0E00   ; {set_hero_target_location(0x000E);
+c$A4A9 LD BC,$0E00   ; {set_hero_route(0x000E);
  $A4AC CALL $A33F    ; }
  $A4AF LD A,$0E      ; A = 0x0E;
  $A4B1 EX AF,AF'
@@ -7491,7 +7491,7 @@ c$A4A9 LD BC,$0E00   ; {set_hero_target_location(0x000E);
 ;
 ; Used by the routine at #R$A215.
 @label=set_route_go_to_yard_reversed
-c$A4B7 LD BC,$8E04   ; {set_hero_target_location(0x048E);
+c$A4B7 LD BC,$8E04   ; {set_hero_route(0x048E);
  $A4BA CALL $A33F    ; }
  $A4BD LD A,$8E      ; A = 0x8E;
  $A4BF EX AF,AF'
@@ -7502,7 +7502,7 @@ c$A4B7 LD BC,$8E04   ; {set_hero_target_location(0x048E);
 ;
 ; Used by the routine at #R$A1F9.
 @label=set_route_go_to_breakfast
-c$A4C5 LD BC,$1000   ; {set_hero_target_location(0x0010);
+c$A4C5 LD BC,$1000   ; {set_hero_route(0x0010);
  $A4C8 CALL $A33F    ; }
  $A4CB LD A,$10      ; A = 0x10;
  $A4CD EX AF,AF'
@@ -7528,7 +7528,7 @@ c$A4D3 LD A,($8217)  ; A = character_index;
 c$A4D8 LD A,(IY+$00) ; A = IY[0]; // must be a character index
  $A4DB AND A         ; {if (A != 0) goto charevnt_breakfast_common;
  $A4DC JR NZ,$A4E4   ; }
- $A4DE LD BC,$2B00   ; { set_hero_target_location(location_002B); // exit via
+ $A4DE LD BC,$2B00   ; { set_hero_route(location_002B); // exit via
  $A4E1 JP $A33F      ; }
 
 ; Common end of above two routines.
@@ -7561,7 +7561,7 @@ c$A4FD LD A,$1A      ; A = 26;
  $A4FF EX AF,AF'
  $A500 LD C,$00      ; C = 0;
  $A502 CALL $A35F    ; set_prisoners_and_guards_location();
- $A505 LD BC,$2D00   ; {set_hero_target_location(location_002D);
+ $A505 LD BC,$2D00   ; {set_hero_route(location_002D);
  $A508 JP $A33F      ; }
 
 ; Screen reset.
