@@ -16970,6 +16970,18 @@ c$F068 JP $F163      ;
 @label=keydefs
 g$F06B DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 
+
+; Everything from $F0F8 onwards is potentially overwritten by the game once the main menu is exited.
+;
+; Memory Map
+; ----------
+; $F0F8..$F28F - 24x17 = 408 bytes of tile_buf
+; $F290..$FF4F - 24x17x8 = 3,264 bytes of window_buf
+; $FF50..$FF57 - seems to be an extra UDG's worth of window_buf to allow overspills
+; $FF58..$FF7A - 7x5 = 35 bytes of map_buf
+; $FF80..$FFFF - the stack
+
+
 ; Static tiles plot direction.
 ;
 ; #TABLE(default,centre)
