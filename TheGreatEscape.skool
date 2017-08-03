@@ -6330,6 +6330,9 @@ c$A035 LD HL,$A12F   ; HL = &game_counter;
  $A063 JR Z,$A068    ;
  $A065 LD DE,$DA29   ; }
 *$A068 LD HL,($A141) ; {HL = moraleflag_screen_address;
+; Plot the flag always at 24x25 pixels in size. Note that the last three rows
+; of the bitmap_flag_up bitmap overlap with the first three of the
+; bitmap_flag_down bitmap.
  $A06B LD BC,$0319   ; }
  $A06E JP $7CBE      ; plot_bitmap(0x0319); return; // dimensions: 24 x 25 // args-BC // exit via
 
