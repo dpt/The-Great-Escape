@@ -8,6 +8,10 @@ The Game
 
 _The Great Escape_ is a 1986 isometric 3D prison break game for the 48K ZX Spectrum where you play a POW trying to escape from a nazi prison camp. It's one of the best-regarded Spectrum games and I want to know how the authors managed to pack all that magic into a 48K ZX Spectrum.
 
+Chat
+----
+[![Join the chat at https://gitter.im/The-Great-Escape/Lobby](https://badges.gitter.im/The-Great-Escape/Lobby.svg)](https://gitter.im/The-Great-Escape/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Goals
 -----
 
