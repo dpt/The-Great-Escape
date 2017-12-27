@@ -9002,7 +9002,7 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
  $AE63 ADD HL,BC     ; }
  $AE64 EX DE,HL
  $AE65 EX AF,AF'
- $AE66 LD ($AE75),A  ;   searchlight_related = A;
+ $AE66 LD ($AE75),A  ;   searchlight_clip_left = A;
  $AE69 CALL $AEB8    ;   searchlight_plot();
 *$AE6C POP HL        ;   next:
  $AE6D POP BC
@@ -9014,7 +9014,7 @@ c$ADBD LD HL,$81BD   ; HL = &searchlight_state;
 ; Searchlight stuff
 ;
 ; (<- nighttime, searchlight_plot)
-@label=searchlight_related
+@label=searchlight_clip_left
 g$AE75 DEFB $00
 ; Coordinates of searchlight when hero is caught.
 @label=searchlight_caught_coord
@@ -9079,7 +9079,7 @@ c$AEB8 EXX
  $AEB9 LD DE,$AF3E                          ; DEdash = &searchlight_shape[0];
  $AEBC LD C,$10                             ; Cdash = 16; // iterations  / width?
 *$AEBE EXX                                  ; do <%
- $AEBF LD A,($AE75)                         ;   A = searchlight_related;
+ $AEBF LD A,($AE75)                         ;   A = searchlight_clip_left;
 @nowarn
  $AEC2 LD HL,$5A40                          ;   HL = 0x5A40; // screen attribute address (column 0 + bottom of game window)
  $AEC5 AND A                                ; {  if (A != 0 && (E & 31) >= 22) L = 32;
@@ -9116,7 +9116,7 @@ c$AEB8 EXX
  $AEF6 LD DE,$071E                          ;     DE = 0x071E;
  $AEF9 LD C,A                               ;     C = A;
  $AEFA LD B,$08                             ;     B = 8;
-*$AEFC LD A,($AE75)                         ;     do <% A = searchlight_related;
+*$AEFC LD A,($AE75)                         ;     do <% A = searchlight_clip_left;
  $AEFF AND A                                ;       if (A != 0) ...
  $AF00 LD A,L                               ;       A = L; // interleaved
  $AF01 JP Z,$AF0C                           ;         ... goto $AF0C;
