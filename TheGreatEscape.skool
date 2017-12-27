@@ -6986,7 +6986,7 @@ c$A26A LD A,$26      ; A = 0x26;
  $A26F LD A,$0C      ; Adash = 12;
  $A271 LD B,$04      ; B = 4; // 4 iterations
 *$A273 PUSH AF       ; do <%
- $A274 CALL $A38C    ;   set_character_target();
+ $A274 CALL $A38C    ;   set_character_route();
  $A277 POP AF
  $A278 INC A         ;   Adash++;
  $A279 EX AF,AF'
@@ -7167,7 +7167,7 @@ c$A35F LD HL,$A27F   ; HL = &prisoners_and_guards[0];
 *$A364 PUSH HL       ; do <%
  $A365 PUSH BC
  $A366 LD A,(HL)     ;   A = *HL;
- $A367 CALL $A38C    ;   set_character_target();
+ $A367 CALL $A38C    ;   set_character_route();
  $A36A EX AF,AF'     ; {
  $A36B INC A         ;   Adash++;
  $A36C EX AF,AF'     ; }
@@ -7191,7 +7191,7 @@ c$A373 LD HL,$A27F   ; HL = &prisoners_and_guards[0];
 *$A378 PUSH HL       ; do <%
  $A379 PUSH BC
  $A37A LD A,(HL)     ;   A = *HL;
- $A37B CALL $A38C    ;   set_character_target();
+ $A37B CALL $A38C    ;   set_character_route();
  $A37E POP BC
 ; When this is 6, the character being processed is character_22_PRISONER_3 and
 ; the next is character_14_GUARD_14, the start of the second half of the list.
