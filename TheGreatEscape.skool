@@ -6997,8 +6997,8 @@ c$A26A LD A,$26      ; A = 0x26;
 
 ; List of non-player characters: six prisoners and four guards.
 ;
-; Read-only by set_prisoners_and_guards_location,
-; set_prisoners_and_guards_location_B.
+; Read-only by set_prisoners_and_guards_route,
+; set_prisoners_and_guards_route_B.
 @label=prisoners_and_guards
 b$A27F DEFB $0C      ; character_12_GUARD_12
  $A280 DEFB $0D      ; character_13_GUARD_13
@@ -7041,10 +7041,10 @@ c$A289 LD A,($A13F)  ; {if (hero_in_bed) <% // odd that this jumps into a point 
 *$A2B5 LD (HL),A     ; do <% *HL = room_5_HUT3RIGHT;
  $A2B6 ADD HL,DE     ;   HL += 7; // characterstruct stride
  $A2B7 DJNZ $A2B5    ; %> while (--B);
- $A2B9 LD A,$05      ; A = 5; // incremented by set_prisoners_and_guards_location_B
+ $A2B9 LD A,$05      ; A = 5; // incremented by set_prisoners_and_guards_route_B
  $A2BB EX AF,AF'
  $A2BC LD C,$00      ; C = 0; // BC = 0
- $A2BE CALL $A373    ; set_prisoners_and_guards_location_B();
+ $A2BE CALL $A373    ; set_prisoners_and_guards_route_B();
 ; Update all the bed objects to be empty.
  $A2C1 LD A,$09
  $A2C3 LD HL,$6B79   ; HL = &beds[0];
@@ -7101,10 +7101,10 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
 *$A30E LD (HL),A     ; do <% *HL = room_23_BREAKFAST;
  $A30F ADD HL,DE     ;   HL += 7; // stride
  $A310 DJNZ $A30E    ; %> while (--B);
- $A312 LD A,$90      ; A = 144; // incremented by set_prisoners_and_guards_location_B
+ $A312 LD A,$90      ; A = 144; // incremented by set_prisoners_and_guards_route_B
  $A314 EX AF,AF'
  $A315 LD C,$03      ; C = 3;
- $A317 CALL $A373    ; set_prisoners_and_guards_location_B();
+ $A317 CALL $A373    ; set_prisoners_and_guards_route_B();
  $A31A LD A,$0D
 ; Update all the benches to be empty.
  $A31C LD ($6F17),A  ; roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
@@ -7152,16 +7152,16 @@ c$A351 LD BC,$8502   ; {set_hero_route(location_0285);
  $A357 LD A,$85      ; Adash = 133;
  $A359 EX AF,AF'
  $A35A LD C,$02      ; C = 2;
- $A35C JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
+ $A35C JP $A373      ; set_prisoners_and_guards_route_B(); return; // exit via
 
-; Set the location of the prisoners_and_guards.
+; Set the route of the prisoners_and_guards.
 ;
 ; Used by the routine at #R$A4FD.
 ; .
-; Set a different location for each character.
+; Set a different route for each character.
 ;
 ; O:A' Counter incremented.
-@label=set_prisoners_and_guards_location
+@label=set_prisoners_and_guards_route
 c$A35F LD HL,$A27F   ; HL = &prisoners_and_guards[0];
  $A362 LD B,$0A      ; B = 10;
 *$A364 PUSH HL       ; do <%
@@ -7177,15 +7177,15 @@ c$A35F LD HL,$A27F   ; HL = &prisoners_and_guards[0];
  $A370 DJNZ $A364    ; %> while (--B);
  $A372 RET           ; return;
 
-; Set the location of the prisoners_and_guards.
+; Set the route of the prisoners_and_guards.
 ;
 ; Used by the routines at #R$A289, #R$A2E2, #R$A351, #R$A4A9, #R$A4B7 and
 ; #R$A4C5.
 ; .
-; Set the same location for each half of the group.
+; Set the same route for each half of the group.
 ;
 ; O:A' Counter incremented.
-@label=set_prisoners_and_guards_location_B
+@label=set_prisoners_and_guards_route_B
 c$A373 LD HL,$A27F   ; HL = &prisoners_and_guards[0];
  $A376 LD B,$0A      ; B = 10;
 *$A378 PUSH HL       ; do <%
@@ -7485,7 +7485,7 @@ c$A4A9 LD BC,$0E00   ; {set_hero_route(0x000E);
  $A4AF LD A,$0E      ; A = 0x0E;
  $A4B1 EX AF,AF'
  $A4B2 LD C,$00      ; C = 0;
- $A4B4 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
+ $A4B4 JP $A373      ; set_prisoners_and_guards_route_B(); return; // exit via
 
 ; Set location 0x048E.
 ;
@@ -7496,7 +7496,7 @@ c$A4B7 LD BC,$8E04   ; {set_hero_route(0x048E);
  $A4BD LD A,$8E      ; A = 0x8E;
  $A4BF EX AF,AF'
  $A4C0 LD C,$04      ; C = 4;
- $A4C2 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
+ $A4C2 JP $A373      ; set_prisoners_and_guards_route_B(); return; // exit via
 
 ; Set location 0x0010.
 ;
@@ -7507,7 +7507,7 @@ c$A4C5 LD BC,$1000   ; {set_hero_route(0x0010);
  $A4CB LD A,$10      ; A = 0x10;
  $A4CD EX AF,AF'
  $A4CE LD C,$00      ; C = 0;
- $A4D0 JP $A373      ; set_prisoners_and_guards_location_B(); return; // exit via
+ $A4D0 JP $A373      ; set_prisoners_and_guards_route_B(); return; // exit via
 
 ; entered_move_characters is non-zero (another one).
 ;
@@ -7560,7 +7560,7 @@ c$A4E4 INC HL        ; {HL[1] = 0;
 c$A4FD LD A,$1A      ; A = 26;
  $A4FF EX AF,AF'
  $A500 LD C,$00      ; C = 0;
- $A502 CALL $A35F    ; set_prisoners_and_guards_location();
+ $A502 CALL $A35F    ; set_prisoners_and_guards_route();
  $A505 LD BC,$2D00   ; {set_hero_route(location_002D);
  $A508 JP $A33F      ; }
 
