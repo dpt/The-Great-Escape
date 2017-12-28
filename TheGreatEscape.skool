@@ -6678,8 +6678,8 @@ g$A13D DEFB $07      ; clock
 ; Read-only by charevnt_bed,
 ; charevnt_breakfast.
 ; .
-; Write/read-write by set_target, spawn_character, move_characters,
-; automatics, set_target.
+; Write/read-write by set_route, spawn_character, move_characters,
+; automatics, set_route.
 @label=entered_move_characters
 g$A13E DEFB $00      ; entered_move_characters
 
@@ -7140,7 +7140,7 @@ c$A33F LD A,($A13A)  ; {if (in_solitary) return;
  $A34A LD (HL),B     ; }
  $A34B INC L         ; {$8003 = C;
  $A34C LD (HL),C     ; }
- $A34D CALL $A3BB    ; set_target();
+ $A34D CALL $A3BB    ; set_route();
  $A350 RET           ; return;
 
 ; Go to time for bed.
@@ -7246,12 +7246,12 @@ c$A38C CALL $C7B9    ; HL = get_character_struct(A);
  $A3B5 RES 6,(HL)    ; {*HL++ &= ~vischar_FLAGS_TARGET_IS_DOOR;
  $A3B7 INC L         ; }
  $A3B8 CALL $A3ED    ; store_location(); // HL = vischar->target
-; FALL THROUGH into set_target.
+; FALL THROUGH into set_route.
 
 ; Not yet understood.
 ;
 ; Used by the routine at #R$A33F.
-@label=set_target
+@label=set_route
 c$A3BB XOR A         ; {entered_move_characters = 0;
  $A3BC LD ($A13E),A  ; }
  $A3BF PUSH BC
