@@ -7239,13 +7239,13 @@ c$A38C CALL $C7B9    ; HL = get_character_struct(A);
  $A3AC INC HL        ;
  $A3AD INC HL        ;
  $A3AE INC HL        ; }
- $A3AF CALL $A3ED    ; store_location();
+ $A3AF CALL $A3ED    ; store_route();
 *$A3B2 RET           ; exit: return;
 *$A3B3 POP BC        ; found:
  $A3B4 INC L         ; HL++;
  $A3B5 RES 6,(HL)    ; {*HL++ &= ~vischar_FLAGS_TARGET_IS_DOOR;
  $A3B7 INC L         ; }
- $A3B8 CALL $A3ED    ; store_location(); // HL = vischar->target
+ $A3B8 CALL $A3ED    ; store_route(); // HL = vischar->target
 ; FALL THROUGH into set_route.
 
 ; Not yet understood.
@@ -7292,7 +7292,7 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
 ; I:A' Low byte.
 ; I:C  High byte.
 ; I:HL Pointer to target.
-@label=store_location
+@label=store_route
 c$A3ED EX AF,AF'     ; {
  $A3EE LD (HL),A     ; *HL++ = Adash;
  $A3EF EX AF,AF'     ;
