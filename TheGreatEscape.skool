@@ -7206,16 +7206,16 @@ c$A373 LD HL,$A27F   ; HL = &prisoners_and_guards[0];
  $A389 DJNZ $A378    ; %> while (--B);
  $A38B RET           ; return;
 
-; Set location of a character.
+; Set the route for a character.
 ;
 ; Used by the routines at #R$A26A, #R$A35F and #R$A373.
 ; .
-; Finds a charstruct, or a vischar, and stores a location in its target.
+; Finds a charstruct, or a vischar, and stores a route.
 ;
 ; I:A Character index.
-; I:A' Location low.
-; I:C Location high.
-@label=set_character_location
+; I:A' Route low.
+; I:C Route high.
+@label=set_character_route
 c$A38C CALL $C7B9    ; HL = get_character_struct(A);
  $A38F BIT 6,(HL)    ; {if ((*HL & characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?
  $A391 JP Z,$A3AA    ; }
