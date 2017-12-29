@@ -13405,7 +13405,7 @@ c$CD31 LD A,C        ; A = C;
 ; .
 ; struct default_item_location { byte room_and_flags; byte x; byte y; };
 ; .
-; #define ITEM_ROOM(item_no, flags) ((item_no & 0x3F) | (flags << 6))
+; #define ITEM_ROOM(room_no, flags) ((room_no & 0x3F) | (flags << 6))
 @label=default_item_locations
 ; do the next flags mean that the wiresnips are always or /never/ found?
 b$CD6A DEFB $FF,$40,$20 ; item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),       ... }
