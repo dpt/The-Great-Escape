@@ -12471,7 +12471,7 @@ g$C891 DEFB $00      ; food_discovered_counter
 c$C892 XOR A         ; {entered_move_characters = 0;
  $C893 LD ($A13E),A  ; }
 ; If the bell is not ringing, hostiles pursue.
- $C896 LD A,($A130)  ; {if (bell == 0) hostiles_pursue();
+ $C896 LD A,($A130)  ; {if (bell == bell_RING_PERPETUAL) hostiles_pursue();
  $C899 AND A         ;
  $C89A CALL Z,$CCAB  ; }
 ; If food was dropped then count down until it is discovered.
