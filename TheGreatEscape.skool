@@ -7128,7 +7128,8 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
 ; #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
 ; .
 ;
-; I:BC Target location (B = x, C = y).
+; I:B Route index.
+; I:C Route step.
 @label=set_hero_route
 c$A33F LD A,($A13A)  ; {if (in_solitary) return;
  $A342 AND A         ;
@@ -7154,13 +7155,14 @@ c$A351 LD BC,$8502   ; {set_hero_route(location_0285);
  $A35A LD C,$02      ; C = 2;
  $A35C JP $A373      ; set_prisoners_and_guards_route_B(); return; // exit via
 
-; Set the route of the prisoners_and_guards.
+; Set ascending routes for all characters in prisoners_and_guards.
 ;
-; Used by the routine at #R$A4FD.
+; The route passed in (A',C) is assigned to the first character. The second character gets route (A'+1,C) and so on.
 ; .
-; Set a different route for each character.
+; Used by the routine at #R$A4FD.
 ;
-; O:A' Counter incremented.
+; I:A' Route index.
+; I:C  Route step.
 @label=set_prisoners_and_guards_route
 c$A35F LD HL,$A27F   ; HL = &prisoners_and_guards[0];
  $A362 LD B,$0A      ; B = 10;
@@ -7177,14 +7179,15 @@ c$A35F LD HL,$A27F   ; HL = &prisoners_and_guards[0];
  $A370 DJNZ $A364    ; %> while (--B);
  $A372 RET           ; return;
 
-; Set the route of the prisoners_and_guards.
+; Set the routes of all characters in prisoners_and_guards.
 ;
+; The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the route passed in (A',C). The second half of the list (guards 14,15 and prisoners 4,5,6) are set to route (A'+1,C).
+; .
 ; Used by the routines at #R$A289, #R$A2E2, #R$A351, #R$A4A9, #R$A4B7 and
 ; #R$A4C5.
-; .
-; Set the same route for each half of the group.
 ;
-; O:A' Counter incremented.
+; I:A' Route index.
+; I:C  Route step.
 @label=set_prisoners_and_guards_route_B
 c$A373 LD HL,$A27F   ; HL = &prisoners_and_guards[0];
  $A376 LD B,$0A      ; B = 10;
@@ -7212,9 +7215,9 @@ c$A373 LD HL,$A27F   ; HL = &prisoners_and_guards[0];
 ; .
 ; Finds a charstruct, or a vischar, and stores a route.
 ;
-; I:A Character index.
-; I:A' Route low.
-; I:C Route high.
+; I:A  Character index.
+; I:A' Route index.
+; I:C  Route step.
 @label=set_character_route
 c$A38C CALL $C7B9    ; HL = get_character_struct(A);
  $A38F BIT 6,(HL)    ; {if ((*HL & characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?
@@ -7289,9 +7292,9 @@ c$A3BB XOR A         ; {entered_move_characters = 0;
 ;
 ; Used by the routine at #R$A38C.
 ;
-; I:A' Low byte.
-; I:C  High byte.
-; I:HL Pointer to target.
+; I:A' Route index.
+; I:C  Route step.
+; I:HL Pointer to route.
 @label=store_route
 c$A3ED EX AF,AF'     ; {
  $A3EE LD (HL),A     ; *HL++ = Adash;
@@ -7476,7 +7479,7 @@ c$A491 LD (HL),$FF   ; *HL = 0xFF; // set in breakfast, or in bed
  $A4A4 CALL $B71B    ; calc_vischar_screenpos_from_mi_pos(); // reset hero
  $A4A7 JR $A479      ; goto select_room_and_plot;
 
-; Set location 0x000E.
+; Set hero's and prisoners_and_guards's routes to "go to yard".
 ;
 ; Used by the routine at #R$A206.
 @label=set_route_go_to_yard
@@ -7487,7 +7490,7 @@ c$A4A9 LD BC,$0E00   ; {set_hero_route(0x000E);
  $A4B2 LD C,$00      ; C = 0;
  $A4B4 JP $A373      ; set_prisoners_and_guards_route_B(); return; // exit via
 
-; Set location 0x048E.
+; Set hero's and prisoners_and_guards's routes to "go to yard" reversed.
 ;
 ; Used by the routine at #R$A215.
 @label=set_route_go_to_yard_reversed
@@ -7498,7 +7501,7 @@ c$A4B7 LD BC,$8E04   ; {set_hero_route(0x048E);
  $A4C0 LD C,$04      ; C = 4;
  $A4C2 JP $A373      ; set_prisoners_and_guards_route_B(); return; // exit via
 
-; Set location 0x0010.
+; Set hero's and prisoners_and_guards's routes to "go to breakfast".
 ;
 ; Used by the routine at #R$A1F9.
 @label=set_route_go_to_breakfast
