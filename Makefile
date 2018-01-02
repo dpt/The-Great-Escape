@@ -32,7 +32,6 @@ all: disasm tap
 .PHONY: disasm
 disasm: $(GAME).skool
 	skool2html.py $(OPTIONS) -o $(GAME).skool
-	cp -R static-images build/TheGreatEscape/
 
 .PHONY: ctl
 ctl: $(BUILD)/$(GAME).ctl
