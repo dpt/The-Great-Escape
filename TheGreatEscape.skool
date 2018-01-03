@@ -8248,12 +8248,12 @@ c$AA05 LD HL,$81BB   ; HL = &map_position;
  $AA08 DEC (HL)      ; (*HL)--;
  $AA09 CALL $A7C9    ; get_supertiles();
 @nowarn
- $AA0C LD HL,$F28E   ; HL = &tile_buf[0];
- $AA0F LD DE,$F28F   ; DE = &tile_buf[1];
+ $AA0C LD HL,$F28E   ; HL = &tile_buf[24 * 17 - 2];
+ $AA0F LD DE,$F28F   ; DE = &tile_buf[24 * 17 - 1];
  $AA12 LD BC,$0197   ; BC = tile_buf_length - 1;
  $AA15 LDDR
- $AA17 LD HL,$FF4F   ; HL = &window_buf[0];
- $AA1A LD DE,$FF50   ; DE = &window_buf[1];
+ $AA17 LD HL,$FF4F   ; HL = &window_buf[24 * 17 * 8 - 1];
+ $AA1A LD DE,$FF50   ; DE = &window_buf[24 * 17 * 8];
  $AA1D LD BC,$0CC0   ; BC = window_buf_length; // Bug: One byte too long.
  $AA20 LDDR
  $AA22 CALL $A8E7    ; plot_leftmost_tiles();
@@ -8308,12 +8308,12 @@ c$AA6C LD HL,$81BC   ; HL = &map_position[1];
  $AA6F DEC (HL)      ; (*HL)--;
  $AA70 CALL $A7C9    ; get_supertiles();
 @nowarn
- $AA73 LD HL,$F277   ; HL = &tile_buf[0];
- $AA76 LD DE,$F28F   ; DE = &tile_buf[24];
+ $AA73 LD HL,$F277   ; HL = &tile_buf[24 * 16 - 1];
+ $AA76 LD DE,$F28F   ; DE = &tile_buf[24 * 17 - 1];
  $AA79 LD BC,$0180   ; BC = tile_buf_length - 24;
  $AA7C LDDR
- $AA7E LD HL,$FE8F   ; HL = &window_buf[0];
- $AA81 LD DE,$FF4F   ; DE = &window_buf[24 * 8];
+ $AA7E LD HL,$FE8F   ; HL = &window_buf[24 * 16 * 8 - 1];
+ $AA81 LD DE,$FF4F   ; DE = &window_buf[24 * 17 * 8 - 1];
  $AA84 LD BC,$0C00   ; BC = window_buf_length - 24 * 8;
  $AA87 LDDR
  $AA89 CALL $A819    ; plot_topmost_tiles();
@@ -8328,13 +8328,13 @@ c$AA8D INC L         ; L++;
  $AA8F LD ($81BB),HL ; map_position = HL;
  $AA92 CALL $A7C9    ; get_supertiles();
 @nowarn
- $AA95 LD HL,$F277   ; HL = &tile_buf[1];
+ $AA95 LD HL,$F277   ; HL = &tile_buf[24 * 16 - 1];
 @nowarn
- $AA98 LD DE,$F28E   ; DE = &tile_buf[24];
+ $AA98 LD DE,$F28E   ; DE = &tile_buf[24 * 17 - 2];
  $AA9B LD BC,$017F   ; BC = tile_buf_length - 24 - 1;
  $AA9E LDDR
- $AAA0 LD HL,$FE8F   ; HL = &window_buf[1];
- $AAA3 LD DE,$FF4E   ; DE = &window_buf[24 * 8];
+ $AAA0 LD HL,$FE8F   ; HL = &window_buf[24 * 16 * 8 - 1];
+ $AAA3 LD DE,$FF4E   ; DE = &window_buf[24 * 17 * 8 - 2];
  $AAA6 LD BC,$0BFF   ; BC = window_buf_length - 24 * 8 - 1;
  $AAA9 LDDR
  $AAAB CALL $A819    ; plot_topmost_tiles();
