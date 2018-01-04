@@ -23,3 +23,8 @@ There are three unused interior object indices: 21, 28, 39.
 [Fact:neverUsesIX:The IX register is never used]
 Nowhere does any routine in the game use the IX register. Of the two index registers it only uses IY.
 
+[Fact:fullerJoystick:Unused Fuller joystick routine]
+There is a Fuller joystick routine at $FEA3 / #R$FEA3 which is never used by the game.
+
+The game supports keyboard, Kempston, Sinclair and Protek joystick interfaces. Once selected from the main menu the chosen keyboard or joystick routine is copied to $F075 and used from there. There is no way to return to the main menu, so the space occupied by the input routines is then reclaimed for the window buffer.
+
