@@ -31,7 +31,7 @@ all: disasm tap
 
 .PHONY: disasm
 disasm: $(GAME).skool
-	skool2html.py $(OPTIONS) -o $(GAME).skool
+	skool2html.py $(OPTIONS) --asm-labels -o $(GAME).skool
 
 .PHONY: ctl
 ctl: $(BUILD)/$(GAME).ctl
