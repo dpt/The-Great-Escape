@@ -38,7 +38,8 @@ Other SkoolKit disassemblies are normally written in a one comment per line styl
 Building the Cross-Referenced Disassembly
 -----------------------------------------
 
-* First, make a local clone of this repository:
+* First, [install SkoolKit](http://skoolkit.ca/docs/skoolkit/usage.html)
+* Then make a local clone of this repository:
     * `git clone https://github.com/dpt/The-Great-Escape.git`
 * Then change to the repository and install the support file:
     * `cd <cloned repo>`
