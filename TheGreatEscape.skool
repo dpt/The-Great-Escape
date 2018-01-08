@@ -85,9 +85,9 @@
 ; the code.
 ;
 ; Multiply A by 2^N:
-;   ADD A,A ; A += A (N times)
-; Note that this disposes of the topmost bit of A. Some routines discard of
-; flag bits this way.
+;   ADD A,A ; A += A (repeated N times)
+; Note that this disposes of the topmost bit of A. Some routines discard flag
+; bits this way.
 ;
 ; Increment HL by an 8-bit delta:
 ;   A = L
@@ -197,7 +197,7 @@
 ; room_3_HUT2RIGHT                              = 3,
 ; room_4_HUT3LEFT                               = 4,
 ; room_5_HUT3RIGHT                              = 5,
-; room_6                                        = 6,    ; unused room
+; room_6                                        = 6,    ; unused room index
 ; room_7_CORRIDOR                               = 7,
 ; room_8_CORRIDOR                               = 8,
 ; room_9_CRATE                                  = 9,
@@ -217,11 +217,10 @@
 ; room_23_BREAKFAST                             = 23,
 ; room_24_SOLITARY                              = 24,
 ; room_25_BREAKFAST                             = 25,
-; room_26                                       = 26,   ; unused room
-; room_27                                       = 27,   ; unused room
+; room_26                                       = 26,   ; unused room index
+; room_27                                       = 27,   ; unused room index
 ; room_28_HUT1LEFT                              = 28,
-; room_29_SECOND_TUNNEL_START                   = 29,
-; many of the tunnels are displayed duplicated
+; room_29_SECOND_TUNNEL_START                   = 29,   ; first of the tunnel rooms
 ; room_30                                       = 30,
 ; room_31                                       = 31,
 ; room_32                                       = 32,
@@ -416,7 +415,7 @@
 ; ; $8007, $8027, $8047, ...
 ; vischar_BYTE7_MASK_LO                         = $0F,
 ; vischar_BYTE7_MASK_HI                         = $F0,
-; vischar_BYTE7_Y_DOMINANT                         = 1 << 5,       ; set when hero hits an obstacle
+; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
 ; vischar_BYTE7_TOUCHING                        = 1 << 6,       ; set while touch() entered
 ; vischar_BYTE7_LOCATABLE                       = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
 ;
@@ -569,7 +568,7 @@
 ; | $1C | byte    | current room index                                                            |
 ; | $1D | byte    | (unused)                                                                      |
 ; | $1E | byte    | copy of sprite width in bytes + 1                                             |
-; | $1F | byte    | copt of sprite height in rows                                                 |
+; | $1F | byte    | copy of sprite height in rows                                                 |
 ; +-----+---------+-------------------------------------------------------------------------------+
 ;
 ; The first entry in the array is the hero.
@@ -6964,11 +6963,11 @@ c$A228 LD A,($771D)     ; {if ((item_structs[item_RED_CROSS_PARCEL].room & items
  $A252 LDIR             ; }
  $A254 LD B,$09         ; {queue_message(message_RED_CROSS_PARCEL);
  $A256 JP $7D15         ; return; // exit via}
-; Red cross parcel reset data (room, tinypos, target).
+; Red cross parcel reset data (room, tinypos, coord).
 @label=red_cross_parcel_reset_data
  $A259 DEFB $14         ; room_20_REDCROSS
  $A25A DEFB $2C,$2C,$0C ; 44,44,12
- $A25D DEFW $F480       ; 0xF480
+ $A25D DEFB $80,$F4     ; 128,244
 ; Red cross parcel contents list.
 @label=red_cross_parcel_contents_list
  $A25F DEFB $0E         ; item_PURSE
@@ -12121,7 +12120,7 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
 *$C6EF INC (HL)      ;     (*HL)++; // i.e -1 or +1 // HLlocation->y
  $C6F0 POP HL
  $C6F1 RET           ;     return; %>
-; Commandant.
+; Commandant only.
 @label=commandant
 *$C6F2 LD A,(HL)     ; {  A = *HL & characterstruct_BYTE5_MASK; // sampled HL=$7617 (characterstruct + 5) // location
  $C6F3 AND $7F       ; }
@@ -12399,7 +12398,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C83D DEFW $C84C    ;   &charevnt_hero_release, };
 ; charevnt_solitary_ends
 @label=charevnt_solitary_ends
- $C83F XOR A         ; {in_solitary = 0;
+ $C83F XOR A         ; {in_solitary = 0; // enable player control
  $C840 LD ($A13A),A  ; }
  $C843 JR $C864      ; goto charevnt_wander_top;
 ; charevnt_commandant_to_yard
