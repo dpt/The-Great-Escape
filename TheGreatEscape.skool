@@ -411,7 +411,7 @@
 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
 ;
 ; ; $8002, $8022, $8042, ...
-; route_REVERSED                            = 1 << 7,       ; target mask
+; route_REVERSED                                = 1 << 7,       ; set if the route is to be followed in reverse order
 ;
 ; ; $8007, $8027, $8047, ...
 ; vischar_BYTE7_MASK_LO                         = $0F,
@@ -556,7 +556,7 @@
 ; +-----+---------+-------------------------------------------------------------------------------+
 ; | $00 | byte    | character index, or $FF for none                                              |
 ; | $01 | byte    | flags                                                                         |
-; | $02 | byte[2] | target location                                                               |
+; | $02 | byte[2] | route                                                                         |
 ; | $04 | byte[3] | position                                                                      |
 ; | $07 | byte    | top nibble = flags, bottom nibble = counter used by character_behaviour only  |
 ; | $08 | pointer | pointer to animations                                                         |
@@ -578,7 +578,7 @@
 ;
 ; b $8000 character index? ($FF if no visible character)
 ; b $8001 flags: bit 6 gets toggled in set_hero_route /  bit 0: picking lock /  bit 1: cutting wire  ($FF when reset)
-; w $8002 could be a target location (set in set_hero_route, process_player_input)
+; w $8002 route (set in set_hero_route, process_player_input)
 ; w $8004 (<- process_player_input) a coordinate? (i see it getting scaled in #R$CA11)
 ; ? $8006
 ; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too) ($00 when reset)
@@ -626,7 +626,18 @@
 ; b $8100 mask buffer (0xA0 bytes - 4 * 8 * 5)
 ; w $81A0 mask buffer pointer
 ; w $81A2 screen buffer pointer
-
+;
+;
+; //////////////////////////////////////////////////////////////////////////////
+; ROUTES
+; //////////////////////////////////////////////////////////////////////////////
+;
+; Each vischar has a "route" structure that guides its pathfinding. The route is
+; composed of an index and a step (the first and second bytes respectively). The index selects a
+; route from the table at #R$7738. The step is the index into that route. If the top
+; bit of the route index is set then the route is followed in reverse order.
+;
+;
 @org=$4000
 
 ; Loading screen.
@@ -1912,7 +1923,7 @@ c$697D LD ($8020),A     ; setup_movable_item: $8020 = A; // character index
 ; Fourteen bytes of reset data.
 @label=movable_item_reset_data
  $69A0 DEFB $00         ; flags
- $69A1 DEFW $0000       ; target
+ $69A1 DEFW $0000       ; route
  $69A3 DEFB $00,$00,$00 ; pos
  $69A6 DEFB $00         ; counter_and_flags
  $69A7 DEFW $CDF2       ; animbase = &animations[0]
@@ -5993,7 +6004,7 @@ c$9E07 LD HL,($A13A) ; {if (in_solitary || morale_exhausted) return;
  $9E40 AND A         ;
  $9E41 JR Z,$9E85    ; }
 ; Hero was at breakfast.
- $9E43 LD HL,$002B   ; {    (word) $8002 = 0x002B; // set target location?
+ $9E43 LD HL,$002B   ; {    (word) $8002 = 0x002B; // set route
  $9E46 LD ($8002),HL ; }
  $9E49 LD HL,$800F   ; {    (word) $800F = 0x0034; // set X pos
  $9E4C LD (HL),$34   ; }
@@ -6005,7 +6016,7 @@ c$9E07 LD HL,($A13A) ; {if (in_solitary || morale_exhausted) return;
  $9E57 LD HL,$A137   ;     HL = &hero_in_breakfast; %>
  $9E5A JR $9E7D      ;   else <%
 ; Hero was in bed.
-*$9E5C LD HL,$012C   ; {    (word) $8002 = 0x012C; // set target location?
+*$9E5C LD HL,$012C   ; {    (word) $8002 = 0x012C; // set route
  $9E5F LD ($8002),HL ; }
  $9E62 LD HL,$2E2E   ; {    (word) $8004 = 0x2E2E; // another position?
 @nowarn
@@ -6165,7 +6176,7 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
 *$9F6B LD A,($A13A)  ; {if (in_solitary) goto set_flag_green;
  $9F6E AND A         ;
  $9F6F JP NZ,$9FDE   ; }
- $9F72 LD HL,$8002   ; HL = $8002; // target location
+ $9F72 LD HL,$8002   ; HL = $8002; // route
  $9F75 LD A,(HL)     ; {A = *HL++;
  $9F76 INC L         ; }
  $9F77 LD C,(HL)     ; C = *HL;
@@ -6219,10 +6230,10 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
  $9FC7 CALL $A007    ;   in_permitted_area_end_bit();
  $9FCA POP HL
  $9FCB POP BC
- $9FCC JR Z,$9FD1    ;   if (Z) goto set_target_then_set_flag_green; // if (Z) break; equivalent?
+ $9FCC JR Z,$9FD1    ;   if (Z) goto set_route_then_set_flag_green; // if (Z) break; equivalent?
  $9FCE INC C         ;   BC++;
  $9FCF JR $9FBF      ; %>
-*$9FD1 LD A,($8002)  ; {set_target_then_set_flag_green: B = $8002;
+*$9FD1 LD A,($8002)  ; {set_route_then_set_flag_green: B = $8002;
  $9FD4 LD B,A        ; }
  $9FD5 CALL $A33F    ; set_hero_route(); // uses B, C
  $9FD8 JR $9FDE      ; goto set_flag_green;
@@ -7122,7 +7133,7 @@ c$A2E2 LD A,($A137)  ; {if (hero_in_breakfast) <%
  $A339 CALL $6A35    ; setup_room();
  $A33C JP $6B42      ; plot_interior_tiles(); return; // exit via // note that this differs to wake_up's ending
 
-; Set the hero's target location.
+; Set the hero's route.
 ;
 ; Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8,
 ; #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
@@ -7237,7 +7248,7 @@ c$A38C CALL $C7B9    ; HL = get_character_struct(A);
  $A3A6 POP BC
  $A3A7 JR $A3B2      ; goto exit;
  $A3A9 DEFB $19      ; Unreferenced byte.
-*$A3AA INC HL        ; {not_set: HL += 5; // HL = charstruct->target
+*$A3AA INC HL        ; {not_set: HL += 5; // HL = charstruct->route
  $A3AB INC HL        ;
  $A3AC INC HL        ;
  $A3AD INC HL        ;
@@ -7248,7 +7259,7 @@ c$A38C CALL $C7B9    ; HL = get_character_struct(A);
  $A3B4 INC L         ; HL++;
  $A3B5 RES 6,(HL)    ; {*HL++ &= ~vischar_FLAGS_TARGET_IS_DOOR;
  $A3B7 INC L         ; }
- $A3B8 CALL $A3ED    ; store_route(); // HL = vischar->target
+ $A3B8 CALL $A3ED    ; store_route(); // HL = vischar->route
 ; FALL THROUGH into set_route.
 
 ; Not yet understood.
@@ -7467,7 +7478,7 @@ c$A489 LD HL,$6C61   ; {roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;
 @label=hero_sit_sleep_common
 c$A491 LD (HL),$FF   ; *HL = 0xFF; // set in breakfast, or in bed
  $A493 XOR A         ; A = 0;
- $A494 LD HL,$8002   ; {$8002 = A; // target location? bottom byte only?
+ $A494 LD HL,$8002   ; {$8002 = A; // zero route index only
  $A497 LD (HL),A     ; }
 ; Set hero's position to zero.
  $A498 LD HL,$800F   ; {memset($800F, 0, 4);
@@ -11980,7 +11991,7 @@ c$C5D3 LD A,(HL)     ; A = *HL;
  $C647 JR C,$C64B    ;
  $C649 LD (HL),$18   ; }
 *$C64B DEC L         ;     HL--; %>
-*$C64C LDI           ;   *DE++ = *HL++; // copy target into charstruct
+*$C64C LDI           ;   *DE++ = *HL++; // copy route into charstruct
  $C64E LDI           ;   *DE++ = *HL++;
  $C650 RET           ;   return; %>
 
@@ -12080,15 +12091,16 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C6C9 INC HL        ; {HL += 3; // point at characterstruct target
  $C6CA INC HL        ;
  $C6CB INC HL        ; }
-; No target? Not yet understood.
- $C6CC LD A,(HL)     ; A = *HL; // charstr->target.x
- $C6CD AND A         ; {if (A == 0) <%
+; If standing still, return.
+ $C6CC LD A,(HL)     ; A = *HL; // charstr->route.index
+ $C6CD AND A         ; {if (A == route_HALT) <%
  $C6CE JR NZ,$C6D2   ; }
  $C6D0 POP HL
  $C6D1 RET           ;   return; %>
 *$C6D2 CALL $C651    ; get_target(); // "move towards" ? // returning ? in A, ? in HL
- $C6D5 CP $FF        ; {if (A == 0xFF) <%
+ $C6D5 CP $FF        ; {if (A == get_target_ROUTE_ENDS) <%
  $C6D7 JP NZ,$C6FF   ; }
+; When the route ends reverse the route.
  $C6DA LD A,($8217)  ;   character = character_index;
  $C6DD AND A         ; {  if (character != character_0_COMMANDANT) <%
  $C6DE JR Z,$C6F2    ; }
@@ -12227,18 +12239,18 @@ c$C6A0 LD A,$FF      ; {entered_move_characters = 0xFF;
  $C788 JR Z,$C78B    ;
  $C78A RET           ; }
 ; So when we reach here a character is stuck.
-*$C78B INC DE        ; DE++; // DE -> charstr->target
+*$C78B INC DE        ; DE++; // DE -> charstr->route
  $C78C EX DE,HL
- $C78D LD A,(HL)     ; A = *HL; // sampled HL=$761E $7625 $768E $7695 $7656 $7695 $7680 // => character struct entry + 5 // target field
- $C78E CP $FF        ; {if (A == 0xFF) return;
+ $C78D LD A,(HL)     ; A = *HL; // sampled HL=$761E $7625 $768E $7695 $7656 $7695 $7680 // => character struct entry + 5 // route index
+ $C78E CP $FF        ; {if (A == route_WANDER) return;
  $C790 RET Z         ; }
- $C791 BIT 7,A       ; if ((A & (1<<7)) != 0) ...
+ $C791 BIT 7,A       ; if ((A & route_REVERSED) != 0) ...
  $C793 INC HL        ; HL++;       // interleaved
 ; sampled HL = $7618, $762D, $7634, $7657, $766C, $76AB, $76B2, $76B9, $76C0, $76C7 => final byte of charstruct
  $C794 JR NZ,$C798   ; ... goto exit;
- $C796 INC (HL)      ; (*HL)++;
+ $C796 INC (HL)      ; (*HL)++; // route.step
  $C797 RET           ; return;
-*$C798 DEC (HL)      ; exit: (*HL)--;
+*$C798 DEC (HL)      ; exit: (*HL)--; // route.step
  $C799 RET           ; return;
 
 ; Increments 'first' by ('first' - 'second').
@@ -12305,7 +12317,7 @@ c$C7B9 LD L,A        ; {HL = &character_structs[A];
 ; .
 ; Makes characters sit, sleep or other things TBD.
 ;
-; I:HL Points to character_struct.unk2 or vischar.target.
+; I:HL Points to character_struct.unk2 or vischar.route.
 @label=character_event
 c$C7C6 LD A,(HL)     ; A = *HL;
  $C7C7 CP $07        ; {if (A >= character_7_GUARD_7  && A <= character_12_GUARD_12) goto character_sleeps;
@@ -12392,7 +12404,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C843 JR $C864      ; goto charevnt_wander_top;
 ; charevnt_commandant_to_yard
 @label=charevnt_commandant_to_yard
- $C845 POP HL        ; // (popped) sampled HL=$80C2 (x2),$8042  // likely target location
+ $C845 POP HL        ; // (popped) sampled HL=$80C2 (x2),$8042  // route
  $C846 LD (HL),$03   ; {*HL++ = 0x03;
  $C848 INC HL        ; }
  $C849 LD (HL),$15   ; *HL   = 0x15;
@@ -12841,7 +12853,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
 *$CAB6 BIT 6,C       ; {if (C & vischar_FLAGS_TARGET_IS_DOOR) <%
  $CAB8 JR Z,$CB13    ; }
 ; Results in character entering.
- $CABA DEC L         ; {  C = *--HL; // 80a3, 8083, 8063, 8003 // likely target location
+ $CABA DEC L         ; {  C = *--HL; // 80a3, 8083, 8063, 8003 // route.step
  $CABB LD C,(HL)     ; }
  $CABC DEC L         ; {  A = *--HL;
  $CABD LD A,(HL)     ; }
@@ -12861,11 +12873,11 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CAD1 LD A,(HL)     ; {  A = *HL++; // $8002, ...
  $CAD2 INC L         ; }
 ; Pattern: [-2]+1
- $CAD3 BIT 7,A       ; {  if (A & route_REVERSED) (*HL) -= 2; // $8003, ... // likely target location
+ $CAD3 BIT 7,A       ; {  if (A & route_REVERSED) (*HL) -= 2; // $8003, ... // route.step
  $CAD5 JR Z,$CAD9    ;
  $CAD7 DEC (HL)      ;
  $CAD8 DEC (HL)      ; }
-*$CAD9 INC (HL)      ;   (*HL)++; // likely target location
+*$CAD9 INC (HL)      ;   (*HL)++; // route.step
  $CADA POP AF
  $CADB CALL $6A12    ;   HL = get_door();
  $CADE LD A,(HL)     ; {  IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is doors[0] room mask shifted right 2
@@ -12907,7 +12919,7 @@ c$CA81 LD A,(IY+$01) ; A = IY[1];
  $CB12 RET           ;   return; %>
 *$CB13 DEC L         ; {HL -= 2;
  $CB14 DEC L         ; }
- $CB15 LD A,(HL)     ; A = *HL; // $8002 etc. // likely target location
+ $CB15 LD A,(HL)     ; A = *HL; // $8002 etc. // route
  $CB16 CP $FF        ; {if (A != 0xFF) <%
  $CB18 JR Z,$CB23    ; }
  $CB1A INC L         ;   HL++;
@@ -12956,7 +12968,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB44 JR C,$CB50    ; }
 ; We arrive here if:
 ; - vischar is the hero, or
-; - character is character_0_COMMANDANT and (target low byte & 0x7F) == 36, or
+; - character is character_0_COMMANDANT and (route.index & 0x7F) == 36, or
 ; - character is >= character_12_GUARD_12
 *$CB46 PUSH HL
  $CB47 CALL $C7C6    ;   character_event();
@@ -12967,7 +12979,7 @@ c$CB2D LD A,L        ; {  if (L != 0x02) <%
  $CB4E JR $CB23      ;   get_target_assign_pos(); return; // exit via
 ; We arrive here if:
 ; - vischar is not the hero, and
-;   - character is character_0_COMMANDANT and (target low byte & 0x7F) != 36, or
+;   - character is character_0_COMMANDANT and (route.index & 0x7F) != 36, or
 ;   - character is character_1_GUARD_1 .. character_11_GUARD_11
 *$CB50 LD A,(HL)     ; {  *HL++ = *HL ^ 0x80;
  $CB51 XOR $80       ;
@@ -13128,7 +13140,7 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
  $CC1F LD HL,$7AC6     ; HL = &solitary_pos;
  $CC22 LD IY,$8000     ; IY = $8000;
  $CC26 LD (IY+$0E),$03 ; IY[0x0E] = direction_BOTTOM_LEFT; // character faces bottom left
- $CC2A XOR A           ; {($8002) = 0; // target location - why is this storing a byte and not a word?
+ $CC2A XOR A           ; {($8002) = 0; // route.index = route_HALT
  $CC2B LD ($8002),A    ; }
  $CC2E JP $68A2        ; transition(); return; // exit via
 
@@ -13138,7 +13150,7 @@ c$CB98 LD A,$FF        ; {bell = bell_STOP;
 @label=solitary_hero_reset_data
 b$CC31 DEFB $00         ; room = room_0_OUTDOORS
  $CC32 DEFB $74,$64,$03 ; pos = 0x74, 0x64, 0x03
- $CC35 DEFB $24,$00     ; target = 0x24, 0x00
+ $CC35 DEFB $24,$00     ; route = 0x24, 0x00
 
 ; Guards follow suspicious character.
 ;
@@ -17124,7 +17136,7 @@ c$F163 DI                     ; {-
 @label=vischar_initial
  $F1C9 DEFB $00               ; character
  $F1CA DEFB $00               ; flags
- $F1CB DEFW $012C             ; target
+ $F1CB DEFW $012C             ; route
  $F1CD DEFB $2E,$2E,$18       ; pos
  $F1D0 DEFB $00               ; b07
  $F1D1 DEFW $CDF2             ; w08
