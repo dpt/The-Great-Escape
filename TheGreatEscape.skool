@@ -7534,12 +7534,9 @@ c$A4D3 LD A,($8217)  ; A = character_index;
 ; entered_move_characters is zero (another one).
 ;
 ; Used by the routine at #R$C7C6.
-; .
-; Sets a target location 0x002B. Seems to get hit around breakfasting time. If
-; I nobble this it stops him sitting for breakfast.
 @label=charevnt_breakfast_vischar
-c$A4D8 LD A,(IY+$00) ; A = IY[0]; // must be a character index
- $A4DB AND A         ; {if (A != 0) goto charevnt_breakfast_common;
+c$A4D8 LD A,(IY+$00) ; A = IY[0]; // character index
+ $A4DB AND A         ; {if (A != character_0_COMMANDANT) goto charevnt_breakfast_common;
  $A4DC JR NZ,$A4E4   ; }
  $A4DE LD BC,$2B00   ; { set_hero_route(location_002B); // exit via
  $A4E1 JP $A33F      ; }
