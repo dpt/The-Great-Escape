@@ -12325,7 +12325,7 @@ c$C7C6 LD A,(HL)     ; A = *HL;
  $C7CD JP C,$A444    ; }
 *$C7D0 CP $12        ; {if (A >= character_18_GUARD_DOG_3 && A <= character_22_PRISONER_3) goto character_sits;
  $C7D2 JR C,$C7D9    ;
- $C7D4 CP $17        ;
+ $C7D4 CP $17        ; Bug: Should be $18 (sixth prisoner doesn't sit for breakfast)
  $C7D6 JP C,$A420    ; }
 *$C7D9 PUSH HL       ; // POPped by handlers
 @nowarn
