@@ -578,11 +578,9 @@
 ;
 ; Further notes:
 ;
-; b $8000 character index? ($FF if no visible character)
 ; b $8001 flags: bit 6 gets toggled in set_hero_route /  bit 0: picking lock /  bit 1: cutting wire  ($FF when reset)
 ; w $8002 route (set in set_hero_route, process_player_input)
-; w $8004 (<- process_player_input) a coordinate? (i see it getting scaled in #R$CA11)
-; ? $8006
+; b*3 $8004 (<- process_player_input) a coordinate? (i see it getting scaled in #R$CA11)
 ; b $8007 bits 5/6/7: flags  (suspect bit 4 is a flag too) ($00 when reset)
 ; w $8008 (read by called_from_main_loop_9)
 ; w $800A (read/written by called_from_main_loop_9)
@@ -610,18 +608,6 @@
 ; w $8018 points to something (gets $06C8 subtracted from it) (<- in_permitted_area)
 ; w $801A points to something (gets $0448 subtracted from it) (<- in_permitted_area)
 ; b $801C room index: cleared to zero by action_papers, set to room_24_SOLITARY by solitary, copied to room_index by transition
-; ? $801D
-; ? $801E
-; ? $801F (written by setup_vischar_plotting)
-;
-; $8020 visible character blocks. 7 sets of 32 bytes, one per visible character. can there be >7 characters on-screen/visible at once? or is it prisoners only?
-;
-;   $8020 byte -- bit 6 means something here, likely merged with a character index
-;   $8021 likely a room index
-;   $8022 likely a position
-;   $8023 likely a position
-;   $8024 likely a position
-;   $803C room index within struct at $8020
 ;
 ; Other things:
 ;
