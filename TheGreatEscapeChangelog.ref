@@ -15,8 +15,102 @@
 ; Second top-level item.
 ; ...
 
-[Changelog:20170506]
-The disassembly is now built with SkoolKit 6.0.
+[Changelog:20180110]
+The disassembly is now built with SkoolKit 6.2.
+
+Added:
+  ~$F0F8: Added memory map for $F0F8 onwards.
+  #R$A068: Added notes about bitmap_flag_up/down overlapping.
+  Added gameplay section:
+    Added instructions from the original casette inlay, including redrawn diagrams and controls.
+    Added game solution from Vaxxolon.
+  Added fact about IX register.
+  Graphic glitch: stray pixels on dog.
+  Added fact about Fuller joystick.
+
+Fixed:
+  Fixed spelling of "pursue" everywhere.
+  The pursuit modes: vischar_FLAGS_BRIBE_PENDING, vischar_FLAGS_BIT1, vischar_FLAGS_SAW_BRIBE weren't flags but an enumeration: vischar_FLAGS_PURSUE, vischar_FLAGS_HASSLE, vischar_FLAGS_DOG_FOOD, vischar_FLAGS_SAW_BRIBE.
+  #R$C41C: HL is being read as part of screen x calc, not written through.
+  ~$CD6A: ITEM_ROOM macro takes room_no, not item_no.
+  #R$7833: Fix name: route_7738 -> route_7833.
+  #R$A259: Should have been room_20_REDCROSS, not an item.
+  #R$AA0C: Fixed various calculations in the shunt_map routines' commentary.
+
+Named / renamed:
+  element_A_of_table_7738 -> get_route
+  breakfast_time -> end_of_breakfast
+  bribes_solitary_food -> target_reached
+  byte_A13E_anotherone_common -> charevnt_breakfast_common
+  byte_A13E_common -> character_bed_common
+  byte_A13E_is_nonzero -> character_bed_state
+  byte_A13E_is_nonzero_anotherone -> charevnt_breakfast_state
+  byte_A13E_is_zero -> character_bed_vischar
+  byte_A13E_is_zero_anotherone -> charevnt_breakfast_vischar
+  characterstruct_BYTE0_MASK -> characterstruct_CHARACTER_MASK
+  charevnt_handler_0 -> charevnt_wander_top
+  charevnt_handler_1 -> charevnt_wander_left
+  charevnt_handler_10_hero_released_from_solitary -> charevnt_hero_release
+  charevnt_handler_2 -> charevnt_wander_yard
+  charevnt_handler_3_check_var_A13E -> charevnt_bed
+  charevnt_handler_4_solitary_ends -> charevnt_solitary_ends
+  charevnt_handler_5_check_var_A13E_anotherone -> charevnt_breakfast
+  charevnt_handler_6 -> charevnt_commandant_to_yard
+  charevnt_handler_7 -> charevnt_exit_hut2
+  charevnt_handler_8_hero_sleeps -> charevnt_hero_sleeps
+  charevnt_handler_9_hero_sits -> charevnt_hero_sits
+  doorpos_FLAGS_MASK_DIRECTION -> door_FLAGS_MASK_DIRECTION
+  follow_suspicious_character -> automatics
+  get_next_target -> get_target
+  get_next_target_and_handle_it -> get_target_assign_pos
+  queue_message_for_display -> queue_message
+  ran_out_of_list -> route_ended
+  screenpos_x -> iso_pos_x
+  screenpos_y -> iso_pos_y
+  searchlight_related -> searchlight_clip_left
+  set_character_location -> set_character_route
+  set_character_target -> set_character_route
+  set_hero_target_location -> set_hero_route
+  set_hero_target_location -> set_hero_route
+  set_location_0x000E -> set_route_go_to_yard
+  set_location_0x0010 -> set_route_go_to_breakfast
+  set_location_0x048E -> set_route_go_to_yard_reversed
+  set_prisoners_and_guards_location -> set_prisoners_and_guards_route
+  set_prisoners_and_guards_location_B -> set_prisoners_and_guards_route_B
+  set_target -> set_route
+  store_location -> store_route
+  vischar_BYTE2_BIT7 -> route_REVERSED
+  vischar_BYTE7_IMPEDED -> vischar_BYTE7_Y_DOMINANT
+  vischar_FLAGS_DOOR_THING -> vischar_FLAGS_TARGET_IS_DOOR
+  vischar_at_pos_x -> vischar_move_x
+  vischar_at_pos_y -> vischar_move_y
+
+Commentary:
+  The #LINK:Items(Items) now all have descriptions.
+  #R$C896: Use bell_RING_PERPETUAL.
+  #R$7B16/item_actions_jump_table: Comment return ops.
+  #R$783A: Improve description.
+  #R$AF5E: Add UDGs for zoombox tiles.
+
+Improved:
+  Enabled assembly labels in the disassembly (should have done this from the start).
+  Various edits to facts text.
+  #LINK:Masks(Masks page) is now divided into two parts for exterior and interior.
+  Expanded copyright statement.
+  Alt text for logo.
+  We no longer specify the base font size to let the user's preference take precedence.
+  Use <a href="https://www.myfonts.com/fonts/itc/berkeley-oldstyle/">ITC Berkeley Oldstyle Std</a> for the disassembly if browser has it, Cambria as a fallback like before. This it the font used for the original game inlay body text.
+  Barbed wire from the game is drawn across the top of the page footer.
+
+Bugs:
+  #R$C7D4: Added a note about the sixth prisoner bug.
+
+SkoolKit:
+  SkoolKit 6.x compatibility changes contributed by Richard Dymond.
+
+Other:
+  AddressAnchor thing?
+
 
 [Changelog:20170325]
 The disassembly is now built with SkoolKit 5.4.
@@ -128,6 +222,7 @@ SkoolKit:
 Other:
   Added a vim modeline.
 
+
 [Changelog:20160326]
 The disassembly is now built with SkoolKit 5.1.
 
@@ -180,8 +275,10 @@ Commentary:
 
 + Various fixes.
 
+
 [Changelog:20151102]
 Changelog begun and populated retrospectively.
+
 
 [Changelog:20151028]
 28th October 2015 update.
@@ -208,6 +305,7 @@ Sprite definitions were renamed to match the C version:
 
 Room and interior object naming was rationalised for the benefit of room decoding.
   We now suffix compass directions to indicate where an interior object faces (NW, NE, SE, SW).
+
 
 [Changelog:20150622]
 22nd June 2015 update.
@@ -260,6 +358,7 @@ Mistake: #R$BA5B tests HL, not DE. #R$BAA9 doesn't affect flags, so test B.
 
 Noted that the #R$BAC9 fallthrough at the end of #R$B916(mask_stuff) looks like a mistake.
 
+
 [Changelog:20150123]
 23rd January 2015 update.
 
@@ -281,7 +380,6 @@ Assembly improvements:
 Changed "TBD" bytes to mask bytes.
 
 Fixed incorrect makefile dependency.
-
 
 
 [Changelog:20141125]
@@ -353,6 +451,7 @@ item_bitmaps_and_masks: Provided dimensions for bitmap and mask blocks.
 Added note about #R$F271(check_menu_keys) exiting by using POP BC to remove the outer calling function's return address off the stack.
 
 Also noted that #R$F350(choose_keys) relies on A' being zero which happens only because the keyboard routine is at $FE00.
+
 
 [Changelog:20141019]
 19th October 2014 update.
