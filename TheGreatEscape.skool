@@ -634,10 +634,11 @@
 ; ROUTES
 ; //////////////////////////////////////////////////////////////////////////////
 ;
-; Each vischar has a "route" structure that guides its pathfinding. The route is
-; composed of an index and a step (the first and second bytes respectively). The index selects a
-; route from the table at #R$7738. The step is the index into that route. If the top
-; bit of the route index is set then the route is followed in reverse order.
+; Each vischar has a "route" structure that guides its pathfinding. The route
+; is composed of an index and a step (the first and second bytes respectively).
+; The index selects a route from the table at #R$7738. The step is the index
+; into that route. If the top bit of the route index is set then the route is
+; followed in reverse order.
 ;
 ;
 @org=$4000
