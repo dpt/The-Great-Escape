@@ -6125,7 +6125,7 @@ c$9EB2 LD HL,$A12F   ; {A = player_locked_out_until - game_counter;
  $9EE3 DEFB $85      ; input_DOWN + input_LEFT  + input_KICK
 
 ; Maps bytes to pointers in $9EF9.
-@label=byte_to_pointer
+@label=route_to_permitted
 b$9EE4 DEFB $2A,$F9,$9E                 ; byte_to_offset { 42, &byte_9EF9[0] }
  $9EE7 DEFB $05,$FC,$9E                 ; byte_to_offset {  5, &byte_9EFC[0] }
  $9EEA DEFB $0E,$01,$9F                 ; byte_to_offset { 14, &byte_9F01[0] }
@@ -6207,8 +6207,8 @@ c$9F21 LD HL,$800F   ; HL = $800F; // position on X axis
 *$9F8C CALL $A007    ;   in_permitted_area_end_bit();
  $9F8F JR Z,$9FDE    ; {  if (Z) goto set_flag_green; else goto set_flag_red;
  $9F91 JR $9FF8      ; %>}
-*$9F93 AND $7F       ; else <% A &= 0x7F;
- $9F95 LD HL,$9EE4   ;   HL = &byte_to_pointer[0]; // table mapping bytes to offsets
+*$9F93 AND $7F       ; else <% A &= 0x7F;  // mask off reversed flag
+ $9F95 LD HL,$9EE4   ;   HL = &route_to_permitted[0]; // table mapping bytes to offsets
  $9F98 LD B,$07      ;   B = 7; // 7 iterations
 *$9F9A CP (HL)       ; {  do <% if (A == *HL++) goto found;
  $9F9B INC HL        ;
