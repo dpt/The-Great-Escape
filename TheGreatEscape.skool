@@ -11601,12 +11601,12 @@ g$C41A DEFW $9000    ; prng_pointer
 ; Form a clamped map position in DE.
 @label=spawn_characters
 c$C41C LD HL,($81BB) ; HL = map_position;
- $C41F LD A,L        ; {E = (L < 8) ? 0 : L;
+ $C41F LD A,L        ; {E = (L < 8) ? 0 : L - 8;
  $C420 SUB $08       ;
  $C422 JR NC,$C425   ;
  $C424 XOR A         ;
 *$C425 LD E,A        ; }
- $C426 LD A,H        ; {D = (H < 8) ? 0 : H;
+ $C426 LD A,H        ; {D = (H < 8) ? 0 : H - 8;
  $C427 SUB $08       ;
  $C429 JR NC,$C42C   ;
  $C42B XOR A         ;
