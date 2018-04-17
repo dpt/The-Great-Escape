@@ -12668,10 +12668,10 @@ c$C918 LD A,(IY+$07)  ; A = IY[7]; // $8007 etc. // more flags
  $C9A6 LD A,($68A0)   ; {    if (room_index) <%
  $C9A9 AND A          ;
  $C9AA JP NZ,$C9B2    ; }
-; Indoors.
+; Outdoors.
  $C9AD CALL $E542     ;       pos_to_tinypos(HL,DE); %>
  $C9B0 JR $C9B7       ;     else <%
-; Outdoors.
+; Indoors.
 *$C9B2 LDI            ;       *DE++ = *HL++;
  $C9B4 INC L          ;       HL++;
  $C9B5 LDI            ;       *DE++ = *HL++; %>
