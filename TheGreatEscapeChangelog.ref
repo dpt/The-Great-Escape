@@ -15,101 +15,111 @@
 ; Second top-level item.
 ; ...
 
-[Changelog:20180110]
-The disassembly is now built with SkoolKit 6.2.
+[Changelog:20180419]
+The disassembly is now built with SkoolKit 6.4.
 
-Added:
+Major changes
+  Updated for SkoolKit 6.4 and Python 3.
+      Changes contributed by Richard Dymond.
+  Added a game section:
+      The #LINK:Intro#theGame(instructions from the original cassette inlay) are now included as the first section of the disassembly. The text was imported from <a href="http://www.worldofspectrum.org/pub/sinclair/games-info/g/GreatEscapeThe.txt">WoS</a> and the original diagrams were redrawn. I've even identified exactly the right font that the original manual used and used that.
+      A page about #LINK:Completion(how to complete the game) has been added. Presently this includes the 1994 Vaxalon solution and a list of escape conditions that I've added: it lists the valid items which you need to successfully escape the camp.
+  Enabled assembly labels in the disassembly (I should have done this from the start).
+
+Additions to supporting files
+  Added a #FACT#neverUsesIX(fact about the IX register).
+  Added a #LINK:GraphicGlitches#strayDogPixels(glitch about stray pixels on the dog animation's third frame).
+  Added a #FACT#fullerJoystick(fact about Fuller joystick support).
+
+Improvements to supporting files
+  The #LINK:Items(items) now all have descriptions (todo: needs more links).
+  The #FACT#(facts page) has had various edits.
+  The #LINK:Masks(masks page) is now divided into two parts for exterior and interior.
+  The copyright statement used at the footer of every disassembly page has been expanded.
+  The logo now has alt text.
+  Style:
+    We no longer specify the base font size to let the user's preference take precedence.
+    We now use <a href="https://www.myfonts.com/fonts/itc/berkeley-oldstyle/">ITC Berkeley Oldstyle Std</a> for the disassembly if browser has it. This is the font used for the original game's casettte inlay body text. Cambria is used as a fallback as before.
+  The barbed wire from the game is now drawn across the top of the page footer.
+
+Additions to main commentary
+  #R$783A: Added @keeps.
+  #R$7D30: Added label for plot_single_glyph.
+  #R$A068: Added note about bitmap_flag_up/down overlapping.
+  #R$F2AD: Added label for define_key_prompts
   ~$F0F8: Added memory map for $F0F8 onwards.
-  #R$A068: Added notes about bitmap_flag_up/down overlapping.
-  Added gameplay section:
-    Added instructions from the original casette inlay, including redrawn diagrams and controls.
-    Added game solution from Vaxxolon.
-  Added fact about IX register.
-  Graphic glitch: stray pixels on dog.
-  Added fact about Fuller joystick.
 
-Fixed:
+Improvements to main commentary
+  The pursuit modes: vischar_FLAGS_BRIBE_PENDING, vischar_FLAGS_BIT1 and vischar_FLAGS_SAW_BRIBE weren't individual flags but instead an enumeration. They are now vischar_FLAGS_PURSUE, vischar_FLAGS_HASSLE, vischar_FLAGS_DOG_FOOD and vischar_FLAGS_SAW_BRIBE.
+  Numerous renamings:
+    #R$7D15: queue_message_for_display -> queue_message
+    #R$81B5: screenpos_x -> iso_pos_x
+    #R$81B6: screenpos_y -> iso_pos_y
+    #R$9EE4: byte_to_pointer -> route_to_permitted
+    #R$A2E2: breakfast_time -> end_of_breakfast
+    #R$A33F: set_hero_target_location -> set_hero_route
+    #R$A35F: set_prisoners_and_guards_location -> set_prisoners_and_guards_route
+    #R$A373: set_prisoners_and_guards_location_B -> set_prisoners_and_guards_route_B
+    #R$A3BB: set_target -> set_route
+    #R$A3ED: store_location -> store_route
+    #R$A3F3: byte_A13E_is_nonzero -> character_bed_state
+    #R$A3F8: byte_A13E_is_zero -> character_bed_vischar
+    #R$A404: byte_A13E_common -> character_bed_common
+    #R$A4A9: set_location_0x000E -> set_route_go_to_yard
+    #R$A4B7: set_location_0x048E -> set_route_go_to_yard_reversed
+    #R$A4C5: set_location_0x0010 -> set_route_go_to_breakfast
+    #R$A4D3: byte_A13E_is_nonzero_anotherone -> charevnt_breakfast_state
+    #R$A4D8: byte_A13E_is_zero_anotherone -> charevnt_breakfast_vischar
+    #R$A4E4: byte_A13E_anotherone_common -> charevnt_breakfast_common
+    #R$AE75: searchlight_related -> searchlight_clip_left
+    #R$C651: get_next_target -> get_target
+    #R$C7D4 (character_event): Added a note about the sixth prisoner bug.
+    #R$C83F: charevnt_handler_4_solitary_ends -> charevnt_solitary_ends
+    #R$C845: charevnt_handler_6 -> charevnt_commandant_to_yard
+    #R$C84C: charevnt_handler_10_hero_released_from_solitary -> charevnt_hero_release
+    #R$C85C: charevnt_handler_1 -> charevnt_wander_left
+    #R$C860: charevnt_handler_2 -> charevnt_wander_yard
+    #R$C864: charevnt_handler_0 -> charevnt_wander_top
+    #R$C86C: charevnt_handler_3_check_var_A13E -> charevnt_bed
+    #R$C877: charevnt_handler_5_check_var_A13E_anotherone -> charevnt_breakfast
+    #R$C882: charevnt_handler_7 -> charevnt_exit_hut2
+    #R$C889: charevnt_handler_9_hero_sits -> charevnt_hero_sits
+    #R$C88D: charevnt_handler_8_hero_sleeps -> charevnt_hero_sleeps
+    #R$C892: follow_suspicious_character -> automatics
+    #R$CA11: vischar_at_pos_x -> vischar_move_x
+    #R$CA49: vischar_at_pos_y -> vischar_move_y
+    #R$CA81: bribes_solitary_food -> target_reached
+    #R$CB23: get_next_target_and_handle_it -> get_target_assign_pos
+    #R$CB2D: ran_out_of_list -> route_ended
+    #R$CB79: element_A_of_table_7738 -> get_route
+    CHECK:
+    #R$A38C: set_character_location -> set_character_route   ** CAN'T BE BOTH
+    set_character_target -> set_character_route   ** CAN'T BE BOTH
+  "Further notes" were reduced.
+  #R$783A (locations): Improved description.
+  #R$7B16: Commented return ops.
+  #R$A4D8: Removed hacking note now I've confirmed it's a test for the commandant.
+  #R$AF5E: Added UDGs for barbed wire zoombox tiles.
+  #R$C896: Uses bell_RING_PERPETUAL.
+  All remaining single dash comments were removed.
+
+Corrections to main commentary
   Fixed spelling of "pursue" everywhere.
-  The pursuit modes: vischar_FLAGS_BRIBE_PENDING, vischar_FLAGS_BIT1, vischar_FLAGS_SAW_BRIBE weren't flags but an enumeration: vischar_FLAGS_PURSUE, vischar_FLAGS_HASSLE, vischar_FLAGS_DOG_FOOD, vischar_FLAGS_SAW_BRIBE.
-  #R$C41C: HL is being read as part of screen x calc, not written through.
-  ~$CD6A: ITEM_ROOM macro takes room_no, not item_no.
-  #R$7833: Fix name: route_7738 -> route_7833.
+  #R$7833: Fixed name: route_7738 -> route_7833.
   #R$A259: Should have been room_20_REDCROSS, not an item.
   #R$AA0C: Fixed various calculations in the shunt_map routines' commentary.
+  #R$C41C: HL is being read as part of screen x calc, not written through.
+  #R$C41F (spawn_characters): A 'SUB' was missed resulting in an incorrect comment.
+  #R$C9AA (character_behaviour): Fixed comments which transposed indoors and outdoors.
 
-Named / renamed:
-  element_A_of_table_7738 -> get_route
-  breakfast_time -> end_of_breakfast
-  bribes_solitary_food -> target_reached
-  byte_A13E_anotherone_common -> charevnt_breakfast_common
-  byte_A13E_common -> character_bed_common
-  byte_A13E_is_nonzero -> character_bed_state
-  byte_A13E_is_nonzero_anotherone -> charevnt_breakfast_state
-  byte_A13E_is_zero -> character_bed_vischar
-  byte_A13E_is_zero_anotherone -> charevnt_breakfast_vischar
+Improvements to symbols only
   characterstruct_BYTE0_MASK -> characterstruct_CHARACTER_MASK
-  charevnt_handler_0 -> charevnt_wander_top
-  charevnt_handler_1 -> charevnt_wander_left
-  charevnt_handler_10_hero_released_from_solitary -> charevnt_hero_release
-  charevnt_handler_2 -> charevnt_wander_yard
-  charevnt_handler_3_check_var_A13E -> charevnt_bed
-  charevnt_handler_4_solitary_ends -> charevnt_solitary_ends
-  charevnt_handler_5_check_var_A13E_anotherone -> charevnt_breakfast
-  charevnt_handler_6 -> charevnt_commandant_to_yard
-  charevnt_handler_7 -> charevnt_exit_hut2
-  charevnt_handler_8_hero_sleeps -> charevnt_hero_sleeps
-  charevnt_handler_9_hero_sits -> charevnt_hero_sits
   doorpos_FLAGS_MASK_DIRECTION -> door_FLAGS_MASK_DIRECTION
-  follow_suspicious_character -> automatics
-  get_next_target -> get_target
-  get_next_target_and_handle_it -> get_target_assign_pos
-  queue_message_for_display -> queue_message
-  ran_out_of_list -> route_ended
-  screenpos_x -> iso_pos_x
-  screenpos_y -> iso_pos_y
-  searchlight_related -> searchlight_clip_left
-  set_character_location -> set_character_route
-  set_character_target -> set_character_route
-  set_hero_target_location -> set_hero_route
-  set_hero_target_location -> set_hero_route
-  set_location_0x000E -> set_route_go_to_yard
-  set_location_0x0010 -> set_route_go_to_breakfast
-  set_location_0x048E -> set_route_go_to_yard_reversed
-  set_prisoners_and_guards_location -> set_prisoners_and_guards_route
-  set_prisoners_and_guards_location_B -> set_prisoners_and_guards_route_B
-  set_target -> set_route
-  store_location -> store_route
   vischar_BYTE2_BIT7 -> route_REVERSED
-  vischar_BYTE7_IMPEDED -> vischar_BYTE7_Y_DOMINANT
   vischar_FLAGS_DOOR_THING -> vischar_FLAGS_TARGET_IS_DOOR
-  vischar_at_pos_x -> vischar_move_x
-  vischar_at_pos_y -> vischar_move_y
 
-Commentary:
-  The #LINK:Items(Items) now all have descriptions.
-  #R$C896: Use bell_RING_PERPETUAL.
-  #R$7B16/item_actions_jump_table: Comment return ops.
-  #R$783A: Improve description.
-  #R$AF5E: Add UDGs for zoombox tiles.
-
-Improved:
-  Enabled assembly labels in the disassembly (should have done this from the start).
-  Various edits to facts text.
-  #LINK:Masks(Masks page) is now divided into two parts for exterior and interior.
-  Expanded copyright statement.
-  Alt text for logo.
-  We no longer specify the base font size to let the user's preference take precedence.
-  Use <a href="https://www.myfonts.com/fonts/itc/berkeley-oldstyle/">ITC Berkeley Oldstyle Std</a> for the disassembly if browser has it, Cambria as a fallback like before. This it the font used for the original game inlay body text.
-  Barbed wire from the game is drawn across the top of the page footer.
-
-Bugs:
-  #R$C7D4: Added a note about the sixth prisoner bug.
-
-SkoolKit:
-  SkoolKit 6.x compatibility changes contributed by Richard Dymond.
-
-Other:
-  AddressAnchor thing?
+Corrections to symbols only
+  ~$CD6A: ITEM_ROOM macro takes a room_no, not an item_no.
 
 
 [Changelog:20170325]

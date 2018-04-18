@@ -4,14 +4,16 @@
 ; This disassembly copyright (c) David Thomas, 2012-2018. <dave@davespace.co.uk>
 ;
 
-[GraphicGlitch:GuardsTooLow:Front-facing guards are drawn too low]
-The pointers to the bitmap data are off by two bytes, so not only do the guards' graphics not line up with their masks, but they're also drawn too low by one row:
+[GraphicGlitch:guardsTooLow:Front-facing guards are drawn too low]
+The pointers to guards' bitmap data are off by two bytes, so not only do the guards' graphics not line up with their masks, but they're also drawn too low by one row:
 
 #UDGTABLE(gallery)
 { #UDGARRAY2,7,4,2,,,,2;$D783-$D7BC-1-16:$D585-$D5C4-1-16{0,0,64,116}(sprite-guard-facing-bottom-right-1) | #UDGARRAY2,7,4,2,,,,2;$D7BD-$D7F6-1-16:$D5C5-$D604-1-16{0,0,64,116}(sprite-guard-facing-bottom-right-2) | #UDGARRAY2,7,4,2,,,,2;$D7F7-$D82E-1-16:$D605-$D63C-1-16{0,0,64,112}(sprite-guard-facing-bottom-right-3) | #UDGARRAY2,7,4,2,,,,2;$D82F-$D866-1-16:$D63D-$D676-1-16{0,0,64,112}(sprite-guard-facing-bottom-right-4) }
 TABLE#
 
-[GraphicGlitch:StrayDogPixels:Dog animation has stray pixels]
+You can easily spot this in the game by turning left-right while wearing the guards' uniform.
+
+[GraphicGlitch:strayDogPixels:Dog animation has stray pixels]
 The third frame of the dog animation ("dog facing bottom right 3") has two stray pixels turned on at the bottom-left of the image by the dog's rear legs. This isn't a problem with the sprite itself but its definition in the #R$CE22 sprites array which defines the sizes of, and pointers to, all of the game sprites. It lists it as having a height of 15, but the data is actually only 13 rows high. The result is two rows of data are lifted from the next frame's data.
 
 The fix is to POKE #R$CEA0,13.

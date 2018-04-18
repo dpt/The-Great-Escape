@@ -5,7 +5,7 @@
 ;
 
 [Page:Intro]
-PageContent=<div>#INCLUDE(Game:theGame) #INCLUDE1(Game:campGeography) #INCLUDE1(Game:characters)</div>
+PageContent=<div>#INCLUDE(Game:theGame) #INCLUDE1(Game:campGeography) #INCLUDE1(Game:characters) #INCLUDE(Game:source)</div>
 
 [Game:theGame]
 <h2>The Game</h2>
@@ -76,9 +76,13 @@ Messages will appear on screen, keeping you fully informed of all news events wi
 
 You score points and increase your morale by discovering objects, using them and escaping - each of these activities will increase your score.
 
+[Game:source]
+
+<p>(Source: http://www.worldofspectrum.org/pub/sinclair/games-info/g/GreatEscapeThe.txt)</p>
+
 
 [Page:Controls]
-PageContent=<div>#INCLUDE(Controls:allControls)</div>
+PageContent=<div>#INCLUDE(Controls:allControls) #INCLUDE(Game:source)</div>
 
 [Controls:allControls]
 <h2>Controls</h2>
@@ -96,16 +100,10 @@ Redefinable keys - follow screen instructions.
 FIRE and UP is pick up. FIRE and DOWN is drop. FIRE LEFT/RIGHT is use object.
 
 [Page:Completion]
-PageContent=<div>#INCLUDE(Completion:escapeConditions) #INCLUDE1(Completion:solutionOne)</div>
-
-[Completion:escapeConditions]
-<h2>Escape conditions</h2>
-<p>To escape the camp and find your freedom successfully you must either have the COMPASS and the PURSE or the COMPASS and the PAPERS.</p>
+PageContent=<div>#INCLUDE1(Completion:solutionOne) #INCLUDE(Game:source) #INCLUDE(Completion:escapeConditions)</div>
 
 [Completion:solutionOne]
 <h2>Solution - Typed by Vaxalon - 1994</h2>
-
-(Source: http://www.worldofspectrum.org/pub/sinclair/games-info/g/GreatEscapeThe.txt)
 
 <h3>DAY ONE</h3>
 Collect the key from under the watchtower and open the door where the toolkit is found. Drop the key on the floor and pick up the toolkit. Open the door where the spade is found. Collect the torch and the papers and take them to the room where the spade is and drop them down the tunnel. Return to normal duties.
@@ -127,4 +125,8 @@ The compass should be in the red cross parcel. Take it to the room where the spa
 
 <h3>DAY SEVEN</h3>
 Wait until you hear the alarm for roll call. Now run up to the wire and cut it. Drop the cutters and pick up the compass - then run off-screen and you've escaped!
+
+[Completion:escapeConditions]
+<h2>Escape conditions</h2>
+<p>To escape the camp and find your freedom successfully you must either have the COMPASS and the PURSE or the COMPASS and the PAPERS.</p>
 
