@@ -148,13 +148,13 @@ PageContent=#INCLUDE(PageContent:Map)
 
 <h4>Storage</h4>
 
-<p>The map is stored as a 54x34 grid of <dfn>super tile indices</dfn>. There are 218 of these super tiles. Each super tile in turn is a 4x4 grid of <dfn>tile indices</dfn>. Tiles are 8x8 pixel blocks.</p>
+<p>The map (stored at #R$BCEE($BCEE)) is stored as a 54x34 grid of <dfn>super tile indices</dfn>. There are 218 of these super tiles (stored at #R$5B00($5B00)) onwards. Each super tile in turn is a 4x4 grid of <dfn>tile indices</dfn>. Tiles are 8x8 pixel blocks.</p>
 
-<p>There are three separate tile sets, selected between based on which super tile is being plotted:
+<p>There is a single <dfn>exterior tile set</dfn> (stored at #R$8590($8590)) of 571 8x8 tiles. Within the exterior tile set there are three groupings of tiles. A group is chosen based on which super tile is being plotted. This sliding window type approach lets super tiles borrow tiles from other groups if they're within range.
 <ul>
-<li>Super tiles 0..44 use exterior_tiles_1</li>
-<li>Super tiles 45..138 and 204..217 use exterior_tiles_2</li>
-<li>Super tiles 139..203 use exterior_tiles_3</li>
+<li>Super tiles 0..44 use the tiles at the very start of the set</li>
+<li>Super tiles 45..138 and 204..217 use tiles 145 onwards</li>
+<li>Super tiles 139..203 use tiles 366 onwards</li>
 </ul>
 </p>
 
@@ -164,16 +164,23 @@ PageContent=#INCLUDE(PageContent:Map)
 #CALL:map($BCEE, 54, 34, 1, 1)
 </p>
 
-<p>And the tile sets contain:
+<p>So the complete map is drawn using just the following tiles:
 <ul>
-<li>exterior_tiles_1: 145 tiles (mainly tiles for huts) #UDGARRAY16,7;$8590-$8A8F-8(exterior-tiles1)</li>
-<li>exterior_tiles_2: 220 tiles (mainly tiles for walls) #UDGARRAY16,7;$8A18-$9117-8(exterior-tiles2)</li>
-<li>exterior_tiles_3: 243 tiles (mainly tiles for fences) #UDGARRAY16,7;$90F8-$9777-8(exterior-tiles3)</li>
+<li>#UDGARRAY64,7;$8590-$9768-8(exterior-tiles)</li>
 </ul>
 </p>
 
-<p>The total storage for the map is thus 54*34 + 218*4*4 + (145+220+243)*8 = <strong>10,188 bytes</strong>.</p>
-<p>An uncompressed map not using such a scheme would consume 54*32*34*32/8 = <strong>235,008 bytes</strong>. That's 23 times larger and far beyond the capacity of the Spectrum.</p>
+<p>The total storage for the map is thus:
+<ul>
+<li>(map) 54 * 34 + (super tiles) 218 * 4 * 4 + (tiles) 571 * 8 = <strong>9,892 bytes</strong>
+</ul>
+</p>
+
+<p>An uncompressed map not using such a scheme would consume:
+<ul>
+<li>54 * 32 * 34 * 32 / 8 = <strong>235,008 bytes</strong>
+</ul>
+That's 24 times larger and far beyond the capacity of the Spectrum.</p>
 
 <h4>Blank upper parts</h4>
 
