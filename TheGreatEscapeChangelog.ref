@@ -26,30 +26,32 @@ Major changes
       A page about #LINK:Completion(how to complete the game) has been added. Presently this includes the 1994 Vaxalon solution and a list of escape conditions that I've added: it lists the valid items which you need to successfully escape the camp.
   Enabled assembly labels in the disassembly (I should have done this from the start).
 
-Additions to supporting files
+Additions to peripheral disassembly
   Added a #FACT#neverUsesIX(fact about the IX register).
   Added a #LINK:GraphicGlitches#strayDogPixels(glitch about stray pixels on the dog animation's third frame).
   Added a #FACT#fullerJoystick(fact about Fuller joystick support).
 
-Improvements to supporting files
+Improvements to peripheral disassembly
   The #LINK:Items(items) now all have descriptions (todo: needs more links).
-  The #FACT#(facts page) has had various edits.
   The #LINK:Masks(masks page) is now divided into two parts for exterior and interior.
+  The logo now has alt text set.
   The copyright statement used at the footer of every disassembly page has been expanded.
-  The logo now has alt text.
-  Style:
-    We no longer specify the base font size to let the user's preference take precedence.
-    We now use <a href="https://www.myfonts.com/fonts/itc/berkeley-oldstyle/">ITC Berkeley Oldstyle Std</a> for the disassembly if browser has it. This is the font used for the original game's casettte inlay body text. Cambria is used as a fallback as before.
   The barbed wire from the game is now drawn across the top of the page footer.
+  We no longer specify the base font size to let the user's preference take precedence.
+  We now use <a href="https://www.myfonts.com/fonts/itc/berkeley-oldstyle/">ITC Berkeley Oldstyle Std</a> for the disassembly if browser has it. This is the font used for the original game's casettte inlay body text. Cambria is used as a fallback as before.
 
-Additions to main commentary
+Corrections to peripheral disassembly
+  The #LINK:Map(map) description has been corrected now that I understand that there's a single exterior tile set which uses a sliding window rather than three separate tile sets.
+  The #FACT#(facts page) has had various edits.
+
+Additions to main disassembly commentary
   #R$783A: Added @keeps.
   #R$7D30: Added label for plot_single_glyph.
   #R$A068: Added note about bitmap_flag_up/down overlapping.
   #R$F2AD: Added label for define_key_prompts
   ~$F0F8: Added memory map for $F0F8 onwards.
 
-Improvements to main commentary
+Improvements to main disassembly commentary
   The pursuit modes: vischar_FLAGS_BRIBE_PENDING, vischar_FLAGS_BIT1 and vischar_FLAGS_SAW_BRIBE weren't individual flags but instead an enumeration. They are now vischar_FLAGS_PURSUE, vischar_FLAGS_HASSLE, vischar_FLAGS_DOG_FOOD and vischar_FLAGS_SAW_BRIBE.
   Numerous renamings:
     #R$7D15: queue_message_for_display -> queue_message
@@ -103,7 +105,7 @@ Improvements to main commentary
   #R$C896: Uses bell_RING_PERPETUAL.
   All remaining single dash comments were removed.
 
-Corrections to main commentary
+Corrections to main disassembly commentary
   Fixed spelling of "pursue" everywhere.
   #R$7833: Fixed name: route_7738 -> route_7833.
   #R$A259: Should have been room_20_REDCROSS, not an item.
@@ -112,13 +114,13 @@ Corrections to main commentary
   #R$C41F (spawn_characters): A 'SUB' was missed resulting in an incorrect comment.
   #R$C9AA (character_behaviour): Fixed comments which transposed indoors and outdoors.
 
-Improvements to symbols only
+Improvements to disassembly symbols only
   characterstruct_BYTE0_MASK -> characterstruct_CHARACTER_MASK
   doorpos_FLAGS_MASK_DIRECTION -> door_FLAGS_MASK_DIRECTION
   vischar_BYTE2_BIT7 -> route_REVERSED
   vischar_FLAGS_DOOR_THING -> vischar_FLAGS_TARGET_IS_DOOR
 
-Corrections to symbols only
+Corrections to disassembly symbols only
   ~$CD6A: ITEM_ROOM macro takes a room_no, not an item_no.
 
 
