@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="7D87.html">7D87</a>.
+Used by the routine at <a href="7D87.html">wipe_message</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,115 +45,115 @@ Used by the routine at <a href="7D87.html">7D87</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_single_glyph</td>
 <td class="address-2"><span id="7d30"></span>7D30</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d31"></span>7D31</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="5">HL = A * 8;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d32"></span>7D32</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d34"></span>7D34</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d35"></span>7D35</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d36"></span>7D36</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d37"></span>7D37</td>
 <td class="instruction">LD BC,$A69E</td>
 <td class="comment-11" rowspan="1">BC = bitmap_font;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d3a"></span>7D3A</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="2">HL += BC;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d3b"></span>7D3B</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d3c"></span>7D3C</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_single_glyph_0</td>
 <td class="address-2"><span id="7d3e"></span>7D3E</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% *DE = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d3f"></span>7D3F</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d40"></span>7D40</td>
 <td class="instruction">INC D</td>
 <td class="comment-11" rowspan="1">D++; // i.e. DE += 256;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d41"></span>7D41</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d42"></span>7D42</td>
-<td class="instruction">DJNZ $7D3E</td>
+<td class="instruction">DJNZ <a href="7D30.html#7d3e">plot_single_glyph_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d44"></span>7D44</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="3">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d45"></span>7D45</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d46"></span>7D46</td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d47"></span>7D47</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -167,9 +167,9 @@ Used by the routine at <a href="7D87.html">7D87</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A38C.html">A38C</a>.
+Used by the routine at <a href="A38C.html">set_character_route</a>.
 </div>
 </div>
 <table class="input-1">
@@ -36,15 +36,15 @@ Used by the routine at <a href="A38C.html">A38C</a>.
 </tr>
 <tr>
 <td class="register">A'</td>
-<td class="register-desc">Low byte.</td>
+<td class="register-desc">Route index.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc">High byte.</td>
+<td class="register-desc">Route step.</td>
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to target.</td>
+<td class="register-desc">Pointer to route.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -56,37 +56,37 @@ Used by the routine at <a href="A38C.html">A38C</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">store_route</td>
 <td class="address-2"><span id="a3ed"></span>A3ED</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="4">*HL++ = Adash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3ee"></span>A3EE</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3ef"></span>A3EF</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3f0"></span>A3F0</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3f1"></span>A3F1</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-11" rowspan="1">*HL = C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3f2"></span>A3F2</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -100,9 +100,9 @@ Used by the routine at <a href="A38C.html">A38C</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

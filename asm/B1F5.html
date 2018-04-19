@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="AF8F.html">AF8F</a>.
+Used by the routine at <a href="AF8F.html">touch</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,7 +48,7 @@ Used by the routine at <a href="AF8F.html">AF8F</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">door_handling</td>
 <td class="address-2"><span id="b1f5"></span>B1F5</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">A = room_index;</td>
@@ -64,15 +64,15 @@ Interior doors are handled by another routine.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b1f8"></span>B1F8</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A) goto door_handling_interior; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b1f9"></span>B1F9</td>
-<td class="instruction">JP NZ,<a href="B32D.html">$B32D</a></td>
+<td class="instruction">JP NZ,<a href="B32D.html">door_handling_interior</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -86,327 +86,327 @@ Select start position in doors[] based on the direction the hero is facing.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b1fc"></span>B1FC</td>
 <td class="instruction">LD HL,$78D6</td>
 <td class="comment-11" rowspan="1">HL = &amp;doors[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b1ff"></span>B1FF</td>
 <td class="instruction">LD E,(IY+$0E)</td>
 <td class="comment-11" rowspan="1">E = IY[14]; // walk/crawl flag byte</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b202"></span>B202</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="4">if (E &gt;= 2) HL = &amp;door_position[1]; /* BOTTOM_RIGHT or BOTTOM_LEFT */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b203"></span>B203</td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b205"></span>B205</td>
-<td class="instruction">JR C,$B20A</td>
+<td class="instruction">JR C,<a href="B1F5.html#b20a">door_handling_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b207"></span>B207</td>
 <td class="instruction">LD HL,$78DA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">door_handling_0</td>
 <td class="address-2"><span id="b20a"></span>B20A</td>
 <td class="instruction">LD D,$03</td>
 <td class="comment-11" rowspan="1">D = 3;  // mask</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b20c"></span>B20C</td>
 <td class="instruction">LD B,$10</td>
 <td class="comment-11" rowspan="1">B = 16; // 16 is the length of what?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">door_handling_1</td>
 <td class="address-2"><span id="b20e"></span>B20E</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% A = *HL &amp; D;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b20f"></span>B20F</td>
 <td class="instruction">AND D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b210"></span>B210</td>
 <td class="instruction">CP E</td>
 <td class="comment-11" rowspan="2">if (A == E) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b211"></span>B211</td>
-<td class="instruction">JR NZ,$B21E</td>
+<td class="instruction">JR NZ,<a href="B1F5.html#b21e">door_handling_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b213"></span>B213</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b214"></span>B214</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b215"></span>B215</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b216"></span>B216</td>
-<td class="instruction">CALL <a href="B252.html">$B252</a></td>
+<td class="instruction">CALL <a href="B252.html">door_in_range</a></td>
 <td class="comment-11" rowspan="1">door_in_range();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b219"></span>B219</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b21a"></span>B21A</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b21b"></span>B21B</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b21c"></span>B21C</td>
-<td class="instruction">JR NC,$B229</td>
+<td class="instruction">JR NC,<a href="B1F5.html#b229">door_handling_4</a></td>
 <td class="comment-11" rowspan="1">if (!C) goto found; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">door_handling_2</td>
 <td class="address-2"><span id="b21e"></span>B21E</td>
 <td class="instruction">LD A,$08</td>
 <td class="comment-11" rowspan="5">HL += 8; // step forward two entries</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b220"></span>B220</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b221"></span>B221</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b222"></span>B222</td>
-<td class="instruction">JR NC,$B225</td>
+<td class="instruction">JR NC,<a href="B1F5.html#b225">door_handling_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b224"></span>B224</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">door_handling_3</td>
 <td class="address-2"><span id="b225"></span>B225</td>
-<td class="instruction">DJNZ $B20E</td>
+<td class="instruction">DJNZ <a href="B1F5.html#b20e">door_handling_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b227"></span>B227</td>
 <td class="instruction">AND B</td>
 <td class="comment-11" rowspan="1">A &amp;= B; // set Z (B is zero) // seems to exist to set Z, but routine doesn't return anything?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b228"></span>B228</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">door_handling_4</td>
 <td class="address-2"><span id="b229"></span>B229</td>
 <td class="instruction">LD A,$10</td>
 <td class="comment-11" rowspan="2">found: A = 16 - B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b22b"></span>B22B</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b22c"></span>B22C</td>
 <td class="instruction">LD ($68A1),A</td>
 <td class="comment-11" rowspan="1">current_door = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b22f"></span>B22F</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b230"></span>B230</td>
-<td class="instruction">CALL <a href="B1D4.html">$B1D4</a></td>
+<td class="instruction">CALL <a href="B1D4.html">is_door_locked</a></td>
 <td class="comment-11" rowspan="1">is_door_locked();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b233"></span>B233</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">if (!Z) return; // door was locked - return nonzero?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b234"></span>B234</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b235"></span>B235</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="5">IY[28] = (*HL &gt;&gt; 2) &amp; 0x3F; // sampled HL=$792E (in doors[])</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b236"></span>B236</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b237"></span>B237</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b238"></span>B238</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b23a"></span>B23A</td>
 <td class="instruction">LD (IY+$1C),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b23d"></span>B23D</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="4">if ((*HL &amp; 3) &gt;= 2) &lt;% /* BR or BL */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b23e"></span>B23E</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b240"></span>B240</td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b242"></span>B242</td>
-<td class="instruction">JR NC,$B24C</td>
+<td class="instruction">JR NC,<a href="B1F5.html#b24c">door_handling_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b244"></span>B244</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="5">HL += 5; // point at the next door's pos</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b245"></span>B245</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b246"></span>B246</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b247"></span>B247</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b248"></span>B248</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b249"></span>B249</td>
-<td class="instruction">JP <a href="68A2.html">$68A2</a></td>
+<td class="instruction">JP <a href="68A2.html">transition</a></td>
 <td class="comment-11" rowspan="1">transition(); return; %&gt; // seems to goto reset then jump back to main (icky)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">door_handling_5</td>
 <td class="address-2"><span id="b24c"></span>B24C</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="3">else &lt;% HL -= 3; // point at the previous door's pos</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b24d"></span>B24D</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b24e"></span>B24E</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b24f"></span>B24F</td>
-<td class="instruction">JP <a href="68A2.html">$68A2</a></td>
+<td class="instruction">JP <a href="68A2.html">transition</a></td>
 <td class="comment-11" rowspan="1">transition(); return; %&gt;</td>
 </tr>
 </table>
@@ -418,9 +418,9 @@ Select start position in doors[] based on the direction the hero is facing.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A8F4.html">A8F4</a>.
+Used by the routine at <a href="A8F4.html">plot_vertical_tiles_common</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,55 +45,55 @@ Used by the routine at <a href="A8F4.html">A8F4</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_tile_then_advance</td>
 <td class="address-2"><span id="a9a0"></span>A9A0</td>
-<td class="instruction">CALL <a href="A9AD.html">$A9AD</a></td>
+<td class="instruction">CALL <a href="A9AD.html">plot_tile</a></td>
 <td class="comment-11" rowspan="1">plot_tile();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a9a3"></span>A9A3</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a9a4"></span>A9A4</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="5">DEdash += 0xBF; // 0xBF = 24 * 8 - 1</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a9a5"></span>A9A5</td>
 <td class="instruction">ADD A,$BF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a9a7"></span>A9A7</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a9a8"></span>A9A8</td>
-<td class="instruction">JR NC,$A9AB</td>
+<td class="instruction">JR NC,<a href="A9A0.html#a9ab">plot_tile_then_advance_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a9aa"></span>A9AA</td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_tile_then_advance_0</td>
 <td class="address-2"><span id="a9ab"></span>A9AB</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a9ac"></span>A9AC</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -107,9 +107,9 @@ Used by the routine at <a href="A8F4.html">A8F4</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

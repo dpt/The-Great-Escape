@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="AC6F.html">AC6F</a>.
+Used by the routine at <a href="AC6F.html">zoombox_draw_border</a>.
 </div>
 </div>
 <table class="input-1">
@@ -56,199 +56,199 @@ Used by the routine at <a href="AC6F.html">AC6F</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">zoombox_draw_tile</td>
 <td class="address-2"><span id="acfc"></span>ACFC</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="acfd"></span>ACFD</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="acfe"></span>ACFE</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="acff"></span>ACFF</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad00"></span>AD00</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="7">HL = &amp;zoombox_tiles[A];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad01"></span>AD01</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad03"></span>AD03</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad04"></span>AD04</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad05"></span>AD05</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad06"></span>AD06</td>
 <td class="instruction">LD BC,$AF5E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad09"></span>AD09</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad0a"></span>AD0A</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">zoombox_draw_tile_0</td>
 <td class="address-2"><span id="ad0c"></span>AD0C</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% *DE = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad0d"></span>AD0D</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad0e"></span>AD0E</td>
 <td class="instruction">INC D</td>
 <td class="comment-11" rowspan="2">DE += 256;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad0f"></span>AD0F</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad10"></span>AD10</td>
-<td class="instruction">DJNZ $AD0C</td>
+<td class="instruction">DJNZ <a href="ACFC.html#ad0c">zoombox_draw_tile_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad12"></span>AD12</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="2">A = D - 1; // ie. (DE - 256) &gt;&gt; 8</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad13"></span>AD13</td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad14"></span>AD14</td>
 <td class="instruction">LD H,$58</td>
 <td class="comment-11" rowspan="1">H = 0x58; // attributes</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad16"></span>AD16</td>
 <td class="instruction">LD L,E</td>
 <td class="comment-11" rowspan="1">L = E;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad17"></span>AD17</td>
 <td class="instruction">CP $48</td>
 <td class="comment-11" rowspan="3">if (A &gt;= 0x48) &lt;% H++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad19"></span>AD19</td>
-<td class="instruction">JR C,$AD21</td>
+<td class="instruction">JR C,<a href="ACFC.html#ad21">zoombox_draw_tile_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad1b"></span>AD1B</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad1c"></span>AD1C</td>
 <td class="instruction">CP $50</td>
 <td class="comment-11" rowspan="3">if (A &gt;= 0x50) H++; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad1e"></span>AD1E</td>
-<td class="instruction">JR C,$AD21</td>
+<td class="instruction">JR C,<a href="ACFC.html#ad21">zoombox_draw_tile_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad20"></span>AD20</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">zoombox_draw_tile_1</td>
 <td class="address-2"><span id="ad21"></span>AD21</td>
 <td class="instruction">LD A,($AB6A)</td>
 <td class="comment-11" rowspan="2">*HL = game_window_attribute;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad24"></span>AD24</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad25"></span>AD25</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad26"></span>AD26</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad27"></span>AD27</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ad28"></span>AD28</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -262,9 +262,9 @@ Used by the routine at <a href="AC6F.html">AC6F</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A47F.html">A47F</a>.
+Used by the routine at <a href="A47F.html">hero_sits</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,25 +48,25 @@ Used by the routine at <a href="A47F.html">A47F</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">hero_sit_sleep_common</td>
 <td class="address-2"><span id="a491"></span>A491</td>
 <td class="instruction">LD (HL),$FF</td>
 <td class="comment-11" rowspan="1">*HL = 0xFF; // set in breakfast, or in bed</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a493"></span>A493</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a494"></span>A494</td>
 <td class="instruction">LD HL,$8002</td>
-<td class="comment-11" rowspan="2">$8002 = A; // target location? bottom byte only?</td>
+<td class="comment-11" rowspan="2">$8002 = A; // zero route index only</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a497"></span>A497</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -82,51 +82,51 @@ Set hero's position to zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a498"></span>A498</td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-11" rowspan="5">memset($800F, 0, 4);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a49b"></span>A49B</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">hero_sit_sleep_common_0</td>
 <td class="address-2"><span id="a49d"></span>A49D</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a49e"></span>A49E</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a49f"></span>A49F</td>
-<td class="instruction">DJNZ $A49D</td>
+<td class="instruction">DJNZ <a href="A491.html#a49d">hero_sit_sleep_common_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a1"></span>A4A1</td>
 <td class="instruction">LD HL,$8000</td>
 <td class="comment-11" rowspan="1">HL = $8000;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a4"></span>A4A4</td>
-<td class="instruction">CALL <a href="B71B.html">$B71B</a></td>
+<td class="instruction">CALL <a href="B71B.html">calc_vischar_screenpos_from_mi_pos</a></td>
 <td class="comment-11" rowspan="1">calc_vischar_screenpos_from_mi_pos(); // reset hero</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a7"></span>A4A7</td>
-<td class="instruction">JR <a href="A479.html">$A479</a></td>
+<td class="instruction">JR <a href="A479.html">select_room_and_plot</a></td>
 <td class="comment-11" rowspan="1">goto select_room_and_plot;</td>
 </tr>
 </table>
@@ -138,9 +138,9 @@ Set hero's position to zero.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

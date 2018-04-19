@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -48,133 +48,133 @@ Reading port 0x1F yields 000FUDLR active high.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_kempston</td>
 <td class="address-2"><span id="fe7e"></span>FE7E</td>
 <td class="instruction">LD BC,$001F</td>
 <td class="comment-11" rowspan="1">BC = 0x001F;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe81"></span>FE81</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe83"></span>FE83</td>
 <td class="instruction">LD BC,$0000</td>
 <td class="comment-11" rowspan="1">BC = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe86"></span>FE86</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe87"></span>FE87</td>
-<td class="instruction">JR NC,$FE8B</td>
+<td class="instruction">JR NC,<a href="FE7E.html#fe8b">inputroutine_kempston_0</a></td>
 <td class="comment-11" rowspan="2">if (carry) B = input_RIGHT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe89"></span>FE89</td>
 <td class="instruction">LD B,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_kempston_0</td>
 <td class="address-2"><span id="fe8b"></span>FE8B</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe8c"></span>FE8C</td>
-<td class="instruction">JR NC,$FE90</td>
+<td class="instruction">JR NC,<a href="FE7E.html#fe90">inputroutine_kempston_1</a></td>
 <td class="comment-11" rowspan="2">if (carry) B = input_LEFT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe8e"></span>FE8E</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_kempston_1</td>
 <td class="address-2"><span id="fe90"></span>FE90</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe91"></span>FE91</td>
-<td class="instruction">JR NC,$FE95</td>
+<td class="instruction">JR NC,<a href="FE7E.html#fe95">inputroutine_kempston_2</a></td>
 <td class="comment-11" rowspan="2">if (carry) C = input_DOWN;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe93"></span>FE93</td>
 <td class="instruction">LD C,$02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_kempston_2</td>
 <td class="address-2"><span id="fe95"></span>FE95</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe96"></span>FE96</td>
-<td class="instruction">JR NC,$FE9A</td>
+<td class="instruction">JR NC,<a href="FE7E.html#fe9a">inputroutine_kempston_3</a></td>
 <td class="comment-11" rowspan="2">if (carry) C = input_UP;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe98"></span>FE98</td>
 <td class="instruction">LD C,$01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_kempston_3</td>
 <td class="address-2"><span id="fe9a"></span>FE9A</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe9b"></span>FE9B</td>
 <td class="instruction">LD A,$09</td>
 <td class="comment-11" rowspan="1">A = input_FIRE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe9d"></span>FE9D</td>
-<td class="instruction">JR C,$FEA0</td>
+<td class="instruction">JR C,<a href="FE7E.html#fea0">inputroutine_kempston_4</a></td>
 <td class="comment-11" rowspan="2">if (!carry) A = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fe9f"></span>FE9F</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_kempston_4</td>
 <td class="address-2"><span id="fea0"></span>FEA0</td>
 <td class="instruction">ADD A,B</td>
 <td class="comment-11" rowspan="2">A += B + C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fea1"></span>FEA1</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fea2"></span>FEA2</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; /* Combine axis */</td>
@@ -188,9 +188,9 @@ Reading port 0x1F yields 000FUDLR active high.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -43,31 +43,31 @@
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_another_day_dawns</td>
 <td class="address-2"><span id="a1d3"></span>A1D3</td>
 <td class="instruction">LD B,$13</td>
-<td class="comment-11" rowspan="2">queue_message_for_display(message_ANOTHER_DAY_DAWNS);</td>
+<td class="comment-11" rowspan="2">queue_message(message_ANOTHER_DAY_DAWNS);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1d5"></span>A1D5</td>
-<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
+<td class="instruction">CALL <a href="7D15.html">queue_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1d8"></span>A1D8</td>
 <td class="instruction">LD B,$19</td>
 <td class="comment-11" rowspan="2">decrease_morale(25);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1da"></span>A1DA</td>
-<td class="instruction">CALL <a href="A0E0.html">$A0E0</a></td>
+<td class="instruction">CALL <a href="A0E0.html">decrease_morale</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1dd"></span>A1DD</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0;</td>
@@ -77,27 +77,27 @@
 <span id="a1de"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="A1C3.html">A1C3</a>.
+This entry point is used by the routine at <a href="A1C3.html">event_night_time</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_another_day_dawns_0</td>
 <td class="address-2"><span id="a1de"></span>A1DE</td>
 <td class="instruction">LD ($A146),A</td>
 <td class="comment-11" rowspan="1">set_attrs: day_or_night = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1e1"></span>A1E1</td>
-<td class="instruction">CALL <a href="AB6B.html">$AB6B</a></td>
+<td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
 <td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1e4"></span>A1E4</td>
-<td class="instruction">JP <a href="A15F.html">$A15F</a></td>
+<td class="instruction">JP <a href="A15F.html">set_game_window_attributes</a></td>
 <td class="comment-11" rowspan="1">set_game_window_attributes(); return; // exit via</td>
 </tr>
 </table>
@@ -109,9 +109,9 @@ This entry point is used by the routine at <a href="A1C3.html">A1C3</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

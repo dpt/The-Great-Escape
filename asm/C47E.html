@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,385 +45,385 @@ Used by the routine at <a href="9D7B.html">9D7B</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters</td>
 <td class="address-2"><span id="c47e"></span>C47E</td>
 <td class="instruction">LD HL,($81BB)</td>
 <td class="comment-11" rowspan="1">HL = &amp;map_position;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c481"></span>C481</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="5">E = MAX(L - 9, 0);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c482"></span>C482</td>
 <td class="instruction">SUB $09</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c484"></span>C484</td>
-<td class="instruction">JR NC,$C487</td>
+<td class="instruction">JR NC,<a href="C47E.html#c487">purge_invisible_characters_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c486"></span>C486</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_0</td>
 <td class="address-2"><span id="c487"></span>C487</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c488"></span>C488</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="5">D = MAX(H - 9, 0);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c489"></span>C489</td>
 <td class="instruction">SUB $09</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c48b"></span>C48B</td>
-<td class="instruction">JR NC,$C48E</td>
+<td class="instruction">JR NC,<a href="C47E.html#c48e">purge_invisible_characters_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c48d"></span>C48D</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_1</td>
 <td class="address-2"><span id="c48e"></span>C48E</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c48f"></span>C48F</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c491"></span>C491</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_2</td>
 <td class="address-2"><span id="c494"></span>C494</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c495"></span>C495</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == character_NONE) goto next;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c497"></span>C497</td>
-<td class="instruction">JP Z,$C4D9</td>
+<td class="instruction">JP Z,<a href="C47E.html#c4d9">purge_invisible_characters_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c49a"></span>C49A</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c49b"></span>C49B</td>
 <td class="instruction">LD A,$1C</td>
 <td class="comment-11" rowspan="3">HL += 28;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c49d"></span>C49D</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c49e"></span>C49E</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c49f"></span>C49F</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index != *HL) goto reset; /* this character is not in the current room */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4a2"></span>C4A2</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4a3"></span>C4A3</td>
-<td class="instruction">JR NZ,$C4CF</td>
+<td class="instruction">JR NZ,<a href="C47E.html#c4cf">purge_invisible_characters_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4a5"></span>C4A5</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">C = *--HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4a6"></span>C4A6</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4a7"></span>C4A7</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">A = *--HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4a8"></span>C4A8</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4a9"></span>C4A9</td>
-<td class="instruction">CALL <a href="E550.html">$E550</a></td>
+<td class="instruction">CALL <a href="E550.html">divide_by_8_with_rounding</a></td>
 <td class="comment-11" rowspan="1">divide_by_8_with_rounding(C,A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4ac"></span>C4AC</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">C = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4ad"></span>C4AD</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="8">if (C &lt;= D || C &gt; MIN(D + 34, 255)) goto reset;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4ae"></span>C4AE</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4af"></span>C4AF</td>
-<td class="instruction">JR NC,$C4CF</td>
+<td class="instruction">JR NC,<a href="C47E.html#c4cf">purge_invisible_characters_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4b1"></span>C4B1</td>
 <td class="instruction">ADD A,$22</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4b3"></span>C4B3</td>
-<td class="instruction">JR NC,$C4B7</td>
+<td class="instruction">JR NC,<a href="C47E.html#c4b7">purge_invisible_characters_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4b5"></span>C4B5</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_3</td>
 <td class="address-2"><span id="c4b7"></span>C4B7</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4b8"></span>C4B8</td>
-<td class="instruction">JR C,$C4CF</td>
+<td class="instruction">JR C,<a href="C47E.html#c4cf">purge_invisible_characters_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4ba"></span>C4BA</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">C = *--HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4bb"></span>C4BB</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4bc"></span>C4BC</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">A = *--HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4bd"></span>C4BD</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4be"></span>C4BE</td>
-<td class="instruction">CALL <a href="E555.html">$E555</a></td>
+<td class="instruction">CALL <a href="E555.html">divide_by_8</a></td>
 <td class="comment-11" rowspan="1">divide_by_8(C,A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4c1"></span>C4C1</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">C = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4c2"></span>C4C2</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="3">if (C &lt;= E || C &gt; MIN(E + 42, 255)) goto reset;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4c3"></span>C4C3</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4c4"></span>C4C4</td>
-<td class="instruction">JR NC,$C4CF</td>
+<td class="instruction">JR NC,<a href="C47E.html#c4cf">purge_invisible_characters_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4c6"></span>C4C6</td>
 <td class="instruction">ADD A,$2A</td>
 <td class="comment-11" rowspan="5">goto pop_next;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4c8"></span>C4C8</td>
-<td class="instruction">JR NC,$C4CC</td>
+<td class="instruction">JR NC,<a href="C47E.html#c4cc">purge_invisible_characters_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4ca"></span>C4CA</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_4</td>
 <td class="address-2"><span id="c4cc"></span>C4CC</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4cd"></span>C4CD</td>
-<td class="instruction">JR NC,$C4D8</td>
+<td class="instruction">JR NC,<a href="C47E.html#c4d8">purge_invisible_characters_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_5</td>
 <td class="address-2"><span id="c4cf"></span>C4CF</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">reset:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4d0"></span>C4D0</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4d1"></span>C4D1</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4d2"></span>C4D2</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4d3"></span>C4D3</td>
-<td class="instruction">CALL <a href="C5D3.html">$C5D3</a></td>
+<td class="instruction">CALL <a href="C5D3.html">reset_visible_character</a></td>
 <td class="comment-11" rowspan="1">reset_visible_character();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4d6"></span>C4D6</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4d7"></span>C4D7</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_6</td>
 <td class="address-2"><span id="c4d8"></span>C4D8</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">pop_next:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">purge_invisible_characters_7</td>
 <td class="address-2"><span id="c4d9"></span>C4D9</td>
 <td class="instruction">LD A,$20</td>
 <td class="comment-11" rowspan="3">next: HL += 32;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4db"></span>C4DB</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4dc"></span>C4DC</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4dd"></span>C4DD</td>
-<td class="instruction">DJNZ $C494</td>
+<td class="instruction">DJNZ <a href="C47E.html#c494">purge_invisible_characters_2</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c4df"></span>C4DF</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -437,9 +437,9 @@ Used by the routine at <a href="9D7B.html">9D7B</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

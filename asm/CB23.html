@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -21,13 +21,13 @@
 <td class="next"><span class="next-1">Next: <a href="CB2D.html">CB2D</a></span></td>
 </tr>
 </table>
-<div class="description">CB23: (unknown) get_next_target_and_handle_it</div>
+<div class="description">CB23: (unknown) get_target_assign_pos</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="B107.html">B107</a>, <a href="C918.html">C918</a>, <a href="CA81.html">CA81</a> and <a href="CB2D.html">CB2D</a>.
+Used by the routines at <a href="A3BB.html">set_route</a>, <a href="B107.html">accept_bribe</a>, <a href="C918.html">character_behaviour</a>, <a href="CA81.html">target_reached</a> and <a href="CB2D.html">route_ended</a>.
 </div>
 </div>
 <table class="input-1">
@@ -52,31 +52,31 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="B107.html">B107</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_target_assign_pos</td>
 <td class="address-2"><span id="cb23"></span>CB23</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb24"></span>CB24</td>
-<td class="instruction">CALL <a href="C651.html">$C651</a></td>
-<td class="comment-11" rowspan="1">get_next_target();</td>
+<td class="instruction">CALL <a href="C651.html">get_target</a></td>
+<td class="comment-11" rowspan="1">get_target();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb27"></span>CB27</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == 0xFF) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb29"></span>CB29</td>
-<td class="instruction">JP NZ,<a href="CB61.html">$CB61</a></td>
+<td class="instruction">JP NZ,<a href="CB61.html">handle_target</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb2c"></span>CB2C</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
@@ -86,7 +86,7 @@ Used by the routines at <a href="A3BB.html">A3BB</a>, <a href="B107.html">B107</
 
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH into ran_out_of_list.
+FALL THROUGH into route_ended.
 </div>
 </div>
 </td>
@@ -100,9 +100,9 @@ FALL THROUGH into ran_out_of_list.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

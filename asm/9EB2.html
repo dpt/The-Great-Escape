@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9E07.html">9E07</a>.
+Used by the routine at <a href="9E07.html">process_player_input</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,97 +45,97 @@ Used by the routine at <a href="9E07.html">9E07</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">cutting_wire</td>
 <td class="address-2"><span id="9eb2"></span>9EB2</td>
 <td class="instruction">LD HL,$A12F</td>
 <td class="comment-11" rowspan="3">A = player_locked_out_until - game_counter;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9eb5"></span>9EB5</td>
 <td class="instruction">LD A,($A145)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9eb8"></span>9EB8</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9eb9"></span>9EB9</td>
-<td class="instruction">JR Z,$9ED0</td>
+<td class="instruction">JR Z,<a href="9EB2.html#9ed0">cutting_wire_1</a></td>
 <td class="comment-11" rowspan="1">if (A) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ebb"></span>9EBB</td>
 <td class="instruction">CP $04</td>
 <td class="comment-11" rowspan="2">if (A &lt; 4)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ebd"></span>9EBD</td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ebe"></span>9EBE</td>
 <td class="instruction">LD A,($800E)</td>
 <td class="comment-11" rowspan="9">$800D = cutting_wire_new_inputs[$800E &amp; vischar_DIRECTION_MASK]; // change direction</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ec1"></span>9EC1</td>
 <td class="instruction">LD HL,$9EE0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ec4"></span>9EC4</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ec6"></span>9EC6</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ec7"></span>9EC7</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ec8"></span>9EC8</td>
-<td class="instruction">JR NC,$9ECB</td>
+<td class="instruction">JR NC,<a href="9EB2.html#9ecb">cutting_wire_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9eca"></span>9ECA</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">cutting_wire_0</td>
 <td class="address-2"><span id="9ecb"></span>9ECB</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ecc"></span>9ECC</td>
 <td class="instruction">LD ($800D),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ecf"></span>9ECF</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -154,7 +154,7 @@ Bug: A is always zero here, so $800E is always set to zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">cutting_wire_1</td>
 <td class="address-2"><span id="9ed0"></span>9ED0</td>
 <td class="instruction">LD HL,$800E</td>
 <td class="comment-11" rowspan="1">else &lt;% $800E = A &amp; vischar_DIRECTION_MASK; // set direction</td>
@@ -170,45 +170,45 @@ LD A,(HL) missing here? x86 version moves zero into $800E - has no AND - is that
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ed3"></span>9ED3</td>
 <td class="instruction">AND $03</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ed5"></span>9ED5</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">}</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ed6"></span>9ED6</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">$800D = input_KICK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ed7"></span>9ED7</td>
 <td class="instruction">LD (HL),$80</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ed9"></span>9ED9</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="2">$8013 = 24; // set height</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9edb"></span>9EDB</td>
 <td class="instruction">LD ($8013),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ede"></span>9EDE</td>
-<td class="instruction">JR <a href="9E98.html#9eaa">$9EAA</a></td>
+<td class="instruction">JR <a href="9E98.html#9eaa">clear_lockpick_wirecut_flags_and_return</a></td>
 <td class="comment-11" rowspan="1">goto clear_lockpick_wirecut_flags_and_return; %&gt;</td>
 </tr>
 <tr>
@@ -222,25 +222,25 @@ New inputs table.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">cutting_wire_new_inputs</td>
 <td class="address-1"><span id="9ee0"></span>9EE0</td>
 <td class="instruction">DEFB $84</td>
 <td class="comment-11" rowspan="1">input_UP   + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ee1"></span>9EE1</td>
 <td class="instruction">DEFB $87</td>
 <td class="comment-11" rowspan="1">input_UP   + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ee2"></span>9EE2</td>
 <td class="instruction">DEFB $88</td>
 <td class="comment-11" rowspan="1">input_DOWN + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ee3"></span>9EE3</td>
 <td class="instruction">DEFB $85</td>
 <td class="comment-11" rowspan="1">input_DOWN + input_LEFT  + input_KICK</td>
@@ -254,9 +254,9 @@ New inputs table.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

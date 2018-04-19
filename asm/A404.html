@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A3F3.html">A3F3</a> and <a href="A3F8.html">A3F8</a>.
+Used by the routines at <a href="A3F3.html">character_bed_state</a> and <a href="A3F8.html">character_bed_vischar</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,91 +45,91 @@ Used by the routines at <a href="A3F3.html">A3F3</a> and <a href="A3F8.html">A3F
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">character_bed_common</td>
 <td class="address-2"><span id="a404"></span>A404</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">HL[1] = 0; // HL=$766B,$7672 characterstruct + 5 (characterstruct + 6 when zeroed)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a405"></span>A405</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a407"></span>A407</td>
 <td class="instruction">CP $13</td>
 <td class="comment-11" rowspan="3">if (A &gt; 19) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a409"></span>A409</td>
-<td class="instruction">JP Z,$A413</td>
+<td class="instruction">JP Z,<a href="A404.html#a413">character_bed_common_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a40c"></span>A40C</td>
-<td class="instruction">JP C,$A413</td>
+<td class="instruction">JP C,<a href="A404.html#a413">character_bed_common_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a40f"></span>A40F</td>
 <td class="instruction">SUB $0D</td>
 <td class="comment-11" rowspan="1">A -= 13; %&gt; // 20.. =&gt; 7..</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a411"></span>A411</td>
-<td class="instruction">JR $A41D</td>
+<td class="instruction">JR <a href="A404.html#a41d">character_bed_common_1</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">character_bed_common_0</td>
 <td class="address-2"><span id="a413"></span>A413</td>
 <td class="instruction">BIT 0,A</td>
 <td class="comment-11" rowspan="3">old_A = A; A = 13; if (old_A &amp; (1&lt;&lt;0)) &lt;% // tmp introduced to avoid interleaving</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a415"></span>A415</td>
 <td class="instruction">LD A,$0D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a417"></span>A417</td>
-<td class="instruction">JR Z,$A41D</td>
+<td class="instruction">JR Z,<a href="A404.html#a41d">character_bed_common_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a419"></span>A419</td>
 <td class="instruction">LD (HL),$01</td>
 <td class="comment-11" rowspan="1">HL[1] = 1; // HL=$7681,$7673 // characterstruct_N + 6</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a41b"></span>A41B</td>
 <td class="instruction">OR $80</td>
 <td class="comment-11" rowspan="1">A |= 0x80; %&gt; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">character_bed_common_1</td>
 <td class="address-2"><span id="a41d"></span>A41D</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">HL[0] = A; // characterstruct_N + 5</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a41e"></span>A41E</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a41f"></span>A41F</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -143,9 +143,9 @@ Used by the routines at <a href="A3F3.html">A3F3</a> and <a href="A3F8.html">A3F
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

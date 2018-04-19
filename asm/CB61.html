@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="CB23.html">CB23</a>.
+Used by the routine at <a href="CB23.html">get_target_assign_pos</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,61 +45,61 @@ Used by the routine at <a href="CB23.html">CB23</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">handle_target</td>
 <td class="address-2"><span id="cb61"></span>CB61</td>
 <td class="instruction">CP $80</td>
 <td class="comment-11" rowspan="2">if (A == 128) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb63"></span>CB63</td>
-<td class="instruction">JP NZ,$CB6A</td>
+<td class="instruction">JP NZ,<a href="CB61.html#cb6a">handle_target_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb66"></span>CB66</td>
 <td class="instruction">SET 6,(IY+$01)</td>
-<td class="comment-11" rowspan="1">IY[1] |= vischar_FLAGS_DOOR_THING; %&gt;</td>
+<td class="comment-11" rowspan="1">IY[1] |= vischar_FLAGS_TARGET_IS_DOOR; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">handle_target_0</td>
 <td class="address-2"><span id="cb6a"></span>CB6A</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb6b"></span>CB6B</td>
 <td class="instruction">INC E</td>
 <td class="comment-11" rowspan="4">memcpy(DE + 2, HL, 2);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb6c"></span>CB6C</td>
 <td class="instruction">INC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb6d"></span>CB6D</td>
 <td class="instruction">LD BC,$0002</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb70"></span>CB70</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb72"></span>CB72</td>
 <td class="instruction">LD A,$80</td>
 <td class="comment-11" rowspan="1">A = 128;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb74"></span>CB74</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -113,9 +113,9 @@ Used by the routine at <a href="CB23.html">CB23</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

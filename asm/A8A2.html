@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="7B36.html">7B36</a> and <a href="B2FC.html">B2FC</a>.
+Used by the routines at <a href="7B36.html">pick_up_item</a> and <a href="B2FC.html">reset_outdoors</a>.
 </div>
 <div class="paragraph">
 Note: Exits with banked registers active.
@@ -48,187 +48,187 @@ Note: Exits with banked registers active.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_all_tiles</td>
 <td class="address-2"><span id="a8a2"></span>A8A2</td>
 <td class="instruction">LD DE,$F0F8</td>
 <td class="comment-11" rowspan="1">DE = &amp;tile_buf[0]; // visible tiles array</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8a5"></span>A8A5</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8a6"></span>A8A6</td>
 <td class="instruction">LD HL,$FF58</td>
 <td class="comment-11" rowspan="1">HLdash = &amp;map_buf[0]; // 7x5 supertile refs</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8a9"></span>A8A9</td>
 <td class="instruction">LD DE,$F290</td>
 <td class="comment-11" rowspan="1">DEdash = &amp;window_buf[0]; // screen buffer start address</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8ac"></span>A8AC</td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="1">A = map_position[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8af"></span>A8AF</td>
 <td class="instruction">LD B,$18</td>
 <td class="comment-11" rowspan="1">Bdash = 24; // 24 iterations (screen rows?)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_all_tiles_0</td>
 <td class="address-2"><span id="a8b1"></span>A8B1</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BCdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b2"></span>A8B2</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1">PUSH DEdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b3"></span>A8B3</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">PUSH HLdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b4"></span>A8B4</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">PUSH AFdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b5"></span>A8B5</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b6"></span>A8B6</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b7"></span>A8B7</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b8"></span>A8B8</td>
-<td class="instruction">CALL <a href="A8F4.html">$A8F4</a></td>
+<td class="instruction">CALL <a href="A8F4.html">plot_vertical_tiles_common</a></td>
 <td class="comment-11" rowspan="1">plot_vertical_tiles_common();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bb"></span>A8BB</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bc"></span>A8BC</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bd"></span>A8BD</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8be"></span>A8BE</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bf"></span>A8BF</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c0"></span>A8C0</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">POP HLdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c1"></span>A8C1</td>
 <td class="instruction">INC A</td>
 <td class="comment-11" rowspan="2">Cdash = ++A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c2"></span>A8C2</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c3"></span>A8C3</td>
 <td class="instruction">AND $03</td>
 <td class="comment-11" rowspan="3">if ((A &amp; 3) == 0) HLdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c5"></span>A8C5</td>
-<td class="instruction">JR NZ,$A8C8</td>
+<td class="instruction">JR NZ,<a href="A8A2.html#a8c8">plot_all_tiles_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c7"></span>A8C7</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_all_tiles_1</td>
 <td class="address-2"><span id="a8c8"></span>A8C8</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">A = Cdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c9"></span>A8C9</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1">POP DEdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8ca"></span>A8CA</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DEdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8cb"></span>A8CB</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BCdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8cc"></span>A8CC</td>
-<td class="instruction">DJNZ $A8B1</td>
+<td class="instruction">DJNZ <a href="A8A2.html#a8b1">plot_all_tiles_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8ce"></span>A8CE</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -242,9 +242,9 @@ Note: Exits with banked registers active.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

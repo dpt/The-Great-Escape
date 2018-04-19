@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C7C6.html">C7C6</a>.
+Used by the routine at <a href="C7C6.html">character_event</a>.
 </div>
 <div class="paragraph">
 Gets hit when hero enters hut at end of day.
@@ -51,33 +51,33 @@ Gets hit when hero enters hut at end of day.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">character_bed_vischar</td>
 <td class="address-2"><span id="a3f8"></span>A3F8</td>
 <td class="instruction">LD A,(IY+$00)</td>
 <td class="comment-11" rowspan="1">A = IY[0]; // IY=$8000 // must be a character index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3fb"></span>A3FB</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A != 0) goto byte_A13E_common;</td>
+<td class="comment-11" rowspan="2">if (A != 0) goto character_bed_common;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3fc"></span>A3FC</td>
-<td class="instruction">JR NZ,<a href="A404.html">$A404</a></td>
+<td class="instruction">JR NZ,<a href="A404.html">character_bed_common</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3fe"></span>A3FE</td>
 <td class="instruction">LD BC,$2C00</td>
-<td class="comment-11" rowspan="2">set_hero_target_location(location_002C); // exit via</td>
+<td class="comment-11" rowspan="2">set_hero_route(location_002C); // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a401"></span>A401</td>
-<td class="instruction">JP <a href="A33F.html">$A33F</a></td>
+<td class="instruction">JP <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
@@ -89,9 +89,9 @@ Gets hit when hero enters hut at end of day.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 <div class="paragraph">
 If pressed then clear the screen and confirm with the player that they want to reset the game. Reset if requested.
@@ -48,93 +48,93 @@ If pressed then clear the screen and confirm with the player that they want to r
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">keyscan_break</td>
 <td class="address-2"><span id="9de5"></span>9DE5</td>
 <td class="instruction">LD BC,$FEFE</td>
 <td class="comment-11" rowspan="8">if (!(shift_pressed &amp;&amp; space_pressed)) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9de8"></span>9DE8</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dea"></span>9DEA</td>
 <td class="instruction">AND $01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dec"></span>9DEC</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ded"></span>9DED</td>
 <td class="instruction">LD B,$7F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9def"></span>9DEF</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9df1"></span>9DF1</td>
 <td class="instruction">AND $01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9df3"></span>9DF3</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9df4"></span>9DF4</td>
-<td class="instruction">CALL <a href="A50B.html">$A50B</a></td>
+<td class="instruction">CALL <a href="A50B.html">screen_reset</a></td>
 <td class="comment-11" rowspan="1">screen_reset();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9df7"></span>9DF7</td>
-<td class="instruction">CALL <a href="EFFC.html">$EFFC</a></td>
+<td class="instruction">CALL <a href="EFFC.html">user_confirm</a></td>
 <td class="comment-11" rowspan="1">user_confirm();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dfa"></span>9DFA</td>
-<td class="instruction">JP Z,<a href="B75A.html">$B75A</a></td>
+<td class="instruction">JP Z,<a href="B75A.html">reset_game</a></td>
 <td class="comment-11" rowspan="1">if (Z) reset_game();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dfd"></span>9DFD</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index == 0) &lt;% reset_outdoors(); return; %&gt; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e00"></span>9E00</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e01"></span>9E01</td>
-<td class="instruction">JP Z,<a href="B2FC.html">$B2FC</a></td>
+<td class="instruction">JP Z,<a href="B2FC.html">reset_outdoors</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e04"></span>9E04</td>
-<td class="instruction">JP <a href="68F4.html">$68F4</a></td>
+<td class="instruction">JP <a href="68F4.html">enter_room</a></td>
 <td class="comment-11" rowspan="1">else enter_room(); // doesn't return (jumps to main_loop)</td>
 </tr>
 </table>
@@ -146,9 +146,9 @@ If pressed then clear the screen and confirm with the player that they want to r
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

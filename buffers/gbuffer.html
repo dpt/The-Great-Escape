@@ -10,7 +10,7 @@
 <body class="GameStatusBuffer">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Game status buffer</td>
 </tr>
 </table>
@@ -161,7 +161,7 @@ Read by render_mask_buffer, guards_follow_suspicious_character.
 <td class="map-g"><span id="81b5"></span><a href="../asm/81B5.html">81B5</a></td>
 <td class="map-length-1">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11">Map position related variables.</div>
+<div class="map-entry-title-11">Current vischar's isometric projected map position.</div>
 <div class="map-entry-desc-1">
 
 </div>
@@ -219,7 +219,7 @@ Used when drawing tiles.
 Suspect that this is a 'hero has been found in searchlight' flag. (possible states: 0, 31, 255)
 </div>
 <div class="paragraph">
-Used by the routines at <a href="../asm/ADBD.html">ADBD</a>, <a href="../asm/B866.html">B866</a>.
+Used by the routines at <a href="../asm/ADBD.html">nighttime</a>, <a href="../asm/B866.html">plot_sprites</a>.
 </div>
 <div class="paragraph">
 <table class="default">
@@ -305,7 +305,7 @@ These are possibly spare object bounds bytes, but not ever used.
 <div class="map-entry-title-11">Indices of interior doors.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-Used by the routines at <a href="../asm/69DC.html">69DC</a>, <a href="../asm/B32D.html">B32D</a>, <a href="../asm/B4D0.html">B4D0</a>.
+Used by the routines at <a href="../asm/69DC.html">setup_doors</a>, <a href="../asm/B32D.html">door_handling_interior</a>, <a href="../asm/B4D0.html">get_nearest_door</a>.
 </div>
 </div>
 </td>
@@ -319,7 +319,7 @@ Used by the routines at <a href="../asm/69DC.html">69DC</a>, <a href="../asm/B32
 <div class="map-entry-title-11">Interior mask data.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-Used by the routines at <a href="../asm/6A35.html">6A35</a>, <a href="../asm/B916.html">B916</a>.
+Used by the routines at <a href="../asm/6A35.html">setup_room</a>, <a href="../asm/B916.html">render_mask_buffer</a>.
 </div>
 </div>
 </td>
@@ -330,7 +330,7 @@ Used by the routines at <a href="../asm/6A35.html">6A35</a>, <a href="../asm/B91
 <td class="map-g"><span id="8213"></span><a href="../asm/8213.html">8213</a></td>
 <td class="map-length-1">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11">Written to by <a href="../asm/DC41.html">DC41</a> setup_item_plotting but never read.</div>
+<div class="map-entry-title-11">Written to by <a href="../asm/DC41.html">setup_item_plotting</a> setup_item_plotting but never read.</div>
 <div class="map-entry-desc-1">
 
 </div>
@@ -345,7 +345,7 @@ Used by the routines at <a href="../asm/6A35.html">6A35</a>, <a href="../asm/B91
 <div class="map-entry-title-11">A copy of item_definition height.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-Used by the routines at <a href="../asm/DC41.html">DC41</a>, <a href="../asm/DD02.html">DD02</a>.
+Used by the routines at <a href="../asm/DC41.html">setup_item_plotting</a>, <a href="../asm/DD02.html">item_visible</a>.
 </div>
 </div>
 </td>
@@ -425,7 +425,7 @@ Write/read-write by wave_morale_flag.
 </table>
 </div>
 <div class="paragraph">
-Read-only by follow_suspicious_character.
+Read-only by automatics.
 </div>
 <div class="paragraph">
 Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_roll_call, event_go_to_breakfast_time, event_breakfast_time, event_go_to_exercise_time, event_exercise_time, event_go_to_time_for_bed, searchlight_caught, solitary, guards_follow_suspicious_character, event_roll_call.
@@ -471,7 +471,7 @@ Write/read-write by increase_score, reset_game.
 <div class="map-entry-title-11">Hero at breakfast flag.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-Write/read-write by process_player_input, breakfast_time, hero_sit_sleep_common.
+Write/read-write by process_player_input, end_of_breakfast, hero_sit_sleep_common.
 </div>
 </div>
 </td>
@@ -501,7 +501,7 @@ Write/read-write by process_player_input, breakfast_time, hero_sit_sleep_common.
 </table>
 </div>
 <div class="paragraph">
-Read-only by follow_suspicious_character, guards_follow_suspicious_character.
+Read-only by automatics, guards_follow_suspicious_character.
 </div>
 <div class="paragraph">
 Write/read-write by in_permitted_area.
@@ -521,10 +521,10 @@ Write/read-write by in_permitted_area.
 Countdown until CPU control of the player is assumed. When it becomes zero, control is assumed. It's usually set to 31 by input events.
 </div>
 <div class="paragraph">
-Read-only by touch, follow_suspicious_character, character_behaviour.
+Read-only by touch, automatics, character_behaviour.
 </div>
 <div class="paragraph">
-Write/read-write by check_morale, process_player_input, charevnt_handler_10_hero_released_from_solitary, solitary.
+Write/read-write by check_morale, process_player_input, charevnt_hero_release, solitary.
 </div>
 </div>
 </td>
@@ -538,16 +538,16 @@ Write/read-write by check_morale, process_player_input, charevnt_handler_10_hero
 <div class="map-entry-title-11">'In solitary' flag.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-Stops set_hero_target_location working.
+Stops set_hero_route working.
 </div>
 <div class="paragraph">
 Used to set flag colour.
 </div>
 <div class="paragraph">
-Read-only by process_player_input, in_permitted_area, set_hero_target_location, follow_suspicious_character.
+Read-only by process_player_input, in_permitted_area, set_hero_route, automatics.
 </div>
 <div class="paragraph">
-Write/read-write by charevnt_handler_4_solitary_ends, solitary.
+Write/read-write by charevnt_solitary_ends, solitary.
 </div>
 </div>
 </td>
@@ -627,13 +627,13 @@ Write/read-write by dispatch_timed_event, reset_map_and_characters.
 <div class="map-entry-title-11">Mystery flag.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-In byte_A13E_is_nonzero etc.: when non-zero, character_index is valid. Else IY points to character_struct.
+In character_bed_state etc.: when non-zero, character_index is valid. Else IY points to character_struct.
 </div>
 <div class="paragraph">
-Read-only by charevnt_handler_3_check_var_A13E, charevnt_handler_5_check_var_A13E_anotherone.
+Read-only by charevnt_bed, charevnt_breakfast.
 </div>
 <div class="paragraph">
-Write/read-write by set_target, spawn_character, move_characters, follow_suspicious_character, set_target.
+Write/read-write by set_route, spawn_character, move_characters, automatics, set_route.
 </div>
 </div>
 </td>
@@ -877,7 +877,7 @@ Initially set to $9000. Wraps around after $90FF.
 <div class="map-entry-title-11">A countdown until any food item is discovered.</div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-(&lt;- follow_suspicious_character, bribes_solitary_food)
+(&lt;- automatics, target_reached)
 </div>
 </div>
 </td>
@@ -986,9 +986,9 @@ Pairs of (port, key mask).
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

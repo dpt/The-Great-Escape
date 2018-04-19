@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
 <table class="input-0">
@@ -58,51 +58,51 @@ Note the combined read of in_solitary and morale_exhausted as a word.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">process_player_input</td>
 <td class="address-2"><span id="9e07"></span>9E07</td>
 <td class="instruction">LD HL,($A13A)</td>
 <td class="comment-11" rowspan="5">if (in_solitary || morale_exhausted) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e0a"></span>9E0A</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e0b"></span>9E0B</td>
 <td class="instruction">OR H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e0c"></span>9E0C</td>
 <td class="instruction">OR L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e0d"></span>9E0D</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e0e"></span>9E0E</td>
 <td class="instruction">LD A,($8001)</td>
 <td class="comment-11" rowspan="3">if ($8001 &amp; (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE)) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e11"></span>9E11</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e13"></span>9E13</td>
-<td class="instruction">JR Z,$9E22</td>
+<td class="instruction">JR Z,<a href="9E07.html#9e22">process_player_input_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -119,57 +119,57 @@ Postpone automatic control for 31 turns.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e15"></span>9E15</td>
 <td class="instruction">LD HL,$A139</td>
 <td class="comment-11" rowspan="2">automatic_player_counter = 31;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e18"></span>9E18</td>
 <td class="instruction">LD (HL),$1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e1a"></span>9E1A</td>
 <td class="instruction">CP $01</td>
 <td class="comment-11" rowspan="2">if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_lock; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e1c"></span>9E1C</td>
-<td class="instruction">JP Z,<a href="9E98.html">$9E98</a></td>
+<td class="instruction">JP Z,<a href="9E98.html">picking_lock</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e1f"></span>9E1F</td>
-<td class="instruction">JP <a href="9EB2.html">$9EB2</a></td>
+<td class="instruction">JP <a href="9EB2.html">cutting_wire</a></td>
 <td class="comment-11" rowspan="1">else goto cutting_wire; %&gt; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">process_player_input_0</td>
 <td class="address-2"><span id="9e22"></span>9E22</td>
 <td class="instruction">CALL $F075</td>
 <td class="comment-11" rowspan="1">A = input_routine(); // lives at same address as static_tiles_plot_direction</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e25"></span>9E25</td>
 <td class="instruction">LD HL,$A139</td>
 <td class="comment-11" rowspan="2">- // subsumed into following code</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e28"></span>9E28</td>
 <td class="instruction">CP $00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e2a"></span>9E2A</td>
-<td class="instruction">JP NZ,$9E34</td>
+<td class="instruction">JP NZ,<a href="9E07.html#9e34">process_player_input_1</a></td>
 <td class="comment-11" rowspan="1">if (A == input_NONE) &lt;%</td>
 </tr>
 <tr>
@@ -183,19 +183,19 @@ No input.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e2d"></span>9E2D</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="3">if (automatic_player_counter == 0) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e2e"></span>9E2E</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e2f"></span>9E2F</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
@@ -211,21 +211,21 @@ No user input: count down.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e30"></span>9E30</td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">automatic_player_counter--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e31"></span>9E31</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e32"></span>9E32</td>
-<td class="instruction">JR $9E8F</td>
+<td class="instruction">JR <a href="9E07.html#9e8f">process_player_input_5</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
@@ -242,51 +242,51 @@ Postpone automatic control for 31 turns.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">process_player_input_1</td>
 <td class="address-2"><span id="9e34"></span>9E34</td>
 <td class="instruction">LD (HL),$1F</td>
 <td class="comment-11" rowspan="1">automatic_player_counter = 31;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e36"></span>9E36</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">... (push af) ...</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e37"></span>9E37</td>
 <td class="instruction">LD A,($A13F)</td>
 <td class="comment-11" rowspan="3">if (hero_in_bed == 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e3a"></span>9E3A</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e3b"></span>9E3B</td>
-<td class="instruction">JR NZ,$9E5C</td>
+<td class="instruction">JR NZ,<a href="9E07.html#9e5c">process_player_input_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e3d"></span>9E3D</td>
 <td class="instruction">LD A,($A137)</td>
 <td class="comment-11" rowspan="3">if (!hero_in_breakfast) goto not_bed_or_breakfast;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e40"></span>9E40</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e41"></span>9E41</td>
-<td class="instruction">JR Z,$9E85</td>
+<td class="instruction">JR Z,<a href="9E07.html#9e85">process_player_input_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -300,69 +300,69 @@ Hero was at breakfast.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e43"></span>9E43</td>
 <td class="instruction">LD HL,$002B</td>
-<td class="comment-11" rowspan="2">(word) $8002 = 0x002B; // set target location?</td>
+<td class="comment-11" rowspan="2">(word) $8002 = 0x002B; // set route</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e46"></span>9E46</td>
 <td class="instruction">LD ($8002),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e49"></span>9E49</td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-11" rowspan="2">(word) $800F = 0x0034; // set X pos</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e4c"></span>9E4C</td>
 <td class="instruction">LD (HL),$34</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e4e"></span>9E4E</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="3">(word) $8011 = 0x003E; // set Y pos</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e4f"></span>9E4F</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e50"></span>9E50</td>
 <td class="instruction">LD (HL),$3E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e52"></span>9E52</td>
 <td class="instruction">LD HL,$6F58</td>
 <td class="comment-11" rowspan="2">roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e55"></span>9E55</td>
 <td class="instruction">LD (HL),$0D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e57"></span>9E57</td>
 <td class="instruction">LD HL,$A137</td>
 <td class="comment-11" rowspan="1">HL = &amp;hero_in_breakfast; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e5a"></span>9E5A</td>
-<td class="instruction">JR $9E7D</td>
+<td class="instruction">JR <a href="9E07.html#9e7d">process_player_input_3</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
@@ -376,121 +376,121 @@ Hero was in bed.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">process_player_input_2</td>
 <td class="address-2"><span id="9e5c"></span>9E5C</td>
 <td class="instruction">LD HL,$012C</td>
-<td class="comment-11" rowspan="2">(word) $8002 = 0x012C; // set target location?</td>
+<td class="comment-11" rowspan="2">(word) $8002 = 0x012C; // set route</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e5f"></span>9E5F</td>
 <td class="instruction">LD ($8002),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e62"></span>9E62</td>
 <td class="instruction">LD HL,$2E2E</td>
 <td class="comment-11" rowspan="2">(word) $8004 = 0x2E2E; // another position?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e65"></span>9E65</td>
 <td class="instruction">LD ($8004),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e68"></span>9E68</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-11" rowspan="2">(word) $800F = 0x002E; // set X pos</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e6a"></span>9E6A</td>
 <td class="instruction">LD ($800F),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e6d"></span>9E6D</td>
 <td class="instruction">LD ($8011),HL</td>
 <td class="comment-11" rowspan="1">(word) $8011 = 0x002E; // set Y pos</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e70"></span>9E70</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="2">$8013 = 24; // set height</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e72"></span>9E72</td>
 <td class="instruction">LD ($8013),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e75"></span>9E75</td>
 <td class="instruction">LD HL,$6C61</td>
 <td class="comment-11" rowspan="2">roomdef_2_hut2_left.bed = interiorobject_EMPTY_BED;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e78"></span>9E78</td>
 <td class="instruction">LD (HL),$09</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e7a"></span>9E7A</td>
 <td class="instruction">LD HL,$A13F</td>
 <td class="comment-11" rowspan="1">HL = &amp;hero_in_bed; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">process_player_input_3</td>
 <td class="address-2"><span id="9e7d"></span>9E7D</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="1">*HL = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e7f"></span>9E7F</td>
-<td class="instruction">CALL <a href="6A35.html">$6A35</a></td>
+<td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
 <td class="comment-11" rowspan="1">setup_room();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e82"></span>9E82</td>
-<td class="instruction">CALL <a href="6B42.html">$6B42</a></td>
+<td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
 <td class="comment-11" rowspan="1">plot_interior_tiles();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">process_player_input_4</td>
 <td class="address-2"><span id="9e85"></span>9E85</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">not_bed_or_breakfast: // ... (pop af -- restores user input value stored at $9E36)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e86"></span>9E86</td>
 <td class="instruction">CP $09</td>
 <td class="comment-11" rowspan="2">if (A &gt;= input_FIRE) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e88"></span>9E88</td>
-<td class="instruction">JR C,$9E8F</td>
+<td class="instruction">JR C,<a href="9E07.html#9e8f">process_player_input_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e8a"></span>9E8A</td>
-<td class="instruction">CALL <a href="7AC9.html">$7AC9</a></td>
+<td class="instruction">CALL <a href="7AC9.html">process_player_input_fire</a></td>
 <td class="comment-11" rowspan="1">process_player_input_fire();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e8d"></span>9E8D</td>
 <td class="instruction">LD A,$80</td>
 <td class="comment-11" rowspan="1">A = input_KICK; %&gt; %&gt;</td>
@@ -506,37 +506,37 @@ If input state has changed then kick a sprite update.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">process_player_input_5</td>
 <td class="address-2"><span id="9e8f"></span>9E8F</td>
 <td class="instruction">LD HL,$800D</td>
 <td class="comment-11" rowspan="3">if ($800D == A) return; // tunnel related?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e92"></span>9E92</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e93"></span>9E93</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e94"></span>9E94</td>
 <td class="instruction">OR $80</td>
 <td class="comment-11" rowspan="2">$800D = A | input_KICK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e96"></span>9E96</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e97"></span>9E97</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -550,9 +550,9 @@ If input state has changed then kick a sprite update.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

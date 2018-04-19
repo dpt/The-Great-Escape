@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="AF8F.html">AF8F</a> and <a href="C4E0.html">C4E0</a>.
+Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">spawn_character</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,55 +45,55 @@ Used by the routines at <a href="AF8F.html">AF8F</a> and <a href="C4E0.html">C4E
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision</td>
 <td class="address-2"><span id="afdf"></span>AFDF</td>
 <td class="instruction">LD HL,$8001</td>
 <td class="comment-11" rowspan="1">HL = $8001; // &amp;vischar[0].byte1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afe2"></span>AFE2</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_0</td>
 <td class="address-2"><span id="afe4"></span>AFE4</td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% if (*HL &amp; vischar_FLAGS_NO_COLLIDE) goto next; // $8001, $8021, ...</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afe6"></span>AFE6</td>
-<td class="instruction">JP NZ,$B0FE</td>
+<td class="instruction">JP NZ,<a href="AFDF.html#b0fe">collision_21</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afe9"></span>AFE9</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afea"></span>AFEA</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afeb"></span>AFEB</td>
 <td class="instruction">LD A,$0E</td>
 <td class="comment-11" rowspan="3">HL += 0x0E; // $800F etc. - X axis position</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afed"></span>AFED</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afee"></span>AFEE</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -109,145 +109,145 @@ Used by the routines at <a href="AF8F.html">AF8F</a> and <a href="C4E0.html">C4E
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="afef"></span>AFEF</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="2">C = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aff0"></span>AFF0</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aff1"></span>AFF1</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="1">B = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aff2"></span>AFF2</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aff3"></span>AFF3</td>
 <td class="instruction">LD HL,($81A4)</td>
 <td class="comment-11" rowspan="1">HL = saved_pos_x;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aff6"></span>AFF6</td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-11" rowspan="6">BC += 4;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aff8"></span>AFF8</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aff9"></span>AFF9</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="affa"></span>AFFA</td>
-<td class="instruction">JR NC,$AFFE</td>
+<td class="instruction">JR NC,<a href="AFDF.html#affe">collision_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="affc"></span>AFFC</td>
 <td class="instruction">INC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="affd"></span>AFFD</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_1</td>
 <td class="address-2"><span id="affe"></span>AFFE</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-11" rowspan="2">if (HL != BC) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b000"></span>B000</td>
-<td class="instruction">JR Z,$B014</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b014">collision_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b002"></span>B002</td>
-<td class="instruction">JP NC,$B0FC</td>
+<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_20</a></td>
 <td class="comment-11" rowspan="1">if (HL &gt; BC) goto pop_next;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b005"></span>B005</td>
 <td class="instruction">SUB $08</td>
 <td class="comment-11" rowspan="5">BC -= 8; // ie -4 over original</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b007"></span>B007</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b008"></span>B008</td>
-<td class="instruction">JR NC,$B00C</td>
+<td class="instruction">JR NC,<a href="AFDF.html#b00c">collision_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b00a"></span>B00A</td>
 <td class="instruction">DEC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b00b"></span>B00B</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_2</td>
 <td class="address-2"><span id="b00c"></span>B00C</td>
 <td class="instruction">LD HL,($81A4)</td>
 <td class="comment-11" rowspan="2">HL = saved_pos_x;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b00f"></span>B00F</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b011"></span>B011</td>
-<td class="instruction">JP C,$B0FC</td>
+<td class="instruction">JP C,<a href="AFDF.html#b0fc">collision_20</a></td>
 <td class="comment-11" rowspan="1">if (HL &lt; BC) goto pop_next; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_3</td>
 <td class="address-2"><span id="b014"></span>B014</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b015"></span>B015</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
@@ -263,145 +263,145 @@ Used by the routines at <a href="AF8F.html">AF8F</a> and <a href="C4E0.html">C4E
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b016"></span>B016</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="2">C = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b017"></span>B017</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b018"></span>B018</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="1">B = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b019"></span>B019</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b01a"></span>B01A</td>
 <td class="instruction">LD HL,($81A6)</td>
 <td class="comment-11" rowspan="1">HL = saved_pos_y;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b01d"></span>B01D</td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-11" rowspan="6">BC += 4;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b01f"></span>B01F</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b020"></span>B020</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b021"></span>B021</td>
-<td class="instruction">JR NC,$B025</td>
+<td class="instruction">JR NC,<a href="AFDF.html#b025">collision_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b023"></span>B023</td>
 <td class="instruction">INC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b024"></span>B024</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_4</td>
 <td class="address-2"><span id="b025"></span>B025</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-11" rowspan="2">if (HL != BC) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b027"></span>B027</td>
-<td class="instruction">JR Z,$B03B</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b03b">collision_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b029"></span>B029</td>
-<td class="instruction">JP NC,$B0FC</td>
+<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_20</a></td>
 <td class="comment-11" rowspan="1">if (HL &gt; BC) goto pop_next;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b02c"></span>B02C</td>
 <td class="instruction">SUB $08</td>
 <td class="comment-11" rowspan="5">BC -= 8;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b02e"></span>B02E</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b02f"></span>B02F</td>
-<td class="instruction">JR NC,$B033</td>
+<td class="instruction">JR NC,<a href="AFDF.html#b033">collision_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b031"></span>B031</td>
 <td class="instruction">DEC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b032"></span>B032</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_5</td>
 <td class="address-2"><span id="b033"></span>B033</td>
 <td class="instruction">LD HL,($81A6)</td>
 <td class="comment-11" rowspan="2">HL = saved_pos_y;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b036"></span>B036</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b038"></span>B038</td>
-<td class="instruction">JP C,$B0FC</td>
+<td class="instruction">JP C,<a href="AFDF.html#b0fc">collision_20</a></td>
 <td class="comment-11" rowspan="1">if (HL &lt; BC) goto pop_next; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_6</td>
 <td class="address-2"><span id="b03b"></span>B03B</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b03c"></span>B03C</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
@@ -417,45 +417,45 @@ Used by the routines at <a href="AF8F.html">AF8F</a> and <a href="C4E0.html">C4E
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b03d"></span>B03D</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="1">C = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b03e"></span>B03E</td>
 <td class="instruction">LD A,($81A8)</td>
 <td class="comment-11" rowspan="2">A = saved_height - C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b041"></span>B041</td>
 <td class="instruction">SUB C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b042"></span>B042</td>
-<td class="instruction">JR NC,$B046</td>
+<td class="instruction">JR NC,<a href="AFDF.html#b046">collision_7</a></td>
 <td class="comment-11" rowspan="1">if (A &lt; 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b044"></span>B044</td>
 <td class="instruction">NEG</td>
 <td class="comment-11" rowspan="1">A = -A; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_7</td>
 <td class="address-2"><span id="b046"></span>B046</td>
 <td class="instruction">CP $18</td>
 <td class="comment-11" rowspan="2">if (A &gt;= 24) goto pop_next;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b048"></span>B048</td>
-<td class="instruction">JP NC,$B0FC</td>
+<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_20</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -469,27 +469,27 @@ If specified vischar character has a bribe pending...
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b04b"></span>B04B</td>
 <td class="instruction">LD A,(IY+$01)</td>
 <td class="comment-11" rowspan="2">A = IY[1] &amp; 0x0F; // sampled IY=$8020,$8040,$8060,$8000 // but this is *not* vischar_FLAGS_MASK, which is 0x1F</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b04e"></span>B04E</td>
 <td class="instruction">AND $0F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b050"></span>B050</td>
 <td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="2">if (A == 1) &lt;%</td>
+<td class="comment-11" rowspan="2">if (A == vischar_FLAGS_PURSUE) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b052"></span>B052</td>
-<td class="instruction">JR NZ,$B071</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b071">collision_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -503,69 +503,69 @@ and current vischar is not the hero...
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b054"></span>B054</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b055"></span>B055</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">// sampled HL=$8021,$8041,$8061,$80A1</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b056"></span>B056</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="1">HL--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b057"></span>B057</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">if ((HL &amp; 0xFF) == 0) &lt;% // ie. $8000</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b058"></span>B058</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b059"></span>B059</td>
-<td class="instruction">JR NZ,$B071</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b071">collision_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b05b"></span>B05B</td>
 <td class="instruction">LD A,($AF8E)</td>
 <td class="comment-11" rowspan="3">if (bribed_character == IY[0]) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b05e"></span>B05E</td>
 <td class="instruction">CP (IY+$00)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b061"></span>B061</td>
-<td class="instruction">JR NZ,$B068</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b068">collision_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b063"></span>B063</td>
-<td class="instruction">CALL <a href="B107.html">$B107</a></td>
+<td class="instruction">CALL <a href="B107.html">accept_bribe</a></td>
 <td class="comment-11" rowspan="1">accept_bribe(); %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b066"></span>B066</td>
-<td class="instruction">JR $B071</td>
+<td class="instruction">JR <a href="AFDF.html#b071">collision_9</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
@@ -579,513 +579,513 @@ A hostile catches the hero!
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_8</td>
 <td class="address-2"><span id="b068"></span>B068</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b069"></span>B069</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b06a"></span>B06A</td>
 <td class="instruction">PUSH IY</td>
 <td class="comment-11" rowspan="3">HL = IY + 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b06c"></span>B06C</td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b06d"></span>B06D</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b06e"></span>B06E</td>
-<td class="instruction">JP <a href="CB98.html">$CB98</a></td>
+<td class="instruction">JP <a href="CB98.html">solitary</a></td>
 <td class="comment-11" rowspan="1">solitary(); return; // exit via %&gt; %&gt; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_9</td>
 <td class="address-2"><span id="b071"></span>B071</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b072"></span>B072</td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="1">HL--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b073"></span>B073</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL; // sampled HL=$80C0,$8040,$8000,$8020,$8060 // vischar_BYTE0</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b074"></span>B074</td>
 <td class="instruction">CP $1A</td>
 <td class="comment-11" rowspan="2">if (A &gt;= 26) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b076"></span>B076</td>
-<td class="instruction">JR C,$B0B9</td>
+<td class="instruction">JR C,<a href="AFDF.html#b0b9">collision_16</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b078"></span>B078</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b079"></span>B079</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b07a"></span>B07A</td>
 <td class="instruction">LD A,$11</td>
-<td class="comment-11" rowspan="3">HL += 17;</td>
+<td class="comment-11" rowspan="3">HL += 17; // &amp;vischar-&gt;mi.pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b07c"></span>B07C</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b07d"></span>B07D</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b07e"></span>B07E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">tmpA = A;</td>
+<td class="comment-11" rowspan="1">tmpA = A; // retrieve character index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b07f"></span>B07F</td>
 <td class="instruction">LD BC,$0723</td>
 <td class="comment-11" rowspan="1">B = 7; C = 35;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b082"></span>B082</td>
 <td class="instruction">CP $1C</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b084"></span>B084</td>
 <td class="instruction">LD A,(IY+$0E)</td>
 <td class="comment-11" rowspan="1">A = IY[14]; // interleaved</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b087"></span>B087</td>
-<td class="instruction">JR NZ,$B08F</td>
-<td class="comment-11" rowspan="1">if (tmpA == 28) &lt;%</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b08f">collision_10</a></td>
+<td class="comment-11" rowspan="1">if (tmpA == character_28_CRATE) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b089"></span>B089</td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">L -= 2;</td>
+<td class="comment-11" rowspan="2">L -= 2; // &amp;vischar-&gt;mi.pos.x</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b08a"></span>B08A</td>
 <td class="instruction">DEC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b08b"></span>B08B</td>
 <td class="instruction">LD C,$36</td>
 <td class="comment-11" rowspan="1">C = 54;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b08d"></span>B08D</td>
 <td class="instruction">XOR $01</td>
 <td class="comment-11" rowspan="1">A ^= 1; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_10</td>
 <td class="address-2"><span id="b08f"></span>B08F</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b090"></span>B090</td>
-<td class="instruction">JR NZ,$B09D</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b09d">collision_12</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b092"></span>B092</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b093"></span>B093</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="2">if (A != C) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b094"></span>B094</td>
-<td class="instruction">JR Z,$B0B8</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b0b8">collision_15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b096"></span>B096</td>
-<td class="instruction">JR C,$B09A</td>
+<td class="instruction">JR C,<a href="AFDF.html#b09a">collision_11</a></td>
 <td class="comment-11" rowspan="3">if (C &gt; A) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b098"></span>B098</td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b099"></span>B099</td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_11</td>
 <td class="address-2"><span id="b09a"></span>B09A</td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">(*HL)++; %&gt; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b09b"></span>B09B</td>
-<td class="instruction">JR $B0B8</td>
+<td class="instruction">JR <a href="AFDF.html#b0b8">collision_15</a></td>
 <td class="comment-11" rowspan="3">else if (A == 1) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_12</td>
 <td class="address-2"><span id="b09d"></span>B09D</td>
 <td class="instruction">CP $01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b09f"></span>B09F</td>
-<td class="instruction">JR NZ,$B0A9</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b0a9">collision_13</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a1"></span>B0A1</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="2">A = C + B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a2"></span>B0A2</td>
 <td class="instruction">ADD A,B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a3"></span>B0A3</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="3">if (A != *HL) (*HL)++; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a4"></span>B0A4</td>
-<td class="instruction">JR Z,$B0B8</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b0b8">collision_15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a6"></span>B0A6</td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a7"></span>B0A7</td>
-<td class="instruction">JR $B0B8</td>
+<td class="instruction">JR <a href="AFDF.html#b0b8">collision_15</a></td>
 <td class="comment-11" rowspan="3">else if (A == 2) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_13</td>
 <td class="address-2"><span id="b0a9"></span>B0A9</td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ab"></span>B0AB</td>
-<td class="instruction">JR NZ,$B0B2</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b0b2">collision_14</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ad"></span>B0AD</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="2">A = C - B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ae"></span>B0AE</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0af"></span>B0AF</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">*HL = A; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0b0"></span>B0B0</td>
-<td class="instruction">JR $B0B8</td>
+<td class="instruction">JR <a href="AFDF.html#b0b8">collision_15</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_14</td>
 <td class="address-2"><span id="b0b2"></span>B0B2</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="2">A = C - B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0b3"></span>B0B3</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0b4"></span>B0B4</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="3">if (A != *HL) (*HL)--; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0b5"></span>B0B5</td>
-<td class="instruction">JR Z,$B0B8</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b0b8">collision_15</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0b7"></span>B0B7</td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_15</td>
 <td class="address-2"><span id="b0b8"></span>B0B8</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_16</td>
 <td class="address-2"><span id="b0b9"></span>B0B9</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">%&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ba"></span>B0BA</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">HL += 13;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0bb"></span>B0BB</td>
 <td class="instruction">ADD A,$0D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0bd"></span>B0BD</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0be"></span>B0BE</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL &amp; ~input_KICK; // mask off kick flag // sampled HL=$806D,$804D,$802D,$808D,$800D</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0bf"></span>B0BF</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c1"></span>B0C1</td>
-<td class="instruction">JR Z,$B0DB</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b0db">collision_18</a></td>
 <td class="comment-11" rowspan="1">if (A) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c3"></span>B0C3</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c4"></span>B0C4</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL ^ 2; // swap direction: top &lt;=&gt; bottom</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c5"></span>B0C5</td>
 <td class="instruction">XOR $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c7"></span>B0C7</td>
 <td class="instruction">CP (IY+$0E)</td>
 <td class="comment-11" rowspan="2">if (A != IY[14]) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ca"></span>B0CA</td>
-<td class="instruction">JR Z,$B0DB</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b0db">collision_18</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0cc"></span>B0CC</td>
 <td class="instruction">LD (IY+$0D),$80</td>
 <td class="comment-11" rowspan="1">IY[13] = input_KICK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_17</td>
 <td class="address-2"><span id="b0d0"></span>B0D0</td>
 <td class="instruction">LD A,(IY+$07)</td>
 <td class="comment-11" rowspan="4">IY[7] = (IY[7] &amp; vischar_BYTE7_MASK_HI) | 5; // preserve flags and set 5? // sampled IY=$8000,$80E0</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0d3"></span>B0D3</td>
 <td class="instruction">AND $F0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0d5"></span>B0D5</td>
 <td class="instruction">OR $05</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0d7"></span>B0D7</td>
 <td class="instruction">LD (IY+$07),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0da"></span>B0DA</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">if (!Z) return; /* odd */ %&gt; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_18</td>
 <td class="address-2"><span id="b0db"></span>B0DB</td>
 <td class="instruction">LD C,(IY+$0E)</td>
 <td class="comment-11" rowspan="2">BC = IY[14]; // sampled IY=$8000,$8040,$80E0</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0de"></span>B0DE</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e0"></span>B0E0</td>
 <td class="instruction">LD HL,$B0F8</td>
 <td class="comment-11" rowspan="4">IY[13] = collision_new_inputs[BC];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e3"></span>B0E3</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e4"></span>B0E4</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e5"></span>B0E5</td>
 <td class="instruction">LD (IY+$0D),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e8"></span>B0E8</td>
 <td class="instruction">BIT 0,C</td>
 <td class="comment-11" rowspan="2">if ((C &amp; 1) == 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ea"></span>B0EA</td>
-<td class="instruction">JR NZ,$B0F2</td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b0f2">collision_19</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ec"></span>B0EC</td>
 <td class="instruction">RES 5,(IY+$07)</td>
-<td class="comment-11" rowspan="1">IY[7] &amp;= ~vischar_BYTE7_IMPEDED;</td>
+<td class="comment-11" rowspan="1">IY[7] &amp;= ~vischar_BYTE7_Y_DOMINANT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0f0"></span>B0F0</td>
-<td class="instruction">JR $B0D0</td>
+<td class="instruction">JR <a href="AFDF.html#b0d0">collision_17</a></td>
 <td class="comment-11" rowspan="1">goto $B0D0; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_19</td>
 <td class="address-2"><span id="b0f2"></span>B0F2</td>
 <td class="instruction">SET 5,(IY+$07)</td>
-<td class="comment-11" rowspan="1">else &lt;% IY[7] |= vischar_BYTE7_IMPEDED;</td>
+<td class="comment-11" rowspan="1">else &lt;% IY[7] |= vischar_BYTE7_Y_DOMINANT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0f6"></span>B0F6</td>
-<td class="instruction">JR $B0D0</td>
+<td class="instruction">JR <a href="AFDF.html#b0d0">collision_17</a></td>
 <td class="comment-11" rowspan="1">goto $B0D0; %&gt;</td>
 </tr>
 <tr>
@@ -1099,73 +1099,73 @@ New inputs.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_new_inputs</td>
 <td class="address-1"><span id="b0f8"></span>B0F8</td>
 <td class="instruction">DEFB $85</td>
 <td class="comment-11" rowspan="1">input_DOWN + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0f9"></span>B0F9</td>
 <td class="instruction">DEFB $84</td>
 <td class="comment-11" rowspan="1">input_UP   + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0fa"></span>B0FA</td>
 <td class="instruction">DEFB $87</td>
 <td class="comment-11" rowspan="1">input_UP   + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0fb"></span>B0FB</td>
 <td class="instruction">DEFB $88</td>
 <td class="comment-11" rowspan="1">input_DOWN + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_20</td>
 <td class="address-2"><span id="b0fc"></span>B0FC</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">pop_next:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0fd"></span>B0FD</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">collision_21</td>
 <td class="address-2"><span id="b0fe"></span>B0FE</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">next: HL += 32;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ff"></span>B0FF</td>
 <td class="instruction">ADD A,$20</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b101"></span>B101</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b102"></span>B102</td>
 <td class="instruction">DEC B</td>
 <td class="comment-11" rowspan="2">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b103"></span>B103</td>
-<td class="instruction">JP NZ,$AFE4</td>
+<td class="instruction">JP NZ,<a href="AFDF.html#afe4">collision_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b106"></span>B106</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; // return with Z set</td>
@@ -1179,9 +1179,9 @@ New inputs.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

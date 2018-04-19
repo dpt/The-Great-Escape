@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="7B36.html">7B36</a>, <a href="7B8B.html">7B8B</a>, <a href="A1D3.html">A1D3</a>, <a href="A50B.html">A50B</a>, <a href="B83B.html">B83B</a> and <a href="F350.html">F350</a>.
+Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html">drop_item</a>, <a href="A1D3.html">event_another_day_dawns</a>, <a href="A50B.html">screen_reset</a>, <a href="B83B.html">searchlight_mask_test</a> and <a href="F350.html">choose_keys</a>.
 </div>
 <div class="paragraph">
 Starting at $5847, set 23 columns of 16 rows to A.
@@ -51,67 +51,67 @@ Starting at $5847, set 23 columns of 16 rows to A.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_game_window_attributes</td>
 <td class="address-2"><span id="a15f"></span>A15F</td>
 <td class="instruction">LD HL,$5847</td>
 <td class="comment-11" rowspan="1">HL = $5847 // attributes base // $5800 + $47</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a162"></span>A162</td>
 <td class="instruction">LD C,$10</td>
 <td class="comment-11" rowspan="1">C = 16 // rows</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a164"></span>A164</td>
 <td class="instruction">LD DE,$0009</td>
 <td class="comment-11" rowspan="1">DE = 32 - 23 // skip</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_game_window_attributes_0</td>
 <td class="address-2"><span id="a167"></span>A167</td>
 <td class="instruction">LD B,$17</td>
 <td class="comment-11" rowspan="1">do &lt;% B = 23 // columns</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_game_window_attributes_1</td>
 <td class="address-2"><span id="a169"></span>A169</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="2">do *HL++ = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a16a"></span>A16A</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a16b"></span>A16B</td>
-<td class="instruction">DJNZ $A169</td>
+<td class="instruction">DJNZ <a href="A15F.html#a169">set_game_window_attributes_1</a></td>
 <td class="comment-11" rowspan="1">while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a16d"></span>A16D</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a16e"></span>A16E</td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="1">C--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a16f"></span>A16F</td>
-<td class="instruction">JP NZ,$A167</td>
+<td class="instruction">JP NZ,<a href="A15F.html#a167">set_game_window_attributes_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (C != 0);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a172"></span>A172</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -125,9 +125,9 @@ Starting at $5847, set 23 columns of 16 rows to A.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

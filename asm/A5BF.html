@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A51C.html">A51C</a>, <a href="EFFC.html">EFFC</a> and <a href="F1E0.html">F1E0</a>.
+Used by the routines at <a href="A51C.html">escaped</a>, <a href="EFFC.html">user_confirm</a> and <a href="F1E0.html">plot_statics_and_menu_text</a>.
 </div>
 </div>
 <table class="input-1">
@@ -51,73 +51,73 @@ Used by the routines at <a href="A51C.html">A51C</a>, <a href="EFFC.html">EFFC</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">screenlocstring_plot</td>
 <td class="address-2"><span id="a5bf"></span>A5BF</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">E = *HL++; // read screen address into DE</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5c0"></span>A5C0</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5c1"></span>A5C1</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="2">D = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5c2"></span>A5C2</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5c3"></span>A5C3</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="2">B = *HL++; // iterations / nbytes</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5c4"></span>A5C4</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">screenlocstring_plot_0</td>
 <td class="address-2"><span id="a5c5"></span>A5C5</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5c6"></span>A5C6</td>
-<td class="instruction">CALL <a href="7D2F.html">$7D2F</a></td>
+<td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
 <td class="comment-11" rowspan="1">plot_glyph();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5c9"></span>A5C9</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5ca"></span>A5CA</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5cb"></span>A5CB</td>
-<td class="instruction">DJNZ $A5C5</td>
+<td class="instruction">DJNZ <a href="A5BF.html#a5c5">screenlocstring_plot_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a5cd"></span>A5CD</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -131,9 +131,9 @@ Used by the routines at <a href="A51C.html">A51C</a>, <a href="EFFC.html">EFFC</
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

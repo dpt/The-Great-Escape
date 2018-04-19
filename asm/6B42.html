@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="68F4.html">68F4</a>, <a href="7B36.html">7B36</a>, <a href="9E07.html">9E07</a>, <a href="A289.html">A289</a>, <a href="A2E2.html">A2E2</a>, <a href="A479.html">A479</a>, <a href="A50B.html">A50B</a>, <a href="AB6B.html">AB6B</a> and <a href="B3F6.html">B3F6</a>.
+Used by the routines at <a href="68F4.html">enter_room</a>, <a href="7B36.html">pick_up_item</a>, <a href="9E07.html">process_player_input</a>, <a href="A289.html">wake_up</a>, <a href="A2E2.html">end_of_breakfast</a>, <a href="A479.html">select_room_and_plot</a>, <a href="A50B.html">screen_reset</a>, <a href="AB6B.html">choose_game_window_attributes</a> and <a href="B3F6.html">action_shovel</a>.
 </div>
 </div>
 <table class="input-0">
@@ -76,223 +76,223 @@ Used by the routines at <a href="68F4.html">68F4</a>, <a href="7B36.html">7B36</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_interior_tiles</td>
 <td class="address-2"><span id="6b42"></span>6B42</td>
 <td class="instruction">LD HL,$F290</td>
 <td class="comment-11" rowspan="1">HL = $F290;  // screen buffer start address</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b45"></span>6B45</td>
 <td class="instruction">LD DE,$F0F8</td>
 <td class="comment-11" rowspan="1">DE = $F0F8;  // visible tiles array</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b48"></span>6B48</td>
 <td class="instruction">LD C,$10</td>
 <td class="comment-11" rowspan="1">C = 16;      // rows</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_interior_tiles_0</td>
 <td class="address-2"><span id="6b4a"></span>6B4A</td>
 <td class="instruction">LD B,$18</td>
 <td class="comment-11" rowspan="1">do &lt;% B = 24; // columns</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_interior_tiles_1</td>
 <td class="address-2"><span id="6b4c"></span>6B4C</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b4d"></span>6B4D</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="9">tileptr = &amp;interior_tiles[*DE];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b4e"></span>6B4E</td>
 <td class="instruction">EXX</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b4f"></span>6B4F</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b50"></span>6B50</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b52"></span>6B52</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b53"></span>6B53</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b54"></span>6B54</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b55"></span>6B55</td>
 <td class="instruction">LD DE,$9768</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b58"></span>6B58</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b59"></span>6B59</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1">screenptr = HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b5a"></span>6B5A</td>
 <td class="instruction">LD BC,$0818</td>
 <td class="comment-11" rowspan="1">iters = 8; stride = 24;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_interior_tiles_2</td>
 <td class="address-2"><span id="6b5d"></span>6B5D</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% *screenptr = *tileptr++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b5e"></span>6B5E</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b5f"></span>6B5F</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="6">screenptr += stride;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b60"></span>6B60</td>
 <td class="instruction">ADD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b61"></span>6B61</td>
-<td class="instruction">JR NC,$6B64</td>
+<td class="instruction">JR NC,<a href="6B42.html#6b64">plot_interior_tiles_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b63"></span>6B63</td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_interior_tiles_3</td>
 <td class="address-2"><span id="6b64"></span>6B64</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b65"></span>6B65</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b66"></span>6B66</td>
-<td class="instruction">DJNZ $6B5D</td>
+<td class="instruction">DJNZ <a href="6B42.html#6b5d">plot_interior_tiles_2</a></td>
 <td class="comment-11" rowspan="2">%&gt; while (--iters);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b68"></span>6B68</td>
 <td class="instruction">EXX</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b69"></span>6B69</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b6a"></span>6B6A</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b6b"></span>6B6B</td>
-<td class="instruction">DJNZ $6B4C</td>
+<td class="instruction">DJNZ <a href="6B42.html#6b4c">plot_interior_tiles_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b6d"></span>6B6D</td>
 <td class="instruction">LD A,$A8</td>
 <td class="comment-11" rowspan="5">HL += 7 * 24;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b6f"></span>6B6F</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b70"></span>6B70</td>
-<td class="instruction">JR NC,$6B73</td>
+<td class="instruction">JR NC,<a href="6B42.html#6b73">plot_interior_tiles_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b72"></span>6B72</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_interior_tiles_4</td>
 <td class="address-2"><span id="6b73"></span>6B73</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b74"></span>6B74</td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="2">%&gt; while (--C);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b75"></span>6B75</td>
-<td class="instruction">JP NZ,$6B4A</td>
+<td class="instruction">JP NZ,<a href="6B42.html#6b4a">plot_interior_tiles_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b78"></span>6B78</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -306,9 +306,9 @@ Used by the routines at <a href="68F4.html">68F4</a>, <a href="7B36.html">7B36</
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

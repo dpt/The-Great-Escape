@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="7D48.html">7D48</a>.
+Used by the routine at <a href="7D48.html">message_display</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,37 +45,37 @@ Used by the routine at <a href="7D48.html">7D48</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wipe_message</td>
 <td class="address-2"><span id="7d87"></span>7D87</td>
 <td class="instruction">LD A,($7D10)</td>
 <td class="comment-11" rowspan="1">A = message_display_index;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d8a"></span>7D8A</td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="2">message_display_index = --A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d8b"></span>7D8B</td>
 <td class="instruction">LD ($7D10),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d8e"></span>7D8E</td>
 <td class="instruction">LD DE,$50E0</td>
 <td class="comment-11" rowspan="3">DE = message_text_screen_address + A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d91"></span>7D91</td>
 <td class="instruction">OR E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d92"></span>7D92</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -91,19 +91,19 @@ Plot a single space character.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d93"></span>7D93</td>
 <td class="instruction">LD A,$23</td>
 <td class="comment-11" rowspan="2">plot_single_glyph(35);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d95"></span>7D95</td>
-<td class="instruction">CALL <a href="7D30.html">$7D30</a></td>
+<td class="instruction">CALL <a href="7D30.html">plot_single_glyph</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d98"></span>7D98</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -117,9 +117,9 @@ Plot a single space character.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

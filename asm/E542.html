@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="7BB5.html">7BB5</a>, <a href="9F21.html">9F21</a>, <a href="C5D3.html">C5D3</a>, <a href="C918.html">C918</a> and <a href="CC37.html">CC37</a>.
+Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="9F21.html">in_permitted_area</a>, <a href="C5D3.html">reset_visible_character</a>, <a href="C918.html">character_behaviour</a> and <a href="CC37.html">guards_follow_suspicious_character</a>.
 </div>
 <div class="paragraph">
 Divides the three input 16-bit words by 8, with rounding to nearest, storing the result as bytes.
@@ -62,61 +62,61 @@ Divides the three input 16-bit words by 8, with rounding to nearest, storing the
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">pos_to_tinypos</td>
 <td class="address-2"><span id="e542"></span>E542</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">B = 3;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">pos_to_tinypos_0</td>
 <td class="address-2"><span id="e544"></span>E544</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% A = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e545"></span>E545</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e546"></span>E546</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="1">C = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e547"></span>E547</td>
-<td class="instruction">CALL <a href="E550.html">$E550</a></td>
+<td class="instruction">CALL <a href="E550.html">divide_by_8_with_rounding</a></td>
 <td class="comment-11" rowspan="1">divide_by_8_with_rounding(C,A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e54a"></span>E54A</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="3">*DE++ = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e54b"></span>E54B</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e54c"></span>E54C</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e54d"></span>E54D</td>
-<td class="instruction">DJNZ $E544</td>
+<td class="instruction">DJNZ <a href="E542.html#e544">pos_to_tinypos_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e54f"></span>E54F</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -130,9 +130,9 @@ Divides the three input 16-bit words by 8, with rounding to nearest, storing the
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

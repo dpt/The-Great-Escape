@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -48,69 +48,69 @@ Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_papers</td>
 <td class="address-2"><span id="efcb"></span>EFCB</td>
 <td class="instruction">LD DE,$696D</td>
 <td class="comment-11" rowspan="1">DE = map_MAIN_GATE_X;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efce"></span>EFCE</td>
 <td class="instruction">LD HL,$81B8</td>
 <td class="comment-11" rowspan="1">HL = &amp;hero_map_position.y;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efd1"></span>EFD1</td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">B = 2; // iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_papers_0</td>
 <td class="address-2"><span id="efd3"></span>EFD3</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efd4"></span>EFD4</td>
 <td class="instruction">CP D</td>
 <td class="comment-11" rowspan="5">if (A &lt; D || A &gt;= E) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efd5"></span>EFD5</td>
 <td class="instruction">RET C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efd6"></span>EFD6</td>
 <td class="instruction">CP E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efd7"></span>EFD7</td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efd8"></span>EFD8</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efd9"></span>EFD9</td>
 <td class="instruction">LD DE,$494B</td>
 <td class="comment-11" rowspan="1">DE = map_MAIN_GATE_Y;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efdc"></span>EFDC</td>
-<td class="instruction">DJNZ $EFD3</td>
+<td class="instruction">DJNZ <a href="EFCB.html#efd3">action_papers_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
@@ -124,43 +124,43 @@ Using the papers at the main gate when not in uniform causes the hero to be sent
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efde"></span>EFDE</td>
 <td class="instruction">LD DE,$CEA6</td>
 <td class="comment-11" rowspan="4">if ($8015 != sprite_guard) goto solitary; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efe1"></span>EFE1</td>
 <td class="instruction">LD A,($8015)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efe4"></span>EFE4</td>
 <td class="instruction">CP E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efe5"></span>EFE5</td>
-<td class="instruction">JP NZ,<a href="CB98.html">$CB98</a></td>
+<td class="instruction">JP NZ,<a href="CB98.html">solitary</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efe8"></span>EFE8</td>
-<td class="instruction">CALL <a href="A0E9.html">$A0E9</a></td>
+<td class="instruction">CALL <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
 <td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efeb"></span>EFEB</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">$801C = room_0_OUTDOORS; // set room index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efec"></span>EFEC</td>
 <td class="instruction">LD ($801C),A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -176,21 +176,21 @@ Transition to outside the main gate.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="efef"></span>EFEF</td>
 <td class="instruction">LD HL,$EFF9</td>
 <td class="comment-11" rowspan="1">HL = &amp;outside_main_gate; // pointer to location</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="eff2"></span>EFF2</td>
 <td class="instruction">LD IY,$8000</td>
 <td class="comment-11" rowspan="1">IY = $8000; // hero character</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="eff6"></span>EFF6</td>
-<td class="instruction">JP <a href="68A2.html">$68A2</a></td>
+<td class="instruction">JP <a href="68A2.html">transition</a></td>
 <td class="comment-11" rowspan="1">transition(); return; // doesn't return: exits with goto main_loop</td>
 </tr>
 <tr>
@@ -204,7 +204,7 @@ Position outside the main gate.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">outside_main_gate</td>
 <td class="address-1"><span id="eff9"></span>EFF9</td>
 <td class="instruction">DEFB $D6,$8A,$06</td>
 <td class="comment-11" rowspan="1">static const tinypos_t outside_main_gate = &lt;% 0xD6, 0x8A, 0x06 %&gt;;</td>
@@ -218,9 +218,9 @@ Position outside the main gate.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

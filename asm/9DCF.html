@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,33 +45,33 @@ Used by the routine at <a href="9D7B.html">9D7B</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">check_morale</td>
 <td class="address-2"><span id="9dcf"></span>9DCF</td>
 <td class="instruction">LD A,($A13C)</td>
 <td class="comment-11" rowspan="3">if (morale &gt;= 2) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dd2"></span>9DD2</td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dd4"></span>9DD4</td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dd5"></span>9DD5</td>
 <td class="instruction">LD BC,$0F00</td>
-<td class="comment-11" rowspan="2">queue_message_for_display(message_MORALE_IS_ZERO);</td>
+<td class="comment-11" rowspan="2">queue_message(message_MORALE_IS_ZERO);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9dd8"></span>9DD8</td>
-<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
+<td class="instruction">CALL <a href="7D15.html">queue_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -85,13 +85,13 @@ Inhibit user input.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ddb"></span>9DDB</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">morale_exhausted = 0xFF;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ddd"></span>9DDD</td>
 <td class="instruction">LD ($A13B),A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -107,19 +107,19 @@ Immediately take automatic control of hero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9de0"></span>9DE0</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">automatic_player_counter = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9de1"></span>9DE1</td>
 <td class="instruction">LD ($A139),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9de4"></span>9DE4</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -133,9 +133,9 @@ Immediately take automatic control of hero.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

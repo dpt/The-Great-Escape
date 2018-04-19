@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="7CBE.html">7CBE</a>, <a href="7CD4.html">7CD4</a>, <a href="A035.html">A035</a> and <a href="F20B.html">F20B</a>.
+Used by the routines at <a href="7CBE.html">plot_bitmap</a>, <a href="7CD4.html">screen_wipe</a>, <a href="A035.html">wave_morale_flag</a> and <a href="F20B.html">plot_static_tiles</a>.
 </div>
 </div>
 <table class="input-1">
@@ -51,79 +51,79 @@ Used by the routines at <a href="7CBE.html">7CBE</a>, <a href="7CD4.html">7CD4</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_next_scanline</td>
 <td class="address-2"><span id="7ce9"></span>7CE9</td>
 <td class="instruction">INC H</td>
 <td class="comment-11" rowspan="1">HL += 256;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cea"></span>7CEA</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="3">if ((H &amp; 7) != 0) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7ceb"></span>7CEB</td>
 <td class="instruction">AND $07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7ced"></span>7CED</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cee"></span>7CEE</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cef"></span>7CEF</td>
 <td class="instruction">LD DE,$F820</td>
 <td class="comment-11" rowspan="1">DE = 0xF820;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cf2"></span>7CF2</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="4">if (L &gt;= 0xE0) D = 0xFF;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cf3"></span>7CF3</td>
 <td class="instruction">CP $E0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cf5"></span>7CF5</td>
-<td class="instruction">JR C,$7CF9</td>
+<td class="instruction">JR C,<a href="7CE9.html#7cf9">get_next_scanline_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cf7"></span>7CF7</td>
 <td class="instruction">LD D,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_next_scanline_0</td>
 <td class="address-2"><span id="7cf9"></span>7CF9</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cfa"></span>7CFA</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7cfb"></span>7CFB</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -137,9 +137,9 @@ Used by the routines at <a href="7CBE.html">7CBE</a>, <a href="7CD4.html">7CD4</
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

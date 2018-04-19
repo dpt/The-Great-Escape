@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A1D3.html">A1D3</a>, <a href="AE78.html">AE78</a>, <a href="CB98.html">CB98</a> and <a href="CD31.html">CD31</a>.
+Used by the routines at <a href="A1D3.html">event_another_day_dawns</a>, <a href="AE78.html">searchlight_caught</a>, <a href="CB98.html">solitary</a> and <a href="CD31.html">item_discovered</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,33 +48,33 @@ Used by the routines at <a href="A1D3.html">A1D3</a>, <a href="AE78.html">AE78</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">decrease_morale</td>
 <td class="address-2"><span id="a0e0"></span>A0E0</td>
 <td class="instruction">LD A,($A13C)</td>
 <td class="comment-11" rowspan="2">A = morale - B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0e3"></span>A0E3</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0e4"></span>A0E4</td>
-<td class="instruction">JR NC,<a href="A0DC.html">$A0DC</a></td>
+<td class="instruction">JR NC,<a href="A0DC.html">set_morale_from_A</a></td>
 <td class="comment-11" rowspan="2">if (A &lt; morale_MIN) A = morale_MIN;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0e6"></span>A0E6</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0e7"></span>A0E7</td>
-<td class="instruction">JR <a href="A0DC.html">$A0DC</a></td>
+<td class="instruction">JR <a href="A0DC.html">set_morale_from_A</a></td>
 <td class="comment-11" rowspan="1">goto set_morale_from_A;</td>
 </tr>
 </table>
@@ -86,9 +86,9 @@ Used by the routines at <a href="A1D3.html">A1D3</a>, <a href="AE78.html">AE78</
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

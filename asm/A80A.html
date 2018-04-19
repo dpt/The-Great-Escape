@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="AA26.html">AA26</a> and <a href="AA4B.html">AA4B</a>.
+Used by the routines at <a href="AA26.html">shunt_map_up_right</a> and <a href="AA4B.html">shunt_map_up</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,39 +45,39 @@ Used by the routines at <a href="AA26.html">AA26</a> and <a href="AA4B.html">AA4
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_bottommost_tiles</td>
 <td class="address-2"><span id="a80a"></span>A80A</td>
 <td class="instruction">LD DE,$F278</td>
 <td class="comment-11" rowspan="1">DE = &amp;tile_buf[24 * 16];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a80d"></span>A80D</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a80e"></span>A80E</td>
 <td class="instruction">LD HL,$FF74</td>
 <td class="comment-11" rowspan="1">HLdash = &amp;map_buf[28];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a811"></span>A811</td>
 <td class="instruction">LD A,($81BC)</td>
 <td class="comment-11" rowspan="1">A = map_position &gt;&gt; 8; // map_position hi</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a814"></span>A814</td>
 <td class="instruction">LD DE,$FE90</td>
 <td class="comment-11" rowspan="1">DEdash = &amp;window_buf[24 * 16 * 8];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a817"></span>A817</td>
-<td class="instruction">JR <a href="A826.html">$A826</a></td>
+<td class="instruction">JR <a href="A826.html">plot_horizontal_tiles_common</a></td>
 <td class="comment-11" rowspan="1">goto plot_horizontal_tiles_common;</td>
 </tr>
 </table>
@@ -89,9 +89,9 @@ Used by the routines at <a href="AA26.html">AA26</a> and <a href="AA4B.html">AA4
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

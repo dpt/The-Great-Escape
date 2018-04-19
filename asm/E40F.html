@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="E2AC.html">E2AC</a> and <a href="E34E.html">E34E</a>.
+Used by the routines at <a href="E2AC.html">masked_sprite_plotter_16_wide_left</a> and <a href="E34E.html">masked_sprite_plotter_16_wide_right</a>.
 </div>
 </div>
 <table class="input-1">
@@ -61,43 +61,43 @@ Reverse the bitmap bytes.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">flip_16_masked_pixels</td>
 <td class="address-2"><span id="e40f"></span>E40F</td>
 <td class="instruction">LD H,$7F</td>
 <td class="comment-11" rowspan="1">H = 0x7F;  // HL = 0x7F00 | (DE &gt;&gt; 8); // 0x7F00 -&gt; table of bit reversed bytes</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e411"></span>E411</td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">L = D;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e412"></span>E412</td>
 <td class="instruction">LD D,E</td>
 <td class="comment-11" rowspan="1">D = E;     // DE = (E &lt;&lt; 8) | *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e413"></span>E413</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="1">E = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e414"></span>E414</td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">L = D;     // HL = (HL &amp; 0xFF00) | (DE &gt;&gt; 8);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e415"></span>E415</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="1">D = *HL;   // DE = (*HL &lt;&lt; 8) | (DE &amp; 0x00FF);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e416"></span>E416</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
@@ -113,49 +113,49 @@ Reverse the mask bytes.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e417"></span>E417</td>
 <td class="instruction">LD H,$7F</td>
 <td class="comment-11" rowspan="1">Hdash = 0x7F;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e419"></span>E419</td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">Ldash = Ddash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e41a"></span>E41A</td>
 <td class="instruction">LD D,E</td>
 <td class="comment-11" rowspan="1">Ddash = Edash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e41b"></span>E41B</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="1">Edash = *HLdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e41c"></span>E41C</td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">Ldash = Ddash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e41d"></span>E41D</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="1">Ddash = *HLdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e41e"></span>E41E</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="e41f"></span>E41F</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -169,9 +169,9 @@ Reverse the mask bytes.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

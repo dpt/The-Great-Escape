@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="7BB5.html">7BB5</a>.
+Used by the routine at <a href="7BB5.html">drop_item_tail</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,67 +45,67 @@ Used by the routine at <a href="7BB5.html">7BB5</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">drop_item_interior</td>
 <td class="address-2"><span id="7be4"></span>7BE4</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">else &lt;% HL++; // The else is logically here when considered as part of drop_item.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7be5"></span>7BE5</td>
 <td class="instruction">LD DE,$800F</td>
 <td class="comment-11" rowspan="1">DE = $800F; // position on X axis</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7be8"></span>7BE8</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="3">*HL++ = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7be9"></span>7BE9</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bea"></span>7BEA</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7beb"></span>7BEB</td>
 <td class="instruction">INC E</td>
 <td class="comment-11" rowspan="2">DE += 2; // position on Y axis</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bec"></span>7BEC</td>
 <td class="instruction">INC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bed"></span>7BED</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="3">*HL++ = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bee"></span>7BEE</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bef"></span>7BEF</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bf0"></span>7BF0</td>
 <td class="instruction">LD (HL),$05</td>
 <td class="comment-11" rowspan="1">*HL = 5;</td>
@@ -129,9 +129,9 @@ FALL THROUGH into calc_interior_item_screenpos.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

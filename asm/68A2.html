@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="B1F5.html">B1F5</a>, <a href="B32D.html">B32D</a>, <a href="CA81.html">CA81</a>, <a href="CB98.html">CB98</a> and <a href="EFCB.html">EFCB</a>.
+Used by the routines at <a href="B1F5.html">door_handling</a>, <a href="B32D.html">door_handling_interior</a>, <a href="CA81.html">target_reached</a>, <a href="CB98.html">solitary</a> and <a href="EFCB.html">action_papers</a>.
 </div>
 </div>
 <table class="input-1">
@@ -52,63 +52,63 @@ Used by the routines at <a href="B1F5.html">B1F5</a>, <a href="B32D.html">B32D</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">transition</td>
 <td class="address-2"><span id="68a2"></span>68A2</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68a3"></span>68A3</td>
 <td class="instruction">PUSH IY</td>
 <td class="comment-11" rowspan="2">HL = IY;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68a5"></span>68A5</td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68a6"></span>68A6</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="1">A = L; // stash vischar index/offset</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68a7"></span>68A7</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68a8"></span>68A8</td>
 <td class="instruction">ADD A,$0F</td>
 <td class="comment-11" rowspan="2">L = A + 0x0F; // $8xxF (position on X axis)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68aa"></span>68AA</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ab"></span>68AB</td>
 <td class="instruction">LD A,(IY+$1C)</td>
 <td class="comment-11" rowspan="1">A = IY[0x1C]; // $8x1C (vischar.room)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ae"></span>68AE</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) &lt;% // outdoors</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68af"></span>68AF</td>
-<td class="instruction">JP NZ,$68C3</td>
+<td class="instruction">JP NZ,<a href="68A2.html#68c3">transition_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -122,75 +122,75 @@ Set position on X axis, Y axis and height (dividing by 4).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68b2"></span>68B2</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">transition_0</td>
 <td class="address-2"><span id="68b4"></span>68B4</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68b5"></span>68B5</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68b6"></span>68B6</td>
-<td class="instruction">CALL <a href="B295.html">$B295</a></td>
+<td class="instruction">CALL <a href="B295.html">multiply_by_4</a></td>
 <td class="comment-11" rowspan="1">multiply_by_4();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68b9"></span>68B9</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-11" rowspan="2">*HL++ = C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ba"></span>68BA</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68bb"></span>68BB</td>
 <td class="instruction">LD (HL),B</td>
 <td class="comment-11" rowspan="3">*HL++ = B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68bc"></span>68BC</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68bd"></span>68BD</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68be"></span>68BE</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68bf"></span>68BF</td>
-<td class="instruction">DJNZ $68B4</td>
+<td class="instruction">DJNZ <a href="68A2.html#68b4">transition_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B); %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68c1"></span>68C1</td>
-<td class="instruction">JR $68CE</td>
+<td class="instruction">JR <a href="68A2.html#68ce">transition_3</a></td>
 <td class="comment-11" rowspan="1">else &lt;% // interior</td>
 </tr>
 <tr>
@@ -204,81 +204,81 @@ Set position on X axis, Y axis and height (copying).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">transition_1</td>
 <td class="address-2"><span id="68c3"></span>68C3</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">transition_2</td>
 <td class="address-2"><span id="68c5"></span>68C5</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="3">do &lt;% *HL++ = *DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68c6"></span>68C6</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68c7"></span>68C7</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68c8"></span>68C8</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="3">*HL++ = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ca"></span>68CA</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68cb"></span>68CB</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68cc"></span>68CC</td>
-<td class="instruction">DJNZ $68C5</td>
+<td class="instruction">DJNZ <a href="68A2.html#68c5">transition_2</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B); %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">transition_3</td>
 <td class="address-2"><span id="68ce"></span>68CE</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68cf"></span>68CF</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="1">L = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68d0"></span>68D0</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="3">if (A) &lt;% reset_visible_character(); return; %&gt; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68d1"></span>68D1</td>
-<td class="instruction">JP Z,$68D7</td>
+<td class="instruction">JP Z,<a href="68A2.html#68d7">transition_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68d4"></span>68D4</td>
-<td class="instruction">JP <a href="C5D3.html">$C5D3</a></td>
+<td class="instruction">JP <a href="C5D3.html">reset_visible_character</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -292,39 +292,39 @@ HL points to the hero vischar at this point.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">transition_4</td>
 <td class="address-2"><span id="68d7"></span>68D7</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="2">*++HL &amp;= ~vischar_FLAGS_NO_COLLIDE; // $8001</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68d8"></span>68D8</td>
 <td class="instruction">RES 7,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68da"></span>68DA</td>
 <td class="instruction">LD A,($801C)</td>
 <td class="comment-11" rowspan="1">A = vischar.room;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68dd"></span>68DD</td>
 <td class="instruction">LD ($68A0),A</td>
 <td class="comment-11" rowspan="1">room_index = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68e0"></span>68E0</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A != 0) goto enter_room;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68e1"></span>68E1</td>
-<td class="instruction">JP NZ,<a href="68F4.html">$68F4</a></td>
+<td class="instruction">JP NZ,<a href="68F4.html">enter_room</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -338,63 +338,63 @@ Outdoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68e4"></span>68E4</td>
 <td class="instruction">LD A,$0C</td>
 <td class="comment-11" rowspan="3">HL += 12;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68e6"></span>68E6</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68e7"></span>68E7</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68e8"></span>68E8</td>
 <td class="instruction">LD (HL),$80</td>
 <td class="comment-11" rowspan="2">*HL++ = input_KICK; // $800D</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ea"></span>68EA</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68eb"></span>68EB</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="3">*HL &amp;= vischar_DIRECTION_MASK; // $800E // likely a sprite direction</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ec"></span>68EC</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ee"></span>68EE</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68ef"></span>68EF</td>
-<td class="instruction">CALL <a href="B2FC.html">$B2FC</a></td>
+<td class="instruction">CALL <a href="B2FC.html">reset_outdoors</a></td>
 <td class="comment-11" rowspan="1">reset_outdoors();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="68f2"></span>68F2</td>
-<td class="instruction">JR <a href="691A.html">$691A</a></td>
+<td class="instruction">JR <a href="691A.html">squash_stack_goto_main</a></td>
 <td class="comment-11" rowspan="1">goto squash_stack_goto_main;</td>
 </tr>
 </table>
@@ -406,9 +406,9 @@ Outdoors.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

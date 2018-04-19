@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A1F0.html">A1F0</a>.
+Used by the routine at <a href="A1F0.html">event_go_to_roll_call</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,39 +45,39 @@ Used by the routine at <a href="A1F0.html">A1F0</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">go_to_roll_call</td>
 <td class="address-2"><span id="a4fd"></span>A4FD</td>
 <td class="instruction">LD A,$1A</td>
 <td class="comment-11" rowspan="1">A = 26;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4ff"></span>A4FF</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a500"></span>A500</td>
 <td class="instruction">LD C,$00</td>
 <td class="comment-11" rowspan="1">C = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a502"></span>A502</td>
-<td class="instruction">CALL <a href="A35F.html">$A35F</a></td>
-<td class="comment-11" rowspan="1">set_prisoners_and_guards_location();</td>
+<td class="instruction">CALL <a href="A35F.html">set_prisoners_and_guards_route</a></td>
+<td class="comment-11" rowspan="1">set_prisoners_and_guards_route();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a505"></span>A505</td>
 <td class="instruction">LD BC,$2D00</td>
-<td class="comment-11" rowspan="2">set_hero_target_location(location_002D);</td>
+<td class="comment-11" rowspan="2">set_hero_route(location_002D);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a508"></span>A508</td>
-<td class="instruction">JP <a href="A33F.html">$A33F</a></td>
+<td class="instruction">JP <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
@@ -89,9 +89,9 @@ Used by the routine at <a href="A1F0.html">A1F0</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

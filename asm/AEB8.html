@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="ADBD.html">ADBD</a>.
+Used by the routine at <a href="ADBD.html">nighttime</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,469 +48,469 @@ Used by the routine at <a href="ADBD.html">ADBD</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot</td>
 <td class="address-2"><span id="aeb8"></span>AEB8</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeb9"></span>AEB9</td>
 <td class="instruction">LD DE,$AF3E</td>
 <td class="comment-11" rowspan="1">DEdash = &amp;searchlight_shape[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aebc"></span>AEBC</td>
 <td class="instruction">LD C,$10</td>
 <td class="comment-11" rowspan="1">Cdash = 16; // iterations  / width?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_0</td>
 <td class="address-2"><span id="aebe"></span>AEBE</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aebf"></span>AEBF</td>
 <td class="instruction">LD A,($AE75)</td>
-<td class="comment-11" rowspan="1">A = searchlight_related;</td>
+<td class="comment-11" rowspan="1">A = searchlight_clip_left;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aec2"></span>AEC2</td>
 <td class="instruction">LD HL,$5A40</td>
 <td class="comment-11" rowspan="1">HL = 0x5A40; // screen attribute address (column 0 + bottom of game window)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aec5"></span>AEC5</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="7">if (A != 0 &amp;&amp; (E &amp; 31) &gt;= 22) L = 32;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aec6"></span>AEC6</td>
-<td class="instruction">JP Z,$AED2</td>
+<td class="instruction">JP Z,<a href="AEB8.html#aed2">searchlight_plot_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aec9"></span>AEC9</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeca"></span>AECA</td>
 <td class="instruction">AND $1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aecc"></span>AECC</td>
 <td class="instruction">CP $16</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aece"></span>AECE</td>
-<td class="instruction">JR C,$AED2</td>
+<td class="instruction">JR C,<a href="AEB8.html#aed2">searchlight_plot_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aed0"></span>AED0</td>
 <td class="instruction">LD L,$20</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_1</td>
 <td class="address-2"><span id="aed2"></span>AED2</td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aed4"></span>AED4</td>
 <td class="instruction">RET C</td>
 <td class="comment-11" rowspan="1">RET C  // if (HL &lt; DE) return; // what about carry?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aed5"></span>AED5</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aed6"></span>AED6</td>
 <td class="instruction">LD HL,$5840</td>
 <td class="comment-11" rowspan="1">HL = 0x5840; // screen attribute address (column 0 + top of game window)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aed9"></span>AED9</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="7">if (A != 0 &amp;&amp; (E &amp; 31) &gt;= 7) L = 32;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeda"></span>AEDA</td>
-<td class="instruction">JP Z,$AEE6</td>
+<td class="instruction">JP Z,<a href="AEB8.html#aee6">searchlight_plot_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aedd"></span>AEDD</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aede"></span>AEDE</td>
 <td class="instruction">AND $1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aee0"></span>AEE0</td>
 <td class="instruction">CP $07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aee2"></span>AEE2</td>
-<td class="instruction">JR C,$AEE6</td>
+<td class="instruction">JR C,<a href="AEB8.html#aee6">searchlight_plot_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aee4"></span>AEE4</td>
 <td class="instruction">LD L,$20</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_2</td>
 <td class="address-2"><span id="aee6"></span>AEE6</td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aee8"></span>AEE8</td>
-<td class="instruction">JR C,$AEF0</td>
+<td class="instruction">JR C,<a href="AEB8.html#aef0">searchlight_plot_3</a></td>
 <td class="comment-11" rowspan="1">JR C,$AEF0  // if (HL &lt; DE) goto $AEF0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeea"></span>AEEA</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeeb"></span>AEEB</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="2">DEdash += 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeec"></span>AEEC</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeed"></span>AEED</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeee"></span>AEEE</td>
-<td class="instruction">JR $AF32</td>
+<td class="instruction">JR <a href="AEB8.html#af32">searchlight_plot_13</a></td>
 <td class="comment-11" rowspan="1">goto nextrow;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_3</td>
 <td class="address-2"><span id="aef0"></span>AEF0</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aef1"></span>AEF1</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aef2"></span>AEF2</td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">Bdash = 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_4</td>
 <td class="address-2"><span id="aef4"></span>AEF4</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *DEdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aef5"></span>AEF5</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aef6"></span>AEF6</td>
 <td class="instruction">LD DE,$071E</td>
 <td class="comment-11" rowspan="1">DE = 0x071E;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aef9"></span>AEF9</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">C = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aefa"></span>AEFA</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_5</td>
 <td class="address-2"><span id="aefc"></span>AEFC</td>
 <td class="instruction">LD A,($AE75)</td>
-<td class="comment-11" rowspan="1">do &lt;% A = searchlight_related;</td>
+<td class="comment-11" rowspan="1">do &lt;% A = searchlight_clip_left;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aeff"></span>AEFF</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">if (A != 0) ...</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af00"></span>AF00</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="1">A = L; // interleaved</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af01"></span>AF01</td>
-<td class="instruction">JP Z,$AF0C</td>
+<td class="instruction">JP Z,<a href="AEB8.html#af0c">searchlight_plot_6</a></td>
 <td class="comment-11" rowspan="1">... goto $AF0C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af04"></span>AF04</td>
 <td class="instruction">AND $1F</td>
 <td class="comment-11" rowspan="3">if ((A &amp; 31) &gt;= 22) goto $AF1B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af06"></span>AF06</td>
 <td class="instruction">CP $16</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af08"></span>AF08</td>
-<td class="instruction">JR NC,$AF1B</td>
+<td class="instruction">JR NC,<a href="AEB8.html#af1b">searchlight_plot_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af0a"></span>AF0A</td>
-<td class="instruction">JR $AF18</td>
+<td class="instruction">JR <a href="AEB8.html#af18">searchlight_plot_8</a></td>
 <td class="comment-11" rowspan="1">goto $AF18;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_6</td>
 <td class="address-2"><span id="af0c"></span>AF0C</td>
 <td class="instruction">AND $1F</td>
 <td class="comment-11" rowspan="3">if ((A &amp; 31) &lt; E) goto $AF18;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af0e"></span>AF0E</td>
 <td class="instruction">CP E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af0f"></span>AF0F</td>
-<td class="instruction">JR C,$AF18</td>
+<td class="instruction">JR C,<a href="AEB8.html#af18">searchlight_plot_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af11"></span>AF11</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_7</td>
 <td class="address-2"><span id="af12"></span>AF12</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="2">do &lt;% DEdash++; %&gt; while (--Bdash);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af13"></span>AF13</td>
-<td class="instruction">DJNZ $AF12</td>
+<td class="instruction">DJNZ <a href="AEB8.html#af12">searchlight_plot_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af15"></span>AF15</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af16"></span>AF16</td>
-<td class="instruction">JR $AF32</td>
+<td class="instruction">JR <a href="AEB8.html#af32">searchlight_plot_13</a></td>
 <td class="comment-11" rowspan="1">goto nextrow;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_8</td>
 <td class="address-2"><span id="af18"></span>AF18</td>
 <td class="instruction">CP D</td>
 <td class="comment-11" rowspan="2">if (A &lt; D) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af19"></span>AF19</td>
-<td class="instruction">JR NC,$AF1F</td>
+<td class="instruction">JR NC,<a href="AEB8.html#af1f">searchlight_plot_10</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_9</td>
 <td class="address-2"><span id="af1b"></span>AF1B</td>
 <td class="instruction">RL C</td>
 <td class="comment-11" rowspan="1">RL C %&gt; // looks like bit extraction ...</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af1d"></span>AF1D</td>
-<td class="instruction">JR $AF2A</td>
+<td class="instruction">JR <a href="AEB8.html#af2a">searchlight_plot_12</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_10</td>
 <td class="address-2"><span id="af1f"></span>AF1F</td>
 <td class="instruction">RL C</td>
 <td class="comment-11" rowspan="1">RL C</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af21"></span>AF21</td>
-<td class="instruction">JP NC,$AF28</td>
+<td class="instruction">JP NC,<a href="AEB8.html#af28">searchlight_plot_11</a></td>
 <td class="comment-11" rowspan="1">if (carry) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af24"></span>AF24</td>
 <td class="instruction">LD (HL),$06</td>
 <td class="comment-11" rowspan="1">*HL = attribute_YELLOW_OVER_BLACK; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af26"></span>AF26</td>
-<td class="instruction">JR $AF2A</td>
+<td class="instruction">JR <a href="AEB8.html#af2a">searchlight_plot_12</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_11</td>
 <td class="address-2"><span id="af28"></span>AF28</td>
 <td class="instruction">LD (HL),$41</td>
 <td class="comment-11" rowspan="1">*HL = attribute_BRIGHT_BLUE_OVER_BLACK; %&gt; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_12</td>
 <td class="address-2"><span id="af2a"></span>AF2A</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af2b"></span>AF2B</td>
-<td class="instruction">DJNZ $AEFC</td>
+<td class="instruction">DJNZ <a href="AEB8.html#aefc">searchlight_plot_5</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af2d"></span>AF2D</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af2e"></span>AF2E</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DEdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af2f"></span>AF2F</td>
-<td class="instruction">DJNZ $AEF4</td>
+<td class="instruction">DJNZ <a href="AEB8.html#aef4">searchlight_plot_4</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af31"></span>AF31</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_plot_13</td>
 <td class="address-2"><span id="af32"></span>AF32</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">nextrow:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af33"></span>AF33</td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="2">HL += 32;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af36"></span>AF36</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af37"></span>AF37</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af38"></span>AF38</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af39"></span>AF39</td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="2">%&gt; while (--Cdash);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af3a"></span>AF3A</td>
-<td class="instruction">JP NZ,$AEBE</td>
+<td class="instruction">JP NZ,<a href="AEB8.html#aebe">searchlight_plot_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af3d"></span>AF3D</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -526,97 +526,97 @@ Searchlight circle shape.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">searchlight_shape</td>
 <td class="address-1"><span id="af3e"></span>AF3E</td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-11" rowspan="16">searchlight_shape</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af40"></span>AF40</td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af42"></span>AF42</td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af44"></span>AF44</td>
 <td class="instruction">DEFB $01,$80</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af46"></span>AF46</td>
 <td class="instruction">DEFB $07,$E0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af48"></span>AF48</td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af4a"></span>AF4A</td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af4c"></span>AF4C</td>
 <td class="instruction">DEFB $1F,$F8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af4e"></span>AF4E</td>
 <td class="instruction">DEFB $1F,$F8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af50"></span>AF50</td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af52"></span>AF52</td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af54"></span>AF54</td>
 <td class="instruction">DEFB $07,$E0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af56"></span>AF56</td>
 <td class="instruction">DEFB $01,$80</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af58"></span>AF58</td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af5a"></span>AF5A</td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af5c"></span>AF5C</td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-01" rowspan="1"></td>
@@ -630,9 +630,9 @@ Searchlight circle shape.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

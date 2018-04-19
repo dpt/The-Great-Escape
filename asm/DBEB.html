@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="B89C.html">B89C</a>.
+Used by the routine at <a href="B89C.html">locate_vischar_or_itemstruct</a>.
 </div>
 <div class="paragraph">
 Returns the furthest/highest/nearest item?
@@ -65,193 +65,193 @@ Iterates over all items. Uses multiply_by_8.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_greatest_itemstruct</td>
 <td class="address-2"><span id="dbeb"></span>DBEB</td>
 <td class="instruction">LD BC,$1007</td>
 <td class="comment-11" rowspan="1">B = item_LIMIT; // iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbee"></span>DBEE</td>
 <td class="instruction">LD HL,$76C9</td>
 <td class="comment-11" rowspan="1">Outer_HL = &amp;item_structs[0].room;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_greatest_itemstruct_0</td>
 <td class="address-2"><span id="dbf1"></span>DBF1</td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="4">do &lt;% if ((*Outer_HL &amp; (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) == (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbf3"></span>DBF3</td>
-<td class="instruction">JR Z,$DC38</td>
+<td class="instruction">JR Z,<a href="DBEB.html#dc38">get_greatest_itemstruct_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbf5"></span>DBF5</td>
 <td class="instruction">BIT 6,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbf7"></span>DBF7</td>
-<td class="instruction">JR Z,$DC38</td>
+<td class="instruction">JR Z,<a href="DBEB.html#dc38">get_greatest_itemstruct_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbf9"></span>DBF9</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">HL = Outer_HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbfa"></span>DBFA</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbfb"></span>DBFB</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="3">HLdash = *++HL * 8; // x position</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbfc"></span>DBFC</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbfd"></span>DBFD</td>
-<td class="instruction">CALL <a href="B1C7.html">$B1C7</a></td>
+<td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc00"></span>DC00</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc01"></span>DC01</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc02"></span>DC02</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc03"></span>DC03</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">A &amp;= A; // Clear carry flag.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc04"></span>DC04</td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-11" rowspan="1">HLdash -= BCdash; // itemstr-&gt;pos.x * 8 - x</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc06"></span>DC06</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc07"></span>DC07</td>
-<td class="instruction">JR Z,$DC36</td>
+<td class="instruction">JR Z,<a href="DBEB.html#dc36">get_greatest_itemstruct_1</a></td>
 <td class="comment-11" rowspan="2">if (HLdash &gt; 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc09"></span>DC09</td>
-<td class="instruction">JR C,$DC36</td>
+<td class="instruction">JR C,<a href="DBEB.html#dc36">get_greatest_itemstruct_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc0b"></span>DC0B</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // y position</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc0c"></span>DC0C</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">HLdash = *HL * 8;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc0d"></span>DC0D</td>
-<td class="instruction">CALL <a href="B1C7.html">$B1C7</a></td>
+<td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc10"></span>DC10</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc11"></span>DC11</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc12"></span>DC12</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">// not clearing carry?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc13"></span>DC13</td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1">HLdash -= BCdash; // itemstr-&gt;pos.y * 8 - y</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc15"></span>DC15</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc16"></span>DC16</td>
-<td class="instruction">JR Z,$DC36</td>
+<td class="instruction">JR Z,<a href="DBEB.html#dc36">get_greatest_itemstruct_1</a></td>
 <td class="comment-11" rowspan="2">if (HLdash &gt; 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc18"></span>DC18</td>
-<td class="instruction">JR C,$DC36</td>
+<td class="instruction">JR C,<a href="DBEB.html#dc36">get_greatest_itemstruct_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc1a"></span>DC1A</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="3">HLdash = HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc1b"></span>DC1B</td>
 <td class="instruction">EXX</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc1c"></span>DC1C</td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
@@ -267,163 +267,163 @@ Get x,y for the next iteration.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc1d"></span>DC1D</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="5">DEdash = *HLdash-- * 8; // y position</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc1e"></span>DC1E</td>
-<td class="instruction">CALL <a href="B1C7.html">$B1C7</a></td>
+<td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc21"></span>DC21</td>
 <td class="instruction">LD E,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc22"></span>DC22</td>
 <td class="instruction">LD D,B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc23"></span>DC23</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc24"></span>DC24</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">BCdash = *HLdash-- * 8; // x position</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc25"></span>DC25</td>
-<td class="instruction">CALL <a href="B1C7.html">$B1C7</a></td>
+<td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc28"></span>DC28</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">HLdash--; // point to item</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc29"></span>DC29</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc2a"></span>DC2A</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="2">IY = HLdash; // IY is not banked // sampled IY=$771C,7715 (pointing into item_structs)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc2b"></span>DC2B</td>
 <td class="instruction">POP IY</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc2d"></span>DC2D</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc2e"></span>DC2E</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">- // fetch iter count</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc2f"></span>DC2F</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc30"></span>DC30</td>
 <td class="instruction">LD A,$10</td>
 <td class="comment-11" rowspan="3">A = (16 - B) | (1&lt;&lt;6); // item found flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc32"></span>DC32</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc33"></span>DC33</td>
 <td class="instruction">OR $40</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc35"></span>DC35</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">%&gt; %&gt; // unpaired // returns the value in Adash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_greatest_itemstruct_1</td>
 <td class="address-2"><span id="dc36"></span>DC36</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc37"></span>DC37</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_greatest_itemstruct_2</td>
 <td class="address-2"><span id="dc38"></span>DC38</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="5">%&gt; Outer_HL += 7; // stride</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc39"></span>DC39</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc3a"></span>DC3A</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc3b"></span>DC3B</td>
-<td class="instruction">JR NC,$DC3E</td>
+<td class="instruction">JR NC,<a href="DBEB.html#dc3e">get_greatest_itemstruct_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc3d"></span>DC3D</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_greatest_itemstruct_3</td>
 <td class="address-2"><span id="dc3e"></span>DC3E</td>
-<td class="instruction">DJNZ $DBF1</td>
+<td class="instruction">DJNZ <a href="DBEB.html#dbf1">get_greatest_itemstruct_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc40"></span>DC40</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -437,9 +437,9 @@ Get x,y for the next iteration.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

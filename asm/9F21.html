@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,33 +45,33 @@ Used by the routine at <a href="9D7B.html">9D7B</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area</td>
 <td class="address-2"><span id="9f21"></span>9F21</td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-11" rowspan="1">HL = $800F; // position on X axis</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f24"></span>9F24</td>
 <td class="instruction">LD DE,$81B8</td>
 <td class="comment-11" rowspan="1">DE = &amp;hero_map_position.x;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f27"></span>9F27</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index == 0) &lt;% // outdoors</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f2a"></span>9F2A</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f2b"></span>9F2B</td>
-<td class="instruction">JP NZ,$9F49</td>
+<td class="instruction">JP NZ,<a href="9F21.html#9f49">in_permitted_area_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -85,63 +85,63 @@ Outdoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f2e"></span>9F2E</td>
-<td class="instruction">CALL <a href="E542.html">$E542</a></td>
+<td class="instruction">CALL <a href="E542.html">pos_to_tinypos</a></td>
 <td class="comment-11" rowspan="1">pos_to_tinypos(HL,DE);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f31"></span>9F31</td>
 <td class="instruction">LD HL,($8018)</td>
 <td class="comment-11" rowspan="8">if (($8018) &gt;= 0x06C8 || ($801A) &gt;= 0x0448) goto escaped; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f34"></span>9F34</td>
 <td class="instruction">LD DE,$06C8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f37"></span>9F37</td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f39"></span>9F39</td>
-<td class="instruction">JP NC,<a href="A51C.html">$A51C</a></td>
+<td class="instruction">JP NC,<a href="A51C.html">escaped</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f3c"></span>9F3C</td>
 <td class="instruction">LD HL,($801A)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f3f"></span>9F3F</td>
 <td class="instruction">LD DE,$0448</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f42"></span>9F42</td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f44"></span>9F44</td>
-<td class="instruction">JP NC,<a href="A51C.html">$A51C</a></td>
+<td class="instruction">JP NC,<a href="A51C.html">escaped</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f47"></span>9F47</td>
-<td class="instruction">JR $9F51</td>
+<td class="instruction">JR <a href="9F21.html#9f51">in_permitted_area_1</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
@@ -155,31 +155,31 @@ Indoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_0</td>
 <td class="address-2"><span id="9f49"></span>9F49</td>
 <td class="instruction">LDI</td>
 <td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f4b"></span>9F4B</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f4c"></span>9F4C</td>
 <td class="instruction">LDI</td>
 <td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f4e"></span>9F4E</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f4f"></span>9F4F</td>
 <td class="instruction">LDI</td>
 <td class="comment-11" rowspan="1">*DE++ = *HL++; %&gt;</td>
@@ -195,21 +195,21 @@ Red flag if picking a lock, or cutting wire.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_1</td>
 <td class="address-2"><span id="9f51"></span>9F51</td>
 <td class="instruction">LD A,($8001)</td>
 <td class="comment-11" rowspan="1">A = ($8001) &amp; (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f54"></span>9F54</td>
 <td class="instruction">AND $03</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f56"></span>9F56</td>
-<td class="instruction">JP NZ,$9FF8</td>
+<td class="instruction">JP NZ,<a href="9F21.html#9ff8">in_permitted_area_14</a></td>
 <td class="comment-11" rowspan="1">if (A) goto set_flag_red;</td>
 </tr>
 <tr>
@@ -223,447 +223,447 @@ At night, home room is the only safe place.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f59"></span>9F59</td>
 <td class="instruction">LD A,($A13D)</td>
 <td class="comment-11" rowspan="3">if (clock &gt;= 100) &lt;% // night time</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f5c"></span>9F5C</td>
 <td class="instruction">CP $64</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f5e"></span>9F5E</td>
-<td class="instruction">JR C,$9F6B</td>
+<td class="instruction">JR C,<a href="9F21.html#9f6b">in_permitted_area_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f60"></span>9F60</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="4">if (room_index == room_2_HUT2LEFT) goto set_flag_green; else goto set_flag_red; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f63"></span>9F63</td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f65"></span>9F65</td>
-<td class="instruction">JP Z,$9FDE</td>
+<td class="instruction">JP Z,<a href="9F21.html#9fde">in_permitted_area_12</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f68"></span>9F68</td>
-<td class="instruction">JP $9FF8</td>
+<td class="instruction">JP <a href="9F21.html#9ff8">in_permitted_area_14</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_2</td>
 <td class="address-2"><span id="9f6b"></span>9F6B</td>
 <td class="instruction">LD A,($A13A)</td>
 <td class="comment-11" rowspan="3">if (in_solitary) goto set_flag_green;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f6e"></span>9F6E</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f6f"></span>9F6F</td>
-<td class="instruction">JP NZ,$9FDE</td>
+<td class="instruction">JP NZ,<a href="9F21.html#9fde">in_permitted_area_12</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f72"></span>9F72</td>
 <td class="instruction">LD HL,$8002</td>
-<td class="comment-11" rowspan="1">HL = $8002; // target location</td>
+<td class="comment-11" rowspan="1">HL = $8002; // route</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f75"></span>9F75</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f76"></span>9F76</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f77"></span>9F77</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="1">C = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f78"></span>9F78</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="3">if (A &amp; vischar_BYTE2_BIT7) C++;</td>
+<td class="comment-11" rowspan="3">if (A &amp; route_REVERSED) C++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f7a"></span>9F7A</td>
-<td class="instruction">JR Z,$9F7D</td>
+<td class="instruction">JR Z,<a href="9F21.html#9f7d">in_permitted_area_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f7c"></span>9F7C</td>
 <td class="instruction">INC C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_3</td>
 <td class="address-2"><span id="9f7d"></span>9F7D</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == 0xFF) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f7f"></span>9F7F</td>
-<td class="instruction">JR NZ,$9F93</td>
+<td class="instruction">JR NZ,<a href="9F21.html#9f93">in_permitted_area_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f81"></span>9F81</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL &amp; 0xF8;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f82"></span>9F82</td>
 <td class="instruction">AND $F8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f84"></span>9F84</td>
 <td class="instruction">CP $08</td>
 <td class="comment-11" rowspan="4">if (A == 8) A = 1; else A = 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f86"></span>9F86</td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f88"></span>9F88</td>
-<td class="instruction">JR Z,$9F8C</td>
+<td class="instruction">JR Z,<a href="9F21.html#9f8c">in_permitted_area_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f8a"></span>9F8A</td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_4</td>
 <td class="address-2"><span id="9f8c"></span>9F8C</td>
-<td class="instruction">CALL <a href="A007.html">$A007</a></td>
+<td class="instruction">CALL <a href="A007.html">in_permitted_area_end_bit</a></td>
 <td class="comment-11" rowspan="1">in_permitted_area_end_bit();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f8f"></span>9F8F</td>
-<td class="instruction">JR Z,$9FDE</td>
+<td class="instruction">JR Z,<a href="9F21.html#9fde">in_permitted_area_12</a></td>
 <td class="comment-11" rowspan="2">if (Z) goto set_flag_green; else goto set_flag_red; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f91"></span>9F91</td>
-<td class="instruction">JR $9FF8</td>
+<td class="instruction">JR <a href="9F21.html#9ff8">in_permitted_area_14</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_5</td>
 <td class="address-2"><span id="9f93"></span>9F93</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1">else &lt;% A &amp;= 0x7F;</td>
+<td class="comment-11" rowspan="1">else &lt;% A &amp;= 0x7F;  // mask off reversed flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f95"></span>9F95</td>
 <td class="instruction">LD HL,$9EE4</td>
-<td class="comment-11" rowspan="1">HL = &amp;byte_to_pointer[0]; // table mapping bytes to offsets</td>
+<td class="comment-11" rowspan="1">HL = &amp;route_to_permitted[0]; // table mapping bytes to offsets</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f98"></span>9F98</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_6</td>
 <td class="address-2"><span id="9f9a"></span>9F9A</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="3">do &lt;% if (A == *HL++) goto found;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f9b"></span>9F9B</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f9c"></span>9F9C</td>
-<td class="instruction">JR Z,$9FA4</td>
+<td class="instruction">JR Z,<a href="9F21.html#9fa4">in_permitted_area_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f9e"></span>9F9E</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">HL += 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9f9f"></span>9F9F</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fa0"></span>9FA0</td>
-<td class="instruction">DJNZ $9F9A</td>
+<td class="instruction">DJNZ <a href="9F21.html#9f9a">in_permitted_area_6</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fa2"></span>9FA2</td>
-<td class="instruction">JR $9FDE</td>
+<td class="instruction">JR <a href="9F21.html#9fde">in_permitted_area_12</a></td>
 <td class="comment-11" rowspan="1">goto set_flag_green; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_7</td>
 <td class="address-2"><span id="9fa4"></span>9FA4</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">found: E = *HL++; // fetch offset</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fa5"></span>9FA5</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fa6"></span>9FA6</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="1">D = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fa7"></span>9FA7</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fa8"></span>9FA8</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">// HL = DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fa9"></span>9FA9</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-11" rowspan="1">B = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fab"></span>9FAB</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">HL += BC;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fac"></span>9FAC</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fad"></span>9FAD</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fae"></span>9FAE</td>
-<td class="instruction">CALL <a href="A007.html">$A007</a></td>
+<td class="instruction">CALL <a href="A007.html">in_permitted_area_end_bit</a></td>
 <td class="comment-11" rowspan="1">in_permitted_area_end_bit();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fb1"></span>9FB1</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fb2"></span>9FB2</td>
-<td class="instruction">JR Z,$9FDE</td>
+<td class="instruction">JR Z,<a href="9F21.html#9fde">in_permitted_area_12</a></td>
 <td class="comment-11" rowspan="1">JR Z,set_flag_green;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fb4"></span>9FB4</td>
 <td class="instruction">LD A,($8002)</td>
 <td class="comment-11" rowspan="1">A = $8002;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fb7"></span>9FB7</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="3">if (A &amp; vischar_BYTE2_BIT7) HL++;</td>
+<td class="comment-11" rowspan="3">if (A &amp; route_REVERSED) HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fb9"></span>9FB9</td>
-<td class="instruction">JR Z,$9FBC</td>
+<td class="instruction">JR Z,<a href="9F21.html#9fbc">in_permitted_area_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fbb"></span>9FBB</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_8</td>
 <td class="address-2"><span id="9fbc"></span>9FBC</td>
 <td class="instruction">LD BC,$0000</td>
 <td class="comment-11" rowspan="1">BC = 0; // counter?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_9</td>
 <td class="address-2"><span id="9fbf"></span>9FBF</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">for (;;) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fc0"></span>9FC0</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fc1"></span>9FC1</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">HL += BC;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fc2"></span>9FC2</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fc3"></span>9FC3</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == 255) goto pop_and_set_flag_red; // hit end of list</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fc5"></span>9FC5</td>
-<td class="instruction">JR Z,$9FDA</td>
+<td class="instruction">JR Z,<a href="9F21.html#9fda">in_permitted_area_11</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fc7"></span>9FC7</td>
-<td class="instruction">CALL <a href="A007.html">$A007</a></td>
+<td class="instruction">CALL <a href="A007.html">in_permitted_area_end_bit</a></td>
 <td class="comment-11" rowspan="1">in_permitted_area_end_bit();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fca"></span>9FCA</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fcb"></span>9FCB</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fcc"></span>9FCC</td>
-<td class="instruction">JR Z,$9FD1</td>
-<td class="comment-11" rowspan="1">if (Z) goto set_target_then_set_flag_green; // if (Z) break; equivalent?</td>
+<td class="instruction">JR Z,<a href="9F21.html#9fd1">in_permitted_area_10</a></td>
+<td class="comment-11" rowspan="1">if (Z) goto set_route_then_set_flag_green; // if (Z) break; equivalent?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fce"></span>9FCE</td>
 <td class="instruction">INC C</td>
 <td class="comment-11" rowspan="1">BC++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fcf"></span>9FCF</td>
-<td class="instruction">JR $9FBF</td>
+<td class="instruction">JR <a href="9F21.html#9fbf">in_permitted_area_9</a></td>
 <td class="comment-11" rowspan="1">%&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_10</td>
 <td class="address-2"><span id="9fd1"></span>9FD1</td>
 <td class="instruction">LD A,($8002)</td>
-<td class="comment-11" rowspan="2">set_target_then_set_flag_green: B = $8002;</td>
+<td class="comment-11" rowspan="2">set_route_then_set_flag_green: B = $8002;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fd4"></span>9FD4</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fd5"></span>9FD5</td>
-<td class="instruction">CALL <a href="A33F.html">$A33F</a></td>
-<td class="comment-11" rowspan="1">set_hero_target_location(); // uses B, C</td>
+<td class="instruction">CALL <a href="A33F.html">set_hero_route</a></td>
+<td class="comment-11" rowspan="1">set_hero_route(); // uses B, C</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fd8"></span>9FD8</td>
-<td class="instruction">JR $9FDE</td>
+<td class="instruction">JR <a href="9F21.html#9fde">in_permitted_area_12</a></td>
 <td class="comment-11" rowspan="1">goto set_flag_green;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_11</td>
 <td class="address-2"><span id="9fda"></span>9FDA</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">pop_and_set_flag_red:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fdb"></span>9FDB</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fdc"></span>9FDC</td>
-<td class="instruction">JR $9FF8</td>
+<td class="instruction">JR <a href="9F21.html#9ff8">in_permitted_area_14</a></td>
 <td class="comment-11" rowspan="1">goto set_flag_red;</td>
 </tr>
 <tr>
@@ -677,81 +677,81 @@ Green flag code path.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_12</td>
 <td class="address-2"><span id="9fde"></span>9FDE</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">set_flag_green: A = 0; // red_flag = 0</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fdf"></span>9FDF</td>
 <td class="instruction">LD C,$44</td>
 <td class="comment-11" rowspan="1">C = attribute_BRIGHT_GREEN_OVER_BLACK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_13</td>
 <td class="address-2"><span id="9fe1"></span>9FE1</td>
 <td class="instruction">LD ($A138),A</td>
 <td class="comment-11" rowspan="1">flag_select: red_flag = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fe4"></span>9FE4</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">A = C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fe5"></span>9FE5</td>
 <td class="instruction">LD HL,$5842</td>
 <td class="comment-11" rowspan="1">HL = $5842; // first morale flag attribute byte</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fe8"></span>9FE8</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A == *HL) return; // flag already correct colour</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fe9"></span>9FE9</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fea"></span>9FEA</td>
 <td class="instruction">CP $44</td>
 <td class="comment-11" rowspan="2">if (A == attribute_BRIGHT_GREEN_OVER_BLACK) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fec"></span>9FEC</td>
-<td class="instruction">JP NZ,<a href="A071.html">$A071</a></td>
+<td class="instruction">JP NZ,<a href="A071.html">set_morale_flag_screen_attributes</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fef"></span>9FEF</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">bell = bell_STOP; // silence bell</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ff1"></span>9FF1</td>
 <td class="instruction">LD ($A130),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ff4"></span>9FF4</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">A = C; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ff5"></span>9FF5</td>
-<td class="instruction">JP <a href="A071.html">$A071</a></td>
+<td class="instruction">JP <a href="A071.html">set_morale_flag_screen_attributes</a></td>
 <td class="comment-11" rowspan="1">goto set_morale_flag_screen_attributes; // exit via</td>
 </tr>
 <tr>
@@ -765,51 +765,51 @@ Red flag code path.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_14</td>
 <td class="address-2"><span id="9ff8"></span>9FF8</td>
 <td class="instruction">LD C,$42</td>
 <td class="comment-11" rowspan="1">set_flag_red: C = attribute_BRIGHT_RED_OVER_BLACK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ffa"></span>9FFA</td>
 <td class="instruction">LD A,($5842)</td>
 <td class="comment-11" rowspan="1">A = ($5842); // first morale flag attribute byte</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ffd"></span>9FFD</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="2">if (A == C) return; // flag already red</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ffe"></span>9FFE</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9fff"></span>9FFF</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">($800D) = 0; // "tunnel related" thing</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a000"></span>A000</td>
 <td class="instruction">LD ($800D),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a003"></span>A003</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">A = 255; // red_flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a005"></span>A005</td>
-<td class="instruction">JR $9FE1</td>
+<td class="instruction">JR <a href="9F21.html#9fe1">in_permitted_area_13</a></td>
 <td class="comment-11" rowspan="1">goto flag_select;</td>
 </tr>
 </table>
@@ -821,9 +821,9 @@ Red flag code path.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

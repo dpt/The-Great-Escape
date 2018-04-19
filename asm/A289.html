@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A1E7.html">A1E7</a>.
+Used by the routine at <a href="A1E7.html">event_wake_up</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,21 +45,21 @@ Used by the routine at <a href="A1E7.html">A1E7</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wake_up</td>
 <td class="address-2"><span id="a289"></span>A289</td>
 <td class="instruction">LD A,($A13F)</td>
 <td class="comment-11" rowspan="3">if (hero_in_bed) &lt;% // odd that this jumps into a point which sets hero_in_bed to zero when it's already zero</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a28c"></span>A28C</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a28d"></span>A28D</td>
-<td class="instruction">JP Z,$A299</td>
+<td class="instruction">JP Z,<a href="A289.html#a299">wake_up_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -73,57 +73,57 @@ Hero gets out of bed.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a290"></span>A290</td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-11" rowspan="2">$800F = 46; // hero's X position</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a293"></span>A293</td>
 <td class="instruction">LD (HL),$2E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a295"></span>A295</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="3">$8011 = 46; %&gt; // hero's Y position</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a296"></span>A296</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a297"></span>A297</td>
 <td class="instruction">LD (HL),$2E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wake_up_0</td>
 <td class="address-2"><span id="a299"></span>A299</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">hero_in_bed = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a29a"></span>A29A</td>
 <td class="instruction">LD ($A13F),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a29d"></span>A29D</td>
 <td class="instruction">LD BC,$2A00</td>
-<td class="comment-11" rowspan="2">set_hero_target_location(location_002A);</td>
+<td class="comment-11" rowspan="2">set_hero_route(location_002A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2a0"></span>A2A0</td>
-<td class="instruction">CALL <a href="A33F.html">$A33F</a></td>
+<td class="instruction">CALL <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -137,100 +137,100 @@ Position all six prisoners.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2a3"></span>A2A3</td>
 <td class="instruction">LD HL,$769F</td>
 <td class="comment-11" rowspan="1">HL = &amp;characterstruct_20.room;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2a6"></span>A2A6</td>
 <td class="instruction">LD DE,$0007</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2a9"></span>A2A9</td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2ab"></span>A2AB</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wake_up_1</td>
 <td class="address-2"><span id="a2ad"></span>A2AD</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">do &lt;% *HL = room_3_HUT2RIGHT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2ae"></span>A2AE</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += 7; // characterstruct stride</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2af"></span>A2AF</td>
-<td class="instruction">DJNZ $A2AD</td>
+<td class="instruction">DJNZ <a href="A289.html#a2ad">wake_up_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2b1"></span>A2B1</td>
 <td class="instruction">LD A,$05</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2b3"></span>A2B3</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wake_up_2</td>
 <td class="address-2"><span id="a2b5"></span>A2B5</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">do &lt;% *HL = room_5_HUT3RIGHT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2b6"></span>A2B6</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += 7; // characterstruct stride</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2b7"></span>A2B7</td>
-<td class="instruction">DJNZ $A2B5</td>
+<td class="instruction">DJNZ <a href="A289.html#a2b5">wake_up_2</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2b9"></span>A2B9</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment-11" rowspan="1">A = 5; // incremented by set_prisoners_and_guards_location_B</td>
+<td class="comment-11" rowspan="1">A = 5; // incremented by set_prisoners_and_guards_route_B</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2bb"></span>A2BB</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2bc"></span>A2BC</td>
 <td class="instruction">LD C,$00</td>
 <td class="comment-11" rowspan="1">C = 0; // BC = 0</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2be"></span>A2BE</td>
-<td class="instruction">CALL <a href="A373.html">$A373</a></td>
-<td class="comment-11" rowspan="1">set_prisoners_and_guards_location_B();</td>
+<td class="instruction">CALL <a href="A373.html">set_prisoners_and_guards_route_B</a></td>
+<td class="comment-11" rowspan="1">set_prisoners_and_guards_route_B();</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -243,13 +243,13 @@ Update all the bed objects to be empty.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2c1"></span>A2C1</td>
 <td class="instruction">LD A,$09</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2c3"></span>A2C3</td>
 <td class="instruction">LD HL,$6B79</td>
 <td class="comment-11" rowspan="1">HL = &amp;beds[0];</td>
@@ -265,45 +265,45 @@ Bug: Seven iterations are specified here BUT there are only six beds in the 'bed
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2c6"></span>A2C6</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wake_up_3</td>
 <td class="address-2"><span id="a2c8"></span>A2C8</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% E = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2c9"></span>A2C9</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2ca"></span>A2CA</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="2">D = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2cb"></span>A2CB</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2cc"></span>A2CC</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">*DE = interiorobject_EMPTY_BED;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2cd"></span>A2CD</td>
-<td class="instruction">DJNZ $A2C8</td>
+<td class="instruction">DJNZ <a href="A289.html#a2c8">wake_up_3</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
@@ -317,61 +317,61 @@ Update the hero's bed object to be empty and redraw if required.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2cf"></span>A2CF</td>
 <td class="instruction">LD HL,$6C61</td>
 <td class="comment-11" rowspan="2">room_2_hut2_left.bed = interiorobject_EMPTY_BED;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2d2"></span>A2D2</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2d3"></span>A2D3</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="5">if (room_index == room_0_OUTDOORS || room_index &gt;= room_6) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2d6"></span>A2D6</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2d7"></span>A2D7</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2d8"></span>A2D8</td>
 <td class="instruction">CP $06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2da"></span>A2DA</td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2db"></span>A2DB</td>
-<td class="instruction">CALL <a href="6A35.html">$6A35</a></td>
+<td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
 <td class="comment-11" rowspan="1">setup_room();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2de"></span>A2DE</td>
-<td class="instruction">CALL <a href="6B42.html">$6B42</a></td>
+<td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
 <td class="comment-11" rowspan="1">plot_interior_tiles();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a2e1"></span>A2E1</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -385,9 +385,9 @@ Update the hero's bed object to be empty and redraw if required.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

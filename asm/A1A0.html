@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 <div class="paragraph">
 Dispatches time-based game events like parcels, meals, exercise and roll calls.
@@ -58,43 +58,43 @@ Increment the clock, wrapping at 140.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">dispatch_timed_event</td>
 <td class="address-2"><span id="a1a0"></span>A1A0</td>
 <td class="instruction">LD HL,$A13D</td>
 <td class="comment-11" rowspan="1">HL = &amp;clock;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a3"></span>A1A3</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL + 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a4"></span>A1A4</td>
 <td class="instruction">INC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a5"></span>A1A5</td>
 <td class="instruction">CP $8C</td>
 <td class="comment-11" rowspan="3">if (A == 140) A = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a7"></span>A1A7</td>
-<td class="instruction">JR NZ,$A1AA</td>
+<td class="instruction">JR NZ,<a href="A1A0.html#a1aa">dispatch_timed_event_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a9"></span>A1A9</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">dispatch_timed_event_0</td>
 <td class="address-2"><span id="a1aa"></span>A1AA</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">*HL = A;</td>
@@ -110,97 +110,97 @@ Dispatch the event for that time.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1ab"></span>A1AB</td>
 <td class="instruction">LD HL,$A173</td>
 <td class="comment-11" rowspan="1">HL = &amp;timed_events[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1ae"></span>A1AE</td>
 <td class="instruction">LD B,$0F</td>
 <td class="comment-11" rowspan="1">B = 15; // 15 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">dispatch_timed_event_1</td>
 <td class="address-2"><span id="a1b0"></span>A1B0</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="3">do &lt;% if (A == *HL++) goto found;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b1"></span>A1B1</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b2"></span>A1B2</td>
-<td class="instruction">JR Z,$A1B9</td>
+<td class="instruction">JR Z,<a href="A1A0.html#a1b9">dispatch_timed_event_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b4"></span>A1B4</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">HL += 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b5"></span>A1B5</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b6"></span>A1B6</td>
-<td class="instruction">DJNZ $A1B0</td>
+<td class="instruction">DJNZ <a href="A1A0.html#a1b0">dispatch_timed_event_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b8"></span>A1B8</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">dispatch_timed_event_2</td>
 <td class="address-2"><span id="a1b9"></span>A1B9</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">found: L = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1ba"></span>A1BA</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1bb"></span>A1BB</td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-11" rowspan="2">H = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1bc"></span>A1BC</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1bd"></span>A1BD</td>
 <td class="instruction">LD A,$28</td>
 <td class="comment-11" rowspan="1">A = bell_RING_40_TIMES;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1bf"></span>A1BF</td>
 <td class="instruction">LD BC,$A130</td>
 <td class="comment-11" rowspan="1">BC = &amp;bell;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c2"></span>A1C2</td>
 <td class="instruction">JP (HL)</td>
 <td class="comment-11" rowspan="1">goto *HL; // fantasy syntax</td>
@@ -214,9 +214,9 @@ Dispatch the event for that time.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

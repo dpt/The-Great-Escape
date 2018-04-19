@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C7C6.html">C7C6</a>.
+Used by the routine at <a href="C7C6.html">character_event</a>.
 </div>
 </div>
 <table class="input-1">
@@ -52,49 +52,49 @@ Used by the routine at <a href="C7C6.html">C7C6</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">character_sits</td>
 <td class="address-2"><span id="a420"></span>A420</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a421"></span>A421</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a422"></span>A422</td>
 <td class="instruction">SUB $12</td>
 <td class="comment-11" rowspan="1">A -= 18; // first three characters</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a424"></span>A424</td>
 <td class="instruction">LD HL,$6F4F</td>
 <td class="comment-11" rowspan="1">HL = &amp;roomdef_25_breakfast.bench_D;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a427"></span>A427</td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="2">if (A &gt;= 3) &lt;% // second three characters</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a429"></span>A429</td>
-<td class="instruction">JR C,$A430</td>
+<td class="instruction">JR C,<a href="A420.html#a430">character_sits_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a42b"></span>A42B</td>
 <td class="instruction">LD HL,$6F17</td>
 <td class="comment-11" rowspan="1">HL = &amp;roomdef_23_breakfast.bench_A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a42e"></span>A42E</td>
 <td class="instruction">SUB $03</td>
 <td class="comment-11" rowspan="1">A -= 3; %&gt;</td>
@@ -110,81 +110,81 @@ Poke object.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">character_sits_0</td>
 <td class="address-2"><span id="a430"></span>A430</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="6">HL += A * 3;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a431"></span>A431</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a432"></span>A432</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a433"></span>A433</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a435"></span>A435</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a436"></span>A436</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a437"></span>A437</td>
 <td class="instruction">LD (HL),$05</td>
 <td class="comment-11" rowspan="1">*HL = interiorobject_PRISONER_SAT_MID_TABLE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a439"></span>A439</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a43a"></span>A43A</td>
 <td class="instruction">LD C,$19</td>
 <td class="comment-11" rowspan="1">C = room_25_BREAKFAST;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a43c"></span>A43C</td>
 <td class="instruction">CP $15</td>
 <td class="comment-11" rowspan="3">if (A &gt;= character_21_PRISONER_2) C = room_23_BREAKFAST;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a43e"></span>A43E</td>
-<td class="instruction">JR C,<a href="A462.html">$A462</a></td>
+<td class="instruction">JR C,<a href="A462.html">character_sit_sleep_common</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a440"></span>A440</td>
 <td class="instruction">LD C,$17</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a442"></span>A442</td>
-<td class="instruction">JR <a href="A462.html">$A462</a></td>
+<td class="instruction">JR <a href="A462.html">character_sit_sleep_common</a></td>
 <td class="comment-11" rowspan="1">goto character_sit_sleep_common;</td>
 </tr>
 </table>
@@ -196,9 +196,9 @@ Poke object.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

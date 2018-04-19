@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -43,75 +43,75 @@
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_uniform</td>
 <td class="address-2"><span id="b3e1"></span>B3E1</td>
 <td class="instruction">LD HL,$8015</td>
 <td class="comment-11" rowspan="1">HL = $8015; // current character sprite set</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3e4"></span>B3E4</td>
 <td class="instruction">LD DE,$CEA6</td>
 <td class="comment-11" rowspan="1">DE = &amp;sprite_guard;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3e7"></span>B3E7</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="3">if (*HL == E) return; // cheap equality test /* Already in uniform. */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3e8"></span>B3E8</td>
 <td class="instruction">CP E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3e9"></span>B3E9</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ea"></span>B3EA</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index &gt;= room_29_SECOND_TUNNEL_START) return; // can't don uniform when in a tunnel</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ed"></span>B3ED</td>
 <td class="instruction">CP $1D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ef"></span>B3EF</td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f0"></span>B3F0</td>
 <td class="instruction">LD (HL),E</td>
 <td class="comment-11" rowspan="1">*HL++ = E;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f1"></span>B3F1</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="2">*HL = D;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f2"></span>B3F2</td>
 <td class="instruction">LD (HL),D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f3"></span>B3F3</td>
-<td class="instruction">JP <a href="A0E9.html">$A0E9</a></td>
+<td class="instruction">JP <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
 <td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50(); return;</td>
 </tr>
 </table>
@@ -123,9 +123,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

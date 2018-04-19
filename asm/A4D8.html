@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,10 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C7C6.html">C7C6</a>.
-</div>
-<div class="paragraph">
-Sets a target location 0x002B. Seems to get hit around breakfasting time. If I nobble this it stops him sitting for breakfast.
+Used by the routine at <a href="C7C6.html">character_event</a>.
 </div>
 </div>
 <table class="input-0">
@@ -48,33 +45,33 @@ Sets a target location 0x002B. Seems to get hit around breakfasting time. If I n
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">charevnt_breakfast_vischar</td>
 <td class="address-2"><span id="a4d8"></span>A4D8</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment-11" rowspan="1">A = IY[0]; // must be a character index</td>
+<td class="comment-11" rowspan="1">A = IY[0]; // character index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4db"></span>A4DB</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A != 0) goto byte_A13E_anotherone_common;</td>
+<td class="comment-11" rowspan="2">if (A != character_0_COMMANDANT) goto charevnt_breakfast_common;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4dc"></span>A4DC</td>
-<td class="instruction">JR NZ,<a href="A4E4.html">$A4E4</a></td>
+<td class="instruction">JR NZ,<a href="A4E4.html">charevnt_breakfast_common</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4de"></span>A4DE</td>
 <td class="instruction">LD BC,$2B00</td>
-<td class="comment-11" rowspan="2">set_hero_target_location(location_002B); // exit via</td>
+<td class="comment-11" rowspan="2">set_hero_route(location_002B); // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a4e1"></span>A4E1</td>
-<td class="instruction">JP <a href="A33F.html">$A33F</a></td>
+<td class="instruction">JP <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
@@ -86,9 +83,9 @@ Sets a target location 0x002B. Seems to get hit around breakfasting time. If I n
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

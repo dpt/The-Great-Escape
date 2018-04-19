@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="68F4.html">68F4</a>.
+Used by the routine at <a href="68F4.html">enter_room</a>.
 </div>
 <div class="paragraph">
 Called when changing rooms.
@@ -48,19 +48,19 @@ Called when changing rooms.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_hero_sprite_for_room</td>
 <td class="address-2"><span id="6920"></span>6920</td>
 <td class="instruction">LD HL,$800D</td>
 <td class="comment-11" rowspan="1">HL = $800D;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6923"></span>6923</td>
 <td class="instruction">LD (HL),$80</td>
 <td class="comment-11" rowspan="2">*HL++ = input_KICK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6925"></span>6925</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
@@ -76,55 +76,55 @@ vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywher
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6926"></span>6926</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index &gt;= room_29_SECOND_TUNNEL_START) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6929"></span>6929</td>
 <td class="instruction">CP $1D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="692b"></span>692B</td>
-<td class="instruction">JR C,$6936</td>
+<td class="instruction">JR C,<a href="6920.html#6936">set_hero_sprite_for_room_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="692d"></span>692D</td>
 <td class="instruction">SET 2,(HL)</td>
 <td class="comment-11" rowspan="1">*HL |= vischar_DIRECTION_CRAWL; // $800E, set crawl flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="692f"></span>692F</td>
 <td class="instruction">LD HL,$CE2E</td>
 <td class="comment-11" rowspan="2">$8015 = &amp;sprite_prisoner; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6932"></span>6932</td>
 <td class="instruction">LD ($8015),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6935"></span>6935</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_hero_sprite_for_room_0</td>
 <td class="address-2"><span id="6936"></span>6936</td>
 <td class="instruction">RES 2,(HL)</td>
 <td class="comment-11" rowspan="1">*HL &amp;= ~vischar_DIRECTION_CRAWL; %&gt; // clear crawl flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6938"></span>6938</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -138,9 +138,9 @@ vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywher
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

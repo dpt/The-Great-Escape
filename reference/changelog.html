@@ -10,11 +10,12 @@
 <body class="Changelog">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Changelog</td>
 </tr>
 </table>
 <ul class="contents">
+<li><a href="#20180419">20180419</a></li>
 <li><a href="#20170325">20170325</a></li>
 <li><a href="#20160326">20160326</a></li>
 <li><a href="#20151102">20151102</a></li>
@@ -24,43 +25,182 @@
 <li><a href="#20141125">20141125</a></li>
 <li><a href="#20141019">20141019</a></li>
 </ul>
+<div><span id="20180419"></span></div>
+<div class="list-entry list-entry-1">
+<div class="list-entry-title">20180419</div>
+<div class="list-entry-desc">The disassembly is now built with SkoolKit 6.4.</div>
+<ul class="list-entry">
+<li>Major changes
+<ul class="list-entry1">
+<li>Updated for SkoolKit 6.4 and Python 3.
+<ul class="list-entry2">
+<li>Changes contributed by Richard Dymond.</li>
+</ul>
+</li>
+<li>Added a game section:
+<ul class="list-entry2">
+<li>The <a href="../Intro.html#theGame">instructions from the original cassette inlay</a> are now included as the first section of the disassembly. The text was imported from <a href="http://www.worldofspectrum.org/pub/sinclair/games-info/g/GreatEscapeThe.txt">WoS</a> and the original diagrams were redrawn. I've even identified exactly the right font that the original manual used and used that.</li>
+<li>A page about <a href="../Completion.html">how to complete the game</a> has been added. Presently this includes the 1994 Vaxalon solution and a list of escape conditions that I've added: it lists the valid items which you need to successfully escape the camp.</li>
+</ul>
+</li>
+<li>Enabled assembly labels in the disassembly (I should have done this from the start).</li>
+</ul>
+</li>
+<li>Additions to peripheral disassembly
+<ul class="list-entry1">
+<li>Added a <a href="facts.html#neverUsesIX">fact about the IX register</a>.</li>
+<li>Added a <a href="../graphics/glitches.html#strayDogPixels">glitch about stray pixels on the dog animation's third frame</a>.</li>
+<li>Added a <a href="facts.html#fullerJoystick">fact about Fuller joystick support</a>.</li>
+</ul>
+</li>
+<li>Improvements to peripheral disassembly
+<ul class="list-entry1">
+<li>The <a href="../Items.html">items</a> now all have descriptions (todo: needs more links).</li>
+<li>The <a href="../Masks.html">masks page</a> is now divided into two parts for exterior and interior.</li>
+<li>The logo now has alt text set.</li>
+<li>The copyright statement used at the footer of every disassembly page has been expanded.</li>
+<li>The barbed wire from the game is now drawn across the top of the page footer.</li>
+<li>We no longer specify the base font size to let the user's preference take precedence.</li>
+<li>We now use <a href="https://www.myfonts.com/fonts/itc/berkeley-oldstyle/">ITC Berkeley Oldstyle Std</a> for the disassembly if browser has it. This is the font used for the original game's casettte inlay body text. Cambria is used as a fallback as before.</li>
+</ul>
+</li>
+<li>Corrections to peripheral disassembly
+<ul class="list-entry1">
+<li>The <a href="../Map.html">map</a> description has been corrected now that I understand that there's a single exterior tile set which uses a sliding window rather than three separate tile sets.</li>
+<li>The <a href="facts.html#">facts page</a> has had various edits.</li>
+</ul>
+</li>
+<li>Additions to main disassembly commentary
+<ul class="list-entry1">
+<li><a href="../asm/783A.html">locations</a>: Added @keeps.</li>
+<li><a href="../asm/7D30.html">plot_single_glyph</a>: Added label for plot_single_glyph.</li>
+<li><a href="../asm/A035.html#a068">wave_morale_flag_3</a>: Added note about bitmap_flag_up/down overlapping.</li>
+<li><a href="../asm/F2AD.html">define_key_prompts</a>: Added label for define_key_prompts</li>
+<li>~$F0F8: Added memory map for $F0F8 onwards.</li>
+</ul>
+</li>
+<li>Improvements to main disassembly commentary
+<ul class="list-entry1">
+<li>The pursuit modes: vischar_FLAGS_BRIBE_PENDING, vischar_FLAGS_BIT1 and vischar_FLAGS_SAW_BRIBE weren't individual flags but instead an enumeration. They are now vischar_FLAGS_PURSUE, vischar_FLAGS_HASSLE, vischar_FLAGS_DOG_FOOD and vischar_FLAGS_SAW_BRIBE.</li>
+<li>Numerous renamings:
+<ul class="list-entry2">
+<li><a href="../asm/7D15.html">queue_message</a>: queue_message_for_display -> queue_message</li>
+<li><a href="../asm/81B5.html">iso_pos_x</a>: screenpos_x -> iso_pos_x</li>
+<li><a href="../asm/81B5.html#81b6">iso_pos_y</a>: screenpos_y -> iso_pos_y</li>
+<li><a href="../asm/9EE4.html">route_to_permitted</a>: byte_to_pointer -> route_to_permitted</li>
+<li><a href="../asm/A2E2.html">end_of_breakfast</a>: breakfast_time -> end_of_breakfast</li>
+<li><a href="../asm/A33F.html">set_hero_route</a>: set_hero_target_location -> set_hero_route</li>
+<li><a href="../asm/A35F.html">set_prisoners_and_guards_route</a>: set_prisoners_and_guards_location -> set_prisoners_and_guards_route</li>
+<li><a href="../asm/A373.html">set_prisoners_and_guards_route_B</a>: set_prisoners_and_guards_location_B -> set_prisoners_and_guards_route_B</li>
+<li><a href="../asm/A3BB.html">set_route</a>: set_target -> set_route</li>
+<li><a href="../asm/A3ED.html">store_route</a>: store_location -> store_route</li>
+<li><a href="../asm/A3F3.html">character_bed_state</a>: byte_A13E_is_nonzero -> character_bed_state</li>
+<li><a href="../asm/A3F8.html">character_bed_vischar</a>: byte_A13E_is_zero -> character_bed_vischar</li>
+<li><a href="../asm/A404.html">character_bed_common</a>: byte_A13E_common -> character_bed_common</li>
+<li><a href="../asm/A4A9.html">set_route_go_to_yard</a>: set_location_0x000E -> set_route_go_to_yard</li>
+<li><a href="../asm/A4B7.html">set_route_go_to_yard_reversed</a>: set_location_0x048E -> set_route_go_to_yard_reversed</li>
+<li><a href="../asm/A4C5.html">set_route_go_to_breakfast</a>: set_location_0x0010 -> set_route_go_to_breakfast</li>
+<li><a href="../asm/A4D3.html">charevnt_breakfast_state</a>: byte_A13E_is_nonzero_anotherone -> charevnt_breakfast_state</li>
+<li><a href="../asm/A4D8.html">charevnt_breakfast_vischar</a>: byte_A13E_is_zero_anotherone -> charevnt_breakfast_vischar</li>
+<li><a href="../asm/A4E4.html">charevnt_breakfast_common</a>: byte_A13E_anotherone_common -> charevnt_breakfast_common</li>
+<li><a href="../asm/AE75.html">searchlight_clip_left</a>: searchlight_related -> searchlight_clip_left</li>
+<li><a href="../asm/C651.html">get_target</a>: get_next_target -> get_target</li>
+<li><a href="../asm/C7C6.html#c7d4">C7D4</a> (character_event): Added a note about the sixth prisoner bug.</li>
+<li><a href="../asm/C7C6.html#c83f">charevnt_solitary_ends</a>: charevnt_handler_4_solitary_ends -> charevnt_solitary_ends</li>
+<li><a href="../asm/C7C6.html#c845">charevnt_commandant_to_yard</a>: charevnt_handler_6 -> charevnt_commandant_to_yard</li>
+<li><a href="../asm/C7C6.html#c84c">charevnt_hero_release</a>: charevnt_handler_10_hero_released_from_solitary -> charevnt_hero_release</li>
+<li><a href="../asm/C7C6.html#c85c">charevnt_wander_left</a>: charevnt_handler_1 -> charevnt_wander_left</li>
+<li><a href="../asm/C7C6.html#c860">charevnt_wander_yard</a>: charevnt_handler_2 -> charevnt_wander_yard</li>
+<li><a href="../asm/C7C6.html#c864">charevnt_wander_top</a>: charevnt_handler_0 -> charevnt_wander_top</li>
+<li><a href="../asm/C7C6.html#c86c">charevnt_bed</a>: charevnt_handler_3_check_var_A13E -> charevnt_bed</li>
+<li><a href="../asm/C7C6.html#c877">charevnt_breakfast</a>: charevnt_handler_5_check_var_A13E_anotherone -> charevnt_breakfast</li>
+<li><a href="../asm/C7C6.html#c882">charevnt_exit_hut2</a>: charevnt_handler_7 -> charevnt_exit_hut2</li>
+<li><a href="../asm/C7C6.html#c889">charevnt_hero_sits</a>: charevnt_handler_9_hero_sits -> charevnt_hero_sits</li>
+<li><a href="../asm/C7C6.html#c88d">charevnt_hero_sleeps</a>: charevnt_handler_8_hero_sleeps -> charevnt_hero_sleeps</li>
+<li><a href="../asm/C892.html">automatics</a>: follow_suspicious_character -> automatics</li>
+<li><a href="../asm/CA11.html">vischar_move_x</a>: vischar_at_pos_x -> vischar_move_x</li>
+<li><a href="../asm/CA49.html">vischar_move_y</a>: vischar_at_pos_y -> vischar_move_y</li>
+<li><a href="../asm/CA81.html">target_reached</a>: bribes_solitary_food -> target_reached</li>
+<li><a href="../asm/CB23.html">get_target_assign_pos</a>: get_next_target_and_handle_it -> get_target_assign_pos</li>
+<li><a href="../asm/CB2D.html">route_ended</a>: ran_out_of_list -> route_ended</li>
+<li><a href="../asm/CB79.html">get_route</a>: element_A_of_table_7738 -> get_route</li>
+<li>CHECK:</li>
+<li><a href="../asm/A38C.html">set_character_route</a>: set_character_location -> set_character_route   ** CAN'T BE BOTH</li>
+<li>set_character_target -> set_character_route   ** CAN'T BE BOTH</li>
+</ul>
+</li>
+<li>"Further notes" were reduced.</li>
+<li><a href="../asm/783A.html">locations</a> (locations): Improved description.</li>
+<li><a href="../asm/7AC9.html#7b16">item_actions_jump_table</a>: Commented return ops.</li>
+<li><a href="../asm/A4D8.html">charevnt_breakfast_vischar</a>: Removed hacking note now I've confirmed it's a test for the commandant.</li>
+<li><a href="../asm/AF5E.html">zoombox_tiles</a>: Added UDGs for barbed wire zoombox tiles.</li>
+<li><a href="../asm/C892.html#c896">C896</a>: Uses bell_RING_PERPETUAL.</li>
+<li>All remaining single dash comments were removed.</li>
+</ul>
+</li>
+<li>Corrections to main disassembly commentary
+<ul class="list-entry1">
+<li>Fixed spelling of "pursue" everywhere.</li>
+<li><a href="../asm/7738.html#7833">route_7833</a>: Fixed name: route_7738 -> route_7833.</li>
+<li><a href="../asm/A228.html#a259">red_cross_parcel_reset_data</a>: Should have been room_20_REDCROSS, not an item.</li>
+<li><a href="../asm/AA05.html#aa0c">AA0C</a>: Fixed various calculations in the shunt_map routines' commentary.</li>
+<li><a href="../asm/C41C.html">spawn_characters</a>: HL is being read as part of screen x calc, not written through.</li>
+<li><a href="../asm/C41C.html#c41f">C41F</a> (spawn_characters): A 'SUB' was missed resulting in an incorrect comment.</li>
+<li><a href="../asm/C918.html#c9aa">C9AA</a> (character_behaviour): Fixed comments which transposed indoors and outdoors.</li>
+</ul>
+</li>
+<li>Improvements to disassembly symbols only
+<ul class="list-entry1">
+<li>characterstruct_BYTE0_MASK -> characterstruct_CHARACTER_MASK</li>
+<li>doorpos_FLAGS_MASK_DIRECTION -> door_FLAGS_MASK_DIRECTION</li>
+<li>vischar_BYTE2_BIT7 -> route_REVERSED</li>
+<li>vischar_FLAGS_DOOR_THING -> vischar_FLAGS_TARGET_IS_DOOR</li>
+</ul>
+</li>
+<li>Corrections to disassembly symbols only
+<ul class="list-entry1">
+<li>~$CD6A: ITEM_ROOM macro takes a room_no, not an item_no.</li>
+</ul>
+</li>
+</ul>
+</div>
 <div><span id="20170325"></span></div>
-<div class="changelog changelog-1">
-<div class="changelog-title">20170325</div>
-<div class="changelog-desc">The disassembly is now built with SkoolKit 5.4.</div>
-<ul class="changelog">
+<div class="list-entry list-entry-2">
+<div class="list-entry-title">20170325</div>
+<div class="list-entry-desc">The disassembly is now built with SkoolKit 5.4.</div>
+<ul class="list-entry">
 <li>Added:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Defined door_NONE ($FF) and used it.</li>
 <li>Split door_LOCKED into door_LOCKED and door_REVERSE. door_REVERSE is the flag passed around when a door is to be entered from the opposite side.</li>
 </ul>
 </li>
 <li>Fixed:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Merged the exterior tilesets together. It turns out that supertiles can contain tiles with indices which go beyond their respective tile set and into the next. The exterior tilesets therefore ought to be a single tileset.</li>
 <li><a href="../asm/68A2.html#68f2">68F2</a> Fixed some FALL THROUGHs. These had migrated down to the end of the routine to the point where they were wrong. The original intent was to re-express the disassembly as an if-else, but that means that the commentary shows an inverted sense of of the assembly. Rewrote the commentary to follow the code.</li>
-<li><a href="../asm/B4B8.html#b4cd">B4CD</a> open_door should not have fallthrough at end.</li>
+<li><a href="../asm/B4B8.html#b4cd">action_key_0</a> open_door should not have fallthrough at end.</li>
 <li><a href="../asm/AAB2.html#ab07">AB07</a> move_map had an inverted test.</li>
 <li><a href="../asm/B2FC.html#b31c">B31C</a> reset_outdoors had an incorrect room_index.</li>
 <li><a href="../asm/A819.html#a81d">A81D</a> plot_topmost_tiles had an incorrect map_buf offset.</li>
 <li><a href="../asm/AFDF.html#b096">B096</a> incorrect test fixed.</li>
-<li><a href="../asm/BB98.html">BB98</a> restore_tiles: Replaced blank lines with semis to avoid broken build.</li>
+<li><a href="../asm/BB98.html">restore_tiles</a> restore_tiles: Replaced blank lines with semis to avoid broken build.</li>
 <li>TheGreatEscapeGraphics.ref: Fiddle address ranges to avoid glitchy tileset images.</li>
-<li><a href="../asm/AD29.html">AD29</a> searchlight_movements: Fixed misnumbered address lines. (Showed up as a dodgy game image).</li>
+<li><a href="../asm/AD29.html">searchlight_movements</a> searchlight_movements: Fixed misnumbered address lines. (Showed up as a dodgy game image).</li>
 <li>The ran_out_of_list "arrive here" comments were incomplete.</li>
-<li><a href="../asm/BADC.html">BADC</a> mask_against_tile: Increment is not a supertile stride, but the mask buffer stride.</li>
-<li>Fixed various incorrect comments claiming that <a href="../asm/81B8.html">81B8</a> is hero_map_position.y.</li>
+<li><a href="../asm/BADC.html">mask_against_tile</a> mask_against_tile: Increment is not a supertile stride, but the mask buffer stride.</li>
+<li>Fixed various incorrect comments claiming that <a href="../asm/81B8.html">hero_map_position_x</a> is hero_map_position.y.</li>
 <li>Fixed some incorrect sprite references.</li>
-<li><a href="../asm/BCAA.html">BCAA</a>: Fixed register usage for select_tile_set.</li>
+<li><a href="../asm/BCAA.html">select_tile_set</a>: Fixed register usage for select_tile_set.</li>
 <li><a href="../asm/BB98.html#bb9f">BB9F</a> was checking for vischar_FLAGS_EMPTY_SLOT, not room_NONE.</li>
 <li>$7CFE is message_queue + 2.</li>
 <li>snipping_wire_new_inputs and collision_new_inputs values are summed not ORed.</li>
-<li><a href="../asm/CB2D.html#cb42">CB42</a> JR C means less than, not equality.</li>
-<li><a href="../asm/C651.html#c688">C688</a> isn't a call to transition() it's a call to get_door_position().</li>
+<li><a href="../asm/CB2D.html#cb42">route_ended_0</a> JR C means less than, not equality.</li>
+<li><a href="../asm/C651.html#c688">get_target_2</a> isn't a call to transition() it's a call to get_door_position().</li>
 </ul>
 </li>
 <li>Removed:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>vischar_BYTE2_MASK</li>
 <li>gates_and_doors_MASK</li>
 <li>characterstruct_BYTE6_MASK_HI. Replaced with ~characterstruct_BYTE6_MASK_LO.</li>
@@ -68,81 +208,81 @@
 </ul>
 </li>
 <li>Named / renamed:
-<ul class="changelog1">
-<li><a href="../asm/F05D.html">F05D</a> gates_and_doors -> locked_doors</li>
+<ul class="list-entry1">
+<li><a href="../asm/F05D.html">locked_doors</a> gates_and_doors -> locked_doors</li>
 <li>vischar_BYTE14_CRAWL -> vischar_DIRECTION_CRAWL</li>
 <li>Added vischar_DIRECTION_MASK to replace literal value 3 masks.</li>
 <li>vischar.b0C -> animindex</li>
-<li><a href="../asm/E29F.html">E29F</a> masked_sprite_plotter_16_wide_searchlight -> masked_sprite_plotter_16_wide_item - It's used for items only and is nothing to do with the searchlight. No idea why I thought it was.</li>
-<li><a href="../asm/E2A2.html">E2A2</a> masked_sprite_plotter_16_wide -> masked_sprite_plotter_16_wide_vischar</li>
-<li><a href="../asm/E102.html">E102</a> masked_sprite_plotter_24_wide -> masked_sprite_plotter_24_wide_vischar</li>
-<li><a href="../asm/78D6.html">78D6</a> door_positions -> doors</li>
-<li><a href="../asm/6A12.html">6A12</a> get_door_position -> get_door</li>
-<li><a href="../asm/CDF2.html">CDF2</a>: anim_A -> anim_walk_tl etc.</li>
-<li><a href="../asm/C47E.html">C47E</a> purge_visible_characters -> purge_invisible_characters</li>
-<li><a href="../asm/B866.html">B866</a> locate_vischar_or_itemstruct_then_plot -> plot_sprites</li>
-<li><a href="../asm/9E98.html">9E98</a> picking_a_lock -> picking_lock</li>
-<li><a href="../asm/B495.html">B495</a> open_door -> get_nearest_door</li>
+<li><a href="../asm/E29F.html">masked_sprite_plotter_16_wide_item</a> masked_sprite_plotter_16_wide_searchlight -> masked_sprite_plotter_16_wide_item - It's used for items only and is nothing to do with the searchlight. No idea why I thought it was.</li>
+<li><a href="../asm/E2A2.html">masked_sprite_plotter_16_wide_vischar</a> masked_sprite_plotter_16_wide -> masked_sprite_plotter_16_wide_vischar</li>
+<li><a href="../asm/E102.html">masked_sprite_plotter_24_wide_vischar</a> masked_sprite_plotter_24_wide -> masked_sprite_plotter_24_wide_vischar</li>
+<li><a href="../asm/78D6.html">doors</a> door_positions -> doors</li>
+<li><a href="../asm/6A12.html">get_door</a> get_door_position -> get_door</li>
+<li><a href="../asm/CDF2.html">animations</a>: anim_A -> anim_walk_tl etc.</li>
+<li><a href="../asm/C47E.html">purge_invisible_characters</a> purge_visible_characters -> purge_invisible_characters</li>
+<li><a href="../asm/B866.html">plot_sprites</a> locate_vischar_or_itemstruct_then_plot -> plot_sprites</li>
+<li><a href="../asm/9E98.html">picking_lock</a> picking_a_lock -> picking_lock</li>
+<li><a href="../asm/B495.html">action_lockpick</a> open_door -> get_nearest_door</li>
 <li>Renamed all the bitmaps and masks so they're in sequence from the perspective of the sprites[] table.</li>
-<li><a href="../asm/CDF2.html">CDF2</a> character_related_pointers -> animations</li>
-<li><a href="../asm/9EB2.html">9EB2</a> snipping_wire -> cutting_wire</li>
-<li><a href="../asm/A13A.html">A13A</a> morale_1/2 -> in_solitary, morale_exhausted</li>
-<li><a href="../asm/CA11.html">CA11</a> move_character_x/y -> vischar_at_pos_x/y</li>
+<li><a href="../asm/CDF2.html">animations</a> character_related_pointers -> animations</li>
+<li><a href="../asm/9EB2.html">cutting_wire</a> snipping_wire -> cutting_wire</li>
+<li><a href="../asm/A13A.html">in_solitary</a> morale_1/2 -> in_solitary, morale_exhausted</li>
+<li><a href="../asm/CA11.html">vischar_move_x</a> move_character_x/y -> vischar_at_pos_x/y</li>
 <li>vischar.p04 -> pos</li>
-<li><a href="../asm/CB61.html">CB61</a> sub_CB61 -> handle_target</li>
-<li><a href="../asm/CB2D.html">CB2D</a> sub_CB2D -> ran_out_of_list</li>
-<li><a href="../asm/CB23.html">CB23</a> sub_CB23 -> get_next_target_and_handle_it</li>
-<li><a href="../asm/81B5.html">81B5</a> map_position_related_x/y -> screenpos_x/y</li>
-<li><a href="../asm/81D6.html">81D6</a> door_related -> doors -> interior_doors</li>
-<li><a href="../asm/B71B.html">B71B</a> reset_position -> calc_vischar_from_mi_pos</li>
+<li><a href="../asm/CB61.html">handle_target</a> sub_CB61 -> handle_target</li>
+<li><a href="../asm/CB2D.html">route_ended</a> sub_CB2D -> ran_out_of_list</li>
+<li><a href="../asm/CB23.html">get_target_assign_pos</a> sub_CB23 -> get_next_target_and_handle_it</li>
+<li><a href="../asm/81B5.html">iso_pos_x</a> map_position_related_x/y -> screenpos_x/y</li>
+<li><a href="../asm/81D6.html">interior_doors</a> door_related -> doors -> interior_doors</li>
+<li><a href="../asm/B71B.html">calc_vischar_screenpos_from_mi_pos</a> reset_position -> calc_vischar_from_mi_pos</li>
 <li>vischar_BYTE7_BIT6 -> vischar_BYTE7_TOUCHING</li>
 <li>vischar_FLAGS_BIT6 -> vischar_FLAGS_DOOR_THING</li>
-<li><a href="../asm/EBC5.html">EBC5</a> exterior_mask_data_pointers -> mask_pointers</li>
-<li><a href="../asm/8218.html">8218</a> exterior_tiles_0 -> mask_tiles</li>
-<li><a href="../asm/B916.html">B916</a> mask_stuff -> render_mask_buffer</li>
-<li><a href="../asm/C651.html">C651</a> sub_C651 -> get_next_target</li>
-<li><a href="../asm/BB98.html">BB98</a> called_from_main_loop_3 -> restore_tiles</li>
+<li><a href="../asm/EBC5.html">mask_pointers</a> exterior_mask_data_pointers -> mask_pointers</li>
+<li><a href="../asm/8218.html">mask_tiles</a> exterior_tiles_0 -> mask_tiles</li>
+<li><a href="../asm/B916.html">render_mask_buffer</a> mask_stuff -> render_mask_buffer</li>
+<li><a href="../asm/C651.html">get_target</a> sub_C651 -> get_next_target</li>
+<li><a href="../asm/BB98.html">restore_tiles</a> called_from_main_loop_3 -> restore_tiles</li>
 </ul>
 </li>
 <li>Commentary:
-<ul class="changelog1">
-<li><a href="../asm/C5D3.html#c5fc">C5FC</a> in reset_visible_character: Comment on how the DOS version resets stoves and crates when re-entering a room.</li>
-<li>Experiment rewriting <a href="../asm/B5CE.html">B5CE</a> called_from_main_loop_9 commentary in the usual assembly one-comment-per-line style.</li>
-<li>Note that <a href="../asm/BACD.html">BACD</a> multiply sets D to zero.</li>
-<li><a href="../asm/B75A.html">B75A</a> reset_game: 'Reset score' part starting at <a href="../asm/B75A.html#b772">B772</a> resets a number of other vars too.</li>
+<ul class="list-entry1">
+<li><a href="../asm/C5D3.html#c5fc">reset_visible_character_0</a> in reset_visible_character: Comment on how the DOS version resets stoves and crates when re-entering a room.</li>
+<li>Experiment rewriting <a href="../asm/B5CE.html">called_from_main_loop_9</a> called_from_main_loop_9 commentary in the usual assembly one-comment-per-line style.</li>
+<li>Note that <a href="../asm/BACD.html">multiply</a> multiply sets D to zero.</li>
+<li><a href="../asm/B75A.html">reset_game</a> reset_game: 'Reset score' part starting at <a href="../asm/B75A.html#b772">B772</a> resets a number of other vars too.</li>
 <li>Tighten up the 'other things' list near the start of the .skool file now that we know how the mask buffer is laid out.</li>
 <li>Refer to variables in commentary using structure member names.</li>
 <li><a href="../asm/BB98.html#bc31">BC31</a> is multiplying C by 192.</li>
-<li><a href="../asm/ABF9.html">ABF9</a> is computing zoombox_y * 192.</li>
+<li><a href="../asm/ABF9.html">zoombox_fill</a> is computing zoombox_y * 192.</li>
 <li>Add a note about topmost bits being discarded by ADD A,A.</li>
 <li>Clarified: <a href="../asm/CB2D.html#cb41">CB41</a> forces the subsequent jump.</li>
 <li>Numerous other comment tweaks.</li>
 </ul>
 </li>
 <li>Improved:
-<ul class="changelog1">
-<li><a href="../asm/BB98.html">BB98</a> restore_tiles reworking.</li>
-<li><a href="../asm/B916.html">B916</a> render_mask_buffer reworking:
-<ul class="changelog2">
-<li><a href="../asm/B837.html">B837</a> byte_B837 & co. are now clip_{x0,y0,width,height}.</li>
+<ul class="list-entry1">
+<li><a href="../asm/BB98.html">restore_tiles</a> restore_tiles reworking.</li>
+<li><a href="../asm/B916.html">render_mask_buffer</a> render_mask_buffer reworking:
+<ul class="list-entry2">
+<li><a href="../asm/B837.html">clip_x0</a> byte_B837 & co. are now clip_{x0,y0,width,height}.</li>
 <li>Fixed <a href="../asm/B916.html#b9af">B9AF</a> comparison.</li>
 <li>multiply() returns HL. Zeros D as a side effect.</li>
 </ul>
 </li>
-<li><a href="../asm/CD9A.html">CD9A</a> character_meta_data is now defined as words, not bytes.</li>
+<li><a href="../asm/CD9A.html">character_meta_data_commandant</a> character_meta_data is now defined as words, not bytes.</li>
 <li>The coloured <a href="../Map.html">map</a> now uses a checkerboard pattern to show position of the supertiles. The separately listed supertiles also use a checkerboard to show the position of the UDGs.</li>
 </ul>
 </li>
 <li>Bugs:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li><a href="../asm/B4D0.html#b500">B500</a> get_nearest_door doing 8 iterations instead of 7.</li>
 <li><a href="../asm/AA05.html#aa1d">AA1D</a> shunt_map_right buffer length is a byte too long.</li>
 </ul>
 </li>
 <li>SkoolKit:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>TheGreatEscape.py
-<ul class="changelog2">
+<ul class="list-entry2">
 <li>Split out map and mask extraction methods.</li>
 <li>Defined all (useful) attributes.</li>
 <li>Improved documentation comments.</li>
@@ -156,34 +296,34 @@
 </ul>
 </li>
 <li>Other:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Added a vim modeline.</li>
 </ul>
 </li>
 </ul>
 </div>
 <div><span id="20160326"></span></div>
-<div class="changelog changelog-2">
-<div class="changelog-title">20160326</div>
-<div class="changelog-desc">The disassembly is now built with SkoolKit 5.1.</div>
-<ul class="changelog">
+<div class="list-entry list-entry-1">
+<div class="list-entry-title">20160326</div>
+<div class="list-entry-desc">The disassembly is now built with SkoolKit 5.1.</div>
+<ul class="list-entry">
 <li>Added a couple of short facts to Trivia about <a href="facts.html#unusedRooms">unused room indices</a> and <a href="facts.html#unusedInteriorObjects">unused interior object indices</a>.</li>
 <li>Re-enabled the input and output register headings in the stylesheet.</li>
 <li>Did a big reformat pass to unwrap lines.
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Stripped trailing whitespace too.</li>
 <li>Tidied up all the 'sampled' lines where I've recorded addresses in use.</li>
 </ul>
 </li>
 <li>Removed:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>All comments which duplicated the adjacent instruction.
-<ul class="changelog2">
+<ul class="list-entry2">
 <li>These were useful in the control file which didn't list an instruction but not in the skool file which does.</li>
 </ul>
 </li>
 <li>All single dash comments.
-<ul class="changelog2">
+<ul class="list-entry2">
 <li>These were only used in the control file to stop regions coalescing.</li>
 </ul>
 </li>
@@ -191,40 +331,40 @@
 </ul>
 </li>
 <li>Named / renamed:
-<ul class="changelog1">
-<li><a href="../asm/FEF4.html#ff58">FF58</a> is map_buf - added a label.</li>
+<ul class="list-entry1">
+<li><a href="../asm/FEF4.html#ff58">map_buf</a> is map_buf - added a label.</li>
 <li>Fix: <a href="../asm/6CC9.html#6cf8">6CF8</a> roomdef_6_corridor -> roomdef_8_corridor.</li>
-<li>Fix: <a href="../asm/6CC9.html#6ce6">6CE6</a> roomdef_3 beds -> roomdef_5 beds.</li>
+<li>Fix: <a href="../asm/6CC9.html#6ce6">roomdef_5_hut2_right_bed_D</a> roomdef_3 beds -> roomdef_5 beds.</li>
 <li>Fix: character_16_GUARD_DOG_2 -> character_17_...</li>
 <li>searchlight_states -> searchlight_movements.</li>
-<li>Fix: References in comments to <a href="../asm/E2A2.html">E2A2</a> missed when it was renamed masked_sprite_plotter_16_wide.</li>
+<li>Fix: References in comments to <a href="../asm/E2A2.html">masked_sprite_plotter_16_wide_vischar</a> missed when it was renamed masked_sprite_plotter_16_wide.</li>
 <li>Fix: Some old names had crept in.</li>
 <li>Typo: action_shove -> action_shovel.</li>
 <li>stashed_A -> touch_stashed_A.</li>
 </ul>
 </li>
 <li>Patches:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Added @bfix for <a href="../asm/A289.html#a2c6">A2C6</a> incorrect iteration count resulting in a ROM write to $1A42.</li>
-<li>Added @rfix for <a href="../asm/6AB5.html#6b19">6B19</a> redundant self-modifying code.</li>
+<li>Added @rfix for <a href="../asm/6AB5.html#6b19">range</a> redundant self-modifying code.</li>
 <li>Added @rfix fixes for redundant jumps, missing RET, bug fix for item_is_discoverable.
-<ul class="changelog2">
+<ul class="list-entry2">
 <li>But note that currently enabling these fixes will create a broken TAP file.</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>Commentary:
-<ul class="changelog1">
-<li><a href="../asm/6AB5.html#6b0f">6B0F</a> is *not* a needless reload (but it is in the C conversion).</li>
-<li>Added comments to the bitmap_font at <a href="../asm/A69E.html">A69E</a>.</li>
+<ul class="list-entry1">
+<li><a href="../asm/6AB5.html#6b0f">expand_object_6</a> is *not* a needless reload (but it is in the C conversion).</li>
+<li>Added comments to the bitmap_font at <a href="../asm/A69E.html">bitmap_font</a>.</li>
 <li>Added overall notes to the disassembly.</li>
 <li>Updated style notes.</li>
 <li>Game notes whipped into nicer state.</li>
 <li>Item bitmap descriptions now show the dimensions.</li>
 <li>Commented the zoombox_tile definitions.</li>
 <li>Annotated the wall defs.
-<ul class="changelog2">
+<ul class="list-entry2">
 <li>Stopped having fences as a separate array.</li>
 </ul>
 </li>
@@ -238,65 +378,65 @@
 </ul>
 </div>
 <div><span id="20151102"></span></div>
-<div class="changelog changelog-1">
-<div class="changelog-title">20151102</div>
-<div class="changelog-desc">Changelog begun and populated retrospectively.</div>
+<div class="list-entry list-entry-2">
+<div class="list-entry-title">20151102</div>
+<div class="list-entry-desc">Changelog begun and populated retrospectively.</div>
 
 </div>
 <div><span id="20151028"></span></div>
-<div class="changelog changelog-2">
-<div class="changelog-title">20151028</div>
-<div class="changelog-desc">28th October 2015 update.</div>
-<ul class="changelog">
+<div class="list-entry list-entry-1">
+<div class="list-entry-title">20151028</div>
+<div class="list-entry-desc">28th October 2015 update.</div>
+<ul class="list-entry">
 <li>The disassembly was migrated from a control file to a skool file.</li>
 <li>The disassembly is now built with SkoolKit 5.</li>
-<li>The searchlight movement block at <a href="../asm/AD29.html">AD29</a> was decoded and renamed to searchlight_states.</li>
+<li>The searchlight movement block at <a href="../asm/AD29.html">searchlight_movements</a> was decoded and renamed to searchlight_states.</li>
 <li>Documented the mystery data block at <a href="../asm/FEF4.html">FEF4</a> as much as possible.
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Modified from a contribution from Richard Dymond.</li>
 </ul>
 </li>
 <li>Added a tap2sna script.
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Contributed by Richard Dymond.</li>
 </ul>
 </li>
 <li>On the objects page unused objects are now ignored rather than producing duplicated images.</li>
 <li>Rooms are now decoded to a <a href="../Rooms.html">Rooms page</a>.
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Statistics are given for each room including object counts and highlighting when an object's use is unique to that room.</li>
 </ul>
 </li>
 <li>Sprite definitions were renamed to match the C version:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>'away' or 'towards' rather than 'top left' or 'bottom right'.</li>
 </ul>
 </li>
 <li>Room and interior object naming was rationalised for the benefit of room decoding.
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>We now suffix compass directions to indicate where an interior object faces (NW, NE, SE, SW).</li>
 </ul>
 </li>
 </ul>
 </div>
 <div><span id="20150622"></span></div>
-<div class="changelog changelog-1">
-<div class="changelog-title">20150622</div>
-<div class="changelog-desc">22nd June 2015 update.</div>
-<ul class="changelog">
+<div class="list-entry list-entry-2">
+<div class="list-entry-title">20150622</div>
+<div class="list-entry-desc">22nd June 2015 update.</div>
+<ul class="list-entry">
 <li>Masks are now decoded to a <a href="../Masks.html">Masks page</a>.</li>
 <li>Added the <a href="facts.html#alternatingSpeed">game speed varies</a> trivia entry.</li>
 <li>Since I began the disassembly the coordinates have been stored in y,x order not x,y as is normal and were left that way for fear of breaking something. This is now fixed.</li>
-<li>The stru_EA7C block at <a href="../asm/EA7C.html">EA7C</a> was decoded and renamed to interior_mask_data_source.</li>
+<li>The stru_EA7C block at <a href="../asm/EA7C.html">interior_mask_data_source</a> was decoded and renamed to interior_mask_data_source.</li>
 <li>Various input flags were decoded:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>vischar_BYTE13_BIT7 and various mystery 0x80's in the disassembly were replaced with input_KICK, set to kick the game into processing a (faked) input event.</li>
-<li>The table at <a href="../asm/9EB2.html#9ee0">9EE0</a> was decoded as a table of new inputs used by <a href="../asm/9EB2.html">snipping_wire</a> and renamed to snipping_wire_new_inputs.</li>
-<li>The table at <a href="../asm/AFDF.html#b0f8">B0F8</a> was decoded as a table of new inputs used by <a href="../asm/AF8F.html">touch</a> and renamed to collision_new_inputs.</li>
+<li>The table at <a href="../asm/9EB2.html#9ee0">cutting_wire_new_inputs</a> was decoded as a table of new inputs used by <a href="../asm/9EB2.html">snipping_wire</a> and renamed to snipping_wire_new_inputs.</li>
+<li>The table at <a href="../asm/AFDF.html#b0f8">collision_new_inputs</a> was decoded as a table of new inputs used by <a href="../asm/AF8F.html">touch</a> and renamed to collision_new_inputs.</li>
 </ul>
 </li>
 <li>Numerous things got renamed:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>check_for_pick_up_keypress becomes <a href="../asm/7AC9.html">process_player_input_fire</a></li>
 <li>increment_DE_by_diff becomes <a href="../asm/C79A.html">change_by_delta</a></li>
 <li>is_door_open becomes <a href="../asm/B1D4.html">is_door_locked</a></li>
@@ -313,10 +453,10 @@
 <li>zoombox_draw becomes <a href="../asm/AC6F.html">zoombox_draw_border</a></li>
 </ul>
 </li>
-<li>The interior_object_defs at <a href="../asm/7095.html">7095</a> are now expanded out into width, height and tile refs fields.</li>
+<li>The interior_object_defs at <a href="../asm/7095.html">interior_object_defs</a> are now expanded out into width, height and tile refs fields.</li>
 <li>Did some preparation for SkoolKit 5.</li>
 <li>Did a round-trip of the control to a skool file then back again in preparation for retiring the control file.
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Fixed various things which don't roundtrip correctly, e.g. stuff which is auto-generated anyway.</li>
 </ul>
 </li>
@@ -329,16 +469,16 @@
 </ul>
 </div>
 <div><span id="20150123"></span></div>
-<div class="changelog changelog-2">
-<div class="changelog-title">20150123</div>
-<div class="changelog-desc">23rd January 2015 update.</div>
-<ul class="changelog">
+<div class="list-entry list-entry-1">
+<div class="list-entry-title">20150123</div>
+<div class="list-entry-desc">23rd January 2015 update.</div>
+<ul class="list-entry">
 <li>The super tiles are now coloured by their group. The <a href="../Map.html">exterior map</a> is now additionally presented with the supertile groups coloured.</li>
-<li>Fixed: An earlier change to set_game_window_attributes/<a href="../asm/A15F.html">A15F</a> to replace the routine with memset() was incorrect.</li>
+<li>Fixed: An earlier change to set_game_window_attributes/<a href="../asm/A15F.html">set_game_window_attributes</a> to replace the routine with memset() was incorrect.</li>
 <li>Moved all game state variables to <a href="../buffers/gbuffer.html">game status buffer</a> directives.</li>
 <li>CSS: Fixed various mis-coloured elements, changed to Cambria for the main font.</li>
 <li>Assembly improvements:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Added isubs.</li>
 <li>Suppressed any and all .ctl warnings with @nowarn or @keep.</li>
 <li>Wrapped CALL directives in HTML[].</li>
@@ -351,21 +491,21 @@
 </ul>
 </div>
 <div><span id="20141125"></span></div>
-<div class="changelog changelog-1">
-<div class="changelog-title">20141125</div>
-<div class="changelog-desc">15th November 2014 update.</div>
-<ul class="changelog">
+<div class="list-entry list-entry-2">
+<div class="list-entry-title">20141125</div>
+<div class="list-entry-desc">15th November 2014 update.</div>
+<ul class="list-entry">
 <li>Documented the map tiling / tokenisation / compression technique on <a href="../Map.html">the map page</a>.</li>
 <li>Separated the concepts of player and hero. The player is the player and the hero is the guy on the screen. Formerly everything was described in terms of player.</li>
 <li>I was using 'vertical offset' or 'vo' in places when this can be more simply be called 'height'.</li>
 <li>Changes were made to get assembly output working:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Many labels were added for the benefit of the generated assembly listing.</li>
 <li>Wrapped HTML-only elements in HTML or UDGTABLE.</li>
 </ul>
 </li>
 <li>Makefile:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Added an 'all' rule which builds everything</li>
 <li>Made rules more generic</li>
 <li>Added bin and tap rules.</li>
@@ -374,15 +514,15 @@
 </ul>
 </li>
 <li>New functions:
-<ul class="changelog1">
-<li><a href="../asm/A01A.html">A01A</a> becomes its own function, within_camp_bounds.</li>
+<ul class="list-entry1">
+<li><a href="../asm/A01A.html">within_camp_bounds</a> becomes its own function, within_camp_bounds.</li>
 <li><a href="../asm/A0C9.html">plot_ringer</a> is promoted to its own function.</li>
 <li><a href="../asm/A0DC.html">set_morale_from_A</a> is promoted to its own function.</li>
 <li>Split <a href="../asm/9D7B.html">main_loop</a> out of main_loop_setup.</li>
 </ul>
 </li>
 <li>Renamed:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li><a href="../asm/7AC6.html">solitary_transition_thing</a> becomes solitary_pos.</li>
 <li><a href="../asm/9F15.html">byte_9F15</a> becomes permitted_bounds.</li>
 <li><a href="../asm/A095.html">indoors_delay_loop</a> becomes interior_delay_loop.</li>
@@ -392,7 +532,7 @@
 </ul>
 </li>
 <li>Broke the following structures down so that each field is listed:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li><a href="../asm/4000.html">screen</a></li>
 <li><a href="../asm/697D.html#69a0">movable_item_reset_data</a></li>
 <li><a href="../asm/69AE.html">movable_items</a></li>
@@ -402,14 +542,14 @@
 </ul>
 </li>
 <li>Turned inline C++-style comments into 'D' lines in various places including:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li><a href="../asm/7D48.html">message_display</a></li>
 <li><a href="../asm/9F21.html">in_permitted_area</a></li>
 <li><a href="../asm/A071.html">set_morale_flag_screen_attributes</a></li>
 </ul>
 </li>
 <li>Fixes:
-<ul class="changelog1">
+<ul class="list-entry1">
 <li><a href="../asm/DC41.html#dc98">DC98</a> in setup_item_plotting is an exclusive-or, not an or.</li>
 <li><a href="../asm/6AB5.html">expand_object</a>: An essential width counter assignment line went walkabout.</li>
 </ul>
@@ -420,7 +560,7 @@
 <li>Split <a href="../asm/7DCD.html">messages_table</a> and the adjacent game messages apart.</li>
 <li><a href="../asm/6B85.html">roomdef_bounds</a>: These are room bounds; this was previously just a suspicion.</li>
 <li>Split <a href="../asm/81BF.html">roomdef_object_bounds</a> into <a href="../asm/81BF.html">roomdef_object_bounds_count</a> and <a href="../asm/81C0.html">roomdef_object_bounds</a>.
-<ul class="changelog1">
+<ul class="list-entry1">
 <li>Note that $81D0 onwards is unreferenced bytes.</li>
 </ul>
 </li>
@@ -430,15 +570,15 @@
 </ul>
 </div>
 <div><span id="20141019"></span></div>
-<div class="changelog changelog-2">
-<div class="changelog-title">20141019</div>
-<div class="changelog-desc">19th October 2014 update.</div>
+<div class="list-entry list-entry-1">
+<div class="list-entry-title">20141019</div>
+<div class="list-entry-desc">19th October 2014 update.</div>
 
 </div>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="9DCF.html">9DCF</a>, <a href="9E98.html">9E98</a>, <a href="A1D3.html">A1D3</a>, <a href="A1E7.html">A1E7</a>, <a href="A1F0.html">A1F0</a>, <a href="A1F9.html">A1F9</a>, <a href="A206.html">A206</a>, <a href="A219.html">A219</a>, <a href="A228.html">A228</a>, <a href="B107.html">B107</a>, <a href="B1D4.html">B1D4</a>, <a href="B387.html">B387</a>, <a href="B417.html">B417</a>, <a href="B495.html">B495</a>, <a href="B4B8.html">B4B8</a>, <a href="CB98.html">CB98</a>, <a href="CD31.html">CD31</a> and <a href="EF9A.html">EF9A</a>.
+Used by the routines at <a href="9DCF.html">check_morale</a>, <a href="9E98.html">picking_lock</a>, <a href="A1D3.html">event_another_day_dawns</a>, <a href="A1E7.html">event_wake_up</a>, <a href="A1F0.html">event_go_to_roll_call</a>, <a href="A1F9.html">event_go_to_breakfast_time</a>, <a href="A206.html">event_go_to_exercise_time</a>, <a href="A219.html">event_go_to_time_for_bed</a>, <a href="A228.html">event_new_red_cross_parcel</a>, <a href="B107.html">accept_bribe</a>, <a href="B1D4.html">is_door_locked</a>, <a href="B387.html">action_red_cross_parcel</a>, <a href="B417.html">action_wiresnips</a>, <a href="B495.html">action_lockpick</a>, <a href="B4B8.html">action_key</a>, <a href="CB98.html">solitary</a>, <a href="CD31.html">item_discovered</a> and <a href="EF9A.html">event_roll_call</a>.
 </div>
 <div class="paragraph">
 The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
@@ -55,25 +55,25 @@ The use of C here is puzzling. One routine (check_morale) explicitly sets it to 
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">queue_message</td>
 <td class="address-2"><span id="7d15"></span>7D15</td>
 <td class="instruction">LD HL,($7D11)</td>
 <td class="comment-11" rowspan="4">if ((*HL = message_queue_pointer) == message_QUEUE_END) return; // queue full</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d18"></span>7D18</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1a"></span>7D1A</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1b"></span>7D1B</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
@@ -89,55 +89,55 @@ Is this message pending?
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1c"></span>7D1C</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">HL -= 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1d"></span>7D1D</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1e"></span>7D1E</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="7">if (*HL++ == B &amp;&amp; *HL++ == C) return; // yes - skip adding it</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1f"></span>7D1F</td>
 <td class="instruction">CP B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d20"></span>7D20</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d21"></span>7D21</td>
-<td class="instruction">JR NZ,$7D26</td>
+<td class="instruction">JR NZ,<a href="7D15.html#7d26">queue_message_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d23"></span>7D23</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d24"></span>7D24</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d25"></span>7D25</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
@@ -153,43 +153,43 @@ Add it to the queue.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">queue_message_0</td>
 <td class="address-2"><span id="7d26"></span>7D26</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="5">*HL++ = B; *HL++ = C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d27"></span>7D27</td>
 <td class="instruction">LD (HL),B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d28"></span>7D28</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d29"></span>7D29</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d2a"></span>7D2A</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d2b"></span>7D2B</td>
 <td class="instruction">LD ($7D11),HL</td>
 <td class="comment-11" rowspan="1">message_queue_pointer = HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d2e"></span>7D2E</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -203,9 +203,9 @@ Add it to the queue.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

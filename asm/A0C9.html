@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A09E.html">A09E</a>.
+Used by the routine at <a href="A09E.html">ring_bell</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,21 +48,21 @@ Used by the routine at <a href="A09E.html">A09E</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_ringer</td>
 <td class="address-2"><span id="a0c9"></span>A0C9</td>
 <td class="instruction">LD HL,$518E</td>
 <td class="comment-11" rowspan="1">HL = screenaddr_bell_ringer;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0cc"></span>A0CC</td>
 <td class="instruction">LD BC,$010C</td>
 <td class="comment-11" rowspan="2">plot_bitmap(0x010C); return; %&gt; // dimensions: 8 x 12 // args=BC // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0cf"></span>A0CF</td>
-<td class="instruction">JP <a href="7CBE.html">$7CBE</a></td>
+<td class="instruction">JP <a href="7CBE.html">plot_bitmap</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
@@ -74,9 +74,9 @@ Used by the routine at <a href="A09E.html">A09E</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="7B36.html">7B36</a>, <a href="7B8B.html">7B8B</a>, <a href="B107.html">B107</a>, <a href="B387.html">B387</a>, <a href="B3C4.html">B3C4</a>, <a href="B75A.html">B75A</a> and <a href="CB98.html">CB98</a>.
+Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html">drop_item</a>, <a href="B107.html">accept_bribe</a>, <a href="B387.html">action_red_cross_parcel</a>, <a href="B3C4.html">action_poison</a>, <a href="B75A.html">reset_game</a> and <a href="CB98.html">solitary</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,43 +45,43 @@ Used by the routines at <a href="7B36.html">7B36</a>, <a href="7B8B.html">7B8B</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">draw_all_items</td>
 <td class="address-2"><span id="7c33"></span>7C33</td>
 <td class="instruction">LD HL,$5087</td>
 <td class="comment-11" rowspan="3">draw_item(screenaddr_item1, items_held[0]);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7c36"></span>7C36</td>
 <td class="instruction">LD A,($8215)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7c39"></span>7C39</td>
-<td class="instruction">CALL <a href="7C46.html">$7C46</a></td>
+<td class="instruction">CALL <a href="7C46.html">draw_item</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7c3c"></span>7C3C</td>
 <td class="instruction">LD HL,$508A</td>
 <td class="comment-11" rowspan="3">draw_item(screenaddr_item2, items_held[1]);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7c3f"></span>7C3F</td>
 <td class="instruction">LD A,($8216)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7c42"></span>7C42</td>
-<td class="instruction">CALL <a href="7C46.html">$7C46</a></td>
+<td class="instruction">CALL <a href="7C46.html">draw_item</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7c45"></span>7C45</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -95,9 +95,9 @@ Used by the routines at <a href="7B36.html">7B36</a>, <a href="7B8B.html">7B8B</
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

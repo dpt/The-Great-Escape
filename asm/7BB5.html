@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="B387.html">B387</a>.
+Used by the routine at <a href="B387.html">action_red_cross_parcel</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,39 +48,39 @@ Used by the routine at <a href="B387.html">B387</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">drop_item_tail</td>
 <td class="address-2"><span id="7bb5"></span>7BB5</td>
-<td class="instruction">CALL <a href="7C26.html">$7C26</a></td>
+<td class="instruction">CALL <a href="7C26.html">item_to_itemstruct</a></td>
 <td class="comment-11" rowspan="1">HL = item_to_itemstruct(A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bb8"></span>7BB8</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bb9"></span>7BB9</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bbc"></span>7BBC</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">*HL = A; // set object's room index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bbd"></span>7BBD</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bbe"></span>7BBE</td>
-<td class="instruction">JR NZ,<a href="7BE4.html">$7BE4</a></td>
+<td class="instruction">JR NZ,<a href="7BE4.html">drop_item_interior</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -94,13 +94,13 @@ Outdoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc0"></span>7BC0</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;    // -&gt; .x</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc1"></span>7BC1</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
@@ -116,55 +116,55 @@ HL is incremented here but then immediately overwritten by $7BC5.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc2"></span>7BC2</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">HL += 2; // -&gt; .unk1</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc3"></span>7BC3</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc4"></span>7BC4</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc5"></span>7BC5</td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-11" rowspan="1">HL = $800F;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc8"></span>7BC8</td>
-<td class="instruction">CALL <a href="E542.html">$E542</a></td>
+<td class="instruction">CALL <a href="E542.html">pos_to_tinypos</a></td>
 <td class="comment-11" rowspan="1">pos_to_tinypos(HL,DE);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bcb"></span>7BCB</td>
 <td class="instruction">DEC DE</td>
 <td class="comment-11" rowspan="1">DE--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bcc"></span>7BCC</td>
 <td class="instruction">LD A,$00</td>
 <td class="comment-11" rowspan="2">*DE = 0; // -&gt;height ?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bce"></span>7BCE</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7bcf"></span>7BCF</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
@@ -188,9 +188,9 @@ FALL THROUGH into calc_exterior_item_screenpos.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A035.html">A035</a>.
+Used by the routine at <a href="A035.html">wave_morale_flag</a>.
 </div>
 </div>
 <table class="input-1">
@@ -51,21 +51,21 @@ Used by the routine at <a href="A035.html">A035</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_prev_scanline</td>
 <td class="address-2"><span id="a082"></span>A082</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="3">if ((H &amp; 7) != 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a083"></span>A083</td>
 <td class="instruction">AND $07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a085"></span>A085</td>
-<td class="instruction">JR Z,$A089</td>
+<td class="instruction">JR Z,<a href="A082.html#a089">get_prev_scanline_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -82,13 +82,13 @@ Step back one scanline.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a087"></span>A087</td>
 <td class="instruction">DEC H</td>
 <td class="comment-11" rowspan="1">HL -= 256; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a088"></span>A088</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
@@ -104,43 +104,43 @@ Complicated.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_prev_scanline_0</td>
 <td class="address-2"><span id="a089"></span>A089</td>
 <td class="instruction">LD DE,$06E0</td>
 <td class="comment-11" rowspan="6">if (L &lt; 32) HL -= 32; else HL += 0x06E0; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a08c"></span>A08C</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a08d"></span>A08D</td>
 <td class="instruction">CP $20</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a08f"></span>A08F</td>
-<td class="instruction">JR NC,$A093</td>
+<td class="instruction">JR NC,<a href="A082.html#a093">get_prev_scanline_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a091"></span>A091</td>
 <td class="instruction">LD D,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_prev_scanline_1</td>
 <td class="address-2"><span id="a093"></span>A093</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a094"></span>A094</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -154,9 +154,9 @@ Complicated.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

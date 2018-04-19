@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -43,21 +43,21 @@
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_go_to_exercise_time</td>
 <td class="address-2"><span id="a206"></span>A206</td>
 <td class="instruction">LD (BC),A</td>
 <td class="comment-11" rowspan="1">*BC = A; // bell = bell_RING_40_TIMES;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a207"></span>A207</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="2">queue_message_for_display(message_EXERCISE_TIME);</td>
+<td class="comment-11" rowspan="2">queue_message(message_EXERCISE_TIME);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a209"></span>A209</td>
-<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
+<td class="instruction">CALL <a href="7D15.html">queue_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -71,22 +71,22 @@ Unlock the gates.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a20c"></span>A20C</td>
 <td class="instruction">LD HL,$0100</td>
 <td class="comment-11" rowspan="2">locked_doors[0] = 0x00; locked_doors[1] = 0x01;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a20f"></span>A20F</td>
 <td class="instruction">LD ($F05D),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a212"></span>A212</td>
-<td class="instruction">JP <a href="A4A9.html">$A4A9</a></td>
-<td class="comment-11" rowspan="1">set_location_0x000E(); return; // exit via</td>
+<td class="instruction">JP <a href="A4A9.html">set_route_go_to_yard</a></td>
+<td class="comment-11" rowspan="1">set_route_go_to_yard(); return; // exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -97,9 +97,9 @@ Unlock the gates.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

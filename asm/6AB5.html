@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="6A35.html">6A35</a>.
+Used by the routine at <a href="6A35.html">setup_room</a>.
 </div>
 <div class="paragraph">
 <table class="default">
@@ -89,259 +89,259 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object</td>
 <td class="address-2"><span id="6ab5"></span>6AB5</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="9">HL = interior_object_defs[A];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab6"></span>6AB6</td>
 <td class="instruction">LD HL,$7095</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab9"></span>6AB9</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aba"></span>6ABA</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6abc"></span>6ABC</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6abd"></span>6ABD</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6abe"></span>6ABE</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6abf"></span>6ABF</td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac0"></span>6AC0</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac1"></span>6AC1</td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="2">B = *HL++; // width</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac2"></span>6AC2</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac3"></span>6AC3</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="2">C = *HL++; // height</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac4"></span>6AC4</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac5"></span>6AC5</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-11" rowspan="2">($6AE6 + 1) = B; // self modify (== width)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac6"></span>6AC6</td>
 <td class="instruction">LD ($6AE7),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_0</td>
 <td class="address-2"><span id="6ac9"></span>6AC9</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% do &lt;% expand: A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aca"></span>6ACA</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == interiorobjecttile_ESCAPE) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6acc"></span>6ACC</td>
-<td class="instruction">JR NZ,$6ADE</td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6ade">expand_object_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ace"></span>6ACE</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6acf"></span>6ACF</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad0"></span>6AD0</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A != interiorobjecttile_ESCAPE) &lt;% // FF FF =&gt; FF</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad2"></span>6AD2</td>
-<td class="instruction">JR Z,$6ADE</td>
+<td class="instruction">JR Z,<a href="6AB5.html#6ade">expand_object_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad4"></span>6AD4</td>
 <td class="instruction">AND $F0</td>
 <td class="comment-11" rowspan="1">A &amp;= 0xF0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad6"></span>6AD6</td>
 <td class="instruction">CP $80</td>
 <td class="comment-11" rowspan="2">if (A &gt;= 128) goto run;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad8"></span>6AD8</td>
-<td class="instruction">JR NC,$6AF4</td>
+<td class="instruction">JR NC,<a href="6AB5.html#6af4">run</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ada"></span>6ADA</td>
 <td class="instruction">CP $40</td>
 <td class="comment-11" rowspan="2">if (A == 64) goto range; %&gt; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6adc"></span>6ADC</td>
-<td class="instruction">JR Z,$6B19</td>
+<td class="instruction">JR Z,<a href="6AB5.html#6b19">range</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_1</td>
 <td class="address-2"><span id="6ade"></span>6ADE</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="3">if (A) *DE = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6adf"></span>6ADF</td>
-<td class="instruction">JR Z,$6AE2</td>
+<td class="instruction">JR Z,<a href="6AB5.html#6ae2">expand_object_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ae1"></span>6AE1</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_2</td>
 <td class="address-2"><span id="6ae2"></span>6AE2</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ae3"></span>6AE3</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ae4"></span>6AE4</td>
-<td class="instruction">DJNZ $6AC9</td>
+<td class="instruction">DJNZ <a href="6AB5.html#6ac9">expand_object_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_width</td>
 <td class="address-1"><span id="6ae6"></span>6AE6</td>
 <td class="instruction">LD B,$01</td>
 <td class="comment-11" rowspan="1">B = 1; // self modified</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6ae8"></span>6AE8</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="6">DE += 24 - B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aea"></span>6AEA</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aeb"></span>6AEB</td>
 <td class="instruction">ADD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aec"></span>6AEC</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aed"></span>6AED</td>
-<td class="instruction">JR NC,$6AF0</td>
+<td class="instruction">JR NC,<a href="6AB5.html#6af0">expand_object_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aef"></span>6AEF</td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_3</td>
 <td class="address-2"><span id="6af0"></span>6AF0</td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="2">%&gt; while (--C); // for each row</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6af1"></span>6AF1</td>
-<td class="instruction">JR NZ,$6AC9</td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6ac9">expand_object_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6af3"></span>6AF3</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -357,75 +357,75 @@ Used by the routine at <a href="6A35.html">6A35</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">run</td>
 <td class="address-2"><span id="6af4"></span>6AF4</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL++ &amp; 0x7F; // run length</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6af5"></span>6AF5</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6af7"></span>6AF7</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6af8"></span>6AF8</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6af9"></span>6AF9</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Adash = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6afa"></span>6AFA</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_4</td>
 <td class="address-2"><span id="6afb"></span>6AFB</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6afc"></span>6AFC</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="3">if (Adash &gt; 0) *DE = Adash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6afd"></span>6AFD</td>
-<td class="instruction">JR Z,$6B00</td>
+<td class="instruction">JR Z,<a href="6AB5.html#6b00">expand_object_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6aff"></span>6AFF</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_5</td>
 <td class="address-2"><span id="6b00"></span>6B00</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b01"></span>6B01</td>
-<td class="instruction">DJNZ $6B12</td>
+<td class="instruction">DJNZ <a href="6AB5.html#6b12">expand_object_7</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
@@ -439,99 +439,99 @@ Ran out of width.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b03"></span>6B03</td>
 <td class="instruction">LD A,($6AE7)</td>
 <td class="comment-11" rowspan="1">LD Adash,($6AE6 + 1)  // Adash = width</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b06"></span>6B06</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">B = Adash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b07"></span>6B07</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="6">DE += 24 - B; // stride // move to next row</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b09"></span>6B09</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b0a"></span>6B0A</td>
 <td class="instruction">ADD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b0b"></span>6B0B</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b0c"></span>6B0C</td>
-<td class="instruction">JR NC,$6B0F</td>
+<td class="instruction">JR NC,<a href="6AB5.html#6b0f">expand_object_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b0e"></span>6B0E</td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_6</td>
 <td class="address-2"><span id="6b0f"></span>6B0F</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Adash = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b10"></span>6B10</td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="2">if (--C == 0) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b11"></span>6B11</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_7</td>
 <td class="address-2"><span id="6b12"></span>6B12</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b13"></span>6B13</td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="2">%&gt; while (--A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b14"></span>6B14</td>
-<td class="instruction">JR NZ,$6AFB</td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6afb">expand_object_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b16"></span>6B16</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b17"></span>6B17</td>
-<td class="instruction">JR $6AC9</td>
+<td class="instruction">JR <a href="6AB5.html#6ac9">expand_object_0</a></td>
 <td class="comment-11" rowspan="1">goto expand;</td>
 </tr>
 <tr>
@@ -548,81 +548,81 @@ Bug: This self-modifies the INC A at the end of the loop body, but nothing else 
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">range</td>
 <td class="address-2"><span id="6b19"></span>6B19</td>
 <td class="instruction">LD A,$3C</td>
 <td class="comment-11" rowspan="1">A = 60; // opcode of 'INC A'</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b1b"></span>6B1B</td>
 <td class="instruction">LD ($6B28),A</td>
 <td class="comment-11" rowspan="1">($6B28) = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b1e"></span>6B1E</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL++ &amp; 0x0F;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b1f"></span>6B1F</td>
 <td class="instruction">AND $0F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b21"></span>6B21</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b22"></span>6B22</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b23"></span>6B23</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Adash = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b24"></span>6B24</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_8</td>
 <td class="address-2"><span id="6b25"></span>6B25</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b26"></span>6B26</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="2">*DE++ = Adash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b27"></span>6B27</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_increment</td>
 <td class="address-1"><span id="6b28"></span>6B28</td>
 <td class="instruction">INC A</td>
 <td class="comment-11" rowspan="1">INC Adash // self modified</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b29"></span>6B29</td>
-<td class="instruction">DJNZ $6B3B</td>
+<td class="instruction">DJNZ <a href="6AB5.html#6b3b">expand_object_10</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
@@ -636,105 +636,105 @@ Ran out of width.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b2b"></span>6B2B</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">PUSH AFdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b2c"></span>6B2C</td>
 <td class="instruction">LD A,($6AE7)</td>
 <td class="comment-11" rowspan="2">LD Adash,($6AE6 + 1)  // Adash = width</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b2f"></span>6B2F</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b30"></span>6B30</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="6">DE += 24 - Adash; // stride // move to next row</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b32"></span>6B32</td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b33"></span>6B33</td>
 <td class="instruction">ADD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b34"></span>6B34</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b35"></span>6B35</td>
-<td class="instruction">JR NC,$6B38</td>
+<td class="instruction">JR NC,<a href="6AB5.html#6b38">expand_object_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b37"></span>6B37</td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_9</td>
 <td class="address-2"><span id="6b38"></span>6B38</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="2">POP AFdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b39"></span>6B39</td>
 <td class="instruction">DEC C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3a"></span>6B3A</td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">if (--C == 0) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">expand_object_10</td>
 <td class="address-2"><span id="6b3b"></span>6B3B</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3c"></span>6B3C</td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3d"></span>6B3D</td>
-<td class="instruction">JR NZ,$6B25</td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6b25">expand_object_8</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3f"></span>6B3F</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6b40"></span>6B40</td>
-<td class="instruction">JR $6AC9</td>
+<td class="instruction">JR <a href="6AB5.html#6ac9">expand_object_0</a></td>
 <td class="comment-11" rowspan="1">goto expand;</td>
 </tr>
 </table>
@@ -746,9 +746,9 @@ Ran out of width.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

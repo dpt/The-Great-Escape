@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -43,45 +43,45 @@
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_night_time</td>
 <td class="address-2"><span id="a1c3"></span>A1C3</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment-11" rowspan="5">if (hero_in_bed == 0) set_hero_target_location(location_012C);</td>
+<td class="comment-11" rowspan="5">if (hero_in_bed == 0) set_hero_route(location_012C);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c6"></span>A1C6</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c7"></span>A1C7</td>
-<td class="instruction">JR NZ,$A1CF</td>
+<td class="instruction">JR NZ,<a href="A1C3.html#a1cf">event_night_time_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c9"></span>A1C9</td>
 <td class="instruction">LD BC,$2C01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1cc"></span>A1CC</td>
-<td class="instruction">CALL <a href="A33F.html">$A33F</a></td>
+<td class="instruction">CALL <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_night_time_0</td>
 <td class="address-2"><span id="a1cf"></span>A1CF</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">A = 0xFF;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1d1"></span>A1D1</td>
-<td class="instruction">JR <a href="A1D3.html#a1de">$A1DE</a></td>
+<td class="instruction">JR <a href="A1D3.html#a1de">event_another_day_dawns_0</a></td>
 <td class="comment-11" rowspan="1">goto set_attrs;</td>
 </tr>
 </table>
@@ -93,9 +93,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

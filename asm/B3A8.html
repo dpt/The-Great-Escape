@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -55,97 +55,97 @@ Walk non-player visible characters.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_bribe</td>
 <td class="address-2"><span id="b3a8"></span>B3A8</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ab"></span>B3AB</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_bribe_0</td>
 <td class="address-2"><span id="b3ad"></span>B3AD</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ae"></span>B3AE</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="4">if ((A != character_NONE) &amp;&amp; (A &gt;= character_20_PRISONER_1)) goto found;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b0"></span>B3B0</td>
-<td class="instruction">JR Z,$B3B6</td>
+<td class="instruction">JR Z,<a href="B3A8.html#b3b6">action_bribe_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b2"></span>B3B2</td>
 <td class="instruction">CP $14</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b4"></span>B3B4</td>
-<td class="instruction">JR NC,$B3BD</td>
+<td class="instruction">JR NC,<a href="B3A8.html#b3bd">action_bribe_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_bribe_1</td>
 <td class="address-2"><span id="b3b6"></span>B3B6</td>
 <td class="instruction">LD A,$20</td>
 <td class="comment-11" rowspan="3">HL += 32; // sizeof a character struct</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b8"></span>B3B8</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b9"></span>B3B9</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ba"></span>B3BA</td>
-<td class="instruction">DJNZ $B3AD</td>
+<td class="instruction">DJNZ <a href="B3A8.html#b3ad">action_bribe_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3bc"></span>B3BC</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_bribe_2</td>
 <td class="address-2"><span id="b3bd"></span>B3BD</td>
 <td class="instruction">LD ($AF8E),A</td>
 <td class="comment-11" rowspan="1">found: bribed_character = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3c0"></span>B3C0</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">HL[1] = vischar_FLAGS_BRIBE_PENDING; // $8021 etc. // flag</td>
+<td class="comment-11" rowspan="2">HL[1] = vischar_FLAGS_PURSUE; // $8021 etc. // flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3c1"></span>B3C1</td>
 <td class="instruction">LD (HL),$01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3c3"></span>B3C3</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -159,9 +159,9 @@ Walk non-player visible characters.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

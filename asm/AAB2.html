@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7B</a>.
+Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
 <table class="input-0">
@@ -48,469 +48,469 @@ Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map</td>
 <td class="address-2"><span id="aab2"></span>AAB2</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index) return; // Can't move the map when indoors.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aab5"></span>AAB5</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aab6"></span>AAB6</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aab7"></span>AAB7</td>
 <td class="instruction">LD HL,$8007</td>
 <td class="comment-11" rowspan="3">if ($8007 &amp; vischar_BYTE7_TOUCHING) return; // don't move the map if touch() is entered?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aaba"></span>AABA</td>
 <td class="instruction">BIT 6,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aabc"></span>AABC</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aabd"></span>AABD</td>
 <td class="instruction">LD HL,$800A</td>
 <td class="comment-11" rowspan="1">HL = $800A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac0"></span>AAC0</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">E = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac1"></span>AAC1</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac2"></span>AAC2</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="2">D = *HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac3"></span>AAC3</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac4"></span>AAC4</td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="1">C = *HL; // $800C</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac5"></span>AAC5</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="3">DE += 3;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac6"></span>AAC6</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac7"></span>AAC7</td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac8"></span>AAC8</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aac9"></span>AAC9</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == 255) return; // don't move</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aacb"></span>AACB</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aacc"></span>AACC</td>
 <td class="instruction">BIT 7,C</td>
 <td class="comment-11" rowspan="3">if (C &amp; vischar_ANIMINDEX_BIT7) A ^= 2; // exchange up and down</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aace"></span>AACE</td>
-<td class="instruction">JR Z,$AAD2</td>
+<td class="instruction">JR Z,<a href="AAB2.html#aad2">move_map_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aad0"></span>AAD0</td>
 <td class="instruction">XOR $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_0</td>
 <td class="address-2"><span id="aad2"></span>AAD2</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aad3"></span>AAD3</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="5">HL = &amp;move_map_jump_table[A];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aad4"></span>AAD4</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aad5"></span>AAD5</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aad7"></span>AAD7</td>
 <td class="instruction">LD HL,$AB31</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aada"></span>AADA</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aadb"></span>AADB</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL++; // ie. HL = (word at HL); HL += 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aadc"></span>AADC</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aadd"></span>AADD</td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-11" rowspan="1">H = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aade"></span>AADE</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="1">L = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aadf"></span>AADF</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aae0"></span>AAE0</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aae1"></span>AAE1</td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aae2"></span>AAE2</td>
 <td class="instruction">LD BC,$7C00</td>
 <td class="comment-11" rowspan="1">B, C = 0x7C, 0x00;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aae5"></span>AAE5</td>
 <td class="instruction">CP $02</td>
 <td class="comment-11" rowspan="3">if (A &gt;= 2) B = 0x00; // bottom of the map clamp</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aae7"></span>AAE7</td>
-<td class="instruction">JR C,$AAEB</td>
+<td class="instruction">JR C,<a href="AAB2.html#aaeb">move_map_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aae9"></span>AAE9</td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_1</td>
 <td class="address-2"><span id="aaeb"></span>AAEB</td>
 <td class="instruction">CP $01</td>
 <td class="comment-11" rowspan="5">if (A != 1 &amp;&amp; A != 2) C = 0xC0; // left of the map clamp</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aaed"></span>AAED</td>
-<td class="instruction">JR Z,$AAF5</td>
+<td class="instruction">JR Z,<a href="AAB2.html#aaf5">move_map_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aaef"></span>AAEF</td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aaf1"></span>AAF1</td>
-<td class="instruction">JR Z,$AAF5</td>
+<td class="instruction">JR Z,<a href="AAB2.html#aaf5">move_map_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aaf3"></span>AAF3</td>
 <td class="instruction">LD C,$C0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_2</td>
 <td class="address-2"><span id="aaf5"></span>AAF5</td>
 <td class="instruction">LD HL,($81BB)</td>
 <td class="comment-11" rowspan="1">HL = map_position;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aaf8"></span>AAF8</td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">if (L == C || H == B) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aaf9"></span>AAF9</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aafa"></span>AAFA</td>
-<td class="instruction">JR NZ,$AAFF</td>
+<td class="instruction">JR NZ,<a href="AAB2.html#aaff">move_map_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_3</td>
 <td class="address-2"><span id="aafc"></span>AAFC</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">popret:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aafd"></span>AAFD</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="aafe"></span>AAFE</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="4">return; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_4</td>
 <td class="address-2"><span id="aaff"></span>AAFF</td>
 <td class="instruction">LD A,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab00"></span>AB00</td>
 <td class="instruction">CP B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab01"></span>AB01</td>
-<td class="instruction">JR Z,$AAFC</td>
+<td class="instruction">JR Z,<a href="AAB2.html#aafc">move_map_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab03"></span>AB03</td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab04"></span>AB04</td>
 <td class="instruction">LD HL,$A7C6</td>
 <td class="comment-11" rowspan="1">HL = &amp;move_map_y; // screen offset of some sort?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab07"></span>AB07</td>
 <td class="instruction">CP $02</td>
 <td class="comment-11" rowspan="2">if (A &lt; 2) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab09"></span>AB09</td>
-<td class="instruction">JR NC,$AB0F</td>
+<td class="instruction">JR NC,<a href="AAB2.html#ab0f">move_map_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab0b"></span>AB0B</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL + 1; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab0c"></span>AB0C</td>
 <td class="instruction">INC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab0d"></span>AB0D</td>
-<td class="instruction">JR $AB11</td>
+<td class="instruction">JR <a href="AAB2.html#ab11">move_map_6</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_5</td>
 <td class="address-2"><span id="ab0f"></span>AB0F</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL - 1; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab10"></span>AB10</td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_6</td>
 <td class="address-2"><span id="ab11"></span>AB11</td>
 <td class="instruction">AND $03</td>
 <td class="comment-11" rowspan="1">A &amp;= 3;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab13"></span>AB13</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">*HL = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab14"></span>AB14</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab15"></span>AB15</td>
 <td class="instruction">LD HL,$0000</td>
 <td class="comment-11" rowspan="1">HL = 0x0000;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab18"></span>AB18</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) goto $AB2A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab19"></span>AB19</td>
-<td class="instruction">JR Z,$AB2A</td>
+<td class="instruction">JR Z,<a href="AAB2.html#ab2a">move_map_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab1b"></span>AB1B</td>
 <td class="instruction">LD L,$60</td>
 <td class="comment-11" rowspan="1">L = 0x60;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab1d"></span>AB1D</td>
 <td class="instruction">CP $02</td>
 <td class="comment-11" rowspan="2">if (A == 2) goto $AB2A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab1f"></span>AB1F</td>
-<td class="instruction">JR Z,$AB2A</td>
+<td class="instruction">JR Z,<a href="AAB2.html#ab2a">move_map_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab21"></span>AB21</td>
 <td class="instruction">LD HL,$FF30</td>
 <td class="comment-11" rowspan="1">HL = 0xFF30;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab24"></span>AB24</td>
 <td class="instruction">CP $01</td>
 <td class="comment-11" rowspan="2">if (A == 1) goto $AB2A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab26"></span>AB26</td>
-<td class="instruction">JR Z,$AB2A</td>
+<td class="instruction">JR Z,<a href="AAB2.html#ab2a">move_map_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab28"></span>AB28</td>
 <td class="instruction">LD L,$90</td>
 <td class="comment-11" rowspan="1">L = 0x90;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_7</td>
 <td class="address-2"><span id="ab2a"></span>AB2A</td>
 <td class="instruction">LD ($A7C7),HL</td>
 <td class="comment-11" rowspan="1">game_window_offset = HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab2d"></span>AB2D</td>
 <td class="instruction">LD HL,($81BB)</td>
 <td class="comment-11" rowspan="1">HL = map_position;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab30"></span>AB30</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; // pops and calls move_map_* routine pushed at $AAE0</td>
@@ -526,27 +526,27 @@ move_map jump table.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_jump_table</td>
 <td class="address-1"><span id="ab31"></span>AB31</td>
-<td class="instruction">DEFW $AB39</td>
+<td class="instruction">DEFW <a href="AAB2.html#ab39">move_map_up_left</a></td>
 <td class="comment-11" rowspan="1">move_map_up_left</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab33"></span>AB33</td>
-<td class="instruction">DEFW $AB44</td>
+<td class="instruction">DEFW <a href="AAB2.html#ab44">move_map_up_right</a></td>
 <td class="comment-11" rowspan="1">move_map_up_right</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab35"></span>AB35</td>
-<td class="instruction">DEFW $AB4F</td>
+<td class="instruction">DEFW <a href="AAB2.html#ab4f">move_map_down_right</a></td>
 <td class="comment-11" rowspan="1">move_map_down_right</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab37"></span>AB37</td>
-<td class="instruction">DEFW $AB5A</td>
+<td class="instruction">DEFW <a href="AAB2.html#ab5a">move_map_down_left</a></td>
 <td class="comment-11" rowspan="1">move_map_down_left</td>
 </tr>
 <tr>
@@ -560,39 +560,39 @@ Called when player moves down-right (map is shifted up-left).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_up_left</td>
 <td class="address-1"><span id="ab39"></span>AB39</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab3a"></span>AB3A</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) goto shunt_map_up;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab3b"></span>AB3B</td>
-<td class="instruction">JP Z,<a href="AA4B.html">$AA4B</a></td>
+<td class="instruction">JP Z,<a href="AA4B.html">shunt_map_up</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab3e"></span>AB3E</td>
 <td class="instruction">BIT 0,A</td>
 <td class="comment-11" rowspan="2">if ((A &amp; 1) == 0) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab40"></span>AB40</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab41"></span>AB41</td>
-<td class="instruction">JP <a href="A9E4.html">$A9E4</a></td>
+<td class="instruction">JP <a href="A9E4.html">shunt_map_left</a></td>
 <td class="comment-11" rowspan="1">goto shunt_map_left;</td>
 </tr>
 <tr>
@@ -606,39 +606,39 @@ Called when player moves down-left (map is shifted up-right).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_up_right</td>
 <td class="address-1"><span id="ab44"></span>AB44</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab45"></span>AB45</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) goto shunt_map_up_right;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab46"></span>AB46</td>
-<td class="instruction">JP Z,<a href="AA26.html">$AA26</a></td>
+<td class="instruction">JP Z,<a href="AA26.html">shunt_map_up_right</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab49"></span>AB49</td>
 <td class="instruction">CP $02</td>
 <td class="comment-11" rowspan="2">if (A != 2) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab4b"></span>AB4B</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab4c"></span>AB4C</td>
-<td class="instruction">JP <a href="AA05.html">$AA05</a></td>
+<td class="instruction">JP <a href="AA05.html">shunt_map_right</a></td>
 <td class="comment-11" rowspan="1">goto shunt_map_right;</td>
 </tr>
 <tr>
@@ -652,37 +652,37 @@ Called when player moves up-left (map is shifted down-right).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_down_right</td>
 <td class="address-1"><span id="ab4f"></span>AB4F</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab50"></span>AB50</td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="2">if (A == 3) goto shunt_map_down;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab52"></span>AB52</td>
-<td class="instruction">JP Z,<a href="AA6C.html">$AA6C</a></td>
+<td class="instruction">JP Z,<a href="AA6C.html">shunt_map_down</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab55"></span>AB55</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="2">if ((A &amp; 1) == 0) goto shunt_map_right;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab56"></span>AB56</td>
-<td class="instruction">JP NC,<a href="AA05.html">$AA05</a></td>
+<td class="instruction">JP NC,<a href="AA05.html">shunt_map_right</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab59"></span>AB59</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -698,37 +698,37 @@ Called when player moves up-right (map is shifted down-left).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">move_map_down_left</td>
 <td class="address-1"><span id="ab5a"></span>AB5A</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab5b"></span>AB5B</td>
 <td class="instruction">CP $01</td>
 <td class="comment-11" rowspan="2">if (A == 1) goto shunt_map_left;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab5d"></span>AB5D</td>
-<td class="instruction">JP Z,<a href="A9E4.html">$A9E4</a></td>
+<td class="instruction">JP Z,<a href="A9E4.html">shunt_map_left</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab60"></span>AB60</td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="2">if (A == 3) goto shunt_map_down_left;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab62"></span>AB62</td>
-<td class="instruction">JP Z,<a href="AA8D.html">$AA8D</a></td>
+<td class="instruction">JP Z,<a href="AA8D.html">shunt_map_down_left</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab65"></span>AB65</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -742,9 +742,9 @@ Called when player moves up-right (map is shifted down-left).
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

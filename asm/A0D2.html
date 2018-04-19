@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A0E9.html">A0E9</a> and <a href="A0F2.html">A0F2</a>.
+Used by the routines at <a href="A0E9.html">increase_morale_by_10_score_by_50</a> and <a href="A0F2.html">increase_morale_by_5_score_by_5</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,31 +48,31 @@ Used by the routines at <a href="A0E9.html">A0E9</a> and <a href="A0F2.html">A0F
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">increase_morale</td>
 <td class="address-2"><span id="a0d2"></span>A0D2</td>
 <td class="instruction">LD A,($A13C)</td>
 <td class="comment-11" rowspan="2">A = morale + B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0d5"></span>A0D5</td>
 <td class="instruction">ADD A,B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0d6"></span>A0D6</td>
 <td class="instruction">CP $70</td>
 <td class="comment-11" rowspan="3">if (A &gt;= morale_MAX) A = morale_MAX;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0d8"></span>A0D8</td>
-<td class="instruction">JR C,<a href="A0DC.html">$A0DC</a></td>
+<td class="instruction">JR C,<a href="A0DC.html">set_morale_from_A</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0da"></span>A0DA</td>
 <td class="instruction">LD A,$70</td>
 <td class="comment-01" rowspan="1"></td>
@@ -96,9 +96,9 @@ FALL THROUGH into set_morale_from_A.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

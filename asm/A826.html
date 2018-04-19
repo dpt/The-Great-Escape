@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="A80A.html">A80A</a>.
+Used by the routine at <a href="A80A.html">plot_bottommost_tiles</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,67 +45,67 @@ Used by the routine at <a href="A80A.html">A80A</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_horizontal_tiles_common</td>
 <td class="address-2"><span id="a826"></span>A826</td>
 <td class="instruction">AND $03</td>
 <td class="comment-11" rowspan="3">A = (A &amp; 3) * 4;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a828"></span>A828</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a829"></span>A829</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a82a"></span>A82A</td>
 <td class="instruction">LD ($A86A),A</td>
 <td class="comment-11" rowspan="1">($A86A) = A; // self modify</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a82d"></span>A82D</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Cdash = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a82e"></span>A82E</td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="3">A = (map_position[0] &amp; 3) + Cdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a831"></span>A831</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a833"></span>A833</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a834"></span>A834</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a835"></span>A835</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Adash = *HLdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a836"></span>A836</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
@@ -121,151 +121,151 @@ Initial edge.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a837"></span>A837</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="9">HL = &amp;super_tiles[0] + Adash * 16;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a838"></span>A838</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a83a"></span>A83A</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a83b"></span>A83B</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a83c"></span>A83C</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a83d"></span>A83D</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a83e"></span>A83E</td>
 <td class="instruction">LD A,$5B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a840"></span>A840</td>
 <td class="instruction">ADD A,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a841"></span>A841</td>
 <td class="instruction">LD H,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a842"></span>A842</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a843"></span>A843</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="1">A += L;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a844"></span>A844</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="1">L = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a845"></span>A845</td>
 <td class="instruction">NEG</td>
 <td class="comment-11" rowspan="2">A = -A &amp; 3;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a847"></span>A847</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a849"></span>A849</td>
-<td class="instruction">JR NZ,$A84D</td>
+<td class="instruction">JR NZ,<a href="A826.html#a84d">plot_horizontal_tiles_common_0</a></td>
 <td class="comment-11" rowspan="2">if (A == 0) A = 4;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a84b"></span>A84B</td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_horizontal_tiles_common_0</td>
 <td class="address-2"><span id="a84d"></span>A84D</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">B = A; // 1..4 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_horizontal_tiles_common_1</td>
 <td class="address-2"><span id="a84e"></span>A84E</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *HL; // A = tile index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a84f"></span>A84F</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">*DE = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a850"></span>A850</td>
-<td class="instruction">CALL <a href="A9AD.html">$A9AD</a></td>
+<td class="instruction">CALL <a href="A9AD.html">plot_tile</a></td>
 <td class="comment-11" rowspan="1">plot_tile();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a853"></span>A853</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a854"></span>A854</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a855"></span>A855</td>
-<td class="instruction">DJNZ $A84E</td>
+<td class="instruction">DJNZ <a href="A826.html#a84e">plot_horizontal_tiles_common_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a857"></span>A857</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a858"></span>A858</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HLdash++;</td>
@@ -281,159 +281,159 @@ Middle loop.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a859"></span>A859</td>
 <td class="instruction">LD B,$05</td>
 <td class="comment-11" rowspan="1">Bdash = 5; // 5 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_horizontal_tiles_common_2</td>
 <td class="address-2"><span id="a85b"></span>A85B</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">do &lt;% PUSH BCdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a85c"></span>A85C</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HLdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a85d"></span>A85D</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a85e"></span>A85E</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="8">HL = &amp;super_tiles[A];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a85f"></span>A85F</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a861"></span>A861</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a862"></span>A862</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a863"></span>A863</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a864"></span>A864</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a865"></span>A865</td>
 <td class="instruction">LD BC,$5B00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a868"></span>A868</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a869"></span>A869</td>
 <td class="instruction">LD A,$00</td>
 <td class="comment-11" rowspan="1">A = 0; // self modified by $A82A</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a86b"></span>A86B</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="2">L += A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a86c"></span>A86C</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a86d"></span>A86D</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-11" rowspan="1">B = 4; // 4 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_horizontal_tiles_common_3</td>
 <td class="address-2"><span id="a86f"></span>A86F</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a870"></span>A870</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">*DE = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a871"></span>A871</td>
-<td class="instruction">CALL <a href="A9AD.html">$A9AD</a></td>
+<td class="instruction">CALL <a href="A9AD.html">plot_tile</a></td>
 <td class="comment-11" rowspan="1">plot_tile();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a874"></span>A874</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a875"></span>A875</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a876"></span>A876</td>
-<td class="instruction">DJNZ $A86F</td>
+<td class="instruction">DJNZ <a href="A826.html#a86f">plot_horizontal_tiles_common_3</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a878"></span>A878</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a879"></span>A879</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HLdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a87a"></span>A87A</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">POP BCdash</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a87b"></span>A87B</td>
-<td class="instruction">DJNZ $A85B</td>
+<td class="instruction">DJNZ <a href="A826.html#a85b">plot_horizontal_tiles_common_2</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
 </tr>
 <tr>
@@ -447,157 +447,157 @@ Trailing edge.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a87d"></span>A87D</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">A = Cdash; // assigned but never used?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a87e"></span>A87E</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">// unpaired?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a87f"></span>A87F</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = *HLdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a880"></span>A880</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a881"></span>A881</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="8">HL = &amp;super_tiles[A];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a882"></span>A882</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a884"></span>A884</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a885"></span>A885</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a886"></span>A886</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a887"></span>A887</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a888"></span>A888</td>
 <td class="instruction">LD BC,$5B00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a88b"></span>A88B</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a88c"></span>A88C</td>
 <td class="instruction">LD A,($A86A)</td>
 <td class="comment-11" rowspan="1">A = ($A86A); // read self modified</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a88f"></span>A88F</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="2">L += A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a890"></span>A890</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a891"></span>A891</td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="2">A = map_position[0] &amp; 3; // map_position lo</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a894"></span>A894</td>
 <td class="instruction">AND $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a896"></span>A896</td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">if (A == 0) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a897"></span>A897</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">B = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_horizontal_tiles_common_4</td>
 <td class="address-2"><span id="a898"></span>A898</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a899"></span>A899</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">*DE = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a89a"></span>A89A</td>
-<td class="instruction">CALL <a href="A9AD.html">$A9AD</a></td>
+<td class="instruction">CALL <a href="A9AD.html">plot_tile</a></td>
 <td class="comment-11" rowspan="1">plot_tile();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a89d"></span>A89D</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a89e"></span>A89E</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a89f"></span>A89F</td>
-<td class="instruction">DJNZ $A898</td>
+<td class="instruction">DJNZ <a href="A826.html#a898">plot_horizontal_tiles_common_4</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a8a1"></span>A8A1</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -611,9 +611,9 @@ Trailing edge.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

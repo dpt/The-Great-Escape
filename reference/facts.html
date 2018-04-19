@@ -10,7 +10,7 @@
 <body class="Facts">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Trivia</td>
 </tr>
 </table>
@@ -19,25 +19,27 @@
 <li><a href="#alternatingSpeed">Game speed varies</a></li>
 <li><a href="#unusedRooms">Unused rooms</a></li>
 <li><a href="#unusedInteriorObjects">Unused interior objects</a></li>
+<li><a href="#neverUsesIX">The IX register is never used</a></li>
+<li><a href="#fullerJoystick">Unused Fuller joystick routine</a></li>
 </ul>
 <div><span id="unusedSupertiles"></span></div>
 <div class="box box-1">
 <div class="box-title">Unused super tiles</div>
 <div class="paragraph">
-There are two unused supertiles: $4F and $9A. The tiles themselves are defined but not used in the map.
+There are two unused supertiles: $4F and $9A. The tiles are defined but not used in the map.
 </div>
 </div>
 <div><span id="alternatingSpeed"></span></div>
 <div class="box box-2">
 <div class="box-title">Game speed varies</div>
 <div class="paragraph">
-When our hero is outdoors the speed of the game can vary depending on where he stands. Look at the flag waving rate then take a single step. You will notice the flag waving faster or slower depending on where you started.
+When our hero is outdoors the speed of the game can vary greatly depending on where he stands. Look at the rate at which the morale flag waves then take a single step. You will notice the flag waving faster or slower depending on where you started.
 </div>
 <div class="paragraph">
 This is because the routine which copies the back-buffered game screen to the real screen has two modes: a fast mode where the bytes are copied directly and a slow mode where the pixels are rolled by a nibble before being written. Depending on where the hero is standing the screen buffer may not be aligned with regard to the screen and require use of the slow rolling routine.
 </div>
 <div class="paragraph">
-In the interior maps the game runs far too fast so has a dedicated delay loop at <a href="../asm/A095.html">A095</a> to slow things down.
+Interior scenes in the game run far too fast so have a dedicated delay loop at <a href="../asm/A095.html">interior_delay_loop</a> to slow things down.
 </div>
 </div>
 <div><span id="unusedRooms"></span></div>
@@ -54,10 +56,27 @@ There are three unused room indices: 6, 26 and 27.
 There are three unused interior object indices: 21, 28, 39.
 </div>
 </div>
+<div><span id="neverUsesIX"></span></div>
+<div class="box box-1">
+<div class="box-title">The IX register is never used</div>
+<div class="paragraph">
+Nowhere does any routine in the game use the IX register. Of the two index registers it only uses IY.
+</div>
+</div>
+<div><span id="fullerJoystick"></span></div>
+<div class="box box-2">
+<div class="box-title">Unused Fuller joystick routine</div>
+<div class="paragraph">
+There is a Fuller joystick routine at $FEA3 / <a href="../asm/FEA3.html">inputroutine_fuller</a> which is never used by the game.
+</div>
+<div class="paragraph">
+The game supports keyboard, Kempston, Sinclair and Protek joystick interfaces. Once selected from the main menu the chosen keyboard or joystick routine is copied to $F075 and used from there. There is no way to return to the main menu, so the space occupied by the input routines is then reclaimed for the window buffer.
+</div>
+</div>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

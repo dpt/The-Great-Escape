@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A9E4.html">A9E4</a>, <a href="AA05.html">AA05</a>, <a href="AA26.html">AA26</a>, <a href="AA4B.html">AA4B</a>, <a href="AA6C.html">AA6C</a>, <a href="AA8D.html">AA8D</a> and <a href="B2FC.html">B2FC</a>.
+Used by the routines at <a href="A9E4.html">shunt_map_left</a>, <a href="AA05.html">shunt_map_right</a>, <a href="AA26.html">shunt_map_up_right</a>, <a href="AA4B.html">shunt_map_up</a>, <a href="AA6C.html">shunt_map_down</a>, <a href="AA8D.html">shunt_map_down_left</a> and <a href="B2FC.html">reset_outdoors</a>.
 </div>
 <div class="paragraph">
 Uses map_position to copy supertile indices from map into the buffer at $FF58.
@@ -58,13 +58,13 @@ Get vertical offset.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_supertiles</td>
 <td class="address-2"><span id="a7c9"></span>A7C9</td>
 <td class="instruction">LD A,($81BC)</td>
 <td class="comment-11" rowspan="2">A = (map_position &gt;&gt; 8) &amp; 0xFC; // A = 0, 4, 8, 12, ...</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7cc"></span>A7CC</td>
 <td class="instruction">AND $FC</td>
 <td class="comment-01" rowspan="1"></td>
@@ -80,97 +80,97 @@ Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ce"></span>A7CE</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="16">HL = &amp;map_tiles[-54] + (A + (A &gt;&gt; 1)) * 9; // must be skipping the first row.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7cf"></span>A7CF</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d1"></span>A7D1</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d2"></span>A7D2</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d4"></span>A7D4</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d5"></span>A7D5</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d6"></span>A7D6</td>
-<td class="instruction">JR NC,$A7D9</td>
+<td class="instruction">JR NC,<a href="A7C9.html#a7d9">get_supertiles_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d8"></span>A7D8</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_supertiles_0</td>
 <td class="address-2"><span id="a7d9"></span>A7D9</td>
 <td class="instruction">LD E,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7da"></span>A7DA</td>
 <td class="instruction">LD D,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7db"></span>A7DB</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7dc"></span>A7DC</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7dd"></span>A7DD</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7de"></span>A7DE</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7df"></span>A7DF</td>
 <td class="instruction">LD DE,$BCB8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7e2"></span>A7E2</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
@@ -186,43 +186,43 @@ Add horizontal offset.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7e3"></span>A7E3</td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="7">HL += (map_position &amp; 0xFF) &gt;&gt; 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7e6"></span>A7E6</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7e7"></span>A7E7</td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7e8"></span>A7E8</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ea"></span>A7EA</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7eb"></span>A7EB</td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ed"></span>A7ED</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
@@ -238,85 +238,85 @@ Populate map_buf with 7x5 array of supertile refs.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ee"></span>A7EE</td>
 <td class="instruction">LD A,$05</td>
 <td class="comment-11" rowspan="1">A = 5; // 5 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7f0"></span>A7F0</td>
 <td class="instruction">LD DE,$FF58</td>
 <td class="comment-11" rowspan="1">DE = &amp;map_buf[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_supertiles_1</td>
 <td class="address-2"><span id="a7f3"></span>A7F3</td>
 <td class="instruction">LDI</td>
 <td class="comment-11" rowspan="7">do &lt;% memcpy(DE, HL, 7); DE += 7;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7f5"></span>A7F5</td>
 <td class="instruction">LDI</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7f7"></span>A7F7</td>
 <td class="instruction">LDI</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7f9"></span>A7F9</td>
 <td class="instruction">LDI</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7fb"></span>A7FB</td>
 <td class="instruction">LDI</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7fd"></span>A7FD</td>
 <td class="instruction">LDI</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ff"></span>A7FF</td>
 <td class="instruction">LDI</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a801"></span>A801</td>
 <td class="instruction">LD BC,$002F</td>
 <td class="comment-11" rowspan="2">HL += 54; // stride - width of map</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a804"></span>A804</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a805"></span>A805</td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="2">%&gt; while (--A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a806"></span>A806</td>
-<td class="instruction">JP NZ,$A7F3</td>
+<td class="instruction">JP NZ,<a href="A7C9.html#a7f3">get_supertiles_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a809"></span>A809</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -330,9 +330,9 @@ Populate map_buf with 7x5 array of supertile refs.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

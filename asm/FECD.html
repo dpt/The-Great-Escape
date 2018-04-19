@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -48,139 +48,139 @@ Up/Down/Left/Right/Fire = keys 9/8/6/7/0.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_sinclair</td>
 <td class="address-2"><span id="fecd"></span>FECD</td>
 <td class="instruction">LD BC,$EFFE</td>
 <td class="comment-11" rowspan="1">BC = port_KEYBOARD_09876;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fed0"></span>FED0</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fed2"></span>FED2</td>
 <td class="instruction">CPL</td>
 <td class="comment-11" rowspan="1">A = ~A; /* xxx67890 */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fed3"></span>FED3</td>
 <td class="instruction">LD BC,$0000</td>
 <td class="comment-11" rowspan="1">BC = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fed6"></span>FED6</td>
 <td class="instruction">RRCA</td>
 <td class="comment-11" rowspan="1">RRCA /* 0xxx6789 */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fed7"></span>FED7</td>
 <td class="instruction">RRCA</td>
 <td class="comment-11" rowspan="1">RRCA /* 90xxx678 */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fed8"></span>FED8</td>
-<td class="instruction">JR NC,$FEDC</td>
+<td class="instruction">JR NC,<a href="FECD.html#fedc">inputroutine_sinclair_0</a></td>
 <td class="comment-11" rowspan="2">if (carry) C = input_UP;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feda"></span>FEDA</td>
 <td class="instruction">LD C,$01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_sinclair_0</td>
 <td class="address-2"><span id="fedc"></span>FEDC</td>
 <td class="instruction">RRCA</td>
 <td class="comment-11" rowspan="1">RRCA /* 890xxx67 */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fedd"></span>FEDD</td>
-<td class="instruction">JR NC,$FEE1</td>
+<td class="instruction">JR NC,<a href="FECD.html#fee1">inputroutine_sinclair_1</a></td>
 <td class="comment-11" rowspan="2">if (carry) C = input_DOWN;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fedf"></span>FEDF</td>
 <td class="instruction">LD C,$02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_sinclair_1</td>
 <td class="address-2"><span id="fee1"></span>FEE1</td>
 <td class="instruction">RRCA</td>
 <td class="comment-11" rowspan="1">RRCA /* 7890xxx6 */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fee2"></span>FEE2</td>
-<td class="instruction">JR NC,$FEE6</td>
+<td class="instruction">JR NC,<a href="FECD.html#fee6">inputroutine_sinclair_2</a></td>
 <td class="comment-11" rowspan="2">if (carry) B = input_RIGHT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fee4"></span>FEE4</td>
 <td class="instruction">LD B,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_sinclair_2</td>
 <td class="address-2"><span id="fee6"></span>FEE6</td>
 <td class="instruction">RRCA</td>
 <td class="comment-11" rowspan="1">RRCA /* 67890xxx */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fee7"></span>FEE7</td>
-<td class="instruction">JR NC,$FEEB</td>
+<td class="instruction">JR NC,<a href="FECD.html#feeb">inputroutine_sinclair_3</a></td>
 <td class="comment-11" rowspan="2">if (carry) B = input_LEFT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fee9"></span>FEE9</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_sinclair_3</td>
 <td class="address-2"><span id="feeb"></span>FEEB</td>
 <td class="instruction">AND $08</td>
 <td class="comment-11" rowspan="3">if ((A &amp; (1&lt;&lt;3)) == 0) A = input_FIRE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feed"></span>FEED</td>
-<td class="instruction">JR Z,$FEF1</td>
+<td class="instruction">JR Z,<a href="FECD.html#fef1">inputroutine_sinclair_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feef"></span>FEEF</td>
 <td class="instruction">LD A,$09</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_sinclair_4</td>
 <td class="address-2"><span id="fef1"></span>FEF1</td>
 <td class="instruction">ADD A,B</td>
 <td class="comment-11" rowspan="2">A += B + C; /* Combine axis */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fef2"></span>FEF2</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fef3"></span>FEF3</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -194,9 +194,9 @@ Up/Down/Left/Right/Fire = keys 9/8/6/7/0.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

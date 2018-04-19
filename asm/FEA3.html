@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -51,145 +51,145 @@ Reading port 0x7F yields F---RLDU active low.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_fuller</td>
 <td class="address-2"><span id="fea3"></span>FEA3</td>
 <td class="instruction">LD BC,$007F</td>
 <td class="comment-11" rowspan="1">BC = 0x007F;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fea6"></span>FEA6</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fea8"></span>FEA8</td>
 <td class="instruction">LD BC,$0000</td>
 <td class="comment-11" rowspan="1">BC = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feab"></span>FEAB</td>
 <td class="instruction">BIT 4,A</td>
 <td class="comment-11" rowspan="3">if (A &amp; (1&lt;&lt;4)) A = ~A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fead"></span>FEAD</td>
-<td class="instruction">JR Z,$FEB0</td>
+<td class="instruction">JR Z,<a href="FEA3.html#feb0">inputroutine_fuller_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feaf"></span>FEAF</td>
 <td class="instruction">CPL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_fuller_0</td>
 <td class="address-2"><span id="feb0"></span>FEB0</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feb1"></span>FEB1</td>
-<td class="instruction">JR NC,$FEB5</td>
+<td class="instruction">JR NC,<a href="FEA3.html#feb5">inputroutine_fuller_1</a></td>
 <td class="comment-11" rowspan="2">if (carry) C = input_UP;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feb3"></span>FEB3</td>
 <td class="instruction">LD C,$01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_fuller_1</td>
 <td class="address-2"><span id="feb5"></span>FEB5</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feb6"></span>FEB6</td>
-<td class="instruction">JR NC,$FEBA</td>
+<td class="instruction">JR NC,<a href="FEA3.html#feba">inputroutine_fuller_2</a></td>
 <td class="comment-11" rowspan="2">if (carry) C = input_DOWN;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="feb8"></span>FEB8</td>
 <td class="instruction">LD C,$02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_fuller_2</td>
 <td class="address-2"><span id="feba"></span>FEBA</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="febb"></span>FEBB</td>
-<td class="instruction">JR NC,$FEBF</td>
+<td class="instruction">JR NC,<a href="FEA3.html#febf">inputroutine_fuller_3</a></td>
 <td class="comment-11" rowspan="2">if (carry) B = input_LEFT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="febd"></span>FEBD</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_fuller_3</td>
 <td class="address-2"><span id="febf"></span>FEBF</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">carry = A &amp; 1; A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fec0"></span>FEC0</td>
-<td class="instruction">JR NC,$FEC4</td>
+<td class="instruction">JR NC,<a href="FEA3.html#fec4">inputroutine_fuller_4</a></td>
 <td class="comment-11" rowspan="2">if (carry) B = input_RIGHT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fec2"></span>FEC2</td>
 <td class="instruction">LD B,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_fuller_4</td>
 <td class="address-2"><span id="fec4"></span>FEC4</td>
 <td class="instruction">AND $08</td>
 <td class="comment-11" rowspan="3">if (A &amp; (1&lt;&lt;3)) A = input_FIRE; /* otherwise A is zero */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fec6"></span>FEC6</td>
-<td class="instruction">JR Z,$FECA</td>
+<td class="instruction">JR Z,<a href="FEA3.html#feca">inputroutine_fuller_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fec8"></span>FEC8</td>
 <td class="instruction">LD A,$09</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">inputroutine_fuller_5</td>
 <td class="address-2"><span id="feca"></span>FECA</td>
 <td class="instruction">ADD A,B</td>
 <td class="comment-11" rowspan="2">A += B + C; /* Combine axis */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fecb"></span>FECB</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fecc"></span>FECC</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -203,9 +203,9 @@ Reading port 0x7F yields F---RLDU active low.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -43,37 +43,37 @@
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">action_shovel</td>
 <td class="address-2"><span id="b3f6"></span>B3F6</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index != room_50_BLOCKED_TUNNEL) return; /* Shovel only works in the blocked tunnel room. */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f9"></span>B3F9</td>
 <td class="instruction">CP $32</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3fb"></span>B3FB</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3fc"></span>B3FC</td>
 <td class="instruction">LD A,($7077)</td>
 <td class="comment-11" rowspan="3">if (roomdef_50_blocked_tunnel_boundary[0] == 255) return; /* Blockage is already cleared. */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ff"></span>B3FF</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b401"></span>B401</td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
@@ -89,13 +89,13 @@ Release boundary.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b402"></span>B402</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_boundary[0] = 255;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b404"></span>B404</td>
 <td class="instruction">LD ($7077),A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -111,39 +111,39 @@ Remove blockage graphic.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b407"></span>B407</td>
 <td class="instruction">INC A</td>
 <td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_collapsed_tunnel = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b408"></span>B408</td>
 <td class="instruction">LD ($708C),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b40b"></span>B40B</td>
-<td class="instruction">CALL <a href="6A35.html">$6A35</a></td>
+<td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
 <td class="comment-11" rowspan="1">setup_room();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b40e"></span>B40E</td>
-<td class="instruction">CALL <a href="AB6B.html">$AB6B</a></td>
+<td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
 <td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b411"></span>B411</td>
-<td class="instruction">CALL <a href="6B42.html">$6B42</a></td>
+<td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
 <td class="comment-11" rowspan="1">plot_interior_tiles();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b414"></span>B414</td>
-<td class="instruction">JP <a href="A0E9.html">$A0E9</a></td>
+<td class="instruction">JP <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
 <td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50(); return; // exit via</td>
 </tr>
 </table>
@@ -155,9 +155,9 @@ Remove blockage graphic.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

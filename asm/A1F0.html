@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -43,27 +43,27 @@
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_go_to_roll_call</td>
 <td class="address-2"><span id="a1f0"></span>A1F0</td>
 <td class="instruction">LD (BC),A</td>
 <td class="comment-11" rowspan="1">*BC = A; // bell = bell_RING_40_TIMES;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1f1"></span>A1F1</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="2">queue_message_for_display(message_ROLL_CALL);</td>
+<td class="comment-11" rowspan="2">queue_message(message_ROLL_CALL);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1f3"></span>A1F3</td>
-<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
+<td class="instruction">CALL <a href="7D15.html">queue_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a1f6"></span>A1F6</td>
-<td class="instruction">JP <a href="A4FD.html">$A4FD</a></td>
+<td class="instruction">JP <a href="A4FD.html">go_to_roll_call</a></td>
 <td class="comment-11" rowspan="1">go_to_roll_call(); return; // exit via</td>
 </tr>
 </table>
@@ -75,9 +75,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

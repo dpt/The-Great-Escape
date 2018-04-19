@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="68F4.html">68F4</a> and <a href="B2FC.html">B2FC</a>.
+Used by the routines at <a href="68F4.html">enter_room</a> and <a href="B2FC.html">reset_outdoors</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,157 +45,157 @@ Used by the routines at <a href="68F4.html">68F4</a> and <a href="B2FC.html">B2F
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_movable_items</td>
 <td class="address-2"><span id="6939"></span>6939</td>
-<td class="instruction">CALL <a href="69C9.html">$69C9</a></td>
+<td class="instruction">CALL <a href="69C9.html">reset_nonplayer_visible_characters</a></td>
 <td class="comment-11" rowspan="1">reset_nonplayer_visible_characters();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="693c"></span>693C</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="693f"></span>693F</td>
 <td class="instruction">CP $02</td>
 <td class="comment-11" rowspan="4">if (A == room_2_HUT2LEFT) setup_stove1();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6941"></span>6941</td>
-<td class="instruction">JP NZ,$6949</td>
+<td class="instruction">JP NZ,<a href="6939.html#6949">setup_movable_items_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6944"></span>6944</td>
-<td class="instruction">CALL $6978</td>
+<td class="instruction">CALL <a href="6939.html#6978">setup_stove1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6947"></span>6947</td>
-<td class="instruction">JR $695B</td>
+<td class="instruction">JR <a href="6939.html#695b">setup_movable_items_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_movable_items_0</td>
 <td class="address-2"><span id="6949"></span>6949</td>
 <td class="instruction">CP $04</td>
 <td class="comment-11" rowspan="4">else if (A == room_4_HUT3LEFT) setup_stove2();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="694b"></span>694B</td>
-<td class="instruction">JP NZ,$6953</td>
+<td class="instruction">JP NZ,<a href="6939.html#6953">setup_movable_items_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="694e"></span>694E</td>
-<td class="instruction">CALL $6971</td>
+<td class="instruction">CALL <a href="6939.html#6971">setup_stove2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6951"></span>6951</td>
-<td class="instruction">JR $695B</td>
+<td class="instruction">JR <a href="6939.html#695b">setup_movable_items_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_movable_items_1</td>
 <td class="address-2"><span id="6953"></span>6953</td>
 <td class="instruction">CP $09</td>
 <td class="comment-11" rowspan="3">else if (A == room_9_CRATE)    setup_crate();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6955"></span>6955</td>
-<td class="instruction">JP NZ,$695B</td>
+<td class="instruction">JP NZ,<a href="6939.html#695b">setup_movable_items_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6958"></span>6958</td>
-<td class="instruction">CALL $696A</td>
+<td class="instruction">CALL <a href="6939.html#696a">setup_crate</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_movable_items_2</td>
 <td class="address-2"><span id="695b"></span>695B</td>
-<td class="instruction">CALL <a href="C41C.html">$C41C</a></td>
+<td class="instruction">CALL <a href="C41C.html">spawn_characters</a></td>
 <td class="comment-11" rowspan="1">spawn_characters();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="695e"></span>695E</td>
-<td class="instruction">CALL <a href="DB9E.html">$DB9E</a></td>
+<td class="instruction">CALL <a href="DB9E.html">mark_nearby_items</a></td>
 <td class="comment-11" rowspan="1">mark_nearby_items();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6961"></span>6961</td>
-<td class="instruction">CALL <a href="B5CE.html">$B5CE</a></td>
+<td class="instruction">CALL <a href="B5CE.html">called_from_main_loop_9</a></td>
 <td class="comment-11" rowspan="1">called_from_main_loop_9();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6964"></span>6964</td>
-<td class="instruction">CALL <a href="AAB2.html">$AAB2</a></td>
+<td class="instruction">CALL <a href="AAB2.html">move_map</a></td>
 <td class="comment-11" rowspan="1">move_map();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6967"></span>6967</td>
-<td class="instruction">JP <a href="B866.html">$B866</a></td>
+<td class="instruction">JP <a href="B866.html">plot_sprites</a></td>
 <td class="comment-11" rowspan="1">plot_sprites(); return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_crate</td>
 <td class="address-2"><span id="696a"></span>696A</td>
 <td class="instruction">LD HL,$69B7</td>
 <td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_CRATE];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="696d"></span>696D</td>
 <td class="instruction">LD A,$1C</td>
 <td class="comment-11" rowspan="1">A = character_28_CRATE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="696f"></span>696F</td>
-<td class="instruction">JR <a href="697D.html">$697D</a></td>
+<td class="instruction">JR <a href="697D.html">setup_movable_item</a></td>
 <td class="comment-11" rowspan="1">goto setup_movable_item;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_stove2</td>
 <td class="address-2"><span id="6971"></span>6971</td>
 <td class="instruction">LD HL,$69C0</td>
 <td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_STOVE2];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6974"></span>6974</td>
 <td class="instruction">LD A,$1B</td>
 <td class="comment-11" rowspan="1">A = character_27_STOVE_2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="6976"></span>6976</td>
-<td class="instruction">JR <a href="697D.html">$697D</a></td>
+<td class="instruction">JR <a href="697D.html">setup_movable_item</a></td>
 <td class="comment-11" rowspan="1">goto setup_movable_item;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_stove1</td>
 <td class="address-2"><span id="6978"></span>6978</td>
 <td class="instruction">LD HL,$69AE</td>
 <td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_STOVE1];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="697b"></span>697B</td>
 <td class="instruction">LD A,$1A</td>
 <td class="comment-11" rowspan="1">A = character_26_STOVE_1;</td>
@@ -219,9 +219,9 @@ FALL THROUGH into setup_movable_item.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

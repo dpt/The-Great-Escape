@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,10 +27,10 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C892.html">C892</a>.
+Used by the routine at <a href="C892.html">automatics</a>.
 </div>
 <div class="paragraph">
-Searches item_structs for items dropped nearby. If items are found the hostiles are made to persue the hero.
+Searches item_structs for items dropped nearby. If items are found the hostiles are made to pursue the hero.
 </div>
 <div class="paragraph">
 Green key and food items are ignored.
@@ -51,21 +51,21 @@ Green key and food items are ignored.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">is_item_discoverable</td>
 <td class="address-2"><span id="cccd"></span>CCCD</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccd0"></span>CCD0</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A != room_0_OUTDOORS) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccd1"></span>CCD1</td>
-<td class="instruction">JR Z,$CCDB</td>
+<td class="instruction">JR Z,<a href="CCCD.html#ccdb">is_item_discoverable_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -79,25 +79,25 @@ Interior.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccd3"></span>CCD3</td>
-<td class="instruction">CALL <a href="CCFB.html">$CCFB</a></td>
+<td class="instruction">CALL <a href="CCFB.html">is_item_discoverable_interior</a></td>
 <td class="comment-11" rowspan="1">is_item_discoverable_interior(A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccd6"></span>CCD6</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="2">if (Z) hostiles_persue(); /* Item found */</td>
+<td class="comment-11" rowspan="2">if (Z) hostiles_pursue(); /* Item found */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccd7"></span>CCD7</td>
-<td class="instruction">CALL <a href="CCAB.html">$CCAB</a></td>
+<td class="instruction">CALL <a href="CCAB.html">hostiles_pursue</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccda"></span>CCDA</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -113,49 +113,49 @@ Exterior.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">is_item_discoverable_0</td>
 <td class="address-2"><span id="ccdb"></span>CCDB</td>
 <td class="instruction">LD HL,$76C9</td>
 <td class="comment-11" rowspan="1">else &lt;% HL = &amp;item_structs[0].room;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccde"></span>CCDE</td>
 <td class="instruction">LD DE,$0007</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cce1"></span>CCE1</td>
 <td class="instruction">LD B,$10</td>
 <td class="comment-11" rowspan="1">B = 16; // iterations == n.itemstructs</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">is_item_discoverable_1</td>
 <td class="address-2"><span id="cce3"></span>CCE3</td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% if (HL[0] &amp; itemstruct_ROOM_FLAG_NEARBY_7) goto nearby;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cce5"></span>CCE5</td>
-<td class="instruction">JR NZ,$CCEB</td>
+<td class="instruction">JR NZ,<a href="CCCD.html#cceb">is_item_discoverable_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">is_item_discoverable_2</td>
 <td class="address-2"><span id="cce7"></span>CCE7</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">next: HL += 7; // stride</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cce8"></span>CCE8</td>
-<td class="instruction">DJNZ $CCE3</td>
+<td class="instruction">DJNZ <a href="CCCD.html#cce3">is_item_discoverable_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccea"></span>CCEA</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -171,19 +171,19 @@ Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So 
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">is_item_discoverable_3</td>
 <td class="address-2"><span id="cceb"></span>CCEB</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">nearby: HL--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccec"></span>CCEC</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">A = *HL &amp; itemstruct_ITEM_MASK; // sampled HL=$772A (&amp;item_structs[item_PURSE].item)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cced"></span>CCED</td>
 <td class="instruction">AND $0F</td>
 <td class="comment-01" rowspan="1"></td>
@@ -199,37 +199,37 @@ The green key and food items are ignored.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccef"></span>CCEF</td>
 <td class="instruction">CP $0B</td>
 <td class="comment-11" rowspan="4">if (A == item_GREEN_KEY || A == item_FOOD) goto next;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccf1"></span>CCF1</td>
-<td class="instruction">JR Z,$CCE7</td>
+<td class="instruction">JR Z,<a href="CCCD.html#cce7">is_item_discoverable_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccf3"></span>CCF3</td>
 <td class="instruction">CP $07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccf5"></span>CCF5</td>
-<td class="instruction">JR Z,$CCE7</td>
+<td class="instruction">JR Z,<a href="CCCD.html#cce7">is_item_discoverable_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccf7"></span>CCF7</td>
-<td class="instruction">CALL <a href="CCAB.html">$CCAB</a></td>
-<td class="comment-11" rowspan="1">hostiles_persue();</td>
+<td class="instruction">CALL <a href="CCAB.html">hostiles_pursue</a></td>
+<td class="comment-11" rowspan="1">hostiles_pursue();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccfa"></span>CCFA</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -243,9 +243,9 @@ The green key and food items are ignored.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

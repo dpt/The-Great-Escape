@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9F21.html">9F21</a>.
+Used by the routine at <a href="9F21.html">in_permitted_area</a>.
 </div>
 </div>
 <table class="input-1">
@@ -48,76 +48,76 @@ Used by the routine at <a href="9F21.html">9F21</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_end_bit</td>
 <td class="address-2"><span id="a007"></span>A007</td>
 <td class="instruction">LD HL,$68A0</td>
-<td class="comment-11" rowspan="1">HL = &amp;room_index;</td>
+<td class="comment-11" rowspan="1">point HL at room_index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a00a"></span>A00A</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="5">if (A &amp; (1&lt;&lt;7)) return *HL == A &amp; 0x7F; // return with flags</td>
+<td class="comment-11" rowspan="1">test the 'room' flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a00c"></span>A00C</td>
-<td class="instruction">JR Z,$A012</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="A007.html#a012">in_permitted_area_end_bit_0</a></td>
+<td class="comment-11" rowspan="1">flag not set - jump</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a00e"></span>A00E</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">mask off room flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a010"></span>A010</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">does room match room_index?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a011"></span>A011</td>
 <td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">return irrespective</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">in_permitted_area_end_bit_0</td>
 <td class="address-2"><span id="a012"></span>A012</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="4">if (*HL) return; // return with flags NZ</td>
+<td class="comment-11" rowspan="1">bank A</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a013"></span>A013</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">fetch room_index</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a014"></span>A014</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a015"></span>A015</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">return if room_index is nonzero</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a016"></span>A016</td>
 <td class="instruction">LD DE,$81B8</td>
 <td class="comment-11" rowspan="1">DE = &amp;hero_map_position.x;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a019"></span>A019</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">unbank A - restoring original A</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -138,9 +138,9 @@ FALL THROUGH to within_camp_bounds.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

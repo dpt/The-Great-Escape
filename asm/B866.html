@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7B</a>.
+Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
 <table class="input-0">
@@ -55,135 +55,135 @@ This can return a vischar OR an itemstruct, but not both.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_sprites</td>
 <td class="address-2"><span id="b866"></span>B866</td>
-<td class="instruction">CALL <a href="B89C.html">$B89C</a></td>
+<td class="instruction">CALL <a href="B89C.html">locate_vischar_or_itemstruct</a></td>
 <td class="comment-11" rowspan="1">locate_vischar_or_itemstruct();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b869"></span>B869</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">if (!Z) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b86a"></span>B86A</td>
 <td class="instruction">BIT 6,A</td>
 <td class="comment-11" rowspan="2">if ((A &amp; (1&lt;&lt;6)) == 0) &lt;% // mysteryflagconst874 'item found' flag</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b86c"></span>B86C</td>
-<td class="instruction">JR NZ,$B88F</td>
+<td class="instruction">JR NZ,<a href="B866.html#b88f">plot_sprites_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b86e"></span>B86E</td>
-<td class="instruction">CALL <a href="E420.html">$E420</a></td>
+<td class="instruction">CALL <a href="E420.html">setup_vischar_plotting</a></td>
 <td class="comment-11" rowspan="1">setup_vischar_plotting();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b871"></span>B871</td>
-<td class="instruction">JR NZ,$B866</td>
+<td class="instruction">JR NZ,<a href="B866.html#b866">plot_sprites</a></td>
 <td class="comment-11" rowspan="1">if (!Z) goto plot_sprites;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b873"></span>B873</td>
-<td class="instruction">CALL <a href="B916.html">$B916</a></td>
+<td class="instruction">CALL <a href="B916.html">render_mask_buffer</a></td>
 <td class="comment-11" rowspan="1">render_mask_buffer();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b876"></span>B876</td>
 <td class="instruction">LD A,($81BD)</td>
 <td class="comment-11" rowspan="3">if (searchlight_state != searchlight_STATE_SEARCHING) searchlight_mask_test();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b879"></span>B879</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b87b"></span>B87B</td>
-<td class="instruction">CALL NZ,<a href="B83B.html">$B83B</a></td>
+<td class="instruction">CALL NZ,<a href="B83B.html">searchlight_mask_test</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b87e"></span>B87E</td>
 <td class="instruction">LD A,(IY+$1E)</td>
 <td class="comment-11" rowspan="1">A = IY[0x1E];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b881"></span>B881</td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="2">if (A != 3) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b883"></span>B883</td>
-<td class="instruction">JR Z,$B88A</td>
+<td class="instruction">JR Z,<a href="B866.html#b88a">plot_sprites_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b885"></span>B885</td>
-<td class="instruction">CALL <a href="E102.html">$E102</a></td>
+<td class="instruction">CALL <a href="E102.html">masked_sprite_plotter_24_wide_vischar</a></td>
 <td class="comment-11" rowspan="1">masked_sprite_plotter_24_wide_vischar();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b888"></span>B888</td>
-<td class="instruction">JR $B866</td>
+<td class="instruction">JR <a href="B866.html#b866">plot_sprites</a></td>
 <td class="comment-11" rowspan="1">goto plot_sprites; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_sprites_0</td>
 <td class="address-2"><span id="b88a"></span>B88A</td>
-<td class="instruction">CALL Z,<a href="E2A2.html">$E2A2</a></td>
+<td class="instruction">CALL Z,<a href="E2A2.html">masked_sprite_plotter_16_wide_vischar</a></td>
 <td class="comment-11" rowspan="1">if (Z) masked_sprite_plotter_16_wide_vischar(); // odd to test for Z since it's always set</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b88d"></span>B88D</td>
-<td class="instruction">JR $B866</td>
+<td class="instruction">JR <a href="B866.html#b866">plot_sprites</a></td>
 <td class="comment-11" rowspan="1">goto plot_sprites; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">plot_sprites_1</td>
 <td class="address-2"><span id="b88f"></span>B88F</td>
-<td class="instruction">CALL <a href="DC41.html">$DC41</a></td>
+<td class="instruction">CALL <a href="DC41.html">setup_item_plotting</a></td>
 <td class="comment-11" rowspan="1">else &lt;% setup_item_plotting();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b892"></span>B892</td>
-<td class="instruction">JR NZ,$B866</td>
+<td class="instruction">JR NZ,<a href="B866.html#b866">plot_sprites</a></td>
 <td class="comment-11" rowspan="1">if (!Z) goto plot_sprites;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b894"></span>B894</td>
-<td class="instruction">CALL <a href="B916.html">$B916</a></td>
+<td class="instruction">CALL <a href="B916.html">render_mask_buffer</a></td>
 <td class="comment-11" rowspan="1">render_mask_buffer();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b897"></span>B897</td>
-<td class="instruction">CALL <a href="E29F.html">$E29F</a></td>
+<td class="instruction">CALL <a href="E29F.html">masked_sprite_plotter_16_wide_item</a></td>
 <td class="comment-11" rowspan="1">masked_sprite_plotter_16_wide_item();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b89a"></span>B89A</td>
-<td class="instruction">JR $B866</td>
+<td class="instruction">JR <a href="B866.html#b866">plot_sprites</a></td>
 <td class="comment-11" rowspan="1">goto plot_sprites; %&gt;</td>
 </tr>
 </table>
@@ -195,9 +195,9 @@ This can return a vischar OR an itemstruct, but not both.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

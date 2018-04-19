@@ -10,7 +10,7 @@
 <body class="Asm-g">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Game status buffer</td>
 </tr>
 </table>
@@ -43,43 +43,43 @@
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">message_queue</td>
 <td class="address-1"><span id="7cfc"></span>7CFC</td>
 <td class="instruction">DEFB $FF,$FF,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-11" rowspan="3">Queue of message indexes. Pairs of bytes + 0xFF terminator.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d04"></span>7D04</td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d0c"></span>7D0C</td>
 <td class="instruction">DEFB $00,$00,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">message_display_delay</td>
 <td class="address-1"><span id="7d0f"></span>7D0F</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">Decrementing counter which shows the next message when it reaches zero.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">message_display_index</td>
 <td class="address-1"><span id="7d10"></span>7D10</td>
 <td class="instruction">DEFB $80</td>
 <td class="comment-11" rowspan="1">Index into the message we're displaying or wiping. If 128 then next_message. If &gt; 128 then wipe_message. Else display.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">message_queue_pointer</td>
 <td class="address-1"><span id="7d11"></span>7D11</td>
 <td class="instruction">DEFW $7CFE</td>
 <td class="comment-11" rowspan="1">Pointer to the next available slot in the message queue.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">current_message_character</td>
 <td class="address-1"><span id="7d13"></span>7D13</td>
 <td class="instruction">DEFW $0000</td>
 <td class="comment-11" rowspan="1">Pointer to the next message character to be displayed.</td>
@@ -93,9 +93,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

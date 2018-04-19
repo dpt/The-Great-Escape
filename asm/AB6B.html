@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="7B36.html">7B36</a>, <a href="7B8B.html">7B8B</a>, <a href="A1D3.html">A1D3</a>, <a href="ABA0.html">ABA0</a>, <a href="B3F6.html">B3F6</a> and <a href="B83B.html">B83B</a>.
+Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html">drop_item</a>, <a href="A1D3.html">event_another_day_dawns</a>, <a href="ABA0.html">zoombox</a>, <a href="B3F6.html">action_shovel</a> and <a href="B83B.html">searchlight_mask_test</a>.
 </div>
 </div>
 <table class="input-0">
@@ -48,21 +48,21 @@ Used by the routines at <a href="7B36.html">7B36</a>, <a href="7B8B.html">7B8B</
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">choose_game_window_attributes</td>
 <td class="address-2"><span id="ab6b"></span>AB6B</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="3">if (room_index &lt; room_29_SECOND_TUNNEL_START) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab6e"></span>AB6E</td>
 <td class="instruction">CP $1D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab70"></span>AB70</td>
-<td class="instruction">JR NC,$AB89</td>
+<td class="instruction">JR NC,<a href="AB6B.html#ab89">choose_game_window_attributes_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -76,73 +76,73 @@ The hero is outside, or in a room, but not in a tunnel.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab72"></span>AB72</td>
 <td class="instruction">LD A,($A146)</td>
 <td class="comment-11" rowspan="1">A = day_or_night;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab75"></span>AB75</td>
 <td class="instruction">LD C,$07</td>
 <td class="comment-11" rowspan="1">C = attribute_WHITE_OVER_BLACK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab77"></span>AB77</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) goto set_attribute_from_C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab78"></span>AB78</td>
-<td class="instruction">JR Z,$AB84</td>
+<td class="instruction">JR Z,<a href="AB6B.html#ab84">choose_game_window_attributes_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab7a"></span>AB7A</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab7d"></span>AB7D</td>
 <td class="instruction">LD C,$41</td>
 <td class="comment-11" rowspan="1">C = attribute_BRIGHT_BLUE_OVER_BLACK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab7f"></span>AB7F</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) goto set_attribute_from_C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab80"></span>AB80</td>
-<td class="instruction">JR Z,$AB84</td>
+<td class="instruction">JR Z,<a href="AB6B.html#ab84">choose_game_window_attributes_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab82"></span>AB82</td>
 <td class="instruction">LD C,$05</td>
 <td class="comment-11" rowspan="1">C = attribute_CYAN_OVER_BLACK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">choose_game_window_attributes_0</td>
 <td class="address-2"><span id="ab84"></span>AB84</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">set_attribute_from_C: A = C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">choose_game_window_attributes_1</td>
 <td class="address-2"><span id="ab85"></span>AB85</td>
 <td class="instruction">LD ($AB6A),A</td>
 <td class="comment-11" rowspan="1">set_attribute_from_A: game_window_attribute = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab88"></span>AB88</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -158,13 +158,13 @@ The hero is in a tunnel.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">choose_game_window_attributes_2</td>
 <td class="address-2"><span id="ab89"></span>AB89</td>
 <td class="instruction">LD C,$02</td>
 <td class="comment-11" rowspan="1">else &lt;% C = attribute_RED_OVER_BLACK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab8b"></span>AB8B</td>
 <td class="instruction">LD HL,($8215)</td>
 <td class="comment-11" rowspan="1">HL = items_held;</td>
@@ -180,33 +180,33 @@ If the hero holds a torch - draw the room.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab8e"></span>AB8E</td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-11" rowspan="5">if (L == item_TORCH || H == item_TORCH) goto set_attribute_from_C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab90"></span>AB90</td>
 <td class="instruction">CP L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab91"></span>AB91</td>
-<td class="instruction">JR Z,$AB84</td>
+<td class="instruction">JR Z,<a href="AB6B.html#ab84">choose_game_window_attributes_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab93"></span>AB93</td>
 <td class="instruction">CP H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab94"></span>AB94</td>
-<td class="instruction">JR Z,$AB84</td>
+<td class="instruction">JR Z,<a href="AB6B.html#ab84">choose_game_window_attributes_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -220,27 +220,27 @@ The hero holds no torch - draw nothing.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab96"></span>AB96</td>
-<td class="instruction">CALL <a href="6A27.html">$6A27</a></td>
+<td class="instruction">CALL <a href="6A27.html">wipe_visible_tiles</a></td>
 <td class="comment-11" rowspan="1">wipe_visible_tiles();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab99"></span>AB99</td>
-<td class="instruction">CALL <a href="6B42.html">$6B42</a></td>
+<td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
 <td class="comment-11" rowspan="1">plot_interior_tiles();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab9c"></span>AB9C</td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-11" rowspan="1">A = attribute_BLUE_OVER_BLACK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="ab9e"></span>AB9E</td>
-<td class="instruction">JR $AB85</td>
+<td class="instruction">JR <a href="AB6B.html#ab85">choose_game_window_attributes_1</a></td>
 <td class="comment-11" rowspan="1">goto set_attribute_from_A; %&gt;</td>
 </tr>
 </table>
@@ -252,9 +252,9 @@ The hero holds no torch - draw nothing.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

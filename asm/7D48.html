@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9D7B.html">9D7B</a>.
+Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
 <table class="input-0">
@@ -55,37 +55,37 @@ Proceed only if message_display_delay is zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">message_display</td>
 <td class="address-2"><span id="7d48"></span>7D48</td>
 <td class="instruction">LD A,($7D0F)</td>
 <td class="comment-11" rowspan="4">if (message_display_delay &gt; 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d4b"></span>7D4B</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d4c"></span>7D4C</td>
-<td class="instruction">JP Z,$7D54</td>
+<td class="instruction">JP Z,<a href="7D48.html#7d54">message_display_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d4f"></span>7D4F</td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d50"></span>7D50</td>
 <td class="instruction">LD ($7D0F),A</td>
 <td class="comment-11" rowspan="1">message_display_delay--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d53"></span>7D53</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -101,99 +101,99 @@ message_display_delay reached zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">message_display_0</td>
 <td class="address-2"><span id="7d54"></span>7D54</td>
 <td class="instruction">LD A,($7D10)</td>
 <td class="comment-11" rowspan="1">A = message_display_index;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d57"></span>7D57</td>
 <td class="instruction">CP $80</td>
 <td class="comment-11" rowspan="2">if (A == 128) goto next_message; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d59"></span>7D59</td>
-<td class="instruction">JR Z,<a href="7D99.html">$7D99</a></td>
+<td class="instruction">JR Z,<a href="7D99.html">next_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d5b"></span>7D5B</td>
-<td class="instruction">JR NC,<a href="7D87.html">$7D87</a></td>
+<td class="instruction">JR NC,<a href="7D87.html">wipe_message</a></td>
 <td class="comment-11" rowspan="1">else if (A &gt; 128) goto wipe_message; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d5d"></span>7D5D</td>
 <td class="instruction">LD HL,($7D13)</td>
 <td class="comment-11" rowspan="1">else &lt;% HL = current_message_character;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d60"></span>7D60</td>
 <td class="instruction">LD DE,$50E0</td>
 <td class="comment-11" rowspan="3">DE = message_text_screen_address + A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d63"></span>7D63</td>
 <td class="instruction">OR E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d64"></span>7D64</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d65"></span>7D65</td>
-<td class="instruction">CALL <a href="7D2F.html">$7D2F</a></td>
+<td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
 <td class="comment-11" rowspan="1">plot_glyph();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d68"></span>7D68</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="3">message_display_index = E &amp; 31;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d69"></span>7D69</td>
 <td class="instruction">AND $1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d6b"></span>7D6B</td>
 <td class="instruction">LD ($7D10),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d6e"></span>7D6E</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">A = *++HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d6f"></span>7D6F</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d70"></span>7D70</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A == 255) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d72"></span>7D72</td>
-<td class="instruction">JP NZ,$7D83</td>
+<td class="instruction">JP NZ,<a href="7D48.html#7d83">message_display_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -207,49 +207,49 @@ Leave the message for 31 turns, then wipe it.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d75"></span>7D75</td>
 <td class="instruction">LD A,$1F</td>
 <td class="comment-11" rowspan="2">message_display_delay = 31;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d77"></span>7D77</td>
 <td class="instruction">LD ($7D0F),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d7a"></span>7D7A</td>
 <td class="instruction">LD A,($7D10)</td>
 <td class="comment-11" rowspan="3">message_display_index |= 128;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d7d"></span>7D7D</td>
 <td class="instruction">OR $80</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d7f"></span>7D7F</td>
 <td class="instruction">LD ($7D10),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d82"></span>7D82</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">message_display_1</td>
 <td class="address-2"><span id="7d83"></span>7D83</td>
 <td class="instruction">LD ($7D13),HL</td>
 <td class="comment-11" rowspan="1">else &lt;% current_message_character = HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="7d86"></span>7D86</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -263,9 +263,9 @@ Leave the message for 31 turns, then wipe it.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

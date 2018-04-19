@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -21,16 +21,16 @@
 <td class="next"><span class="next-1">Next: <a href="A3BB.html">A3BB</a></span></td>
 </tr>
 </table>
-<div class="description">A38C: Set location of a character.</div>
+<div class="description">A38C: Set the route for a character.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A26A.html">A26A</a>, <a href="A35F.html">A35F</a> and <a href="A373.html">A373</a>.
+Used by the routines at <a href="A26A.html">event_search_light</a>, <a href="A35F.html">set_prisoners_and_guards_route</a> and <a href="A373.html">set_prisoners_and_guards_route_B</a>.
 </div>
 <div class="paragraph">
-Finds a charstruct, or a vischar, and stores a location in its target.
+Finds a charstruct, or a vischar, and stores a route.
 </div>
 </div>
 <table class="input-1">
@@ -43,11 +43,11 @@ Finds a charstruct, or a vischar, and stores a location in its target.
 </tr>
 <tr>
 <td class="register">A'</td>
-<td class="register-desc">Location low.</td>
+<td class="register-desc">Route index.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc">Location high.</td>
+<td class="register-desc">Route step.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -59,37 +59,37 @@ Finds a charstruct, or a vischar, and stores a location in its target.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_character_route</td>
 <td class="address-2"><span id="a38c"></span>A38C</td>
-<td class="instruction">CALL <a href="C7B9.html">$C7B9</a></td>
+<td class="instruction">CALL <a href="C7B9.html">get_character_struct</a></td>
 <td class="comment-11" rowspan="1">HL = get_character_struct(A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a38f"></span>A38F</td>
 <td class="instruction">BIT 6,(HL)</td>
 <td class="comment-11" rowspan="2">if ((*HL &amp; characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a391"></span>A391</td>
-<td class="instruction">JP Z,$A3AA</td>
+<td class="instruction">JP Z,<a href="A38C.html#a3aa">set_character_route_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a394"></span>A394</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a395"></span>A395</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL &amp; characterstruct_BYTE0_MASK;</td>
+<td class="comment-11" rowspan="2">A = *HL &amp; characterstruct_CHARACTER_MASK;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a396"></span>A396</td>
 <td class="instruction">AND $1F</td>
 <td class="comment-01" rowspan="1"></td>
@@ -105,143 +105,143 @@ Search non-player characters to see if this character is already on-screen.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a398"></span>A398</td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a39a"></span>A39A</td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="1">DE = 32; // stride</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a39d"></span>A39D</td>
 <td class="instruction">LD HL,$8020</td>
 <td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_character_route_0</td>
 <td class="address-2"><span id="a3a0"></span>A3A0</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% if (A == *HL) goto found;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a1"></span>A3A1</td>
-<td class="instruction">JR Z,$A3B3</td>
+<td class="instruction">JR Z,<a href="A38C.html#a3b3">set_character_route_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a3"></span>A3A3</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a4"></span>A3A4</td>
-<td class="instruction">DJNZ $A3A0</td>
+<td class="instruction">DJNZ <a href="A38C.html#a3a0">set_character_route_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a6"></span>A3A6</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a7"></span>A3A7</td>
-<td class="instruction">JR $A3B2</td>
+<td class="instruction">JR <a href="A38C.html#a3b2">set_character_route_2</a></td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a9"></span>A3A9</td>
 <td class="instruction">DEFB $19</td>
 <td class="comment-11" rowspan="1">Unreferenced byte.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_character_route_1</td>
 <td class="address-2"><span id="a3aa"></span>A3AA</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="5">not_set: HL += 5; // HL = charstruct-&gt;target</td>
+<td class="comment-11" rowspan="5">not_set: HL += 5; // HL = charstruct-&gt;route</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3ab"></span>A3AB</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3ac"></span>A3AC</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3ad"></span>A3AD</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3ae"></span>A3AE</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3af"></span>A3AF</td>
-<td class="instruction">CALL <a href="A3ED.html">$A3ED</a></td>
-<td class="comment-11" rowspan="1">store_location();</td>
+<td class="instruction">CALL <a href="A3ED.html">store_route</a></td>
+<td class="comment-11" rowspan="1">store_route();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_character_route_2</td>
 <td class="address-2"><span id="a3b2"></span>A3B2</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">exit: return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">set_character_route_3</td>
 <td class="address-2"><span id="a3b3"></span>A3B3</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">found:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3b4"></span>A3B4</td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3b5"></span>A3B5</td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="comment-11" rowspan="2">*HL++ &amp;= ~vischar_FLAGS_DOOR_THING;</td>
+<td class="comment-11" rowspan="2">*HL++ &amp;= ~vischar_FLAGS_TARGET_IS_DOOR;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3b7"></span>A3B7</td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a3b8"></span>A3B8</td>
-<td class="instruction">CALL <a href="A3ED.html">$A3ED</a></td>
-<td class="comment-11" rowspan="1">store_location(); // HL = vischar-&gt;target</td>
+<td class="instruction">CALL <a href="A3ED.html">store_route</a></td>
+<td class="comment-11" rowspan="1">store_route(); // HL = vischar-&gt;route</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH into set_target.
+FALL THROUGH into set_route.
 </div>
 </div>
 </td>
@@ -255,9 +255,9 @@ FALL THROUGH into set_target.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

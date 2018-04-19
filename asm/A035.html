@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="9D7B.html">9D7B</a> and <a href="F4B7.html">F4B7</a>.
+Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="F4B7.html">menu_screen</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,13 +45,13 @@ Used by the routines at <a href="9D7B.html">9D7B</a> and <a href="F4B7.html">F4B
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wave_morale_flag</td>
 <td class="address-2"><span id="a035"></span>A035</td>
 <td class="instruction">LD HL,$A12F</td>
 <td class="comment-11" rowspan="1">HL = &amp;game_counter;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a038"></span>A038</td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">(*HL)++;</td>
@@ -67,57 +67,57 @@ Wave the flag on every other turn.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a039"></span>A039</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="3">if (*HL &amp; 1) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a03a"></span>A03A</td>
 <td class="instruction">AND $01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a03c"></span>A03C</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a03d"></span>A03D</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a03e"></span>A03E</td>
 <td class="instruction">LD A,($A13C)</td>
 <td class="comment-11" rowspan="1">A = morale;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a041"></span>A041</td>
 <td class="instruction">LD HL,$A140</td>
 <td class="comment-11" rowspan="1">HL = &amp;displayed_morale;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a044"></span>A044</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">if (A != *HL) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a045"></span>A045</td>
-<td class="instruction">JR Z,$A05D</td>
+<td class="instruction">JR Z,<a href="A035.html#a05d">wave_morale_flag_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a047"></span>A047</td>
-<td class="instruction">JP NC,$A053</td>
+<td class="instruction">JP NC,<a href="A035.html#a053">wave_morale_flag_0</a></td>
 <td class="comment-11" rowspan="1">if (A &lt; *HL) &lt;%</td>
 </tr>
 <tr>
@@ -131,27 +131,27 @@ Decreasing morale.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a04a"></span>A04A</td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">(*HL)--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a04b"></span>A04B</td>
 <td class="instruction">LD HL,($A141)</td>
 <td class="comment-11" rowspan="1">HL = moraleflag_screen_address;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a04e"></span>A04E</td>
-<td class="instruction">CALL <a href="7CE9.html">$7CE9</a></td>
+<td class="instruction">CALL <a href="7CE9.html">get_next_scanline</a></td>
 <td class="comment-11" rowspan="1">get_next_scanline(); %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a051"></span>A051</td>
-<td class="instruction">JR $A05A</td>
+<td class="instruction">JR <a href="A035.html#a05a">wave_morale_flag_1</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
@@ -165,75 +165,85 @@ Increasing morale.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wave_morale_flag_0</td>
 <td class="address-2"><span id="a053"></span>A053</td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">(*HL)++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a054"></span>A054</td>
 <td class="instruction">LD HL,($A141)</td>
 <td class="comment-11" rowspan="1">HL = moraleflag_screen_address;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a057"></span>A057</td>
-<td class="instruction">CALL <a href="A082.html">$A082</a></td>
+<td class="instruction">CALL <a href="A082.html">get_prev_scanline</a></td>
 <td class="comment-11" rowspan="1">get_prev_scanline(); %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wave_morale_flag_1</td>
 <td class="address-2"><span id="a05a"></span>A05A</td>
 <td class="instruction">LD ($A141),HL</td>
 <td class="comment-11" rowspan="1">moraleflag_screen_address = HL; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wave_morale_flag_2</td>
 <td class="address-2"><span id="a05d"></span>A05D</td>
 <td class="instruction">LD DE,$DA6B</td>
 <td class="comment-11" rowspan="1">DE = bitmap_flag_down;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a060"></span>A060</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a061"></span>A061</td>
 <td class="instruction">BIT 1,(HL)</td>
 <td class="comment-11" rowspan="3">if (*HL &amp; 2) DE = bitmap_flag_up;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a063"></span>A063</td>
-<td class="instruction">JR Z,$A068</td>
+<td class="instruction">JR Z,<a href="A035.html#a068">wave_morale_flag_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a065"></span>A065</td>
 <td class="instruction">LD DE,$DA29</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">wave_morale_flag_3</td>
 <td class="address-2"><span id="a068"></span>A068</td>
 <td class="instruction">LD HL,($A141)</td>
-<td class="comment-11" rowspan="2">HL = moraleflag_screen_address;</td>
+<td class="comment-11" rowspan="1">HL = moraleflag_screen_address;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="routine-comment" colspan="4">
+<span id="a06b"></span>
+<div class="comments">
+<div class="paragraph">
+Plot the flag always at 24x25 pixels in size. Note that the last three rows of the bitmap_flag_up bitmap overlap with the first three of the bitmap_flag_down bitmap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a06b"></span>A06B</td>
 <td class="instruction">LD BC,$0319</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">}</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a06e"></span>A06E</td>
-<td class="instruction">JP <a href="7CBE.html">$7CBE</a></td>
+<td class="instruction">JP <a href="7CBE.html">plot_bitmap</a></td>
 <td class="comment-11" rowspan="1">plot_bitmap(0x0319); return; // dimensions: 24 x 25 // args-BC // exit via</td>
 </tr>
 </table>
@@ -245,9 +255,9 @@ Increasing morale.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

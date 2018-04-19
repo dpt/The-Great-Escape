@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="68F4.html">68F4</a>, <a href="A0E9.html">A0E9</a> and <a href="A0F2.html">A0F2</a>.
+Used by the routines at <a href="68F4.html">enter_room</a>, <a href="A0E9.html">increase_morale_by_10_score_by_50</a> and <a href="A0F2.html">increase_morale_by_5_score_by_5</a>.
 </div>
 </div>
 <table class="input-1">
@@ -58,69 +58,69 @@ Increment the score digit-wise until delta is zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">increase_score</td>
 <td class="address-2"><span id="a0f9"></span>A0F9</td>
 <td class="instruction">LD A,$0A</td>
 <td class="comment-11" rowspan="1">A = 10;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a0fb"></span>A0FB</td>
 <td class="instruction">LD HL,$A136</td>
 <td class="comment-11" rowspan="1">HL = &amp;score_digits + 4;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">increase_score_0</td>
 <td class="address-2"><span id="a0fe"></span>A0FE</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">do &lt;% tmp = HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">increase_score_increment_score</td>
 <td class="address-2"><span id="a0ff"></span>A0FF</td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">increment_score: (*HL)++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a100"></span>A100</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="5">if (*HL == A) &lt;% *HL-- = 0; goto increment_score; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a101"></span>A101</td>
-<td class="instruction">JR NZ,$A108</td>
+<td class="instruction">JR NZ,<a href="A0F9.html#a108">increase_score_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a103"></span>A103</td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a105"></span>A105</td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a106"></span>A106</td>
-<td class="instruction">JR $A0FF</td>
+<td class="instruction">JR <a href="A0F9.html#a0ff">increase_score_increment_score</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">increase_score_1</td>
 <td class="address-2"><span id="a108"></span>A108</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">HL = tmp;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a109"></span>A109</td>
-<td class="instruction">DJNZ $A0FE</td>
+<td class="instruction">DJNZ <a href="A0F9.html#a0fe">increase_score_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
@@ -142,9 +142,9 @@ FALL THROUGH into plot_score.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

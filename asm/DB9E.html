@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="6939.html">6939</a> and <a href="9D7B.html">9D7B</a>.
+Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
 <div class="paragraph">
 Iterates over item structs, testing to see if each item is within range (-1..22, 0..15) of the map position.
@@ -51,237 +51,237 @@ This is similar to is_item_discoverable_interior in that it iterates over all it
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items</td>
 <td class="address-2"><span id="db9e"></span>DB9E</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">A = room_index;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dba1"></span>DBA1</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="3">if (A == room_NONE) A = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dba3"></span>DBA3</td>
-<td class="instruction">JR NZ,$DBA6</td>
+<td class="instruction">JR NZ,<a href="DB9E.html#dba6">mark_nearby_items_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dba5"></span>DBA5</td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items_0</td>
 <td class="address-2"><span id="dba6"></span>DBA6</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">C = A; // room ref</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dba7"></span>DBA7</td>
 <td class="instruction">LD DE,($81BB)</td>
 <td class="comment-11" rowspan="1">DE = map_position;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbab"></span>DBAB</td>
 <td class="instruction">LD B,$10</td>
 <td class="comment-11" rowspan="1">B = item__LIMIT;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbad"></span>DBAD</td>
 <td class="instruction">LD HL,$76C9</td>
 <td class="comment-11" rowspan="1">HL = &amp;item_structs[0].room;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items_1</td>
 <td class="address-2"><span id="dbb0"></span>DBB0</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">do &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb1"></span>DBB1</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="4">if (HL[0] &amp; itemstruct_ROOM_MASK == C) &lt;% // compare room</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb2"></span>DBB2</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb4"></span>DBB4</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb5"></span>DBB5</td>
-<td class="instruction">JR NZ,$DBDC</td>
+<td class="instruction">JR NZ,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb7"></span>DBB7</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="13">if (HL[4] &gt; E - 2 &amp;&amp; HL[4] &lt; E + 23) &lt;% // itemstruct.screenpos.x</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb8"></span>DBB8</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb9"></span>DBB9</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbba"></span>DBBA</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbb"></span>DBBB</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbc"></span>DBBC</td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbd"></span>DBBD</td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbe"></span>DBBE</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbf"></span>DBBF</td>
-<td class="instruction">JR Z,$DBC3</td>
+<td class="instruction">JR Z,<a href="DB9E.html#dbc3">mark_nearby_items_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc1"></span>DBC1</td>
-<td class="instruction">JR NC,$DBDC</td>
+<td class="instruction">JR NC,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items_2</td>
 <td class="address-2"><span id="dbc3"></span>DBC3</td>
 <td class="instruction">ADD A,$19</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc5"></span>DBC5</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc6"></span>DBC6</td>
-<td class="instruction">JR C,$DBDC</td>
+<td class="instruction">JR C,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc8"></span>DBC8</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="9">if (HL[5] &gt; D - 1 &amp;&amp; HL[5] &lt; D + 16) &lt;% // itemstruct.screenpos.y</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc9"></span>DBC9</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbca"></span>DBCA</td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbcb"></span>DBCB</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbcc"></span>DBCC</td>
-<td class="instruction">JR Z,$DBD0</td>
+<td class="instruction">JR Z,<a href="DB9E.html#dbd0">mark_nearby_items_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbce"></span>DBCE</td>
-<td class="instruction">JR NC,$DBDC</td>
+<td class="instruction">JR NC,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items_3</td>
 <td class="address-2"><span id="dbd0"></span>DBD0</td>
 <td class="instruction">ADD A,$11</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd2"></span>DBD2</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd3"></span>DBD3</td>
-<td class="instruction">JR C,$DBDC</td>
+<td class="instruction">JR C,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd5"></span>DBD5</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd6"></span>DBD6</td>
 <td class="instruction">SET 7,(HL)</td>
 <td class="comment-11" rowspan="2">*HL |= itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7; // sampled HL=$772B &amp;itemstruct_14.room</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd8"></span>DBD8</td>
 <td class="instruction">SET 6,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbda"></span>DBDA</td>
-<td class="instruction">JR $DBE1</td>
+<td class="instruction">JR <a href="DB9E.html#dbe1">mark_nearby_items_5</a></td>
 <td class="comment-11" rowspan="1">goto next; %&gt; %&gt; %&gt;</td>
 </tr>
 <tr>
@@ -295,61 +295,61 @@ Reset.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items_4</td>
 <td class="address-2"><span id="dbdc"></span>DBDC</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbdd"></span>DBDD</td>
 <td class="instruction">RES 7,(HL)</td>
 <td class="comment-11" rowspan="2">*HL &amp;= ~(itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbdf"></span>DBDF</td>
 <td class="instruction">RES 6,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items_5</td>
 <td class="address-2"><span id="dbe1"></span>DBE1</td>
 <td class="instruction">LD A,$07</td>
 <td class="comment-11" rowspan="5">next: HL += 7; // stride</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe3"></span>DBE3</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe4"></span>DBE4</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe5"></span>DBE5</td>
-<td class="instruction">JR NC,$DBE8</td>
+<td class="instruction">JR NC,<a href="DB9E.html#dbe8">mark_nearby_items_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe7"></span>DBE7</td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">mark_nearby_items_6</td>
 <td class="address-2"><span id="dbe8"></span>DBE8</td>
-<td class="instruction">DJNZ $DBB0</td>
+<td class="instruction">DJNZ <a href="DB9E.html#dbb0">mark_nearby_items_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dbea"></span>DBEA</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -363,9 +363,9 @@ Reset.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

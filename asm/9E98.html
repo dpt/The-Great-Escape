@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9E07.html">9E07</a>.
+Used by the routine at <a href="9E07.html">process_player_input</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,25 +45,25 @@ Used by the routine at <a href="9E07.html">9E07</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">picking_lock</td>
 <td class="address-2"><span id="9e98"></span>9E98</td>
 <td class="instruction">LD HL,$A12F</td>
 <td class="comment-11" rowspan="4">if (player_locked_out_until != game_counter) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e9b"></span>9E9B</td>
 <td class="instruction">LD A,($A145)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e9e"></span>9E9E</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9e9f"></span>9E9F</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
@@ -79,27 +79,27 @@ Countdown reached: Unlock the door.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ea0"></span>9EA0</td>
 <td class="instruction">LD HL,($A143)</td>
 <td class="comment-11" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~door_LOCKED;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ea3"></span>9EA3</td>
 <td class="instruction">RES 7,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ea5"></span>9EA5</td>
 <td class="instruction">LD B,$06</td>
-<td class="comment-11" rowspan="2">queue_message_for_display(message_IT_IS_OPEN);</td>
+<td class="comment-11" rowspan="2">queue_message(message_IT_IS_OPEN);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ea7"></span>9EA7</td>
-<td class="instruction">CALL <a href="7D15.html">$7D15</a></td>
+<td class="instruction">CALL <a href="7D15.html">queue_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -107,37 +107,37 @@ Countdown reached: Unlock the door.
 <span id="9eaa"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="9EB2.html">9EB2</a>.
+This entry point is used by the routine at <a href="9EB2.html">cutting_wire</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">clear_lockpick_wirecut_flags_and_return</td>
 <td class="address-2"><span id="9eaa"></span>9EAA</td>
 <td class="instruction">LD HL,$8001</td>
 <td class="comment-11" rowspan="4">clear_lockpick_wirecut_flags_and_return: $8001 &amp;= ~(vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9ead"></span>9EAD</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9eae"></span>9EAE</td>
 <td class="instruction">AND $FC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9eb0"></span>9EB0</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="9eb1"></span>9EB1</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -151,9 +151,9 @@ This entry point is used by the routine at <a href="9EB2.html">9EB2</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

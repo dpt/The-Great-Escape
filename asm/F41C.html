@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="F271.html">F271</a>.
+Used by the routine at <a href="F271.html">check_menu_keys</a>.
 </div>
 </div>
 <table class="input-0">
@@ -48,121 +48,121 @@ Used by the routine at <a href="F271.html">F271</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">menu_keyscan</td>
 <td class="address-2"><span id="f41c"></span>F41C</td>
 <td class="instruction">LD BC,$F7FE</td>
 <td class="comment-11" rowspan="1">BC = port_KEYBOARD_12345;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f41f"></span>F41F</td>
 <td class="instruction">LD E,$00</td>
 <td class="comment-11" rowspan="1">E = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f421"></span>F421</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f423"></span>F423</td>
 <td class="instruction">CPL</td>
 <td class="comment-11" rowspan="2">A = ~A &amp; 0x0F;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f424"></span>F424</td>
 <td class="instruction">AND $0F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f426"></span>F426</td>
-<td class="instruction">JR Z,$F432</td>
+<td class="instruction">JR Z,<a href="F41C.html#f432">menu_keyscan_2</a></td>
 <td class="comment-11" rowspan="1">if (A) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f428"></span>F428</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-11" rowspan="1">B = 4; /* iterations */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">menu_keyscan_0</td>
 <td class="address-2"><span id="f42a"></span>F42A</td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="1">do &lt;% A &gt;&gt;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f42b"></span>F42B</td>
 <td class="instruction">INC E</td>
 <td class="comment-11" rowspan="1">E++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f42c"></span>F42C</td>
-<td class="instruction">JR C,$F430</td>
+<td class="instruction">JR C,<a href="F41C.html#f430">menu_keyscan_1</a></td>
 <td class="comment-11" rowspan="1">if (carry) goto found;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f42e"></span>F42E</td>
-<td class="instruction">DJNZ $F42A</td>
+<td class="instruction">DJNZ <a href="F41C.html#f42a">menu_keyscan_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">menu_keyscan_1</td>
 <td class="address-2"><span id="f430"></span>F430</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="1">found: A = E;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f431"></span>F431</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt; /* 1..4 */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">menu_keyscan_2</td>
 <td class="address-2"><span id="f432"></span>F432</td>
 <td class="instruction">LD B,$EF</td>
 <td class="comment-11" rowspan="1">else &lt;% B = 0xEF; /* port_KEYBOARD_09876 */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f434"></span>F434</td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f436"></span>F436</td>
 <td class="instruction">AND $01</td>
 <td class="comment-11" rowspan="1">A &amp;= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f438"></span>F438</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="1">A = E; /* interleaved */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f439"></span>F439</td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">if (Z) return; /* always zero */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f43a"></span>F43A</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">A = 0xFF; /* no keypress */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="f43c"></span>F43C</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -176,9 +176,9 @@ Used by the routine at <a href="F271.html">F271</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

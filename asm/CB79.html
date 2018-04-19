@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -21,13 +21,13 @@
 <td class="next"><span class="next-1">Next: <a href="CB85.html">CB85</a></span></td>
 </tr>
 </table>
-<div class="description">CB79: Return the A'th element of table_7738.</div>
+<div class="description">CB79: Return a route.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="C651.html">C651</a> and <a href="CA81.html">CA81</a>.
+Used by the routines at <a href="C651.html">get_target</a> and <a href="CA81.html">target_reached</a>.
 </div>
 </div>
 <table class="input-1">
@@ -45,7 +45,7 @@ Used by the routines at <a href="C651.html">C651</a> and <a href="CA81.html">CA8
 </tr>
 <tr>
 <td class="register">DE</td>
-<td class="register-desc">Element.</td>
+<td class="register-desc">Pointer to route data.</td>
 </tr>
 <tr>
 <td class="register">HL</td>
@@ -55,55 +55,55 @@ Used by the routines at <a href="C651.html">C651</a> and <a href="CA81.html">CA8
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_route</td>
 <td class="address-2"><span id="cb79"></span>CB79</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="8">DE = table_7738[A];</td>
+<td class="comment-11" rowspan="8">DE = routes[A];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb7a"></span>CB7A</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb7b"></span>CB7B</td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb7d"></span>CB7D</td>
 <td class="instruction">LD HL,$7738</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb80"></span>CB80</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb81"></span>CB81</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb82"></span>CB82</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb83"></span>CB83</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="cb84"></span>CB84</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -117,9 +117,9 @@ Used by the routines at <a href="C651.html">C651</a> and <a href="CA81.html">CA8
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

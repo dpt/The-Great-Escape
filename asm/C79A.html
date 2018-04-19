@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C6A0.html">C6A0</a>.
+Used by the routine at <a href="C6A0.html">move_characters</a>.
 </div>
 </div>
 <table class="input-1">
@@ -63,157 +63,157 @@ Used by the routine at <a href="C6A0.html">C6A0</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">change_by_delta</td>
 <td class="address-2"><span id="c79a"></span>C79A</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c79b"></span>C79B</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">C = Adash; // ie. banked A // some maximum value</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c79c"></span>C79C</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c79d"></span>C79D</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="2">A = *DE - *HL; // delta</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c79e"></span>C79E</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c79f"></span>C79F</td>
-<td class="instruction">JR NZ,$C7A3</td>
+<td class="instruction">JR NZ,<a href="C79A.html#c7a3">change_by_delta_0</a></td>
 <td class="comment-11" rowspan="1">if (A == 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a1"></span>C7A1</td>
 <td class="instruction">INC B</td>
 <td class="comment-11" rowspan="1">B++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a2"></span>C7A2</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">change_by_delta_0</td>
 <td class="address-2"><span id="c7a3"></span>C7A3</td>
-<td class="instruction">JR NC,$C7B0</td>
+<td class="instruction">JR NC,<a href="C79A.html#c7b0">change_by_delta_2</a></td>
 <td class="comment-11" rowspan="1">else if (A &lt; 0) &lt;% // delta -ve =&gt; second &gt; first</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a5"></span>C7A5</td>
 <td class="instruction">NEG</td>
 <td class="comment-11" rowspan="1">A = -A; // absolute value</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a7"></span>C7A7</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="3">if (A &gt;= C) A = C;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a8"></span>C7A8</td>
-<td class="instruction">JR C,$C7AB</td>
+<td class="instruction">JR C,<a href="C79A.html#c7ab">change_by_delta_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7aa"></span>C7AA</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">change_by_delta_1</td>
 <td class="address-2"><span id="c7ab"></span>C7AB</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="4">*DE += A; // move first towards second</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ac"></span>C7AC</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ad"></span>C7AD</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ae"></span>C7AE</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7af"></span>C7AF</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">change_by_delta_2</td>
 <td class="address-2"><span id="c7b0"></span>C7B0</td>
 <td class="instruction">CP C</td>
 <td class="comment-11" rowspan="3">else &lt;% if (A &gt;= C) A = C; // delta +ve =&gt; first &gt; second</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b1"></span>C7B1</td>
-<td class="instruction">JR C,$C7B4</td>
+<td class="instruction">JR C,<a href="C79A.html#c7b4">change_by_delta_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b3"></span>C7B3</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">change_by_delta_3</td>
 <td class="address-2"><span id="c7b4"></span>C7B4</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="4">*DE -= A; // move first towards second</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b5"></span>C7B5</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b6"></span>C7B6</td>
 <td class="instruction">SUB C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b7"></span>C7B7</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b8"></span>C7B8</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; %&gt;</td>
@@ -227,9 +227,9 @@ Used by the routine at <a href="C6A0.html">C6A0</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

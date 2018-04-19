@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -53,25 +53,25 @@ Don't deliver a new red cross parcel while the previous one still exists.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_new_red_cross_parcel</td>
 <td class="address-2"><span id="a228"></span>A228</td>
 <td class="instruction">LD A,($771D)</td>
 <td class="comment-11" rowspan="4">if ((item_structs[item_RED_CROSS_PARCEL].room &amp; itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a22b"></span>A22B</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a22d"></span>A22D</td>
 <td class="instruction">CP $3F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a22f"></span>A22F</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-01" rowspan="1"></td>
@@ -87,123 +87,123 @@ Select the contents of the next parcel; choosing the first item from the list wh
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a230"></span>A230</td>
 <td class="instruction">LD DE,$A25F</td>
 <td class="comment-11" rowspan="1">DE = &amp;red_cross_parcel_contents_list[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a233"></span>A233</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-11" rowspan="1">B = 4; // length of above</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_new_red_cross_parcel_0</td>
 <td class="address-2"><span id="a235"></span>A235</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">do &lt;% A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a236"></span>A236</td>
-<td class="instruction">CALL <a href="7C26.html">$7C26</a></td>
+<td class="instruction">CALL <a href="7C26.html">item_to_itemstruct</a></td>
 <td class="comment-11" rowspan="1">HL = item_to_itemstruct(A);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a239"></span>A239</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a23a"></span>A23A</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="4">if ((*HL &amp; itemstruct_ROOM_MASK) == itemstruct_ROOM_MASK) goto found;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a23b"></span>A23B</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a23d"></span>A23D</td>
 <td class="instruction">CP $3F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a23f"></span>A23F</td>
-<td class="instruction">JR Z,$A245</td>
+<td class="instruction">JR Z,<a href="A228.html#a245">event_new_red_cross_parcel_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a241"></span>A241</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a242"></span>A242</td>
-<td class="instruction">DJNZ $A235</td>
+<td class="instruction">DJNZ <a href="A228.html#a235">event_new_red_cross_parcel_0</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a244"></span>A244</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">event_new_red_cross_parcel_1</td>
 <td class="address-2"><span id="a245"></span>A245</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="2">found: red_cross_parcel_current_contents = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a246"></span>A246</td>
 <td class="instruction">LD ($A263),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a249"></span>A249</td>
 <td class="instruction">LD DE,$771D</td>
 <td class="comment-11" rowspan="4">memcpy(&amp;item_structs[item_RED_CROSS_PARCEL].room, red_cross_parcel_reset_data, 6);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a24c"></span>A24C</td>
 <td class="instruction">LD HL,$A259</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a24f"></span>A24F</td>
 <td class="instruction">LD BC,$0006</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a252"></span>A252</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a254"></span>A254</td>
 <td class="instruction">LD B,$09</td>
-<td class="comment-11" rowspan="2">queue_message_for_display(message_RED_CROSS_PARCEL); return; // exit via</td>
+<td class="comment-11" rowspan="2">queue_message(message_RED_CROSS_PARCEL); return; // exit via</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a256"></span>A256</td>
-<td class="instruction">JP <a href="7D15.html">$7D15</a></td>
+<td class="instruction">JP <a href="7D15.html">queue_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -211,28 +211,28 @@ Select the contents of the next parcel; choosing the first item from the list wh
 <span id="a259"></span>
 <div class="comments">
 <div class="paragraph">
-Red cross parcel reset data (room, tinypos, target).
+Red cross parcel reset data (room, tinypos, coord).
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">red_cross_parcel_reset_data</td>
 <td class="address-1"><span id="a259"></span>A259</td>
 <td class="instruction">DEFB $14</td>
-<td class="comment-11" rowspan="1">item_RED_CROSS_PARCEL</td>
+<td class="comment-11" rowspan="1">room_20_REDCROSS</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a25a"></span>A25A</td>
 <td class="instruction">DEFB $2C,$2C,$0C</td>
 <td class="comment-11" rowspan="1">44,44,12</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a25d"></span>A25D</td>
-<td class="instruction">DEFW $F480</td>
-<td class="comment-11" rowspan="1">0xF480</td>
+<td class="instruction">DEFB $80,$F4</td>
+<td class="comment-11" rowspan="1">128,244</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -245,25 +245,25 @@ Red cross parcel contents list.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">red_cross_parcel_contents_list</td>
 <td class="address-1"><span id="a25f"></span>A25F</td>
 <td class="instruction">DEFB $0E</td>
 <td class="comment-11" rowspan="1">item_PURSE</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a260"></span>A260</td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-11" rowspan="1">item_WIRESNIPS</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a261"></span>A261</td>
 <td class="instruction">DEFB $05</td>
 <td class="comment-11" rowspan="1">item_BRIBE</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="a262"></span>A262</td>
 <td class="instruction">DEFB $0F</td>
 <td class="comment-11" rowspan="1">item_COMPASS</td>
@@ -277,9 +277,9 @@ Red cross parcel contents list.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

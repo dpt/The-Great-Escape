@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="B495.html">B495</a> and <a href="B4B8.html">B4B8</a>.
+Used by the routines at <a href="B495.html">action_lockpick</a> and <a href="B4B8.html">action_key</a>.
 </div>
 </div>
 <table class="input-0">
@@ -52,27 +52,27 @@ Used by the routines at <a href="B495.html">B495</a> and <a href="B4B8.html">B4B
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door</td>
 <td class="address-2"><span id="b4d0"></span>B4D0</td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="4">if (room_index == room_0_OUTDOORS) goto outdoors; else goto indoors;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4d3"></span>B4D3</td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4d4"></span>B4D4</td>
-<td class="instruction">JR Z,$B4D9</td>
+<td class="instruction">JR Z,<a href="B4D0.html#b4d9">get_nearest_door_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4d6"></span>B4D6</td>
-<td class="instruction">JP $B4FD</td>
+<td class="instruction">JP <a href="B4D0.html#b4fd">get_nearest_door_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -89,139 +89,139 @@ Outdoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_0</td>
 <td class="address-2"><span id="b4d9"></span>B4D9</td>
 <td class="instruction">LD B,$05</td>
 <td class="comment-11" rowspan="1">outdoors: B = 5; // 5 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4db"></span>B4DB</td>
 <td class="instruction">LD HL,$F05D</td>
 <td class="comment-11" rowspan="1">HL = &amp;locked_doors[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_1</td>
 <td class="address-2"><span id="b4de"></span>B4DE</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% A = *HL &amp; ~door_LOCKED;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4df"></span>B4DF</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4e1"></span>B4E1</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4e2"></span>B4E2</td>
-<td class="instruction">CALL <a href="6A12.html">$6A12</a></td>
+<td class="instruction">CALL <a href="6A12.html">get_door</a></td>
 <td class="comment-11" rowspan="1">HL = get_door();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4e5"></span>B4E5</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4e6"></span>B4E6</td>
-<td class="instruction">CALL <a href="B252.html">$B252</a></td>
+<td class="instruction">CALL <a href="B252.html">door_in_range</a></td>
 <td class="comment-11" rowspan="1">door_in_range();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4e9"></span>B4E9</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4ea"></span>B4EA</td>
-<td class="instruction">JR NC,$B4FA</td>
+<td class="instruction">JR NC,<a href="B4D0.html#b4fa">get_nearest_door_2</a></td>
 <td class="comment-11" rowspan="1">if (!C) goto not_in_range;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4ec"></span>B4EC</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="4">HL += 4;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4ed"></span>B4ED</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4ee"></span>B4EE</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4ef"></span>B4EF</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4f0"></span>B4F0</td>
-<td class="instruction">CALL <a href="B252.html">$B252</a></td>
+<td class="instruction">CALL <a href="B252.html">door_in_range</a></td>
 <td class="comment-11" rowspan="1">door_in_range();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4f3"></span>B4F3</td>
-<td class="instruction">JR NC,$B4FA</td>
+<td class="instruction">JR NC,<a href="B4D0.html#b4fa">get_nearest_door_2</a></td>
 <td class="comment-11" rowspan="1">if (!C) goto not_in_range;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4f5"></span>B4F5</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4f6"></span>B4F6</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4f7"></span>B4F7</td>
-<td class="instruction">DJNZ $B4DE</td>
+<td class="instruction">DJNZ <a href="B4D0.html#b4de">get_nearest_door_1</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4f9"></span>B4F9</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_2</td>
 <td class="address-2"><span id="b4fa"></span>B4FA</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">not_in_range:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4fb"></span>B4FB</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b4fc"></span>B4FC</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
@@ -237,31 +237,31 @@ Indoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_3</td>
 <td class="address-2"><span id="b4fd"></span>B4FD</td>
 <td class="instruction">LD HL,$F05F</td>
 <td class="comment-11" rowspan="1">indoors: HL = &amp;locked_doors[2];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b500"></span>B500</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">B = 8; // 8 iterations // Bug: Ought to be 7 iterations.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_4</td>
 <td class="address-2"><span id="b502"></span>B502</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="3">do &lt;% C = *HL &amp; ~door_LOCKED;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b503"></span>B503</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b505"></span>B505</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -277,109 +277,109 @@ Search interior doors for C.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b506"></span>B506</td>
 <td class="instruction">LD DE,$81D6</td>
 <td class="comment-11" rowspan="1">DE = &amp;interior_doors;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_5</td>
 <td class="address-2"><span id="b509"></span>B509</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">for (;;) &lt;% A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b50a"></span>B50A</td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">if (A != door_NONE) &lt;% // door_NONE =&gt; end of list</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b50c"></span>B50C</td>
-<td class="instruction">JR Z,$B516</td>
+<td class="instruction">JR Z,<a href="B4D0.html#b516">get_nearest_door_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b50e"></span>B50E</td>
 <td class="instruction">AND $7F</td>
 <td class="comment-11" rowspan="3">if ((A &amp; ~door_REVERSE) == C) goto found;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b510"></span>B510</td>
 <td class="instruction">CP C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b511"></span>B511</td>
-<td class="instruction">JR Z,$B51C</td>
+<td class="instruction">JR Z,<a href="B4D0.html#b51c">get_nearest_door_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b513"></span>B513</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="2">DE++; %&gt; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b514"></span>B514</td>
-<td class="instruction">JR $B509</td>
+<td class="instruction">JR <a href="B4D0.html#b509">get_nearest_door_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_6</td>
 <td class="address-2"><span id="b516"></span>B516</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">next: HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b517"></span>B517</td>
-<td class="instruction">DJNZ $B502</td>
+<td class="instruction">DJNZ <a href="B4D0.html#b502">get_nearest_door_4</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b519"></span>B519</td>
 <td class="instruction">OR $01</td>
 <td class="comment-11" rowspan="1">A |= 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b51b"></span>B51B</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_7</td>
 <td class="address-2"><span id="b51c"></span>B51C</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">found: A = *DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b51d"></span>B51D</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b51e"></span>B51E</td>
-<td class="instruction">CALL <a href="6A12.html">$6A12</a></td>
+<td class="instruction">CALL <a href="6A12.html">get_door</a></td>
 <td class="comment-11" rowspan="1">HL = get_door();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b521"></span>B521</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b522"></span>B522</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
@@ -395,111 +395,111 @@ Range check pattern (-2..+3).
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b523"></span>B523</td>
 <td class="instruction">LD HL,$81A4</td>
 <td class="comment-11" rowspan="1">HL = &amp;saved_pos_x; // note: 16-bit values holding 8-bit values</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b526"></span>B526</td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">B = 2; // 2 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_8</td>
 <td class="address-2"><span id="b528"></span>B528</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="7">do &lt;% if (*HL &lt;= *DE - 3 || *HL &gt; *DE + 3) goto exx_next;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b529"></span>B529</td>
 <td class="instruction">SUB $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b52b"></span>B52B</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b52c"></span>B52C</td>
-<td class="instruction">JR NC,$B53B</td>
+<td class="instruction">JR NC,<a href="B4D0.html#b53b">get_nearest_door_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b52e"></span>B52E</td>
 <td class="instruction">ADD A,$06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b530"></span>B530</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b531"></span>B531</td>
-<td class="instruction">JR C,$B53B</td>
+<td class="instruction">JR C,<a href="B4D0.html#b53b">get_nearest_door_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b533"></span>B533</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">HL += 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b534"></span>B534</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b535"></span>B535</td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">DE++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b536"></span>B536</td>
-<td class="instruction">DJNZ $B528</td>
+<td class="instruction">DJNZ <a href="B4D0.html#b528">get_nearest_door_8</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--B);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b538"></span>B538</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b539"></span>B539</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0; // ok</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b53a"></span>B53A</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">get_nearest_door_9</td>
 <td class="address-2"><span id="b53b"></span>B53B</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">exx_next:</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b53c"></span>B53C</td>
-<td class="instruction">JR $B516</td>
+<td class="instruction">JR <a href="B4D0.html#b516">get_nearest_door_6</a></td>
 <td class="comment-11" rowspan="1">goto next;</td>
 </tr>
 </table>
@@ -511,9 +511,9 @@ Range check pattern (-2..+3).
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

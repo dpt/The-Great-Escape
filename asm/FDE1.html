@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -45,45 +45,45 @@ Very first entry point used to shunt the game image down into its proper positio
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">loaded</td>
 <td class="address-2"><span id="fde1"></span>FDE1</td>
 <td class="instruction">DI</td>
 <td class="comment-11" rowspan="1">Disable interrupts.</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fde2"></span>FDE2</td>
 <td class="instruction">LD SP,$FFFF</td>
 <td class="comment-11" rowspan="1">SP = 0xFFFF;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fde5"></span>FDE5</td>
 <td class="instruction">LD BC,$9FE0</td>
 <td class="comment-11" rowspan="4">memmove(0x5B00, 0x5E00, 0x9FE0);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fde8"></span>FDE8</td>
 <td class="instruction">LD HL,$5E00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fdeb"></span>FDEB</td>
 <td class="instruction">LD DE,$5B00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fdee"></span>FDEE</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="fdf0"></span>FDF0</td>
-<td class="instruction">JP <a href="F068.html">$F068</a></td>
+<td class="instruction">JP <a href="F068.html">jump_to_main</a></td>
 <td class="comment-11" rowspan="1">goto jump_to_main; /* exit via */</td>
 </tr>
 </table>
@@ -95,9 +95,9 @@ Very first entry point used to shunt the game image down into its proper positio
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body class="Asm-c">
 <table class="header">
 <tr>
-<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="logo"><a href="../index.html"><img alt="The Great Escape" src="../images/logo.png" /></a></td>
 <td class="page-header">Routines</td>
 </tr>
 </table>
@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="B866.html">B866</a>.
+Used by the routine at <a href="B866.html">plot_sprites</a>.
 </div>
 </div>
 <table class="input-1">
@@ -62,7 +62,7 @@ Used by the routine at <a href="B866.html">B866</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting</td>
 <td class="address-2"><span id="dc41"></span>DC41</td>
 <td class="instruction">AND $3F</td>
 <td class="comment-11" rowspan="1">A &amp;= 0x3F;</td>
@@ -78,639 +78,639 @@ Bug: This writes to saved_item but it's never subsequently read from.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc43"></span>DC43</td>
 <td class="instruction">LD ($8213),A</td>
 <td class="comment-11" rowspan="1">saved_item = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc46"></span>DC46</td>
 <td class="instruction">PUSH IY</td>
 <td class="comment-11" rowspan="4">HL = IY + 2;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc48"></span>DC48</td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc49"></span>DC49</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc4a"></span>DC4A</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc4b"></span>DC4B</td>
 <td class="instruction">LD DE,$81B2</td>
 <td class="comment-11" rowspan="1">DE = &amp;tinypos_stash_x;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc4e"></span>DC4E</td>
 <td class="instruction">LD BC,$0005</td>
 <td class="comment-11" rowspan="1">BC = 5;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc51"></span>DC51</td>
 <td class="instruction">LDIR</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc53"></span>DC53</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc54"></span>DC54</td>
 <td class="instruction">LD (HL),B</td>
 <td class="comment-11" rowspan="1">*HL = B; // B == 0 due to LDIR /* Items are never drawn flipped. */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc55"></span>DC55</td>
 <td class="instruction">LD HL,$DD7D</td>
 <td class="comment-11" rowspan="7">HL = &amp;item_definitions[A];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc58"></span>DC58</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc59"></span>DC59</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5a"></span>DC5A</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5b"></span>DC5B</td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5c"></span>DC5C</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5d"></span>DC5D</td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5e"></span>DC5E</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++; // &amp;item_definitions[A].height</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5f"></span>DC5F</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">A = (HL);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc60"></span>DC60</td>
 <td class="instruction">LD ($8214),A</td>
 <td class="comment-11" rowspan="1">item_height = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc63"></span>DC63</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HL++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc64"></span>DC64</td>
 <td class="instruction">LD DE,$81AC</td>
 <td class="comment-11" rowspan="3">memcpy(&amp;bitmap_pointer, HL, 4); // copy bitmap and mask pointers</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc67"></span>DC67</td>
 <td class="instruction">LD BC,$0004</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc6a"></span>DC6A</td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc6c"></span>DC6C</td>
-<td class="instruction">CALL <a href="DD02.html">$DD02</a></td>
+<td class="instruction">CALL <a href="DD02.html">item_visible</a></td>
 <td class="comment-11" rowspan="1">item_visible();</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc6f"></span>DC6F</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">if (!Z) return; /* invisible */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc70"></span>DC70</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">// clipped width</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc71"></span>DC71</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1">// clipped height</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc72"></span>DC72</td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="1">A = E;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc73"></span>DC73</td>
 <td class="instruction">LD ($E2C2),A</td>
 <td class="comment-11" rowspan="1">($E2C1 + 1) = A; // self modify masked_sprite_plotter_16_wide_left</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc76"></span>DC76</td>
 <td class="instruction">LD A,B</td>
 <td class="comment-11" rowspan="1">A = B;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc77"></span>DC77</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc78"></span>DC78</td>
-<td class="instruction">JP NZ,$DC81</td>
+<td class="instruction">JP NZ,<a href="DC41.html#dc81">setup_item_plotting_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc7b"></span>DC7B</td>
 <td class="instruction">LD A,$77</td>
 <td class="comment-11" rowspan="1">A = 0x77; // 0b01110111 /* opcode of 'LD (HL),A' */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc7d"></span>DC7D</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="2">Adash = C; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc7e"></span>DC7E</td>
 <td class="instruction">LD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc7f"></span>DC7F</td>
-<td class="instruction">JR $DC86</td>
+<td class="instruction">JR <a href="DC41.html#dc86">setup_item_plotting_1</a></td>
 <td class="comment-11" rowspan="1">else &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_0</td>
 <td class="address-2"><span id="dc81"></span>DC81</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0; /* opcode of 'NOP' */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc82"></span>DC82</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="3">Adash = 3 - C; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc83"></span>DC83</td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc85"></span>DC85</td>
 <td class="instruction">SUB C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_1</td>
 <td class="address-2"><span id="dc86"></span>DC86</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc87"></span>DC87</td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Cdash = Adash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc88"></span>DC88</td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc89"></span>DC89</td>
 <td class="instruction">LD HL,$E0E0</td>
 <td class="comment-11" rowspan="1">HLdash = &amp;masked_sprite_plotter_16_enables[0];</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc8c"></span>DC8C</td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">Bdash = 3; // iterations</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_2</td>
 <td class="address-2"><span id="dc8e"></span>DC8E</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">do &lt;% Edash = *HLdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc8f"></span>DC8F</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc90"></span>DC90</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="1">Ddash = *HLdash;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc91"></span>DC91</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">*DEdash = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc92"></span>DC92</td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">HLdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc93"></span>DC93</td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="2">Edash = *HLdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc94"></span>DC94</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc95"></span>DC95</td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="2">Ddash = *HLdash++;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc96"></span>DC96</td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc97"></span>DC97</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">*DEdash = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc98"></span>DC98</td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="3">if (--Cdash == 0) A ^= 0x77; /* Toggle between LD (HL),A and NOP. */</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc99"></span>DC99</td>
-<td class="instruction">JR NZ,$DC9D</td>
+<td class="instruction">JR NZ,<a href="DC41.html#dc9d">setup_item_plotting_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc9b"></span>DC9B</td>
 <td class="instruction">XOR $77</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_3</td>
 <td class="address-2"><span id="dc9d"></span>DC9D</td>
-<td class="instruction">DJNZ $DC8E</td>
+<td class="instruction">DJNZ <a href="DC41.html#dc8e">setup_item_plotting_2</a></td>
 <td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dc9f"></span>DC9F</td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dca0"></span>DCA0</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="1">A = D;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dca1"></span>DCA1</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">A &amp;= A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dca2"></span>DCA2</td>
 <td class="instruction">LD DE,$0000</td>
 <td class="comment-11" rowspan="1">DE = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dca5"></span>DCA5</td>
-<td class="instruction">JR NZ,$DCBC</td>
+<td class="instruction">JR NZ,<a href="DC41.html#dcbc">setup_item_plotting_4</a></td>
 <td class="comment-11" rowspan="1">if (Z) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dca7"></span>DCA7</td>
 <td class="instruction">LD HL,$81BC</td>
 <td class="comment-11" rowspan="1">HL = $81BC; // &amp;map_position + 1;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcaa"></span>DCAA</td>
 <td class="instruction">LD A,($81B6)</td>
 <td class="comment-11" rowspan="2">A = ($81B6) - *HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcad"></span>DCAD</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcae"></span>DCAE</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="12">HL = A * 192;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcaf"></span>DCAF</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb1"></span>DCB1</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb2"></span>DCB2</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb3"></span>DCB3</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb4"></span>DCB4</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb5"></span>DCB5</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb6"></span>DCB6</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb7"></span>DCB7</td>
 <td class="instruction">LD E,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb8"></span>DCB8</td>
 <td class="instruction">LD D,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb9"></span>DCB9</td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcba"></span>DCBA</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcbb"></span>DCBB</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">%&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_4</td>
 <td class="address-2"><span id="dcbc"></span>DCBC</td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="comment-11" rowspan="1">A = screenpos_x;</td>
+<td class="comment-11" rowspan="1">A = iso_pos_x;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcbf"></span>DCBF</td>
 <td class="instruction">LD HL,$81BB</td>
 <td class="comment-11" rowspan="1">HL = $81BB; // &amp;map_position;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc2"></span>DCC2</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">A -= *HL; // x</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc3"></span>DCC3</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="2">HL = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc4"></span>DCC4</td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc6"></span>DCC6</td>
-<td class="instruction">JR NC,$DCCA</td>
+<td class="instruction">JR NC,<a href="DC41.html#dcca">setup_item_plotting_5</a></td>
 <td class="comment-11" rowspan="2">if (carry) H = 0xFF;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc8"></span>DCC8</td>
 <td class="instruction">LD H,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_5</td>
 <td class="address-2"><span id="dcca"></span>DCCA</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dccb"></span>DCCB</td>
 <td class="instruction">LD DE,$F290</td>
 <td class="comment-11" rowspan="1">DE = $F290; // screen buffer start address</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcce"></span>DCCE</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">HL += DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dccf"></span>DCCF</td>
 <td class="instruction">LD ($81A2),HL</td>
 <td class="comment-11" rowspan="1">($81A2) = HL;  // screen buffer pointer</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd2"></span>DCD2</td>
 <td class="instruction">LD HL,$8100</td>
 <td class="comment-11" rowspan="1">HL = mask_buffer;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd5"></span>DCD5</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd6"></span>DCD6</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd7"></span>DCD7</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="5">L += D * 4;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd8"></span>DCD8</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd9"></span>DCD9</td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcda"></span>DCDA</td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcdb"></span>DCDB</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcdc"></span>DCDC</td>
 <td class="instruction">LD ($81B0),HL</td>
 <td class="comment-11" rowspan="1">($81B0) = HL;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcdf"></span>DCDF</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce0"></span>DCE0</td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce1"></span>DCE1</td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="1">A = D;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce2"></span>DCE2</td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">if (A) &lt;%</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce3"></span>DCE3</td>
-<td class="instruction">JR Z,$DCEF</td>
+<td class="instruction">JR Z,<a href="DC41.html#dcef">setup_item_plotting_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -724,45 +724,45 @@ Bug: Generic multiply loop which only ever multiplies by two...
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce5"></span>DCE5</td>
 <td class="instruction">LD D,A</td>
 <td class="comment-11" rowspan="1">D = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce6"></span>DCE6</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce7"></span>DCE7</td>
 <td class="instruction">LD E,$03</td>
 <td class="comment-11" rowspan="1">E = 3; // unusual (or self modified and i've not spotted the setter)</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dce9"></span>DCE9</td>
 <td class="instruction">DEC E</td>
 <td class="comment-11" rowspan="1">E--;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_6</td>
 <td class="address-2"><span id="dcea"></span>DCEA</td>
 <td class="instruction">ADD A,E</td>
 <td class="comment-11" rowspan="3">do &lt;% A += E; %&gt; while (--D); %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dceb"></span>DCEB</td>
 <td class="instruction">DEC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcec"></span>DCEC</td>
-<td class="instruction">JP NZ,$DCEA</td>
+<td class="instruction">JP NZ,<a href="DC41.html#dcea">setup_item_plotting_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -776,67 +776,67 @@ D ends up as zero either way.
 </td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1">setup_item_plotting_7</td>
 <td class="address-2"><span id="dcef"></span>DCEF</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-11" rowspan="1">E = A;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf0"></span>DCF0</td>
 <td class="instruction">LD HL,($81AC)</td>
 <td class="comment-11" rowspan="3">bitmap_pointer += DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf3"></span>DCF3</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf4"></span>DCF4</td>
 <td class="instruction">LD ($81AC),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf7"></span>DCF7</td>
 <td class="instruction">LD HL,($81AE)</td>
 <td class="comment-11" rowspan="3">mask_pointer += DE;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcfa"></span>DCFA</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcfb"></span>DCFB</td>
 <td class="instruction">LD ($81AE),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcfe"></span>DCFE</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dcff"></span>DCFF</td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dd00"></span>DD00</td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">A = 0;</td>
 </tr>
 <tr>
-<td class="asm-label-0"></td>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="dd01"></span>DD01</td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">return; /* visible */</td>
@@ -850,9 +850,9 @@ D ends up as zero either way.
 </tr>
 </table>
 <footer>
-<div class="release">The incomplete The Great Escape disassembly 20170325</div>
-<div class="copyright">&copy; Denton Designs. Ocean. David Thomas.</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 5.4.</div>
+<div class="release">The incomplete The Great Escape disassembly 20180419</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
 </footer>
 </body>
 </html>
