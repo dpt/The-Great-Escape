@@ -264,12 +264,18 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         return Udg(attr, self.snapshot[a: a + 8])
 
     # API
-    def decode_all_masks(self, cwd, base, ents):
-        """ Decode all masks. """
+    def decode_masks(self, cwd, base, ents):
+        """ Decode masks. """
 
-        # There are no heights in the mask data so use the bounds of the $EC01
-        # and $EA7C tables to work out the worst case and use that (for
-        # exterior masks).
+        # There are no heights given in the actual mask data so we must use the
+        # bounds of the $EC01 and $EA7C tables to work out the worst case and
+        # use that (for exterior masks).
+        if base == 0xEBC5:
+            struct = (0xEC01, 0xEDD1, 8)
+        elif base == 0xEBE3:
+            # The structures at $EA7C stride is one byte shorter than mask_t
+            # since the constant final byte is removed.
+            struct = (0xEA7C, 0xEBC5, 7)
 
         # Collect dicts of lists of dimensions, keyed by ref. Each mask may
         # have multiple uses with different dimensions so we collect them here
@@ -277,25 +283,23 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         widths = {}
         heights = {}
 
-        # Force all refs to be present but empty because mask 19 is unused.
+        # Force all lists of widths and heights to be present but empty because
+        # mask 19 is unused.
         for ref in range(30):
             widths.setdefault(ref, [])
             heights.setdefault(ref, [])
 
-        # The structures at $EA7C stride is one byte shorter than mask_t since
-        # the constant final byte is removed.
-        for data, dataend, stride in [(0xEC01, 0xEDD1, 8),
-                                      (0xEA7C, 0xEBC5, 7)]:
-            while data < dataend:
-                ref = self.snapshot[data + 0]
-                x0  = self.snapshot[data + 1]
-                x1  = self.snapshot[data + 2]
-                y0  = self.snapshot[data + 3]
-                y1  = self.snapshot[data + 4]
-                data += stride
+        data, dataend, stride = struct
+        while data < dataend:
+            ref = self.snapshot[data + 0]
+            x0  = self.snapshot[data + 1]
+            x1  = self.snapshot[data + 2]
+            y0  = self.snapshot[data + 3]
+            y1  = self.snapshot[data + 4]
+            data += stride
 
-                widths[ref].append(x1 - x0)
-                heights[ref].append(y1 - y0)
+            widths[ref].append(x1 - x0)
+            heights[ref].append(y1 - y0)
 
         max_widths  = [max(widths[key]  + [0]) + 1 for key in widths]
         max_heights = [max(heights[key] + [0]) + 1 for key in heights]
@@ -303,10 +307,11 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         #     print "%d: %d x %d" % (i, wh[0], wh[1])
 
         s = ""
-        for ref, base in enumerate(range(base, base + ents * 2, 2)):
-            addr = self.snapshot[base + 0] + self.snapshot[base + 1] * 256
-            s += "<h3>$%.4x</h3>" % addr
-            s += "<p>" + self._decode_and_save_mask(cwd, addr, ref, max_widths[ref], max_heights[ref]) + "</p>"
+        for b in range(base, base + ents * 2, 2):
+            ref = (b - 0xEBC5) // 2
+            addr = self.snapshot[b + 0] + self.snapshot[b + 1] * 256
+            s += "<h3>$%.4X</h3>" % addr
+            s += "<p>" + self._decode_and_save_mask(cwd, addr, max_widths[ref], max_heights[ref]) + "</p>"
         return s
 
     # Internal
@@ -331,17 +336,17 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         return udg_array
 
     # Internal
-    def _save_mask(self, cwd, index, udg_array):
+    def _save_mask(self, cwd, addr, udg_array):
         img_path_id = 'ScreenshotImagePath'
-        fname = 'mask-%d' % index
+        fname = 'mask-%.4X' % addr
         img_path = self.image_path(fname, img_path_id)
         self.write_image(img_path, udg_array)
         return img_path
 
     # Internal
-    def _decode_and_save_mask(self, cwd, addr, index, suggested_width, suggested_height):
+    def _decode_and_save_mask(self, cwd, addr, suggested_width, suggested_height):
         udg_array = self._decode_mask(cwd, addr, suggested_width, suggested_height)
-        img_path = self._save_mask(cwd, index, udg_array)
+        img_path = self._save_mask(cwd, addr, udg_array)
         return self.img_element(cwd, img_path)
 
     # Internal
