@@ -1,19 +1,36 @@
+# Makefile for The Great Escape disassembly
+#
+
 NAME="The Great Escape"
 GAME=TheGreatEscape
 BUILD?=build
 OPTIONS=--hex
 
+SFT=$(GAME).sft
+
+ASM=$(BUILD)/$(GAME).asm
+BIN=$(BUILD)/$(GAME).bin
+CTL=$(BUILD)/$(GAME).ctl
+PRISTINEZ80=$(BUILD)/$(GAME).pristine.z80
+SKOOL=$(BUILD)/$(GAME).skool
+TAP=$(BUILD)/$(GAME).tap
+Z80=$(BUILD)/$(GAME).z80
+GENERATED_SFT=$(BUILD)/$(GAME).sft
+
 .PHONY: usage
 usage:
 	@echo "Supported targets:"
 	@echo "  usage		Show this help"
+	@echo "  all		Build virtually everything"
 	@echo "  install	Install the $(NAME) support script"
-	@echo "  all		Build everything"
+	@echo "  pristine	Fetch a version of $(NAME) and output a pristine Z80 snapshot"
+	@echo "  skool		Build a skool file from the skool file template + pristine Z80 snapshot"
 	@echo "  disasm	Build the $(NAME) disassembly"
-	@echo "  ctl		Build the $(NAME) control file"
 	@echo "  asm		Build the $(NAME) assembly"
-	@echo "  bin		Build the $(NAME) binary image"
-	@echo "  tap		Build the $(NAME) tape image"
+	@echo "  z80		Build the $(NAME) Z80 snapshot"
+	@echo "  tap		Build the $(NAME) TAP file"
+	@echo "  sft		Build the $(NAME) skool file template"
+	@echo "  ctl		Build the $(NAME) control file"
 	@echo "  clean		Clean a previous build"
 	@echo ""
 	@echo "Environment variables:"
@@ -21,49 +38,68 @@ usage:
 
 # .PHONY rules are always run.
 
+.PHONY: all
+all: install pristine skool disasm asm z80 tap
+
 .PHONY: install
 install:
 	mkdir -p ~/.skoolkit
 	cp $(GAME).py ~/.skoolkit
 
-.PHONY: all
-all: disasm tap
+.PHONY: pristine
+pristine: $(PRISTINEZ80)
+
+$(PRISTINEZ80):
+	tap2sna.py --output-dir $(BUILD) @$(GAME).t2s && mv $(BUILD)/$(GAME).z80 $(PRISTINEZ80)
+
+.PHONY: skool
+skool: $(SKOOL)
+
+$(SKOOL): $(PRISTINEZ80) $(SFT)
+	mkdir -p $(BUILD)
+	sna2skool.py --skool-hex --sft $(SFT) $(PRISTINEZ80) > $@
 
 .PHONY: disasm
-disasm: $(GAME).skool
-	skool2html.py $(OPTIONS) --asm-labels -o $(GAME).skool
-
-.PHONY: ctl
-ctl: $(BUILD)/$(GAME).ctl
-
-$(BUILD)/$(GAME).ctl: $(GAME).skool
-	mkdir -p $(BUILD)
-	skool2ctl.py $(OPTIONS) $(GAME).skool > $@
+disasm: $(SKOOL)
+	skool2html.py $(OPTIONS) --asm-labels --rebuild-images $(SKOOL)
 
 .PHONY: asm
-asm: $(BUILD)/$(GAME).asm
+asm: $(ASM)
 
-%.asm: ../%.skool
+%.asm: %.skool
 	mkdir -p $(BUILD)
-	skool2asm.py -w $(OPTIONS) -c $< > $@
-
-.PHONY: bin
-bin: $(BUILD)/$(GAME).bin
-
-%.bin: %.asm
-	pasmo -v --bin $< $@
-
-.PHONY: tap
-tap: $(BUILD)/$(GAME).tap
-
-%.tap: %.bin
-	bin2tap.py --org 16384 --stack 65535 --start 61795 $<
+	skool2asm.py $(OPTIONS) --create-labels --no-warnings $< > $@
 
 .PHONY: z80
-z80: $(BUILD)/$(GAME).z80
+z80: $(Z80)
 
-%.z80: ../%.skool
+%.z80: %.skool
 	skool2bin.py $< - | bin2sna.py --org 16384 --stack 65535 --start 61795 - $@
+
+.PHONY: tap
+tap: $(TAP)
+
+%.tap: %.skool
+	skool2bin.py $< - | bin2tap.py --org 16384 --stack 65535 --start 61795 - $@
+
+.PHONY: sft
+sft: $(GENERATED_SFT)
+
+$(GENERATED_SFT): $(SKOOL)
+	mkdir -p $(BUILD)
+	skool2sft.py $(OPTIONS) $(SKOOL) > $@
+
+# Use when ready for commit
+.PHONY: commit
+commit: sft
+	cp $(GENERATED_SFT) $(BUILD)/../
+
+.PHONY: ctl
+ctl: $(CTL)
+
+$(CTL): $(SKOOL)
+	mkdir -p $(BUILD)
+	skool2ctl.py $(OPTIONS) $(SKOOL) > $@
 
 .PHONY: clean
 clean:
