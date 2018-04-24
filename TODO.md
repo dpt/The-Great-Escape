@@ -37,14 +37,14 @@ TODO
 - [x] Decode masks into images in the HTML disassembly
   - [ ] Include a variant of the exterior map with the masks shown atop it
 - [x] Add a a variant of the exterior map with a checkerboard pattern showing the supertiles (using the BRIGHT bit)
-- [ ] Document the game rules
-  - [ ] All items and their uses
-  - [ ] The escape conditions
+- [x] Document the game rules
+  - [x] All items and their uses
+  - [x] The escape conditions
 - [ ] Document the memory map
   - [ ] In particular map out the game state at $8000+ which overlaps static tile graphics
-- [ ] Document graphic glitches
+- [x] Document graphic glitches
   - [x] Guard graphic too low
-  - [ ] Stray pixels on dog graphic
+  - [x] Stray pixels on dog graphic
 - [ ] Document all bugs noted in the code
 - [ ] Add POKEs!
   - [ ] Infinite morale
