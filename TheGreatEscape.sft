@@ -1327,10 +1327,9 @@ cC$68A2,1
  C$68A8,2;21 {L = A + 0x0F; // $8xxF (position on X axis)
  C$68AA,1;21 }
  C$68AB,3;21 A = IY[0x1C]; // $8x1C (vischar.room)
- C$68AE,1;21 {if (A == 0) <%
+ C$68AE,1;21 {if (A == 0) <% // outdoors
  C$68AF,3;21 }
-; Outdoors.
-; Set position on X axis, Y axis and height (multiplying by 4).
+; Set position on X axis, Y axis and height (dividing by 4).
  C$68B2,2;21 B = 3; // 3 iterations
 *C$68B4,1;21 do <%
  C$68B5,1;21 A = *DE++;
@@ -1342,8 +1341,7 @@ cC$68A2,1
  C$68BD,1;21 }
  C$68BE,1
  C$68BF,2;21 %> while (--B); %>
- C$68C1,2;21 else <%
-; Indoors.
+ C$68C1,2;21 else <% // interior
 ; Set position on X axis, Y axis and height (copying).
 *C$68C3,2;21 B = 3; // 3 iterations
 *C$68C5,1;21 {  do <% *HL++ = *DE++;
@@ -1356,10 +1354,8 @@ cC$68A2,1
 *C$68CE,1
  C$68CF,1;21 L = A;
  C$68D0,1;21 {if (A) <% reset_visible_character(); return; %> // exit via
-; Not the hero.
  C$68D1,3;21
  C$68D4,3;21 }
-; Hero only.
 ; HL points to the hero vischar at this point.
 *C$68D7,1;21 {*++HL &= ~vischar_FLAGS_NO_COLLIDE; // $8001
  C$68D8,2;21 }
@@ -3105,7 +3101,6 @@ wW$783A,2;21 0x44, 0x68
  W$784A,2;21 0x68, 0x70
 @keep
  W$784C,2;21 0x60, 0x70
-;
  W$784E,2;21 0x6A, 0x66
  W$7850,2;21 0x5D, 0x68
 @keep
@@ -3123,7 +3118,6 @@ wW$783A,2;21 0x44, 0x68
 @keep
  W$785E,2;21 0x70, 0x60
  W$7860,2;21 0x74, 0x54
-;
 @keep
  W$7862,2;21 0x7C, 0x64
 @keep
@@ -3139,7 +3133,6 @@ wW$783A,2;21 0x44, 0x68
  W$7870,2;21 0x5C, 0x44
  W$7872,2;21 0x56, 0x44
  W$7874,2;21 0x54, 0x40
-;
  W$7876,2;21 0x4A, 0x44
  W$7878,2;21 0x4A, 0x40
  W$787A,2;21 0x66, 0x44
@@ -3151,7 +3144,6 @@ wW$783A,2;21 0x44, 0x68
  W$7884,2;21 0x4D, 0x2D
  W$7886,2;21 0x4D, 0x3D
  W$7888,2;21 0x3D, 0x3D
-;
  W$788A,2;21 0x3D, 0x67
  W$788C,2;21 0x74, 0x4C
  W$788E,2;21 0x2C, 0x2A
@@ -3162,7 +3154,6 @@ wW$783A,2;21 0x44, 0x68
  W$7898,2;21 0x34, 0x2C
  W$789A,2;21 0x34, 0x1C
  W$789C,2;21 0x77, 0x6B
-;
  W$789E,2;21 0x7A, 0x6E
  W$78A0,2;21 0x34, 0x1C
  W$78A2,2;21 0x28, 0x3C
@@ -3173,7 +3164,6 @@ wW$783A,2;21 0x44, 0x68
  W$78AC,2;21 0x64, 0x3D
  W$78AE,2;21 0x5C, 0x36
  W$78B0,2;21 0x54, 0x32
-;
  W$78B2,2;21 0x66, 0x30
  W$78B4,2;21 0x60, 0x38
  W$78B6,2;21 0x4F, 0x3B
@@ -3184,7 +3174,6 @@ wW$783A,2;21 0x44, 0x68
  W$78C0,2;21 0x34, 0x3E
  W$78C2,2;21 0x20, 0x38
  W$78C4,2;21 0x34, 0x18
-;
  W$78C6,2;21 0x2A, 0x2E
  W$78C8,2;21 0x22, 0x22
 @keep
@@ -5291,7 +5280,7 @@ cC$9EB2,3;21 {A = player_locked_out_until - game_counter;
  C$9EB5,3;21
  C$9EB8,1;21 }
  C$9EB9,2;21 if (A) <%
- C$9EBB,2;21 {  if (A < 4)  // return if (unsigned) A >= 4
+ C$9EBB,2;21 {  if (A < 4)
  C$9EBD,1;21 }
 @nowarn
  C$9EBE,3;21 {$800D = cutting_wire_new_inputs[$800E & vischar_DIRECTION_MASK]; // change direction
@@ -5306,7 +5295,7 @@ cC$9EB2,3;21 {A = player_locked_out_until - game_counter;
 ; Bug: A is always zero here, so $800E is always set to zero.
 @nowarn
 *C$9ED0,3;21 {else <% $800E = A & vischar_DIRECTION_MASK; // set direction
-; LD A,(HL); AND 3 missing here?
+; LD A,(HL) missing here?
 ; x86 version moves zero into $800E - has no AND - is that just hardcoding the bug?
  C$9ED3,2;21
  C$9ED5,1;21 }
@@ -5382,13 +5371,13 @@ cC$9F21,3;21 HL = $800F; // position on X axis
  C$9F6E,1;21
  C$9F6F,3;21 }
  C$9F72,3;21 HL = $8002; // route
- C$9F75,1;21 {A = *HL++;  // load route.index
+ C$9F75,1;21 {A = *HL++;
  C$9F76,1;21 }
- C$9F77,1;21 C = *HL; // load route.step    // increment route.step, as C, if reversed route
+ C$9F77,1;21 C = *HL;
  C$9F78,2;21 {if (A & route_REVERSED) C++;
  C$9F7A,2;21
  C$9F7C,1;21 }
-*C$9F7D,2;21 {if (A == 0xFF) <% // route_WANDER
+*C$9F7D,2;21 {if (A == 0xFF) <%
  C$9F7F,2;21 }
  C$9F81,1;21 {  A = *HL & 0xF8;
  C$9F82,2;21 }
@@ -5414,7 +5403,7 @@ cC$9F21,3;21 HL = $800F; // position on X axis
  C$9FA7,1
  C$9FA8,1;21 // HL = DE;
  C$9FA9,2;21 B = 0;
- C$9FAB,1;21 HL += BC;  // C is from $9F77 etc.
+ C$9FAB,1;21 HL += BC;
  C$9FAC,1;21 A = *HL;
  C$9FAD,1
  C$9FAE,3;21 in_permitted_area_end_bit();
@@ -5472,11 +5461,7 @@ cC$9F21,3;21 HL = $800F; // position on X axis
 ;
 ; Used by the routine at #R$9F21.
 ;
-; I:A  Room index + flag in bit 7.
-; O:A' Corrupted.
-; O:DE Corrupted.
-; O:HL Corrupted.
-; O:F  Z set if in permitted area, NZ otherwise.
+; I:A Room index + flag in bit 7.
 @label=in_permitted_area_end_bit
 cC$A007,3;21 point HL at room_index
  C$A00A,2;21 test the 'room' flag
@@ -5498,10 +5483,8 @@ cC$A007,3;21 point HL at room_index
 ;
 ; Used by the routine at #R$CB98.
 ;
-; I:A  Index (0..2) into permitted_bounds[] table.
-; I:DE Pointer to position to test (e.g. hero_map_position).
-; O:BC Corrupted.
-; O:HL Corrupted.
+; I:A Index (0..2) into permitted_bounds[] table.
+; I:HL Pointer to position.
 @label=within_camp_bounds
 cC$A01A,1;21 {HL = &permitted_bounds[A * 4];
  C$A01B,7;21
@@ -5786,7 +5769,7 @@ gB$A12F,1;21 game_counter
 ; searchlight_caught, solitary, guards_follow_suspicious_character,
 ; event_roll_call.
 @label=bell
-gB$A130,1;21 bell - bell_STOP by default
+gB$A130,1;21 bell
 
 ; Unreferenced byte.
 gB$A131,1;21 unused_A131
@@ -7350,7 +7333,7 @@ cC$AA05,3;21 HL = &map_position;
  C$AA12,3;21 BC = tile_buf_length - 1;
  C$AA15,2
  C$AA17,3;21 HL = &window_buf[24 * 17 * 8 - 1];
- C$AA1A,3;21 DE = &window_buf[24 * 17 * 8]; // out of bounds?
+ C$AA1A,3;21 DE = &window_buf[24 * 17 * 8];
  C$AA1D,3;21 BC = window_buf_length; // Bug: One byte too long.
  C$AA20,2
  C$AA22,3;21 plot_leftmost_tiles();
@@ -7871,7 +7854,7 @@ cC$AD59,1;21 {E = *HL++;
  C$AD6E,2;21 *HL &= ~(1<<7); %> // clear sign bit when magnitude hits zero
  C$AD70,2;21 else <%
 *C$AD72,1;21 (*HL)--; // count down
- C$AD73,1;21 A--; %> %> // just a copy sans direction bit
+ C$AD73,1;21 A--; %> %> // just a copy
 *C$AD74,2;21 else <%
 *C$AD76,1;21 A++; // count up
  C$AD77,1;21 *HL = A; %>
@@ -7992,41 +7975,37 @@ cC$ADBD,3;21 HL = &searchlight_state;
 ; .
 ; if (D + 16 < y || y + 16 < D) goto next;
  C$AE22,1;21 {  if (E + 23 < *HL) goto next;
- C$AE23,2;21 // off the right hand edge?
- C$AE25,1;21
+ C$AE23,3;21
  C$AE26,3;21 }
  C$AE29,1;21 {  if (*HL + 16 < E) goto next;
- C$AE2A,2;21 // off the left hand edge?
- C$AE2C,1;21
+ C$AE2A,3;21
  C$AE2D,3;21 }
  C$AE30,1;21 HL++;
  C$AE31,1;21 {  if (D + 16 < *HL) goto next;
- C$AE32,2;21 // off the bottom edge? (CHECK)
- C$AE34,1;21
+ C$AE32,3;21
  C$AE35,3;21 }
  C$AE38,1;21 {  if (*HL + 16 < D) goto next;
- C$AE39,2;21 // off the top edge? (CHECK)
- C$AE3B,1;21
+ C$AE39,3;21
  C$AE3C,3;21 }
 *C$AE3F,1;21 A = 0;
  C$AE40,1
  C$AE41,1;21 HL--;
  C$AE42,2;21 B = 0x00;
- C$AE44,1;21 {  if (*HL < E) <%
+ C$AE44,1;21 {  if (*HL - E < 0) <%
  C$AE45,1;21
  C$AE46,3;21 }
  C$AE49,2;21 B = 0xFF;
  C$AE4B,1
- C$AE4C,1;21 Adash = ~Adash;
+ C$AE4C,1;21 A = ~A;
  C$AE4D,1;21 %>
-*C$AE4E,1;21 C = A;
- C$AE4F,1;21 {  A = *++HL;
+*C$AE4E,1;21 C = Adash;
+ C$AE4F,1;21 {  Adash = *++HL;
  C$AE50,1;21 }
  C$AE51,2;21 H = 0x00;
- C$AE53,1;21 A -= D;
- C$AE54,3;21 {  if (A < 0) H = 0xFF; // -ve
+ C$AE53,1;21 Adash -= D;
+ C$AE54,3;21 {  if (Adash < 0) H = 0xFF; // -ve
  C$AE57,2;21 }
-*C$AE59,1;21 L = A;
+*C$AE59,1;21 L = Adash;
 ; HL must be row, BC must be column
  C$AE5A,1;21 {  HL *= 32;
  C$AE5B,3;21
@@ -8221,11 +8200,11 @@ cC$AF8F,1
  C$AFDD,1;22 A = 0;
  C$AFDE,1;22 return 0;
 
-; Handle collisions including items being pushed around.
+; (unknown) Definitely something to do with moving objects around. Collisions?
 ;
 ; Used by the routines at #R$AF8F and #R$C4E0.
 @label=collision
-cC$AFDF,3;23 HL = $8001; // &vischar[0].flags;
+cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
  C$AFE2,2;23 B = 8; // 8 iterations
 *C$AFE4,2;23 {do <% if (*HL & vischar_FLAGS_NO_COLLIDE) goto next;
  C$AFE6,3;23 // $8001, $8021, ...}
@@ -8273,8 +8252,8 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].flags;
  C$B038,3;23 if (HL < BC) goto pop_next; %>
 *C$B03B,1
  C$B03C,1;23 HL++;
-; Check the heights are within 24 of each other.
- C$B03D,1;23 C = *HL; // mi.pos.height
+; --------
+ C$B03D,1;23 C = *HL;
  C$B03E,3;23 {  A = saved_height - C;
  C$B041,1;23 }
  C$B042,2;23 if (A < 0) <%
@@ -8286,7 +8265,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].flags;
  C$B04E,2;23 }
  C$B050,2;23 {  if (A == vischar_FLAGS_PURSUE) <%
  C$B052,2;23 }
-; and current vischar is the hero...
+; and current vischar is not the hero...
  C$B054,1
  C$B055,1;23 // sampled HL=$8021,$8041,$8061,$80A1
  C$B056,1;23 HL--;
@@ -8301,7 +8280,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].flags;
 ; A hostile catches the hero!
 *C$B068,1
  C$B069,1
- C$B06A,2;23 {        HL = IY + 1; // unused operation? (solitary doesn't take HL)
+ C$B06A,2;23 {        HL = IY + 1;
  C$B06C,1;23
  C$B06D,1;23 }
  C$B06E,3;23 solitary(); return; // exit via %> %> %>
@@ -8500,7 +8479,7 @@ cC$B14C,3;21 {if (room_index) <% interior_bounds_check(); return; %>
  C$B1C0,1;21 }
  C$B1C1,1;21 {%> while (--B);
  C$B1C2,3;21 }
- C$B1C5,1;21 A &= 0; /* B is zero */ // return Z
+ C$B1C5,1;21 A &= B; // return Z
  C$B1C6,1;21 return;
 
 ; Multiplies A by 8, returning the result in BC.
@@ -8608,7 +8587,7 @@ cC$B1F5,3;21 A = room_index;
 ;
 ; I:HL Pointer to (byte before) coord byte pair.
 ; O:HL Corrupted.
-; O:F  Carry flag clear if door in range. Carry set otherwise.
+; O:F  C/NC if nomatch/match.
 @label=door_in_range
 cC$B252,1;21 {A = HL[1];
  C$B253,1;21 }
@@ -8972,7 +8951,7 @@ cC$B417,3;21 HL = &walls[12] + 3;
  C$B482,3;21 {$8015 = sprite_prisoner;
  C$B485,3;21 }
  C$B488,3;21 {player_locked_out_until = game_counter + 96;
- C$B48B,2;20
+ C$B48B,2;21
  C$B48D,3;21 }
  C$B490,2;21 {queue_message(message_CUTTING_THE_WIRE);
  C$B492,3;21 }
@@ -9993,7 +9972,7 @@ cC$BAF7,3;22 HL = &iso_pos_x;
 *C$BB33,3;22 {  HL = ((map_position >> 8) + 17) * 8;
  C$BB36,7;22
  C$BB3D,1;22 }
- C$BB3E,3;22 E = IY[26];  // DE = floogle.y
+ C$BB3E,3;22 E = IY[26];
  C$BB41,3;22 D = IY[27];
  C$BB44,1;22 A &= A;
  C$BB45,2;22 HL -= DE;
@@ -10003,7 +9982,7 @@ cC$BAF7,3;22 HL = &iso_pos_x;
  C$BB4E,1;22
  C$BB4F,3;22 }
  C$BB52,1;22 A = L;
- C$BB53,3;22 CP IY[31]  vischar->height
+ C$BB53,3;22 CP IY[31]
  C$BB56,3;22 if (carry) <%
  C$BB59,1;22 {    DE = A; %>
  C$BB5A,2;22 }
@@ -10312,7 +10291,7 @@ cC$C41C,3;21 HL = map_position;
  C$C446,1;21 A -= *HL; // charstr->pos.height
  C$C447,1;21 C = A;
  C$C448,1;21 A = D;
- C$C449,1;21 {  if (A >= C) goto unstash_skip; // check
+ C$C449,1;21 {  if (C <= A) goto unstash_skip; // check
  C$C44A,2;21 }
  C$C44C,2;21 A += 32;
  C$C44E,2;21 {  if (A > 0xFF) A = 0xFF;
@@ -10328,7 +10307,7 @@ cC$C41C,3;21 HL = map_position;
  C$C45B,1;21 A *= 2; // A == 128
  C$C45C,1;21 C = A;
  C$C45D,1;21 A = E;
- C$C45E,1;21 {  if (A >= C) goto unstash_skip; // check
+ C$C45E,1;21 {  if (C <= A) goto unstash_skip; // check
  C$C45F,2;21 }
  C$C461,2;21 A += 40;
  C$C463,2;21 {  if (A > 0xFF) A = 0xFF;
