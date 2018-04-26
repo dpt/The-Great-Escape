@@ -602,7 +602,7 @@
 ;          $07 -> character faces bottom left  (crawling)
 ; w $800F position on X axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on Y axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's height // set to 24 in process_player_input, cutting_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_screenpos_from_mi_pos,  read by animate ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's height // set to 24 in process_player_input, cutting_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_iso_pos_from_vischar,  read by animate ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 touch sets this to touch_stashed_A
 ; w $8018 points to something (gets $06C8 subtracted from it) (<- in_permitted_area)
@@ -6622,7 +6622,7 @@ cC$A491,2;21 *HL = 0xFF; // set in breakfast, or in bed
  C$A49E,1;21
  C$A49F,2;21 }
  C$A4A1,3;21 HL = $8000;
- C$A4A4,3;21 calc_vischar_screenpos_from_mi_pos(); // reset hero
+ C$A4A4,3;21 calc_vischar_iso_pos_from_vischar(); // reset hero
  C$A4A7,2;21 goto select_room_and_plot;
 
 ; Set hero's and prisoners_and_guards's routes to "go to yard".
@@ -8702,7 +8702,7 @@ cC$B29F,3;21 {BC = &roomdef_bounds[roomdef_bounds_index];
 ; Reset hero.
 @label=reset_outdoors
 cC$B2FC,3;21 HL = $8000;
- C$B2FF,3;21 calc_vischar_screenpos_from_mi_pos();
+ C$B2FF,3;21 calc_vischar_iso_pos_from_vischar();
 ; Centre the screen on the hero.
  C$B302,3;21 HL = $8018; // (vischar.screenpos.x)
  C$B305,1;21 {A = *HL++;
@@ -9277,7 +9277,7 @@ cC$B5CE,2;23 iterate over all eight vischars
 ; Used by the routines at #R$68F4, #R$697D, #R$A491, #R$B2FC and #R$C4E0.
 ;
 ; I:HL Pointer to visible character.
-@label=calc_vischar_screenpos_from_mi_pos
+@label=calc_vischar_iso_pos_from_vischar
 cC$B71B,1
 ; Save a copy of the vischar's position + offset.
  C$B71C,2;21 {memcpy(&saved_pos_x, HL + 0x0F, 6);
@@ -10532,7 +10532,7 @@ cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_DISABLED) return; /* character disa
  C$C5C7,2;22
  C$C5C9,1;22 }
  C$C5CA,2
- C$C5CC,3;22 calc_vischar_screenpos_from_mi_pos();
+ C$C5CC,3;22 calc_vischar_iso_pos_from_vischar();
  C$C5CF,1
  C$C5D0,3;22 character_behaviour(); return; // exit via
 
