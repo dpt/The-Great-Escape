@@ -1312,68 +1312,72 @@ gB$68A0,1
 @label=current_door
 gB$68A1,1
 
-; The hero or a non-player character changes room.
+; The current visible character is made to change room.
 ;
 ; Used by the routines at #R$B1F5, #R$B32D, #R$CA81, #R$CB98 and #R$EFCB.
 ;
-; I:HL Pointer to pos.
-; I:IY Pointer to visible character.
+; I:HL Pointer to position. FIXME: Specify type.
+; I:IY Pointer to current visible character.
 @label=transition
-cC$68A2,1
- C$68A3,2;21 {HL = IY;
+cC$68A2,1;21 Save position into #REGde
+ C$68A3,2;21 {Copy the current visible character pointer into #REGhl
  C$68A5,1;21 }
- C$68A6,1;21 A = L; // stash vischar index/offset
- C$68A7,1
- C$68A8,2;21 {L = A + 0x0F; // $8xxF (position on X axis)
+ C$68A6,1;21 Extract visible character's offset
+ C$68A7,1;21 Save it for later.
+ C$68A8,2;21 {Point #REGhl at the visible character's position
  C$68AA,1;21 }
- C$68AB,3;21 A = IY[0x1C]; // $8x1C (vischar.room)
- C$68AE,1;21 {if (A == 0) <% // outdoors
- C$68AF,3;21 }
-; Set position on X axis, Y axis and height (dividing by 4).
- C$68B2,2;21 B = 3; // 3 iterations
-*C$68B4,1;21 do <%
- C$68B5,1;21 A = *DE++;
- C$68B6,3;21 multiply_by_4();
- C$68B9,1;21 {    *HL++ = C;
- C$68BA,1;21 }
- C$68BB,1;21 {    *HL++ = B;
- C$68BC,1;21
+ C$68AB,3;21 Fetch the visible character's current room index
+ C$68AE,1;21 Are we outdoors?
+ C$68AF,3;21 Jump if not
+; We're outdoors.
+; .
+; Set position on X, Y axis and height by multiplying by 4.
+ C$68B2,2;21 Iterate thrice: X, Y and height fields
+*C$68B4,1;21 Save #REGbc - #R$B295's output register
+ C$68B5,1;21 Fetch a position byte
+ C$68B6,3;21 Multiply it by 4, widening it to a word in #REGbc
+ C$68B9,1;21 {Store it to visible character's position and increment pointers
+ C$68BA,3;21
  C$68BD,1;21 }
- C$68BE,1
- C$68BF,2;21 %> while (--B); %>
- C$68C1,2;21 else <% // interior
-; Set position on X axis, Y axis and height (copying).
-*C$68C3,2;21 B = 3; // 3 iterations
-*C$68C5,1;21 {  do <% *HL++ = *DE++;
- C$68C6,1;21
- C$68C7,1;21 }
- C$68C8,2;21 {    *HL++ = 0;
- C$68CA,1;21
+ C$68BE,1;21 Restore
+ C$68BF,2;21 Loop
+ C$68C1,2;21 Jump over indoors case (ELSE part)
+; We're indoors.
+; .
+; Set position on X, Y axis and height by copying.
+*C$68C3,2;21 Iterate thrice: X, Y and height fields
+*C$68C5,1;21 {Widen position bytes to words, store and increment pointers
+ C$68C6,5;21
  C$68CB,1;21 }
- C$68CC,2;21 %> while (--B); %>
-*C$68CE,1
- C$68CF,1;21 L = A;
- C$68D0,1;21 {if (A) <% reset_visible_character(); return; %> // exit via
- C$68D1,3;21
- C$68D4,3;21 }
-; HL points to the hero vischar at this point.
-*C$68D7,1;21 {*++HL &= ~vischar_FLAGS_NO_COLLIDE; // $8001
- C$68D8,2;21 }
- C$68DA,3;21 A = vischar.room;
- C$68DD,3;21 room_index = A;
- C$68E0,1;21 {if (A != 0) goto enter_room;
- C$68E1,3;21 }
-; Outdoors.
- C$68E4,2;21 {HL += 12;
+ C$68CC,2;21 Loop
+*C$68CE,1;21 Retrieve vischar index/offset stacked at $68A7
+ C$68CF,1
+ C$68D0,1;21 Is it the hero?
+ C$68D1,3;21 Jump if so
+; Not the hero.
+; .
+; This is an unusual construct. Why did the author not use JP NZ,$C5D3 above and fallthrough otherwise?
+ C$68D4,3;21 If not, exit via #R$C5D3 resetting the visible character
+; Hero only.
+; .
+; #REGhl points to the hero's visible character at this point.
+*C$68D7,1;21 Point #REGhl at the visible character's flags field (always $8001)
+ C$68D8,2;21 Clear vischar_FLAGS_NO_COLLIDE in flags
+ C$68DA,3;21 Get the visible character's room index
+ C$68DD,3;21 Set the global current room index
+ C$68E0,1;21 Are we outdoors?
+ C$68E1,3;21 Jump if not
+; We're outdoors.
+ C$68E4,2;21 {Point #REGhl at the visible character's input field (always $800D)
  C$68E6,1;21
  C$68E7,1;21 }
- C$68E8,2;21 {*HL++ = input_KICK; // $800D
- C$68EA,1;21 }
- C$68EB,1;21 {*HL &= vischar_DIRECTION_MASK; // $800E // likely a sprite direction
+ C$68E8,2;21 Set input to input_KICK (so the character is reset???)
+ C$68EA,1;21 Point #REGhl at the visible character's direction field (always $800E)
+ C$68EB,1;21 {Fetch the direction field and clear the non-direction bits, resetting the crawl flag
  C$68EC,2;21
  C$68EE,1;21 }
- C$68EF,3;21 reset_outdoors();
- C$68F2,2;21 goto squash_stack_goto_main;
+ C$68EF,3;21 Reset the hero's position, redraw the scene then zoombox it onto the screen
+ C$68F2,2;21 Restart from main loop
 
 ; The hero enters a room.
 ;
