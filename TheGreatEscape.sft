@@ -1412,23 +1412,25 @@ cC$691A,3;21 Set stack to the very top of RAM
 ; Called when changing rooms.
 @label=set_hero_sprite_for_room
 @nowarn
-cC$6920,3;21 HL = $800D;
- C$6923,2;21 {*HL++ = input_KICK;
- C$6925,1;21 }
+cC$6920,3;21 {Set the hero's visible character input field to input_KICK
+ C$6923,2;21 }
+ C$6925,1;21 Point HL at vischar.direction ($800E)
 ; vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly
 ; anywhere else so it must be an offset into byte_CDAA[].
-;
+; .
 ; When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl
 ; flag appropriately.
- C$6926,3;21 {if (room_index >= room_29_SECOND_TUNNEL_START) <%
+ C$6926,3;21 {If the global current room index is room_29_SECOND_TUNNEL_START or above...
  C$6929,2;21
  C$692B,2;21 }
- C$692D,2;21 *HL |= vischar_DIRECTION_CRAWL; // $800E, set crawl flag
- C$692F,3;21 {  $8015 = &sprite_prisoner; %>
+; We're in a tunnel room.
+ C$692D,2;21 Set the vischar_DIRECTION_CRAWL bit on vischar.direction
+ C$692F,3;21 {Set vischar.mi.sprite to the prisoner sprite set
  C$6932,3;21 }
- C$6935,1;21 else <%
-*C$6936,2;21 *HL &= ~vischar_DIRECTION_CRAWL; %> // clear crawl flag
- C$6938,1;21 return;
+ C$6935,1
+; We're not in a tunnel room.
+*C$6936,2;21 Clear the vischar_DIRECTION_CRAWL bit from vischar.direction
+ C$6938,1
 
 ; Setup movable items.
 ;
