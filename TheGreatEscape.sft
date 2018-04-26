@@ -9211,7 +9211,7 @@ cC$B5CE,2;23 iterate over all eight vischars
  C$B69F,3;23 IY[0x0C]++; %>
 *C$B6A2,2;23 {  HL = IY;
  C$B6A4,1;23 }
- C$B6A5,3;23 calc_vischar_screenpos();
+ C$B6A5,3;23 calc_vischar_iso_pos_from_state();
 *C$B6A8,1;23 pop_next:
  C$B6A9,3;23 {  if (IY[1] != vischar_FLAGS_EMPTY_SLOT) IY[1] &= ~vischar_FLAGS_NO_COLLIDE; // $8001
  C$B6AC,4;23
@@ -9284,7 +9284,7 @@ cC$B71B,1
  C$B71E,8;21
  C$B726,2;21 }
  C$B728,1
-; FALL THROUGH into calc_vischar_screenpos.
+; FALL THROUGH into calc_vischar_iso_pos_from_state.
 
 ; Calculate screen position for vischars from saved_pos.
 ;
@@ -9293,7 +9293,7 @@ cC$B71B,1
 ; Similar to drop_item_tail_interior.
 ;
 ; I:HL Pointer to visible character.
-@label=calc_vischar_screenpos
+@label=calc_vischar_iso_pos_from_state
 cC$B729,1
  C$B72A,2;21 {HL += 0x18; // vischar->scrx/y
  C$B72C,1;21
