@@ -1383,18 +1383,18 @@ cC$68A2,1;21 Save position into #REGde
 ;
 ; Used by the routines at #R$68A2, #R$9D78, #R$9DE5 and #R$B75A.
 @label=enter_room
-cC$68F4,3;21 {game_window_offset = 0;
+cC$68F4,3;21 {Reset the game_window_offset X and Y coordinates to zero
  C$68F7,3;21 }
- C$68FA,3;21 setup_room();
- C$68FD,3;21 plot_interior_tiles();
- C$6900,3;21 {map_position = 0xEA74;
+ C$68FA,3;21 Setup the room
+ C$68FD,3;21 Expand tile buffer into screen buffer
+ C$6900,3;21 {Set the map_position to (116,234)
  C$6903,3;21 }
- C$6906,3;21 set_hero_sprite_for_room();
- C$6909,3;21 HL = $8000;
- C$690C,3;21 calc_vischar_screenpos_from_mi_pos(); // reset hero
- C$690F,3;21 setup_movable_items();
- C$6912,3;21 zoombox();
- C$6915,2;21 {increase_score(1);
+ C$6906,3;21 Set appropriate sprite for the room (standing or crawl)
+ C$6909,3;21 {Reset the hero's screen position
+ C$690C,3;21 }
+ C$690F,3;21 Setup movable items
+ C$6912,3;21 Zoombox the scene onto the screen
+ C$6915,2;21 {Increment score by one
  C$6917,3;21 }
 ; FALL THROUGH into squash_stack_goto_main.
 
