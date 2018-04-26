@@ -1316,7 +1316,7 @@ gB$68A1,1
 ;
 ; Used by the routines at #R$B1F5, #R$B32D, #R$CA81, #R$CB98 and #R$EFCB.
 ;
-; I:HL Pointer to position. FIXME: Specify type.
+;!I:HL Pointer to position. FIXME: Specify type.
 ; I:IY Pointer to current visible character.
 @label=transition
 cC$68A2,1;21 Save position into #REGde
@@ -1341,7 +1341,7 @@ cC$68A2,1;21 Save position into #REGde
  C$68BD,1;21 }
  C$68BE,1;21 Restore
  C$68BF,2;21 Loop
- C$68C1,2;21 Jump over indoors case (ELSE part)
+ C$68C1,2;21 !Jump over indoors case (ELSE part)
 ; We're indoors.
 ; .
 ; Set position on X, Y axis and height by copying.
@@ -1371,7 +1371,7 @@ cC$68A2,1;21 Save position into #REGde
  C$68E4,2;21 {Point #REGhl at the visible character's input field (always $800D)
  C$68E6,1;21
  C$68E7,1;21 }
- C$68E8,2;21 Set input to input_KICK (so the character is reset???)
+ C$68E8,2;21 !Set input to input_KICK (so the character is reset???)
  C$68EA,1;21 Point #REGhl at the visible character's direction field (always $800E)
  C$68EB,1;21 {Fetch the direction field and clear the non-direction bits, resetting the crawl flag
  C$68EC,2;21
