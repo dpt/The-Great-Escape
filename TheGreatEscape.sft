@@ -1400,10 +1400,10 @@ cC$68F4,3;21 {Reset the game_window_offset X and Y coordinates to zero
 
 ; Squash stack, then goto main.
 ;
-; Used by the routine at #R$68A2.
+; Used by the routines at #R$68A2 and #R$68F4 (a fall through).
 @label=squash_stack_goto_main
-cC$691A,3;21 SP = $FFFF;
- C$691D,3;21 goto main_loop;
+cC$691A,3;21 Set stack to the very top of RAM
+ C$691D,3;21 Jump to the start of the game's main loop
 
 ; Set appropriate hero sprite for room.
 ;
