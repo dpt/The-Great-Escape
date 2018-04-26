@@ -1416,7 +1416,7 @@ cC$6920,3;21 {Set the hero's visible character input field to input_KICK
  C$6923,2;21 }
  C$6925,1;21 Point HL at vischar.direction ($800E)
 ; vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly
-; anywhere else so it must be an offset into byte_CDAA[].
+; anywhere else so it must be an offset into animindices[].
 ; .
 ; When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl
 ; flag appropriately.
@@ -9242,7 +9242,7 @@ cC$B5CE,2;23 iterate over all eight vischars
  C$B6C9,1;23 }
  C$B6CA,3;23 add vischar.input to it
  C$B6CD,3;23
- C$B6D0,3;23 add it to byte_CDAA
+ C$B6D0,3;23 add it to animindices
  C$B6D3,1;23
  C$B6D4,1;23 fetch the (table entry)
  C$B6D5,1;23
@@ -11980,7 +11980,7 @@ wW$CD9A,2;18 &animations[0]
 ; none, up, down, left, up+left, down+left, right, up+right, down+right, fire
 ; .
 ; Groups of nine. (<- animate)
-@label=byte_CDAA
+@label=animindices
 bB$CDAA,9;48 TL
  B$CDB3,9;48 TR
  B$CDBC,9;48 BR
