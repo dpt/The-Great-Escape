@@ -1434,94 +1434,82 @@ cC$6920,3;21 {Set the hero's visible character input field to input_KICK
 
 ; Setup movable items.
 ;
+; "Movable items" are the stoves and the crate which appear in three rooms in the game. Unlike ordinary items such as keys and the radio the movable items can be pushed around by the hero character walking into them. Internally they use the second visible character slot.
+; .
 ; Used by the routines at #R$68F4 and #R$B2FC.
 @label=setup_movable_items
-cC$6939,3;21 reset_nonplayer_visible_characters();
- C$693C,3;21 A = room_index;
- C$693F,2;21 {     if (A == room_2_HUT2LEFT) setup_stove1();
- C$6941,6;21
- C$6947,2;21 }
-*C$6949,2;21 {else if (A == room_4_HUT3LEFT) setup_stove2();
- C$694B,6;21
- C$6951,2;21 }
-*C$6953,2;21 {else if (A == room_9_CRATE)    setup_crate();
- C$6955,3;21
- C$6958,3;21 }
-*C$695B,3;21 spawn_characters();
- C$695E,3;21 mark_nearby_items();
- C$6961,3;21 animate();
- C$6964,3;21 move_map();
- C$6967,3;21 plot_sprites(); return;
+cC$6939,3;24 Reset all non-player visible characters
+ C$693C,3;24 Get global current room index
+ C$693F,2;24 {If current room index is room_2_HUT2LEFT then jump to setup_stove1
+ C$6941,6;24
+ C$6947,2;24 }
+*C$6949,2;24 {If current room index is room_4_HUT3LEFT then jump to setup_stove2
+ C$694B,6;24
+ C$6951,2;24 }
+*C$6953,2;24 {If current room index is room_9_CRATE then jump to setup_crate
+ C$6955,3;24
+ C$6958,3;24 }
+*C$695B,3;24 Spawn characters
+ C$695E,3;24 Mark nearby items
+ C$6961,3;24 Animate all visible characters
+ C$6964,3;24 Move the map
+ C$6967,3;24 Plot vischars and items
 @label=setup_crate
-*C$696A,3;21 HL = &movable_items[movable_item_CRATE];
- C$696D,2;21 A = character_28_CRATE;
- C$696F,2;21 goto setup_movable_item;
+*C$696A,3;24 Point #REGhl at movable_item_crate
+ C$696D,2;24 Set #REGa to character index character_28_CRATE
+ C$696F,2;24 Jump to setup_movable_item
 @label=setup_stove2
-*C$6971,3;21 HL = &movable_items[movable_item_STOVE2];
- C$6974,2;21 A = character_27_STOVE_2;
- C$6976,2;21 goto setup_movable_item;
+*C$6971,3;24 Point #REGhl at movable_item_stove2
+ C$6974,2;24 Set #REGa to character index character_27_STOVE_2
+ C$6976,2;24 Jump to setup_movable_item
 @label=setup_stove1
-*C$6978,3;21 HL = &movable_items[movable_item_STOVE1];
- C$697B,2;21 A = character_26_STOVE_1;
-; FALL THROUGH into setup_movable_item.
-
-; Setup the second vischar as a movable item.
-;
-; Used by the routine at #R$6939.
-;
-; I:HL Pointer to movable item.
+*C$6978,3;24 Point #REGhl at movable_item_stove1
+ C$697B,2;24 Set #REGa to character index character_26_STOVE_1
+; Using the movable item specific data and a generic item reset data, setup the second visible character as a movable item.
 @label=setup_movable_item
 @nowarn
-cC$697D,3;24 setup_movable_item: $8020 = A; // character index
- C$6980,3;24 {memcpy($802F, HL, 9); // non-player character 0 is $8020..$803F
+ C$697D,3;24 Assign the character index in #REGa to the second visible character's character field
+ C$6980,3;24 {Copy nine bytes of item-specific movable item data over the second visible character data
  C$6983,3;24
  C$6986,2;24 }
 @nowarn
- C$6988,3;24 {memcpy($8021, movable_item_reset_data, 14);
+ C$6988,3;24 {Copy fourteen bytes of visible character data over the vischar
  C$698B,6;24
  C$6991,2;24 }
- C$6993,3;24 {$803C = room_index;
+ C$6993,3;24 {Set the visible character's room index to the global current room index
  C$6996,3;24 }
 @nowarn
- C$6999,3;24 HL = $8020;
- C$699C,3;24 calc_vischar_screenpos_from_mi_pos(); // reset item vischar
- C$699F,1;24 return;
-; Fourteen bytes of reset data.
+ C$6999,3;24 Point #REGhl at the second visible character
+ C$699C,3;24 Set saved_pos (FIXME this func looks misnamed)
+ C$699F,1
+; Fourteen bytes of visible character reset data.
 @label=movable_item_reset_data
- B$69A0,1;24 flags
- W$69A1,2;24 route
- B$69A3,3;24 pos
- B$69A6,1;24 counter_and_flags
- W$69A7,2;24 animbase = &animations[0]
- W$69A9,2;24 anim     = animations[8] // anim_wait_tl animation
- B$69AB,1;24 animindex
- B$69AC,1;24 input
- B$69AD,1;24 direction
-
+ B$69A0,1;24 Flags
+ W$69A1,2;24 Route
+ B$69A3,3;24 Position
+ B$69A6,1;24 Counter and flags
+ W$69A7,2;24 Animation base = &animations[0]
+ W$69A9,2;24 Animation      = animations[8] // anim_wait_tl animation
+ B$69AB,1;24 Animation index
+ B$69AC,1;24 Input
+ B$69AD,1;24 Direction
 ; Movable items.
 ;
-; struct movable_item { word x_coord, y_coord, height; const sprite *; byte
-; index; };
+; struct movable_item { word x_coord, y_coord, height; const sprite *; byte index; };
 ; .
 ; Sub-struct of vischar ($802F..$8038).
-;
-; .
-;
-; struct movable_item stove1 = { { 62, 35, 16 }, &sprite_stove, 0 };
 @label=movable_item_stove1
-bW$69AE,6;30 pos: 62, 35, 16
- W$69B4,2;30 sprite: sprite_stove
- B$69B6,1;30 index: 0
-; struct movable_item crate  = { { 55, 54, 14 }, &sprite_crate, 0 };
+ W$69AE,6;30 Position (62, 35, 16)
+ W$69B4,2;30 Sprite: sprite_stove
+ B$69B6,1;30 Index: 0
 @label=movable_item_crate
- W$69B7,6;30 pos: 55, 54, 14
- W$69BD,2;30 sprite: sprite_crate
- B$69BF,1;30 index: 0
-; struct movable_item stove2 = { { 62, 35, 16 }, &sprite_stove, 0 };
+ W$69B7,6;30 Position (55, 54, 14)
+ W$69BD,2;30 Sprite: sprite_crate
+ B$69BF,1;30 Index: 0
 @label=movable_item_stove2
- W$69C0,6;30 pos: 62, 35, 16
- W$69C6,2;30 sprite: sprite_stove
- B$69C8,1;30 index: 0
+ W$69C0,6;30 Position (62, 35, 16)
+ W$69C6,2;30 Sprite: sprite_stove
+ B$69C8,1;30 Index: 0
 
 ; Reset all non-player visible characters.
 ;
