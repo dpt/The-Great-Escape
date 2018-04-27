@@ -1511,22 +1511,22 @@ cC$6939,3;24 Reset all non-player visible characters
  W$69C6,2;30 Sprite: sprite_stove
  B$69C8,1;30 Index: 0
 
-; Reset all non-player visible characters.
+; Reset all seven non-player visible characters.
 ;
-; Used by the routine at #R$6939.
+; Used by the routine at #R$6939 only. (!could merge into the above)
 @label=reset_nonplayer_visible_characters
 @nowarn
-cC$69C9,3;21 HL = $8020; // iterate over non-player characters
- C$69CC,3;21 B = 7; // 7 iterations
-*C$69CF,1;21 do <%
- C$69D0,1
- C$69D1,3;21 reset_visible_character();
- C$69D4,2
- C$69D6,1;21 {  HL += 32; // stride
+cC$69C9,3;21 Start at the first visible character (hero is the zeroth)
+ C$69CC,3;21 Set #REGb for seven iterations and set #REGc for a 32 byte stride simultaneously
+; Start loop
+*C$69CF,1;21 {Reset the visible character at #REGhl
+ C$69D0,5;21
+ C$69D5,1;21 }
+ C$69D6,1;21 {Step #REGhl to the next visible character
  C$69D7,1;21
  C$69D8,1;21 }
- C$69D9,2;21 %> while (--B);
- C$69DB,1;21 return;
+ C$69D9,2;21 ...loop
+ C$69DB,1
 
 ; Setup interior doors.
 ;
