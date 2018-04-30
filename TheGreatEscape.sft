@@ -1530,45 +1530,50 @@ cC$69C9,3;21 Start at the first visible character (hero is the zeroth)
 
 ; Setup interior doors.
 ;
-; Used by the routine at #R$6A35.
-; .
-; Used by setup_room only.
+; Used by the routine at #R$6A35 only.
 ;
 ; .
 ;
-; Wipe interior doors with 0xFF.
 @label=setup_doors
-cC$69DC,2
- C$69DE,3;21 DE = interior_doors + 3;
- C$69E1,2;21 B = 4;
-*C$69E3,1;21 {do <% *DE-- = door_NONE;
- C$69E4,1;21 }
- C$69E5,2;21 %> while (--B);
- C$69E7,1;21 DE++; // DE = &interior_doors[0];
- C$69E8,3;21 {B = room_index << 2;
+; Clear the interior_doors[] array with door_NONE ($FF).
+cC$69DC,2;21 Set #REGa to door_NONE
+ C$69DE,3;21 Set #REGde to the final byte of interior_doors[] (byte 4)
+ C$69E1,2;21 {Set all four bytes to door_NONE
+*C$69E3,1;21
+ C$69E4,1;21
+ C$69E5,2;21 }
+; Setup to populate interior_doors[].
+ C$69E7,1;21 Set #REGde to the first interior_doors[] byte
+ C$69E8,3;21 {Fetch and shift the global current room index up by two bits, to match door_flags, then store it in #REGb
  C$69EB,2;21
  C$69ED,1;21 }
- C$69EE,2;21 {C = 0;
- C$69F0,1;21 }
- C$69F1,3;21 HLdash = &doors[0];
- C$69F4,2;21 Bdash = 124; // length of doors[]
- C$69F6,3
-*C$69F9,1;21 {do <% if ((HLdash[0] & ~door_FLAGS_MASK_DIRECTION) == B) <%
- C$69FA,1
- C$69FB,3;21
- C$69FE,2;21 }
- C$6A00,1;21 {    *DE++ = C ^ door_REVERSE; %>
+ C$69EE,2;21 Initialise the door index
+ C$69F0,1;21 Switch register banks for the iteration
+; We're about to walk through doors[] and extract the indices of the doors relevant to the current room.
+ C$69F1,3;21 Point #REGhl' to the first byte of doors[]
+ C$69F4,2;21 Set #REGb' to the number of entries in doors[] (124)
+ C$69F6,3;21 Set #REGde' to the stride of four bytes (each door is a room_and_direction byte followed by a 3-byte position)
+; Start loop
+; .
+; Save any door index which matches the current room.
+*C$69F9,1;21 Fetch door's room_and_direction
+ C$69FA,1;21 Switch registers back to the set used on entry to the routine
+ C$69FB,2;21 Clear room_and_direction's direction bits (door_FLAGS_MASK_DIRECTION)
+ C$69FD,1;21 Is it the current room?
+ C$69FE,2;21 Jump if not
+; This is the current room.
+ C$6A00,1;21 {Write to #REGde register #REGc toggled with door_REVERSE
  C$6A01,3;21
  C$6A04,1;21 }
-*C$6A05,1;21 {  C ^= door_REVERSE;
+*C$6A05,1;21 {Toggle door_REVERSE in #REGc for the next iteration
  C$6A06,2;21 }
- C$6A08,3;21 {  if (C < door_REVERSE) C++; // increment every two stops?
- C$6A0B,1;21
-*C$6A0C,1;21
- C$6A0D,1;21 }
- C$6A0E,1;21 HLdash += 4; %>
- C$6A0F,2;21 while (--Bdash);
- C$6A11,1;21 return;
+ C$6A08,3;21 Jump if (#REGc >= door_REVERSE)
+ C$6A0B,1;21 {Increment the door index once every two steps through the array
+*C$6A0C,1;21 }
+ C$6A0D,1;21 Switch registers again
+ C$6A0E,1;21 Step #REGhl' to the next door
+ C$6A0F,2;21 ...loop
+ C$6A11,1
 
 ; Turn a door index into a doorpos pointer.
 ;
