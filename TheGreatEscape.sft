@@ -1598,10 +1598,10 @@ cC$6A12,1;21 Save the original #REGa so we can test its flag bit in a moment
 ;
 ; Used by the routines at #R$6A35, #R$A50B and #R$AB6B.
 @label=wipe_visible_tiles
-cC$6A27,3;21 {memset($F0F8, 0, 24 * 17);
+cC$6A27,3;21 {Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero
  C$6A2A,8;21
  C$6A32,2;21 }
- C$6A34,1;21 return;
+ C$6A34,1
 
 ; Expand out the room definition for room_index.
 ;
