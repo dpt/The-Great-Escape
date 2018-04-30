@@ -1575,21 +1575,24 @@ cC$69DC,2;21 Set #REGa to door_NONE
  C$6A0F,2;21 ...loop
  C$6A11,1
 
-; Turn a door index into a doorpos pointer.
+; Turn a door index into a door_t pointer.
 ;
 ; Used by the routines at #R$B32D, #R$B4D0, #R$C651 and #R$CA81.
 ;
-; I:A  Index of door + lock flag in bit 7.
-; O:HL Pointer to doorpos.
-; O:DE Corrupted.
+; I:A  Index of door + reverse flag in bit 7.
+; O:HL Pointer to door_t.
 @label=get_door
-cC$6A12,1;21 {HL = &doors[(A & ~door_REVERSE) * 2]; // are they pairs of doors?
- C$6A13,9;21
+cC$6A12,1;21 Save the original #REGa so we can test its flag bit in a moment
+ C$6A13,1;21 First double #REGa since doors[] contains pairs of doors. This also discards the flag in bit 7
+ C$6A14,1;21 {Form the address of doors[#REGa] in #REGhl
+ C$6A15,7;21
  C$6A1C,1;21 }
- C$6A1D,2;21 {if (A & door_REVERSE) HL += 4; // if reverse
- C$6A1F,6;21
+ C$6A1D,2;21 Was the door_REVERSE flag bit set on entry?
+ C$6A1F,1;21 If not, return with #REGhl pointing to the entry
+ C$6A20,1;21 {Otherwise, point to the next entry along
+ C$6A21,4;21
  C$6A25,1;21 }
- C$6A26,1;21 return;
+ C$6A26,1
 
 ; Wipe the visible tiles array.
 ;
