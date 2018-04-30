@@ -1608,73 +1608,94 @@ cC$6A27,3;21 {Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero
 ; Used by the routines at #R$68F4, #R$7B36, #R$9E07, #R$A289, #R$A2E2, #R$A479
 ; and #R$B3F6.
 @label=setup_room
-cC$6A35,3;21 wipe_visible_tiles();
- C$6A38,3;21 {HL = rooms_and_tunnels[room_index - 1]; // array starts with room 1
- C$6A3B,1;21
+cC$6A35,3;21 Wipe the visible tiles array
+; Form the address of rooms_and_tunnels[room_index - 1] in #REGhl.
+ C$6A38,3;21 Fetch the global current room index
+ C$6A3B,1;21 Double it so we can index rooms_and_tunnels[]
 @isub=LD HL,rooms_and_tunnels - 2
- C$6A3C,8;21
-*C$6A44,1;21
+ C$6A3C,3;21 Point #REGhl at #R$6BAD rooms_and_tunnels[-1]
+ C$6A3F,1;21 {#REGhl + #REGa
+ C$6A40,3;21
+ C$6A43,1;21 }
+*C$6A44,1;21 {Fetch room pointer in #REGhl
  C$6A45,2;21
  C$6A47,1;21 }
- C$6A48,1
- C$6A49,3;21 setup_doors();
- C$6A4C,1
-; Copy boundaries into state.
- C$6A4D,3;21 DE = &roomdef_bounds_index; // room dimensions index
- C$6A50,2;21 *DE++ = *HL++;
- C$6A52,1;21 A = *HL;
- C$6A53,1
- C$6A54,1;21 *DE = A;
- C$6A55,2;21 if (A == 0) <% // no boundaries
- C$6A57,1;21 HL++; %> // skip to interior mask
- C$6A58,2;21 else <%
-*C$6A5A,1;21 {  memcpy(DE, HL, A * 4 + 1); HL += A * 4 + 1; %> // skip to interior mask
- C$6A5B,5;21
+ C$6A48,1;21 Push it
+ C$6A49,3;21 Setup interior doors
+ C$6A4C,1;21 Pop it
+; Copy the count of boundaries into state.
+ C$6A4D,3;21 Point DE at #R$81BE roomdef_bounds_index
+ C$6A50,2;21 Copy first byte of roomdef into roomdef_bounds_index. (DE, HL incremented).
+; DE now points to #R$81BF
+; .
+; Copy all boundary structures into state, if any.
+ C$6A52,1;21 Fetch count of boundaries
+ C$6A53,1;21 Is it zero?
+ C$6A54,1;21 Store it irrespectively.
+ C$6A55,2;21 No, jump to copying step
+ C$6A57,1;21 Skip roomdef count of boundaries
+ C$6A58,2;21 Jump to mask copying
+*C$6A5A,1;21 {Multiply #REGa by four (size of boundary structures) then add one (skip current counter) == size of boundary structures
+ C$6A5B,1;21
+ C$6A5C,1;21 }
+ C$6A5D,1;21 {Copy all boundary structures
+ C$6A5E,2;21
  C$6A60,2;21 }
 ; Copy interior mask into interior_mask_data.
-*C$6A62,3;21 DE = &interior_mask_data;
- C$6A65,1;21 {A = *HL++; // sampled HL=$6E22,$6EF8,$6F38 // count of interior masks}
- C$6A66,1;21
- C$6A67,1;21 *DE = A;
- C$6A68,1
- C$6A69,2;21 if (A) <%
- C$6A6B,1;21 DE++;
- C$6A6C,1;21 B = A;
-*C$6A6D,1;21 do <%
- C$6A6E,1
- C$6A6F,1;21 {    memcpy(DE, &interior_mask_data_source[*HL++], 7);
- C$6A70,2;21 DE += 7;
- C$6A72,15;21
- C$6A81,2;21 }
- C$6A83,2;21 {    *DE++ = 32;
+*C$6A62,3;21 Point #REGde at interior_mask_data
+ C$6A65,1;21 Get count of interior masks
+ C$6A66,1;21 Step
+ C$6A67,1;21 Write it out
+ C$6A68,1;21 Is the count non-zero?
+ C$6A69,2;21 Jump if not
+ C$6A6B,1;21 Skip over the written count
+ C$6A6C,1;21 #REGb is our loop counter
+; Start loop
+; .
+; interior_mask_data holds indices into interior_mask_data_source[].
+*C$6A6D,1;21
+ C$6A6E,1;21
+ C$6A6F,1;21 {Fetch an index (from roomdef?)
+ C$6A70,2;21 }
+ C$6A72,1;21 {#REGbc = #REGhl
+ C$6A73,1;21 }
+ C$6A74,1;21 {Multiply it by eight
+ C$6A75,1;21
+ C$6A76,1;21 }
+ C$6A77,1;21 Clear the carry flag
+ C$6A78,2;21 Final offset is index * 7
+ C$6A7A,3;21 Point at interior_mask_data_source
+ C$6A7D,1;21 Form the address of the mask data
+ C$6A7E,3;21 Width of mask data
+ C$6A81,2;21 Copy it
+ C$6A83,2;21 {Constant final byte is always 32
  C$6A85,1;21
  C$6A86,1;21 }
- C$6A87,2
- C$6A89,1;21 - %>
- C$6A8A,2;21 while (--B); %>
+ C$6A87,3;21
+ C$6A8A,2;21 ...loop
 ; Plot all objects (as tiles).
-*C$6A8C,1;21 B = *HL; // count of objects // sample: HL -> $6E25 (room_16_CORRIDOR + 5)
- C$6A8D,1;21 {if (B == 0) return;
- C$6A8E,1;21
- C$6A8F,1;21 }
- C$6A90,1;21 HL++;
-*C$6A91,1;21 do <%
- C$6A92,1;21 {  C = *HL++; // object index
- C$6A93,1;21 }
- C$6A94,1;21 {  A = *HL++; // column
- C$6A95,1;21 }
- C$6A96,1
- C$6A97,1;21 {  DE = $F0F8 + *HL * 24 + A; // $F0F8 = visible tiles array (so *HL = row, A = column)
- C$6A98,14;21
+*C$6A8C,1;21 Count of objects
+ C$6A8D,1;21
+ C$6A8E,1;21 Is it zero?
+ C$6A8F,1;21 Return if so
+ C$6A90,1;21 Skip the count
+; Start loop: for every object in the roomdef
+*C$6A91,1
+ C$6A92,1;21 Fetch the object index
+ C$6A93,1;21
+ C$6A94,1;21 Fetch the column
+ C$6A95,3;21
+; Plot the object into the visible tiles array
+ C$6A98,2;21 {#REGde = $F0F8 + row * 24 + column.
+ C$6A9A,12;21
 *C$6AA6,3;21
  C$6AA9,1;21
  C$6AAA,1;21 }
- C$6AAB,1;21 {  expand_object(C); // pass C as A
- C$6AAC,3;21 }
- C$6AAF,2
- C$6AB1,1;21 HL++; %>
- C$6AB2,2;21 while (--B);
- C$6AB4,1;21 return;
+ C$6AAB,1;21
+ C$6AAC,3;21 Expand RLE-encoded object out to a set of tile references
+ C$6AAF,3;21
+ C$6AB2,2;21 ...loop
+ C$6AB4,1
 
 ; Expands RLE-encoded objects to a full set of tile references.
 ;
