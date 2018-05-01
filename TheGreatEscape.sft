@@ -1844,15 +1844,6 @@ cC$6AB5,1;21 {Fetch the object pointer from #R$7095[A] into #REGhl
 ;
 ; Used by the routines at #R$68F4, #R$7B36, #R$9E07, #R$A289, #R$A2E2, #R$A479,
 ; #R$A50B, #R$AB6B and #R$B3F6.
-;
-; O:A   Corrupted.
-; O:BC  Corrupted.
-; O:DE  Corrupted.
-; O:HL  Corrupted.
-; O:A'  Corrupted.
-; O:BC' Corrupted.
-; O:DE' Corrupted.
-; O:HL' Corrupted.
 @label=plot_interior_tiles
 cC$6B42,3;21 Point #REGhl at the screen buffer's start address
  C$6B45,3;21 Point #REGde at the visible tiles array
@@ -8638,7 +8629,6 @@ cC$B1F5,3;21 A = room_index;
 ; (saved_X,saved_Y) within (-2,+2) of HL[1..] scaled << 2
 ;
 ; I:HL Pointer to (byte before) coord byte pair.
-; O:HL Corrupted.
 ; O:F  C/NC if nomatch/match.
 @label=door_in_range
 cC$B252,1;21 {A = HL[1];
@@ -8686,10 +8676,7 @@ cC$B295,2;21 B = 0;
 ; Used by the routine at #R$B14C.
 ;
 ; I:IY Pointer to visible character.
-; O:A  Corrupted.
-; O:BC Corrupted.
 ; O:F  Z clear if boundary hit, set otherwise.
-; O:HL Corrupted.
 @label=interior_bounds_check
 cC$B29F,3;21 {BC = &roomdef_bounds[roomdef_bounds_index];
  C$B2A2,9;21
