@@ -1701,123 +1701,143 @@ cC$6A35,3;21 Wipe the visible tiles array
 ;
 ; Used by the routine at #R$6A35.
 ; .
+; Object format:
 ; #TABLE(default)
-; { =c2 Each object starts with dimension bytes: }
-; { <w> <h>               | width, height }
+; { =c2 Each object starts with two bytes which specify its dimensions: }
+; { <w> <h>               | Width in tiles, Height in tiles }
 ; { =c2 Which are then followed by a repetition of the following bytes: }
-; { <t>                   | emit tile <t> }
-; { <0xFF> <64..127> <t>  | emit tile <t> <t+1> <t+2> .. up to 63 times }
-; { <0xFF> <128..254> <t> | emit tile <t> up to 126 times }
-; { <0xFF> <0xFF>         | emit <0xFF> }
+; { <t>                   | Literal: Emit tile <t> }
+; { <0xFF> <0xFF>         | Escape: Emit <0xFF> }
+; { <0xFF> <128..254> <t> | Repetition: Emit tile <t> up to 126 times }
+; { <0xFF> <64..79> <t>   | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> }
+; { <0xFF> <other>        | Other encodings are not used }
 ; TABLE#
+; .
+; Tile references of zero produce no output.
 ;
 ; I:A  Object index.
 ; I:DE Tile buffer location to expand to.
-; O:BC Corrupted.
-; O:HL Corrupted.
 @label=expand_object
-cC$6AB5,1;21 {HL = interior_object_defs[A];
+cC$6AB5,1;21 {Fetch the object pointer from #R$7095[A] into #REGhl
  C$6AB6,10;21
  C$6AC0,1;21 }
- C$6AC1,1;21 {B = *HL++; // width
+ C$6AC1,1;21 {Fetch the object's width (in tiles)
  C$6AC2,1;21 }
- C$6AC3,1;21 {C = *HL++; // height
+ C$6AC3,1;21 {Fetch the object's height (in tiles)
  C$6AC4,1;21 }
- C$6AC5,1;21 {($6AE6 + 1) = B; // self modify (== width)
-@isub=LD (expand_object_width + 1),A
+ C$6AC5,1;21 {Self modify the "LD B,$xx" at #R$6AE6 to load the tile-width into #REGb
+@isub=LD (end_of_row + 1),A
  C$6AC6,3;21 }
-*C$6AC9,1;21 do <% do <% expand: A = *HL;
- C$6ACA,2;21 {    if (A == interiorobjecttile_ESCAPE) <%
- C$6ACC,2;21 }
- C$6ACE,1;21 HL++;
- C$6ACF,1;21 A = *HL;
- C$6AD0,2;21 {      if (A != interiorobjecttile_ESCAPE) <% // FF FF => FF
- C$6AD2,2;21 }
- C$6AD4,2;21 A &= 0xF0;
- C$6AD6,2;21 {        if (A >= 128) goto run;
- C$6AD8,2;21 }
- C$6ADA,2;21 {        if (A == 64) goto range; %> %>
- C$6ADC,2;21 }
-*C$6ADE,1;21 {    if (A) *DE = A;
+; Start main expand loop
+@label=expand
+*C$6AC9,1;21 Fetch the next byte
+ C$6ACA,2;21 Is it an escape byte? (interiorobjecttile_ESCAPE/$FF)
+ C$6ACC,2;21 Jump if not
+; Handle an escape byte - indicating an encoded sequence
+ C$6ACE,1;21 Step over the escape byte
+ C$6ACF,1;21 Fetch the next byte
+ C$6AD0,2;21 Is it also an escape byte?
+ C$6AD2,2;21 Jump to tile write op if so - we'll emit $FF (Note: Could jump two instructions later)
+ C$6AD4,2;21 Isolate the top nibble - the top two bits are flags (Note: This could move down to before the $40 test without affecting anything)
+ C$6AD6,2;21 Is it >= 128?
+ C$6AD8,2;21 Jump to repetition handling if so
+ C$6ADA,2;21 Is it == 64?
+ C$6ADC,2;21 Jump to range handling if so
+@label=write_tile
+*C$6ADE,1;21 {Write out the tile if it's non-zero
  C$6ADF,2;21
  C$6AE1,1;21 }
-*C$6AE2,1;21 HL++;
- C$6AE3,1;21 DE++;
- C$6AE4,2;21 %> while (--B);
-@label=expand_object_width
- C$6AE6,2;21 B = 1; // self modified
- C$6AE8,2;21 {  DE += 24 - B;
- C$6AEA,5;21
+*C$6AE2,1;21 Move to next input byte
+ C$6AE3,1;21 Move to next output byte
+ C$6AE4,2;21 ...loop while width counter #REGb is non-zero
+@label=end_of_row
+ C$6AE6,2;21 Reset width counter. Self modified by #R$6AC5
+ C$6AE8,2;21 Width of tile buffer is 24
+ C$6AEA,1;21 Tile buffer width minus width of object gives the rowskip
+ C$6AEB,1;21 {Add #REGa to #REGde to move by rowskip
+ C$6AEC,3;21
  C$6AEF,1;21 }
-*C$6AF0,1;21 {%> while (--C); // for each row
- C$6AF1,2;21 }
- C$6AF3,1;21 return;
-; 128..255 case
-@label=run
-*C$6AF4,1;21 {A = *HL++ & 0x7F; // run length
- C$6AF5,2;21 }
- C$6AF7,2
- C$6AF9,1;21 Adash = *HL;
- C$6AFA,1
-*C$6AFB,1;21 do <%
- C$6AFC,1;21 {  if (Adash > 0) *DE = Adash;
- C$6AFD,2;21
- C$6AFF,1;21 }
-*C$6B00,1;21 DE++;
- C$6B01,2
-; Ran out of width.
-@isub=LD A,(expand_object_width + 1)
- C$6B03,3;21 LD Adash,($6AE6 + 1)  // Adash = width
- C$6B06,1;21 B = Adash;
- C$6B07,2;21 {  DE += 24 - B; // stride // move to next row
- C$6B09,5;21
+*C$6AF0,1;21 Decrement row counter
+ C$6AF1,2;21 ...loop to expand while row > 0
+ C$6AF3,1;21 Return
+; Escape + 128..255 case: emit a repetition of the same byte
+@label=repetition
+*C$6AF4,1;21 Fetch flags+count byte
+ C$6AF5,2;21 Mask off top bit to get repetition counter/length
+ C$6AF7,1;21 Bank repetition counter
+ C$6AF8,1;21 Move to the next tile value
+ C$6AF9,1;21 Fetch a tile value
+ C$6AFA,1;21 Unbank repetition counter ready for the next bank
+; Start of repetition loop
+@label=repetition_loop
+*C$6AFB,1;21 Bank the repetition counter
+ C$6AFC,1;21 Is the tile value zero?
+ C$6AFD,2;21 Jump if so, avoiding the write
+ C$6AFF,1;21 Write it
+*C$6B00,1;21 Move to next tile output byte
+ C$6B01,2;21 Decrement the width counter. Jump over the end-of-row code to #R$6B12 if it's non-zero
+; Ran out of width / end of row
+@isub=LD A,(end_of_row + 1)
+ C$6B03,3;21 Fetch width (from self modified instruction) into #REGa'
+ C$6B06,1;21 Reset width counter
+ C$6B07,2;21 Width of tile buffer is 24
+ C$6B09,1;21 Tile buffer width minus width of object gives the rowskip
+ C$6B0A,1;21 {Add #REGa to #REGde to move by rowskip
+ C$6B0B,3;21
  C$6B0E,1;21 }
-*C$6B0F,1;21 Adash = *HL;
- C$6B10,1;21 {  if (--C == 0) return;
- C$6B11,1;21 }
-*C$6B12,1
- C$6B13,1;21 {%> while (--A);
- C$6B14,2;21 }
- C$6B16,1;21 HL++;
- C$6B17,2;21 goto expand;
-; 64..127 case.
+*C$6B0F,1;21 Fetch the next tile value (reload)
+ C$6B10,1;21 Decrement the row counter
+ C$6B11,1;21 Return if it hit zero
+@label=repetition_end
+*C$6B12,1;21 Unbank the repetition counter
+ C$6B13,1;21 Decrement the repetition counter
+ C$6B14,2;21 ...loop if non-zero
+ C$6B16,1;21 Advance the data pointer
+ C$6B17,2;21 Jump to main expand loop
+; Escape + 64..79 case: emit an ascending range of bytes
 @label=range
 @rfix-begin
 ; .
-; Bug: This self-modifies the INC A at the end of the loop body, but nothing
-; else in the code modifies it! Possible evidence that other encodings (e.g.
-; 'DEC A') were attempted.
-*C$6B19,2;21 A = 60; // opcode of 'INC A'
+; Bug: This self-modifies the INC A at #R$6B28 at the end of the loop body, but
+; nothing else in the code modifies it! Possible evidence that other encodings
+; (e.g. 'DEC A') were attempted.
+*C$6B19,2;21 {Make the instruction at #R$6B28 an 'INC A'
 @nowarn
- C$6B1B,3;21 ($6B28) = A;
+ C$6B1B,3;21 }
 @rfix-end
- C$6B1E,1;21 {A = *HL++ & 0x0F;
- C$6B1F,2;21 }
- C$6B21,2
- C$6B23,1;21 Adash = *HL;
- C$6B24,1
-*C$6B25,1;21 do <%
- C$6B26,1;21 {  *DE++ = Adash;
- C$6B27,1;21 }
+ C$6B1E,1;21 Fetch flags+count byte
+ C$6B1F,2;21 Mask off the bottom nibble which contains the range counter
+ C$6B21,1;21 Bank the range counter
+ C$6B22,1;21 Move to the first tile value
+ C$6B23,1;21 Get the first tile value
+ C$6B24,1;21 Unbank the range counter ready for the next bank
+; Start of range loop
+@label=range_loop
+*C$6B25,1;21 Bank the range counter
+ C$6B26,1;21 Write the tile value (Note: We assume it's non-zero)
+ C$6B27,1;21 Move to the next tile output byte
 @label=expand_object_increment
- C$6B28,1;21 INC Adash // self modified
- C$6B29,2
-; Ran out of width.
- C$6B2B,1;21 PUSH AFdash
-@isub=LD A,(expand_object_width + 1)
- C$6B2C,3;21 {  LD Adash,($6AE6 + 1)  // Adash = width
- C$6B2F,1;21 }
- C$6B30,2;21 {  DE += 24 - Adash; // stride // move to next row
- C$6B32,5;21
+ C$6B28,1;21 Increment the tile value. Self modified by #R$6B1B
+ C$6B29,2;21 Decrement width counter. Jump over the end-of-row code to #R$6B3B if it's non-zero
+; Ran out of width / end of row
+ C$6B2B,1;21 Stash the tile value
+@isub=LD A,(reset_width + 1)
+ C$6B2C,3;21 Fetch width (from self modified instruction) into #REGa'
+ C$6B2F,1;21 Reset width counter
+ C$6B30,2;21 Width of tile buffer is 24
+ C$6B32,1;21 Tile buffer width minus width of object gives the rowskip
+ C$6B33,1;21 {Add #REGa to #REGde to move by rowskip
+ C$6B34,3;21
  C$6B37,1;21 }
-*C$6B38,1;21 {  POP AFdash
- C$6B39,1;21 }
- C$6B3A,1;21 if (--C == 0) return;
-*C$6B3B,1
- C$6B3C,1
- C$6B3D,2;21 %> while (--A);
- C$6B3F,1;21 HL++;
- C$6B40,2;21 goto expand;
+*C$6B38,1;21 Unstash the tile value
+ C$6B39,1;21 Decrement row counter
+ C$6B3A,1;21 Return if it hit zero
+@label=range_end
+*C$6B3B,1;21 Unbank the range counter
+ C$6B3C,1;21 Decrement the range counter
+ C$6B3D,2;21 ...loop if non-zero
+ C$6B3F,1;21 Advance the data pointer
+ C$6B40,2;21 Jump to main expand loop
 
 ; Expand all of the tile indices in the tiles buffer to full tiles in the
 ; screen buffer.
