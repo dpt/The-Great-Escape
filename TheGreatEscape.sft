@@ -1854,34 +1854,43 @@ cC$6AB5,1;21 {Fetch the object pointer from #R$7095[A] into #REGhl
 ; O:DE' Corrupted.
 ; O:HL' Corrupted.
 @label=plot_interior_tiles
-cC$6B42,3;21 HL = $F290;  // screen buffer start address
- C$6B45,3;21 DE = $F0F8;  // visible tiles array
- C$6B48,2;21 C = 16;      // rows
-*C$6B4A,2;21 do <% B = 24; // columns
-*C$6B4C,1;21 do <%
- C$6B4D,1;21 {    tileptr = &interior_tiles[*DE];
- C$6B4E,1
- C$6B4F,9;21
+cC$6B42,3;21 Point #REGhl at the screen buffer's start address
+ C$6B45,3;21 Point #REGde at the visible tiles array
+ C$6B48,2;21 Set row counter to 16
+; For every row
+@label=row_loop
+*C$6B4A,2;21 Set column counter to 24
+; For every column
+@label=column_loop
+*C$6B4C,1;21 Stack screen buffer pointer while we form a tile pointer
+ C$6B4D,1;21 Load a tile index
+ C$6B4E,1;21 Bank outer registers
+ C$6B4F,1;21 {Point #REGhl at interior_tiles[tile index]
+ C$6B50,8;21
  C$6B58,1;21 }
- C$6B59,1;21 screenptr = HL;
- C$6B5A,3;21 iters = 8; stride = 24;
-*C$6B5D,1;21 {    do <% *screenptr = *tileptr++;
+ C$6B59,1;21 Unstack screen buffer pointer
+ C$6B5A,3;21 Set #REGb for eight iterations and set #REGc for a 24 byte stride simultaneously
+@label=tile_loop
+*C$6B5D,1;21 {Transfer a byte (a row) of tile across
  C$6B5E,1;21 }
- C$6B5F,1;21 {      screenptr += stride;
+ C$6B5F,1;21 {Advance the screen buffer pointer by the stride
  C$6B60,4;21
 *C$6B64,1;21
  C$6B65,1;21 }
- C$6B66,2;21 {    %> while (--iters);
- C$6B68,1;21 }
- C$6B69,1;21 DE++;
- C$6B6A,1;21 HL++;
- C$6B6B,2;21 %> while (--B);
- C$6B6D,2;21 {  HL += 7 * 24;
+ C$6B66,2;21 ...loop for each byte of the tile
+; End of column
+ C$6B68,1;21 Unbank outer registers
+ C$6B69,1;21 Move to next input tile
+ C$6B6A,1;21 Move to next screen buffer output
+ C$6B6B,2;21 ...loop for each column
+; End of row
+ C$6B6D,2;21 {Move to the next screen buffer row (seven rows down)
  C$6B6F,4;21
 *C$6B73,1;21 }
- C$6B74,1;21 {%> while (--C);
+ C$6B74,1;21 {...loop for each row
  C$6B75,3;21 }
- C$6B78,1;21 return;
+; End
+ C$6B78,1;21 Return
 
 ; Locations of beds.
 ;
