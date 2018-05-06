@@ -3921,46 +3921,48 @@ cC$7D30,1;21 Preserve #REGhl
  C$7D46,1;21 Restore #REGhl
  C$7D47,1;21 Return
 
-; Incrementally display queued game messages.
+; Incrementally wipe and display queued game messages.
 ;
 ; Used by the routine at #R$9D7B.
 ;
 ; .
 ;
-; Proceed only if message_display_delay is zero.
+; Proceed only if message display delay is zero.
 @label=message_display
-cC$7D48,3;21 {if (message_display_delay > 0) <%
- C$7D4B,4;21
- C$7D4F,1;21 }
- C$7D50,3;21 message_display_delay--;
- C$7D53,1;21 return; %>
-; message_display_delay reached zero.
-*C$7D54,3;21 A = message_display_index;
- C$7D57,2;21 {if (A == 128) goto next_message; // exit via
+cC$7D48,3;21 {If message display delay is positive...
+ C$7D4B,1;21
+ C$7D4C,3;21 }
+ C$7D4F,1;21 {Decrement it - we'll get called again until it hits zero
+ C$7D50,3;21 }
+ C$7D53,1;21 Return
+; Otherwise message_display_delay reached zero.
+*C$7D54,3;21 {If message display index == message_NEXT (128) exit via (jump to) next_message
+ C$7D57,2;21
  C$7D59,2;21 }
- C$7D5B,2;21 else if (A > 128) goto wipe_message; // exit via
- C$7D5D,3;21 else <% HL = current_message_character;
+ C$7D5B,2;21 Otherwise if message display index > message_NEXT exit via (jump to) wipe_message
+; Display a character
+ C$7D5D,3;21 Otherwise... point #REGhl to the current message character
 @nowarn
- C$7D60,3;21 {  DE = message_text_screen_address + A;
- C$7D63,1;21
+ C$7D60,3;21 {Point #REGde at the message text screen address
+ C$7D63,1;21 plus the display index
  C$7D64,1;21 }
- C$7D65,3;21 plot_glyph();
- C$7D68,1;21 {  message_display_index = E & 31;
+ C$7D65,3;21 Plot the glyph
+ C$7D68,1;21 {Save the incremented message display index
  C$7D69,2;21
  C$7D6B,3;21 }
- C$7D6E,1;21 {  A = *++HL;
- C$7D6F,1;21 }
- C$7D70,2;21 {  if (A == 255) <%
+ C$7D6E,1;21 {Check for end of string ($FF)
+ C$7D6F,3;21
  C$7D72,3;21 }
 ; Leave the message for 31 turns, then wipe it.
- C$7D75,2;21 {  message_display_delay = 31;
+ C$7D75,2;21 {Set message display delay to 31
  C$7D77,3;21 }
- C$7D7A,3;21 {  message_display_index |= 128;
+ C$7D7A,3;21 {Set the message_NEXT flag in the message display index
  C$7D7D,2;21
  C$7D7F,3;21 }
- C$7D82,1;21 return; %>
-*C$7D83,3;21 else <% current_message_character = HL;
- C$7D86,1;21 return; %>
+ C$7D82,1;21 Return
+@label=not_end_of_string
+*C$7D83,3;21 If it wasn't the end of the string set current message character to #REGhl
+ C$7D86,1;21 Return
 
 ; Incrementally wipe away any on-screen game message.
 ;
