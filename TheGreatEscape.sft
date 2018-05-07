@@ -627,6 +627,48 @@
 ; followed in reverse order.
 ;
 ;
+; //////////////////////////////////////////////////////////////////////////////
+; HUTS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; Hut 1 is the hut at the 'top' of the map.
+; Hut 2 is the middle hut.
+; Hut 3 is the bottom hut.
+;
+; These identifiers for the huts are my own convention - as with all things in
+; this disassembly it was determined from scratch.
+;
+;
+; //////////////////////////////////////////////////////////////////////////////
+; HUT INTERIORS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; Hut 1 is composed of room 28 on the left and room 1 on the right.
+; Hut 2 is composed of room  2 on the left and room 3 on the right.
+; Hut 3 is composed of room  4 on the left and room 5 on the right.
+;
+;
+; //////////////////////////////////////////////////////////////////////////////
+; SLEEPING CHARACTERS
+; //////////////////////////////////////////////////////////////////////////////
+;
+; Three of the four beds in hut 1 are occupied by sleeping figures who -
+; creepily - never rise from their slumber. Perhaps more concurrent prisoner
+; characters were originally planned - there's capacity in the room layout for
+; eleven - but machine limits prevented more than six being used.
+;
+; In hut 2, our hero sleeps in the left hand room and three active characters
+; (20..22) slumber in the right hand room.
+;
+; Hut 3 has no character sleeping in its left hand room and three active
+; characters (23..25) sleep in the right hand room.
+;
+;       .-- Left room --.----------------- Right room -----------------|
+;       |---------------+-- Left bed --+-- Middle bed -+-- Right bed --|
+; Hut 1 | Always asleep | Always empty | Always asleep | Always asleep |
+; Hut 2 | Hero          | 22           | 21            | 20            |
+; Hut 3 | Always empty  | 25           | 24            | 23            |
+;       '               '              '               '               '
 @org=$4000
 
 ; Loading screen.
