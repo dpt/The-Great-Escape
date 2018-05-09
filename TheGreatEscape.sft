@@ -11627,20 +11627,22 @@ cC$CB79,1;21 {DE = routes[A];
 
 ; Pseudo-random number generator.
 ;
+; This returns the bottom nibbles of the bytes from $9000..$90FF in sequence,
+; acting as a cheap pseudo-random number generator.
+; .
 ; Used by the routine at #R$C651.
 ;
-; O:A Pseudo-random number from 0..15.
+; O:A  Pseudo-random number from 0..15.
+; O:HL Preserved.
 @label=random_nibble
-cC$CB85,1
- C$CB86,3;21 {HL = prng_pointer + 1;
- C$CB89,1;21 }
-; sampled HL=$902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like
-; it's fetching exterior tiles
- C$CB8A,1;21 {A = *HL & 0x0F;
- C$CB8B,2;21 }
- C$CB8D,3;21 prng_pointer = HL;
- C$CB90,1
- C$CB91,1;21 return;
+cC$CB85,1;21 Preserve #REGhl
+ C$CB86,3;21 Point at the prng_pointer (initialised on load to $9000)
+ C$CB89,1;21 Increment its bottom byte, wrapping at $90FF
+ C$CB8A,1;21 Fetch a byte from the pointer
+ C$CB8B,2;21 Mask off the bottom nibble
+ C$CB8D,3;21 Save the incremented prng_pointer
+ C$CB90,1;21 Restore #REGhl
+ C$CB91,1;21 Return
 
 ; Unreferenced bytes.
 uB$CB92,6;36 unused_CB92
