@@ -3896,24 +3896,30 @@ cC$7D2F,1;21 A = *HL;
 ; Plot a single glyph.
 ;
 ; Used by the routine at #R$7D87.
+; .
+; Note: This won't work for arbitrary screen locations.
+;
+; I:HL Glyph index.
+; I:DE Pointer to destination.
+; O:HL Preserved.
+; O:DE Points to the next character position to the right.
 @label=plot_single_glyph
-cC$7D30,1
- C$7D31,1;21 {HL = A * 8;
- C$7D32,4;21
- C$7D36,1;21 }
- C$7D37,3;21 BC = bitmap_font;
- C$7D3A,1;21 {HL += BC;
- C$7D3B,1;21 }
- C$7D3C,2;21 B = 8; // 8 iterations
-*C$7D3E,1;21 {do <% *DE = *HL;
+cC$7D30,1;21 Preserve #REGhl
+ C$7D31,1;21 {Point #REGhl at the bitmap glyph we want to plot
+ C$7D32,8;21
+ C$7D3A,1;21 }
+ C$7D3B,1;21 Preserve #REGde so we can return it incremented later
+ C$7D3C,2;21 8 rows
+@label=glyph_loop
+*C$7D3E,1;21 {Plot a byte (a row) of bitmap glyph
  C$7D3F,1;21 }
- C$7D40,1;21 D++; // i.e. DE += 256;
- C$7D41,1;21 HL++;
- C$7D42,2;21 %> while (--B);
- C$7D44,1;21 {DE++;
- C$7D45,1;21
- C$7D46,1;21 }
- C$7D47,1;21 return;
+ C$7D40,1;21 Move down to the next scanline (#REGde increases by 256)
+ C$7D41,1;21 Move to the next byte of the bitmap glyph
+ C$7D42,2;21 ...loop until the glyph is drawn
+ C$7D44,1;21 {Restore and point #REGde at the next character position to the right
+ C$7D45,1;21 }
+ C$7D46,1;21 Restore #REGhl
+ C$7D47,1;21 Return
 
 ; Incrementally display queued game messages.
 ;
