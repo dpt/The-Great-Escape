@@ -3851,34 +3851,35 @@ gB$7CFC,8;44 {Queue of message indexes. Pairs of bytes + 0xFF terminator.
 @label=current_message_character
  W$7D13,2;44 Pointer to the next message character to be displayed.
 
-; Add a message to the pending messages queue.
+; Add a new message index to the pending messages queue.
 ;
 ; Used by the routines at #R$9DCF, #R$9E98, #R$A1D3, #R$A1E7, #R$A1F0, #R$A1F9,
 ; #R$A206, #R$A219, #R$A228, #R$B107, #R$B1D4, #R$B387, #R$B417, #R$B495,
 ; #R$B4B8, #R$CB98, #R$CD31 and #R$EF9A.
 ; .
-; The use of C here is puzzling. One routine (check_morale) explicitly sets it
-; to zero before calling, but others do not and we receive whatever was in C
-; previously.
+; The use of #REGc on entry to this routine is puzzling. One routine (#R$9DCF)
+; explicitly sets it to zero before calling, but the other callers do not so we
+; receive whatever was in #REGc previously.
 ;
-; I:B message_* index.
-; I:C Possibly a second message index.
+; I:B Message index.
+; I:C Unknown: possibly a second message index.
 @label=queue_message
-cC$7D15,3;21 {if ((*HL = message_queue_pointer) == message_QUEUE_END) return; // queue full
- C$7D18,3;21
- C$7D1B,1;21 }
-; Is this message pending?
- C$7D1C,1;21 {HL -= 2;
+cC$7D15,3;21 Fetch the message queue pointer
+ C$7D18,2;21 {Is the currently pointed-to index message_QUEUE_END? ($FF)
+ C$7D1A,1;21 }
+ C$7D1B,1;21 Return if so - the queue is full
+; Is this message index already pending?
+ C$7D1C,1;21 {Step back two bytes to the next pending entry
  C$7D1D,1;21 }
- C$7D1E,1;21 {if (*HL++ == B && *HL++ == C) return; // yes - skip adding it
+ C$7D1E,1;21 {If the new message index matches the pending entry then return
  C$7D1F,6;21
  C$7D25,1;21 }
 ; Add it to the queue.
-*C$7D26,1;21 {*HL++ = B; *HL++ = C;
+*C$7D26,1;21 {Store the new message index
  C$7D27,3;21
  C$7D2A,1;21 }
- C$7D2B,3;21 message_queue_pointer = HL;
- C$7D2E,1;21 return;
+ C$7D2B,3;21 Update the message queue pointer
+ C$7D2E,1;21 Return
 
 ; Plot a single glyph (indirectly).
 ;
