@@ -1,7 +1,7 @@
 The Great Escape
 ================
 
-This project reverse engineers [Denton Designs'](http://en.wikipedia.org/wiki/Denton_Designs) classic [ZX Spectrum](http://en.wikipedia.org/wiki/ZX_Spectrum) 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) from a raw binary to a cross-referenced and annotated HTML disassembly, using [SkoolKit](http://skoolkit.ca/).
+This project reverse engineers [Denton Designs'](http://en.wikipedia.org/wiki/Denton_Designs) classic [ZX Spectrum](http://en.wikipedia.org/wiki/ZX_Spectrum) 48K game [The Great Escape](http://www.worldofspectrum.org/infoseekid.cgi?id=0002125) from a tape image of the original game into a cross-referenced and annotated HTML disassembly and full assembly source code, using [SkoolKit](http://skoolkit.ca/).
 
 The Game
 --------
@@ -17,6 +17,7 @@ Note that the disassembly may lag behind the head of the source tree: it might n
 
 Chat
 ----
+
 [![Join the chat at https://gitter.im/The-Great-Escape/Lobby](https://badges.gitter.im/The-Great-Escape/Lobby.svg)](https://gitter.im/The-Great-Escape/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Goals
@@ -33,7 +34,7 @@ SkoolKit
 
 In addition to producing the cross-referenced HTML disassembly SkoolKit can also produce an annotated assembly listing. We can use this to reassemble the game to a .TAP file which you can load into an emulator. You can use it to alter the game and fix 30-year-old bugs!
 
-Other SkoolKit disassemblies are normally written in a one comment per line style but I've chosen to attempt to reconstruct the logic of the original code as pseudo-C-style control structures. This makes it look weirder than I'd like but eases the conversion to C. A later pass will probably remove the pseudocode and normalise the disassembly.
+Other SkoolKit disassemblies are normally written in a one comment per line style but I've chosen to attempt to reconstruct the logic of the original code as pseudo-C-style control structures. This makes it look weirder than I'd like but eases the conversion to C. My current work involves "normalising" the assembly: removing the pseudocode and replacing it with prose.
 
 Building the Cross-Referenced Disassembly
 -----------------------------------------
@@ -114,7 +115,7 @@ To Edit, Rebuild and Run the Game
 Building the Assembly Source
 ----------------------------
 
-If skool files are not to your taste and you prefer a regular assembly listing: `make asm` will build `build/TheGreatEscape.asm` which you can then pass into Pasmo, for instance.
+If skool files are not to your taste and you prefer a regular assembly listing: `make asm` will build `build/TheGreatEscape.asm`. This can then be passed into Pasmo, for instance, to build a binary.
 
 Current State of the Project
 ----------------------------
