@@ -3968,17 +3968,17 @@ cC$7D48,3;21 {If message display delay is positive...
 ;
 ; Used by the routine at #R$7D48.
 @label=wipe_message
-cC$7D87,3;21 A = message_display_index;
- C$7D8A,1;21 {message_display_index = --A;
+cC$7D87,3;21 {Decrement the message display index
+ C$7D8A,1;21
  C$7D8B,3;21 }
 @nowarn
- C$7D8E,3;21 {DE = message_text_screen_address + A;
- C$7D91,1;21
+ C$7D8E,3;21 {Point #REGde at the message text screen address
+ C$7D91,1;21 plus the display index
  C$7D92,1;21 }
-; Plot a single space character.
- C$7D93,2;21 {plot_single_glyph(35);
- C$7D95,3;21 }
- C$7D98,1;21 return;
+; Overplot the previous character with a single space.
+ C$7D93,2;21 Glyph index of space
+ C$7D95,3;21 Plot the single space glyph
+ C$7D98,1;21 Return
 
 ; Change to displaying the next queued game message.
 ;
