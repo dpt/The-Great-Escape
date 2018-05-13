@@ -3986,32 +3986,29 @@ cC$7D87,3;21 {Decrement the message display index
 ; .
 ; Called when messages.display_index == 128.
 @label=next_message
-cC$7D99,3;21 HL = message_queue_pointer;
- C$7D9C,3;21 DE = &message_queue[2];
- C$7D9F,1;21 {if (L == E) return; // cheap test -- no more messages?
- C$7DA0,2;21
- C$7DA2,1;21 }
- C$7DA3,1;21 {A = *DE++;
+cC$7D99,3;21 Get the message queue pointer
+ C$7D9C,3;21 Queue start address
+ C$7D9F,1;21 {Is the queue pointer at the start of the queue?
+ C$7DA0,1;21 }
+ C$7DA1,1;21 Return if so
+ C$7DA2,1;21
+ C$7DA3,1;21 {Get message index from queue
  C$7DA4,1;21 }
 @rsub-begin
-; Bug: C is loaded here but not used. This could be a hangover from 16-bit
-; message IDs.
- C$7DA5,1;21 C = *DE;
+ C$7DA5,1;21 Bug: C is loaded here but not used. This could be a hangover from 16-bit message IDs
 @rsub-end
- C$7DA6,1;21 {HL = messages_table[A];
- C$7DA7,10;21
- C$7DB1,1;21 }
- C$7DB2,3;21 current_message_character = HL;
-; Discard the first element.
- C$7DB5,3;21 {memmove(message_queue, message_queue + 2, 16);
+ C$7DA6,1;21 {Set current message character pointer to messages_table[A]
+ C$7DA7,11;21
+ C$7DB2,3;21 }
+ C$7DB5,3;21 {Shunt the whole queue back by two bytes discarding the first element
  C$7DB8,6;21
  C$7DBE,2;21 }
- C$7DC0,3;21 {message_queue_pointer -= 2;
+ C$7DC0,3;21 {Move the message queue pointer back
  C$7DC3,2;21
  C$7DC5,3;21 }
- C$7DC8,1;21 {message_display_index = 0;
+ C$7DC8,1;21 {Zero the message display index
  C$7DC9,3;21 }
- C$7DCC,1;21 return;
+ C$7DCC,1;21 Return
 
 ; Array of pointers to game messages.
 @label=messages_table
