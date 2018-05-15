@@ -8,6 +8,7 @@ import string
 from skoolkit.graphics import Udg
 from skoolkit.skoolhtml import HtmlWriter
 from skoolkit.skoolasm import AsmWriter
+from skoolkit.skoolmacro import parse_ints
 
 ZX_ATTRIBUTE_BRIGHT                     = 64
 
@@ -26,7 +27,30 @@ ZX_ATTRIBUTE_BRIGHT_CYAN_OVER_BLACK     = 69
 ZX_ATTRIBUTE_BRIGHT_YELLOW_OVER_BLACK   = 70
 ZX_ATTRIBUTE_BRIGHT_WHITE_OVER_BLACK    = 71
 
-class TheGreatEscapeHtmlWriter(HtmlWriter):
+class TheGreatEscapeWriter:
+    def expand_route(self, text, index, cwd=None):
+        " Expand a directive of the form #ROUTE(address) "
+        end, address = parse_ints(text, index, 1)
+        s = "[ "
+        while self.snapshot[address] != 0xFF:
+            byte = self.snapshot[address]
+            reversed = (byte >= 128)
+            other = (byte & 0x7F)
+            if other < 40:
+                # it's a door
+                if reversed:
+                    r = " reversed"
+                else:
+                    r = ""
+                s += "door(%d%s), " % (other, r)
+            else:
+                # it's a location index
+                s += "location(%d), " % (other - 40)
+            address += 1
+        s += "(end) ]"
+        return end, s
+
+class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
     def init(self):
         self.font = {}
 
@@ -657,7 +681,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter):
         return self.img_element(cwd, img_path)
 
 
-class TheGreatEscapeAsmWriter(AsmWriter):
+class TheGreatEscapeAsmWriter(AsmWriter, TheGreatEscapeWriter):
     pass
 
 # vim: ts=8 sts=4 sw=4 et

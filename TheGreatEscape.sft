@@ -3083,89 +3083,91 @@ bB$76C8,7;40 item_WIRESNIPS,        room_NONE,        64,32, 0x02, 0x78, 0xF4 //
 
 ; Table of pointers to routes.
 @label=routes
+@assemble=,0
 bW$7738,2;44 {Array, 46 long, of pointers to
  W$773A,2;44 $FF-terminated runs.
  W$773C,2*43
  W$7792,2;44 }
  B$7794,1;44 could be a terminating $FF
 @label=route_7795
- B$7795,4;44 route_7795
+ B$7795,4;44 L-shaped route in the fenced area  #ROUTE($7795)
 @label=route_7799
- B$7799,7;44 route_7799
+ B$7799,7;44 guard's route around the front perimeter wall  #ROUTE($7799)
 @label=route_commandant
- B$77A0,8;44 {route_commandant
+ B$77A0,8;44 {the commandant's route - the longest of all the routes  #ROUTE($77A0)
  B$77A8,8*4
  B$77C8,5;44 }
 @label=route_77CD
- B$77CD,3;44 route_77CD
+ B$77CD,3;44 guard's route marching over the front gate  #ROUTE($77CD)
 @label=route_exit_hut2
- B$77D0,4;44 route_exit_hut2
+ B$77D0,4;44 route_exit_hut2  #ROUTE($77D0)
 @label=route_exit_hut3
- B$77D4,4;44 route_exit_hut3
+ B$77D4,4;44 route_exit_hut3  #ROUTE($77D4)
 @label=route_prisoner_sleeps_1
- B$77D8,2;44 route_prisoner_sleeps_1
+ B$77D8,2;44 route_prisoner_sleeps_1  #ROUTE($77D8)
 @label=route_prisoner_sleeps_2
- B$77DA,2;44 route_prisoner_sleeps_2
+ B$77DA,2;44 route_prisoner_sleeps_2  #ROUTE($77DA)
 @label=route_prisoner_sleeps_3
- B$77DC,2;44 route_prisoner_sleeps_3
+ B$77DC,2;44 route_prisoner_sleeps_3  #ROUTE($77DC)
 @label=route_77DE
- B$77DE,3;44 route_77DE
+ B$77DE,3;44 route_77DE  #ROUTE($77DE)
 @label=route_77E1
- B$77E1,6;44 route_77E1
+ B$77E1,6;44 route_77E1  #ROUTE($77E1)
 @label=route_77E7
- B$77E7,5;44 route_77E7
+ B$77E7,5;44 route_77E7  #ROUTE($77E7)
 @label=route_77EC
- B$77EC,5;44 route_77EC
+ B$77EC,5;44 route_77EC  #ROUTE($77EC)
 @label=route_prisoner_sits_1
- B$77F1,2;44 route_prisoner_sits_1
+ B$77F1,2;44 route_prisoner_sits_1  #ROUTE($77F1)
 @label=route_prisoner_sits_2
- B$77F3,2;44 route_prisoner_sits_2
+ B$77F3,2;44 route_prisoner_sits_2  #ROUTE($77F3)
 @label=route_prisoner_sits_3
- B$77F5,2;44 route_prisoner_sits_3
+ B$77F5,2;44 route_prisoner_sits_3  #ROUTE($77F5)
 @label=route_guardA_breakfast
- B$77F7,2;44 route_guardA_breakfast
+ B$77F7,2;44 route_guardA_breakfast  #ROUTE($77F7)
 @label=route_guardB_breakfast
- B$77F9,2;44 route_guardB_breakfast
+ B$77F9,2;44 route_guardB_breakfast  #ROUTE($77F9)
 @label=route_guard_12_roll_call
- B$77FB,2;44 route_guard_12_roll_call
+ B$77FB,2;44 route_guard_12_roll_call  #ROUTE($77FB)
 @label=route_guard_13_roll_call
- B$77FD,2;44 route_guard_13_roll_call
+ B$77FD,2;44 route_guard_13_roll_call  #ROUTE($77FD)
 @label=route_guard_14_roll_call
- B$77FF,2;44 route_guard_14_roll_call
+ B$77FF,2;44 route_guard_14_roll_call  #ROUTE($77FF)
 @label=route_guard_15_roll_call
- B$7801,2;44 route_guard_15_roll_call
+ B$7801,2;44 route_guard_15_roll_call  #ROUTE($7801)
 @label=route_prisoner_1_roll_call
- B$7803,2;44 route_prisoner_1_roll_call
+ B$7803,2;44 route_prisoner_1_roll_call  #ROUTE($7803)
 @label=route_prisoner_2_roll_call
- B$7805,2;44 route_prisoner_2_roll_call
+ B$7805,2;44 route_prisoner_2_roll_call  #ROUTE($7805)
 @label=route_prisoner_3_roll_call
- B$7807,2;44 route_prisoner_3_roll_call
+ B$7807,2;44 route_prisoner_3_roll_call  #ROUTE($7807)
 @label=route_prisoner_4_roll_call
- B$7809,2;44 route_prisoner_4_roll_call
+ B$7809,2;44 route_prisoner_4_roll_call  #ROUTE($7809)
 @label=route_prisoner_5_roll_call
- B$780B,2;44 route_prisoner_5_roll_call
+ B$780B,2;44 route_prisoner_5_roll_call  #ROUTE($780B)
 @label=route_prisoner_6_roll_call
- B$780D,2;44 route_prisoner_6_roll_call
+ B$780D,2;44 route_prisoner_6_roll_call  #ROUTE($780D)
 @label=route_go_to_solitary
- B$780F,6;44 route_go_to_solitary
+ B$780F,6;44 route_go_to_solitary  #ROUTE($780F)
 @label=route_hero_leave_solitary
- B$7815,5;44 route_hero_leave_solitary
+ B$7815,5;44 route_hero_leave_solitary  #ROUTE($7815)
 @label=route_guard_12_bed
- B$781A,5;44 route_guard_12_bed
+ B$781A,5;44 route_guard_12_bed  #ROUTE($781A)
 @label=route_guard_13_bed
- B$781F,6;44 route_guard_13_bed
+ B$781F,6;44 route_guard_13_bed  #ROUTE($781F)
 @label=route_guard_14_bed
- B$7825,6;44 route_guard_14_bed
+ B$7825,6;44 route_guard_14_bed  #ROUTE($7825)
 @label=route_guard_15_bed
- B$782B,6;44 route_guard_15_bed
+ B$782B,6;44 route_guard_15_bed  #ROUTE($782B)
 @label=route_hut2_left_to_right
- B$7831,2;44 route_hut2_left_to_right
+ B$7831,2;44 route_hut2_left_to_right  #ROUTE($7831)
 @label=route_7833
- B$7833,2;44 route_7833
+ B$7833,2;44 route_7833  #ROUTE($7833)
 @label=route_hut2_right_to_left
- B$7835,3;44 route_hut2_right_to_left
+ B$7835,3;44 route_hut2_right_to_left  #ROUTE($7835)
 @label=route_hero_roll_call
- B$7838,2;44 route_hero_roll_call
+ B$7838,2;44 route_hero_roll_call  #ROUTE($7838)
+@assemble=,-1
 
 ; Table of map locations used in routes.
 ;
