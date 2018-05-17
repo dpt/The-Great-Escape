@@ -3413,73 +3413,67 @@ bB$78D6,4;28 { BYTE0(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // gates
 @label=solitary_pos
 bB$7AC6,3;24 0x3A, 0x2A, 24 // tinypos_t
 
-; Check for 'pick up', 'drop' and 'use' input.
+; Check for 'pick up', 'drop' and 'use' input events.
 ;
 ; Used by the routine at #R$9E07.
 ;
 ; I:A Input event.
 @label=process_player_input_fire
-cC$7AC9,2;21 {if (A == input_UP_FIRE) pick_up_item();
- C$7ACB,6;21
- C$7AD1,2;21 }
-*C$7AD3,2;21 {else if (A == input_DOWN_FIRE) drop_item();
- C$7AD5,6;21
- C$7ADB,2;21 }
-*C$7ADD,2;21 {else if (A == input_LEFT_FIRE) use_item_A();
- C$7ADF,6;21
- C$7AE5,2;21 }
-*C$7AE7,2;21 {else if (A == input_RIGHT_FIRE) use_item_B();
- C$7AE9,3;21
- C$7AEC,3;21 }
+cC$7AC9,2;21 Is the input event fire + up?
+ C$7ACB,3;21 Test for the next input event if not
+ C$7ACE,3;21 Call pick_up_item if so
+ C$7AD1,2;21 Then return
+*C$7AD3,2;21 Is the input event fire + down?
+ C$7AD5,3;21 Test for the next input event if not
+ C$7AD8,3;21 Call drop_item if so
+ C$7ADB,2;21 Then return
+*C$7ADD,2;21 Is the input event fire + left?
+ C$7ADF,3;21 Test for the next input event if not
+ C$7AE2,3;21 Call use_item_A if so
+ C$7AE5,2;21 Then return
+*C$7AE7,2;21 Is the input event fire + right?
+ C$7AE9,3;21 Test for the next input event if not
+ C$7AEC,3;21 Call use_item_B if so
 @label=check_for_pick_up_keypress_exit
-*C$7AEF,1;21 return;
+*C$7AEF,1;21 Return
 ; Use item 'B'.
 @label=use_item_B
 @isub=LD A,(items_held + 1)
-*C$7AF0,3;21 A = items_held[1]; // $8216
- C$7AF3,2;21 goto use_item_common;
+*C$7AF0,3;21 Fetch the second held item
+ C$7AF3,2;21 Jump over item 'A' case
 ; Use item 'A'.
 @label=use_item_A
-*C$7AF5,3;21 A = items_held[0]; // $8215
+*C$7AF5,3;21 Fetch the first held item
 ; Use item common.
 @label=use_item_common
-*C$7AF8,2;21 {if (A == item_NONE) return;
- C$7AFA,1;21 }
+*C$7AF8,2;21 Is the item in #REGa item_NONE? ($FF)
+ C$7AFA,1;21 Return if so
 @rfix-begin
- C$7AFB,2;21 Bug: Pointless jump to adjacent instruction.
+ C$7AFB,2;21 Bug: Pointless jump to adjacent instruction
 @rfix-end
-*C$7AFD,1;21 {HL = &item_actions_jump_table[A];
+*C$7AFD,1;21 {Point #REGhl at the #REGa'th entry of item_actions_jump_table
  C$7AFE,3;21
 @nowarn
  C$7B01,3;21
  C$7B04,1;21 }
- C$7B05,1;21 {L = *HL++;
- C$7B06,1;21 }
- C$7B07,1;21 {H = *HL;
+ C$7B05,1;21 {Fetch the jump table destination address
+ C$7B06,2;21
  C$7B08,1;21 }
- C$7B09,1;21 // exit via stacked jump table entry
- C$7B0A,3;21 {memcpy(&saved_pos_x, $800F, 6); // copy X,Y and height
+ C$7B09,1;21 Stack the jump table destination address
+ C$7B0A,3;21 {Copy X,Y and height from the hero's position into saved_pos
  C$7B0D,6;21
  C$7B13,2;21 }
- C$7B15,1;21 return;
+ C$7B15,1;21 Jump to the stacked destination address
 ; Item actions jump table.
 @label=item_actions_jump_table
- W$7B16,2;21 action_wiresnips
- W$7B18,2;21 action_shovel
- W$7B1A,2;21 action_lockpick
- W$7B1C,2;21 action_papers
- W$7B1E,2;21 return
- W$7B20,2;21 action_bribe
- W$7B22,2;21 action_uniform
- W$7B24,2;21 return
- W$7B26,2;21 action_poison
- W$7B28,2;21 action_red_key
- W$7B2A,2;21 action_yellow_key
- W$7B2C,2;21 action_green_key
- W$7B2E,2;21 action_red_cross_parcel
- W$7B30,2;21 return
- W$7B32,2;21 return
- W$7B34,2;21 return
+ W$7B16,2*4;21
+ W$7B1E,2;21 Return
+ W$7B20,2*2;21
+ W$7B24,2;21 Return
+ W$7B26,2*5;21
+ W$7B30,2;21 Return
+ W$7B32,2;21 Return
+ W$7B34,2;21 Return
 
 ; Pick up an item.
 ;
