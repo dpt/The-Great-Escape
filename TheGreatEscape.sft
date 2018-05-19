@@ -430,7 +430,7 @@
 ;
 ; itemstruct_ITEM_MASK                          = $0F,
 ; itemstruct_ITEM_FLAG_POISONED                 = 1 << 5,
-; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,       ; set when the item is picked up (maybe)
+; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,       ; set when the item has been encountered
 ; itemstruct_ROOM_MASK                          = $3F,
 ; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; unknown
 ; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
@@ -3481,53 +3481,58 @@ cC$7AC9,2;21 Is the input event fire + up?
 ;
 ; Used by the routine at #R$7AC9.
 @label=pick_up_item
-cC$7B36,3;21 HL = items_held;
- C$7B39,2;21 A = item_NONE;
- C$7B3B,1;21 {if (L != A && H != A) return; // no spare slots
+cC$7B36,3;21 Load both held items into #REGhl
+ C$7B39,2;21 Set #REGa to item_NONE ($FF)
+ C$7B3B,1;21 {If neither item slot is empty then return - we don't have the space to pick another item up
  C$7B3C,3;21
  C$7B3F,1;21 }
-*C$7B40,3;21 find_nearby_item();
- C$7B43,1;21 if (!Z) return; // no item nearby
+@label=pick_up_have_empty_slot
+*C$7B40,3;21 Find nearby items. #REGhl points to an item in item_structs if found
+ C$7B43,1;21 Return if no items were found
 ; Locate an empty item slot.
- C$7B44,3;21 DE = &items_held[0];
- C$7B47,1;21 A = *DE;
- C$7B48,2;21 {if (A != item_NONE) DE++;
+ C$7B44,3;21 Point #REGde at the held items array
+ C$7B47,1;21 Load an item
+ C$7B48,2;21 {Step over the item if it's item_NONE
  C$7B4A,2;21
  C$7B4C,1;21 }
-*C$7B4D,1;21 {*DE = *HL & 0x1F; // item mask + extra bit (which is not seen elsewhere in the code...)
- C$7B4E,2;21
+*C$7B4D,1;21 {Fetch the item_struct item's first byte and mask off the item.
+ C$7B4E,2;21 Note: The mask used here is $1F, not $0F as seen elsewhere in the code. Unsure why
  C$7B50,1;21 }
- C$7B51,1
- C$7B52,3;21 A = room_index;
- C$7B55,2;21 {if (A == 0) <% // outdoors
- C$7B57,3;21 }
- C$7B5A,3;21 plot_all_tiles();
- C$7B5D,2;21 %>
-*C$7B5F,3;21 else <% setup_room(); // indoors
- C$7B62,3;21 plot_interior_tiles();
- C$7B65,3;21 choose_game_window_attributes();
- C$7B68,3;21 set_game_window_attributes(); %>
-*C$7B6B,1
- C$7B6C,2;21 {if ((*HL & itemstruct_ITEM_FLAG_HELD) == 0) <%
- C$7B6E,2;21 }
-; Have picked up an item not previously held.
- C$7B70,2;21 *HL |= itemstruct_ITEM_FLAG_HELD;
- C$7B72,1
- C$7B73,3;21 increase_morale_by_5_score_by_5();
- C$7B76,1;21 %>
-*C$7B77,1;21 A = 0;
- C$7B78,1;21 HL++;
- C$7B79,1;21 *HL = A; // itemstruct->room_and_flags = 0
- C$7B7A,1;21 {HL += 4;
+ C$7B51,1;21 Save the item_struct item pointer
+ C$7B52,3;21 Fetch the global current room index
+ C$7B55,2;21 Are we outdoors?
+ C$7B57,3;21 No - jump to indoor handling
+@label=pick_up_outdoors
+ C$7B5A,3;21 Plot all tiles
+ C$7B5D,2;21 Jump over indoor handling
+@label=pick_up_indoors
+*C$7B5F,3;21 Expand out the room definition for room_index
+ C$7B62,3;21 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+ C$7B65,3;21 Choose game window attributes
+ C$7B68,3;21 Set game window attributes
+*C$7B6B,1;21 Retrieve the item_struct item pointer
+ C$7B6C,2;21 Is the itemstruct_ITEM_FLAG_HELD flag set? ($80)
+ C$7B6E,2;21 Jump if so
+@label=pick_up_novel_item
+; Have picked up an item not previously held - increase the score.
+ C$7B70,2;21 Set the itemstruct_ITEM_FLAG_HELD flag so we only award these points on the first pick-up
+ C$7B72,1;21 Save the item_struct item pointer again
+ C$7B73,3;21 Increase morale by 5, score by 5
+ C$7B76,1;21 Retrieve again
+; Make the item disappear.
+*C$7B77,1;21 Zero #REGa
+ C$7B78,1;21 {Zero itemstruct->room_and_flags
+ C$7B79,1;21 }
+ C$7B7A,1;21 {Advance #REGhl to itemstruct->screenpos
  C$7B7B,2;21
  C$7B7D,1;21 }
- C$7B7E,1;21 {*HL++ = A; // itemstruct->screenpos.x = 0
- C$7B7F,1;21 }
- C$7B80,1;21 *HL = A; // itemstruct->screenpos.x = 0
- C$7B81,3;21 draw_all_items();
- C$7B84,3;21 {play_speaker(sound_PICK_UP_ITEM);
+ C$7B7E,1;21 {Zero itemstruct->screenpos.screen_x and screen_y
+ C$7B7F,1;21
+ C$7B80,1;21 }
+ C$7B81,3;21 Draw both held items
+ C$7B84,3;21 {Play the "pick up item" sound
  C$7B87,3;21 }
- C$7B8A,1;21 return;
+ C$7B8A,1;21 Return
 
 ; Drop the first item.
 ;
