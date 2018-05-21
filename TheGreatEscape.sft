@@ -3659,9 +3659,14 @@ cC$7BF2,13;21
 ; I:A  Item index.
 ; O:HL Pointer to itemstruct.
 @label=item_to_itemstruct
-cC$7C26,1;21 {return &item_structs[A]; // $76C8 + A * 7
- C$7C27,11;21
- C$7C32,1;21 }
+cC$7C26,1;21 {Multiply item index by seven
+ C$7C27,3;21
+ C$7C2A,1;21 }
+ C$7C2B,3;21 Point #REGhl at the first element of item_structs
+ C$7C2E,1;21 {Add the two
+ C$7C2F,2;21
+ C$7C31,1;21 }
+ C$7C32,1;21 Return i'th element of item_structs in #REGhl
 
 ; Draw both held items.
 ;
