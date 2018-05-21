@@ -3534,7 +3534,7 @@ cC$7B36,3;21 Load both held items into #REGhl
  C$7B87,3;21 }
  C$7B8A,1;21 Return
 
-; Drop the first item.
+; Drop the first held item then shuffle the second into the first slot.
 ;
 ; Used by the routine at #R$7AC9.
 ;
@@ -3542,27 +3542,29 @@ cC$7B36,3;21 Load both held items into #REGhl
 ;
 ; Return if no items held.
 @label=drop_item
-cC$7B8B,3;21 A = items_held[0];
- C$7B8E,2;21 {if (A == item_NONE) return;
- C$7B90,1;21 }
-; When dropping the uniform reset the player sprite.
- C$7B91,2;21 {if (A == item_UNIFORM) $8015 = sprite_prisoner;
- C$7B93,6;21
+cC$7B8B,3;21 Fetch the first held item
+ C$7B8E,2;21 Is the item item_NONE? ($FF)
+ C$7B90,1;21 Return if so - there are no items to drop
+; When dropping the uniform reset the hero's sprite.
+ C$7B91,2;21 Does #REGa contain item_UNIFORM? (6)
+ C$7B93,3;21 Jump if not
+ C$7B96,3;21 {Set the hero's sprite definition pointer to #R$CE2E to remove the guard's uniform
  C$7B99,3;21 }
-*C$7B9C,1
+*C$7B9C,1;21 Save item
 ; Shuffle items down.
 @isub=LD HL,items_held + 1
- C$7B9D,3;21 HL = &items_held[1];  // item slot B
- C$7BA0,1;21 A = *HL;
- C$7BA1,2;21 {*HL-- = item_NONE;
- C$7BA3,1;21 }
- C$7BA4,1;21 *HL = A;
- C$7BA5,3;21 draw_all_items();
- C$7BA8,3;21 {play_speaker(sound_DROP_ITEM);
+ C$7B9D,3;21 Point #REGhl at the second held item
+ C$7BA0,1;21 Fetch its value
+ C$7BA1,2;21 Set it to item_NONE
+ C$7BA3,1;21 Now point to the first held item
+ C$7BA4,1;21 Store the fetched item there
+; Redraw
+ C$7BA5,3;21 Draw both held items
+ C$7BA8,3;21 {Play the "drop item" sound
  C$7BAB,3;21 }
- C$7BAE,3;21 choose_game_window_attributes();
- C$7BB1,3;21 set_game_window_attributes();
- C$7BB4,1
+ C$7BAE,3;21 Choose game window attributes
+ C$7BB1,3;21 Set game window attributes
+ C$7BB4,1;21 Restore item
 ; FALL THROUGH into drop_item_tail.
 
 ; Drop item, tail part.
