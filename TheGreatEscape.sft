@@ -3614,18 +3614,19 @@ cC$7BD0,1;21 Point to itemstruct.y
 ;
 ; Used by the routine at #R$7BB5.
 ;
+; I:HL Pointer to item struct.
 @label=drop_item_interior
-cC$7BE4,1;21 else <% HL++; // The else is logically here when considered as part of drop_item.
- C$7BE5,3;21 DE = $800F; // position on X axis
- C$7BE8,1;21 {  *HL++ = *DE;
- C$7BE9,1;21
- C$7BEA,1;21 }
- C$7BEB,1;21 {  DE += 2; // position on Y axis
+cC$7BE4,1;21 Point to itemstruct.x
+ C$7BE5,3;21 Point #REGde at the hero's map position.x
+ C$7BE8,1;21 Fetch x
+ C$7BE9,1;21 Store x in itemstruct.x
+ C$7BEA,1;21 Point to itemstruct.y
+ C$7BEB,1;21 {Point #REGde at the hero's map position.y
  C$7BEC,1;21 }
- C$7BED,1;21 {  *HL++ = *DE;
- C$7BEE,1;21
- C$7BEF,1;21 }
- C$7BF0,2;21 *HL = 5;
+ C$7BED,1;21 Fetch y
+ C$7BEE,1;21 Store y in itemstruct.y
+ C$7BEF,1;21 Point #REGhl at itemstruct.height
+ C$7BF0,2;21 Set height to five
 ; FALL THROUGH into calc_interior_item_screenpos.
 
 ; Calculate screen position for dropped items.
