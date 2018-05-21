@@ -3571,27 +3571,26 @@ cC$7B8B,3;21 Fetch the first held item
 ;
 ; Used by the routine at #R$B387.
 ;
-; I:A Item.
+; I:A Item index.
 @label=drop_item_tail
-cC$7BB5,3;21 HL = item_to_itemstruct(A);
- C$7BB8,1;21 HL++;
- C$7BB9,3;21 A = room_index;
- C$7BBC,1;21 *HL = A; // set object's room index
- C$7BBD,1;21 {if (A == 0) <%
- C$7BBE,2;21 }
+cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct pointer
+ C$7BB8,1;21 Advance #REGhl to point to the room index
+ C$7BB9,3;21 Get the global current room index
+ C$7BBC,1;21 Set the object's room index
+ C$7BBD,1;21 Is it outdoors? (room index is zero)
+ C$7BBE,2;21 Jump if not
 ; Outdoors.
- C$7BC0,1;21 HL++;    // -> .x
- C$7BC1,1
-; HL is incremented here but then immediately overwritten by $7BC5.
- C$7BC2,1;21 {  HL += 2; // -> .unk1
+ C$7BC0,1;21 Point #REGhl at itemstruct.pos
+ C$7BC1,1;21 Save for below
+ C$7BC2,1;21 {Bug: HL is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.
  C$7BC3,1;21 }
- C$7BC4,1
- C$7BC5,3;21 HL = $800F;
- C$7BC8,3;21 pos_to_tinypos(HL,DE);
- C$7BCB,1;21 DE--;
- C$7BCC,2;21 {  *DE = 0; // ->height ?
+ C$7BC4,1;21 Restore itemstruct.pos pointer into #REGde
+ C$7BC5,3;21 Point #REGhl at the hero's map position
+ C$7BC8,3;21 Scale down hero's map position (#REGhl) and assign the result to itemstruct's tinypos (#REGde). #REGde is updated to point after tinypos on return
+ C$7BCB,1;21 Point at height field
+ C$7BCC,2;21 {Set height to zero
  C$7BCE,1;21 }
- C$7BCF,1
+ C$7BCF,1;21 Move itemstruct pointer into HL
 ; FALL THROUGH into calc_exterior_item_screenpos.
 
 ; Assign target member for dropped exterior objects.
