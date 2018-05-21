@@ -3629,35 +3629,28 @@ cC$7BE4,1;21 Point to itemstruct.x
  C$7BF0,2;21 Set height to five
 ; FALL THROUGH into calc_interior_item_screenpos.
 
-; Calculate screen position for dropped items.
+; Calculate isometric screen position for dropped interior items.
+;
+; TODO: Describe why this has to scale things whereas the above exterior variant doesn't.
 ;
 ; Used by the routine at #R$CD31.
+;
+; I:HL Pointer to item struct + ?
 @label=calc_interior_item_screenpos
-cC$7BF2,1;21 HL--;
- C$7BF3,2;21 {  DE = 0x0200 + HL[0];  // 512 / 8 = 64
- C$7BF5,1;21 }
- C$7BF6,1
- C$7BF7,1;21 DE--;
- C$7BF8,1;21 {  HL = (HL - DE[0]) * 2;
- C$7BF9,6;21
- C$7BFF,1;21 }
- C$7C00,1;21 {  A = divide_by_8_with_rounding(H,L);
- C$7C01,1;21
- C$7C02,3;21 }
- C$7C05,1
- C$7C06,3;21 {  HL = 0x0800 - DE[0] - DE[1] - DE[2]; DE += 2;
- C$7C09,15;21
- C$7C18,2;21 }
- C$7C1A,1;21 {  Adash = divide_by_8_with_rounding(H,L);
- C$7C1B,1;21
- C$7C1C,3;21 }
- C$7C1F,1;21 {  DE += 2;
- C$7C20,1;21 }
- C$7C21,1;21 {  *DE-- = Adash;
- C$7C22,1;21 }
- C$7C23,1
- C$7C24,1;21 *DE = A;
- C$7C25,1;21 return; %>
+; Set #REGa' to ($200 + y - x) * 2
+cC$7BF2,13;21
+ C$7BFF,1;21 Double
+ C$7C00,2;21
+ C$7C02,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa
+ C$7C05,1;21
+; Set #REGa to ($800 - x - y - height)
+ C$7C06,5;21
+ C$7C0B,1;21 #REGde points to x
+ C$7C0C,16;21
+ C$7C1C,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa
+; Write the result to itemstruct.screenpos
+ C$7C1F,6;21
+ C$7C25,1;21 Return
 
 ; Convert an item to an itemstruct pointer.
 ;
