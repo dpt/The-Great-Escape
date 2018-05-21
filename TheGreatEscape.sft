@@ -3593,20 +3593,22 @@ cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct pointer
  C$7BCF,1;21 Move itemstruct pointer into HL
 ; FALL THROUGH into calc_exterior_item_screenpos.
 
-; Assign target member for dropped exterior objects.
+; Calculate isometric screen position for dropped exterior items.
 ;
 ; Used by the routine at #R$CD31.
+;
+; I:HL Pointer to item struct.
+;
 @label=calc_exterior_item_screenpos
-cC$7BD0,1;21 {  HL--; C = (0x40 + HL[1] - HL[0]) * 2; // itemstruct.y, itemstruct.x
- C$7BD1,6;21
- C$7BD7,1;21 }
- C$7BD8,1;21 {  B = 0 - HL[0] - HL[1] - HL[2]; HL += 3; // itemstruct.x, .y, .height
- C$7BD9,6;21
- C$7BDF,1;21 }
- C$7BE0,1;21 {  *HL++ = C;
- C$7BE1,1;21 }
- C$7BE2,1;21 *HL = B;
- C$7BE3,1;21 return; %>
+; Set #REGc to ($40 + y - x) * 2
+cC$7BD0,1;21 Point to itemstruct.y
+ C$7BD1,7;21
+; Set #REGb to ($200 - x - y - height)
+ C$7BD8,1;21 Zero result - this acts like $200
+ C$7BD9,7;21
+; Write the result to itemstruct.screenpos
+ C$7BE0,3;21
+ C$7BE3,1;21 Return
 
 ; Drop item, interior part.
 ;
