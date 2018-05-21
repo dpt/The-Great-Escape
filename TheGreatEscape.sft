@@ -3591,7 +3591,7 @@ cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct pointer
  C$7BCC,2;21 {Set height to zero
  C$7BCE,1;21 }
  C$7BCF,1;21 Move itemstruct pointer into HL
-; FALL THROUGH into calc_exterior_item_screenpos.
+; FALL THROUGH into calc_exterior_item_iso_pos.
 
 ; Calculate isometric screen position for dropped exterior items.
 ;
@@ -3599,7 +3599,7 @@ cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct pointer
 ;
 ; I:HL Pointer to item struct.
 ;
-@label=calc_exterior_item_screenpos
+@label=calc_exterior_item_iso_pos
 ; Set #REGc to ($40 + y - x) * 2
 cC$7BD0,1;21 Point to itemstruct.y
  C$7BD1,7;21
@@ -3627,7 +3627,7 @@ cC$7BE4,1;21 Point to itemstruct.x
  C$7BEE,1;21 Store y in itemstruct.y
  C$7BEF,1;21 Point #REGhl at itemstruct.height
  C$7BF0,2;21 Set height to five
-; FALL THROUGH into calc_interior_item_screenpos.
+; FALL THROUGH into calc_interior_item_iso_pos.
 
 ; Calculate isometric screen position for dropped interior items.
 ;
@@ -3636,7 +3636,7 @@ cC$7BE4,1;21 Point to itemstruct.x
 ; Used by the routine at #R$CD31.
 ;
 ; I:HL Pointer to item struct + ?
-@label=calc_interior_item_screenpos
+@label=calc_interior_item_iso_pos
 ; Set #REGa' to ($200 + y - x) * 2
 cC$7BF2,13;21
  C$7BFF,1;21 Double
@@ -12016,9 +12016,9 @@ cC$CD31,1;21 A = C;
  C$CD5E,1;21 {if (A == room_0_OUTDOORS) <%
  C$CD5F,2;21 }
  C$CD61,1;21 *HL = A; // A is already zero
- C$CD62,3;21 goto calc_exterior_item_screenpos;
+ C$CD62,3;21 goto calc_exterior_item_iso_pos;
 *C$CD65,2;21 else <% *HL = 5;
- C$CD67,3;21 goto calc_interior_item_screenpos;
+ C$CD67,3;21 goto calc_interior_item_iso_pos;
 
 ; Default item locations.
 ;
