@@ -3673,13 +3673,13 @@ cC$7C26,1;21 {Multiply item index by seven
 ; Used by the routines at #R$7B36, #R$7B8B, #R$B107, #R$B387, #R$B3C4, #R$B75A
 ; and #R$CB98.
 @label=draw_all_items
-cC$7C33,3;21 {draw_item(screenaddr_item1, items_held[0]);
- C$7C36,3;21
- C$7C39,3;21 }
- C$7C3C,3;21 {draw_item(screenaddr_item2, items_held[1]);
- C$7C3F,3;21
- C$7C42,3;21 }
- C$7C45,1;21 return;
+cC$7C33,3;21 Point #REGhl at the screen address of item 1
+ C$7C36,3;21 Fetch the first held item
+ C$7C39,3;21 Draw the item
+ C$7C3C,3;21 Point #REGhl at the screen address of item 2
+ C$7C3F,3;21 Fetch the second held item
+ C$7C42,3;21 Draw the item
+ C$7C45,1;21 Return
 
 ; Draw a single held item.
 ;
