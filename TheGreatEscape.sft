@@ -3688,46 +3688,48 @@ cC$7C33,3;21 Point #REGhl at the screen address of item 1
 ; I:A  Item index.
 ; I:HL Screen address of item.
 @label=draw_item
-cC$7C46,2
-; Wipe item.
- C$7C48,2;21 B = 2; // 16 wide
- C$7C4A,2;21 C = 16;
- C$7C4C,3;21 screen_wipe();
- C$7C4F,2
- C$7C51,2;21 {if (A == item_NONE) return;
- C$7C53,1;21 }
+cC$7C46,1;21 Save screen address of item
+ C$7C47,1;21 Bank item index
+; Wipe the item's screen area.
+ C$7C48,2;21 2 bytes / pixels wide
+ C$7C4A,2;21 16 pixels high
+ C$7C4C,3;21 Wipe the screen area pointed to by #REGhl
+; Bail if no item.
+ C$7C4F,1;21 Retrieve screen address
+ C$7C50,1;21 Retrieve item index
+ C$7C51,2;21 Is the item index item_NONE? ($FF)
+ C$7C53,1;21 Return if so
 ; Set screen attributes.
- C$7C54,1
- C$7C55,2;21 HL = (HL & ~0xFF00) | 0x5A00; // point to screen attributes
- C$7C57,1
- C$7C58,3;21 {A = item_attributes[A];
+ C$7C54,1;21 Save screen address again
+ C$7C55,2;21 Set #REGh to $5A which points #REGhl at the attribute for the equivalent screen address
+ C$7C57,1;21 Save item index
+ C$7C58,3;21 {Get the attribute byte for this item
  C$7C5B,5;21
 *C$7C60,1;21 }
- C$7C61,1;21 {*HL++ = A;
- C$7C62,1;21 }
- C$7C63,1;21 {*HL-- = A;
- C$7C64,1;21 }
+ C$7C61,1;21 {Write two attribute bytes
+ C$7C62,1;21
+ C$7C63,1;21 }
 ; Move to next attribute row.
- C$7C65,2;21 HL |= 1<<5;
- C$7C67,1;21 {*HL++ = A;
- C$7C68,1;21 }
- C$7C69,1;21 *HL = A;
- C$7C6A,1
+ C$7C64,1;21 Move #REGhl back for the next row
+ C$7C65,2;21 Move #REGhl to the next attribute row
+ C$7C67,1;21 {Write two attribute bytes
+ C$7C68,1;21
+ C$7C69,1;21 }
+ C$7C6A,1;21 Retrieve item index
 ; Plot bitmap.
- C$7C6B,1;21 {HL = &item_definitions[A]; // elements are six bytes
- C$7C6C,1;21 wide
- C$7C6D,8;21
+ C$7C6B,1;21 {Point #REGhl at the definition for this item
+ C$7C6C,9;21
  C$7C75,1;21 }
- C$7C76,1;21 {B = *HL++;
+ C$7C76,1;21 {Fetch width
  C$7C77,1;21 }
- C$7C78,1;21 {C = *HL++;
+ C$7C78,1;21 {Fetch height
  C$7C79,1;21 }
- C$7C7A,1;21 {E = *HL++;
- C$7C7B,1;21 }
- C$7C7C,1;21 D = *HL;
- C$7C7D,1
- C$7C7E,3;21 plot_bitmap();
- C$7C81,1;21 return;
+ C$7C7A,1;21 {Fetch sprite data pointer
+ C$7C7B,1;21
+ C$7C7C,1;21 }
+ C$7C7D,1;21 Retrieve screen address saved at #R$7C54
+ C$7C7E,3;21 Plot the bitmap without masking
+ C$7C81,1;21 Return
 
 ; Returns an item within range of the hero.
 ;
@@ -3784,7 +3786,7 @@ cC$7C82,2;21 C = 1; // outdoors
 ;
 ; Used by the routines at #R$7C46, #R$A035 and #R$A0C9.
 ;
-; I:BC Dimensions (w x h, where w is in bytes).
+; I:BC Dimensions (B x C == w x h, where w is in bytes).
 ; I:DE Source address.
 ; I:HL Destination address.
 @label=plot_bitmap
