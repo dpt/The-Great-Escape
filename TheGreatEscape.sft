@@ -3735,52 +3735,57 @@ cC$7C46,1;21 Save screen address of item
 ;
 ; Used by the routine at #R$7B36.
 ;
-; O:AF Z set if item found.
+; O:AF Z set if item found, NZ otherwise.
 ; O:HL If item was found contains pointer to the item.
 ;
-; Select a pick up radius.
+; Select a pick up radius based on the room.
 @label=find_nearby_item
-cC$7C82,2;21 C = 1; // outdoors
- C$7C84,3;21 {if (room_index) C = 6; // interior
- C$7C87,3;21
- C$7C8A,2;21 }
-; For all items.
-*C$7C8C,2;21 B = item__LIMIT; // 16 iterations
- C$7C8E,3;21 HL = &item_structs[0].room;
-*C$7C91,2;21 {do <% if (*HL & itemstruct_ROOM_FLAG_ITEM_NEARBY_7) <%
- C$7C93,2;21 }
- C$7C95,2
- C$7C97,1;21 HL++; // itemstruct.x
- C$7C98,3;21 DE = &hero_map_position.x;
- C$7C9B,2;21 B = 2; // 2 iterations
+cC$7C82,2;21 Set the pick up radius to one
+ C$7C84,3;21 Fetch global current room index
+ C$7C87,1;21 Is it room_0_OUTDOORS?
+ C$7C88,2;21 Jump if so
+ C$7C8A,2;21 Otherwise set the pick up radius to six
+; Loop for all items.
+*C$7C8C,2;21 Sixteen items (item__LIMIT)
+ C$7C8E,3;21 Point #REGhl at the first item_struct's room member
+@label=find_nearby_item_loop
+*C$7C91,2;21 Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_7 flag set? ($80)
+ C$7C93,2;21 If not, jump to the next iteration
+ C$7C95,1;21 Save item counter
+ C$7C96,1;21 Save item_struct pointer
+ C$7C97,1;21 Point #REGhl at itemstruct position
+ C$7C98,3;21 Point #REGde at global map position (hero)
+ C$7C9B,2;21 Do two loop iterations (once for x then y)
 ; Range check.
-*C$7C9D,1;21 {    do <% A = *DE++; // get hero map position
- C$7C9E,1;21 }
- C$7C9F,1;21 {      if (A - C >= *HL || A + C < *HL) goto popnext;
- C$7CA0,5;21
+@label=find_nearby_position_loop
+*C$7C9D,1;21 Read a map position byte
+ C$7C9E,1;21 {if (map_pos_byte (#REGa) - pick_up_radius (#REGc) >= itemstruct_byte || map_pos_byte + pick_up_radius < itemstruct_byte) jump to pop_next
+ C$7C9F,6;21
  C$7CA5,2;21 }
- C$7CA7,1;21 {      HL++;
- C$7CA8,1;21 }
- C$7CA9,2;21 %> while (--B);
- C$7CAB,1
- C$7CAC,1;21 HL--; // compensate for overshoot
- C$7CAD,1
- C$7CAE,1;21 A = 0; // set Z (found)
+ C$7CA7,1;21 Move to next itemstruct byte
+ C$7CA8,1;21 Move to next map position byte
+ C$7CA9,2;21 ...loop for both bytes
+ C$7CAB,1;21 Restore item_struct pointer
+ C$7CAC,1;21 Compensate for overshoot. Point to itemstruct.item for return value
+ C$7CAD,1;21 Restore item counter
+ C$7CAE,1;21 Set Z (found)
 @bfix-begin
 ; Bug: The next instruction is written as RET Z but there's no need for it to
 ; be conditional.
- C$7CAF,1;21 return;
+ C$7CAF,1;21 Return
 @bfix+else
- $7CAF RET           ;     return;
+ $7CAF RET           ; Return
 @bfix+end
-*C$7CB0,1;21 popnext:
- C$7CB1,1;21 %>
-*C$7CB2,2;21 {  HL += 7; // stride
+@label=find_nearby_pop_next
+*C$7CB0,1;21 Restore item_struct pointer
+ C$7CB1,1;21 Restore item counter
+@label=find_nearby_next
+*C$7CB2,2;21 {Step #REGhl to the next item_struct
  C$7CB4,4;21
  C$7CB8,1;21 }
-*C$7CB9,2;21 %> while (--B);
- C$7CBB,2;21 A |= 1; // set NZ (not found)
- C$7CBD,1;21 return;
+*C$7CB9,2;21 ...loop for each item
+ C$7CBB,2;21 Ran out of items: set NZ (not found)
+ C$7CBD,1;21 Return
 
 ; Plot a bitmap without masking.
 ;
