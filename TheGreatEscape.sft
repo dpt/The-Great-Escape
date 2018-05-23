@@ -3841,18 +3841,19 @@ cC$7CD4,1;21 Set #REGa to the byte width of the area to wipe
 ; I:HL Original screen address.
 ; O:HL Updated screen address.
 @label=get_next_scanline
-cC$7CE9,1;21 HL += 256;
- C$7CEA,1;21 {if ((H & 7) != 0) return;
- C$7CEB,2;21
- C$7CED,1;21 }
- C$7CEE,1
- C$7CEF,3;21 DE = 0xF820;
- C$7CF2,1;21 {if (L >= 0xE0) D = 0xFF;
- C$7CF3,4;21
- C$7CF7,2;21 }
-*C$7CF9,1;21 HL += DE;
- C$7CFA,1
- C$7CFB,1;21 return;
+cC$7CE9,1;21 Incrementing #REGh moves us to the next minor row
+ C$7CEA,1;21
+ C$7CEB,2;21 Unless we hit an exact multiple of eight - in which case we stepped to the next third of the screen
+ C$7CED,1;21 Just return if we didn't
+ C$7CEE,1;21 Borrow #REGde for scratch
+ C$7CEF,3;21 Step back by a third ($F8), then to the next major row ($20)
+ C$7CF2,1;21 {Unless we will hit a boundary in doing that
+ C$7CF3,2;21 }
+ C$7CF5,2;21 Skip, if we won't
+ C$7CF7,2;21 If we will then step back by a minor row, then to the next major row
+*C$7CF9,1;21 Step
+ C$7CFA,1;21 Restore
+ C$7CFB,1;21 Return
 
 ; Message queue stuff.
 @label=message_queue
