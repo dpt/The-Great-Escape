@@ -3795,8 +3795,6 @@ cC$7C82,2;21 Set the pick up radius to one
 ; I:DE Source address.
 ; I:HL Destination address.
 @label=plot_bitmap
-
-; Wipe the screen.
 cC$7CBE,1;21 Set #REGa to the byte width of the bitmap
  C$7CBF,3;21 Self modify the width counter at $7CC2 to set #REGb to the byte width
 @label=plot_bitmap_row
@@ -3813,24 +3811,28 @@ cC$7CBE,1;21 Set #REGa to the byte width of the bitmap
  C$7CCF,1;21 Decrement the row counter
  C$7CD0,3;21 ...loop for every row
  C$7CD3,1;21 Return
+
+; Wipe an area of the screen.
 ;
 ; Used by the routine at #R$7C46.
 ;
-; I:B  Number of bytes to set.
-; I:C  Number of scanlines.
+; I:BC Dimensions (B x C == width x height, where width is specified in bytes).
 ; I:HL Destination address.
 @label=screen_wipe
-cC$7CD4,1;21 A = B;
- C$7CD5,3;21 (loopcounter + 1) = A; // self modifying
-*C$7CD8,2;21 do <% loopcounter: B = 2; // modified
- C$7CDA,1;21 dst = HL;
-*C$7CDB,2;21 {  do <% *dst++ = 0; %> while (--B);
- C$7CDD,3;21
- C$7CE0,1;21 }
- C$7CE1,3;21 get_next_scanline();
- C$7CE4,1;21 {%> while (--C);
- C$7CE5,3;21 }
- C$7CE8,1;21 return;
+cC$7CD4,1;21 Set #REGa to the byte width of the area to wipe
+ C$7CD5,3;21 Self modify the width counter at $7CD8 to set #REGb to the byte width
+@label=screen_wipe_row
+*C$7CD8,2;21 Set the column counter to the bitmap width in bytes
+ C$7CDA,1;21 Save the destination address
+@label=screen_wipe_column
+*C$7CDB,2;21 Wipe a byte
+ C$7CDD,1;21 Step destination address
+ C$7CDE,2;21 Decrement the column counter then loop for every column
+ C$7CE0,1;21 Restore the destination address
+ C$7CE1,3;21 Move the destination address down a scanline
+ C$7CE4,1;21 Decrement the row counter
+ C$7CE5,3;21 ...loop for every row
+ C$7CE8,1;21 Return
 
 ; Given a screen address, return the same position on the next scanline.
 ;
