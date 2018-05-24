@@ -5274,16 +5274,16 @@ cC$9DCF,3;21 {If morale is greater than one then return
 ; If pressed then clear the screen and confirm with the player that they want
 ; to reset the game. Reset if requested.
 @label=keyscan_break
-cC$9DE5,3;21 {if (!(shift_pressed && space_pressed)) return;
+cC$9DE5,3;21 {If shift or space are not pressed then return
  C$9DE8,11;21
  C$9DF3,1;21 }
- C$9DF4,3;21 screen_reset();
- C$9DF7,3;21 user_confirm();
- C$9DFA,3;21 if (Z) reset_game();
- C$9DFD,3;21 {if (room_index == 0) <% reset_outdoors(); return; %> // exit via
+ C$9DF4,3;21 Reset the screen
+ C$9DF7,3;21 Wait for the player to press 'Y' or 'N'
+ C$9DFA,3;21 If 'Y' was pressed (Z set) then reset the game
+ C$9DFD,3;21 {If the global current room index is room_0_OUTDOORS then
  C$9E00,1;21
- C$9E01,3;21 }
- C$9E04,3;21 else enter_room(); // doesn't return (jumps to main_loop)
+ C$9E01,3;21 !(Reset the hero's position, redraw the scene, then zoombox it onto the screen) and return}
+ C$9E04,3;21 The hero enters a room - returns via squash_stack_goto_main
 
 ; Process player input.
 ;
