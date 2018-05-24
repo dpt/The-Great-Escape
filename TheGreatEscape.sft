@@ -1440,7 +1440,7 @@ cC$68F4,3;21 {Reset the game_window_offset X and Y coordinates to zero
  C$6917,3;21 }
 ; FALL THROUGH into squash_stack_goto_main.
 
-; Squash stack, then goto main.
+; Squash the stack then jump into the game's main loop.
 ;
 ; Used by the routines at #R$68A2 and #R$68F4 (a fall through).
 @label=squash_stack_goto_main
@@ -5215,61 +5215,59 @@ bB$8218,8;44 #HTML[#UDGARRAY1,7,4,1;$8218-$821F-8(exterior-tiles0-000)]
 ; main_loop' so it never returns. In fact, the single calling routine (main)
 ; might just as well goto enter_room instead of goto main_loop_setup.
 @label=main_loop_setup
-cC$9D78,3;21 enter_room(); // returns by goto main_loop
+cC$9D78,3;21 The hero enters a room - returns via squash_stack_goto_main
 
 ; Main game loop.
 ;
 ; Used by the routine at #R$691A.
 @label=main_loop
-cC$9D7B,3;21 main_loop: for (;;) <% check_morale();
- C$9D7E,3;21 keyscan_break();
- C$9D81,3;21 message_display();
- C$9D84,3;21 process_player_input();
- C$9D87,3;21 in_permitted_area();
- C$9D8A,3;21 restore_tiles();
- C$9D8D,3;21 move_characters();
- C$9D90,3;21 automatics();
- C$9D93,3;21 purge_invisible_characters();
- C$9D96,3;21 spawn_characters();
- C$9D99,3;21 mark_nearby_items();
- C$9D9C,3;21 ring_bell();
- C$9D9F,3;21 animate();
- C$9DA2,3;21 move_map();
- C$9DA5,3;21 message_display();
- C$9DA8,3;21 ring_bell();
- C$9DAB,3;21 plot_sprites();
- C$9DAE,3;21 plot_game_window();
- C$9DB1,3;21 ring_bell();
- C$9DB4,3;21 {  if (day_or_night != 0) nighttime();
+cC$9D7B,3;21 Check morale level, report if (near) zero and inhibit player control if exhausted
+ C$9D7E,3;21 Check for a BREAK keypress
+ C$9D81,3;21 Incrementally wipe and display queued game messages
+ C$9D84,3;21 Process player input
+ C$9D87,3;21 Check the hero's map position and colour the flag accordingly
+ C$9D8A,3;21 Paint any tiles occupied by visible characters with tiles from tile_buf
+ C$9D8D,3;21 Move characters around
+ C$9D90,3;21 Make characters follow the hero if he's being suspicious
+ C$9D93,3;21 Run through all visible characters, resetting them if they're off-screen
+ C$9D96,3;21 Spawn characters
+ C$9D99,3;21 Mark nearby items
+ C$9D9C,3;21 Ring the alarm bell (1)
+ C$9D9F,3;21 Animate all visible characters
+ C$9DA2,3;21 Move the map when the hero walks
+ C$9DA5,3;21 Incrementally wipe and display queued game messages
+ C$9DA8,3;21 Ring the alarm bell (2)
+ C$9DAB,3;21 Plot vischars and items in order
+ C$9DAE,3;21 Plot the game screen
+ C$9DB1,3;21 Ring the alarm bell (3)
+ C$9DB4,3;21 {If the nighttime flag is set, turns white screen elements light blue and tracks the hero with a searchlight
  C$9DB7,1;21
  C$9DB8,3;21 }
- C$9DBB,3;21 {  if (room_index != 0) interior_delay_loop();
+ C$9DBB,3;21 {If the global current room index is non-zero then slow the game down with a delay loop
  C$9DBE,1;21
  C$9DBF,3;21 }
- C$9DC2,3;21 wave_morale_flag();
- C$9DC5,3;21 {  if ((game_counter & 63) == 0)
- C$9DC8,2;21 dispatch_timed_event();
+ C$9DC2,3;21 Wave the morale flag
+ C$9DC5,3;21 {Dispatch a timed event event once every 64 ticks of the game counter
+ C$9DC8,2;21
  C$9DCA,3;21 }
- C$9DCD,2;21 %>
+ C$9DCD,2;21 ...loop forever
 
-; Check morale level, report if (near) zero and inhibit player control.
+; Check morale level, report if (near) zero and inhibit player control if exhausted.
 ;
 ; Used by the routine at #R$9D7B.
 @label=check_morale
-cC$9DCF,3;21 {if (morale >= 2) return;
+cC$9DCF,3;21 {If morale is greater than one then return
  C$9DD2,2;21
  C$9DD4,1;21 }
- C$9DD5,3;21 {queue_message(message_MORALE_IS_ZERO);
+ C$9DD5,3;21 {Queue the message "MORALE IS ZERO"
  C$9DD8,3;21 }
-; Inhibit user input.
- C$9DDB,2;21 {morale_exhausted = 0xFF;
+ C$9DDB,2;21 {Set the "morale exhausted" flag to inhibit player input
  C$9DDD,3;21 }
-; Immediately take automatic control of hero.
- C$9DE0,1;21 {automatic_player_counter = 0;
+ C$9DE0,1;21 {Immediately take automatic control of the hero
  C$9DE1,3;21 }
- C$9DE4,1;21 return;
+ C$9DE4,1;21 Return
 
-; Check for BREAK keypress.
+; Check for a BREAK keypress.
 ;
 ; Used by the routine at #R$9D7B.
 ; .
@@ -5459,7 +5457,7 @@ bB$9F15,4;28 Corridor to yard.
  B$9F19,4;28 Hut area.
  B$9F1D,4;28 Yard area.
 
-; In permitted area.
+; Check the hero's map position and colour the flag accordingly.
 ;
 ; Used by the routine at #R$9D7B.
 @label=in_permitted_area
@@ -6840,7 +6838,7 @@ cC$A4FD,2;21 A = 26;
  C$A505,3;21 {set_hero_route(location_002D);
  C$A508,3;21 }
 
-; Screen reset.
+; Reset the screen.
 ;
 ; Used by the routines at #R$9DE5 and #R$A51C.
 @label=screen_reset
@@ -7545,7 +7543,7 @@ cC$AA8D,1;21 L++;
  C$AAAE,3;21 plot_rightmost_tiles();
  C$AAB1,1;21 return;
 
-; Moves the map when the hero walks.
+; Move the map when the hero walks.
 ;
 ; Used by the routines at #R$6939 and #R$9D7B.
 ;
@@ -9228,7 +9226,7 @@ bB$B53E,6;36 0x6A, 0x6E, 0x52, 0x62, 0, 11 ;  0: hut 1 (leftmost on main map)
  B$B5C2,6;36 0x46, 0x48, 0x5E, 0x60, 0, 8  ; 22: tower at north east of main yard
  B$B5C8,6;36 0x69, 0x6D, 0x46, 0x49, 0, 8  ; 23: gate wall middle
 
-; Animates all visible characters.
+; Animate all visible characters.
 ;
 ; Used by the routines at #R$6939 and #R$9D7B.
 @label=animate
@@ -10136,7 +10134,7 @@ cC$BAF7,3;22 HL = &iso_pos_x;
  C$BB96,1;22 A &= A; // return NZ (vischar is not visible)
  C$BB97,1;22 return;
 
-; Paints any tiles occupied by visible characters with tiles from tile_buf.
+; Paint any tiles occupied by visible characters with tiles from tile_buf.
 ;
 ; Used by the routine at #R$9D7B.
 @label=restore_tiles
@@ -10816,7 +10814,7 @@ cC$C651,1;21 A = *HL;
 *C$C69D,2;21 return_255: A = 255;
  C$C69F,1;21 return;
 
-; Moves characters around.
+; Move characters around.
 ;
 ; Used by the routine at #R$9D7B.
 @label=move_characters
@@ -11193,7 +11191,7 @@ cC$C7C6,1;21 A = *HL;
 @label=food_discovered_counter
 gB$C891,1;21 food_discovered_counter
 
-; Causes characters to follow the hero if he's being suspicious.
+; Make characters follow the hero if he's being suspicious.
 ;
 ; Used by the routine at #R$9D7B.
 ; .
@@ -14653,7 +14651,7 @@ cC$EFCB,3;24 DE = map_MAIN_GATE_X;
 @label=outside_main_gate
  B$EFF9,3;24 static const tinypos_t outside_main_gate = <% 0xD6, 0x8A, 0x06 %>;
 
-; Waits for the user to press Y or N.
+; Wait for the user to press 'Y' or 'N'.
 ;
 ; Used by the routines at #R$9DE5 and #R$F350.
 ;
