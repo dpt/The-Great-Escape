@@ -1940,27 +1940,28 @@ wW$6B79,2;21 &roomdef_3_hut2_right[29]
 
 ; Room dimensions.
 ;
+; The room definitions specify their dimensions via an index into this table.
+; .
 ; #TABLE(default)
-; { <x1> | Maximum x }
-; { <x0> | Minimum x }
-; { <y1> | Maximum y }
-; { <y0> | Minimum y }
+; { =h Type | =h Bytes | =h Name | =h Meaning }
+; { Byte    |        1 | x1      | Maximum x }
+; { Byte    |        1 | x0      | Minimum x }
+; { Byte    |        1 | y1      | Maximum y }
+; { Byte    |        1 | y0      | Minimum y }
 ; TABLE#
 ; .
-; Used only by interior_bounds_check.
-; .
-; 10x 4-byte structures which are range checked by routine at #R$B29F.
+; Used by #R$B29F only.
 @label=roomdef_dimensions
-bB$6B85,4;28 66, 26,  70, 22
- B$6B89,4;28 62, 22,  58, 26
- B$6B8D,4;28 54, 30,  66, 18
- B$6B91,4;28 62, 30,  58, 34
- B$6B95,4;28 74, 18,  62, 30
- B$6B99,4;28 56, 50, 100, 10
- B$6B9D,4;28 104, 6,  56, 50
- B$6BA1,4;28 56, 50, 100, 26
- B$6BA5,4;28 104,28,  56, 50
- B$6BA9,4;28 56, 50,  88, 10
+bB$6B85,4;28 ( 66, 26,  70, 22)
+ B$6B89,4;28 ( 62, 22,  58, 26)
+ B$6B8D,4;28 ( 54, 30,  66, 18)
+ B$6B91,4;28 ( 62, 30,  58, 34)
+ B$6B95,4;28 ( 74, 18,  62, 30)
+ B$6B99,4;28 ( 56, 50, 100, 10)
+ B$6B9D,4;28 (104,  6,  56, 50)
+ B$6BA1,4;28 ( 56, 50, 100, 26)
+ B$6BA5,4;28 (104, 28,  56, 50)
+ B$6BA9,4;28 ( 56, 50,  88, 10)
 
 ; Room and tunnel definitions.
 ;
