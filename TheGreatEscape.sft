@@ -3029,14 +3029,14 @@ bB$75B0,1;44 width
 
 ; Character structures.
 ;
-; One of these 7-byte structures for each of the 26 game characters:
+; This array contains one of these 7-byte structures for each of the 26 game characters:
 ; .
 ; #TABLE(default)
-; { =h Type   | =h Name             | =h Meaning }
-; { Character | character_and_flags | Character index; bit 6 = on-screen flag }
-; { Room      | room                | The room the character's in }
-; { TinyPos   | pos                 | Map position of the character }
-; { Route     | route               | The route the character's on }
+; { =h Type   | =h Bytes | =h Name             | =h Meaning }
+; { Character |        1 | character_and_flags | Character index; bit 6 = on-screen flag }
+; { Room      |        1 | room                | The room the character's in, and flags }
+; { TinyPos   |        3 | pos                 | Map position of the character }
+; { Route     |        2 | route               | The route the character's on }
 ; TABLE#
 @label=character_structs
 bB$7612,7;40 character_0_COMMANDANT,   room_11_PAPERS,   ( 46,  46, 24), (0x03, 0x00)
