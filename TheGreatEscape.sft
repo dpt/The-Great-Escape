@@ -3070,14 +3070,14 @@ bB$7612,7;40 character_0_COMMANDANT,   room_11_PAPERS,   ( 46,  46, 24), (0x03, 
 
 ; Item structures.
 ;
-; One of these 7-byte structures for each of the 16 game characters:
+; This array contains one of these 7-byte structures for each of the 16 game items:
 ; .
 ; #TABLE(default)
-; { =h Type | =h Name        | =h Meaning }
-; { Item    | item_and_flags | bits 0..3 = item; bits 4..7 = flags }
-; { Room    | room_and_flags | bits 0..5 = room; bits 6..7 = flags }
-; { TinyPos | pos            | Map position of the item }
-; { IsoPos  | iso_pos        | Isometric projected position of the item }
+; { =h Type | =h Bytes | =h Name        | =h Meaning }
+; { Item    |        1 | item_and_flags | bits 0..3 = item; bits 4..7 = flags }
+; { Room    |        1 | room_and_flags | bits 0..5 = room; bits 6..7 = flags }
+; { TinyPos |        3 | pos            | Map position of the item }
+; { IsoPos  |        2 | iso_pos        | Isometric projected position of the item }
 ; TABLE#
 @label=item_structs
 bB$76C8,7;40 item_WIRESNIPS,        room_NONE,        (64, 32,  2), (0x78, 0xF4) // <- item_to_itemstruct, find_nearby_item
