@@ -5294,87 +5294,87 @@ cC$9DE5,3;21 {If shift or space are not pressed then return
 ;
 @label=process_player_input
 ; Morale exhausted? If so then don't allow input.
-; .
-; Note the combined read of in_solitary and morale_exhausted as a word.
-cC$9E07,3;21 {if (in_solitary || morale_exhausted) return;
- C$9E0A,3;21
+cC$9E07,3;21 Simultaneously load the in_solitary and morale_exhausted flags
+ C$9E0A,1;21 {Return if either is set. This inhibits the player's control
+ C$9E0B,2;21
  C$9E0D,1;21 }
- C$9E0E,3;21 {if ($8001 & (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE)) <%
- C$9E11,2;21
- C$9E13,2;21 }
+ C$9E0E,3;21 {Is the hero is picking a lock, or cutting wire?
+ C$9E11,2;21 }
+ C$9E13,2;21 Jump if not
 ; Hero is picking a lock, or cutting through a wire fence.
-; .
-; Postpone automatic control for 31 turns.
- C$9E15,3;21 {  automatic_player_counter = 31;
+ C$9E15,3;21 {Postpone automatic control for 31 turns of this routine
  C$9E18,2;21 }
- C$9E1A,2;21 {  if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_lock; // exit via
- C$9E1C,3;21 }
- C$9E1F,3;21 else goto cutting_wire; %> // exit via
-*C$9E22,3;21 A = input_routine(); // lives at same address as static_tiles_plot_direction
- C$9E25,3;21 {- // subsumed into following code
- C$9E28,2;21 }
- C$9E2A,3;21 if (A == input_NONE) <%
-; No input.
- C$9E2D,1;21 {  if (automatic_player_counter == 0) return;
+ C$9E1A,2;21 Is the hero picking a lock?
+ C$9E1C,3;21 Jump to picking_lock if so
+ C$9E1F,3;21 Jump to cutting_wire otherwise
+@label=process_player_input_no_flags
+*C$9E22,3;21 Call the input routine. Input is returned in #REGa. (Note: The routine lives at same address as static_tiles_plot_direction)
+ C$9E25,3;21 Take address of the automatic player counter
+ C$9E28,2;21 Did the input routine return input_NONE? (zero)
+ C$9E2A,3;21 Jump if not
+; No user input was received: count down the automatic player counter
+ C$9E2D,1;21 {If the automatic player counter is zero then return
  C$9E2E,1;21
  C$9E2F,1;21 }
-; No user input: count down.
- C$9E30,1;21 automatic_player_counter--;
- C$9E31,1;21 A = 0; %>
- C$9E32,2;21 else <%
-; Input received.
+ C$9E30,1;21 Decrement the automatic player counter
+ C$9E31,1;21 Set input to input_NONE
+ C$9E32,2;21 Jump to end bit
+@label=process_player_input_received
+; User input was received.
 ; .
 ; Postpone automatic control for 31 turns.
-*C$9E34,2;21 automatic_player_counter = 31;
- C$9E36,1;21 ... (push af) ...
- C$9E37,3;21 {  if (hero_in_bed == 0) <%
- C$9E3A,1;21
- C$9E3B,2;21 }
- C$9E3D,3;21 {    if (!hero_in_breakfast) goto not_bed_or_breakfast;
- C$9E40,1;21
- C$9E41,2;21 }
-; Hero was at breakfast.
- C$9E43,3;21 {    (word) $8002 = 0x002B; // set route
+*C$9E34,2;21 Set the automatic player counter to 31
+ C$9E36,1;21 Bank input routine result
+ C$9E37,3;21 Load hero in bed flag
+ C$9E3A,1;21 Is it zero?
+ C$9E3B,2;21 Jump to 'hero was in bed' case if not
+ C$9E3D,3;21 Load hero at breakfast flag
+ C$9E40,1;21 Is it zero?
+ C$9E41,2;21 Jump to 'not bed or breakfast' case if so
+; Hero was at breakfast: make him stand up
+ C$9E43,3;21 {Set hero's route to 43, step 0
  C$9E46,3;21 }
- C$9E49,3;21 {    (word) $800F = 0x0034; // set X pos
- C$9E4C,2;21 }
- C$9E4E,1;21 {    (word) $8011 = 0x003E; // set Y pos
- C$9E4F,1;21
+ C$9E49,3;21 {Set hero's (x,y) pos to (52,62)
+ C$9E4C,4;21
  C$9E50,2;21 }
- C$9E52,3;21 {    roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
+ C$9E52,3;21 {Set room definition 25's bench_G object to interiorobject_EMPTY_BENCH
  C$9E55,2;21 }
- C$9E57,3;21 HL = &hero_in_breakfast; %>
- C$9E5A,2;21 else <%
-; Hero was in bed.
-*C$9E5C,3;21 {    (word) $8002 = 0x012C; // set route
+ C$9E57,3;21 Point #REGhl at hero at breakfast flag
+ C$9E5A,2;21 Jump to common part
+@label=process_player_input_in_bed
+; Hero was in bed: make him get up
+*C$9E5C,3;21 {Set hero's route to 44, step 1
  C$9E5F,3;21 }
- C$9E62,3;21 {    (word) $8004 = 0x2E2E; // another position?
+ C$9E62,3;21 {Set hero's target (x,y) to (46,46)
 @nowarn
  C$9E65,3;21 }
- C$9E68,2;21 {    (word) $800F = 0x002E; // set X pos
- C$9E6A,3;21 }
- C$9E6D,3;21 (word) $8011 = 0x002E; // set Y pos
- C$9E70,2;21 {    $8013 = 24; // set height
+ C$9E68,2;21 {Set hero's (x,y) pos to (46,46)
+ C$9E6A,3;21
+ C$9E6D,3;21 }
+ C$9E70,2;21 {Set hero's height to 24
  C$9E72,3;21 }
- C$9E75,3;21 {    roomdef_2_hut2_left.bed = interiorobject_EMPTY_BED;
+ C$9E75,3;21 {Set room definition 2's bed object to interiorobject_EMPTY_BED
  C$9E78,2;21 }
- C$9E7A,3;21 HL = &hero_in_bed; %>
-*C$9E7D,2;21 *HL = 0;
- C$9E7F,3;21 setup_room();
- C$9E82,3;21 plot_interior_tiles();
-*C$9E85,1;21 not_bed_or_breakfast: // ... (pop af -- restores user input value stored at $9E36)
- C$9E86,2;21 {  if (A >= input_FIRE) <%
- C$9E88,2;21 }
- C$9E8A,3;21 process_player_input_fire();
- C$9E8D,2;21 A = input_KICK; %> %>
+ C$9E7A,3;21 Point #REGhl at hero in bed flag
+@label=process_player_input_common
+*C$9E7D,2;21 Clear the hero at breakfast / hero in bed flag
+ C$9E7F,3;21 Expand out the room definition for room_index
+ C$9E82,3;21 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+@label=process_player_input_check_fire
+*C$9E85,1;21 Unbank input routine result
+ C$9E86,2;21 Was fire pressed?
+ C$9E88,2;21 Jump if not
+ C$9E8A,3;21 Check for 'pick up', 'drop' and 'use' input events
+ C$9E8D,2;21 Set #REGa to input_KICK ($80)
 ; If input state has changed then kick a sprite update.
+@label=process_player_input_set_kick
 @nowarn
-*C$9E8F,3;21 {if ($800D == A) return; // tunnel related?
- C$9E92,1;21
- C$9E93,1;21 }
- C$9E94,2;21 {$800D = A | input_KICK;
+*C$9E8F,3;21 {Did the input state change from the hero's existing input?
+ C$9E92,1;21 }
+ C$9E93,1;21 Return if not
+ C$9E94,2;21 {Kick a sprite update if it did
  C$9E96,1;21 }
- C$9E97,1;21 return;
+ C$9E97,1;21 Return
 
 ; Locks the player out until the lock is picked.
 ;
