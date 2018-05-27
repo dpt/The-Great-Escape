@@ -1469,10 +1469,10 @@ cC$6920,3;21 {Set the hero's visible character input field to input_KICK
  C$692D,2;21 Set the vischar_DIRECTION_CRAWL bit on vischar.direction
  C$692F,3;21 {Set vischar.mi.sprite to the prisoner sprite set
  C$6932,3;21 }
- C$6935,1
+ C$6935,1;21 Return
 ; We're not in a tunnel room.
 *C$6936,2;21 Clear the vischar_DIRECTION_CRAWL bit from vischar.direction
- C$6938,1
+ C$6938,1;21 Return
 
 ; Setup movable items.
 ;
@@ -1523,7 +1523,7 @@ cC$6939,3;24 Reset all non-player visible characters
 @nowarn
  C$6999,3;24 Point #REGhl at the second visible character
  C$699C,3;24 Set saved_pos
- C$699F,1
+ C$699F,1;24 Return
 ; Fourteen bytes of visible character reset data.
 @label=movable_item_reset_data
  B$69A0,1;24 Flags
@@ -1568,7 +1568,7 @@ cC$69C9,3;21 Start at the first visible character (hero is the zeroth)
  C$69D7,1;21
  C$69D8,1;21 }
  C$69D9,2;21 ...loop
- C$69DB,1
+ C$69DB,1;21 Return
 
 ; Setup interior doors.
 ;
@@ -1615,7 +1615,7 @@ cC$69DC,2;21 Set #REGa to door_NONE
  C$6A0D,1;21 Switch registers again
  C$6A0E,1;21 Step #REGhl' to the next door
  C$6A0F,2;21 ...loop
- C$6A11,1
+ C$6A11,1;21 Return
 
 ; Turn a door index into a door_t pointer.
 ;
@@ -1634,7 +1634,7 @@ cC$6A12,1;21 Save the original #REGa so we can test its flag bit in a moment
  C$6A20,1;21 {Otherwise, point to the next entry along
  C$6A21,4;21
  C$6A25,1;21 }
- C$6A26,1
+ C$6A26,1;21 Return
 
 ; Wipe the visible tiles array.
 ;
@@ -1643,7 +1643,7 @@ cC$6A12,1;21 Save the original #REGa so we can test its flag bit in a moment
 cC$6A27,3;21 {Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero
  C$6A2A,8;21
  C$6A32,2;21 }
- C$6A34,1
+ C$6A34,1;21 Return
 
 ; Expand out the room definition for room_index.
 ;
@@ -1737,7 +1737,7 @@ cC$6A35,3;21 Wipe the visible tiles array
  C$6AAC,3;21 Expand RLE-encoded object out to a set of tile references
  C$6AAF,3;21
  C$6AB2,2;21 ...loop
- C$6AB4,1
+ C$6AB4,1;21 Return
 
 ; Expands RLE-encoded objects to a full set of tile references.
 ;
@@ -5386,14 +5386,14 @@ cC$9E98,3;21 {if (player_locked_out_until != game_counter) return;
 ; Countdown reached: Unlock the door.
  C$9EA0,3;21 {*ptr_to_door_being_lockpicked &= ~door_LOCKED;
  C$9EA3,2;21 }
- C$9EA5,2;21 {queue_message(message_IT_IS_OPEN);
+ C$9EA5,2;21 {Queue the message "IT IS OPEN"
  C$9EA7,3;21 }
 ; This entry point is used by the routine at #R$9EB2.
 @label=clear_lockpick_wirecut_flags_and_return
 *C$9EAA,3;21 {clear_lockpick_wirecut_flags_and_return: $8001 &= ~(vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE);
  C$9EAD,3;21
  C$9EB0,1;21 }
- C$9EB1,1;21 return;
+ C$9EB1,1;21 Return
 
 ; Locks the player out until the wire is snipped.
 ;
@@ -10004,7 +10004,7 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
 @rfix-begin
 ; Bug: RET is missing here. We fall through into multiply.
 @rfix+else
-       RET
+       RET           ; Return
 @rfix+end
 
 ; Multiply the two input values, A and E, returning a widened result in HL.
