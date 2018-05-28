@@ -5386,17 +5386,17 @@ cC$9E07,3;21 Simultaneously load the in_solitary and morale_exhausted flags
 ;
 ; Used by the routine at #R$9E07.
 @label=picking_lock
-cC$9E98,3;21 {if (player_locked_out_until != game_counter) return;
+cC$9E98,3;21 {Return unless player_locked_out_until becomes equal to game_counter
  C$9E9B,4;21
  C$9E9F,1;21 }
 ; Countdown reached: Unlock the door.
- C$9EA0,3;21 {*ptr_to_door_being_lockpicked &= ~door_LOCKED;
+ C$9EA0,3;21 {Clear door_LOCKED ($80) from the door whose lock is being picked
  C$9EA3,2;21 }
  C$9EA5,2;21 {Queue the message "IT IS OPEN"
  C$9EA7,3;21 }
 ; This entry point is used by the routine at #R$9EB2.
 @label=clear_lockpick_wirecut_flags_and_return
-*C$9EAA,3;21 {clear_lockpick_wirecut_flags_and_return: $8001 &= ~(vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE);
+*C$9EAA,3;21 {Clear the vischar_FLAGS_PICKING_LOCK and vischar_FLAGS_CUTTING_WIRE flags
  C$9EAD,3;21
  C$9EB0,1;21 }
  C$9EB1,1;21 Return
