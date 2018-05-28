@@ -1350,7 +1350,7 @@ bB$5B00,4;28 {super_tile $00 #HTML[#CALL:supertile($5B00, 0)]
 @label=room_index
 gB$68A0,1
 
-; Holds the current door id.
+; The current door id.
 @label=current_door
 gB$68A1,1
 
@@ -3872,19 +3872,27 @@ cC$7CE9,1;21 Incrementing #REGh moves us to the next minor row
  C$7CFA,1;21 Restore
  C$7CFB,1;21 Return
 
-; Message queue stuff.
+; The pending message queue.
 @label=message_queue
 gB$7CFC,8;44 {Queue of message indexes. Pairs of bytes + 0xFF terminator.
  B$7D04,8;44
  B$7D0C,3;44 }
+
+; Countdown to the next message.
 @label=message_display_delay
- B$7D0F,1;44 Decrementing counter which shows the next message when it reaches zero.
+gB$7D0F,1;44 Decrementing counter which shows the next message when it reaches zero.
+
+; Index into the message we're displaying or wiping.
 @label=message_display_index
- B$7D10,1;44 Index into the message we're displaying or wiping. If 128 then next_message. If > 128 then wipe_message. Else display.
+gB$7D10,1;44 If 128 then next_message. If > 128 then wipe_message. Else display.
+
+; Pointer to the next available slot in the message queue.
 @label=message_queue_pointer
- W$7D11,2;44 Pointer to the next available slot in the message queue.
+gW$7D11,2
+
+; Pointer to the next message character to be displayed.
 @label=current_message_character
- W$7D13,2;44 Pointer to the next message character to be displayed.
+gW$7D13,2
 
 ; Add a new message index to the pending messages queue.
 ;
@@ -4090,7 +4098,7 @@ tB$7DF5,17;92 "MISSED ROLL CALL" #HTML[/ #CALL:decode_stringFF($7DF5)]
 ; Unreferenced bytes.
 ;
 ; Two alignment bytes to make static_tiles start at $7F00.
-gB$7EFE,2;20 unused_7EFE
+uB$7EFE,2
 
 ; Static tiles.
 ;
@@ -4181,33 +4189,33 @@ bB$7F00,9;48 blank
  B$819A,9;48 bell_middle_middle
 
 ; Unreferenced byte.
-gB$81A3,1;21 unused_81A3
+uB$81A3,1
 
 ; Saved/stashed position.
 ;
 ; Structure type: pos_t.
 @label=saved_pos_x
 @keep
-gW$81A4,2;21 saved_pos_x
+gW$81A4,2
 @label=saved_pos_y
- W$81A6,2;21 saved_pos_y
+ W$81A6,2
 @label=saved_height
- W$81A8,2;21 saved_height
+ W$81A8,2
 
 ; Used by touch() only.
 @label=touch_stashed_A
-gB$81AA,1;21 touch_stashed_A
+gB$81AA,1
 
 ; Unreferenced byte.
-gB$81AB,1;21 unused_81AB
+uB$81AB,1
 
 ; Bitmap and mask pointers.
 @label=bitmap_pointer
-gW$81AC,2;21 bitmap_pointer
+gW$81AC,2
 @label=mask_pointer
- W$81AE,2;21 mask_pointer
+ W$81AE,2
 @label=foreground_mask_pointer
- W$81B0,2;21 foreground_mask_pointer
+ W$81B0,2
 
 ; Saved/stashed position.
 ;
@@ -4217,37 +4225,37 @@ gW$81AC,2;21 bitmap_pointer
 ; .
 ; Read by render_mask_buffer, guards_follow_suspicious_character.
 @label=tinypos_stash_x
-gB$81B2,1;21 tinypos_stash_x
+gB$81B2,1
 @label=tinypos_stash_y
- B$81B3,1;21 tinypos_stash_y
+ B$81B3,1
 @label=tinypos_stash_height
- B$81B4,1;21 tinypos_stash_height
+ B$81B4,1
 
 ; Current vischar's isometric projected map position.
 @label=iso_pos_x
-gB$81B5,1;21 iso_pos_x
+gB$81B5,1
 @label=iso_pos_y
- B$81B6,1;21 iso_pos_y
+ B$81B6,1
 
 ; Controls character left/right flipping.
 @label=flip_sprite
-gB$81B7,1;21 flip_sprite
+gB$81B7,1
 
 ; Hero's map position.
 ;
 ; Structure type: tinypos_t.
 @label=hero_map_position_x
-gB$81B8,1;21 hero_map_position_x
+gB$81B8,1
 @label=hero_map_position_y
- B$81B9,1;21 hero_map_position_y
+ B$81B9,1
 @label=hero_map_position_height
- B$81BA,1;21 hero_map_position_height
+ B$81BA,1
 
 ; Map position.
 ;
 ; Used when drawing tiles.
 @label=map_position
-gW$81BB,2;21 map_position
+gW$81BB,2
 
 ; Searchlight state.
 ;
@@ -4263,17 +4271,17 @@ gW$81BB,2;21 map_position
 ; { 255 | Searchlight is off }
 ; TABLE#
 @label=searchlight_state
-gB$81BD,1;21 searchlight_state
+gB$81BD,1
 
 ; Copy of first byte of current room def.
 ;
 ; Indexes roomdef_dimensions[].
 @label=roomdef_bounds_index
-gB$81BE,1;21 roomdef_bounds_index
+gB$81BE,1
 
 ; Count of object bounds.
 @label=roomdef_object_bounds_count
-gB$81BF,1;21 roomdef_object_bounds_count
+gB$81BF,1
 
 ; Copy of current room def's additional bounds (allows for four room objects).
 @label=roomdef_object_bounds
@@ -4282,7 +4290,7 @@ gB$81C0,4*4
 ; Unreferenced bytes.
 ;
 ; These are possibly spare object bounds bytes, but not ever used.
-gB$81D0,6;36 unused_81D0
+gB$81D0,6
 
 ; Indices of interior doors.
 ;
@@ -4297,30 +4305,28 @@ gB$81D6,4
 ; FIXME: First byte is a count.
 ;
 @label=interior_mask_data
-gB$81DA,8;44 {interior_mask_data
- B$81E2,8*6
- B$8212,1;44 }
+gB$81DA,8*7,1
 
 ; Written to by #R$DC41 setup_item_plotting but never read.
 @label=saved_item
-gB$8213,1;21 saved_item
+gB$8213,1
 
 ; A copy of item_definition height.
 ;
 ; Used by the routines at #R$DC41, #R$DD02.
 @label=item_height
-gB$8214,1;21 item_height
+gB$8214,1
 
 ; The items which the hero is holding.
 ;
 ; Each byte holds one item. Initialised to 0xFFFF meaning no item in either
 ; slot.
 @label=items_held
-gW$8215,2;21 items_held
+gW$8215,2
 
 ; The current character index.
 @label=character_index
-gB$8217,1;21 character_index
+gB$8217,1
 
 ; Tiles
 ;
@@ -5873,7 +5879,7 @@ cC$A11D,1;21 {delay = C; // Self-modify delay loop at $A126.
 ; .
 ; Write/read-write by wave_morale_flag.
 @label=game_counter
-gB$A12F,1;21 game_counter
+gB$A12F,1;21 game_counter     // TODO: delete all comments which just repeat the above @label
 
 ; Bell.
 ;
@@ -5892,10 +5898,10 @@ gB$A12F,1;21 game_counter
 ; searchlight_caught, solitary, guards_follow_suspicious_character,
 ; event_roll_call.
 @label=bell
-gB$A130,1;21 bell
+gB$A130,1
 
 ; Unreferenced byte.
-gB$A131,1;21 unused_A131
+gB$A131,1
 
 ; Score digits.
 ;
@@ -5903,14 +5909,14 @@ gB$A131,1;21 unused_A131
 ; .
 ; Write/read-write by increase_score, reset_game.
 @label=score_digits
-gB$A132,5;32 score_digits
+gB$A132,5
 
 ; Hero at breakfast flag.
 ;
 ; Write/read-write by process_player_input, end_of_breakfast,
 ; hero_sit_sleep_common.
 @label=hero_in_breakfast
-gB$A137,1;21 hero_in_breakfast
+gB$A137,1
 
 ; Red flag flag.
 ;
@@ -5924,7 +5930,7 @@ gB$A137,1;21 hero_in_breakfast
 ; .
 ; Write/read-write by in_permitted_area.
 @label=red_flag
-gB$A138,1;21 red_flag
+gB$A138,1
 
 ; Automatic player counter.
 ;
@@ -5936,7 +5942,7 @@ gB$A138,1;21 red_flag
 ; Write/read-write by check_morale, process_player_input,
 ; charevnt_hero_release, solitary.
 @label=automatic_player_counter
-gB$A139,1;21 automatic_player_counter
+gB$A139,1
 
 ; 'In solitary' flag.
 ;
@@ -5949,7 +5955,7 @@ gB$A139,1;21 automatic_player_counter
 ; .
 ; Write/read-write by charevnt_solitary_ends, solitary.
 @label=in_solitary
-gB$A13A,1;21 in_solitary
+gB$A13A,1
 
 ; 'Morale exhausted' flag.
 ;
@@ -5963,7 +5969,7 @@ gB$A13A,1;21 in_solitary
 ; .
 ; Write/read-write by check_morale.
 @label=morale_exhausted
-gB$A13B,1;21 morale_exhausted
+gB$A13B,1
 
 ; Morale 'score'.
 ;
@@ -5973,7 +5979,7 @@ gB$A13B,1;21 morale_exhausted
 ; .
 ; Write/read-write by increase_morale, decrease_morale, reset_game.
 @label=morale
-gB$A13C,1;21 morale
+gB$A13C,1
 
 ; Game clock.
 ;
@@ -5983,7 +5989,7 @@ gB$A13C,1;21 morale
 ; .
 ; Write/read-write by dispatch_timed_event, reset_map_and_characters.
 @label=clock
-gB$A13D,1;21 clock
+gB$A13D,1
 
 ; Mystery flag.
 ;
@@ -5996,7 +6002,7 @@ gB$A13D,1;21 clock
 ; Write/read-write by set_route, spawn_character, move_characters,
 ; automatics, set_route.
 @label=entered_move_characters
-gB$A13E,1;21 entered_move_characters
+gB$A13E,1
 
 ; Hero in bed flag.
 ;
@@ -6004,7 +6010,7 @@ gB$A13E,1;21 entered_move_characters
 ; .
 ; Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
 @label=hero_in_bed
-gB$A13F,1;21 hero_in_bed
+gB$A13F,1
 
 ; Displayed morale.
 ;
@@ -6012,13 +6018,13 @@ gB$A13F,1;21 hero_in_bed
 ; .
 ; Write/read-write by wave_morale_flag.
 @label=displayed_morale
-gB$A140,1;21 displayed_morale
+gB$A140,1
 
 ; Pointer to the screen address where the morale flag was last plotted.
 ;
 ; Write/read-write by wave_morale_flag.
 @label=moraleflag_screen_address
-gW$A141,2;21 moraleflag_screen_address
+gW$A141,2
 
 ; Address of door (in locked_doors[]) in which bit 7 is cleared when picked.
 ;
@@ -6026,7 +6032,7 @@ gW$A141,2;21 moraleflag_screen_address
 ; .
 ; Write/read-write by action_lockpick.
 @label=ptr_to_door_being_lockpicked
-gW$A143,2;21 ptr_to_door_being_lockpicked
+gW$A143,2
 
 ; Game time until player control is restored.
 ;
@@ -6036,7 +6042,7 @@ gW$A143,2;21 ptr_to_door_being_lockpicked
 ; .
 ; Write/read-write by action_wiresnips, action_lockpick.
 @label=player_locked_out_until
-gB$A145,1;21 player_locked_out_until
+gB$A145,1
 
 ; Day or night flag.
 ;
@@ -6050,19 +6056,15 @@ gB$A145,1;21 player_locked_out_until
 ; .
 ; Write/read-write by set_day_or_night, reset_map_and_characters.
 @label=day_or_night
-gB$A146,1;21 day_or_night
+gB$A146,1
 
 ; Bell ringer bitmaps.
 ;
 ; 8x12 pixels.
 @label=bell_ringer_bitmap_off
-bB$A147,1;21 {bell_ringer_bitmap_off
- B$A148,1*10
- B$A152,1;21 }
+bB$A147,1*12
 @label=bell_ringer_bitmap_on
- B$A153,1;21 {bell_ringer_bitmap_on
- B$A154,1*10
- B$A15E,1;21 }
+ B$A153,1*12
 
 ; Set game window attributes.
 ;
@@ -6261,7 +6263,7 @@ cC$A228,3;24 {if ((item_structs[item_RED_CROSS_PARCEL].room & itemstruct_ROOM_MA
 
 ; Current contents of red cross parcel.
 @label=red_cross_parcel_current_contents
-gB$A263,1;21 red_cross_parcel_current_contents
+gB$A263,1
 
 ; Event: time for bed.
 @label=event_time_for_bed
@@ -7056,11 +7058,11 @@ bB$A69E,8;44 0
 
 ; An index used only by move_map().
 @label=move_map_y
-gB$A7C6,1;21 move_map_y
+gB$A7C6,1
 
 ; Game window plotting offset.
 @label=game_window_offset
-gW$A7C7,2;21 game_window_offset
+gW$A7C7,2
 
 ; Get supertiles.
 ;
@@ -7666,17 +7668,17 @@ cC$AAB2,3;21 {if (room_index) return; // Can't move the map when indoors.
 
 ; Zoombox stuff.
 @label=zoombox_x
-gB$AB66,1;21 zoombox_x
+gB$AB66,1
 @label=zoombox_horizontal_count
- B$AB67,1;21 zoombox_horizontal_count
+ B$AB67,1
 @label=zoombox_y
- B$AB68,1;21 zoombox_y
+ B$AB68,1
 @label=zoombox_vertical_count
- B$AB69,1;21 zoombox_vertical_count
+ B$AB69,1
 
 ; Game window current attribute byte.
 @label=game_window_attribute
-gB$AB6A,1;21 game_window_attribute
+gB$AB6A,1
 
 ; Choose game window attributes.
 ;
@@ -8278,7 +8280,7 @@ bB$AF5E,8;44 top left tile, zoombox_tile_wire_tl #HTML[#UDG$AF5E]
 
 ; Bribed character.
 @label=bribed_character
-gB$AF8E,1;21 bribed_character
+gB$AF8E,1
 
 ; Stuff is touching. Also assigns saved_pos to specified vischar's pos and sets
 ; the sprite_index.
@@ -10368,7 +10370,7 @@ bB$BCEE,54*34
 ;
 ; Initially set to $9000. Wraps around after $90FF.
 @label=prng_pointer
-gW$C41A,2;21 prng_pointer
+gW$C41A,2
 
 ; Spawn characters.
 ;
@@ -11190,7 +11192,7 @@ cC$C7C6,1;21 A = *HL;
 ;
 ; (<- automatics, target_reached)
 @label=food_discovered_counter
-gB$C891,1;21 food_discovered_counter
+gB$C891,1
 
 ; Make characters follow the hero if he's being suspicious.
 ;
@@ -11725,7 +11727,7 @@ cC$CB85,1;21 Preserve #REGhl
  C$CB91,1;21 Return
 
 ; Unreferenced bytes.
-uB$CB92,6;36 unused_CB92
+uB$CB92,6
 
 ; The hero has been sent to solitary.
 ;
@@ -13319,9 +13321,8 @@ bB$DDDD,2;21 {item_bitmap: SHOVEL (16x13)
  B$E0B9,2*14
  B$E0D5,2;21 }
 
-; Unreferenced byte.
-uB$E0D7,8;44 {unused_E0D7
- B$E0DF,1;44 }
+; Unreferenced bytes.
+uB$E0D7,8,1
 
 ; Addresses of self-modified locations which are changed between NOPs and LD
 ; (HL),A.
@@ -13355,7 +13356,7 @@ wW$E0EC,2;21 masked_sprite_plotter_24_wide_enable0
 ; Unused word?
 ;
 ; Unsure if related to the above masked_sprite_plotter_24_enables table.
-uW$E100,2;21 unused_E100
+uW$E100,2
 
 ; Sprite plotter for 24-pixel-wide sprites. Used for characters and objects.
 ;
@@ -14439,7 +14440,7 @@ bB$EC01,8*58
 ;
 ; Used by plot_game_window and wipe_game_window.
 @label=saved_sp
-gW$EDD1,2;21 saved_sp
+gW$EDD1,2
 
 ; Game screen start addresses.
 ;
@@ -14720,7 +14721,7 @@ gB$F06B,10
 ; { 255 | Vertical }
 ; TABLE#
 @label=static_tiles_plot_direction
-gB$F075,1;21 static_tiles_plot_direction
+gB$F075,1
 
 ; Definitions of fixed graphic elements.
 ;
@@ -15278,7 +15279,7 @@ wW$F43D,2;21 &inputroutine_keyboard,
 ; { 3 | Protek }
 ; TABLE#
 @label=chosen_input_device
-gB$F445,1;21 chosen_input_device
+gB$F445,1
 
 ; Key choice screenlocstrings.
 ;
@@ -15392,12 +15393,12 @@ cC$F52C,1;21 {BC = music_tuning_table[A];
 
 ; Music channel indices.
 @label=music_channel0_index
-gW$F541,2;21 music_channel0_index
+gW$F541,2
 @label=music_channel1_index
- W$F543,2;21 music_channel1_index
+ W$F543,2
 
 ; Unreferenced byte.
-uB$F545,1;21 unused_F545
+uB$F545,1
 
 ; Music data.
 @label=music_channel0_data
@@ -15414,9 +15415,7 @@ bB$F546,8;44 {music_channel0_data
  W$FADE,2;44 }
 
 ; 769 bytes of apparently unreferenced bytes.
-uB$FAE0,8;44 {unused_FAE0
- B$FAE8,8*95
- B$FDE0,1;44 }
+uB$FAE0,8*96,1
 
 ; Loaded.
 ;
@@ -15432,8 +15431,7 @@ cC$FDE1,1;21 Disable interrupts.
  C$FDF0,3;21 goto jump_to_main; /* exit via */
 
 ; Unreferenced bytes.
-uB$FDF3,8;44 {unused_FDF3
- B$FDFB,5;44 }
+uB$FDF3,8,5
 
 ; Keyboard input routine.
 ;
