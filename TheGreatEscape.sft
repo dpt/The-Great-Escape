@@ -5441,23 +5441,34 @@ cC$9EB2,3;21 {How much longer do we have to wait until the wire cutting is compl
  B$9EE2,1;21 input_DOWN + input_RIGHT + input_KICK
  B$9EE3,1;21 input_DOWN + input_LEFT  + input_KICK
 
-; Maps bytes to pointers in $9EF9.
+; Maps route indices to arrays of valid rooms or areas.
+;
+; #R$9F21 uses this to check if the hero is in an area permitted for the
+; current route.
 @label=route_to_permitted
-bB$9EE4,3;40 byte_to_offset { 42, &byte_9EF9[0] }
- B$9EE7,3;40 byte_to_offset {  5, &byte_9EFC[0] }
- B$9EEA,3;40 byte_to_offset { 14, &byte_9F01[0] }
- B$9EED,3;40 byte_to_offset { 16, &byte_9F08[0] }
- B$9EF0,3;40 byte_to_offset { 44, &byte_9F0E[0] }
- B$9EF3,3;40 byte_to_offset { 43, &byte_9F11[0] }
- B$9EF6,3;40 byte_to_offset { 45, &byte_9F13[0] }
-; Variable-length arrays, 0xFF terminated.
- B$9EF9,3;40 byte_9EF9 = { 0x82,0x82,0xFF }
- B$9EFC,5;40 byte_9EFC = { 0x83,0x01,0x01,0x01,0xFF }
- B$9F01,7;40 byte_9F01 = { 0x01,0x01,0x01,0x00,0x02,0x02,0xFF }
- B$9F08,6;40 byte_9F08 = { 0x01,0x01,0x95,0x97,0x99,0xFF }
- B$9F0E,3;40 byte_9F0E = { 0x83,0x82,0xFF }
- B$9F11,2;40 byte_9F11 = { 0x99,0xFF }
- B$9F13,2;40 byte_9F13 = { 0x01,0xFF }
+bB$9EE4,3;40 (Route 42: #R$9EF9)
+ B$9EE7,3;40 (Route  5: #R$9EFC)
+ B$9EEA,3;40 (Route 14: #R$9F01)
+ B$9EED,3;40 (Route 16: #R$9F08)
+ B$9EF0,3;40 (Route 44: #R$9F0E)
+ B$9EF3,3;40 (Route 43: #R$9F11)
+ B$9EF6,3;40 (Route 45: #R$9F13)
+; Seven variable-length arrays which encode a list of valid rooms (if top bit
+; is set) or permitted areas (0, 1 or 2) for a given route and step within the
+; route. Terminated with $FF.
+; .
+; Note that while routes encode transitions _between_ rooms this table encodes
+; individual rooms or areas, so each list here will be one entry longer than
+; the corresponding route.
+; .
+; In the table: R => Room, A => Area
+ B$9EF9,3;40 ( R2, R2,                    $FF)
+ B$9EFC,5;40 ( R3, A1,  A1,  A1,          $FF)
+ B$9F01,7;40 ( A1, A1,  A1,  A0,  A2, A2, $FF)
+ B$9F08,6;40 ( A1, A1, R21, R23, R25,     $FF)
+ B$9F0E,3;40 ( R3, R2,                    $FF)
+ B$9F11,2;40 (R25,                        $FF)
+ B$9F13,2;40 ( A1,                        $FF)
 
 ; Boundings of the three main exterior areas.
 @label=permitted_bounds
