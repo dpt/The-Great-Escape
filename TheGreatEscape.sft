@@ -5405,34 +5405,35 @@ cC$9E98,3;21 {Return unless player_locked_out_until becomes equal to game_counte
 ;
 ; Used by the routine at #R$9E07.
 @label=cutting_wire
-cC$9EB2,3;21 {A = player_locked_out_until - game_counter;
+cC$9EB2,3;21 {How much longer do we have to wait until the wire cutting is complete?
  C$9EB5,3;21
  C$9EB8,1;21 }
- C$9EB9,2;21 if (A) <%
- C$9EBB,2;21 {  if (A < 4)
+ C$9EB9,2;21 Jump if the countdown reached zero
+ C$9EBB,2;21 {Return if greater than 3
  C$9EBD,1;21 }
 @nowarn
- C$9EBE,3;21 {$800D = cutting_wire_new_inputs[$800E & vischar_DIRECTION_MASK]; // change direction
+ C$9EBE,3;21 Read current direction
 @nowarn
- C$9EC1,10;21
-*C$9ECB,1;21
+ C$9EC1,3;21 Point at cutting_wire_new_inputs
+ C$9EC4,2;21 Mask off direction part
+ C$9EC6,1;21 {Look that up in cutting_wire_new_inputs
+ C$9EC7,4;21
+*C$9ECB,1;21 }
 @nowarn
- C$9ECC,3;21 }
- C$9ECF,1;21 return; %>
+ C$9ECC,3;21 Save new input
+ C$9ECF,1;21 Return
 ; Countdown reached zero: Snip the wire.
-; .
-; Bug: A is always zero here, so $800E is always set to zero.
+@label=cutting_wire_complete
 @nowarn
-*C$9ED0,3;21 {else <% $800E = A & vischar_DIRECTION_MASK; // set direction
-; LD A,(HL) missing here?
-; x86 version moves zero into $800E - has no AND - is that just hardcoding the bug?
- C$9ED3,2;21
- C$9ED5,1;21 }
- C$9ED6,1;21 {  $800D = input_KICK;
+*C$9ED0,3;21 Point #REGhl at hero's direction field
+; Bug: An LD A,(HL) instruction is missing here. #REGa is always zero at this point from above, so $800E is always set to zero. The hero will always face top-left (direction_TOP_LEFT is 0) after breaking through a fence.
+; Note that the DOS x86 version moves zero into $800E - it has no AND - hardcoding the bug.
+ C$9ED3,3;21
+ C$9ED6,1;21 {Set vischar.input to input_KICK
  C$9ED7,2;21 }
- C$9ED9,2;21 {  $8013 = 24; // set height
+ C$9ED9,2;21 {Set vischar height to 24
  C$9EDB,3;21 }
- C$9EDE,2;21 goto clear_lockpick_wirecut_flags_and_return; %>
+ C$9EDE,2;21 Jump to clear_lockpick_wirecut_flags_and_return
 ; New inputs table.
 @label=cutting_wire_new_inputs
  B$9EE0,1;21 input_UP   + input_LEFT  + input_KICK
