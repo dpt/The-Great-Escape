@@ -3928,12 +3928,12 @@ cC$7D15,3;21 Fetch the message queue pointer
 ;
 ; Used by the routines at #R$7D48, #R$A10B, #R$A5BF and #R$F350.
 ;
-; I:HL Pointer to glyph.
-; I:DE Pointer to destination.
+; I:HL Pointer to glyph index.
+; I:DE Pointer to screen destination.
 ; O:HL Preserved.
-; O:DE Points to next character.
+; O:DE Points to the next character position to the right.
 @label=plot_glyph
-cC$7D2F,1;21 A = *HL;
+cC$7D2F,1;21 Fetch the glyph index
 ; FALL THROUGH into plot_single_glyph,
 
 ; Plot a single glyph.
@@ -3943,7 +3943,7 @@ cC$7D2F,1;21 A = *HL;
 ; Note: This won't work for arbitrary screen locations.
 ;
 ; I:HL Glyph index.
-; I:DE Pointer to destination.
+; I:DE Pointer to screen destination.
 ; O:HL Preserved.
 ; O:DE Points to the next character position to the right.
 @label=plot_single_glyph
