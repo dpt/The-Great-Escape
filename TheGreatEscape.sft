@@ -5687,17 +5687,16 @@ cC$A035,3;21 HL = &game_counter;
 ;
 ; I:A Screen attributes to use.
 @label=set_morale_flag_screen_attributes
-cC$A071,3;21 HL = $5842; // first attribute byte
- C$A074,3;21 DE = $001E; // skip
- C$A077,2;21 B  = $13; // height of flag
-*C$A079,1;21 {do <% *HL++ = A;
- C$A07A,1;21 }
- C$A07B,1;21 {  *HL = A;
- C$A07C,1;21
+cC$A071,3;21 Point #REGhl at the top-left attribute byte of the morale flag
+ C$A074,3;21 Set #REGde to the rowskip (32 attributes per row, minus 2)
+ C$A077,2;21 The flag is 19 attributes high
+; Start loop
+*C$A079,1;21 {Write out three attribute bytes
+ C$A07A,3;21
  C$A07D,1;21 }
- C$A07E,1;21 HL += DE;
- C$A07F,2;21 %> while (--B);
- C$A081,1;21 return;
+ C$A07E,1;21 Move to next row
+ C$A07F,2;21 ...loop
+ C$A081,1;21 Return
 
 ; Given a screen address, returns the same position on the previous scanline.
 ;
