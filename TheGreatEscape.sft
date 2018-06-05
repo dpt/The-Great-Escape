@@ -3851,7 +3851,7 @@ cC$7CD4,1;21 Set #REGa to the byte width of the area to wipe
  C$7CE5,3;21 ...loop for every row
  C$7CE8,1;21 Return
 
-; Given a screen address, return the same position on the next scanline.
+; Given a screen address, return the same position on the next (lower on-screen) scanline.
 ;
 ; Used by the routines at #R$7CBE, #R$7CD4, #R$A035 and #R$F20B.
 ;
@@ -5698,26 +5698,52 @@ cC$A071,3;21 Point #REGhl at the top-left attribute byte of the morale flag
  C$A07F,2;21 ...loop
  C$A081,1;21 Return
 
-; Given a screen address, returns the same position on the previous scanline.
+; Given a screen address, returns the same position on the previous (higher on-screen) scanline.
 ;
+; Spectrum screen memory addresses have the form:
+; .
+; #TABLE(default)
+;   bit: { 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 }
+; field: { =c3 0-1-0 | =c2 Y7-Y6 | =c3 Y2-Y1-Y0 | =c3 Y5-Y4-Y3 | =c5 X4-X3-X2-X1-X0 }
+; TABLE#
+; .
+; To calculate the address of the previous scanline (that is the scanline
+; higher up) we test two of the fields in sequence and subtract accordingly:
+; .
+; Y2-Y1-Y0: If this field is non-zero it's an easy case: we can just decrement
+;           the top byte (e.g. using DEC H). Only the bottom three bits of Y
+;           will be affected.
+; .
+; Y5-Y4-Y3: If this field is zero we can add $FFE0 (-32) to HL. This is like
+;           adding "-1" to the field from bits 5 upwards. Since Y2-Y1-Y0 and
+;           Y5-Y4-Y3 are both zero here we don't care about bits propagating
+;           across boundaries.
+; .
+;           Otherwise we add $06E0 (0000 0110 1110 0000) to HL. This will add
+;           "-1" to the Y5-Y4-Y3 field, which will carry out into Y0 for all
+;           possible values. Simultaneously it adds "-1" to the Y2-Y1-Y0 field
+;           - which is zero - so the complete field becomes 111. Thus the
+;           complete field is decremented.
+; .
 ; Used by the routine at #R$A035.
 ;
 ; I:HL Original screen address.
 ; O:HL Updated screen address.
 @label=get_prev_scanline
-cC$A082,1;21 {if ((H & 7) != 0) <%
+cC$A082,1;21 {If Y2-Y1-Y0 zero jump to the complicated case
  C$A083,2;21
  C$A085,2;21 }
-; NNN bits.
-; .
-; Step back one scanline.
- C$A087,1;21 HL -= 256; %>
- C$A088,1;21 else <%
-; Complicated.
-*C$A089,3;21 {  if (L < 32) HL -= 32; else HL += 0x06E0; %>
- C$A08C,7;21
-*C$A093,1;21 }
- C$A094,1;21 return;
+; Easy case.
+ C$A087,1;21 Just decrement the high byte of the address to go back a scanline
+ C$A088,1;21 Return
+; Complicated case.
+*C$A089,3;21 Load #REGde with $06E0 by default
+ C$A08C,1;21 {Is L < 32?
+ C$A08D,2;21 }
+ C$A08F,2;21 Jump if not
+ C$A091,2;21 If so bits Y5-Y4-Y3 are clear. Load #REGde with $FFE0 (-32)
+*C$A093,1;21 Add
+ C$A094,1;21 Return
 
 ; Delay loop called only when the hero is indoors.
 ;
