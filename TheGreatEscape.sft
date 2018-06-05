@@ -5749,11 +5749,11 @@ cC$A082,1;21 {If Y2-Y1-Y0 zero jump to the complicated case
 ;
 ; Used by the routine at #R$9D7B.
 @label=interior_delay_loop
-cC$A095,3;21 BC = 0xFFF;
-*C$A098,1;21 {while (--BC) ;
+cC$A095,3;21 {Count down from 4095
+*C$A098,1;21
  C$A099,2;21
  C$A09B,2;21 }
- C$A09D,1;21 return;
+ C$A09D,1;21 Return
 
 ; Ring the alarm bell.
 ;
