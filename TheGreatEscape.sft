@@ -5641,24 +5641,33 @@ cC$A007,3;21 Point #REGhl at the global current room index
 ;
 ; Used by the routine at #R$CB98.
 ;
-; I:A Index (0..2) into permitted_bounds[] table.
-; I:HL Pointer to position.
+; I:A  Index (0..2) into permitted_bounds[] table.
+; I:DE Pointer to position (a TinyPos).
+; O:F  Z set if position is within the area specified.
 @label=within_camp_bounds
-cC$A01A,1;21 {HL = &permitted_bounds[A * 4];
- C$A01B,7;21
- C$A022,1;21 }
- C$A023,2;21 B = 2;
-*C$A025,1;21 do <% A = *DE++;
- C$A026,1;21 {  if (A < HL[0]) return; // return with flags NZ
- C$A027,1;21 }
- C$A028,1;21 {  if (A >= HL[1]) <% A |= 1; return; %> // return with flags NZ
- C$A029,5;21
- C$A02E,1;21 // return with flags NZ
-*C$A02F,1;21 }
- C$A030,1;21 HL += 2;
- C$A031,2;21 %> while (--B);
- C$A033,1;21 A &= B;
- C$A034,1;21 return; // return with flags Z
+; Point #REGhl at permitted_bounds[A]
+cC$A01A,1;21 {Multiply #REGa by 4
+ C$A01B,1;21 }
+ C$A01C,1;21 {Move it into #REGbc
+ C$A01D,2;21 }
+ C$A01F,3;21 Point #REGhl at permitted_bounds
+ C$A022,1;21 Add
+; Test position against bounds
+ C$A023,2;21 Iterate twice - first checking the X axis, then the Y axis
+; Start loop
+*C$A025,1;21 Fetch a position byte
+ C$A026,1;21 Is #REGa less than the lower bound?
+ C$A027,1;21 Return with flags NZ if so (outside area)
+ C$A028,1;21 Move to x1, or y1 on second iteration
+ C$A029,1;21 Is #REGa less than the upper bound?
+ C$A02A,2;21 Jump to the next loop iteration if so (inside area)
+ C$A02C,2;21 {Otherwise return with flags NZ (outside area)
+ C$A02E,1;21 }
+*C$A02F,1;21 Advance to second axis for position
+ C$A030,1;21 Advance to second axis for bounds
+ C$A031,2;21 ...loop
+ C$A033,1;21 {Return with flags Z (within area)
+ C$A034,1;21 }
 
 ; Wave the morale flag.
 ;
