@@ -5480,123 +5480,140 @@ bB$9F15,4;28 Corridor to exercise yard.
 ;
 ; Used by the routine at #R$9D7B.
 @label=in_permitted_area
-cC$9F21,3;21 HL = $800F; // position on X axis
- C$9F24,3;21 DE = &hero_map_position.x;
- C$9F27,3;21 {if (room_index == 0) <% // outdoors
- C$9F2A,1;21
- C$9F2B,3;21 }
+cC$9F21,3;21 Point #REGhl at the hero's vischar position
+ C$9F24,3;21 Point #REGde at the hero's map position
+ C$9F27,3;21 Get the global current room index
+ C$9F2A,1;21 Is it indoors?
+ C$9F2B,3;21 Jump if so
 ; Outdoors.
- C$9F2E,3;21 pos_to_tinypos(HL,DE);
- C$9F31,3;21 {  if (($8018) >= 0x06C8 || ($801A) >= 0x0448) goto escaped; %>
- C$9F34,16;21
- C$9F44,3;21 }
- C$9F47,2;21 else <%
+ C$9F2E,3;21 Scale down the vischar position and assign result to the hero's map position
+ C$9F31,3;21 {If the hero's isometric x position is 217 * 8 or higher...
+ C$9F34,5;21
+ C$9F39,3;21 jump to "hero has escaped"}
+ C$9F3C,3;21 {If the hero's isometric y position is 137 * 8 or higher...
+ C$9F3F,5;21
+ C$9F44,3;21 jump to "hero has escaped"}
+ C$9F47,2;21 Otherwise jump over the indoors handling
 ; Indoors.
-*C$9F49,2;21 *DE++ = *HL++;
- C$9F4B,1;21 HL++;
- C$9F4C,2;21 *DE++ = *HL++;
- C$9F4E,1;21 HL++;
- C$9F4F,2;21 *DE++ = *HL++; %>
-; Red flag if picking a lock, or cutting wire.
-*C$9F51,3;21 {A = ($8001) & (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE);}
- C$9F54,2;21
- C$9F56,3;21 if (A) goto set_flag_red;
+*C$9F49,2;21 {Copy position across
+ C$9F4B,4;21
+ C$9F4F,2;21 }
+; Set the flag red if picking a lock, or cutting wire.
+*C$9F51,3;21 Read hero's vischar flags
+ C$9F54,2;21 AND the flags with (vischar_FLAGS_PICKING_LOCK OR vischar_FLAGS_CUTTING_WIRE)
+ C$9F56,3;21 If either of those flags is set then set the morale flag red
+; Is it night time?
+ C$9F59,3;21 Read the game time
+ C$9F5C,2;21 If it's 100 or higher then it's night time
+ C$9F5E,2;21 Jump if it's not night time
 ; At night, home room is the only safe place.
- C$9F59,3;21 {if (clock >= 100) <% // night time
- C$9F5C,2;21
- C$9F5E,2;21 }
- C$9F60,3;21 {  if (room_index == room_2_HUT2LEFT) goto set_flag_green; else goto set_flag_red; %>
- C$9F63,5;21
- C$9F68,3;21 }
-*C$9F6B,3;21 {if (in_solitary) goto set_flag_green;
- C$9F6E,1;21
- C$9F6F,3;21 }
- C$9F72,3;21 HL = $8002; // route
- C$9F75,1;21 {A = *HL++;
- C$9F76,1;21 }
- C$9F77,1;21 C = *HL;
- C$9F78,2;21 {if (A & route_REVERSED) C++;
- C$9F7A,2;21
- C$9F7C,1;21 }
-*C$9F7D,2;21 {if (A == 0xFF) <%
- C$9F7F,2;21 }
- C$9F81,1;21 {  A = *HL & 0xF8;
+@label=night_time
+ C$9F60,3;21 What room are we in?
+ C$9F63,2;21 Is it the home room: room_2_HUT2LEFT?
+ C$9F65,3;21 Jump to set_flag_green if so
+ C$9F68,3;21 Otherwise jump to set_flag_red
+; If in solitary then bypass all checks.
+@label=day_time
+*C$9F6B,3;21 {Are we in solitary?
+ C$9F6E,1;21 }
+ C$9F6F,3;21 Jump to set_flag_green if we are
+ C$9F72,3;21 Point #REGhl at the hero's vischar route
+ C$9F75,1;21 Load the route index
+ C$9F76,1;21 {Load the route step
+ C$9F77,1;21 }
+ C$9F78,2;21 Is the route index's route_REVERSED flag set? ($80)
+ C$9F7A,2;21 Jump if not
+ C$9F7C,1;21 Otherwise increment the route step
+*C$9F7D,2;21 Is the route index routeindex_255_WANDER? ($FF)
+ C$9F7F,2;21 Jump if not
+ C$9F81,1;21 {Load the route step again and clear its bottom three bits
  C$9F82,2;21 }
- C$9F84,2;21 {  if (A == 8) A = 1; else A = 2;
+ C$9F84,2;21 {If step is 8 then set #REGa to 1 (hut area)
  C$9F86,4;21
- C$9F8A,2;21 }
-*C$9F8C,3;21 in_permitted_area_end_bit();
- C$9F8F,2;21 {  if (Z) goto set_flag_green; else goto set_flag_red;
- C$9F91,2;21 %>}
-*C$9F93,2;21 else <% A &= 0x7F;  // mask off reversed flag
- C$9F95,3;21 HL = &route_to_permitted[0]; // table mapping bytes to offsets
- C$9F98,2;21 B = 7; // 7 iterations
-*C$9F9A,1;21 {  do <% if (A == *HL++) goto found;
- C$9F9B,1;21
- C$9F9C,2;21 }
- C$9F9E,1;21 {    HL += 2;
+ C$9F8A,2;21 otherwise set #REGa to 2 (exercise yard area)}
+*C$9F8C,3;21 Check that the hero is in the specified room or camp bounds
+ C$9F8F,2;21 If within the permitted area (Z set) goto set_flag_green
+ C$9F91,2;21 Otherwise goto set_flag_red
+; Check regular routes against route_to_permitted.
+*C$9F93,2;21 Mask off the route_REVERSED flag
+ C$9F95,3;21 Point #REGhl at route_to_permitted[]
+ C$9F98,2;21 Set #REGb for seven iterations
+; Start loop
+*C$9F9A,1;21 {Does the first byte of the entry match the route index?
+ C$9F9B,1;21 }
+ C$9F9C,2;21 Jump if so
+ C$9F9E,1;21 {Otherwise move to the next entry
  C$9F9F,1;21 }
- C$9FA0,2;21 %> while (--B);
- C$9FA2,2;21 goto set_flag_green; %>
-*C$9FA4,1;21 {found: E = *HL++; // fetch offset
- C$9FA5,1;21 }
- C$9FA6,1;21 D = *HL;
- C$9FA7,1
- C$9FA8,1;21 // HL = DE;
- C$9FA9,2;21 B = 0;
- C$9FAB,1;21 HL += BC;
- C$9FAC,1;21 A = *HL;
- C$9FAD,1
- C$9FAE,3;21 in_permitted_area_end_bit();
- C$9FB1,1
- C$9FB2,2;21 JR Z,set_flag_green;
- C$9FB4,3;21 A = $8002;
- C$9FB7,2;21 {if (A & route_REVERSED) HL++;
+ C$9FA0,2;21 ...loop
+ C$9FA2,2;21 Route index wasn't found in the table - jump to set_flag_green
+@label=found
+*C$9FA4,1;21 {Load #REGde with the sub-table's address
+ C$9FA5,1;21
+ C$9FA6,1;21 }
+ C$9FA7,1;21 {Move it into #REGhl
+ C$9FA8,1;21 }
+ C$9FA9,2;21 Zero #REGb so we can use #REGbc in the next instruction
+ C$9FAB,1;21 {Fetch byte at HL[BC]
+ C$9FAC,1;21 }
+ C$9FAD,1;21 Save the sub-table's address
+ C$9FAE,3;21 Check that the hero is in the specified room or camp bounds
+ C$9FB1,1;21 Restore the sub-table address
+ C$9FB2,2;21 If within the permitted area (Z set) jump to set_flag_green
+ C$9FB4,3;21 Load the hero's vischar route index
+ C$9FB7,2;21 {If the route index's route_REVERSED flag is set ($80)
  C$9FB9,2;21
- C$9FBB,1;21 }
-*C$9FBC,3;21 BC = 0; // counter?
-*C$9FBF,1;21 for (;;) <%
- C$9FC0,1
- C$9FC1,1;21 HL += BC;
- C$9FC2,1;21 A = *HL;
- C$9FC3,2;21 {  if (A == 255) goto pop_and_set_flag_red; // hit end
- C$9FC5,2;21 of list}
- C$9FC7,3;21 in_permitted_area_end_bit();
- C$9FCA,2
- C$9FCC,2;21 if (Z) goto set_route_then_set_flag_green; // if (Z) break; equivalent?
- C$9FCE,1;21 BC++;
- C$9FCF,2;21 %>
-*C$9FD1,3;21 {set_route_then_set_flag_green: B = $8002;
+ C$9FBB,1;21 move the sub-table pointer forward by a byte}
+; Search through the list for (... CHECK)
+*C$9FBC,3;21 Initialise index
+; Start loop
+*C$9FBF,1;21 Save index
+ C$9FC0,1;21 Save sub-table address
+ C$9FC1,1;21 {Fetch byte at HL[BC]
+ C$9FC2,1;21 }
+ C$9FC3,2;21 Did we hit the end of the list?
+ C$9FC5,2;21 Jump to pop_and_set_flag_red if we did
+ C$9FC7,3;21 Check that the hero is in the specified room or camp bounds
+ C$9FCA,1;21 Restore the sub-table address
+ C$9FCB,1;21 Restore the index
+ C$9FCC,2;21 If within the area (Z set) break out of the loop
+ C$9FCE,1;21 Increment counter
+ C$9FCF,2;21 ...loop
+@label=set_route_then_set_flag_green
+*C$9FD1,3;21 {Fetch the hero's route index
  C$9FD4,1;21 }
- C$9FD5,3;21 set_hero_route(); // uses B, C
- C$9FD8,2;21 goto set_flag_green;
-*C$9FDA,1;21 pop_and_set_flag_red:
- C$9FDB,1
- C$9FDC,2;21 goto set_flag_red;
+ C$9FD5,3;21 Set the hero's route (to A,C) unless in solitary
+ C$9FD8,2;21 Jump to set_flag_green
+@label=pop_and_set_flag_red
+*C$9FDA,1;21 {Restore the stack pointer position - don't care about order
+ C$9FDB,1;21 }
+ C$9FDC,2;21 Jump to set_flag_red
 ; Green flag code path.
-*C$9FDE,1;21 set_flag_green: A = 0; // red_flag = 0
- C$9FDF,2;21 C = attribute_BRIGHT_GREEN_OVER_BLACK;
-*C$9FE1,3;21 flag_select: red_flag = A;
- C$9FE4,1;21 A = C;
- C$9FE5,3;21 HL = $5842; // first morale flag attribute byte
- C$9FE8,1;21 {if (A == *HL) return; // flag already correct colour
- C$9FE9,1;21 }
- C$9FEA,2;21 {if (A == attribute_BRIGHT_GREEN_OVER_BLACK) <%
- C$9FEC,3;21 }
- C$9FEF,2;21 {  bell = bell_STOP; // silence bell
+@label=set_flag_green
+*C$9FDE,1;21 Clear the red flag
+ C$9FDF,2;21 Load #REGc with attribute_BRIGHT_GREEN_OVER_BLACK
+@label=flag_select
+*C$9FE1,3;21 Assign red_flag
+ C$9FE4,1;21 Shuffle wanted attribute value into #REGa
+ C$9FE5,3;21 Point #REGhl at the first attribute byte of the morale flag
+ C$9FE8,1;21 Is the flag already the correct colour?
+ C$9FE9,1;21 Return if so
+ C$9FEA,2;21 Are we in the green flag case?
+ C$9FEC,3;21 Exit via set_morale_flag_screen_attributes if not
+ C$9FEF,2;21 {Silence the bell
  C$9FF1,3;21 }
- C$9FF4,1;21 A = C; %>
- C$9FF5,3;21 goto set_morale_flag_screen_attributes; // exit via
+ C$9FF4,1;21 Shuffle wanted attribute value into #REGa
+ C$9FF5,3;21 Exit via set_morale_flag_screen_attributes
 ; Red flag code path.
-*C$9FF8,2;21 set_flag_red: C = attribute_BRIGHT_RED_OVER_BLACK;
- C$9FFA,3;21 A = ($5842); // first morale flag attribute byte
- C$9FFD,1;21 {if (A == C) return; // flag already red
- C$9FFE,1;21 }
- C$9FFF,1;21 {($800D) = 0; // "tunnel related" thing
+@label=set_flag_red
+*C$9FF8,2;21 Load #REGc with attribute_BRIGHT_RED_OVER_BLACK
+ C$9FFA,3;21 Fetch the first attribute byte of the morale flag
+ C$9FFD,1;21 Is the flag already the correct colour?
+ C$9FFE,1;21 Return if so
+ C$9FFF,1;21 {Set the vischar's input to 0
 @nowarn
  C$A000,3;21 }
- C$A003,2;21 A = 255; // red_flag
- C$A005,2;21 goto flag_select;
+ C$A003,2;21 Set the red flag flag
+ C$A005,2;21 Jump to flag_select
 
 ; In permitted area (end bit).
 ;
