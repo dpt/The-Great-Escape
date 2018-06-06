@@ -5673,39 +5673,39 @@ cC$A01A,1;21 {Multiply #REGa by 4
 ;
 ; Used by the routines at #R$9D7B and #R$F4B7.
 @label=wave_morale_flag
-cC$A035,3;21 HL = &game_counter;
- C$A038,1;21 (*HL)++;
+cC$A035,3;21 Point #REGhl at the game counter
+ C$A038,1;21 Increment the game counter in-place
 ; Wave the flag on every other turn.
- C$A039,1;21 {if (*HL & 1) return;
- C$A03A,2;21
- C$A03C,1;21 }
- C$A03D,1
- C$A03E,3;21 A = morale;
- C$A041,3;21 HL = &displayed_morale;
- C$A044,1;21 {if (A != *HL) <%
- C$A045,2;21 }
- C$A047,3;21 if (A < *HL) <%
+ C$A039,1;21 Now fetch the game counter
+ C$A03A,2;21 Is its bottom bit set?
+ C$A03C,1;21 Return if so
+ C$A03D,1;21 Save the game counter pointer
+ C$A03E,3;21 Fetch morale
+ C$A041,3;21 Point #REGhl at currently displayed morale
+ C$A044,1;21 Is the currently displayed morale different to the actual morale?
+ C$A045,2;21 It's equal - jump straight to wiggling the flag
+ C$A047,3;21 Actual morale exceeds displayed morale - jump to the increasing case
 ; Decreasing morale.
- C$A04A,1;21 (*HL)--;
- C$A04B,3;21 HL = moraleflag_screen_address;
- C$A04E,3;21 get_next_scanline(); %>
- C$A051,2;21 else <%
+ C$A04A,1;21 Decrement displayed morale
+ C$A04B,3;21 Get the current screen address of the morale flag
+ C$A04E,3;21 Given a screen address, return the same position on the next scanline
+ C$A051,2;21 Jump over increasing morale block
 ; Increasing morale.
-*C$A053,1;21 (*HL)++;
- C$A054,3;21 HL = moraleflag_screen_address;
- C$A057,3;21 get_prev_scanline(); %>
-*C$A05A,3;21 moraleflag_screen_address = HL; %>
-*C$A05D,3;21 DE = bitmap_flag_down;
- C$A060,1
- C$A061,2;21 {if (*HL & 2) DE = bitmap_flag_up;
- C$A063,2;21
- C$A065,3;21 }
-*C$A068,3;21 {HL = moraleflag_screen_address;
-; Plot the flag always at 24x25 pixels in size. Note that the last three rows
-; of the bitmap_flag_up bitmap overlap with the first three of the
-; bitmap_flag_down bitmap.
- C$A06B,3;21 }
- C$A06E,3;21 plot_bitmap(0x0319); return; // dimensions: 24 x 25 // args-BC // exit via
+*C$A053,1;21 Increment displayed morale
+ C$A054,3;21 Get the current screen address of the morale flag
+ C$A057,3;21 Given a screen address, returns the same position on the previous scanline
+*C$A05A,3;21 Set the screen address of the morale flag
+; Wiggle and draw the flag.
+*C$A05D,3;21 Point #REGde at bitmap_flag_down
+ C$A060,1;21 Restore the game counter pointer
+ C$A061,2;21 Is bit 1 set?
+ C$A063,2;21 Skip next instruction if not
+; Note that the last three rows of the bitmap_flag_up bitmap overlap with the
+; first three of the bitmap_flag_down bitmap.
+ C$A065,3;21 Point #REGde at bitmap_flag_up
+*C$A068,3;21 Get the screen address of the morale flag
+ C$A06B,3;21 Plot the flag always at 24x25 pixels in size
+ C$A06E,3;21 exit via plot_bitmap
 
 ; Set the screen attributes of the morale flag.
 ;
