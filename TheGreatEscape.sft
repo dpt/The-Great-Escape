@@ -5615,26 +5615,26 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$A003,2;21 Set the red flag flag
  C$A005,2;21 Jump to flag_select
 
-; In permitted area (end bit).
+; Check that the hero is in the specified room or camp bounds.
 ;
 ; Used by the routine at #R$9F21.
 ;
-; I:A Room index + flag in bit 7.
+; I:A  If bit 7 is set then bits 0..6 contain a room index. Otherwise it's an area index as passed into within_camp_bounds.
+; O:F  Z set if in the permitted area.
 @label=in_permitted_area_end_bit
-cC$A007,3;21 point HL at room_index
- C$A00A,2;21 test the 'room' flag
- C$A00C,2;21 flag not set - jump
- C$A00E,2;21 mask off room flag
- C$A010,1;21 does room match room_index?
- C$A011,1;21 return irrespective
-;
-*C$A012,1;21 bank A
- C$A013,1;21 fetch room_index
- C$A014,1;21
- C$A015,1;21 return if room_index is nonzero
-;
- C$A016,3;21 DE = &hero_map_position.x;
- C$A019,1;21 unbank A - restoring original A
+cC$A007,3;21 Point #REGhl at the global current room index
+ C$A00A,2;21 Was the permitted_route_ROOM flag set on entry? ($80)
+ C$A00C,2;21 Jump if not
+ C$A00E,2;21 Mask off the room flag
+ C$A010,1;21 Does the specified room match the global current room index?
+ C$A011,1;21 Return immediately with the result in flags
+@label=end_bit_area
+*C$A012,1;21 Bank A
+ C$A013,1;21 Fetch the global current room index
+ C$A014,1;21 Is it room_0_OUTDOORS? (0)
+ C$A015,1;21 Return if not
+ C$A016,3;21 Point #REGde at hero_map_position
+ C$A019,1;21 Unbank A - restoring original A
 ; FALL THROUGH to within_camp_bounds.
 
 ; Is the specified position within the bounds of the indexed area?
