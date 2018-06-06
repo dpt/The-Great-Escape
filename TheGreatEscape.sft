@@ -1902,7 +1902,7 @@ cC$6B42,3;21 Point #REGhl at the screen buffer's start address
  C$6B50,8;21
  C$6B58,1;21 }
  C$6B59,1;21 Unstack screen buffer pointer
- C$6B5A,3;21 Set #REGb for eight iterations and set #REGc for a 24 byte stride simultaneously
+ C$6B5A,3;21 Simultaneously set #REGb for eight iterations and #REGc for a 24 byte stride
 @label=tile_loop
 *C$6B5D,1;21 {Transfer a byte (a row) of tile across
  C$6B5E,1;21 }
@@ -5472,9 +5472,9 @@ bB$9EE4,3;40 (Route 42: #R$9EF9)
 
 ; Boundings of the three main exterior areas.
 @label=permitted_bounds
-bB$9F15,4;28 Corridor to exercise yard.
- B$9F19,4;28 Hut area.
- B$9F1D,4;28 Exercise yard area.
+bB$9F15,4;28 Corridor to exercise yard
+ B$9F19,4;28 Hut area
+ B$9F1D,4;28 Exercise yard area
 
 ; Check the hero's map position and colour the flag accordingly.
 ;
@@ -6475,7 +6475,7 @@ cC$A2E2,3;21 {if (hero_in_breakfast) <%
  C$A339,3;21 setup_room();
  C$A33C,3;21 plot_interior_tiles(); return; // exit via // note that this differs to wake_up's ending
 
-; Set the hero's route.
+; Set the hero's route, unless in solitary.
 ;
 ; Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8,
 ; #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
@@ -14829,14 +14829,12 @@ bB$F076,23
 @label=statics_corner_br
  B$F15E,5
 
-; Main.
+; The game starts here.
 ;
 ; Used by the routine at #R$F068.
-; .
-; Disable interrupts and set up stack pointer.
 @label=main
-cC$F163,1;30 {-
- C$F164,3;30 }
+cC$F163,1;30 Disable interrupts.
+ C$F164,3;30 Set up stack pointer. Why is this $FFFE when squash_stack_goto_main sets it to $FFFF?
 ; Set up screen.
  C$F167,3;30 wipe_full_screen_and_attributes();
  C$F16A,2;30 {set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
