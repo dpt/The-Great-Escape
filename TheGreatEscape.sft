@@ -5787,35 +5787,34 @@ cC$A095,3;21 {Count down from 4095
 ; .
 ; Called three times from main_loop.
 @label=ring_bell
-cC$A09E,3;21 HL = &bell;
- C$A0A1,1;21 A = *HL;
- C$A0A2,2;21 {if (A == bell_STOP) return; // not ringing
+cC$A09E,3;21 Point #REGhl at bell ring counter/flag
+ C$A0A1,1;21 Fetch its value
+ C$A0A2,2;21 {If it's bell_STOP then return
  C$A0A4,1;21 }
- C$A0A5,1;21 {if (A != bell_RING_PERPETUAL) <%
+ C$A0A5,1;21 {If it's bell_RING_PERPETUAL then jump over decrement code
  C$A0A6,2;21 }
 ; Decrement the ring counter.
- C$A0A8,1;21 {  *HL = --A;
+ C$A0A8,1;21 {Decrement and store
  C$A0A9,1;21 }
- C$A0AA,2;21 if (A == 0) <%
+ C$A0AA,2;21 If it didn't hit zero then jump over the stop code
 ; Counter hit zero - stop ringing.
- C$A0AC,2;21 {    *HL = bell_STOP;
+ C$A0AC,2;21 {Stop the bell
  C$A0AE,1;21 }
- C$A0AF,1;21 return; %> %>
-; Fetch visible state of bell.
-*C$A0B0,3;21 A = screenaddr_bell_ringer;
- C$A0B3,2;21 {if (A != 63) <%
- C$A0B5,3;21 }
+ C$A0AF,1;21 Return
+; Fetch visible state of bell from the screen.
+*C$A0B0,3;21 Fetch the bell ringing graphic from the screen
+ C$A0B3,2;21 Is it $3F? (63)
+ C$A0B5,3;21 If so, jump to plot "off" code
 @rfix-begin
-; Bug: Pointless jump to adjacent instruction.
- C$A0B8,3
+ C$A0B8,3;21 Bug: Pointless jump to adjacent instruction
 @rfix-end
-; Plot ringer "on".
-*C$A0BB,3;21 DE = bell_ringer_bitmap_on;
- C$A0BE,3;21 plot_ringer();
- C$A0C1,3;21 {  play_speaker(sound_BELL_RINGER); return; %> // args=BC // exit via
+; Plot UDG for the bell ringer "on" and make the bell sound
+*C$A0BB,3;21 Point #REGde at bell_ringer_bitmap_on
+ C$A0BE,3;21 Plot ringer
+ C$A0C1,3;21 {Play the "bell ringing" sound, exiting via it
  C$A0C4,2;21 }
-; Plot ringer "off".
-*C$A0C6,3;21 else <% DE = bell_ringer_bitmap_off;
+; Plot UDG for the bell ringer "off".
+*C$A0C6,3;21 Point #REGde at bell_ringer_bitmap_on
 ; FALL THROUGH to plot_ringer.
 
 ; Plot ringer.
