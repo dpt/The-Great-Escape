@@ -3851,13 +3851,13 @@ cC$7CD4,1;21 Set #REGa to the byte width of the area to wipe
  C$7CE5,3;21 ...loop for every row
  C$7CE8,1;21 Return
 
-; Given a screen address, return the same position on the next (lower on-screen) scanline.
+; Given a screen address, return the same position on the next scanline down.
 ;
 ; Used by the routines at #R$7CBE, #R$7CD4, #R$A035 and #R$F20B.
 ;
 ; I:HL Original screen address.
 ; O:HL Updated screen address.
-@label=get_next_scanline
+@label=next_scanline_down
 cC$7CE9,1;21 Incrementing #REGh moves us to the next minor row
  C$7CEA,1;21
  C$7CEB,2;21 Unless we hit an exact multiple of eight - in which case we stepped to the next third of the screen
@@ -5688,12 +5688,12 @@ cC$A035,3;21 Point #REGhl at the game counter
 ; Decreasing morale.
  C$A04A,1;21 Decrement displayed morale
  C$A04B,3;21 Get the current screen address of the morale flag
- C$A04E,3;21 Given a screen address, return the same position on the next scanline
+ C$A04E,3;21 Given a screen address, return the same position on the next scanline down
  C$A051,2;21 Jump over increasing morale block
 ; Increasing morale.
 *C$A053,1;21 Increment displayed morale
  C$A054,3;21 Get the current screen address of the morale flag
- C$A057,3;21 Given a screen address, returns the same position on the previous scanline
+ C$A057,3;21 Given a screen address, returns the same position on the next scanline up
 *C$A05A,3;21 Set the screen address of the morale flag
 ; Wiggle and draw the flag.
 *C$A05D,3;21 Point #REGde at bitmap_flag_down
@@ -5724,7 +5724,7 @@ cC$A071,3;21 Point #REGhl at the top-left attribute byte of the morale flag
  C$A07F,2;21 ...loop
  C$A081,1;21 Return
 
-; Given a screen address, returns the same position on the previous (higher on-screen) scanline.
+; Given a screen address, returns the same position on the next scanline up.
 ;
 ; Spectrum screen memory addresses have the form:
 ; .
@@ -5755,7 +5755,7 @@ cC$A071,3;21 Point #REGhl at the top-left attribute byte of the morale flag
 ;
 ; I:HL Original screen address.
 ; O:HL Updated screen address.
-@label=get_prev_scanline
+@label=next_scanline_up
 cC$A082,1;21 {If Y2-Y1-Y0 zero jump to the complicated case
  C$A083,2;21
  C$A085,2;21 }
@@ -15003,7 +15003,7 @@ cC$F20B,3;21 static_tiles_plot_direction = A;
  C$F24A,1;21 }
  C$F24B,1;21 Ldash++; %>
  C$F24C,2;21 else <% // vertical
-*C$F24E,3;21 get_next_scanline(); %>
+*C$F24E,3;21 next_scanline_down(); %>
 *C$F251,1;21 EX DEdash,HLdash
  C$F252,1
  C$F253,1;21 HL++;
