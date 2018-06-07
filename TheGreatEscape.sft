@@ -5827,57 +5827,57 @@ cC$A0C9,3;21 Point #REGhl at screenaddr_bell_ringer
  C$A0CC,3;21 {Plot the bell always at 8x12 pixels in size, exiting via it
  C$A0CF,3;21 }
 
-; Increase morale.
+; Increase morale level.
 ;
 ; Used by the routines at #R$A0E9 and #R$A0F2.
 ;
-; I:B Amount to increase morale by. (Preserved)
+; I:B Amount to increase morale level by. (Preserved)
 @label=increase_morale
-cC$A0D2,3;21 {A = morale + B;
+cC$A0D2,3;21 {Fetch morale level and add #REGb onto it
  C$A0D5,1;21 }
- C$A0D6,2;21 {if (A >= morale_MAX) A = morale_MAX;
+ C$A0D6,2;21 {Clamp morale level to morale_MAX (112)
  C$A0D8,2;21
  C$A0DA,2;21 }
-; FALL THROUGH into set_morale_from_A.
+; FALL THROUGH into set_morale.
 
-; Set morale from A.
+; Set morale level.
 ;
 ; Used by the routines at #R$A0D2 and #R$A0E0.
 ;
 ; I:A Morale.
-@label=set_morale_from_A
-cC$A0DC,3;21 morale = A;
- C$A0DF,1;21 return;
+@label=set_morale
+cC$A0DC,3;21 Set morale level to #REGa
+ C$A0DF,1;21 Return
 
-; Decrease morale.
+; Decrease morale level.
 ;
 ; Used by the routines at #R$A1D3, #R$AE78, #R$CB98 and #R$CD31.
 ;
-; I:B Amount to decrease morale by. (Preserved)
+; I:B Amount to decrease morale level by. (Preserved)
 @label=decrease_morale
-cC$A0E0,3;21 {A = morale - B;
+cC$A0E0,3;21 {Fetch morale level and subtract #REGb from it
  C$A0E3,1;21 }
- C$A0E4,2;21 {if (A < morale_MIN) A = morale_MIN;
+ C$A0E4,2;21 {Clamp morale level to morale_MIN (0)
  C$A0E6,1;21 }
- C$A0E7,2;21 goto set_morale_from_A;
+ C$A0E7,2;21 Jump to set_morale
 
 ; Increase morale by 10, score by 50.
 ;
 ; Used by the routines at #R$B107, #R$B387, #R$B3C4, #R$B3E1, #R$B3F6, #R$B4B8
 ; and #R$EFCB.
 @label=increase_morale_by_10_score_by_50
-cC$A0E9,2;21 {increase_morale(10);
+cC$A0E9,2;21 {Increase morale by 10
  C$A0EB,3;21 }
- C$A0EE,2;21 {increase_score(50); return; // exit via
+ C$A0EE,2;21 {Increase score by 50, exiting via it
  C$A0F0,2;21 }
 
 ; Increase morale by 5, score by 5.
 ;
 ; Used by the routine at #R$7B36.
 @label=increase_morale_by_5_score_by_5
-cC$A0F2,2;21 {increase_morale(5);
+cC$A0F2,2;21 {Increase morale by 5
  C$A0F4,3;21 }
- C$A0F7,2;21 increase_score(5); return; // exit via
+ C$A0F7,2;21 Increase score by 5, exiting via it
 
 ; Increases the score then plots it.
 ;
