@@ -5885,18 +5885,21 @@ cC$A0F2,2;21 {Increase morale by 5
 ;
 ; I:B Amount to increase score by.
 ;
-; Increment the score digit-wise until delta is zero.
+; Increment the score digit-wise until #REGb is zero.
 @label=increase_score
-cC$A0F9,2;21 A = 10;
- C$A0FB,3;21 HL = &score_digits + 4;
-*C$A0FE,1;21 do <% tmp = HL;
-@label=increase_score_increment_score
-*C$A0FF,1;21 increment_score: (*HL)++;
- C$A100,1;21 {  if (*HL == A) <% *HL-- = 0; goto increment_score; %>
- C$A101,5;21
- C$A106,2;21 }
-*C$A108,1;21 HL = tmp;
- C$A109,2;21 %> while (--B);
+cC$A0F9,2;21 Set #REGa to our base: 10
+ C$A0FB,3;21 Point #REGhl at the last of the score digits
+; Start loop
+*C$A0FE,1;21 Save HL
+@label=increment_score
+*C$A0FF,1;21 Increment the pointed-to score digit by one
+ C$A100,1;21 Has the pointed-to digit incremented to equal our base 10?
+ C$A101,2;21 No - loop
+ C$A103,2;21 Yes - reset the current digit to zero
+ C$A105,1;21 Move to the next higher digit
+ C$A106,2;21 "Recurse" - we'll arrive at the next instruction when we increment a digit which doesn't roll over
+*C$A108,1;21 Restore HL
+ C$A109,2;21 ...loop until the (score specified on entry) turns have been had
 ; FALL THROUGH into plot_score.
 
 ; Draws the current score to screen.
