@@ -5823,8 +5823,8 @@ cC$A09E,3;21 Point #REGhl at bell ring counter/flag
 ;
 ; I:HL Source bitmap.
 @label=plot_ringer
-cC$A0C9,3;21 HL = screenaddr_bell_ringer;
- C$A0CC,3;21 {plot_bitmap(0x010C); return; %> // dimensions: 8 x 12 // args=BC // exit via
+cC$A0C9,3;21 Point #REGhl at screenaddr_bell_ringer
+ C$A0CC,3;21 {Plot the bell always at 8x12 pixels in size, exiting via it
  C$A0CF,3;21 }
 
 ; Increase morale.
