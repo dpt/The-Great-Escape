@@ -5906,16 +5906,17 @@ cC$A0F9,2;21 Set #REGa to our base: 10
 ;
 ; Used by the routines at #R$B75A and #R$F163.
 @label=plot_score
-cC$A10B,3;21 HL = &score_digits;
- C$A10E,3;21 DE = &score; // screen address of score
- C$A111,2;21 B = 5;
-*C$A113,1;21 do <%
- C$A114,3;21 plot_glyph(); // HL -> glyph, DE -> destination
- C$A117,1;21 HL++;
- C$A118,1;21 DE++;
- C$A119,1
- C$A11A,2;21 %> while (--B);
- C$A11C,1;21 return;
+cC$A10B,3;21 Point #REGhl at the first of the score digits
+ C$A10E,3;21 Point #REGde at the screen address of the score
+ C$A111,2;21 Plot five digits
+; Start loop
+*C$A113,1;21 Save BC
+ C$A114,3;21 Plot a single glyph pointed to by #REGhl at #REGde
+ C$A117,1;21 Move to the next score digit
+ C$A118,1;21 Move to the next character position (in addition to plot_glyph's increment)
+ C$A119,1;21 Restore BC
+ C$A11A,2;21 ...loop until all digits plotted
+ C$A11C,1;21 Return
 
 ; Plays a sound.
 ;
