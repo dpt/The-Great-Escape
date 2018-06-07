@@ -5733,7 +5733,7 @@ cC$A071,3;21 Point #REGhl at the top-left attribute byte of the morale flag
 ; field: { =c3 0-1-0 | =c2 Y7-Y6 | =c3 Y2-Y1-Y0 | =c3 Y5-Y4-Y3 | =c5 X4-X3-X2-X1-X0 }
 ; TABLE#
 ; .
-; To calculate the address of the previous scanline (that is the scanline
+; To calculate the address of the previous scanline (that is the next scanline
 ; higher up) we test two of the fields in sequence and subtract accordingly:
 ; .
 ; Y2-Y1-Y0: If this field is non-zero it's an easy case: we can just decrement
@@ -5741,15 +5741,15 @@ cC$A071,3;21 Point #REGhl at the top-left attribute byte of the morale flag
 ;           will be affected.
 ; .
 ; Y5-Y4-Y3: If this field is zero we can add $FFE0 (-32) to HL. This is like
-;           adding "-1" to the field from bits 5 upwards. Since Y2-Y1-Y0 and
-;           Y5-Y4-Y3 are both zero here we don't care about bits propagating
-;           across boundaries.
+;           adding "-1" to the register starting from bit 5 upwards. Since
+;           Y2-Y1-Y0 and Y5-Y4-Y3 are both zero here we don't care about bits
+;           propagating across boundaries.
 ; .
 ;           Otherwise we add $06E0 (0000 0110 1110 0000) to HL. This will add
-;           "-1" to the Y5-Y4-Y3 field, which will carry out into Y0 for all
-;           possible values. Simultaneously it adds "-1" to the Y2-Y1-Y0 field
-;           - which is zero - so the complete field becomes 111. Thus the
-;           complete field is decremented.
+;           111 binary or "-1" to the Y5-Y4-Y3 field, which will carry out into
+;           Y0 for all possible values. Simultaneously it adds 110 binary or
+;           "-2" to the Y2-Y1-Y0 field (all zeroes) so the complete field
+;           becomes 111. Thus the complete field is decremented.
 ; .
 ; Used by the routine at #R$A035.
 ;
