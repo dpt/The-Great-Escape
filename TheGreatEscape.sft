@@ -6137,21 +6137,23 @@ bB$A147,1*12
 ; Used by the routines at #R$7B36, #R$7B8B, #R$A1D3, #R$A50B, #R$B83B and
 ; #R$F350.
 ; .
-; Starting at $5847, set 23 columns of 16 rows to A.
+; Starting at $5847, set 23 columns of 16 rows to the specified attribute byte.
 ;
 ; I:A Attribute byte.
 @label=set_game_window_attributes
-cC$A15F,3;21 HL = $5847 // attributes base // $5800 + $47
- C$A162,2;21 C = 16 // rows
- C$A164,3;21 DE = 32 - 23 // skip
-*C$A167,2;21 do <% B = 23 // columns
-*C$A169,1;21 {do *HL++ = A;
- C$A16A,1;21 }
- C$A16B,2;21 while (--B);
- C$A16D,1;21 HL += DE;
- C$A16E,1;21 C--;
- C$A16F,3;21 %> while (C != 0);
- C$A172,1;21 return;
+cC$A15F,3;21 Point #REGhl at the top-left game window attribute
+ C$A162,2;21 Set rows to 16
+ C$A164,3;21 Set rowskip to 9 (32 - 23 columns)
+; Start loop
+*C$A167,2;21 Set columns to 23
+; Start loop
+*C$A169,1;21 Set attribute byte
+ C$A16A,1;21 Step to the next
+ C$A16B,2;21 ...loop
+ C$A16D,1;21 Add rowskip
+ C$A16E,1;21 Decrement row counter
+ C$A16F,3;21 ...loop
+ C$A172,1;21 Return
 
 ; Timed events.
 ;
