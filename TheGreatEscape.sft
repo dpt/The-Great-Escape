@@ -6394,60 +6394,61 @@ bB$A27F,1;21 character_12_GUARD_12
 ;
 ; Used by the routine at #R$A1E7.
 @label=wake_up
-cC$A289,3;21 {if (hero_in_bed) <% // odd that this jumps into a point which sets hero_in_bed to zero when it's already zero
+cC$A289,3;21 {If the hero's not in bed, jump forward (note: it could jump one instruction later instead)
  C$A28C,1;21
  C$A28D,3;21 }
 ; Hero gets out of bed.
- C$A290,3;21 {  $800F = 46; // hero's X position
- C$A293,2;21 }
- C$A295,1;21 {  $8011 = 46; %> // hero's Y position
- C$A296,1;21
+ C$A290,3;21 {Set the hero's vischar position to (46, 46)
+ C$A293,4;21
  C$A297,2;21 }
-*C$A299,1;21 {hero_in_bed = 0;
+*C$A299,1;21 {Clear the hero in bed flag
  C$A29A,3;21 }
- C$A29D,3;21 {set_hero_route(location_002A);
+ C$A29D,3;21 {Set the hero's route to (routeindex_42_HUT2_LEFT_TO_RIGHT, 0)
  C$A2A0,3;21 }
 ; Position all six prisoners.
- C$A2A3,3;21 HL = &characterstruct_20.room;
- C$A2A6,5
- C$A2AB,2;21 B = 3; // 3 iterations
-*C$A2AD,1;21 do <% *HL = room_3_HUT2RIGHT;
- C$A2AE,1;21 HL += 7; // characterstruct stride
- C$A2AF,2;21 %> while (--B);
- C$A2B1,2
- C$A2B3,2;21 B = 3; // 3 iterations
-*C$A2B5,1;21 do <% *HL = room_5_HUT3RIGHT;
- C$A2B6,1;21 HL += 7; // characterstruct stride
- C$A2B7,2;21 %> while (--B);
- C$A2B9,2;21 A = 5; // incremented by set_prisoners_and_guards_route_B
- C$A2BB,1
- C$A2BC,2;21 C = 0; // BC = 0
- C$A2BE,3;21 set_prisoners_and_guards_route_B();
+ C$A2A3,3;21 Point #REGhl at characterstruct 20's room field (character 20 is the first of the prisoners)
+ C$A2A6,3;21 Prepare the characterstruct stride
+ C$A2A9,2;21 Prepare room_3_HUT2RIGHT
+ C$A2AB,2;21 Do the first three prisoner characters
+; Start loop
+*C$A2AD,1;21 Set this characterstruct's room to room_3_HUT2RIGHT
+ C$A2AE,1;21 Advance to the next characterstruct
+ C$A2AF,2;21 ...loop
+ C$A2B1,2;21 Prepare room_5_HUT3RIGHT
+ C$A2B3,2;21 Do the second three prisoner characters
+; Start loop
+*C$A2B5,1;21 Set this characterstruct's room to room_5_HUT3RIGHT
+ C$A2B6,1;21 Advance to the next characterstruct
+ C$A2B7,2;21 ...loop
+ C$A2B9,2;21 {Set initial route index in #REGa'. This gets incremented by set_prisoners_and_guards_route_B for every route it assigns
+ C$A2BB,1;21 }
+ C$A2BC,2;21 Zero route step
+ C$A2BE,3;21 Set the routes of all characters in prisoners_and_guards
 ; Update all the bed objects to be empty.
- C$A2C1,2
- C$A2C3,3;21 HL = &beds[0];
+ C$A2C1,2;21 Prepare interiorobject_EMPTY_BED
+ C$A2C3,3;21 Point #REGhl at table of pointers to prisoner bed objects
 @bfix-begin
 ; Bug: Seven iterations are specified here BUT there are only six beds in the
 ; 'beds' array. This results in a spurious write to ROM location $1A42.
- C$A2C6,2;21 B = 7; // 7 iterations
+ C$A2C6,2;21 Set seven iterations
 @bfix+else
- $A2C6 LD B,$06      ; B = 6; // 6 iterations
+ $A2C6 LD B,$06      ; Set six iteratons
 @bfix+end
-*C$A2C8,1;21 {do <% E = *HL++;
- C$A2C9,1;21 }
- C$A2CA,1;21 {  D = *HL++;
+; Start loop
+*C$A2C8,1;21 {Load the current bed object address into #REGde
+ C$A2C9,2;21
  C$A2CB,1;21 }
- C$A2CC,1;21 *DE = interiorobject_EMPTY_BED;
- C$A2CD,2;21 %> while (--B);
+ C$A2CC,1;21 Overwrite the current bed object with interiorobject_EMPTY_BED
+ C$A2CD,2;21 ...loop
 ; Update the hero's bed object to be empty and redraw if required.
- C$A2CF,3;21 {room_2_hut2_left.bed = interiorobject_EMPTY_BED;
+ C$A2CF,3;21 {Set rooom definition 2's bed object to interiorobject_EMPTY_BED
  C$A2D2,1;21 }
- C$A2D3,3;21 {if (room_index == room_0_OUTDOORS || room_index >= room_6) return;
+ C$A2D3,3;21 {If the global current room index is outdoors, or is not a hut room (6 or above) then return
  C$A2D6,4;21
  C$A2DA,1;21 }
- C$A2DB,3;21 setup_room();
- C$A2DE,3;21 plot_interior_tiles();
- C$A2E1,1;21 return;
+ C$A2DB,3;21 Expand out the room definition for room_index
+ C$A2DE,3;21 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+ C$A2E1,1;21 Return
 
 ; End of breakfast time.
 ;
