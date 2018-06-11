@@ -5925,16 +5925,17 @@ cC$A10B,3;21 Point #REGhl at the first of the score digits
 ; I:B Number of iterations to play for.
 ; I:C Delay inbetween each iteration.
 @label=play_speaker
-cC$A11D,1;21 {delay = C; // Self-modify delay loop at $A126.
+cC$A11D,1;21 {Self-modify the delay loop at $A126
  C$A11E,3;21 }
- C$A121,2;21 A = 16; // Initial speaker bit.
-*C$A123,2;21 {do <% OUT ($FE),A // Play.
- C$A125,2;21 }
-*C$A127,1;21 {  C = delay; while (C--) ;
+ C$A121,2;21 Initially set the speaker bit on
+; Start loop
+*C$A123,2;21 Play the speaker (and set the border)
+ C$A125,2;21 {Delay
+*C$A127,1;21
  C$A128,2;21 }
- C$A12A,2;21 A ^= 16; // Toggle speaker bit.
- C$A12C,2;21 %> while (--B);
- C$A12E,1;21 return;
+ C$A12A,2;21 Toggle the speaker bit
+ C$A12C,2;21 ...loop
+ C$A12E,1;21 Return
 
 ; Game counter.
 ;
