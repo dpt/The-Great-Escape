@@ -1925,18 +1925,20 @@ cC$6B42,3;21 Point #REGhl at the screen buffer's start address
 ; End
  C$6B78,1;21 Return
 
-; Locations of beds.
+; Table of pointers to prisoner bed objects in room definition data.
 ;
-; 6x pointers to bed. These are the beds of active prisoners.
+; Six pointers to bed objects in room definition data. These are the beds of
+; the active prisoners (characters 20 to 25).
 ; .
-; Note that the top hut has prisoners permanently in bed.
+; Note that the topmost hut has three prisoners permanently in bed and one
+; permanently empty bed.
 @label=beds
-wW$6B79,2;21 &roomdef_3_hut2_right[29]
- W$6B7B,2;21 &roomdef_3_hut2_right[32]
- W$6B7D,2;21 &roomdef_3_hut2_right[35]
- W$6B7F,2;21 &roomdef_5_hut3_right[29]
- W$6B81,2;21 &roomdef_5_hut3_right[32]
- W$6B83,2;21 &roomdef_5_hut3_right[35]
+wW$6B79,2;21 roomdef_3_hut2_right byte 29 - rightmost bed in hut 2 right - used by char route 7
+ W$6B7B,2;21 roomdef_3_hut2_right byte 32 - middle bed in hut 2 right - used by char route 8
+ W$6B7D,2;21 roomdef_3_hut2_right byte 35 - leftmost bed in hut 2 right - used by char route 9
+ W$6B7F,2;21 roomdef_5_hut3_right byte 29 - rightmost in hut 3 right - used by char route 10
+ W$6B81,2;21 roomdef_5_hut3_right byte 32 - middle in hut 3 right - used by char route 11
+ W$6B83,2;21 roomdef_5_hut3_right byte 35 - leftmost in hut 3 right - used by char route 12
 
 ; Room dimensions.
 ;
