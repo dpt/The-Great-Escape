@@ -5945,7 +5945,7 @@ cC$A11D,1;21 {delay = C; // Self-modify delay loop at $A126.
 ; .
 ; Write/read-write by wave_morale_flag.
 @label=game_counter
-gB$A12F,1;21 game_counter     // TODO: delete all comments which just repeat the above @label
+gB$A12F,1
 
 ; Bell.
 ;
@@ -5977,19 +5977,19 @@ uB$A131,1
 @label=score_digits
 gB$A132,5
 
-; Hero at breakfast flag.
+; 'Hero is at breakfast' flag.
 ;
 ; Write/read-write by process_player_input, end_of_breakfast,
 ; hero_sit_sleep_common.
 @label=hero_in_breakfast
 gB$A137,1
 
-; Red flag flag.
+; 'Red morale flag' flag.
 ;
 ; #TABLE(default,centre)
 ; { =h Value | =h Meaning }
-; { 0 | Not naughty }
-; { 255 | Naughty }
+; { 0 | The hero is in a permitted area }
+; { 255 | The hero is not in a permitted area }
 ; TABLE#
 ; .
 ; Read-only by automatics, guards_follow_suspicious_character.
@@ -6000,8 +6000,8 @@ gB$A138,1
 
 ; Automatic player counter.
 ;
-; Countdown until CPU control of the player is assumed. When it becomes zero,
-; control is assumed. It's usually set to 31 by input events.
+; Counts down until zero at which point CPU control of the player is assumed.
+; It's usually set to 31 by input events.
 ; .
 ; Read-only by touch, automatics, character_behaviour.
 ; .
@@ -6037,7 +6037,7 @@ gB$A13A,1
 @label=morale_exhausted
 gB$A13B,1
 
-; Morale 'score'.
+; Remaining morale.
 ;
 ; Ranges morale_MIN..morale_MAX.
 ; .
@@ -6057,20 +6057,19 @@ gB$A13C,1
 @label=clock
 gB$A13D,1
 
-; Mystery flag.
+; 'Character index is valid' flag.
 ;
-; In character_bed_state etc.: when non-zero, character_index is valid. Else
-; IY points to character_struct.
+; In character_bed_state etc.: when non-zero, character_index is valid,
+; otherwise IY points to character_struct.
 ; .
-; Read-only by charevnt_bed,
-; charevnt_breakfast.
+; Read-only by charevnt_bed, charevnt_breakfast.
 ; .
 ; Write/read-write by set_route, spawn_character, move_characters,
 ; automatics, set_route.
 @label=entered_move_characters
 gB$A13E,1
 
-; Hero in bed flag.
+; 'Hero in bed' flag.
 ;
 ; Read-only by event_night_time,
 ; .
@@ -6078,9 +6077,9 @@ gB$A13E,1
 @label=hero_in_bed
 gB$A13F,1
 
-; Displayed morale.
+; Currently displayed morale.
 ;
-; This lags behind actual morale while the flag moves slowly to its target.
+; This lags behind actual morale while the flag moves steadily to its target.
 ; .
 ; Write/read-write by wave_morale_flag.
 @label=displayed_morale
@@ -6100,7 +6099,7 @@ gW$A141,2
 @label=ptr_to_door_being_lockpicked
 gW$A143,2
 
-; Game time until player control is restored.
+; The game time when player control will be restored.
 ;
 ; e.g. when picking a lock or cutting wire.
 ; .
@@ -6110,12 +6109,12 @@ gW$A143,2
 @label=player_locked_out_until
 gB$A145,1
 
-; Day or night flag.
+; 'Night-time' flag.
 ;
 ; #TABLE(default,centre)
 ; { =h Value | =h Meaning }
 ; { 0 | Daytime }
-; { 255 | Nighttime }
+; { 255 | Night-time }
 ; TABLE#
 ; .
 ; Read-only by main_loop, choose_game_window_attributes.
