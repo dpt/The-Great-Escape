@@ -6189,142 +6189,149 @@ bB$A173,3;24 (   0, event_another_day_dawns ),
 ;
 ; Increment the clock, wrapping at 140.
 @label=dispatch_timed_event
-cC$A1A0,3;21 HL = &clock;
- C$A1A3,1;21 {A = *HL + 1;
- C$A1A4,1;21 }
- C$A1A5,2;21 {if (A == 140) A = 0;
+cC$A1A0,3;21 Point #REGhl at the game clock
+ C$A1A3,1;21 Load the game clock
+ C$A1A4,1;21 ...and increment it
+ C$A1A5,2;21 {If it hits 140 then reset it to zero
  C$A1A7,2;21
  C$A1A9,1;21 }
-*C$A1AA,1;21 *HL = A;
-; Dispatch the event for that time.
- C$A1AB,3;21 HL = &timed_events[0];
- C$A1AE,2;21 B = 15; // 15 iterations
-*C$A1B0,1;21 {do <% if (A == *HL++) goto found;
- C$A1B1,1;21
- C$A1B2,2;21 }
- C$A1B4,1;21 {  HL += 2;
+*C$A1AA,1;21 Then save the game clock back
+; Find an event for the current clock
+ C$A1AB,3;21 Point #REGhl at the timed events table
+ C$A1AE,2;21 There are fifteen timed events
+; Start loop
+@label=find_event
+*C$A1B0,1;21 {Does the current event's time match the game clock?
+ C$A1B1,1;21 }
+ C$A1B2,2;21 Jump to setup event handler if so
+ C$A1B4,1;21 {Skip the event handler address
  C$A1B5,1;21 }
- C$A1B6,2;21 %> while (--B);
- C$A1B8,1;21 return;
-*C$A1B9,1;21 {found: L = *HL++;
- C$A1BA,1;21 }
- C$A1BB,1;21 {H = *HL;
+ C$A1B6,2;21 ...loop
+ C$A1B8,1;21 Return with no event matched
+; Found an event
+@label=event_found
+*C$A1B9,1;21 {Read the event handler address into #REGhl
+ C$A1BA,2;21
  C$A1BC,1;21 }
- C$A1BD,2;21 A = bell_RING_40_TIMES;
- C$A1BF,3;21 BC = &bell;
- C$A1C2,1;21 goto *HL; // fantasy syntax
+; Most events need to sound the bell, so prepare for that
+ C$A1BD,2;21 Set #REGa to bell_RING_40_TIMES
+ C$A1BF,3;21 Point #REGbc at bell
+ C$A1C2,1;21 Jump to the event handler
 
-; Event: night time.
+; Event: Night time.
 @label=event_night_time
-cC$A1C3,3;21 {if (hero_in_bed == 0)
- C$A1C6,1;21 set_hero_route(location_012C);
- C$A1C7,5;21
- C$A1CC,3;21 }
-*C$A1CF,2;21 A = 0xFF;
- C$A1D1,2;21 goto set_attrs;
+cC$A1C3,3;21 {Is the hero already in his bed?
+ C$A1C6,1;21 }
+ C$A1C7,2;21 Skip route setting if so
+ C$A1C9,3;21 {If not in bed set the hero's route to (routeindex_44_HUT2_RIGHT_TO_LEFT, 1)
+ C$A1CC,3;21 to make him move to bed}
+*C$A1CF,2;21 Set the night time flag ($FF)
+ C$A1D1,2;21 Jump to set_attrs
 
-; Event: another day dawns.
+; Event: Another day dawns.
 @label=event_another_day_dawns
-cC$A1D3,2;21 {queue_message(message_ANOTHER_DAY_DAWNS);
+cC$A1D3,2;21 {Queue the message "ANOTHER DAY DAWNS"
  C$A1D5,3;21 }
- C$A1D8,2;21 {decrease_morale(25);
+ C$A1D8,2;21 {Decrease morale by 25
  C$A1DA,3;21 }
- C$A1DD,1;21 A = 0;
+ C$A1DD,1;21 Clear the night time flag
 ; This entry point is used by the routine at #R$A1C3.
-*C$A1DE,3;21 set_attrs: day_or_night = A;
- C$A1E1,3;21 choose_game_window_attributes();
- C$A1E4,3;21 set_game_window_attributes(); return; // exit via
+@label=set_attrs
+*C$A1DE,3;21 Set the day_or_night flag to #REGa
+ C$A1E1,3;21 Choose game window attributes
+ C$A1E4,3;21 Exit via set_game_window_attributes
 
-; Event: wake up.
+; Event: Wake up.
 @label=event_wake_up
-cC$A1E7,1;21 *BC = A; // bell = bell_RING_40_TIMES;
- C$A1E8,2;21 {queue_message(message_TIME_TO_WAKE_UP);
+cC$A1E7,1;21 Ring the bell 40 times as passed in
+ C$A1E8,2;21 {Queue the message "TIME TO WAKE UP"
  C$A1EA,3;21 }
- C$A1ED,3;21 wake_up(); return; // exit via
+ C$A1ED,3;21 Exit via wake_up
 
-; Event: go to roll call.
+; Event: Go to roll call.
 @label=event_go_to_roll_call
-cC$A1F0,1;21 *BC = A; // bell = bell_RING_40_TIMES;
- C$A1F1,2;21 {queue_message(message_ROLL_CALL);
+cC$A1F0,1;21 Ring the bell 40 times as passed in
+ C$A1F1,2;21 {Queue the nessage "ROLL CALL"
  C$A1F3,3;21 }
- C$A1F6,3;21 go_to_roll_call(); return; // exit via
+ C$A1F6,3;21 Exit via go_to_roll_call
 
-; Event: go to breakfast time.
+; Event: Go to breakfast time.
 @label=event_go_to_breakfast_time
-cC$A1F9,1;21 *BC = A; // bell = bell_RING_40_TIMES;
- C$A1FA,2;21 {queue_message(message_BREAKFAST_TIME);
+cC$A1F9,1;21 Ring the bell 40 times as passed in
+ C$A1FA,2;21 {Queue the message "BREAKFAST TIME"
  C$A1FC,3;21 }
- C$A1FF,3;21 set_route_go_to_breakfast(); return; // exit via
+ C$A1FF,3;21 Exit via set_route_go_to_breakfast
 
-; Event: breakfast time.
+; Event: Breakfast time.
 @label=event_breakfast_time
-cC$A202,1;21 *BC = A; // bell = bell_RING_40_TIMES;
- C$A203,3;21 end_of_breakfast(); return; // exit via
+cC$A202,1;21 Ring the bell 40 times as passed in
+ C$A203,3;21 Exit via end_of_breakfast
 
-; Event: go to exercise time.
+; Event: Go to exercise time.
 @label=event_go_to_exercise_time
-cC$A206,1;21 *BC = A; // bell = bell_RING_40_TIMES;
- C$A207,2;21 {queue_message(message_EXERCISE_TIME);
+cC$A206,1;21 Ring the bell 40 times as passed in
+ C$A207,2;21 {Queue the message "EXERCISE TIME"
  C$A209,3;21 }
-; Unlock the gates.
- C$A20C,3;21 {locked_doors[0] = 0x00; locked_doors[1] = 0x01;
+ C$A20C,3;21 {Unlock the gates to the exercise yard
  C$A20F,3;21 }
- C$A212,3;21 set_route_go_to_yard(); return; // exit via
+ C$A212,3;21 Exit via set_route_go_to_yard
 
-; Event: exercise time.
+; Event: Exercise time.
 @label=event_exercise_time
-cC$A215,1;21 *BC = A; // bell = bell_RING_40_TIMES;
- C$A216,3;21 set_route_go_to_yard_reversed(); return; // exit via
+cC$A215,1;21 Ring the bell 40 times as passed in
+ C$A216,3;21 Exit via set_route_go_to_yard_reversed
 
-; Event: go to time for bed.
+; Event: Go to time for bed.
 @label=event_go_to_time_for_bed
-cC$A219,1;21 *BC = A; // bell = bell_RING_40_TIMES;
-; Lock the gates.
- C$A21A,3;21 {locked_doors[0] = 0x80; locked_doors[1] = 0x81;
+cC$A219,1;21 Ring the bell 40 times as passed in
+ C$A21A,3;21 {Lock the gates to the exercise yard
  C$A21D,3;21 }
- C$A220,2;21 {queue_message(message_TIME_FOR_BED);
+ C$A220,2;21 {Queue the message "TIME FOR BED"
  C$A222,3;21 }
- C$A225,3;21 go_to_time_for_bed(); return; // exit via
+ C$A225,3;21 Exit via go_to_time_for_bed
 
-; Event: new red cross parcel.
+; Event: New red cross parcel.
 ;
 ; .
 ;
 ; .
 ;
-; Don't deliver a new red cross parcel while the previous one still exists.
 @label=event_new_red_cross_parcel
-cC$A228,3;24 {if ((item_structs[item_RED_CROSS_PARCEL].room & itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;
- C$A22B,4;24
- C$A22F,1;24 }
+; Don't deliver a new red cross parcel while the previous one still exists.
+cC$A228,3;24 Fetch the red cross parcel's room (and flags)
+ C$A22B,2;24 Mask off the room part
+ C$A22D,2;24 Is it $3F? (i.e. room_NONE ($FF) masked)
+ C$A22F,1;24 Return if not
 ; Select the contents of the next parcel; choosing the first item from the list
 ; which does not already exist.
 @nowarn
- C$A230,3;24 DE = &red_cross_parcel_contents_list[0];
- C$A233,2;24 B = 4; // length of above
-*C$A235,1;24 do <% A = *DE;
- C$A236,3;24 HL = item_to_itemstruct(A);
- C$A239,1;24 HL++;
- C$A23A,1;24 {  if ((*HL & itemstruct_ROOM_MASK) == itemstruct_ROOM_MASK) goto found;
- C$A23B,4;24
- C$A23F,2;24 }
- C$A241,1;24 DE++;
- C$A242,2;24 %> while (--B);
- C$A244,1;24 return;
-*C$A245,1;24 {found: red_cross_parcel_current_contents = *DE;
+ C$A230,3;24 Point #REGde at the red cross parcel contents list
+ C$A233,2;24 There are four entries in the list
+; Start loop
+*C$A235,1;24 Fetch item number
+ C$A236,3;24 Turn it into an itemstruct
+ C$A239,1;24 {Get its room and mask it
+ C$A23A,1;24
+ C$A23B,2;24 }
+ C$A23D,2;24 Is it $3F? (i.e. room_NONE ($FF) masked)
+ C$A23F,2;24 Jump to parcel_found if so
+ C$A241,1;24
+ C$A242,2;24 ...loop while (...)
+ C$A244,1;24 Return - a parcel could not be spawned
+@label=parcel_found
+*C$A245,1;24 {Set red_cross_parcel_current_contents to the item number
  C$A246,3;24 }
- C$A249,3;24 {memcpy(&item_structs[item_RED_CROSS_PARCEL].room,
+ C$A249,3;24 {Copy the red cross parcel reset data over the red cross parcel item struct
 @nowarn
- C$A24C,3;24 red_cross_parcel_reset_data, 6);
- C$A24F,3;24
+ C$A24C,6;24
  C$A252,2;24 }
- C$A254,2;24 {queue_message(message_RED_CROSS_PARCEL);
- C$A256,3;24 return; // exit via}
-; Red cross parcel reset data (room, tinypos, coord).
+ C$A254,2;24 {Queue the message "RED CROSS PARCEL" and exit via
+ C$A256,3;24 }
+; Red cross parcel reset data.
 @label=red_cross_parcel_reset_data
- B$A259,1;24 room_20_REDCROSS
- B$A25A,3;24 44,44,12
- B$A25D,2;24 128,244
+ B$A259,1;24 Room: room_20_REDCROSS
+ B$A25A,3;24 TinyPos: (44, 44, 12)
+ B$A25D,2;24 Coord: (128, 244)
 ; Red cross parcel contents list.
 @label=red_cross_parcel_contents_list
  B$A25F,1;24 item_PURSE
@@ -6336,31 +6343,36 @@ cC$A228,3;24 {if ((item_structs[item_RED_CROSS_PARCEL].room & itemstruct_ROOM_MA
 @label=red_cross_parcel_current_contents
 gB$A263,1
 
-; Event: time for bed.
+; Event: Time for bed.
 @label=event_time_for_bed
-cC$A264,2;21 A = 0xA6;
- C$A266,2;21 C = 3;
- C$A268,2;21 goto $A26E;
+cC$A264,2;21 {Set route to (REVERSED routeindex_38_GUARD_12_BED, 3)
+ C$A266,2;21 }
+ C$A268,2;21 Jump to $A26E
 
-; Event: search light.
+; Event: Search light.
 @label=event_search_light
-cC$A26A,2;21 A = 0x26;
- C$A26C,2;21 C = 0;
+cC$A26A,2;21 {Set route to (routeindex_38_GUARD_12_BED, 0)
+ C$A26C,2;21 }
 ; This entry point is used by the routine at #R$A264.
 ; .
-; Common end of event_time_for_bed and event_search_light.
-*C$A26E,1
- C$A26F,2;21 Adash = 12;
- C$A271,2;21 B = 4; // 4 iterations
-*C$A273,1;21 do <%
- C$A274,3;21 set_character_route();
- C$A277,1
- C$A278,1;21 Adash++;
- C$A279,1
- C$A27A,1;21 A++;
- C$A27B,1
- C$A27C,2;21 %> while (--B);
- C$A27E,1;21 return;
+; Common end of event_time_for_bed and event_search_light. Sets the route for
+; guards 12..15 to (#REGc + 0, #REGa)..(#REGc + 3, #REGa) respectively.
+; .
+; TODO: Split off to its own routine
+@label=set_guards_route
+*C$A26E,1;21 bank
+ C$A26F,2;21 Set character index to character_12_GUARD_12
+ C$A271,2;21 4 iterations
+; Start loop
+*C$A273,1;21
+ C$A274,3;21 Set the route for a character in #REGa to route (#REGa', #REGc)
+ C$A277,1;21
+ C$A278,1;21 Increment the character index
+ C$A279,1;21
+ C$A27A,1;21 Increment the route index
+ C$A27B,1;21
+ C$A27C,2;21 ...loop
+ C$A27E,1;21 Return
 
 ; List of non-player characters: six prisoners and four guards.
 ;
