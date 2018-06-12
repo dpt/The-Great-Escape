@@ -6456,47 +6456,49 @@ cC$A289,3;21 {If the hero's not in bed, jump forward (note: it could jump one in
 ;
 ; Used by the routine at #R$A202.
 @label=end_of_breakfast
-cC$A2E2,3;21 {if (hero_in_breakfast) <%
+cC$A2E2,3;21 {If the hero's not at breakfast, jump forward (note: it could jump one instruction later instead)
  C$A2E5,1;21
  C$A2E6,3;21 }
- C$A2E9,3;21 {  $800F = 52; // hero X position
- C$A2EC,2;21 }
- C$A2EE,1;21 {  $8011 = 62; %> // hero Y position
- C$A2EF,1;21
+ C$A2E9,3;21 {Set the hero's vischar position to (52,62)
+ C$A2EC,4;21
  C$A2F0,2;21 }
-*C$A2F2,1;21 {hero_in_breakfast = 0;
+*C$A2F2,1;21 {Clear the 'at breakfast' flag
  C$A2F3,3;21 }
- C$A2F6,3;21 {set_hero_route(location_0390);
+ C$A2F6,3;21 {Set the hero's route to (REVERSED routeindex_16_BREAKFAST_25, 3)
  C$A2F9,3;21 }
- C$A2FC,3;21 HL = &characterstruct_20.room; // character_20_PRISONER_1
- C$A2FF,5
- C$A304,2;21 B = 3; // 3 iterations
-*C$A306,1;21 do <% *HL = room_25_BREAKFAST;
- C$A307,1;21 HL += 7; // stride
- C$A308,2;21 %> while (--B);
- C$A30A,2
- C$A30C,2;21 B = 3; // 3 iterations
-*C$A30E,1;21 do <% *HL = room_23_BREAKFAST;
- C$A30F,1;21 HL += 7; // stride
- C$A310,2;21 %> while (--B);
- C$A312,2;21 A = 144; // incremented by set_prisoners_and_guards_route_B
- C$A314,1
- C$A315,2;21 C = 3;
- C$A317,3;21 set_prisoners_and_guards_route_B();
- C$A31A,2
+; Position all six prisoners.
+ C$A2FC,3;21 Point #REGhl at characterstruct 20's room field (character 20 is the first of the prisoners)
+ C$A2FF,3;21 Prepare the characterstruct stride
+ C$A302,2;21 Prepare room_25_BREAKFAST
+ C$A304,2;21 Do the first three prisoner characters
+; Start loop
+*C$A306,1;21 Set this characterstruct's room to room_25_BREAKFAST
+ C$A307,1;21 Advance to the next characterstruct
+ C$A308,2;21 ...loop
+ C$A30A,2;21 Prepare room_23_BREAKFAST
+ C$A30C,2;21 Do the second three prisoner characters
+; Start loop
+*C$A30E,1;21 Set this characterstruct's room to room_23_BREAKFAST
+ C$A30F,1;21 Advance to the next characterstruct
+ C$A310,2;21 ...loop
+ C$A312,2;21 {Set initial route index in #REGa'. This gets incremented by set_prisoners_and_guards_route_B for every route it assigns
+ C$A314,1;21 }
+ C$A315,2;21 Set route step to 3
+ C$A317,3;21 Set the routes of all characters in prisoners_and_guards
 ; Update all the benches to be empty.
- C$A31C,3;21 roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
- C$A31F,3;21 roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
- C$A322,3;21 roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
- C$A325,3;21 roomdef_25_breakfast.bench_D = interiorobject_EMPTY_BENCH;
- C$A328,3;21 roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
- C$A32B,3;21 roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
- C$A32E,3;21 roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
- C$A331,3;21 {if (room_index == room_0_OUTDOORS || room_index >= room_29_SECOND_TUNNEL_START) return;
+ C$A31A,2;21 Prepare interiorobject_EMPTY_BENCH
+ C$A31C,3;21 Set room definition 23's bench_A object to interiorobject_EMPTY_BENCH
+ C$A31F,3;21 Set room definition 23's bench_B object to interiorobject_EMPTY_BENCH
+ C$A322,3;21 Set room definition 23's bench_C object to interiorobject_EMPTY_BENCH
+ C$A325,3;21 Set room definition 25's bench_D object to interiorobject_EMPTY_BENCH
+ C$A328,3;21 Set room definition 25's bench_E object to interiorobject_EMPTY_BENCH
+ C$A32B,3;21 Set room definition 25's bench_F object to interiorobject_EMPTY_BENCH
+ C$A32E,3;21 Set room definition 25's bench_G object to interiorobject_EMPTY_BENCH
+ C$A331,3;21 {If the global current room index is outdoors, or a tunnel room then return
  C$A334,4;21
  C$A338,1;21 }
- C$A339,3;21 setup_room();
- C$A33C,3;21 plot_interior_tiles(); return; // exit via // note that this differs to wake_up's ending
+ C$A339,3;21 Expand out the room definition for room_index
+ C$A33C,3;21 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer and exit via (note: different to wake_up's end)
 
 ; Set the hero's route, unless in solitary.
 ;
