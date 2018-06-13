@@ -450,7 +450,7 @@
 ; door_LOCKED                                   = 1 << 7,       ; used to lock doors in locked_doors[]
 ; door_NONE                                     = $FF
 ;
-; characterstruct_FLAG_DISABLED                 = 1 << 6,       ; this disables the character
+; characterstruct_FLAG_ON_SCREEN                = 1 << 6,       ; this disables the character
 ; characterstruct_CHARACTER_MASK                = $1F,
 ; characterstruct_BYTE5_MASK                    = $7F,
 ; characterstruct_BYTE6_MASK_LO                 = $07,
@@ -6608,7 +6608,7 @@ cC$A373,3;21 HL = &prisoners_and_guards[0];
 ; I:C  Route step.
 @label=set_character_route
 cC$A38C,3;21 HL = get_character_struct(A);
- C$A38F,2;21 {if ((*HL & characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?
+ C$A38F,2;21 {if ((*HL & characterstruct_FLAG_ON_SCREEN) == 0) goto not_set; // disabled?
  C$A391,3;21 }
  C$A394,1
  C$A395,1;21 {A = *HL & characterstruct_CHARACTER_MASK;
@@ -10489,7 +10489,7 @@ cC$C41C,3;21 HL = map_position;
 ; Walk all character structs.
  C$C42D,3;21 HL = &character_structs[0];
  C$C430,2;21 B = character_26_STOVE_1; // the 26 'real' characters
-*C$C432,2;21 {do <% if (*HL & characterstruct_FLAG_DISABLED) goto skip;
+*C$C432,2;21 {do <% if (*HL & characterstruct_FLAG_ON_SCREEN) goto skip;
  C$C434,2;21 }
 ; Is the character in this room?
  C$C436,1;21 (stash HL)
@@ -10612,7 +10612,7 @@ cC$C47E,3;21 HL = &map_position;
 ;
 ; I:HL Pointer to character to spawn.
 @label=spawn_character
-cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_DISABLED) return; /* character disabled */
+cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character disabled */
  C$C4E2,1;22 }
  C$C4E3,1
 ; Find an empty slot in the visible character list.
@@ -10664,7 +10664,7 @@ cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_DISABLED) return; /* character disa
  C$C529,1;22 // restore DE (-> character struct)
  C$C52A,1;22 // restore HL (-> empty vischar slot)
  C$C52B,1;22 RET NZ // if collision or bounds_check is nonzero, then return
- C$C52C,1;22 {A = *DE | characterstruct_FLAG_DISABLED; /* Disable character */
+ C$C52C,1;22 {A = *DE | characterstruct_FLAG_ON_SCREEN; /* Disable character */
  C$C52D,2;22 }
  C$C52F,1;22 *DE = A;
  C$C530,2;22 A &= characterstruct_CHARACTER_MASK;
@@ -10804,7 +10804,7 @@ cC$C5D3,1;21 A = *HL;
 ; A non-object character.
 *C$C602,1;21 else <%
  C$C603,3;21 DE = get_character_struct(A);
- C$C606,2;21 *DE &= ~characterstruct_FLAG_DISABLED;
+ C$C606,2;21 *DE &= ~characterstruct_FLAG_ON_SCREEN;
  C$C608,2;21 {
  C$C60A,1;21
  C$C60B,1;21 }
@@ -10931,7 +10931,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
 *C$C6AE,3;21 character_index = character;
 ; Get its chararacter struct, exiting if it's not enabled.
  C$C6B1,3;21 HL = get_character_struct(character); // passing character in A
- C$C6B4,2;21 {if (*HL & characterstruct_FLAG_DISABLED)
+ C$C6B4,2;21 {if (*HL & characterstruct_FLAG_ON_SCREEN)
  C$C6B6,1;21 return; /* Disabled character. */}
  C$C6B7,1
 ; Are any items to be found in the same room as the character?
