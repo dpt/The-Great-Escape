@@ -6550,28 +6550,30 @@ cC$A351,3;21 {Set the hero's route to (REVERSED routeindex_5_EXIT_HUT2, 2)
  C$A35A,2;21 Set route step to 2
  C$A35C,3;21 Set the routes of all characters in prisoners_and_guards and exit via
 
-; Set ascending routes for all characters in prisoners_and_guards.
+; Set individual routes for all characters in prisoners_and_guards.
 ;
-; The route passed in (A',C) is assigned to the first character. The second character gets route (A'+1,C) and so on.
+; The route passed in (#REGa',#REGc) is assigned to the first character. The second character gets route (#REGa'+1,#REGc) and so on.
 ; .
 ; Used by the routine at #R$A4FD.
 ;
 ; I:A' Route index.
 ; I:C  Route step.
 @label=set_prisoners_and_guards_route
-cC$A35F,3;21 HL = &prisoners_and_guards[0];
- C$A362,2;21 B = 10;
-*C$A364,1;21 do <%
- C$A365,1
- C$A366,1;21 A = *HL;
- C$A367,3;21 set_character_route();
- C$A36A,1;21 {
- C$A36B,1;21 Adash++;
+cC$A35F,3;21 Point #REGhl at prisoners_and_guards table of character indices
+ C$A362,2;21 Iterate over the ten entries
+; Start loop
+*C$A364,1;21 Save
+ C$A365,1;21 Save
+ C$A366,1;21 Fetch the character index
+ C$A367,3;21 Set the route for the character
+ C$A36A,1;21 {Increment the route index
+ C$A36B,1;21
  C$A36C,1;21 }
- C$A36D,2
- C$A36F,1;21 HL++;
- C$A370,2;21 %> while (--B);
- C$A372,1;21 return;
+ C$A36D,1;21 Restore
+ C$A36E,1;21 Restore
+ C$A36F,1;21 Advance to the next character
+ C$A370,2;21 ...loop
+ C$A372,1;21 Return
 
 ; Set the routes of all characters in prisoners_and_guards.
 ;
