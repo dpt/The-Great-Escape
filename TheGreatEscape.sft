@@ -6585,25 +6585,26 @@ cC$A35F,3;21 Point #REGhl at prisoners_and_guards table of character indices
 ; I:A' Route index.
 ; I:C  Route step.
 @label=set_prisoners_and_guards_route_B
-cC$A373,3;21 HL = &prisoners_and_guards[0];
- C$A376,2;21 B = 10;
-*C$A378,1;21 do <%
- C$A379,1
- C$A37A,1;21 A = *HL;
- C$A37B,3;21 set_character_route();
- C$A37E,1
+cC$A373,3;21 Point #REGhl at prisoners_and_guards table of character indices
+ C$A376,2;21 Iterate over the ten entries
+; Start loop
+*C$A378,1;21 Save
+ C$A379,1;21 Save
+ C$A37A,1;21 Fetch the character index
+ C$A37B,3;21 Set the route for the character
+ C$A37E,1;21 Check the loop index
 ; When this is 6, the character being processed is character_22_PRISONER_3 and
 ; the next is character_14_GUARD_14, the start of the second half of the list.
- C$A37F,1;21 {  if (B == 6) Adash++; // array index 6 is character
- C$A380,2;21 22
- C$A382,2;21
- C$A384,1
+ C$A37F,1;21 {Is it six?
+ C$A380,2;21 }
+ C$A382,2;21 Jump over if not
+ C$A384,1;21 {Otherwise increment the route index
  C$A385,1;21
  C$A386,1;21 }
-*C$A387,1
- C$A388,1;21 HL++;
- C$A389,2;21 %> while (--B);
- C$A38B,1;21 return;
+*C$A387,1;21 Restore
+ C$A388,1;21 Advance to the next character
+ C$A389,2;21 ...loop
+ C$A38B,1;21 Return
 
 ; Set the route for a character.
 ;
