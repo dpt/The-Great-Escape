@@ -6543,12 +6543,12 @@ cC$A344,3;21 {Clear vischar_FLAGS_TARGET_IS_DOOR flag
 ;
 ; Used by the routine at #R$A219.
 @label=go_to_time_for_bed
-cC$A351,3;21 {set_hero_route(location_0285);
+cC$A351,3;21 {Set the hero's route to (REVERSED routeindex_5_EXIT_HUT2, 2)
  C$A354,3;21 }
- C$A357,2;21 Adash = 133;
- C$A359,1
- C$A35A,2;21 C = 2;
- C$A35C,3;21 set_prisoners_and_guards_route_B(); return; // exit via
+ C$A357,2;21 {Set route index to (REVERSED routeindex_5_EXIT_HUT2)
+ C$A359,1;21 }
+ C$A35A,2;21 Set route step to 2
+ C$A35C,3;21 Set the routes of all characters in prisoners_and_guards and exit via
 
 ; Set ascending routes for all characters in prisoners_and_guards.
 ;
