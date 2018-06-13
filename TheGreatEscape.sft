@@ -6687,20 +6687,21 @@ cC$A3BB,1;21 {entered_move_characters = 0;
 *C$A3EB,1
  C$A3EC,1;21 return;
 
-; Store an xy_t at the specified address.
+; Store a route at the specified address.
 ;
 ; Used by the routine at #R$A38C.
 ;
 ; I:A' Route index.
 ; I:C  Route step.
 ; I:HL Pointer to route.
+; O:HL Pointer to route.step.
 @label=store_route
-cC$A3ED,1;21 {
- C$A3EE,1;21 *HL++ = Adash;
- C$A3EF,1;21
- C$A3F0,1;21 }
- C$A3F1,1;21 *HL = C;
- C$A3F2,1;21 return;
+cC$A3ED,1;21 Unbank the route index
+ C$A3EE,1;21 Store the route index
+ C$A3EF,1;21 Bank the route index
+ C$A3F0,1;21 {Store the route step
+ C$A3F1,1;21 }
+ C$A3F2,1;21 Return
 
 ; entered_move_characters is non-zero.
 ;
