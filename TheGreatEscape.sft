@@ -6511,27 +6511,33 @@ cC$A2E2,3;21 {If the hero's not at breakfast, jump forward (note: it could jump 
  C$A339,3;21 Expand out the room definition for room_index
  C$A33C,3;21 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer and exit via (note: different to wake_up's end)
 
-; Set the hero's route, unless in solitary.
+; Set the hero's route, unless he's in solitary.
 ;
 ; Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8,
 ; #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
-; .
 ;
 ; I:B Route index.
 ; I:C Route step.
 @label=set_hero_route
-cC$A33F,3;21 {if (in_solitary) return;
+cC$A33F,3;21 {Do nothing if the hero's in solitary
  C$A342,1;21
  C$A343,1;21 }
-; This entry point is used by the routine at #R$C7C6.
-*C$A344,3;21 {$8001 &= ~vischar_FLAGS_TARGET_IS_DOOR;
+; FALL THROUGH into set_hero_route_force
+
+; Set the hero's route
+;
+; Used by the routine at #R$C7C6.
+;
+; I:B Route index.
+; I:C Route step.
+@label=set_hero_route_force
+cC$A344,3;21 {Clear vischar_FLAGS_TARGET_IS_DOOR flag
  C$A347,2;21 }
- C$A349,1;21 {$8002 = B;
- C$A34A,1;21 }
- C$A34B,1;21 {$8003 = C;
+ C$A349,1;21 {Assign route
+ C$A34A,2;21
  C$A34C,1;21 }
- C$A34D,3;21 set_route();
- C$A350,1;21 return;
+ C$A34D,3;21 Set the route
+ C$A350,1;21 Return
 
 ; Go to time for bed.
 ;
