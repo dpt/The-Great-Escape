@@ -6616,34 +6616,39 @@ cC$A373,3;21 Point #REGhl at prisoners_and_guards table of character indices
 ; I:A' Route index.
 ; I:C  Route step.
 @label=set_character_route
-cC$A38C,3;21 HL = get_character_struct(A);
- C$A38F,2;21 {if ((*HL & characterstruct_FLAG_ON_SCREEN) == 0) goto not_set; // disabled?
- C$A391,3;21 }
- C$A394,1
+cC$A38C,3;21 Get a pointer to the character struct in #REGhl for character index #REGa
+ C$A38F,2;21 Is the character on-screen? characterstruct_FLAG_ON_SCREEN
+ C$A391,3;21 It's not - jump to characterstruct setting code
+@label=set_vischar_route
+ C$A394,1;21 Save route step
  C$A395,1;21 {A = *HL & characterstruct_CHARACTER_MASK;
  C$A396,2;21 }
 ; Search non-player characters to see if this character is already on-screen.
- C$A398,2;21 B = 7; // 7 iterations
- C$A39A,3;21 DE = 32; // stride
+ C$A398,2;21 There are seven non-player vischars
+ C$A39A,3;21 Prepare the vischar stride
 @nowarn
- C$A39D,3;21 HL = $8020; // iterate over non-player characters
-*C$A3A0,1;21 {do <% if (A == *HL) goto found;
- C$A3A1,2;21 }
- C$A3A3,1;21 HL += DE;
- C$A3A4,2;21 %> while (--B);
- C$A3A6,1
- C$A3A7,2;21 goto exit;
- B$A3A9,1;21 Unreferenced byte.
-*C$A3AA,1;21 {not_set: HL += 5; // HL = charstruct->route
+ C$A39D,3;21 Point #REGhl at the second visible character
+; Start loop
+*C$A3A0,1;21 Is this the character we want?
+ C$A3A1,2;21 Jump if so
+ C$A3A3,1;21 Advance the vischar pointer
+ C$A3A4,2;21 ...loop
+ C$A3A6,1;21 Restore
+ C$A3A7,2;21 Jump to exit (note: why not just RET here?)
+ B$A3A9,1;21 Unreferenced byte
+@label=set_character_struct_route
+*C$A3AA,1;21 {Advance #REGhl to point to the characterstruct's route
  C$A3AB,3;21
  C$A3AE,1;21 }
- C$A3AF,3;21 store_route();
-*C$A3B2,1;21 exit: return;
-*C$A3B3,1;21 found:
- C$A3B4,1;21 HL++;
- C$A3B5,2;21 {*HL++ &= ~vischar_FLAGS_TARGET_IS_DOOR;
+ C$A3AF,3;21 Store the route at #REGhl
+@label=set_character_route_exit
+*C$A3B2,1;21 Return
+@label=set_character_route_vischar_found
+*C$A3B3,1;21 Restore route step
+ C$A3B4,1;21 {Reset vischar_FLAGS_TARGET_IS_DOOR flag
+ C$A3B5,2;21
  C$A3B7,1;21 }
- C$A3B8,3;21 store_route(); // HL = vischar->route
+ C$A3B8,3;21 Store the route at #REGhl
 ; FALL THROUGH into set_route.
 
 ; Not yet understood.
