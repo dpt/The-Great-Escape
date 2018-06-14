@@ -6617,6 +6617,7 @@ cC$A373,3;21 Point #REGhl at prisoners_and_guards table of character indices
 ; I:A  Character index.
 ; I:A' Route index.
 ; I:C  Route step.
+; O:BC Preserved.
 @label=set_character_route
 cC$A38C,3;21 Get a pointer to the character struct in #REGhl for character index #REGa
  C$A38F,2;21 Is the character on-screen? characterstruct_FLAG_ON_SCREEN
@@ -6653,41 +6654,50 @@ cC$A38C,3;21 Get a pointer to the character struct in #REGhl for character index
  C$A3B8,3;21 Store the route at #REGhl
 ; FALL THROUGH into set_route.
 
-; Not yet understood.
+; Calls get_target and assigns the result into vischar.
 ;
 ; Used by the routine at #R$A33F.
+;
+; I:HL Points to route.step.
+; O:BC Preserved.
 @label=set_route
-cC$A3BB,1;21 {entered_move_characters = 0;
+cC$A3BB,1;21 {Clear the entered_move_characters flag so that the vischar pointed to by #REGiy is used for character events
  C$A3BC,3;21 }
- C$A3BF,2
- C$A3C1,1;21 HL--;
- C$A3C2,3;21 get_target();
- C$A3C5,1;21 // DE = the HL stored at $A3C0
- C$A3C6,1;21 DE++;
- C$A3C7,2;21 *DE++ = *HL++; BC--;
- C$A3C9,2;21 *DE++ = *HL++; BC--;
- C$A3CB,2;21 {if (A == 255) <%
- C$A3CD,3;21 }
- C$A3D0,1;21 {  DE -= 6;
+ C$A3BF,1;21 Preserve for callers
+ C$A3C0,1;21 Preserve route.step pointer
+ C$A3C1,1;21 Point #REGhl at route.index
+ C$A3C2,3;21 Get our next target - a location, a door or 'route ends'. The result is returned in #REGa, target pointer returned in #REGhl
+ C$A3C5,1;21 Restore route.step pointer to #REGde
+ C$A3C6,1;21 Point #REGde at vischar.target
+ C$A3C7,2;21 {Copy target across
+ C$A3C9,2;21 }
+ C$A3CB,2;21 Did #R$C651 return get_target_ROUTE_ENDS? ($FF)
+ C$A3CD,3;21 Jump if not
+; Result was 'route ends'
+ C$A3D0,1;21 {Point #REGde at the vischar's start
  C$A3D1,2;21
  C$A3D3,1;21 }
- C$A3D4,1;21 {  IY = DE;
+ C$A3D4,1;21 {Assign current vischar to #REGiy
  C$A3D5,2;21 }
- C$A3D7,1
- C$A3D8,1;21 {  HL += 2;
+ C$A3D7,1;21 Swap vischar pointer into #REGhl
+ C$A3D8,1;21 {Point #REGhl at route
  C$A3D9,1;21 }
- C$A3DA,3;21 get_target_assign_pos();
- C$A3DD,1;21 // could have just ended the block here
- C$A3DE,1;21 return; %>
-*C$A3DF,2;21 {else if (A == 128) <%
- C$A3E1,3;21 }
- C$A3E4,1;21 {  DE -= 5;
+ C$A3DA,3;21 Call get_target_assign_pos so that the end-of-route handling code is invoked if required. Note: This seems like something of a waste as get_target is (appears to be) called again with the same arguments as above
+ C$A3DD,1;21 Restore
+ C$A3DE,1;21 Return
+@label=set_route_not_end
+; Result was a location or a door
+*C$A3DF,2;21 Did #R$C651 return get_target_DOOR? ($80)
+ C$A3E1,3;21 Jump if not (it must be get_target_LOCATION)
+@label=set_route_door
+ C$A3E4,1;21 {Point #REGde at vischar.flags
  C$A3E5,2;21
  C$A3E7,1;21 }
- C$A3E8,1
- C$A3E9,2;21 *HL |= vischar_FLAGS_TARGET_IS_DOOR; %> // sampled HL=$8001
-*C$A3EB,1
- C$A3EC,1;21 return;
+ C$A3E8,1;21 Swap vischar pointer into #REGhl
+ C$A3E9,2;21 Set the vischar_FLAGS_TARGET_IS_DOOR flag
+@label=set_route_exit
+*C$A3EB,1;21 Restore
+ C$A3EC,1;21 Return
 
 ; Store a route at the specified address.
 ;
