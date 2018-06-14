@@ -6715,48 +6715,50 @@ cC$A3ED,1;21 Unbank the route index
  C$A3F1,1;21 }
  C$A3F2,1;21 Return
 
-; entered_move_characters is non-zero.
+; Character goes to bed: used when entered_move_characters is non-zero.
 ;
 ; Used by the routine at #R$C7C6.
 ;
 ; I:HL Pointer to location.
 @label=character_bed_state
-cC$A3F3,3;21 A = character_index;
- C$A3F6,2;21 goto character_bed_common;
+cC$A3F3,3;21 Get the current character index
+ C$A3F6,2;21 Jump to character_bed_common
 
-; entered_move_characters is zero.
+; Character goes to bed: used when entered_move_characters is zero.
 ;
 ; Used by the routine at #R$C7C6.
-; .
-; Gets hit when hero enters hut at end of day.
 ;
 ; I:HL Pointer to location.
 @label=character_bed_vischar
-cC$A3F8,3;21 A = IY[0]; // IY=$8000 // must be a character index
- C$A3FB,1;21 {if (A != 0) goto character_bed_common;
+cC$A3F8,3;21 Read the current vischar's character index
+ C$A3FB,1;21 {If it's not the commandant (0) then goto character_bed_common
  C$A3FC,2;21 }
- C$A3FE,3;21 { set_hero_route(location_002C); // exit via
+ C$A3FE,3;21 {Otherwise set the commandant's route to ($2C,$00) and exit via
  C$A401,3;21 }
 
 ; Common end of above two routines.
 ;
 ; Used by the routines at #R$A3F3 and #R$A3F8.
+;
+; I:A  Character index.
+; I:HL Pointer to route.
 @label=character_bed_common
-cC$A404,1;21 {HL[1] = 0; // HL=$766B,$7672 characterstruct + 5 (characterstruct + 6 when zeroed)
+cC$A404,1;21 {Clear route's step
  C$A405,2;21 }
- C$A407,2;21 {if (A > 19) <%
- C$A409,3;21
+ C$A407,2;21 Is the character a hostile? (its index less than or equal to character_19_GUARD_DOG_4)
+ C$A409,3;21 {Jump to hostile handling if so
  C$A40C,3;21 }
- C$A40F,2;21 A -= 13; %> // 20.. => 7..
- C$A411,2;21 else <%
-*C$A413,2;21 {  old_A = A; A = 13; if (old_A & (1<<0)) <% // tmp introduced to avoid interleaving
- C$A415,2;21
- C$A417,2;21 }
- C$A419,2;21 HL[1] = 1; // HL=$7681,$7673 // characterstruct_N + 6
- C$A41B,2;21 A |= 0x80; %> %>
-*C$A41D,1;21 {HL[0] = A; // characterstruct_N + 5
+ C$A40F,2;21 Compute the route index by subtracting 13 from the character index, e.g. character 20 is assigned route 7
+ C$A411,2;21 Jump to end part
+@label=character_bed_hostile
+*C$A413,2;21 Does this hostile have an odd numbered character index?
+ C$A415,2;21 Set the default route index to 13
+ C$A417,2;21 Jump to exit if it had an even numbered character index
+ C$A419,2;21 {Otherwise reverse its route by setting the route step to 1 and setting the reversed route flag
+ C$A41B,2;21 }
+*C$A41D,1;21 {Save route index
  C$A41E,1;21 }
- C$A41F,1;21 return;
+ C$A41F,1;21 Return
 
 ; Character sits.
 ;
