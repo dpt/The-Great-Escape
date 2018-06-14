@@ -6575,9 +6575,11 @@ cC$A35F,3;21 Point #REGhl at prisoners_and_guards table of character indices
  C$A370,2;21 ...loop
  C$A372,1;21 Return
 
-; Set the routes of all characters in prisoners_and_guards.
+; Set joint routes for all characters in prisoners_and_guards.
 ;
-; The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the route passed in (A',C). The second half of the list (guards 14,15 and prisoners 4,5,6) are set to route (A'+1,C).
+; The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the
+; route passed in (#REGa',#REGc). The second half of the list (guards 14,15 and
+; prisoners 4,5,6) are set to route (#REGa'+1,#REGc).
 ; .
 ; Used by the routines at #R$A289, #R$A2E2, #R$A351, #R$A4A9, #R$A4B7 and
 ; #R$A4C5.
