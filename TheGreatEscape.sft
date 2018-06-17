@@ -6764,79 +6764,82 @@ cC$A404,1;21 {Clear route's step
 ;
 ; Used by the routine at #R$C7C6.
 ;
-; I:A Character.
-; I:HL Pointer to location.
+; I:A  Route index.
+; I:HL Pointer to route.
 @label=character_sits
-cC$A420,2
- C$A422,2;21 A -= 18; // first three characters
- C$A424,3;21 HL = &roomdef_25_breakfast.bench_D;
- C$A427,2;21 {if (A >= 3) <% // second three characters
- C$A429,2;21 }
- C$A42B,3;21 HL = &roomdef_23_breakfast.bench_A;
- C$A42E,2;21 A -= 3; %>
+cC$A420,1;21 Save the route index
+ C$A421,1;21 Move the route pointer into #REGde for the common part later
+ C$A422,2;21 Bias the route index by 18
+ C$A424,3;21 Point #REGhl at room definition 25's bench_D
+ C$A427,2;21 {Is #REGa equal to two or lower?
+ C$A429,2;21 Jump if so}
+ C$A42B,3;21 Point #REGhl at room definition 23's bench_A
+ C$A42E,2;21 Bias...
 ; Poke object.
-*C$A430,1;21 {HL += A * 3;
- C$A431,5;21
- C$A436,1;21 }
- C$A437,2;21 *HL = interiorobject_PRISONER_SAT_MID_TABLE;
- C$A439,1
- C$A43A,2;21 C = room_25_BREAKFAST;
- C$A43C,2;21 {if (A >= character_21_PRISONER_2) C = room_23_BREAKFAST;
- C$A43E,2;21
- C$A440,2;21 }
- C$A442,2;21 goto character_sit_sleep_common;
+*C$A430,1;21 {Triple #REGa
+ C$A431,1;21
+ C$A432,1;21 }
+ C$A433,2;21 {Move it into #REGbc
+ C$A435,1;21 }
+ C$A436,1;21 Point to the required object
+ C$A437,2;21 Set the object at #REGhl to interiorobject_PRISONER_SAT_MID_TABLE ($05)
+ C$A439,1;21 Restore the route index
+ C$A43A,2;21 Room is room_25_BREAKFAST
+ C$A43C,2;21 Is the route index less than routeindex_21_PRISONER_SITS_1?
+ C$A43E,2;21 Jump if so
+ C$A440,2;21 Otherwise room is room_23_BREAKFAST
+ C$A442,2;21 Jump to character_sit_sleep_common
 
 ; Character sleeps.
 ;
 ; Used by the routine at #R$C7C6.
 ;
-; I:A Character.
-; I:HL Pointer to location.
+; I:A  Route index.
+; I:HL Pointer to route.
 @label=character_sleeps
-cC$A444,1
- C$A445,2;21 {A -= 7;
- C$A447,1;21 }
- C$A448,1
+cC$A444,1;21 Save the route index
+ C$A445,2;21 Route indices 7..12 map to beds array indices 0..5
+ C$A447,1;21 Turn index into an offset
+ C$A448,1;21 Move the route pointer into #REGde for the common part later
 ; Poke object.
- C$A449,1;21 {BC = beds[A];
+ C$A449,1;21 {Fetch the bed object pointer from beds array
  C$A44A,8;21
  C$A452,1;21 }
- C$A453,2;21 {*BC = interiorobject_OCCUPIED_BED;
+ C$A453,2;21 {Write interiorobject_OCCUPIED_BED to the bed object
  C$A455,1;21 }
- C$A456,1
- C$A457,2;21 {if (A < character_10_GUARD_10)
- C$A459,3;21 }
- C$A45C,2;21 C = room_3_hut2_right;
- C$A45E,2;21 else
-*C$A460,2;21 C = room_5_hut3_right;
+ C$A456,1;21 Restore the route index
+ C$A457,2;21 Is the route index greater than or equal to routeindex_10_PRISONER_SLEEPS_1?
+ C$A459,3;21 Jump if so
+ C$A45C,2;21 {Otherwise room is room_3_HUT2RIGHT
+ C$A45E,2;21 }
+*C$A460,2;21 Room is room_5_HUT3RIGHT
 ; FALL THROUGH into character_sit_sleep_common.
 
 ; Common end of character sits/sleeps.
 ;
 ; Used by the routines at #R$A420 and #R$A444.
 ;
-; .
-;
-; I:C Room.
-; .
-; I:DE Pointer to location.
+; I:C  Room.
+; I:DE Pointer to route.
 @label=character_sit_sleep_common
-cC$A462,1
- C$A463,2;21 *HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)
- C$A465,1
- C$A466,3;21 {if (room_index != C) <%
+cC$A462,1;21 Move the route pointer back into #REGhl
+ C$A463,2;21 Stand still - set the character's route to route_HALT ($00) (Note: This receives a pointer to a route structure which is within either a characterstruct or a vischar).
+ C$A465,1;21 (unknown)
+ C$A466,3;21 {If the global current room index matches #REGc ...
  C$A469,1;21
- C$A46A,2;21 }
- C$A46C,1;21 {  HL -= 4;
+ C$A46A,2;21 Jump to refresh code}
+; Character is sitting or sleeping in a room presently not visible.
+ C$A46C,1;21 {Point #REGhl at characterstruct's room member
  C$A46D,2;21
  C$A46F,1;21 }
- C$A470,2;21 *HL = 255;
- C$A472,1;21 return; %>
-; Force a refresh.
-*C$A473,1;21 {HL += 26;
+ C$A470,2;21 Set room to room_NONE ($FF)
+ C$A472,1;21 Return
+; Character is visible - force a repaint.
+@label=character_sit_sleep_refresh
+*C$A473,1;21 {Pointer #REGhl at vischar's room member
  C$A474,2;21
  C$A476,1;21 }
- C$A477,2;21 *HL = 255;
+ C$A477,2;21 Set room to room_NONE ($FF)
 ; FALL THROUGH into select_room_and_plot.
 
 ; Select room and plot.
