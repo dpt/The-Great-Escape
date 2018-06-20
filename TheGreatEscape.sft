@@ -7001,50 +7001,50 @@ cC$A479,3;21 Expand out the room definition for room_index
 ;
 ; Used by the routine at #R$C7C6.
 @label=hero_sits
-cC$A47F,3;21 {roomdef_25_breakfast.bench_G = interiorobject_PRISONER_SAT_DOWN_END_TABLE;
- C$A482,2;21 }
- C$A484,3;21 HL = &hero_in_breakfast;
- C$A487,2;21 goto hero_sit_sleep_common;
+cC$A47F,3;21 {Set room definition 25's bench_G object (where the hero
+ C$A482,2;21 sits) to interiorobject_PRISONER_SAT_DOWN_END_TABLE}
+ C$A484,3;21 Point #REGhl at the hero_in_breakfast flag
+ C$A487,2;21 Jump to hero_sit_sleep_common
 
 ; The hero sleeps.
 ;
 ; Used by the routines at #R$B75A and #R$C7C6.
 @label=hero_sleeps
-cC$A489,3;21 {roomdef_2_hut2_left.bed = interiorobject_OCCUPIED_BED;
- C$A48C,2;21 }
- C$A48E,3;21 HL = &hero_in_bed;
+cC$A489,3;21 {Set room definition 2's bed object (where the hero
+ C$A48C,2;21 sleeps) to interiorobject_OCCUPIED_BED}
+ C$A48E,3;21 Point #REGhl at the hero_in_bed flag
 ; FALL THROUGH into hero_sit_sleep_common.
 
-; Common end of hero_sits/sleeps.
+; Common end of hero sits/sleeps.
 ;
 ; Used by the routine at #R$A47F.
 ;
-; I:HL Pointer to hero_in_breakfast or hero_in_bed.
+; I:HL Pointer to hero_in_breakfast or hero_in_bed flag.
 @label=hero_sit_sleep_common
-cC$A491,2;21 *HL = 0xFF; // set in breakfast, or in bed
- C$A493,1;21 A = 0;
- C$A494,3;21 {$8002 = A; // zero route index only
+cC$A491,2;21 Set the sit/sleep flag, whichever it was
+ C$A493,1;21 {Stand still - set the hero's route to route_HALT ($00)
+ C$A494,3;21
  C$A497,1;21 }
-; Set hero's position to zero.
- C$A498,3;21 {memset($800F, 0, 4);
+; Set hero position (x,y) to zero.
+ C$A498,3;21 {Zero $800F..$8012
  C$A49B,2;21
 *C$A49D,1;21
  C$A49E,1;21
  C$A49F,2;21 }
- C$A4A1,3;21 HL = $8000;
- C$A4A4,3;21 calc_vischar_iso_pos_from_vischar(); // reset hero
- C$A4A7,2;21 goto select_room_and_plot;
+ C$A4A1,3;21 {Reset the hero's screen position
+ C$A4A4,3;21 }
+ C$A4A7,2;21 Exit via select_room_and_plot
 
 ; Set hero's and prisoners_and_guards's routes to "go to yard".
 ;
 ; Used by the routine at #R$A206.
 @label=set_route_go_to_yard
-cC$A4A9,3;21 {set_hero_route(0x000E);
+cC$A4A9,3;21 {Set the hero's route to (routeindex_14_GO_TO_YARD, 0)
  C$A4AC,3;21 }
- C$A4AF,2;21 A = 0x0E;
- C$A4B1,1
- C$A4B2,2;21 C = 0;
- C$A4B4,3;21 set_prisoners_and_guards_route_B(); return; // exit via
+ C$A4AF,2;21 {And set the routes of all characters in
+ C$A4B1,1;21 prisoners_and_guards to the same route
+ C$A4B2,2;21
+ C$A4B4,3;21 (exit via)}
 
 ; Set hero's and prisoners_and_guards's routes to "go to yard" reversed.
 ;
