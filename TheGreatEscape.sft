@@ -7068,24 +7068,24 @@ cC$A4C5,3;21 {Set the hero's route to (routeindex_16_BREAKFAST_25, 0)
  C$A4CE,2;21
  C$A4D0,3;21 (exit via)}
 
-; entered_move_characters is non-zero (another one).
+; Character event: used when entered_move_characters is non-zero.
 ;
 ; Used by the routine at #R$C7C6.
 ; .
 ; Something character related [very similar to the routine at $A3F3].
 @label=charevnt_breakfast_state
-cC$A4D3,3;21 A = character_index;
- C$A4D6,2;21 goto $A4E4;
+cC$A4D3,3;21 Get the current character index
+ C$A4D6,2;21 Jump to charevnt_breakfast_common
 
-; entered_move_characters is zero (another one).
+; Character event: used when entered_move_characters is zero.
 ;
 ; Used by the routine at #R$C7C6.
 @label=charevnt_breakfast_vischar
-cC$A4D8,3;21 A = IY[0]; // character index
- C$A4DB,1;21 {if (A != character_0_COMMANDANT) goto charevnt_breakfast_common;
- C$A4DC,2;21 }
- C$A4DE,3;21 { set_hero_route(location_002B); // exit via
- C$A4E1,3;21 }
+cC$A4D8,3;21 Read the current vischar's character index
+ C$A4DB,1;21 {If it's not the commandant (0) then goto
+ C$A4DC,2;21 charevnt_breakfast_common}
+ C$A4DE,3;21 {Otherwise set the commandant's route to ($2B,$00) and
+ C$A4E1,3;21 exit via}
 
 ; Common end of above two routines.
 ;
