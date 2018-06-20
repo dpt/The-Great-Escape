@@ -7050,23 +7050,23 @@ cC$A4A9,3;21 {Set the hero's route to (routeindex_14_GO_TO_YARD, 0)
 ;
 ; Used by the routine at #R$A215.
 @label=set_route_go_to_yard_reversed
-cC$A4B7,3;21 {set_hero_route(0x048E);
- C$A4BA,3;21 }
- C$A4BD,2;21 A = 0x8E;
- C$A4BF,1
- C$A4C0,2;21 C = 4;
- C$A4C2,3;21 set_prisoners_and_guards_route_B(); return; // exit via
+cC$A4B7,3;21 {Set the hero's route to
+ C$A4BA,3;21 (REVERSED routeindex_14_GO_TO_YARD, 4)}
+ C$A4BD,2;21 {And set the routes of all characters in
+ C$A4BF,1;21 prisoners_and_guards to the same route
+ C$A4C0,2;21
+ C$A4C2,3;21 (exit via)}
 
 ; Set hero's and prisoners_and_guards's routes to "go to breakfast".
 ;
 ; Used by the routine at #R$A1F9.
 @label=set_route_go_to_breakfast
-cC$A4C5,3;21 {set_hero_route(0x0010);
+cC$A4C5,3;21 {Set the hero's route to (routeindex_16_BREAKFAST_25, 0)
  C$A4C8,3;21 }
- C$A4CB,2;21 A = 0x10;
- C$A4CD,1
- C$A4CE,2;21 C = 0;
- C$A4D0,3;21 set_prisoners_and_guards_route_B(); return; // exit via
+ C$A4CB,2;21 {And set the routes of all characters in
+ C$A4CD,1;21 prisoners_and_guards to the same route
+ C$A4CE,2;21
+ C$A4D0,3;21 (exit via)}
 
 ; entered_move_characters is non-zero (another one).
 ;
