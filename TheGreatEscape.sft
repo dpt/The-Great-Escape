@@ -6994,8 +6994,8 @@ cC$A462,1;21 Move the route pointer back into #REGhl
 ;
 ; Used by the routine at #R$A491.
 @label=select_room_and_plot
-cC$A479,3;21 select_room_and_plot: setup_room();
- C$A47C,3;21 plot_interior_tiles(); return;
+cC$A479,3;21 Expand out the room definition for room_index
+ C$A47C,3;21 Expand tile buffer into screen buffer, exit via
 
 ; The hero sits.
 ;
