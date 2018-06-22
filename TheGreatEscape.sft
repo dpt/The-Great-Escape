@@ -7127,12 +7127,12 @@ cC$A4FD,2;21 {Set route to (routeindex_26_GUARD_12_ROLL_CALL, 0)
 ;
 ; Used by the routines at #R$9DE5 and #R$A51C.
 @label=screen_reset
-cC$A50B,3;21 wipe_visible_tiles();
- C$A50E,3;21 plot_interior_tiles();
- C$A511,3;21 zoombox();
- C$A514,3;21 plot_game_window();
- C$A517,2;21 A = attribute_WHITE_OVER_BLACK;
- C$A519,3;21 set_game_window_attributes(); return; // exit via
+cC$A50B,3;21 Wipe the visible tiles array
+ C$A50E,3;21 Expand tile buffer into screen buffer
+ C$A511,3;21 Zoombox the scene onto the screen
+ C$A514,3;21 Plot the game screen
+ C$A517,2;21 Set #REGa to attribute_WHITE_OVER_BLACK
+ C$A519,3;21 Set game window attributes (exit via)
 
 ; Hero has escaped.
 ;
