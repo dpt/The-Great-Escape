@@ -7141,67 +7141,69 @@ cC$A50B,3;21 Wipe the visible tiles array
 ; Print 'well done' message then test to see if the correct objects were used
 ; in the escape attempt.
 @label=escaped
-cC$A51C,3;21 screen_reset();
+cC$A51C,3;21 Reset the screen
 ; Print standard prefix messages.
- C$A51F,3;21 HL = &escape_strings[0];
- C$A522,3;21 screenlocstring_plot(); // WELL DONE
- C$A525,3;21 screenlocstring_plot(); // YOU HAVE ESCAPED
- C$A528,3;21 screenlocstring_plot(); // FROM THE CAMP
-; Form escape items bitfield.
- C$A52B,2;21 C = 0; // zero flag
- C$A52D,3;21 HL = &items_held[0];
- C$A530,3;21 join_item_to_escapeitem();
- C$A533,1;21 HL++; // &items_held[1];
- C$A534,3;21 join_item_to_escapeitem();
+ C$A51F,3;21 Point #REGhl at the escape messages
+ C$A522,3;21 {Print "WELL DONE"
+ C$A525,3;21 "YOU HAVE ESCAPED"
+ C$A528,3;21 "FROM THE CAMP" (each print call advances #REGhl)}
+; Form an escape items bitfield.
+ C$A52B,2;21 Clear the item flags
+ C$A52D,3;21 Point #REGhl at the first held item
+ C$A530,3;21 Turn the item into a flag
+ C$A533,1;21 Point #REGhl at the second held item
+ C$A534,3;21 Turn the item into a flag, merging with previous result
 ; Print item-tailored messages.
- C$A537,1;21 A = C;
- C$A538,2;21 {if (A == escapeitem_COMPASS + escapeitem_PURSE) goto success;
- C$A53A,2;21 }
- C$A53C,2;21 {else if (A != escapeitem_COMPASS + escapeitem_PAPERS) goto captured;
- C$A53E,2;21 }
+ C$A537,1;21 Move flags into #REGa
+ C$A538,2;21 {If the flags show we're holding are escapeitem_COMPASS
+ C$A53A,2;21 and escapeitem_PURSE then jump to the success case}
+ C$A53C,2;21 {Otherwise if we don't have both escapeitem_COMPASS and
+ C$A53E,2;21 escapeitem_PAPERS jump to the captured case}
 @label=escaped_success
 @nowarn
-*C$A540,3;21 success: HL = &escape_strings[3];
- C$A543,3;21 screenlocstring_plot(); // AND WILL CROSS THE
- C$A546,3;21 screenlocstring_plot(); // BORDER SUCCESSFULLY
- C$A549,2;21 A = 0xFF; // success - reset game
- C$A54B,1
- C$A54C,2;21 goto press_any_key;
+*C$A540,3;21 Point #REGhl at the fourth escape message
+ C$A543,3;21 {Print "AND WILL CROSS THE
+ C$A546,3;21 "BORDER SUCCESSFULLY"}
+ C$A549,2;21 {Signal to reset the game at the end of this routine
+ C$A54B,1;21 }
+ C$A54C,2;21 Jump to "press any key"
 @label=escaped_captured
-*C$A54E,1;21 captured:
+*C$A54E,1;21 Save flags
 @nowarn
- C$A54F,3;21 HL = &escape_strings[5];
- C$A552,3;21 screenlocstring_plot(); // BUT WERE RECAPTURED
- C$A555,2
- C$A557,2;21 {if (A >= escapeitem_UNIFORM) goto plot; // at least a uniform => 'but were recaptured' // bug? plotting twice
+ C$A54F,3;21 Point #REGhl at the sixth escape message
+ C$A552,3;21 Print "BUT WERE RECAPTURED"
+ C$A555,1;21 {Fetch flags
+ C$A556,1;21 }
+ C$A557,2;21 {If flags include escapeitem_UNIFORM print "AND SHOT AS A SPY"
  C$A559,2;21 }
 @nowarn
- C$A55B,3;21 HL = &escape_strings[7];
- C$A55E,1;21 {if (A == 0) goto plot; // no objects => 'totally unprepared'
+ C$A55B,3;21 Point #REGhl at the eighth escape message
+ C$A55E,1;21 {If flags is zero then print "TOTALLY UNPREPARED"
  C$A55F,2;21 }
 @nowarn
- C$A561,3;21 HL = &escape_strings[8];
- C$A564,2;21 {if ((A & escapeitem_COMPASS) == 0) goto plot; // no compass => 'totally lost'
+ C$A561,3;21 Point #REGhl at the ninth escape message
+ C$A564,2;21 {If there was no compass then print "TOTALLY LOST"
  C$A566,2;21 }
 @nowarn
- C$A568,3;21 HL = &escape_strings[9];
+ C$A568,3;21 Print "DUE TO LACK OF PAPERS"
 @label=escaped_plot
-*C$A56B,3;21 plot: screenlocstring_plot();
+*C$A56B,3;21 Print
 @nowarn
 @label=escaped_press_any_key
-*C$A56E,3;21 press_any_key: HL = &escape_strings[10];
- C$A571,3;21 screenlocstring_plot(); // PRESS ANY KEY
+*C$A56E,3;21 {Print "PRESS ANY KEY"
+ C$A571,3;21 }
 ; Wait for a keypress.
-*C$A574,3;21 {do <% keyscan_all(); %> while (!Z); // down press
+*C$A574,3;21 {Wait for a key down
  C$A577,2;21 }
-*C$A579,3;21 {do <% keyscan_all(); %> while (Z); // up press
+*C$A579,3;21 {Wait for a key up
  C$A57C,2;21 }
- C$A57E,1
+ C$A57E,1;21 Fetch flags
 ; Reset the game, or send the hero to solitary.
- C$A57F,2;21 {if (A == 0xFF || A >= escapeitem_UNIFORM) <% reset_game(); return; %> // exit via
- C$A581,5;21
- C$A586,3;21 }
- C$A589,3;21 solitary(); return; // exit via
+ C$A57F,2;21 Are the flags $FF?
+ C$A581,3;21 Reset the game if so (exit via)
+ C$A584,2;21 Are the flags greater or equal to escapeitem_UNIFORM?
+ C$A586,3;21 Reset the game if so (exit via)
+ C$A589,3;21 Otherwise send the hero to solitary (exit via)
 
 ; Key scan of all ports.
 ;
