@@ -7089,25 +7089,28 @@ cC$A4D8,3;21 Read the current vischar's character index
 
 ; Common end of above two routines.
 ;
+; Sets routes for prisoners and guards.
+; .
 ; Used by the routines at #R$A4D3 and #R$A4D8.
 ;
-; I:A Character.
-; I:HL Pointer to location.
+; I:A  Character index.
+; I:HL Pointer to route.
 @label=charevnt_breakfast_common
-cC$A4E4,1;21 {HL[1] = 0;
+cC$A4E4,1;21 {Set the route's step to zero
  C$A4E5,2;21 }
- C$A4E7,2;21 {if (A > 19) <% // change this to 20 and character_21? stands in place of a guard
- C$A4E9,3;21
+ C$A4E7,2;21 Is the character index less than or equal to
+ ;21 character_19_GUARD_DOG_4?
+ C$A4E9,3;21 {Jump to hostile handling if so
  C$A4EC,3;21 }
- C$A4EF,2;21 tmp_A = A - 2; %> // seems to affect position at table 20.. => 18..
- C$A4F1,2;21 else <%
-*C$A4F3,2
- C$A4F5,2;21 tmp_A = 24; // interleaved // guard character?
- C$A4F7,2;21 {  if (A & (1<<0)) tmp_A++; %>
- C$A4F9,1;21 }
-*C$A4FA,1;21 {HL[0] = tmp_A;
+ C$A4EF,2;21 Map prisoner 1..6 to route 18..23 (routes to sitting)
+ C$A4F1,2;21 Jump to store
+*C$A4F3,2;21 Is the character index odd?
+ C$A4F5,2;21 Route index is 24 if even
+ C$A4F7,2;21 Jump to store if even
+ C$A4F9,1;21 Route index is 25 if odd
+*C$A4FA,1;21 {Store route index
  C$A4FB,1;21 }
- C$A4FC,1;21 return;
+ C$A4FC,1;21 Return
 
 ; Go to roll call.
 ;
