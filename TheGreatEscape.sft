@@ -2646,7 +2646,7 @@ bB$7075,1;40 5
 @label=interior_object_defs
 bW$7095,2;21 {Array of pointer to interior object definitions, 54
  W$7097,2;21 entries long (== number of interior objects).
- W$7099,2*51
+ W$7099,2*51;21
  W$70FF,2;21 }
 
 ; Room object 0: Straight tunnel section SW-NE
@@ -7276,7 +7276,7 @@ cC$A5BF,1;21 {E = *HL++; // read screen address into DE
 *C$A5C5,1;21 do <%
  C$A5C6,3;21 plot_glyph();
  C$A5C9,1;21 HL++;
- C$A5CA,1
+ C$A5CA,1;21
  C$A5CB,2;21 %> while (--B);
  C$A5CD,1;21 return;
 
@@ -7495,7 +7495,7 @@ cC$A826,2;21 {A = (A & 3) * 4;
 ; Note: Exits with banked registers active.
 @label=plot_all_tiles
 cC$A8A2,3;21 DE = &tile_buf[0]; // visible tiles array
- C$A8A5,1
+ C$A8A5,1;21
  C$A8A6,3;21 HLdash = &map_buf[0]; // 7x5 supertile refs
  C$A8A9,3;21 DEdash = &window_buf[0]; // screen buffer start address
  C$A8AC,3;21 A = map_position[0];
@@ -7504,11 +7504,11 @@ cC$A8A2,3;21 DE = &tile_buf[0]; // visible tiles array
  C$A8B2,1;21 PUSH DEdash
  C$A8B3,1;21 PUSH HLdash
  C$A8B4,1;21 PUSH AFdash
- C$A8B5,3
+ C$A8B5,3;21
  C$A8B8,3;21 plot_vertical_tiles_common();
- C$A8BB,2
+ C$A8BB,2;21
  C$A8BD,1;21 DE++;
- C$A8BE,2
+ C$A8BE,2;21
  C$A8C0,1;21 POP HLdash
  C$A8C1,1;21 {  Cdash = ++A;
  C$A8C2,1;21 }
@@ -7544,7 +7544,7 @@ cC$A8CF,3;21 DE = &tile_buf[23];
 ; Used by the routines at #R$AA05 and #R$AA26.
 @label=plot_leftmost_tiles
 cC$A8E7,3;21 DE = &tile_buf[0]; // visible tiles array
- C$A8EA,1
+ C$A8EA,1;21
  C$A8EB,3;21 HLdash = &map_buf[0]; // 7x5 supertile refs
  C$A8EE,3;21 DEdash = &window_buf[0]; // screen buffer start address
  C$A8F1,3;21 A = map_position[0]; // map_position lo
@@ -7564,11 +7564,11 @@ cC$A8F4,2;21 A &= 3;
  C$A902,1
 ; Initial edge.
  C$A903,1;21 Adash = *HLdash;
- C$A904,1
+ C$A904,1;21
  C$A905,1;21 {HL = &super_tiles[0] + Adash * 16; // supertiles
  C$A906,9;21
  C$A90F,1;21 }
- C$A910,1
+ C$A910,1;21
  C$A911,1;21 A += L;
  C$A912,1;21 L = A;
  C$A913,1;21 RRA
@@ -7578,7 +7578,7 @@ cC$A8F4,2;21 A &= 3;
  C$A919,2;21 }
  C$A91B,2;21 {if (A == 0) A = 4;
  C$A91D,2;21 }
-*C$A91F,1
+*C$A91F,1;21
  C$A920,3;21 BC = 24; // 24 iterations (screen rows?)
 *C$A923,1;21 do <%
  C$A924,1;21 A = *DE;
@@ -7588,10 +7588,10 @@ cC$A8F4,2;21 A &= 3;
  C$A92B,1;21
  C$A92C,1;21 }
  C$A92D,1;21 HL += BC;
- C$A92E,1
+ C$A92E,1;21
  C$A92F,1;21 {%> while (--A);
  C$A930,3;21 }
- C$A933,2
+ C$A933,2;21
  C$A935,1;21 {HL += 7;
  C$A936,5;21
  C$A93B,1;21 }
@@ -7599,7 +7599,7 @@ cC$A8F4,2;21 A &= 3;
 *C$A93C,2;21 B = 3; // 3 iterations
 *C$A93E,1;21 do <%
  C$A93F,1;21 A = *HL;
- C$A940,1
+ C$A940,1;21
  C$A941,1;21 {  HL = &super_tiles[0] + A * 16; // supertiles
  C$A942,9;21
  C$A94B,1;21 }
@@ -7608,7 +7608,7 @@ cC$A8F4,2;21 A &= 3;
  C$A94E,1;21 A += L;
  C$A94F,1;21 L = A;
  C$A950,3;21 BC = 24; // stride
- C$A953,1
+ C$A953,1;21
  C$A954,2;21 A = 4;
 *C$A956,1;21 do <%
  C$A957,1;21 A = *DE;
@@ -7618,18 +7618,18 @@ cC$A8F4,2;21 A &= 3;
  C$A95D,2;21 {    DE += 4; // stride
  C$A95F,1;21
  C$A960,1;21 }
- C$A961,1
+ C$A961,1;21
  C$A962,1;21 {  %> while (--A);
  C$A963,3;21 }
- C$A966,2
+ C$A966,2;21
  C$A968,1;21 {  HL += 7;
  C$A969,5;21
  C$A96E,1;21 }
-*C$A96F,1
+*C$A96F,1;21
  C$A970,2;21 %> while (--B);
 ; Trailing edge.
  C$A972,1;21 A = *HL;
- C$A973,1
+ C$A973,1;21
  C$A974,1;21 {HL = &super_tiles[0] + A * 16; // supertiles
  C$A975,9;21
  C$A97E,1;21 }
@@ -7640,7 +7640,7 @@ cC$A8F4,2;21 A &= 3;
  C$A987,2;21
  C$A989,1;21 }
  C$A98A,3;21 BC = 24; // stride
- C$A98D,1
+ C$A98D,1;21
 *C$A98E,1;21 do <%
  C$A98F,1;21 A = *DE;
  C$A990,1;21 *HL = A;
@@ -7649,10 +7649,10 @@ cC$A8F4,2;21 A &= 3;
  C$A996,1;21 A += E;
  C$A997,1;21 E = A;
  C$A998,1;21 HL += BC;
- C$A999,1
+ C$A999,1;21
  C$A99A,1;21 {%> while (--A);
  C$A99B,3;21 }
- C$A99E,1
+ C$A99E,1;21
  C$A99F,1;21 return;
 
 ; Call plot_tile then advance DE' by a row.
@@ -7660,11 +7660,11 @@ cC$A8F4,2;21 A &= 3;
 ; Used by the routine at #R$A8F4.
 @label=plot_tile_then_advance
 cC$A9A0,3;21 plot_tile();
- C$A9A3,1
+ C$A9A3,1;21
  C$A9A4,1;21 {DEdash += 0xBF; // 0xBF = 24 * 8 - 1
  C$A9A5,5;21
  C$A9AA,1;21 }
-*C$A9AB,1
+*C$A9AB,1;21
  C$A9AC,1;21 return;
 
 ; Plot a tile then increment DE' by 1.
@@ -7675,7 +7675,7 @@ cC$A9A0,3;21 plot_tile();
 ; I:DE' Output buffer start address.
 ; I:HL' Pointer to supertile index (used to select the correct tile group).
 @label=plot_tile
-cC$A9AD,2
+cC$A9AD,2;21
  C$A9AF,1;21 Adash = *HLdash; // get supertile index
  C$A9B0,3;21 BCdash = &exterior_tiles[0];
  C$A9B3,2;21 {if (Adash < 45) goto chosen;
@@ -7687,7 +7687,7 @@ cC$A9AD,2
  C$A9C2,3;21 BCdash = &exterior_tiles[145 + 220]; // set 3
 @label=plot_tile_chosen
 *C$A9C5,1;21 chosen: PUSH HLdash;
- C$A9C6,1
+ C$A9C6,1;21
  C$A9C7,1;21 {HLdash = A * 8 + BCdash;
  C$A9C8,5;21
  C$A9CD,1;21 }
@@ -7701,13 +7701,13 @@ cC$A9AD,2
  C$A9D7,1;21 *HLdash = Adash;
  C$A9D8,1;21 HLdash += BCdash; // stride
  C$A9D9,1;21 E++;
- C$A9DA,1
+ C$A9DA,1;21
  C$A9DB,1;21 A--;
  C$A9DC,3;21 %> while (A);
  C$A9DF,1;21 POP DEdash;
  C$A9E0,1;21 DEdash++;
  C$A9E1,1;21 POP HLdash;
- C$A9E2,1
+ C$A9E2,1;21
  C$A9E3,1;21 return;
 
 ; Shunt the map left.
@@ -7720,12 +7720,12 @@ cC$A9E4,3;21 HL = &map_position;
  C$A9EB,3;21 HL = &tile_buf[1];
  C$A9EE,3;21 DE = &tile_buf[0];
  C$A9F1,3;21 BC = tile_buf_length - 1;
- C$A9F4,2
+ C$A9F4,2;21
 @nowarn
  C$A9F6,3;21 HL = &window_buf[1];
  C$A9F9,3;21 DE = &window_buf[0];
  C$A9FC,3;21 BC = window_buf_length - 1;
- C$A9FF,2
+ C$A9FF,2;21
  C$AA01,3;21 plot_rightmost_tiles();
  C$AA04,1;21 return;
 
@@ -7740,11 +7740,11 @@ cC$AA05,3;21 HL = &map_position;
  C$AA0C,3;21 HL = &tile_buf[24 * 17 - 2];
  C$AA0F,3;21 DE = &tile_buf[24 * 17 - 1];
  C$AA12,3;21 BC = tile_buf_length - 1;
- C$AA15,2
+ C$AA15,2;21
  C$AA17,3;21 HL = &window_buf[24 * 17 * 8 - 1];
  C$AA1A,3;21 DE = &window_buf[24 * 17 * 8];
  C$AA1D,3;21 BC = window_buf_length; // Bug: One byte too long.
- C$AA20,2
+ C$AA20,2;21
  C$AA22,3;21 plot_leftmost_tiles();
  C$AA25,1;21 return;
 
@@ -7759,13 +7759,13 @@ cC$AA26,1;21 L--;
  C$AA2E,3;21 HL = &tile_buf[24];
  C$AA31,3;21 DE = &tile_buf[1];
  C$AA34,3;21 BC = tile_buf_length - 24;
- C$AA37,2
+ C$AA37,2;21
 @nowarn
  C$AA39,3;21 HL = &window_buf[24 * 8];
 @nowarn
  C$AA3C,3;21 DE = &window_buf[1];
  C$AA3F,3;21 BC = window_buf_length - 24 * 8;
- C$AA42,2
+ C$AA42,2;21
  C$AA44,3;21 plot_bottommost_tiles();
  C$AA47,3;21 plot_leftmost_tiles();
  C$AA4A,1;21 return;
@@ -7780,12 +7780,12 @@ cC$AA4B,3;21 HL = &map_position[1];
  C$AA52,3;21 HL = &tile_buf[24];
  C$AA55,3;21 DE = &tile_buf[0];
  C$AA58,3;21 BC = tile_buf_length - 24;
- C$AA5B,2
+ C$AA5B,2;21
 @nowarn
  C$AA5D,3;21 HL = &window_buf[24 * 8];
  C$AA60,3;21 DE = &window_buf[0];
  C$AA63,3;21 BC = window_buf_length - 24 * 8;
- C$AA66,2
+ C$AA66,2;21
  C$AA68,3;21 plot_bottommost_tiles();
  C$AA6B,1;21 return;
 
@@ -7800,11 +7800,11 @@ cC$AA6C,3;21 HL = &map_position[1];
  C$AA73,3;21 HL = &tile_buf[24 * 16 - 1];
  C$AA76,3;21 DE = &tile_buf[24 * 17 - 1];
  C$AA79,3;21 BC = tile_buf_length - 24;
- C$AA7C,2
+ C$AA7C,2;21
  C$AA7E,3;21 HL = &window_buf[24 * 16 * 8 - 1];
  C$AA81,3;21 DE = &window_buf[24 * 17 * 8 - 1];
  C$AA84,3;21 BC = window_buf_length - 24 * 8;
- C$AA87,2
+ C$AA87,2;21
  C$AA89,3;21 plot_topmost_tiles();
  C$AA8C,1;21 return;
 
@@ -7821,11 +7821,11 @@ cC$AA8D,1;21 L++;
 @nowarn
  C$AA98,3;21 DE = &tile_buf[24 * 17 - 2];
  C$AA9B,3;21 BC = tile_buf_length - 24 - 1;
- C$AA9E,2
+ C$AA9E,2;21
  C$AAA0,3;21 HL = &window_buf[24 * 16 * 8 - 1];
  C$AAA3,3;21 DE = &window_buf[24 * 17 * 8 - 2];
  C$AAA6,3;21 BC = window_buf_length - 24 * 8 - 1;
- C$AAA9,2
+ C$AAA9,2;21
  C$AAAB,3;21 plot_topmost_tiles();
  C$AAAE,3;21 plot_rightmost_tiles();
  C$AAB1,1;21 return;
@@ -7857,7 +7857,7 @@ cC$AAB2,3;21 {if (room_index) return; // Can't move the map when indoors.
  C$AACC,2;21 {if (C & vischar_ANIMINDEX_BIT7) A ^= 2; // exchange up and down
  C$AACE,2;21
  C$AAD0,2;21 }
-*C$AAD2,1
+*C$AAD2,1;21
  C$AAD3,1;21 {HL = &move_map_jump_table[A];
  C$AAD4,3;21
 @nowarn
@@ -7867,7 +7867,7 @@ cC$AAB2,3;21 {if (room_index) return; // Can't move the map when indoors.
  C$AADC,1;21 }
  C$AADD,1;21 H = *HL;
  C$AADE,1;21 L = A;
- C$AADF,3
+ C$AADF,3;21
 @keep
  C$AAE2,3;21 B, C = 0x7C, 0x00;
  C$AAE5,2;21 {if (A >= 2) B = 0x00; // bottom of the map clamp
@@ -7881,12 +7881,12 @@ cC$AAB2,3;21 {if (room_index) return; // Can't move the map when indoors.
  C$AAF9,1;21
  C$AAFA,2;21 }
 *C$AAFC,1;21 popret:
- C$AAFD,1
+ C$AAFD,1;21
  C$AAFE,1;21 {  return; %>
 *C$AAFF,1;21
  C$AB00,1;21
  C$AB01,2;21 }
- C$AB03,1
+ C$AB03,1;21
  C$AB04,3;21 HL = &move_map_y; // screen offset of some sort?
  C$AB07,2;21 {if (A < 2) <%
  C$AB09,2;21 }
@@ -7897,7 +7897,7 @@ cC$AAB2,3;21 {if (room_index) return; // Can't move the map when indoors.
  C$AB10,1;21 }
 *C$AB11,2;21 A &= 3;
  C$AB13,1;21 *HL = A;
- C$AB14,1
+ C$AB14,1;21
  C$AB15,3;21 HL = 0x0000;
  C$AB18,1;21 {if (A == 0) goto $AB2A;
  C$AB19,2;21 }
