@@ -7116,12 +7116,12 @@ cC$A4E4,1;21 {Set the route's step to zero
 ;
 ; Used by the routine at #R$A1F0.
 @label=go_to_roll_call
-cC$A4FD,2;21 A = 26;
- C$A4FF,1
- C$A500,2;21 C = 0;
- C$A502,3;21 set_prisoners_and_guards_route();
- C$A505,3;21 {set_hero_route(location_002D);
- C$A508,3;21 }
+cC$A4FD,2;21 {Set route to (routeindex_26_GUARD_12_ROLL_CALL, 0)
+ C$A4FF,1;21
+ C$A500,2;21 }
+ C$A502,3;21 Set individual routes for prisoners_and_guards
+ C$A505,3;21 {Set the hero's route to
+ C$A508,3;21 (routeindex_45_HERO_ROLL_CALL, 0)}
 
 ; Reset the screen.
 ;
