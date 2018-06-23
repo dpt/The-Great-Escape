@@ -7233,11 +7233,11 @@ cC$A58C,3;21 Set #REGb to $FE (initial keyboard half-row selector)
 ; I:HL Pointer to (single) item slot.
 ; O:C  Previous return value + escapeitem_ flag.
 @label=join_item_to_escapeitem
-cC$A59C,1;21 A = *HL;
- C$A59D,3;21 item_to_escapeitem();
- C$A5A0,1;21 {C += A;
+cC$A59C,1;21 Fetch the item we've been pointed at
+ C$A59D,3;21 Turn the item into a flag
+ C$A5A0,1;21 {Merge the new flag with the previous
  C$A5A1,1;21 }
- C$A5A2,1;21 return;
+ C$A5A2,1;21 Return
 
 ; Return a bitmask indicating the presence of items required for escape.
 ;
@@ -7246,23 +7246,23 @@ cC$A59C,1;21 A = *HL;
 ; I:A Item.
 ; O:A Bitfield.
 @label=item_to_escapeitem
-cC$A5A3,2;21 {if (A == item_COMPASS) <% A = escapeitem_COMPASS; return;
- C$A5A5,2;21 %>
- C$A5A7,2;21
+cC$A5A3,2;21 Is it item_COMPASS?
+ C$A5A5,2;21 No - try the next interesting item
+ C$A5A7,2;21 {Otherwise return flag escapeitem_COMPASS
  C$A5A9,1;21 }
-*C$A5AA,2;21 {if (A == item_PAPERS)  <% A = escapeitem_PAPERS; return;
- C$A5AC,2;21 %>
- C$A5AE,2;21
+*C$A5AA,2;21 Is it item_PAPERS?
+ C$A5AC,2;21 No - try the next interesting item
+ C$A5AE,2;21 {Otherwise return flag escapeitem_PAPERS
  C$A5B0,1;21 }
-*C$A5B1,2;21 {if (A == item_PURSE)   <% A = escapeitem_PURSE; return;
- C$A5B3,2;21 %>
- C$A5B5,2;21
+*C$A5B1,2;21 Is it item_PURSE?
+ C$A5B3,2;21 No - try the next interesting item
+ C$A5B5,2;21 {Otherwise return flag escapeitem_PURSE
  C$A5B7,1;21 }
-*C$A5B8,2;21 {if (A == item_UNIFORM) <% A = escapeitem_UNIFORM; return;
- C$A5BA,2;21 %>
+*C$A5B8,2;21 Is it item_UNIFORM?
+ C$A5BA,2;21 {Return escapeitem_UNIFORM if so
  C$A5BC,1;21 }
- C$A5BD,1;21 A = 0; // have no required objects
- C$A5BE,1;21 return;
+ C$A5BD,1;21 {Otherwise return zero
+ C$A5BE,1;21 }
 
 ; Plot a screenlocstring.
 ;
