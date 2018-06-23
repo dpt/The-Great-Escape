@@ -7205,21 +7205,25 @@ cC$A51C,3;21 Reset the screen
  C$A586,3;21 Reset the game if so (exit via)
  C$A589,3;21 Otherwise send the hero to solitary (exit via)
 
-; Key scan of all ports.
+; Check for any key press.
 ;
 ; Used by the routine at #R$A51C.
 ;
-; O:A Pressed key.
+; O:F NZ if a key was pressed, Z otherwise.
 @label=keyscan_all
-cC$A58C,3;21 BC = $FEFE;
-*C$A58F,2;21 do <%
- C$A591,1;21 {  A = ~A & 0x1F;
- C$A592,2;21 }
- C$A594,1;21 if (A) return;
- C$A595,2;21 RLC B
- C$A597,3;21 %> while (carry);
- C$A59A,1;21 A = 0;
- C$A59B,1;21 return;
+cC$A58C,3;21 Set #REGb to $FE (initial keyboard half-row selector)
+ ;21 and #REGc to $FE (keyboard port number)
+; Start loop
+*C$A58F,2;21 Read the port
+ C$A591,1;21 Complement the value returned to change it from
+ ;21 active-low
+ C$A592,2;21 Discard any non-key flags
+ C$A594,1;21 Return with Z clear if any key was pressed
+ C$A595,2;21 Rotate the half-row selector
+ ;21 ($FE -> $FD -> $FB -> .. -> $7F)
+ C$A597,3;21 ...loop until the zero bit shifts out (eight iterations)
+ C$A59A,1;21 {No keys were pressed - return with Z set
+ C$A59B,1;21 }
 
 ; Call item_to_escapeitem then merge result with a previous escapeitem.
 ;
