@@ -7373,39 +7373,53 @@ gW$A7C7,2
 
 ; Get supertiles.
 ;
+; Using map_position copies supertile indices from map_tiles at $BCB8 into the
+; map_buf buffer at $FF58.
+; .
 ; Used by the routines at #R$A9E4, #R$AA05, #R$AA26, #R$AA4B, #R$AA6C, #R$AA8D
 ; and #R$B2FC.
-; .
-; Uses map_position to copy supertile indices from map into the buffer at
-; $FF58.
 ;
 ; .
 ;
 ; Get vertical offset.
 @label=get_supertiles
-cC$A7C9,3;21 {A = (map_position >> 8) & 0xFC; // A = 0, 4, 8, 12, ...
- C$A7CC,2;21 }
-; Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
- C$A7CE,1;21 {HL = &map_tiles[-54] + (A + (A >> 1)) * 9; // must be skipping the first row.
- C$A7CF,10;21
-*C$A7D9,1;21
- C$A7DA,8;21
- C$A7E2,1;21 }
-; Add horizontal offset.
- C$A7E3,3;21 {HL += (map_position & 0xFF) >> 2;
- C$A7E6,7;21
- C$A7ED,1;21 }
+cC$A7C9,3;21 {Get the map position's Y component and round it down to
+ C$A7CC,2;21 a multiple of four}
+; Multiply the Y component by 13.5 producing 0, 54, 108, 162, ...
+ C$A7CE,1;21 {Copy #REGa into #REGhl
+ C$A7CF,2;21 }
+ C$A7D1,1;21 {Halve #REGa
+ C$A7D2,2;21 }
+ C$A7D4,1;21 {Add #REGa to #REGhl, giving us Y multiplied by 1.5
+ C$A7D5,3;21
+ C$A7D8,1;21 }
+*C$A7D9,1;21 {Copy #REGhl into #REGde
+ C$A7DA,1;21 }
+ C$A7DB,1;21 {Multiply by nine, giving us Y multiplied by 13.5
+ C$A7DC,2;21
+ C$A7DE,1;21 }
+ C$A7DF,3;21 Point #REGde at map_tiles but minus a whole row
+ C$A7E2,1;21 Combine
+; Add the X component.
+ C$A7E3,3;21 {Get the map position's X component and divide it by 4
+ C$A7E6,2;21
+ C$A7E8,2;21 }
+ C$A7EA,1;21 {Move #REGa into #REGde
+ C$A7EB,2;21 }
+ C$A7ED,1;21 Combine. Now we have a pointer into map_tiles
 ; Populate map_buf with 7x5 array of supertile refs.
- C$A7EE,2;21 A = 5; // 5 iterations
- C$A7F0,3;21 DE = &map_buf[0];
-*C$A7F3,2;21 {do <% memcpy(DE, HL, 7); DE += 7;
+ C$A7EE,2;21 Five rows
+ C$A7F0,3;21 Point #REGde at map_buf (a 7x5 scratch buffer which
+ ;21 holds copied-out supertile indices)
+; Start loop
+*C$A7F3,2;21 {Fill the buffer row with seven bytes from #REGhl
  C$A7F5,10;21
  C$A7FF,2;21 }
- C$A801,3;21 {  HL += 54; // stride - width of map
+ C$A801,3;21 {Move #REGhl forward by (stride - width of map_buf)
  C$A804,1;21 }
- C$A805,1;21 {%> while (--A);
+ C$A805,1;21 {...loop
  C$A806,3;21 }
- C$A809,1;21 return;
+ C$A809,1;21 Return
 
 ; Plot the complete bottommost row of tiles.
 ;
@@ -15055,7 +15069,7 @@ cC$F163,1;30 Disable interrupts.
  C$F1BC,4;30
  C$F1C0,3;30 }
  C$F1C3,3;30 reset_game();
- C$F1C6,3;30 goto main_loop_setup;
+ C$F1C6,3;30 goto ma holdsin_loop_setup;
 ; Initial state of a visible character.
 @label=vischar_initial
  B$F1C9,1;30 character
