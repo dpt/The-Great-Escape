@@ -7413,7 +7413,7 @@ cC$A7C9,3;21 {A = (map_position >> 8) & 0xFC; // A = 0, 4, 8, 12, ...
 @label=plot_bottommost_tiles
 @nowarn
 cC$A80A,3;21 DE = &tile_buf[24 * 16];
- C$A80D,1
+ C$A80D,1;21
 @nowarn
  C$A80E,3;21 HLdash = &map_buf[28];
  C$A811,3;21 A = map_position >> 8; // map_position hi
@@ -7426,7 +7426,7 @@ cC$A80A,3;21 DE = &tile_buf[24 * 16];
 ; Used by the routines at #R$AA6C and #R$AA8D.
 @label=plot_topmost_tiles
 cC$A819,3;21 DE = &state->tile_buf[0];
- C$A81C,1
+ C$A81C,1;21
  C$A81D,3;21 HLdash = &state->map_buf[0];
  C$A820,3;21 A = map_position >> 8; // map_position hi
  C$A823,3;21 DEdash = &state->window_buf[0];
@@ -7443,14 +7443,14 @@ cC$A826,2;21 {A = (A & 3) * 4;
  C$A82E,3;21 {A = (map_position[0] & 3) + Cdash;
  C$A831,2;21
  C$A833,1;21 }
- C$A834,1
+ C$A834,1;21
  C$A835,1;21 Adash = *HLdash;
  C$A836,1
 ; Initial edge.
  C$A837,1;21 {HL = &super_tiles[0] + Adash * 16;
  C$A838,9;21
  C$A841,1;21 }
- C$A842,1
+ C$A842,1;21
  C$A843,1;21 A += L;
  C$A844,1;21 L = A;
  C$A845,2;21 {A = -A & 3;
@@ -7464,13 +7464,13 @@ cC$A826,2;21 {A = (A & 3) * 4;
  C$A853,1;21 HL++;
  C$A854,1;21 DE++;
  C$A855,2;21 %> while (--B);
- C$A857,1
+ C$A857,1;21
  C$A858,1;21 HLdash++;
 ; Middle loop.
  C$A859,2;21 Bdash = 5; // 5 iterations
 *C$A85B,1;21 do <% PUSH BCdash
  C$A85C,1;21 A = *HLdash;
- C$A85D,1
+ C$A85D,1;21
  C$A85E,1;21 {  HL = &super_tiles[A];
  C$A85F,9;21
  C$A868,1;21 }
@@ -7484,7 +7484,7 @@ cC$A826,2;21 {A = (A & 3) * 4;
  C$A874,1;21 HL++;
  C$A875,1;21 DE++;
  C$A876,2;21 %> while (--B);
- C$A878,1
+ C$A878,1;21
  C$A879,1;21 HLdash++;
  C$A87A,1;21 POP BCdash
  C$A87B,2;21 %> while (--Bdash);
@@ -7492,7 +7492,7 @@ cC$A826,2;21 {A = (A & 3) * 4;
  C$A87D,1;21 A = Cdash; // assigned but never used?
  C$A87E,1;21 // unpaired?
  C$A87F,1;21 A = *HLdash;
- C$A880,1
+ C$A880,1;21
  C$A881,1;21 {HL = &super_tiles[A];
  C$A882,9;21
  C$A88B,1;21 }
@@ -7584,7 +7584,7 @@ cC$A8F4,2;21 A &= 3;
  C$A8FA,3;21 {A = ((map_position >> 8) & 3) * 4 + Cdash;
  C$A8FD,4;21
  C$A901,1;21 }
- C$A902,1
+ C$A902,1;21
 ; Initial edge.
  C$A903,1;21 Adash = *HLdash;
  C$A904,1;21
@@ -8094,7 +8094,7 @@ cC$ABF9,3;21 A = zoombox_y;
 @nowarn
 *C$AC10,3;21 DE = &state->window_buf[1];
  C$AC13,1;21 HL += DE;
- C$AC14,1
+ C$AC14,1;21
 @nowarn
  C$AC15,3;21 {HL = game_window_start_addresses[zoombox_y * 8]; // ie. * 16
  C$AC18,12;21
@@ -8104,7 +8104,7 @@ cC$ABF9,3;21 A = zoombox_y;
  C$AC28,3;21 {HL += zoombox_x;
  C$AC2B,1;21
  C$AC2C,1;21 }
- C$AC2D,1
+ C$AC2D,1;21
  C$AC2E,3;21 A = zoombox_horizontal_count;
  C$AC31,3;21 ($AC55) = A; // self modify
  C$AC34,2;21 {A = -A + 24;
@@ -8113,7 +8113,7 @@ cC$ABF9,3;21 A = zoombox_y;
  C$AC3B,3;21 A = zoombox_vertical_count;
  C$AC3E,1;21 B = A; // iterations
 *C$AC3F,1;21 do <%
- C$AC40,1
+ C$AC40,1;21
  C$AC41,2;21 A = 8; // 8 iterations
 *C$AC43,1;21 do <%
  C$AC44,3;21 {    BC = zoombox_horizontal_count;
@@ -8128,16 +8128,16 @@ cC$ABF9,3;21 A = zoombox_y;
  C$AC54,2;21 Adash -= 0; // self modified
  C$AC56,1;21 E = Adash;
  C$AC57,1;21 D++;
- C$AC58,1
+ C$AC58,1;21
  C$AC59,1;21 {  %> while (--A);
  C$AC5A,3;21 }
- C$AC5D,2
+ C$AC5D,2;21
  C$AC5F,3;21 BC = 0x0020;
  C$AC62,1;21 {  if (L >= 224) B = 0x07;
  C$AC63,4;21
  C$AC67,2;21 }
 *C$AC69,1;21 HL += BC;
- C$AC6A,2
+ C$AC6A,2;21
  C$AC6C,2;21 %> while (--B);
  C$AC6E,1;21 return;
 
@@ -8224,7 +8224,7 @@ cC$AC6F,3;21 {HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
 ; I:BC (preserved)
 ; I:HL Destination address.
 @label=zoombox_draw_tile
-cC$ACFC,4
+cC$ACFC,4;21
  C$AD00,1;21 {HL = &zoombox_tiles[A];
  C$AD01,8;21
  C$AD09,1;21 }
@@ -8246,7 +8246,7 @@ cC$ACFC,4
  C$AD20,1;21 }
 *C$AD21,3;21 {*HL = game_window_attribute;
  C$AD24,1;21 }
- C$AD25,3
+ C$AD25,3;21
  C$AD28,1;21 return;
 
 ; Searchlight movement data.
@@ -8392,16 +8392,16 @@ cC$ADBD,3;21 HL = &searchlight_state;
 *C$AE00,4;21 DE = map_position;
  C$AE04,3;21 HL = $AE77; // &searchlight_caught_coord + 1 byte; // compensating for HL--; jumped into
  C$AE07,2;21 B = 1; // 1 iteration
- C$AE09,2
+ C$AE09,2;21
  C$AE0B,2;21 goto $AE3F;
 *C$AE0D,3;21 not_tracking: HL = &searchlight_movements[0];
  C$AE10,2;21 B = 3; // 3 iterations == three searchlights
 *C$AE12,1;21 do <%
- C$AE13,1
+ C$AE13,1;21
  C$AE14,3;21 searchlight_movement();
- C$AE17,2
+ C$AE17,2;21
  C$AE19,3;21 searchlight_caught();
- C$AE1C,2
+ C$AE1C,2;21
  C$AE1E,4;21 DE = map_position;
 ; if (E + 23 < x || x + 16 < E) goto next;
 ; .
@@ -8420,14 +8420,14 @@ cC$ADBD,3;21 HL = &searchlight_state;
  C$AE39,3;21
  C$AE3C,3;21 }
 *C$AE3F,1;21 A = 0;
- C$AE40,1
+ C$AE40,1;21
  C$AE41,1;21 HL--;
  C$AE42,2;21 B = 0x00;
  C$AE44,1;21 {  if (*HL - E < 0) <%
  C$AE45,1;21
  C$AE46,3;21 }
  C$AE49,2;21 B = 0xFF;
- C$AE4B,1
+ C$AE4B,1;21
  C$AE4C,1;21 A = ~A;
  C$AE4D,1;21 %>
 *C$AE4E,1;21 C = Adash;
@@ -8445,11 +8445,11 @@ cC$ADBD,3;21 HL = &searchlight_state;
  C$AE5F,1;21 HL += BC;
  C$AE60,3;21 {  HL += 0x5846; // address of top-left game window attribute
  C$AE63,1;21 }
- C$AE64,2
+ C$AE64,2;21
  C$AE66,3;21 searchlight_clip_left = A;
  C$AE69,3;21 searchlight_plot();
 *C$AE6C,1;21 next:
- C$AE6D,1
+ C$AE6D,1;21
  C$AE6E,3;21 {  HL += 7;
  C$AE71,1;21 }
  C$AE72,2;21 %> while (--B);
@@ -8511,7 +8511,7 @@ cC$AEB8,1
  C$AED0,2;44 }
 *C$AED2,2;44
  C$AED4,1;44 RET C  // if (HL < DE) return; // what about carry?
- C$AED5,1
+ C$AED5,1;44
 @nowarn
  C$AED6,3;44 HL = 0x5840; // screen attribute address (column 0 + top of game window)
  C$AED9,1;44 {  if (A != 0 && (E & 31) >= 7) L = 32;
@@ -8519,16 +8519,16 @@ cC$AEB8,1
  C$AEE4,2;44 }
 *C$AEE6,2;44
  C$AEE8,2;44 JR C,$AEF0  // if (HL < DE) goto $AEF0;
- C$AEEA,1
+ C$AEEA,1;44
  C$AEEB,1;44 {  DEdash += 2;
  C$AEEC,1;44 }
- C$AEED,1
+ C$AEED,1;44
  C$AEEE,2;44 goto nextrow;
-*C$AEF0,1
- C$AEF1,1
+*C$AEF0,1;44
+ C$AEF1,1;44
  C$AEF2,2;44 Bdash = 2;
 *C$AEF4,1;44 do <% A = *DEdash;
- C$AEF5,1
+ C$AEF5,1;44
  C$AEF6,3;44 DE = 0x071E;
  C$AEF9,1;44 C = A;
  C$AEFA,2;44 B = 8;
@@ -8543,10 +8543,10 @@ cC$AEB8,1
 *C$AF0C,2;44 {      if ((A & 31) < E) goto $AF18;
  C$AF0E,1;44
  C$AF0F,2;44 }
- C$AF11,1
+ C$AF11,1;44
 *C$AF12,1;44 {      do <% DEdash++; %> while (--Bdash);
  C$AF13,2;44 }
- C$AF15,1
+ C$AF15,1;44
  C$AF16,2;44 goto nextrow;
 *C$AF18,1;44 {      if (A < D) <%
  C$AF19,2;44 }
@@ -8559,14 +8559,14 @@ cC$AEB8,1
 *C$AF28,2;44 *HL = attribute_BRIGHT_BLUE_OVER_BLACK; %> %>
 *C$AF2A,1;44 HL++;
  C$AF2B,2;44 %> while (--B);
- C$AF2D,1
+ C$AF2D,1;44
  C$AF2E,1;44 DEdash++;
  C$AF2F,2;44 %> while (--Bdash);
- C$AF31,1
+ C$AF31,1;44
 *C$AF32,1;44 nextrow:
  C$AF33,3;44 {  HL += 32;
  C$AF36,1;44 }
- C$AF37,2
+ C$AF37,2;44
  C$AF39,1;44 {%> while (--Cdash);
  C$AF3A,3;44 }
  C$AF3D,1;44 return;
@@ -8597,13 +8597,13 @@ gB$AF8E,1
 ; I:A' Flip flag + sprite offset.
 ; I:IY Pointer to visible character block.
 @label=touch
-cC$AF8F,1
+cC$AF8F,1;22
  C$AF90,3;22 touch_stashed_A = A;
  C$AF93,4;22 {IY[7] |= vischar_BYTE7_TOUCHING | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?
  C$AF97,4;22 }
  C$AF9B,2;22 {HL = IY;
  C$AF9D,1;22 }
- C$AF9E,1
+ C$AF9E,1;22
 ; If hero is player controlled, then check for door transitions.
  C$AF9F,1;22 {if (L == 0 && automatic_player_counter > 0) door_handling(); // L == 0 => HL == 0x8000
  C$AFA0,10;22
@@ -8640,7 +8640,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
  C$AFE2,2;23 B = 8; // 8 iterations
 *C$AFE4,2;23 {do <% if (*HL & vischar_FLAGS_NO_COLLIDE) goto next;
  C$AFE6,3;23 // $8001, $8021, ...}
- C$AFE9,2
+ C$AFE9,2;23
  C$AFEB,2;23 {  HL += 0x0E; // $800F etc. - X axis position
  C$AFED,1;23
  C$AFEE,1;23 }
@@ -8648,7 +8648,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
  C$AFEF,1;23 {  C = *HL++;
  C$AFF0,1;23 }
  C$AFF1,1;23 B = *HL;
- C$AFF2,1
+ C$AFF2,1;23
  C$AFF3,3;23 HL = saved_pos_x;
  C$AFF6,2;23 {  BC += 4;
  C$AFF8,5;23
@@ -8662,13 +8662,13 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
 *C$B00C,3;23 {    HL = saved_pos_x;
  C$B00F,2;23 }
  C$B011,3;23 if (HL < BC) goto pop_next; %>
-*C$B014,1
+*C$B014,1;23
  C$B015,1;23 HL++;
 ; --------
  C$B016,1;23 {  C = *HL++;
  C$B017,1;23 }
  C$B018,1;23 B = *HL;
- C$B019,1
+ C$B019,1;23
  C$B01A,3;23 HL = saved_pos_y;
  C$B01D,2;23 {  BC += 4;
  C$B01F,5;23
@@ -8682,7 +8682,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
 *C$B033,3;23 {    HL = saved_pos_y;
  C$B036,2;23 }
  C$B038,3;23 if (HL < BC) goto pop_next; %>
-*C$B03B,1
+*C$B03B,1;23
  C$B03C,1;23 HL++;
 ; --------
  C$B03D,1;23 C = *HL;
@@ -8698,7 +8698,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
  C$B050,2;23 {  if (A == vischar_FLAGS_PURSUE) <%
  C$B052,2;23 }
 ; and current vischar is not the hero...
- C$B054,1
+ C$B054,1;23
  C$B055,1;23 // sampled HL=$8021,$8041,$8061,$80A1
  C$B056,1;23 HL--;
  C$B057,1;23 {    if ((HL & 0xFF) == 0) <% // ie. $8000
@@ -8710,24 +8710,24 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
  C$B063,3;23 accept_bribe(); %>
  C$B066,2;23 else <%
 ; A hostile catches the hero!
-*C$B068,1
- C$B069,1
+*C$B068,1;23
+ C$B069,1;23
  C$B06A,2;23 {        HL = IY + 1;
  C$B06C,1;23
  C$B06D,1;23 }
  C$B06E,3;23 solitary(); return; // exit via %> %> %>
-*C$B071,1
+*C$B071,1;23
  C$B072,1;23 HL--;
  C$B073,1;23 A = *HL; // sampled HL=$80C0,$8040,$8000,$8020,$8060 // vischar_BYTE0
  C$B074,2;23 {  if (A >= 26) <%
  C$B076,2;23 }
- C$B078,2
+ C$B078,2;23
  C$B07A,2;23 {    HL += 17; // &vischar->mi.pos.y
  C$B07C,1;23
  C$B07D,1;23 }
  C$B07E,1;23 tmpA = A; // retrieve character index
  C$B07F,3;23 B = 7; C = 35;
- C$B082,2
+ C$B082,2;23
  C$B084,3;23 A = IY[14]; // interleaved
  C$B087,2;23 if (tmpA == character_28_CRATE) <%
  C$B089,1;23 {      L -= 2; // &vischar->mi.pos.x
@@ -8763,7 +8763,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
  C$B0B4,1;23 {      if (A != *HL) (*HL)--; %>
  C$B0B5,2;23
  C$B0B7,1;23 }
-*C$B0B8,1
+*C$B0B8,1;23
 *C$B0B9,1;23 %>
  C$B0BA,1;23 {  HL += 13;
  C$B0BB,2;23
@@ -8800,7 +8800,7 @@ cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
  B$B0FA,1;23 input_UP   + input_RIGHT + input_KICK
  B$B0FB,1;23 input_DOWN + input_RIGHT + input_KICK
 *C$B0FC,1;23 pop_next:
- C$B0FD,1
+ C$B0FD,1;23
 *C$B0FE,1;23 {  next: HL += 32;
  C$B0FF,2;23
  C$B101,1;23 }
@@ -8861,7 +8861,7 @@ cC$B14C,3;21 {if (room_index) <% interior_bounds_check(); return; %>
  C$B153,2;21 B = 24; // 24 iterations
  C$B155,3;21 DE = &walls[0];
 *C$B158,1;21 do <%
- C$B159,1
+ C$B159,1;21
  C$B15A,1;21 {
  C$B15B,3;21 }
  C$B15E,1;21 {  if ((saved_pos_x >= DE[0] * 8 + 2) &&
@@ -8898,14 +8898,14 @@ cC$B14C,3;21 {if (room_index) <% interior_bounds_check(); return; %>
  C$B1A5,6;21
  C$B1AB,2;21 }
 ; Found it.
- C$B1AD,2
+ C$B1AD,2;21
  C$B1AF,3;21 {    IY[7] ^= vischar_BYTE7_Y_DOMINANT; // sampled IY=$80A0,$8080,$8060
  C$B1B2,2;21
  C$B1B4,3;21 }
  C$B1B7,2;21 A |= 1; // return NZ
  C$B1B9,1;21 return; %>
-*C$B1BA,1
- C$B1BB,1
+*C$B1BA,1;21
+ C$B1BB,1;21
  C$B1BC,3;21 {  DE += 6;
  C$B1BF,1;21
  C$B1C0,1;21 }
@@ -8979,9 +8979,9 @@ cC$B1F5,3;21 A = room_index;
  C$B20F,1;21 }
  C$B210,1;21 {  if (A == E) <%
  C$B211,2;21 }
- C$B213,3
+ C$B213,3;21
  C$B216,3;21 door_in_range();
- C$B219,3
+ C$B219,3;21
  C$B21C,2;21 if (!C) goto found; %>
 *C$B21E,2;21 {  HL += 8; // step forward two entries
  C$B220,4;21
@@ -8992,10 +8992,10 @@ cC$B1F5,3;21 A = room_index;
 *C$B229,2;21 {found: A = 16 - B;
  C$B22B,1;21 }
  C$B22C,3;21 current_door = A;
- C$B22F,1
+ C$B22F,1;21
  C$B230,3;21 is_door_locked();
  C$B233,1;21 if (!Z) return; // door was locked - return nonzero?
- C$B234,1
+ C$B234,1;21
  C$B235,1;21 {IY[28] = (*HL >> 2) & 0x3F; // sampled HL=$792E (in doors[])
  C$B236,4;21
  C$B23A,3;21 }
@@ -9022,7 +9022,7 @@ cC$B1F5,3;21 A = room_index;
 @label=door_in_range
 cC$B252,1;21 {A = HL[1];
  C$B253,1;21 }
- C$B254,1
+ C$B254,1;21
  C$B255,3;21 multiply_by_4();
  C$B258,1;21 {if (saved_pos_x < BC - 3 || saved_pos_x >= BC + 3) return; // with C set
  C$B259,6;21
@@ -9031,11 +9031,11 @@ cC$B252,1;21 {A = HL[1];
 *C$B26C,3;21
  C$B26F,3;21
  C$B272,1;21 }
- C$B273,1
+ C$B273,1;21
  C$B274,1;21 {A = HL[2];
  C$B275,1;21 }
  C$B276,3;21 multiply_by_4();
- C$B279,1
+ C$B279,1;21
  C$B27A,1;21 {if (saved_pos_y < BC - 3 || saved_pos_y >= BC + 3) return; // with C set
  C$B27B,6;21
 *C$B281,3;21
@@ -9099,7 +9099,7 @@ cC$B29F,3;21 {BC = &roomdef_dimensions[roomdef_bounds_index];
  C$B2CF,1;21 }
  C$B2D0,1;21 HL++;
 *C$B2D1,1;21 do <%
- C$B2D2,1
+ C$B2D2,1;21
  C$B2D3,3;21 DE = &saved_pos_x;
  C$B2D6,2;21 B = 2; // 2 iterations
 *C$B2D8,1;21 do <% A = *DE;
@@ -9111,7 +9111,7 @@ cC$B29F,3;21 {BC = &roomdef_dimensions[roomdef_bounds_index];
  C$B2E2,1;21 HL += 2; // increment moved - hope it's still correct
  C$B2E3,2;21 %> while (--B);
 ; Found.
- C$B2E5,2
+ C$B2E5,2;21
 *C$B2E7,3;21 {stop: IY[7] ^= vischar_BYTE7_Y_DOMINANT; // stop character?
  C$B2EA,2;21
  C$B2EC,3;21 }
@@ -9121,7 +9121,7 @@ cC$B29F,3;21 {BC = &roomdef_dimensions[roomdef_bounds_index];
 *C$B2F2,1;21 next:
  C$B2F3,3;21 {  HL += 4;
  C$B2F6,1;21 }
- C$B2F7,1
+ C$B2F7,1;21
  C$B2F8,2;21 %> while (--B);
 ; Not found.
  C$B2FA,1;21 A &= B; // B is zero here
@@ -9170,7 +9170,7 @@ cC$B32D,3;21 HL = &interior_doors;
 *C$B330,1;21 for (;;) <% A = *HL;
  C$B331,2;21 {  if (A == door_NONE) return; /* Reached end of list. */
  C$B333,1;21 }
- C$B334,1
+ C$B334,1;21
  C$B335,3;21 current_door = A;
  C$B338,3;21 HL = get_door();
  C$B33B,1;21 A = *HLdash;
@@ -9181,7 +9181,7 @@ cC$B32D,3;21 HL = &interior_doors;
  C$B343,3;21
  C$B346,2;21 }
  C$B348,1;21 HLdash++;
- C$B349,1
+ C$B349,1;21
  C$B34A,3;21 DEdash = &saved_pos_x; // reusing saved_pos as 8-bit here?
  C$B34D,2;21 Bdash = 2; // 2 iterations
 *C$B34F,1;21 {  do <% A = *HLdash - 3;
@@ -9194,7 +9194,7 @@ cC$B32D,3;21 HL = &interior_doors;
  C$B35C,1;21 HLdash++;
  C$B35D,2;21 %> while (--Bdash);
  C$B35F,1;21 HLdash++;
- C$B360,1
+ C$B360,1;21
  C$B361,1;21 PUSH HLdash
  C$B362,1;21 PUSH BCdash
  C$B363,3;21 is_door_locked();
@@ -9418,9 +9418,9 @@ cC$B4B6,2;21 A = room_14_TORCH;
 ;
 ; I:A Room number to which the key applies.
 @label=action_key
-cC$B4B8,1
+cC$B4B8,1;21
  C$B4B9,3;21 get_nearest_door();
- C$B4BC,1
+ C$B4BC,1;21
  C$B4BD,1;21 if (!Z) return; /* No door nearby. */
  C$B4BE,1;21 {A = *HL & ~door_LOCKED; // mask off locked flag
  C$B4BF,2;21 }
@@ -9449,18 +9449,18 @@ cC$B4D0,3;21 {if (room_index == room_0_OUTDOORS) goto outdoors; else goto indoor
  C$B4DB,3;21 HL = &locked_doors[0];
 *C$B4DE,1;21 {do <% A = *HL & ~door_LOCKED;
  C$B4DF,2;21 }
- C$B4E1,1
+ C$B4E1,1;21
  C$B4E2,3;21 HL = get_door();
- C$B4E5,1
+ C$B4E5,1;21
  C$B4E6,3;21 door_in_range();
- C$B4E9,1
+ C$B4E9,1;21
  C$B4EA,2;21 if (!C) goto not_in_range;
  C$B4EC,1;21 {  HL += 4;
  C$B4ED,2;21
  C$B4EF,1;21 }
  C$B4F0,3;21 door_in_range();
  C$B4F3,2;21 if (!C) goto not_in_range;
- C$B4F5,1
+ C$B4F5,1;21
  C$B4F6,1;21 HL++;
  C$B4F7,2;21 %> while (--B);
  C$B4F9,1;21 return;
@@ -9489,10 +9489,10 @@ cC$B4D0,3;21 {if (room_index == room_0_OUTDOORS) goto outdoors; else goto indoor
  C$B519,2;21 A |= 1;
  C$B51B,1;21 return;
 *C$B51C,1;21 found: A = *DE;
- C$B51D,1
+ C$B51D,1;21
  C$B51E,3;21 HL = get_door();
  C$B521,1;21 HL++;
- C$B522,1
+ C$B522,1;21
 ; Range check pattern (-2..+3).
  C$B523,3;21 HL = &saved_pos_x; // note: 16-bit values holding 8-bit values
  C$B526,2;21 B = 2; // 2 iterations
@@ -9503,7 +9503,7 @@ cC$B4D0,3;21 {if (room_index == room_0_OUTDOORS) goto outdoors; else goto indoor
  C$B534,1;21 }
  C$B535,1;21 DE++;
  C$B536,2;21 %> while (--B);
- C$B538,1
+ C$B538,1;21
  C$B539,1;21 A = 0; // ok
  C$B53A,1;21 return;
 *C$B53B,1;21 exx_next:
@@ -9639,7 +9639,7 @@ cC$B5CE,2;23 iterate over all eight vischars
  C$B693,3;23 saved_height = HL;
  C$B696,1;23 DE++;
  C$B697,1;23 A = *DE; // sprite_index
- C$B698,1
+ C$B698,1;23
  C$B699,3;23 touch();
  C$B69C,3;23 if (!Z) goto pop_next;
  C$B69F,3;23 IY[0x0C]++; %>
@@ -9685,7 +9685,7 @@ cC$B5CE,2;23 iterate over all eight vischars
  C$B6F3,3;23 }
  C$B6F6,1;23 {  DE += 2; // point to groups of four
  C$B6F7,1;23 }
- C$B6F8,1
+ C$B6F8,1;23
  C$B6F9,3;23 goto increment
 ; else
 *C$B6FC,1;23 A = *DE; // count of four-byte groups
@@ -9698,12 +9698,12 @@ cC$B5CE,2;23 iterate over all eight vischars
  C$B708,1;23 {  DE += 3; // point to groups of four
  C$B709,1;23
  C$B70A,1;23 }
- C$B70B,2
+ C$B70B,2;23
  C$B70D,1;23 {  HL += C * 4 - 1;
  C$B70E,6;23
  C$B714,1;23 }
  C$B715,1;23 A = *HL;
- C$B716,2
+ C$B716,2;23
  C$B718,3;23 goto decrement
 
 ; Reset position.
@@ -9728,26 +9728,26 @@ cC$B71B,1
 ;
 ; I:HL Pointer to visible character.
 @label=calc_vischar_iso_pos_from_state
-cC$B729,1
+cC$B729,1;21
  C$B72A,2;21 {HL += 0x18; // vischar->scrx/y
  C$B72C,1;21
  C$B72D,1;21 }
  C$B72E,3;21 {DE = saved_pos_y + 0x0200;
  C$B731,3;21
  C$B734,1;21 }
- C$B735,5
+ C$B735,5;21
  C$B73A,2;21 {DE = (DE - saved_pos_x) * 2;
  C$B73C,1;21 }
- C$B73D,1
+ C$B73D,1;21
  C$B73E,1;21 {*HL++ = E;
  C$B73F,1;21 }
  C$B740,1;21 {*HL++ = D;
  C$B741,1;21 }
- C$B742,1
+ C$B742,1;21
  C$B743,3;21 {DE = 0x0800 - saved_pos_x - saved_height - saved_pos_y;
  C$B746,13;21
  C$B753,2;21 }
- C$B755,1
+ C$B755,1;21
  C$B756,1;21 {*HL++ = E;
  C$B757,1;21 }
  C$B758,1;21 *HL = D;
@@ -9764,7 +9764,7 @@ cC$B729,1
 cC$B75A,3;21 B = item__LIMIT; C = 0;
 *C$B75D,1;21 do <%
  C$B75E,3;21 item_discovered(C); // pass C as C
- C$B761,1
+ C$B761,1;21
  C$B762,1;21 C++;
  C$B763,2;21 %> while (--B);
 ; Reset message queue.
@@ -9972,7 +9972,7 @@ cC$B89C,3;22 BC = 0; // prev-x
  C$B89F,1;22 {DE = 0; // prev-y
  C$B8A0,1;22 }
  C$B8A1,2;22 A = 0xFF; // 'nothing found' marker 0xFF
- C$B8A3,2
+ C$B8A3,2;22
  C$B8A5,3;22 DE = 0;
  C$B8A8,3;22 B = 8; C = 32; // iterations, stride
  C$B8AB,3;22 HL = $8007; // vischar byte7
@@ -9988,9 +9988,7 @@ cC$B89C,3;22 BC = 0; // prev-x
  C$B8BB,1;22 {  BC += 4;
  C$B8BC,2;22
  C$B8BE,1;22 }
- C$B8BF,3
- C$B8C2,2;22
- C$B8C4,1
+ C$B8BF,6;22
  C$B8C5,2;22 JR C,pop_next
  C$B8C7,1;22 HL++;
  C$B8C8,1;22 {  C = *HL++;
@@ -9999,19 +9997,17 @@ cC$B89C,3;22 BC = 0; // prev-x
  C$B8CB,1;22 {  BC += 4;
  C$B8CC,2;22
  C$B8CE,1;22 }
- C$B8CF,3
- C$B8D2,2;22
- C$B8D4,1
+ C$B8CF,6;22
  C$B8D5,2;22 JR C,pop_next
  C$B8D7,1;22 HL++;
- C$B8D8,2
+ C$B8D8,2;22
  C$B8DA,2;22 {  A = 8 - B; /* Item index. */
  C$B8DC,1;22 }
  C$B8DD,1;22 // unpaired
  C$B8DE,1;22 {  E = *HL++;
  C$B8DF,1;22 }
  C$B8E0,1;22 D = *HL;
- C$B8E1,3
+ C$B8E1,3;22
  C$B8E4,1;22 {  L -= 2;
  C$B8E5,1;22 }
  C$B8E6,1;22 {  D = *HL--;
@@ -10026,9 +10022,9 @@ cC$B89C,3;22 BC = 0; // prev-x
  C$B8F0,1;22 }
  C$B8F1,1;22 {  IY = HL;
  C$B8F2,2;22 }
- C$B8F4,1
+ C$B8F4,1;22
 *C$B8F5,1;22 pop_next:
- C$B8F6,1
+ C$B8F6,1;22
 *C$B8F7,1;22 {  next: HL += C;
  C$B8F8,1;22
  C$B8F9,1;22 }
@@ -10090,7 +10086,7 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
  C$B937,3;21 HL = $EC03; // exterior_mask_data + 2 bytes %>
 ; Mask against all.
 *C$B93A,1;21 do <%
- C$B93B,1
+ C$B93B,1;21
  C$B93C,3;21 {  A = iso_pos_x - 1;
  C$B93F,1;21 }
  C$B940,1;21 {  if (A >= HL[0] || A + 4 < HL[-1]) goto pop_next;
@@ -10192,7 +10188,7 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
  C$BA08,1;21 }
 *C$BA09,1;21 HL--;
  C$BA0A,1;21 A = *HL;
- C$BA0B,1
+ C$BA0B,1;21
  C$BA0C,1;21 {  Adash = C * 32 + B;
  C$BA0D,5;21
  C$BA12,1;21 }
@@ -10201,7 +10197,7 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
  C$BA16,1;21
  C$BA17,1;21 }
  C$BA18,3;21 ($81A0) = HL; // mask buffer pointer
- C$BA1B,1
+ C$BA1B,1;21
  C$BA1C,1;21 {  DE = mask_pointers[A];
  C$BA1D,9;21
  C$BA26,1;21 }
@@ -10216,7 +10212,7 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
  C$BA37,2;21 {  ($BABA) = 32 - H; // self modify
  C$BA39,1;21
  C$BA3A,3;21 }
- C$BA3D,1
+ C$BA3D,1;21
  C$BA3E,1;21 {  E = *DE;
  C$BA3F,1;21 }
  C$BA40,3;21 A = clip_y0;
@@ -10224,7 +10220,7 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
  C$BA46,3;21 {  E = clip_x0;
  C$BA49,1;21 }
  C$BA4A,1;21 HL += DE;
- C$BA4B,1
+ C$BA4B,1;21
  C$BA4C,1;21 HL++; // iterations
 ;
 ; Skip the initial clipped mask bytes.
@@ -10268,7 +10264,7 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
  C$BA8A,1;21 }
 *C$BA8B,1;21 DE++;
  C$BA8C,2;21 %> while (--B);
- C$BA8E,1
+ C$BA8E,1;21
  C$BA8F,2;21 B = 1; // self modified
  C$BA91,1;21 bank while we test B
  C$BA92,1;21 {    if (B) <%
@@ -10301,11 +10297,11 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
  C$BABB,1;21
  C$BABC,1;21 }
  C$BABD,1;21 // unbank
- C$BABE,1
+ C$BABE,1;21
  C$BABF,1;21 {  %> while (--C);
  C$BAC0,3;21 }
 *C$BAC3,1;21 pop_next:
- C$BAC4,1
+ C$BAC4,1;21
  C$BAC5,3;21 {  HL += 8;
  C$BAC8,1;21 }
  C$BAC9,1;21 {%> while (--B);
@@ -10343,11 +10339,11 @@ cC$BACD,2;21 B = 8; // iterations
 ; I:HL Pointer to a tile to be masked.
 @label=mask_against_tile
 cC$BADC,1;21 DEdash = HL
- C$BADD,1
+ C$BADD,1;21
  C$BADE,1;21 {HLdash = &mask_tiles[A];
  C$BADF,8;21
  C$BAE7,1;21 }
- C$BAE8,1
+ C$BAE8,1;21
  C$BAE9,2;21 Bdash = 8; // 8 iterations
 *C$BAEB,1;21 {do <% *DEdash &= *HLdash++;
  C$BAEC,2;21
@@ -10356,7 +10352,7 @@ cC$BADC,1;21 DEdash = HL
  C$BAF0,2;21
  C$BAF2,1;21 }
  C$BAF3,2;21 %> while (--Bdash);
- C$BAF5,1
+ C$BAF5,1;21
  C$BAF6,1;21 return;
 
 ; Clipping vischars to the game window.
@@ -10466,7 +10462,7 @@ cC$BB98,2;21 B = 8; // iterations
  C$BBD3,1;21 {  A = ((E >> 3) & 31) + 2;
  C$BBD4,5;21
  C$BBD9,2;21 }
- C$BBDB,1
+ C$BBDB,1;21
 ;
  C$BBDC,3;21 {  A += iso_pos_y - map_position_y;
  C$BBDF,4;21
@@ -10477,12 +10473,12 @@ cC$BB98,2;21 B = 8; // iterations
  C$BBE8,2;21 {    if (A > 0) <%
  C$BBEA,2;21 }
  C$BBEC,1;21 E = A;
- C$BBED,1
+ C$BBED,1;21
  C$BBEE,1;21 A -= E;
  C$BBEF,3;21 if (carry) goto next;
  C$BBF2,2;21 if (!Z) goto $BBF8;
  C$BBF4,3;21 goto next; %> %>
-*C$BBF7,1
+*C$BBF7,1;21
 ;
 *C$BBF8,2;21 {  if (A > 5) A = 5;
  C$BBFA,6;21
@@ -10532,20 +10528,20 @@ cC$BB98,2;21 B = 8; // iterations
  C$BC45,1;21 swap it into DE. HL about to be overwritten.
 ;
 ; Copy BC (x,y coord) into HL'
- C$BC46,2
+ C$BC46,2;21
  C$BC48,1;21 POP HLdash
- C$BC49,1
+ C$BC49,1;21
 ;
  C$BC4A,1;21 A = B;
  C$BC4B,1;21 {  HL = C * 24 + A + $F0F8; // visible tiles array
  C$BC4C,16;21
  C$BC5C,1;21 }
- C$BC5D,1
+ C$BC5D,1;21
  C$BC5E,2;21 C = 5; // iterations // self modified $BC5F
 *C$BC60,2;21 do <% B = 4; // iterations // self modified $BC61
 *C$BC62,1;21 do <%
  C$BC63,1;21 A = *DE;
- C$BC64,1
+ C$BC64,1;21
  C$BC65,1;21 POP DEdash // visible tiles array pointer
  C$BC66,1;21 PUSH HLdash // save x,y
  C$BC67,3;21 select_tile_set(); // call using banked registers
@@ -10562,16 +10558,16 @@ cC$BB98,2;21 B = 8; // iterations
  C$BC7D,2;21 %> while (--Bdash);
  C$BC7F,1;21 POP HLdash
  C$BC80,1;21 Hdash++;
- C$BC81,1
+ C$BC81,1;21
  C$BC82,1;21 DE++;
  C$BC83,1;21 HL++;
  C$BC84,2;21 %> while (--B);
- C$BC86,1
+ C$BC86,1;21
  C$BC87,1;21 A = Hdash;
  C$BC88,2;21 A -= 0; // self modified $BC89
  C$BC8A,1;21 Hdash = A;
  C$BC8B,1;21 Ldash++;
- C$BC8C,1
+ C$BC8C,1;21
  C$BC8D,2;21 A = 20; // self modified $BC8E
  C$BC8F,1;21 A += E;
  C$BC90,2;21 {    if (carry) D++;
@@ -10600,12 +10596,12 @@ cC$BB98,2;21 B = 8; // iterations
 ; O:A  Preserved.
 ; O:BC Pointer to tile set.
 @label=select_tile_set
-cC$BCAA,1
+cC$BCAA,1;21
  C$BCAB,3;21 {if (room_index) <%
  C$BCAE,1;21
  C$BCAF,2;21 }
  C$BCB1,3;21 BC = &interior_tiles[0];
- C$BCB4,1
+ C$BCB4,1;21
  C$BCB5,1;21 return; %>
 ; Convert map position to an index into 7x5 supertile refs array.
 *C$BCB6,3;21 {else <% Adash = (((map_position >> 8) & 3) + L) >> 2;
@@ -10630,7 +10626,7 @@ cC$BCAA,1
  C$BCE3,4;21
  C$BCE7,2;21 }
  C$BCE9,3;21 BC = &exterior_tiles[145 + 220]; %> %>
-*C$BCEC,1
+*C$BCEC,1;21
  C$BCED,1;21 return; %>
 
 ; Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
@@ -10773,7 +10769,7 @@ cC$C47E,3;21 HL = &map_position;
 *C$C494,1;21 do <% A = *HL;
  C$C495,2;21 {  if (A == character_NONE) goto next;
  C$C497,3;21 }
- C$C49A,1
+ C$C49A,1;21
  C$C49B,2;21 {  HL += 28;
  C$C49D,1;21
  C$C49E,1;21 }
@@ -10804,9 +10800,9 @@ cC$C47E,3;21 HL = &map_position;
 *C$C4CC,1;21
  C$C4CD,2;21 }
 *C$C4CF,1;21 reset:
- C$C4D0,3
+ C$C4D0,3;21
  C$C4D3,3;21 reset_visible_character();
- C$C4D6,2
+ C$C4D6,2;21
 *C$C4D8,1;21 pop_next:
 *C$C4D9,2;21 {  next: HL += 32;
  C$C4DB,1;21
@@ -10822,17 +10818,17 @@ cC$C47E,3;21 HL = &map_position;
 @label=spawn_character
 cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character disabled */
  C$C4E2,1;22 }
- C$C4E3,1
+ C$C4E3,1;22
 ; Find an empty slot in the visible character list.
 @nowarn
  C$C4E4,3;22 HL = $8020; // iterate over non-player characters
- C$C4E7,5
+ C$C4E7,5;22
  C$C4EC,2;22 B = 7; // 7 iterations
 *C$C4EE,1;22 {do <% if (*HL == vischar_CHARACTER_EMPTY_SLOT) goto found_empty_slot;
  C$C4EF,2;22 }
  C$C4F1,1;22 HL += 32; // stride
  C$C4F2,2;22 %> while (--B);
- C$C4F4,1
+ C$C4F4,1;22
  C$C4F5,1;22 return;
 ; Found an empty slot.
 *C$C4F6,1;22 found_empty_slot: // restore DE (-> character struct)
@@ -10856,7 +10852,7 @@ cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character dis
  C$C50E,1;22 {    *HL++ = B;
  C$C50F,1;22 }
  C$C510,1;22 DE++;
- C$C511,1
+ C$C511,1;22
  C$C512,1;22 {  %> while (--A); %>
  C$C513,3;22 }
  C$C516,2;22 else <%
@@ -10891,7 +10887,7 @@ cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character dis
  C$C547,2;22 {    if (A >= 20) <%
  C$C549,2;22 }
  C$C54B,3;22 DE = &character_meta_data[3]; %> %> %> /* Prisoner */
-*C$C54E,1
+*C$C54E,1;22
  C$C54F,2;22 {DE += 7;
  C$C551,1;22
  C$C552,1;22 }
@@ -10957,7 +10953,7 @@ cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character dis
 *C$C5B6,2;22 {  if (A == 128) IY[1] |= vischar_FLAGS_TARGET_IS_DOOR; // $8021
  C$C5B8,2;22
  C$C5BA,4;22 }
-*C$C5BE,1
+*C$C5BE,1;22
  C$C5BF,3;22 {  memcpy(DE, HL, 3); %>
  C$C5C2,2;22 }
 *C$C5C4,1;22 {*DE = 0; // zero vischar->counter_and_flags
@@ -10965,9 +10961,9 @@ cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character dis
  C$C5C6,1;22 {DE -= 7;
  C$C5C7,2;22
  C$C5C9,1;22 }
- C$C5CA,2
+ C$C5CA,2;22
  C$C5CC,3;22 calc_vischar_iso_pos_from_vischar();
- C$C5CF,1
+ C$C5CF,1;22
  C$C5D0,3;22 character_behaviour(); return; // exit via
 
 ; Reset a visible character (either a character or an object).
@@ -11020,7 +11016,7 @@ cC$C5D3,1;21 A = *HL;
  C$C60D,1;21 {  *++DE = A; // characterstruct.room = room index;
  C$C60E,1;21
  C$C60F,1;21 }
- C$C610,1
+ C$C610,1;21
  C$C611,1;21 {  HL[7] = 0; // more flags
  C$C612,3;21
  C$C615,2;21 }
@@ -11097,7 +11093,7 @@ cC$C651,1;21 A = *HL;
  C$C671,1;21 }
 *C$C672,1;21 L = A; // HL == -1, or A
  C$C673,1;21 HL += DE;
- C$C674,1
+ C$C674,1;21
  C$C675,1;21 routebyte = routebytes[step];
  C$C676,2;21 if (routebyte == routebyte_END) ...
  C$C678,1;21 // interleaved
@@ -11141,7 +11137,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C6B1,3;21 HL = get_character_struct(character); // passing character in A
  C$C6B4,2;21 {if (*HL & characterstruct_FLAG_ON_SCREEN)
  C$C6B6,1;21 return; /* Disabled character. */}
- C$C6B7,1
+ C$C6B7,1;21
 ; Are any items to be found in the same room as the character?
  C$C6B8,1;21 {room = *++HL; // characterstruct room
  C$C6B9,1;21 }
@@ -11154,7 +11150,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
 *C$C6C5,1;21 HL = characterstruct
  C$C6C6,1;21 {HL += 2; // point at characterstruct pos
  C$C6C7,1;21 }
- C$C6C8,1
+ C$C6C8,1;21
  C$C6C9,1;21 {HL += 3; // point at characterstruct target
  C$C6CA,1;21
  C$C6CB,1;21 }
@@ -11162,7 +11158,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C6CC,1;21 A = *HL; // charstr->route.index
  C$C6CD,1;21 {if (A == route_HALT) <%
  C$C6CE,2;21 }
- C$C6D0,1
+ C$C6D0,1;21
  C$C6D1,1;21 return; %>
 *C$C6D2,3;21 get_target(); // "move towards" ? // returning ? in A, ? in HL
  C$C6D5,2;21 {if (A == get_target_ROUTE_ENDS) <%
@@ -11184,7 +11180,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C6EB,3;21
  C$C6EE,1;21 }
 *C$C6EF,1;21 (*HL)++; // i.e -1 or +1 // HLlocation->y
- C$C6F0,1
+ C$C6F0,1;21
  C$C6F1,1;21 return; %>
 ; Commandant only.
 @label=commandant
@@ -11203,10 +11199,10 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C705,1;21 {  room = DE[-1];
  C$C706,1;21
  C$C707,1;21 }
- C$C708,1
+ C$C708,1;21
  C$C709,1;21 {  if (room == room_0_OUTDOORS) <%
  C$C70A,3;21 }
- C$C70D,1
+ C$C70D,1;21
 ; Divide the location at HL by 2 and store it to saved_pos.
  C$C70E,3;21 DE = &saved_pos_x;
  C$C711,2;21 B = 2; // 2 iters
@@ -11222,13 +11218,13 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C723,2;21 A = 2;
  C$C725,2;21
  C$C727,2;21 else A = 6;}
-*C$C729,1
+*C$C729,1;21
  C$C72A,2;21 B = 0;
  C$C72C,3;21 change_by_delta(A, B, HL, DE);
  C$C72F,1;21 DE++;
  C$C730,1;21 HL++;
  C$C731,3;21 change_by_delta(A, B, HL, DE);
- C$C734,1
+ C$C734,1;21
  C$C735,1;21 {  if (B != 2) return; // managed to move
  C$C736,2;21
  C$C738,1;21 }
@@ -11270,7 +11266,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C769,2;21 %> while (--B)
  C$C76B,1;21 DE--; %> %>
  C$C76C,2;21 else <%
-*C$C76E,1
+*C$C76E,1;21
 ; Establish a maximum for passing into change_by_delta.
  C$C76F,1;21 {  room = DE[-1]; // DE -> charstr
  C$C770,1;21
@@ -11278,7 +11274,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C772,1;21 {  if (room == room_0_OUTDOORS) A = 2; else A = 6;
  C$C773,4;21
  C$C777,2;21 }
-*C$C779,1
+*C$C779,1;21
  C$C77A,2;21 B = 0;
  C$C77C,3;21 change_by_delta(A, B, HL, DE);
  C$C77F,1;21 HL++;
@@ -11290,7 +11286,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C78A,1;21 }
 ; So when we reach here a character is stuck.
 *C$C78B,1;21 DE++; // DE -> charstr->route
- C$C78C,1
+ C$C78C,1;21
  C$C78D,1;21 A = *HL; // sampled HL=$761E $7625 $768E $7695 $7656 $7695 $7680 // => character struct entry + 5 // route index
  C$C78E,2;21 {if (A == route_WANDER) return;
  C$C790,1;21 }
@@ -11317,7 +11313,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
 @label=change_by_delta
 cC$C79A,1
  C$C79B,1;21 C = Adash; // ie. banked A // some maximum value
- C$C79C,1
+ C$C79C,1;21
  C$C79D,1;21 {A = *DE - *HL; // delta
  C$C79E,1;21 }
  C$C79F,2;21 if (A == 0) <%
@@ -11378,7 +11374,7 @@ cC$C7C6,1;21 A = *HL;
  C$C7E2,1;21 {  map += 2;
  C$C7E3,1;21 }
  C$C7E4,2;21 %> while (--B);
- C$C7E6,1
+ C$C7E6,1;21
  C$C7E7,2;21 *HL = 0; // no action
  C$C7E9,1;21 return;
 *C$C7EA,1;21 {call_action: goto character_event_handlers[*++HL];
@@ -11443,7 +11439,7 @@ cC$C7C6,1;21 A = *HL;
  C$C84B,1;21 return;
 ; charevnt_hero_release
 @label=charevnt_hero_release
- C$C84C,1
+ C$C84C,1;21
  C$C84D,2;21 {*HL++ = 0xA4;
  C$C84F,1;21 }
  C$C850,2;21 *HL   = 0x03;
@@ -11469,30 +11465,30 @@ cC$C7C6,1;21 A = *HL;
  C$C86B,1;21 return;
 ; charevnt_bed
 @label=charevnt_bed
- C$C86C,1
+ C$C86C,1;21
  C$C86D,3;21 {if (entered_move_characters == 0) goto character_bed_vischar; else goto character_bed_state;
  C$C870,4;21
  C$C874,3;21 }
 ; charevnt_breakfast
 @label=charevnt_breakfast
- C$C877,1
+ C$C877,1;21
  C$C878,3;21 {if (entered_move_characters == 0) goto charevnt_breakfast_vischar; else goto charevnt_breakfast_state;
  C$C87B,4;21
  C$C87F,3;21 }
 ; charevnt_exit_hut2
 @label=charevnt_exit_hut2
- C$C882,1
+ C$C882,1;21
  C$C883,2;21 {*HL++ = 0x05;
  C$C885,1;21 }
  C$C886,2;21 *HL   = 0x00;
  C$C888,1;21 return;
 ; charevnt_hero_sits
 @label=charevnt_hero_sits
- C$C889,1
+ C$C889,1;21
  C$C88A,3;21 goto hero_sits;
 ; charevnt_hero_sleeps
 @label=charevnt_hero_sleeps
- C$C88D,1
+ C$C88D,1;21
  C$C88E,3;21 goto hero_sleeps;
 
 ; A countdown until any food item is discovered.
@@ -11542,7 +11538,7 @@ cC$C892,1;21 {entered_move_characters = 0;
  C$C8C5,2;21 {    if (A <= character_19_GUARD_DOG_4) <% // Hostile characters only.}
  C$C8C7,3;21
 ; Characters 0..19.
- C$C8CA,1
+ C$C8CA,1;21
  C$C8CB,3;21 is_item_discoverable();
  C$C8CE,3;21 {      if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_character();
  C$C8D1,7;21
@@ -11557,7 +11553,7 @@ cC$C892,1;21 {entered_move_characters = 0;
  C$C8E6,9;21
  C$C8EF,2;21 }
 *C$C8F1,3;21 character_behaviour(); %>
-*C$C8F4,1
+*C$C8F4,1;21
  C$C8F5,3;21 {  IY += 32; // stride
  C$C8F8,2;21 }
  C$C8FA,1;21 {%> while (--B);
@@ -11594,8 +11590,8 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
  C$C92B,3;22 }
  C$C92E,2;22 {  if (A == vischar_FLAGS_PURSUE) <%
  C$C930,2;22 }
-*C$C932,1
- C$C933,1
+*C$C932,1;22
+ C$C933,1;22
  C$C934,1;22 POP DEdash // ie. DEdash = HL
  C$C935,1;22 {    DEdash += 3;
  C$C936,1;22
@@ -11603,7 +11599,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
  C$C938,3;22 HLdash = &hero_map_position.x;
  C$C93B,2;22 *DEdash++ = *HLdash++;
  C$C93D,2;22 *DEdash++ = *HLdash++;
- C$C93F,1
+ C$C93F,1;22
  C$C940,3;22 goto end_bit; %>
 *C$C943,2;22 {  else if (A == vischar_FLAGS_HASSLE) <%
  C$C945,2;22 }
@@ -11614,8 +11610,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
  C$C94F,1;22 }
  C$C950,3;22 get_target_assign_pos(); return; %> // exit via
 *C$C953,2;22 {  else if (A == vischar_FLAGS_DOG_FOOD) <%}
- C$C955,2;22
- C$C957,2
+ C$C955,4;22
  C$C959,3;22 {    if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_NEARBY_7) <%
  C$C95C,2;22
  C$C95E,2;22 }
@@ -11626,26 +11621,26 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
  C$C964,1;22 }
  C$C965,2;22 *DE++ = *HL++;
  C$C967,2;22 *DE++ = *HL++;
- C$C969,1
+ C$C969,1;22
  C$C96A,2;22 goto end_bit; %>
 *C$C96C,1;22 else <% A = 0;
  C$C96D,1;22 *DE = A;
- C$C96E,1
+ C$C96E,1;22
  C$C96F,1;22 {      *++HL = 0xFF;
  C$C970,2;22 }
  C$C972,1;22 {      *++HL = 0;
  C$C973,2;22 }
- C$C975,1
+ C$C975,1;22
  C$C976,3;22 get_target_assign_pos(); return; %> %> // exit via
 *C$C979,2;22 {  else if (A == vischar_FLAGS_SAW_BRIBE) <%
  C$C97B,2;22 }
- C$C97D,1
+ C$C97D,1;22
  C$C97E,3;22 A = bribed_character;
  C$C981,2;22 {    if (A != character_NONE) <%
  C$C983,2;22 }
- C$C985,1
+ C$C985,1;22
  C$C986,2;22 B = 7; // 7 iterations
-@nowarn
+@nowarn               ;
  C$C988,3;22 HL = $8020; // iterate over non-player characters
 *C$C98B,1;22 do <%
  C$C98C,1;22 {        if (*HL == A) goto found_bribed;
@@ -11654,7 +11649,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
  C$C991,1;22
  C$C992,1;22 }
  C$C993,2;22 %> while (--B); %>
-*C$C995,1
+*C$C995,1;22
 ; Bribed character was not visible.
  C$C996,2;22 {    *HL++ = 0;
  C$C998,1;22 }
@@ -11663,7 +11658,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
 *C$C99C,2;22 {found_bribed: HL += 15;
  C$C99E,1;22
  C$C99F,1;22 }
- C$C9A0,2
+ C$C9A0,2;22
  C$C9A2,1;22 {    DE += 3;
  C$C9A3,2;22
  C$C9A5,1;22 }
@@ -11677,7 +11672,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
 *C$C9B2,2;22 *DE++ = *HL++;
  C$C9B4,1;22 HL++;
  C$C9B5,2;22 *DE++ = *HL++; %>
-*C$C9B7,1
+*C$C9B7,1;22
  C$C9B8,2;22 goto end_bit; %> %>
 ;
 *C$C9BA,1;22 {A = HL[1]; // route index
@@ -11686,7 +11681,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
  C$C9BD,1;22 {if (A == 0) goto character_behaviour_set_input;
  C$C9BE,2;22 }
 *C$C9C0,1;22 end_bit: A = *HL; // HL is $8001
- C$C9C1,1
+ C$C9C1,1;22
  C$C9C2,1;22 Cdash = A;
 ; Self modify vischar_move_x/y routines.
  C$C9C3,3;22 {if (room_index > room_0_OUTDOORS) <%
@@ -11704,7 +11699,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
 *C$C9D7,3;22 HLdash = &multiply_by_8; %> %>
 *C$C9DA,3;22 ($CA13) = HLdash; // self-modify vischar_move_x:$CA13
  C$C9DD,3;22 ($CA4B) = HLdash; // self-modify vischar_move_y:$CA4B
- C$C9E0,1
+ C$C9E0,1;22
  C$C9E1,4;22 {if (IY[7] & vischar_BYTE7_Y_DOMINANT) goto character_behaviour_impeded; // hit a wall etc.
  C$C9E5,2;22 }
  C$C9E7,1;22 {HL += 3;
@@ -11747,7 +11742,7 @@ cC$CA11,1;22 A = *HL; // sampled HL=$8004,$8044,$8064,$8084  vischar->pos.x
  C$CA19,1;22 {E = *HL++;
  C$CA1A,1;22 }
  C$CA1B,1;22 D = *HL;
- C$CA1C,1
+ C$CA1C,1;22
  C$CA1D,2;22 DE -= BC;  // delta
  C$CA1F,2;22 if (DE) <%
  C$CA21,3;22 if (DE > 0) <%
@@ -11764,7 +11759,7 @@ cC$CA11,1;22 A = *HL; // sampled HL=$8004,$8044,$8064,$8084  vischar->pos.x
 *C$CA3B,2;22
  C$CA3D,1;22 }
 ;
-*C$CA3E,1
+*C$CA3E,1;22
  C$CA3F,1;22 {HL -= 11;
  C$CA40,2;22
  C$CA42,1;22 }
@@ -11791,7 +11786,7 @@ cC$CA49,1;22 A = *HL; // sampled HL=$8025,$8065,$8005
  C$CA51,1;22 {E = *HL++;
  C$CA52,1;22 }
  C$CA53,1;22 D = *HL;
- C$CA54,1
+ C$CA54,1;22
  C$CA55,2;22 DE -= BC;
  C$CA57,2;22 if (DE) <%
  C$CA59,3;22 if (DE > 0) <% // +ve
@@ -11805,7 +11800,7 @@ cC$CA49,1;22 A = *HL; // sampled HL=$8025,$8065,$8005
  C$CA6B,8;22
 *C$CA73,2;22
  C$CA75,1;22 }
-*C$CA76,1
+*C$CA76,1;22
  C$CA77,1;22 {HL -= 14;
  C$CA78,2;22
  C$CA7A,1;22 }
@@ -11840,7 +11835,7 @@ cC$CA81,3;21 A = IY[1];
  C$CAA3,6;21
  C$CAA9,2;21 }
 *C$CAAB,3;21 food_discovered_counter = A;
- C$CAAE,1
+ C$CAAE,1;21
  C$CAAF,1;21 {  HL -= 2;
  C$CAB0,1;21 }
  C$CAB1,1;21 {  *HL = 0;
@@ -11853,9 +11848,9 @@ cC$CA81,3;21 A = IY[1];
  C$CABB,1;21 }
  C$CABC,1;21 {  A = *--HL;
  C$CABD,1;21 }
- C$CABE,1
+ C$CABE,1;21
  C$CABF,3;21 DE = get_route(A);
- C$CAC2,1
+ C$CAC2,1;21
  C$CAC3,1;21 {  DE += C;
  C$CAC4,4;21
  C$CAC8,1;21 }
@@ -11863,7 +11858,7 @@ cC$CA81,3;21 A = IY[1];
  C$CACA,2;21 {  if (*HL & route_REVERSED) A ^= door_REVERSE;
  C$CACC,2;21
  C$CACE,2;21 }
-*C$CAD0,1
+*C$CAD0,1;21
  C$CAD1,1;21 {  A = *HL++; // $8002, ...
  C$CAD2,1;21 }
 ; Pattern: [-2]+1
@@ -11871,7 +11866,7 @@ cC$CA81,3;21 A = IY[1];
  C$CAD5,3;21
  C$CAD8,1;21 }
 *C$CAD9,1;21 (*HL)++; // route.step
- C$CADA,1
+ C$CADA,1;21
  C$CADB,3;21 HL = get_door();
  C$CADE,1;21 {  IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is doors[0] room mask shifted right 2
  C$CADF,4;21
@@ -11886,7 +11881,7 @@ cC$CA81,3;21 A = IY[1];
 *C$CAF5,1;21
  C$CAF6,1;21
  C$CAF7,1;21 }
-*C$CAF8,1
+*C$CAF8,1;21
  C$CAF9,2;21 {  HL = IY;
  C$CAFB,1;21 }
  C$CAFC,1;21 {  if (L == 0) <%
@@ -11897,7 +11892,7 @@ cC$CA81,3;21 A = IY[1];
  C$CB02,2;21 {    *HL++ &= ~vischar_FLAGS_TARGET_IS_DOOR;
  C$CB04,1;21 }
  C$CB05,3;21 get_target_assign_pos(); %>
-*C$CB08,1
+*C$CB08,1;21
  C$CB09,3;21 transition();
  C$CB0C,3;21 {  play_speaker(sound_CHARACTER_ENTERS_1);
  C$CB0F,3;21 }
@@ -11923,11 +11918,11 @@ cC$CA81,3;21 A = IY[1];
 ; I:A  Character index?
 ; I:HL ?
 @label=get_target_assign_pos
-cC$CB23,1
+cC$CB23,1;21
  C$CB24,3;21 get_target();
  C$CB27,2;21 {if (A == 0xFF) <%
  C$CB29,3;21 }
- C$CB2C,1
+ C$CB2C,1;21
 ; FALL THROUGH into route_ended.
 
 ; Called when a character has run out of route.
@@ -11955,9 +11950,9 @@ cC$CB2D,1;21 {  if (L != 0x02) <%
 ; - vischar is the hero, or
 ; - character is character_0_COMMANDANT and (route.index & 0x7F) == 36, or
 ; - character is >= character_12_GUARD_12
-*C$CB46,1
+*C$CB46,1;21
  C$CB47,3;21 character_event();
- C$CB4A,1
+ C$CB4A,1;21
  C$CB4B,1;21 A = *HL;
  C$CB4C,1;21 {  if (A == 0) return;
  C$CB4D,1;21 }
@@ -11988,7 +11983,7 @@ cC$CB2D,1;21 {  if (L != 0x02) <%
 cC$CB61,2;22 {if (A == 128) <%
  C$CB63,3;22 }
  C$CB66,4;22 IY[1] |= vischar_FLAGS_TARGET_IS_DOOR; %>
-*C$CB6A,1
+*C$CB6A,1;22
  C$CB6B,1;22 {memcpy(DE + 2, HL, 2);
  C$CB6C,4;22
  C$CB70,2;22 }
@@ -12149,7 +12144,7 @@ cC$CC37,2;23 {HL = IY;
 *C$CC46,1;23 {if (HL[1] == vischar_FLAGS_SAW_BRIBE) return; // $8041 etc. // 'gone mad' flag
  C$CC47,3;23
  C$CC4A,1;23 }
- C$CC4B,1
+ C$CC4B,1;23
  C$CC4C,1;23 {HL += 15;
  C$CC4D,2;23
  C$CC4F,1;23 }
@@ -12250,7 +12245,7 @@ cC$CCCD,3;21 A = room_index;
  C$CCDA,1;21 return; %>
 ; Exterior.
 *C$CCDB,3;21 else <% HL = &item_structs[0].room;
- C$CCDE,3
+ C$CCDE,3;21
  C$CCE1,2;21 B = 16; // iterations == n.itemstructs
 *C$CCE3,2;21 {  do <% if (HL[0] & itemstruct_ROOM_FLAG_NEARBY_7) goto nearby;
  C$CCE5,2;21 }
@@ -12314,7 +12309,7 @@ cC$CCFB,1;21 C = A; // room ref
 ; Ignore red cross parcel.
  C$CD27,2;21 {if (A == item_RED_CROSS_PARCEL) <%
  C$CD29,2;21 }
- C$CD2B,1
+ C$CD2B,1;21
  C$CD2C,2;21 goto next; %>
 *C$CD2E,1;21 C = A;
  C$CD2F,1;21 A = 0; // set Z (found)
@@ -12330,12 +12325,12 @@ cC$CD31,1;21 A = C;
  C$CD32,2;21 {if (A == item_NONE) return;
  C$CD34,1;21 }
  C$CD35,2;21 A &= itemstruct_ITEM_MASK;
- C$CD37,1
+ C$CD37,1;21
  C$CD38,2;21 {queue_message(message_ITEM_DISCOVERED);
  C$CD3A,3;21 }
  C$CD3D,2;21 {decrease_morale(5);
  C$CD3F,3;21 }
- C$CD42,1
+ C$CD42,1;21
  C$CD43,1;21 {HL = &default_item_locations[A];
  C$CD44,7;21
  C$CD4B,1;21 }
@@ -12346,11 +12341,11 @@ cC$CD31,1;21 A = C;
  C$CD4F,1;21 Adash = C;
  C$CD50,3;21 HL = item_to_itemstruct(Adash);
  C$CD53,2;21 *HL &= ~itemstruct_ITEM_FLAG_HELD;
- C$CD55,1
+ C$CD55,1;21
  C$CD56,1;21 DE++;
  C$CD57,3;21 {memcpy(DE, HL, 3); DE += 3; HL += 3; // reset location?
  C$CD5A,2;21 }
- C$CD5C,2
+ C$CD5C,2;21
  C$CD5E,1;21 {if (A == room_0_OUTDOORS) <%
  C$CD5F,2;21 }
  C$CD61,1;21 *HL = A; // A is already zero
@@ -12572,7 +12567,7 @@ bB$CF06,8
 ; TABLE#
 @label=bitmap_commandant_facing_top_left_4
 bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
- B$D02E,8*6
+ B$D02E,8*6;44
  B$D05E,2;44 }
 ; #UDGTABLE
 ; {
@@ -12581,7 +12576,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_commandant_facing_top_left_3
  B$D060,8;44 {bitmap: COMMANDANT FACING TOP LEFT 3
- B$D068,8*6
+ B$D068,8*6;44
  B$D098,2;44 }
 ; #UDGTABLE
 ; {
@@ -12590,7 +12585,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_commandant_facing_top_left_2
  B$D09A,8;44 {bitmap: COMMANDANT FACING TOP LEFT 2
- B$D0A2,8*6
+ B$D0A2,8*6;44
  B$D0D2,4;44 }
 ; #UDGTABLE
 ; {
@@ -12599,7 +12594,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_commandant_facing_top_left_1
  B$D0D6,8;44 {bitmap: COMMANDANT FACING TOP LEFT 1
- B$D0DE,8*5
+ B$D0DE,8*5;44
  B$D106,8;44 }
 ; #UDGTABLE
 ; {
@@ -12608,7 +12603,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_commandant_facing_bottom_right_1
  B$D10E,8;44 {bitmap: COMMANDANT FACING BOTTOM RIGHT 1
- B$D116,8*5
+ B$D116,8*5;44
  B$D13E,6;44 }
 ; #UDGTABLE
 ; {
@@ -12617,7 +12612,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_commandant_facing_bottom_right_2
  B$D144,8;44 {bitmap: COMMANDANT FACING BOTTOM RIGHT 2
- B$D14C,8*5
+ B$D14C,8*5;44
  B$D174,8;44 }
 ; #UDGTABLE
 ; {
@@ -12626,7 +12621,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_commandant_facing_bottom_right_3
  B$D17C,8;44 {bitmap: COMMANDANT FACING BOTTOM RIGHT 3
- B$D184,8*5
+ B$D184,8*5;44
  B$D1AC,6;44 }
 ; #UDGTABLE
 ; {
@@ -12635,7 +12630,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_commandant_facing_bottom_right_4
  B$D1B2,8;44 {bitmap: COMMANDANT FACING BOTTOM RIGHT 4
- B$D1BA,8*5
+ B$D1BA,8*5;44
  B$D1E2,8;44 }
 ; #UDGTABLE
 ; {
@@ -12644,7 +12639,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_top_left_4
  B$D1EA,8;44 {bitmap: PRISONER FACING TOP LEFT 4
- B$D1F2,8*5
+ B$D1F2,8*5;44
  B$D21A,6;44 }
 ; #UDGTABLE
 ; {
@@ -12653,7 +12648,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_top_left_3
  B$D220,8;44 {bitmap: PRISONER FACING TOP LEFT 3
- B$D228,8*5
+ B$D228,8*5;44
  B$D250,6;44 }
 ; #UDGTABLE
 ; {
@@ -12662,7 +12657,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_top_left_2
  B$D256,8;44 {bitmap: PRISONER FACING TOP LEFT 2
- B$D25E,8*5
+ B$D25E,8*5;44
  B$D286,6;44 }
 ; #UDGTABLE
 ; {
@@ -12671,7 +12666,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_top_left_1
  B$D28C,8;44 {bitmap: PRISONER FACING TOP LEFT 1
- B$D294,8*5
+ B$D294,8*5;44
  B$D2BC,4;44 }
 ; #UDGTABLE
 ; {
@@ -12680,7 +12675,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_bottom_right_1
  B$D2C0,8;44 {bitmap: PRISONER FACING BOTTOM RIGHT 1
- B$D2C8,8*5
+ B$D2C8,8*5;44
  B$D2F0,4;44 }
 ; #UDGTABLE
 ; {
@@ -12689,7 +12684,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_bottom_right_2
  B$D2F4,8;44 {bitmap: PRISONER FACING BOTTOM RIGHT 2
- B$D2FC,8*5
+ B$D2FC,8*5;44
  B$D324,8;44 }
 ; #UDGTABLE
 ; {
@@ -12698,7 +12693,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_bottom_right_3
  B$D32C,8;44 {bitmap: PRISONER FACING BOTTOM RIGHT 3
- B$D334,8*5
+ B$D334,8*5;44
  B$D35C,6;44 }
 ; #UDGTABLE
 ; {
@@ -12707,7 +12702,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_prisoner_facing_bottom_right_4
  B$D362,8;44 {bitmap: PRISONER FACING BOTTOM RIGHT 4
- B$D36A,8*5
+ B$D36A,8*5;44
  B$D392,6;44 }
 ; #UDGTABLE
 ; {
@@ -12716,7 +12711,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_crawl_facing_bottom_left_2
  B$D398,8;44 {bitmap: CRAWL FACING BOTTOM RIGHT 2
- B$D3A0,8*4
+ B$D3A0,8*4;44
  B$D3C0,5;44 }
 ; #UDGTABLE
 ; {
@@ -12725,7 +12720,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_crawl_facing_bottom_left_1
  B$D3C5,8;44 {bitmap: CRAWL FACING BOTTOM RIGHT 1
- B$D3CD,8*4
+ B$D3CD,8*4;44
  B$D3ED,8;44 }
 ; #UDGTABLE
 ; {
@@ -12734,7 +12729,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_crawl_facing_top_left_1
  B$D3F5,8;44 {bitmap: CRAWL FACING TOP LEFT 1
- B$D3FD,8*4
+ B$D3FD,8*4;44
  B$D41D,8;44 }
 ; #UDGTABLE
 ; {
@@ -12743,56 +12738,56 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_crawl_facing_top_left_2
  B$D425,8;44 {bitmap: CRAWL FACING TOP LEFT 2
- B$D42D,8*4
+ B$D42D,8*4;44
  B$D44D,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D455-$D484-1-24{0,0,96,64}(mask-crawl-facing-top-left) }
 ; TABLE#
 @label=mask_crawl_facing_top_left
  B$D455,8;44 {mask: CRAWL FACING TOP LEFT (shared)
- B$D45D,8*4
+ B$D45D,8*4;44
  B$D47D,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$D485-$D4C4-1-16(mask-various-facing-top-left-1) }
 ; TABLE#
 @label=mask_various_facing_top_left_4
  B$D485,8;44 {mask: VARIOUS FACING TOP LEFT 4
- B$D48D,8*6
+ B$D48D,8*6;44
  B$D4BD,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$D4C5-$D504-1-16(mask-various-facing-top-left-2) }
 ; TABLE#
 @label=mask_various_facing_top_left_3
  B$D4C5,8;44 {mask: VARIOUS FACING TOP LEFT 3
- B$D4CD,8*6
+ B$D4CD,8*6;44
  B$D4FD,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$D505-$D544-1-16(mask-various-facing-top-left-3) }
 ; TABLE#
 @label=mask_various_facing_top_left_2
  B$D505,8;44 {mask: VARIOUS FACING TOP LEFT 2
- B$D50D,8*6
+ B$D50D,8*6;44
  B$D53D,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$D545-$D584-1-16(mask-various-facing-top-left-4) }
 ; TABLE#
 @label=mask_various_facing_top_left_1
  B$D545,8;44 {mask: VARIOUS FACING TOP LEFT 1
- B$D54D,8*6
+ B$D54D,8*6;44
  B$D57D,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$D585-$D5C4-1-16(mask-various-facing-bottom-right-1) }
 ; TABLE#
 @label=mask_various_facing_bottom_right_1
  B$D585,8;44 {mask: VARIOUS FACING BOTTOM RIGHT 1
- B$D58D,8*6
+ B$D58D,8*6;44
  B$D5BD,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$D5C5-$D604-1-16(mask-various-facing-bottom-right-2) }
 ; TABLE#
 @label=mask_various_facing_bottom_right_2
  B$D5C5,8;44 {mask: VARIOUS FACING BOTTOM RIGHT 2
- B$D5CD,8*6
+ B$D5CD,8*6;44
  B$D5FD,8;44 }
 ; #UDGTABLE
 ; {
@@ -12801,7 +12796,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=mask_various_facing_bottom_right_3
  B$D605,8;44 {mask: VARIOUS FACING BOTTOM RIGHT 3
- B$D60D,8*5
+ B$D60D,8*5;44
  B$D635,8;44 }
 ; #UDGTABLE
 ; {
@@ -12810,14 +12805,14 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=mask_various_facing_bottom_right_4
  B$D63D,8;44 {mask: VARIOUS FACING BOTTOM RIGHT 4
- B$D645,8*6
+ B$D645,8*6;44
  B$D675,2;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D677-$D6A6-1-24(mask-crawl-facing-bottom-left) }
 ; TABLE#
 @label=mask_crawl_facing_bottom_left
  B$D677,8;44 {mask: CRAWL FACING BOTTOM RIGHT (shared)
- B$D67F,8*4
+ B$D67F,8*4;44
  B$D69F,8;44 }
 ; #UDGTABLE
 ; {
@@ -12826,7 +12821,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_top_left_4
  B$D6A7,8;44 {bitmap: GUARD FACING TOP LEFT 4
- B$D6AF,8*5
+ B$D6AF,8*5;44
  B$D6D7,6;44 }
 ; #UDGTABLE
 ; {
@@ -12835,7 +12830,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_top_left_3
  B$D6DD,8;44 {bitmap: GUARD FACING TOP LEFT 3
- B$D6E5,8*5
+ B$D6E5,8*5;44
  B$D70D,6;44 }
 ; #UDGTABLE
 ; {
@@ -12844,7 +12839,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_top_left_2
  B$D713,8;44 {bitmap: GUARD FACING TOP LEFT 2
- B$D71B,8*6
+ B$D71B,8*6;44
  B$D74B,2;44 }
 ; #UDGTABLE
 ; {
@@ -12853,7 +12848,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_top_left_1
  B$D74D,8;44 {bitmap: GUARD FACING TOP LEFT 1
- B$D755,8*5
+ B$D755,8*5;44
  B$D77D,6;44 }
 ; #UDGTABLE
 ; {
@@ -12862,7 +12857,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_bottom_right_1
  B$D783,8;44 {bitmap: GUARD FACING BOTTOM RIGHT 1
- B$D78B,8*6
+ B$D78B,8*6;44
  B$D7BB,2;44 }
 ; #UDGTABLE
 ; {
@@ -12871,7 +12866,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_bottom_right_2
  B$D7BD,8;44 {bitmap: GUARD FACING BOTTOM RIGHT 2
- B$D7C5,8*6
+ B$D7C5,8*6;44
  B$D7F5,2;44 }
 ; #UDGTABLE
 ; {
@@ -12880,7 +12875,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_bottom_right_3
  B$D7F7,8;44 {bitmap: GUARD FACING BOTTOM RIGHT 3
- B$D7FF,8*5
+ B$D7FF,8*5;44
  B$D827,8;44 }
 ; #UDGTABLE
 ; {
@@ -12889,7 +12884,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_guard_facing_bottom_right_4
  B$D82F,8;44 {bitmap: GUARD FACING BOTTOM RIGHT 4
- B$D837,8*5
+ B$D837,8*5;44
  B$D85F,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1)
@@ -12897,7 +12892,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_top_left_1
  B$D867,8;44 {bitmap: DOG FACING TOP LEFT 1
- B$D86F,8*4
+ B$D86F,8*4;44
  B$D88F,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D897-$D8C6-1-24{0,0,96,64}(bitmap-dog-facing-top-left-2)
@@ -12905,7 +12900,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_top_left_2
  B$D897,8;44 {bitmap: DOG FACING TOP LEFT 2
- B$D89F,8*4
+ B$D89F,8*4;44
  B$D8BF,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D8C7-$D8F3-1-24{0,0,96,60}(bitmap-dog-facing-top-left-3)
@@ -12913,7 +12908,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_top_left_3
  B$D8C7,8;44 {bitmap: DOG FACING TOP LEFT 3
- B$D8CF,8*4
+ B$D8CF,8*4;44
  B$D8EF,5;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D8F4-$D920-1-24{0,0,96,60}(bitmap-dog-facing-top-left-4)
@@ -12921,14 +12916,14 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_top_left_4
  B$D8F4,8;44 {bitmap: DOG FACING TOP LEFT 4
- B$D8FC,8*4
+ B$D8FC,8*4;44
  B$D91C,5;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D921-$D950-1-24(mask-dog-facing-top-left) }
 ; TABLE#
 @label=mask_dog_facing_top_left
  B$D921,8;44 {mask: DOG FACING TOP LEFT (shared)
- B$D929,8*4
+ B$D929,8*4;44
  B$D949,8;44 }
 ; #UDGTABLE
 ; {
@@ -12937,7 +12932,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_bottom_right_1
  B$D951,8;44 {bitmap: DOG FACING BOTTOM RIGHT 1
- B$D959,8*4
+ B$D959,8*4;44
  B$D979,2;44 }
 ; #UDGTABLE
 ; {
@@ -12946,7 +12941,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_bottom_right_2
  B$D97B,8;44 {bitmap: DOG FACING BOTTOM RIGHT 2
- B$D983,8*4
+ B$D983,8*4;44
  B$D9A3,5;44 }
 ; #UDGTABLE
 ; {
@@ -12955,7 +12950,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_bottom_right_3
  B$D9A8,8;44 {bitmap: DOG FACING BOTTOM RIGHT 3
- B$D9B0,8*3
+ B$D9B0,8*3;44
  B$D9C8,7;44 }
 ; #UDGTABLE
 ; {
@@ -12964,56 +12959,56 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 ; TABLE#
 @label=bitmap_dog_facing_bottom_right_4
  B$D9CF,8;44 {bitmap: DOG FACING BOTTOM RIGHT 4
- B$D9D7,8*4
+ B$D9D7,8*4;44
  B$D9F7,2;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$D9F9-$DA28-1-24(mask-dog-facing-bottom-right) }
 ; TABLE#
 @label=mask_dog_facing_bottom_right
  B$D9F9,8;44 {mask: DOG FACING BOTTOM RIGHT (shared)
- B$DA01,8*4
+ B$DA01,8*4;44
  B$DA21,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$DA29-$DA6A-1-24{0,0,96,96}(flag-up) }
 ; TABLE#
 @label=bitmap_flag_up
  B$DA29,8;44 {bitmap: FLAG UP
- B$DA31,8*7
+ B$DA31,8*7;44
  B$DA69,2;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$DA6B-$DAB5-1-24{0,0,96,96}(flag-down) }
 ; TABLE#
 @label=bitmap_flag_down
  B$DA6B,8;44 {bitmap: FLAG DOWN
- B$DA73,8*8
+ B$DA73,8*8;44
  B$DAB3,3;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$DAB6-$DAFD-1-24{0,0,96,96}(bitmap-crate) }
 ; TABLE#
 @label=bitmap_crate
  B$DAB6,8;44 {bitmap: CRATE
- B$DABE,8*7
+ B$DABE,8*7;44
  B$DAF6,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY3,7,4,3;$DAFE-$DB45-1-24(mask-crate) }
 ; TABLE#
 @label=mask_crate
  B$DAFE,8;44 {mask: CRATE
- B$DB06,8*7
+ B$DB06,8*7;44
  B$DB3E,8;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DB46-$DB71-1-16{0,0,64,88}(bitmap-stove) }
 ; TABLE#
 @label=bitmap_stove
  B$DB46,8;44 {bitmap: STOVE
- B$DB4E,8*4
+ B$DB4E,8*4;44
  B$DB6E,4;44 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) }
 ; TABLE#
 @label=mask_stove
  B$DB72,8;44 {mask: STOVE
- B$DB7A,8*4
+ B$DB7A,8*4;44
  B$DB9A,4;44 }
 
 ; Mark nearby items.
@@ -13048,7 +13043,7 @@ cC$DB9E,3;21 A = room_index;
 *C$DBD0,2;21
  C$DBD2,1;21
  C$DBD3,2;21 }
- C$DBD5,1
+ C$DBD5,1;21
  C$DBD6,2;21 {        *HL |= itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7; // sampled HL=$772B &itemstruct_14.room
  C$DBD8,2;21 }
  C$DBDA,2;21 goto next; %> %> %>
@@ -13081,29 +13076,27 @@ cC$DBEB,3;21 B = item_LIMIT; // iterations
  C$DBF3,4;21
  C$DBF7,2;21 }
  C$DBF9,1;21 HL = Outer_HL;
- C$DBFA,1
+ C$DBFA,1;21
  C$DBFB,1;21 {  HLdash = *++HL * 8; // x position
  C$DBFC,1;21
  C$DBFD,3;21 }
- C$DC00,1;21
- C$DC01,1
- C$DC02,1;21
+ C$DC00,3;21
  C$DC03,1;21 A &= A; // Clear carry flag.
  C$DC04,2;21 HLdash -= BCdash; // itemstr->pos.x * 8 - x
- C$DC06,1
+ C$DC06,1;21
  C$DC07,2;21 {  if (HLdash > 0) <%
  C$DC09,2;21 }
  C$DC0B,1;21 HL++; // y position
  C$DC0C,1;21 {    HLdash = *HL * 8;
  C$DC0D,3;21 }
- C$DC10,2
+ C$DC10,2;21
  C$DC12,1;21 // not clearing carry?
  C$DC13,2;21 HLdash -= BCdash; // itemstr->pos.y * 8 - y
- C$DC15,1
+ C$DC15,1;21
  C$DC16,2;21 {    if (HLdash > 0) <%
  C$DC18,2;21 }
  C$DC1A,1;21 {      HLdash = HL;
- C$DC1B,1
+ C$DC1B,1;21
  C$DC1C,1;21 }
 ; Get x,y for the next iteration.
  C$DC1D,1;21 {      DEdash = *HLdash-- * 8; // y position
@@ -13115,15 +13108,15 @@ cC$DBEB,3;21 B = item_LIMIT; // iterations
  C$DC29,1;21 }
  C$DC2A,1;21 {      IY = HLdash; // IY is not banked // sampled IY=$771C,7715 (pointing into item_structs)
  C$DC2B,2;21 }
- C$DC2D,1
+ C$DC2D,1;21
  C$DC2E,1;21 - // fetch iter count
- C$DC2F,1
+ C$DC2F,1;21
  C$DC30,2;21 {      A = (16 - B) | (1<<6); // item found flag
  C$DC32,1;21
  C$DC33,2;21 }
  C$DC35,1;21 %> %> // unpaired // returns the value in Adash
-*C$DC36,1
- C$DC37,1
+*C$DC36,1;21
+ C$DC37,1;21
 *C$DC38,1;21 {  %> Outer_HL += 7; // stride
  C$DC39,4;21
  C$DC3D,1;21 }
@@ -13148,7 +13141,7 @@ cC$DC41,2;21 A &= 0x3F;
  C$DC4A,1;21 }
  C$DC4B,3;21 DE = &tinypos_stash_x;
  C$DC4E,3;21 BC = 5;
- C$DC51,3
+ C$DC51,3;21
  C$DC54,1;21 *HL = B; // B == 0 due to LDIR /* Items are never drawn flipped. */
  C$DC55,3;21 {HL = &item_definitions[A];
  C$DC58,5;21
@@ -13177,9 +13170,9 @@ cC$DC41,2;21 A &= 0x3F;
  C$DC82,1;21 {  Adash = 3 - C; %>
  C$DC83,2;21
  C$DC85,1;21 }
-*C$DC86,1
+*C$DC86,1;21
  C$DC87,1;21 Cdash = Adash;
- C$DC88,1
+ C$DC88,1;21
  C$DC89,3;21 HLdash = &masked_sprite_plotter_16_enables[0];
  C$DC8C,2;21 Bdash = 3; // iterations
 *C$DC8E,1;21 {do <% Edash = *HLdash++;
@@ -13196,7 +13189,7 @@ cC$DC41,2;21 A &= 0x3F;
  C$DC99,2;21
  C$DC9B,2;21 }
 *C$DC9D,2;21 %> while (--Bdash);
- C$DC9F,1
+ C$DC9F,1;21
  C$DCA0,1;21 A = D;
  C$DCA1,1;21 A &= A;
  C$DCA2,3;21 DE = 0;
@@ -13222,12 +13215,12 @@ cC$DC41,2;21 A &= 0x3F;
  C$DCCF,3;21 ($81A2) = HL;  // screen buffer pointer
 @nowarn
  C$DCD2,3;21 HL = mask_buffer;
- C$DCD5,2
+ C$DCD5,2;21
  C$DCD7,1;21 {L += D * 4;
  C$DCD8,3;21
  C$DCDB,1;21 }
  C$DCDC,3;21 ($81B0) = HL;
- C$DCDF,2
+ C$DCDF,2;21
  C$DCE1,1;21 A = D;
  C$DCE2,1;21 {if (A) <%
  C$DCE3,2;21 }
@@ -13247,7 +13240,7 @@ cC$DC41,2;21 A &= 0x3F;
  C$DCF7,3;21 {mask_pointer += DE;
  C$DCFA,1;21
  C$DCFB,3;21 }
- C$DCFE,2
+ C$DCFE,2;21
  C$DD00,1;21 A = 0;
  C$DD01,1;21 return; /* visible */
 
@@ -13443,189 +13436,189 @@ bB$DD7D,1;21 width
 ; TABLE#
 @label=bitmap_shovel
 bB$DDDD,2;21 {item_bitmap: SHOVEL (16x13)
- B$DDDF,2*11
+ B$DDDF,2*11;21
  B$DDF5,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DDF7-$DE10-1-16{0,0,64,52}(item-key) }
 ; TABLE#
 @label=bitmap_key
  B$DDF7,2;21 {item_bitmap: KEY (shared for all keys) (16x13)
- B$DDF9,2*11
+ B$DDF9,2*11;21
  B$DE0F,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DE11-$DE30-1-16{0,0,64,64}(item-lockpick) }
 ; TABLE#
 @label=bitmap_lockpick
  B$DE11,2;21 {item_bitmap: LOCKPICK (16x16)
- B$DE13,2*14
+ B$DE13,2*14;21
  B$DE2F,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DE31-$DE48-1-16{0,0,64,48}(item-compass) }
 ; TABLE#
 @label=bitmap_compass
  B$DE31,2;21 {item_bitmap: COMPASS (16x12)
- B$DE33,2*10
+ B$DE33,2*10;21
  B$DE47,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DE49-$DE60-1-16{0,0,64,48}(item-purse) }
 ; TABLE#
 @label=bitmap_purse
  B$DE49,2;21 {item_bitmap: PURSE (16x12)
- B$DE4B,2*10
+ B$DE4B,2*10;21
  B$DE5F,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DE61-$DE7E-1-16{0,0,64,60}(item-papers) }
 ; TABLE#
 @label=bitmap_papers
  B$DE61,2;21 {item_bitmap: PAPERS (16x15)
- B$DE63,2*13
+ B$DE63,2*13;21
  B$DE7D,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DE7F-$DE94-1-16{0,0,64,44}(item-wiresnips) }
 ; TABLE#
 @label=bitmap_wiresnips
  B$DE7F,2;21 {item_bitmap: WIRESNIPS (16x11)
- B$DE81,2*9
+ B$DE81,2*9;21
  B$DE93,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DE95-$DEAE-1-16{0,0,64,52}(item-mask-shovelkey) }
 ; TABLE#
 @label=mask_shovel_key
  B$DE95,2;21 {item_mask: SHOVEL or KEY (shared) (16x13)
- B$DE97,2*11
+ B$DE97,2*11;21
  B$DEAD,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DEAF-$DECE-1-16{0,0,64,64}(item-mask-lockpick) }
 ; TABLE#
 @label=mask_lockpick
  B$DEAF,2;21 {item_mask: LOCKPICK (16x16)
- B$DEB1,2*14
+ B$DEB1,2*14;21
  B$DECD,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DECF-$DEE6-1-16{0,0,64,48}(item-mask-compass) }
 ; TABLE#
 @label=mask_compass
  B$DECF,2;21 {item_mask: COMPASS (16x12)
- B$DED1,2*10
+ B$DED1,2*10;21
  B$DEE5,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DEE7-$DEFE-1-16{0,0,64,48}(item-mask-purse) }
 ; TABLE#
 @label=mask_purse
  B$DEE7,2;21 {item_mask: PURSE (16x12)
- B$DEE9,2*10
+ B$DEE9,2*10;21
  B$DEFD,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DEFF-$DF1C-1-16{0,0,64,60}(item-mask-papers) }
 ; TABLE#
 @label=mask_papers
  B$DEFF,2;21 {item_mask: PAPERS (16x15)
- B$DF01,2*13
+ B$DF01,2*13;21
  B$DF1B,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DF1D-$DF32-1-16{0,0,64,44}(item-mask-wiresnips) }
 ; TABLE#
 @label=mask_wiresnips
  B$DF1D,2;21 {item_mask: WIRESNIPS (16x11)
- B$DF1F,2*9
+ B$DF1F,2*9;21
  B$DF31,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DF33-$DF52-1-16{0,0,64,64}(item-food) }
 ; TABLE#
 @label=bitmap_food
  B$DF33,2;21 {item_bitmap: FOOD (16x16)
- B$DF35,2*14
+ B$DF35,2*14;21
  B$DF51,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DF53-$DF72-1-16{0,0,64,64}(item-poison) }
 ; TABLE#
 @label=bitmap_poison
  B$DF53,2;21 {item_bitmap: POISON (16x16)
- B$DF55,2*14
+ B$DF55,2*14;21
  B$DF71,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DF73-$DF8A-1-16{0,0,64,48}(item-torch) }
 ; TABLE#
 @label=bitmap_torch
  B$DF73,2;21 {item_bitmap: TORCH (16x12)
- B$DF75,2*10
+ B$DF75,2*10;21
  B$DF89,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DF8B-$DFAA-1-16{0,0,64,64}(item-uniform) }
 ; TABLE#
 @label=bitmap_uniform
  B$DF8B,2;21 {item_bitmap: UNIFORM (16x16)
- B$DF8D,2*14
+ B$DF8D,2*14;21
  B$DFA9,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DFAB-$DFC4-1-16{0,0,64,52}(item-bribe) }
 ; TABLE#
 @label=bitmap_bribe
  B$DFAB,2;21 {item_bitmap: BRIBE (16x13)
- B$DFAD,2*11
+ B$DFAD,2*11;21
  B$DFC3,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DFC5-$DFE4-1-16{0,0,64,64}(item-radio) }
 ; TABLE#
 @label=bitmap_radio
  B$DFC5,2;21 {item_bitmap: RADIO (16x16)
- B$DFC7,2*14
+ B$DFC7,2*14;21
  B$DFE3,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$DFE5-$E004-1-16{0,0,64,64}(item-parcel) }
 ; TABLE#
 @label=bitmap_parcel
  B$DFE5,2;21 {item_bitmap: PARCEL (16x16)
- B$DFE7,2*14
+ B$DFE7,2*14;21
  B$E003,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$E005-$E01E-1-16{0,0,64,52}(item-mask-bribe) }
 ; TABLE#
 @label=mask_bribe
  B$E005,2;21 {item_mask: BRIBE (16x13)
- B$E007,2*11
+ B$E007,2*11;21
  B$E01D,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$E01F-$E03E-1-16{0,0,64,64}(item-mask-uniform) }
 ; TABLE#
 @label=mask_uniform
  B$E01F,2;21 {item_mask: UNIFORM (16x16)
- B$E021,2*14
+ B$E021,2*14;21
  B$E03D,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$E03F-$E05E-1-16{0,0,64,64}(item-mask-parcel) }
 ; TABLE#
 @label=mask_parcel
  B$E03F,2;21 {item_mask: PARCEL (16x16)
- B$E041,2*14
+ B$E041,2*14;21
  B$E05D,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$E05F-$E07E-1-16{0,0,64,64}(item-mask-poison) }
 ; TABLE#
 @label=mask_poison
  B$E05F,2;21 {item_mask: POISON (16x16)
- B$E061,2*14
+ B$E061,2*14;21
  B$E07D,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$E07F-$E096-1-16{0,0,64,48}(item-mask-torch) }
 ; TABLE#
 @label=mask_torch
  B$E07F,2;21 {item_mask: TORCH (16x12)
- B$E081,2*10
+ B$E081,2*10;21
  B$E095,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$E097-$E0B6-1-16{0,0,64,64}(item-mask-radio) }
 ; TABLE#
 @label=mask_radio
  B$E097,2;21 {item_mask: RADIO (16x16)
- B$E099,2*14
+ B$E099,2*14;21
  B$E0B5,2;21 }
 ; #UDGTABLE
 ; { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food) }
 ; TABLE#
 @label=mask_food
  B$E0B7,2;21 {item_mask: FOOD (16x16)
- B$E0B9,2*14
+ B$E0B9,2*14;21
  B$E0D5,2;21 }
 
 ; Unreferenced bytes.
@@ -13755,14 +13748,7 @@ cC$E102,3;21 {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  C$E189,1;21
  C$E18A,1;21 }
  C$E18B,1;21 {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
- C$E18C,2;21
- C$E18E,1
- C$E18F,1;21
- C$E190,1
- C$E191,1;21
- C$E192,1
- C$E193,2;21
- C$E195,1
+ C$E18C,10;21
  C$E196,1;21 }
  C$E197,1;21 {  foremaskptr++;
  C$E198,1;21 }
@@ -13771,14 +13757,7 @@ cC$E102,3;21 {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  C$E19A,1;21
  C$E19B,1;21 }
  C$E19C,1;21 {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
- C$E19D,2;21
- C$E19F,1
- C$E1A0,1;21
- C$E1A1,1
- C$E1A2,1;21
- C$E1A3,1
- C$E1A4,2;21
- C$E1A6,1
+ C$E19D,10;21
  C$E1A7,1;21 }
  C$E1A8,1;21 {  foremaskptr++;
  C$E1A9,1;21 }
@@ -13787,14 +13766,7 @@ cC$E102,3;21 {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  C$E1AB,1;21
  C$E1AC,1;21 }
  C$E1AD,1;21 {  A = ((~*foremaskptr | mask3) & *screenptr) | (bm3 & *foremaskptr);
- C$E1AE,2;21
- C$E1B0,1
- C$E1B1,1;21
- C$E1B2,1
- C$E1B3,1;21
- C$E1B4,1
- C$E1B5,2;21
- C$E1B7,1
+ C$E1AE,10;21
  C$E1B8,1;21 }
  C$E1B9,1;21 foremaskptr++;
  C$E1BA,3;21 {  foreground_mask_pointer = foremaskptr;
@@ -13833,7 +13805,7 @@ cC$E102,3;21 {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  C$E1E7,1;21 }
  C$E1E8,1;21 {  E = *HL++;
  C$E1E9,1;21 }
- C$E1EA,2
+ C$E1EA,2;21
 ; Load mask bytes into B',C',E'.
  C$E1EC,1;21 {  B = *HL++;
  C$E1ED,1;21 }
@@ -13841,12 +13813,12 @@ cC$E102,3;21 {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  C$E1EF,1;21 }
  C$E1F0,1;21 {  E = *HL++;
  C$E1F1,1;21 }
- C$E1F2,1
+ C$E1F2,1;21
  C$E1F3,3;21 {  if (flip_sprite & (1<<7)) flip_24_masked_pixels();
  C$E1F6,1;21
  C$E1F7,3;21 }
  C$E1FA,3;21 HL = foreground_mask_pointer;
- C$E1FD,1
+ C$E1FD,1;21
 @nowarn
  C$E1FE,3;21 HL = ($81A2); // screen pointer
 ; Shift bitmap.
@@ -13869,7 +13841,7 @@ cC$E102,3;21 {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  C$E21F,2;21 RL C
  C$E221,2;21 RL B
  C$E223,2;21 RL D
- C$E225,1
+ C$E225,1;21
 ; Shift mask.
  C$E226,2;21 D = 255;
  C$E228,1;21 SCF
@@ -13895,79 +13867,79 @@ cC$E102,3;21 {if ((A = (IY[24] & 7)) >= 4) goto unaligned;
  C$E24B,1;21 {  A = ~*HL | D;       // 1
  C$E24C,1;21
  C$E24D,1;21 }
- C$E24E,1
+ C$E24E,1;21
  C$E24F,1;21 A &= *HL;
- C$E250,1
+ C$E250,1;21
  C$E251,1;21 A = D;
- C$E252,1
+ C$E252,1;21
  C$E253,1;21 A &= *HL;
  C$E254,1;21 D = A;
- C$E255,1
+ C$E255,1;21
  C$E256,1;21 A |= D;
  C$E257,1;21 L++;
- C$E258,1
+ C$E258,1;21
 @label=masked_sprite_plotter_24_wide_enable1
  C$E259,1;21 {  *HL++ = A;          // enable/disable 1
  C$E25A,1;21 }
- C$E25B,1
+ C$E25B,1;21
  C$E25C,1;21 {  A = ~*HL | B;       // 2
  C$E25D,1;21
  C$E25E,1;21 }
- C$E25F,1
+ C$E25F,1;21
  C$E260,1;21 A &= *HL;
- C$E261,1
+ C$E261,1;21
  C$E262,1;21 A = B;
- C$E263,1
+ C$E263,1;21
  C$E264,1;21 A &= *HL;
  C$E265,1;21 B = A;
- C$E266,1
+ C$E266,1;21
  C$E267,1;21 A |= B;
  C$E268,1;21 L++;
- C$E269,1
+ C$E269,1;21
 @label=masked_sprite_plotter_24_wide_enable3
  C$E26A,1;21 {  *HL++ = A;          // enable/disable 3
  C$E26B,1;21 }
- C$E26C,1
+ C$E26C,1;21
  C$E26D,1;21 {  A = ~*HL | C;       // 3
  C$E26E,1;21
  C$E26F,1;21 }
- C$E270,1
+ C$E270,1;21
  C$E271,1;21 A &= *HL;
- C$E272,1
+ C$E272,1;21
  C$E273,1;21 A = C;
- C$E274,1
+ C$E274,1;21
  C$E275,1;21 A &= *HL;
  C$E276,1;21 C = A;
- C$E277,1
+ C$E277,1;21
  C$E278,1;21 A |= C;
  C$E279,1;21 L++;
- C$E27A,1
+ C$E27A,1;21
 @label=masked_sprite_plotter_24_wide_enable5
  C$E27B,1;21 {  *HL++ = A;          // enable/disable 5
  C$E27C,1;21 }
- C$E27D,1
+ C$E27D,1;21
  C$E27E,1;21 {  A = ~*HL | E;       // 4
  C$E27F,1;21
  C$E280,1;21 }
- C$E281,1
+ C$E281,1;21
  C$E282,1;21 A &= *HL;
- C$E283,1
+ C$E283,1;21
  C$E284,1;21 A = E;
- C$E285,1
+ C$E285,1;21
  C$E286,1;21 A &= *HL;
  C$E287,1;21 E = A;
- C$E288,1
+ C$E288,1;21
  C$E289,1;21 A |= E;
  C$E28A,1;21 L++;
  C$E28B,3;21 foreground_mask_pointer = HL;
- C$E28E,2
+ C$E28E,2;21
 @label=masked_sprite_plotter_24_wide_enable7
  C$E290,1;21 *HL = A;            // enable/disable 7
  C$E291,3;21 {  HL += 21;
  C$E294,1;21 }
 @nowarn
  C$E295,3;21 ($81A2) = HL;
- C$E298,2
+ C$E298,2;21
  C$E29A,1;21 {%> while (--B);
  C$E29B,3;21 }
  C$E29E,1;21 return;
@@ -14020,8 +13992,7 @@ cC$E2AC,1;21 {A = (~A & 3) * 6; // jump table offset
  C$E2C6,1;21 }
 ; Load mask bytes into D',E'.
  C$E2C7,1;21 {  mask0 = *maskptr++; // D'
- C$E2C8,1
- C$E2C9,1;21
+ C$E2C8,2;21
  C$E2CA,1;21 }
  C$E2CB,1;21 {  mask1 = *maskptr++; // E'
  C$E2CC,1;21
@@ -14066,14 +14037,7 @@ cC$E2AC,1;21 {A = (~A & 3) * 6; // jump table offset
 @nowarn
  C$E307,3;21 screenptr = ($81A2);
  C$E30A,1;21 {  A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
- C$E30B,3;21
- C$E30E,1
- C$E30F,1;21
- C$E310,1
- C$E311,1;21
- C$E312,1
- C$E313,2;21
- C$E315,1
+ C$E30B,11;21
  C$E316,1;21 }
  C$E317,1;21 {  foremaskptr++;
  C$E318,1;21 }
@@ -14081,14 +14045,7 @@ cC$E2AC,1;21 {A = (~A & 3) * 6; // jump table offset
  C$E319,1;21 {  *screenptr++ = A; // entry point jump0
  C$E31A,1;21 }
  C$E31B,1;21 {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
- C$E31C,3;21
- C$E31F,1
- C$E320,1;21
- C$E321,1
- C$E322,1;21
- C$E323,1
- C$E324,2;21
- C$E326,1
+ C$E31C,11;21
  C$E327,1;21 }
  C$E328,1;21 {  foremaskptr++;
  C$E329,1;21 }
@@ -14096,14 +14053,7 @@ cC$E2AC,1;21 {A = (~A & 3) * 6; // jump table offset
  C$E32A,1;21 {  *screenptr++ = A; // entry point jump2
  C$E32B,1;21 }
  C$E32C,1;21 {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
- C$E32D,3;21
- C$E330,1
- C$E331,1;21
- C$E332,1
- C$E333,1;21
- C$E334,1
- C$E335,2;21
- C$E337,1
+ C$E32D,11;21
  C$E338,1;21 }
  C$E339,1;21 {  foremaskptr += 2;
  C$E33A,1;21 }
@@ -14143,8 +14093,7 @@ cC$E34E,2;21 {A = (A - 4) * 6; // jump table offset
  C$E366,1;21 {  bm2 = *bitmapptr++;
  C$E367,1;21 }
  C$E368,1;21 {  mask1 = *maskptr++;
- C$E369,1
- C$E36A,1;21
+ C$E369,2;21
  C$E36B,1;21 }
  C$E36C,1;21 {  mask2 = *maskptr++;
  C$E36D,1;21 }
@@ -14191,14 +14140,7 @@ cC$E34E,2;21 {A = (A - 4) * 6; // jump table offset
 @nowarn
  C$E3B3,3;21 screenptr = ($81A2);
  C$E3B6,1;21 {  A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
- C$E3B7,3;21
- C$E3BA,1
- C$E3BB,1;21
- C$E3BC,1
- C$E3BD,1;21
- C$E3BE,1
- C$E3BF,2;21
- C$E3C1,1
+ C$E3B7,11;21
  C$E3C2,1;21 }
  C$E3C3,1;21 {  foremaskptr++;
  C$E3C4,1;21 }
@@ -14206,14 +14148,7 @@ cC$E34E,2;21 {A = (A - 4) * 6; // jump table offset
  C$E3C5,1;21 {  *screenptr++ = A; // entry point jump1
  C$E3C6,1;21 }
  C$E3C7,1;21 {  A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
- C$E3C8,3;21
- C$E3CB,1
- C$E3CC,1;21
- C$E3CD,1
- C$E3CE,1;21
- C$E3CF,1
- C$E3D0,2;21
- C$E3D2,1
+ C$E3C8,11;21
  C$E3D3,1;21 }
  C$E3D4,1;21 {  foremaskptr++;
  C$E3D5,1;21 }
@@ -14221,14 +14156,7 @@ cC$E34E,2;21 {A = (A - 4) * 6; // jump table offset
  C$E3D6,1;21 {  *screenptr++ = A; // entry point jump3
  C$E3D7,1;21 }
  C$E3D8,1;21 {  A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
- C$E3D9,3;21
- C$E3DC,1
- C$E3DD,1;21
- C$E3DE,1
- C$E3DF,1;21
- C$E3E0,1
- C$E3E1,2;21
- C$E3E3,1
+ C$E3D9,11;21
  C$E3E4,1;21 }
  C$E3E5,1;21 {  foremaskptr += 2;
  C$E3E6,1;21 }
@@ -14265,7 +14193,7 @@ cC$E3FA,2;21 H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 -> table of bi
  C$E400,1;21 E = *HL;   // DE = (DE & 0xFF00) | *HL;
  C$E401,1;21 L = C;     // HL = (HL & 0xFF00) | (BC & 0xFF);
  C$E402,1;21 C = *HL;   // BC = (BC & 0xFF00) | *HL;
- C$E403,1
+ C$E403,1;21
 ; Reverse the mask bytes.
  C$E404,2;21 Hdash = 0x7F;
  C$E406,1;21 Ldash = Edash;
@@ -14275,7 +14203,7 @@ cC$E3FA,2;21 H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 -> table of bi
  C$E40A,1;21 Edash = *HLdash;
  C$E40B,1;21 Ldash = Cdash;
  C$E40C,1;21 Cdash = *HLdash;
- C$E40D,1
+ C$E40D,1;21
  C$E40E,1;21 return;
 
 ; Reverses the 16 pixels in D,E and D',E'.
@@ -14293,7 +14221,7 @@ cC$E40F,2;21 H = 0x7F;  // HL = 0x7F00 | (DE >> 8); // 0x7F00 -> table of bit re
  C$E413,1;21 E = *HL;
  C$E414,1;21 L = D;     // HL = (HL & 0xFF00) | (DE >> 8);
  C$E415,1;21 D = *HL;   // DE = (*HL << 8) | (DE & 0x00FF);
- C$E416,1
+ C$E416,1;21
 ; Reverse the mask bytes.
  C$E417,2;21 Hdash = 0x7F;
  C$E419,1;21 Ldash = Ddash;
@@ -14301,7 +14229,7 @@ cC$E40F,2;21 H = 0x7F;  // HL = 0x7F00 | (DE >> 8); // 0x7F00 -> table of bit re
  C$E41B,1;21 Edash = *HLdash;
  C$E41C,1;21 Ldash = Ddash;
  C$E41D,1;21 Ddash = *HLdash;
- C$E41E,1
+ C$E41E,1;21
  C$E41F,1;21 return;
 
 ; Set up vischar plotting.
@@ -14346,10 +14274,10 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
 *C$E44E,1;21 {C = *HL++;
  C$E44F,1;21 }
  C$E450,1;21 B = *HL++;
- C$E451,2
+ C$E451,2;21
  C$E453,1;21 {sprite_index = *HL++; // set left/right flip flag / sprite offset
  C$E454,3;21 }
- C$E457,2
+ C$E457,2;21
  C$E459,2;21 B = 2; // 2 iterations
 *C$E45B,1;21 {do <% Adash = *HL++;
  C$E45C,1;21 }
@@ -14359,13 +14287,13 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E462,1;21
  C$E463,1;21 }
  C$E464,2;21 %> while (--B);
- C$E466,2
+ C$E466,2;21
  C$E468,1;21 {DE += A * 6; // point into sprite[] array
  C$E469,7;21
  C$E470,1;21 }
 *C$E471,1;21 {L += 2; // skip over room, unused bytes
  C$E472,1;21 }
- C$E473,1
+ C$E473,1;21
  C$E474,2;21 *DE++ = *HL++; // width in bytes
  C$E476,2;21 *DE++ = *HL++; // height in rows
  C$E478,3;21 {memcpy(bitmap_pointer, HL, 4); // copy bitmap pointer and mask pointer
@@ -14385,7 +14313,7 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E495,2;21 A = 3;
  C$E497,3;21 HL = masked_sprite_plotter_16_enables; %>
  C$E49A,2;21 else <%
-*C$E49C,1
+*C$E49C,1;21
  C$E49D,3;21 ($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift right case)
  C$E4A0,3;21 ($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift left case)
  C$E4A3,2;21 A = 4;
@@ -14397,17 +14325,17 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E4AE,1;21 {if (A == 0) <%
  C$E4AF,2;21 }
  C$E4B1,2;21 A = 0x77; /* opcode of 'LD (HL),A' */
- C$E4B3,1
+ C$E4B3,1;21
  C$E4B4,1;21 Adash = C; %>
  C$E4B5,2;21 else <%
 *C$E4B7,1;21 A = 0; /* opcode of 'LD (HL),A' */
- C$E4B8,1
+ C$E4B8,1;21
  C$E4B9,1;21 {  Adash = E - C; %>
  C$E4BA,1;21 }
-*C$E4BB,1
+*C$E4BB,1;21
  C$E4BC,1;21 POP enables
  C$E4BD,1;21 Cdash = Adash;
- C$E4BE,1
+ C$E4BE,1;21
 ; Set the addresses in the jump table to NOP or LD (HL),A.
 @label=setup_vischar_plotting_enables_iters
  C$E4BF,2;21 Bdash = 3; // 3 iterations // self modified by $E4A9
@@ -14425,7 +14353,7 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E4CC,2;21 {  if (Z) A ^= 0x77; /* Toggle between LD and NOP. */
  C$E4CE,2;21 }
 *C$E4D0,2;21 %> while (--Bdash);
- C$E4D2,1
+ C$E4D2,1;21
  C$E4D3,1;21 A = D;
  C$E4D4,1;21 A &= A;
  C$E4D5,3;21 DE = 0;
@@ -14433,7 +14361,7 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E4DA,3;21 {  HL = $81BC * 8; // &map_position + 1;
  C$E4DD,5;21
  C$E4E2,1;21 }
- C$E4E3,1
+ C$E4E3,1;21
  C$E4E4,3;21 L = IY[26];
  C$E4E7,3;21 H = IY[27];
  C$E4EA,1;21 A &= A;
@@ -14454,12 +14382,12 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E508,3;21 ($81A2) = HL;
 @nowarn
  C$E50B,3;21 HL = mask_buffer;
- C$E50E,2
+ C$E50E,2;21
  C$E510,1;21 {L += D * 4 + (IY[26] & 7) * 4;
  C$E511,12;21
  C$E51D,1;21 }
  C$E51E,3;21 foreground_mask_pointer = HL;
- C$E521,1
+ C$E521,1;21
  C$E522,1;21 A = D;
  C$E523,1;21 {if (A) <%
  C$E524,2;21 }
@@ -14479,7 +14407,7 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E539,3;21 {mask_pointer += DE;
  C$E53C,1;21
  C$E53D,3;21 }
- C$E540,1
+ C$E540,1;21
  C$E541,1;21 return; /* visible */
 
 ; Scale down a pos_t and assign result to a tinypos_t.
@@ -14536,68 +14464,68 @@ cC$E555,2;21 {A = (A >> 3) | (C << 5); C >>= 3;
 @label=masks
 @label=exterior_mask_0
 bB$E55F,8;44 {exterior_mask_0
- B$E567,8*18
+ B$E567,8*18;44
  B$E5F7,8;44 }
 @label=exterior_mask_1
  B$E5FF,8;44 {exterior_mask_1
- B$E607,8*2
+ B$E607,8*2;44
  B$E617,7;44 }
 @label=exterior_mask_2
  B$E61E,8;44 {exterior_mask_2
- B$E626,8*20
+ B$E626,8*20;44
  B$E6C6,4;44 }
 @label=exterior_mask_3
  B$E6CA,8;44 {exterior_mask_3
- B$E6D2,8*15
+ B$E6D2,8*15;44
  B$E74A,1;44 }
 @label=exterior_mask_4
  B$E74B,8;44 {exterior_mask_4
  B$E753,5;44 }
 @label=exterior_mask_5
  B$E758,8;44 {exterior_mask_5
- B$E760,8*3
+ B$E760,8*3;44
  B$E778,7;44 }
 @label=exterior_mask_6
  B$E77F,8;44 {exterior_mask_6
- B$E787,8
+ B$E787,8;44
  B$E78F,7;44 }
 @label=exterior_mask_7
  B$E796,8;44 {exterior_mask_7
- B$E79E,8*2
+ B$E79E,8*2;44
  B$E7AE,1;44 }
 @label=exterior_mask_8
  B$E7AF,8;44 {exterior_mask_8
- B$E7B7,8*20
+ B$E7B7,8*20;44
  B$E857,5;44 }
 @label=exterior_mask_9
  B$E85C,8;44 {exterior_mask_9
- B$E864,8*7
+ B$E864,8*7;44
  B$E89C,7;44 }
 @label=exterior_mask_10
  B$E8A3,8;44 {exterior_mask_10
- B$E8AB,8*8
+ B$E8AB,8*8;44
  B$E8EB,5;44 }
 @label=exterior_mask_11
  B$E8F0,8;44 {exterior_mask_11
- B$E8F8,8*6
+ B$E8F8,8*6;44
  B$E928,7;44 }
 @label=exterior_mask_12
  B$E92F,8;44 {exterior_mask_12
- B$E937,8
+ B$E937,8;44
  B$E93F,1;44 }
 @label=exterior_mask_13
  B$E940,8;44 {exterior_mask_13
- B$E948,8*5
+ B$E948,8*5;44
  B$E970,2;44 }
 @label=exterior_mask_14
  B$E972,8;44 {exterior_mask_14
- B$E97A,8*3
+ B$E97A,8*3;44
  B$E992,8;44 }
 @label=interior_mask_15
  B$E99A,5;44 interior_mask_15
 @label=interior_mask_16
  B$E99F,8;44 {interior_mask_16
- B$E9A7,8*2
+ B$E9A7,8*2;44
  B$E9B7,2;44 }
 @label=interior_mask_17
  B$E9B9,8;44 {interior_mask_17
@@ -14606,18 +14534,18 @@ bB$E55F,8;44 {exterior_mask_0
  B$E9C6,5;44 interior_mask_18
 @label=interior_mask_19
  B$E9CB,8;44 {interior_mask_19
- B$E9D3,8*2
+ B$E9D3,8*2;44
  B$E9E3,3;44 }
 @label=interior_mask_20
  B$E9E6,8;44 {interior_mask_20
  B$E9EE,7;44 }
 @label=interior_mask_21
  B$E9F5,8;44 {interior_mask_21
- B$E9FD,8*2
+ B$E9FD,8*2;44
  B$EA0D,1;44 }
 @label=interior_mask_22
  B$EA0E,8;44 {interior_mask_22
- B$EA16,8*2
+ B$EA16,8*2;44
  B$EA26,5;44 }
 @label=interior_mask_23
  B$EA2B,8;44 {interior_mask_23
@@ -14638,7 +14566,7 @@ bB$E55F,8;44 {exterior_mask_0
  B$EA65,2;44 }
 @label=interior_mask_29
  B$EA67,8;44 {interior_mask_29
- B$EA6F,8
+ B$EA6F,8;44
  B$EA77,5;44 }
 
 ; Interior masking data.
@@ -14815,8 +14743,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF42,1;21 Adash = *HL;
  C$EF43,1;21 *DE++ = Adash;
  C$EF44,1;21 {    *HL++ = C;
- C$EF45,1
- C$EF46,1;21
+ C$EF45,2;21
  C$EF47,1;21 }
  C$EF48,1;21 C = *HL;
  C$EF49,2;21 {    RRD
@@ -14824,8 +14751,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF4C,1;21 Adash = *HL;
  C$EF4D,1;21 *DE++ = Adash;
  C$EF4E,1;21 {    *HL++ = C;
- C$EF4F,1
- C$EF50,1;21
+ C$EF4F,2;21
  C$EF51,1;21 }
  C$EF52,1;21 C = *HL;
  C$EF53,2;21 {    RRD
@@ -14833,8 +14759,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF56,1;21 Adash = *HL;
  C$EF57,1;21 *DE++ = Adash;
  C$EF58,1;21 {    *HL++ = C;
- C$EF59,1
- C$EF5A,1;21
+ C$EF59,2;21
  C$EF5B,1;21 }
  C$EF5C,1;21 C = *HL;
  C$EF5D,2;21 {    RRD
@@ -14842,8 +14767,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF60,1;21 Adash = *HL;
  C$EF61,1;21 *DE++ = Adash;
  C$EF62,1;21 {    *HL++ = C;
- C$EF63,1
- C$EF64,1;21
+ C$EF63,2;21
  C$EF65,1;21 }
  C$EF66,1;21 C = *HL;
  C$EF67,2;21 {    RRD
@@ -14851,8 +14775,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF6A,1;21 Adash = *HL;
  C$EF6B,1;21 *DE++ = Adash;
  C$EF6C,1;21 {    *HL++ = C;
- C$EF6D,1
- C$EF6E,1;21
+ C$EF6D,2;21
  C$EF6F,1;21 }
  C$EF70,2;21 %> while (--B);
  C$EF72,1;21 C = *HL;
@@ -14861,8 +14784,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF76,1;21 Adash = *HL;
  C$EF77,1;21 *DE++ = Adash;
  C$EF78,1;21 {  *HL++ = C;
- C$EF79,1
- C$EF7A,1;21
+ C$EF79,2;21
  C$EF7B,1;21 }
  C$EF7C,1;21 C = *HL;
  C$EF7D,2;21 {  RRD
@@ -14870,8 +14792,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF80,1;21 Adash = *HL;
  C$EF81,1;21 *DE++ = Adash;
  C$EF82,1;21 {  *HL++ = C;
- C$EF83,1
- C$EF84,1;21
+ C$EF83,2;21
  C$EF85,1;21 }
  C$EF86,1;21 C = *HL;
  C$EF87,2;21 {  RRD
@@ -14879,8 +14800,7 @@ cC$EED3,4;21 saved_sp = SP;
  C$EF8A,1;21 Adash = *HL;
  C$EF8B,1;21 *DE++ = Adash;
  C$EF8C,1;21 {  *HL++ = C;
- C$EF8D,1
- C$EF8E,1;21
+ C$EF8D,2;21
  C$EF8F,1;21 }
  C$EF90,1;21 {  A = *HL++;
  C$EF91,1;21
@@ -15108,20 +15028,20 @@ cC$F163,1;30 Disable interrupts.
  C$F196,1;30 {
  C$F197,1;30 }
  C$F198,3;30 {  memcpy(HL, DE, 23);
- C$F19B,1
+ C$F19B,1;30
  C$F19C,2;30 }
- C$F19E,1
+ C$F19E,1;30
  C$F19F,2;30 {  HL += 32;
  C$F1A1,1;30
  C$F1A2,1;30 }
- C$F1A3,1
+ C$F1A3,1;30
  C$F1A4,1;30 {%> while (--B);
  C$F1A5,2;30 }
 ; Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
  C$F1A7,2;30 B = 7; // iterations
 @nowarn
  C$F1A9,3;30 HL = 0x8020; // iterate over non-player characters
- C$F1AC,5
+ C$F1AC,5;30
 *C$F1B1,1;30 {do <% HL[0] = character_NONE;
  C$F1B2,1;30 }
  C$F1B3,1;30 HL[1] = 0xFF; // flags
@@ -15168,14 +15088,14 @@ cC$F1E0,3;21 HL = &static_graphic_defs[0];
  C$F1EE,3;21 plot_static_tiles_vertical();
  C$F1F1,2;21 else
 *C$F1F3,3;21 plot_static_tiles_horizontal();
-*C$F1F6,1
+*C$F1F6,1;21
  C$F1F7,2;21 %> while (--B);
 ; Plot menu text.
  C$F1F9,2;21 B = 8; // 8 iterations
  C$F1FB,3;21 HL = &key_choice_screenlocstrings;
 *C$F1FE,1;21 do <%
  C$F1FF,3;21 screenlocstring_plot();
- C$F202,1
+ C$F202,1;21
  C$F203,2;21 %> while (--B);
  C$F205,1;21 return;
 
@@ -15210,11 +15130,11 @@ cC$F20B,3;21 static_tiles_plot_direction = A;
  C$F20E,1;21 {B = *HL++ & statictiles_COUNT_MASK; // loop iterations
  C$F20F,3;21
  C$F212,1;21 }
- C$F213,2
+ C$F213,2;21
  C$F215,1;21 POP DEdash
- C$F216,1
+ C$F216,1;21
 *C$F217,1;21 do <% A = *HL;
- C$F218,1
+ C$F218,1;21
  C$F219,1;21 {  HLdash = &static_tiles[A]; // elements: 9 bytes each
  C$F21A,12;21
  C$F226,1;21 }
@@ -15249,7 +15169,7 @@ cC$F20B,3;21 static_tiles_plot_direction = A;
  C$F24C,2;21 else <% // vertical
 *C$F24E,3;21 next_scanline_down(); %>
 *C$F251,1;21 EX DEdash,HLdash
- C$F252,1
+ C$F252,1;21
  C$F253,1;21 HL++;
  C$F254,2;21 %> while (--B);
  C$F256,1;21 return;
@@ -15286,11 +15206,11 @@ cC$F271,3;21 A = menu_keyscan();
  C$F278,2;21 }
  C$F27A,1;21 A--; // 1..4 -> 0..3
 ; Clear old selection.
- C$F27B,1
+ C$F27B,1;21
  C$F27C,3;21 A = chosen_input_device;
  C$F27F,2;21 {
  C$F281,3;21 set_menu_item_attributes(attribute_WHITE_OVER_BLACK);}
- C$F284,1
+ C$F284,1;21
 ; Highlight new selection.
  C$F285,3;21 chosen_input_device = A;
  C$F288,2;21 {
@@ -15303,9 +15223,7 @@ cC$F271,3;21 A = menu_keyscan();
 ; the case of the keyboard, it's zero. choose_keys relies on that in a
 ; nonobvious way.
  C$F292,1;21 {  memcpy($F075, inputroutine[A], 0x4A); // copy input routine to $F075, length 0x4A
- C$F293,2;21
- C$F295,1
- C$F296,16;21
+ C$F293,19;21
  C$F2A6,1;21 }
  C$F2A7,1;21 {  if (A == inputdevice_KEYBOARD) { choose_keys(); }
  C$F2A8,3;21 }
@@ -15410,9 +15328,9 @@ cC$F350,3;21 for (;;) <% wipe_game_window();
  C$F365,1;21 A = *HL; // redundant
  C$F366,3;21 plot_glyph();
  C$F369,1;21 HL++;
- C$F36A,1
+ C$F36A,1;21
  C$F36B,2;21 %> while (--B);
- C$F36D,1
+ C$F36D,1;21
  C$F36E,2;21 %> while (--B);
 ; Wipe keydefs.
  C$F370,3;21 HL = &keydefs[0];
@@ -15428,7 +15346,7 @@ cC$F350,3;21 for (;;) <% wipe_game_window();
  C$F381,1;21 }
  C$F382,1;21 {    D = *HL++;
  C$F383,1;21 }
- C$F384,1
+ C$F384,1;21
  C$F385,4;21 ($F3E9) = DE; // self modify screen addr
  C$F389,2;21 A = 0xFF;
 *C$F38B,1;21 for (;;) <%
@@ -15450,11 +15368,11 @@ cC$F350,3;21 for (;;) <% wipe_game_window();
  C$F3A4,1;21 {      Adash = C & E;
  C$F3A5,1;21 }
  C$F3A6,2;21 if (Adash == 0) goto $F3A0;
- C$F3A8,1
+ C$F3A8,1;21
  C$F3A9,1;21 {      if (A) goto $F38B;
  C$F3AA,2;21 }
  C$F3AC,1;21 A = D;
- C$F3AD,1
+ C$F3AD,1;21
  C$F3AE,3;21 HL = 0xF06A;
 *C$F3B1,1;21 HL++;
  C$F3B2,1;21 Adash = *HL;
@@ -15472,7 +15390,7 @@ cC$F350,3;21 for (;;) <% wipe_game_window();
 *C$F3C1,1;21 {    *HL++ = B;
  C$F3C2,1;21 }
  C$F3C3,1;21 *HL = C;
- C$F3C4,1
+ C$F3C4,1;21
  C$F3C5,1;21 {    A *= 5;
  C$F3C6,2;21
  C$F3C8,1;21 }
@@ -15501,9 +15419,9 @@ cC$F350,3;21 for (;;) <% wipe_game_window();
  C$F3EC,1;21 A = *HL; // Bug: Redundant.
  C$F3ED,3;21 plot_glyph();
  C$F3F0,1;21 HL++;
- C$F3F1,1
+ C$F3F1,1;21
  C$F3F2,2;21 %> while (--B);
- C$F3F4,2
+ C$F3F4,2;21
  C$F3F6,1;21 {  %> while (--B);
  C$F3F7,2;21 }
 ; Delay loop.
@@ -15621,7 +15539,7 @@ cC$F4B7,3;21 for (;;) <% check_menu_keys();
  C$F4CD,3;21 HL = 0;
  C$F4D0,2;21 %>
 *C$F4D2,3;21 get_tuning();
- C$F4D5,1
+ C$F4D5,1;21
 ; Loop until the end marker is encountered.
  C$F4D6,3;21 {  HLdash = music_channel1_index + 1;
  C$F4D9,1;21 }
@@ -15635,10 +15553,10 @@ cC$F4B7,3;21 for (;;) <% check_menu_keys();
  C$F4E9,2;21 %>
 *C$F4EB,3;21 get_tuning(); /* using banked registers */
  C$F4EE,1;21 A = Bdash;
- C$F4EF,2
+ C$F4EF,2;21
  C$F4F1,2;21 {  if (A == 0xFF) <%
  C$F4F3,2;21 }
- C$F4F5,1
+ C$F4F5,1;21
  C$F4F6,1;21 POP BCdash
  C$F4F7,1;21 {    DEdash = BCdash;
  C$F4F8,1;21 }
@@ -15657,7 +15575,7 @@ cC$F4B7,3;21 for (;;) <% check_menu_keys();
  C$F50C,2;21 OUT ($FE),L
  C$F50E,1;21 {          BC = DE; %> %>
  C$F50F,1;21 }
-*C$F510,1
+*C$F510,1;21
  C$F511,2;21 if (--Bdash == 0) <%
  C$F513,1;21 {        if (--Cdash == 0) <%
  C$F514,3;21 }
@@ -15667,10 +15585,10 @@ cC$F4B7,3;21 for (;;) <% check_menu_keys();
  C$F51B,2;21 OUT ($FE),Ldash
  C$F51D,1;21 {          BCdash = DEdash; %> %>
  C$F51E,1;21 }
-*C$F51F,1
+*C$F51F,1;21
  C$F520,1;21 {    %> while (--H);
  C$F521,3;21 }
- C$F524,1
+ C$F524,1;21
  C$F525,1;21 {  %> while (--A);
  C$F526,3;21 }
  C$F529,3;21 %>
@@ -15708,15 +15626,15 @@ uB$F545,1
 ; Music data.
 @label=music_channel0_data
 bB$F546,8;44 {music_channel0_data
- B$F54E,8*79
+ B$F54E,8*79;44
  B$F7C6,1;44 }
 @label=music_channel1_data
  B$F7C7,8;44 {music_channel1_data
- B$F7CF,8*79
+ B$F7CF,8*79;44
  B$FA47,1;44 }
 @label=music_tuning_table
  W$FA48,2;44 {music_tuning_table
- W$FA4A,2*74
+ W$FA4A,2*74;44
  W$FADE,2;44 }
 
 ; 769 bytes of apparently unreferenced bytes.
