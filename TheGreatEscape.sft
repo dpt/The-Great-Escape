@@ -2013,63 +2013,42 @@ bB$6B85,4;28 ( 66, 26,  70, 22)
  B$6BA5,4;28 (104, 28,  56, 50)
  B$6BA9,4;28 ( 56, 50,  88, 10)
 
-; Room and tunnel definitions.
+; Array of pointers to room and tunnel definitions.
 ;
-; Array of pointers to rooms (starting with room 1).
+; Note: The first entry is room 1, not room 0.
 @label=rooms_and_tunnels
-wW$6BAD,2;21 &roomdef_1_hut1_right,
- W$6BAF,2;21 &roomdef_2_hut2_left,
- W$6BB1,2;21 &roomdef_3_hut2_right,
- W$6BB3,2;21 &roomdef_4_hut3_left,
- W$6BB5,2;21 &roomdef_5_hut3_right,
- W$6BB7,2;21 &roomdef_8_corridor, // room 6 unused
- W$6BB9,2;21 &roomdef_7_corridor,
- W$6BBB,2;21 &roomdef_8_corridor,
- W$6BBD,2;21 &roomdef_9_crate,
- W$6BBF,2;21 &roomdef_10_lockpick,
- W$6BC1,2;21 &roomdef_11_papers,
- W$6BC3,2;21 &roomdef_12_corridor,
- W$6BC5,2;21 &roomdef_13_corridor,
- W$6BC7,2;21 &roomdef_14_torch,
- W$6BC9,2;21 &roomdef_15_uniform,
- W$6BCB,2;21 &roomdef_16_corridor,
- W$6BCD,2;21 &roomdef_7_corridor, // room 17 same defn as room 7
- W$6BCF,2;21 &roomdef_18_radio,
- W$6BD1,2;21 &roomdef_19_food,
- W$6BD3,2;21 &roomdef_20_redcross,
- W$6BD5,2;21 &roomdef_16_corridor, // room 21 same defn as room 16
- W$6BD7,2;21 &roomdef_22_red_key,
- W$6BD9,2;21 &roomdef_23_breakfast,
- W$6BDB,2;21 &roomdef_24_solitary,
- W$6BDD,2;21 &roomdef_25_breakfast,
- W$6BDF,2;21 &roomdef_28_hut1_left, // room 26 unused
- W$6BE1,2;21 &roomdef_28_hut1_left, // room 27 unused
- W$6BE3,2;21 &roomdef_28_hut1_left,
+wW$6BAD,2;21 Room 1
+ W$6BAF,2*4;21
+ W$6BB7,2;21 Room 6 is unused
+ W$6BB9,2*10;21
+ W$6BCD,2;21 Room 17 uses the same definition as room 7
+ W$6BCF,2*3;21
+ W$6BD5,2;21 Room 21 uses the same definition as room 16
+ W$6BD7,2*4;21
+ W$6BDF,2;21 Room 26 is unused
+ W$6BE1,2;21 Room 27 is unused
+ W$6BE3,2;21
 ; Array of pointers to tunnels.
- W$6BE5,2;21 &roomdef_29_second_tunnel_start,
- W$6BE7,2;21 &roomdef_30,
- W$6BE9,2;21 &roomdef_31,
- W$6BEB,2;21 &roomdef_32,
- W$6BED,2;21 &roomdef_29_second_tunnel_start, // room 33 same defn as room 29
- W$6BEF,2;21 &roomdef_34,
- W$6BF1,2;21 &roomdef_35,
- W$6BF3,2;21 &roomdef_36,
- W$6BF5,2;21 &roomdef_34, // room 37 same defn as 34
- W$6BF7,2;21 &roomdef_35, // room 38 same defn as 35
- W$6BF9,2;21 &roomdef_32, // room 39 same defn as 32
- W$6BFB,2;21 &roomdef_40,
- W$6BFD,2;21 &roomdef_30, // room 41 same defn as 30
- W$6BFF,2;21 &roomdef_32, // room 42 same defn as 32
- W$6C01,2;21 &roomdef_29_second_tunnel_start, // room 43 same defn as 29
- W$6C03,2;21 &roomdef_44,
- W$6C05,2;21 &roomdef_36, // room 45 same defn as 36
- W$6C07,2;21 &roomdef_36, // room 46 same defn as 36
- W$6C09,2;21 &roomdef_32, // room 47 same defn as 32
- W$6C0B,2;21 &roomdef_34, // room 48 same defn as 34
- W$6C0D,2;21 &roomdef_36, // room 49 same defn as 36
- W$6C0F,2;21 &roomdef_50_blocked_tunnel,
- W$6C11,2;21 &roomdef_32, // room 51 same defn as 32
- W$6C13,2;21 &roomdef_40, // room 52 same defn as 40
+ W$6BE5,2*4;21
+ W$6BED,2;21 Room 33 uses the same definition as room 29
+ W$6BEF,2*3;21
+ W$6BF5,2;21 Room 37 uses the same definition as room 34
+ W$6BF7,2;21 Room 38 uses the same definition as room 35
+ W$6BF9,2;21 Room 39 uses the same definition as room 32
+ W$6BFB,2;21
+ W$6BFD,2;21 Room 41 uses the same definition as room 30
+ W$6BFF,2;21 Room 42 uses the same definition as room 32
+ W$6C01,2;21 Room 43 uses the same definition as room 29
+ W$6C03,2;21
+ W$6C05,2;21 Room 45 uses the same definition as room 36
+ W$6C07,2;21 Room 46 uses the same definition as room 36
+ W$6C09,2;21 Room 47 uses the same definition as room 32
+ W$6C0B,2;21 Room 48 uses the same definition as room 34
+ W$6C0D,2;21 Room 49 uses the same definition as room 36
+ W$6C0F,2;21
+ W$6C11,2;21 Room 51 uses the same definition as room 32
+ W$6C13,2;21 Room 52 uses the same definition as room 40
+
 
 ; Room 1: Hut 1, far side.
 @label=roomdef_1_hut1_right
