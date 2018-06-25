@@ -7292,18 +7292,30 @@ cC$A5BF,1;21 {Read the screen address into #REGde
  C$A5CD,1;21 Return
 
 ; Escape messages.
+;
+; "WELL DONE"
 @label=escape_strings
-tB$A5CE,12;108 "WELL DONE"  [/ #HTML[#CALL:decode_screenlocstring($A5CE)]]
- B$A5DA,19;108 "YOU HAVE ESCAPED"  #HTML[/ #CALL:decode_screenlocstring($A5DA)]
- B$A5ED,16;108 "FROM THE CAMP"  #HTML[/ #CALL:decode_screenlocstring($A5ED)]
- B$A5FD,21;108 "AND WILL CROSS THE"  #HTML[/ #CALL:decode_screenlocstring($A5FD)]
- B$A612,22;108 "BORDER SUCCESSFULLY"  #HTML[/ #CALL:decode_screenlocstring($A612)]
- B$A628,22;108 "BUT WERE RECAPTURED"  #HTML[/ #CALL:decode_screenlocstring($A628)]
- B$A63E,20;108 "AND SHOT AS A SPY"  #HTML[/ #CALL:decode_screenlocstring($A63E)]
- B$A652,21;108 "TOTALLY UNPREPARED"  #HTML[/ #CALL:decode_screenlocstring($A652)]
- B$A667,15;108 "TOTALLY LOST"  #HTML[/ #CALL:decode_screenlocstring($A667)]
- B$A676,24;108 "DUE TO LACK OF PAPERS"  #HTML[/ #CALL:decode_screenlocstring($A676)]
- B$A68E,16;108 "PRESS ANY KEY"  #HTML[/ #CALL:decode_screenlocstring($A68E)]
+tB$A5CE,12;60 #HTML[#CALL:decode_screenlocstring($A5CE)]
+; "YOU HAVE ESCAPED"
+ B$A5DA,19;88 #HTML[#CALL:decode_screenlocstring($A5DA)]
+; "FROM THE CAMP"
+ B$A5ED,16;76 #HTML[#CALL:decode_screenlocstring($A5ED)]
+; "AND WILL CROSS THE"
+ B$A5FD,21;96 #HTML[#CALL:decode_screenlocstring($A5FD)]
+; "BORDER SUCCESSFULLY"
+ B$A612,22;100 #HTML[#CALL:decode_screenlocstring($A612)]
+; "BUT WERE RECAPTURED"
+ B$A628,22;100 #HTML[#CALL:decode_screenlocstring($A628)]
+; "AND SHOT AS A SPY"
+ B$A63E,20;92 #HTML[#CALL:decode_screenlocstring($A63E)]
+; "TOTALLY UNPREPARED"
+ B$A652,21;96 #HTML[#CALL:decode_screenlocstring($A652)]
+; "TOTALLY LOST"
+ B$A667,15;72 #HTML[#CALL:decode_screenlocstring($A667)]
+; "DUE TO LACK OF PAPERS"
+ B$A676,24;108 #HTML[#CALL:decode_screenlocstring($A676)]
+; "PRESS ANY KEY"
+ B$A68E,16;76 #HTML[#CALL:decode_screenlocstring($A68E)]
 
 ; Bitmap font definition.
 ;
