@@ -7501,7 +7501,7 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
  C$A85E,1;21 {Point #REGhl at super_tiles[A]
  C$A85F,9;21
  C$A868,1;21 }
- C$A869,2;21 Get the combined offset - self modified by $A82A
+ C$A869,2;21 Load the combined offset - self modified by $A82A
  C$A86B,1;21 {Add on the combined offset to #REGhl
  C$A86C,1;21 }
  C$A86D,2;21 Supertiles are four tiles wide
@@ -7525,8 +7525,7 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
  C$A881,1;21 {Point #REGhl at super_tiles[A]
  C$A882,9;21
  C$A88B,1;21 }
- C$A88C,3;21 Get the combined offset - read self modified value from
- ;21 $A86A
+ C$A88C,3;21 Load the combined offset from (self modified) $A86A
  C$A88F,1;21 {Add on the combined offset to #REGhl
  C$A890,1;21 }
  C$A891,3;21 {Is the map aligned to a boundary?
@@ -7545,37 +7544,44 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
 
 ; Plot all tiles.
 ;
+; Renders the complete screen by plotting all vertical columns in turn.
+; .
 ; Used by the routines at #R$7B36 and #R$B2FC.
 ; .
 ; Note: Exits with banked registers active.
 @label=plot_all_tiles
-cC$A8A2,3;21 DE = &tile_buf[0]; // visible tiles array
- C$A8A5,1;21
- C$A8A6,3;21 HLdash = &map_buf[0]; // 7x5 supertile refs
- C$A8A9,3;21 DEdash = &window_buf[0]; // screen buffer start address
- C$A8AC,3;21 A = map_position[0];
- C$A8AF,2;21 Bdash = 24; // 24 iterations (screen rows?)
-*C$A8B1,1;21 do <% PUSH BCdash
- C$A8B2,1;21 PUSH DEdash
- C$A8B3,1;21 PUSH HLdash
- C$A8B4,1;21 PUSH AFdash
- C$A8B5,3;21
- C$A8B8,3;21 plot_vertical_tiles_common();
- C$A8BB,2;21
- C$A8BD,1;21 DE++;
- C$A8BE,2;21
- C$A8C0,1;21 POP HLdash
- C$A8C1,1;21 {  Cdash = ++A;
- C$A8C2,1;21 }
- C$A8C3,2;21 {  if ((A & 3) == 0) HLdash++;
+cC$A8A2,3;21 Point #REGde at the the 24x17 visible tiles array ("tile_buf")
+ C$A8A5,1;21 Bank
+ C$A8A6,3;21 Point #REGhl' at the 7x5 supertile indices buffer ("map_buf")
+ C$A8A9,3;21 Point #REGde' at the 24x17x8 screen buffer ("window_buf")
+ C$A8AC,3;21 Get map X position
+ C$A8AF,2;21 Set 24 iterations (screen columns)
+; Start loop
+*C$A8B1,1;21 Preserve the loop counter
+ C$A8B2,1;21 Preserve the screen buffer pointer
+ C$A8B3,1;21 Preserve the supertile indices pointer
+ C$A8B4,1;21 Preserve the map X position
+ C$A8B5,1;21 Bank
+ C$A8B6,1;21 Preserve the visible tiles pointer
+ C$A8B7,1;21 Bank
+ C$A8B8,3;21 Plot a complete column of tiles
+ C$A8BB,1;21 Bank
+ C$A8BC,1;21 {Restore and advance the visible tiles pointer
+ C$A8BD,1;21 }
+ C$A8BE,1;21 Bank
+ C$A8BF,1;21 Restore the map X position
+ C$A8C0,1;21 Restore the supertile indices pointer
+ C$A8C1,1;21 Advance the map X position
+ C$A8C2,1;21 Save the result in #REGc
+ C$A8C3,2;21 {If the X position hits a multiple of 4
  C$A8C5,2;21
- C$A8C7,1;21 }
-*C$A8C8,1;21 A = Cdash;
- C$A8C9,1;21 POP DEdash
- C$A8CA,1;21 DEdash++;
- C$A8CB,1;21 POP BCdash
- C$A8CC,2;21 %> while (--Bdash);
- C$A8CE,1;21 return;
+ C$A8C7,1;21 advance to the next supertile}
+*C$A8C8,1;21 Restore the map X position
+ C$A8C9,1;21 {Restore and advance the screen buffer pointer to the next column
+ C$A8CA,1;21 }
+ C$A8CB,1;21 Restore the loop counter
+ C$A8CC,2;21 ...loop
+ C$A8CE,1;21 Return
 
 ; Plot the complete rightmost column of tiles.
 ;
