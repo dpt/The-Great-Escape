@@ -7446,7 +7446,7 @@ cC$A819,3;21 {Point #REGde' at the start of tile_buf's first row
  C$A823,3;21 Point #REGde at the start of window_buf's first row
 ; FALL THROUGH into plot_horizontal_tiles_common
 
-; Plots a single row of tiles to the screen buffer.
+; Plots a single horizontal row of tiles to the screen buffer.
 ;
 ; Simultaneously updates the visible tiles buffer.
 ; .
@@ -7462,28 +7462,28 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
  C$A829,1;21 }
  C$A82A,3;21 Self modify the "LD A,$xx" instruction at #R$A869 to load
  ;21 the row offset
- C$A82D,1;21 Copy the row offset to #REGc for the next step
- C$A82E,3;21 {Compute the column offset by ANDing the map's X position
- C$A831,2;21 with 3}
- C$A833,1;21 Now add the row offset - giving the combined offset
+ C$A82D,1;21 Preserve the row offset in #REGc for the next step
+ C$A82E,3;21 {Compute the column offset within a supertile from the
+ C$A831,2;21 map's X position (0, 1, 2 or 3)}
+ C$A833,1;21 Now add it to the row offset - giving the combined offset
  C$A834,1;21 Bank the combined offset
+; Initial edge.
+; This draws up to 4 tiles.
  C$A835,1;21 Fetch a supertile index from map_buf
  C$A836,1;21 Switch register banks for the initial edge
-; Initial edge.
-; The draws up to 4 tiles.
  C$A837,1;21 {Point #REGhl at super_tiles[A]
  C$A838,9;21
  C$A841,1;21 }
  C$A842,1;21 Unbank the combined offset
  C$A843,1;21 {Add on the combined offset to #REGhl to point us at the
- ;21 right part of the supertile
- C$A844,1;21 }
- C$A845,2;21 {Turn 0,1,2,3 into 4,3,2,1
- C$A847,4;21
+ C$A844,1;21 appropriate part of the supertile}
+ C$A845,2;21 {Turn 0,1,2,3 into 4,3,2,1 - the number of initial loop
+ C$A847,2;21 iterations
+ C$A849,2;21
  C$A84B,2;21 }
 *C$A84D,1;21 Set 1..4 iterations
 ; Start loop
-*C$A84E,1;21 Fetch a tile index from the super tile
+*C$A84E,1;21 Fetch a tile index from the super tile pointer
  C$A84F,1;21 Store it in visible tiles (#REGde' on entry)
  C$A850,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
  ;21 using supertile pointer #REGhl'
@@ -7493,20 +7493,22 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
  C$A857,1;21 Unbank
  C$A858,1;21 Advance the map buffer pointer
 ; Middle loop.
- C$A859,2;21 There are always five iterations
+ C$A859,2;21 There are always five iterations (five supertiles in the
+ ;21 middle section).
 ; Start loop (outer) -- advanced for each supertile.
 *C$A85B,1;21 Preserve the loop counter
- C$A85C,1;21 Fetch a supertile index from map buffer pointer
+ C$A85C,1;21 Fetch a supertile index from the map buffer pointer
  C$A85D,1;21 Switch register banks during the middle loop
  C$A85E,1;21 {Point #REGhl at super_tiles[A]
  C$A85F,9;21
  C$A868,1;21 }
+@label=supertile_plot_horizontal_common_iters
  C$A869,2;21 Load the row offset - self modified by $A82A
  C$A86B,1;21 {Add on the row offset to #REGhl
  C$A86C,1;21 }
  C$A86D,2;21 Supertiles are four tiles wide
 ; Start loop (inner) -- advanced for each tile
-*C$A86F,1;21 Fetch a tile index from the super tile
+*C$A86F,1;21 Fetch a tile index from the super tile pointer
  C$A870,1;21 Store it in visible tiles
  C$A871,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
  ;21 using supertile pointer #REGhl'
@@ -7521,19 +7523,19 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
  C$A87D,1;21 {Spurious instructions
  C$A87E,1;21 }
  C$A87F,1;21 Fetch a supertile index from map_buf
- C$A880,1;21 Unbank
+ C$A880,1;21 Switch register banks during the trailing loop
  C$A881,1;21 {Point #REGhl at super_tiles[A]
  C$A882,9;21
  C$A88B,1;21 }
  C$A88C,3;21 Load the row offset from (self modified) $A86A
  C$A88F,1;21 {Add on the row offset to #REGhl
  C$A890,1;21 }
- C$A891,3;21 {Is the map aligned to a boundary?
+ C$A891,3;21 {Form the trailing loop iteration counter
  C$A894,2;21 }
  C$A896,1;21 Return if no iterations are required
  C$A897,1;21 Move iterations into #REGb
 ; Start loop
-*C$A898,1;21 Fetch a tile index from the super tile
+*C$A898,1;21 Fetch a tile index from the super tile pointer
  C$A899,1;21 Store it in visible tiles
  C$A89A,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
  ;21 using supertile pointer #REGhl'
@@ -7550,7 +7552,7 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
 ; .
 ; Note: Exits with banked registers active.
 @label=plot_all_tiles
-cC$A8A2,3;21 Point #REGde at the the 24x17 visible tiles array ("tile_buf")
+cC$A8A2,3;21 Point #REGde at the 24x17 visible tiles array ("tile_buf")
  C$A8A5,1;21 Bank
  C$A8A6,3;21 Point #REGhl' at the 7x5 supertile indices buffer ("map_buf")
  C$A8A9,3;21 Point #REGde' at the 24x17x8 screen buffer ("window_buf")
@@ -7561,11 +7563,11 @@ cC$A8A2,3;21 Point #REGde at the the 24x17 visible tiles array ("tile_buf")
  C$A8B2,1;21 Preserve the screen buffer pointer
  C$A8B3,1;21 Preserve the supertile indices pointer
  C$A8B4,1;21 Preserve the map X position
- C$A8B5,1;21 Bank
+ C$A8B5,1;21 Unbank
  C$A8B6,1;21 Preserve the visible tiles pointer
  C$A8B7,1;21 Bank
  C$A8B8,3;21 Plot a complete column of tiles
- C$A8BB,1;21 Bank
+ C$A8BB,1;21 Unbank
  C$A8BC,1;21 {Restore and advance the visible tiles pointer
  C$A8BD,1;21 }
  C$A8BE,1;21 Bank
@@ -7588,137 +7590,163 @@ cC$A8A2,3;21 Point #REGde at the the 24x17 visible tiles array ("tile_buf")
 ; Used by the routines at #R$A9E4 and #R$AA8D.
 @label=plot_rightmost_tiles
 @nowarn
-cC$A8CF,3;21 DE = &tile_buf[23];
- C$A8D2,1;21 // unpaired
- C$A8D3,3;21 HL = &map_buf[6];
- C$A8D6,3;21 DE = &window_buf[23];
- C$A8D9,3;21 {A = map_position[0] & 3; // map_position lo
- C$A8DC,2;21 }
- C$A8DE,2;21 {if (A == 0) HL--;
+cC$A8CF,3;21 Point #REGde at the 24x17 visible tiles array ("tile_buf") rightmost column [+23]
+ C$A8D2,1;21 Bank
+ C$A8D3,3;21 Point #REGhl' at the 7x5 supertile indices buffer ("map_buf") rightmost supertile [+6]
+ C$A8D6,3;21 Point #REGde' at the 24x17x8 screen buffer ("window_buf") rightmost column [+23]
+ C$A8D9,3;21 {Compute the column offset by ANDing the map's X position
+ C$A8DC,2;21 with 3}
+ C$A8DE,2;21 {If column offset is zero - use the previous supertile CHECK
  C$A8E0,1;21 }
-*C$A8E1,3;21 {A = map_position[0] - 1; // map_position lo
- C$A8E4,1;21 }
- C$A8E5,2;21 goto plot_vertical_tiles_common;
+*C$A8E1,3;21 Get the map's X coordinate
+ C$A8E4,1;21 Decrement it
+ C$A8E5,2;21 Jump to plot_vertical_tiles_common
 
 ; Plot the complete leftmost column of tiles.
 ;
 ; Used by the routines at #R$AA05 and #R$AA26.
 @label=plot_leftmost_tiles
-cC$A8E7,3;21 DE = &tile_buf[0]; // visible tiles array
- C$A8EA,1;21
- C$A8EB,3;21 HLdash = &map_buf[0]; // 7x5 supertile refs
- C$A8EE,3;21 DEdash = &window_buf[0]; // screen buffer start address
- C$A8F1,3;21 A = map_position[0]; // map_position lo
+cC$A8E7,3;21 Point #REGde at the 24x17 visible tiles array ("tile_buf") leftmost column
+ C$A8EA,1;21 Bank
+ C$A8EB,3;21 Point #REGhl' at the 7x5 supertile indices buffer ("map_buf") leftmost supertile
+ C$A8EE,3;21 Point #REGde' at the 24x17x8 screen buffer ("window_buf") leftmost column
+ C$A8F1,3;21 Get the map's X coordinate
+; FALL THROUGH into plot_vertical_tiles_common
 
-; Plotting vertical tiles (common part).
+; Plots a single vertical row of tiles to the screen buffer.
 ;
-; The comments here assume banked registers on entry.
-;
+; Simultaneously updates the visible tiles buffer.
+; .
 ; Used by the routines at #R$A8A2 and #R$A8CF.
+;
+; I:A   Map X position
+; I:DE  Pointer into the 24x17 visible tiles array ("tile_buf")
+; I:HL  Pointer into the 7x5 supertile indices buffer ("map_buf")
+; I:DE' Pointer into the 24x17x8 screen buffer ("window_buf")
 @label=plot_vertical_tiles_common
-cC$A8F4,2;21 A &= 3;
- C$A8F6,3;21 ($A94C + 1) = A; // self modify
- C$A8F9,1;21 Cdash = A;
- C$A8FA,3;21 {A = ((map_position >> 8) & 3) * 4 + Cdash;
- C$A8FD,4;21
- C$A901,1;21 }
- C$A902,1;21
+cC$A8F4,2;21 Compute the column offset within a supertile from the
+ ;21 map's X position (0, 1, 2 or 3)
+ C$A8F6,3;21 Self modify the "LD A,$xx" instruction at $A94C to load
+ ;21 the column offset
+ C$A8F9,1;21 Preserve the column offset in #REGc for the next step
+ C$A8FA,3;21 {Compute the row offset within a supertile from the map's
+ C$A8FD,2;21 Y position (0, 4, 8 or 12)
+ C$A8FF,1;21
+ C$A900,1;21 }
+ C$A901,1;21 Now add it to the column offset - giving the combined
+ ;21 offset
+ C$A902,1;21 Bank the combined offset
 ; Initial edge.
- C$A903,1;21 Adash = *HLdash;
- C$A904,1;21
- C$A905,1;21 {HL = &super_tiles[0] + Adash * 16; // supertiles
+; This draws up to 4 tiles.
+ C$A903,1;21 Fetch a supertile index from map_buf
+ C$A904,1;21 Switch register banks for the initial edge
+ C$A905,1;21 {Point #REGhl at super_tiles[A]
  C$A906,9;21
  C$A90F,1;21 }
- C$A910,1;21
- C$A911,1;21 A += L;
- C$A912,1;21 L = A;
- C$A913,1;21 RRA
- C$A914,1;21 RRA
- C$A915,2;21 {A = -(A & 3) & 3;
- C$A917,2;21
- C$A919,2;21 }
- C$A91B,2;21 {if (A == 0) A = 4;
+ C$A910,1;21 Unbank the combined offset
+ C$A911,1;21 {Add on the combined offset to #REGhl to point us at the
+ C$A912,1;21 appropriate part of the supertile}
+ C$A913,1;21 {Turn 0,4,8,12 into 4,3,2,1 - the number of initial loop
+ C$A914,1;21 iterations
+ C$A915,8;21
  C$A91D,2;21 }
-*C$A91F,1;21
- C$A920,3;21 BC = 24; // 24 iterations (screen rows?)
-*C$A923,1;21 do <%
- C$A924,1;21 A = *DE;
- C$A925,1;21 *HL = A;
- C$A926,3;21 plot_tile_then_advance();
- C$A929,2;21 {  DE += 4; // stride
+*C$A91F,1;21 Transpose tile_buf and map_buf pointers
+ C$A920,3;21 Set visible tiles stride
+; Start loop
+*C$A923,1;21 Save the loop counter
+ C$A924,1;21 Fetch a tile index from the super tile pointer
+ C$A925,1;21 Store it in the visible tiles (#REGde' on entry)
+ C$A926,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
+ ;21 using supertile pointer #REGhl then advance #REGde' by a
+ ;21 row
+ C$A929,2;21 {Advance the tile pointer by a supertile row (4)
  C$A92B,1;21
  C$A92C,1;21 }
- C$A92D,1;21 HL += BC;
- C$A92E,1;21
- C$A92F,1;21 {%> while (--A);
+ C$A92D,1;21 Advance the visible tiles pointer by a row (24)
+ C$A92E,1;21 Restore the loop counter
+ C$A92F,1;21 {...loop
  C$A930,3;21 }
- C$A933,2;21
- C$A935,1;21 {HL += 7;
+ C$A933,1;21 Transpose the tile_buf and map_buf pointers back
+ C$A934,1;21 Unbank
+ C$A935,1;21 {Advance the map buffer pointer by a row (7)
  C$A936,5;21
  C$A93B,1;21 }
 ; Middle loop.
-*C$A93C,2;21 B = 3; // 3 iterations
-*C$A93E,1;21 do <%
- C$A93F,1;21 A = *HL;
- C$A940,1;21
- C$A941,1;21 {  HL = &super_tiles[0] + A * 16; // supertiles
+*C$A93C,2;21 There are always three iterations (three supertiles in
+ ;21 the middle section).
+; Start loop (outer) -- advanced for each supertile.
+*C$A93E,1;21 Preserve the loop counter
+ C$A93F,1;21 Fetch a supertile index from the map buffer pointer
+ C$A940,1;21 Switch register banks during the middle loop
+ C$A941,1;21 {Point #REGhl at super_tiles[A]
  C$A942,9;21
  C$A94B,1;21 }
 @label=supertile_plot_vertical_common_iters
- C$A94C,2;21 A = 0; // self modified by $A8F6
- C$A94E,1;21 A += L;
- C$A94F,1;21 L = A;
- C$A950,3;21 BC = 24; // stride
- C$A953,1;21
- C$A954,2;21 A = 4;
-*C$A956,1;21 do <%
- C$A957,1;21 A = *DE;
- C$A958,1;21 *HL = A;
- C$A959,3;21 plot_tile_then_advance();
- C$A95C,1;21 HL += BC;
- C$A95D,2;21 {    DE += 4; // stride
+ C$A94C,2;21 Load the column offset - self modified by $A8F6
+ C$A94E,1;21 {Add on the column offset to #REGhl
+ C$A94F,1;21 }
+ C$A950,3;21 Set visible tiles stride
+ C$A953,1;21 Transpose the tile_buf and map_buf pointers
+ C$A954,2;21 Supertiles are four tiles high
+; Start loop (inner) -- advanced for each tile
+*C$A956,1;21 Preserve the loop counter
+ C$A957,1;21 Fetch a tile index from the super tile pointer
+ C$A958,1;21 Store it in visible tiles
+ C$A959,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
+ ;21 using supertile pointer #REGhl then advance #REGde' by a
+ ;21 row
+ C$A95C,1;21 Advance the visible tiles pointer by a row
+ C$A95D,2;21 {Advance the tiles pointer by a row
  C$A95F,1;21
  C$A960,1;21 }
- C$A961,1;21
- C$A962,1;21 {  %> while (--A);
+ C$A961,1;21 Restore the loop counter
+ C$A962,1;21 {...loop (inner)
  C$A963,3;21 }
- C$A966,2;21
- C$A968,1;21 {  HL += 7;
+ C$A966,1;21 Transpose the tile_buf and map_buf pointers back
+ C$A967,1;21 Unbank
+ C$A968,1;21 {Advance the map buffer pointer
  C$A969,5;21
  C$A96E,1;21 }
-*C$A96F,1;21
- C$A970,2;21 %> while (--B);
+*C$A96F,1;21 Restore the loop counter
+ C$A970,2;21 ...loop (outer)
 ; Trailing edge.
- C$A972,1;21 A = *HL;
- C$A973,1;21
- C$A974,1;21 {HL = &super_tiles[0] + A * 16; // supertiles
+ C$A972,1;21 Fetch a supertile index from map_buf
+ C$A973,1;21 Switch register banks during the trailing loop
+ C$A974,1;21 {Point #REGhl at super_tiles[A]
  C$A975,9;21
  C$A97E,1;21 }
- C$A97F,3;21 {HL += ($A94C + 1); // read self modified
- C$A982,1;21
+ C$A97F,3;21 Load the column offset from (self modified) $A94D
+ C$A982,1;21 {Add on the column offset to #REGhl
  C$A983,1;21 }
- C$A984,3;21 {A = ((map_position >> 8) & 3) + 1;
+ C$A984,3;21 {Form the trailing loop iteration counter
  C$A987,2;21
  C$A989,1;21 }
- C$A98A,3;21 BC = 24; // stride
- C$A98D,1;21
-*C$A98E,1;21 do <%
- C$A98F,1;21 A = *DE;
- C$A990,1;21 *HL = A;
- C$A991,3;21 plot_tile_then_advance();
- C$A994,2;21 A = 4;
- C$A996,1;21 A += E;
- C$A997,1;21 E = A;
- C$A998,1;21 HL += BC;
- C$A999,1;21
- C$A99A,1;21 {%> while (--A);
+ C$A98A,3;21 Set visible tiles stride
+ C$A98D,1;21 Transpose the tile_buf and map_buf pointers
+; Start loop
+*C$A98E,1;21 Preserve the loop counter
+ C$A98F,1;21 Fetch a tile index from the super tile pointer
+ C$A990,1;21 Store it in visible tiles
+ C$A991,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
+ ;21 using supertile pointer #REGhl then advance #REGde' by a
+ ;21 row
+ C$A994,2;21 {Advance the tiles pointer by a row
+ C$A996,1;21
+ C$A997,1;21 }
+ C$A998,1;21 Advance the visible tiles pointer by a row
+ C$A999,1;21 Restore the loop counter
+ C$A99A,1;21 {...loop
  C$A99B,3;21 }
- C$A99E,1;21
- C$A99F,1;21 return;
+ C$A99E,1;21 Transpose the tile_buf and map_buf pointers back
+ C$A99F,1;21 Return
 
 ; Call plot_tile then advance DE' by a row.
 ;
 ; Used by the routine at #R$A8F4.
+;
+; I:A   Tile
+; I:DE' Screen buffer pointer
+; I:HL  Supertile pointer
 @label=plot_tile_then_advance
 cC$A9A0,3;21 plot_tile();
  C$A9A3,1;21
