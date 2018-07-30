@@ -7454,7 +7454,7 @@ cC$A819,3;21 {Point #REGde' at the start of tile_buf's first row
 ;
 ; I:A   Map Y position
 ; I:DE  Pointer into the 24x17 visible tiles array ("tile_buf")
-; I:HL  Pointer into the 7x5 supertile indices buffer ("map_buf")
+; I:HL' Pointer into the 7x5 supertile indices buffer ("map_buf")
 ; I:DE' Pointer into the 24x17x8 screen buffer ("window_buf")
 @label=plot_horizontal_tiles_common
 cC$A826,2;21 {Compute the row offset within a supertile from the map's
@@ -7621,7 +7621,7 @@ cC$A8E7,3;21 Point #REGde at the 24x17 visible tiles array ("tile_buf") leftmost
 ;
 ; I:A   Map X position
 ; I:DE  Pointer into the 24x17 visible tiles array ("tile_buf")
-; I:HL  Pointer into the 7x5 supertile indices buffer ("map_buf")
+; I:HL' Pointer into the 7x5 supertile indices buffer ("map_buf")
 ; I:DE' Pointer into the 24x17x8 screen buffer ("window_buf")
 @label=plot_vertical_tiles_common
 cC$A8F4,2;21 Compute the column offset within a supertile from the
@@ -7657,7 +7657,7 @@ cC$A8F4,2;21 Compute the column offset within a supertile from the
  C$A924,1;21 Fetch a tile index from the super tile pointer
  C$A925,1;21 Store it in the visible tiles (#REGde' on entry)
  C$A926,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
- ;21 using supertile pointer #REGhl then advance #REGde' by a
+ ;21 using supertile pointer #REGhl' then advance #REGde' by a
  ;21 row
  C$A929,2;21 {Advance the tile pointer by a supertile row (4)
  C$A92B,1;21
@@ -7693,7 +7693,7 @@ cC$A8F4,2;21 Compute the column offset within a supertile from the
  C$A957,1;21 Fetch a tile index from the super tile pointer
  C$A958,1;21 Store it in visible tiles
  C$A959,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
- ;21 using supertile pointer #REGhl then advance #REGde' by a
+ ;21 using supertile pointer #REGhl' then advance #REGde' by a
  ;21 row
  C$A95C,1;21 Advance the visible tiles pointer by a row
  C$A95D,2;21 {Advance the tiles pointer by a row
@@ -7728,7 +7728,7 @@ cC$A8F4,2;21 Compute the column offset within a supertile from the
  C$A98F,1;21 Fetch a tile index from the super tile pointer
  C$A990,1;21 Store it in visible tiles
  C$A991,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
- ;21 using supertile pointer #REGhl then advance #REGde' by a
+ ;21 using supertile pointer #REGhl' then advance #REGde' by a
  ;21 row
  C$A994,2;21 {Advance the tiles pointer by a row
  C$A996,1;21
