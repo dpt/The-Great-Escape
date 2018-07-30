@@ -7740,21 +7740,23 @@ cC$A8F4,2;21 Compute the column offset within a supertile from the
  C$A99E,1;21 Transpose the tile_buf and map_buf pointers back
  C$A99F,1;21 Return
 
-; Call plot_tile then advance DE' by a row.
+; Call plot_tile then advance the screen buffer pointer in #REGde' by a row.
 ;
 ; Used by the routine at #R$A8F4.
 ;
-; I:A   Tile
-; I:DE' Screen buffer pointer
-; I:HL  Supertile pointer
+; I:A   Tile index
+; I:DE' Pointer into the 24x17x8 screen buffer ("window_buf")
+; I:HL' Pointer into the 7x5 supertile indices buffer ("map_buf")
 @label=plot_tile_then_advance
-cC$A9A0,3;21 plot_tile();
- C$A9A3,1;21
- C$A9A4,1;21 {DEdash += 0xBF; // 0xBF = 24 * 8 - 1
- C$A9A5,5;21
+cC$A9A0,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
+ ;21 using supertile pointer #REGhl'
+ C$A9A3,1;21 Bank
+ C$A9A4,1;21 {Advance the screen buffer pointer #REGde' to the next
+ C$A9A5,2;21 row (add 24 * 8 - 1)
+ C$A9A7,3;21
  C$A9AA,1;21 }
-*C$A9AB,1;21
- C$A9AC,1;21 return;
+*C$A9AB,1;21 Unbank
+ C$A9AC,1;21 Return
 
 ; Plot a tile then increment DE' by 1.
 ;
