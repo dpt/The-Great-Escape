@@ -7758,48 +7758,57 @@ cC$A9A0,3;21 Plot the tile in #REGa to the screen buffer at #REGde'
 *C$A9AB,1;21 Unbank
  C$A9AC,1;21 Return
 
-; Plot a tile then increment DE' by 1.
+; Plot an exterior tile then advance #REGde' to the next column.
 ;
 ; Used by the routines at #R$A826 and #R$A9A0.
 ;
 ; I:A   Tile index
-; I:DE' Output buffer start address.
-; I:HL' Pointer to supertile index (used to select the correct tile group).
+; I:DE' Pointer into the 24x17x8 screen buffer ("window_buf")
+; I:HL' Pointer into the 7x5 supertile indices buffer ("map_buf") (used to select the correct tile group)
 @label=plot_tile
-cC$A9AD,2;21
- C$A9AF,1;21 Adash = *HLdash; // get supertile index
- C$A9B0,3;21 BCdash = &exterior_tiles[0];
- C$A9B3,2;21 {if (Adash < 45) goto chosen;
+cC$A9AD,1;21 Unbank input registers
+ C$A9AE,1;21 Bank the tile index
+ C$A9AF,1;21 Fetch a supertile index from map_buf
+; Now map the tile index and supertile index into a tile pointer:
+; #TABLE(default)
+; { Supertiles 44 and lower         | use tiles   0..249 (249 tile span) }
+; { Supertiles 45..138 and 204..218 | use tiles 145..400 (255 tile span) }
+; { Supertiles 139..203             | use tiles 365..570 (205 tile span) }
+; TABLE#
+ C$A9B0,3;21 Point #REGbc at exterior_tiles[0]
+ C$A9B3,2;21 {If supertile index <= 44 jump to plot_tile_chosen
  C$A9B5,2;21 }
- C$A9B7,3;21 BCdash = &exterior_tiles[145]; // set 2
- C$A9BA,2;21 {if (Adash < 139 || Adash >= 204) goto chosen;
- C$A9BC,4;21
+ C$A9B7,3;21 Point #REGbc at exterior_tiles[145]
+ C$A9BA,2;21 {If supertile index <= 138 or >= 204 jump to
+ C$A9BC,2;21 plot_tile_chosen
+ C$A9BE,2;21
  C$A9C0,2;21 }
- C$A9C2,3;21 BCdash = &exterior_tiles[145 + 220]; // set 3
+ C$A9C2,3;21 Point #REGbc at exterior_tiles[365]
 @label=plot_tile_chosen
-*C$A9C5,1;21 chosen: PUSH HLdash;
- C$A9C6,1;21
- C$A9C7,1;21 {HLdash = A * 8 + BCdash;
+*C$A9C5,1;21 Preserve the supertile pointer
+ C$A9C6,1;21 Unbank the tile index
+ C$A9C7,1;21 {Point #REGhl at #REGbc[tile index]
  C$A9C8,5;21
  C$A9CD,1;21 }
- C$A9CE,1;21 PUSH DEdash;
- C$A9CF,1;21 EX DEdash,HLdash;
- C$A9D0,3;21 BCdash = 24;
- C$A9D3,2;21 A = 8; // 8 iterations
+ C$A9CE,1;21 Preserve the screen buffer pointer
+ C$A9CF,1;21 Transpose
+ C$A9D0,3;21 Set the screen buffer stride to 24
+ C$A9D3,2;21 Set eight iterations
 @label=plot_tile_loop
-*C$A9D5,1;21 do <%
- C$A9D6,1;21 Adash = *DEdash;
- C$A9D7,1;21 *HLdash = Adash;
- C$A9D8,1;21 HLdash += BCdash; // stride
- C$A9D9,1;21 E++;
- C$A9DA,1;21
- C$A9DB,1;21 A--;
- C$A9DC,3;21 %> while (A);
- C$A9DF,1;21 POP DEdash;
- C$A9E0,1;21 DEdash++;
- C$A9E1,1;21 POP HLdash;
- C$A9E2,1;21
- C$A9E3,1;21 return;
+; Start loop
+*C$A9D5,1;21 Preserve the loop counter
+ C$A9D6,1;21 {Copy a byte of tile
+ C$A9D7,1;21 }
+ C$A9D8,1;21 Advance the destination pointer to the next row
+ C$A9D9,1;21 Advance the source pointer
+ C$A9DA,1;21 Restore the loop counter
+ C$A9DB,1;21 {...loop
+ C$A9DC,3;21 }
+ C$A9DF,1;21 Restore the screen buffer pointer
+ C$A9E0,1;21 Advance the screen buffer pointer
+ C$A9E1,1;21 Restore the supertile pointer
+ C$A9E2,1;21 Re-bank input registers
+ C$A9E3,1;21 Return
 
 ; Shunt the map left.
 ;
