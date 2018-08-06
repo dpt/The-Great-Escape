@@ -429,7 +429,7 @@
 ; vischar_BYTE7_MASK_LO                         = $0F,
 ; vischar_BYTE7_MASK_HI                         = $F0,
 ; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
-; vischar_BYTE7_TOUCHING                        = 1 << 6,       ; set while touch() entered
+; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,       ; set while touch() entered
 ; vischar_BYTE7_LOCATABLE                       = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
 ;
 ; ; $800C, $802C, $804C, ...
@@ -7814,241 +7814,260 @@ cC$A9AD,1;21 Unbank input registers
 ;
 ; Used by the routine at #R$AAB2.
 @label=shunt_map_left
-cC$A9E4,3;21 HL = &map_position;
- C$A9E7,1;21 (*HL)++;
- C$A9E8,3;21 get_supertiles();
- C$A9EB,3;21 HL = &tile_buf[1];
- C$A9EE,3;21 DE = &tile_buf[0];
- C$A9F1,3;21 BC = tile_buf_length - 1;
- C$A9F4,2;21
+cC$A9E4,3;21 {Move the map position to the left
+ C$A9E7,1;21 }
+ C$A9E8,3;21 Update the supertiles in map_buf
+ C$A9EB,3;21 {Shunt the tile_buf back by one byte
+ C$A9EE,6;21
+ C$A9F4,2;21 }
 @nowarn
- C$A9F6,3;21 HL = &window_buf[1];
- C$A9F9,3;21 DE = &window_buf[0];
- C$A9FC,3;21 BC = window_buf_length - 1;
- C$A9FF,2;21
- C$AA01,3;21 plot_rightmost_tiles();
- C$AA04,1;21 return;
+ C$A9F6,3;21 {Shunt the window_buf back by one byte
+ C$A9F9,6;21
+ C$A9FF,2;21 }
+ C$AA01,3;21 Plot the complete rightmost column of tiles
+ C$AA04,1;21 Return
 
 ; Shunt the map right.
 ;
 ; Used by the routine at #R$AAB2.
 @label=shunt_map_right
-cC$AA05,3;21 HL = &map_position;
- C$AA08,1;21 (*HL)--;
- C$AA09,3;21 get_supertiles();
+cC$AA05,3;21 {Move the map position to the right
+ C$AA08,1;21 }
+ C$AA09,3;21 Update the supertiles in map_buf
 @nowarn
- C$AA0C,3;21 HL = &tile_buf[24 * 17 - 2];
- C$AA0F,3;21 DE = &tile_buf[24 * 17 - 1];
- C$AA12,3;21 BC = tile_buf_length - 1;
- C$AA15,2;21
- C$AA17,3;21 HL = &window_buf[24 * 17 * 8 - 1];
- C$AA1A,3;21 DE = &window_buf[24 * 17 * 8];
- C$AA1D,3;21 BC = window_buf_length; // Bug: One byte too long.
- C$AA20,2;21
- C$AA22,3;21 plot_leftmost_tiles();
- C$AA25,1;21 return;
+ C$AA0C,3;21 {Shunt the tile_buf forward by one byte
+ C$AA0F,6;21
+ C$AA15,2;21 }
+; Bug: The length in the following is one byte too long.
+ C$AA17,3;21 {Shunt the window_buf forward by one byte
+ C$AA1A,6;21
+ C$AA20,2;21 }
+ C$AA22,3;21 Plot the complete leftmost column of tiles
+ C$AA25,1;21 Return
 
 ; Shunt the map up-right.
 ;
 ; Used by the routine at #R$AAB2.
+;
+; I:HL Contents of #R$81BB map position
 @label=shunt_map_up_right
-cC$AA26,1;21 L--;
- C$AA27,1;21 H++;
- C$AA28,3;21 map_position = HL;
- C$AA2B,3;21 get_supertiles();
- C$AA2E,3;21 HL = &tile_buf[24];
- C$AA31,3;21 DE = &tile_buf[1];
- C$AA34,3;21 BC = tile_buf_length - 24;
- C$AA37,2;21
+cC$AA26,1;21 {Move the map position up (#REGh) and to the right (#REGl)
+ C$AA27,1;21
+ C$AA28,3;21 }
+ C$AA2B,3;21 Update the supertiles in map_buf
+ C$AA2E,3;21 {Shunt the tile_buf up and to the right
+ C$AA31,6;21
+ C$AA37,2;21 }
 @nowarn
- C$AA39,3;21 HL = &window_buf[24 * 8];
+ C$AA39,3;21 {Shunt the window_buf up and to the right
 @nowarn
- C$AA3C,3;21 DE = &window_buf[1];
- C$AA3F,3;21 BC = window_buf_length - 24 * 8;
- C$AA42,2;21
- C$AA44,3;21 plot_bottommost_tiles();
- C$AA47,3;21 plot_leftmost_tiles();
- C$AA4A,1;21 return;
+ C$AA3C,6;21
+ C$AA42,2;21 }
+ C$AA44,3;21 Plot the complete bottommost row of tiles
+ C$AA47,3;21 Plot the complete leftmost column of tiles
+ C$AA4A,1;21 Return
 
 ; Shunt the map up.
 ;
 ; Used by the routine at #R$AAB2.
 @label=shunt_map_up
-cC$AA4B,3;21 HL = &map_position[1];
- C$AA4E,1;21 (*HL)++;
- C$AA4F,3;21 get_supertiles();
- C$AA52,3;21 HL = &tile_buf[24];
- C$AA55,3;21 DE = &tile_buf[0];
- C$AA58,3;21 BC = tile_buf_length - 24;
- C$AA5B,2;21
+cC$AA4B,3;21 {Move the map position up
+ C$AA4E,1;21 }
+ C$AA4F,3;21 Update the supertiles in map_buf
+ C$AA52,3;21 {Shunt the tile_buf up
+ C$AA55,6;21
+ C$AA5B,2;21 }
 @nowarn
- C$AA5D,3;21 HL = &window_buf[24 * 8];
- C$AA60,3;21 DE = &window_buf[0];
- C$AA63,3;21 BC = window_buf_length - 24 * 8;
- C$AA66,2;21
- C$AA68,3;21 plot_bottommost_tiles();
- C$AA6B,1;21 return;
+ C$AA5D,3;21 {Shunt the window_buf up
+ C$AA60,6;21
+ C$AA66,2;21 }
+ C$AA68,3;21 Plot the complete bottommost row of tiles
+ C$AA6B,1;21 Return
 
 ; Shunt the map down.
 ;
 ; Used by the routine at #R$AAB2.
 @label=shunt_map_down
-cC$AA6C,3;21 HL = &map_position[1];
- C$AA6F,1;21 (*HL)--;
- C$AA70,3;21 get_supertiles();
+cC$AA6C,3;21 {Move the map position down
+ C$AA6F,1;21 }
+ C$AA70,3;21 Update the supertiles in map_buf
 @nowarn
- C$AA73,3;21 HL = &tile_buf[24 * 16 - 1];
- C$AA76,3;21 DE = &tile_buf[24 * 17 - 1];
- C$AA79,3;21 BC = tile_buf_length - 24;
- C$AA7C,2;21
- C$AA7E,3;21 HL = &window_buf[24 * 16 * 8 - 1];
- C$AA81,3;21 DE = &window_buf[24 * 17 * 8 - 1];
- C$AA84,3;21 BC = window_buf_length - 24 * 8;
- C$AA87,2;21
- C$AA89,3;21 plot_topmost_tiles();
- C$AA8C,1;21 return;
+ C$AA73,3;21 {Shunt the tile_buf down
+ C$AA76,6;21
+ C$AA7C,2;21 }
+ C$AA7E,3;21 {Shunt the window_buf down
+ C$AA81,6;21
+ C$AA87,2;21 }
+ C$AA89,3;21 Plot the complete topmost row of tiles
+ C$AA8C,1;21 Return
 
 ; Shunt the map down left.
 ;
 ; Used by the routine at #R$AAB2.
 @label=shunt_map_down_left
-cC$AA8D,1;21 L++;
- C$AA8E,1;21 H--;
- C$AA8F,3;21 map_position = HL;
- C$AA92,3;21 get_supertiles();
+cC$AA8D,1;21 {Shunt the map position down (#REGh) and to the left (#REGl)
+ C$AA8E,1;21
+ C$AA8F,3;21 }
+ C$AA92,3;21 Update the supertiles in map_buf
 @nowarn
- C$AA95,3;21 HL = &tile_buf[24 * 16 - 1];
+ C$AA95,3;21 {Shunt the tile_buf down
 @nowarn
- C$AA98,3;21 DE = &tile_buf[24 * 17 - 2];
- C$AA9B,3;21 BC = tile_buf_length - 24 - 1;
- C$AA9E,2;21
- C$AAA0,3;21 HL = &window_buf[24 * 16 * 8 - 1];
- C$AAA3,3;21 DE = &window_buf[24 * 17 * 8 - 2];
- C$AAA6,3;21 BC = window_buf_length - 24 * 8 - 1;
- C$AAA9,2;21
- C$AAAB,3;21 plot_topmost_tiles();
- C$AAAE,3;21 plot_rightmost_tiles();
- C$AAB1,1;21 return;
+ C$AA98,6;21
+ C$AA9E,2;21 }
+ C$AAA0,3;21 {Shunt the window_buf down
+ C$AAA3,6;21
+ C$AAA9,2;21 }
+ C$AAAB,3;21 Plot the complete topmost row of tiles
+ C$AAAE,3;21 Plot the complete rightmost column of tiles
+ C$AAB1,1;21 Return
 
-; Move the map when the hero walks.
+; Move the map when the hero walks around outdoors.
 ;
+; The map is shunted around in the opposite direction to the apparent character
+; motion.
+; .
 ; Used by the routines at #R$6939 and #R$9D7B.
-;
-; O:HL == map_position
 @label=move_map
-cC$AAB2,3;21 {if (room_index) return; // Can't move the map when indoors.
+cC$AAB2,3;21 {Ignore any attempt to move the map when we're indoors
  C$AAB5,1;21
  C$AAB6,1;21 }
- C$AAB7,3;21 {if ($8007 & vischar_BYTE7_TOUCHING) return; // don't move the map if touch() is entered?
- C$AABA,2;21
- C$AABC,1;21 }
- C$AABD,3;21 HL = $800A;
- C$AAC0,1;21 {E = *HL++;
- C$AAC1,1;21 }
- C$AAC2,1;21 {D = *HL++;
+ C$AAB7,3;21 {Is the hero's vischar_BYTE7_DONT_MOVE_MAP flag set?
+ C$AABA,2;21 (See #R$AF93) }
+ C$AABC,1;21 Return if so
+ C$AABD,3;21 Point #REGhl at the hero's animation pointer field
+ C$AAC0,1;21 {Fetch the animation pointer into #REGde
+ C$AAC1,2;21
  C$AAC3,1;21 }
- C$AAC4,1;21 C = *HL; // $800C
- C$AAC5,1;21 {DE += 3;
- C$AAC6,1;21
+ C$AAC4,1;21 Load the current animation index
+ C$AAC5,1;21 {Step forward through the animation structure to the map
+ C$AAC6,1;21 direction field
  C$AAC7,1;21 }
- C$AAC8,1;21 A = *DE;
- C$AAC9,2;21 {if (A == 255) return; // don't move
- C$AACB,1;21 }
- C$AACC,2;21 {if (C & vischar_ANIMINDEX_BIT7) A ^= 2; // exchange up and down
- C$AACE,2;21
+ C$AAC8,1;21 Read the animation's map direction field
+ C$AAC9,2;21 A map direction of 255 means "don't move"
+ C$AACB,1;21 Return if 255
+ C$AACC,2;21 {If animation index's vischar_ANIMINDEX_REVERSE bit is
+ C$AACE,2;21 set then exchange the up and down directions
  C$AAD0,2;21 }
-*C$AAD2,1;21
- C$AAD3,1;21 {HL = &move_map_jump_table[A];
+*C$AAD2,1;21 Preserve map direction
+ C$AAD3,1;21 {Point #REGhl at move_map_jump_table[A]
  C$AAD4,3;21
 @nowarn
  C$AAD7,3;21
  C$AADA,1;21 }
- C$AADB,1;21 {A = *HL++; // ie. HL = (word at HL); HL += 2;
- C$AADC,1;21 }
- C$AADD,1;21 H = *HL;
- C$AADE,1;21 L = A;
- C$AADF,3;21
+ C$AADB,1;21 {Load jump address into #REGhl
+ C$AADC,2;21
+ C$AADE,1;21 }
+ C$AADF,1;21 Restore map direction
+ C$AAE0,1;21 Stack the jump table target - our final RET will call it
+ C$AAE1,1;21 Preserve map direction
+; Calculate the position at which we should stop scrolling the map
+; .
+; For example in the animation anim_walk_tl (where 'tl' denotes a character
+; walking towards the top left) we're asked to scroll the map to the bottom and
+; right. If the map scrolls further than 192 across we'll render off the side of
+; the map, so we clamp the scroll at that point. Similar for vertical.
+; .
+; #TABLE(default)
+; { =h Direction | =h Clamps at (x,y) }
+; { direction_TOP_LEFT | (192,124) aka bottom right of the map }
+; { direction_TOP_RIGHT | (0,124) aka bottom left of the map }
+; { direction_BOTTOM_RIGHT | (0,0) aka top left of the map }
+; { direction_BOTTOM_LEFT | (192,0) aka top right of th map }
+; TABLE#
 @keep
- C$AAE2,3;21 B, C = 0x7C, 0x00;
- C$AAE5,2;21 {if (A >= 2) B = 0x00; // bottom of the map clamp
- C$AAE7,2;21
+ C$AAE2,3;21 Set the initial clamp position (x,y) to
+ ;21 (#REGc = 0,#REGb = 124)
+ C$AAE5,2;21 {If the map scroll direction is direction_BOTTOM_*
+ C$AAE7,2;21 (scrolling up) then the y limit becomes 0
  C$AAE9,2;21 }
-*C$AAEB,2;21 {if (A != 1 && A != 2) C = 0xC0; // left of the map clamp
- C$AAED,6;21
+*C$AAEB,2;21 {If the map scroll direction is direction_*_LEFT
+ C$AAED,2;21 (scrolling right) then the x limit becomes 192
+ C$AAEF,4;21
  C$AAF3,2;21 }
-*C$AAF5,3;21 HL = map_position;
- C$AAF8,1;21 {if (L == C || H == B) <%
+*C$AAF5,3;21 Read the current map position into #REGhl
+ C$AAF8,1;21 {If current map X equals limit X then return
  C$AAF9,1;21
  C$AAFA,2;21 }
-*C$AAFC,1;21 popret:
- C$AAFD,1;21
- C$AAFE,1;21 {  return; %>
-*C$AAFF,1;21
+*C$AAFC,1;21 Restore map direction
+ C$AAFD,1;21 Restore jump table target
+ C$AAFE,1;21 Return
+*C$AAFF,1;21 {If current map Y equals limit Y then return
  C$AB00,1;21
  C$AB01,2;21 }
- C$AB03,1;21
- C$AB04,3;21 HL = &move_map_y; // screen offset of some sort?
- C$AB07,2;21 {if (A < 2) <%
- C$AB09,2;21 }
- C$AB0B,1;21 {  A = *HL + 1; %>
- C$AB0C,1;21 }
- C$AB0D,2;21 else <%
-*C$AB0F,1;21 {  A = *HL - 1; %>
+ C$AB03,1;21 Restore map direction
+; Now we form a counter that's used by the move_map functions to decide in which
+; order the map shunt operations will be issued. Instead of immediately shunting
+; the map in the named direction, they use this counter to work through a
+; pattern of moves.
+ C$AB04,3;21 Point #REGhl at move_map_y
+ C$AB07,2;21 Is the map direction direction_BOTTOM_*?
+ C$AB09,2;21 Jump if so
+ C$AB0B,1;21 {Cycle the counter forwards for TOP cases
+ C$AB0C,1;21
+ C$AB0D,2;21 }
+*C$AB0F,1;21 {Cycle the counter backwards for BOTTOM cases
  C$AB10,1;21 }
-*C$AB11,2;21 A &= 3;
- C$AB13,1;21 *HL = A;
- C$AB14,1;21
- C$AB15,3;21 HL = 0x0000;
- C$AB18,1;21 {if (A == 0) goto $AB2A;
+*C$AB11,2;21 Clamp to 0..3
+ C$AB13,1;21 Save it back to move_map_y
+ C$AB14,1;21 Transpose (for passing into move_map_*)
+; Now choose the game window offset that will be used by plot_game_window.
+; A 255 in the high byte means to plot the screen offset (which direction?) by
+; half a byte. The low byte is a byte offset added to the source data.
+ C$AB15,3;21 Clear the game window offset (GWO)
+ C$AB18,1;21 {If move_map_y is 0 GWO becomes (0, 0)
  C$AB19,2;21 }
- C$AB1B,2;21 L = 0x60;
- C$AB1D,2;21 {if (A == 2) goto $AB2A;
+ C$AB1B,2;21 {If move_map_y is 2 GWO becomes (4 * 24, 0)
+ C$AB1D,2;21
  C$AB1F,2;21 }
- C$AB21,3;21 HL = 0xFF30;
- C$AB24,2;21 {if (A == 1) goto $AB2A;
+ C$AB21,3;21 {If move_map_y is 1 GWO becomes (2 * 24, 255)
+ C$AB24,2;21
  C$AB26,2;21 }
- C$AB28,2;21 L = 0x90;
-*C$AB2A,3;21 game_window_offset = HL;
- C$AB2D,3;21 HL = map_position;
- C$AB30,1;21 return; // pops and calls move_map_* routine pushed at $AAE0
-; move_map jump table.
+ C$AB28,2;21 Otherwise GWO becomes (6 * 24, 255)
+*C$AB2A,3;21 Write it to game_window_offset
+ C$AB2D,3;21 Point #REGhl at map_position
+ C$AB30,1;21 NOT a return - pops and calls the move_map_* routine
+ ;21 pushed at #R$AAE0 which then returns
 @label=move_map_jump_table
  W$AB31,2;21 move_map_up_left
  W$AB33,2;21 move_map_up_right
  W$AB35,2;21 move_map_down_right
  W$AB37,2;21 move_map_down_left
-; Called when player moves down-right (map is shifted up-left).
+; Called when player moves down-right (map is shifted up or left).
+; This moves the map in the pattern up/left/none/left.
 @label=move_map_up_left
- C$AB39,1;21 A = *DE;
- C$AB3A,1;21 {if (A == 0) goto shunt_map_up;
+ C$AB39,1;21 Fetch move_map_y
+ C$AB3A,1;21 {If move_map_y is 0 then jump to shunt_map_up
  C$AB3B,3;21 }
- C$AB3E,2;21 {if ((A & 1) == 0) return;
+ C$AB3E,2;21 {If move_map_y is 2 then return
  C$AB40,1;21 }
- C$AB41,3;21 goto shunt_map_left;
-; Called when player moves down-left (map is shifted up-right).
+ C$AB41,3;21 Otherwise move_map_y is 1 or 3 - jump to shunt_map_left
+; Called when player moves down-left (map is shifted up or right).
+; This moves the map in the pattern up-right/none/right/none.
 @label=move_map_up_right
- C$AB44,1;21 A = *DE;
- C$AB45,1;21 {if (A == 0) goto shunt_map_up_right;
+ C$AB44,1;21 Fetch move_map_y
+ C$AB45,1;21 {If move_map_y is 0 then jump to shunt_map_up_right
  C$AB46,3;21 }
- C$AB49,2;21 {if (A != 2) return;
+ C$AB49,2;21 {If move_map_y is 1 or 3 then return
  C$AB4B,1;21 }
- C$AB4C,3;21 goto shunt_map_right;
-; Called when player moves up-left (map is shifted down-right).
+ C$AB4C,3;21 Otherwise move_map_y is 2 - jump to shunt_map_right
+; Called when player moves up-left (map is shifted down or right).
+; This moves the map in the pattern right/none/right/down.
 @label=move_map_down_right
- C$AB4F,1;21 A = *DE;
- C$AB50,2;21 {if (A == 3) goto shunt_map_down;
+ C$AB4F,1;21 Fetch move_map_y
+ C$AB50,2;21 {If move_map_y is 3 then jump to shunt_map_down
  C$AB52,3;21 }
- C$AB55,1;21 {if ((A & 1) == 0) goto shunt_map_right;
+ C$AB55,1;21 {If move_map_y is 0 or 2 then jump to shunt_map_right
  C$AB56,3;21 }
- C$AB59,1;21 return;
-; Called when player moves up-right (map is shifted down-left).
+ C$AB59,1;21 Otherwise move_map_y is 1 - return
+; Called when player moves up-right (map is shifted down or left).
+; This moves the map in the pattern none/left/down/left.
 @label=move_map_down_left
- C$AB5A,1;21 A = *DE;
- C$AB5B,2;21 {if (A == 1) goto shunt_map_left;
+ C$AB5A,1;21 Fetch move_map_y
+ C$AB5B,2;21 {If move_map_y is 1 then jump to shunt_map_left
  C$AB5D,3;21 }
- C$AB60,2;21 {if (A == 3) goto shunt_map_down_left;
+ C$AB60,2;21 {If move_map_y is 3 then jump to shunt_map_down_left
  C$AB62,3;21 }
- C$AB65,1;21 return;
+ C$AB65,1;21 Otherwise move_map_y is 0 or 2 - return
 
 ; Zoombox stuff.
 @label=zoombox_x
@@ -8676,7 +8695,7 @@ gB$AF8E,1
 @label=touch
 cC$AF8F,1;22
  C$AF90,3;22 touch_stashed_A = A;
- C$AF93,4;22 {IY[7] |= vischar_BYTE7_TOUCHING | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?
+ C$AF93,4;22 {IY[7] |= vischar_BYTE7_DONT_MOVE_MAP | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?
  C$AF97,4;22 }
  C$AF9B,2;22 {HL = IY;
  C$AF9D,1;22 }
@@ -8699,7 +8718,7 @@ cC$AF8F,1;22
  C$AFC0,3;22 collision();
  C$AFC3,1;22 if (!Z) return; %>
 ; noncolliding characters and items only at this point
-*C$AFC4,4;22 IY[7] &= ~vischar_BYTE7_TOUCHING; // clear counter_and_flag
+*C$AFC4,4;22 IY[7] &= ~vischar_BYTE7_DONT_MOVE_MAP; // clear counter_and_flag
  C$AFC8,3;22 {memcpy(IY + 15, &saved_pos_x, 6); // $800F // vischar
  C$AFCB,2;22 pos = saved_pos
  C$AFCD,8;22
