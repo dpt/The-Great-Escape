@@ -5333,7 +5333,7 @@ cC$9D7B,3;21 Check morale level, report if (near) zero and inhibit
  C$9DAB,3;21 Plot vischars and items in order
  C$9DAE,3;21 Plot the game screen
  C$9DB1,3;21 Ring the alarm bell (3)
- C$9DB4,3;21 {If the nighttime flag is set, turns white screen
+ C$9DB4,3;21 {If the night-time flag is set, turns white screen
  C$9DB7,1;21 elements light blue and tracks the hero with a
  C$9DB8,3;21 searchlight}
  C$9DBB,3;21 {If the global current room index is non-zero then slow
@@ -8086,39 +8086,51 @@ gB$AB6A,1;20 Assigned by #R$AB85. Used by #R$AD21 to set the attribute
 
 ; Choose game window attributes.
 ;
+; This uses the current room index and the night-time flag to decide which
+; screen attributes should be used for the game window. Additionally, when in
+; non-illuminated tunnel rooms it will wipe the visible tiles to obscure the
+; tunnel's route.
+; .
 ; Used by the routines at #R$7B36, #R$7B8B, #R$A1D3, #R$ABA0, #R$B3F6 and
 ; #R$B83B.
 ;
 ; O:A Chosen attribute.
 @label=choose_game_window_attributes
-cC$AB6B,3;21 {if (room_index < room_29_SECOND_TUNNEL_START) <%
- C$AB6E,2;21
+cC$AB6B,3;21 {If the global current room index is
+ C$AB6E,2;21 room_28_HUT1LEFT or below...
  C$AB70,2;21 }
 ; The hero is outside, or in a room, but not in a tunnel.
- C$AB72,3;21 A = day_or_night;
- C$AB75,2;21 C = attribute_WHITE_OVER_BLACK;
- C$AB77,1;21 {  if (A == 0) goto set_attribute_from_C;
- C$AB78,2;21 }
- C$AB7A,3;21 A = room_index;
- C$AB7D,2;21 C = attribute_BRIGHT_BLUE_OVER_BLACK;
- C$AB7F,1;21 {  if (A == 0) goto set_attribute_from_C;
- C$AB80,2;21 }
- C$AB82,2;21 C = attribute_CYAN_OVER_BLACK;
-*C$AB84,1;21 set_attribute_from_C: A = C;
-*C$AB85,3;21 set_attribute_from_A: game_window_attribute = A;
- C$AB88,1;21 return; %>
+ C$AB72,3;21 Read the night-time flag
+ C$AB75,2;21 Default attribute is attribute_WHITE_OVER_BLACK
+ C$AB77,1;21 Is it night-time?
+ C$AB78,2;21 Jump if not
+; Consider night-time colours.
+ C$AB7A,3;21 Read the global current room index
+ C$AB7D,2;21 For outside at night we use attribute_BRIGHT_BLUE_OVER_BLACK
+ C$AB7F,1;21 Are we outside?
+ C$AB80,2;21 Jump if so
+ C$AB82,2;21 Otherwise for inside at night we use attribute_CYAN_OVER_BLACK
+@label=set_attribute_from_C
+*C$AB84,1;21 Copy
+@label=set_attribute_from_A
+*C$AB85,3;21 Assign game_window_attribute
+ C$AB88,1;21 Return
 ; The hero is in a tunnel.
-*C$AB89,2;21 else <% C = attribute_RED_OVER_BLACK;
- C$AB8B,3;21 HL = items_held;
-; If the hero holds a torch - draw the room.
- C$AB8E,2;21 {  if (L == item_TORCH || H == item_TORCH) goto set_attribute_from_C;
- C$AB90,4;21
- C$AB94,2;21 }
-; The hero holds no torch - draw nothing.
- C$AB96,3;21 wipe_visible_tiles();
- C$AB99,3;21 plot_interior_tiles();
- C$AB9C,2;21 A = attribute_BLUE_OVER_BLACK;
- C$AB9E,2;21 goto set_attribute_from_A; %>
+@label=choose_attribute_tunnel
+*C$AB89,2;21 For an illuminated tunnel we use attribute_RED_OVER_BLACK
+ C$AB8B,3;21 Load #REGhl with items_held
+; If the hero holds a torch - illuminate the room.
+ C$AB8E,2;21 Load item_TORCH into #REGa
+ C$AB90,1;21 Item is torch?
+ C$AB91,2;21 Jump if so
+ C$AB93,1;21 Item is torch?
+ C$AB94,2;21 Jump if so
+; The hero holds no torch - wipe the tiles so that nothing gets drawn.
+ C$AB96,3;21 Wipe the visible tiles array
+ C$AB99,3;21 Expand all of the tile indices in the tiles buffer to
+ ;21 full tiles in the screen buffer
+ C$AB9C,2;21 For a dark tunnel we use attribute_BLUE_OVER_BLACK
+ C$AB9E,2;21 Jump to set_attribute_from_A
 
 ; Zoombox.
 ;
