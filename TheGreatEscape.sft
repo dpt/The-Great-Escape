@@ -8069,15 +8069,15 @@ cC$AAB2,3;21 {Ignore any attempt to move the map when we're indoors
  C$AB62,3;21 }
  C$AB65,1;21 Otherwise move_map_y is 0 or 2 - return
 
-; Zoombox stuff.
+; Zoombox parameters.
 @label=zoombox_x
-gB$AB66,1
+gB$AB66,1;20 X coordinate of left zoombox fill, in game window area
 @label=zoombox_horizontal_count
- B$AB67,1
+ B$AB67,1;20 Maximum width (ish) of zoombox
 @label=zoombox_y
- B$AB68,1
+ B$AB68,1;20 Y coordinate of top zoombox fill, in game window area
 @label=zoombox_vertical_count
- B$AB69,1
+ B$AB69,1;20 Maximum height (ish) of zoombox
 
 ; Game window current attribute byte.
 @label=game_window_attribute
