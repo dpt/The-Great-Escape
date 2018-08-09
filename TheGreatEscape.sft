@@ -8072,11 +8072,11 @@ cC$AAB2,3;21 {Ignore any attempt to move the map when we're indoors
 ; Zoombox parameters.
 @label=zoombox_x
 gB$AB66,1;20 X coordinate of left zoombox fill, in game window area
-@label=zoombox_horizontal_count
+@label=zoombox_width
  B$AB67,1;20 Maximum width (ish) of zoombox
 @label=zoombox_y
  B$AB68,1;20 Y coordinate of top zoombox fill, in game window area
-@label=zoombox_vertical_count
+@label=zoombox_height
  B$AB69,1;20 Maximum height (ish) of zoombox
 
 ; Game window current attribute byte.
@@ -8214,18 +8214,18 @@ cC$ABF9,3;21 A = zoombox_y;
  C$AC2B,1;21
  C$AC2C,1;21 }
  C$AC2D,1;21
- C$AC2E,3;21 A = zoombox_horizontal_count;
+ C$AC2E,3;21 A = zoombox_width;
  C$AC31,3;21 ($AC55) = A; // self modify
  C$AC34,2;21 {A = -A + 24;
  C$AC36,2;21 }
  C$AC38,3;21 ($AC4D) = A; // self modify
- C$AC3B,3;21 A = zoombox_vertical_count;
+ C$AC3B,3;21 A = zoombox_height;
  C$AC3E,1;21 B = A; // iterations
 *C$AC3F,1;21 do <%
  C$AC40,1;21
  C$AC41,2;21 A = 8; // 8 iterations
 *C$AC43,1;21 do <%
- C$AC44,3;21 {    BC = zoombox_horizontal_count;
+ C$AC44,3;21 {    BC = zoombox_width;
  C$AC47,1;21
  C$AC48,2;21 }
  C$AC4A,2;21
@@ -8268,7 +8268,7 @@ cC$AC6F,3;21 {HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
  C$AC8B,3;21 }
  C$AC8E,1;21 HL++;
 ; Horizontal, moving right.
- C$AC8F,3;21 {B = zoombox_horizontal_count; // iterations
+ C$AC8F,3;21 {B = zoombox_width; // iterations
  C$AC92,1;21 }
 *C$AC93,2;21 {do <% zoombox_draw_tile(zoombox_tile_HZ);
  C$AC95,3;21 }
@@ -8283,7 +8283,7 @@ cC$AC6F,3;21 {HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
  C$ACA8,2;21 }
 *C$ACAA,1;21 HL += DE;
 ; Vertical, moving down.
- C$ACAB,3;21 {B = zoombox_vertical_count; // iterations
+ C$ACAB,3;21 {B = zoombox_height; // iterations
  C$ACAE,1;21 }
 *C$ACAF,2;21 {do <% zoombox_draw_tile(zoombox_tile_VT);
  C$ACB1,3;21 }
@@ -8298,7 +8298,7 @@ cC$AC6F,3;21 {HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
  C$ACC3,3;21 }
  C$ACC6,1;21 HL--;
 ; Horizontal, moving left.
- C$ACC7,3;21 {B = zoombox_horizontal_count; // iterations
+ C$ACC7,3;21 {B = zoombox_width; // iterations
  C$ACCA,1;21 }
 *C$ACCB,2;21 {do <% zoombox_draw_tile(zoombox_tile_HZ);
  C$ACCD,3;21 }
@@ -8313,7 +8313,7 @@ cC$AC6F,3;21 {HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
  C$ACE0,3;21 }
 *C$ACE3,1;21 HL += DE;
 ; Vertical, moving up.
- C$ACE4,3;21 {B = zoombox_vertical_count; // iterations
+ C$ACE4,3;21 {B = zoombox_height; // iterations
  C$ACE7,1;21 }
 *C$ACE8,2;21 {do <% zoombox_draw_tile(zoombox_tile_VT);
  C$ACEA,3;21 }
