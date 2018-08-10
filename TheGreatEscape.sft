@@ -8134,57 +8134,65 @@ cC$AB6B,3;21 {If the global current room index is
 
 ; Zoombox.
 ;
+; Animate the window buffer onto the screen via a zooming box effect.
+;
 ; Used by the routines at #R$68F4, #R$A50B and #R$B2FC.
 @label=zoombox
-cC$ABA0,2;21 {zoombox_x = 12;
+cC$ABA0,2;21 {Initialise zoombox_x to 12
  C$ABA2,3;21 }
- C$ABA5,2;21 {zoombox_y = 8;
+ C$ABA5,2;21 {Initialise zoombox_y to 8
 @nowarn
  C$ABA7,3;21 }
- C$ABAA,3;21 choose_game_window_attributes();
- C$ABAD,1;21 H = A;
- C$ABAE,1;21 L = A;
- C$ABAF,3;21 ($5932) = HL; // set 2 attrs
- C$ABB2,3;21 ($5952) = HL; // set 2 attrs
- C$ABB5,1;21 {zoombox_horizontal_count = 0;
- C$ABB6,3;21 }
- C$ABB9,3;21 zoombox_vertical_count = 0;
-*C$ABBC,3;21 do <% HL = &zoombox_x;
- C$ABBF,1;21 A = *HL;
- C$ABC0,2;21 {  if (A != 1) <%
- C$ABC2,3;21 }
- C$ABC5,1;21 (*HL)--;
- C$ABC6,1;21 A--;
- C$ABC7,1;21 HL++;
- C$ABC8,1;21 (*HL)++;
- C$ABC9,1;21 HL--; %>
-*C$ABCA,1;21 HL++;
- C$ABCB,1;21 A += *HL;
- C$ABCC,2;21 {  if (A < 22) (*HL)++;
- C$ABCE,3;21
- C$ABD1,1;21 }
-*C$ABD2,1;21 HL++;
- C$ABD3,1;21 A = *HL;
- C$ABD4,2;21 {  if (A != 1) <%
- C$ABD6,3;21 }
- C$ABD9,1;21 (*HL)--;
- C$ABDA,1;21 A--;
- C$ABDB,1;21 HL++;
- C$ABDC,1;21 (*HL)++;
- C$ABDD,1;21 HL--; %>
-*C$ABDE,1;21 HL++;
- C$ABDF,1;21 A += *HL;
- C$ABE0,2;21 {  if (A < 15) (*HL)++;
- C$ABE2,3;21
- C$ABE5,1;21 }
-*C$ABE6,3;21 zoombox_fill();
- C$ABE9,3;21 zoombox_draw_border();
- C$ABEC,3;21 {  A = zoombox_vertical_count + zoombox_horizontal_count;
+ C$ABAA,3;21 Choose the game window attributes (the chosen attribute
+ ;21 is returned in #REGa)
+ C$ABAD,1;21 {Duplicate attribute into both bytes of #REGhl
+ C$ABAE,1;21 }
+ C$ABAF,3;21 {Set the attributes of the initial zoombox fill rectangle
+ C$ABB2,3;21 }
+ C$ABB5,1;21 {Set zoombox_width and zoombox_height to zero
+ C$ABB6,3;21
+ C$ABB9,3;21 }
+; Start loop
+; Shrink X and grow width until X is 1
+*C$ABBC,3;21 Point #REGhl at zoombox_x
+ C$ABBF,1;21 Fetch it
+ C$ABC0,2;21 Is it 1?
+ C$ABC2,3;21 Skip the next chunk if so
+ C$ABC5,1;21 Decrement zoombox_x
+ C$ABC6,1;21 And the register copy too
+ C$ABC7,1;21 Point #REGhl at zoombox_width
+ C$ABC8,1;21 Increment zoombox_width
+ C$ABC9,1;21 Step back
+; Grow width until it's 22
+*C$ABCA,1;21 Point #REGhl at zoombox_width
+ C$ABCB,1;21 Add width to x
+ C$ABCC,2;21 Did we hit 22?
+ C$ABCE,3;21 Jump if not
+ C$ABD1,1;21 Increment zoombox_width
+; Shrink Y and grow height until Y is 1
+*C$ABD2,1;21 Point #REGhl at zoombox_y
+ C$ABD3,1;21 Fetch it
+ C$ABD4,2;21 Is it 1?
+ C$ABD6,3;21 Skip the next chunk if so
+ C$ABD9,1;21 Decrement zoombox_y
+ C$ABDA,1;21 And the register copy too
+ C$ABDB,1;21 Point #REGhl at zoombox_height
+ C$ABDC,1;21 Increment zoombox_height
+ C$ABDD,1;21 Step back
+; Grow height until it's 15
+*C$ABDE,1;21 Point #REGhl at zoombox_height
+ C$ABDF,1;21 Add height to y
+ C$ABE0,2;21 Did we hit 15?
+ C$ABE2,3;21 Jump if not
+ C$ABE5,1;21 Increment zoombox_height
+*C$ABE6,3;21 Draw the zoombox contents
+ C$ABE9,3;21 Draw the zoombox border
+ C$ABEC,3;21 {Sum the width and height
  C$ABEF,3;21
  C$ABF2,1;21 }
- C$ABF3,2;21 {%> while (A < 35);
+ C$ABF3,2;21 {If it's less than 35 then ...loop
  C$ABF5,3;21 }
- C$ABF8,1;21 return;
+ C$ABF8,1;21 Return
 
 ; Zoombox. partial copy of window buffer contents?
 ;
