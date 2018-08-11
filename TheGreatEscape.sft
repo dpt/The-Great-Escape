@@ -8194,71 +8194,88 @@ cC$ABA0,2;21 {Initialise zoombox_x to 12
  C$ABF5,3;21 }
  C$ABF8,1;21 Return
 
-; Zoombox. partial copy of window buffer contents?
+; Draw the zoombox contents.
 ;
 ; Used by the routine at #R$ABA0.
 @label=zoombox_fill
-cC$ABF9,3;21 A = zoombox_y;
- C$ABFC,1;21 { DE = zoombox_y * 128
+cC$ABF9,3;21 Fetch zoombox_y
+ C$ABFC,1;21 {Multiply it by 128 and store it in #REGde
  C$ABFD,5;21
  C$AC02,1;21 }
- C$AC03,2;21 { HL = zoombox_y * 64
+ C$AC03,2;21 {Multiply it by 64 and store it in #REGhl
  C$AC05,1;21
  C$AC06,1;21 }
- C$AC07,1;21 {HL += DE + zoombox_x;
- C$AC08,7;21
+ C$AC07,1;21 Sum the two, producing zoombox_y * 192
+ C$AC08,3;21 Fetch zoombox_x
+ C$AC0B,1;21 {Add zoombox_x to zoombox_y * 192 producing the window
+ C$AC0C,1;21 buffer source offset
+ C$AC0D,2;21
  C$AC0F,1;21 }
 @nowarn
-*C$AC10,3;21 DE = &state->window_buf[1];
- C$AC13,1;21 HL += DE;
- C$AC14,1;21
+*C$AC10,3;21 Point #REGde at window buffer + 1 (TODO: Explain the +1)
+ C$AC13,1;21 Form the final source pointer
+ C$AC14,1;21 Free up #REGhl for the next chunk
 @nowarn
- C$AC15,3;21 {HL = game_window_start_addresses[zoombox_y * 8]; // ie. * 16
- C$AC18,12;21
-*C$AC24,1;21
+ C$AC15,3;21 Fetch zoombox_y again
+ C$AC18,1;21 {Multiply it by 16 producing an offset into the
+ C$AC19,1;21 game_window_start_addresses array
+ C$AC1A,1;21
+ C$AC1B,1;21 }
+ C$AC1C,3;21 Point #REGhl at the game_window_start_addresses array
+ C$AC1F,1;21 {Combine it with the offset
+ C$AC20,3;21
+ C$AC23,1;21 }
+*C$AC24,1;21 {Fetch the game window start address
  C$AC25,2;21
  C$AC27,1;21 }
- C$AC28,3;21 {HL += zoombox_x;
- C$AC2B,1;21
+ C$AC28,3;21 Fetch zoombox_x again
+ C$AC2B,1;21 {Combine with game window start address
  C$AC2C,1;21 }
- C$AC2D,1;21
- C$AC2E,3;21 A = zoombox_width;
- C$AC31,3;21 ($AC55) = A; // self modify
- C$AC34,2;21 {A = -A + 24;
+ C$AC2D,1;21 Get the source pointer back in #REGhl
+ C$AC2E,3;21 Fetch zoombox_width
+ C$AC31,3;21 Self modify the 'SUB $00' at #R$AC54
+ C$AC34,2;21 {Compute source skip (24 - width)
  C$AC36,2;21 }
- C$AC38,3;21 ($AC4D) = A; // self modify
- C$AC3B,3;21 A = zoombox_height;
- C$AC3E,1;21 B = A; // iterations
-*C$AC3F,1;21 do <%
- C$AC40,1;21
- C$AC41,2;21 A = 8; // 8 iterations
-*C$AC43,1;21 do <%
- C$AC44,3;21 {    BC = zoombox_width;
+ C$AC38,3;21 Self modify the 'LD A,$00' at #R$AC4C
+ C$AC3B,3;21 Fetch zoombox_height (number of rows to copy)
+ C$AC3E,1;21 Set outer iterations
+; Start loop (outer) -- once for every row
+*C$AC3F,1;21 Preserve iteration counter
+ C$AC40,1;21 Preserve destination pointer
+ C$AC41,2;21 8 iterations / 1 row
+; Start loop (inner) -- once for every line
+*C$AC43,1;21 Bank the counter
+ C$AC44,3;21 {Fetch zoombox_width into #REGbc
  C$AC47,1;21
  C$AC48,2;21 }
- C$AC4A,2;21
- C$AC4C,2;21 Adash = 0; // self modified
- C$AC4E,1;21 {    HL += Adash;
+ C$AC4A,2;21 Copy zoombox_width bytes from #REGhl to #REGde,
+ ;21 then advance those pointers
+ C$AC4C,2;21 Load the (self modified) source skip
+ C$AC4E,1;21 {Advance the source pointer by source skip bytes
  C$AC4F,3;21
  C$AC52,1;21 }
-*C$AC53,1;21 Adash = E;
- C$AC54,2;21 Adash -= 0; // self modified
- C$AC56,1;21 E = Adash;
- C$AC57,1;21 D++;
- C$AC58,1;21
- C$AC59,1;21 {  %> while (--A);
+*C$AC53,1;21 {Subtract the (self modified) zoombox_width from the
+ C$AC54,2;21 destination pointer to undo LDIR's post-increment
+ C$AC56,1;21 }
+ C$AC57,1;21 Move to the next scanline by incrementing high byte
+ C$AC58,1;21 Unbank the inner loop counter
+ C$AC59,1;21 {...loop (inner)
  C$AC5A,3;21 }
- C$AC5D,2;21
- C$AC5F,3;21 BC = 0x0020;
- C$AC62,1;21 {  if (L >= 224) B = 0x07;
- C$AC63,4;21
- C$AC67,2;21 }
-*C$AC69,1;21 HL += BC;
- C$AC6A,2;21
- C$AC6C,2;21 %> while (--B);
- C$AC6E,1;21 return;
+ C$AC5D,1;21 Restore the destination pointer
+ C$AC5E,1;21 Exchange
+ C$AC5F,3;21 Set the scanline-to-scanline stride to 32
+ C$AC62,1;21 Are we about to step from one 8-scanline row to the next?
+ C$AC63,2;21 "224" tests for Y bits 3..5 set
+ C$AC65,2;21 Jump if not so
+ C$AC67,2;21 If so, set stride to $0720 so we step forward by a
+ ;21 scanline, but back by a row (TODO: Explain better)
+*C$AC69,1;21 Step
+ C$AC6A,1;21 Exchange back
+ C$AC6B,1;21 Pop the outer loop counter
+ C$AC6C,2;21 ...loop (outer)
+ C$AC6E,1;21 Return
 
-; Draw zoombox border.
+; Draw the zoombox border.
 ;
 ; Used by the routine at #R$ABA0.
 @label=zoombox_draw_border
