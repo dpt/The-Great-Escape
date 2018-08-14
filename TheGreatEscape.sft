@@ -8285,75 +8285,80 @@ cC$ABF9,3;21 Fetch zoombox_y
 ; Used by the routine at #R$ABA0.
 @label=zoombox_draw_border
 @nowarn
-cC$AC6F,3;21 {HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16
- C$AC72,13;21
-*C$AC7F,1;21
+cC$AC6F,3;21 Fetch zoombox_y
+ C$AC72,1;21 Subtract one so that we draw around the zoombox fill area
+ C$AC73,1;21 {Multiply it by 16 producing an offset into the
+ C$AC74,1;21 game_window_start_addresses array
+ C$AC75,1;21
+ C$AC76,1;21 }
+ C$AC77,3;21 Point #REGhl at the game_window_start_addresses array
+ C$AC7A,1;21 {Combine it with the offset
+ C$AC7B,3;21
+ C$AC7E,1;21 }
+*C$AC7F,1;21 {Fetch the game window start address
  C$AC80,2;21
  C$AC82,1;21 }
-; Top left.
- C$AC83,3;21 {HL += zoombox_x - 1;
- C$AC86,2;21
+; Top left corner tile.
+ C$AC83,3;21 Fetch zoombox_x
+ C$AC86,1;21 Subtract one so that we draw around the zoombox fill area
+ C$AC87,1;21 {Combine with game window start address
  C$AC88,1;21 }
- C$AC89,2;21 {zoombox_draw_tile(zoombox_tile_TL);
+ C$AC89,2;21 {Draw a top-left zoombox border tile
  C$AC8B,3;21 }
- C$AC8E,1;21 HL++;
-; Horizontal, moving right.
- C$AC8F,3;21 {B = zoombox_width; // iterations
- C$AC92,1;21 }
-*C$AC93,2;21 {do <% zoombox_draw_tile(zoombox_tile_HZ);
+ C$AC8E,1;21 Move the destination pointer forward
+; Top horizontal run, moving right.
+ C$AC8F,3;21 Fetch zoombox_width
+ C$AC92,1;21 Set iterations
+; Start loop
+*C$AC93,2;21 {Draw a horizontal zoombox border tile
  C$AC95,3;21 }
- C$AC98,1;21 HL++;
- C$AC99,2;21 %> while (--B);
-; Top right.
- C$AC9B,2;21 {zoombox_draw_tile(zoombox_tile_TR);
+ C$AC98,1;21 Move the destination pointer forward
+ C$AC99,2;21 ...loop
+; Top right corner tile.
+ C$AC9B,2;21 {Draw a top-right zoombox border tile
  C$AC9D,3;21 }
- C$ACA0,3;21 DE = 32;
- C$ACA3,1;21 {if (L >= 224) D = 0x07;
- C$ACA4,4;21
- C$ACA8,2;21 }
-*C$ACAA,1;21 HL += DE;
-; Vertical, moving down.
- C$ACAB,3;21 {B = zoombox_height; // iterations
- C$ACAE,1;21 }
-*C$ACAF,2;21 {do <% zoombox_draw_tile(zoombox_tile_VT);
+ C$ACA0,3;21 {See similar code at #R$AC5F onwards
+ C$ACA3,7;21
+*C$ACAA,1;21 }
+; Right hand vertical run, moving down.
+ C$ACAB,3;21 Fetch zoombox_height
+ C$ACAE,1;21
+; Start loop
+*C$ACAF,2;21 {Draw a vertical zoombox border tile
  C$ACB1,3;21 }
- C$ACB4,3;21 DE = 32;
- C$ACB7,1;21 {  if (L >= 224) D = 0x07;
- C$ACB8,4;21
- C$ACBC,2;21 }
-*C$ACBE,1;21 HL += DE;
- C$ACBF,2;21 %> while (--B);
-; Bottom right.
- C$ACC1,2;21 {zoombox_draw_tile(zoombox_tile_BR);
+ C$ACB4,3;21 {See similar code at #R$AC5F onwards
+ C$ACB7,7;21
+*C$ACBE,1;21 }
+ C$ACBF,2;21 ...loop
+; Bottom right corner tile.
+ C$ACC1,2;21 {Draw a bottom-right zoombox border tile
  C$ACC3,3;21 }
- C$ACC6,1;21 HL--;
-; Horizontal, moving left.
- C$ACC7,3;21 {B = zoombox_width; // iterations
- C$ACCA,1;21 }
-*C$ACCB,2;21 {do <% zoombox_draw_tile(zoombox_tile_HZ);
+ C$ACC6,1;21 Move the destination pointer backwards
+; Bottom horizontal run, moving left.
+ C$ACC7,3;21 Fetch zoombox_width
+ C$ACCA,1;21 Set iterations
+; Start loop
+*C$ACCB,2;21 {Draw a horizontal zoombox border tile
  C$ACCD,3;21 }
- C$ACD0,1;21 HL--;
- C$ACD1,2;21 %> while (--B);
-; Bottom left.
- C$ACD3,2;21 {zoombox_draw_tile(zoombox_tile_BL);
+ C$ACD0,1;21 Move the destination pointer backwards
+ C$ACD1,2;21 ...loop
+; Bottom left corner tile.
+ C$ACD3,2;21 {Draw a bottom-left zoombox border tile
  C$ACD5,3;21 }
- C$ACD8,3;21 DE = 0xFFE0;
- C$ACDB,1;21 {if (L < 32) DE = 0xF8E0;
- C$ACDC,4;21
- C$ACE0,3;21 }
-*C$ACE3,1;21 HL += DE;
-; Vertical, moving up.
- C$ACE4,3;21 {B = zoombox_height; // iterations
- C$ACE7,1;21 }
-*C$ACE8,2;21 {do <% zoombox_draw_tile(zoombox_tile_VT);
+ C$ACD8,3;21 {Inversion of similar code at #R$AC5F onwards
+ C$ACDB,8;21
+*C$ACE3,1;21 }
+; Left hand vertical run, moving up.
+ C$ACE4,3;21 Fetch zoombox_height
+ C$ACE7,1;21 Set iterations
+; Start loop
+*C$ACE8,2;21 {Draw a vertical zoombox border tile
  C$ACEA,3;21 }
- C$ACED,3;21 DE = 0xFFE0;
- C$ACF0,1;21 {  if (L < 32) DE = 0xF8E0;
- C$ACF1,4;21
- C$ACF5,3;21 }
-*C$ACF8,1;21 HL += DE;
- C$ACF9,2;21 %> while (--B);
- C$ACFB,1;21 return;
+ C$ACED,3;21 {Inversion of similar code at #R$AC5F onwards
+ C$ACF0,8;21
+*C$ACF8,1;21 }
+ C$ACF9,2;21 ...loop
+ C$ACFB,1;21 Return
 
 ; Draw a single zoombox border tile.
 ;
