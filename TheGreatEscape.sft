@@ -8405,18 +8405,33 @@ cC$ACFC,1;21 Preserve
 
 ; Searchlight movement data.
 @label=searchlight_movements
-wB$AD29,5;36 x, y, step, direction, counter
- W$AD2E,2;20 searchlight_path_2
- B$AD30,5;36 x, y, step, direction, counter
- W$AD35,2;20 searchlight_path_1
- B$AD37,5;36 x, y, step, direction, counter
- W$AD3C,2;20 searchlight_path_0
+wB$AD29,5;36 x, y, counter, direction, index
+ W$AD2E,2;36 pointer to movement data
+ B$AD30,5;36 x, y, counter, direction, index
+ W$AD35,2;36 pointer to movement data
+ B$AD37,5;36 x, y, counter, direction, index
+ W$AD3C,2;36 pointer to movement data
+; Searchlight movement pattern for ?
 @label=searchlight_path_0
- B$AD3E,5
+ B$AD3E,2;36 (32, bottom right)
+ B$AD40,2;36 (32, top right)
+ B$AD42,1;36 terminator
+; Searchlight movement pattern for main compound.
 @label=searchlight_path_1
- B$AD43,17
+ B$AD43,2;36 (24, top right)
+ B$AD45,2;36 (12, top left)
+ B$AD47,2;36 (24, bottom left)
+ B$AD49,2;36 (12, top left)
+ B$AD4B,2;36 (32, top right)
+ B$AD4D,2;36 (20, top left)
+ B$AD4F,2;36 (32, bottom left)
+ B$AD51,2;36 (44, bottom right)
+ B$AD53,1;36 terminator
+; Searchlight movement pattern for ?
 @label=searchlight_path_2
- B$AD54,5
+ B$AD54,2;36 (44, bottom right)
+ B$AD56,2;36 (42, top right)
+ B$AD58,1;36 terminator
 
 ; Decides searchlight movement.
 ;
