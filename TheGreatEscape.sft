@@ -8364,34 +8364,44 @@ cC$AC6F,3;21 Fetch zoombox_y
 ;
 ; Used by the routine at #R$AC6F.
 ;
-; I:A Index of tile to draw.
+; I:A  Index of tile to draw.
 ; I:BC (preserved)
 ; I:HL Destination address.
 @label=zoombox_draw_tile
-cC$ACFC,4;21
- C$AD00,1;21 {HL = &zoombox_tiles[A];
- C$AD01,8;21
- C$AD09,1;21 }
- C$AD0A,2;21 B = 8; // 8 iterations
-*C$AD0C,1;21 {do <% *DE = *HL++;
+cC$ACFC,1;21 Preserve
+ C$ACFD,1;21 Preserve
+ C$ACFE,1;21 Preserve
+ C$ACFF,1;21 Move destination address into #REGde
+ C$AD00,1;21 {Widen the tile index from #REGa into #REGhl
+ C$AD01,2;21 }
+ C$AD03,1;21 {Then multiply the tile index by eight
+ C$AD04,1;21
+ C$AD05,1;21 }
+ C$AD06,3;21 Point #REGbc at zoombox_tiles
+ C$AD09,1;21 Combine to form a pointer to the required tile in #REGhl
+ C$AD0A,2;21 8 iterations / 8 rows
+; Start loop
+*C$AD0C,1;21 {Copy a byte
  C$AD0D,1;21 }
- C$AD0E,1;21 {  DE += 256;
- C$AD0F,1;21 }
- C$AD10,2;21 %> while (--B);
- C$AD12,1;21 {A = D - 1; // ie. (DE - 256) >> 8
+ C$AD0E,1;21 Next destination byte is 8 * 32 (=256) bytes ahead
+ C$AD0F,1;21 Next source byte is adjacent
+ C$AD10,2;21 ...loop
+ C$AD12,1;21 {Shunt #REGd into #REGa and undo the earlier INC D
  C$AD13,1;21 }
- C$AD14,2;21 H = 0x58; // attributes
- C$AD16,1;21 L = E;
- C$AD17,2;21 {if (A >= 0x48) <% H++;
- C$AD19,2;21
- C$AD1B,1;21 }
- C$AD1C,2;21 {  if (A >= 0x50) H++; %>
- C$AD1E,2;21
- C$AD20,1;21 }
-*C$AD21,3;21 {*HL = game_window_attribute;
- C$AD24,1;21 }
- C$AD25,3;21
- C$AD28,1;21 return;
+ C$AD14,2;21 {Point #REGhl at the attributes bank
+ C$AD16,1;21 }
+ C$AD17,2;21 Was the tile on the middle or later third of the screen?
+ C$AD19,2;21 If not, jump to writing the attribute
+ C$AD1B,1;21 If so, increment the attribute bank pointer
+ C$AD1C,2;21 Was the tile on to the final third of the screen?
+ C$AD1E,2;21 If not, jump to writing the attribute
+ C$AD20,1;21 If so, increment the attribute bank pointer
+*C$AD21,3;21 Read our current game_window_attribute
+ C$AD24,1;21 Write it to the attribute byte
+ C$AD25,1;21 Restore
+ C$AD26,1;21 Restore
+ C$AD27,1;21 Restore
+ C$AD28,1;21 Return
 
 ; Searchlight movement data.
 @label=searchlight_movements
