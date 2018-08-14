@@ -8439,190 +8439,208 @@ wB$AD29,5;36 x, y, counter, direction, index
 ;
 ; I:HL Pointer to a searchlight movement data.
 @label=searchlight_movement
-cC$AD59,1;21 {E = *HL++;
- C$AD5A,1;21 }
- C$AD5B,1;21 {D = *HL++;
- C$AD5C,1;21 }
- C$AD5D,1;21 (*HL)--;
- C$AD5E,3;21 if (Z) <%
- C$AD61,1;21 {  HL += 2;
+cC$AD59,1;21 Fetch movement.x
+ C$AD5A,1;21 Step over
+ C$AD5B,1;21 Fetch movement.y
+ C$AD5C,1;21 Step over
+ C$AD5D,1;21 Decrement movement.counter
+ C$AD5E,3;21 Jump if it's non-zero
+; End of previous sweep: work out the next.
+ C$AD61,1;21 {Advance to movement.index
  C$AD62,1;21 }
- C$AD63,1;21 A = *HL; // sampled HL=$AD3B,$AD34,$AD2D
- C$AD64,2;21 {  if (A & (1<<7)) <% // sign
- C$AD66,3;21 }
- C$AD69,2;21 A &= 0x7F;
- C$AD6B,3;21 if (A == 0) <%
- C$AD6E,2;21 *HL &= ~(1<<7); %> // clear sign bit when magnitude hits zero
- C$AD70,2;21 else <%
-*C$AD72,1;21 (*HL)--; // count down
- C$AD73,1;21 A--; %> %> // just a copy
-*C$AD74,2;21 else <%
-*C$AD76,1;21 A++; // count up
- C$AD77,1;21 *HL = A; %>
-*C$AD78,1;21 HL++;
- C$AD79,1;21 {  C = *HL++;
- C$AD7A,1;21 }
- C$AD7B,1;21 B = *HL;
- C$AD7C,1;21 {  HL -= 2;
+ C$AD63,1;21 Fetch movement.index
+ C$AD64,2;21 Is the reverse direction flag set?
+ C$AD66,3;21 Jump if not
+ C$AD69,2;21 Clear the reverse direction flag
+ C$AD6B,3;21 Jump if non-zero index
+; Index is zero.
+ C$AD6E,2;21 Clear direction bit when index hits zero
+ C$AD70,2;21 (else)
+; Index is non-zero.
+*C$AD72,1;21 Decrement movement.index
+ C$AD73,1;21 Decrement local copy too (sans direction bit)
+*C$AD74,2;21 (else)
+; Not reverse direction.
+*C$AD76,1;21 Count up
+ C$AD77,1;21 Assign to movement.index
+*C$AD78,1;21 Advance to movement.pointer
+ C$AD79,1;21 {Load pointer
+ C$AD7A,1;21
+ C$AD7B,1;21 }
+ C$AD7C,1;21 {Backtrack to movement.index
  C$AD7D,1;21 }
- C$AD7E,1;21 {  BC += A * 2;
+ C$AD7E,1;21 {Index in #REGa doubled and added to pointer
  C$AD7F,4;21
  C$AD83,1;21 }
-*C$AD84,1;21 A = *BC;
- C$AD85,2;21 {  if (A == 0xFF) <% // end of list?
+*C$AD84,1;21 Fetch movement byte
+ C$AD85,2;21 {End of list?
  C$AD87,3;21 }
- C$AD8A,1;21 (*HL)--; // overshot? count down counter byte
- C$AD8B,2;21 *HL |= 1<<7; // go negative
- C$AD8D,1;21 {    BC -= 2;
+ C$AD8A,1;21 !overshot? count down counter byte
+ C$AD8B,2;21 !go negative
+ C$AD8D,1;21 {Pointer -= 2
  C$AD8E,1;21 }
- C$AD8F,1;21 A = *BC; %>/* This is a flaw in original code: A is fetched but never used again. */
-*C$AD90,1;21 {  HL -= 2;
+ C$AD8F,1;21 Bug: #REGa is loaded but never used again
+*C$AD90,1;21 {HL -= 2;
  C$AD91,1;21 }
 ; Copy counter + direction_t.
- C$AD92,1;21 {  *HL++ = *BC++;
+ C$AD92,1;21 {Copy counter
  C$AD93,2;21
  C$AD95,1;21 }
- C$AD96,1;21 {  *HL = *BC;
+ C$AD96,1;21 {Copy direction
  C$AD97,1;21 }
- C$AD98,1;21 return; %>
-*C$AD99,1;21 else <% HL++;
- C$AD9A,1;21 {  A = *HL++;
+ C$AD98,1;21 Return
+*C$AD99,1;21 Advance to direction
+ C$AD9A,1;21 {Fetch direction
  C$AD9B,1;21 }
- C$AD9C,2;21 {  if (*HL & (1<<7)) A ^= 2; // if -ve, toggle up-down
- C$AD9E,2;21
- C$ADA0,2;21 }
-*C$ADA2,2;21 {  if (A < 2) D -= 2;
- C$ADA4,3;21
- C$ADA7,1;21 }
-*C$ADA8,1;21 D++;
- C$ADA9,1;21 {  if (A != 0 && A != 3) <% E += 2; %> else <% E -= 2
- C$ADAA,2;21 %>;
- C$ADAC,8;21
+ C$AD9C,2;21 !Test sign
+ C$AD9E,2;21 Jump if clear
+ C$ADA0,2;21 Toggle direction
+*C$ADA2,2;21 {If direction <= direction_TOP_RIGHT, y-- else y++
+ C$ADA4,4;21
+*C$ADA8,1;21 }
+ C$ADA9,1;21 {If direction is RIGHT, x+=2 else x-=2
+ C$ADAA,10;21
 *C$ADB4,1;21
  C$ADB5,1;21 }
-*C$ADB6,1;21 {  HL -= 3;
+*C$ADB6,1;21 {Backtrack to (x,y)
  C$ADB7,1;21
  C$ADB8,1;21 }
- C$ADB9,1;21 {  *HL-- = D;
+ C$ADB9,1;21 {Store y
  C$ADBA,1;21 }
- C$ADBB,1;21 *HL = E;
- C$ADBC,1;21 return; %>
+ C$ADBB,1;21 Store x
+ C$ADBC,1;21 Return
 
 ; Turns white screen elements light blue and tracks the hero with a
 ; searchlight.
 ;
 ; Used by the routine at #R$9D7B.
 @label=nighttime
-cC$ADBD,3;21 HL = &searchlight_state;
- C$ADC0,1;21 {if (*HL == searchlight_STATE_SEARCHING) goto not_tracking;
- C$ADC1,2;21
- C$ADC3,3;21 }
- C$ADC6,3;21 {if (room_index) <% // hero is indoors
- C$ADC9,1;21
- C$ADCA,2;21 }
+cC$ADBD,3;21 Point #REGhl at searchlight_state
+ C$ADC0,1;21 Fetch the state
+ C$ADC1,2;21 Is it in searchlight_STATE_SEARCHING state? ($FF)
+ C$ADC3,3;21 If so, jump to searching
+ C$ADC6,3;21 Fetch the global current room index
+ C$ADC9,1;21 Are we outdoors?
+ C$ADCA,2;21 If so, jump to searchlight movement code
 ; If the hero goes indoors then the searchlight loses track.
- C$ADCC,2;21 *HL = searchlight_STATE_SEARCHING;
- C$ADCE,1;21 return; %>
+ C$ADCC,2;21 Set the searchlight state to searchlight_STATE_SEARCHING
+ C$ADCE,1;21 Return
 ; The hero is outdoors.
 ; .
 ; If the searchlight previously caught the hero, then track him.
-*C$ADCF,1;21 {if (*HL == searchlight_STATE_CAUGHT) <%
- C$ADD0,2;21
- C$ADD2,3;21 }
- C$ADD5,3;21 HL = map_position;
- C$ADD8,1;21 {  E = L + 4;
+*C$ADCF,1;21 Fetch the searchlight state again - it's a counter
+ C$ADD0,2;21 Does it equal searchlight_STATE_CAUGHT? ($1F)
+ C$ADD2,3;21 If not, jump to single searchlight code. This will draw
+ ;21 the searchlight in the place where the hero was last
+ ;21 seen
+; Caught in searchlight.
+ C$ADD5,3;21 Fetch map_position into #REGhl
+ C$ADD8,1;21 {Compute map_x as map_position.x + 4
  C$ADD9,2;21
  C$ADDB,1;21 }
- C$ADDC,1;21 D = H;
- C$ADDD,3;21 HL = searchlight_caught_coord;
- C$ADE0,1;21 {  if (L == E) <%
- C$ADE1,1;21
- C$ADE2,2;21 }
- C$ADE4,1;21 {    if (H == D) return; %> // If the highlight doesn't need to move, quit.
- C$ADE5,1;21
- C$ADE6,1;21 }
- C$ADE7,2;21 else <%
+ C$ADDC,1;21 map_y is just map_position.y
+ C$ADDD,3;21 Fetch the searchlight_caught_coord x/y into #REGhl
+ C$ADE0,1;21 {Does caught_x equal map_x?
+ C$ADE1,1;21 }
+ C$ADE2,2;21 Jump if not
+ C$ADE4,1;21 {Does caught_y equal map_y?
+ C$ADE5,1;21 }
+ C$ADE6,1;21 If both are equal the highlight doesn't need to move so
+ ;21 return
+ C$ADE7,2;21 (else)
 ; Move searchlight left/right to focus on the hero.
-*C$ADE9,3;21 if (L < E) <%
- C$ADEC,1;21 L++; %>
- C$ADED,2;21 else <%
-*C$ADEF,1;21 L--; %>
-*C$ADF0,1;21 %>
+*C$ADE9,3;21 Jump to decrement case if caught_x exceeds map_x
+ C$ADEC,1;21 Increment caught_x
+ C$ADED,2;21 (else)
+*C$ADEF,1;21 Decrement caught_x
+*C$ADF0,1;21 Save to #REGhl
 ; Move searchlight up/down to focus on the hero.
-*C$ADF1,1;21 {  if (H != D) <%
- C$ADF2,1;21
- C$ADF3,2;21 }
- C$ADF5,3;21 if (H < D) <%
- C$ADF8,1;21 H++; %>
- C$ADF9,2;21 else <%
-*C$ADFB,1;21 H--; %>
-*C$ADFC,1;21 %>
-*C$ADFD,3;21 searchlight_caught_coord = HL; %>
-*C$AE00,4;21 DE = map_position;
- C$AE04,3;21 HL = $AE77; // &searchlight_caught_coord + 1 byte; // compensating for HL--; jumped into
- C$AE07,2;21 B = 1; // 1 iteration
- C$AE09,2;21
- C$AE0B,2;21 goto $AE3F;
-*C$AE0D,3;21 not_tracking: HL = &searchlight_movements[0];
- C$AE10,2;21 B = 3; // 3 iterations == three searchlights
-*C$AE12,1;21 do <%
- C$AE13,1;21
- C$AE14,3;21 searchlight_movement();
- C$AE17,2;21
- C$AE19,3;21 searchlight_caught();
- C$AE1C,2;21
- C$AE1E,4;21 DE = map_position;
-; if (E + 23 < x || x + 16 < E) goto next;
-; .
-; if (D + 16 < y || y + 16 < D) goto next;
- C$AE22,1;21 {  if (E + 23 < *HL) goto next;
+*C$ADF1,1;21 {Does caught_y equal map_y? (Note: This looks like a
+ C$ADF2,1;21 duplicated check but isn't - the equivalent above doesn't
+ ;21 always execute) }
+ C$ADF3,2;21 Skip movement code if so
+ C$ADF5,3;21 Jump to decrement case if caught_y exceeds map_y
+ C$ADF8,1;21 Increment caught_y
+ C$ADF9,2;21 (else)
+*C$ADFB,1;21 Decrement caught_y
+*C$ADFC,1;21 Save to #REGhl
+*C$ADFD,3;21 Save #REGhl back to searchlight_caught_coord
+; When tracking the hero a single searchlight is used.
+*C$AE00,4;21 Fetch map_position into #REGhl
+ C$AE04,3;21 Point #REGhl at searchlight_caught_coord plus a
+ ;21 byte to compensate for the 'DEC HL' at the jump target
+ C$AE07,2;21 1 iteration / 1 searchlight
+ C$AE09,1;21 Preserve loop counter
+ C$AE0A,1;21 Preserve searchlight movement pointer
+ C$AE0B,2;21 Jump
+; When not tracking the hero all three searchlights are cycled through.
+@label=searching
+*C$AE0D,3;21 Point #REGhl at searchlight_movements[0]
+ C$AE10,2;21 3 iterations / 3 searchlights
+; Start loop
+*C$AE12,1;21 Preserve loop counter
+ C$AE13,1;21 Preserve searchlight movement pointer
+ C$AE14,3;21 Decide searchlight movement
+ C$AE17,1;21 {Restore searchlight movement pointer
+ C$AE18,1;21 }
+ C$AE19,3;21 Is the hero caught in the searchlight?
+ C$AE1C,1;21 {Restore searchlight movement pointer
+ C$AE1D,1;21 }
+ C$AE1E,4;21 Point #REGde at map_position
+ C$AE22,1;21 {If map_x + 23 < searchlight.x (off right hand side)
  C$AE23,3;21
- C$AE26,3;21 }
- C$AE29,1;21 {  if (*HL + 16 < E) goto next;
+ C$AE26,3;21 goto next}
+ C$AE29,1;21 {If searchlight.x + 16 < map_x (off left hand side)
  C$AE2A,3;21
- C$AE2D,3;21 }
- C$AE30,1;21 HL++;
- C$AE31,1;21 {  if (D + 16 < *HL) goto next;
+ C$AE2D,3;21 goto next}
+ C$AE30,1;21 Point #REGhl at searchlight.y
+ C$AE31,1;21 {If map_y + 16 < searchlight.y (off top side)
  C$AE32,3;21
- C$AE35,3;21 }
- C$AE38,1;21 {  if (*HL + 16 < D) goto next;
+ C$AE35,3;21 goto next}
+ C$AE38,1;21 {If searchlight.y + 16 < map_y (off bottom side)
  C$AE39,3;21
- C$AE3C,3;21 }
-*C$AE3F,1;21 A = 0;
- C$AE40,1;21
- C$AE41,1;21 HL--;
- C$AE42,2;21 B = 0x00;
- C$AE44,1;21 {  if (*HL - E < 0) <%
- C$AE45,1;21
- C$AE46,3;21 }
- C$AE49,2;21 B = 0xFF;
- C$AE4B,1;21
- C$AE4C,1;21 A = ~A;
- C$AE4D,1;21 %>
-*C$AE4E,1;21 C = Adash;
- C$AE4F,1;21 {  Adash = *++HL;
- C$AE50,1;21 }
- C$AE51,2;21 H = 0x00;
- C$AE53,1;21 Adash -= D;
- C$AE54,3;21 {  if (Adash < 0) H = 0xFF; // -ve
- C$AE57,2;21 }
-*C$AE59,1;21 L = Adash;
-; HL must be row, BC must be column
- C$AE5A,1;21 {  HL *= 32;
+ C$AE3C,3;21 goto next}
+*C$AE3F,1;21 Set the clip flag to zero
+ C$AE40,1;21 Bank the clip flag
+ C$AE41,1;21 Point #REGhl at searchlight.x (or caught_coord.x
+ ;21 depending on how it was entered)
+; Calculate the column
+ C$AE42,2;21 Clear top part of 'column' skip
+ C$AE44,1;21 {Calculate the left side skip = searchlight.x - map_x
+ C$AE45,1;21 }
+ C$AE46,3;21 Jump if left hand skip is +ve
+ C$AE49,2;21 Invert the top part of 'column'
+ C$AE4B,1;21 {Bitwise complement the banked clip flag
+ C$AE4C,1;21
+ C$AE4D,1;21 }
+*C$AE4E,1;21 Finalise #REGbc as column
+; Calculate the row
+ C$AE4F,1;21 Point #REGhl at searchlight.y
+ C$AE50,1;21 Fetch searchlight.y
+ C$AE51,2;21 Clear top part of 'row' skip
+ C$AE53,1;21 Calculate the top side skip = searchlight.y - map_y
+ C$AE54,3;21 Jump if top side skip is +ve
+ C$AE57,2;21 Invert the top part of 'row'
+*C$AE59,1;21 Finalise #REGhl as row
+; #REGhl is row, #REGbc is column
+ C$AE5A,1;21 {Multiply row by 32
  C$AE5B,3;21
  C$AE5E,1;21 }
- C$AE5F,1;21 HL += BC;
- C$AE60,3;21 {  HL += 0x5846; // address of top-left game window attribute
- C$AE63,1;21 }
- C$AE64,2;21
- C$AE66,3;21 searchlight_clip_left = A;
- C$AE69,3;21 searchlight_plot();
-*C$AE6C,1;21 next:
- C$AE6D,1;21
- C$AE6E,3;21 {  HL += 7;
+ C$AE5F,1;21 Add column to it
+ C$AE60,3;21 Point #REGhl at the address of the top-left game
+ ;21 window attribute
+ C$AE63,1;21 Add row+column to base, producing our plot pointer
+ C$AE64,1;21 Move it to #REGde
+ C$AE65,1;21 Unbank the clip flag
+ C$AE66,3;21 Assign it to searchlight_clip_left
+ C$AE69,3;21 Plot the searchlight
+@label=next_searchlight
+*C$AE6C,1;21 Restore searchlight_movement pointer
+ C$AE6D,1;21 Restore loop counter
+ C$AE6E,3;21 {Step to the next searchlight_movement
  C$AE71,1;21 }
- C$AE72,2;21 %> while (--B);
- C$AE74,1;21 return;
+ C$AE72,2;21 ...loop
+ C$AE74,1;21 Return
 
 ; Searchlight stuff
 ;
