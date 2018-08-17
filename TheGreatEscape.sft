@@ -8263,12 +8263,17 @@ cC$ABF9,3;21 Fetch zoombox_y
  C$AC5A,3;21 }
  C$AC5D,1;21 Restore the destination pointer
  C$AC5E,1;21 Exchange
- C$AC5F,3;21 Set the scanline-to-scanline stride to 32
- C$AC62,1;21 Are we about to step from one 8-scanline row to the next?
- C$AC63,2;21 "224" tests for Y bits 3..5 set
- C$AC65,2;21 Jump if not so
- C$AC67,2;21 If so, set stride to $0720 so we step forward by a
- ;21 scanline, but back by a row (TODO: Explain better)
+ C$AC5F,3;21 Set the row-to-row delta to 32
+ C$AC62,1;21 Isolate
+ C$AC63,2;21 Is A < 224? This sets the C flag if we're NOT at the end
+ ;21 of the current third of the screen
+ C$AC65,2;21 Jump over if so
+ C$AC67,2;21 Otherwise set the stride to $0720 so we will step forward
+ ;21 to the next third of the screen. In this case #REGhl is
+ ;21 of the binary form 010ttyyy111xxxxx. Adding $0720 -
+ ;21 binary 0000011100100000 - will result in 010TTyyy000xxxxx
+ ;21 where the 't' bits are incremented, moving the pointer
+ ;21 forward to the next screen third
 *C$AC69,1;21 Step
  C$AC6A,1;21 Exchange back
  C$AC6B,1;21 Pop the outer loop counter
