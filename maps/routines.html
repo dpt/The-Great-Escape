@@ -29,7 +29,7 @@
 <td class="map-c"><span id="68a2"></span><a href="../asm/68A2.html">68A2</a></td>
 <td class="map-length-0">82</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">The hero or a non-player character changes room.</div>
+<div class="map-entry-title-10">The current visible character is made to change room.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -53,7 +53,7 @@
 <td class="map-c"><span id="691a"></span><a href="../asm/691A.html">691A</a></td>
 <td class="map-length-0">6</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Squash stack, then goto main.</div>
+<div class="map-entry-title-10">Squash the stack then jump into the game's main loop.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -75,21 +75,9 @@
 <td class="map-page-0">105</td>
 <td class="map-byte-0">57</td>
 <td class="map-c"><span id="6939"></span><a href="../asm/6939.html">6939</a></td>
-<td class="map-length-0">68</td>
+<td class="map-length-0">144</td>
 <td class="map-c-desc">
 <div class="map-entry-title-10">Setup movable items.</div>
-<div class="map-entry-desc-0">
-
-</div>
-</td>
-</tr>
-<tr>
-<td class="map-page-0">105</td>
-<td class="map-byte-0">125</td>
-<td class="map-c"><span id="697d"></span><a href="../asm/697D.html">697D</a></td>
-<td class="map-length-0">49</td>
-<td class="map-c-desc">
-<div class="map-entry-title-10">Setup the second vischar as a movable item.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -101,7 +89,7 @@
 <td class="map-c"><span id="69c9"></span><a href="../asm/69C9.html">69C9</a></td>
 <td class="map-length-0">19</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Reset all non-player visible characters.</div>
+<div class="map-entry-title-10">Reset all seven non-player visible characters.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -125,7 +113,7 @@
 <td class="map-c"><span id="6a12"></span><a href="../asm/6A12.html">6A12</a></td>
 <td class="map-length-0">21</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Turn a door index into a doorpos pointer.</div>
+<div class="map-entry-title-10">Turn a door index into a door_t pointer.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -185,7 +173,7 @@
 <td class="map-c"><span id="7ac9"></span><a href="../asm/7AC9.html">7AC9</a></td>
 <td class="map-length-0">109</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Check for 'pick up', 'drop' and 'use' input.</div>
+<div class="map-entry-title-10">Check for 'pick up', 'drop' and 'use' input events.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -209,7 +197,7 @@
 <td class="map-c"><span id="7b8b"></span><a href="../asm/7B8B.html">7B8B</a></td>
 <td class="map-length-0">42</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Drop the first item.</div>
+<div class="map-entry-title-10">Drop the first held item then shuffle the second into the first slot.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -233,7 +221,7 @@
 <td class="map-c"><span id="7bd0"></span><a href="../asm/7BD0.html">7BD0</a></td>
 <td class="map-length-0">20</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Assign target member for dropped exterior objects.</div>
+<div class="map-entry-title-10">Calculate isometric screen position for dropped exterior items.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -257,7 +245,7 @@
 <td class="map-c"><span id="7bf2"></span><a href="../asm/7BF2.html">7BF2</a></td>
 <td class="map-length-0">52</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Calculate screen position for dropped items.</div>
+<div class="map-entry-title-10">Calculate isometric screen position for dropped interior items.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -329,7 +317,7 @@
 <td class="map-c"><span id="7cd4"></span><a href="../asm/7CD4.html">7CD4</a></td>
 <td class="map-length-0">21</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Wipe the screen.</div>
+<div class="map-entry-title-10">Wipe an area of the screen.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -341,7 +329,7 @@
 <td class="map-c"><span id="7ce9"></span><a href="../asm/7CE9.html">7CE9</a></td>
 <td class="map-length-0">19</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Given a screen address, return the same position on the next scanline.</div>
+<div class="map-entry-title-10">Given a screen address, return the same position on the next scanline down.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -353,7 +341,7 @@
 <td class="map-c"><span id="7d15"></span><a href="../asm/7D15.html">7D15</a></td>
 <td class="map-length-0">26</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Add a message to the pending messages queue.</div>
+<div class="map-entry-title-10">Add a new message index to the pending messages queue.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -389,7 +377,7 @@
 <td class="map-c"><span id="7d48"></span><a href="../asm/7D48.html">7D48</a></td>
 <td class="map-length-0">63</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Incrementally display queued game messages.</div>
+<div class="map-entry-title-10">Incrementally wipe and display queued game messages.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -449,7 +437,7 @@
 <td class="map-c"><span id="9dcf"></span><a href="../asm/9DCF.html">9DCF</a></td>
 <td class="map-length-0">22</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Check morale level, report if (near) zero and inhibit player control.</div>
+<div class="map-entry-title-10">Check morale level, report if (near) zero and inhibit player control if exhausted.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -461,7 +449,7 @@
 <td class="map-c"><span id="9de5"></span><a href="../asm/9DE5.html">9DE5</a></td>
 <td class="map-length-0">34</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Check for BREAK keypress.</div>
+<div class="map-entry-title-10">Check for a BREAK keypress.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -509,7 +497,7 @@
 <td class="map-c"><span id="9f21"></span><a href="../asm/9F21.html">9F21</a></td>
 <td class="map-length-0">230</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">In permitted area.</div>
+<div class="map-entry-title-10">Check the hero's map position and colour the flag accordingly.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -521,7 +509,7 @@
 <td class="map-c"><span id="a007"></span><a href="../asm/A007.html">A007</a></td>
 <td class="map-length-0">19</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">In permitted area (end bit).</div>
+<div class="map-entry-title-10">Check that the hero is in the specified room or camp bounds.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -569,7 +557,7 @@
 <td class="map-c"><span id="a082"></span><a href="../asm/A082.html">A082</a></td>
 <td class="map-length-0">19</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Given a screen address, returns the same position on the previous scanline.</div>
+<div class="map-entry-title-10">Given a screen address, returns the same position on the next scanline up.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -617,7 +605,7 @@
 <td class="map-c"><span id="a0d2"></span><a href="../asm/A0D2.html">A0D2</a></td>
 <td class="map-length-0">10</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Increase morale.</div>
+<div class="map-entry-title-10">Increase morale level.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -629,7 +617,7 @@
 <td class="map-c"><span id="a0dc"></span><a href="../asm/A0DC.html">A0DC</a></td>
 <td class="map-length-0">4</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Set morale from A.</div>
+<div class="map-entry-title-10">Set morale level.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -641,7 +629,7 @@
 <td class="map-c"><span id="a0e0"></span><a href="../asm/A0E0.html">A0E0</a></td>
 <td class="map-length-0">9</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Decrease morale.</div>
+<div class="map-entry-title-10">Decrease morale level.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -737,7 +725,7 @@
 <td class="map-c"><span id="a1c3"></span><a href="../asm/A1C3.html">A1C3</a></td>
 <td class="map-length-0">16</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: night time.</div>
+<div class="map-entry-title-10">Event: Night time.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -749,7 +737,7 @@
 <td class="map-c"><span id="a1d3"></span><a href="../asm/A1D3.html">A1D3</a></td>
 <td class="map-length-0">20</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: another day dawns.</div>
+<div class="map-entry-title-10">Event: Another day dawns.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -761,7 +749,7 @@
 <td class="map-c"><span id="a1e7"></span><a href="../asm/A1E7.html">A1E7</a></td>
 <td class="map-length-0">9</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: wake up.</div>
+<div class="map-entry-title-10">Event: Wake up.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -773,7 +761,7 @@
 <td class="map-c"><span id="a1f0"></span><a href="../asm/A1F0.html">A1F0</a></td>
 <td class="map-length-0">9</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: go to roll call.</div>
+<div class="map-entry-title-10">Event: Go to roll call.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -785,7 +773,7 @@
 <td class="map-c"><span id="a1f9"></span><a href="../asm/A1F9.html">A1F9</a></td>
 <td class="map-length-0">9</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: go to breakfast time.</div>
+<div class="map-entry-title-10">Event: Go to breakfast time.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -797,7 +785,7 @@
 <td class="map-c"><span id="a202"></span><a href="../asm/A202.html">A202</a></td>
 <td class="map-length-0">4</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: breakfast time.</div>
+<div class="map-entry-title-10">Event: Breakfast time.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -809,7 +797,7 @@
 <td class="map-c"><span id="a206"></span><a href="../asm/A206.html">A206</a></td>
 <td class="map-length-0">15</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: go to exercise time.</div>
+<div class="map-entry-title-10">Event: Go to exercise time.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -821,7 +809,7 @@
 <td class="map-c"><span id="a215"></span><a href="../asm/A215.html">A215</a></td>
 <td class="map-length-0">4</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: exercise time.</div>
+<div class="map-entry-title-10">Event: Exercise time.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -833,7 +821,7 @@
 <td class="map-c"><span id="a219"></span><a href="../asm/A219.html">A219</a></td>
 <td class="map-length-0">15</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: go to time for bed.</div>
+<div class="map-entry-title-10">Event: Go to time for bed.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -845,7 +833,7 @@
 <td class="map-c"><span id="a228"></span><a href="../asm/A228.html">A228</a></td>
 <td class="map-length-0">59</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: new red cross parcel.</div>
+<div class="map-entry-title-10">Event: New red cross parcel.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -857,7 +845,7 @@
 <td class="map-c"><span id="a264"></span><a href="../asm/A264.html">A264</a></td>
 <td class="map-length-0">6</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: time for bed.</div>
+<div class="map-entry-title-10">Event: Time for bed.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -869,7 +857,7 @@
 <td class="map-c"><span id="a26a"></span><a href="../asm/A26A.html">A26A</a></td>
 <td class="map-length-0">21</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Event: search light.</div>
+<div class="map-entry-title-10">Event: Search light.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -903,9 +891,21 @@
 <td class="map-page-0">163</td>
 <td class="map-byte-0">63</td>
 <td class="map-c"><span id="a33f"></span><a href="../asm/A33F.html">A33F</a></td>
-<td class="map-length-0">18</td>
+<td class="map-length-0">5</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Set the hero's route.</div>
+<div class="map-entry-title-10">Set the hero's route, unless he's in solitary.</div>
+<div class="map-entry-desc-0">
+
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-page-0">163</td>
+<td class="map-byte-0">68</td>
+<td class="map-c"><span id="a344"></span><a href="../asm/A344.html">A344</a></td>
+<td class="map-length-0">13</td>
+<td class="map-c-desc">
+<div class="map-entry-title-10">Set the hero's route</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -929,7 +929,7 @@
 <td class="map-c"><span id="a35f"></span><a href="../asm/A35F.html">A35F</a></td>
 <td class="map-length-0">20</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Set ascending routes for all characters in prisoners_and_guards.</div>
+<div class="map-entry-title-10">Set individual routes for all characters in prisoners_and_guards.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -941,7 +941,7 @@
 <td class="map-c"><span id="a373"></span><a href="../asm/A373.html">A373</a></td>
 <td class="map-length-0">25</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Set the routes of all characters in prisoners_and_guards.</div>
+<div class="map-entry-title-10">Set joint routes for all characters in prisoners_and_guards.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -965,7 +965,7 @@
 <td class="map-c"><span id="a3bb"></span><a href="../asm/A3BB.html">A3BB</a></td>
 <td class="map-length-0">50</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Not yet understood.</div>
+<div class="map-entry-title-10">Calls get_target and assigns the result into vischar.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -977,7 +977,7 @@
 <td class="map-c"><span id="a3ed"></span><a href="../asm/A3ED.html">A3ED</a></td>
 <td class="map-length-0">6</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Store an xy_t at the specified address.</div>
+<div class="map-entry-title-10">Store a route at the specified address.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -989,7 +989,7 @@
 <td class="map-c"><span id="a3f3"></span><a href="../asm/A3F3.html">A3F3</a></td>
 <td class="map-length-0">5</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">entered_move_characters is non-zero.</div>
+<div class="map-entry-title-10">Character goes to bed: used when entered_move_characters is non-zero.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1001,7 +1001,7 @@
 <td class="map-c"><span id="a3f8"></span><a href="../asm/A3F8.html">A3F8</a></td>
 <td class="map-length-0">12</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">entered_move_characters is zero.</div>
+<div class="map-entry-title-10">Character goes to bed: used when entered_move_characters is zero.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1097,7 +1097,7 @@
 <td class="map-c"><span id="a491"></span><a href="../asm/A491.html">A491</a></td>
 <td class="map-length-0">24</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Common end of hero_sits/sleeps.</div>
+<div class="map-entry-title-10">Common end of hero sits/sleeps.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1145,7 +1145,7 @@
 <td class="map-c"><span id="a4d3"></span><a href="../asm/A4D3.html">A4D3</a></td>
 <td class="map-length-0">5</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">entered_move_characters is non-zero (another one).</div>
+<div class="map-entry-title-10">Character event: used when entered_move_characters is non-zero.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1157,7 +1157,7 @@
 <td class="map-c"><span id="a4d8"></span><a href="../asm/A4D8.html">A4D8</a></td>
 <td class="map-length-0">12</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">entered_move_characters is zero (another one).</div>
+<div class="map-entry-title-10">Character event: used when entered_move_characters is zero.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1193,7 +1193,7 @@
 <td class="map-c"><span id="a50b"></span><a href="../asm/A50B.html">A50B</a></td>
 <td class="map-length-0">17</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Screen reset.</div>
+<div class="map-entry-title-10">Reset the screen.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1217,7 +1217,7 @@
 <td class="map-c"><span id="a58c"></span><a href="../asm/A58C.html">A58C</a></td>
 <td class="map-length-0">16</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Key scan of all ports.</div>
+<div class="map-entry-title-10">Check for any key press.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1301,7 +1301,7 @@
 <td class="map-c"><span id="a826"></span><a href="../asm/A826.html">A826</a></td>
 <td class="map-length-0">124</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Plotting supertiles.</div>
+<div class="map-entry-title-10">Plots a single horizontal row of tiles to the screen buffer.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1349,7 +1349,7 @@
 <td class="map-c"><span id="a8f4"></span><a href="../asm/A8F4.html">A8F4</a></td>
 <td class="map-length-0">172</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Plotting vertical tiles (common part).</div>
+<div class="map-entry-title-10">Plots a single vertical row of tiles to the screen buffer.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1361,7 +1361,7 @@
 <td class="map-c"><span id="a9a0"></span><a href="../asm/A9A0.html">A9A0</a></td>
 <td class="map-length-0">13</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Call plot_tile then advance DE' by a row.</div>
+<div class="map-entry-title-10">Call plot_tile then advance the screen buffer pointer in <span class="register">DE'</span> by a row.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1373,7 +1373,7 @@
 <td class="map-c"><span id="a9ad"></span><a href="../asm/A9AD.html">A9AD</a></td>
 <td class="map-length-0">55</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Plot a tile then increment DE' by 1.</div>
+<div class="map-entry-title-10">Plot an exterior tile then advance <span class="register">DE'</span> to the next column.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1457,7 +1457,7 @@
 <td class="map-c"><span id="aab2"></span><a href="../asm/AAB2.html">AAB2</a></td>
 <td class="map-length-0">180</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Moves the map when the hero walks.</div>
+<div class="map-entry-title-10">Move the map when the hero walks around outdoors.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1493,7 +1493,7 @@
 <td class="map-c"><span id="abf9"></span><a href="../asm/ABF9.html">ABF9</a></td>
 <td class="map-length-0">118</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Zoombox. partial copy of window buffer contents?</div>
+<div class="map-entry-title-10">Draw the zoombox contents.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1505,7 +1505,7 @@
 <td class="map-c"><span id="ac6f"></span><a href="../asm/AC6F.html">AC6F</a></td>
 <td class="map-length-0">141</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Draw zoombox border.</div>
+<div class="map-entry-title-10">Draw the zoombox border.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -1865,7 +1865,7 @@
 <td class="map-c"><span id="b5ce"></span><a href="../asm/B5CE.html">B5CE</a></td>
 <td class="map-length-0">333</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">(unknown) called_from_main_loop_9</div>
+<div class="map-entry-title-10">Animate all visible characters.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2009,7 +2009,7 @@
 <td class="map-c"><span id="bb98"></span><a href="../asm/BB98.html">BB98</a></td>
 <td class="map-length-0">274</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Paints any tiles occupied by visible characters with tiles from tile_buf.</div>
+<div class="map-entry-title-10">Paint any tiles occupied by visible characters with tiles from tile_buf.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2093,7 +2093,7 @@
 <td class="map-c"><span id="c6a0"></span><a href="../asm/C6A0.html">C6A0</a></td>
 <td class="map-length-0">250</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Moves characters around.</div>
+<div class="map-entry-title-10">Move characters around.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2141,7 +2141,7 @@
 <td class="map-c"><span id="c892"></span><a href="../asm/C892.html">C892</a></td>
 <td class="map-length-0">134</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Causes characters to follow the hero if he's being suspicious.</div>
+<div class="map-entry-title-10">Make characters follow the hero if he's being suspicious.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2561,7 +2561,7 @@
 <td class="map-c"><span id="effc"></span><a href="../asm/EFFC.html">EFFC</a></td>
 <td class="map-length-0">24</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Waits for the user to press Y or N.</div>
+<div class="map-entry-title-10">Wait for the user to press 'Y' or 'N'.</div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2585,7 +2585,7 @@
 <td class="map-c"><span id="f163"></span><a href="../asm/F163.html">F163</a></td>
 <td class="map-length-0">125</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10">Main.</div>
+<div class="map-entry-title-10">The game starts here.</div>
 <div class="map-entry-desc-0">
 
 </div>

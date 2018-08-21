@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A4E4.html">A4E4</a></span></td>
 </tr>
 </table>
-<div class="description">A4D8: entered_move_characters is zero (another one).</div>
+<div class="description">A4D8: Character event: used when entered_move_characters is zero.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -48,13 +48,13 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="asm-label-1">charevnt_breakfast_vischar</td>
 <td class="address-2"><span id="a4d8"></span>A4D8</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment-11" rowspan="1">A = IY[0]; // character index</td>
+<td class="comment-11" rowspan="1">Read the current vischar's character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4db"></span>A4DB</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A != character_0_COMMANDANT) goto charevnt_breakfast_common;</td>
+<td class="comment-11" rowspan="2">If it's not the commandant (0) then goto charevnt_breakfast_common</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -66,7 +66,7 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4de"></span>A4DE</td>
 <td class="instruction">LD BC,$2B00</td>
-<td class="comment-11" rowspan="2">set_hero_route(location_002B); // exit via</td>
+<td class="comment-11" rowspan="2">Otherwise set the commandant's route to ($2B,$00) and exit via</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>

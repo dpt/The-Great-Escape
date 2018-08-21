@@ -30,11 +30,18 @@
 Used by the routines at <a href="A420.html">character_sits</a> and <a href="A444.html">character_sleeps</a>.
 </div>
 </div>
-<table class="input-0">
+<table class="input-1">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
-
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Room.</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Pointer to route.</td>
+</tr>
 </table>
 <table class="output-0">
 <tr class="asm-output-header">
@@ -45,41 +52,28 @@ Used by the routines at <a href="A420.html">character_sits</a> and <a href="A444
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="a462"></span>
-<div class="comments">
-<div class="paragraph">
-I:C Room.
-</div>
-<div class="paragraph">
-I:DE Pointer to location.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1">character_sit_sleep_common</td>
 <td class="address-2"><span id="a462"></span>A462</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move the route pointer back into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a463"></span>A463</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-11" rowspan="1">*HL = 0;  // $8022, $76B8, $76BF, $76A3  (can be vischar OR characterstruct - weird)</td>
+<td class="comment-11" rowspan="1">Stand still - set the character's route to route_HALT ($00) (Note: This receives a pointer to a route structure which is within either a characterstruct or a vischar).</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a465"></span>A465</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">(unknown)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a466"></span>A466</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index != C) &lt;%</td>
+<td class="comment-11" rowspan="3">If the global current room index matches <span class="register">C</span> ... Jump to refresh code</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -90,14 +84,24 @@ I:DE Pointer to location.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a46a"></span>A46A</td>
-<td class="instruction">JR Z,<a href="A462.html#a473">character_sit_sleep_common_0</a></td>
+<td class="instruction">JR Z,<a href="A462.html#a473">character_sit_sleep_refresh</a></td>
 <td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a46c"></span>
+<div class="comments">
+<div class="paragraph">
+Character is sitting or sleeping in a room presently not visible.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a46c"></span>A46C</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="4">HL -= 4;</td>
+<td class="comment-11" rowspan="4">Point <span class="register">HL</span> at characterstruct's room member</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -121,29 +125,29 @@ I:DE Pointer to location.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a470"></span>A470</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment-11" rowspan="1">*HL = 255;</td>
+<td class="comment-11" rowspan="1">Set room to room_NONE ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a472"></span>A472</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="a473"></span>
 <div class="comments">
 <div class="paragraph">
-Force a refresh.
+Character is visible - force a repaint.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">character_sit_sleep_common_0</td>
+<td class="asm-label-1">character_sit_sleep_refresh</td>
 <td class="address-2"><span id="a473"></span>A473</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">HL += 26;</td>
+<td class="comment-11" rowspan="3">Pointer <span class="register">HL</span> at vischar's room member</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -161,7 +165,7 @@ Force a refresh.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a477"></span>A477</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment-11" rowspan="1">*HL = 255;</td>
+<td class="comment-11" rowspan="1">Set room to room_NONE ($FF)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">

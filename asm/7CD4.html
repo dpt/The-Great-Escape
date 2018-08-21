@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="7CE9.html">7CE9</a></span></td>
 </tr>
 </table>
-<div class="description">7CD4: Wipe the screen.</div>
+<div class="description">7CD4: Wipe an area of the screen.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -35,12 +35,8 @@ Used by the routine at <a href="7C46.html">draw_item</a>.
 <th colspan="2">Input</th>
 </tr>
 <tr>
-<td class="register">B</td>
-<td class="register-desc">Number of bytes to set.</td>
-</tr>
-<tr>
-<td class="register">C</td>
-<td class="register-desc">Number of scanlines.</td>
+<td class="register">BC</td>
+<td class="register-desc">Dimensions (B x C == width x height, where width is specified in bytes).</td>
 </tr>
 <tr>
 <td class="register">HL</td>
@@ -59,73 +55,73 @@ Used by the routine at <a href="7C46.html">draw_item</a>.
 <td class="asm-label-1">screen_wipe</td>
 <td class="address-2"><span id="7cd4"></span>7CD4</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="1">A = B;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to the byte width of the area to wipe</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cd5"></span>7CD5</td>
 <td class="instruction">LD ($7CD9),A</td>
-<td class="comment-11" rowspan="1">(loopcounter + 1) = A; // self modifying</td>
+<td class="comment-11" rowspan="1">Self modify the width counter at $7CD8 to set <span class="register">B</span> to the byte width</td>
 </tr>
 <tr>
-<td class="asm-label-1">screen_wipe_0</td>
+<td class="asm-label-1">screen_wipe_row</td>
 <td class="address-2"><span id="7cd8"></span>7CD8</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">do &lt;% loopcounter: B = 2; // modified</td>
+<td class="comment-11" rowspan="1">Set the column counter to the bitmap width in bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cda"></span>7CDA</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">dst = HL;</td>
+<td class="comment-11" rowspan="1">Save the destination address</td>
 </tr>
 <tr>
-<td class="asm-label-1">screen_wipe_1</td>
+<td class="asm-label-1">screen_wipe_column</td>
 <td class="address-2"><span id="7cdb"></span>7CDB</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-11" rowspan="4">do &lt;% *dst++ = 0; %&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">Wipe a byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cdd"></span>7CDD</td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Step destination address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cde"></span>7CDE</td>
-<td class="instruction">DJNZ <a href="7CD4.html#7cdb">screen_wipe_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">DJNZ <a href="7CD4.html#7cdb">screen_wipe_column</a></td>
+<td class="comment-11" rowspan="1">Decrement the column counter then loop for every column</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ce0"></span>7CE0</td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the destination address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ce1"></span>7CE1</td>
-<td class="instruction">CALL <a href="7CE9.html">get_next_scanline</a></td>
-<td class="comment-11" rowspan="1">get_next_scanline();</td>
+<td class="instruction">CALL <a href="7CE9.html">next_scanline_down</a></td>
+<td class="comment-11" rowspan="1">Move the destination address down a scanline</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ce4"></span>7CE4</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">%&gt; while (--C);</td>
+<td class="comment-11" rowspan="1">Decrement the row counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ce5"></span>7CE5</td>
-<td class="instruction">JP NZ,<a href="7CD4.html#7cd8">screen_wipe_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NZ,<a href="7CD4.html#7cd8">screen_wipe_row</a></td>
+<td class="comment-11" rowspan="1">...loop for every row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ce8"></span>7CE8</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

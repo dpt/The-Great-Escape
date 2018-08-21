@@ -8,20 +8,22 @@
 
 /* Universal/generic */
 body {
-  color: #f0f0f0;
+  color: #fff;
   background-color: #000000;
   font-family: "ITC Berkeley Oldstyle Std", Cambria, sans-serif;
 }
 img {
-  border-width: 0px;
+  border-width: 0;
 }
 th {
   text-align: center;
   vertical-align: middle;
+  padding: 0.125em 0.5em;
 }
 td {
   text-align: left;
   vertical-align: baseline;
+  padding: 0.125em 0.5em;
 }
 a {
   text-decoration: none;
@@ -33,8 +35,8 @@ a:hover {
 table.header td {
   font-weight: bolder;
   font-size: 150%;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 td.page-header {
   white-space: nowrap;
@@ -57,8 +59,8 @@ td.transparent {
 }
 ul.contents {
   list-style-type: none;
-  margin-left: 0px;
-  padding-left: 0px;
+  margin-left: 0;
+  padding-left: 0;
 }
 span.register {
   color: #986A0A;
@@ -77,7 +79,7 @@ div.box-title {
   font-weight: bolder;
 }
 div.box p {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 div.box-1 {
   background-color: #14284b;
@@ -98,8 +100,8 @@ td.centre {
 /* Home page */
 ul.index-list {
   list-style-type: none;
-  margin-top: 0px;
-  margin-left: 0px;
+  margin-top: 0;
+  margin-left: 0;
   padding-left: 20px;
 }
 
@@ -111,6 +113,7 @@ table.asm-navigation {
 }
 table.asm-navigation td {
   background-color: #4b3914;
+  text-shadow: 0 1px 1px black;
 }
 table.asm-navigation td.prev {
   width: 30%;
@@ -123,9 +126,6 @@ table.asm-navigation td.up {
 table.asm-navigation td.next {
   width: 30%;
   text-align: right;
-}
-table.disassembly {
-  width: 100%;
 }
 table.disassembly {
   width: 100%;
@@ -144,25 +144,29 @@ div.comments {
 table.input-1, table.output-1 {
   margin-bottom: 10px;
 }
-table.input-1 td {
+table.input-1 th, table.output-1 th {
+  background-color: #194798;
+}
+table.input-1 td, table.output-1 td {
   background-color: #14284B;
 }
-table.output-1 td {
-  background-color: #14284B;
-}
-table.input-1 th {
-  background-color: #385A98;
-}
-table.output-1 th {
-  background-color: #385A98;
+/* Give input and output tables the same minimum width */
+table.input-1, table.output-1 {
+  min-width: 20em;
 }
 td.register {
   color: #986A0A;
   width: 20px;
   text-align: center;
 }
+td.asm-label-1 {
+  color: #986a0a;
+  background-color: #060c17;
+  padding-right: 10px;
+}
 td.address-2 {
   color: #986a0a;
+  background-color: #060c17;
   padding-right: 10px;
 }
 td.address-1 {
@@ -179,27 +183,16 @@ td.instruction {
 }
 td.comment-11 {
   background-color: #14284B;
-  width: 100%;
-}
-td.comment-11 {
-  background-color: #14284B;
-  width: 100%;
 }
 td.map-c-comment {
-  padding-left: 0px;
-}
-td.comment-10 {
-  width: 100%;
-}
-td.comment-10 {
-  width: 100%;
+  padding-left: 0;
 }
 
 /* Maps */
 table.map th {
-  padding: 0 0.25em;
   color: #986a0a;
   background-color: #4B3914;
+  text-shadow: 0 1px 1px black;
 }
 table.map td {
   background-color: #060C17;
@@ -209,7 +202,6 @@ div.map-intro {
 }
 table.map td.map-page-1, table.map td.map-byte-1, table.map td.map-b, td.map-w, table.map td.map-c, table.map td.map-g, table.map td.map-t, table.map td.map-s, td.map-u {
   text-align: right;
-  padding: 0 0.25em;
 }
 table.map td.map-page-1, table.map td.map-byte-1 {
   background-color: transparent;
@@ -219,7 +211,7 @@ table.map td.map-b, table.map td.map-c, table.map td.map-g, table.map td.map-s, 
 }
 table.map td.map-b-desc, table.map td.map-c-desc, table.map td.map-g-desc, table.map td.map-s-desc, table.map td.map-t-desc, table.map td.map-u-desc, table.map td.map-w-desc {
   background-color: #14284B;
-  color: #f0f0f0;
+  color: #fff;
   font-family: inherit;
   font-style: normal;
 }
@@ -241,7 +233,7 @@ div.map-entry-title-11 {
 }
 div.map-entry-title-11, div.map-entry-desc-1, td.map-s-desc, td.map-u-desc {
   font-family: "ITC Berkeley Oldstyle Std", Cambria, sans-serif; /* defeats skoolkit.css */
-  color: #f0f0f0;
+  color: #fff;
 }
 
 /* Graphic glitches */
@@ -281,7 +273,7 @@ div.list-entry-desc {
 }
 ul.list-entry {
   margin-top: 5px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .gallery TD { vertical-align: top; }

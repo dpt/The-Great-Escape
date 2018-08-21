@@ -48,31 +48,31 @@ Used by the routine at <a href="A1F0.html">event_go_to_roll_call</a>.
 <td class="asm-label-1">go_to_roll_call</td>
 <td class="address-2"><span id="a4fd"></span>A4FD</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment-11" rowspan="1">A = 26;</td>
+<td class="comment-11" rowspan="3">Set route to (routeindex_26_GUARD_12_ROLL_CALL, 0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4ff"></span>A4FF</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a500"></span>A500</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-11" rowspan="1">C = 0;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a502"></span>A502</td>
 <td class="instruction">CALL <a href="A35F.html">set_prisoners_and_guards_route</a></td>
-<td class="comment-11" rowspan="1">set_prisoners_and_guards_route();</td>
+<td class="comment-11" rowspan="1">Set individual routes for prisoners_and_guards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a505"></span>A505</td>
 <td class="instruction">LD BC,$2D00</td>
-<td class="comment-11" rowspan="2">set_hero_route(location_002D);</td>
+<td class="comment-11" rowspan="2">Set the hero's route to (routeindex_45_HERO_ROLL_CALL, 0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>

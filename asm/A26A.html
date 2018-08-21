@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A27F.html">A27F</a></span></td>
 </tr>
 </table>
-<div class="description">A26A: Event: search light.</div>
+<div class="description">A26A: Event: Search light.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -46,13 +46,13 @@
 <td class="asm-label-1">event_search_light</td>
 <td class="address-2"><span id="a26a"></span>A26A</td>
 <td class="instruction">LD A,$26</td>
-<td class="comment-11" rowspan="1">A = 0x26;</td>
+<td class="comment-11" rowspan="2">Set route to (routeindex_38_GUARD_12_BED, 0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a26c"></span>A26C</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-11" rowspan="1">C = 0;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -62,40 +62,53 @@
 This entry point is used by the routine at <a href="A264.html">event_time_for_bed</a>.
 </div>
 <div class="paragraph">
-Common end of event_time_for_bed and event_search_light.
+Common end of event_time_for_bed and event_search_light. Sets the route for guards 12..15 to (<span class="register">C</span> + 0, <span class="register">A</span>)..(<span class="register">C</span> + 3, <span class="register">A</span>) respectively.
+</div>
+<div class="paragraph">
+TODO: Split off to its own routine
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">set_guards_route</td>
+<td class="address-2"><span id="a26e"></span>A26E</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">bank</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="a26f"></span>A26F</td>
+<td class="instruction">LD A,$0C</td>
+<td class="comment-11" rowspan="1">Set character index to character_12_GUARD_12</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="a271"></span>A271</td>
+<td class="instruction">LD B,$04</td>
+<td class="comment-11" rowspan="1">4 iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a273"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label-1">event_search_light_0</td>
-<td class="address-2"><span id="a26e"></span>A26E</td>
-<td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a26f"></span>A26F</td>
-<td class="instruction">LD A,$0C</td>
-<td class="comment-11" rowspan="1">Adash = 12;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a271"></span>A271</td>
-<td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">B = 4; // 4 iterations</td>
-</tr>
-<tr>
-<td class="asm-label-1">event_search_light_1</td>
 <td class="address-2"><span id="a273"></span>A273</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a274"></span>A274</td>
 <td class="instruction">CALL <a href="A38C.html">set_character_route</a></td>
-<td class="comment-11" rowspan="1">set_character_route();</td>
+<td class="comment-11" rowspan="1">Set the route for a character in <span class="register">A</span> to route (<span class="register">A'</span>, <span class="register">C</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -107,7 +120,7 @@ Common end of event_time_for_bed and event_search_light.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a278"></span>A278</td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="1">Adash++;</td>
+<td class="comment-11" rowspan="1">Increment the character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -119,7 +132,7 @@ Common end of event_time_for_bed and event_search_light.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a27a"></span>A27A</td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="1">A++;</td>
+<td class="comment-11" rowspan="1">Increment the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -130,14 +143,14 @@ Common end of event_time_for_bed and event_search_light.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a27c"></span>A27C</td>
-<td class="instruction">DJNZ <a href="A26A.html#a273">event_search_light_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="A26A.html#a273">event_search_light_0</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a27e"></span>A27E</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

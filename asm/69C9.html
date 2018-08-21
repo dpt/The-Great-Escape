@@ -16,18 +16,18 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="69AE.html">69AE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="6939.html">6939</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#69c9">Map</a></td>
 <td class="next"><span class="next-1">Next: <a href="69DC.html">69DC</a></span></td>
 </tr>
 </table>
-<div class="description">69C9: Reset all non-player visible characters.</div>
+<div class="description">69C9: Reset all seven non-player visible characters.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="6939.html">setup_movable_items</a>.
+Used by the routine at <a href="6939.html">setup_movable_items</a> only. (!could merge into the above)
 </div>
 </div>
 <table class="input-0">
@@ -48,49 +48,59 @@ Used by the routine at <a href="6939.html">setup_movable_items</a>.
 <td class="asm-label-1">reset_nonplayer_visible_characters</td>
 <td class="address-2"><span id="69c9"></span>69C9</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
+<td class="comment-11" rowspan="1">Start at the first visible character (hero is the zeroth)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69cc"></span>69CC</td>
 <td class="instruction">LD BC,$0720</td>
-<td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations and set <span class="register">C</span> for a 32 byte stride simultaneously</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="69cf"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">reset_nonplayer_visible_characters_0</td>
 <td class="address-2"><span id="69cf"></span>69CF</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="5">Reset the visible character at <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69d0"></span>69D0</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69d1"></span>69D1</td>
 <td class="instruction">CALL <a href="C5D3.html">reset_visible_character</a></td>
-<td class="comment-11" rowspan="1">reset_visible_character();</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69d4"></span>69D4</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69d5"></span>69D5</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69d6"></span>69D6</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">HL += 32; // stride</td>
+<td class="comment-11" rowspan="3">Step <span class="register">HL</span> to the next visible character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -108,18 +118,18 @@ Used by the routine at <a href="6939.html">setup_movable_items</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69d9"></span>69D9</td>
 <td class="instruction">DJNZ <a href="69C9.html#69cf">reset_nonplayer_visible_characters_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69db"></span>69DB</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="69AE.html">69AE</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="6939.html">6939</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#69c9">Map</a></td>
 <td class="next"><span class="next-1">Next: <a href="69DC.html">69DC</a></span></td>
 </tr>

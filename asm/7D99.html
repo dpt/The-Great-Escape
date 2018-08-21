@@ -51,19 +51,19 @@ Called when messages.display_index == 128.
 <td class="asm-label-1">next_message</td>
 <td class="address-2"><span id="7d99"></span>7D99</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment-11" rowspan="1">HL = message_queue_pointer;</td>
+<td class="comment-11" rowspan="1">Get the message queue pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d9c"></span>7D9C</td>
 <td class="instruction">LD DE,$7CFE</td>
-<td class="comment-11" rowspan="1">DE = &amp;message_queue[2];</td>
+<td class="comment-11" rowspan="1">Queue start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d9f"></span>7D9F</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="4">if (L == E) return; // cheap test -- no more messages?</td>
+<td class="comment-11" rowspan="2">Is the queue pointer at the start of the queue?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -75,19 +75,19 @@ Called when messages.display_index == 128.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da1"></span>7DA1</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da2"></span>7DA2</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da3"></span>7DA3</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *DE++;</td>
+<td class="comment-11" rowspan="2">Get message index from queue</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -96,26 +96,16 @@ Called when messages.display_index == 128.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="7da5"></span>
-<div class="comments">
-<div class="paragraph">
-Bug: C is loaded here but not used. This could be a hangover from 16-bit message IDs.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da5"></span>7DA5</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *DE;</td>
+<td class="comment-11" rowspan="1">Bug: C is loaded here but not used. This could be a hangover from 16-bit message IDs</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da6"></span>7DA6</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="9">HL = messages_table[A];</td>
+<td class="comment-11" rowspan="10">Set current message character pointer to messages_table[A]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -169,23 +159,13 @@ Bug: C is loaded here but not used. This could be a hangover from 16-bit message
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7db2"></span>7DB2</td>
 <td class="instruction">LD ($7D13),HL</td>
-<td class="comment-11" rowspan="1">current_message_character = HL;</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="7db5"></span>
-<div class="comments">
-<div class="paragraph">
-Discard the first element.
-</div>
-</div>
-</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7db5"></span>7DB5</td>
 <td class="instruction">LD DE,$7CFC</td>
-<td class="comment-11" rowspan="4">memmove(message_queue, message_queue + 2, 16);</td>
+<td class="comment-11" rowspan="4">Shunt the whole queue back by two bytes discarding the first element</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -209,7 +189,7 @@ Discard the first element.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc0"></span>7DC0</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment-11" rowspan="4">message_queue_pointer -= 2;</td>
+<td class="comment-11" rowspan="4">Move the message queue pointer back</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -233,7 +213,7 @@ Discard the first element.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc8"></span>7DC8</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">message_display_index = 0;</td>
+<td class="comment-11" rowspan="2">Zero the message display index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -245,7 +225,7 @@ Discard the first element.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dcc"></span>7DCC</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

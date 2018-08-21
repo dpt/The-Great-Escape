@@ -36,11 +36,11 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Character.</td>
+<td class="register-desc">Route index.</td>
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to location.</td>
+<td class="register-desc">Pointer to route.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -55,25 +55,25 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="asm-label-1">character_sleeps</td>
 <td class="address-2"><span id="a444"></span>A444</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a445"></span>A445</td>
 <td class="instruction">SUB $07</td>
-<td class="comment-11" rowspan="2">A -= 7;</td>
+<td class="comment-11" rowspan="1">Route indices 7..12 map to beds array indices 0..5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a447"></span>A447</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Turn index into an offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a448"></span>A448</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move the route pointer into <span class="register">DE</span> for the common part later</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -89,7 +89,7 @@ Poke object.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a449"></span>A449</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="7">BC = beds[A];</td>
+<td class="comment-11" rowspan="7">Fetch the bed object pointer from beds array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -131,7 +131,7 @@ Poke object.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a453"></span>A453</td>
 <td class="instruction">LD A,$17</td>
-<td class="comment-11" rowspan="2">*BC = interiorobject_OCCUPIED_BED;</td>
+<td class="comment-11" rowspan="2">Write interiorobject_OCCUPIED_BED to the bed object</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -143,37 +143,37 @@ Poke object.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a456"></span>A456</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a457"></span>A457</td>
 <td class="instruction">CP $0A</td>
-<td class="comment-11" rowspan="2">if (A &lt; character_10_GUARD_10)</td>
+<td class="comment-11" rowspan="1">Is the route index greater than or equal to routeindex_10_PRISONER_SLEEPS_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a459"></span>A459</td>
 <td class="instruction">JP NC,<a href="A444.html#a460">character_sleeps_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a45c"></span>A45C</td>
 <td class="instruction">LD C,$03</td>
-<td class="comment-11" rowspan="1">C = room_3_hut2_right;</td>
+<td class="comment-11" rowspan="2">Otherwise room is room_3_HUT2RIGHT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a45e"></span>A45E</td>
 <td class="instruction">JR <a href="A462.html">character_sit_sleep_common</a></td>
-<td class="comment-11" rowspan="1">else</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">character_sleeps_0</td>
 <td class="address-2"><span id="a460"></span>A460</td>
 <td class="instruction">LD C,$05</td>
-<td class="comment-11" rowspan="1">C = room_5_hut3_right;</td>
+<td class="comment-11" rowspan="1">Room is room_5_HUT3RIGHT</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">

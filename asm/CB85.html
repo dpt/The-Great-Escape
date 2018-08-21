@@ -27,6 +27,9 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
+This returns the bottom nibbles of the bytes from $9000..$90FF in sequence, acting as a cheap pseudo-random number generator.
+</div>
+<div class="paragraph">
 Used by the routine at <a href="C651.html">get_target</a>.
 </div>
 </div>
@@ -44,6 +47,10 @@ Used by the routine at <a href="C651.html">get_target</a>.
 <td class="register">A</td>
 <td class="register-desc">Pseudo-random number from 0..15.</td>
 </tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Preserved.</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -51,59 +58,49 @@ Used by the routine at <a href="C651.html">get_target</a>.
 <td class="asm-label-1">random_nibble</td>
 <td class="address-2"><span id="cb85"></span>CB85</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb86"></span>CB86</td>
 <td class="instruction">LD HL,($C41A)</td>
-<td class="comment-11" rowspan="2">HL = prng_pointer + 1;</td>
+<td class="comment-11" rowspan="1">Point at the prng_pointer (initialised on load to $9000)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb89"></span>CB89</td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="cb8a"></span>
-<div class="comments">
-<div class="paragraph">
-sampled HL=$902E,$902F,$9030,$9031,$9032,$9033,$9034,$9035,... looks like it's fetching exterior tiles
-</div>
-</div>
-</td>
+<td class="comment-11" rowspan="1">Increment its bottom byte, wrapping at $90FF</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb8a"></span>CB8A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL &amp; 0x0F;</td>
+<td class="comment-11" rowspan="1">Fetch a byte from the pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb8b"></span>CB8B</td>
 <td class="instruction">AND $0F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Mask off the bottom nibble</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb8d"></span>CB8D</td>
 <td class="instruction">LD ($C41A),HL</td>
-<td class="comment-11" rowspan="1">prng_pointer = HL;</td>
+<td class="comment-11" rowspan="1">Save the incremented prng_pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb90"></span>CB90</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb91"></span>CB91</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

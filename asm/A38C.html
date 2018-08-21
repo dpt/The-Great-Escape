@@ -50,11 +50,14 @@ Finds a charstruct, or a vischar, and stores a route.
 <td class="register-desc">Route step.</td>
 </tr>
 </table>
-<table class="output-0">
+<table class="output-1">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Preserved.</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -62,25 +65,25 @@ Finds a charstruct, or a vischar, and stores a route.
 <td class="asm-label-1">set_character_route</td>
 <td class="address-2"><span id="a38c"></span>A38C</td>
 <td class="instruction">CALL <a href="C7B9.html">get_character_struct</a></td>
-<td class="comment-11" rowspan="1">HL = get_character_struct(A);</td>
+<td class="comment-11" rowspan="1">Get a pointer to the character struct in <span class="register">HL</span> for character index <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a38f"></span>A38F</td>
 <td class="instruction">BIT 6,(HL)</td>
-<td class="comment-11" rowspan="2">if ((*HL &amp; characterstruct_FLAG_DISABLED) == 0) goto not_set; // disabled?</td>
+<td class="comment-11" rowspan="1">Is the character on-screen? characterstruct_FLAG_ON_SCREEN</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a391"></span>A391</td>
-<td class="instruction">JP Z,<a href="A38C.html#a3aa">set_character_route_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP Z,<a href="A38C.html#a3aa">set_character_struct_route</a></td>
+<td class="comment-11" rowspan="1">It's not - jump to characterstruct setting code</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label-1">set_vischar_route</td>
 <td class="address-1"><span id="a394"></span>A394</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save route step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -108,67 +111,77 @@ Search non-player characters to see if this character is already on-screen.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a398"></span>A398</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
+<td class="comment-11" rowspan="1">There are seven non-player vischars</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a39a"></span>A39A</td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment-11" rowspan="1">DE = 32; // stride</td>
+<td class="comment-11" rowspan="1">Prepare the vischar stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a39d"></span>A39D</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second visible character</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a3a0"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">set_character_route_0</td>
 <td class="address-2"><span id="a3a0"></span>A3A0</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% if (A == *HL) goto found;</td>
+<td class="comment-11" rowspan="1">Is this the character we want?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a1"></span>A3A1</td>
-<td class="instruction">JR Z,<a href="A38C.html#a3b3">set_character_route_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="A38C.html#a3b3">set_character_route_vischar_found</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a3"></span>A3A3</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-11" rowspan="1">Advance the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a4"></span>A3A4</td>
 <td class="instruction">DJNZ <a href="A38C.html#a3a0">set_character_route_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a6"></span>A3A6</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a7"></span>A3A7</td>
-<td class="instruction">JR <a href="A38C.html#a3b2">set_character_route_2</a></td>
-<td class="comment-11" rowspan="1">goto exit;</td>
+<td class="instruction">JR <a href="A38C.html#a3b2">set_character_route_exit</a></td>
+<td class="comment-11" rowspan="1">Jump to exit (note: why not just RET here?)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3a9"></span>A3A9</td>
 <td class="instruction">DEFB $19</td>
-<td class="comment-11" rowspan="1">Unreferenced byte.</td>
+<td class="comment-11" rowspan="1">Unreferenced byte</td>
 </tr>
 <tr>
-<td class="asm-label-1">set_character_route_1</td>
+<td class="asm-label-1">set_character_struct_route</td>
 <td class="address-2"><span id="a3aa"></span>A3AA</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="5">not_set: HL += 5; // HL = charstruct-&gt;route</td>
+<td class="comment-11" rowspan="5">Advance <span class="register">HL</span> to point to the characterstruct's route</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -198,31 +211,31 @@ Search non-player characters to see if this character is already on-screen.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3af"></span>A3AF</td>
 <td class="instruction">CALL <a href="A3ED.html">store_route</a></td>
-<td class="comment-11" rowspan="1">store_route();</td>
+<td class="comment-11" rowspan="1">Store the route at <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1">set_character_route_2</td>
+<td class="asm-label-1">set_character_route_exit</td>
 <td class="address-2"><span id="a3b2"></span>A3B2</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">exit: return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">set_character_route_3</td>
+<td class="asm-label-1">set_character_route_vischar_found</td>
 <td class="address-2"><span id="a3b3"></span>A3B3</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">found:</td>
+<td class="comment-11" rowspan="1">Restore route step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3b4"></span>A3B4</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="3">Reset vischar_FLAGS_TARGET_IS_DOOR flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3b5"></span>A3B5</td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="comment-11" rowspan="2">*HL++ &amp;= ~vischar_FLAGS_TARGET_IS_DOOR;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -234,7 +247,7 @@ Search non-player characters to see if this character is already on-screen.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3b8"></span>A3B8</td>
 <td class="instruction">CALL <a href="A3ED.html">store_route</a></td>
-<td class="comment-11" rowspan="1">store_route(); // HL = vischar-&gt;route</td>
+<td class="comment-11" rowspan="1">Store the route at <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">

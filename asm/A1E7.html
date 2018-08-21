@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A1F0.html">A1F0</a></span></td>
 </tr>
 </table>
-<div class="description">A1E7: Event: wake up.</div>
+<div class="description">A1E7: Event: Wake up.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -46,13 +46,13 @@
 <td class="asm-label-1">event_wake_up</td>
 <td class="address-2"><span id="a1e7"></span>A1E7</td>
 <td class="instruction">LD (BC),A</td>
-<td class="comment-11" rowspan="1">*BC = A; // bell = bell_RING_40_TIMES;</td>
+<td class="comment-11" rowspan="1">Ring the bell 40 times as passed in</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1e8"></span>A1E8</td>
 <td class="instruction">LD B,$01</td>
-<td class="comment-11" rowspan="2">queue_message(message_TIME_TO_WAKE_UP);</td>
+<td class="comment-11" rowspan="2">Queue the message "TIME TO WAKE UP"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -64,7 +64,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1ed"></span>A1ED</td>
 <td class="instruction">JP <a href="A289.html">wake_up</a></td>
-<td class="comment-11" rowspan="1">wake_up(); return; // exit via</td>
+<td class="comment-11" rowspan="1">Exit via wake_up</td>
 </tr>
 </table>
 <table class="asm-navigation">

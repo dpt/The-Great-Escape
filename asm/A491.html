@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A4A9.html">A4A9</a></span></td>
 </tr>
 </table>
-<div class="description">A491: Common end of hero_sits/sleeps.</div>
+<div class="description">A491: Common end of hero sits/sleeps.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,7 +36,7 @@ Used by the routine at <a href="A47F.html">hero_sits</a>.
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to hero_in_breakfast or hero_in_bed.</td>
+<td class="register-desc">Pointer to hero_in_breakfast or hero_in_bed flag.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -51,19 +51,19 @@ Used by the routine at <a href="A47F.html">hero_sits</a>.
 <td class="asm-label-1">hero_sit_sleep_common</td>
 <td class="address-2"><span id="a491"></span>A491</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment-11" rowspan="1">*HL = 0xFF; // set in breakfast, or in bed</td>
+<td class="comment-11" rowspan="1">Set the sit/sleep flag, whichever it was</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a493"></span>A493</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="3">Stand still - set the hero's route to route_HALT ($00)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a494"></span>A494</td>
 <td class="instruction">LD HL,$8002</td>
-<td class="comment-11" rowspan="2">$8002 = A; // zero route index only</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -76,7 +76,7 @@ Used by the routine at <a href="A47F.html">hero_sits</a>.
 <span id="a498"></span>
 <div class="comments">
 <div class="paragraph">
-Set hero's position to zero.
+Set hero position (x,y) to zero.
 </div>
 </div>
 </td>
@@ -85,7 +85,7 @@ Set hero's position to zero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a498"></span>A498</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment-11" rowspan="5">memset($800F, 0, 4);</td>
+<td class="comment-11" rowspan="5">Zero $800F..$8012</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -115,19 +115,19 @@ Set hero's position to zero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a1"></span>A4A1</td>
 <td class="instruction">LD HL,$8000</td>
-<td class="comment-11" rowspan="1">HL = $8000;</td>
+<td class="comment-11" rowspan="2">Reset the hero's screen position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a4"></span>A4A4</td>
-<td class="instruction">CALL <a href="B71B.html">calc_vischar_screenpos_from_mi_pos</a></td>
-<td class="comment-11" rowspan="1">calc_vischar_screenpos_from_mi_pos(); // reset hero</td>
+<td class="instruction">CALL <a href="B71B.html">calc_vischar_iso_pos_from_vischar</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a7"></span>A4A7</td>
 <td class="instruction">JR <a href="A479.html">select_room_and_plot</a></td>
-<td class="comment-11" rowspan="1">goto select_room_and_plot;</td>
+<td class="comment-11" rowspan="1">Exit via select_room_and_plot</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A263.html">A263</a></span></td>
 </tr>
 </table>
-<div class="description">A228: Event: new red cross parcel.</div>
+<div class="description">A228: Event: New red cross parcel.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -56,25 +56,25 @@ Don't deliver a new red cross parcel while the previous one still exists.
 <td class="asm-label-1">event_new_red_cross_parcel</td>
 <td class="address-2"><span id="a228"></span>A228</td>
 <td class="instruction">LD A,($771D)</td>
-<td class="comment-11" rowspan="4">if ((item_structs[item_RED_CROSS_PARCEL].room &amp; itemstruct_ROOM_MASK) != itemstruct_ROOM_MASK) return;</td>
+<td class="comment-11" rowspan="1">Fetch the red cross parcel's room (and flags)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a22b"></span>A22B</td>
 <td class="instruction">AND $3F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Mask off the room part</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a22d"></span>A22D</td>
 <td class="instruction">CP $3F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it $3F? (i.e. room_NONE ($FF) masked)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a22f"></span>A22F</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -90,37 +90,47 @@ Select the contents of the next parcel; choosing the first item from the list wh
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a230"></span>A230</td>
 <td class="instruction">LD DE,$A25F</td>
-<td class="comment-11" rowspan="1">DE = &amp;red_cross_parcel_contents_list[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the red cross parcel contents list</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a233"></span>A233</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">B = 4; // length of above</td>
+<td class="comment-11" rowspan="1">There are four entries in the list</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a235"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">event_new_red_cross_parcel_0</td>
 <td class="address-2"><span id="a235"></span>A235</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">do &lt;% A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch item number</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a236"></span>A236</td>
 <td class="instruction">CALL <a href="7C26.html">item_to_itemstruct</a></td>
-<td class="comment-11" rowspan="1">HL = item_to_itemstruct(A);</td>
+<td class="comment-11" rowspan="1">Turn it into an itemstruct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a239"></span>A239</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="3">Get its room and mask it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a23a"></span>A23A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="4">if ((*HL &amp; itemstruct_ROOM_MASK) == itemstruct_ROOM_MASK) goto found;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -132,37 +142,37 @@ Select the contents of the next parcel; choosing the first item from the list wh
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a23d"></span>A23D</td>
 <td class="instruction">CP $3F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it $3F? (i.e. room_NONE ($FF) masked)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a23f"></span>A23F</td>
-<td class="instruction">JR Z,<a href="A228.html#a245">event_new_red_cross_parcel_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="A228.html#a245">parcel_found</a></td>
+<td class="comment-11" rowspan="1">Jump to parcel_found if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a241"></span>A241</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a242"></span>A242</td>
 <td class="instruction">DJNZ <a href="A228.html#a235">event_new_red_cross_parcel_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop while (...)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a244"></span>A244</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return - a parcel could not be spawned</td>
 </tr>
 <tr>
-<td class="asm-label-1">event_new_red_cross_parcel_1</td>
+<td class="asm-label-1">parcel_found</td>
 <td class="address-2"><span id="a245"></span>A245</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">found: red_cross_parcel_current_contents = *DE;</td>
+<td class="comment-11" rowspan="2">Set red_cross_parcel_current_contents to the item number</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -174,7 +184,7 @@ Select the contents of the next parcel; choosing the first item from the list wh
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a249"></span>A249</td>
 <td class="instruction">LD DE,$771D</td>
-<td class="comment-11" rowspan="4">memcpy(&amp;item_structs[item_RED_CROSS_PARCEL].room, red_cross_parcel_reset_data, 6);</td>
+<td class="comment-11" rowspan="4">Copy the red cross parcel reset data over the red cross parcel item struct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -198,7 +208,7 @@ Select the contents of the next parcel; choosing the first item from the list wh
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a254"></span>A254</td>
 <td class="instruction">LD B,$09</td>
-<td class="comment-11" rowspan="2">queue_message(message_RED_CROSS_PARCEL); return; // exit via</td>
+<td class="comment-11" rowspan="2">Queue the message "RED CROSS PARCEL" and exit via</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -211,7 +221,7 @@ Select the contents of the next parcel; choosing the first item from the list wh
 <span id="a259"></span>
 <div class="comments">
 <div class="paragraph">
-Red cross parcel reset data (room, tinypos, coord).
+Red cross parcel reset data.
 </div>
 </div>
 </td>
@@ -220,19 +230,19 @@ Red cross parcel reset data (room, tinypos, coord).
 <td class="asm-label-1">red_cross_parcel_reset_data</td>
 <td class="address-1"><span id="a259"></span>A259</td>
 <td class="instruction">DEFB $14</td>
-<td class="comment-11" rowspan="1">room_20_REDCROSS</td>
+<td class="comment-11" rowspan="1">Room: room_20_REDCROSS</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a25a"></span>A25A</td>
 <td class="instruction">DEFB $2C,$2C,$0C</td>
-<td class="comment-11" rowspan="1">44,44,12</td>
+<td class="comment-11" rowspan="1">TinyPos: (44, 44, 12)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a25d"></span>A25D</td>
 <td class="instruction">DEFB $80,$F4</td>
-<td class="comment-11" rowspan="1">128,244</td>
+<td class="comment-11" rowspan="1">Coord: (128, 244)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">

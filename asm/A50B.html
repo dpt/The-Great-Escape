@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A51C.html">A51C</a></span></td>
 </tr>
 </table>
-<div class="description">A50B: Screen reset.</div>
+<div class="description">A50B: Reset the screen.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -48,37 +48,37 @@ Used by the routines at <a href="9DE5.html">keyscan_break</a> and <a href="A51C.
 <td class="asm-label-1">screen_reset</td>
 <td class="address-2"><span id="a50b"></span>A50B</td>
 <td class="instruction">CALL <a href="6A27.html">wipe_visible_tiles</a></td>
-<td class="comment-11" rowspan="1">wipe_visible_tiles();</td>
+<td class="comment-11" rowspan="1">Wipe the visible tiles array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a50e"></span>A50E</td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_interior_tiles();</td>
+<td class="comment-11" rowspan="1">Expand tile buffer into screen buffer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a511"></span>A511</td>
 <td class="instruction">CALL <a href="ABA0.html">zoombox</a></td>
-<td class="comment-11" rowspan="1">zoombox();</td>
+<td class="comment-11" rowspan="1">Zoombox the scene onto the screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a514"></span>A514</td>
 <td class="instruction">CALL <a href="EED3.html">plot_game_window</a></td>
-<td class="comment-11" rowspan="1">plot_game_window();</td>
+<td class="comment-11" rowspan="1">Plot the game screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a517"></span>A517</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-11" rowspan="1">A = attribute_WHITE_OVER_BLACK;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to attribute_WHITE_OVER_BLACK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a519"></span>A519</td>
 <td class="instruction">JP <a href="A15F.html">set_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">set_game_window_attributes(); return; // exit via</td>
+<td class="comment-11" rowspan="1">Set game window attributes (exit via)</td>
 </tr>
 </table>
 <table class="asm-navigation">

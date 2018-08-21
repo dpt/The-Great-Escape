@@ -48,61 +48,71 @@ Used by the routines at <a href="B75A.html">reset_game</a> and <a href="F163.htm
 <td class="asm-label-1">plot_score</td>
 <td class="address-2"><span id="a10b"></span>A10B</td>
 <td class="instruction">LD HL,$A132</td>
-<td class="comment-11" rowspan="1">HL = &amp;score_digits;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first of the score digits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a10e"></span>A10E</td>
 <td class="instruction">LD DE,$5094</td>
-<td class="comment-11" rowspan="1">DE = &amp;score; // screen address of score</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the screen address of the score</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a111"></span>A111</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment-11" rowspan="1">B = 5;</td>
+<td class="comment-11" rowspan="1">Plot five digits</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a113"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_score_0</td>
 <td class="address-2"><span id="a113"></span>A113</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Save BC</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a114"></span>A114</td>
 <td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
-<td class="comment-11" rowspan="1">plot_glyph(); // HL -&gt; glyph, DE -&gt; destination</td>
+<td class="comment-11" rowspan="1">Plot a single glyph pointed to by <span class="register">HL</span> at <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a117"></span>A117</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Move to the next score digit</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a118"></span>A118</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++;</td>
+<td class="comment-11" rowspan="1">Move to the next character position (in addition to plot_glyph's increment)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a119"></span>A119</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore BC</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a11a"></span>A11A</td>
 <td class="instruction">DJNZ <a href="A10B.html#a113">plot_score_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop until all digits plotted</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a11c"></span>A11C</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -30,11 +30,14 @@
 Used by the routine at <a href="7BB5.html">drop_item_tail</a>.
 </div>
 </div>
-<table class="input-0">
+<table class="input-1">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
-
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer to item struct.</td>
+</tr>
 </table>
 <table class="output-0">
 <tr class="asm-output-header">
@@ -48,37 +51,37 @@ Used by the routine at <a href="7BB5.html">drop_item_tail</a>.
 <td class="asm-label-1">drop_item_interior</td>
 <td class="address-2"><span id="7be4"></span>7BE4</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">else &lt;% HL++; // The else is logically here when considered as part of drop_item.</td>
+<td class="comment-11" rowspan="1">Point to itemstruct.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7be5"></span>7BE5</td>
 <td class="instruction">LD DE,$800F</td>
-<td class="comment-11" rowspan="1">DE = $800F; // position on X axis</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the hero's map position.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7be8"></span>7BE8</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="3">*HL++ = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7be9"></span>7BE9</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Store x in itemstruct.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bea"></span>7BEA</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point to itemstruct.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7beb"></span>7BEB</td>
 <td class="instruction">INC E</td>
-<td class="comment-11" rowspan="2">DE += 2; // position on Y axis</td>
+<td class="comment-11" rowspan="2">Point <span class="register">DE</span> at the hero's map position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -90,32 +93,32 @@ Used by the routine at <a href="7BB5.html">drop_item_tail</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bed"></span>7BED</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="3">*HL++ = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bee"></span>7BEE</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Store y in itemstruct.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bef"></span>7BEF</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at itemstruct.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bf0"></span>7BF0</td>
 <td class="instruction">LD (HL),$05</td>
-<td class="comment-11" rowspan="1">*HL = 5;</td>
+<td class="comment-11" rowspan="1">Set height to five</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH into calc_interior_item_screenpos.
+FALL THROUGH into calc_interior_item_iso_pos.
 </div>
 </div>
 </td>

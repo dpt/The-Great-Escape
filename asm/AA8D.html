@@ -48,91 +48,91 @@ Used by the routine at <a href="AAB2.html">move_map</a>.
 <td class="asm-label-1">shunt_map_down_left</td>
 <td class="address-2"><span id="aa8d"></span>AA8D</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">L++;</td>
+<td class="comment-11" rowspan="3">Shunt the map position down (<span class="register">H</span>) and to the left (<span class="register">L</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa8e"></span>AA8E</td>
 <td class="instruction">DEC H</td>
-<td class="comment-11" rowspan="1">H--;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa8f"></span>AA8F</td>
 <td class="instruction">LD ($81BB),HL</td>
-<td class="comment-11" rowspan="1">map_position = HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa92"></span>AA92</td>
 <td class="instruction">CALL <a href="A7C9.html">get_supertiles</a></td>
-<td class="comment-11" rowspan="1">get_supertiles();</td>
+<td class="comment-11" rowspan="1">Update the supertiles in map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa95"></span>AA95</td>
 <td class="instruction">LD HL,$F277</td>
-<td class="comment-11" rowspan="1">HL = &amp;tile_buf[24 * 16 - 1];</td>
+<td class="comment-11" rowspan="4">Shunt the tile_buf down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa98"></span>AA98</td>
 <td class="instruction">LD DE,$F28E</td>
-<td class="comment-11" rowspan="1">DE = &amp;tile_buf[24 * 17 - 2];</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa9b"></span>AA9B</td>
 <td class="instruction">LD BC,$017F</td>
-<td class="comment-11" rowspan="1">BC = tile_buf_length - 24 - 1;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa9e"></span>AA9E</td>
 <td class="instruction">LDDR</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aaa0"></span>AAA0</td>
 <td class="instruction">LD HL,$FE8F</td>
-<td class="comment-11" rowspan="1">HL = &amp;window_buf[24 * 16 * 8 - 1];</td>
+<td class="comment-11" rowspan="4">Shunt the window_buf down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aaa3"></span>AAA3</td>
 <td class="instruction">LD DE,$FF4E</td>
-<td class="comment-11" rowspan="1">DE = &amp;window_buf[24 * 17 * 8 - 2];</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aaa6"></span>AAA6</td>
 <td class="instruction">LD BC,$0BFF</td>
-<td class="comment-11" rowspan="1">BC = window_buf_length - 24 * 8 - 1;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aaa9"></span>AAA9</td>
 <td class="instruction">LDDR</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aaab"></span>AAAB</td>
 <td class="instruction">CALL <a href="A819.html">plot_topmost_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_topmost_tiles();</td>
+<td class="comment-11" rowspan="1">Plot the complete topmost row of tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aaae"></span>AAAE</td>
 <td class="instruction">CALL <a href="A8CF.html">plot_rightmost_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_rightmost_tiles();</td>
+<td class="comment-11" rowspan="1">Plot the complete rightmost column of tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aab1"></span>AAB1</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

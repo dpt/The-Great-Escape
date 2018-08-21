@@ -48,31 +48,41 @@ Used by the routines at <a href="68F4.html">enter_room</a>, <a href="7B36.html">
 <td class="asm-label-1">setup_room</td>
 <td class="address-2"><span id="6a35"></span>6A35</td>
 <td class="instruction">CALL <a href="6A27.html">wipe_visible_tiles</a></td>
-<td class="comment-11" rowspan="1">wipe_visible_tiles();</td>
+<td class="comment-11" rowspan="1">Wipe the visible tiles array</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6a38"></span>
+<div class="comments">
+<div class="paragraph">
+Form the address of rooms_and_tunnels[room_index - 1] in <span class="register">HL</span>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a38"></span>6A38</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="11">HL = rooms_and_tunnels[room_index - 1]; // array starts with room 1</td>
+<td class="comment-11" rowspan="1">Fetch the global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a3b"></span>6A3B</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Double it so we can index rooms_and_tunnels[]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a3c"></span>6A3C</td>
 <td class="instruction">LD HL,$6BAB</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at <a href="6BAD.html">rooms_and_tunnels</a> rooms_and_tunnels[-1]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a3f"></span>6A3F</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4"><span class="register">HL</span> + <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -96,7 +106,7 @@ Used by the routines at <a href="68F4.html">enter_room</a>, <a href="7B36.html">
 <td class="asm-label-1">setup_room_0</td>
 <td class="address-2"><span id="6a44"></span>6A44</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Fetch room pointer in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -120,26 +130,26 @@ Used by the routines at <a href="68F4.html">enter_room</a>, <a href="7B36.html">
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a48"></span>6A48</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Push it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a49"></span>6A49</td>
 <td class="instruction">CALL <a href="69DC.html">setup_doors</a></td>
-<td class="comment-11" rowspan="1">setup_doors();</td>
+<td class="comment-11" rowspan="1">Setup interior doors</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a4c"></span>6A4C</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Pop it</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="6a4d"></span>
 <div class="comments">
 <div class="paragraph">
-Copy boundaries into state.
+Copy the count of boundaries into state.
 </div>
 </div>
 </td>
@@ -148,55 +158,68 @@ Copy boundaries into state.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a4d"></span>6A4D</td>
 <td class="instruction">LD DE,$81BE</td>
-<td class="comment-11" rowspan="1">DE = &amp;roomdef_bounds_index; // room dimensions index</td>
+<td class="comment-11" rowspan="1">Point DE at <a href="81BE.html">roomdef_bounds_index</a> roomdef_bounds_index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a50"></span>6A50</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-11" rowspan="1">Copy first byte of roomdef into roomdef_bounds_index. (DE, HL incremented).</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6a52"></span>
+<div class="comments">
+<div class="paragraph">
+DE now points to <a href="81BF.html">roomdef_object_bounds_count</a>
+</div>
+<div class="paragraph">
+Copy all boundary structures into state, if any.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a52"></span>6A52</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch count of boundaries</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a53"></span>6A53</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a54"></span>6A54</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE = A;</td>
+<td class="comment-11" rowspan="1">Store it irrespectively.</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a55"></span>6A55</td>
 <td class="instruction">JR NZ,<a href="6A35.html#6a5a">setup_room_1</a></td>
-<td class="comment-11" rowspan="1">if (A == 0) &lt;% // no boundaries</td>
+<td class="comment-11" rowspan="1">No, jump to copying step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a57"></span>6A57</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; %&gt; // skip to interior mask</td>
+<td class="comment-11" rowspan="1">Skip roomdef count of boundaries</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a58"></span>6A58</td>
 <td class="instruction">JR <a href="6A35.html#6a62">setup_room_2</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="comment-11" rowspan="1">Jump to mask copying</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_room_1</td>
 <td class="address-2"><span id="6a5a"></span>6A5A</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="6">memcpy(DE, HL, A * 4 + 1); HL += A * 4 + 1; %&gt; // skip to interior mask</td>
+<td class="comment-11" rowspan="3">Multiply <span class="register">A</span> by four (size of boundary structures) then add one (skip current counter) == size of boundary structures</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -214,7 +237,7 @@ Copy boundaries into state.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a5d"></span>6A5D</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Copy all boundary structures</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -242,55 +265,68 @@ Copy interior mask into interior_mask_data.
 <td class="asm-label-1">setup_room_2</td>
 <td class="address-2"><span id="6a62"></span>6A62</td>
 <td class="instruction">LD DE,$81DA</td>
-<td class="comment-11" rowspan="1">DE = &amp;interior_mask_data;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at interior_mask_data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a65"></span>6A65</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL++; // sampled HL=$6E22,$6EF8,$6F38 // count of interior masks</td>
+<td class="comment-11" rowspan="1">Get count of interior masks</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a66"></span>6A66</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a67"></span>6A67</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE = A;</td>
+<td class="comment-11" rowspan="1">Write it out</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a68"></span>6A68</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is the count non-zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a69"></span>6A69</td>
 <td class="instruction">JR Z,<a href="6A35.html#6a8c">setup_room_4</a></td>
-<td class="comment-11" rowspan="1">if (A) &lt;%</td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a6b"></span>6A6B</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++;</td>
+<td class="comment-11" rowspan="1">Skip over the written count</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a6c"></span>6A6C</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-11" rowspan="1">B = A;</td>
+<td class="comment-11" rowspan="1"><span class="register">B</span> is our loop counter</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6a6d"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+<div class="paragraph">
+interior_mask_data holds indices into interior_mask_data_source[].
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_room_3</td>
 <td class="address-2"><span id="6a6d"></span>6A6D</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -302,7 +338,7 @@ Copy interior mask into interior_mask_data.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a6f"></span>6A6F</td>
 <td class="instruction">LD L,(HL)</td>
-<td class="comment-11" rowspan="13">memcpy(DE, &amp;interior_mask_data_source[*HL++], 7); DE += 7;</td>
+<td class="comment-11" rowspan="2">Fetch an index (from roomdef?)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -314,7 +350,7 @@ Copy interior mask into interior_mask_data.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a72"></span>6A72</td>
 <td class="instruction">LD B,H</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2"><span class="register">BC</span> = <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -326,7 +362,7 @@ Copy interior mask into interior_mask_data.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a74"></span>6A74</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Multiply it by eight</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -344,43 +380,43 @@ Copy interior mask into interior_mask_data.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a77"></span>6A77</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a78"></span>6A78</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Final offset is index * 7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a7a"></span>6A7A</td>
 <td class="instruction">LD BC,$EA7C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point at interior_mask_data_source</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a7d"></span>6A7D</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Form the address of the mask data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a7e"></span>6A7E</td>
 <td class="instruction">LD BC,$0007</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Width of mask data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a81"></span>6A81</td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Copy it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a83"></span>6A83</td>
 <td class="instruction">LD A,$20</td>
-<td class="comment-11" rowspan="3">*DE++ = 32;</td>
+<td class="comment-11" rowspan="3">Constant final byte is always 32</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -410,13 +446,13 @@ Copy interior mask into interior_mask_data.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a89"></span>6A89</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">- %&gt;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8a"></span>6A8A</td>
 <td class="instruction">DJNZ <a href="6A35.html#6a6d">setup_room_3</a></td>
-<td class="comment-11" rowspan="1">while (--B); %&gt;</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -432,61 +468,71 @@ Plot all objects (as tiles).
 <td class="asm-label-1">setup_room_4</td>
 <td class="address-2"><span id="6a8c"></span>6A8C</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-11" rowspan="1">B = *HL; // count of objects // sample: HL -&gt; $6E25 (room_16_CORRIDOR + 5)</td>
+<td class="comment-11" rowspan="1">Count of objects</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8d"></span>6A8D</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="3">if (B == 0) return;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8e"></span>6A8E</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8f"></span>6A8F</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a90"></span>6A90</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Skip the count</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6a91"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop: for every object in the roomdef
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_room_5</td>
 <td class="address-2"><span id="6a91"></span>6A91</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a92"></span>6A92</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="2">C = *HL++; // object index</td>
+<td class="comment-11" rowspan="1">Fetch the object index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a93"></span>6A93</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a94"></span>6A94</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++; // column</td>
+<td class="comment-11" rowspan="1">Fetch the column</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a95"></span>6A95</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -498,13 +544,23 @@ Plot all objects (as tiles).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a97"></span>6A97</td>
 <td class="instruction">LD L,(HL)</td>
-<td class="comment-11" rowspan="16">DE = $F0F8 + *HL * 24 + A; // $F0F8 = visible tiles array (so *HL = row, A = column)</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6a98"></span>
+<div class="comments">
+<div class="paragraph">
+Plot the object into the visible tiles array
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a98"></span>6A98</td>
 <td class="instruction">LD H,$00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="15"><span class="register">DE</span> = $F0F8 + row * 24 + column.</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -594,13 +650,13 @@ Plot all objects (as tiles).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aab"></span>6AAB</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">expand_object(C); // pass C as A</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aac"></span>6AAC</td>
 <td class="instruction">CALL <a href="6AB5.html">expand_object</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Expand RLE-encoded object out to a set of tile references</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -618,19 +674,19 @@ Plot all objects (as tiles).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab1"></span>6AB1</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; %&gt;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab2"></span>6AB2</td>
 <td class="instruction">DJNZ <a href="6A35.html#6a91">setup_room_5</a></td>
-<td class="comment-11" rowspan="1">while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab4"></span>6AB4</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

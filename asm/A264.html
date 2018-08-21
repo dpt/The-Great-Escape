@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A26A.html">A26A</a></span></td>
 </tr>
 </table>
-<div class="description">A264: Event: time for bed.</div>
+<div class="description">A264: Event: Time for bed.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -46,19 +46,19 @@
 <td class="asm-label-1">event_time_for_bed</td>
 <td class="address-2"><span id="a264"></span>A264</td>
 <td class="instruction">LD A,$A6</td>
-<td class="comment-11" rowspan="1">A = 0xA6;</td>
+<td class="comment-11" rowspan="2">Set route to (REVERSED routeindex_38_GUARD_12_BED, 3)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a266"></span>A266</td>
 <td class="instruction">LD C,$03</td>
-<td class="comment-11" rowspan="1">C = 3;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a268"></span>A268</td>
-<td class="instruction">JR <a href="A26A.html#a26e">event_search_light_0</a></td>
-<td class="comment-11" rowspan="1">goto $A26E;</td>
+<td class="instruction">JR <a href="A26A.html#a26e">set_guards_route</a></td>
+<td class="comment-11" rowspan="1">Jump to $A26E</td>
 </tr>
 </table>
 <table class="asm-navigation">

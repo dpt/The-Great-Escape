@@ -48,121 +48,121 @@ Used by the routine at <a href="691A.html">squash_stack_goto_main</a>.
 <td class="asm-label-1">main_loop</td>
 <td class="address-2"><span id="9d7b"></span>9D7B</td>
 <td class="instruction">CALL <a href="9DCF.html">check_morale</a></td>
-<td class="comment-11" rowspan="1">main_loop: for (;;) &lt;% check_morale();</td>
+<td class="comment-11" rowspan="1">Check morale level, report if (near) zero and inhibit player control if exhausted</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d7e"></span>9D7E</td>
 <td class="instruction">CALL <a href="9DE5.html">keyscan_break</a></td>
-<td class="comment-11" rowspan="1">keyscan_break();</td>
+<td class="comment-11" rowspan="1">Check for a BREAK keypress</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d81"></span>9D81</td>
 <td class="instruction">CALL <a href="7D48.html">message_display</a></td>
-<td class="comment-11" rowspan="1">message_display();</td>
+<td class="comment-11" rowspan="1">Incrementally wipe and display queued game messages</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d84"></span>9D84</td>
 <td class="instruction">CALL <a href="9E07.html">process_player_input</a></td>
-<td class="comment-11" rowspan="1">process_player_input();</td>
+<td class="comment-11" rowspan="1">Process player input</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d87"></span>9D87</td>
 <td class="instruction">CALL <a href="9F21.html">in_permitted_area</a></td>
-<td class="comment-11" rowspan="1">in_permitted_area();</td>
+<td class="comment-11" rowspan="1">Check the hero's map position and colour the flag accordingly</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d8a"></span>9D8A</td>
 <td class="instruction">CALL <a href="BB98.html">restore_tiles</a></td>
-<td class="comment-11" rowspan="1">restore_tiles();</td>
+<td class="comment-11" rowspan="1">Paint any tiles occupied by visible characters with tiles from tile_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d8d"></span>9D8D</td>
 <td class="instruction">CALL <a href="C6A0.html">move_characters</a></td>
-<td class="comment-11" rowspan="1">move_characters();</td>
+<td class="comment-11" rowspan="1">Move characters around</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d90"></span>9D90</td>
 <td class="instruction">CALL <a href="C892.html">automatics</a></td>
-<td class="comment-11" rowspan="1">automatics();</td>
+<td class="comment-11" rowspan="1">Make characters follow the hero if he's being suspicious</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d93"></span>9D93</td>
 <td class="instruction">CALL <a href="C47E.html">purge_invisible_characters</a></td>
-<td class="comment-11" rowspan="1">purge_invisible_characters();</td>
+<td class="comment-11" rowspan="1">Run through all visible characters, resetting them if they're off-screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d96"></span>9D96</td>
 <td class="instruction">CALL <a href="C41C.html">spawn_characters</a></td>
-<td class="comment-11" rowspan="1">spawn_characters();</td>
+<td class="comment-11" rowspan="1">Spawn characters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d99"></span>9D99</td>
 <td class="instruction">CALL <a href="DB9E.html">mark_nearby_items</a></td>
-<td class="comment-11" rowspan="1">mark_nearby_items();</td>
+<td class="comment-11" rowspan="1">Mark nearby items</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d9c"></span>9D9C</td>
 <td class="instruction">CALL <a href="A09E.html">ring_bell</a></td>
-<td class="comment-11" rowspan="1">ring_bell();</td>
+<td class="comment-11" rowspan="1">Ring the alarm bell (1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9d9f"></span>9D9F</td>
-<td class="instruction">CALL <a href="B5CE.html">called_from_main_loop_9</a></td>
-<td class="comment-11" rowspan="1">called_from_main_loop_9();</td>
+<td class="instruction">CALL <a href="B5CE.html">animate</a></td>
+<td class="comment-11" rowspan="1">Animate all visible characters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9da2"></span>9DA2</td>
 <td class="instruction">CALL <a href="AAB2.html">move_map</a></td>
-<td class="comment-11" rowspan="1">move_map();</td>
+<td class="comment-11" rowspan="1">Move the map when the hero walks</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9da5"></span>9DA5</td>
 <td class="instruction">CALL <a href="7D48.html">message_display</a></td>
-<td class="comment-11" rowspan="1">message_display();</td>
+<td class="comment-11" rowspan="1">Incrementally wipe and display queued game messages</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9da8"></span>9DA8</td>
 <td class="instruction">CALL <a href="A09E.html">ring_bell</a></td>
-<td class="comment-11" rowspan="1">ring_bell();</td>
+<td class="comment-11" rowspan="1">Ring the alarm bell (2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dab"></span>9DAB</td>
 <td class="instruction">CALL <a href="B866.html">plot_sprites</a></td>
-<td class="comment-11" rowspan="1">plot_sprites();</td>
+<td class="comment-11" rowspan="1">Plot vischars and items in order</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dae"></span>9DAE</td>
 <td class="instruction">CALL <a href="EED3.html">plot_game_window</a></td>
-<td class="comment-11" rowspan="1">plot_game_window();</td>
+<td class="comment-11" rowspan="1">Plot the game screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9db1"></span>9DB1</td>
 <td class="instruction">CALL <a href="A09E.html">ring_bell</a></td>
-<td class="comment-11" rowspan="1">ring_bell();</td>
+<td class="comment-11" rowspan="1">Ring the alarm bell (3)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9db4"></span>9DB4</td>
 <td class="instruction">LD A,($A146)</td>
-<td class="comment-11" rowspan="3">if (day_or_night != 0) nighttime();</td>
+<td class="comment-11" rowspan="3">If the night-time flag is set, turns white screen elements light blue and tracks the hero with a searchlight</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -180,7 +180,7 @@ Used by the routine at <a href="691A.html">squash_stack_goto_main</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dbb"></span>9DBB</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index != 0) interior_delay_loop();</td>
+<td class="comment-11" rowspan="3">If the global current room index is non-zero then slow the game down with a delay loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -198,13 +198,13 @@ Used by the routine at <a href="691A.html">squash_stack_goto_main</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dc2"></span>9DC2</td>
 <td class="instruction">CALL <a href="A035.html">wave_morale_flag</a></td>
-<td class="comment-11" rowspan="1">wave_morale_flag();</td>
+<td class="comment-11" rowspan="1">Wave the morale flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dc5"></span>9DC5</td>
 <td class="instruction">LD A,($A12F)</td>
-<td class="comment-11" rowspan="3">if ((game_counter &amp; 63) == 0) dispatch_timed_event();</td>
+<td class="comment-11" rowspan="3">Dispatch a timed event event once every 64 ticks of the game counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -222,7 +222,7 @@ Used by the routine at <a href="691A.html">squash_stack_goto_main</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dcd"></span>9DCD</td>
 <td class="instruction">JR <a href="9D7B.html#9d7b">main_loop</a></td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">...loop forever</td>
 </tr>
 </table>
 <table class="asm-navigation">

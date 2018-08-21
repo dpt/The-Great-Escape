@@ -16,12 +16,12 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7CFC.html">7CFC</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7D13.html">7D13</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#7d15">Map</a></td>
 <td class="next"><span class="next-1">Next: <a href="7D2F.html">7D2F</a></span></td>
 </tr>
 </table>
-<div class="description">7D15: Add a message to the pending messages queue.</div>
+<div class="description">7D15: Add a new message index to the pending messages queue.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -30,7 +30,7 @@
 Used by the routines at <a href="9DCF.html">check_morale</a>, <a href="9E98.html">picking_lock</a>, <a href="A1D3.html">event_another_day_dawns</a>, <a href="A1E7.html">event_wake_up</a>, <a href="A1F0.html">event_go_to_roll_call</a>, <a href="A1F9.html">event_go_to_breakfast_time</a>, <a href="A206.html">event_go_to_exercise_time</a>, <a href="A219.html">event_go_to_time_for_bed</a>, <a href="A228.html">event_new_red_cross_parcel</a>, <a href="B107.html">accept_bribe</a>, <a href="B1D4.html">is_door_locked</a>, <a href="B387.html">action_red_cross_parcel</a>, <a href="B417.html">action_wiresnips</a>, <a href="B495.html">action_lockpick</a>, <a href="B4B8.html">action_key</a>, <a href="CB98.html">solitary</a>, <a href="CD31.html">item_discovered</a> and <a href="EF9A.html">event_roll_call</a>.
 </div>
 <div class="paragraph">
-The use of C here is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but others do not and we receive whatever was in C previously.
+The use of <span class="register">C</span> on entry to this routine is puzzling. One routine (<a href="9DCF.html">check_morale</a>) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in <span class="register">C</span> previously.
 </div>
 </div>
 <table class="input-1">
@@ -39,11 +39,11 @@ The use of C here is puzzling. One routine (check_morale) explicitly sets it to 
 </tr>
 <tr>
 <td class="register">B</td>
-<td class="register-desc">message_* index.</td>
+<td class="register-desc">Message index.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc">Possibly a second message index.</td>
+<td class="register-desc">Unknown: possibly a second message index.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -58,13 +58,13 @@ The use of C here is puzzling. One routine (check_morale) explicitly sets it to 
 <td class="asm-label-1">queue_message</td>
 <td class="address-2"><span id="7d15"></span>7D15</td>
 <td class="instruction">LD HL,($7D11)</td>
-<td class="comment-11" rowspan="4">if ((*HL = message_queue_pointer) == message_QUEUE_END) return; // queue full</td>
+<td class="comment-11" rowspan="1">Fetch the message queue pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d18"></span>7D18</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Is the currently pointed-to index message_QUEUE_END? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -76,14 +76,14 @@ The use of C here is puzzling. One routine (check_morale) explicitly sets it to 
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1b"></span>7D1B</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so - the queue is full</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="7d1c"></span>
 <div class="comments">
 <div class="paragraph">
-Is this message pending?
+Is this message index already pending?
 </div>
 </div>
 </td>
@@ -92,7 +92,7 @@ Is this message pending?
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1c"></span>7D1C</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="2">HL -= 2;</td>
+<td class="comment-11" rowspan="2">Step back two bytes to the next pending entry</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -104,7 +104,7 @@ Is this message pending?
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d1e"></span>7D1E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="7">if (*HL++ == B &amp;&amp; *HL++ == C) return; // yes - skip adding it</td>
+<td class="comment-11" rowspan="7">If the new message index matches the pending entry then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -156,7 +156,7 @@ Add it to the queue.
 <td class="asm-label-1">queue_message_0</td>
 <td class="address-2"><span id="7d26"></span>7D26</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="5">*HL++ = B; *HL++ = C;</td>
+<td class="comment-11" rowspan="5">Store the new message index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -186,18 +186,18 @@ Add it to the queue.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d2b"></span>7D2B</td>
 <td class="instruction">LD ($7D11),HL</td>
-<td class="comment-11" rowspan="1">message_queue_pointer = HL;</td>
+<td class="comment-11" rowspan="1">Update the message queue pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d2e"></span>7D2E</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7CFC.html">7CFC</a></span></td>
+<td class="prev"><span class="prev-1">Prev: <a href="7D13.html">7D13</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#7d15">Map</a></td>
 <td class="next"><span class="next-1">Next: <a href="7D2F.html">7D2F</a></span></td>
 </tr>

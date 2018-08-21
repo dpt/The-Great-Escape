@@ -48,79 +48,79 @@ Used by the routine at <a href="AAB2.html">move_map</a>.
 <td class="asm-label-1">shunt_map_up</td>
 <td class="address-2"><span id="aa4b"></span>AA4B</td>
 <td class="instruction">LD HL,$81BC</td>
-<td class="comment-11" rowspan="1">HL = &amp;map_position[1];</td>
+<td class="comment-11" rowspan="2">Move the map position up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa4e"></span>AA4E</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-11" rowspan="1">(*HL)++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa4f"></span>AA4F</td>
 <td class="instruction">CALL <a href="A7C9.html">get_supertiles</a></td>
-<td class="comment-11" rowspan="1">get_supertiles();</td>
+<td class="comment-11" rowspan="1">Update the supertiles in map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa52"></span>AA52</td>
 <td class="instruction">LD HL,$F110</td>
-<td class="comment-11" rowspan="1">HL = &amp;tile_buf[24];</td>
+<td class="comment-11" rowspan="4">Shunt the tile_buf up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa55"></span>AA55</td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="comment-11" rowspan="1">DE = &amp;tile_buf[0];</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa58"></span>AA58</td>
 <td class="instruction">LD BC,$0180</td>
-<td class="comment-11" rowspan="1">BC = tile_buf_length - 24;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa5b"></span>AA5B</td>
 <td class="instruction">LDIR</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa5d"></span>AA5D</td>
 <td class="instruction">LD HL,$F350</td>
-<td class="comment-11" rowspan="1">HL = &amp;window_buf[24 * 8];</td>
+<td class="comment-11" rowspan="4">Shunt the window_buf up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa60"></span>AA60</td>
 <td class="instruction">LD DE,$F290</td>
-<td class="comment-11" rowspan="1">DE = &amp;window_buf[0];</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa63"></span>AA63</td>
 <td class="instruction">LD BC,$0C00</td>
-<td class="comment-11" rowspan="1">BC = window_buf_length - 24 * 8;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa66"></span>AA66</td>
 <td class="instruction">LDIR</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa68"></span>AA68</td>
 <td class="instruction">CALL <a href="A80A.html">plot_bottommost_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_bottommost_tiles();</td>
+<td class="comment-11" rowspan="1">Plot the complete bottommost row of tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa6b"></span>AA6B</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

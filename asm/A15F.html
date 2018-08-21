@@ -30,7 +30,7 @@
 Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html">drop_item</a>, <a href="A1D3.html">event_another_day_dawns</a>, <a href="A50B.html">screen_reset</a>, <a href="B83B.html">searchlight_mask_test</a> and <a href="F350.html">choose_keys</a>.
 </div>
 <div class="paragraph">
-Starting at $5847, set 23 columns of 16 rows to A.
+Starting at $5847, set 23 columns of 16 rows to the specified attribute byte.
 </div>
 </div>
 <table class="input-1">
@@ -54,67 +54,87 @@ Starting at $5847, set 23 columns of 16 rows to A.
 <td class="asm-label-1">set_game_window_attributes</td>
 <td class="address-2"><span id="a15f"></span>A15F</td>
 <td class="instruction">LD HL,$5847</td>
-<td class="comment-11" rowspan="1">HL = $5847 // attributes base // $5800 + $47</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the top-left game window attribute</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a162"></span>A162</td>
 <td class="instruction">LD C,$10</td>
-<td class="comment-11" rowspan="1">C = 16 // rows</td>
+<td class="comment-11" rowspan="1">Set rows to 16</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a164"></span>A164</td>
 <td class="instruction">LD DE,$0009</td>
-<td class="comment-11" rowspan="1">DE = 32 - 23 // skip</td>
+<td class="comment-11" rowspan="1">Set rowskip to 9 (32 - 23 columns)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a167"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">set_game_window_attributes_0</td>
 <td class="address-2"><span id="a167"></span>A167</td>
 <td class="instruction">LD B,$17</td>
-<td class="comment-11" rowspan="1">do &lt;% B = 23 // columns</td>
+<td class="comment-11" rowspan="1">Set columns to 23</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a169"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">set_game_window_attributes_1</td>
 <td class="address-2"><span id="a169"></span>A169</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="2">do *HL++ = A;</td>
+<td class="comment-11" rowspan="1">Set attribute byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a16a"></span>A16A</td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Step to the next</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a16b"></span>A16B</td>
 <td class="instruction">DJNZ <a href="A15F.html#a169">set_game_window_attributes_1</a></td>
-<td class="comment-11" rowspan="1">while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a16d"></span>A16D</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-11" rowspan="1">Add rowskip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a16e"></span>A16E</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="1">C--;</td>
+<td class="comment-11" rowspan="1">Decrement row counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a16f"></span>A16F</td>
 <td class="instruction">JP NZ,<a href="A15F.html#a167">set_game_window_attributes_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (C != 0);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a172"></span>A172</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

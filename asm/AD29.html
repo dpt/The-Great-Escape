@@ -45,56 +45,158 @@
 <tr>
 <td class="asm-label-1">searchlight_movements</td>
 <td class="address-1"><span id="ad29"></span>AD29</td>
-<td class="instruction">DEFB $24, $52, $2C, $02, $00</td>
-<td class="comment-11" rowspan="1">x, y, step, direction, counter</td>
+<td class="instruction">DEFB $24,$52,$2C,$02,$00</td>
+<td class="comment-11" rowspan="1">x, y, counter, direction, index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad2e"></span>AD2E</td>
 <td class="instruction">DEFW <a href="AD29.html#ad54">searchlight_path_2</a></td>
-<td class="comment-11" rowspan="1">searchlight_path_2</td>
+<td class="comment-11" rowspan="1">pointer to movement data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad30"></span>AD30</td>
-<td class="instruction">DEFB $78, $52, $18, $01, $00</td>
-<td class="comment-11" rowspan="1">x, y, step, direction, counter</td>
+<td class="instruction">DEFB $78,$52,$18,$01,$00</td>
+<td class="comment-11" rowspan="1">x, y, counter, direction, index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad35"></span>AD35</td>
 <td class="instruction">DEFW <a href="AD29.html#ad43">searchlight_path_1</a></td>
-<td class="comment-11" rowspan="1">searchlight_path_1</td>
+<td class="comment-11" rowspan="1">pointer to movement data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad37"></span>AD37</td>
-<td class="instruction">DEFB $3C, $4C, $20, $02, $00</td>
-<td class="comment-11" rowspan="1">x, y, step, direction, counter</td>
+<td class="instruction">DEFB $3C,$4C,$20,$02,$00</td>
+<td class="comment-11" rowspan="1">x, y, counter, direction, index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad3c"></span>AD3C</td>
 <td class="instruction">DEFW <a href="AD29.html#ad3e">searchlight_path_0</a></td>
-<td class="comment-11" rowspan="1">searchlight_path_0</td>
+<td class="comment-11" rowspan="1">pointer to movement data</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ad3e"></span>
+<div class="comments">
+<div class="paragraph">
+Searchlight movement pattern for ?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_path_0</td>
 <td class="address-1"><span id="ad3e"></span>AD3E</td>
-<td class="instruction">DEFB $20, $02, $20, $01, $FF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="instruction">DEFB $20,$02</td>
+<td class="comment-11" rowspan="1">(32, bottom right)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad40"></span>AD40</td>
+<td class="instruction">DEFB $20,$01</td>
+<td class="comment-11" rowspan="1">(32, top right)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad42"></span>AD42</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-11" rowspan="1">terminator</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ad43"></span>
+<div class="comments">
+<div class="paragraph">
+Searchlight movement pattern for main compound.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_path_1</td>
 <td class="address-1"><span id="ad43"></span>AD43</td>
-<td class="instruction">DEFB $18, $01, $0C, $00, $18, $03, $0C, $00, $20, $01, $14, $00, $20, $03, $2C, $02, $FF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="instruction">DEFB $18,$01</td>
+<td class="comment-11" rowspan="1">(24, top right)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad45"></span>AD45</td>
+<td class="instruction">DEFB $0C,$00</td>
+<td class="comment-11" rowspan="1">(12, top left)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad47"></span>AD47</td>
+<td class="instruction">DEFB $18,$03</td>
+<td class="comment-11" rowspan="1">(24, bottom left)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad49"></span>AD49</td>
+<td class="instruction">DEFB $0C,$00</td>
+<td class="comment-11" rowspan="1">(12, top left)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad4b"></span>AD4B</td>
+<td class="instruction">DEFB $20,$01</td>
+<td class="comment-11" rowspan="1">(32, top right)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad4d"></span>AD4D</td>
+<td class="instruction">DEFB $14,$00</td>
+<td class="comment-11" rowspan="1">(20, top left)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad4f"></span>AD4F</td>
+<td class="instruction">DEFB $20,$03</td>
+<td class="comment-11" rowspan="1">(32, bottom left)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad51"></span>AD51</td>
+<td class="instruction">DEFB $2C,$02</td>
+<td class="comment-11" rowspan="1">(44, bottom right)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad53"></span>AD53</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-11" rowspan="1">terminator</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ad54"></span>
+<div class="comments">
+<div class="paragraph">
+Searchlight movement pattern for ?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_path_2</td>
 <td class="address-1"><span id="ad54"></span>AD54</td>
-<td class="instruction">DEFB $2C, $02, $2A, $01, $FF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="instruction">DEFB $2C,$02</td>
+<td class="comment-11" rowspan="1">(44, bottom right)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad56"></span>AD56</td>
+<td class="instruction">DEFB $2A,$01</td>
+<td class="comment-11" rowspan="1">(42, top right)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ad58"></span>AD58</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-11" rowspan="1">terminator</td>
 </tr>
 </table>
 <table class="asm-navigation">

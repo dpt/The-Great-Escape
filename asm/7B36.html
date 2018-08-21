@@ -48,24 +48,24 @@ Used by the routine at <a href="7AC9.html">process_player_input_fire</a>.
 <td class="asm-label-1">pick_up_item</td>
 <td class="address-2"><span id="7b36"></span>7B36</td>
 <td class="instruction">LD HL,($8215)</td>
-<td class="comment-11" rowspan="1">HL = items_held;</td>
+<td class="comment-11" rowspan="1">Load both held items into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b39"></span>7B39</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">A = item_NONE;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to item_NONE ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b3b"></span>7B3B</td>
 <td class="instruction">CP L</td>
-<td class="comment-11" rowspan="4">if (L != A &amp;&amp; H != A) return; // no spare slots</td>
+<td class="comment-11" rowspan="4">If neither item slot is empty then return - we don't have the space to pick another item up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b3c"></span>7B3C</td>
-<td class="instruction">JR Z,<a href="7B36.html#7b40">pick_up_item_0</a></td>
+<td class="instruction">JR Z,<a href="7B36.html#7b40">pick_up_have_empty_slot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -81,16 +81,16 @@ Used by the routine at <a href="7AC9.html">process_player_input_fire</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_0</td>
+<td class="asm-label-1">pick_up_have_empty_slot</td>
 <td class="address-2"><span id="7b40"></span>7B40</td>
 <td class="instruction">CALL <a href="7C82.html">find_nearby_item</a></td>
-<td class="comment-11" rowspan="1">find_nearby_item();</td>
+<td class="comment-11" rowspan="1">Find nearby items. <span class="register">HL</span> points to an item in item_structs if found</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b43"></span>7B43</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">if (!Z) return; // no item nearby</td>
+<td class="comment-11" rowspan="1">Return if no items were found</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -106,24 +106,24 @@ Locate an empty item slot.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b44"></span>7B44</td>
 <td class="instruction">LD DE,$8215</td>
-<td class="comment-11" rowspan="1">DE = &amp;items_held[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the held items array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b47"></span>7B47</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Load an item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b48"></span>7B48</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="3">if (A != item_NONE) DE++;</td>
+<td class="comment-11" rowspan="3">Step over the item if it's item_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b4a"></span>7B4A</td>
-<td class="instruction">JR Z,<a href="7B36.html#7b4d">pick_up_item_1</a></td>
+<td class="instruction">JR Z,<a href="7B36.html#7b4d">pick_up_item_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -133,10 +133,10 @@ Locate an empty item slot.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_1</td>
+<td class="asm-label-1">pick_up_item_0</td>
 <td class="address-2"><span id="7b4d"></span>7B4D</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">*DE = *HL &amp; 0x1F; // item mask + extra bit (which is not seen elsewhere in the code...)</td>
+<td class="comment-11" rowspan="3">Fetch the item_struct item's first byte and mask off the item. Note: The mask used here is $1F, not $0F as seen elsewhere in the code. Unsure why</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -154,137 +154,147 @@ Locate an empty item slot.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b51"></span>7B51</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save the item_struct item pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b52"></span>7B52</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">A = room_index;</td>
+<td class="comment-11" rowspan="1">Fetch the global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b55"></span>7B55</td>
 <td class="instruction">CP $00</td>
-<td class="comment-11" rowspan="2">if (A == 0) &lt;% // outdoors</td>
+<td class="comment-11" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b57"></span>7B57</td>
-<td class="instruction">JP NZ,<a href="7B36.html#7b5f">pick_up_item_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NZ,<a href="7B36.html#7b5f">pick_up_indoors</a></td>
+<td class="comment-11" rowspan="1">No - jump to indoor handling</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label-1">pick_up_outdoors</td>
 <td class="address-1"><span id="7b5a"></span>7B5A</td>
 <td class="instruction">CALL <a href="A8A2.html">plot_all_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_all_tiles();</td>
+<td class="comment-11" rowspan="1">Plot all tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b5d"></span>7B5D</td>
-<td class="instruction">JR <a href="7B36.html#7b6b">pick_up_item_3</a></td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="instruction">JR <a href="7B36.html#7b6b">pick_up_item_1</a></td>
+<td class="comment-11" rowspan="1">Jump over indoor handling</td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_2</td>
+<td class="asm-label-1">pick_up_indoors</td>
 <td class="address-2"><span id="7b5f"></span>7B5F</td>
 <td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
-<td class="comment-11" rowspan="1">else &lt;% setup_room(); // indoors</td>
+<td class="comment-11" rowspan="1">Expand out the room definition for room_index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b62"></span>7B62</td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_interior_tiles();</td>
+<td class="comment-11" rowspan="1">Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b65"></span>7B65</td>
 <td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
+<td class="comment-11" rowspan="1">Choose game window attributes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b68"></span>7B68</td>
 <td class="instruction">CALL <a href="A15F.html">set_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">set_game_window_attributes(); %&gt;</td>
+<td class="comment-11" rowspan="1">Set game window attributes</td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_3</td>
+<td class="asm-label-1">pick_up_item_1</td>
 <td class="address-2"><span id="7b6b"></span>7B6B</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Retrieve the item_struct item pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b6c"></span>7B6C</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="2">if ((*HL &amp; itemstruct_ITEM_FLAG_HELD) == 0) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the itemstruct_ITEM_FLAG_HELD flag set? ($80)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b6e"></span>7B6E</td>
-<td class="instruction">JR NZ,<a href="7B36.html#7b77">pick_up_item_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="7B36.html#7b77">pick_up_item_2</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="7b70"></span>
 <div class="comments">
 <div class="paragraph">
-Have picked up an item not previously held.
+Have picked up an item not previously held - increase the score.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label-1">pick_up_novel_item</td>
 <td class="address-1"><span id="7b70"></span>7B70</td>
 <td class="instruction">SET 7,(HL)</td>
-<td class="comment-11" rowspan="1">*HL |= itemstruct_ITEM_FLAG_HELD;</td>
+<td class="comment-11" rowspan="1">Set the itemstruct_ITEM_FLAG_HELD flag so we only award these points on the first pick-up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b72"></span>7B72</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save the item_struct item pointer again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b73"></span>7B73</td>
 <td class="instruction">CALL <a href="A0F2.html">increase_morale_by_5_score_by_5</a></td>
-<td class="comment-11" rowspan="1">increase_morale_by_5_score_by_5();</td>
+<td class="comment-11" rowspan="1">Increase morale by 5, score by 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b76"></span>7B76</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">Retrieve again</td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_4</td>
+<td class="routine-comment" colspan="4">
+<span id="7b77"></span>
+<div class="comments">
+<div class="paragraph">
+Make the item disappear.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pick_up_item_2</td>
 <td class="address-2"><span id="7b77"></span>7B77</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="1">Zero <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b78"></span>7B78</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="2">Zero itemstruct-&gt;room_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b79"></span>7B79</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A; // itemstruct-&gt;room_and_flags = 0</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b7a"></span>7B7A</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="4">HL += 4;</td>
+<td class="comment-11" rowspan="4">Advance <span class="register">HL</span> to itemstruct-&gt;screenpos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -308,7 +318,7 @@ Have picked up an item not previously held.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b7e"></span>7B7E</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="2">*HL++ = A; // itemstruct-&gt;screenpos.x = 0</td>
+<td class="comment-11" rowspan="3">Zero itemstruct-&gt;screenpos.screen_x and screen_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -320,19 +330,19 @@ Have picked up an item not previously held.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b80"></span>7B80</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A; // itemstruct-&gt;screenpos.x = 0</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b81"></span>7B81</td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
-<td class="comment-11" rowspan="1">draw_all_items();</td>
+<td class="comment-11" rowspan="1">Draw both held items</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b84"></span>7B84</td>
 <td class="instruction">LD BC,$3030</td>
-<td class="comment-11" rowspan="2">play_speaker(sound_PICK_UP_ITEM);</td>
+<td class="comment-11" rowspan="2">Play the "pick up item" sound</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -344,7 +354,7 @@ Have picked up an item not previously held.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b8a"></span>7B8A</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

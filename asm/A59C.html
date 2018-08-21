@@ -58,19 +58,19 @@ Used by the routine at <a href="A51C.html">escaped</a>.
 <td class="asm-label-1">join_item_to_escapeitem</td>
 <td class="address-2"><span id="a59c"></span>A59C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the item we've been pointed at</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a59d"></span>A59D</td>
 <td class="instruction">CALL <a href="A5A3.html">item_to_escapeitem</a></td>
-<td class="comment-11" rowspan="1">item_to_escapeitem();</td>
+<td class="comment-11" rowspan="1">Turn the item into a flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5a0"></span>A5A0</td>
 <td class="instruction">ADD A,C</td>
-<td class="comment-11" rowspan="2">C += A;</td>
+<td class="comment-11" rowspan="2">Merge the new flag with the previous</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -82,7 +82,7 @@ Used by the routine at <a href="A51C.html">escaped</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5a2"></span>A5A2</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

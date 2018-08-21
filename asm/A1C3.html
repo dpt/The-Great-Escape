@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A1D3.html">A1D3</a></span></td>
 </tr>
 </table>
-<div class="description">A1C3: Event: night time.</div>
+<div class="description">A1C3: Event: Night time.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -46,7 +46,7 @@
 <td class="asm-label-1">event_night_time</td>
 <td class="address-2"><span id="a1c3"></span>A1C3</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment-11" rowspan="5">if (hero_in_bed == 0) set_hero_route(location_012C);</td>
+<td class="comment-11" rowspan="2">Is the hero already in his bed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -58,13 +58,13 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c7"></span>A1C7</td>
 <td class="instruction">JR NZ,<a href="A1C3.html#a1cf">event_night_time_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Skip route setting if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c9"></span>A1C9</td>
 <td class="instruction">LD BC,$2C01</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">If not in bed set the hero's route to (routeindex_44_HUT2_RIGHT_TO_LEFT, 1) to make him move to bed</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -76,13 +76,13 @@
 <td class="asm-label-1">event_night_time_0</td>
 <td class="address-2"><span id="a1cf"></span>A1CF</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">A = 0xFF;</td>
+<td class="comment-11" rowspan="1">Set the night time flag ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1d1"></span>A1D1</td>
-<td class="instruction">JR <a href="A1D3.html#a1de">event_another_day_dawns_0</a></td>
-<td class="comment-11" rowspan="1">goto set_attrs;</td>
+<td class="instruction">JR <a href="A1D3.html#a1de">set_attrs</a></td>
+<td class="comment-11" rowspan="1">Jump to set_attrs</td>
 </tr>
 </table>
 <table class="asm-navigation">

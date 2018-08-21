@@ -48,7 +48,7 @@ Used by the routines at <a href="6A35.html">setup_room</a>, <a href="A50B.html">
 <td class="asm-label-1">wipe_visible_tiles</td>
 <td class="address-2"><span id="6a27"></span>6A27</td>
 <td class="instruction">LD DE,$F0F9</td>
-<td class="comment-11" rowspan="5">memset($F0F8, 0, 24 * 17);</td>
+<td class="comment-11" rowspan="5">Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -78,7 +78,7 @@ Used by the routines at <a href="6A35.html">setup_room</a>, <a href="A50B.html">
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a34"></span>6A34</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -21,11 +21,14 @@
 <td class="next"><span class="next-1">Next: <a href="AB66.html">AB66</a></span></td>
 </tr>
 </table>
-<div class="description">AAB2: Moves the map when the hero walks.</div>
+<div class="description">AAB2: Move the map when the hero walks around outdoors.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
+<div class="paragraph">
+The map is shunted around in the opposite direction to the apparent character motion.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
@@ -36,14 +39,11 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 </tr>
 
 </table>
-<table class="output-1">
+<table class="output-0">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-<tr>
-<td class="register">HL</td>
-<td class="register-desc">== map_position</td>
-</tr>
+
 </table>
 </td>
 </tr>
@@ -51,7 +51,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1">move_map</td>
 <td class="address-2"><span id="aab2"></span>AAB2</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index) return; // Can't move the map when indoors.</td>
+<td class="comment-11" rowspan="3">Ignore any attempt to move the map when we're indoors</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -69,7 +69,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aab7"></span>AAB7</td>
 <td class="instruction">LD HL,$8007</td>
-<td class="comment-11" rowspan="3">if ($8007 &amp; vischar_BYTE7_TOUCHING) return; // don't move the map if touch() is entered?</td>
+<td class="comment-11" rowspan="2">Is the hero's vischar_BYTE7_DONT_MOVE_MAP flag set? (See <a href="AF8F.html#af93">AF93</a>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -81,19 +81,19 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aabc"></span>AABC</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aabd"></span>AABD</td>
 <td class="instruction">LD HL,$800A</td>
-<td class="comment-11" rowspan="1">HL = $800A;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's animation pointer field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aac0"></span>AAC0</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="2">E = *HL++;</td>
+<td class="comment-11" rowspan="4">Fetch the animation pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -105,7 +105,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aac2"></span>AAC2</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="2">D = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -117,13 +117,13 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aac4"></span>AAC4</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL; // $800C</td>
+<td class="comment-11" rowspan="1">Load the current animation index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aac5"></span>AAC5</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="3">DE += 3;</td>
+<td class="comment-11" rowspan="3">Step forward through the animation structure to the map direction field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -141,25 +141,25 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aac8"></span>AAC8</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Read the animation's map direction field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aac9"></span>AAC9</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == 255) return; // don't move</td>
+<td class="comment-11" rowspan="1">A map direction of 255 means "don't move"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aacb"></span>AACB</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if 255</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aacc"></span>AACC</td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment-11" rowspan="3">if (C &amp; vischar_ANIMINDEX_BIT7) A ^= 2; // exchange up and down</td>
+<td class="comment-11" rowspan="3">If animation index's vischar_ANIMINDEX_REVERSE bit is set then exchange the up and down directions</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -177,13 +177,13 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1">move_map_0</td>
 <td class="address-2"><span id="aad2"></span>AAD2</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve map direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aad3"></span>AAD3</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="5">HL = &amp;move_map_jump_table[A];</td>
+<td class="comment-11" rowspan="5">Point <span class="register">HL</span> at move_map_jump_table[A]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -213,7 +213,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aadb"></span>AADB</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++; // ie. HL = (word at HL); HL += 2;</td>
+<td class="comment-11" rowspan="4">Load jump address into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -225,43 +225,80 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aadd"></span>AADD</td>
 <td class="instruction">LD H,(HL)</td>
-<td class="comment-11" rowspan="1">H = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aade"></span>AADE</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="1">L = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aadf"></span>AADF</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore map direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aae0"></span>AAE0</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Stack the jump table target - our final RET will call it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aae1"></span>AAE1</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve map direction</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="aae2"></span>
+<div class="comments">
+<div class="paragraph">
+Calculate the position at which we should stop scrolling the map
+</div>
+<div class="paragraph">
+For example in the animation anim_walk_tl (where 'tl' denotes a character walking towards the top left) we're asked to scroll the map to the bottom and right. If the map scrolls further than 192 across we'll render off the side of the map, so we clamp the scroll at that point. Similar for vertical.
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Direction</th>
+<th colspan="1" rowspan="1">Clamps at (x,y)</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">direction_TOP_LEFT</td>
+<td class="" colspan="1" rowspan="1">(192,124) aka bottom right of the map</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">direction_TOP_RIGHT</td>
+<td class="" colspan="1" rowspan="1">(0,124) aka bottom left of the map</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">direction_BOTTOM_RIGHT</td>
+<td class="" colspan="1" rowspan="1">(0,0) aka top left of the map</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">direction_BOTTOM_LEFT</td>
+<td class="" colspan="1" rowspan="1">(192,0) aka top right of th map</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aae2"></span>AAE2</td>
 <td class="instruction">LD BC,$7C00</td>
-<td class="comment-11" rowspan="1">B, C = 0x7C, 0x00;</td>
+<td class="comment-11" rowspan="1">Set the initial clamp position (x,y) to (<span class="register">C</span> = 0,<span class="register">B</span> = 124)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aae5"></span>AAE5</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="3">if (A &gt;= 2) B = 0x00; // bottom of the map clamp</td>
+<td class="comment-11" rowspan="3">If the map scroll direction is direction_BOTTOM_* (scrolling up) then the y limit becomes 0</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -279,7 +316,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1">move_map_1</td>
 <td class="address-2"><span id="aaeb"></span>AAEB</td>
 <td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="5">if (A != 1 &amp;&amp; A != 2) C = 0xC0; // left of the map clamp</td>
+<td class="comment-11" rowspan="5">If the map scroll direction is direction_*_LEFT (scrolling right) then the x limit becomes 192</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -309,13 +346,13 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1">move_map_2</td>
 <td class="address-2"><span id="aaf5"></span>AAF5</td>
 <td class="instruction">LD HL,($81BB)</td>
-<td class="comment-11" rowspan="1">HL = map_position;</td>
+<td class="comment-11" rowspan="1">Read the current map position into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aaf8"></span>AAF8</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">if (L == C || H == B) &lt;%</td>
+<td class="comment-11" rowspan="3">If current map X equals limit X then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -333,25 +370,25 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1">move_map_3</td>
 <td class="address-2"><span id="aafc"></span>AAFC</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1">popret:</td>
+<td class="comment-11" rowspan="1">Restore map direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aafd"></span>AAFD</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore jump table target</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aafe"></span>AAFE</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="4">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1">move_map_4</td>
 <td class="address-2"><span id="aaff"></span>AAFF</td>
 <td class="instruction">LD A,H</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">If current map Y equals limit Y then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -369,31 +406,41 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab03"></span>AB03</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore map direction</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ab04"></span>
+<div class="comments">
+<div class="paragraph">
+Now we form a counter that's used by the move_map functions to decide in which order the map shunt operations will be issued. Instead of immediately shunting the map in the named direction, they use this counter to work through a pattern of moves.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab04"></span>AB04</td>
 <td class="instruction">LD HL,$A7C6</td>
-<td class="comment-11" rowspan="1">HL = &amp;move_map_y; // screen offset of some sort?</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at move_map_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab07"></span>AB07</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="2">if (A &lt; 2) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the map direction direction_BOTTOM_*?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab09"></span>AB09</td>
 <td class="instruction">JR NC,<a href="AAB2.html#ab0f">move_map_5</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab0b"></span>AB0B</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL + 1; %&gt;</td>
+<td class="comment-11" rowspan="3">Cycle the counter forwards for TOP cases</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -405,13 +452,13 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab0d"></span>AB0D</td>
 <td class="instruction">JR <a href="AAB2.html#ab11">move_map_6</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">move_map_5</td>
 <td class="address-2"><span id="ab0f"></span>AB0F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL - 1; %&gt;</td>
+<td class="comment-11" rowspan="2">Cycle the counter backwards for BOTTOM cases</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -423,31 +470,41 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1">move_map_6</td>
 <td class="address-2"><span id="ab11"></span>AB11</td>
 <td class="instruction">AND $03</td>
-<td class="comment-11" rowspan="1">A &amp;= 3;</td>
+<td class="comment-11" rowspan="1">Clamp to 0..3</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab13"></span>AB13</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A;</td>
+<td class="comment-11" rowspan="1">Save it back to move_map_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab14"></span>AB14</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Transpose (for passing into move_map_*)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ab15"></span>
+<div class="comments">
+<div class="paragraph">
+Now choose the game window offset that will be used by plot_game_window. A 255 in the high byte means to plot the screen offset (which direction?) by half a byte. The low byte is a byte offset added to the source data.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab15"></span>AB15</td>
 <td class="instruction">LD HL,$0000</td>
-<td class="comment-11" rowspan="1">HL = 0x0000;</td>
+<td class="comment-11" rowspan="1">Clear the game window offset (GWO)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab18"></span>AB18</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) goto $AB2A;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 0 GWO becomes (0, 0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -459,13 +516,13 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab1b"></span>AB1B</td>
 <td class="instruction">LD L,$60</td>
-<td class="comment-11" rowspan="1">L = 0x60;</td>
+<td class="comment-11" rowspan="3">If move_map_y is 2 GWO becomes (4 * 24, 0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab1d"></span>AB1D</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="2">if (A == 2) goto $AB2A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -477,13 +534,13 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab21"></span>AB21</td>
 <td class="instruction">LD HL,$FF30</td>
-<td class="comment-11" rowspan="1">HL = 0xFF30;</td>
+<td class="comment-11" rowspan="3">If move_map_y is 1 GWO becomes (2 * 24, 255)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab24"></span>AB24</td>
 <td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="2">if (A == 1) goto $AB2A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -495,35 +552,25 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab28"></span>AB28</td>
 <td class="instruction">LD L,$90</td>
-<td class="comment-11" rowspan="1">L = 0x90;</td>
+<td class="comment-11" rowspan="1">Otherwise GWO becomes (6 * 24, 255)</td>
 </tr>
 <tr>
 <td class="asm-label-1">move_map_7</td>
 <td class="address-2"><span id="ab2a"></span>AB2A</td>
 <td class="instruction">LD ($A7C7),HL</td>
-<td class="comment-11" rowspan="1">game_window_offset = HL;</td>
+<td class="comment-11" rowspan="1">Write it to game_window_offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab2d"></span>AB2D</td>
 <td class="instruction">LD HL,($81BB)</td>
-<td class="comment-11" rowspan="1">HL = map_position;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at map_position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab30"></span>AB30</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; // pops and calls move_map_* routine pushed at $AAE0</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="ab31"></span>
-<div class="comments">
-<div class="paragraph">
-move_map jump table.
-</div>
-</div>
-</td>
+<td class="comment-11" rowspan="1">NOT a return - pops and calls the move_map_* routine pushed at <a href="AAB2.html#aae0">AAE0</a> which then returns</td>
 </tr>
 <tr>
 <td class="asm-label-1">move_map_jump_table</td>
@@ -554,7 +601,7 @@ move_map jump table.
 <span id="ab39"></span>
 <div class="comments">
 <div class="paragraph">
-Called when player moves down-right (map is shifted up-left).
+Called when player moves down-right (map is shifted up or left). This moves the map in the pattern up/left/none/left.
 </div>
 </div>
 </td>
@@ -563,13 +610,13 @@ Called when player moves down-right (map is shifted up-left).
 <td class="asm-label-1">move_map_up_left</td>
 <td class="address-1"><span id="ab39"></span>AB39</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch move_map_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab3a"></span>AB3A</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) goto shunt_map_up;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 0 then jump to shunt_map_up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -581,7 +628,7 @@ Called when player moves down-right (map is shifted up-left).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab3e"></span>AB3E</td>
 <td class="instruction">BIT 0,A</td>
-<td class="comment-11" rowspan="2">if ((A &amp; 1) == 0) return;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 2 then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -593,14 +640,14 @@ Called when player moves down-right (map is shifted up-left).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab41"></span>AB41</td>
 <td class="instruction">JP <a href="A9E4.html">shunt_map_left</a></td>
-<td class="comment-11" rowspan="1">goto shunt_map_left;</td>
+<td class="comment-11" rowspan="1">Otherwise move_map_y is 1 or 3 - jump to shunt_map_left</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="ab44"></span>
 <div class="comments">
 <div class="paragraph">
-Called when player moves down-left (map is shifted up-right).
+Called when player moves down-left (map is shifted up or right). This moves the map in the pattern up-right/none/right/none.
 </div>
 </div>
 </td>
@@ -609,13 +656,13 @@ Called when player moves down-left (map is shifted up-right).
 <td class="asm-label-1">move_map_up_right</td>
 <td class="address-1"><span id="ab44"></span>AB44</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch move_map_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab45"></span>AB45</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) goto shunt_map_up_right;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 0 then jump to shunt_map_up_right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -627,7 +674,7 @@ Called when player moves down-left (map is shifted up-right).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab49"></span>AB49</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="2">if (A != 2) return;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 1 or 3 then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -639,14 +686,14 @@ Called when player moves down-left (map is shifted up-right).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab4c"></span>AB4C</td>
 <td class="instruction">JP <a href="AA05.html">shunt_map_right</a></td>
-<td class="comment-11" rowspan="1">goto shunt_map_right;</td>
+<td class="comment-11" rowspan="1">Otherwise move_map_y is 2 - jump to shunt_map_right</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="ab4f"></span>
 <div class="comments">
 <div class="paragraph">
-Called when player moves up-left (map is shifted down-right).
+Called when player moves up-left (map is shifted down or right). This moves the map in the pattern right/none/right/down.
 </div>
 </div>
 </td>
@@ -655,13 +702,13 @@ Called when player moves up-left (map is shifted down-right).
 <td class="asm-label-1">move_map_down_right</td>
 <td class="address-1"><span id="ab4f"></span>AB4F</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch move_map_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab50"></span>AB50</td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="2">if (A == 3) goto shunt_map_down;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 3 then jump to shunt_map_down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -673,7 +720,7 @@ Called when player moves up-left (map is shifted down-right).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab55"></span>AB55</td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="2">if ((A &amp; 1) == 0) goto shunt_map_right;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 0 or 2 then jump to shunt_map_right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -685,14 +732,14 @@ Called when player moves up-left (map is shifted down-right).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab59"></span>AB59</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Otherwise move_map_y is 1 - return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="ab5a"></span>
 <div class="comments">
 <div class="paragraph">
-Called when player moves up-right (map is shifted down-left).
+Called when player moves up-right (map is shifted down or left). This moves the map in the pattern none/left/down/left.
 </div>
 </div>
 </td>
@@ -701,13 +748,13 @@ Called when player moves up-right (map is shifted down-left).
 <td class="asm-label-1">move_map_down_left</td>
 <td class="address-1"><span id="ab5a"></span>AB5A</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch move_map_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab5b"></span>AB5B</td>
 <td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="2">if (A == 1) goto shunt_map_left;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 1 then jump to shunt_map_left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -719,7 +766,7 @@ Called when player moves up-right (map is shifted down-left).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab60"></span>AB60</td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="2">if (A == 3) goto shunt_map_down_left;</td>
+<td class="comment-11" rowspan="2">If move_map_y is 3 then jump to shunt_map_down_left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -731,7 +778,7 @@ Called when player moves up-right (map is shifted down-left).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ab65"></span>AB65</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Otherwise move_map_y is 0 or 2 - return</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="9DE5.html">9DE5</a></span></td>
 </tr>
 </table>
-<div class="description">9DCF: Check morale level, report if (near) zero and inhibit player control.</div>
+<div class="description">9DCF: Check morale level, report if (near) zero and inhibit player control if exhausted.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -48,7 +48,7 @@ Used by the routine at <a href="9D7B.html">main_loop</a>.
 <td class="asm-label-1">check_morale</td>
 <td class="address-2"><span id="9dcf"></span>9DCF</td>
 <td class="instruction">LD A,($A13C)</td>
-<td class="comment-11" rowspan="3">if (morale &gt;= 2) return;</td>
+<td class="comment-11" rowspan="3">If morale is greater than one then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -66,7 +66,7 @@ Used by the routine at <a href="9D7B.html">main_loop</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dd5"></span>9DD5</td>
 <td class="instruction">LD BC,$0F00</td>
-<td class="comment-11" rowspan="2">queue_message(message_MORALE_IS_ZERO);</td>
+<td class="comment-11" rowspan="2">Queue the message "MORALE IS ZERO"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -75,20 +75,10 @@ Used by the routine at <a href="9D7B.html">main_loop</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="9ddb"></span>
-<div class="comments">
-<div class="paragraph">
-Inhibit user input.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9ddb"></span>9DDB</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">morale_exhausted = 0xFF;</td>
+<td class="comment-11" rowspan="2">Set the "morale exhausted" flag to inhibit player input</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -97,20 +87,10 @@ Inhibit user input.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="9de0"></span>
-<div class="comments">
-<div class="paragraph">
-Immediately take automatic control of hero.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9de0"></span>9DE0</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">automatic_player_counter = 0;</td>
+<td class="comment-11" rowspan="2">Immediately take automatic control of the hero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -122,7 +102,7 @@ Immediately take automatic control of hero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9de4"></span>9DE4</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

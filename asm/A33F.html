@@ -18,10 +18,10 @@
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="A2E2.html">A2E2</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#a33f">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A351.html">A351</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="A344.html">A344</a></span></td>
 </tr>
 </table>
-<div class="description">A33F: Set the hero's route.</div>
+<div class="description">A33F: Set the hero's route, unless he's in solitary.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -55,7 +55,7 @@ Used by the routines at <a href="9F21.html">in_permitted_area</a>, <a href="A1C3
 <td class="asm-label-1">set_hero_route</td>
 <td class="address-2"><span id="a33f"></span>A33F</td>
 <td class="instruction">LD A,($A13A)</td>
-<td class="comment-11" rowspan="3">if (in_solitary) return;</td>
+<td class="comment-11" rowspan="3">Do nothing if the hero's in solitary</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -71,68 +71,20 @@ Used by the routines at <a href="9F21.html">in_permitted_area</a>, <a href="A1C3
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<span id="a344"></span>
+
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="C7C6.html">character_event</a>.
+FALL THROUGH into set_hero_route_force
 </div>
 </div>
 </td>
-</tr>
-<tr>
-<td class="asm-label-1">set_hero_route_0</td>
-<td class="address-2"><span id="a344"></span>A344</td>
-<td class="instruction">LD HL,$8001</td>
-<td class="comment-11" rowspan="2">$8001 &amp;= ~vischar_FLAGS_TARGET_IS_DOOR;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a347"></span>A347</td>
-<td class="instruction">RES 6,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a349"></span>A349</td>
-<td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">$8002 = B;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a34a"></span>A34A</td>
-<td class="instruction">LD (HL),B</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a34b"></span>A34B</td>
-<td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">$8003 = C;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a34c"></span>A34C</td>
-<td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a34d"></span>A34D</td>
-<td class="instruction">CALL <a href="A3BB.html">set_route</a></td>
-<td class="comment-11" rowspan="1">set_route();</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="a350"></span>A350</td>
-<td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="A2E2.html">A2E2</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#a33f">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A351.html">A351</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="A344.html">A344</a></span></td>
 </tr>
 </table>
 <footer>

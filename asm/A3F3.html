@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A3F8.html">A3F8</a></span></td>
 </tr>
 </table>
-<div class="description">A3F3: entered_move_characters is non-zero.</div>
+<div class="description">A3F3: Character goes to bed: used when entered_move_characters is non-zero.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -51,13 +51,13 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="asm-label-1">character_bed_state</td>
 <td class="address-2"><span id="a3f3"></span>A3F3</td>
 <td class="instruction">LD A,($8217)</td>
-<td class="comment-11" rowspan="1">A = character_index;</td>
+<td class="comment-11" rowspan="1">Get the current character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a3f6"></span>A3F6</td>
 <td class="instruction">JR <a href="A404.html">character_bed_common</a></td>
-<td class="comment-11" rowspan="1">goto character_bed_common;</td>
+<td class="comment-11" rowspan="1">Jump to character_bed_common</td>
 </tr>
 </table>
 <table class="asm-navigation">

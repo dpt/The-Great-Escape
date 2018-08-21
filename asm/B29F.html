@@ -44,20 +44,8 @@ Used by the routine at <a href="B14C.html">bounds_check</a>.
 <th colspan="2">Output</th>
 </tr>
 <tr>
-<td class="register">A</td>
-<td class="register-desc">Corrupted.</td>
-</tr>
-<tr>
-<td class="register">BC</td>
-<td class="register-desc">Corrupted.</td>
-</tr>
-<tr>
 <td class="register">F</td>
 <td class="register-desc">Z clear if boundary hit, set otherwise.</td>
-</tr>
-<tr>
-<td class="register">HL</td>
-<td class="register-desc">Corrupted.</td>
 </tr>
 </table>
 </td>
@@ -66,7 +54,7 @@ Used by the routine at <a href="B14C.html">bounds_check</a>.
 <td class="asm-label-1">interior_bounds_check</td>
 <td class="address-2"><span id="b29f"></span>B29F</td>
 <td class="instruction">LD A,($81BE)</td>
-<td class="comment-11" rowspan="8">BC = &amp;roomdef_bounds[roomdef_bounds_index];</td>
+<td class="comment-11" rowspan="8">BC = &amp;roomdef_dimensions[roomdef_bounds_index];</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>

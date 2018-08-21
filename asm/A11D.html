@@ -55,7 +55,7 @@ Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html
 <td class="asm-label-1">play_speaker</td>
 <td class="address-2"><span id="a11d"></span>A11D</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">delay = C; // Self-modify delay loop at $A126.</td>
+<td class="comment-11" rowspan="2">Self-modify the delay loop at $A126</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -67,25 +67,35 @@ Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a121"></span>A121</td>
 <td class="instruction">LD A,$10</td>
-<td class="comment-11" rowspan="1">A = 16; // Initial speaker bit.</td>
+<td class="comment-11" rowspan="1">Initially set the speaker bit on</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a123"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">play_speaker_0</td>
 <td class="address-2"><span id="a123"></span>A123</td>
 <td class="instruction">OUT ($FE),A</td>
-<td class="comment-11" rowspan="2">do &lt;% OUT ($FE),A // Play.</td>
+<td class="comment-11" rowspan="1">Play the speaker (and set the border)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a125"></span>A125</td>
 <td class="instruction">LD C,$37</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Delay</td>
 </tr>
 <tr>
 <td class="asm-label-1">play_speaker_1</td>
 <td class="address-2"><span id="a127"></span>A127</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">C = delay; while (C--) ;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -97,19 +107,19 @@ Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a12a"></span>A12A</td>
 <td class="instruction">XOR $10</td>
-<td class="comment-11" rowspan="1">A ^= 16; // Toggle speaker bit.</td>
+<td class="comment-11" rowspan="1">Toggle the speaker bit</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a12c"></span>A12C</td>
 <td class="instruction">DJNZ <a href="A11D.html#a123">play_speaker_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a12e"></span>A12E</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -21,13 +21,16 @@
 <td class="next"><span class="next-1">Next: <a href="A9A0.html">A9A0</a></span></td>
 </tr>
 </table>
-<div class="description">A8F4: Plotting vertical tiles (common part).</div>
+<div class="description">A8F4: Plots a single vertical row of tiles to the screen buffer.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-The comments here assume banked registers on entry.
+Simultaneously updates the visible tiles buffer.
+</div>
+<div class="paragraph">
+Used by the routines at <a href="A8A2.html">plot_all_tiles</a> and <a href="A8CF.html">plot_rightmost_tiles</a>.
 </div>
 </div>
 <table class="input-1">
@@ -35,8 +38,20 @@ The comments here assume banked registers on entry.
 <th colspan="2">Input</th>
 </tr>
 <tr>
-<td class="register">Used</td>
-<td class="register-desc">by the routines at <a href="A8A2.html">plot_all_tiles</a> and <a href="A8CF.html">plot_rightmost_tiles</a>.</td>
+<td class="register">A</td>
+<td class="register-desc">Map X position</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Pointer into the 24x17 visible tiles array ("tile_buf")</td>
+</tr>
+<tr>
+<td class="register">HL'</td>
+<td class="register-desc">Pointer into the 7x5 supertile indices buffer ("map_buf")</td>
+</tr>
+<tr>
+<td class="register">DE'</td>
+<td class="register-desc">Pointer into the 24x17x8 screen buffer ("window_buf")</td>
 </tr>
 </table>
 <table class="output-0">
@@ -51,25 +66,25 @@ The comments here assume banked registers on entry.
 <td class="asm-label-1">plot_vertical_tiles_common</td>
 <td class="address-2"><span id="a8f4"></span>A8F4</td>
 <td class="instruction">AND $03</td>
-<td class="comment-11" rowspan="1">A &amp;= 3;</td>
+<td class="comment-11" rowspan="1">Compute the column offset within a supertile from the map's X position (0, 1, 2 or 3)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8f6"></span>A8F6</td>
 <td class="instruction">LD ($A94D),A</td>
-<td class="comment-11" rowspan="1">($A94C + 1) = A; // self modify</td>
+<td class="comment-11" rowspan="1">Self modify the "LD A,$xx" instruction at $A94C to load the column offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8f9"></span>A8F9</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Cdash = A;</td>
+<td class="comment-11" rowspan="1">Preserve the column offset in <span class="register">C</span> for the next step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8fa"></span>A8FA</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="5">A = ((map_position &gt;&gt; 8) &amp; 3) * 4 + Cdash;</td>
+<td class="comment-11" rowspan="4">Compute the row offset within a supertile from the map's Y position (0, 4, 8 or 12)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -93,20 +108,20 @@ The comments here assume banked registers on entry.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a901"></span>A901</td>
 <td class="instruction">ADD A,C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Now add it to the column offset - giving the combined offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a902"></span>A902</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank the combined offset</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="a903"></span>
 <div class="comments">
 <div class="paragraph">
-Initial edge.
+Initial edge. This draws up to 4 tiles.
 </div>
 </div>
 </td>
@@ -115,19 +130,19 @@ Initial edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a903"></span>A903</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HLdash;</td>
+<td class="comment-11" rowspan="1">Fetch a supertile index from map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a904"></span>A904</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Switch register banks for the initial edge</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a905"></span>A905</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="9">HL = &amp;super_tiles[0] + Adash * 16; // supertiles</td>
+<td class="comment-11" rowspan="9">Point <span class="register">HL</span> at super_tiles[A]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -181,37 +196,37 @@ Initial edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a910"></span>A910</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the combined offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a911"></span>A911</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-11" rowspan="1">A += L;</td>
+<td class="comment-11" rowspan="2">Add on the combined offset to <span class="register">HL</span> to point us at the appropriate part of the supertile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a912"></span>A912</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="1">L = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a913"></span>A913</td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">RRA</td>
+<td class="comment-11" rowspan="7">Turn 0,4,8,12 into 4,3,2,1 - the number of initial loop iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a914"></span>A914</td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">RRA</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a915"></span>A915</td>
 <td class="instruction">AND $03</td>
-<td class="comment-11" rowspan="3">A = -(A &amp; 3) &amp; 3;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -229,7 +244,7 @@ Initial edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a91b"></span>A91B</td>
 <td class="instruction">JR NZ,<a href="A8F4.html#a91f">plot_vertical_tiles_common_0</a></td>
-<td class="comment-11" rowspan="2">if (A == 0) A = 4;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -241,43 +256,53 @@ Initial edge.
 <td class="asm-label-1">plot_vertical_tiles_common_0</td>
 <td class="address-2"><span id="a91f"></span>A91F</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Transpose tile_buf and map_buf pointers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a920"></span>A920</td>
 <td class="instruction">LD BC,$0018</td>
-<td class="comment-11" rowspan="1">BC = 24; // 24 iterations (screen rows?)</td>
+<td class="comment-11" rowspan="1">Set visible tiles stride</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a923"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_vertical_tiles_common_1</td>
 <td class="address-2"><span id="a923"></span>A923</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Save the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a924"></span>A924</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch a tile index from the super tile pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a925"></span>A925</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A;</td>
+<td class="comment-11" rowspan="1">Store it in the visible tiles (<span class="register">DE'</span> on entry)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a926"></span>A926</td>
 <td class="instruction">CALL <a href="A9A0.html">plot_tile_then_advance</a></td>
-<td class="comment-11" rowspan="1">plot_tile_then_advance();</td>
+<td class="comment-11" rowspan="1">Plot the tile in <span class="register">A</span> to the screen buffer at <span class="register">DE'</span> using supertile pointer <span class="register">HL'</span> then advance <span class="register">DE'</span> by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a929"></span>A929</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="3">DE += 4; // stride</td>
+<td class="comment-11" rowspan="3">Advance the tile pointer by a supertile row (4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -295,19 +320,19 @@ Initial edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a92d"></span>A92D</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">HL += BC;</td>
+<td class="comment-11" rowspan="1">Advance the visible tiles pointer by a row (24)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a92e"></span>A92E</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a92f"></span>A92F</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+<td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -319,19 +344,19 @@ Initial edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a933"></span>A933</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Transpose the tile_buf and map_buf pointers back</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a934"></span>A934</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a935"></span>A935</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="5">HL += 7;</td>
+<td class="comment-11" rowspan="5">Advance the map buffer pointer by a row (7)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -371,31 +396,41 @@ Middle loop.
 <td class="asm-label-1">plot_vertical_tiles_common_2</td>
 <td class="address-2"><span id="a93c"></span>A93C</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
+<td class="comment-11" rowspan="1">There are always three iterations (three supertiles in the middle section).</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a93e"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (outer) -- advanced for each supertile.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_vertical_tiles_common_3</td>
 <td class="address-2"><span id="a93e"></span>A93E</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a93f"></span>A93F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch a supertile index from the map buffer pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a940"></span>A940</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Switch register banks during the middle loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a941"></span>A941</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="8">HL = &amp;super_tiles[0] + A * 16; // supertiles</td>
+<td class="comment-11" rowspan="8">Point <span class="register">HL</span> at super_tiles[A]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -443,73 +478,83 @@ Middle loop.
 <td class="asm-label-1">supertile_plot_vertical_common_iters</td>
 <td class="address-1"><span id="a94c"></span>A94C</td>
 <td class="instruction">LD A,$00</td>
-<td class="comment-11" rowspan="1">A = 0; // self modified by $A8F6</td>
+<td class="comment-11" rowspan="1">Load the column offset - self modified by $A8F6</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a94e"></span>A94E</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-11" rowspan="1">A += L;</td>
+<td class="comment-11" rowspan="2">Add on the column offset to <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a94f"></span>A94F</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="1">L = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a950"></span>A950</td>
 <td class="instruction">LD BC,$0018</td>
-<td class="comment-11" rowspan="1">BC = 24; // stride</td>
+<td class="comment-11" rowspan="1">Set visible tiles stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a953"></span>A953</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Transpose the tile_buf and map_buf pointers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a954"></span>A954</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="1">A = 4;</td>
+<td class="comment-11" rowspan="1">Supertiles are four tiles high</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a956"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (inner) -- advanced for each tile
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_vertical_tiles_common_4</td>
 <td class="address-2"><span id="a956"></span>A956</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a957"></span>A957</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch a tile index from the super tile pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a958"></span>A958</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A;</td>
+<td class="comment-11" rowspan="1">Store it in visible tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a959"></span>A959</td>
 <td class="instruction">CALL <a href="A9A0.html">plot_tile_then_advance</a></td>
-<td class="comment-11" rowspan="1">plot_tile_then_advance();</td>
+<td class="comment-11" rowspan="1">Plot the tile in <span class="register">A</span> to the screen buffer at <span class="register">DE'</span> using supertile pointer <span class="register">HL'</span> then advance <span class="register">DE'</span> by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a95c"></span>A95C</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">HL += BC;</td>
+<td class="comment-11" rowspan="1">Advance the visible tiles pointer by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a95d"></span>A95D</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="3">DE += 4; // stride</td>
+<td class="comment-11" rowspan="3">Advance the tiles pointer by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -527,13 +572,13 @@ Middle loop.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a961"></span>A961</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a962"></span>A962</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+<td class="comment-11" rowspan="2">...loop (inner)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -545,19 +590,19 @@ Middle loop.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a966"></span>A966</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Transpose the tile_buf and map_buf pointers back</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a967"></span>A967</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a968"></span>A968</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="5">HL += 7;</td>
+<td class="comment-11" rowspan="5">Advance the map buffer pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -587,13 +632,13 @@ Middle loop.
 <td class="asm-label-1">plot_vertical_tiles_common_5</td>
 <td class="address-2"><span id="a96f"></span>A96F</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a970"></span>A970</td>
 <td class="instruction">DJNZ <a href="A8F4.html#a93e">plot_vertical_tiles_common_3</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop (outer)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -609,19 +654,19 @@ Trailing edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a972"></span>A972</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch a supertile index from map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a973"></span>A973</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Switch register banks during the trailing loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a974"></span>A974</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="8">HL = &amp;super_tiles[0] + A * 16; // supertiles</td>
+<td class="comment-11" rowspan="8">Point <span class="register">HL</span> at super_tiles[A]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -669,13 +714,13 @@ Trailing edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a97f"></span>A97F</td>
 <td class="instruction">LD A,($A94D)</td>
-<td class="comment-11" rowspan="3">HL += ($A94C + 1); // read self modified</td>
+<td class="comment-11" rowspan="1">Load the column offset from (self modified) $A94D</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a982"></span>A982</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Add on the column offset to <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -687,7 +732,7 @@ Trailing edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a984"></span>A984</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="3">A = ((map_position &gt;&gt; 8) &amp; 3) + 1;</td>
+<td class="comment-11" rowspan="3">Form the trailing loop iteration counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -705,73 +750,83 @@ Trailing edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a98a"></span>A98A</td>
 <td class="instruction">LD BC,$0018</td>
-<td class="comment-11" rowspan="1">BC = 24; // stride</td>
+<td class="comment-11" rowspan="1">Set visible tiles stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a98d"></span>A98D</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Transpose the tile_buf and map_buf pointers</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a98e"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_vertical_tiles_common_6</td>
 <td class="address-2"><span id="a98e"></span>A98E</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a98f"></span>A98F</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch a tile index from the super tile pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a990"></span>A990</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A;</td>
+<td class="comment-11" rowspan="1">Store it in visible tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a991"></span>A991</td>
 <td class="instruction">CALL <a href="A9A0.html">plot_tile_then_advance</a></td>
-<td class="comment-11" rowspan="1">plot_tile_then_advance();</td>
+<td class="comment-11" rowspan="1">Plot the tile in <span class="register">A</span> to the screen buffer at <span class="register">DE'</span> using supertile pointer <span class="register">HL'</span> then advance <span class="register">DE'</span> by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a994"></span>A994</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="1">A = 4;</td>
+<td class="comment-11" rowspan="3">Advance the tiles pointer by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a996"></span>A996</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-11" rowspan="1">A += E;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a997"></span>A997</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1">E = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a998"></span>A998</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">HL += BC;</td>
+<td class="comment-11" rowspan="1">Advance the visible tiles pointer by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a999"></span>A999</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a99a"></span>A99A</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+<td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -783,13 +838,13 @@ Trailing edge.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a99e"></span>A99E</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Transpose the tile_buf and map_buf pointers back</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a99f"></span>A99F</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

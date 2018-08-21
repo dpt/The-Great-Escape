@@ -51,26 +51,29 @@ Called when changing rooms.
 <td class="asm-label-1">set_hero_sprite_for_room</td>
 <td class="address-2"><span id="6920"></span>6920</td>
 <td class="instruction">LD HL,$800D</td>
-<td class="comment-11" rowspan="1">HL = $800D;</td>
+<td class="comment-11" rowspan="2">Set the hero's visible character input field to input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6923"></span>6923</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment-11" rowspan="2">*HL++ = input_KICK;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6925"></span>6925</td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at vischar.direction ($800E)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="6926"></span>
 <div class="comments">
 <div class="paragraph">
-vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywhere else so it must be an offset into byte_CDAA[]. When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag appropriately.
+vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywhere else so it must be an offset into animindices[].
+</div>
+<div class="paragraph">
+When in tunnel rooms force the hero sprite to 'prisoner' and set the crawl flag appropriately.
 </div>
 </div>
 </td>
@@ -79,7 +82,7 @@ vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywher
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6926"></span>6926</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index &gt;= room_29_SECOND_TUNNEL_START) &lt;%</td>
+<td class="comment-11" rowspan="3">If the global current room index is room_29_SECOND_TUNNEL_START or above...</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -94,16 +97,26 @@ vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywher
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="692d"></span>
+<div class="comments">
+<div class="paragraph">
+We're in a tunnel room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="692d"></span>692D</td>
 <td class="instruction">SET 2,(HL)</td>
-<td class="comment-11" rowspan="1">*HL |= vischar_DIRECTION_CRAWL; // $800E, set crawl flag</td>
+<td class="comment-11" rowspan="1">Set the vischar_DIRECTION_CRAWL bit on vischar.direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="692f"></span>692F</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="comment-11" rowspan="2">$8015 = &amp;sprite_prisoner; %&gt;</td>
+<td class="comment-11" rowspan="2">Set vischar.mi.sprite to the prisoner sprite set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -115,19 +128,29 @@ vischar_DIRECTION_CRAWL is set, or cleared, here but not tested directly anywher
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6935"></span>6935</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="comment-11" rowspan="1">Return</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6936"></span>
+<div class="comments">
+<div class="paragraph">
+We're not in a tunnel room.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">set_hero_sprite_for_room_0</td>
 <td class="address-2"><span id="6936"></span>6936</td>
 <td class="instruction">RES 2,(HL)</td>
-<td class="comment-11" rowspan="1">*HL &amp;= ~vischar_DIRECTION_CRAWL; %&gt; // clear crawl flag</td>
+<td class="comment-11" rowspan="1">Clear the vischar_DIRECTION_CRAWL bit from vischar.direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6938"></span>6938</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

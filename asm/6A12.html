@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="6A27.html">6A27</a></span></td>
 </tr>
 </table>
-<div class="description">6A12: Turn a door index into a doorpos pointer.</div>
+<div class="description">6A12: Turn a door index into a door_t pointer.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,7 +36,7 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Index of door + lock flag in bit 7.</td>
+<td class="register-desc">Index of door + reverse flag in bit 7.</td>
 </tr>
 </table>
 <table class="output-1">
@@ -45,11 +45,7 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to doorpos.</td>
-</tr>
-<tr>
-<td class="register">DE</td>
-<td class="register-desc">Corrupted.</td>
+<td class="register-desc">Pointer to door_t.</td>
 </tr>
 </table>
 </td>
@@ -58,19 +54,19 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 <td class="asm-label-1">get_door</td>
 <td class="address-2"><span id="6a12"></span>6A12</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="8">HL = &amp;doors[(A &amp; ~door_REVERSE) * 2]; // are they pairs of doors?</td>
+<td class="comment-11" rowspan="1">Save the original <span class="register">A</span> so we can test its flag bit in a moment</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a13"></span>6A13</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">First double <span class="register">A</span> since doors[] contains pairs of doors. This also discards the flag in bit 7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a14"></span>6A14</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="6">Form the address of doors[<span class="register">A</span>] in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -106,19 +102,19 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a1d"></span>6A1D</td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment-11" rowspan="7">if (A &amp; door_REVERSE) HL += 4; // if reverse</td>
+<td class="comment-11" rowspan="1">Was the door_REVERSE flag bit set on entry?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a1f"></span>6A1F</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">If not, return with <span class="register">HL</span> pointing to the entry</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a20"></span>6A20</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="5">Otherwise, point to the next entry along</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -148,7 +144,7 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a26"></span>6A26</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

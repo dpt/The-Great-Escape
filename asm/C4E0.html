@@ -51,7 +51,7 @@ Used by the routine at <a href="C41C.html">spawn_characters</a>.
 <td class="asm-label-1">spawn_character</td>
 <td class="address-2"><span id="c4e0"></span>C4E0</td>
 <td class="instruction">BIT 6,(HL)</td>
-<td class="comment-11" rowspan="2">if (*HL &amp; characterstruct_FLAG_DISABLED) return; /* character disabled */</td>
+<td class="comment-11" rowspan="2">if (*HL &amp; characterstruct_FLAG_ON_SCREEN) return; /* character disabled */</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -381,7 +381,7 @@ Scale coords dependent on which room the character is in.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c52c"></span>C52C</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">A = *DE | characterstruct_FLAG_DISABLED; /* Disable character */</td>
+<td class="comment-11" rowspan="2">A = *DE | characterstruct_FLAG_ON_SCREEN; /* Disable character */</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -966,8 +966,8 @@ Scale coords dependent on which room the character is in.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c5cc"></span>C5CC</td>
-<td class="instruction">CALL <a href="B71B.html">calc_vischar_screenpos_from_mi_pos</a></td>
-<td class="comment-11" rowspan="1">calc_vischar_screenpos_from_mi_pos();</td>
+<td class="instruction">CALL <a href="B71B.html">calc_vischar_iso_pos_from_vischar</a></td>
+<td class="comment-11" rowspan="1">calc_vischar_iso_pos_from_vischar();</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>

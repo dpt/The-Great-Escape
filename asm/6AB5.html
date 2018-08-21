@@ -30,34 +30,41 @@
 Used by the routine at <a href="6A35.html">setup_room</a>.
 </div>
 <div class="paragraph">
-<table class="default">
+Object format: <table class="default">
 <tr>
-<td class="" colspan="2" rowspan="1">Each object starts with dimension bytes:</td>
+<td class="" colspan="2" rowspan="1">Each object starts with two bytes which specify its dimensions:</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">&lt;w&gt; &lt;h&gt;</td>
-<td class="" colspan="1" rowspan="1">width, height</td>
+<td class="" colspan="1" rowspan="1">Width in tiles, Height in tiles</td>
 </tr>
 <tr>
 <td class="" colspan="2" rowspan="1">Which are then followed by a repetition of the following bytes:</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">&lt;t&gt;</td>
-<td class="" colspan="1" rowspan="1">emit tile &lt;t&gt;</td>
-</tr>
-<tr>
-<td class="" colspan="1" rowspan="1">&lt;0xFF&gt; &lt;64..127&gt; &lt;t&gt;</td>
-<td class="" colspan="1" rowspan="1">emit tile &lt;t&gt; &lt;t+1&gt; &lt;t+2&gt; .. up to 63 times</td>
-</tr>
-<tr>
-<td class="" colspan="1" rowspan="1">&lt;0xFF&gt; &lt;128..254&gt; &lt;t&gt;</td>
-<td class="" colspan="1" rowspan="1">emit tile &lt;t&gt; up to 126 times</td>
+<td class="" colspan="1" rowspan="1">Literal: Emit tile &lt;t&gt;</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">&lt;0xFF&gt; &lt;0xFF&gt;</td>
-<td class="" colspan="1" rowspan="1">emit &lt;0xFF&gt;</td>
+<td class="" colspan="1" rowspan="1">Escape: Emit &lt;0xFF&gt;</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">&lt;0xFF&gt; &lt;128..254&gt; &lt;t&gt;</td>
+<td class="" colspan="1" rowspan="1">Repetition: Emit tile &lt;t&gt; up to 126 times</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">&lt;0xFF&gt; &lt;64..79&gt; &lt;t&gt;</td>
+<td class="" colspan="1" rowspan="1">Range: Emit tile &lt;t&gt; &lt;t+1&gt; &lt;t+2&gt; .. up to &lt;t+15&gt;</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">&lt;0xFF&gt; &lt;other&gt;</td>
+<td class="" colspan="1" rowspan="1">Other encodings are not used</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+Tile references of zero produce no output.
 </div>
 </div>
 <table class="input-1">
@@ -73,18 +80,11 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="register-desc">Tile buffer location to expand to.</td>
 </tr>
 </table>
-<table class="output-1">
+<table class="output-0">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-<tr>
-<td class="register">BC</td>
-<td class="register-desc">Corrupted.</td>
-</tr>
-<tr>
-<td class="register">HL</td>
-<td class="register-desc">Corrupted.</td>
-</tr>
+
 </table>
 </td>
 </tr>
@@ -92,7 +92,7 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="asm-label-1">expand_object</td>
 <td class="address-2"><span id="6ab5"></span>6AB5</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="9">HL = interior_object_defs[A];</td>
+<td class="comment-11" rowspan="9">Fetch the object pointer from <a href="7095.html">interior_object_defs</a>[A] into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -146,7 +146,7 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac1"></span>6AC1</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-11" rowspan="2">B = *HL++; // width</td>
+<td class="comment-11" rowspan="2">Fetch the object's width (in tiles)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -158,7 +158,7 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac3"></span>6AC3</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="2">C = *HL++; // height</td>
+<td class="comment-11" rowspan="2">Fetch the object's height (in tiles)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -170,7 +170,7 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ac5"></span>6AC5</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="2">($6AE6 + 1) = B; // self modify (== width)</td>
+<td class="comment-11" rowspan="2">Self modify the "LD B,$xx" at <a href="6AB5.html#6ae6">end_of_row</a> to load the tile-width into <span class="register">B</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -179,87 +179,107 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_0</td>
+<td class="routine-comment" colspan="4">
+<span id="6ac9"></span>
+<div class="comments">
+<div class="paragraph">
+Start main expand loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">expand</td>
 <td class="address-2"><span id="6ac9"></span>6AC9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">do &lt;% do &lt;% expand: A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the next byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aca"></span>6ACA</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == interiorobjecttile_ESCAPE) &lt;%</td>
+<td class="comment-11" rowspan="1">Is it an escape byte? (interiorobjecttile_ESCAPE/$FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6acc"></span>6ACC</td>
-<td class="instruction">JR NZ,<a href="6AB5.html#6ade">expand_object_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6ade">write_tile</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6ace"></span>
+<div class="comments">
+<div class="paragraph">
+Handle an escape byte - indicating an encoded sequence
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ace"></span>6ACE</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Step over the escape byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6acf"></span>6ACF</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the next byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad0"></span>6AD0</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A != interiorobjecttile_ESCAPE) &lt;% // FF FF =&gt; FF</td>
+<td class="comment-11" rowspan="1">Is it also an escape byte?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad2"></span>6AD2</td>
-<td class="instruction">JR Z,<a href="6AB5.html#6ade">expand_object_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="6AB5.html#6ade">write_tile</a></td>
+<td class="comment-11" rowspan="1">Jump to tile write op if so - we'll emit $FF (Note: Could jump two instructions later)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad4"></span>6AD4</td>
 <td class="instruction">AND $F0</td>
-<td class="comment-11" rowspan="1">A &amp;= 0xF0;</td>
+<td class="comment-11" rowspan="1">Isolate the top nibble - the top two bits are flags (Note: This could move down to before the $40 test without affecting anything)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad6"></span>6AD6</td>
 <td class="instruction">CP $80</td>
-<td class="comment-11" rowspan="2">if (A &gt;= 128) goto run;</td>
+<td class="comment-11" rowspan="1">Is it &gt;= 128?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ad8"></span>6AD8</td>
-<td class="instruction">JR NC,<a href="6AB5.html#6af4">run</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="6AB5.html#6af4">repetition</a></td>
+<td class="comment-11" rowspan="1">Jump to repetition handling if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ada"></span>6ADA</td>
 <td class="instruction">CP $40</td>
-<td class="comment-11" rowspan="2">if (A == 64) goto range; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">Is it == 64?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6adc"></span>6ADC</td>
 <td class="instruction">JR Z,<a href="6AB5.html#6b19">range</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump to range handling if so</td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_1</td>
+<td class="asm-label-1">write_tile</td>
 <td class="address-2"><span id="6ade"></span>6ADE</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="3">if (A) *DE = A;</td>
+<td class="comment-11" rowspan="3">Write out the tile if it's non-zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6adf"></span>6ADF</td>
-<td class="instruction">JR Z,<a href="6AB5.html#6ae2">expand_object_2</a></td>
+<td class="instruction">JR Z,<a href="6AB5.html#6ae2">expand_object_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -269,46 +289,46 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_2</td>
+<td class="asm-label-1">expand_object_0</td>
 <td class="address-2"><span id="6ae2"></span>6AE2</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Move to next input byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ae3"></span>6AE3</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++;</td>
+<td class="comment-11" rowspan="1">Move to next output byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ae4"></span>6AE4</td>
-<td class="instruction">DJNZ <a href="6AB5.html#6ac9">expand_object_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="6AB5.html#6ac9">expand</a></td>
+<td class="comment-11" rowspan="1">...loop while width counter <span class="register">B</span> is non-zero</td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_width</td>
+<td class="asm-label-1">end_of_row</td>
 <td class="address-1"><span id="6ae6"></span>6AE6</td>
 <td class="instruction">LD B,$01</td>
-<td class="comment-11" rowspan="1">B = 1; // self modified</td>
+<td class="comment-11" rowspan="1">Reset width counter. Self modified by <a href="6AB5.html#6ac5">6AC5</a></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ae8"></span>6AE8</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="6">DE += 24 - B;</td>
+<td class="comment-11" rowspan="1">Width of tile buffer is 24</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aea"></span>6AEA</td>
 <td class="instruction">SUB B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Tile buffer width minus width of object gives the rowskip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aeb"></span>6AEB</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Add <span class="register">A</span> to <span class="register">DE</span> to move by rowskip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -319,7 +339,7 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aed"></span>6AED</td>
-<td class="instruction">JR NC,<a href="6AB5.html#6af0">expand_object_3</a></td>
+<td class="instruction">JR NC,<a href="6AB5.html#6af0">expand_object_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -329,111 +349,121 @@ Used by the routine at <a href="6A35.html">setup_room</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_3</td>
+<td class="asm-label-1">expand_object_1</td>
 <td class="address-2"><span id="6af0"></span>6AF0</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">%&gt; while (--C); // for each row</td>
+<td class="comment-11" rowspan="1">Decrement row counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6af1"></span>6AF1</td>
-<td class="instruction">JR NZ,<a href="6AB5.html#6ac9">expand_object_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6ac9">expand</a></td>
+<td class="comment-11" rowspan="1">...loop to expand while row &gt; 0</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6af3"></span>6AF3</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="6af4"></span>
 <div class="comments">
 <div class="paragraph">
-128..255 case
+Escape + 128..255 case: emit a repetition of the same byte
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">run</td>
+<td class="asm-label-1">repetition</td>
 <td class="address-2"><span id="6af4"></span>6AF4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++ &amp; 0x7F; // run length</td>
+<td class="comment-11" rowspan="1">Fetch flags+count byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6af5"></span>6AF5</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Mask off top bit to get repetition counter/length</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6af7"></span>6AF7</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank repetition counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6af8"></span>6AF8</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move to the next tile value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6af9"></span>6AF9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch a tile value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6afa"></span>6AFA</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank repetition counter ready for the next bank</td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_4</td>
+<td class="routine-comment" colspan="4">
+<span id="6afb"></span>
+<div class="comments">
+<div class="paragraph">
+Start of repetition loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">repetition_loop</td>
 <td class="address-2"><span id="6afb"></span>6AFB</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Bank the repetition counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6afc"></span>6AFC</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="3">if (Adash &gt; 0) *DE = Adash;</td>
+<td class="comment-11" rowspan="1">Is the tile value zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6afd"></span>6AFD</td>
-<td class="instruction">JR Z,<a href="6AB5.html#6b00">expand_object_5</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="6AB5.html#6b00">expand_object_2</a></td>
+<td class="comment-11" rowspan="1">Jump if so, avoiding the write</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aff"></span>6AFF</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Write it</td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_5</td>
+<td class="asm-label-1">expand_object_2</td>
 <td class="address-2"><span id="6b00"></span>6B00</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++;</td>
+<td class="comment-11" rowspan="1">Move to next tile output byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b01"></span>6B01</td>
-<td class="instruction">DJNZ <a href="6AB5.html#6b12">expand_object_7</a></td>
-<td class="comment-11" rowspan="1"></td>
+<td class="instruction">DJNZ <a href="6AB5.html#6b12">repetition_end</a></td>
+<td class="comment-11" rowspan="1">Decrement the width counter. Jump over the end-of-row code to <a href="6AB5.html#6b12">repetition_end</a> if it's non-zero</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="6b03"></span>
 <div class="comments">
 <div class="paragraph">
-Ran out of width.
+Ran out of width / end of row
 </div>
 </div>
 </td>
@@ -442,31 +472,31 @@ Ran out of width.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b03"></span>6B03</td>
 <td class="instruction">LD A,($6AE7)</td>
-<td class="comment-11" rowspan="1">LD Adash,($6AE6 + 1)  // Adash = width</td>
+<td class="comment-11" rowspan="1">Fetch width (from self modified instruction) into <span class="register">A'</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b06"></span>6B06</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-11" rowspan="1">B = Adash;</td>
+<td class="comment-11" rowspan="1">Reset width counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b07"></span>6B07</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="6">DE += 24 - B; // stride // move to next row</td>
+<td class="comment-11" rowspan="1">Width of tile buffer is 24</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b09"></span>6B09</td>
 <td class="instruction">SUB B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Tile buffer width minus width of object gives the rowskip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b0a"></span>6B0A</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Add <span class="register">A</span> to <span class="register">DE</span> to move by rowskip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -477,7 +507,7 @@ Ran out of width.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b0c"></span>6B0C</td>
-<td class="instruction">JR NC,<a href="6AB5.html#6b0f">expand_object_6</a></td>
+<td class="instruction">JR NC,<a href="6AB5.html#6b0f">expand_object_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -487,62 +517,62 @@ Ran out of width.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_6</td>
+<td class="asm-label-1">expand_object_3</td>
 <td class="address-2"><span id="6b0f"></span>6B0F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the next tile value (reload)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b10"></span>6B10</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">if (--C == 0) return;</td>
+<td class="comment-11" rowspan="1">Decrement the row counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b11"></span>6B11</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if it hit zero</td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_7</td>
+<td class="asm-label-1">repetition_end</td>
 <td class="address-2"><span id="6b12"></span>6B12</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the repetition counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b13"></span>6B13</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+<td class="comment-11" rowspan="1">Decrement the repetition counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b14"></span>6B14</td>
-<td class="instruction">JR NZ,<a href="6AB5.html#6afb">expand_object_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6afb">repetition_loop</a></td>
+<td class="comment-11" rowspan="1">...loop if non-zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b16"></span>6B16</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance the data pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b17"></span>6B17</td>
-<td class="instruction">JR <a href="6AB5.html#6ac9">expand_object_0</a></td>
-<td class="comment-11" rowspan="1">goto expand;</td>
+<td class="instruction">JR <a href="6AB5.html#6ac9">expand</a></td>
+<td class="comment-11" rowspan="1">Jump to main expand loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="6b19"></span>
 <div class="comments">
 <div class="paragraph">
-64..127 case.
+Escape + 64..79 case: emit an ascending range of bytes
 </div>
 <div class="paragraph">
-Bug: This self-modifies the INC A at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+Bug: This self-modifies the INC A at <a href="6AB5.html#6b28">expand_object_increment</a> at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
 </div>
 </div>
 </td>
@@ -551,86 +581,96 @@ Bug: This self-modifies the INC A at the end of the loop body, but nothing else 
 <td class="asm-label-1">range</td>
 <td class="address-2"><span id="6b19"></span>6B19</td>
 <td class="instruction">LD A,$3C</td>
-<td class="comment-11" rowspan="1">A = 60; // opcode of 'INC A'</td>
+<td class="comment-11" rowspan="2">Make the instruction at <a href="6AB5.html#6b28">expand_object_increment</a> an 'INC A'</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b1b"></span>6B1B</td>
 <td class="instruction">LD ($6B28),A</td>
-<td class="comment-11" rowspan="1">($6B28) = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b1e"></span>6B1E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++ &amp; 0x0F;</td>
+<td class="comment-11" rowspan="1">Fetch flags+count byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b1f"></span>6B1F</td>
 <td class="instruction">AND $0F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Mask off the bottom nibble which contains the range counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b21"></span>6B21</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank the range counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b22"></span>6B22</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move to the first tile value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b23"></span>6B23</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-11" rowspan="1">Get the first tile value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b24"></span>6B24</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the range counter ready for the next bank</td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_8</td>
+<td class="routine-comment" colspan="4">
+<span id="6b25"></span>
+<div class="comments">
+<div class="paragraph">
+Start of range loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">range_loop</td>
 <td class="address-2"><span id="6b25"></span>6B25</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Bank the range counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b26"></span>6B26</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="2">*DE++ = Adash;</td>
+<td class="comment-11" rowspan="1">Write the tile value (Note: We assume it's non-zero)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b27"></span>6B27</td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move to the next tile output byte</td>
 </tr>
 <tr>
 <td class="asm-label-1">expand_object_increment</td>
 <td class="address-1"><span id="6b28"></span>6B28</td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="1">INC Adash // self modified</td>
+<td class="comment-11" rowspan="1">Increment the tile value. Self modified by <a href="6AB5.html#6b1b">6B1B</a></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b29"></span>6B29</td>
-<td class="instruction">DJNZ <a href="6AB5.html#6b3b">expand_object_10</a></td>
-<td class="comment-11" rowspan="1"></td>
+<td class="instruction">DJNZ <a href="6AB5.html#6b3b">range_end</a></td>
+<td class="comment-11" rowspan="1">Decrement width counter. Jump over the end-of-row code to <a href="6AB5.html#6b3b">range_end</a> if it's non-zero</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="6b2b"></span>
 <div class="comments">
 <div class="paragraph">
-Ran out of width.
+Ran out of width / end of row
 </div>
 </div>
 </td>
@@ -639,37 +679,37 @@ Ran out of width.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b2b"></span>6B2B</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">PUSH AFdash</td>
+<td class="comment-11" rowspan="1">Stash the tile value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b2c"></span>6B2C</td>
 <td class="instruction">LD A,($6AE7)</td>
-<td class="comment-11" rowspan="2">LD Adash,($6AE6 + 1)  // Adash = width</td>
+<td class="comment-11" rowspan="1">Fetch width (from self modified instruction) into <span class="register">A'</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b2f"></span>6B2F</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Reset width counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b30"></span>6B30</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="6">DE += 24 - Adash; // stride // move to next row</td>
+<td class="comment-11" rowspan="1">Width of tile buffer is 24</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b32"></span>6B32</td>
 <td class="instruction">SUB B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Tile buffer width minus width of object gives the rowskip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b33"></span>6B33</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Add <span class="register">A</span> to <span class="register">DE</span> to move by rowskip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -680,7 +720,7 @@ Ran out of width.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b35"></span>6B35</td>
-<td class="instruction">JR NC,<a href="6AB5.html#6b38">expand_object_9</a></td>
+<td class="instruction">JR NC,<a href="6AB5.html#6b38">expand_object_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -690,52 +730,52 @@ Ran out of width.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_9</td>
+<td class="asm-label-1">expand_object_4</td>
 <td class="address-2"><span id="6b38"></span>6B38</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="2">POP AFdash</td>
+<td class="comment-11" rowspan="1">Unstash the tile value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b39"></span>6B39</td>
 <td class="instruction">DEC C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Decrement row counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3a"></span>6B3A</td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">if (--C == 0) return;</td>
+<td class="comment-11" rowspan="1">Return if it hit zero</td>
 </tr>
 <tr>
-<td class="asm-label-1">expand_object_10</td>
+<td class="asm-label-1">range_end</td>
 <td class="address-2"><span id="6b3b"></span>6B3B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the range counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3c"></span>6B3C</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Decrement the range counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3d"></span>6B3D</td>
-<td class="instruction">JR NZ,<a href="6AB5.html#6b25">expand_object_8</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--A);</td>
+<td class="instruction">JR NZ,<a href="6AB5.html#6b25">range_loop</a></td>
+<td class="comment-11" rowspan="1">...loop if non-zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b3f"></span>6B3F</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance the data pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6b40"></span>6B40</td>
-<td class="instruction">JR <a href="6AB5.html#6ac9">expand_object_0</a></td>
-<td class="comment-11" rowspan="1">goto expand;</td>
+<td class="instruction">JR <a href="6AB5.html#6ac9">expand</a></td>
+<td class="comment-11" rowspan="1">Jump to main expand loop</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="9E07.html">9E07</a></span></td>
 </tr>
 </table>
-<div class="description">9DE5: Check for BREAK keypress.</div>
+<div class="description">9DE5: Check for a BREAK keypress.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -51,7 +51,7 @@ If pressed then clear the screen and confirm with the player that they want to r
 <td class="asm-label-1">keyscan_break</td>
 <td class="address-2"><span id="9de5"></span>9DE5</td>
 <td class="instruction">LD BC,$FEFE</td>
-<td class="comment-11" rowspan="8">if (!(shift_pressed &amp;&amp; space_pressed)) return;</td>
+<td class="comment-11" rowspan="8">If shift or space are not pressed then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -99,25 +99,25 @@ If pressed then clear the screen and confirm with the player that they want to r
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9df4"></span>9DF4</td>
 <td class="instruction">CALL <a href="A50B.html">screen_reset</a></td>
-<td class="comment-11" rowspan="1">screen_reset();</td>
+<td class="comment-11" rowspan="1">Reset the screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9df7"></span>9DF7</td>
 <td class="instruction">CALL <a href="EFFC.html">user_confirm</a></td>
-<td class="comment-11" rowspan="1">user_confirm();</td>
+<td class="comment-11" rowspan="1">Wait for the player to press 'Y' or 'N'</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dfa"></span>9DFA</td>
 <td class="instruction">JP Z,<a href="B75A.html">reset_game</a></td>
-<td class="comment-11" rowspan="1">if (Z) reset_game();</td>
+<td class="comment-11" rowspan="1">If 'Y' was pressed (Z set) then reset the game</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9dfd"></span>9DFD</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index == 0) &lt;% reset_outdoors(); return; %&gt; // exit via</td>
+<td class="comment-11" rowspan="3">If the global current room index is room_0_OUTDOORS then !(Reset the hero's position, redraw the scene, then zoombox it onto the screen) and return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -135,7 +135,7 @@ If pressed then clear the screen and confirm with the player that they want to r
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e04"></span>9E04</td>
 <td class="instruction">JP <a href="68F4.html">enter_room</a></td>
-<td class="comment-11" rowspan="1">else enter_room(); // doesn't return (jumps to main_loop)</td>
+<td class="comment-11" rowspan="1">The hero enters a room - returns via squash_stack_goto_main</td>
 </tr>
 </table>
 <table class="asm-navigation">

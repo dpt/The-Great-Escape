@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A9E4.html">A9E4</a></span></td>
 </tr>
 </table>
-<div class="description">A9AD: Plot a tile then increment DE' by 1.</div>
+<div class="description">A9AD: Plot an exterior tile then advance <span class="register">DE'</span> to the next column.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -40,11 +40,11 @@ Used by the routines at <a href="A826.html">plot_horizontal_tiles_common</a> and
 </tr>
 <tr>
 <td class="register">DE'</td>
-<td class="register-desc">Output buffer start address.</td>
+<td class="register-desc">Pointer into the 24x17x8 screen buffer ("window_buf")</td>
 </tr>
 <tr>
 <td class="register">HL'</td>
-<td class="register-desc">Pointer to supertile index (used to select the correct tile group).</td>
+<td class="register-desc">Pointer into the 7x5 supertile indices buffer ("map_buf") (used to select the correct tile group)</td>
 </tr>
 </table>
 <table class="output-0">
@@ -59,31 +59,54 @@ Used by the routines at <a href="A826.html">plot_horizontal_tiles_common</a> and
 <td class="asm-label-1">plot_tile</td>
 <td class="address-2"><span id="a9ad"></span>A9AD</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank input registers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9ae"></span>A9AE</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank the tile index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9af"></span>A9AF</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HLdash; // get supertile index</td>
+<td class="comment-11" rowspan="1">Fetch a supertile index from map_buf</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a9b0"></span>
+<div class="comments">
+<div class="paragraph">
+Now map the tile index and supertile index into a tile pointer: <table class="default">
+<tr>
+<td class="" colspan="1" rowspan="1">Supertiles 44 and lower</td>
+<td class="" colspan="1" rowspan="1">use tiles   0..249 (249 tile span)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Supertiles 45..138 and 204..218</td>
+<td class="" colspan="1" rowspan="1">use tiles 145..400 (255 tile span)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Supertiles 139..203</td>
+<td class="" colspan="1" rowspan="1">use tiles 365..570 (205 tile span)</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9b0"></span>A9B0</td>
 <td class="instruction">LD BC,$8590</td>
-<td class="comment-11" rowspan="1">BCdash = &amp;exterior_tiles[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at exterior_tiles[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9b3"></span>A9B3</td>
 <td class="instruction">CP $2D</td>
-<td class="comment-11" rowspan="2">if (Adash &lt; 45) goto chosen;</td>
+<td class="comment-11" rowspan="2">If supertile index &lt;= 44 jump to plot_tile_chosen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -95,13 +118,13 @@ Used by the routines at <a href="A826.html">plot_horizontal_tiles_common</a> and
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9b7"></span>A9B7</td>
 <td class="instruction">LD BC,$8A18</td>
-<td class="comment-11" rowspan="1">BCdash = &amp;exterior_tiles[145]; // set 2</td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at exterior_tiles[145]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9ba"></span>A9BA</td>
 <td class="instruction">CP $8B</td>
-<td class="comment-11" rowspan="4">if (Adash &lt; 139 || Adash &gt;= 204) goto chosen;</td>
+<td class="comment-11" rowspan="4">If supertile index &lt;= 138 or &gt;= 204 jump to plot_tile_chosen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -125,25 +148,25 @@ Used by the routines at <a href="A826.html">plot_horizontal_tiles_common</a> and
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9c2"></span>A9C2</td>
 <td class="instruction">LD BC,$90F8</td>
-<td class="comment-11" rowspan="1">BCdash = &amp;exterior_tiles[145 + 220]; // set 3</td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at exterior_tiles[365]</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_tile_chosen</td>
 <td class="address-2"><span id="a9c5"></span>A9C5</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">chosen: PUSH HLdash;</td>
+<td class="comment-11" rowspan="1">Preserve the supertile pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9c6"></span>A9C6</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the tile index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9c7"></span>A9C7</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="6">HLdash = A * 8 + BCdash;</td>
+<td class="comment-11" rowspan="6">Point <span class="register">HL</span> at <span class="register">BC</span>[tile index]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -179,103 +202,113 @@ Used by the routines at <a href="A826.html">plot_horizontal_tiles_common</a> and
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9ce"></span>A9CE</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">PUSH DEdash;</td>
+<td class="comment-11" rowspan="1">Preserve the screen buffer pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9cf"></span>A9CF</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">EX DEdash,HLdash;</td>
+<td class="comment-11" rowspan="1">Transpose</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9d0"></span>A9D0</td>
 <td class="instruction">LD BC,$0018</td>
-<td class="comment-11" rowspan="1">BCdash = 24;</td>
+<td class="comment-11" rowspan="1">Set the screen buffer stride to 24</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9d3"></span>A9D3</td>
 <td class="instruction">LD A,$08</td>
-<td class="comment-11" rowspan="1">A = 8; // 8 iterations</td>
+<td class="comment-11" rowspan="1">Set eight iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a9d5"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_tile_loop</td>
 <td class="address-2"><span id="a9d5"></span>A9D5</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9d6"></span>A9D6</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Adash = *DEdash;</td>
+<td class="comment-11" rowspan="2">Copy a byte of tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9d7"></span>A9D7</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HLdash = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9d8"></span>A9D8</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">HLdash += BCdash; // stride</td>
+<td class="comment-11" rowspan="1">Advance the destination pointer to the next row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9d9"></span>A9D9</td>
 <td class="instruction">INC E</td>
-<td class="comment-11" rowspan="1">E++;</td>
+<td class="comment-11" rowspan="1">Advance the source pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9da"></span>A9DA</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9db"></span>A9DB</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="1">A--;</td>
+<td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9dc"></span>A9DC</td>
 <td class="instruction">JP NZ,<a href="A9AD.html#a9d5">plot_tile_loop</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (A);</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9df"></span>A9DF</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">POP DEdash;</td>
+<td class="comment-11" rowspan="1">Restore the screen buffer pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9e0"></span>A9E0</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DEdash++;</td>
+<td class="comment-11" rowspan="1">Advance the screen buffer pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9e1"></span>A9E1</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HLdash;</td>
+<td class="comment-11" rowspan="1">Restore the supertile pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9e2"></span>A9E2</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Re-bank input registers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9e3"></span>A9E3</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

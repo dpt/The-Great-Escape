@@ -39,15 +39,22 @@ Used by the routine at <a href="CB98.html">solitary</a>.
 <td class="register-desc">Index (0..2) into permitted_bounds[] table.</td>
 </tr>
 <tr>
-<td class="register">HL</td>
-<td class="register-desc">Pointer to position.</td>
+<td class="register">DE</td>
+<td class="register-desc">Pointer to position (a TinyPos).</td>
 </tr>
 </table>
-<table class="output-0">
+<table class="output-1">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if position is within the area specified.</td>
+</tr>
+<tr>
+<td class="register">Point</td>
+<td class="register-desc"><span class="register">HL</span> at permitted_bounds[A]</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -55,7 +62,7 @@ Used by the routine at <a href="CB98.html">solitary</a>.
 <td class="asm-label-1">within_camp_bounds</td>
 <td class="address-2"><span id="a01a"></span>A01A</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="6">HL = &amp;permitted_bounds[A * 4];</td>
+<td class="comment-11" rowspan="2">Multiply <span class="register">A</span> by 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -67,7 +74,7 @@ Used by the routine at <a href="CB98.html">solitary</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a01c"></span>A01C</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Move it into <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -79,61 +86,81 @@ Used by the routine at <a href="CB98.html">solitary</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a01f"></span>A01F</td>
 <td class="instruction">LD HL,$9F15</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at permitted_bounds</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a022"></span>A022</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a023"></span>
+<div class="comments">
+<div class="paragraph">
+Test position against bounds
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a023"></span>A023</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">B = 2;</td>
+<td class="comment-11" rowspan="1">Iterate twice - first checking the X axis, then the Y axis</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a025"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">within_camp_bounds_0</td>
 <td class="address-2"><span id="a025"></span>A025</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">do &lt;% A = *DE++;</td>
+<td class="comment-11" rowspan="1">Fetch a position byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a026"></span>A026</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A &lt; HL[0]) return; // return with flags NZ</td>
+<td class="comment-11" rowspan="1">Is <span class="register">A</span> less than the lower bound?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a027"></span>A027</td>
 <td class="instruction">RET C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return with flags NZ if so (outside area)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a028"></span>A028</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="6">if (A &gt;= HL[1]) &lt;% A |= 1; return; %&gt; // return with flags NZ // return with flags NZ</td>
+<td class="comment-11" rowspan="1">Move to x1, or y1 on second iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a029"></span>A029</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is <span class="register">A</span> less than the upper bound?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a02a"></span>A02A</td>
 <td class="instruction">JR C,<a href="A01A.html#a02f">within_camp_bounds_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump to the next loop iteration if so (inside area)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a02c"></span>A02C</td>
 <td class="instruction">OR $01</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Otherwise return with flags NZ (outside area)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -145,31 +172,31 @@ Used by the routine at <a href="CB98.html">solitary</a>.
 <td class="asm-label-1">within_camp_bounds_1</td>
 <td class="address-2"><span id="a02f"></span>A02F</td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance to second axis for position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a030"></span>A030</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL += 2;</td>
+<td class="comment-11" rowspan="1">Advance to second axis for bounds</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a031"></span>A031</td>
 <td class="instruction">DJNZ <a href="A01A.html#a025">within_camp_bounds_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a033"></span>A033</td>
 <td class="instruction">AND B</td>
-<td class="comment-11" rowspan="1">A &amp;= B;</td>
+<td class="comment-11" rowspan="2">Return with flags Z (within area)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a034"></span>A034</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; // return with flags Z</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">

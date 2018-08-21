@@ -51,7 +51,7 @@ Print 'well done' message then test to see if the correct objects were used in t
 <td class="asm-label-1">escaped</td>
 <td class="address-2"><span id="a51c"></span>A51C</td>
 <td class="instruction">CALL <a href="A50B.html">screen_reset</a></td>
-<td class="comment-11" rowspan="1">screen_reset();</td>
+<td class="comment-11" rowspan="1">Reset the screen</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -67,32 +67,32 @@ Print standard prefix messages.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a51f"></span>A51F</td>
 <td class="instruction">LD HL,$A5CE</td>
-<td class="comment-11" rowspan="1">HL = &amp;escape_strings[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the escape messages</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a522"></span>A522</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">screenlocstring_plot(); // WELL DONE</td>
+<td class="comment-11" rowspan="3">Print "WELL DONE" "YOU HAVE ESCAPED" "FROM THE CAMP" (each print call advances <span class="register">HL</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a525"></span>A525</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">screenlocstring_plot(); // YOU HAVE ESCAPED</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a528"></span>A528</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">screenlocstring_plot(); // FROM THE CAMP</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="a52b"></span>
 <div class="comments">
 <div class="paragraph">
-Form escape items bitfield.
+Form an escape items bitfield.
 </div>
 </div>
 </td>
@@ -101,31 +101,31 @@ Form escape items bitfield.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a52b"></span>A52B</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-11" rowspan="1">C = 0; // zero flag</td>
+<td class="comment-11" rowspan="1">Clear the item flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a52d"></span>A52D</td>
 <td class="instruction">LD HL,$8215</td>
-<td class="comment-11" rowspan="1">HL = &amp;items_held[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a530"></span>A530</td>
 <td class="instruction">CALL <a href="A59C.html">join_item_to_escapeitem</a></td>
-<td class="comment-11" rowspan="1">join_item_to_escapeitem();</td>
+<td class="comment-11" rowspan="1">Turn the item into a flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a533"></span>A533</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; // &amp;items_held[1];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a534"></span>A534</td>
 <td class="instruction">CALL <a href="A59C.html">join_item_to_escapeitem</a></td>
-<td class="comment-11" rowspan="1">join_item_to_escapeitem();</td>
+<td class="comment-11" rowspan="1">Turn the item into a flag, merging with previous result</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -141,13 +141,13 @@ Print item-tailored messages.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a537"></span>A537</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="1">A = C;</td>
+<td class="comment-11" rowspan="1">Move flags into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a538"></span>A538</td>
 <td class="instruction">CP $05</td>
-<td class="comment-11" rowspan="2">if (A == escapeitem_COMPASS + escapeitem_PURSE) goto success;</td>
+<td class="comment-11" rowspan="2">If the flags show we're holding are escapeitem_COMPASS and escapeitem_PURSE then jump to the success case</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -159,7 +159,7 @@ Print item-tailored messages.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a53c"></span>A53C</td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="2">else if (A != escapeitem_COMPASS + escapeitem_PAPERS) goto captured;</td>
+<td class="comment-11" rowspan="2">Otherwise if we don't have both escapeitem_COMPASS and escapeitem_PAPERS jump to the captured case</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -171,73 +171,73 @@ Print item-tailored messages.
 <td class="asm-label-1">escaped_success</td>
 <td class="address-2"><span id="a540"></span>A540</td>
 <td class="instruction">LD HL,$A5FD</td>
-<td class="comment-11" rowspan="1">success: HL = &amp;escape_strings[3];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the fourth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a543"></span>A543</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">screenlocstring_plot(); // AND WILL CROSS THE</td>
+<td class="comment-11" rowspan="2">Print "AND WILL CROSS THE "BORDER SUCCESSFULLY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a546"></span>A546</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">screenlocstring_plot(); // BORDER SUCCESSFULLY</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a549"></span>A549</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">A = 0xFF; // success - reset game</td>
+<td class="comment-11" rowspan="2">Signal to reset the game at the end of this routine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a54b"></span>A54B</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a54c"></span>A54C</td>
 <td class="instruction">JR <a href="A51C.html#a56e">escaped_press_any_key</a></td>
-<td class="comment-11" rowspan="1">goto press_any_key;</td>
+<td class="comment-11" rowspan="1">Jump to "press any key"</td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_captured</td>
 <td class="address-2"><span id="a54e"></span>A54E</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">captured:</td>
+<td class="comment-11" rowspan="1">Save flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a54f"></span>A54F</td>
 <td class="instruction">LD HL,$A628</td>
-<td class="comment-11" rowspan="1">HL = &amp;escape_strings[5];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the sixth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a552"></span>A552</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">screenlocstring_plot(); // BUT WERE RECAPTURED</td>
+<td class="comment-11" rowspan="1">Print "BUT WERE RECAPTURED"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a555"></span>A555</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Fetch flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a556"></span>A556</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a557"></span>A557</td>
 <td class="instruction">CP $08</td>
-<td class="comment-11" rowspan="2">if (A &gt;= escapeitem_UNIFORM) goto plot; // at least a uniform =&gt; 'but were recaptured' // bug? plotting twice</td>
+<td class="comment-11" rowspan="2">If flags include escapeitem_UNIFORM print "AND SHOT AS A SPY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -249,13 +249,13 @@ Print item-tailored messages.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a55b"></span>A55B</td>
 <td class="instruction">LD HL,$A652</td>
-<td class="comment-11" rowspan="1">HL = &amp;escape_strings[7];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the eighth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a55e"></span>A55E</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) goto plot; // no objects =&gt; 'totally unprepared'</td>
+<td class="comment-11" rowspan="2">If flags is zero then print "TOTALLY UNPREPARED"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -267,13 +267,13 @@ Print item-tailored messages.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a561"></span>A561</td>
 <td class="instruction">LD HL,$A667</td>
-<td class="comment-11" rowspan="1">HL = &amp;escape_strings[8];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the ninth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a564"></span>A564</td>
 <td class="instruction">BIT 0,A</td>
-<td class="comment-11" rowspan="2">if ((A &amp; escapeitem_COMPASS) == 0) goto plot; // no compass =&gt; 'totally lost'</td>
+<td class="comment-11" rowspan="2">If there was no compass then print "TOTALLY LOST"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -285,25 +285,25 @@ Print item-tailored messages.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a568"></span>A568</td>
 <td class="instruction">LD HL,$A676</td>
-<td class="comment-11" rowspan="1">HL = &amp;escape_strings[9];</td>
+<td class="comment-11" rowspan="1">Print "DUE TO LACK OF PAPERS"</td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_plot</td>
 <td class="address-2"><span id="a56b"></span>A56B</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">plot: screenlocstring_plot();</td>
+<td class="comment-11" rowspan="1">Print</td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_press_any_key</td>
 <td class="address-2"><span id="a56e"></span>A56E</td>
 <td class="instruction">LD HL,$A68E</td>
-<td class="comment-11" rowspan="1">press_any_key: HL = &amp;escape_strings[10];</td>
+<td class="comment-11" rowspan="2">Print "PRESS ANY KEY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a571"></span>A571</td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">screenlocstring_plot(); // PRESS ANY KEY</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -319,7 +319,7 @@ Wait for a keypress.
 <td class="asm-label-1">escaped_0</td>
 <td class="address-2"><span id="a574"></span>A574</td>
 <td class="instruction">CALL <a href="A58C.html">keyscan_all</a></td>
-<td class="comment-11" rowspan="2">do &lt;% keyscan_all(); %&gt; while (!Z); // down press</td>
+<td class="comment-11" rowspan="2">Wait for a key down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -331,7 +331,7 @@ Wait for a keypress.
 <td class="asm-label-1">escaped_1</td>
 <td class="address-2"><span id="a579"></span>A579</td>
 <td class="instruction">CALL <a href="A58C.html">keyscan_all</a></td>
-<td class="comment-11" rowspan="2">do &lt;% keyscan_all(); %&gt; while (Z); // up press</td>
+<td class="comment-11" rowspan="2">Wait for a key up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -343,7 +343,7 @@ Wait for a keypress.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a57e"></span>A57E</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch flags</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -359,31 +359,31 @@ Reset the game, or send the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a57f"></span>A57F</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="4">if (A == 0xFF || A &gt;= escapeitem_UNIFORM) &lt;% reset_game(); return; %&gt; // exit via</td>
+<td class="comment-11" rowspan="1">Are the flags $FF?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a581"></span>A581</td>
 <td class="instruction">JP Z,<a href="B75A.html">reset_game</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Reset the game if so (exit via)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a584"></span>A584</td>
 <td class="instruction">CP $08</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Are the flags greater or equal to escapeitem_UNIFORM?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a586"></span>A586</td>
 <td class="instruction">JP NC,<a href="B75A.html">reset_game</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Reset the game if so (exit via)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a589"></span>A589</td>
 <td class="instruction">JP <a href="CB98.html">solitary</a></td>
-<td class="comment-11" rowspan="1">solitary(); return; // exit via</td>
+<td class="comment-11" rowspan="1">Otherwise send the hero to solitary (exit via)</td>
 </tr>
 </table>
 <table class="asm-navigation">

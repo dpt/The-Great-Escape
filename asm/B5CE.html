@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B71B.html">B71B</a></span></td>
 </tr>
 </table>
-<div class="description">B5CE: (unknown) called_from_main_loop_9</div>
+<div class="description">B5CE: Animate all visible characters.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -45,7 +45,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9</td>
+<td class="asm-label-1">animate</td>
 <td class="address-2"><span id="b5ce"></span>B5CE</td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">iterate over all eight vischars</td>
@@ -57,7 +57,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-11" rowspan="1">set IY to first vischar</td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_0</td>
+<td class="asm-label-1">animate_0</td>
 <td class="address-2"><span id="b5d4"></span>B5D4</td>
 <td class="instruction">LD A,(IY+$01)</td>
 <td class="comment-11" rowspan="1">get vischar.flags</td>
@@ -71,7 +71,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5d9"></span>B5D9</td>
-<td class="instruction">JP Z,<a href="B5CE.html#b6b4">called_from_main_loop_9_12</a></td>
+<td class="instruction">JP Z,<a href="B5CE.html#b6b4">animate_12</a></td>
 <td class="comment-11" rowspan="1">if so - continue to next iteration</td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5f2"></span>B5F2</td>
-<td class="instruction">JP P,<a href="B5CE.html#b64f">called_from_main_loop_9_5</a></td>
+<td class="instruction">JP P,<a href="B5CE.html#b64f">animate_5</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
@@ -201,7 +201,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-11" rowspan="1">HL++</td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_1</td>
+<td class="asm-label-1">animate_1</td>
 <td class="address-2"><span id="b605"></span>B605</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">decrement:</td>
@@ -239,7 +239,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b610"></span>B610</td>
-<td class="instruction">JR Z,<a href="B5CE.html#b614">called_from_main_loop_9_2</a></td>
+<td class="instruction">JR Z,<a href="B5CE.html#b614">animate_2</a></td>
 <td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
@@ -249,7 +249,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_2</td>
+<td class="asm-label-1">animate_2</td>
 <td class="address-2"><span id="b614"></span>B614</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">B = A;</td>
@@ -305,7 +305,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b625"></span>B625</td>
-<td class="instruction">JR Z,<a href="B5CE.html#b629">called_from_main_loop_9_3</a></td>
+<td class="instruction">JR Z,<a href="B5CE.html#b629">animate_3</a></td>
 <td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
@@ -315,7 +315,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_3</td>
+<td class="asm-label-1">animate_3</td>
 <td class="address-2"><span id="b629"></span>B629</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">B = A;</td>
@@ -371,7 +371,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b63a"></span>B63A</td>
-<td class="instruction">JR Z,<a href="B5CE.html#b63e">called_from_main_loop_9_4</a></td>
+<td class="instruction">JR Z,<a href="B5CE.html#b63e">animate_4</a></td>
 <td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
@@ -381,7 +381,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_4</td>
+<td class="asm-label-1">animate_4</td>
 <td class="address-2"><span id="b63e"></span>B63E</td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">B = A;</td>
@@ -407,7 +407,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b647"></span>B647</td>
-<td class="instruction">JP NZ,<a href="B5CE.html#b6a8">called_from_main_loop_9_11</a></td>
+<td class="instruction">JP NZ,<a href="B5CE.html#b6a8">animate_11</a></td>
 <td class="comment-11" rowspan="1">if (!Z) goto pop_next;</td>
 </tr>
 <tr>
@@ -419,11 +419,11 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b64d"></span>B64D</td>
-<td class="instruction">JR <a href="B5CE.html#b6a2">called_from_main_loop_9_10</a></td>
+<td class="instruction">JR <a href="B5CE.html#b6a2">animate_10</a></td>
 <td class="comment-11" rowspan="1">%&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_5</td>
+<td class="asm-label-1">animate_5</td>
 <td class="address-2"><span id="b64f"></span>B64F</td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="2">else &lt;% if (A == *HL) goto end_bit;</td>
@@ -471,7 +471,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_6</td>
+<td class="asm-label-1">animate_6</td>
 <td class="address-2"><span id="b65a"></span>B65A</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">increment:</td>
@@ -497,7 +497,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b65f"></span>B65F</td>
-<td class="instruction">JR Z,<a href="B5CE.html#b663">called_from_main_loop_9_7</a></td>
+<td class="instruction">JR Z,<a href="B5CE.html#b663">animate_7</a></td>
 <td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
@@ -507,7 +507,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_7</td>
+<td class="asm-label-1">animate_7</td>
 <td class="address-2"><span id="b663"></span>B663</td>
 <td class="instruction">LD H,A</td>
 <td class="comment-11" rowspan="1">H = A;</td>
@@ -563,7 +563,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b673"></span>B673</td>
-<td class="instruction">JR Z,<a href="B5CE.html#b677">called_from_main_loop_9_8</a></td>
+<td class="instruction">JR Z,<a href="B5CE.html#b677">animate_8</a></td>
 <td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
@@ -573,7 +573,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_8</td>
+<td class="asm-label-1">animate_8</td>
 <td class="address-2"><span id="b677"></span>B677</td>
 <td class="instruction">LD H,A</td>
 <td class="comment-11" rowspan="1">H = A;</td>
@@ -629,7 +629,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b687"></span>B687</td>
-<td class="instruction">JR Z,<a href="B5CE.html#b68b">called_from_main_loop_9_9</a></td>
+<td class="instruction">JR Z,<a href="B5CE.html#b68b">animate_9</a></td>
 <td class="comment-11" rowspan="2">if (A) A = 0xFF;</td>
 </tr>
 <tr>
@@ -639,7 +639,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_9</td>
+<td class="asm-label-1">animate_9</td>
 <td class="address-2"><span id="b68b"></span>B68B</td>
 <td class="instruction">LD H,A</td>
 <td class="comment-11" rowspan="1">H = A;</td>
@@ -695,7 +695,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b69c"></span>B69C</td>
-<td class="instruction">JP NZ,<a href="B5CE.html#b6a8">called_from_main_loop_9_11</a></td>
+<td class="instruction">JP NZ,<a href="B5CE.html#b6a8">animate_11</a></td>
 <td class="comment-11" rowspan="1">if (!Z) goto pop_next;</td>
 </tr>
 <tr>
@@ -705,7 +705,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-11" rowspan="1">IY[0x0C]++; %&gt;</td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_10</td>
+<td class="asm-label-1">animate_10</td>
 <td class="address-2"><span id="b6a2"></span>B6A2</td>
 <td class="instruction">PUSH IY</td>
 <td class="comment-11" rowspan="2">HL = IY;</td>
@@ -719,11 +719,11 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b6a5"></span>B6A5</td>
-<td class="instruction">CALL <a href="B729.html">calc_vischar_screenpos</a></td>
-<td class="comment-11" rowspan="1">calc_vischar_screenpos();</td>
+<td class="instruction">CALL <a href="B729.html">calc_vischar_iso_pos_from_state</a></td>
+<td class="comment-11" rowspan="1">calc_vischar_iso_pos_from_state();</td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_11</td>
+<td class="asm-label-1">animate_11</td>
 <td class="address-2"><span id="b6a8"></span>B6A8</td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">pop_next:</td>
@@ -743,7 +743,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b6ae"></span>B6AE</td>
-<td class="instruction">JR Z,<a href="B5CE.html#b6b4">called_from_main_loop_9_12</a></td>
+<td class="instruction">JR Z,<a href="B5CE.html#b6b4">animate_12</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -753,7 +753,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_12</td>
+<td class="asm-label-1">animate_12</td>
 <td class="address-2"><span id="b6b4"></span>B6B4</td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="1">next: DE = 32; // stride</td>
@@ -773,7 +773,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b6ba"></span>B6BA</td>
-<td class="instruction">JP NZ,<a href="B5CE.html#b5d4">called_from_main_loop_9_0</a></td>
+<td class="instruction">JP NZ,<a href="B5CE.html#b5d4">animate_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -846,7 +846,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b6d0"></span>B6D0</td>
 <td class="instruction">LD HL,$CDAA</td>
-<td class="comment-11" rowspan="1">add it to byte_CDAA</td>
+<td class="comment-11" rowspan="1">add it to animindices</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -935,7 +935,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b6ea"></span>B6EA</td>
-<td class="instruction">JR NZ,<a href="B5CE.html#b6fc">called_from_main_loop_9_13</a></td>
+<td class="instruction">JR NZ,<a href="B5CE.html#b6fc">animate_13</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -989,7 +989,7 @@ Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href=
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b6f9"></span>B6F9</td>
-<td class="instruction">JP <a href="B5CE.html#b65a">called_from_main_loop_9_6</a></td>
+<td class="instruction">JP <a href="B5CE.html#b65a">animate_6</a></td>
 <td class="comment-11" rowspan="1">goto increment</td>
 </tr>
 <tr>
@@ -1003,7 +1003,7 @@ else
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">called_from_main_loop_9_13</td>
+<td class="asm-label-1">animate_13</td>
 <td class="address-2"><span id="b6fc"></span>B6FC</td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">A = *DE; // count of four-byte groups</td>
@@ -1137,7 +1137,7 @@ else
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b718"></span>B718</td>
-<td class="instruction">JP <a href="B5CE.html#b605">called_from_main_loop_9_1</a></td>
+<td class="instruction">JP <a href="B5CE.html#b605">animate_1</a></td>
 <td class="comment-11" rowspan="1">goto decrement</td>
 </tr>
 </table>

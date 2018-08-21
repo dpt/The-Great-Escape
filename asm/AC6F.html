@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="ACFC.html">ACFC</a></span></td>
 </tr>
 </table>
-<div class="description">AC6F: Draw zoombox border.</div>
+<div class="description">AC6F: Draw the zoombox border.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -48,19 +48,19 @@ Used by the routine at <a href="ABA0.html">zoombox</a>.
 <td class="asm-label-1">zoombox_draw_border</td>
 <td class="address-2"><span id="ac6f"></span>AC6F</td>
 <td class="instruction">LD A,($AB68)</td>
-<td class="comment-11" rowspan="15">HL = game_window_start_addresses[(zoombox_y - 1) * 8]; // ie. * 16</td>
+<td class="comment-11" rowspan="1">Fetch zoombox_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac72"></span>AC72</td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Subtract one so that we draw around the zoombox fill area</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac73"></span>AC73</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Multiply it by 16 producing an offset into the game_window_start_addresses array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -84,13 +84,13 @@ Used by the routine at <a href="ABA0.html">zoombox</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac77"></span>AC77</td>
 <td class="instruction">LD HL,$EDD3</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the game_window_start_addresses array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac7a"></span>AC7A</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Combine it with the offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -114,7 +114,7 @@ Used by the routine at <a href="ABA0.html">zoombox</a>.
 <td class="asm-label-1">zoombox_draw_border_0</td>
 <td class="address-2"><span id="ac7f"></span>AC7F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Fetch the game window start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -139,7 +139,7 @@ Used by the routine at <a href="ABA0.html">zoombox</a>.
 <span id="ac83"></span>
 <div class="comments">
 <div class="paragraph">
-Top left.
+Top left corner tile.
 </div>
 </div>
 </td>
@@ -148,19 +148,19 @@ Top left.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac83"></span>AC83</td>
 <td class="instruction">LD A,($AB66)</td>
-<td class="comment-11" rowspan="4">HL += zoombox_x - 1;</td>
+<td class="comment-11" rowspan="1">Fetch zoombox_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac86"></span>AC86</td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Subtract one so that we draw around the zoombox fill area</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac87"></span>AC87</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Combine with game window start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -172,7 +172,7 @@ Top left.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac89"></span>AC89</td>
 <td class="instruction">LD A,$00</td>
-<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_TL);</td>
+<td class="comment-11" rowspan="2">Draw a top-left zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -184,14 +184,14 @@ Top left.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac8e"></span>AC8E</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Move the destination pointer forward</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="ac8f"></span>
 <div class="comments">
 <div class="paragraph">
-Horizontal, moving right.
+Top horizontal run, moving right.
 </div>
 </div>
 </td>
@@ -200,19 +200,29 @@ Horizontal, moving right.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac8f"></span>AC8F</td>
 <td class="instruction">LD A,($AB67)</td>
-<td class="comment-11" rowspan="2">B = zoombox_horizontal_count; // iterations</td>
+<td class="comment-11" rowspan="1">Fetch zoombox_width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac92"></span>AC92</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ac93"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_1</td>
 <td class="address-2"><span id="ac93"></span>AC93</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_HZ);</td>
+<td class="comment-11" rowspan="2">Draw a horizontal zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -224,20 +234,20 @@ Horizontal, moving right.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac98"></span>AC98</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Move the destination pointer forward</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac99"></span>AC99</td>
 <td class="instruction">DJNZ <a href="AC6F.html#ac93">zoombox_draw_border_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="ac9b"></span>
 <div class="comments">
 <div class="paragraph">
-Top right.
+Top right corner tile.
 </div>
 </div>
 </td>
@@ -246,7 +256,7 @@ Top right.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac9b"></span>AC9B</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_TR);</td>
+<td class="comment-11" rowspan="2">Draw a top-right zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -258,13 +268,13 @@ Top right.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aca0"></span>ACA0</td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment-11" rowspan="1">DE = 32;</td>
+<td class="comment-11" rowspan="6">See similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aca3"></span>ACA3</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="4">if (L &gt;= 224) D = 0x07;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -288,14 +298,14 @@ Top right.
 <td class="asm-label-1">zoombox_draw_border_2</td>
 <td class="address-2"><span id="acaa"></span>ACAA</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="acab"></span>
 <div class="comments">
 <div class="paragraph">
-Vertical, moving down.
+Right hand vertical run, moving down.
 </div>
 </div>
 </td>
@@ -304,19 +314,29 @@ Vertical, moving down.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acab"></span>ACAB</td>
 <td class="instruction">LD A,($AB69)</td>
-<td class="comment-11" rowspan="2">B = zoombox_vertical_count; // iterations</td>
+<td class="comment-11" rowspan="1">Fetch zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acae"></span>ACAE</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="acaf"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_3</td>
 <td class="address-2"><span id="acaf"></span>ACAF</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_VT);</td>
+<td class="comment-11" rowspan="2">Draw a vertical zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -328,13 +348,13 @@ Vertical, moving down.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acb4"></span>ACB4</td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment-11" rowspan="1">DE = 32;</td>
+<td class="comment-11" rowspan="6">See similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acb7"></span>ACB7</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="4">if (L &gt;= 224) D = 0x07;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -358,20 +378,20 @@ Vertical, moving down.
 <td class="asm-label-1">zoombox_draw_border_4</td>
 <td class="address-2"><span id="acbe"></span>ACBE</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acbf"></span>ACBF</td>
 <td class="instruction">DJNZ <a href="AC6F.html#acaf">zoombox_draw_border_3</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="acc1"></span>
 <div class="comments">
 <div class="paragraph">
-Bottom right.
+Bottom right corner tile.
 </div>
 </div>
 </td>
@@ -380,7 +400,7 @@ Bottom right.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acc1"></span>ACC1</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_BR);</td>
+<td class="comment-11" rowspan="2">Draw a bottom-right zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -392,14 +412,14 @@ Bottom right.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acc6"></span>ACC6</td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="1">HL--;</td>
+<td class="comment-11" rowspan="1">Move the destination pointer backwards</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="acc7"></span>
 <div class="comments">
 <div class="paragraph">
-Horizontal, moving left.
+Bottom horizontal run, moving left.
 </div>
 </div>
 </td>
@@ -408,19 +428,29 @@ Horizontal, moving left.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acc7"></span>ACC7</td>
 <td class="instruction">LD A,($AB67)</td>
-<td class="comment-11" rowspan="2">B = zoombox_horizontal_count; // iterations</td>
+<td class="comment-11" rowspan="1">Fetch zoombox_width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acca"></span>ACCA</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="accb"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_5</td>
 <td class="address-2"><span id="accb"></span>ACCB</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_HZ);</td>
+<td class="comment-11" rowspan="2">Draw a horizontal zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -432,20 +462,20 @@ Horizontal, moving left.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd0"></span>ACD0</td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="1">HL--;</td>
+<td class="comment-11" rowspan="1">Move the destination pointer backwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd1"></span>ACD1</td>
 <td class="instruction">DJNZ <a href="AC6F.html#accb">zoombox_draw_border_5</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="acd3"></span>
 <div class="comments">
 <div class="paragraph">
-Bottom left.
+Bottom left corner tile.
 </div>
 </div>
 </td>
@@ -454,7 +484,7 @@ Bottom left.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd3"></span>ACD3</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment-11" rowspan="2">zoombox_draw_tile(zoombox_tile_BL);</td>
+<td class="comment-11" rowspan="2">Draw a bottom-left zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -466,13 +496,13 @@ Bottom left.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd8"></span>ACD8</td>
 <td class="instruction">LD DE,$FFE0</td>
-<td class="comment-11" rowspan="1">DE = 0xFFE0;</td>
+<td class="comment-11" rowspan="6">Inversion of similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acdb"></span>ACDB</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="4">if (L &lt; 32) DE = 0xF8E0;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -496,14 +526,14 @@ Bottom left.
 <td class="asm-label-1">zoombox_draw_border_6</td>
 <td class="address-2"><span id="ace3"></span>ACE3</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="ace4"></span>
 <div class="comments">
 <div class="paragraph">
-Vertical, moving up.
+Left hand vertical run, moving up.
 </div>
 </div>
 </td>
@@ -512,19 +542,29 @@ Vertical, moving up.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ace4"></span>ACE4</td>
 <td class="instruction">LD A,($AB69)</td>
-<td class="comment-11" rowspan="2">B = zoombox_vertical_count; // iterations</td>
+<td class="comment-11" rowspan="1">Fetch zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ace7"></span>ACE7</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ace8"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_7</td>
 <td class="address-2"><span id="ace8"></span>ACE8</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-11" rowspan="2">do &lt;% zoombox_draw_tile(zoombox_tile_VT);</td>
+<td class="comment-11" rowspan="2">Draw a vertical zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -536,13 +576,13 @@ Vertical, moving up.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aced"></span>ACED</td>
 <td class="instruction">LD DE,$FFE0</td>
-<td class="comment-11" rowspan="1">DE = 0xFFE0;</td>
+<td class="comment-11" rowspan="6">Inversion of similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acf0"></span>ACF0</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="4">if (L &lt; 32) DE = 0xF8E0;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -566,19 +606,19 @@ Vertical, moving up.
 <td class="asm-label-1">zoombox_draw_border_8</td>
 <td class="address-2"><span id="acf8"></span>ACF8</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acf9"></span>ACF9</td>
 <td class="instruction">DJNZ <a href="AC6F.html#ace8">zoombox_draw_border_7</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acfb"></span>ACFB</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

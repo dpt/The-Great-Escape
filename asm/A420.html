@@ -36,11 +36,11 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Character.</td>
+<td class="register-desc">Route index.</td>
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to location.</td>
+<td class="register-desc">Pointer to route.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -55,31 +55,31 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="asm-label-1">character_sits</td>
 <td class="address-2"><span id="a420"></span>A420</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a421"></span>A421</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move the route pointer into <span class="register">DE</span> for the common part later</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a422"></span>A422</td>
 <td class="instruction">SUB $12</td>
-<td class="comment-11" rowspan="1">A -= 18; // first three characters</td>
+<td class="comment-11" rowspan="1">Bias the route index by 18</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a424"></span>A424</td>
 <td class="instruction">LD HL,$6F4F</td>
-<td class="comment-11" rowspan="1">HL = &amp;roomdef_25_breakfast.bench_D;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at room definition 25's bench_D</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a427"></span>A427</td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="2">if (A &gt;= 3) &lt;% // second three characters</td>
+<td class="comment-11" rowspan="2">Is <span class="register">A</span> equal to two or lower? Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -91,13 +91,13 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a42b"></span>A42B</td>
 <td class="instruction">LD HL,$6F17</td>
-<td class="comment-11" rowspan="1">HL = &amp;roomdef_23_breakfast.bench_A;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at room definition 23's bench_A</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a42e"></span>A42E</td>
 <td class="instruction">SUB $03</td>
-<td class="comment-11" rowspan="1">A -= 3; %&gt;</td>
+<td class="comment-11" rowspan="1">Bias...</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -113,7 +113,7 @@ Poke object.
 <td class="asm-label-1">character_sits_0</td>
 <td class="address-2"><span id="a430"></span>A430</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="6">HL += A * 3;</td>
+<td class="comment-11" rowspan="3">Triple <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -131,7 +131,7 @@ Poke object.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a433"></span>A433</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Move it into <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -143,49 +143,49 @@ Poke object.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a436"></span>A436</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point to the required object</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a437"></span>A437</td>
 <td class="instruction">LD (HL),$05</td>
-<td class="comment-11" rowspan="1">*HL = interiorobject_PRISONER_SAT_MID_TABLE;</td>
+<td class="comment-11" rowspan="1">Set the object at <span class="register">HL</span> to interiorobject_PRISONER_SAT_MID_TABLE ($05)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a439"></span>A439</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a43a"></span>A43A</td>
 <td class="instruction">LD C,$19</td>
-<td class="comment-11" rowspan="1">C = room_25_BREAKFAST;</td>
+<td class="comment-11" rowspan="1">Room is room_25_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a43c"></span>A43C</td>
 <td class="instruction">CP $15</td>
-<td class="comment-11" rowspan="3">if (A &gt;= character_21_PRISONER_2) C = room_23_BREAKFAST;</td>
+<td class="comment-11" rowspan="1">Is the route index less than routeindex_21_PRISONER_SITS_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a43e"></span>A43E</td>
 <td class="instruction">JR C,<a href="A462.html">character_sit_sleep_common</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a440"></span>A440</td>
 <td class="instruction">LD C,$17</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Otherwise room is room_23_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a442"></span>A442</td>
 <td class="instruction">JR <a href="A462.html">character_sit_sleep_common</a></td>
-<td class="comment-11" rowspan="1">goto character_sit_sleep_common;</td>
+<td class="comment-11" rowspan="1">Jump to character_sit_sleep_common</td>
 </tr>
 </table>
 <table class="asm-navigation">

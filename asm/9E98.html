@@ -48,7 +48,7 @@ Used by the routine at <a href="9E07.html">process_player_input</a>.
 <td class="asm-label-1">picking_lock</td>
 <td class="address-2"><span id="9e98"></span>9E98</td>
 <td class="instruction">LD HL,$A12F</td>
-<td class="comment-11" rowspan="4">if (player_locked_out_until != game_counter) return;</td>
+<td class="comment-11" rowspan="4">Return unless player_locked_out_until becomes equal to game_counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -82,7 +82,7 @@ Countdown reached: Unlock the door.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9ea0"></span>9EA0</td>
 <td class="instruction">LD HL,($A143)</td>
-<td class="comment-11" rowspan="2">*ptr_to_door_being_lockpicked &amp;= ~door_LOCKED;</td>
+<td class="comment-11" rowspan="2">Clear door_LOCKED ($80) from the door whose lock is being picked</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -94,7 +94,7 @@ Countdown reached: Unlock the door.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9ea5"></span>9EA5</td>
 <td class="instruction">LD B,$06</td>
-<td class="comment-11" rowspan="2">queue_message(message_IT_IS_OPEN);</td>
+<td class="comment-11" rowspan="2">Queue the message "IT IS OPEN"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -116,7 +116,7 @@ This entry point is used by the routine at <a href="9EB2.html">cutting_wire</a>.
 <td class="asm-label-1">clear_lockpick_wirecut_flags_and_return</td>
 <td class="address-2"><span id="9eaa"></span>9EAA</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment-11" rowspan="4">clear_lockpick_wirecut_flags_and_return: $8001 &amp;= ~(vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE);</td>
+<td class="comment-11" rowspan="4">Clear the vischar_FLAGS_PICKING_LOCK and vischar_FLAGS_CUTTING_WIRE flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -140,7 +140,7 @@ This entry point is used by the routine at <a href="9EB2.html">cutting_wire</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9eb1"></span>9EB1</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

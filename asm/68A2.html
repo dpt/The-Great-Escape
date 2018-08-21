@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="68F4.html">68F4</a></span></td>
 </tr>
 </table>
-<div class="description">68A2: The hero or a non-player character changes room.</div>
+<div class="description">68A2: The current visible character is made to change room.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,11 +36,11 @@ Used by the routines at <a href="B1F5.html">door_handling</a>, <a href="B32D.htm
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to pos.</td>
+<td class="register-desc">Pointer to position. FIXME: Specify type.</td>
 </tr>
 <tr>
 <td class="register">IY</td>
-<td class="register-desc">Pointer to visible character.</td>
+<td class="register-desc">Pointer to current visible character.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -55,13 +55,13 @@ Used by the routines at <a href="B1F5.html">door_handling</a>, <a href="B32D.htm
 <td class="asm-label-1">transition</td>
 <td class="address-2"><span id="68a2"></span>68A2</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save position into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68a3"></span>68A3</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="2">HL = IY;</td>
+<td class="comment-11" rowspan="2">Copy the current visible character pointer into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -73,19 +73,19 @@ Used by the routines at <a href="B1F5.html">door_handling</a>, <a href="B32D.htm
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68a6"></span>68A6</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="1">A = L; // stash vischar index/offset</td>
+<td class="comment-11" rowspan="1">Extract visible character's offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68a7"></span>68A7</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save it for later</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68a8"></span>68A8</td>
 <td class="instruction">ADD A,$0F</td>
-<td class="comment-11" rowspan="2">L = A + 0x0F; // $8xxF (position on X axis)</td>
+<td class="comment-11" rowspan="2">Point <span class="register">HL</span> at the visible character's position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -97,26 +97,29 @@ Used by the routines at <a href="B1F5.html">door_handling</a>, <a href="B32D.htm
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68ab"></span>68AB</td>
 <td class="instruction">LD A,(IY+$1C)</td>
-<td class="comment-11" rowspan="1">A = IY[0x1C]; // $8x1C (vischar.room)</td>
+<td class="comment-11" rowspan="1">Fetch the visible character's current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68ae"></span>68AE</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) &lt;% // outdoors</td>
+<td class="comment-11" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68af"></span>68AF</td>
 <td class="instruction">JP NZ,<a href="68A2.html#68c3">transition_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="68b2"></span>
 <div class="comments">
 <div class="paragraph">
-Set position on X axis, Y axis and height (dividing by 4).
+We're outdoors.
+</div>
+<div class="paragraph">
+Set position on X, Y axis and height by multiplying by 4.
 </div>
 </div>
 </td>
@@ -125,31 +128,31 @@ Set position on X axis, Y axis and height (dividing by 4).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68b2"></span>68B2</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
+<td class="comment-11" rowspan="1">Iterate thrice: X, Y and height fields</td>
 </tr>
 <tr>
 <td class="asm-label-1">transition_0</td>
 <td class="address-2"><span id="68b4"></span>68B4</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Save <span class="register">BC</span> - <a href="B295.html">multiply_by_4</a>'s output register</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68b5"></span>68B5</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE++;</td>
+<td class="comment-11" rowspan="1">Fetch a position byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68b6"></span>68B6</td>
 <td class="instruction">CALL <a href="B295.html">multiply_by_4</a></td>
-<td class="comment-11" rowspan="1">multiply_by_4();</td>
+<td class="comment-11" rowspan="1">Multiply it by 4, widening it to a word in <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68b9"></span>68B9</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="2">*HL++ = C;</td>
+<td class="comment-11" rowspan="5">Store it to visible character's position and increment pointers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -161,7 +164,7 @@ Set position on X axis, Y axis and height (dividing by 4).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68bb"></span>68BB</td>
 <td class="instruction">LD (HL),B</td>
-<td class="comment-11" rowspan="3">*HL++ = B;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -179,26 +182,29 @@ Set position on X axis, Y axis and height (dividing by 4).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68be"></span>68BE</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68bf"></span>68BF</td>
 <td class="instruction">DJNZ <a href="68A2.html#68b4">transition_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B); %&gt;</td>
+<td class="comment-11" rowspan="1">Loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68c1"></span>68C1</td>
 <td class="instruction">JR <a href="68A2.html#68ce">transition_3</a></td>
-<td class="comment-11" rowspan="1">else &lt;% // interior</td>
+<td class="comment-11" rowspan="1">!Jump over indoors case (ELSE part)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="68c3"></span>
 <div class="comments">
 <div class="paragraph">
-Set position on X axis, Y axis and height (copying).
+We're indoors.
+</div>
+<div class="paragraph">
+Set position on X, Y axis and height by copying.
 </div>
 </div>
 </td>
@@ -207,13 +213,13 @@ Set position on X axis, Y axis and height (copying).
 <td class="asm-label-1">transition_1</td>
 <td class="address-2"><span id="68c3"></span>68C3</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">B = 3; // 3 iterations</td>
+<td class="comment-11" rowspan="1">Iterate thrice: X, Y and height fields</td>
 </tr>
 <tr>
 <td class="asm-label-1">transition_2</td>
 <td class="address-2"><span id="68c5"></span>68C5</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="3">do &lt;% *HL++ = *DE++;</td>
+<td class="comment-11" rowspan="6">Widen position bytes to words, store and increment pointers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -231,7 +237,7 @@ Set position on X axis, Y axis and height (copying).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68c8"></span>68C8</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-11" rowspan="3">*HL++ = 0;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -249,44 +255,60 @@ Set position on X axis, Y axis and height (copying).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68cc"></span>68CC</td>
 <td class="instruction">DJNZ <a href="68A2.html#68c5">transition_2</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B); %&gt;</td>
+<td class="comment-11" rowspan="1">Loop</td>
 </tr>
 <tr>
 <td class="asm-label-1">transition_3</td>
 <td class="address-2"><span id="68ce"></span>68CE</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Retrieve vischar index/offset stacked at $68A7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68cf"></span>68CF</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="1">L = A;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68d0"></span>68D0</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="3">if (A) &lt;% reset_visible_character(); return; %&gt; // exit via</td>
+<td class="comment-11" rowspan="1">Is it the hero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68d1"></span>68D1</td>
 <td class="instruction">JP Z,<a href="68A2.html#68d7">transition_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="68d4"></span>
+<div class="comments">
+<div class="paragraph">
+Not the hero.
+</div>
+<div class="paragraph">
+This is an unusual construct. Why did the author not use JP NZ,$C5D3 above and fallthrough otherwise?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68d4"></span>68D4</td>
 <td class="instruction">JP <a href="C5D3.html">reset_visible_character</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">If not, exit via <a href="C5D3.html">reset_visible_character</a> resetting the visible character</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="68d7"></span>
 <div class="comments">
 <div class="paragraph">
-HL points to the hero vischar at this point.
+Hero only.
+</div>
+<div class="paragraph">
+<span class="register">HL</span> points to the hero's visible character at this point.
 </div>
 </div>
 </td>
@@ -295,44 +317,44 @@ HL points to the hero vischar at this point.
 <td class="asm-label-1">transition_4</td>
 <td class="address-2"><span id="68d7"></span>68D7</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">*++HL &amp;= ~vischar_FLAGS_NO_COLLIDE; // $8001</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the visible character's flags field (always $8001)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68d8"></span>68D8</td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clear vischar_FLAGS_NO_COLLIDE in flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68da"></span>68DA</td>
 <td class="instruction">LD A,($801C)</td>
-<td class="comment-11" rowspan="1">A = vischar.room;</td>
+<td class="comment-11" rowspan="1">Get the visible character's room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68dd"></span>68DD</td>
 <td class="instruction">LD ($68A0),A</td>
-<td class="comment-11" rowspan="1">room_index = A;</td>
+<td class="comment-11" rowspan="1">Set the global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68e0"></span>68E0</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A != 0) goto enter_room;</td>
+<td class="comment-11" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68e1"></span>68E1</td>
 <td class="instruction">JP NZ,<a href="68F4.html">enter_room</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="68e4"></span>
 <div class="comments">
 <div class="paragraph">
-Outdoors.
+We're outdoors.
 </div>
 </div>
 </td>
@@ -341,7 +363,7 @@ Outdoors.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68e4"></span>68E4</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment-11" rowspan="3">HL += 12;</td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at the visible character's input field (always $800D)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -359,19 +381,19 @@ Outdoors.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68e8"></span>68E8</td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment-11" rowspan="2">*HL++ = input_KICK; // $800D</td>
+<td class="comment-11" rowspan="1">!Set input to input_KICK (so the character is reset???)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68ea"></span>68EA</td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the visible character's direction field (always $800E)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68eb"></span>68EB</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">*HL &amp;= vischar_DIRECTION_MASK; // $800E // likely a sprite direction</td>
+<td class="comment-11" rowspan="3">Fetch the direction field and clear the non-direction bits, resetting the crawl flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -389,13 +411,13 @@ Outdoors.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68ef"></span>68EF</td>
 <td class="instruction">CALL <a href="B2FC.html">reset_outdoors</a></td>
-<td class="comment-11" rowspan="1">reset_outdoors();</td>
+<td class="comment-11" rowspan="1">Reset the hero's position, redraw the scene then zoombox it onto the screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="68f2"></span>68F2</td>
 <td class="instruction">JR <a href="691A.html">squash_stack_goto_main</a></td>
-<td class="comment-11" rowspan="1">goto squash_stack_goto_main;</td>
+<td class="comment-11" rowspan="1">Restart from main loop</td>
 </tr>
 </table>
 <table class="asm-navigation">

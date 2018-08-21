@@ -61,25 +61,25 @@ Increment the clock, wrapping at 140.
 <td class="asm-label-1">dispatch_timed_event</td>
 <td class="address-2"><span id="a1a0"></span>A1A0</td>
 <td class="instruction">LD HL,$A13D</td>
-<td class="comment-11" rowspan="1">HL = &amp;clock;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the game clock</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a3"></span>A1A3</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL + 1;</td>
+<td class="comment-11" rowspan="1">Load the game clock</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a4"></span>A1A4</td>
 <td class="instruction">INC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">...and increment it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1a5"></span>A1A5</td>
 <td class="instruction">CP $8C</td>
-<td class="comment-11" rowspan="3">if (A == 140) A = 0;</td>
+<td class="comment-11" rowspan="3">If it hits 140 then reset it to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -97,14 +97,14 @@ Increment the clock, wrapping at 140.
 <td class="asm-label-1">dispatch_timed_event_0</td>
 <td class="address-2"><span id="a1aa"></span>A1AA</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A;</td>
+<td class="comment-11" rowspan="1">Then save the game clock back</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="a1ab"></span>
 <div class="comments">
 <div class="paragraph">
-Dispatch the event for that time.
+Find an event for the current clock
 </div>
 </div>
 </td>
@@ -113,19 +113,29 @@ Dispatch the event for that time.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1ab"></span>A1AB</td>
 <td class="instruction">LD HL,$A173</td>
-<td class="comment-11" rowspan="1">HL = &amp;timed_events[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the timed events table</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1ae"></span>A1AE</td>
 <td class="instruction">LD B,$0F</td>
-<td class="comment-11" rowspan="1">B = 15; // 15 iterations</td>
+<td class="comment-11" rowspan="1">There are fifteen timed events</td>
 </tr>
 <tr>
-<td class="asm-label-1">dispatch_timed_event_1</td>
+<td class="routine-comment" colspan="4">
+<span id="a1b0"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">find_event</td>
 <td class="address-2"><span id="a1b0"></span>A1B0</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="3">do &lt;% if (A == *HL++) goto found;</td>
+<td class="comment-11" rowspan="2">Does the current event's time match the game clock?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -136,14 +146,14 @@ Dispatch the event for that time.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b2"></span>A1B2</td>
-<td class="instruction">JR Z,<a href="A1A0.html#a1b9">dispatch_timed_event_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="A1A0.html#a1b9">event_found</a></td>
+<td class="comment-11" rowspan="1">Jump to setup event handler if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b4"></span>A1B4</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">HL += 2;</td>
+<td class="comment-11" rowspan="2">Skip the event handler address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -154,20 +164,30 @@ Dispatch the event for that time.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b6"></span>A1B6</td>
-<td class="instruction">DJNZ <a href="A1A0.html#a1b0">dispatch_timed_event_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="A1A0.html#a1b0">find_event</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1b8"></span>A1B8</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return with no event matched</td>
 </tr>
 <tr>
-<td class="asm-label-1">dispatch_timed_event_2</td>
+<td class="routine-comment" colspan="4">
+<span id="a1b9"></span>
+<div class="comments">
+<div class="paragraph">
+Found an event
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">event_found</td>
 <td class="address-2"><span id="a1b9"></span>A1B9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">found: L = *HL++;</td>
+<td class="comment-11" rowspan="4">Read the event handler address into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -179,7 +199,7 @@ Dispatch the event for that time.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1bb"></span>A1BB</td>
 <td class="instruction">LD H,(HL)</td>
-<td class="comment-11" rowspan="2">H = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -188,22 +208,32 @@ Dispatch the event for that time.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="a1bd"></span>
+<div class="comments">
+<div class="paragraph">
+Most events need to sound the bell, so prepare for that
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1bd"></span>A1BD</td>
 <td class="instruction">LD A,$28</td>
-<td class="comment-11" rowspan="1">A = bell_RING_40_TIMES;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to bell_RING_40_TIMES</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1bf"></span>A1BF</td>
 <td class="instruction">LD BC,$A130</td>
-<td class="comment-11" rowspan="1">BC = &amp;bell;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at bell</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c2"></span>A1C2</td>
 <td class="instruction">JP (HL)</td>
-<td class="comment-11" rowspan="1">goto *HL; // fantasy syntax</td>
+<td class="comment-11" rowspan="1">Jump to the event handler</td>
 </tr>
 </table>
 <table class="asm-navigation">

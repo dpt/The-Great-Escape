@@ -48,37 +48,37 @@ Used by the routines at <a href="AA26.html">shunt_map_up_right</a> and <a href="
 <td class="asm-label-1">plot_bottommost_tiles</td>
 <td class="address-2"><span id="a80a"></span>A80A</td>
 <td class="instruction">LD DE,$F278</td>
-<td class="comment-11" rowspan="1">DE = &amp;tile_buf[24 * 16];</td>
+<td class="comment-11" rowspan="2">Point <span class="register">DE'</span> at the start of tile_buf's final row (= tile_buf + 24 * 16)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a80d"></span>A80D</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a80e"></span>A80E</td>
 <td class="instruction">LD HL,$FF74</td>
-<td class="comment-11" rowspan="1">HLdash = &amp;map_buf[28];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the start of map_buf's final row (= map_buf + 7 * 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a811"></span>A811</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="1">A = map_position &gt;&gt; 8; // map_position hi</td>
+<td class="comment-11" rowspan="1">Get the map's Y coordinate</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a814"></span>A814</td>
 <td class="instruction">LD DE,$FE90</td>
-<td class="comment-11" rowspan="1">DEdash = &amp;window_buf[24 * 16 * 8];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the start of window_buf's final row (= window_buf + 24 * 16 * 8)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a817"></span>A817</td>
 <td class="instruction">JR <a href="A826.html">plot_horizontal_tiles_common</a></td>
-<td class="comment-11" rowspan="1">goto plot_horizontal_tiles_common;</td>
+<td class="comment-11" rowspan="1">Jump to plot_horizontal_tiles_common</td>
 </tr>
 </table>
 <table class="asm-navigation">

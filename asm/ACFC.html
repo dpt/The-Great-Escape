@@ -59,31 +59,31 @@ Used by the routine at <a href="AC6F.html">zoombox_draw_border</a>.
 <td class="asm-label-1">zoombox_draw_tile</td>
 <td class="address-2"><span id="acfc"></span>ACFC</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acfd"></span>ACFD</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acfe"></span>ACFE</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acff"></span>ACFF</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move destination address into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad00"></span>AD00</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="7">HL = &amp;zoombox_tiles[A];</td>
+<td class="comment-11" rowspan="2">Widen the tile index from <span class="register">A</span> into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -95,7 +95,7 @@ Used by the routine at <a href="AC6F.html">zoombox_draw_border</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad03"></span>AD03</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Then multiply the tile index by eight</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -113,25 +113,35 @@ Used by the routine at <a href="AC6F.html">zoombox_draw_border</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad06"></span>AD06</td>
 <td class="instruction">LD BC,$AF5E</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at zoombox_tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad09"></span>AD09</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Combine to form a pointer to the required tile in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad0a"></span>AD0A</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
+<td class="comment-11" rowspan="1">8 iterations / 8 rows</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ad0c"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_tile_0</td>
 <td class="address-2"><span id="ad0c"></span>AD0C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% *DE = *HL++;</td>
+<td class="comment-11" rowspan="2">Copy a byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -143,25 +153,25 @@ Used by the routine at <a href="AC6F.html">zoombox_draw_border</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad0e"></span>AD0E</td>
 <td class="instruction">INC D</td>
-<td class="comment-11" rowspan="2">DE += 256;</td>
+<td class="comment-11" rowspan="1">Next destination byte is 8 * 32 (=256) bytes ahead</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad0f"></span>AD0F</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Next source byte is adjacent</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad10"></span>AD10</td>
 <td class="instruction">DJNZ <a href="ACFC.html#ad0c">zoombox_draw_tile_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad12"></span>AD12</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="2">A = D - 1; // ie. (DE - 256) &gt;&gt; 8</td>
+<td class="comment-11" rowspan="2">Shunt <span class="register">D</span> into <span class="register">A</span> and undo the earlier INC D</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -173,85 +183,85 @@ Used by the routine at <a href="AC6F.html">zoombox_draw_border</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad14"></span>AD14</td>
 <td class="instruction">LD H,$58</td>
-<td class="comment-11" rowspan="1">H = 0x58; // attributes</td>
+<td class="comment-11" rowspan="2">Point <span class="register">HL</span> at the attributes bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad16"></span>AD16</td>
 <td class="instruction">LD L,E</td>
-<td class="comment-11" rowspan="1">L = E;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad17"></span>AD17</td>
 <td class="instruction">CP $48</td>
-<td class="comment-11" rowspan="3">if (A &gt;= 0x48) &lt;% H++;</td>
+<td class="comment-11" rowspan="1">Was the tile on the middle or later third of the screen?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad19"></span>AD19</td>
 <td class="instruction">JR C,<a href="ACFC.html#ad21">zoombox_draw_tile_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">If not, jump to writing the attribute</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad1b"></span>AD1B</td>
 <td class="instruction">INC H</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">If so, increment the attribute bank pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad1c"></span>AD1C</td>
 <td class="instruction">CP $50</td>
-<td class="comment-11" rowspan="3">if (A &gt;= 0x50) H++; %&gt;</td>
+<td class="comment-11" rowspan="1">Was the tile on to the final third of the screen?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad1e"></span>AD1E</td>
 <td class="instruction">JR C,<a href="ACFC.html#ad21">zoombox_draw_tile_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">If not, jump to writing the attribute</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad20"></span>AD20</td>
 <td class="instruction">INC H</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">If so, increment the attribute bank pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_tile_1</td>
 <td class="address-2"><span id="ad21"></span>AD21</td>
 <td class="instruction">LD A,($AB6A)</td>
-<td class="comment-11" rowspan="2">*HL = game_window_attribute;</td>
+<td class="comment-11" rowspan="1">Read our current game_window_attribute</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad24"></span>AD24</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Write it to the attribute byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad25"></span>AD25</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad26"></span>AD26</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad27"></span>AD27</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad28"></span>AD28</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

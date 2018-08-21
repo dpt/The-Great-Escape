@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="7D87.html">7D87</a></span></td>
 </tr>
 </table>
-<div class="description">7D48: Incrementally display queued game messages.</div>
+<div class="description">7D48: Incrementally wipe and display queued game messages.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -49,7 +49,7 @@ Used by the routine at <a href="9D7B.html">main_loop</a>.
 <span id="7d48"></span>
 <div class="comments">
 <div class="paragraph">
-Proceed only if message_display_delay is zero.
+Proceed only if message display delay is zero.
 </div>
 </div>
 </td>
@@ -58,7 +58,7 @@ Proceed only if message_display_delay is zero.
 <td class="asm-label-1">message_display</td>
 <td class="address-2"><span id="7d48"></span>7D48</td>
 <td class="instruction">LD A,($7D0F)</td>
-<td class="comment-11" rowspan="4">if (message_display_delay &gt; 0) &lt;%</td>
+<td class="comment-11" rowspan="3">If message display delay is positive...</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -76,26 +76,26 @@ Proceed only if message_display_delay is zero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d4f"></span>7D4F</td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Decrement it - we'll get called again until it hits zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d50"></span>7D50</td>
 <td class="instruction">LD ($7D0F),A</td>
-<td class="comment-11" rowspan="1">message_display_delay--;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d53"></span>7D53</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="7d54"></span>
 <div class="comments">
 <div class="paragraph">
-message_display_delay reached zero.
+Otherwise message_display_delay reached zero.
 </div>
 </div>
 </td>
@@ -104,13 +104,13 @@ message_display_delay reached zero.
 <td class="asm-label-1">message_display_0</td>
 <td class="address-2"><span id="7d54"></span>7D54</td>
 <td class="instruction">LD A,($7D10)</td>
-<td class="comment-11" rowspan="1">A = message_display_index;</td>
+<td class="comment-11" rowspan="3">If message display index == message_NEXT (128) exit via (jump to) next_message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d57"></span>7D57</td>
 <td class="instruction">CP $80</td>
-<td class="comment-11" rowspan="2">if (A == 128) goto next_message; // exit via</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -122,19 +122,29 @@ message_display_delay reached zero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d5b"></span>7D5B</td>
 <td class="instruction">JR NC,<a href="7D87.html">wipe_message</a></td>
-<td class="comment-11" rowspan="1">else if (A &gt; 128) goto wipe_message; // exit via</td>
+<td class="comment-11" rowspan="1">Otherwise if message display index &gt; message_NEXT exit via (jump to) wipe_message</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="7d5d"></span>
+<div class="comments">
+<div class="paragraph">
+Display a character
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d5d"></span>7D5D</td>
 <td class="instruction">LD HL,($7D13)</td>
-<td class="comment-11" rowspan="1">else &lt;% HL = current_message_character;</td>
+<td class="comment-11" rowspan="1">Otherwise... point <span class="register">HL</span> to the current message character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d60"></span>7D60</td>
 <td class="instruction">LD DE,$50E0</td>
-<td class="comment-11" rowspan="3">DE = message_text_screen_address + A;</td>
+<td class="comment-11" rowspan="3">Point <span class="register">DE</span> at the message text screen address plus the display index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -152,13 +162,13 @@ message_display_delay reached zero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d65"></span>7D65</td>
 <td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
-<td class="comment-11" rowspan="1">plot_glyph();</td>
+<td class="comment-11" rowspan="1">Plot the glyph</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d68"></span>7D68</td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="3">message_display_index = E &amp; 31;</td>
+<td class="comment-11" rowspan="3">Save the incremented message display index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -176,7 +186,7 @@ message_display_delay reached zero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d6e"></span>7D6E</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">A = *++HL;</td>
+<td class="comment-11" rowspan="4">Check for end of string ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -188,12 +198,12 @@ message_display_delay reached zero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d70"></span>7D70</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == 255) &lt;%</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d72"></span>7D72</td>
-<td class="instruction">JP NZ,<a href="7D48.html#7d83">message_display_1</a></td>
+<td class="instruction">JP NZ,<a href="7D48.html#7d83">not_end_of_string</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -210,7 +220,7 @@ Leave the message for 31 turns, then wipe it.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d75"></span>7D75</td>
 <td class="instruction">LD A,$1F</td>
-<td class="comment-11" rowspan="2">message_display_delay = 31;</td>
+<td class="comment-11" rowspan="2">Set message display delay to 31</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -222,7 +232,7 @@ Leave the message for 31 turns, then wipe it.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d7a"></span>7D7A</td>
 <td class="instruction">LD A,($7D10)</td>
-<td class="comment-11" rowspan="3">message_display_index |= 128;</td>
+<td class="comment-11" rowspan="3">Set the message_NEXT flag in the message display index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -240,19 +250,19 @@ Leave the message for 31 turns, then wipe it.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d82"></span>7D82</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">message_display_1</td>
+<td class="asm-label-1">not_end_of_string</td>
 <td class="address-2"><span id="7d83"></span>7D83</td>
 <td class="instruction">LD ($7D13),HL</td>
-<td class="comment-11" rowspan="1">else &lt;% current_message_character = HL;</td>
+<td class="comment-11" rowspan="1">If it wasn't the end of the string set current message character to <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d86"></span>7D86</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="7B36.html">7B36</a></span></td>
 </tr>
 </table>
-<div class="description">7AC9: Check for 'pick up', 'drop' and 'use' input.</div>
+<div class="description">7AC9: Check for 'pick up', 'drop' and 'use' input events.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -51,97 +51,97 @@ Used by the routine at <a href="9E07.html">process_player_input</a>.
 <td class="asm-label-1">process_player_input_fire</td>
 <td class="address-2"><span id="7ac9"></span>7AC9</td>
 <td class="instruction">CP $0A</td>
-<td class="comment-11" rowspan="4">if (A == input_UP_FIRE) pick_up_item();</td>
+<td class="comment-11" rowspan="1">Is the input event fire + up?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7acb"></span>7ACB</td>
 <td class="instruction">JP NZ,<a href="7AC9.html#7ad3">process_player_input_fire_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Test for the next input event if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ace"></span>7ACE</td>
 <td class="instruction">CALL <a href="7B36.html">pick_up_item</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Call pick_up_item if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ad1"></span>7AD1</td>
 <td class="instruction">JR <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Then return</td>
 </tr>
 <tr>
 <td class="asm-label-1">process_player_input_fire_0</td>
 <td class="address-2"><span id="7ad3"></span>7AD3</td>
 <td class="instruction">CP $0B</td>
-<td class="comment-11" rowspan="4">else if (A == input_DOWN_FIRE) drop_item();</td>
+<td class="comment-11" rowspan="1">Is the input event fire + down?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ad5"></span>7AD5</td>
 <td class="instruction">JP NZ,<a href="7AC9.html#7add">process_player_input_fire_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Test for the next input event if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ad8"></span>7AD8</td>
 <td class="instruction">CALL <a href="7B8B.html">drop_item</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Call drop_item if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7adb"></span>7ADB</td>
 <td class="instruction">JR <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Then return</td>
 </tr>
 <tr>
 <td class="asm-label-1">process_player_input_fire_1</td>
 <td class="address-2"><span id="7add"></span>7ADD</td>
 <td class="instruction">CP $0C</td>
-<td class="comment-11" rowspan="4">else if (A == input_LEFT_FIRE) use_item_A();</td>
+<td class="comment-11" rowspan="1">Is the input event fire + left?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7adf"></span>7ADF</td>
 <td class="instruction">JP NZ,<a href="7AC9.html#7ae7">process_player_input_fire_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Test for the next input event if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ae2"></span>7AE2</td>
 <td class="instruction">CALL <a href="7AC9.html#7af5">use_item_A</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Call use_item_A if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ae5"></span>7AE5</td>
 <td class="instruction">JR <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Then return</td>
 </tr>
 <tr>
 <td class="asm-label-1">process_player_input_fire_2</td>
 <td class="address-2"><span id="7ae7"></span>7AE7</td>
 <td class="instruction">CP $0F</td>
-<td class="comment-11" rowspan="3">else if (A == input_RIGHT_FIRE) use_item_B();</td>
+<td class="comment-11" rowspan="1">Is the input event fire + right?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ae9"></span>7AE9</td>
 <td class="instruction">JP NZ,<a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Test for the next input event if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7aec"></span>7AEC</td>
 <td class="instruction">CALL <a href="7AC9.html#7af0">use_item_B</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Call use_item_B if so</td>
 </tr>
 <tr>
 <td class="asm-label-1">check_for_pick_up_keypress_exit</td>
 <td class="address-2"><span id="7aef"></span>7AEF</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -157,13 +157,13 @@ Use item 'B'.
 <td class="asm-label-1">use_item_B</td>
 <td class="address-2"><span id="7af0"></span>7AF0</td>
 <td class="instruction">LD A,($8216)</td>
-<td class="comment-11" rowspan="1">A = items_held[1]; // $8216</td>
+<td class="comment-11" rowspan="1">Fetch the second held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7af3"></span>7AF3</td>
 <td class="instruction">JR <a href="7AC9.html#7af8">use_item_common</a></td>
-<td class="comment-11" rowspan="1">goto use_item_common;</td>
+<td class="comment-11" rowspan="1">Jump over item 'A' case</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -179,7 +179,7 @@ Use item 'A'.
 <td class="asm-label-1">use_item_A</td>
 <td class="address-2"><span id="7af5"></span>7AF5</td>
 <td class="instruction">LD A,($8215)</td>
-<td class="comment-11" rowspan="1">A = items_held[0]; // $8215</td>
+<td class="comment-11" rowspan="1">Fetch the first held item</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -195,25 +195,25 @@ Use item common.
 <td class="asm-label-1">use_item_common</td>
 <td class="address-2"><span id="7af8"></span>7AF8</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == item_NONE) return;</td>
+<td class="comment-11" rowspan="1">Is the item in <span class="register">A</span> item_NONE? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7afa"></span>7AFA</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7afb"></span>7AFB</td>
 <td class="instruction">JR <a href="7AC9.html#7afd">process_player_input_fire_3</a></td>
-<td class="comment-11" rowspan="1">Bug: Pointless jump to adjacent instruction.</td>
+<td class="comment-11" rowspan="1">Bug: Pointless jump to adjacent instruction</td>
 </tr>
 <tr>
 <td class="asm-label-1">process_player_input_fire_3</td>
 <td class="address-2"><span id="7afd"></span>7AFD</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="5">HL = &amp;item_actions_jump_table[A];</td>
+<td class="comment-11" rowspan="5">Point <span class="register">HL</span> at the <span class="register">A'</span>th entry of item_actions_jump_table</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -243,7 +243,7 @@ Use item common.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b05"></span>7B05</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">L = *HL++;</td>
+<td class="comment-11" rowspan="4">Fetch the jump table destination address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -255,7 +255,7 @@ Use item common.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b07"></span>7B07</td>
 <td class="instruction">LD H,(HL)</td>
-<td class="comment-11" rowspan="2">H = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -267,13 +267,13 @@ Use item common.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b09"></span>7B09</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">// exit via stacked jump table entry</td>
+<td class="comment-11" rowspan="1">Stack the jump table destination address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b0a"></span>7B0A</td>
 <td class="instruction">LD DE,$81A4</td>
-<td class="comment-11" rowspan="4">memcpy(&amp;saved_pos_x, $800F, 6); // copy X,Y and height</td>
+<td class="comment-11" rowspan="4">Copy X,Y and height from the hero's position into saved_pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -297,7 +297,7 @@ Use item common.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b15"></span>7B15</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Jump to the stacked destination address</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -313,97 +313,97 @@ Item actions jump table.
 <td class="asm-label-1">item_actions_jump_table</td>
 <td class="address-1"><span id="7b16"></span>7B16</td>
 <td class="instruction">DEFW <a href="B417.html">action_wiresnips</a></td>
-<td class="comment-11" rowspan="1">action_wiresnips</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b18"></span>7B18</td>
 <td class="instruction">DEFW <a href="B3F6.html">action_shovel</a></td>
-<td class="comment-11" rowspan="1">action_shovel</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b1a"></span>7B1A</td>
 <td class="instruction">DEFW <a href="B495.html">action_lockpick</a></td>
-<td class="comment-11" rowspan="1">action_lockpick</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b1c"></span>7B1C</td>
 <td class="instruction">DEFW <a href="EFCB.html">action_papers</a></td>
-<td class="comment-11" rowspan="1">action_papers</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b1e"></span>7B1E</td>
 <td class="instruction">DEFW <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-11" rowspan="1">return</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b20"></span>7B20</td>
 <td class="instruction">DEFW <a href="B3A8.html">action_bribe</a></td>
-<td class="comment-11" rowspan="1">action_bribe</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b22"></span>7B22</td>
 <td class="instruction">DEFW <a href="B3E1.html">action_uniform</a></td>
-<td class="comment-11" rowspan="1">action_uniform</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b24"></span>7B24</td>
 <td class="instruction">DEFW <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-11" rowspan="1">return</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b26"></span>7B26</td>
 <td class="instruction">DEFW <a href="B3C4.html">action_poison</a></td>
-<td class="comment-11" rowspan="1">action_poison</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b28"></span>7B28</td>
 <td class="instruction">DEFW <a href="B4AE.html">action_red_key</a></td>
-<td class="comment-11" rowspan="1">action_red_key</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b2a"></span>7B2A</td>
 <td class="instruction">DEFW <a href="B4B2.html">action_yellow_key</a></td>
-<td class="comment-11" rowspan="1">action_yellow_key</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b2c"></span>7B2C</td>
 <td class="instruction">DEFW <a href="B4B6.html">action_green_key</a></td>
-<td class="comment-11" rowspan="1">action_green_key</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b2e"></span>7B2E</td>
 <td class="instruction">DEFW <a href="B387.html">action_red_cross_parcel</a></td>
-<td class="comment-11" rowspan="1">action_red_cross_parcel</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b30"></span>7B30</td>
 <td class="instruction">DEFW <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-11" rowspan="1">return</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b32"></span>7B32</td>
 <td class="instruction">DEFW <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-11" rowspan="1">return</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b34"></span>7B34</td>
 <td class="instruction">DEFW <a href="7AC9.html#7aef">check_for_pick_up_keypress_exit</a></td>
-<td class="comment-11" rowspan="1">return</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

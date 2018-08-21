@@ -27,10 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="6A35.html">setup_room</a>.
-</div>
-<div class="paragraph">
-Used by setup_room only.
+Used by the routine at <a href="6A35.html">setup_room</a> only.
 </div>
 </div>
 <table class="input-0">
@@ -52,7 +49,7 @@ Used by setup_room only.
 <span id="69dc"></span>
 <div class="comments">
 <div class="paragraph">
-Wipe interior doors with 0xFF.
+Clear the interior_doors[] array with door_NONE ($FF).
 </div>
 </div>
 </td>
@@ -61,25 +58,25 @@ Wipe interior doors with 0xFF.
 <td class="asm-label-1">setup_doors</td>
 <td class="address-2"><span id="69dc"></span>69DC</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to door_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69de"></span>69DE</td>
 <td class="instruction">LD DE,$81D9</td>
-<td class="comment-11" rowspan="1">DE = interior_doors + 3;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">DE</span> to the final byte of interior_doors[] (byte 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69e1"></span>69E1</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">B = 4;</td>
+<td class="comment-11" rowspan="4">Set all four bytes to door_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_doors_0</td>
 <td class="address-2"><span id="69e3"></span>69E3</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="2">do &lt;% *DE-- = door_NONE;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -91,19 +88,29 @@ Wipe interior doors with 0xFF.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69e5"></span>69E5</td>
 <td class="instruction">DJNZ <a href="69DC.html#69e3">setup_doors_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="69e7"></span>
+<div class="comments">
+<div class="paragraph">
+Setup to populate interior_doors[].
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69e7"></span>69E7</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++; // DE = &amp;interior_doors[0];</td>
+<td class="comment-11" rowspan="1">Set <span class="register">DE</span> to the first interior_doors[] byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69e8"></span>69E8</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="4">B = room_index &lt;&lt; 2;</td>
+<td class="comment-11" rowspan="4">Fetch and shift the global current room index up by two bits, to match door_flags, then store it in <span class="register">B</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -127,67 +134,100 @@ Wipe interior doors with 0xFF.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69ee"></span>69EE</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-11" rowspan="2">C = 0;</td>
+<td class="comment-11" rowspan="1">Initialise the door index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69f0"></span>69F0</td>
 <td class="instruction">EXX</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Switch register banks for the iteration</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="69f1"></span>
+<div class="comments">
+<div class="paragraph">
+We're about to walk through doors[] and extract the indices of the doors relevant to the current room.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69f1"></span>69F1</td>
 <td class="instruction">LD HL,$78D6</td>
-<td class="comment-11" rowspan="1">HLdash = &amp;doors[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL'</span> to the first byte of doors[]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69f4"></span>69F4</td>
 <td class="instruction">LD B,$7C</td>
-<td class="comment-11" rowspan="1">Bdash = 124; // length of doors[]</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B'</span> to the number of entries in doors[] (124)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69f6"></span>69F6</td>
 <td class="instruction">LD DE,$0004</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set <span class="register">DE'</span> to the stride of four bytes (each door is a room_and_direction byte followed by a 3-byte position)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="69f9"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+<div class="paragraph">
+Save any door index which matches the current room.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_doors_1</td>
 <td class="address-2"><span id="69f9"></span>69F9</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="5">do &lt;% if ((HLdash[0] &amp; ~door_FLAGS_MASK_DIRECTION) == B) &lt;%</td>
+<td class="comment-11" rowspan="1">Fetch door's room_and_direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69fa"></span>69FA</td>
 <td class="instruction">EXX</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Switch registers back to the set used on entry to the routine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69fb"></span>69FB</td>
 <td class="instruction">AND $FC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clear room_and_direction's direction bits (door_FLAGS_MASK_DIRECTION)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69fd"></span>69FD</td>
 <td class="instruction">CP B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it the current room?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="69fe"></span>69FE</td>
 <td class="instruction">JR NZ,<a href="69DC.html#6a05">setup_doors_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="6a00"></span>
+<div class="comments">
+<div class="paragraph">
+This is the current room.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a00"></span>6A00</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="4">*DE++ = C ^ door_REVERSE; %&gt;</td>
+<td class="comment-11" rowspan="4">Write to <span class="register">DE</span> register <span class="register">C</span> toggled with door_REVERSE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -211,7 +251,7 @@ Wipe interior doors with 0xFF.
 <td class="asm-label-1">setup_doors_2</td>
 <td class="address-2"><span id="6a05"></span>6A05</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">C ^= door_REVERSE;</td>
+<td class="comment-11" rowspan="2">Toggle door_REVERSE in <span class="register">C</span> for the next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -223,13 +263,13 @@ Wipe interior doors with 0xFF.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a08"></span>6A08</td>
 <td class="instruction">JP M,<a href="69DC.html#6a0c">setup_doors_3</a></td>
-<td class="comment-11" rowspan="4">if (C &lt; door_REVERSE) C++; // increment every two stops?</td>
+<td class="comment-11" rowspan="1">Jump if (<span class="register">C</span> &gt;= door_REVERSE)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a0b"></span>6A0B</td>
 <td class="instruction">INC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Increment the door index once every two steps through the array</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_doors_3</td>
@@ -241,25 +281,25 @@ Wipe interior doors with 0xFF.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a0d"></span>6A0D</td>
 <td class="instruction">EXX</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Switch registers again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a0e"></span>6A0E</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HLdash += 4; %&gt;</td>
+<td class="comment-11" rowspan="1">Step <span class="register">HL'</span> to the next door</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a0f"></span>6A0F</td>
 <td class="instruction">DJNZ <a href="69DC.html#69f9">setup_doors_1</a></td>
-<td class="comment-11" rowspan="1">while (--Bdash);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a11"></span>6A11</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

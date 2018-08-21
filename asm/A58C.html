@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A59C.html">A59C</a></span></td>
 </tr>
 </table>
-<div class="description">A58C: Key scan of all ports.</div>
+<div class="description">A58C: Check for any key press.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -41,8 +41,8 @@ Used by the routine at <a href="A51C.html">escaped</a>.
 <th colspan="2">Output</th>
 </tr>
 <tr>
-<td class="register">A</td>
-<td class="register-desc">Pressed key.</td>
+<td class="register">F</td>
+<td class="register-desc">NZ if a key was pressed, Z otherwise.</td>
 </tr>
 </table>
 </td>
@@ -51,55 +51,65 @@ Used by the routine at <a href="A51C.html">escaped</a>.
 <td class="asm-label-1">keyscan_all</td>
 <td class="address-2"><span id="a58c"></span>A58C</td>
 <td class="instruction">LD BC,$FEFE</td>
-<td class="comment-11" rowspan="1">BC = $FEFE;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> to $FE (initial keyboard half-row selector) and <span class="register">C</span> to $FE (keyboard port number)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a58f"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">keyscan_all_0</td>
 <td class="address-2"><span id="a58f"></span>A58F</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Read the port</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a591"></span>A591</td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="2">A = ~A &amp; 0x1F;</td>
+<td class="comment-11" rowspan="1">Complement the value returned to change it from active-low</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a592"></span>A592</td>
 <td class="instruction">AND $1F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Discard any non-key flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a594"></span>A594</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">if (A) return;</td>
+<td class="comment-11" rowspan="1">Return with Z clear if any key was pressed</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a595"></span>A595</td>
 <td class="instruction">RLC B</td>
-<td class="comment-11" rowspan="1">RLC B</td>
+<td class="comment-11" rowspan="1">Rotate the half-row selector ($FE -&gt; $FD -&gt; $FB -&gt; .. -&gt; $7F)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a597"></span>A597</td>
 <td class="instruction">JP C,<a href="A58C.html#a58f">keyscan_all_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (carry);</td>
+<td class="comment-11" rowspan="1">...loop until the zero bit shifts out (eight iterations)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a59a"></span>A59A</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="2">No keys were pressed - return with Z set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a59b"></span>A59B</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">

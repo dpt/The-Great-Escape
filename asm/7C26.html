@@ -54,7 +54,7 @@ Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.ht
 <td class="asm-label-1">item_to_itemstruct</td>
 <td class="address-2"><span id="7c26"></span>7C26</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="11">return &amp;item_structs[A]; // $76C8 + A * 7</td>
+<td class="comment-11" rowspan="5">Multiply item index by seven</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -84,13 +84,13 @@ Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.ht
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c2b"></span>7C2B</td>
 <td class="instruction">LD HL,$76C8</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first element of item_structs</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c2e"></span>7C2E</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Add the two</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -114,7 +114,7 @@ Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.ht
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c32"></span>7C32</td>
 <td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return i'th element of item_structs in <span class="register">HL</span></td>
 </tr>
 </table>
 <table class="asm-navigation">

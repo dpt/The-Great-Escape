@@ -52,7 +52,7 @@ Used by the routines at <a href="68F4.html">enter_room</a>, <a href="A0E9.html">
 <span id="a0f9"></span>
 <div class="comments">
 <div class="paragraph">
-Increment the score digit-wise until delta is zero.
+Increment the score digit-wise until <span class="register">B</span> is zero.
 </div>
 </div>
 </td>
@@ -61,67 +61,77 @@ Increment the score digit-wise until delta is zero.
 <td class="asm-label-1">increase_score</td>
 <td class="address-2"><span id="a0f9"></span>A0F9</td>
 <td class="instruction">LD A,$0A</td>
-<td class="comment-11" rowspan="1">A = 10;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to our base: 10</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0fb"></span>A0FB</td>
 <td class="instruction">LD HL,$A136</td>
-<td class="comment-11" rowspan="1">HL = &amp;score_digits + 4;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the last of the score digits</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a0fe"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">increase_score_0</td>
 <td class="address-2"><span id="a0fe"></span>A0FE</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">do &lt;% tmp = HL;</td>
+<td class="comment-11" rowspan="1">Save HL</td>
 </tr>
 <tr>
-<td class="asm-label-1">increase_score_increment_score</td>
+<td class="asm-label-1">increment_score</td>
 <td class="address-2"><span id="a0ff"></span>A0FF</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-11" rowspan="1">increment_score: (*HL)++;</td>
+<td class="comment-11" rowspan="1">Increment the pointed-to score digit by one</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a100"></span>A100</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="5">if (*HL == A) &lt;% *HL-- = 0; goto increment_score; %&gt;</td>
+<td class="comment-11" rowspan="1">Has the pointed-to digit incremented to equal our base 10?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a101"></span>A101</td>
 <td class="instruction">JR NZ,<a href="A0F9.html#a108">increase_score_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">No - loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a103"></span>A103</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Yes - reset the current digit to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a105"></span>A105</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move to the next higher digit</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a106"></span>A106</td>
-<td class="instruction">JR <a href="A0F9.html#a0ff">increase_score_increment_score</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR <a href="A0F9.html#a0ff">increment_score</a></td>
+<td class="comment-11" rowspan="1">"Recurse" - we'll arrive at the next instruction when we increment a digit which doesn't roll over</td>
 </tr>
 <tr>
 <td class="asm-label-1">increase_score_1</td>
 <td class="address-2"><span id="a108"></span>A108</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">HL = tmp;</td>
+<td class="comment-11" rowspan="1">Restore HL</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a109"></span>A109</td>
 <td class="instruction">DJNZ <a href="A0F9.html#a0fe">increase_score_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop until the (score specified on entry) turns have been had</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">

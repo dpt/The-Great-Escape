@@ -51,13 +51,13 @@ Used by the routine at <a href="A09E.html">ring_bell</a>.
 <td class="asm-label-1">plot_ringer</td>
 <td class="address-2"><span id="a0c9"></span>A0C9</td>
 <td class="instruction">LD HL,$518E</td>
-<td class="comment-11" rowspan="1">HL = screenaddr_bell_ringer;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at screenaddr_bell_ringer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0cc"></span>A0CC</td>
 <td class="instruction">LD BC,$010C</td>
-<td class="comment-11" rowspan="2">plot_bitmap(0x010C); return; %&gt; // dimensions: 8 x 12 // args=BC // exit via</td>
+<td class="comment-11" rowspan="2">Plot the bell always at 8x12 pixels in size, exiting via it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>

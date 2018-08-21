@@ -48,79 +48,79 @@ Used by the routine at <a href="AAB2.html">move_map</a>.
 <td class="asm-label-1">shunt_map_left</td>
 <td class="address-2"><span id="a9e4"></span>A9E4</td>
 <td class="instruction">LD HL,$81BB</td>
-<td class="comment-11" rowspan="1">HL = &amp;map_position;</td>
+<td class="comment-11" rowspan="2">Move the map position to the left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9e7"></span>A9E7</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-11" rowspan="1">(*HL)++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9e8"></span>A9E8</td>
 <td class="instruction">CALL <a href="A7C9.html">get_supertiles</a></td>
-<td class="comment-11" rowspan="1">get_supertiles();</td>
+<td class="comment-11" rowspan="1">Update the supertiles in map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9eb"></span>A9EB</td>
 <td class="instruction">LD HL,$F0F9</td>
-<td class="comment-11" rowspan="1">HL = &amp;tile_buf[1];</td>
+<td class="comment-11" rowspan="4">Shunt the tile_buf back by one byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9ee"></span>A9EE</td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="comment-11" rowspan="1">DE = &amp;tile_buf[0];</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9f1"></span>A9F1</td>
 <td class="instruction">LD BC,$0197</td>
-<td class="comment-11" rowspan="1">BC = tile_buf_length - 1;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9f4"></span>A9F4</td>
 <td class="instruction">LDIR</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9f6"></span>A9F6</td>
 <td class="instruction">LD HL,$F291</td>
-<td class="comment-11" rowspan="1">HL = &amp;window_buf[1];</td>
+<td class="comment-11" rowspan="4">Shunt the window_buf back by one byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9f9"></span>A9F9</td>
 <td class="instruction">LD DE,$F290</td>
-<td class="comment-11" rowspan="1">DE = &amp;window_buf[0];</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9fc"></span>A9FC</td>
 <td class="instruction">LD BC,$0CBF</td>
-<td class="comment-11" rowspan="1">BC = window_buf_length - 1;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a9ff"></span>A9FF</td>
 <td class="instruction">LDIR</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa01"></span>AA01</td>
 <td class="instruction">CALL <a href="A8CF.html">plot_rightmost_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_rightmost_tiles();</td>
+<td class="comment-11" rowspan="1">Plot the complete rightmost column of tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa04"></span>AA04</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

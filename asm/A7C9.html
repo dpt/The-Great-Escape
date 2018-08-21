@@ -27,10 +27,10 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="A9E4.html">shunt_map_left</a>, <a href="AA05.html">shunt_map_right</a>, <a href="AA26.html">shunt_map_up_right</a>, <a href="AA4B.html">shunt_map_up</a>, <a href="AA6C.html">shunt_map_down</a>, <a href="AA8D.html">shunt_map_down_left</a> and <a href="B2FC.html">reset_outdoors</a>.
+Using map_position copies supertile indices from map_tiles at $BCB8 into the map_buf buffer at $FF58.
 </div>
 <div class="paragraph">
-Uses map_position to copy supertile indices from map into the buffer at $FF58.
+Used by the routines at <a href="A9E4.html">shunt_map_left</a>, <a href="AA05.html">shunt_map_right</a>, <a href="AA26.html">shunt_map_up_right</a>, <a href="AA4B.html">shunt_map_up</a>, <a href="AA6C.html">shunt_map_down</a>, <a href="AA8D.html">shunt_map_down_left</a> and <a href="B2FC.html">reset_outdoors</a>.
 </div>
 </div>
 <table class="input-0">
@@ -61,7 +61,7 @@ Get vertical offset.
 <td class="asm-label-1">get_supertiles</td>
 <td class="address-2"><span id="a7c9"></span>A7C9</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="2">A = (map_position &gt;&gt; 8) &amp; 0xFC; // A = 0, 4, 8, 12, ...</td>
+<td class="comment-11" rowspan="2">Get the map position's Y component and round it down to a multiple of four</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -74,7 +74,7 @@ Get vertical offset.
 <span id="a7ce"></span>
 <div class="comments">
 <div class="paragraph">
-Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
+Multiply the Y component by 13.5 producing 0, 54, 108, 162, ...
 </div>
 </div>
 </td>
@@ -83,7 +83,7 @@ Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ce"></span>A7CE</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="16">HL = &amp;map_tiles[-54] + (A + (A &gt;&gt; 1)) * 9; // must be skipping the first row.</td>
+<td class="comment-11" rowspan="2">Copy <span class="register">A</span> into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -95,7 +95,7 @@ Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d1"></span>A7D1</td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Halve <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -107,7 +107,7 @@ Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7d4"></span>A7D4</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Add <span class="register">A</span> to <span class="register">HL</span>, giving us Y multiplied by 1.5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -131,7 +131,7 @@ Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 <td class="asm-label-1">get_supertiles_0</td>
 <td class="address-2"><span id="a7d9"></span>A7D9</td>
 <td class="instruction">LD E,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Copy <span class="register">HL</span> into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -143,7 +143,7 @@ Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7db"></span>A7DB</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Multiply by nine, giving us Y multiplied by 13.5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -167,20 +167,20 @@ Multiply A by 13.5. (A is a multiple of 4, so this goes 0, 54, 108, 162, ...)
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7df"></span>A7DF</td>
 <td class="instruction">LD DE,$BCB8</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at map_tiles but minus a whole row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7e2"></span>A7E2</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Combine</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="a7e3"></span>
 <div class="comments">
 <div class="paragraph">
-Add horizontal offset.
+Add the X component.
 </div>
 </div>
 </td>
@@ -189,7 +189,7 @@ Add horizontal offset.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7e3"></span>A7E3</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="comment-11" rowspan="7">HL += (map_position &amp; 0xFF) &gt;&gt; 2;</td>
+<td class="comment-11" rowspan="4">Get the map position's X component and divide it by 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -213,7 +213,7 @@ Add horizontal offset.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ea"></span>A7EA</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Move <span class="register">A</span> into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -225,7 +225,7 @@ Add horizontal offset.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ed"></span>A7ED</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Combine. Now we have a pointer into map_tiles</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -241,19 +241,29 @@ Populate map_buf with 7x5 array of supertile refs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7ee"></span>A7EE</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment-11" rowspan="1">A = 5; // 5 iterations</td>
+<td class="comment-11" rowspan="1">Five rows</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a7f0"></span>A7F0</td>
 <td class="instruction">LD DE,$FF58</td>
-<td class="comment-11" rowspan="1">DE = &amp;map_buf[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at map_buf (a 7x5 scratch buffer which holds copied-out supertile indices)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a7f3"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">get_supertiles_1</td>
 <td class="address-2"><span id="a7f3"></span>A7F3</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="7">do &lt;% memcpy(DE, HL, 7); DE += 7;</td>
+<td class="comment-11" rowspan="7">Fill the buffer row with seven bytes from <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -295,7 +305,7 @@ Populate map_buf with 7x5 array of supertile refs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a801"></span>A801</td>
 <td class="instruction">LD BC,$002F</td>
-<td class="comment-11" rowspan="2">HL += 54; // stride - width of map</td>
+<td class="comment-11" rowspan="2">Move <span class="register">HL</span> forward by (stride - width of map_buf)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -307,7 +317,7 @@ Populate map_buf with 7x5 array of supertile refs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a805"></span>A805</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+<td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -319,7 +329,7 @@ Populate map_buf with 7x5 array of supertile refs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a809"></span>A809</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

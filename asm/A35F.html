@@ -21,13 +21,13 @@
 <td class="next"><span class="next-1">Next: <a href="A373.html">A373</a></span></td>
 </tr>
 </table>
-<div class="description">A35F: Set ascending routes for all characters in prisoners_and_guards.</div>
+<div class="description">A35F: Set individual routes for all characters in prisoners_and_guards.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-The route passed in (A',C) is assigned to the first character. The second character gets route (A'+1,C) and so on.
+The route passed in (<span class="register">A'</span>,<span class="register">C</span>) is assigned to the first character. The second character gets route (<span class="register">A'</span>+1,<span class="register">C</span>) and so on.
 </div>
 <div class="paragraph">
 Used by the routine at <a href="A4FD.html">go_to_roll_call</a>.
@@ -58,43 +58,53 @@ Used by the routine at <a href="A4FD.html">go_to_roll_call</a>.
 <td class="asm-label-1">set_prisoners_and_guards_route</td>
 <td class="address-2"><span id="a35f"></span>A35F</td>
 <td class="instruction">LD HL,$A27F</td>
-<td class="comment-11" rowspan="1">HL = &amp;prisoners_and_guards[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at prisoners_and_guards table of character indices</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a362"></span>A362</td>
 <td class="instruction">LD B,$0A</td>
-<td class="comment-11" rowspan="1">B = 10;</td>
+<td class="comment-11" rowspan="1">Iterate over the ten entries</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a364"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">set_prisoners_and_guards_route_0</td>
 <td class="address-2"><span id="a364"></span>A364</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Save</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a365"></span>A365</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a366"></span>A366</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a367"></span>A367</td>
 <td class="instruction">CALL <a href="A38C.html">set_character_route</a></td>
-<td class="comment-11" rowspan="1">set_character_route();</td>
+<td class="comment-11" rowspan="1">Set the route for the character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a36a"></span>A36A</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="3">Adash++;</td>
+<td class="comment-11" rowspan="3">Increment the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -112,31 +122,31 @@ Used by the routine at <a href="A4FD.html">go_to_roll_call</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a36d"></span>A36D</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a36e"></span>A36E</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a36f"></span>A36F</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance to the next character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a370"></span>A370</td>
 <td class="instruction">DJNZ <a href="A35F.html#a364">set_prisoners_and_guards_route_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a372"></span>A372</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

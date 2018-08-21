@@ -36,11 +36,11 @@ Used by the routines at <a href="7D48.html">message_display</a>, <a href="A10B.h
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to glyph.</td>
+<td class="register-desc">Pointer to glyph index.</td>
 </tr>
 <tr>
 <td class="register">DE</td>
-<td class="register-desc">Pointer to destination.</td>
+<td class="register-desc">Pointer to screen destination.</td>
 </tr>
 </table>
 <table class="output-1">
@@ -53,7 +53,7 @@ Used by the routines at <a href="7D48.html">message_display</a>, <a href="A10B.h
 </tr>
 <tr>
 <td class="register">DE</td>
-<td class="register-desc">Points to next character.</td>
+<td class="register-desc">Points to the next character position to the right.</td>
 </tr>
 </table>
 </td>
@@ -62,7 +62,7 @@ Used by the routines at <a href="7D48.html">message_display</a>, <a href="A10B.h
 <td class="asm-label-1">plot_glyph</td>
 <td class="address-2"><span id="7d2f"></span>7D2F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the glyph index</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">

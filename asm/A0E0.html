@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A0E9.html">A0E9</a></span></td>
 </tr>
 </table>
-<div class="description">A0E0: Decrease morale.</div>
+<div class="description">A0E0: Decrease morale level.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,7 +36,7 @@ Used by the routines at <a href="A1D3.html">event_another_day_dawns</a>, <a href
 </tr>
 <tr>
 <td class="register">B</td>
-<td class="register-desc">Amount to decrease morale by. (Preserved)</td>
+<td class="register-desc">Amount to decrease morale level by. (Preserved)</td>
 </tr>
 </table>
 <table class="output-0">
@@ -51,7 +51,7 @@ Used by the routines at <a href="A1D3.html">event_another_day_dawns</a>, <a href
 <td class="asm-label-1">decrease_morale</td>
 <td class="address-2"><span id="a0e0"></span>A0E0</td>
 <td class="instruction">LD A,($A13C)</td>
-<td class="comment-11" rowspan="2">A = morale - B;</td>
+<td class="comment-11" rowspan="2">Fetch morale level and subtract <span class="register">B</span> from it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -62,8 +62,8 @@ Used by the routines at <a href="A1D3.html">event_another_day_dawns</a>, <a href
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0e4"></span>A0E4</td>
-<td class="instruction">JR NC,<a href="A0DC.html">set_morale_from_A</a></td>
-<td class="comment-11" rowspan="2">if (A &lt; morale_MIN) A = morale_MIN;</td>
+<td class="instruction">JR NC,<a href="A0DC.html">set_morale</a></td>
+<td class="comment-11" rowspan="2">Clamp morale level to morale_MIN (0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -74,8 +74,8 @@ Used by the routines at <a href="A1D3.html">event_another_day_dawns</a>, <a href
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0e7"></span>A0E7</td>
-<td class="instruction">JR <a href="A0DC.html">set_morale_from_A</a></td>
-<td class="comment-11" rowspan="1">goto set_morale_from_A;</td>
+<td class="instruction">JR <a href="A0DC.html">set_morale</a></td>
+<td class="comment-11" rowspan="1">Jump to set_morale</td>
 </tr>
 </table>
 <table class="asm-navigation">

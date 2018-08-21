@@ -21,16 +21,13 @@
 <td class="next"><span class="next-1">Next: <a href="F1E0.html">F1E0</a></span></td>
 </tr>
 </table>
-<div class="description">F163: Main.</div>
+<div class="description">F163: The game starts here.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="F068.html">jump_to_main</a>.
-</div>
-<div class="paragraph">
-Disable interrupts and set up stack pointer.
 </div>
 </div>
 <table class="input-0">
@@ -51,13 +48,13 @@ Disable interrupts and set up stack pointer.
 <td class="asm-label-1">main</td>
 <td class="address-2"><span id="f163"></span>F163</td>
 <td class="instruction">DI</td>
-<td class="comment-11" rowspan="2">-</td>
+<td class="comment-11" rowspan="1">Disable interrupts.</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f164"></span>F164</td>
 <td class="instruction">LD SP,$FFFE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set up stack pointer. Why is this $FFFE when squash_stack_goto_main sets it to $FFFF?</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -422,7 +419,7 @@ This is likely wiping everything up until the start of tiles ($8218).
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f1c6"></span>F1C6</td>
 <td class="instruction">JP <a href="9D78.html">main_loop_setup</a></td>
-<td class="comment-11" rowspan="1">goto main_loop_setup;</td>
+<td class="comment-11" rowspan="1">goto ma holdsin_loop_setup;</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">

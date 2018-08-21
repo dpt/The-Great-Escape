@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A215.html">A215</a></span></td>
 </tr>
 </table>
-<div class="description">A206: Event: go to exercise time.</div>
+<div class="description">A206: Event: Go to exercise time.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -46,13 +46,13 @@
 <td class="asm-label-1">event_go_to_exercise_time</td>
 <td class="address-2"><span id="a206"></span>A206</td>
 <td class="instruction">LD (BC),A</td>
-<td class="comment-11" rowspan="1">*BC = A; // bell = bell_RING_40_TIMES;</td>
+<td class="comment-11" rowspan="1">Ring the bell 40 times as passed in</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a207"></span>A207</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="2">queue_message(message_EXERCISE_TIME);</td>
+<td class="comment-11" rowspan="2">Queue the message "EXERCISE TIME"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -61,20 +61,10 @@
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="a20c"></span>
-<div class="comments">
-<div class="paragraph">
-Unlock the gates.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a20c"></span>A20C</td>
 <td class="instruction">LD HL,$0100</td>
-<td class="comment-11" rowspan="2">locked_doors[0] = 0x00; locked_doors[1] = 0x01;</td>
+<td class="comment-11" rowspan="2">Unlock the gates to the exercise yard</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -86,7 +76,7 @@ Unlock the gates.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a212"></span>A212</td>
 <td class="instruction">JP <a href="A4A9.html">set_route_go_to_yard</a></td>
-<td class="comment-11" rowspan="1">set_route_go_to_yard(); return; // exit via</td>
+<td class="comment-11" rowspan="1">Exit via set_route_go_to_yard</td>
 </tr>
 </table>
 <table class="asm-navigation">

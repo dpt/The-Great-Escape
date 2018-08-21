@@ -48,31 +48,41 @@ Used by the routines at <a href="AA6C.html">shunt_map_down</a> and <a href="AA8D
 <td class="asm-label-1">plot_topmost_tiles</td>
 <td class="address-2"><span id="a819"></span>A819</td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="comment-11" rowspan="1">DE = &amp;state-&gt;tile_buf[0];</td>
+<td class="comment-11" rowspan="2">Point <span class="register">DE'</span> at the start of tile_buf's first row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a81c"></span>A81C</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a81d"></span>A81D</td>
 <td class="instruction">LD HL,$FF58</td>
-<td class="comment-11" rowspan="1">HLdash = &amp;state-&gt;map_buf[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the start of map_buf's first row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a820"></span>A820</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="1">A = map_position &gt;&gt; 8; // map_position hi</td>
+<td class="comment-11" rowspan="1">Get the map's Y coordinate</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a823"></span>A823</td>
 <td class="instruction">LD DE,$F290</td>
-<td class="comment-11" rowspan="1">DEdash = &amp;state-&gt;window_buf[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the start of window_buf's first row</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+
+<div class="comments">
+<div class="paragraph">
+FALL THROUGH into plot_horizontal_tiles_common
+</div>
+</div>
+</td>
 </tr>
 </table>
 <table class="asm-navigation">

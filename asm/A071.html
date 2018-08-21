@@ -51,25 +51,35 @@ Used by the routines at <a href="9F21.html">in_permitted_area</a> and <a href="F
 <td class="asm-label-1">set_morale_flag_screen_attributes</td>
 <td class="address-2"><span id="a071"></span>A071</td>
 <td class="instruction">LD HL,$5842</td>
-<td class="comment-11" rowspan="1">HL = $5842; // first attribute byte</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the top-left attribute byte of the morale flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a074"></span>A074</td>
 <td class="instruction">LD DE,$001E</td>
-<td class="comment-11" rowspan="1">DE = $001E; // skip</td>
+<td class="comment-11" rowspan="1">Set <span class="register">DE</span> to the rowskip (32 attributes per row, minus 2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a077"></span>A077</td>
 <td class="instruction">LD B,$13</td>
-<td class="comment-11" rowspan="1">B  = $13; // height of flag</td>
+<td class="comment-11" rowspan="1">The flag is 19 attributes high</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="a079"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">set_morale_flag_screen_attributes_0</td>
 <td class="address-2"><span id="a079"></span>A079</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="2">do &lt;% *HL++ = A;</td>
+<td class="comment-11" rowspan="5">Write out three attribute bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -81,7 +91,7 @@ Used by the routines at <a href="9F21.html">in_permitted_area</a> and <a href="F
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a07b"></span>A07B</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="3">*HL = A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -99,19 +109,19 @@ Used by the routines at <a href="9F21.html">in_permitted_area</a> and <a href="F
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a07e"></span>A07E</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-11" rowspan="1">Move to next row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a07f"></span>A07F</td>
 <td class="instruction">DJNZ <a href="A071.html#a079">set_morale_flag_screen_attributes_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a081"></span>A081</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

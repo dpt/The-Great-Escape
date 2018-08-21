@@ -51,9 +51,6 @@ Used by the routine at <a href="9D7B.html">main_loop</a>.
 <div class="paragraph">
 Morale exhausted? If so then don't allow input.
 </div>
-<div class="paragraph">
-Note the combined read of in_solitary and morale_exhausted as a word.
-</div>
 </div>
 </td>
 </tr>
@@ -61,13 +58,13 @@ Note the combined read of in_solitary and morale_exhausted as a word.
 <td class="asm-label-1">process_player_input</td>
 <td class="address-2"><span id="9e07"></span>9E07</td>
 <td class="instruction">LD HL,($A13A)</td>
-<td class="comment-11" rowspan="5">if (in_solitary || morale_exhausted) return;</td>
+<td class="comment-11" rowspan="1">Simultaneously load the in_solitary and morale_exhausted flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e0a"></span>9E0A</td>
 <td class="instruction">XOR A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Return if either is set. This inhibits the player's control</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -91,7 +88,7 @@ Note the combined read of in_solitary and morale_exhausted as a word.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e0e"></span>9E0E</td>
 <td class="instruction">LD A,($8001)</td>
-<td class="comment-11" rowspan="3">if ($8001 &amp; (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE)) &lt;%</td>
+<td class="comment-11" rowspan="2">Is the hero is picking a lock, or cutting wire?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -102,8 +99,8 @@ Note the combined read of in_solitary and morale_exhausted as a word.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e13"></span>9E13</td>
-<td class="instruction">JR Z,<a href="9E07.html#9e22">process_player_input_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="9E07.html#9e22">process_player_input_no_flags</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -112,9 +109,6 @@ Note the combined read of in_solitary and morale_exhausted as a word.
 <div class="paragraph">
 Hero is picking a lock, or cutting through a wire fence.
 </div>
-<div class="paragraph">
-Postpone automatic control for 31 turns.
-</div>
 </div>
 </td>
 </tr>
@@ -122,7 +116,7 @@ Postpone automatic control for 31 turns.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e15"></span>9E15</td>
 <td class="instruction">LD HL,$A139</td>
-<td class="comment-11" rowspan="2">automatic_player_counter = 31;</td>
+<td class="comment-11" rowspan="2">Postpone automatic control for 31 turns of this routine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -134,50 +128,50 @@ Postpone automatic control for 31 turns.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e1a"></span>9E1A</td>
 <td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="2">if ($8001 == vischar_FLAGS_PICKING_LOCK) goto picking_lock; // exit via</td>
+<td class="comment-11" rowspan="1">Is the hero picking a lock?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e1c"></span>9E1C</td>
 <td class="instruction">JP Z,<a href="9E98.html">picking_lock</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump to picking_lock if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e1f"></span>9E1F</td>
 <td class="instruction">JP <a href="9EB2.html">cutting_wire</a></td>
-<td class="comment-11" rowspan="1">else goto cutting_wire; %&gt; // exit via</td>
+<td class="comment-11" rowspan="1">Jump to cutting_wire otherwise</td>
 </tr>
 <tr>
-<td class="asm-label-1">process_player_input_0</td>
+<td class="asm-label-1">process_player_input_no_flags</td>
 <td class="address-2"><span id="9e22"></span>9E22</td>
 <td class="instruction">CALL $F075</td>
-<td class="comment-11" rowspan="1">A = input_routine(); // lives at same address as static_tiles_plot_direction</td>
+<td class="comment-11" rowspan="1">Call the input routine. Input is returned in <span class="register">A</span>. (Note: The routine lives at same address as static_tiles_plot_direction)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e25"></span>9E25</td>
 <td class="instruction">LD HL,$A139</td>
-<td class="comment-11" rowspan="2">- // subsumed into following code</td>
+<td class="comment-11" rowspan="1">Take address of the automatic player counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e28"></span>9E28</td>
 <td class="instruction">CP $00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Did the input routine return input_NONE? (zero)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e2a"></span>9E2A</td>
-<td class="instruction">JP NZ,<a href="9E07.html#9e34">process_player_input_1</a></td>
-<td class="comment-11" rowspan="1">if (A == input_NONE) &lt;%</td>
+<td class="instruction">JP NZ,<a href="9E07.html#9e34">process_player_input_received</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="9e2d"></span>
 <div class="comments">
 <div class="paragraph">
-No input.
+No user input was received: count down the automatic player counter
 </div>
 </div>
 </td>
@@ -186,7 +180,7 @@ No input.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e2d"></span>9E2D</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">if (automatic_player_counter == 0) return;</td>
+<td class="comment-11" rowspan="3">If the automatic player counter is zero then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -201,39 +195,29 @@ No input.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="9e30"></span>
-<div class="comments">
-<div class="paragraph">
-No user input: count down.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e30"></span>9E30</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment-11" rowspan="1">automatic_player_counter--;</td>
+<td class="comment-11" rowspan="1">Decrement the automatic player counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e31"></span>9E31</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0; %&gt;</td>
+<td class="comment-11" rowspan="1">Set input to input_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e32"></span>9E32</td>
-<td class="instruction">JR <a href="9E07.html#9e8f">process_player_input_5</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="instruction">JR <a href="9E07.html#9e8f">process_player_input_set_kick</a></td>
+<td class="comment-11" rowspan="1">Jump to end bit</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="9e34"></span>
 <div class="comments">
 <div class="paragraph">
-Input received.
+User input was received.
 </div>
 <div class="paragraph">
 Postpone automatic control for 31 turns.
@@ -242,59 +226,59 @@ Postpone automatic control for 31 turns.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">process_player_input_1</td>
+<td class="asm-label-1">process_player_input_received</td>
 <td class="address-2"><span id="9e34"></span>9E34</td>
 <td class="instruction">LD (HL),$1F</td>
-<td class="comment-11" rowspan="1">automatic_player_counter = 31;</td>
+<td class="comment-11" rowspan="1">Set the automatic player counter to 31</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e36"></span>9E36</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">... (push af) ...</td>
+<td class="comment-11" rowspan="1">Bank input routine result</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e37"></span>9E37</td>
 <td class="instruction">LD A,($A13F)</td>
-<td class="comment-11" rowspan="3">if (hero_in_bed == 0) &lt;%</td>
+<td class="comment-11" rowspan="1">Load hero in bed flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e3a"></span>9E3A</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e3b"></span>9E3B</td>
-<td class="instruction">JR NZ,<a href="9E07.html#9e5c">process_player_input_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="9E07.html#9e5c">process_player_input_in_bed</a></td>
+<td class="comment-11" rowspan="1">Jump to 'hero was in bed' case if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e3d"></span>9E3D</td>
 <td class="instruction">LD A,($A137)</td>
-<td class="comment-11" rowspan="3">if (!hero_in_breakfast) goto not_bed_or_breakfast;</td>
+<td class="comment-11" rowspan="1">Load hero at breakfast flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e40"></span>9E40</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e41"></span>9E41</td>
-<td class="instruction">JR Z,<a href="9E07.html#9e85">process_player_input_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="9E07.html#9e85">process_player_input_check_fire</a></td>
+<td class="comment-11" rowspan="1">Jump to 'not bed or breakfast' case if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="9e43"></span>
 <div class="comments">
 <div class="paragraph">
-Hero was at breakfast.
+Hero was at breakfast: make him stand up
 </div>
 </div>
 </td>
@@ -303,7 +287,7 @@ Hero was at breakfast.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e43"></span>9E43</td>
 <td class="instruction">LD HL,$002B</td>
-<td class="comment-11" rowspan="2">(word) $8002 = 0x002B; // set route</td>
+<td class="comment-11" rowspan="2">Set hero's route to 43, step 0</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -315,7 +299,7 @@ Hero was at breakfast.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e49"></span>9E49</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment-11" rowspan="2">(word) $800F = 0x0034; // set X pos</td>
+<td class="comment-11" rowspan="5">Set hero's (x,y) pos to (52,62)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -327,7 +311,7 @@ Hero was at breakfast.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e4e"></span>9E4E</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="3">(word) $8011 = 0x003E; // set Y pos</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -345,7 +329,7 @@ Hero was at breakfast.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e52"></span>9E52</td>
 <td class="instruction">LD HL,$6F58</td>
-<td class="comment-11" rowspan="2">roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;</td>
+<td class="comment-11" rowspan="2">Set room definition 25's bench_G object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -357,29 +341,29 @@ Hero was at breakfast.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e57"></span>9E57</td>
 <td class="instruction">LD HL,$A137</td>
-<td class="comment-11" rowspan="1">HL = &amp;hero_in_breakfast; %&gt;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at hero at breakfast flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e5a"></span>9E5A</td>
-<td class="instruction">JR <a href="9E07.html#9e7d">process_player_input_3</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="instruction">JR <a href="9E07.html#9e7d">process_player_input_common</a></td>
+<td class="comment-11" rowspan="1">Jump to common part</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="9e5c"></span>
 <div class="comments">
 <div class="paragraph">
-Hero was in bed.
+Hero was in bed: make him get up
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">process_player_input_2</td>
+<td class="asm-label-1">process_player_input_in_bed</td>
 <td class="address-2"><span id="9e5c"></span>9E5C</td>
 <td class="instruction">LD HL,$012C</td>
-<td class="comment-11" rowspan="2">(word) $8002 = 0x012C; // set route</td>
+<td class="comment-11" rowspan="2">Set hero's route to 44, step 1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -391,7 +375,7 @@ Hero was in bed.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e62"></span>9E62</td>
 <td class="instruction">LD HL,$2E2E</td>
-<td class="comment-11" rowspan="2">(word) $8004 = 0x2E2E; // another position?</td>
+<td class="comment-11" rowspan="2">Set hero's target (x,y) to (46,46)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -403,7 +387,7 @@ Hero was in bed.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e68"></span>9E68</td>
 <td class="instruction">LD H,$00</td>
-<td class="comment-11" rowspan="2">(word) $800F = 0x002E; // set X pos</td>
+<td class="comment-11" rowspan="3">Set hero's (x,y) pos to (46,46)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -415,13 +399,13 @@ Hero was in bed.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e6d"></span>9E6D</td>
 <td class="instruction">LD ($8011),HL</td>
-<td class="comment-11" rowspan="1">(word) $8011 = 0x002E; // set Y pos</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e70"></span>9E70</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="2">$8013 = 24; // set height</td>
+<td class="comment-11" rowspan="2">Set hero's height to 24</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -433,7 +417,7 @@ Hero was in bed.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e75"></span>9E75</td>
 <td class="instruction">LD HL,$6C61</td>
-<td class="comment-11" rowspan="2">roomdef_2_hut2_left.bed = interiorobject_EMPTY_BED;</td>
+<td class="comment-11" rowspan="2">Set room definition 2's bed object to interiorobject_EMPTY_BED</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -445,55 +429,55 @@ Hero was in bed.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e7a"></span>9E7A</td>
 <td class="instruction">LD HL,$A13F</td>
-<td class="comment-11" rowspan="1">HL = &amp;hero_in_bed; %&gt;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at hero in bed flag</td>
 </tr>
 <tr>
-<td class="asm-label-1">process_player_input_3</td>
+<td class="asm-label-1">process_player_input_common</td>
 <td class="address-2"><span id="9e7d"></span>9E7D</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-11" rowspan="1">*HL = 0;</td>
+<td class="comment-11" rowspan="1">Clear the hero at breakfast / hero in bed flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e7f"></span>9E7F</td>
 <td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
-<td class="comment-11" rowspan="1">setup_room();</td>
+<td class="comment-11" rowspan="1">Expand out the room definition for room_index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e82"></span>9E82</td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_interior_tiles();</td>
+<td class="comment-11" rowspan="1">Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1">process_player_input_4</td>
+<td class="asm-label-1">process_player_input_check_fire</td>
 <td class="address-2"><span id="9e85"></span>9E85</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1">not_bed_or_breakfast: // ... (pop af -- restores user input value stored at $9E36)</td>
+<td class="comment-11" rowspan="1">Unbank input routine result</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e86"></span>9E86</td>
 <td class="instruction">CP $09</td>
-<td class="comment-11" rowspan="2">if (A &gt;= input_FIRE) &lt;%</td>
+<td class="comment-11" rowspan="1">Was fire pressed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e88"></span>9E88</td>
-<td class="instruction">JR C,<a href="9E07.html#9e8f">process_player_input_5</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="9E07.html#9e8f">process_player_input_set_kick</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e8a"></span>9E8A</td>
 <td class="instruction">CALL <a href="7AC9.html">process_player_input_fire</a></td>
-<td class="comment-11" rowspan="1">process_player_input_fire();</td>
+<td class="comment-11" rowspan="1">Check for 'pick up', 'drop' and 'use' input events</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e8d"></span>9E8D</td>
 <td class="instruction">LD A,$80</td>
-<td class="comment-11" rowspan="1">A = input_KICK; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to input_KICK ($80)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -506,10 +490,10 @@ If input state has changed then kick a sprite update.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">process_player_input_5</td>
+<td class="asm-label-1">process_player_input_set_kick</td>
 <td class="address-2"><span id="9e8f"></span>9E8F</td>
 <td class="instruction">LD HL,$800D</td>
-<td class="comment-11" rowspan="3">if ($800D == A) return; // tunnel related?</td>
+<td class="comment-11" rowspan="2">Did the input state change from the hero's existing input?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -521,13 +505,13 @@ If input state has changed then kick a sprite update.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e93"></span>9E93</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e94"></span>9E94</td>
 <td class="instruction">OR $80</td>
-<td class="comment-11" rowspan="2">$800D = A | input_KICK;</td>
+<td class="comment-11" rowspan="2">Kick a sprite update if it did</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -539,7 +523,7 @@ If input state has changed then kick a sprite update.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="9e97"></span>9E97</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

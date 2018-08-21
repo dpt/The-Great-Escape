@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="7CFC.html">7CFC</a></span></td>
 </tr>
 </table>
-<div class="description">7CE9: Given a screen address, return the same position on the next scanline.</div>
+<div class="description">7CE9: Given a screen address, return the same position on the next scanline down.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -51,46 +51,46 @@ Used by the routines at <a href="7CBE.html">plot_bitmap</a>, <a href="7CD4.html"
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">get_next_scanline</td>
+<td class="asm-label-1">next_scanline_down</td>
 <td class="address-2"><span id="7ce9"></span>7CE9</td>
 <td class="instruction">INC H</td>
-<td class="comment-11" rowspan="1">HL += 256;</td>
+<td class="comment-11" rowspan="1">Incrementing <span class="register">H</span> moves us to the next minor row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cea"></span>7CEA</td>
 <td class="instruction">LD A,H</td>
-<td class="comment-11" rowspan="3">if ((H &amp; 7) != 0) return;</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ceb"></span>7CEB</td>
 <td class="instruction">AND $07</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unless we hit an exact multiple of eight - in which case we stepped to the next third of the screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ced"></span>7CED</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Just return if we didn't</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cee"></span>7CEE</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Borrow <span class="register">DE</span> for scratch</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cef"></span>7CEF</td>
 <td class="instruction">LD DE,$F820</td>
-<td class="comment-11" rowspan="1">DE = 0xF820;</td>
+<td class="comment-11" rowspan="1">Step back by a third ($F8), then to the next major row ($20)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cf2"></span>7CF2</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="4">if (L &gt;= 0xE0) D = 0xFF;</td>
+<td class="comment-11" rowspan="2">Unless we will hit a boundary in doing that</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -101,32 +101,32 @@ Used by the routines at <a href="7CBE.html">plot_bitmap</a>, <a href="7CD4.html"
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cf5"></span>7CF5</td>
-<td class="instruction">JR C,<a href="7CE9.html#7cf9">get_next_scanline_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="7CE9.html#7cf9">next_scanline_down_0</a></td>
+<td class="comment-11" rowspan="1">Skip, if we won't</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cf7"></span>7CF7</td>
 <td class="instruction">LD D,$FF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">If we will then step back by a minor row, then to the next major row</td>
 </tr>
 <tr>
-<td class="asm-label-1">get_next_scanline_0</td>
+<td class="asm-label-1">next_scanline_down_0</td>
 <td class="address-2"><span id="7cf9"></span>7CF9</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-11" rowspan="1">Step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cfa"></span>7CFA</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cfb"></span>7CFB</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

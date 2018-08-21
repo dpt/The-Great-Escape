@@ -21,13 +21,13 @@
 <td class="next"><span class="next-1">Next: <a href="6920.html">6920</a></span></td>
 </tr>
 </table>
-<div class="description">691A: Squash stack, then goto main.</div>
+<div class="description">691A: Squash the stack then jump into the game's main loop.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="68A2.html">transition</a>.
+Used by the routines at <a href="68A2.html">transition</a> and <a href="68F4.html">enter_room</a> (a fall through).
 </div>
 </div>
 <table class="input-0">
@@ -48,13 +48,13 @@ Used by the routine at <a href="68A2.html">transition</a>.
 <td class="asm-label-1">squash_stack_goto_main</td>
 <td class="address-2"><span id="691a"></span>691A</td>
 <td class="instruction">LD SP,$FFFF</td>
-<td class="comment-11" rowspan="1">SP = $FFFF;</td>
+<td class="comment-11" rowspan="1">Set stack to the very top of RAM</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="691d"></span>691D</td>
 <td class="instruction">JP <a href="9D7B.html">main_loop</a></td>
-<td class="comment-11" rowspan="1">goto main_loop;</td>
+<td class="comment-11" rowspan="1">Jump to the start of the game's main loop</td>
 </tr>
 </table>
 <table class="asm-navigation">

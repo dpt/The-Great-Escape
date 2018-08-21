@@ -36,7 +36,7 @@ Used by the routines at <a href="7C46.html">draw_item</a>, <a href="A035.html">w
 </tr>
 <tr>
 <td class="register">BC</td>
-<td class="register-desc">Dimensions (w x h, where w is in bytes).</td>
+<td class="register-desc">Dimensions (B x C == width x height, where width is specified in bytes).</td>
 </tr>
 <tr>
 <td class="register">DE</td>
@@ -59,31 +59,31 @@ Used by the routines at <a href="7C46.html">draw_item</a>, <a href="A035.html">w
 <td class="asm-label-1">plot_bitmap</td>
 <td class="address-2"><span id="7cbe"></span>7CBE</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="1">A = B;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to the byte width of the bitmap</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cbf"></span>7CBF</td>
 <td class="instruction">LD ($7CC3),A</td>
-<td class="comment-11" rowspan="1">(loopcounter + 1) = A; // self modifying</td>
+<td class="comment-11" rowspan="1">Self modify the width counter at $7CC2 to set <span class="register">B</span> to the byte width</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_bitmap_0</td>
+<td class="asm-label-1">plot_bitmap_row</td>
 <td class="address-2"><span id="7cc2"></span>7CC2</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">do &lt;% loopcounter: B = 3; // modified</td>
+<td class="comment-11" rowspan="1">Set the column counter to the bitmap width in bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cc4"></span>7CC4</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">dst = HL;</td>
+<td class="comment-11" rowspan="1">Save the destination address</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_bitmap_1</td>
+<td class="asm-label-1">plot_bitmap_column</td>
 <td class="address-2"><span id="7cc5"></span>7CC5</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="6">do &lt;% *dst++ = *DE++; %&gt; while (--B);</td>
+<td class="comment-11" rowspan="2">Copy a byte across</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -95,49 +95,49 @@ Used by the routines at <a href="7C46.html">draw_item</a>, <a href="A035.html">w
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cc7"></span>7CC7</td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Step destination address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cc8"></span>7CC8</td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Step source address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cc9"></span>7CC9</td>
-<td class="instruction">DJNZ <a href="7CBE.html#7cc5">plot_bitmap_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">DJNZ <a href="7CBE.html#7cc5">plot_bitmap_column</a></td>
+<td class="comment-11" rowspan="1">Decrement the column counter then loop for every column</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ccb"></span>7CCB</td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the destination address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ccc"></span>7CCC</td>
-<td class="instruction">CALL <a href="7CE9.html">get_next_scanline</a></td>
-<td class="comment-11" rowspan="1">get_next_scanline();</td>
+<td class="instruction">CALL <a href="7CE9.html">next_scanline_down</a></td>
+<td class="comment-11" rowspan="1">Move the destination address down a scanline</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ccf"></span>7CCF</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">%&gt; while (--C);</td>
+<td class="comment-11" rowspan="1">Decrement the row counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cd0"></span>7CD0</td>
-<td class="instruction">JP NZ,<a href="7CBE.html#7cc2">plot_bitmap_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NZ,<a href="7CBE.html#7cc2">plot_bitmap_row</a></td>
+<td class="comment-11" rowspan="1">...loop for every row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cd3"></span>7CD3</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -36,7 +36,7 @@ Used by the routine at <a href="B387.html">action_red_cross_parcel</a>.
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Item.</td>
+<td class="register-desc">Item index.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -51,37 +51,37 @@ Used by the routine at <a href="B387.html">action_red_cross_parcel</a>.
 <td class="asm-label-1">drop_item_tail</td>
 <td class="address-2"><span id="7bb5"></span>7BB5</td>
 <td class="instruction">CALL <a href="7C26.html">item_to_itemstruct</a></td>
-<td class="comment-11" rowspan="1">HL = item_to_itemstruct(A);</td>
+<td class="comment-11" rowspan="1">Convert the item index in <span class="register">A</span> into an itemstruct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bb8"></span>7BB8</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to point to the room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bb9"></span>7BB9</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">A = room_index;</td>
+<td class="comment-11" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bbc"></span>7BBC</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A; // set object's room index</td>
+<td class="comment-11" rowspan="1">Set the object's room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bbd"></span>7BBD</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
+<td class="comment-11" rowspan="1">Is it outdoors? (room index is zero)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bbe"></span>7BBE</td>
 <td class="instruction">JR NZ,<a href="7BE4.html">drop_item_interior</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -97,29 +97,19 @@ Outdoors.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc0"></span>7BC0</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;    // -&gt; .x</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at itemstruct.pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc1"></span>7BC1</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="7bc2"></span>
-<div class="comments">
-<div class="paragraph">
-HL is incremented here but then immediately overwritten by $7BC5.
-</div>
-</div>
-</td>
+<td class="comment-11" rowspan="1">Save for below</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc2"></span>7BC2</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">HL += 2; // -&gt; .unk1</td>
+<td class="comment-11" rowspan="2">Bug: HL is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -131,31 +121,31 @@ HL is incremented here but then immediately overwritten by $7BC5.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc4"></span>7BC4</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore itemstruct.pos pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc5"></span>7BC5</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment-11" rowspan="1">HL = $800F;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's map position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bc8"></span>7BC8</td>
 <td class="instruction">CALL <a href="E542.html">pos_to_tinypos</a></td>
-<td class="comment-11" rowspan="1">pos_to_tinypos(HL,DE);</td>
+<td class="comment-11" rowspan="1">Scale down hero's map position (<span class="register">HL</span>) and assign the result to itemstruct's tinypos (<span class="register">DE</span>). <span class="register">DE</span> is updated to point after tinypos on return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bcb"></span>7BCB</td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">DE--;</td>
+<td class="comment-11" rowspan="1">Point at height field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bcc"></span>7BCC</td>
 <td class="instruction">LD A,$00</td>
-<td class="comment-11" rowspan="2">*DE = 0; // -&gt;height ?</td>
+<td class="comment-11" rowspan="2">Set height to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -167,14 +157,14 @@ HL is incremented here but then immediately overwritten by $7BC5.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bcf"></span>7BCF</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move itemstruct pointer into HL</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH into calc_exterior_item_screenpos.
+FALL THROUGH into calc_exterior_item_iso_pos.
 </div>
 </div>
 </td>

@@ -48,7 +48,7 @@ Used by the routine at <a href="A215.html">event_exercise_time</a>.
 <td class="asm-label-1">set_route_go_to_yard_reversed</td>
 <td class="address-2"><span id="a4b7"></span>A4B7</td>
 <td class="instruction">LD BC,$8E04</td>
-<td class="comment-11" rowspan="2">set_hero_route(0x048E);</td>
+<td class="comment-11" rowspan="2">Set the hero's route to (REVERSED routeindex_14_GO_TO_YARD, 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -60,25 +60,25 @@ Used by the routine at <a href="A215.html">event_exercise_time</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4bd"></span>A4BD</td>
 <td class="instruction">LD A,$8E</td>
-<td class="comment-11" rowspan="1">A = 0x8E;</td>
+<td class="comment-11" rowspan="4">And set the routes of all characters in prisoners_and_guards to the same route (exit via)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4bf"></span>A4BF</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4c0"></span>A4C0</td>
 <td class="instruction">LD C,$04</td>
-<td class="comment-11" rowspan="1">C = 4;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4c2"></span>A4C2</td>
 <td class="instruction">JP <a href="A373.html">set_prisoners_and_guards_route_B</a></td>
-<td class="comment-11" rowspan="1">set_prisoners_and_guards_route_B(); return; // exit via</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">

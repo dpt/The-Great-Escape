@@ -18,7 +18,7 @@
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="6920.html">6920</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#6939">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="697D.html">697D</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="69C9.html">69C9</a></span></td>
 </tr>
 </table>
 <div class="description">6939: Setup movable items.</div>
@@ -26,6 +26,9 @@
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
+<div class="paragraph">
+"Movable items" are the stoves and the crate which appear in three rooms in the game. Unlike ordinary items such as keys and the radio the movable items can be pushed around by the hero character walking into them. Internally they use the second visible character slot.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="68F4.html">enter_room</a> and <a href="B2FC.html">reset_outdoors</a>.
 </div>
@@ -48,19 +51,19 @@ Used by the routines at <a href="68F4.html">enter_room</a> and <a href="B2FC.htm
 <td class="asm-label-1">setup_movable_items</td>
 <td class="address-2"><span id="6939"></span>6939</td>
 <td class="instruction">CALL <a href="69C9.html">reset_nonplayer_visible_characters</a></td>
-<td class="comment-11" rowspan="1">reset_nonplayer_visible_characters();</td>
+<td class="comment-11" rowspan="1">Reset all non-player visible characters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="693c"></span>693C</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">A = room_index;</td>
+<td class="comment-11" rowspan="1">Get global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="693f"></span>693F</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="4">if (A == room_2_HUT2LEFT) setup_stove1();</td>
+<td class="comment-11" rowspan="4">If current room index is room_2_HUT2LEFT then jump to setup_stove1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -84,7 +87,7 @@ Used by the routines at <a href="68F4.html">enter_room</a> and <a href="B2FC.htm
 <td class="asm-label-1">setup_movable_items_0</td>
 <td class="address-2"><span id="6949"></span>6949</td>
 <td class="instruction">CP $04</td>
-<td class="comment-11" rowspan="4">else if (A == room_4_HUT3LEFT) setup_stove2();</td>
+<td class="comment-11" rowspan="4">If current room index is room_4_HUT3LEFT then jump to setup_stove2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -108,7 +111,7 @@ Used by the routines at <a href="68F4.html">enter_room</a> and <a href="B2FC.htm
 <td class="asm-label-1">setup_movable_items_1</td>
 <td class="address-2"><span id="6953"></span>6953</td>
 <td class="instruction">CP $09</td>
-<td class="comment-11" rowspan="3">else if (A == room_9_CRATE)    setup_crate();</td>
+<td class="comment-11" rowspan="3">If current room index is room_9_CRATE then jump to setup_crate</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -126,96 +129,305 @@ Used by the routines at <a href="68F4.html">enter_room</a> and <a href="B2FC.htm
 <td class="asm-label-1">setup_movable_items_2</td>
 <td class="address-2"><span id="695b"></span>695B</td>
 <td class="instruction">CALL <a href="C41C.html">spawn_characters</a></td>
-<td class="comment-11" rowspan="1">spawn_characters();</td>
+<td class="comment-11" rowspan="1">Spawn characters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="695e"></span>695E</td>
 <td class="instruction">CALL <a href="DB9E.html">mark_nearby_items</a></td>
-<td class="comment-11" rowspan="1">mark_nearby_items();</td>
+<td class="comment-11" rowspan="1">Mark nearby items</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6961"></span>6961</td>
-<td class="instruction">CALL <a href="B5CE.html">called_from_main_loop_9</a></td>
-<td class="comment-11" rowspan="1">called_from_main_loop_9();</td>
+<td class="instruction">CALL <a href="B5CE.html">animate</a></td>
+<td class="comment-11" rowspan="1">Animate all visible characters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6964"></span>6964</td>
 <td class="instruction">CALL <a href="AAB2.html">move_map</a></td>
-<td class="comment-11" rowspan="1">move_map();</td>
+<td class="comment-11" rowspan="1">Move the map</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6967"></span>6967</td>
 <td class="instruction">JP <a href="B866.html">plot_sprites</a></td>
-<td class="comment-11" rowspan="1">plot_sprites(); return;</td>
+<td class="comment-11" rowspan="1">Plot vischars and items</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_crate</td>
 <td class="address-2"><span id="696a"></span>696A</td>
 <td class="instruction">LD HL,$69B7</td>
-<td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_CRATE];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at movable_item_crate</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="696d"></span>696D</td>
 <td class="instruction">LD A,$1C</td>
-<td class="comment-11" rowspan="1">A = character_28_CRATE;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to character index character_28_CRATE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="696f"></span>696F</td>
-<td class="instruction">JR <a href="697D.html">setup_movable_item</a></td>
-<td class="comment-11" rowspan="1">goto setup_movable_item;</td>
+<td class="instruction">JR <a href="6939.html#697d">setup_movable_item</a></td>
+<td class="comment-11" rowspan="1">Jump to setup_movable_item</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_stove2</td>
 <td class="address-2"><span id="6971"></span>6971</td>
 <td class="instruction">LD HL,$69C0</td>
-<td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_STOVE2];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at movable_item_stove2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6974"></span>6974</td>
 <td class="instruction">LD A,$1B</td>
-<td class="comment-11" rowspan="1">A = character_27_STOVE_2;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to character index character_27_STOVE_2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6976"></span>6976</td>
-<td class="instruction">JR <a href="697D.html">setup_movable_item</a></td>
-<td class="comment-11" rowspan="1">goto setup_movable_item;</td>
+<td class="instruction">JR <a href="6939.html#697d">setup_movable_item</a></td>
+<td class="comment-11" rowspan="1">Jump to setup_movable_item</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_stove1</td>
 <td class="address-2"><span id="6978"></span>6978</td>
 <td class="instruction">LD HL,$69AE</td>
-<td class="comment-11" rowspan="1">HL = &amp;movable_items[movable_item_STOVE1];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at movable_item_stove1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="697b"></span>697B</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment-11" rowspan="1">A = character_26_STOVE_1;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to character index character_26_STOVE_1</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-
+<span id="697d"></span>
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH into setup_movable_item.
+Using the movable item specific data and a generic item reset data, setup the second visible character as a movable item.
 </div>
 </div>
 </td>
+</tr>
+<tr>
+<td class="asm-label-1">setup_movable_item</td>
+<td class="address-1"><span id="697d"></span>697D</td>
+<td class="instruction">LD ($8020),A</td>
+<td class="comment-11" rowspan="1">Assign the character index in <span class="register">A</span> to the second visible character's character field</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6980"></span>6980</td>
+<td class="instruction">LD BC,$0009</td>
+<td class="comment-11" rowspan="3">Copy nine bytes of item-specific movable item data over the second visible character data</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6983"></span>6983</td>
+<td class="instruction">LD DE,$802F</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6986"></span>6986</td>
+<td class="instruction">LDIR</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6988"></span>6988</td>
+<td class="instruction">LD HL,$69A0</td>
+<td class="comment-11" rowspan="4">Copy fourteen bytes of visible character data over the vischar</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="698b"></span>698B</td>
+<td class="instruction">LD DE,$8021</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="698e"></span>698E</td>
+<td class="instruction">LD BC,$000E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6991"></span>6991</td>
+<td class="instruction">LDIR</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6993"></span>6993</td>
+<td class="instruction">LD A,($68A0)</td>
+<td class="comment-11" rowspan="2">Set the visible character's room index to the global current room index</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6996"></span>6996</td>
+<td class="instruction">LD ($803C),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="6999"></span>6999</td>
+<td class="instruction">LD HL,$8020</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second visible character</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="699c"></span>699C</td>
+<td class="instruction">CALL <a href="B71B.html">calc_vischar_iso_pos_from_vischar</a></td>
+<td class="comment-11" rowspan="1">Set saved_pos</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="699f"></span>699F</td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">Return</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="69a0"></span>
+<div class="comments">
+<div class="paragraph">
+Fourteen bytes of visible character reset data.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">movable_item_reset_data</td>
+<td class="address-1"><span id="69a0"></span>69A0</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Flags</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69a1"></span>69A1</td>
+<td class="instruction">DEFW $0000</td>
+<td class="comment-11" rowspan="1">Route</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69a3"></span>69A3</td>
+<td class="instruction">DEFB $00,$00,$00</td>
+<td class="comment-11" rowspan="1">Position</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69a6"></span>69A6</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Counter and flags</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69a7"></span>69A7</td>
+<td class="instruction">DEFW <a href="CDF2.html">animations</a></td>
+<td class="comment-11" rowspan="1">Animation base = &amp;animations[0]</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69a9"></span>69A9</td>
+<td class="instruction">DEFW <a href="CF06.html#cf76">anim_wait_tl</a></td>
+<td class="comment-11" rowspan="1">Animation      = animations[8] // anim_wait_tl animation</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69ab"></span>69AB</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Animation index</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69ac"></span>69AC</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Input</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69ad"></span>69AD</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Direction</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="69ae"></span>
+<div class="comments">
+<div class="paragraph">
+Movable items. struct movable_item { word x_coord, y_coord, height; const sprite *; byte index; };
+</div>
+<div class="paragraph">
+Sub-struct of vischar ($802F..$8038).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">movable_item_stove1</td>
+<td class="address-1"><span id="69ae"></span>69AE</td>
+<td class="instruction">DEFW $003E,$0023,$0010</td>
+<td class="comment-11" rowspan="1">Position (62, 35, 16)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69b4"></span>69B4</td>
+<td class="instruction">DEFW <a href="CE22.html">sprite_stove</a></td>
+<td class="comment-11" rowspan="1">Sprite: sprite_stove</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69b6"></span>69B6</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Index: 0</td>
+</tr>
+<tr>
+<td class="asm-label-1">movable_item_crate</td>
+<td class="address-1"><span id="69b7"></span>69B7</td>
+<td class="instruction">DEFW $0037,$0036,$000E</td>
+<td class="comment-11" rowspan="1">Position (55, 54, 14)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69bd"></span>69BD</td>
+<td class="instruction">DEFW <a href="CE22.html#ce28">sprite_crate</a></td>
+<td class="comment-11" rowspan="1">Sprite: sprite_crate</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69bf"></span>69BF</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Index: 0</td>
+</tr>
+<tr>
+<td class="asm-label-1">movable_item_stove2</td>
+<td class="address-1"><span id="69c0"></span>69C0</td>
+<td class="instruction">DEFW $003E,$0023,$0010</td>
+<td class="comment-11" rowspan="1">Position (62, 35, 16)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69c6"></span>69C6</td>
+<td class="instruction">DEFW <a href="CE22.html">sprite_stove</a></td>
+<td class="comment-11" rowspan="1">Sprite: sprite_stove</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="69c8"></span>69C8</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-11" rowspan="1">Index: 0</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="6920.html">6920</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#6939">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="697D.html">697D</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="69C9.html">69C9</a></span></td>
 </tr>
 </table>
 <footer>

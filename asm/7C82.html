@@ -42,7 +42,7 @@ Used by the routine at <a href="7B36.html">pick_up_item</a>.
 </tr>
 <tr>
 <td class="register">AF</td>
-<td class="register-desc">Z set if item found.</td>
+<td class="register-desc">Z set if item found, NZ otherwise.</td>
 </tr>
 <tr>
 <td class="register">HL</td>
@@ -56,7 +56,7 @@ Used by the routine at <a href="7B36.html">pick_up_item</a>.
 <span id="7c82"></span>
 <div class="comments">
 <div class="paragraph">
-Select a pick up radius.
+Select a pick up radius based on the room.
 </div>
 </div>
 </td>
@@ -65,38 +65,38 @@ Select a pick up radius.
 <td class="asm-label-1">find_nearby_item</td>
 <td class="address-2"><span id="7c82"></span>7C82</td>
 <td class="instruction">LD C,$01</td>
-<td class="comment-11" rowspan="1">C = 1; // outdoors</td>
+<td class="comment-11" rowspan="1">Set the pick up radius to one</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c84"></span>7C84</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="4">if (room_index) C = 6; // interior</td>
+<td class="comment-11" rowspan="1">Fetch global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c87"></span>7C87</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it room_0_OUTDOORS?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c88"></span>7C88</td>
 <td class="instruction">JR Z,<a href="7C82.html#7c8c">find_nearby_item_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c8a"></span>7C8A</td>
 <td class="instruction">LD C,$06</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Otherwise set the pick up radius to six</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="7c8c"></span>
 <div class="comments">
 <div class="paragraph">
-For all items.
+Loop for all items.
 </div>
 </div>
 </td>
@@ -105,55 +105,55 @@ For all items.
 <td class="asm-label-1">find_nearby_item_0</td>
 <td class="address-2"><span id="7c8c"></span>7C8C</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment-11" rowspan="1">B = item__LIMIT; // 16 iterations</td>
+<td class="comment-11" rowspan="1">Sixteen items (item__LIMIT)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c8e"></span>7C8E</td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment-11" rowspan="1">HL = &amp;item_structs[0].room;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first item_struct's room member</td>
 </tr>
 <tr>
-<td class="asm-label-1">find_nearby_item_1</td>
+<td class="asm-label-1">find_nearby_item_loop</td>
 <td class="address-2"><span id="7c91"></span>7C91</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% if (*HL &amp; itemstruct_ROOM_FLAG_ITEM_NEARBY_7) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_7 flag set? ($80)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c93"></span>7C93</td>
-<td class="instruction">JR Z,<a href="7C82.html#7cb2">find_nearby_item_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="7C82.html#7cb2">find_nearby_next</a></td>
+<td class="comment-11" rowspan="1">If not, jump to the next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c95"></span>7C95</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save item counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c96"></span>7C96</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save item_struct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c97"></span>7C97</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; // itemstruct.x</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at itemstruct position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c98"></span>7C98</td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment-11" rowspan="1">DE = &amp;hero_map_position.x;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at global map position (hero)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c9b"></span>7C9B</td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">B = 2; // 2 iterations</td>
+<td class="comment-11" rowspan="1">Do two loop iterations (once for x then y)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -166,27 +166,27 @@ Range check.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">find_nearby_item_2</td>
+<td class="asm-label-1">find_nearby_position_loop</td>
 <td class="address-2"><span id="7c9d"></span>7C9D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">do &lt;% A = *DE++; // get hero map position</td>
+<td class="comment-11" rowspan="1">Read a map position byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c9e"></span>7C9E</td>
 <td class="instruction">SUB C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="7">if (map_pos_byte (<span class="register">A</span>) - pick_up_radius (<span class="register">C</span>) &gt;= itemstruct_byte || map_pos_byte + pick_up_radius &lt; itemstruct_byte) jump to pop_next</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c9f"></span>7C9F</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="6">if (A - C &gt;= *HL || A + C &lt; *HL) goto popnext;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ca0"></span>7CA0</td>
-<td class="instruction">JR NC,<a href="7C82.html#7cb0">find_nearby_item_3</a></td>
+<td class="instruction">JR NC,<a href="7C82.html#7cb0">find_nearby_pop_next</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -210,50 +210,50 @@ Range check.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ca5"></span>7CA5</td>
-<td class="instruction">JR C,<a href="7C82.html#7cb0">find_nearby_item_3</a></td>
+<td class="instruction">JR C,<a href="7C82.html#7cb0">find_nearby_pop_next</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ca7"></span>7CA7</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">HL++;</td>
+<td class="comment-11" rowspan="1">Move to next itemstruct byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ca8"></span>7CA8</td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move to next map position byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ca9"></span>7CA9</td>
-<td class="instruction">DJNZ <a href="7C82.html#7c9d">find_nearby_item_2</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="7C82.html#7c9d">find_nearby_position_loop</a></td>
+<td class="comment-11" rowspan="1">...loop for both bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cab"></span>7CAB</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore item_struct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cac"></span>7CAC</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="1">HL--; // compensate for overshoot</td>
+<td class="comment-11" rowspan="1">Compensate for overshoot. Point to itemstruct.item for return value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cad"></span>7CAD</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore item counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cae"></span>7CAE</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0; // set Z (found)</td>
+<td class="comment-11" rowspan="1">Set Z (found)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -269,25 +269,25 @@ Bug: The next instruction is written as RET Z but there's no need for it to be c
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7caf"></span>7CAF</td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">find_nearby_item_3</td>
+<td class="asm-label-1">find_nearby_pop_next</td>
 <td class="address-2"><span id="7cb0"></span>7CB0</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">popnext:</td>
+<td class="comment-11" rowspan="1">Restore item_struct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cb1"></span>7CB1</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">Restore item counter</td>
 </tr>
 <tr>
-<td class="asm-label-1">find_nearby_item_4</td>
+<td class="asm-label-1">find_nearby_next</td>
 <td class="address-2"><span id="7cb2"></span>7CB2</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-11" rowspan="5">HL += 7; // stride</td>
+<td class="comment-11" rowspan="5">Step <span class="register">HL</span> to the next item_struct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -304,7 +304,7 @@ Bug: The next instruction is written as RET Z but there's no need for it to be c
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cb6"></span>7CB6</td>
-<td class="instruction">JR NC,<a href="7C82.html#7cb9">find_nearby_item_5</a></td>
+<td class="instruction">JR NC,<a href="7C82.html#7cb9">find_nearby_item_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -314,22 +314,22 @@ Bug: The next instruction is written as RET Z but there's no need for it to be c
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">find_nearby_item_5</td>
+<td class="asm-label-1">find_nearby_item_1</td>
 <td class="address-2"><span id="7cb9"></span>7CB9</td>
-<td class="instruction">DJNZ <a href="7C82.html#7c91">find_nearby_item_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="7C82.html#7c91">find_nearby_item_loop</a></td>
+<td class="comment-11" rowspan="1">...loop for each item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cbb"></span>7CBB</td>
 <td class="instruction">OR $01</td>
-<td class="comment-11" rowspan="1">A |= 1; // set NZ (not found)</td>
+<td class="comment-11" rowspan="1">Ran out of items: set NZ (not found)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7cbd"></span>7CBD</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">

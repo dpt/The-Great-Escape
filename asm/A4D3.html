@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="A4D8.html">A4D8</a></span></td>
 </tr>
 </table>
-<div class="description">A4D3: entered_move_characters is non-zero (another one).</div>
+<div class="description">A4D3: Character event: used when entered_move_characters is non-zero.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -51,13 +51,13 @@ Something character related [very similar to the routine at $A3F3].
 <td class="asm-label-1">charevnt_breakfast_state</td>
 <td class="address-2"><span id="a4d3"></span>A4D3</td>
 <td class="instruction">LD A,($8217)</td>
-<td class="comment-11" rowspan="1">A = character_index;</td>
+<td class="comment-11" rowspan="1">Get the current character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4d6"></span>A4D6</td>
 <td class="instruction">JR <a href="A4E4.html">charevnt_breakfast_common</a></td>
-<td class="comment-11" rowspan="1">goto $A4E4;</td>
+<td class="comment-11" rowspan="1">Jump to charevnt_breakfast_common</td>
 </tr>
 </table>
 <table class="asm-navigation">
