@@ -1,15 +1,7 @@
-/* Unipack Pantone */
-/* 385A98 - light blue */
-/* 194798 - darker blue */
-/* 14284B - darkest blue */
-/*+060C17 - even darker */
-/* 986A0A - yellow */
-/* 4B3914 - brown */
-
 /* Universal/generic */
 body {
-  color: #fff;
-  background-color: #000000;
+  color: white;
+  background-color: black;
   font-family: "ITC Berkeley Oldstyle Std", Cambria, sans-serif;
 }
 img {
@@ -19,18 +11,22 @@ th {
   text-align: center;
   vertical-align: middle;
   padding: 0.125em 0.5em;
+  height: 20px;
+  /* acts as min-height */
 }
 td {
   text-align: left;
   vertical-align: baseline;
   padding: 0.125em 0.5em;
+  height: 20px;
+  /* acts as min-height */
 }
 a {
   text-decoration: none;
-  color: #986a0a;
+  color: #bb832c;
 }
 a:hover {
-  color: #ffffff;
+  color: #e9a740;
 }
 table.header td {
   font-weight: bolder;
@@ -63,7 +59,7 @@ ul.contents {
   padding-left: 0;
 }
 span.register {
-  color: #986A0A;
+  color: #bb832c;
 }
 div.box {
   width: 100%;
@@ -82,21 +78,23 @@ div.box p {
   margin-bottom: 0;
 }
 div.box-1 {
-  background-color: #14284b;
+  background-color: #153167;
 }
 div.box-2 {
-  background-color: #194798;
+  background-color: #4a79cb;
 }
-table table.default th, table.default th {
-  background-color: #4B3914;
+/* DPT: This "table table" rule is strange. */
+table table.default th,
+table.default th {
+  background-color: #4a79cb;
 }
-table table.default td, table.default td {
-  background-color: #194798;
+table table.default td,
+table.default td {
+  background-color: #153167;
 }
 td.centre {
   text-align: center;
 }
-
 /* Home page */
 ul.index-list {
   list-style-type: none;
@@ -104,7 +102,6 @@ ul.index-list {
   margin-left: 0;
   padding-left: 20px;
 }
-
 /* Disassembly pages */
 table.asm-navigation {
   margin-top: 10px;
@@ -112,7 +109,7 @@ table.asm-navigation {
   width: 100%;
 }
 table.asm-navigation td {
-  background-color: #4b3914;
+  background-color: #4f3915;
   text-shadow: 0 1px 1px black;
 }
 table.asm-navigation td.prev {
@@ -129,6 +126,7 @@ table.asm-navigation td.next {
 }
 table.disassembly {
   width: 100%;
+  border-collapse: collapse;
 }
 div.description {
   margin-top: 10px;
@@ -141,89 +139,132 @@ div.comments {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-table.input-1, table.output-1 {
+table.input-1,
+table.output-1 {
   margin-bottom: 10px;
 }
-table.input-1 th, table.output-1 th {
-  background-color: #194798;
+table.input-1 th,
+table.output-1 th {
+  background-color: #4a79cb;
 }
-table.input-1 td, table.output-1 td {
-  background-color: #14284B;
+table.input-1 td,
+table.output-1 td {
+  background-color: #153167;
 }
 /* Give input and output tables the same minimum width */
-table.input-1, table.output-1 {
+table.input-1,
+table.output-1 {
   min-width: 20em;
 }
 td.register {
-  color: #986A0A;
+  color: #bb832c;
   width: 20px;
   text-align: center;
 }
 td.asm-label-1 {
-  color: #986a0a;
-  background-color: #060c17;
+  color: #e9a740;
   padding-right: 10px;
 }
 td.address-2 {
-  color: #986a0a;
-  background-color: #060c17;
+  color: #bb832c;
+  background-color: #071731;
   padding-right: 10px;
 }
 td.address-1 {
-  color: #385a98;
+  color: #4a79cb;
+  background-color: #071731;
   padding-right: 10px;
   font-weight: 300;
 }
 td.instruction {
-  color: #385a98;
-  background-color: #060c17;
+  color: #639bfd;
+  background-color: #153167;
   white-space: pre;
   padding-right: 10px;
   font-weight: 400;
 }
 td.comment-11 {
-  background-color: #14284B;
+  background-color: #071731;
 }
 td.map-c-comment {
   padding-left: 0;
 }
-
 /* Maps */
 table.map th {
-  color: #986a0a;
-  background-color: #4B3914;
+  color: #bb832c;
+  background-color: #4f3915;
   text-shadow: 0 1px 1px black;
 }
 table.map td {
-  background-color: #060C17;
+  background-color: #071731;
 }
 div.map-intro {
   margin-bottom: 10px;
 }
-table.map td.map-page-1, table.map td.map-byte-1, table.map td.map-b, td.map-w, table.map td.map-c, table.map td.map-g, table.map td.map-t, table.map td.map-s, td.map-u {
+table.map td.map-page-1,
+table.map td.map-byte-1,
+table.map td.map-b,
+td.map-w,
+table.map td.map-c,
+table.map td.map-g,
+table.map td.map-t,
+table.map td.map-s,
+td.map-u {
   text-align: right;
 }
-table.map td.map-page-1, table.map td.map-byte-1 {
+table.map td.map-page-1,
+table.map td.map-byte-1 {
   background-color: transparent;
 }
-table.map td.map-b, table.map td.map-c, table.map td.map-g, table.map td.map-s, table.map td.map-t, table.map td.map-u, table.map td.map-w {
-  background-color: #060C17;
+table.map td.map-b,
+table.map td.map-c,
+table.map td.map-g,
+table.map td.map-s,
+table.map td.map-t,
+table.map td.map-u,
+table.map td.map-w {
+  background-color: #071731;
 }
-table.map td.map-b-desc, table.map td.map-c-desc, table.map td.map-g-desc, table.map td.map-s-desc, table.map td.map-t-desc, table.map td.map-u-desc, table.map td.map-w-desc {
-  background-color: #14284B;
-  color: #fff;
+table.map td.map-b-desc,
+table.map td.map-c-desc,
+table.map td.map-g-desc,
+table.map td.map-s-desc,
+table.map td.map-t-desc,
+table.map td.map-u-desc,
+table.map td.map-w-desc {
+  background-color: #153167;
+  color: white;
   font-family: inherit;
   font-style: normal;
 }
-table.map td.map-b-desc { color: #385A98; font-style: normal; }
-table.map td.map-c-desc { color: #F0F0F0; font-style: italic; }
-table.map td.map-g-desc { color: #986A0A; font-style: normal; }
-table.map td.map-s-desc { color: red; font-style: normal; }
-table.map td.map-t-desc { color: #4B3914; font-style: normal; }
-table.map td.map-u-desc { color: #194798; font-style: normal; }
-table.map td.map-w-desc { color: #385A98; font-style: normal; }
-
-
+table.map td.map-b-desc {
+  color: white;
+  font-style: normal;
+}
+table.map td.map-c-desc {
+  color: white;
+  font-style: italic;
+}
+table.map td.map-g-desc {
+  color: white;
+  font-style: normal;
+}
+table.map td.map-s-desc {
+  color: white;
+  font-style: normal;
+}
+table.map td.map-t-desc {
+  color: white;
+  font-style: normal;
+}
+table.map td.map-u-desc {
+  color: white;
+  font-style: normal;
+}
+table.map td.map-w-desc {
+  color: white;
+  font-style: normal;
+}
 /* Game status buffer */
 td.map-length-1 {
   text-align: center;
@@ -231,11 +272,14 @@ td.map-length-1 {
 div.map-entry-title-11 {
   font-weight: bolder;
 }
-div.map-entry-title-11, div.map-entry-desc-1, td.map-s-desc, td.map-u-desc {
-  font-family: "ITC Berkeley Oldstyle Std", Cambria, sans-serif; /* defeats skoolkit.css */
-  color: #fff;
+div.map-entry-title-11,
+div.map-entry-desc-1,
+td.map-s-desc,
+td.map-u-desc {
+  font-family: "ITC Berkeley Oldstyle Std", Cambria, sans-serif;
+  /* defeats skoolkit.css */
+  color: white;
 }
-
 /* Graphic glitches */
 table.gglitch {
   border-collapse: collapse;
@@ -244,10 +288,9 @@ table.gglitch td {
   text-align: center;
   border-width: 1px;
   border-style: solid;
-  border-color: #FFFFFF;
+  border-color: white;
   padding: 5px;
 }
-
 /* Changelog */
 div.list-entry {
   width: 100%;
@@ -263,10 +306,10 @@ div.list-entry-title {
   font-weight: bolder;
 }
 div.list-entry-1 {
-  background-color: #14284B;
+  background-color: #153167;
 }
 div.list-entry-2 {
-  background-color: #194798;
+  background-color: #153167;
 }
 div.list-entry-desc {
   margin-top: 5px;
@@ -275,6 +318,6 @@ ul.list-entry {
   margin-top: 5px;
   margin-bottom: 0;
 }
-
-.gallery TD { vertical-align: top; }
-
+.gallery TD {
+  vertical-align: top;
+}
