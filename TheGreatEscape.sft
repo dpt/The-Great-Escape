@@ -8636,27 +8636,51 @@ gB$AE75,1
 ;
 ; I:HL Pointer to searchlight movement data.
 @label=searchlight_caught
-cC$AE78,4;21 DE = map_position;
- C$AE7C,1;21 {if (HL[0] + 5 >= E + 12 || HL[0] + 10 < E + 10) return;
- C$AE7D,13;21
- C$AE8A,1;21 }
- C$AE8B,1;21 {if (HL[1] + 5 >= D + 10 || D + 6 >= HL[1] + 12) return;
- C$AE8C,16;21
- C$AE9C,1;21 }
-; It seems odd to not do this (cheaper) test sooner.
- C$AE9D,3;21 {if (searchlight_state == searchlight_STATE_CAUGHT) return;
- C$AEA0,2;21
- C$AEA2,1;21 }
- C$AEA3,2;21 {searchlight_state = searchlight_STATE_CAUGHT;
- C$AEA5,3;21 }
- C$AEA8,1;21 {D = HL[0];
- C$AEA9,1;21 }
- C$AEAA,1;21 E = HL[1];
- C$AEAB,4;21 searchlight_caught_coord = DE;
- C$AEAF,1;21 {bell = bell_RING_PERPETUAL;
+cC$AE78,4;21 Fetch map_position into #REGde. #REGe is x, #REGd is y
+; Detect when the searchlight overlaps the hero.
+ C$AE7C,1;21 {Compute map_position.x + 12
+ C$AE7D,2;21 }
+ C$AE7F,1;21 Save it in #REGb
+ C$AE80,1;21 Fetch searchlight.x
+ C$AE81,2;21 Compute searchlight.x + 5
+ C$AE83,1;21 Is (searchlight.x + 5) >= (map_position.x + 12)?
+ ;21 Meaning: is the searchlight hotspot left edge beyond the hero's right edge?
+ C$AE84,1;21 Return if so - the hero isn't in the hotspot
+ C$AE85,2;21 Compute (searchlight.x + 5) + 5
+ C$AE87,1;21 {Compute (map_position.x + 12) - 2
+ C$AE88,1;21 }
+ C$AE89,1;21 Is (searchlight.x + 10) < (map_position.x + 10)?
+ ;21 Meaning: is the searchlight hotspot right edge beyond the hero's left edge?
+ C$AE8A,1;21 Return if so - the hero isn't in the hotspot
+ C$AE8B,1;21 Advance #REGhl to searchlight.y
+ C$AE8C,1;21 {Compute map_position.y + 10
+ C$AE8D,2;21 }
+ C$AE8F,1;21 Save it in #REGb
+ C$AE90,1;21 Fetch searchlight.y
+ C$AE91,2;21 Compute searchlight.y + 5
+ C$AE93,1;21 Is (searchlight.y + 5) >= (map_position.y + 10)?
+ ;21 Meaning: is the searchlight hotspot top edge beyond the hero's bottom edge?
+ C$AE94,1;21 Return if so - the hero isn't in the hotspot
+ C$AE95,2;21 Compute (searchlight.y + 5) + 7
+ C$AE97,1;21 Save it in #REGc
+ C$AE98,1;21 {Compute (map_position.y + 10) - 4
+ C$AE99,2;21 }
+ C$AE9B,1;21 Is (map_position.y + 6) >= (searchlight.y + 12)?
+ ;21 Meaning: is the searchlight hotspot bottom edge beyond the hero's top edge?
+ C$AE9C,1;21 Return if so - the hero isn't in the hotspot
+; DPT: It seems odd to not do this (cheaper) test first.
+ C$AE9D,3;21 {Is searchlight_state set to
+ C$AEA0,2;21 searchlight_STATE_CAUGHT?}
+ C$AEA2,1;21 Return if so
+ C$AEA3,2;21 {Set searchlight_state to
+ C$AEA5,3;21 searchlight_STATE_CAUGHT}
+ C$AEA8,1;21 {Assign searchlight_caught_coord from searchlight (x,y)
+ C$AEA9,2;21
+ C$AEAB,4;21 }
+ C$AEAF,1;21 {Make the bell ring perpetually
  C$AEB0,3;21 }
- C$AEB3,2;21 {decrease_morale(10); // exit via
- C$AEB5,3;21 }
+ C$AEB3,2;21 Decrease morale by 10
+ C$AEB5,3;21 Exit via decrease_morale
 
 ; Searchlight plotter.
 ;
