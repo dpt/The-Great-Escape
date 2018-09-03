@@ -430,7 +430,7 @@
 ; vischar_BYTE7_MASK_HI                         = $F0,
 ; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
 ; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,       ; set while touch() entered
-; vischar_BYTE7_LOCATABLE                       = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
+; vischar_TOUCH_ENTERED                         = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
 ;
 ; ; $800C, $802C, $804C, ...
 ; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
@@ -8789,7 +8789,7 @@ gB$AF8E,1
 @label=touch
 cC$AF8F,1;22
  C$AF90,3;22 touch_stashed_A = A;
- C$AF93,4;22 {IY[7] |= vischar_BYTE7_DONT_MOVE_MAP | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?
+ C$AF93,4;22 {IY[7] |= vischar_BYTE7_DONT_MOVE_MAP | vischar_TOUCH_ENTERED; // wild guess: clamp character in position?
  C$AF97,4;22 }
  C$AF9B,2;22 {HL = IY;
  C$AF9D,1;22 }
@@ -10166,7 +10166,7 @@ cC$B89C,3;22 BC = 0; // prev-x
  C$B8A5,3;22 DE = 0;
  C$B8A8,3;22 B = 8; C = 32; // iterations, stride
  C$B8AB,3;22 HL = $8007; // vischar byte7
-*C$B8AE,2;22 {do <% if ((*HL & vischar_BYTE7_LOCATABLE) == 0) goto next;
+*C$B8AE,2;22 {do <% if ((*HL & vischar_TOUCH_ENTERED) == 0) goto next;
  C$B8B0,2;22 }
  C$B8B2,2;22
  C$B8B4,2;22 {  HL += 8; // $8007 + 8 = $800F = mi.pos.x
@@ -10229,7 +10229,7 @@ cC$B89C,3;22 BC = 0; // prev-x
  C$B905,1;22 }
  C$B906,2;22 {if ((A & (1<<6)) == 0) <% // mysteryflagconst874 'item found' flag?
  C$B908,2;22 }
- C$B90A,4;22 IY[7] &= ~vischar_BYTE7_LOCATABLE;
+ C$B90A,4;22 IY[7] &= ~vischar_TOUCH_ENTERED;
  C$B90E,1;22 return; %>
 *C$B90F,1;22 {else <% HL[1] &= ~itemstruct_ROOM_FLAG_NEARBY_6; // looks wrong: HL points to a vischar here
  C$B910,2;22 }
