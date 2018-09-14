@@ -5800,7 +5800,7 @@ cC$A035,3;21 Point #REGhl at the game counter
  C$A065,3;21 Point #REGde at bitmap_flag_up
 *C$A068,3;21 Get the screen address of the morale flag
  C$A06B,3;21 Plot the flag always at 24x25 pixels in size
- C$A06E,3;21 exit via plot_bitmap
+ C$A06E,3;21 Exit via plot_bitmap
 
 ; Set the screen attributes of the morale flag.
 ;
@@ -6355,7 +6355,7 @@ cC$A1E7,1;21 Ring the bell 40 times as passed in
 ; Event: Go to roll call.
 @label=event_go_to_roll_call
 cC$A1F0,1;21 Ring the bell 40 times as passed in
- C$A1F1,2;21 {Queue the nessage "ROLL CALL"
+ C$A1F1,2;21 {Queue the message "ROLL CALL"
  C$A1F3,3;21 }
  C$A1F6,3;21 Exit via go_to_roll_call
 
@@ -15988,7 +15988,8 @@ cC$FE7E,3;21 BC = 0x001F;
 ;
 ; Reading port 0x7F yields F---RLDU active low.
 ;
-;   This is unused by the game.
+; This is unused by the game.
+;
 ; O:A Input value (as per enum input).
 @label=inputroutine_fuller
 cC$FEA3,3;21 BC = 0x007F;
