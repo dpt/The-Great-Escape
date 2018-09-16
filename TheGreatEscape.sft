@@ -9070,40 +9070,47 @@ cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
 ;
 ; I:IY Pointer to visible character.
 @label=accept_bribe
-cC$B107,3;23 increase_morale_by_10_score_by_50();
- C$B10A,4;23 IY[1] = 0;
- C$B10E,2;23 {HL = IY + 2;
+cC$B107,3;23 Increase morale by 10, score by 50
+ C$B10A,4;23 Clear the vischar_PURSUIT_PURSUE flag
+ C$B10E,2;23 {Point #REGhl at IY->route
  C$B110,2;23
  C$B112,1;23 }
- C$B113,3;23 get_target_assign_pos();
- C$B116,3;23 DE = &items_held[0];
- C$B119,1;23 {if (*DE != item_BRIBE && *++DE != item_BRIBE) return; // have no bribes
- C$B11A,8;23
- C$B122,1;23 }
-; We have a bribe, take it away.
-*C$B123,2;23 {*DE = item_NONE;
+ C$B113,3;23 Call get_target_assign_pos
+; Return early if we have no bribes.
+ C$B116,3;23 Point #REGde at items_held
+ C$B119,1;23 Fetch the first item
+ C$B11A,2;23 Does it hold item_BRIBE?
+ C$B11C,2;23 Jump forward if it does
+ C$B11E,1;23 Advance to the second item
+ C$B11F,1;23 Fetch the second item
+ C$B120,2;23 Does it hold item_BRIBE?
+ C$B122,1;23 Return if not
+; Remove the bribe item.
+*C$B123,2;23 {Assign item_NONE to the item slot, removing the bribe item
  C$B125,1;23 }
- C$B126,2;23 {item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;
+ C$B126,2;23 {Set the bribe item's item_struct room to itemstruct_ROOM_NONE
  C$B128,3;23 }
- C$B12B,3;23 draw_all_items();
- C$B12E,2;23 B = 7; // 7 iterations
-; Iterate over hostile + visible non-player characters.
+ C$B12B,3;23 Draw both held items
+; Set the vischar_PURSUIT_SAW_BRIBE flag on all visible hostiles.
+; Iterate over hostile and visible non-player characters.
+ C$B12E,2;23 7 iterations
 @nowarn
- C$B130,3;23 HL = $8020;
-*C$B133,1;23 {do <% if (HL[0] <= character_19_GUARD_DOG_4) <% // Hostile characters only.
- C$B134,2;23
- C$B136,2;23 }
- C$B138,1;23 {    HL[1] = vischar_FLAGS_SAW_BRIBE; %> // hostile will look for bribed character?
+ C$B130,3;23 Start at the first visible character (hero is the zeroth)
+; Start loop
+*C$B133,1;23 Fetch the character index
+ C$B134,2;23 Is it > character_20_PRISONER_1?
+ C$B136,2;23 Jump forward if so
+ C$B138,1;23 {Set flags to vischar_FLAGS_SAW_BRIBE if hostile
  C$B139,2;23
  C$B13B,1;23 }
-*C$B13C,1;23 {  HL += 32;
+*C$B13C,1;23 {Advance to the next vischar
  C$B13D,2;23
  C$B13F,1;23 }
- C$B140,2;23 %> while (--B);
- C$B142,2;23 {queue_message(message_HE_TAKES_THE_BRIBE);
+ C$B140,2;23 ...loop
+ C$B142,2;23 {Queue the message "HE_TAKES_THE_BRIBE"
  C$B144,3;23 }
- C$B147,2;23 queue_message(message_AND_ACTS_AS_DECOY);
- C$B149,3;23 return; // exit via
+ C$B147,2;23 Then queue the messsage "AND ACTS AS DECOY"
+ C$B149,3;23 Return
 
 ; Check the character is inside of permitted areas.
 ;
