@@ -8854,181 +8854,215 @@ cC$AF8F,1;22 Exchange #REGa registers
  C$AFDD,1;22 Set flags to Z
  C$AFDE,1;22 Return
 
-; (unknown) Definitely something to do with moving objects around. Collisions?
+; Handle collisions, including items being pushed around.
 ;
 ; Used by the routines at #R$AF8F and #R$C4E0.
+;
+; O:F Z/NZ => no collision/collision.
 @label=collision
-cC$AFDF,3;23 HL = $8001; // &vischar[0].byte1;
- C$AFE2,2;23 B = 8; // 8 iterations
-*C$AFE4,2;23 {do <% if (*HL & vischar_FLAGS_NO_COLLIDE) goto next;
- C$AFE6,3;23 // $8001, $8021, ...}
- C$AFE9,2;23
- C$AFEB,2;23 {  HL += 0x0E; // $800F etc. - X axis position
+; Iterate over characters being collided with (e.g. stove).
+cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
+ C$AFE2,2;23 Set #REGb for eight iterations
+; Start loop
+*C$AFE4,2;23 Is the vischar_FLAGS_NO_COLLIDE flag bit set?
+ C$AFE6,3;23 Skip if so
+ C$AFE9,1;23 Preserve the loop counter
+ C$AFEA,1;23 Preserve the vischar pointer
+; Check for contact between the current vischar and saved_pos.
+ C$AFEB,2;23 {Point #REGhl at vischar's X position
  C$AFED,1;23
  C$AFEE,1;23 }
-; --------
- C$AFEF,1;23 {  C = *HL++;
- C$AFF0,1;23 }
- C$AFF1,1;23 B = *HL;
- C$AFF2,1;23
- C$AFF3,3;23 HL = saved_pos_x;
- C$AFF6,2;23 {  BC += 4;
- C$AFF8,5;23
- C$AFFD,1;23 }
-*C$AFFE,2;23 {  if (HL != BC) <%
- C$B000,2;23 }
- C$B002,3;23 if (HL > BC) goto pop_next;
- C$B005,2;23 {    BC -= 8; // ie -4 over original
- C$B007,4;23
+; Check X
+ C$AFEF,1;23 {Fetch X position
+ C$AFF0,1;23
+ C$AFF1,1;23 }
+ C$AFF2,1;23 Save our vischar pointer while we compare bounds
+ C$AFF3,3;23 Fetch saved_pos_x
+ C$AFF6,2;23 {Add 4 to the X position - our upper bound
+ C$AFF8,4;23
+ C$AFFC,1;23 }
+ C$AFFD,1;23 Clear the carry flag
+*C$AFFE,2;23 Compare saved_pos_x to (X position + 4)
+ C$B000,2;23 Equal - jump forward to comparing Y position
+ C$B002,3;23 If (saved_pos_x >= (X position + 4)) there was no
+ ;23 collision, so jump to the next iteration
+ C$B005,2;23 {Reduce #REGa by 8 giving (X position - 4) - our lower
+ C$B007,1;23 bound
+ C$B008,3;23
  C$B00B,1;23 }
-*C$B00C,3;23 {    HL = saved_pos_x;
- C$B00F,2;23 }
- C$B011,3;23 if (HL < BC) goto pop_next; %>
-*C$B014,1;23
- C$B015,1;23 HL++;
-; --------
- C$B016,1;23 {  C = *HL++;
- C$B017,1;23 }
- C$B018,1;23 B = *HL;
- C$B019,1;23
- C$B01A,3;23 HL = saved_pos_y;
- C$B01D,2;23 {  BC += 4;
- C$B01F,5;23
- C$B024,1;23 }
-*C$B025,2;23 {  if (HL != BC) <%
- C$B027,2;23 }
- C$B029,3;23 if (HL > BC) goto pop_next;
- C$B02C,2;23 {    BC -= 8;
- C$B02E,4;23
+*C$B00C,3;23 Fetch saved_pos_x again
+ C$B00F,2;23 Compare saved_pos_x to (X position - 4)
+ C$B011,3;23 If (saved_pos_x < (X position - 4)) there was no
+ ;23 collision, so jump to the next iteration
+*C$B014,1;23 Restore our vischar pointer
+ C$B015,1;23 Advance to Y position
+; Check Y
+ C$B016,1;23 {Fetch Y position
+ C$B017,1;23
+ C$B018,1;23 }
+ C$B019,1;23 Save our vischar pointer while we compare bounds
+ C$B01A,3;23 Fetch saved_pos_y
+ C$B01D,2;23 {Add 4 to the Y position - our upper bound
+ C$B01F,4;23
+ C$B023,1;23 }
+ C$B024,1;23 Clear the carry flag
+*C$B025,2;23 Compare saved_pos_y to (Y position + 4)
+ C$B027,2;23 Equal - jump forward to comparing height
+ C$B029,3;23 If (saved_pos_y >= (Y position + 4)) there was no
+ ;23 collision, so jump to the next iteration
+ C$B02C,2;23 {Reduce #REGa by 8 giving (Y position - 4) - our lower
+ C$B02E,1;23 bound
+ C$B02F,3;23
  C$B032,1;23 }
-*C$B033,3;23 {    HL = saved_pos_y;
- C$B036,2;23 }
- C$B038,3;23 if (HL < BC) goto pop_next; %>
-*C$B03B,1;23
- C$B03C,1;23 HL++;
-; --------
- C$B03D,1;23 C = *HL;
- C$B03E,3;23 {  A = saved_height - C;
- C$B041,1;23 }
- C$B042,2;23 if (A < 0) <%
- C$B044,2;23 A = -A; %>
-*C$B046,2;23 {  if (A >= 24) goto pop_next;
+*C$B033,3;23 Fetch saved_pos_y again
+ C$B036,2;23 Compare saved_pos_y to (Y position - 4)
+ C$B038,3;23 If (saved_pos_y < (Y position - 4)) there was no
+ ;23 collision, so jump to the next iteration
+*C$B03B,1;23 Restore our vischar pointer
+ C$B03C,1;23 Advance to height
+; Check height
+ C$B03D,1;23 Fetch height
+ C$B03E,3;23 Fetch saved_height
+ C$B041,1;23 Subtract height from saved_height
+ C$B042,2;23 {If negative flip the sign - get the absolute value
+ C$B044,2;23 }
+*C$B046,2;23 {If the result is >= 24 then jump to the next iteration
  C$B048,3;23 }
-; If specified vischar character has a bribe pending...
- C$B04B,3;23 {  A = IY[1] & 0x0F; // sampled IY=$8020,$8040,$8060,$8000 // but this is *not* vischar_FLAGS_MASK, which is 0x1F
- C$B04E,2;23 }
- C$B050,2;23 {  if (A == vischar_FLAGS_PURSUE) <%
- C$B052,2;23 }
-; and current vischar is not the hero...
- C$B054,1;23
- C$B055,1;23 // sampled HL=$8021,$8041,$8061,$80A1
- C$B056,1;23 HL--;
- C$B057,1;23 {    if ((HL & 0xFF) == 0) <% // ie. $8000
+;
+ C$B04B,3;23 Read the vischar's flags
+ C$B04E,2;23 AND the flags with vischar_FLAGS_PURSUIT_MASK
+ C$B050,2;23 Is the result vischar_FLAGS_PURSUE?
+ C$B052,2;23 If not, jump forward to collision checking
+;
+ C$B054,1;23 {Restore vischar pointer
+ C$B055,1;23 }
+ C$B056,1;23 Point at vischar base, not flags
+ C$B057,1;23 {Is the current vischar the hero's? $8000
  C$B058,1;23
  C$B059,2;23 }
- C$B05B,3;23 {      if (bribed_character == IY[0]) <%
- C$B05E,3;23
- C$B061,2;23 }
- C$B063,3;23 accept_bribe(); %>
- C$B066,2;23 else <%
-; A hostile catches the hero!
-*C$B068,1;23
- C$B069,1;23
- C$B06A,2;23 {        HL = IY + 1;
+ C$B05B,3;23 Fetch bribed_character
+ C$B05E,3;23 Does it match IY's vischar character?
+ C$B061,2;23 No, jump forward to solitary check
+; IY is a bribed character pursuing the hero.
+; When the pursuer catches the hero the bribe will be accepted.
+ C$B063,3;23 Call accept_bribe
+ C$B066,2;23 (else)
+; IY is a hostile who's caught the hero!
+*C$B068,1;23 Restore vischar pointer
+ C$B069,1;23 Restore loop counter
+ C$B06A,2;23 {Unused sequence: HL = IY + 1
  C$B06C,1;23
  C$B06D,1;23 }
- C$B06E,3;23 solitary(); return; // exit via %> %> %>
-*C$B071,1;23
- C$B072,1;23 HL--;
- C$B073,1;23 A = *HL; // sampled HL=$80C0,$8040,$8000,$8020,$8060 // vischar_BYTE0
- C$B074,2;23 {  if (A >= 26) <%
- C$B076,2;23 }
- C$B078,2;23
- C$B07A,2;23 {    HL += 17; // &vischar->mi.pos.y
+ C$B06E,3;23 Exit via solitary
+; Check for collisions with items.
+*C$B071,1;23 Restore vischar pointer
+ C$B072,1;23 Point at vischar base, not flags
+ C$B073,1;23 Fetch the vischar's character
+ C$B074,2;23 Is the character >= character_26_STOVE_1?
+ C$B076,2;23 Jump if NOT
+ C$B078,1;23 Preserve the vischar pointer
+ C$B079,1;23 Bank the character index
+ C$B07A,2;23 {Point #REGhl at vischar->mi.pos.y
  C$B07C,1;23
  C$B07D,1;23 }
- C$B07E,1;23 tmpA = A; // retrieve character index
- C$B07F,3;23 B = 7; C = 35;
- C$B082,2;23
- C$B084,3;23 A = IY[14]; // interleaved
- C$B087,2;23 if (tmpA == character_28_CRATE) <%
- C$B089,1;23 {      L -= 2; // &vischar->mi.pos.x
+ C$B07E,1;23 Retrieve the character index
+ C$B07F,3;23 Set #REGb to 7 - the permitted range, in either
+ ;23 direction, from the centre point and set #REGc to 35 -
+ ;23 the centre point
+ C$B082,2;23 Compare character index with character_28_CRATE
+ C$B084,3;23 (interleaved) Fetch IY's direction
+ C$B087,2;23 If it's not the crate then jump to the stove handling
+; Handle the crate
+; It moves on the top-left-to-bottom-right axis only
+ C$B089,1;23 {Point #REGhl at vischar->mi.pos.x
  C$B08A,1;23 }
- C$B08B,2;23 C = 54;
- C$B08D,2;23 A ^= 1; %>
-*C$B08F,1;23 {    if (A == 0) <%
- C$B090,2;23 }
- C$B092,1;23 A = *HL;
- C$B093,1;23 {      if (A != C) <%
- C$B094,2;23 }
- C$B096,2;23 {        if (C > A) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch
- C$B098,1;23
- C$B099,1;23 }
-*C$B09A,1;23 (*HL)++; %> %>
- C$B09B,2;23 {    else if (A == 1) <%
-*C$B09D,2;23
- C$B09F,2;23 }
- C$B0A1,1;23 {      A = C + B;
- C$B0A2,1;23 }
- C$B0A3,1;23 {      if (A != *HL) (*HL)++; %>
- C$B0A4,2;23
+ C$B08B,2;23 Centre point is 54 (47..54..61)
+ C$B08D,2;23 Swap direction left<=>right
+; Top left case.
+*C$B08F,1;23 Test the direction: Is it top left? (zero)
+ C$B090,2;23 Jump forward to next check if not
+; The player is pushing the movable item from the front, so centre it.
+ C$B092,1;23 Load the coordinate
+ C$B093,1;23 Is it at the centre point?
+ C$B094,2;23 Jump forward if so
+ C$B096,2;23 {If the coordinate is larger than the centre point then
+ C$B098,1;23 decrement, else increment its position
+ C$B099,1;23
+*C$B09A,1;23 }
+ C$B09B,2;23 (else)
+; Top right case.
+*C$B09D,2;23 Test the direction: Is it top right? (one)
+ C$B09F,2;23 Jump forward to next check if not
+ C$B0A1,1;23 {If the coordinate is not at its maximum (C+B) then
+ C$B0A2,1;23 increment its position
+ C$B0A3,3;23
  C$B0A6,1;23 }
- C$B0A7,2;23 {    else if (A == 2) <%
-*C$B0A9,2;23
- C$B0AB,2;23 }
- C$B0AD,1;23 {      A = C - B;
- C$B0AE,1;23 }
- C$B0AF,1;23 *HL = A; %>
- C$B0B0,2;23 else <%
-*C$B0B2,1;23 {      A = C - B;
- C$B0B3,1;23 }
- C$B0B4,1;23 {      if (A != *HL) (*HL)--; %>
- C$B0B5,2;23
+ C$B0A7,2;23 (else)
+; Bottom right case.
+*C$B0A9,2;23 Test the direction: Is it bottom right? (two)
+ C$B0AB,2;23 Jump forward to next check if not
+ C$B0AD,1;23 {Set the position to minimum (C-B) irrespective.
+ C$B0AE,1;23 Note that this never seems to happen in practice in the
+ C$B0AF,1;23 game}
+ C$B0B0,2;23 (else)
+; Bottom left case.
+*C$B0B2,1;23 {If the coordinate is not at its minimum (C-B) then
+ C$B0B3,1;23 decrement its position
+ C$B0B4,3;23
  C$B0B7,1;23 }
-*C$B0B8,1;23
-*C$B0B9,1;23 %>
- C$B0BA,1;23 {  HL += 13;
+*C$B0B8,1;23 Restore the vischar pointer
+*C$B0B9,1;23 Restore ?...
+; Reorient the character? Not well understood. (?)
+ C$B0BA,1;23 {Point at vischar input field
  C$B0BB,2;23
  C$B0BD,1;23 }
- C$B0BE,1;23 {  A = *HL & ~input_KICK; // mask off kick flag // sampled HL=$806D,$804D,$802D,$808D,$800D}
- C$B0BF,2;23
- C$B0C1,2;23 if (A) <%
- C$B0C3,1;23 HL++;
- C$B0C4,1;23 {    A = *HL ^ 2; // swap direction: top <=> bottom
+ C$B0BE,1;23 {Load the input field and mask off the input_KICK flag
+ C$B0BF,2;23 }
+ C$B0C1,2;23 Jump forward if the input field is zero
+ C$B0C3,1;23 Point at the direction field
+ C$B0C4,1;23 {Swap direction top <=> bottom
  C$B0C5,2;23 }
- C$B0C7,3;23 {    if (A != IY[14]) <%
+ C$B0C7,3;23 {If direction != state->IY->direction
  C$B0CA,2;23 }
- C$B0CC,4;23 IY[13] = input_KICK;
-*C$B0D0,3;23 {      IY[7] = (IY[7] & vischar_BYTE7_MASK_HI) | 5; // preserve flags and set 5? // sampled IY=$8000,$80E0
+ C$B0CC,4;23 Set IY's input to input_KICK
+@label=collided
+; Delay calling character_behaviour for five turns. This delay controls how
+; long it takes before a blocked character will try another direction.
+*C$B0D0,3;23 {IY->counter_and_flags = (IY->counter_and_flags & ~vischar_BYTE7_COUNTER_MASK) | 5
  C$B0D3,4;23
  C$B0D7,3;23 }
- C$B0DA,1;23 if (!Z) return; /* odd */ %> %>
-*C$B0DB,3;23 {  BC = IY[14]; // sampled IY=$8000,$8040,$80E0
+ C$B0DA,1;23 Return  DPT: This return works but it's odd that it's conditional
+; ... new input stuff
+; Note: C direction field doesn't get masked, so will access out-of-bounds in
+; new_inputs[] if we collide when crawling.
+*C$B0DB,3;23 {Fetch IY->direction, widening it to BC
  C$B0DE,2;23 }
 @nowarn
- C$B0E0,3;23 {  IY[13] = collision_new_inputs[BC];
- C$B0E3,2;23
- C$B0E5,3;23 }
- C$B0E8,2;23 {  if ((C & 1) == 0) <%
- C$B0EA,2;23 }
- C$B0EC,4;23 IY[7] &= ~vischar_BYTE7_Y_DOMINANT;
- C$B0F0,2;23 goto $B0D0; %>
-*C$B0F2,4;23 else <% IY[7] |= vischar_BYTE7_Y_DOMINANT;
- C$B0F6,2;23 goto $B0D0; %>
+ C$B0E0,3;23 Point #REGhl at collision_new_inputs
+ C$B0E3,1;23 Index it by direction (in BC)
+ C$B0E4,1;23 Fetch the direction
+ C$B0E5,3;23 IY->input = A
+ C$B0E8,2;23 If the new direction is TR or BL
+ C$B0EA,2;23 Jump if so
+ C$B0EC,4;23 IY->counter_and_flags &= ~vischar_BYTE7_Y_DOMINANT
+ C$B0F0,2;23 Jump to 'collided'
+*C$B0F2,4;23 IY->counter_and_flags |= vischar_BYTE7_Y_DOMINAN
+ C$B0F6,2;23 Jump to 'collided'
 ; New inputs.
 @label=collision_new_inputs
- B$B0F8,1;23 input_DOWN + input_LEFT  + input_KICK
- B$B0F9,1;23 input_UP   + input_LEFT  + input_KICK
- B$B0FA,1;23 input_UP   + input_RIGHT + input_KICK
- B$B0FB,1;23 input_DOWN + input_RIGHT + input_KICK
-*C$B0FC,1;23 pop_next:
- C$B0FD,1;23
-*C$B0FE,1;23 {  next: HL += 32;
+ B$B0F8,1;23 = input_DOWN + input_LEFT  + input_KICK
+ B$B0F9,1;23 = input_UP   + input_LEFT  + input_KICK
+ B$B0FA,1;23 = input_UP   + input_RIGHT + input_KICK
+ B$B0FB,1;23 = input_DOWN + input_RIGHT + input_KICK
+@label=collision_pop_next
+*C$B0FC,1;23 Restore vischar pointer
+ C$B0FD,1;23 Restore loop counter
+*C$B0FE,1;23 {Step #REGhl to the next vischar
  C$B0FF,2;23
  C$B101,1;23 }
- C$B102,1;23 {%> while (--B);
+ C$B102,1;23 {...loop for each vischar
  C$B103,3;23 }
- C$B106,1;23 return; // return with Z set
+ C$B106,1;23 Return with Z set
 
 ; Character accepts the bribe.
 ;
