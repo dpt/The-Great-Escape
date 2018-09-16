@@ -9112,21 +9112,29 @@ cC$B107,3;23 Increase morale by 10, score by 50
  C$B147,2;23 Then queue the messsage "AND ACTS AS DECOY"
  C$B149,3;23 Return
 
-; Tests whether the position in saved_pos is near a wall/fence boundary.
+; Tests whether the position in saved_pos touches any wall or fence boundary.
 ;
+; A position (x,y,h) touches a wall if the following returns true:
+; (minx + 2 >= x <= maxx + 3) and
+; (miny     >= y <= maxy + 3) and
+; (minh     >= h <= maxh + 1)
+; .
 ; Used by the routines at #R$AF8F and #R$C4E0.
 ;
 ; I:IY Pointer to visible character.
 ; O:F  Z set if no bounds hit, Z clear otherwise
 @label=bounds_check
 cC$B14C,3;21 Get the global current room index
+; Interior boundaries are handled by another routine.
  C$B14F,1;21 Is it indoors?
- C$B150,3;21 Use the interior bounds check routine instead, if so
+ C$B150,3;21 Use the interior bounds check routine instead, if so (exit via)
  C$B153,2;21 24 iterations / 24 wall definitions
  C$B155,3;21 Point #REGde at the first wall definition
 ; Start loop
+@label=bounds_loop
 *C$B158,1;21 Preserve the loop counter
  C$B159,1;21 Preserve the wall definition pointer
+; Check against minimum X
  C$B15A,1;21 Read minimum x
  C$B15B,3;21 Multiply it by 8 returning the result in #REGbc
  C$B15E,1;21 {And add two
@@ -9134,6 +9142,7 @@ cC$B14C,3;21 Get the global current room index
  C$B160,3;21 Read saved_pos_x
  C$B163,2;21 Compute saved_pos_x - ((wall minimum x) * 8 + 2)
  C$B165,2;21 Jump to the next iteration if saved_pos_x is left of minimum x
+; Check against maximum X
  C$B167,1;21 Move to maximum x field
  C$B168,1;21 Read maximum x
  C$B169,3;21 Multiply it by 8 returning the result in #REGbc
@@ -9143,12 +9152,14 @@ cC$B14C,3;21 Get the global current room index
  C$B170,3;21 Re-read saved_pos_x
  C$B173,2;21 Compute saved_pos_x - ((wall maximum x) * 8 + 4)
  C$B175,2;21 Jump to next iteration if saved_pos_x is right of maximum x
+; Check against minimum Y
  C$B177,1;21 Move to minimum y field
  C$B178,1;21 Read minimum y
  C$B179,3;21 Multiply it by 8 returning the result in #REGbc
  C$B17C,3;21 Read saved_pos_y
  C$B17F,2;21 Compute saved_pos_y - ((wall minimum y) * 8)
  C$B181,2;21 Jump to the next iteration if saved_pos_y is below minimum y
+; Check against maximum Y
  C$B183,1;21 Move to maximum y field
  C$B184,1;21 Read maximum y
  C$B185,3;21 Multiply it by 8 returning the result in #REGbc
@@ -9158,12 +9169,14 @@ cC$B14C,3;21 Get the global current room index
  C$B18C,3;21 Re-read saved_pos_y
  C$B18F,2;21 Compute saved_pos_y - ((wall maximum y) * 8 + 4)
  C$B191,2;21 Jump to next iteration if saved_pos_y is above maximum y
+; Check minimum height
  C$B193,1;21 Move to minimum height field
  C$B194,1;21 Read minimum height
  C$B195,3;21 Multiply it by 8 returning the result in #REGbc
  C$B198,3;21 Read saved_pos_height
  C$B19B,2;21 Compute saved_pos_height - ((wall minimum height) * 8)
  C$B19D,2;21 Jump to the next iteration if saved_pos_height is below minimum height
+; Check maximum height
  C$B19F,1;21 Move to maximum height field
  C$B1A0,1;21 Read maximum height
  C$B1A1,3;21 Multiply it by 8 returning the result in #REGbc
@@ -9172,7 +9185,7 @@ cC$B14C,3;21 Get the global current room index
  C$B1A6,3;21 Re-read saved_pos_height
  C$B1A9,2;21 Compute saved_pos_height - ((wall maximum height) * 8)
  C$B1AB,2;21 Jump to the next iteration if saved_pos_height is above maximum height
-; Found it.
+; Passed all checks - in contact with wall
  C$B1AD,1;21 Restore the wall definition pointer
  C$B1AE,1;21 Restore the loop counter
  C$B1AF,3;21 {Toggle counter_and_flags vischar_BYTE7_Y_DOMINANT flag
@@ -9180,12 +9193,12 @@ cC$B14C,3;21 Get the global current room index
  C$B1B4,3;21 }
  C$B1B7,2;21 Clear Z flag
  C$B1B9,1;21 Return with Z clear
-@lavel=bounds_next
+@label=bounds_next
 *C$B1BA,1;21 Restore the wall definition pointer
  C$B1BB,1;21 Restore the loop counter
- C$B1BC,3;21 Set wall definition stride
+ C$B1BC,3;21 Set the wall definition stride
  C$B1BF,1;21 Point to next wall definition
- C$B1C0,1;21 Move wall definition pointer into #REGde
+ C$B1C0,1;21 Move the wall definition pointer into #REGde
  C$B1C1,1;21 {...loop
  C$B1C2,3;21 }
  C$B1C5,1;21 #REGb is zero, AND it with itself to set Z flag
