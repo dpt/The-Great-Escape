@@ -16343,30 +16343,37 @@ cC$FE7E,3;21 BC = 0x001F;
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_fuller
-cC$FEA3,3;21 BC = 0x007F;
- C$FEA6,2;21
- C$FEA8,3;21 BC = 0;
- C$FEAB,2;21 {if (A & (1<<4)) A = ~A;
- C$FEAD,2;21
- C$FEAF,1;21 }
-*C$FEB0,1;21 carry = A & 1; A >>= 1;
- C$FEB1,2;21 {if (carry) C = input_UP;
- C$FEB3,2;21 }
-*C$FEB5,1;21 carry = A & 1; A >>= 1;
- C$FEB6,2;21 {if (carry) C = input_DOWN;
- C$FEB8,2;21 }
-*C$FEBA,1;21 carry = A & 1; A >>= 1;
- C$FEBB,2;21 {if (carry) B = input_LEFT;
- C$FEBD,2;21 }
-*C$FEBF,1;21 carry = A & 1; A >>= 1;
- C$FEC0,2;21 {if (carry) B = input_RIGHT;
- C$FEC2,2;21 }
-*C$FEC4,2;21 {if (A & (1<<3)) A = input_FIRE; /* otherwise A is zero */
- C$FEC6,2;21
- C$FEC8,2;21 }
-*C$FECA,1;21 {A += B + C; /* Combine axis */
+cC$FEA3,3;21 Load #REGbc with port number 0x7F
+ C$FEA6,2;21 Read that port. We'll receive FxxxRLDU
+ C$FEA8,3;21 Clear our {...} variables
+; DPT: This is odd. It's testing an unspecified bit to see whether to complement
+; the read value. I don't see a reference for that behaviour anywhere.
+ C$FEAB,2;21 Test bit 4
+ C$FEAD,2;21 Jump forward if clear
+ C$FEAF,1;21 Complement the value
+; Up
+*C$FEB0,1;21 Rotate 'U' out: UFxxxRLD
+ C$FEB1,2;21 If carry was set then up was pressed, otherwise skip
+ C$FEB3,2;21 up_down = input_UP
+; Down
+*C$FEB5,1;21 Rotate 'D' out: DUFxxxRL
+ C$FEB6,2;21 If carry was set then down was pressed, otherwise skip
+ C$FEB8,2;21 up_down = input_DOWN
+; Left
+*C$FEBA,1;21 Rotate 'L' out: LDUFxxxR
+ C$FEBB,2;21 If carry was set then down was pressed, otherwise skip
+ C$FEBD,2;21 left_right = input_LEFT
+; Right
+*C$FEBF,1;21 Rotate 'R' out: RLDUFxxx
+ C$FEC0,2;21 If carry was set then right was pressed, otherwise skip
+ C$FEC2,2;21 left_right = input_RIGHT
+; Fire
+*C$FEC4,2;21 Test fire bit (and set A to zero if not set)
+ C$FEC6,2;21 If bit was set then fire was pressed, otherwise skip
+ C$FEC8,2;21 fire = input_FIRE
+*C$FECA,1;21 {Combine the fire, up_down and left_right values
  C$FECB,1;21 }
- C$FECC,1;21 return;
+ C$FECC,1;21 Return
 
 ; Sinclair joystick input routine.
 ;
