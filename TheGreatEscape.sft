@@ -8682,89 +8682,113 @@ cC$AE78,4;21 Fetch map_position into #REGde. #REGe is x, #REGd is y
  C$AEB3,2;21 Decrease morale by 10
  C$AEB5,3;21 Exit via decrease_morale
 
-; Searchlight plotter.
+; Plot the searchlight.
 ;
+; Note: In terms of attributes the game window is at (7,2)-(29,17) inclusive.
+; .
 ; Used by the routine at #R$ADBD.
 ;
 ; I:DE Pointer to screen attributes.
 @label=searchlight_plot
-cC$AEB8,1
+cC$AEB8,1;21 Bank the screen attribute pointer supplied in #REGde
 @nowarn
- C$AEB9,3;44 DEdash = &searchlight_shape[0];
- C$AEBC,2;44 Cdash = 16; // iterations  / width?
-*C$AEBE,1;44 do <%
- C$AEBF,3;44 A = searchlight_clip_left;
+ C$AEB9,3;21 Point #REGde at the spotlight bitmap searchlight_shape[0]
+ C$AEBC,2;21 16 iterations - one per row of searchlight bitmap
+; Start loop (outer)
+*C$AEBE,1;21 Switch register banks for this iteration
+; Note: I'm presently unable to discern the intent of the 'clip' flag.
+ C$AEBF,3;21 Fetch the clip flag
+; Stop if we're beyond the maximum Y
 @nowarn
- C$AEC2,3;44 HL = 0x5A40; // screen attribute address (column 0 + bottom of game window)
- C$AEC5,1;44 {  if (A != 0 && (E & 31) >= 22) L = 32;
- C$AEC6,10;44
- C$AED0,2;44 }
-*C$AED2,2;44
- C$AED4,1;44 RET C  // if (HL < DE) return; // what about carry?
- C$AED5,1;44
+ C$AEC2,3;21 Point #REGhl at the screen attribute (0,18).
+ ;21 This is max_y_attrs: the bottom of the game window
+ C$AEC5,1;21 Is the clip flag zero?
+ C$AEC6,3;21 Jump forward if so
+ C$AEC9,1;21 {Extract the X position from the screen attribute pointer
+ C$AECA,2;21 }
+ C$AECC,2;21 Is it < 22?
+ C$AECE,2;21 Jump forward if so
+ C$AED0,2;21 Otherwise point #REGhl at screen attribute (0,17)
+*C$AED2,2;21 Is the screen attribute pointer >= max_y_attrs?
+ C$AED4,1;21 Return if so
+ C$AED5,1;21 Preserve the screen attribute pointer
+; Skip rows until we're in bounds
 @nowarn
- C$AED6,3;44 HL = 0x5840; // screen attribute address (column 0 + top of game window)
- C$AED9,1;44 {  if (A != 0 && (E & 31) >= 7) L = 32;
- C$AEDA,10;44
- C$AEE4,2;44 }
-*C$AEE6,2;44
- C$AEE8,2;44 JR C,$AEF0  // if (HL < DE) goto $AEF0;
- C$AEEA,1;44
- C$AEEB,1;44 {  DEdash += 2;
- C$AEEC,1;44 }
- C$AEED,1;44
- C$AEEE,2;44 goto nextrow;
-*C$AEF0,1;44
- C$AEF1,1;44
- C$AEF2,2;44 Bdash = 2;
-*C$AEF4,1;44 do <% A = *DEdash;
- C$AEF5,1;44
- C$AEF6,3;44 DE = 0x071E;
- C$AEF9,1;44 C = A;
- C$AEFA,2;44 B = 8;
-*C$AEFC,3;44 do <% A = searchlight_clip_left;
- C$AEFF,1;44 if (A != 0) ...
- C$AF00,1;44 A = L; // interleaved
- C$AF01,3;44 ... goto $AF0C;
- C$AF04,2;44 {      if ((A & 31) >= 22) goto $AF1B;
- C$AF06,2;44
- C$AF08,2;44 }
- C$AF0A,2;44 goto $AF18;
-*C$AF0C,2;44 {      if ((A & 31) < E) goto $AF18;
- C$AF0E,1;44
- C$AF0F,2;44 }
- C$AF11,1;44
-*C$AF12,1;44 {      do <% DEdash++; %> while (--Bdash);
- C$AF13,2;44 }
- C$AF15,1;44
- C$AF16,2;44 goto nextrow;
-*C$AF18,1;44 {      if (A < D) <%
- C$AF19,2;44 }
-*C$AF1B,2;44 RL C %> // looks like bit extraction ...
- C$AF1D,2;44 else <%
-*C$AF1F,2;44 RL C
- C$AF21,3;44 if (carry) <%
- C$AF24,2;44 *HL = attribute_YELLOW_OVER_BLACK; %>
- C$AF26,2;44 else <%
-*C$AF28,2;44 *HL = attribute_BRIGHT_BLUE_OVER_BLACK; %> %>
-*C$AF2A,1;44 HL++;
- C$AF2B,2;44 %> while (--B);
- C$AF2D,1;44
- C$AF2E,1;44 DEdash++;
- C$AF2F,2;44 %> while (--Bdash);
- C$AF31,1;44
-*C$AF32,1;44 nextrow:
- C$AF33,3;44 {  HL += 32;
- C$AF36,1;44 }
- C$AF37,2;44
- C$AF39,1;44 {%> while (--Cdash);
- C$AF3A,3;44 }
- C$AF3D,1;44 return;
+ C$AED6,3;21 Point #REGhl at screen attribute (0,2).
+ ;21 This is min_y_attrs: the first row that has the game window on it
+ C$AED9,1;21 Is the clip flag zero?
+ C$AEDA,3;21 Jump forward if so
+ C$AEDD,1;21 {Extract the X position from the screen attribute pointer
+ C$AEDE,2;21 }
+ C$AEE0,2;21 Is it < 7?
+ C$AEE2,2;21 Jump forward if so
+ C$AEE4,2;21 Otherwise point #REGhl at screen attribute (0,1)
+*C$AEE6,2;21 Is the screen attribute pointer >= min_y_attrs?
+ C$AEE8,2;21 Jump forward if so
+ C$AEEA,1;21 {Otherwise we need to skip this row.
+ C$AEEB,1;21 Increment the (banked) shape pointer by a row
+ C$AEEC,1;21
+ C$AEED,1;21 }
+ C$AEEE,2;21 Then jump to the next row, skipping all of the plotting
+*C$AEF0,1;21 Move shape pointer into #REGde
+ C$AEF1,1;21
+ C$AEF2,2;21 Two iterations (two bytes per row)
+; Start loop (inner)
+*C$AEF4,1;21 Fetch eight pixels from the shape data
+ C$AEF5,1;21
+ C$AEF6,3;21 Preload #REGd with 7 (left hand clip) and #REGe with 30
+ ;21 (right hand clip)
+ C$AEF9,1;21 Save the shape pixels to #REGc
+ C$AEFA,2;21 Eight iterations (bits per byte)
+; Start loop (inner inner)
+; .
+; Clip right hand edge
+*C$AEFC,3;21 Fetch the clip flag
+ C$AEFF,1;21 Is the clip flag zero?
+ C$AF00,1;21 Fetch the screen attribute pointer low byte (interleaved)
+ C$AF01,3;21 Jump forward if so
+ C$AF04,2;21 Get X
+ C$AF06,2;21 Is it >= 22?
+ C$AF08,2;21 Jump to don't plot if so
+ C$AF0A,2;21 Otherwise jump to plot test
+*C$AF0C,2;21 Get X
+ C$AF0E,1;21 Is it < 30? (#REGe is 30 here, as set by #R$AEF6)
+ C$AF0F,2;21 Jump to plot test if so
+ C$AF11,1;21
+; Tight loop to increment #REGde by #REGb
+*C$AF12,1;21 {Skip the remainder of the shape's row
+ C$AF13,2;21 }
+ C$AF15,1;21
+ C$AF16,2;21 Jump to next_row
+; Clip left hand edge
+*C$AF18,1;21 Is #REGa >= 8? (#R$AEF6 previously stored 7 in #REGd)
+ C$AF19,2;21 Jump to plot if so
+@label=dont_plot
+*C$AF1B,2;21 Extract the next bit from shape's pixels
+ C$AF1D,2;21 Jump to the next pixel
+@label=do_plot
+*C$AF1F,2;21 Extract the next bit from shape's pixels
+ C$AF21,3;21 Jump if the pixel is not set
+ C$AF24,2;21 Set screen attribute to attribute_YELLOW_OVER_BLACK
+ C$AF26,2;21 (else)
+*C$AF28,2;21 Set screen attribute to attribute_BRIGHT_BLUE_OVER_BLACK
+*C$AF2A,1;21 Advance to the next pixel and attribute
+ C$AF2B,2;21 ...loop (inner inner)
+ C$AF2D,1;21
+ C$AF2E,1;21 Advance shape pointer
+ C$AF2F,2;21 ...loop (inner)
+ C$AF31,1;21
+@label=next_row
+*C$AF32,1;21
+ C$AF33,3;21 {Move the attribute pointer to the next scanline
+ C$AF36,1;21 }
+ C$AF37,2;21
+ C$AF39,1;21 Decrement row counter
+ C$AF3A,3;21 ...loop while row > 0 (outer)
+ C$AF3D,1;21 Return
 ; Searchlight circle shape.
 @label=searchlight_shape
- B$AF3E,2;20 {searchlight_shape
- B$AF40,2*14;20
- B$AF5C,2;20 }
+ B$AF3E,2*16
 
 ; Barbed wire tiles used by the zoombox effect.
 @label=zoombox_tiles
