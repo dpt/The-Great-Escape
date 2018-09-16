@@ -8668,13 +8668,15 @@ cC$AE78,4;21 Fetch map_position into #REGde. #REGe is x, #REGd is y
  C$AE9B,1;21 Is (map_position.y + 6) >= (searchlight.y + 12)?
  ;21 Meaning: is the searchlight hotspot bottom edge beyond the hero's top edge?
  C$AE9C,1;21 Return if so - the hero isn't in the hotspot
-; DPT: It seems odd to not do this (cheaper) test first.
+; The hero is in the hotspot.
+; .
+; DPT: It seems odd to not do this next test first, since it's cheaper.
  C$AE9D,3;21 {Is searchlight_state set to
- C$AEA0,2;21 searchlight_STATE_CAUGHT?}
+ C$AEA0,2;21 searchlight_STATE_CAUGHT? ($1F)}
  C$AEA2,1;21 Return if so
  C$AEA3,2;21 {Set searchlight_state to
  C$AEA5,3;21 searchlight_STATE_CAUGHT}
- C$AEA8,1;21 {Assign searchlight_caught_coord from searchlight (x,y)
+ C$AEA8,1;21 {Assign searchlight_caught_coord from searchlight.x and .y
  C$AEA9,2;21
  C$AEAB,4;21 }
  C$AEAF,1;21 {Make the bell ring perpetually
