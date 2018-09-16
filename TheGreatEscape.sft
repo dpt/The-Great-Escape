@@ -8805,48 +8805,55 @@ bB$AF5E,8;44 top left tile, zoombox_tile_wire_tl #HTML[#UDG$AF5E]
 @label=bribed_character
 gB$AF8E,1
 
-; Stuff is touching. Also assigns saved_pos to specified vischar's pos and sets
-; the sprite_index.
+; Test for characters meeting obstacles like doors and map bounds.
+;
+; Also assigns saved_pos to specified vischar's pos and sets the sprite_index.
 ;
 ; Used by the routine at #R$B5CE.
 ;
-; I:A' Flip flag + sprite offset.
+; I:A' Flip flag and sprite offset.
 ; I:IY Pointer to visible character block.
+; O:F  Z/NZ => inside/outside bounds.
 @label=touch
-cC$AF8F,1;22
- C$AF90,3;22 touch_stashed_A = A;
- C$AF93,4;22 {IY[7] |= vischar_BYTE7_DONT_MOVE_MAP | vischar_TOUCH_ENTERED; // wild guess: clamp character in position?
- C$AF97,4;22 }
- C$AF9B,2;22 {HL = IY;
+cC$AF8F,1;22 Exchange #REGa registers
+ C$AF90,3;22 Stash the flip flag and sprite offset
+ C$AF93,4;22 Set the vischar's vischar_BYTE7_DONT_MOVE_MAP flag
+ C$AF97,4;22 Set the vischar's vischar_TOUCH_ENTERED flag
+ C$AF9B,2;22 {#REGhl = #REGiy
  C$AF9D,1;22 }
- C$AF9E,1;22
-; If hero is player controlled, then check for door transitions.
- C$AF9F,1;22 {if (L == 0 && automatic_player_counter > 0) door_handling(); // L == 0 => HL == 0x8000
- C$AFA0,10;22
-*C$AFAA,1;22 }
-; If non-player character or hero is not cutting the fence.
- C$AFAB,1;22 {if (L || (($8001 & (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE)) != vischar_FLAGS_CUTTING_WIRE)) <% if (bounds_check()) return 1;
- C$AFAC,5;22
- C$AFB1,2;22 %>
- C$AFB3,2;22
-*C$AFB5,3;22
- C$AFB8,1;22 }
-; Cutting wire only from here onwards?
- C$AFB9,3;22 A = IY[0]; // $8000,$8020,$8040,$8060
- C$AFBC,2;22 {if (A <= character_25_PRISONER_6) <% // a character index
- C$AFBE,2;22 }
- C$AFC0,3;22 collision();
- C$AFC3,1;22 if (!Z) return; %>
-; noncolliding characters and items only at this point
-*C$AFC4,4;22 IY[7] &= ~vischar_BYTE7_DONT_MOVE_MAP; // clear counter_and_flag
+; If the hero is player controlled then check for door transitions.
+ C$AF9E,1;22 {Which vischar are we processing?
+ C$AF9F,1;22 }
+ C$AFA0,1;22 Preserve the vischar low byte
+ C$AFA1,2;22 Jump forward if not the hero's vischar
+ C$AFA3,3;22 {If the automatic player counter is positive (=> player controlled)...
+ C$AFA6,1;22
+ C$AFA7,3;22 call door_handling}
+*C$AFAA,1;22 Restore vischar low byte
+; Check bounds if this is a non-player character or the hero is not cutting the fence.
+ C$AFAB,1;22 {If it's a non-player vischar...
+ C$AFAC,2;22 jump foward to bounds check}
+ C$AFAE,3;22 OR if it's the hero's vischar and its flags
+ C$AFB1,2;22 (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE)
+ C$AFB3,2;22 don't equal vischar_FLAGS_CUTTING_WIRE
+*C$AFB5,3;22 call bounds_check}
+ C$AFB8,1;22 Return if a wall was hit
+; Check "real" characters for collisions.
+ C$AFB9,3;22 Get this vischar's character index
+ C$AFBC,2;22 Is it >= character_26_STOVE_1?
+ C$AFBE,2;22 Jump forward if so
+ C$AFC0,3;22 Call collision()
+ C$AFC3,1;22 Return if ??
+; At this point we handle non-colliding characters and items only.
+*C$AFC4,4;22 Clear vischar_BYTE7_DONT_MOVE_MAP
  C$AFC8,3;22 {memcpy(IY + 15, &saved_pos_x, 6); // $800F // vischar
  C$AFCB,2;22 pos = saved_pos
  C$AFCD,8;22
  C$AFD5,2;22 }
- C$AFD7,3;22 {IY[0x17] = touch_stashed_A; // left/right flip flag / sprite offset
- C$AFDA,3;22 }
- C$AFDD,1;22 A = 0;
- C$AFDE,1;22 return 0;
+ C$AFD7,3;22 Unstash the flip flag and sprite offset
+ C$AFDA,3;22 Set it in the vischar's sprite_index field
+ C$AFDD,1;22 Set flags to Z
+ C$AFDE,1;22 Return
 
 ; (unknown) Definitely something to do with moving objects around. Collisions?
 ;
