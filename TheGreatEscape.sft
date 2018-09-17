@@ -16308,44 +16308,49 @@ cC$FE47,3;21 Load #REGbc with the port number of the keyboard half
 
 ; Kempston joystick input routine.
 ;
-; Reading port 0x1F yields 000FUDLR active high.
+; Reading port $1F yields 000FUDLR active high.
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_kempston
-cC$FE7E,3;21 BC = 0x001F;
- C$FE81,2;21
- C$FE83,3;21 BC = 0;
- C$FE86,1;21 carry = A & 1; A >>= 1;
- C$FE87,2;21 {if (carry) B = input_RIGHT;
- C$FE89,2;21 }
-*C$FE8B,1;21 carry = A & 1; A >>= 1;
- C$FE8C,2;21 {if (carry) B = input_LEFT;
- C$FE8E,2;21 }
-*C$FE90,1;21 carry = A & 1; A >>= 1;
- C$FE91,2;21 {if (carry) C = input_DOWN;
- C$FE93,2;21 }
-*C$FE95,1;21 carry = A & 1; A >>= 1;
- C$FE96,2;21 {if (carry) C = input_UP;
- C$FE98,2;21 }
-*C$FE9A,1;21 carry = A & 1; A >>= 1;
- C$FE9B,2;21 A = input_FIRE;
- C$FE9D,2;21 {if (!carry) A = 0;
- C$FE9F,1;21 }
-*C$FEA0,1;21 {A += B + C;
+cC$FE7E,3;21 Load #REGbc with port number $1F
+ C$FE81,2;21 Read that port. We'll receive 000FUDLR
+ C$FE83,3;21 Clear our {...} variables
+; Right
+ C$FE86,1;21 Rotate 'R' out: R000FUDL
+ C$FE87,2;21 If carry was set then right was pressed, otherwise skip
+ C$FE89,2;21 left_right = input_RIGHT
+; Left
+*C$FE8B,1;21 Rotate 'L' out: LR000FUD
+ C$FE8C,2;21 If carry was set then left was pressed, otherwise skip
+ C$FE8E,2;21 left_right = input_LEFT
+; Down
+*C$FE90,1;21 Rotate 'D' out: DLR000FU
+ C$FE91,2;21 If carry was set then down was pressed, otherwise skip
+ C$FE93,2;21 up_down = input_DOWN
+; Up
+*C$FE95,1;21 Rotate 'U' out: UDLR000F
+ C$FE96,2;21 If carry was set then up was pressed, otherwise skip
+ C$FE98,2;21 up_down = input_UP
+; Fire
+*C$FE9A,1;21 Rotate 'F' out: FUDLR000
+ C$FE9B,2;21 fire = input_FIRE
+ C$FE9D,2;21 If fire bit was set then jump forward
+ C$FE9F,1;21 fire = 0
+*C$FEA0,1;21 {Combine the fire, up_down and left_right values
  C$FEA1,1;21 }
- C$FEA2,1;21 return; /* Combine axis */
+ C$FEA2,1;21 Return
 
 ; Fuller joystick input routine.
 ;
-; Reading port 0x7F yields F---RLDU active low.
+; Reading port $7F yields F---RLDU active low.
 ;
 ; This is unused by the game.
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_fuller
-cC$FEA3,3;21 Load #REGbc with port number 0x7F
+cC$FEA3,3;21 Load #REGbc with port number $7F
  C$FEA6,2;21 Read that port. We'll receive FxxxRLDU
- C$FEA8,3;21 Clear our {...} variables
+ C$FEA8,3;21 Clear our variables
 ; DPT: This is odd. It's testing an unspecified bit to see whether to complement
 ; the read value. I don't see a reference for that behaviour anywhere.
  C$FEAB,2;21 Test bit 4
