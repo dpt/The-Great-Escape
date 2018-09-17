@@ -8808,7 +8808,7 @@ gB$AF8E,1
 ; Test for characters meeting obstacles like doors and map bounds.
 ;
 ; Also assigns saved_pos to specified vischar's pos and sets the sprite_index.
-;
+; .
 ; Used by the routine at #R$B5CE.
 ;
 ; I:A' Flip flag and sprite offset.
@@ -8826,14 +8826,14 @@ cC$AF8F,1;22 Exchange #REGa registers
  C$AF9F,1;22 }
  C$AFA0,1;22 Preserve the vischar low byte
  C$AFA1,2;22 Jump forward if not the hero's vischar
- C$AFA3,3;22 {If the automatic player counter is positive (=> player controlled)...
+ C$AFA3,3;22 {If the automatic player counter is positive (under player control)...
  C$AFA6,1;22
  C$AFA7,3;22 call door_handling}
 *C$AFAA,1;22 Restore vischar low byte
 ; Check bounds if this is a non-player character or the hero is not cutting the fence.
  C$AFAB,1;22 {If it's a non-player vischar...
  C$AFAC,2;22 jump foward to bounds check}
- C$AFAE,3;22 OR if it's the hero's vischar and its flags
+ C$AFAE,3;22 {OR if it's the hero's vischar and its flags
  C$AFB1,2;22 (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE)
  C$AFB3,2;22 don't equal vischar_FLAGS_CUTTING_WIRE
 *C$AFB5,3;22 call bounds_check}
@@ -8842,13 +8842,12 @@ cC$AF8F,1;22 Exchange #REGa registers
  C$AFB9,3;22 Get this vischar's character index
  C$AFBC,2;22 Is it >= character_26_STOVE_1?
  C$AFBE,2;22 Jump forward if so
- C$AFC0,3;22 Call collision()
- C$AFC3,1;22 Return if ??
+ C$AFC0,3;22 Call collision
+ C$AFC3,1;22 Return if there was a collision
 ; At this point we handle non-colliding characters and items only.
 *C$AFC4,4;22 Clear vischar_BYTE7_DONT_MOVE_MAP
- C$AFC8,3;22 {memcpy(IY + 15, &saved_pos_x, 6); // $800F // vischar
- C$AFCB,2;22 pos = saved_pos
- C$AFCD,8;22
+ C$AFC8,3;22 {Copy saved_pos to vischar's position
+ C$AFCB,10;22
  C$AFD5,2;22 }
  C$AFD7,3;22 Unstash the flip flag and sprite offset
  C$AFDA,3;22 Set it in the vischar's sprite_index field
