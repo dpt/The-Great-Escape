@@ -15366,7 +15366,11 @@ cC$F068,3;21
 ;
 ; Pairs of (port, key mask).
 @label=keydefs
-gB$F06B,10
+gB$F06B,2;20 Left
+ B$F06D,2;20 Right
+ B$F06F,2;20 Up
+ B$F071,2;20 Down
+ B$F073,2;20 Fire
 
 
 ; Everything from $F0F8 onwards is potentially overwritten by the game once the main menu is exited.
@@ -16190,68 +16194,70 @@ uB$FDF3,8,5
 
 ; Keyboard input routine.
 ;
-; .
+; Walks the keydefs table testing the ports against masks as setup by #R$F350.
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_keyboard
-cC$FE00,3;21 HL = keydefs; /* A list of (port high byte, key mask) */
-; Left or right?
- C$FE03,2;21 C = 0xFE; /* Port 0xXXFE */
- C$FE05,1;21 {B = *HL++;
- C$FE06,1;21 }
- C$FE07,2;21
- C$FE09,1;21 {A = ~A & *HL++;
- C$FE0A,1;21
- C$FE0B,1;21 }
- C$FE0C,2;21 if (A) <%
- C$FE0E,1;21 {  HL += 2; /* Skip right keydef */
+cC$FE00,3;21 Point #REGhl at keydefs table - a list of (port high
+ ;21 byte, key mask) filled out when the user chose their
+ ;21 keys
+; Check for left
+ C$FE03,2;21 Port $xxFE
+ C$FE05,1;21 Fetch the port high byte
+ C$FE06,1;21 Advance to key mask
+ C$FE07,2;21 Read that port
+ C$FE09,1;21 The keyboard is active low, so complement the value
+ C$FE0A,1;21 Mask off the wanted bit
+ C$FE0B,1;21 Advance to next definition
+ C$FE0C,2;21 Key NOT pressed - jump forward to test for right key
+ C$FE0E,1;21 {Skip the right key definition
  C$FE0F,1;21 }
- C$FE10,2;21 E = input_LEFT;
- C$FE12,2;21 %>
-; Right.
-*C$FE14,1;21 {else <% B = *HL++;
- C$FE15,1;21 }
- C$FE16,2;21
- C$FE18,1;21 {  A = ~A & *HL++;
- C$FE19,1;21
- C$FE1A,1;21 }
- C$FE1B,2;21 if (A) <%
- C$FE1D,2;21 E = input_RIGHT;
- C$FE1F,2;21 %>
-*C$FE21,1;21 else <% E = A; /* == 0 */ %> %>
-; Up or down?
-*C$FE22,1;21 {B = *HL++;
- C$FE23,1;21 }
- C$FE24,2;21
- C$FE26,1;21 {A = ~A & *HL++;
- C$FE27,1;21
- C$FE28,1;21 }
- C$FE29,2;21 if (A) <%
- C$FE2B,1;21 {  HL += 2; /* Skip down keydef */
+ C$FE10,2;21 result = input_LEFT
+ C$FE12,2;21 Jump to up/down checking
+; Check for right
+*C$FE14,1;21 Fetch the port high byte
+ C$FE15,1;21 Advance to key mask
+ C$FE16,2;21 Read that port
+ C$FE18,1;21 The keyboard is active low, so complement the value
+ C$FE19,1;21 Mask off the wanted bit
+ C$FE1A,1;21 Advance to next definition
+ C$FE1B,2;21 Key NOT pressed - jump forward to test for up key
+ C$FE1D,2;21 result = input_RIGHT
+ C$FE1F,2;21 Jump to up/down checking
+*C$FE21,1;21 Otherwise result = 0 (#REGa is zero here)
+; Check for up
+*C$FE22,1;21 Fetch the port high byte
+ C$FE23,1;21 Advance to key mask
+ C$FE24,2;21 Read that port
+ C$FE26,1;21 The keyboard is active low, so complement the value
+ C$FE27,1;21 Mask off the wanted bit
+ C$FE28,1;21 Advance to next definition
+ C$FE29,2;21 Key NOT pressed - jump forward to test for down key
+ C$FE2B,1;21 {Skip down key definition
  C$FE2C,1;21 }
- C$FE2D,1;21 E += input_UP;
- C$FE2E,2;21 %>
-; Down.
-*C$FE30,1;21 {else <% B = *HL++;
- C$FE31,1;21 }
- C$FE32,2;21
- C$FE34,1;21 {  A = ~A & *HL++;
- C$FE35,1;21
- C$FE36,1;21 }
- C$FE37,2;21 if (A) <%
- C$FE39,1;21 {    E += input_DOWN; %> %>
+ C$FE2D,1;21 result += input_UP
+ C$FE2E,2;21 Jump to fire checking
+; Check for down
+*C$FE30,1;21 Fetch the port high byte
+ C$FE31,1;21 Advance to key mask
+ C$FE32,2;21 Read that port
+ C$FE34,1;21 The keyboard is active low, so complement the value
+ C$FE35,1;21 Mask off the wanted bit
+ C$FE36,1;21 Advance to next key definition
+ C$FE37,2;21 Key NOT pressed - jump forward to test for fire key
+ C$FE39,1;21 {result += input_DOWN
  C$FE3A,1;21 }
-; Fire?
-*C$FE3B,1;21 {B = *HL++;
- C$FE3C,1;21 }
- C$FE3D,2;21
- C$FE3F,1;21 {A = ~A & *HL++;
- C$FE40,1;21
- C$FE41,1;21 }
- C$FE42,1;21 A = E;
- C$FE43,1;21 if (A)
- C$FE44,2;21 A += input_FIRE;
- C$FE46,1;21 return;
+; Check for fire
+*C$FE3B,1;21 Fetch the port high byte
+ C$FE3C,1;21 Advance to key mask
+ C$FE3D,2;21 Read that port
+ C$FE3F,1;21 The keyboard is active low, so complement the value
+ C$FE40,1;21 Mask off the wanted bit
+ C$FE41,1;21 Advance to next key definition
+ C$FE42,1;21 Result
+ C$FE43,1;21 Return the result if fire NOT pressed
+ C$FE44,2;21 result += input_FIRE
+ C$FE46,1;21 Return
 
 ; Protek (cursor) joystick input routine.
 ;
