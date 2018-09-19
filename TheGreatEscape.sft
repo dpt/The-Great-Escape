@@ -16261,47 +16261,50 @@ cC$FE00,3;21 Point #REGhl at keydefs table - a list of (port high
 
 ; Protek (cursor) joystick input routine.
 ;
-; .
+; Up/Down/Left/Right/Fire = keys 7/6/5/8/0.
 ;
 ; O:A Input value (as per enum input).
-;
-; Horizontal.
 @label=inputroutine_protek
-cC$FE47,3;21 BC = port_KEYBOARD_12345;
- C$FE4A,2;21
- C$FE4C,1;21 {A = ~A & (1<<4); /* 5 == left */
- C$FE4D,2;21 }
- C$FE4F,2;21 E = input_LEFT;
- C$FE51,2;21 B = 0xEF; /* port_KEYBOARD_09876 */
- C$FE53,2;21 if (Z) <%
- C$FE55,2;21
- C$FE57,1;21 {  A = ~A & (1<<2);
- C$FE58,2;21 }
- C$FE5A,2;21 E = input_RIGHT;
- C$FE5C,2;21 if (Z)
- C$FE5E,2;21 E = 0; %>
-; Vertical.
-*C$FE60,2;21
- C$FE62,1;21 A = ~A;
- C$FE63,1;21 D = A;
- C$FE64,2;21 A &= (1<<3);
- C$FE66,2;21 A = input_UP; /* interleaved */
- C$FE68,2;21 if (Z) <%
- C$FE6A,1;21 A = D;
- C$FE6B,2;21 A &= (1<<4);
- C$FE6D,2;21 A = input_DOWN; /* interleaved */
- C$FE6F,2;21 if (Z)
- C$FE71,1;21 A = input_NONE; %>
-*C$FE72,1;21 {E += A; /* Combine axis */
+cC$FE47,3;21 Load #REGbc with the port number of the keyboard half
+ ;21 row for keys 1/2/3/4/5
+ C$FE4A,2;21 Read that port. We'll receive xxx54321
+ C$FE4C,1;21 The keyboard is active low, so complement the value
+; Check for left
+ C$FE4D,2;21 Is '5' pressed?
+ C$FE4F,2;21 left_right = input_LEFT
+ C$FE51,2;21 Load #REGbc with the port number of the keyboard half
+ ;21 row for keys 0/9/8/7/6
+ C$FE53,2;21 Jump forward if '5'/left was pressed
+; Check for right
+ C$FE55,2;21 Read that port. We'll receive xxx67890
+ C$FE57,1;21 The keyboard is active low, so complement the value
+ C$FE58,2;21 Is '8' pressed?
+ C$FE5A,2;21 left_right = input_RIGHT
+ C$FE5C,2;21 Jump forward if '8'/right was pressed
+ C$FE5E,2;21 Otherwise left_right = 0
+*C$FE60,2;21 Read $EFFE again
+ C$FE62,1;21 The keyboard is active low, so complement the value
+ C$FE63,1;21 Save a copy of the port value
+; Check for up
+ C$FE64,2;21 Is '7' pressed?
+ C$FE66,2;21 up_down = input_UP
+ C$FE68,2;21 Jump forward if '7'/up was pressed
+; Check for down
+ C$FE6A,1;21 Restore the port value
+ C$FE6B,2;21 Is '6' pressed?
+ C$FE6D,2;21 up_down = input_DOWN
+ C$FE6F,2;21 Jump forward if '6'/down was pressed
+ C$FE71,1;21 Otherwise up_down = 0
+*C$FE72,1;21 {Combine the up_down and left_right values
  C$FE73,1;21 }
-; Fire.
- C$FE74,1;21 {A = D & (1<<0);
- C$FE75,2;21 }
- C$FE77,2;21 A = input_FIRE; /* interleaved */
- C$FE79,2;21 {if (Z) A = 0;
- C$FE7B,1;21 }
-*C$FE7C,1;21 A += E; /* Combine axis */
- C$FE7D,1;21 return;
+; Check for fire
+ C$FE74,1;21 Restore the port value
+ C$FE75,2;21 Is '0' pressed?
+ C$FE77,2;21 fire = input_FIRE
+ C$FE79,2;21 Jump forward if fire was pressed
+ C$FE7B,1;21 fire = 0
+*C$FE7C,1;21 Combine the (up_down + left_right) and fire values
+ C$FE7D,1;21 Return
 
 ; Kempston joystick input routine.
 ;
