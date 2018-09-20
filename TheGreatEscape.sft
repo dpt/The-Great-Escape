@@ -15761,7 +15761,7 @@ cC$F4B7,3;21 for (;;) <% check_menu_keys();
  C$F4CB,2;21 }
  C$F4CD,3;21 HL = 0;
  C$F4D0,2;21 %>
-*C$F4D2,3;21 get_tuning();
+*C$F4D2,3;21 frequency_for_semitone();
  C$F4D5,1;21
 ; Loop until the end marker is encountered.
  C$F4D6,3;21 {  HLdash = music_channel1_index + 1;
@@ -15774,7 +15774,7 @@ cC$F4B7,3;21 for (;;) <% check_menu_keys();
  C$F4E4,2;21 }
  C$F4E6,3;21 HLdash = 0;
  C$F4E9,2;21 %>
-*C$F4EB,3;21 get_tuning(); /* using banked registers */
+*C$F4EB,3;21 frequency_for_semitone(); /* using banked registers */
  C$F4EE,1;21 A = Bdash;
  C$F4EF,2;21
  C$F4F1,2;21 {  if (A == 0xFF) <%
@@ -15816,16 +15816,17 @@ cC$F4B7,3;21 for (;;) <% check_menu_keys();
  C$F526,3;21 }
  C$F529,3;21 %>
 
-; Get tuning.
+; Return the frequency to play at to generate the given semitone.
+;
+; The frequency value returned is the number of iterations that the music
+; routine should count for before flipping its output bit.
 ;
 ; Used by the routine at #R$F4B7.
 ;
-; I:A Index (never larger than 42?).
-; O:BC ...
-; O:DE ...
-; O:HL ...
-@label=get_tuning
-cC$F52C,1;21 {BC = music_tuning_table[A];
+; I:A  Semitone index (never larger than 42 in this game).
+; O:DE Frequency
+@label=frequency_for_semitone
+cC$F52C,1;21 {BC = semitone_to_frequency[A];
  C$F52D,9;21
  C$F536,1;21 }
  C$F537,1;21 C++;
@@ -15846,19 +15847,110 @@ gW$F541,2
 ; Unreferenced byte.
 uB$F545,1
 
-; Music data.
+; High music channel notes (semitones).
+;
+; Start of The Great Escape theme.
 @label=music_channel0_data
-bB$F546,8;44 {music_channel0_data
- B$F54E,8*79;44
- B$F7C6,1;44 }
+bB$F546,8*16,6
+; Start of "Pack Up Your Troubles in Your Old Kit Bag".
+ B$F5CC,2,8*31,4
+; Start of "It's a Long Way to Tipperary".
+ B$F6CA,4,8*31
+; End marker
+ B$F7C6,1
+; Low music channel notes (semitones).
+;
+; Start of The Great Escape theme.
 @label=music_channel1_data
- B$F7C7,8;44 {music_channel1_data
- B$F7CF,8*79;44
- B$FA47,1;44 }
-@label=music_tuning_table
- W$FA48,2;44 {music_tuning_table
- W$FA4A,2*74;44
- W$FADE,2;44 }
+ B$F7C7,8*16,6
+; Start of "Pack Up Your Troubles in Your Old Kit Bag".
+ B$F84D,2,8*31,4
+; Start of "It's a Long Way to Tipperary".
+ B$F94B,4,8*31
+; End marker
+ B$FA47,1
+; The frequency to use to produce the given semitone.
+;
+; Covers full octaves from C2 to B6 and C7 only.
+;
+; Used by #R$F52C
+@label=semitone_to_frequency
+ W$FA48,2;44 delay
+ W$FA4A,2;44 unused
+ W$FA4C,2;44 unused
+ W$FA4E,2;44 unused
+ W$FA50,2;44 unused
+; Octave 2
+ W$FA52,2;44 C2
+ W$FA54,2;44 C2#
+ W$FA56,2;44 D2
+ W$FA58,2;44 D2# -- the lowest note used by the game music
+ W$FA5A,2;44 E2
+ W$FA5C,2;44 F2
+ W$FA5E,2;44 F2#
+ W$FA60,2;44 G2
+ W$FA62,2;44 G2#
+ W$FA64,2;44 A2
+ W$FA66,2;44 A2#
+ W$FA68,2;44 B2
+; Octave 3
+ W$FA6A,2;44 C3
+ W$FA6C,2;44 C3#
+ W$FA6E,2;44 D3
+ W$FA70,2;44 D3#
+ W$FA72,2;44 E3
+ W$FA74,2;44 F3
+ W$FA76,2;44 F3#
+ W$FA78,2;44 G3
+ W$FA7A,2;44 G3#
+ W$FA7C,2;44 A3
+ W$FA7E,2;44 A3#
+ W$FA80,2;44 B3
+; Octave 4
+ W$FA82,2;44 C4
+ W$FA84,2;44 C4#
+ W$FA86,2;44 D4
+ W$FA88,2;44 D4#
+ W$FA8A,2;44 E4
+ W$FA8C,2;44 F4
+ W$FA8E,2;44 F4#
+ W$FA90,2;44 G4
+ W$FA92,2;44 G4#
+ W$FA94,2;44 A4
+ W$FA96,2;44 A4#
+ W$FA98,2;44 B4
+; Octave 5
+ W$FA9A,2;44 C5
+ W$FA9C,2;44 C5# -- the highest note used by the game music
+ W$FA9E,2;44 D5
+ W$FAA0,2;44 D5#
+ W$FAA2,2;44 E5
+ W$FAA4,2;44 F5
+ W$FAA6,2;44 F5#
+ W$FAA8,2;44 G5
+ W$FAAA,2;44 G5#
+ W$FAAC,2;44 A5
+ W$FAAE,2;44 A5#
+ W$FAB0,2;44 B5
+; Octave 6
+ W$FAB2,2;44 C6
+ W$FAB4,2;44 C6#
+ W$FAB6,2;44 D6
+ W$FAB8,2;44 D6#
+ W$FABA,2;44 E6
+ W$FABC,2;44 F6
+ W$FABE,2;44 F6#
+ W$FAC0,2;44 G6
+ W$FAC2,2;44 G6#
+ W$FAC4,2;44 A6
+ W$FAC6,2;44 A6#
+ W$FAC8,2;44 B6
+; Octave 7
+ W$FACA,2;44 C7
+; It's unclear from the original game data where the table is supposed to end.
+; It's not important in practice since the highest note used by the game is
+; C5#.
+ W$FACC,2*10;44
 
 ; 769 bytes of apparently unreferenced bytes.
 uB$FAE0,8*96,1
