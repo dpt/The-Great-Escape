@@ -22,7 +22,6 @@ usage:
 	@echo "Supported targets:"
 	@echo "  usage		Show this help"
 	@echo "  all		Build virtually everything"
-	@echo "  install	Install the $(NAME) support script"
 	@echo "  pristine	Fetch a version of $(NAME) and output a pristine Z80 snapshot"
 	@echo "  skool		Build a skool file from the skool file template + pristine Z80 snapshot"
 	@echo "  disasm	Build the $(NAME) disassembly"
@@ -39,12 +38,7 @@ usage:
 # .PHONY rules are always run.
 
 .PHONY: all
-all: install pristine skool disasm asm z80 tap
-
-.PHONY: install
-install:
-	mkdir -p ~/.skoolkit
-	cp $(GAME).py ~/.skoolkit
+all: pristine skool disasm asm z80 tap
 
 .PHONY: pristine
 pristine: $(PRISTINEZ80)

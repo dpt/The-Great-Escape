@@ -42,11 +42,8 @@ Building the Cross-Referenced Disassembly
 * First, [install SkoolKit](http://skoolkit.ca/docs/skoolkit/usage.html)
 * Then make a local clone of this repository:
     * `git clone https://github.com/dpt/The-Great-Escape.git`
-* Then change to the repository and install the support file:
+* Finally change to the repository and build the HTML format disassembly:
     * `cd <cloned repo>`
-    * `make install`
-        * This will install `TheGreatEscape.py` into your `~/.skoolkit` directory. You only have to do this once. (Note: If you wish to install into a different location you may have to customise the path inside `Makefile`).
-* Finally, build the HTML format disassembly:
     * `make disasm`
 
 If all's well you will see output like:
