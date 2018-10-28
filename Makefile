@@ -12,7 +12,7 @@ ASM=$(BUILD)/$(GAME).asm
 BIN=$(BUILD)/$(GAME).bin
 CTL=$(BUILD)/$(GAME).ctl
 PRISTINEZ80=$(BUILD)/$(GAME).pristine.z80
-SKOOL=$(BUILD)/$(GAME).skool
+SKOOL=$(GAME).skool
 TAP=$(BUILD)/$(GAME).tap
 Z80=$(BUILD)/$(GAME).z80
 GENERATED_SFT=$(BUILD)/$(GAME).sft
@@ -66,20 +66,20 @@ disasm: $(SKOOL)
 .PHONY: asm
 asm: $(ASM)
 
-%.asm: %.skool
+$(ASM): $(SKOOL)
 	mkdir -p $(BUILD)
 	skool2asm.py $(OPTIONS) --create-labels --no-warnings $< > $@
 
 .PHONY: z80
 z80: $(Z80)
 
-%.z80: %.skool
+$(Z80): $(SKOOL)
 	skool2bin.py $< - | bin2sna.py --org 16384 --stack 65535 --start 61795 - $@
 
 .PHONY: tap
 tap: $(TAP)
 
-%.tap: %.skool
+$(TAP): $(SKOOL)
 	skool2bin.py $< - | bin2tap.py --org 16384 --stack 65535 --start 61795 - $@
 
 .PHONY: sft
