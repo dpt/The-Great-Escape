@@ -5,7 +5,7 @@
 
 import string
 
-from skoolkit.graphics import Udg
+from skoolkit.graphics import Frame, Udg
 from skoolkit.skoolhtml import HtmlWriter
 from skoolkit.skoolasm import AsmWriter
 from skoolkit.skoolmacro import parse_ints
@@ -137,12 +137,9 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
                               bright)
             udg_array[-1].append(tile)
 
-        img_path_id = 'ScreenshotImagePath'
-        fname = 'supertile-%X-%d-%d' % (stile, colour_supertiles, checkerboard)
-        img_path = self.image_path(fname, img_path_id)
-        self.write_image(img_path, udg_array)
+        fname = '{ScreenshotImagePath}/supertile-%X-%d-%d' % (stile, colour_supertiles, checkerboard)
 
-        return self.img_element(cwd, img_path)
+        return self.handle_image(Frame(udg_array, 2), fname, cwd)
 
     # API
     def supertile(self, cwd, addr, colour_supertiles):
@@ -184,12 +181,9 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
 
         map_udgs = self._get_map_as_udgs(cwd, 0xBCEE, width, height, colour_supertiles, checkerboard)
 
-        img_path_id = 'ScreenshotImagePath'
-        fname = 'map-%d-%d' % (colour_supertiles, checkerboard)
-        img_path = self.image_path(fname, img_path_id)
-        self.write_image(img_path, map_udgs, scale=1)
+        fname = '{ScreenshotImagePath}/map-%d-%d' % (colour_supertiles, checkerboard)
 
-        return self.img_element(cwd, img_path)
+        return self.handle_image(Frame(map_udgs), fname, cwd)
 
 # -----------------------------------------------------------------------------
 
@@ -229,12 +223,9 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
             for x in range(width):
                 udg_array[-1].append(self._interior_tile(cwd, tiles.pop()))
 
-        img_path_id = 'ScreenshotImagePath'
-        fname = 'object-%d' % index
-        img_path = self.image_path(fname, img_path_id)
-        self.write_image(img_path, udg_array)
+        fname = '{ScreenshotImagePath}/object-%d' % index
 
-        return self.img_element(cwd, img_path)
+        return self.handle_image(Frame(udg_array, 2), fname, cwd)
 
     # Internal
     def _expand_object(self, cwd, addr):
@@ -360,18 +351,10 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
         return udg_array
 
     # Internal
-    def _save_mask(self, cwd, addr, udg_array):
-        img_path_id = 'ScreenshotImagePath'
-        fname = 'mask-%.4X' % addr
-        img_path = self.image_path(fname, img_path_id)
-        self.write_image(img_path, udg_array)
-        return img_path
-
-    # Internal
     def _decode_and_save_mask(self, cwd, addr, suggested_width, suggested_height):
         udg_array = self._decode_mask(cwd, addr, suggested_width, suggested_height)
-        img_path = self._save_mask(cwd, addr, udg_array)
-        return self.img_element(cwd, img_path)
+        fname = '{ScreenshotImagePath}/mask-%.4X' % addr
+        return self.handle_image(Frame(udg_array, 2), fname, cwd)
 
     # Internal
     def _expand_mask(self, cwd, addr, suggested_width, suggested_height):
@@ -673,12 +656,9 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
                     if t:
                         udg_array[y + yy][x + xx] = self._interior_tile(cwd, t)
 
-        img_path_id = 'ScreenshotImagePath'
-        fname = 'room-%d' % roomdata['room_no']
-        img_path = self.image_path(fname, img_path_id)
-        self.write_image(img_path, udg_array)
+        fname = '{ScreenshotImagePath}/room-%d' % roomdata['room_no']
 
-        return self.img_element(cwd, img_path)
+        return self.handle_image(Frame(udg_array, 2), fname, cwd)
 
 
 class TheGreatEscapeAsmWriter(AsmWriter, TheGreatEscapeWriter):
