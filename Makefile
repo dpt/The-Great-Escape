@@ -57,7 +57,7 @@ skool: $(SKOOL)
 
 $(SKOOL): $(PRISTINEZ80) $(SFT)
 	mkdir -p $(BUILD)
-	sna2skool.py --skool-hex --sft $(SFT) $(PRISTINEZ80) > $@
+	sna2skool.py --hex --sft $(SFT) $(PRISTINEZ80) > $@
 
 .PHONY: disasm
 disasm: $(SKOOL)
