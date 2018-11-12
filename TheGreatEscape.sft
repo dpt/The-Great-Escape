@@ -16386,29 +16386,35 @@ cC$FEA3,3;21 Load #REGbc with port number $7F
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_sinclair
-cC$FECD,3;21 BC = port_KEYBOARD_09876;
- C$FED0,2;21
- C$FED2,1;21 A = ~A; /* xxx67890 */
- C$FED3,3;21 BC = 0;
- C$FED6,1;21 RRCA /* 0xxx6789 */
- C$FED7,1;21 RRCA /* 90xxx678 */
- C$FED8,2;21 {if (carry) C = input_UP;
- C$FEDA,2;21 }
-*C$FEDC,1;21 RRCA /* 890xxx67 */
- C$FEDD,2;21 {if (carry) C = input_DOWN;
- C$FEDF,2;21 }
-*C$FEE1,1;21 RRCA /* 7890xxx6 */
- C$FEE2,2;21 {if (carry) B = input_RIGHT;
- C$FEE4,2;21 }
-*C$FEE6,1;21 RRCA /* 67890xxx */
- C$FEE7,2;21 {if (carry) B = input_LEFT;
- C$FEE9,2;21 }
-*C$FEEB,2;21 {if ((A & (1<<3)) == 0) A = input_FIRE;
- C$FEED,2;21
- C$FEEF,2;21 }
-*C$FEF1,1;21 {A += B + C; /* Combine axis */
+cC$FECD,3;21 Load #REGbc with the port number of the keyboard half
+ ;21 row for keys 6/7/8/9/0
+ C$FED0,2;21 Read that port. We'll receive xxx67890
+ C$FED2,1;21 The keyboard is active low, so complement the value
+ C$FED3,3;21 Clear our left_right and up_down variables
+ C$FED6,1;21 Rotate '0' out: 0xxx6789
+; Up
+ C$FED7,1;21 Rotate '9' out: 90xxx678
+ C$FED8,2;21 If carry was set then '9' was pressed, otherwise skip
+ C$FEDA,2;21 up_down = input_UP
+; Down
+*C$FEDC,1;21 Rotate '8' out: 890xxx67
+ C$FEDD,2;21 If carry was set then '8' was pressed, otherwise skip
+ C$FEDF,2;21 up_down = input_DOWN
+; Right
+*C$FEE1,1;21 Rotate '7' out: 7890xxx6
+ C$FEE2,2;21 If carry was set then '7' was pressed, otherwise skip
+ C$FEE4,2;21 left_right = input_RIGHT
+; Left
+*C$FEE6,1;21 Rotate '6' out: 67890xxx
+ C$FEE7,2;21 If carry was set then '6' was pressed, otherwise skip
+ C$FEE9,2;21 left_right = input_LEFT
+; Fire
+*C$FEEB,2;21 Is '0' pressed?
+ C$FEED,2;21 Jump forward if not
+ C$FEEF,2;21 fire = input_FIRE
+*C$FEF1,1;21 {Combine the fire, up_down and left_right values
  C$FEF2,1;21 }
- C$FEF3,1;21 return;
+ C$FEF3,1;21 Return
 
 ; Data block at FEF4.
 ;
