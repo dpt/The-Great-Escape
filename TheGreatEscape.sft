@@ -9227,24 +9227,29 @@ cC$B1C7,2;21 Set #REGb to zero
 ;
 ; O:F Z set if door open.
 @label=is_door_locked
-cC$B1D4,2;21 {C = current_door & ~door_LOCKED; // probably door_REVERSE
- C$B1D6,4;21
- C$B1DA,1;21 }
- C$B1DB,3;21 HL = &locked_doors[0];
- C$B1DE,2;21 B = 9; // 9 iterations
-*C$B1E0,1;21 {do <% if (*HL & ~door_LOCKED == C) <%
- C$B1E1,2;21
- C$B1E3,2;21 }
- C$B1E5,2;21 {    if ((*HL & door_LOCKED) == 0) return; // Door is open.
- C$B1E7,1;21
- C$B1E8,2;21 }
- C$B1EA,3;21 queue_message(message_THE_DOOR_IS_LOCKED);
- C$B1ED,2;21 A |= 1; // set NZ // Door is locked.
- C$B1EF,1;21 return; %>
-*C$B1F0,1;21 HL++;
- C$B1F1,2;21 %> while (--B);
- C$B1F3,1;21 A &= B; // set Z (B is zero) // Door is open.
- C$B1F4,1;21 return;
+cC$B1D4,2;21 Set #REGe to the complement of door_REVERSE ($7F)
+ C$B1D6,3;21 Fetch the current door [index]
+ C$B1D9,1;21 Mask it off
+ C$B1DA,1;21 Move it to #REGc
+; Check all locked doors
+ C$B1DB,3;21 Point #REGhl at first locked doors
+ C$B1DE,2;21 9 iterations / 9 locked doors
+; Start loop
+*C$B1E0,1;21 Fetch a door index
+ C$B1E1,1;21 Mask off the locked flag
+ C$B1E2,1;21 Does it match the current door?
+ C$B1E3,2;21 Jump forward if not
+ C$B1E5,2;21 Test the door_LOCKED flag
+ C$B1E7,1;21 Return if the flag was zero: the door is open
+; Otherwise the door is locked
+ C$B1E8,2;21 {Queue the message "THE DOOR IS LOCKED"
+ C$B1EA,3;21 }
+ C$B1ED,2;21 Set flags to NZ - the door is locked
+ C$B1EF,1;21 Return
+*C$B1F0,1;21 Advance to the next locked door
+ C$B1F1,2;21 ...loop
+ C$B1F3,1;21 Set flags to Z - the door is open
+ C$B1F4,1;21 Return
 
 ; Door handling.
 ;
