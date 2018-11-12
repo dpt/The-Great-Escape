@@ -9204,22 +9204,22 @@ cC$B14C,3;21 Get the global current room index
  C$B1C5,1;21 #REGb is zero, AND it with itself to set Z flag
  C$B1C6,1;21 Return with Z set
 
-; Multiplies A by 8, returning the result in BC.
+; Multiplies #REGa by 8, returning the result in #REGbc.
 ;
 ; Used by the routines at #R$B14C, #R$C4E0, #R$CA11, #R$CA49 and #R$DBEB.
 ;
 ; I:A  Argument.
 ; O:BC Result of (A << 3).
 @label=multiply_by_8
-cC$B1C7,2;21 B = 0;
- C$B1C9,1;21 A <<= 1;
- C$B1CA,2;21 B = (B << 1) + carry;
- C$B1CC,1;21 A <<= 1;
- C$B1CD,2;21 B = (B << 1) + carry;
- C$B1CF,1;21 A <<= 1;
- C$B1D0,2;21 B = (B << 1) + carry;
- C$B1D2,1;21 C = A;
- C$B1D3,1;21 return;
+cC$B1C7,2;21 Set #REGb to zero
+ C$B1C9,1;21 Double the input argument
+ C$B1CA,2;21 Merge the carry out from the doubling into #REGb
+ C$B1CC,1;21 {Double it again
+ C$B1CD,2;21 }
+ C$B1CF,1;21 {And double it again
+ C$B1D0,2;21 }
+ C$B1D2,1;21 Move low part of result into #REGc
+ C$B1D3,1;21 Return
 
 ; Locate current door, queuing a message if it's locked.
 ;
