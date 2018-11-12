@@ -481,6 +481,21 @@
 ;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
+; COMMON TYPES
+; //////////////////////////////////////////////////////////////////////////////
+;
+; 'bounds_t' is a bounding box:
+; +---------------------------------+
+; | Type | Bytes | Name | Meaning   |
+; |---------------------------------|
+; | Byte |     1 |   x0 | Minimum x |
+; | Byte |     1 |   x1 | Maximum x |
+; | Byte |     1 |   y0 | Minimum y |
+; | Byte |     1 |   y1 | Maximum y |
+; +---------------------------------+
+;
+;
+; //////////////////////////////////////////////////////////////////////////////
 ; ROOMS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
@@ -1991,13 +2006,14 @@ wW$6B79,2;21 roomdef_3_hut2_right byte 29 - rightmost bed in hut 2 right - used 
 ; Room dimensions.
 ;
 ; The room definitions specify their dimensions via an index into this table.
+; Note that it looks like a bounds_t but has a different order.
 ; .
 ; #TABLE(default)
 ; { =h Type | =h Bytes | =h Name | =h Meaning }
-; { Byte    |        1 | x1      | Maximum x }
-; { Byte    |        1 | x0      | Minimum x }
-; { Byte    |        1 | y1      | Maximum y }
-; { Byte    |        1 | y0      | Minimum y }
+; { Byte    |        1 |      x1 | Maximum x  }
+; { Byte    |        1 |      x0 | Minimum x  }
+; { Byte    |        1 |      y1 | Maximum y  }
+; { Byte    |        1 |      y0 | Minimum y  }
 ; TABLE#
 ; .
 ; Used by #R$B29F only.
@@ -15106,6 +15122,19 @@ wW$EBC5,2;18 exterior_mask
 ; mask_t structs for the exterior scene.
 ;
 ; 58 mask_t structs.
+; .
+; 'mask_t' defines a mask:
+; .
+; #TABLE(default)
+; { =h Type   | =h Bytes | =h Name | =h Meaning }
+; { Byte      |        1 |   index | An index into mask_pointers }
+; { bounds_t  |        4 |  bounds | The isometric projected bounds of the mask.
+;                                    Used for culling }
+; { tinypos_t |        3 |     pos | If a character is behind this point then
+;                                    the mask is enabled. ("Behind" here means
+;                                    when character coord x is greater and y is
+;                                    greater-or-equal) }
+; TABLE#
 ; .
 ; Used by render_mask_buffer. Used in outdoor mode only.
 @label=exterior_mask_data
