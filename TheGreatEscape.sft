@@ -9257,54 +9257,70 @@ cC$B1D4,2;21 Set #REGe to the complement of door_REVERSE ($7F)
 ;
 ; I:IY Pointer to visible character.
 @label=door_handling
-cC$B1F5,3;21 A = room_index;
+cC$B1F5,3;21 Get the global current room index
 ; Interior doors are handled by another routine.
- C$B1F8,1;21 {if (A) goto door_handling_interior; // exit via
- C$B1F9,3;21 }
-; Select start position in doors[] based on the direction the hero is
-; facing.
- C$B1FC,3;21 HL = &doors[0];
- C$B1FF,3;21 E = IY[14]; // walk/crawl flag byte
- C$B202,1;21 {if (E >= 2) HL = &door_position[1]; /* BOTTOM_RIGHT or BOTTOM_LEFT */
- C$B203,4;21
- C$B207,3;21 }
-*C$B20A,2;21 D = 3;  // mask
- C$B20C,2;21 B = 16; // 16 is the length of what?
-*C$B20E,1;21 {do <% A = *HL & D;
- C$B20F,1;21 }
- C$B210,1;21 {  if (A == E) <%
- C$B211,2;21 }
- C$B213,3;21
- C$B216,3;21 door_in_range();
- C$B219,3;21
- C$B21C,2;21 if (!C) goto found; %>
-*C$B21E,2;21 {  HL += 8; // step forward two entries
+ C$B1F8,1;21 Is it indoors?
+ C$B1F9,3;21 Exit via the interior door handling routine if so
+; Select a start position in doors[] based on the direction the hero is facing.
+ C$B1FC,3;21 Point #REGhl at the first entry in doors[]
+ C$B1FF,3;21 Fetch current vischar's direction field
+ C$B202,1;21 {Is it direction_BOTTOM_RIGHT or direction_BOTTOM_LEFT?
+ C$B203,2;21 }
+ C$B205,2;21 Jump if not
+ C$B207,3;21 Point #REGhl at the second entry in doors[]
+*C$B20A,2;21 Preload door_FLAGS_MASK_DIRECTION mask ($03) into #REGd
+; The first 16 (pairs of) entries in doors[] are the only ones with outdoors as
+; a destination, so only consider those.
+ C$B20C,2;21 16 iterations / 16 pairs of entries
+; Start loop
+*C$B20E,1;21 Load the door entry's room_and_direction field
+ C$B20F,1;21 Extract the direction field
+ C$B210,1;21 Does it match the vischar's direction?
+ C$B211,2;21 Jump forward if not
+; A match
+ C$B213,1;21 Preserve loop counter
+ C$B214,1;21 Preserve door entry pointer
+ C$B215,1;21 Preserve direction mask
+ C$B216,3;21 Call door_in_range -- returns C clear if in range
+ C$B219,1;21 {Restore the registers stored prior to call
+ C$B21A,1;21
+ C$B21B,1;21 }
+ C$B21C,2;21 If not in range, jump to door_handling_found
+@label=door_handling_next
+*C$B21E,2;21 {Step forward two entries
  C$B220,4;21
  C$B224,1;21 }
-*C$B225,2;21 %> while (--B);
- C$B227,1;21 A &= B; // set Z (B is zero) // seems to exist to set Z, but routine doesn't return anything?
- C$B228,1;21 return;
-*C$B229,2;21 {found: A = 16 - B;
- C$B22B,1;21 }
- C$B22C,3;21 current_door = A;
- C$B22F,1;21
- C$B230,3;21 is_door_locked();
- C$B233,1;21 if (!Z) return; // door was locked - return nonzero?
- C$B234,1;21
- C$B235,1;21 {IY[28] = (*HL >> 2) & 0x3F; // sampled HL=$792E (in doors[])
- C$B236,4;21
- C$B23A,3;21 }
- C$B23D,1;21 {if ((*HL & 3) >= 2) <% /* BR or BL */
- C$B23E,4;21
- C$B242,2;21 }
- C$B244,1;21 {  HL += 5; // point at the next door's pos
+*C$B225,2;21 ...loop
+; DPT: This seems to exist to set Z, but this routine doesn't return anything!
+ C$B227,1;21 Set Z (#REGb is zero here)
+ C$B228,1;21 Return
+@label=door_handling_found
+*C$B229,2;21 {current door = 16 - iterations
+ C$B22B,1;21
+ C$B22C,3;21 }
+ C$B22F,1;21 Switch register banks over the call
+ C$B230,3;21 Call is_door_locked -- returns Z clear if locked
+ C$B233,1;21 Return if the door was locked
+ C$B234,1;21 Switch registers back
+ C$B235,1;21 Fetch door entry's room_and_direction
+ C$B236,1;21 {Rotate it by two bits
+ C$B237,1;21 }
+ C$B238,2;21 Clear the top two bits rotated in
+ C$B23A,3;21 Store in vischar->room
+ C$B23D,1;21 Fetch door entry's room_and_direction again
+ C$B23E,2;21 Extract the direction field
+ C$B240,2;21 Is it direction_BOTTOM_RIGHT or direction_BOTTOM_LEFT?
+ C$B242,2;21 Jump if either of those
+; Point to the next door entry's pos
+ C$B244,1;21 {Step forward five bytes to the next door entry
  C$B245,3;21
  C$B248,1;21 }
- C$B249,3;21 transition(); return; %> // seems to goto reset then jump back to main (icky)
-*C$B24C,1;21 {else <% HL -= 3; // point at the previous door's pos
+ C$B249,3;21 Jump to transition -- never returns
+; Point to the previous door entry's pos
+*C$B24C,1;21 {Step back three bytes to the previous door entry
  C$B24D,1;21
  C$B24E,1;21 }
- C$B24F,3;21 transition(); return; %>
+ C$B24F,3;21 Jump to transition -- never returns
 
 ; Door in range.
 ;
@@ -9324,8 +9340,9 @@ cC$B252,1;21 {A = HL[1];
 *C$B25F,3;21
  C$B262,10;21
 *C$B26C,3;21
- C$B26F,3;21
- C$B272,1;21 }
+ C$B26F,2;21
+ C$B271,1;21 Clear the carry flag
+ C$B272,1;21 Return irrespective? (WHY NOT RET?)
  C$B273,1;21
  C$B274,1;21 {A = HL[2];
  C$B275,1;21 }
@@ -9337,8 +9354,8 @@ cC$B252,1;21 {A = HL[1];
  C$B284,10;21
 *C$B28E,3;21
  C$B291,2;21
- C$B293,1;21 }
- C$B294,1;21 return; // C not set
+ C$B293,1;21 Clear the carry flag
+ C$B294,1;21 Return
 
 ; Multiplies A by 4, returning the result in BC.
 ;
