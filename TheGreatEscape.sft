@@ -2015,6 +2015,24 @@ bB$6B85,4;28 ( 66, 26,  70, 22)
 
 ; Array of pointers to room and tunnel definitions.
 ;
+; Room definition format:
+; .
+; #TABLE(default)
+; { =h Byte             | =h Meaning }
+; { <rd>                | Room dimensions - indirect via #R$6B85 }
+; { <nb>                | Number of boundaries in the room (rectangles where characters can't walk) }
+; { =c2 Followed by an array of those boundaries: }
+; { <x0> <y0> <x1> <y1> | A boundary }
+; { =c2 Then: }
+; { <nm>                | Number of mask indices used in the room (indexes #R$EA7C) }
+; { =c2 Followed by an array of those mask bytes: }
+; { <mb>                | Mask byte }
+; { =c2 Then: }
+; { <no>                | Number of objects in the room }
+; { =c2 Followed by an array of those objects: }
+; { <io> <x> <y>        | Interior object ref, x, y }
+; TABLE#
+; .
 ; Note: The first entry is room 1, not room 0.
 @label=rooms_and_tunnels
 wW$6BAD,2;21 Room 1
