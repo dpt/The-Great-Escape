@@ -8990,11 +8990,10 @@ cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
  C$B082,2;23 Compare character index with character_28_CRATE
  C$B084,3;23 (interleaved) Fetch IY's direction
  C$B087,2;23 If it's not the crate then jump to the stove handling
-; Handle the crate
-; It moves on the top-left-to-bottom-right axis only
+; Handle the crate. It moves on the X axis (top left to bottom right) only.
  C$B089,1;23 {Point #REGhl at vischar->mi.pos.x
  C$B08A,1;23 }
- C$B08B,2;23 Centre point is 54 (47..54..61)
+ C$B08B,2;23 Centre point is 54 (crate will move 47..54..61)
  C$B08D,2;23 Swap direction left<=>right
 ; Top left case.
 *C$B08F,1;23 Test the direction: Is it top left? (zero)
@@ -9029,7 +9028,7 @@ cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
  C$B0B4,3;23
  C$B0B7,1;23 }
 *C$B0B8,1;23 Restore the vischar pointer
-*C$B0B9,1;23 Restore ?...
+*C$B0B9,1;23 Restore the loop counter
 ; Reorient the character? Not well understood. (?)
  C$B0BA,1;23 {Point at vischar input field
  C$B0BB,2;23
@@ -9073,8 +9072,8 @@ cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
  B$B0FA,1;23 = input_UP   + input_RIGHT + input_KICK
  B$B0FB,1;23 = input_DOWN + input_RIGHT + input_KICK
 @label=collision_pop_next
-*C$B0FC,1;23 Restore vischar pointer
- C$B0FD,1;23 Restore loop counter
+*C$B0FC,1;23 Restore the vischar pointer
+ C$B0FD,1;23 Restore the loop counter
 *C$B0FE,1;23 {Step #REGhl to the next vischar
  C$B0FF,2;23
  C$B101,1;23 }
