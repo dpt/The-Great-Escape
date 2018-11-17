@@ -9387,20 +9387,20 @@ cC$B252,1;21 Step over the room_and_direction field
  C$B293,1;21 Invert the carry flag
  C$B294,1;21 Return with result of final test
 
-; Multiplies A by 4, returning the result in BC.
+; Multiplies #REGa by 4, returning the result in #REGbc.
 ;
 ; Used by the routines at #R$68A2 and #R$B252.
 ;
-; I:A  Argument.
-; O:BC Result of (A << 2).
+; I:A  Value to multiply.
+; O:BC Result of #REGa * 4.
 @label=multiply_by_4
-cC$B295,2;21 B = 0;
- C$B297,1;21 A <<= 1;
- C$B298,2;21 B = (B << 1) + carry;
- C$B29A,1;21 A <<= 1;
- C$B29B,2;21 B = (B << 1) + carry;
- C$B29D,1;21 C = A;
- C$B29E,1;21 return;
+cC$B295,2;21 Initialise high byte of result to zero
+ C$B297,1;21 Double input value
+ C$B298,2;21 Shift carry out into high byte
+ C$B29A,1;21 Double input value
+ C$B29B,2;21 Shift carry out into high byte
+ C$B29D,1;21 #REGbc is the multiplied value
+ C$B29E,1;21 Return
 
 ; Check the character is inside of bounds, when indoors.
 ;
