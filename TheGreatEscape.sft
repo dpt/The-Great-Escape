@@ -9339,40 +9339,53 @@ cC$B1F5,3;21 Get the global current room index
  C$B24E,1;21 }
  C$B24F,3;21 Jump to transition -- never returns
 
-; Door in range.
+; Test whether an exterior door is in range.
 ;
-; Used by the routines at #R$B1F5 and #R$B4D0.
+; A door is in range if (saved_X,saved_Y) is within -3..+2 of its position (once
+; scaled).
 ; .
-; (saved_X,saved_Y) within (-2,+2) of HL[1..] scaled << 2
+; Used by the routines at #R$B1F5 and #R$B4D0.
 ;
-; I:HL Pointer to (byte before) coord byte pair.
-; O:F  C/NC if nomatch/match.
+; I:HL Pointer to a door_t structure.
+; O:F  C set if no match.
 @label=door_in_range
-cC$B252,1;21 {A = HL[1];
- C$B253,1;21 }
- C$B254,1;21
- C$B255,3;21 multiply_by_4();
- C$B258,1;21 {if (saved_pos_x < BC - 3 || saved_pos_x >= BC + 3) return; // with C set
- C$B259,6;21
-*C$B25F,3;21
- C$B262,10;21
-*C$B26C,3;21
- C$B26F,2;21
- C$B271,1;21 Clear the carry flag
- C$B272,1;21 Return irrespective? (WHY NOT RET?)
- C$B273,1;21
- C$B274,1;21 {A = HL[2];
+cC$B252,1;21 Step over the room_and_direction field
+; Are we in range on the X axis?
+ C$B253,1;21 Fetch door's pos.x
+ C$B254,1;21 Preserve the door position pointer
+ C$B255,3;21 Multiply pos.x by 4 returning the result in #REGbc
+ C$B258,1;21 {Subtract 3
+ C$B259,5;21
+ C$B25E,1;21 }
+*C$B25F,3;21 Get saved_pos_x
+ C$B262,2;21 Calculate saved_pos_x - (pos.x * 4 - 3)
+ C$B264,1;21 Return if carry set (saved_pos_x is under)
+ C$B265,2;21 {Add 6, to make pos.x * 4 + 3
+ C$B267,4;21
+ C$B26B,1;21 }
+*C$B26C,3;21 Get saved_pos_x again
+ C$B26F,2;21 Calculate saved_pos_x - (pos.x * 4 + 3)
+ C$B271,1;21 Invert the carry flag
+ C$B272,1;21 Return if carry set (saved_pos_x is over)
+; Are we in range on the Y axis?
+ C$B273,1;21 Restore door position pointer
+ C$B274,1;21 {Fetch door's pos.y
  C$B275,1;21 }
- C$B276,3;21 multiply_by_4();
- C$B279,1;21
- C$B27A,1;21 {if (saved_pos_y < BC - 3 || saved_pos_y >= BC + 3) return; // with C set
- C$B27B,6;21
-*C$B281,3;21
- C$B284,10;21
-*C$B28E,3;21
- C$B291,2;21
- C$B293,1;21 Clear the carry flag
- C$B294,1;21 Return
+ C$B276,3;21 Multiply pos.y by 4 returning the result in #REGbc
+ C$B279,1;21 Preserve door position pointer
+ C$B27A,1;21 {Subtract 3
+ C$B27B,5;21
+ C$B280,1;21 }
+*C$B281,3;21 Get saved_pos_y
+ C$B284,2;21 Calculate saved_pos_y - (pos.y * 4 - 3)
+ C$B286,1;21 Return if carry set (saved_pos_y is under)
+ C$B287,2;21 {Add 6, to make pos.y * 4 + 3
+ C$B289,4;21
+ C$B28D,1;21 }
+*C$B28E,3;21 Get saved_pos_y again
+ C$B291,2;21 Calculate saved_pos_y - (pos.y * 4 + 3)
+ C$B293,1;21 Invert the carry flag
+ C$B294,1;21 Return with result of final test
 
 ; Multiplies A by 4, returning the result in BC.
 ;
