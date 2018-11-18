@@ -9409,65 +9409,83 @@ cC$B295,2;21 Initialise high byte of result to zero
 ; I:IY Pointer to visible character.
 ; O:F  Z clear if boundary hit, set otherwise.
 @label=interior_bounds_check
-cC$B29F,3;21 {BC = &roomdef_dimensions[roomdef_bounds_index];
- C$B2A2,9;21
+cC$B29F,3;21 Fetch index into room dimensions (roomdef_bounds_index)
+; Point #REGbc at roomdef_dimensions[roomdef_bounds_index]
+ C$B2A2,1;21 {Multiply index by the size of a bounds (4)
+ C$B2A3,1;21 }
+ C$B2A4,3;21 Point #REGbc at roomdef_dimensions[0]
+ C$B2A7,1;21 {Combine #REGbc with the scaled index
+ C$B2A8,3;21
  C$B2AB,1;21 }
-*C$B2AC,3;21 HL = &saved_pos_x;
- C$B2AF,1;21 A = *BC;
- C$B2B0,1;21 {if (A < *HL) goto stop;
- C$B2B1,2;21 }
- C$B2B3,1;21 {A = *++BC + 4;
- C$B2B4,1;21
- C$B2B5,2;21 }
- C$B2B7,1;21 {if (A >= *HL) goto stop;
- C$B2B8,2;21 }
- C$B2BA,1;21 {HL += 2;
+; Check X axis
+; .
+; Note that the room dimensions are given in an unusual order: x1, x0, y1, y0.
+*C$B2AC,3;21 Point #REGhl at saved_pos
+ C$B2AF,1;21 Fetch bounds.x1
+ C$B2B0,1;21 Compare bounds.x1 with saved_pos_x
+ C$B2B1,2;21 If bounds.x1 < saved_pos_x jump to 'stop'
+ C$B2B3,1;21 {Fetch bounds.x0
+ C$B2B4,1;21 }
+ C$B2B5,2;21 Add 4
+ C$B2B7,1;21 Compare (bounds.x0 + 4) with saved_pos_x
+ C$B2B8,2;21 If (bounds.x0 + 4) >= saved_pos_x jump to 'stop'
+ C$B2BA,1;21 {Advance #REGhl to saved_pos_y
  C$B2BB,1;21 }
-; Bug: This instruction is stray code. DE is incremented but never used.
- C$B2BC,1;21 DE++;
- C$B2BD,1;21 {A = *++BC - 4;
- C$B2BE,1;21
- C$B2BF,2;21 }
- C$B2C1,1;21 {if (A < *HL) goto stop;
- C$B2C2,2;21 }
- C$B2C4,1;21 {A = *++BC;
- C$B2C5,1;21 }
- C$B2C6,1;21 {if (A >= *HL) goto stop;
- C$B2C7,2;21 }
- C$B2C9,3;21 HL = &roomdef_object_bounds[0];
- C$B2CC,1;21 {B = *HL; // iterations
- C$B2CD,1;21 }
- C$B2CE,1;21 {if (B == 0) return;
- C$B2CF,1;21 }
- C$B2D0,1;21 HL++;
-*C$B2D1,1;21 do <%
- C$B2D2,1;21
- C$B2D3,3;21 DE = &saved_pos_x;
- C$B2D6,2;21 B = 2; // 2 iterations
-*C$B2D8,1;21 do <% A = *DE;
- C$B2D9,1;21 {    if (A < HL[0] || A >= HL[1]) goto next; // next outer loop iteration
- C$B2DA,4;21
- C$B2DE,2;21 }
- C$B2E0,1;21 {    DE += 2;
+; Bug: The next instruction is stray code. #REGde is incremented but never used.
+ C$B2BC,1;21 (bug)
+; Check Y axis
+ C$B2BD,1;21 Point #REGbc at bounds.y1
+ C$B2BE,1;21 Fetch bounds.y1
+ C$B2BF,2;21 Subtract 4
+ C$B2C1,1;21 Compare (bounds.y1 - 4) with saved_pos_y
+ C$B2C2,2;21 If (bounds.y1 - 4) < saved_pos_y jump to 'stop'
+ C$B2C4,1;21 Point #REGbc at bounds.y0
+ C$B2C5,1;21 Fetch bounds.y0
+ C$B2C6,1;21 Compare bounds.y0 with saved_pos_y
+ C$B2C7,2;21 If bounds.y0 >= saved_pos_y jump to 'stop'
+; Bomb out if there are no bounds to consider.
+ C$B2C9,3;21 Point #REGhl at roomdef_object_bounds_count
+ C$B2CC,1;21 Fetch the count of object bounds
+ C$B2CD,1;21 Move it to #REGa so we can test it
+ C$B2CE,1;21 Is the count zero?
+ C$B2CF,1;21 Return with Z set if so
+ C$B2D0,1;21 Step over to roomdef_object_bounds
+; Start loop (outer)
+*C$B2D1,1;21 Preserve the loop counter
+ C$B2D2,1;21 Preserve the bounds pointer
+ C$B2D3,3;21 Point #REGhl at saved_pos
+ C$B2D6,2;21 2 iterations - once per axis
+; Start loop (inner)
+*C$B2D8,1;21 Fetch saved_pos_x, or saved_pos_y on the second pass
+ C$B2D9,1;21 Is it less than the lower bound?
+ C$B2DA,2;21 Jump to the next iteration if so
+ C$B2DC,1;21 Step to the upper bound
+ C$B2DD,1;21 Is it greater or equal to the upper bound?
+ C$B2DE,2;21 Jump to the next iteration if so
+ C$B2E0,1;21 {Step to the next saved_pos axis
  C$B2E1,1;21 }
- C$B2E2,1;21 HL += 2; // increment moved - hope it's still correct
- C$B2E3,2;21 %> while (--B);
+ C$B2E2,1;21 Step to the next bound axis
+ C$B2E3,2;21 ...loop (inner)
 ; Found.
- C$B2E5,2;21
-*C$B2E7,3;21 {stop: IY[7] ^= vischar_BYTE7_Y_DOMINANT; // stop character?
- C$B2EA,2;21
- C$B2EC,3;21 }
- C$B2EF,2;21 A |= 1;
- C$B2F1,1;21 return; // return NZ
+ C$B2E5,1;21 Restore the bounds pointer
+ C$B2E6,1;21 Restore the loop counter
+@label=stop
+; Toggle movement direction preference.
+*C$B2E7,3;21 Fetch IY->counter_and_flags
+ C$B2EA,2;21 Toggle vischar_BYTE7_Y_DOMINANT
+ C$B2EC,3;21 Store IY->counter_and_flags
+ C$B2EF,2;21 Clear Z flag
+ C$B2F1,1;21 Return with Z clear
 ; Next iteration.
-*C$B2F2,1;21 next:
- C$B2F3,3;21 {  HL += 4;
+@label=next
+*C$B2F2,1;21 Restore the bounds pointer
+ C$B2F3,3;21 {Advance to next bound
  C$B2F6,1;21 }
- C$B2F7,1;21
- C$B2F8,2;21 %> while (--B);
+ C$B2F7,1;21 Restore the loop counter
+ C$B2F8,2;21 ...loop (outer)
 ; Not found.
- C$B2FA,1;21 A &= B; // B is zero here
- C$B2FB,1;21 return; // return Z
+ C$B2FA,1;21 #REGb is zero, AND it with itself to set Z flag
+ C$B2FB,1;21 Return with Z set
 
 ; Reset the hero's position, redraw the scene, then zoombox it onto the screen.
 ;
