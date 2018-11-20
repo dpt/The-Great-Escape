@@ -9493,32 +9493,34 @@ cC$B29F,3;21 Fetch index into room dimensions (roomdef_bounds_index)
 ;
 ; .
 ;
-; Reset hero.
+; Reset hero's position.
 @label=reset_outdoors
-cC$B2FC,3;21 HL = $8000;
- C$B2FF,3;21 calc_vischar_iso_pos_from_vischar();
-; Centre the screen on the hero.
- C$B302,3;21 HL = $8018; // (vischar.screenpos.x)
- C$B305,1;21 {A = *HL++;
- C$B306,1;21 }
- C$B307,1;21 C = *HL;
- C$B308,3;21 divide_by_8(C,A);
- C$B30B,2;21 {map_position.x = A - 11; // 11 would be screen width minus half of character width?
- C$B30D,3;21 }
- C$B310,1;21 HL++;
- C$B311,1;21 {A = *HL++;
- C$B312,1;21 }
- C$B313,1;21 C = *HL;
- C$B314,3;21 divide_by_8(C,A);
- C$B317,2;21 {map_position.y = A - 6; // 6 would be screen height minus half of character height?
- C$B319,3;21 }
- C$B31C,1;21 {room_index = room_0_OUTDOORS;
+cC$B2FC,3;21 {Reset the hero's screen position
+ C$B2FF,3;21 }
+; Centre the map position on the hero.
+ C$B302,3;21 Point #REGhl at the hero's iso_pos.x
+ C$B305,1;21 {Read it into (#REGa, #REGc)
+ C$B306,1;21
+ C$B307,1;21 }
+ C$B308,3;21 Divide by 8. Result is in (#REGa, #REGc)
+; 11 here is the width of the game screen minus half of the hero's width
+ C$B30B,2;21 Subtract 11
+ C$B30D,3;21 Set map_position.x
+ C$B310,1;21 Advance #REGhl to the hero's iso_pos.y
+ C$B311,1;21 {Read it into (#REGa, #REGc)
+ C$B312,1;21
+ C$B313,1;21 }
+ C$B314,3;21 Divide by 8. Result is in (#REGa, #REGc)
+; 6 here is the height of the game screen minus half of the hero's height
+ C$B317,2;21 Subtract 6
+ C$B319,3;21 Set map_position.y
+ C$B31C,1;21 {Set the global current room index to room_0_OUTDOORS
  C$B31D,3;21 }
- C$B320,3;21 get_supertiles();
- C$B323,3;21 plot_all_tiles();
- C$B326,3;21 setup_movable_items();
- C$B329,3;21 zoombox();
- C$B32C,1;21 return;
+ C$B320,3;21 Update the supertiles in map_buf
+ C$B323,3;21 Plot all tiles
+ C$B326,3;21 Setup movable items
+ C$B329,3;21 Zoombox the scene onto the screen
+ C$B32C,1;21 Return
 
 ; Door handling (indoors).
 ;
@@ -14809,6 +14811,10 @@ cC$E550,2;21 A += 4;
 ; Divide AC by 8.
 ;
 ; Used by the routines at #R$B2FC, #R$C47E, #R$E420 and #R$E550.
+;
+; I:A Low.
+; I:C High.
+; O:A Result.
 @label=divide_by_8
 cC$E555,2;21 {A = (A >> 3) | (C << 5); C >>= 3;
  C$E557,6;21
