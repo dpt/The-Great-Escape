@@ -9528,52 +9528,76 @@ cC$B2FC,3;21 {Reset the hero's screen position
 ;
 ; I:IY Pointer to visible character.
 @label=door_handling_interior
-cC$B32D,3;21 HL = &interior_doors;
-*C$B330,1;21 for (;;) <% A = *HL;
- C$B331,2;21 {  if (A == door_NONE) return; /* Reached end of list. */
- C$B333,1;21 }
- C$B334,1;21
- C$B335,3;21 current_door = A;
- C$B338,3;21 HL = get_door();
- C$B33B,1;21 A = *HLdash;
- C$B33C,1;21 Cdash = A;
- C$B33D,2;21 {  Bdash = A & door_FLAGS_MASK_DIRECTION;
- C$B33F,1;21 }
- C$B340,3;21 {  if ((IY->direction & vischar_DIRECTION_MASK) != Bdash) goto next;
- C$B343,3;21
- C$B346,2;21 }
- C$B348,1;21 HLdash++;
- C$B349,1;21
- C$B34A,3;21 DEdash = &saved_pos_x; // reusing saved_pos as 8-bit here?
- C$B34D,2;21 Bdash = 2; // 2 iterations
-*C$B34F,1;21 {  do <% A = *HLdash - 3;
- C$B350,2;21 }
- C$B352,1;21 {    if (A >= *DEdash || A + 6 < *DEdash) goto next; // -3 .. +3
- C$B353,5;21
- C$B358,2;21 }
- C$B35A,1;21 {    DEdash += 2;
+cC$B32D,3;21 Point #REGhl at the interior_doors array
+; Loop through every door index in interior_doors.
+; .
+; Start loop
+*C$B330,1;21 Fetch a door index
+ C$B331,2;21 Does it equal door_NONE? ($FF)
+ C$B333,1;21 If so, we've reached the end of the list - return
+ C$B334,1;21 Switch register banks until the end of this iteration
+ C$B335,3;21 Set the global current door to door index
+ C$B338,3;21 Turn the door_index into a door_t structure pointer in #REGhl
+ C$B33B,1;21 {Fetch room_and_flags from the door_t
+ C$B33C,1;21 and save in #REGc for later}
+; Does the character face the same direction as the door?
+ C$B33D,2;21 Mask off the door's direction part (door_FLAGS_MASK_DIRECTION)
+ C$B33F,1;21 Stash it in #REGb for a comparison in a moment
+ C$B340,3;21 Fetch IY's direction & crawl byte
+ C$B343,2;21 Mask off the direction part (vischar_DIRECTION_MASK)
+ C$B345,1;21 Do the door and vischar have the same direction?
+ C$B346,2;21 Jump to the next iteration if not
+; Skip any door which is more than three units away.
+ C$B348,1;21 Advance #REGhl to point at door's position
+ C$B349,1;21 Move it into #REGde
+; TODO: Does this treat saved_pos as 8-bit quantities? (it's normally 16-bit)
+ C$B34A,3;21 Point #REGde at saved_pos_x
+ C$B34D,2;21 Iterate twice: X,Y axis
+; Start loop
+*C$B34F,1;21 Fetch door position x/y
+ C$B350,2;21 Subtract 3 to form lower bound (pos-3)
+ C$B352,1;21 Compare to saved_pos_x/y
+ C$B353,2;21 If lower bound >= saved_pos goto next
+ C$B355,2;21 Add 6 to form upper bound (pos+3)
+ C$B357,1;21 Compare to saved_pos_x/y
+ C$B358,2;21 If upper bound < saved_pos goto next
+ C$B35A,1;21 {Step to the next saved_pos axis
  C$B35B,1;21 }
- C$B35C,1;21 HLdash++;
- C$B35D,2;21 %> while (--Bdash);
- C$B35F,1;21 HLdash++;
- C$B360,1;21
- C$B361,1;21 PUSH HLdash
- C$B362,1;21 PUSH BCdash
- C$B363,3;21 is_door_locked();
- C$B366,1;21 POP BCdash
- C$B367,1;21 POP HLdash
- C$B368,1;21 if (!Z) return; /* The door was locked. */
- C$B369,1;21 {  IY[28] = (Cdash >> 2) & 0x3F;
- C$B36A,4;21
- C$B36E,3;21 }
- C$B371,1;21 HLdash++;
- C$B372,3;21 {  if (current_door & door_REVERSE) <% HLdash -= 8; %>
- C$B375,10;21
+ C$B35C,1;21 Step to the next door position axis
+ C$B35D,2;21 ...loop
+ C$B35F,1;21 Skip position height byte
+ C$B360,1;21 Move door position back into #REGhl
+ C$B361,1;21 Preserve door position pointer
+ C$B362,1;21 Preserve iteration counter
+ C$B363,3;21 Locate current door. Returns Z set if door is open
+ C$B366,1;21 Restore iteration counter
+ C$B367,1;21 Restore door position pointer
+ C$B368,1;21 Return if Z clear => the door was locked
+; The door is in range and is unlocked - proceed with transition.
+; .
+; Set the vischar's room to the door's destination.
+ C$B369,1;21 Retrieve the room_and_flags we saved earlier
+ C$B36A,1;21 {Discard the direction bits so it's room index only
+ C$B36B,1;21
+ C$B36C,2;21 }
+ C$B36E,3;21 Store it in vischar->room
+; Get the destination position for transition.
+; .
+; If we're going through the door in the forward direction we fetch our
+; destination position from the next element in the list. If we're reversed we
+; fetch the previous element in the list.
+ C$B371,1;21 Point at the next door position
+ C$B372,3;21 Fetch the global current door
+ C$B375,2;21 Is door_REVERSE set?
+ C$B377,2;21 Jump if so. #REGhl is setup for transition call
+ C$B379,1;21 {Subtract 8 from #REGhl
+ C$B37A,5;21
  C$B37F,1;21 }
-*C$B380,3;21 transition(); return; // exit via // with banked registers...
-*C$B383,1;21 next:
- C$B384,1;21 HL++;
- C$B385,2;21 %>
+*C$B380,3;21 Jump to transition -- never returns
+@label=dhi_next
+*C$B383,1;21 Unbank
+ C$B384,1;21 Advance to the next door in interior_doors[]
+ C$B385,2;21 ...loop
 
 ; The hero has tried to open the red cross parcel.
 @label=action_red_cross_parcel
