@@ -2089,6 +2089,36 @@ bB$6C15,1;40 0
  B$6C41,3;40 { interiorobject_EMPTY_BED,                    2,  9 },
  B$6C44,3;40 { interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 
+; Illustration
+;
+; Cartesian coordinates for room 2:
+;
+;        X>>>>> Y>>>>>
+;  Room: 22..62 26..58 - the first byte of the room definition gives us this
+;   Bed: 48..64 43..56 - the first boundary is the bed
+; Table: 24..38 26..40 - the second boundary is the table
+;
+;    22 ................X................. 62
+; 26 +-+------------+-----------------------+
+;  . | |            |                       |
+;  . | |            |                       |
+;  . | |   Table    |                       |
+;  . | |            |                       |
+;  . | |            |                       |
+;  . | +------------+                       |
+;  . |                                      |
+;  Y |                    +-------------------+
+;  . |                    |                   |
+;  . |                    |                   |
+;  . |                    |        Bed        |
+;  . |                    |                   |
+;  . |                    |                   |
+;  . |                    +-------------------+
+;  . |                                      |
+; 58 +--------------------------------------+
+;
+; (Not necessarily to scale.)
+
 ; Room 2: Hut 2, near side.
 @label=roomdef_2_hut2_left
 bB$6C47,1;40 1
@@ -9685,22 +9715,32 @@ cC$B3E1,3;21 Point #REGhl at the hero's vischar sprite set pointer
 
 ; Use shovel.
 @label=action_shovel
-cC$B3F6,3;21 {if (room_index != room_50_BLOCKED_TUNNEL) return; /* Shovel only works in the blocked tunnel room. */
- C$B3F9,2;21
- C$B3FB,1;21 }
- C$B3FC,3;21 {if (roomdef_50_blocked_tunnel_boundary[0] == 255) return; /* Blockage is already cleared. */
- C$B3FF,2;21
- C$B401,1;21 }
-; Release boundary.
+; The shovel only works in the room with the blocked tunnel: number 50.
+cC$B3F6,3;21 {If the global current room index isn't
+ C$B3F9,2;21 room_50_BLOCKED_TUNNEL
+ C$B3FB,1;21 bail out}
+; Bomb out if the blockage is already removed.
+ C$B3FC,3;21 Fetch the room definition's first boundary byte
+ C$B3FF,2;21 Is it 255?
+ C$B401,1;21 Return if so - the blockage was already removed
+; Otherwise we can remove the blockage
+; .
+; (Note that the hero doesn't need to be adjacent to the blockage for this to
+; work, only in the same room).
+; .
+; The blockage boundary's x0 is set to 255. This invalidates the boundary by
+; forcing the "x < bounds->x0" test at #R$B2D9 (in interior_bounds_check) to
+; fail.
  C$B402,2;21 {roomdef_50_blocked_tunnel_boundary[0] = 255;
  C$B404,3;21 }
-; Remove blockage graphic.
+; Remove the blockage graphic.
  C$B407,1;21 {roomdef_50_blocked_tunnel_collapsed_tunnel = 0;
  C$B408,3;21 }
- C$B40B,3;21 setup_room();
- C$B40E,3;21 choose_game_window_attributes();
- C$B411,3;21 plot_interior_tiles();
- C$B414,3;21 increase_morale_by_10_score_by_50(); return; // exit via
+ C$B40B,3;21 Setup the room
+ C$B40E,3;21 Choose game window attributes
+ C$B411,3;21 Expand all of the tile indices in the tiles buffer to
+ ;21 full tiles in the screen buffer
+ C$B414,3;21 Increase morale by 10, score by 50 and exit via
 
 ; Use wiresnips.
 @label=action_wiresnips
