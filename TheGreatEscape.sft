@@ -9665,20 +9665,23 @@ cC$B3C4,3;21 Load both held items
  C$B3DB,3;21 Draw both held items
  C$B3DE,3;21 Increase morale by 10, score by 50 and exit via
 
-; Use uniform.
+; Use guard's uniform.
 @label=action_uniform
-cC$B3E1,3;21 HL = $8015; // current character sprite set
- C$B3E4,3;21 DE = &sprite_guard;
- C$B3E7,1;21 {if (*HL == E) return; // cheap equality test /* Already in uniform. */
+cC$B3E1,3;21 Point #REGhl at the hero's vischar sprite set pointer
+ C$B3E4,3;21 Point #REGde at the guard sprite set
+; Bail out if the hero's already in the uniform
+ C$B3E7,1;21 {Cheap equality test
  C$B3E8,1;21
  C$B3E9,1;21 }
- C$B3EA,3;21 {if (room_index >= room_29_SECOND_TUNNEL_START) return; // can't don uniform when in a tunnel
- C$B3ED,2;21
- C$B3EF,1;21 }
- C$B3F0,1;21 *HL++ = E;
- C$B3F1,1;21 {*HL = D;
+; Can't don the uniform when in a tunnel
+ C$B3EA,3;21 {If the global current room index is
+ C$B3ED,2;21 room_29_SECOND_TUNNEL_START or above...
+ C$B3EF,1;21 we're in the tunnels, so bail out}
+; Otherwise the uniform can be worn
+ C$B3F0,1;21 {Set the hero's sprite set to sprite_guard
+ C$B3F1,1;21
  C$B3F2,1;21 }
- C$B3F3,3;21 increase_morale_by_10_score_by_50(); return;
+ C$B3F3,3;21 Increase morale by 10, score by 50 and exit via
 
 ; Use shovel.
 @label=action_shovel
