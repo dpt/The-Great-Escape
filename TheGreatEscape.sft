@@ -8958,7 +8958,7 @@ cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
  C$B057,1;23 {Is the current vischar the hero's? $8000
  C$B058,1;23
  C$B059,2;23 }
- C$B05B,3;23 Fetch bribed_character
+ C$B05B,3;23 Fetch global bribed character
  C$B05E,3;23 Does it match IY's vischar character?
  C$B061,2;23 No, jump forward to solitary check
 ; IY is a bribed character pursuing the hero.
@@ -9625,24 +9625,27 @@ cC$B387,2;21 {Clear the red cross parcel item's room field
 ;
 ; .
 ;
-; Walk non-player visible characters.
+; Iterate over non-player visible characters.
 @label=action_bribe
 @nowarn
-cC$B3A8,3;21 HL = $8020; // iterate over non-player characters
- C$B3AB,2;21 B = 7; // 7 iterations
-*C$B3AD,1;21 do <% A = *HL;
- C$B3AE,2;21 {  if ((A != character_NONE) && (A >= character_20_PRISONER_1)) goto found;
- C$B3B0,4;21
- C$B3B4,2;21 }
-*C$B3B6,2;21 {  HL += 32; // sizeof a character struct
+cC$B3A8,3;21 Point #REGhl at the first visible character
+ C$B3AB,2;21 Set #REGb for seven iterations
+; Start loop
+*C$B3AD,1;21 Fetch the vischar's character index
+ C$B3AE,2;21 Is it character_NONE?
+ C$B3B0,2;21 Jump to the next vischar if so
+ C$B3B2,2;21 Is it character_20_PRISONER_1?
+ C$B3B4,2;21 Jump to bribe_found if >=
+*C$B3B6,2;21 {Step to the next vischar
  C$B3B8,1;21
  C$B3B9,1;21 }
- C$B3BA,2;21 %> while (--B);
- C$B3BC,1;21 return;
-*C$B3BD,3;21 found: bribed_character = A;
- C$B3C0,1;21 {HL[1] = vischar_FLAGS_PURSUE; // $8021 etc. // flag
- C$B3C1,2;21 }
- C$B3C3,1;21 return;
+ C$B3BA,2;21 ...loop
+ C$B3BC,1;21 Return
+@label=bribe_found
+*C$B3BD,3;21 Set the global bribed character to #REGa
+ C$B3C0,1;21 Point #REGhl at vischar flags
+ C$B3C1,2;21 Set flags to vischar_FLAGS_PURSUE
+ C$B3C3,1;21 Return
 
 ; Use poison.
 @label=action_poison
