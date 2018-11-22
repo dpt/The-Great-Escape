@@ -9601,19 +9601,23 @@ cC$B32D,3;21 Point #REGhl at the interior_doors array
 
 ; The hero has tried to open the red cross parcel.
 @label=action_red_cross_parcel
-cC$B387,2;21 {item_structs[item_RED_CROSS_PARCEL].room = itemstruct_ROOM_MASK; // room_NONE & 0x3F;
+cC$B387,2;21 {Clear the red cross parcel item's room field
  C$B389,3;21 }
- C$B38C,3;21 HL = &items_held;
- C$B38F,2;21 {if (*HL != item_RED_CROSS_PARCEL) HL++; /* One or the other must be a red cross parcel item, so advance. */
- C$B391,3;21
- C$B394,1;21 }
-*C$B395,2;21 *HL = item_NONE; /* Parcel opened. */
- C$B397,3;21 draw_all_items();
- C$B39A,3;21 A = red_cross_parcel_current_contents;
- C$B39D,3;21 drop_item_tail();
- C$B3A0,2;21 {queue_message(message_YOU_OPEN_THE_BOX);
+ C$B38C,3;21 Point #REGhl at items_held
+; We've arrived here from a 'use' command, so one or the other item must be the
+; red cross parcel.
+ C$B38F,2;21 {Is the first item the red cross parcel? (item_RED_CROSS_PARCEL)
+ C$B391,1;21 }
+ C$B392,2;21 Jump if so
+ C$B394,1;21 Advance if not
+; #REGhl now points to the held item.
+*C$B395,2;21 Remove parcel from the inventory
+ C$B397,3;21 Draw both held items
+ C$B39A,3;21 Fetch the value of the parcel's current contents
+ C$B39D,3;21 Pass that into "drop item, tail part"
+ C$B3A0,2;21 {Queue the message "YOU OPEN THE BOX"
  C$B3A2,3;21 }
- C$B3A5,3;21 increase_morale_by_10_score_by_50(); return; // exit via
+ C$B3A5,3;21 Increase morale by 10, score by 50 and exit via
 
 ; The hero tries to bribe a prisoner.
 ;
