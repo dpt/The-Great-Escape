@@ -9649,21 +9649,21 @@ cC$B3A8,3;21 Point #REGhl at the first visible character
 
 ; Use poison.
 @label=action_poison
-cC$B3C4,3;21 Load items_held.
- C$B3C7,2;21 Load item_FOOD.
- C$B3C9,1;21 Is 'low' slot item_FOOD?
- C$B3CA,2;21 Yes - goto have_food.
- C$B3CC,1;21 Is 'high' slot item_FOOD?
- C$B3CD,1;21 No - return.
-@label=action_poison_have_food
-*C$B3CE,3;21 have_food: &item_structs[item_FOOD].item
- C$B3D1,2;21 Bit 5 set?
- C$B3D3,1;21 Yes - return.
- C$B3D4,2;21 Set bit 5.
- C$B3D6,2;21 {Set item_attribute: FOOD to bright-purple/black.
- C$B3D8,3;21 }
- C$B3DB,3;21 draw_all_items()
- C$B3DE,3;21 goto increase_morale_by_10_score_by_50
+cC$B3C4,3;21 Load both held items
+ C$B3C7,2;21 Prepare item_FOOD
+ C$B3C9,1;21 Is the first item item_FOOD?
+ C$B3CA,2;21 Jump to have_food if so
+ C$B3CC,1;21 Is the second item item_FOOD?
+ C$B3CD,1;21 Return if not
+@label=have_food
+*C$B3CE,3;21 Point #REGhl at item_structs[item_FOOD].item
+ C$B3D1,2;21 Is bit 5 set? (itemstruct_ITEM_FLAG_POISONED)
+ C$B3D3,1;21 Return if so - the food is already poisoned
+ C$B3D4,2;21 Set bit 5
+ C$B3D6,2;21 {Set the screen attribute for the food item to
+ C$B3D8,3;21 bright-purple over black}
+ C$B3DB,3;21 Draw both held items
+ C$B3DE,3;21 Increase morale by 10, score by 50 and exit via
 
 ; Use uniform.
 @label=action_uniform
