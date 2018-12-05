@@ -9760,81 +9760,108 @@ cC$B3F6,3;21 {If the global current room index isn't
  C$B414,3;21 Increase morale by 10, score by 50 and exit via
 
 ; Use wiresnips.
+;
+; .
+;
+; .
+;
+; Check the hero's position against the four vertically-oriented fences.
 @label=action_wiresnips
-cC$B417,3;21 HL = &walls[12] + 3;
- C$B41A,3;21 DE = &hero_map_position.x;
- C$B41D,2;21 B = 4; // iterations
-*C$B41F,1;21 do <% ...
- C$B420,1;21 A = *DE;
- C$B421,1;21 {  if (A >= *HL) goto next;
- C$B422,2;21 }
- C$B424,1;21 HL--;
- C$B425,1;21 {  if (A < *HL) goto next;
- C$B426,2;21 }
- C$B428,1;21 DE--; // &hero_map_position.y;
- C$B429,1;21 A = *DE;
- C$B42A,1;21 HL--;
- C$B42B,1;21 {  if (A == *HL) goto set_to_4;
- C$B42C,2;21 }
- C$B42E,1;21 A--;
- C$B42F,1;21 {  if (A == *HL) goto set_to_6;
- C$B430,2;21 }
- C$B432,1;21 DE++; // reset to Y
-*C$B433,1;21 next: ...
- C$B434,1;21 {  HL += 6; // array stride
- C$B435,5;21
+cC$B417,3;21 Point #REGhl at the 12th entry of the walls array: the
+ ;21 start of the vertically-oriented fences PLUS three
+ ;21 bytes so it points at the maxy value.
+ C$B41A,3;21 Point #REGde at hero_map_position.y
+ C$B41D,2;21 Set #REGb for four iterations (four vertical fences)
+; Start loop
+*C$B41F,1;21 Preserve the wall entry pointer during this iteration
+; Are we in range on the Y axis?
+ C$B420,1;21 Fetch hero_map_position.y
+ C$B421,1;21 Is it >= wall->maxy?
+ C$B422,2;21 Jump to the next iteration if so
+ C$B424,1;21 Step #REGhl back to wall->miny
+ C$B425,1;21 Is it < wall->miny?
+ C$B426,2;21 Jump to the next iteration if so
+; Are we adjacent to the wall on the X axis?
+ C$B428,1;21 Step #REGde back to hero_map_position.x
+ C$B429,1;21 Fetch hero_map_position.x
+ C$B42A,1;21 Step #REGhl back to wall->maxx
+ C$B42B,1;21 Is it == wall->maxx?
+ C$B42C,2;21 Jump to snips_crawl_tl if so
+ C$B42E,1;21 Try the opposite side
+ C$B42F,1;21 Is it == wall->maxx?
+ C$B430,2;21 Jump to snips_crawl_br if so
+ C$B432,1;21 Advance #REGde to hero_map_position.y
+@label=snips_next_vert
+*C$B433,1;21 Restore wall array pointer
+ C$B434,1;21 {Advance #REGhl to the next wall array element PLUS 3
+ C$B435,2;21 bytes
+ C$B437,3;21
  C$B43A,1;21 }
-*C$B43B,2;21 %> while (--B);
- C$B43D,1;21 DE--; // &hero_map_position.y;
- C$B43E,1;21 {HL -= 3; // pointing to $B59E
+*C$B43B,2;21 ...loop
+; Check the hero's position against the three horizontally-oriented fences.
+ C$B43D,1;21 Step #REGde back to hero_map_position.x
+; Point #REGhl at the 16th entry of walls array (start of horizontal fences).
+ C$B43E,1;21 {Step #REGhl back to the 16th entry of the walls array
+ ;21 PLUS 0 bytes (it's three ahead prior to this)
  C$B43F,1;21
  C$B440,1;21 }
- C$B441,2;21 B = 3; // iterations
-*C$B443,1;21 do <% ...
- C$B444,1;21 A = *DE;
- C$B445,1;21 {  if (A < *HL) goto next2;
- C$B446,2;21 }
- C$B448,1;21 HL++;
- C$B449,1;21 {  if (A >= *HL) goto next2;
- C$B44A,2;21 }
- C$B44C,1;21 DE++;
- C$B44D,1;21 A = *DE;
- C$B44E,1;21 HL++;
- C$B44F,1;21 {  if (A == *HL) goto set_to_5;
- C$B450,2;21 }
- C$B452,1;21 A--;
- C$B453,1;21 {  if (A == *HL) goto set_to_7;
- C$B454,2;21 }
- C$B456,1;21 DE--;
-*C$B457,1;21 next2: ...
- C$B458,1;21 {  HL += 6; // array stride
- C$B459,5;21
+ C$B441,2;21 Set #REGb for three iterations (three horizontal fences)
+; Start loop
+*C$B443,1;21 Preserve wall array pointer during this iteration
+; Are we in range on the X axis?
+ C$B444,1;21 Fetch hero_map_position.x
+ C$B445,1;21 Is it < wall->minx?
+ C$B446,2;21 Jump to the next iteration if so
+ C$B448,1;21 Advance #REGhl to wall->maxx
+ C$B449,1;21 Is x >= wall->maxx?
+ C$B44A,2;21 Jump to the next iteration if so
+; Are we adjacent to the wall on the Y axis?
+ C$B44C,1;21 Advance #REGde to hero_map_position.y
+ C$B44D,1;21 Fetch hero_map_position.y
+ C$B44E,1;21 Advance #REGhl to wall->miny
+ C$B44F,1;21 Is it == wall->miny?
+ C$B450,2;21 Jump to snips_crawl_tr if so
+ C$B452,1;21 Try the opposite side
+ C$B453,1;21 Is it == wall->maxy?
+ C$B454,2;21 Jump to snips_crawl_bl if so
+ C$B456,1;21 Step #REGde back to hero_map_position.x
+@label=snips_next_horz
+*C$B457,1;21 Restore wall array pointer
+ C$B458,1;21 {Advance #REGhl to the next wall array element PLUS 3
+ C$B459,2;21 bytes
+ C$B45B,3;21
  C$B45E,1;21 }
-*C$B45F,2;21 %> while (--B);
- C$B461,1;21 {return;
-*C$B462,2;21
- C$B464,2;21 }
-*C$B466,2;21 {set_to_5: A = 5; goto action_wiresnips_tail; // crawl TR
- C$B468,2;21 }
-*C$B46A,2;21 {set_to_6: A = 6; goto action_wiresnips_tail; // crawl BR
- C$B46C,2;21 }
-*C$B46E,2;21 set_to_7: A = 7;                             // crawl BL
-*C$B470,1;21 action_wiresnips_tail: ...
+*C$B45F,2;21 ...loop
+ C$B461,1;21 Return
+@label=snips_crawl_tl
+*C$B462,2;21 Set #REGa to 4 (direction_TOP_LEFT + vischar_DIRECTION_CRAWL)
+ C$B464,2;21 Jump forward
+@label=snips_crawl_tr
+*C$B466,2;21 Set #REGa to 5 (direction_TOP_RIGHT + vischar_DIRECTION_CRAWL)
+ C$B468,2;21 Jump forward
+@label=snips_crawl_br
+*C$B46A,2;21 Set #REGa to 6 (direction_BOTTOM_RIGHT + vischar_DIRECTION_CRAWL)
+ C$B46C,2;21 Jump forward
+@label=snips_crawl_bl
+*C$B46E,2;21 Set #REGa to 7 (direction_BOTTOM_LEFT + vischar_DIRECTION_CRAWL)
+@label=snips_tail
+; #REGa is the direction + crawl flag. Proceed to making the hero cut the wire.
+*C$B470,1;21 Restore wall array pointer
 @nowarn
- C$B471,3;21 {$800E = A; // walk/crawl flag
+ C$B471,3;21 {Set hero's vischar.direction field (direction and walk/crawl flag) to #REGa
  C$B474,1;21 }
- C$B475,1;21 {$800D = input_KICK;
+ C$B475,1;21 {Set hero's vischar.input field to input_KICK
  C$B476,2;21 }
- C$B478,3;21 {$8001 = vischar_FLAGS_CUTTING_WIRE;
+ C$B478,3;21 {Set hero's vischar.flags to vischar_FLAGS_CUTTING_WIRE
  C$B47B,2;21 }
- C$B47D,2;21 {$8013 = 12; // set height
+ C$B47D,2;21 {Set hero's vischar.mi.pos.height to 12
  C$B47F,3;21 }
- C$B482,3;21 {$8015 = sprite_prisoner;
+ C$B482,3;21 {Set vischar.mi.sprite to the prisoner sprite set
  C$B485,3;21 }
- C$B488,3;21 {player_locked_out_until = game_counter + 96;
+ C$B488,3;21 {Lock out the player until the game counter is now + 96
  C$B48B,2;21
  C$B48D,3;21 }
- C$B490,2;21 {queue_message(message_CUTTING_THE_WIRE);
+ C$B490,2;21 {Queue the message "CUTTING THE WIRE" and exit via
  C$B492,3;21 }
 
 ; Use lockpick.
