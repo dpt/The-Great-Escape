@@ -9236,18 +9236,18 @@ cC$B14C,3;21 Get the global current room index
  C$B193,1;21 Move to minimum height field
  C$B194,1;21 Read minimum height
  C$B195,3;21 Multiply it by 8 returning the result in #REGbc
- C$B198,3;21 Read saved_pos_height
- C$B19B,2;21 Compute saved_pos_height - ((wall minimum height) * 8)
- C$B19D,2;21 Jump to the next iteration if saved_pos_height is below minimum height
+ C$B198,3;21 Read saved_height
+ C$B19B,2;21 Compute saved_height - ((wall minimum height) * 8)
+ C$B19D,2;21 Jump to the next iteration if saved_height is below minimum height
 ; Check maximum height
  C$B19F,1;21 Move to maximum height field
  C$B1A0,1;21 Read maximum height
  C$B1A1,3;21 Multiply it by 8 returning the result in #REGbc
  C$B1A4,1;21 {And add two
  C$B1A5,1;21 }
- C$B1A6,3;21 Re-read saved_pos_height
- C$B1A9,2;21 Compute saved_pos_height - ((wall maximum height) * 8)
- C$B1AB,2;21 Jump to the next iteration if saved_pos_height is above maximum height
+ C$B1A6,3;21 Re-read saved_height
+ C$B1A9,2;21 Compute saved_height - ((wall maximum height) * 8)
+ C$B1AB,2;21 Jump to the next iteration if saved_height is above maximum height
 ; Passed all checks - in contact with wall
  C$B1AD,1;21 Restore the wall definition pointer
  C$B1AE,1;21 Restore the loop counter
