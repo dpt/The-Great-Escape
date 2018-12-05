@@ -1390,7 +1390,7 @@ gB$68A1,1
 cC$68A2,1;21 Save position into #REGde
  C$68A3,2;21 {Copy the current visible character pointer into #REGhl
  C$68A5,1;21 }
- C$68A6,1;21 Extract visible character's offset
+ C$68A6,1;21 Extract the visible character's offset
  C$68A7,1;21 Save it for later
  C$68A8,2;21 {Point #REGhl at the visible character's position
  C$68AA,1;21 }
@@ -1797,6 +1797,7 @@ cC$6A35,3;21 Wipe the visible tiles array
 ; Used by the routine at #R$6A35.
 ; .
 ; Object format:
+; .
 ; #TABLE(default)
 ; { =c2 Each object starts with two bytes which specify its dimensions: }
 ; { <w> <h>               | Width in tiles, Height in tiles }
@@ -5650,7 +5651,7 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$9F56,3;21 If either of those flags is set then set the morale flag
  ;21 red
 ; Is it night time?
- C$9F59,3;21 Read the game time
+ C$9F59,3;21 Read the game clock
  C$9F5C,2;21 If it's 100 or higher then it's night time
  C$9F5E,2;21 Jump if it's not night time
 ; At night, home room is the only safe place.
@@ -6405,7 +6406,7 @@ cC$A1D3,2;21 {Queue the message "ANOTHER DAY DAWNS"
  C$A1DD,1;21 Clear the night time flag
 ; This entry point is used by the routine at #R$A1C3.
 @label=set_attrs
-*C$A1DE,3;21 Set the day_or_night flag to #REGa
+*C$A1DE,3;21 Set the night-time flag to #REGa
  C$A1E1,3;21 Choose game window attributes
  C$A1E4,3;21 Exit via set_game_window_attributes
 
@@ -8708,13 +8709,13 @@ cC$AE78,4;21 Fetch map_position into #REGde. #REGe is x, #REGd is y
  C$AE80,1;21 Fetch searchlight.x
  C$AE81,2;21 Compute searchlight.x + 5
  C$AE83,1;21 Is (searchlight.x + 5) >= (map_position.x + 12)?
- ;21 Meaning: is the searchlight hotspot left edge beyond the hero's right edge?
+; Is the searchlight hotspot left edge beyond the hero's right edge?
  C$AE84,1;21 Return if so - the hero isn't in the hotspot
  C$AE85,2;21 Compute (searchlight.x + 5) + 5
  C$AE87,1;21 {Compute (map_position.x + 12) - 2
  C$AE88,1;21 }
  C$AE89,1;21 Is (searchlight.x + 10) < (map_position.x + 10)?
- ;21 Meaning: is the searchlight hotspot right edge beyond the hero's left edge?
+; Is the searchlight hotspot right edge beyond the hero's left edge?
  C$AE8A,1;21 Return if so - the hero isn't in the hotspot
  C$AE8B,1;21 Advance #REGhl to searchlight.y
  C$AE8C,1;21 {Compute map_position.y + 10
@@ -8723,14 +8724,14 @@ cC$AE78,4;21 Fetch map_position into #REGde. #REGe is x, #REGd is y
  C$AE90,1;21 Fetch searchlight.y
  C$AE91,2;21 Compute searchlight.y + 5
  C$AE93,1;21 Is (searchlight.y + 5) >= (map_position.y + 10)?
- ;21 Meaning: is the searchlight hotspot top edge beyond the hero's bottom edge?
+; Is the searchlight hotspot top edge beyond the hero's bottom edge?
  C$AE94,1;21 Return if so - the hero isn't in the hotspot
  C$AE95,2;21 Compute (searchlight.y + 5) + 7
  C$AE97,1;21 Save it in #REGc
  C$AE98,1;21 {Compute (map_position.y + 10) - 4
  C$AE99,2;21 }
  C$AE9B,1;21 Is (map_position.y + 6) >= (searchlight.y + 12)?
- ;21 Meaning: is the searchlight hotspot bottom edge beyond the hero's top edge?
+; Is the searchlight hotspot bottom edge beyond the hero's top edge?
  C$AE9C,1;21 Return if so - the hero isn't in the hotspot
 ; The hero is in the hotspot.
 ; .
