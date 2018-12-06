@@ -9866,15 +9866,15 @@ cC$B417,3;21 Point #REGhl at the 12th entry of the walls array: the
 
 ; Use lockpick.
 @label=action_lockpick
-cC$B495,3;21 get_nearest_door();
- C$B498,1;21 if (!Z) return; /* No door nearby. */
- C$B499,3;21 ptr_to_door_being_lockpicked = HL;
- C$B49C,3;21 {player_locked_out_until = game_counter + 255;
- C$B49F,2;21
+cC$B495,3;21 Get the door in range of the hero in #REGhl
+ C$B498,1;21 Return if no door was nearby
+ C$B499,3;21 Store the door_t pointer in ptr_to_door_being_lockpicked
+ C$B49C,3;21 {Lock out player control until the game counter becomes
+ C$B49F,2;21 now + 255
  C$B4A1,3;21 }
- C$B4A4,3;21 {($8001) = vischar_FLAGS_PICKING_LOCK;
+ C$B4A4,3;21 {Set hero's vischar.flags to vischar_FLAGS_PICKING_LOCK
  C$B4A7,2;21 }
- C$B4A9,2;21 {queue_message(message_PICKING_THE_LOCK);
+ C$B4A9,2;21 {Queue the message "PICKING THE LOCK" and exit via
  C$B4AB,3;21 }
 
 ; Use red key.
