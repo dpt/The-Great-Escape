@@ -15423,7 +15423,11 @@ cC$F068,3;21
 ;
 ; Pairs of (port, key mask).
 @label=keydefs
-gB$F06B,10
+gB$F06B,2;20 Left
+ B$F06D,2;20 Right
+ B$F06F,2;20 Up
+ B$F071,2;20 Down
+ B$F073,2;20 Fire
 
 
 ; Everything from $F0F8 onwards is potentially overwritten by the game once the main menu is exited.
@@ -16247,174 +16251,191 @@ uB$FDF3,8,5
 
 ; Keyboard input routine.
 ;
-; .
+; Walks the keydefs table testing the ports against masks as setup by #R$F350.
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_keyboard
-cC$FE00,3;21 HL = keydefs; /* A list of (port high byte, key mask) */
-; Left or right?
- C$FE03,2;21 C = 0xFE; /* Port 0xXXFE */
- C$FE05,1;21 {B = *HL++;
- C$FE06,1;21 }
- C$FE07,2;21
- C$FE09,1;21 {A = ~A & *HL++;
- C$FE0A,1;21
- C$FE0B,1;21 }
- C$FE0C,2;21 if (A) <%
- C$FE0E,1;21 {  HL += 2; /* Skip right keydef */
+cC$FE00,3;21 Point #REGhl at keydefs table - a list of (port high
+ ;21 byte, key mask) filled out when the user chose their
+ ;21 keys
+; Check for left
+ C$FE03,2;21 Port $xxFE
+ C$FE05,1;21 Fetch the port high byte
+ C$FE06,1;21 Advance to key mask
+ C$FE07,2;21 Read that port
+ C$FE09,1;21 The keyboard is active low, so complement the value
+ C$FE0A,1;21 Mask off the wanted bit
+ C$FE0B,1;21 Advance to next definition
+ C$FE0C,2;21 Key NOT pressed - jump forward to test for right key
+ C$FE0E,1;21 {Skip the right key definition
  C$FE0F,1;21 }
- C$FE10,2;21 E = input_LEFT;
- C$FE12,2;21 %>
-; Right.
-*C$FE14,1;21 {else <% B = *HL++;
- C$FE15,1;21 }
- C$FE16,2;21
- C$FE18,1;21 {  A = ~A & *HL++;
- C$FE19,1;21
- C$FE1A,1;21 }
- C$FE1B,2;21 if (A) <%
- C$FE1D,2;21 E = input_RIGHT;
- C$FE1F,2;21 %>
-*C$FE21,1;21 else <% E = A; /* == 0 */ %> %>
-; Up or down?
-*C$FE22,1;21 {B = *HL++;
- C$FE23,1;21 }
- C$FE24,2;21
- C$FE26,1;21 {A = ~A & *HL++;
- C$FE27,1;21
- C$FE28,1;21 }
- C$FE29,2;21 if (A) <%
- C$FE2B,1;21 {  HL += 2; /* Skip down keydef */
+ C$FE10,2;21 result = input_LEFT
+ C$FE12,2;21 Jump to up/down checking
+; Check for right
+*C$FE14,1;21 Fetch the port high byte
+ C$FE15,1;21 Advance to key mask
+ C$FE16,2;21 Read that port
+ C$FE18,1;21 The keyboard is active low, so complement the value
+ C$FE19,1;21 Mask off the wanted bit
+ C$FE1A,1;21 Advance to next definition
+ C$FE1B,2;21 Key NOT pressed - jump forward to test for up key
+ C$FE1D,2;21 result = input_RIGHT
+ C$FE1F,2;21 Jump to up/down checking
+*C$FE21,1;21 Otherwise result = 0 (#REGa is zero here)
+; Check for up
+*C$FE22,1;21 Fetch the port high byte
+ C$FE23,1;21 Advance to key mask
+ C$FE24,2;21 Read that port
+ C$FE26,1;21 The keyboard is active low, so complement the value
+ C$FE27,1;21 Mask off the wanted bit
+ C$FE28,1;21 Advance to next definition
+ C$FE29,2;21 Key NOT pressed - jump forward to test for down key
+ C$FE2B,1;21 {Skip down key definition
  C$FE2C,1;21 }
- C$FE2D,1;21 E += input_UP;
- C$FE2E,2;21 %>
-; Down.
-*C$FE30,1;21 {else <% B = *HL++;
- C$FE31,1;21 }
- C$FE32,2;21
- C$FE34,1;21 {  A = ~A & *HL++;
- C$FE35,1;21
- C$FE36,1;21 }
- C$FE37,2;21 if (A) <%
- C$FE39,1;21 {    E += input_DOWN; %> %>
+ C$FE2D,1;21 result += input_UP
+ C$FE2E,2;21 Jump to fire checking
+; Check for down
+*C$FE30,1;21 Fetch the port high byte
+ C$FE31,1;21 Advance to key mask
+ C$FE32,2;21 Read that port
+ C$FE34,1;21 The keyboard is active low, so complement the value
+ C$FE35,1;21 Mask off the wanted bit
+ C$FE36,1;21 Advance to next key definition
+ C$FE37,2;21 Key NOT pressed - jump forward to test for fire key
+ C$FE39,1;21 {result += input_DOWN
  C$FE3A,1;21 }
-; Fire?
-*C$FE3B,1;21 {B = *HL++;
- C$FE3C,1;21 }
- C$FE3D,2;21
- C$FE3F,1;21 {A = ~A & *HL++;
- C$FE40,1;21
- C$FE41,1;21 }
- C$FE42,1;21 A = E;
- C$FE43,1;21 if (A)
- C$FE44,2;21 A += input_FIRE;
- C$FE46,1;21 return;
+; Check for fire
+*C$FE3B,1;21 Fetch the port high byte
+ C$FE3C,1;21 Advance to key mask
+ C$FE3D,2;21 Read that port
+ C$FE3F,1;21 The keyboard is active low, so complement the value
+ C$FE40,1;21 Mask off the wanted bit
+ C$FE41,1;21 Advance to next key definition
+ C$FE42,1;21 Result
+ C$FE43,1;21 Return the result if fire NOT pressed
+ C$FE44,2;21 result += input_FIRE
+ C$FE46,1;21 Return
 
 ; Protek (cursor) joystick input routine.
 ;
-; .
+; Up/Down/Left/Right/Fire = keys 7/6/5/8/0.
 ;
 ; O:A Input value (as per enum input).
-;
-; Horizontal.
 @label=inputroutine_protek
-cC$FE47,3;21 BC = port_KEYBOARD_12345;
- C$FE4A,2;21
- C$FE4C,1;21 {A = ~A & (1<<4); /* 5 == left */
- C$FE4D,2;21 }
- C$FE4F,2;21 E = input_LEFT;
- C$FE51,2;21 B = 0xEF; /* port_KEYBOARD_09876 */
- C$FE53,2;21 if (Z) <%
- C$FE55,2;21
- C$FE57,1;21 {  A = ~A & (1<<2);
- C$FE58,2;21 }
- C$FE5A,2;21 E = input_RIGHT;
- C$FE5C,2;21 if (Z)
- C$FE5E,2;21 E = 0; %>
-; Vertical.
-*C$FE60,2;21
- C$FE62,1;21 A = ~A;
- C$FE63,1;21 D = A;
- C$FE64,2;21 A &= (1<<3);
- C$FE66,2;21 A = input_UP; /* interleaved */
- C$FE68,2;21 if (Z) <%
- C$FE6A,1;21 A = D;
- C$FE6B,2;21 A &= (1<<4);
- C$FE6D,2;21 A = input_DOWN; /* interleaved */
- C$FE6F,2;21 if (Z)
- C$FE71,1;21 A = input_NONE; %>
-*C$FE72,1;21 {E += A; /* Combine axis */
+cC$FE47,3;21 Load #REGbc with the port number of the keyboard half
+ ;21 row for keys 1/2/3/4/5
+ C$FE4A,2;21 Read that port. We'll receive xxx54321
+ C$FE4C,1;21 The keyboard is active low, so complement the value
+; Check for left
+ C$FE4D,2;21 Is '5' pressed?
+ C$FE4F,2;21 left_right = input_LEFT
+ C$FE51,2;21 Load #REGbc with the port number of the keyboard half
+ ;21 row for keys 0/9/8/7/6
+ C$FE53,2;21 Jump forward if '5'/left was pressed
+; Check for right
+ C$FE55,2;21 Read that port. We'll receive xxx67890
+ C$FE57,1;21 The keyboard is active low, so complement the value
+ C$FE58,2;21 Is '8' pressed?
+ C$FE5A,2;21 left_right = input_RIGHT
+ C$FE5C,2;21 Jump forward if '8'/right was pressed
+ C$FE5E,2;21 Otherwise left_right = 0
+*C$FE60,2;21 Read $EFFE again
+ C$FE62,1;21 The keyboard is active low, so complement the value
+ C$FE63,1;21 Save a copy of the port value
+; Check for up
+ C$FE64,2;21 Is '7' pressed?
+ C$FE66,2;21 up_down = input_UP
+ C$FE68,2;21 Jump forward if '7'/up was pressed
+; Check for down
+ C$FE6A,1;21 Restore the port value
+ C$FE6B,2;21 Is '6' pressed?
+ C$FE6D,2;21 up_down = input_DOWN
+ C$FE6F,2;21 Jump forward if '6'/down was pressed
+ C$FE71,1;21 Otherwise up_down = 0
+*C$FE72,1;21 {Combine the up_down and left_right values
  C$FE73,1;21 }
-; Fire.
- C$FE74,1;21 {A = D & (1<<0);
- C$FE75,2;21 }
- C$FE77,2;21 A = input_FIRE; /* interleaved */
- C$FE79,2;21 {if (Z) A = 0;
- C$FE7B,1;21 }
-*C$FE7C,1;21 A += E; /* Combine axis */
- C$FE7D,1;21 return;
+; Check for fire
+ C$FE74,1;21 Restore the port value
+ C$FE75,2;21 Is '0' pressed?
+ C$FE77,2;21 fire = input_FIRE
+ C$FE79,2;21 Jump forward if fire was pressed
+ C$FE7B,1;21 fire = 0
+*C$FE7C,1;21 Combine the (up_down + left_right) and fire values
+ C$FE7D,1;21 Return
 
 ; Kempston joystick input routine.
 ;
-; Reading port 0x1F yields 000FUDLR active high.
+; Reading port $1F yields 000FUDLR active high.
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_kempston
-cC$FE7E,3;21 BC = 0x001F;
- C$FE81,2;21
- C$FE83,3;21 BC = 0;
- C$FE86,1;21 carry = A & 1; A >>= 1;
- C$FE87,2;21 {if (carry) B = input_RIGHT;
- C$FE89,2;21 }
-*C$FE8B,1;21 carry = A & 1; A >>= 1;
- C$FE8C,2;21 {if (carry) B = input_LEFT;
- C$FE8E,2;21 }
-*C$FE90,1;21 carry = A & 1; A >>= 1;
- C$FE91,2;21 {if (carry) C = input_DOWN;
- C$FE93,2;21 }
-*C$FE95,1;21 carry = A & 1; A >>= 1;
- C$FE96,2;21 {if (carry) C = input_UP;
- C$FE98,2;21 }
-*C$FE9A,1;21 carry = A & 1; A >>= 1;
- C$FE9B,2;21 A = input_FIRE;
- C$FE9D,2;21 {if (!carry) A = 0;
- C$FE9F,1;21 }
-*C$FEA0,1;21 {A += B + C;
+cC$FE7E,3;21 Load #REGbc with port number $1F
+ C$FE81,2;21 Read that port. We'll receive 000FUDLR
+ C$FE83,3;21 Clear our {...} variables
+; Right
+ C$FE86,1;21 Rotate 'R' out: R000FUDL
+ C$FE87,2;21 If carry was set then right was pressed, otherwise skip
+ C$FE89,2;21 left_right = input_RIGHT
+; Left
+*C$FE8B,1;21 Rotate 'L' out: LR000FUD
+ C$FE8C,2;21 If carry was set then left was pressed, otherwise skip
+ C$FE8E,2;21 left_right = input_LEFT
+; Down
+*C$FE90,1;21 Rotate 'D' out: DLR000FU
+ C$FE91,2;21 If carry was set then down was pressed, otherwise skip
+ C$FE93,2;21 up_down = input_DOWN
+; Up
+*C$FE95,1;21 Rotate 'U' out: UDLR000F
+ C$FE96,2;21 If carry was set then up was pressed, otherwise skip
+ C$FE98,2;21 up_down = input_UP
+; Fire
+*C$FE9A,1;21 Rotate 'F' out: FUDLR000
+ C$FE9B,2;21 fire = input_FIRE
+ C$FE9D,2;21 If fire bit was set then jump forward
+ C$FE9F,1;21 fire = 0
+*C$FEA0,1;21 {Combine the fire, up_down and left_right values
  C$FEA1,1;21 }
- C$FEA2,1;21 return; /* Combine axis */
+ C$FEA2,1;21 Return
 
 ; Fuller joystick input routine.
 ;
-; Reading port 0x7F yields F---RLDU active low.
+; Reading port $7F yields F---RLDU active low.
 ;
 ; This is unused by the game.
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_fuller
-cC$FEA3,3;21 BC = 0x007F;
- C$FEA6,2;21
- C$FEA8,3;21 BC = 0;
- C$FEAB,2;21 {if (A & (1<<4)) A = ~A;
- C$FEAD,2;21
- C$FEAF,1;21 }
-*C$FEB0,1;21 carry = A & 1; A >>= 1;
- C$FEB1,2;21 {if (carry) C = input_UP;
- C$FEB3,2;21 }
-*C$FEB5,1;21 carry = A & 1; A >>= 1;
- C$FEB6,2;21 {if (carry) C = input_DOWN;
- C$FEB8,2;21 }
-*C$FEBA,1;21 carry = A & 1; A >>= 1;
- C$FEBB,2;21 {if (carry) B = input_LEFT;
- C$FEBD,2;21 }
-*C$FEBF,1;21 carry = A & 1; A >>= 1;
- C$FEC0,2;21 {if (carry) B = input_RIGHT;
- C$FEC2,2;21 }
-*C$FEC4,2;21 {if (A & (1<<3)) A = input_FIRE; /* otherwise A is zero */
- C$FEC6,2;21
- C$FEC8,2;21 }
-*C$FECA,1;21 {A += B + C; /* Combine axis */
+cC$FEA3,3;21 Load #REGbc with port number $7F
+ C$FEA6,2;21 Read that port. We'll receive FxxxRLDU
+ C$FEA8,3;21 Clear our variables
+; DPT: This is odd. It's testing an unspecified bit to see whether to complement
+; the read value. I don't see a reference for that behaviour anywhere.
+ C$FEAB,2;21 Test bit 4
+ C$FEAD,2;21 Jump forward if clear
+ C$FEAF,1;21 Complement the value
+; Up
+*C$FEB0,1;21 Rotate 'U' out: UFxxxRLD
+ C$FEB1,2;21 If carry was set then up was pressed, otherwise skip
+ C$FEB3,2;21 up_down = input_UP
+; Down
+*C$FEB5,1;21 Rotate 'D' out: DUFxxxRL
+ C$FEB6,2;21 If carry was set then down was pressed, otherwise skip
+ C$FEB8,2;21 up_down = input_DOWN
+; Left
+*C$FEBA,1;21 Rotate 'L' out: LDUFxxxR
+ C$FEBB,2;21 If carry was set then down was pressed, otherwise skip
+ C$FEBD,2;21 left_right = input_LEFT
+; Right
+*C$FEBF,1;21 Rotate 'R' out: RLDUFxxx
+ C$FEC0,2;21 If carry was set then right was pressed, otherwise skip
+ C$FEC2,2;21 left_right = input_RIGHT
+; Fire
+*C$FEC4,2;21 Test fire bit (and set A to zero if not set)
+ C$FEC6,2;21 If bit was set then fire was pressed, otherwise skip
+ C$FEC8,2;21 fire = input_FIRE
+*C$FECA,1;21 {Combine the fire, up_down and left_right values
  C$FECB,1;21 }
- C$FECC,1;21 return;
+ C$FECC,1;21 Return
 
 ; Sinclair joystick input routine.
 ;
@@ -16422,29 +16443,35 @@ cC$FEA3,3;21 BC = 0x007F;
 ;
 ; O:A Input value (as per enum input).
 @label=inputroutine_sinclair
-cC$FECD,3;21 BC = port_KEYBOARD_09876;
- C$FED0,2;21
- C$FED2,1;21 A = ~A; /* xxx67890 */
- C$FED3,3;21 BC = 0;
- C$FED6,1;21 RRCA /* 0xxx6789 */
- C$FED7,1;21 RRCA /* 90xxx678 */
- C$FED8,2;21 {if (carry) C = input_UP;
- C$FEDA,2;21 }
-*C$FEDC,1;21 RRCA /* 890xxx67 */
- C$FEDD,2;21 {if (carry) C = input_DOWN;
- C$FEDF,2;21 }
-*C$FEE1,1;21 RRCA /* 7890xxx6 */
- C$FEE2,2;21 {if (carry) B = input_RIGHT;
- C$FEE4,2;21 }
-*C$FEE6,1;21 RRCA /* 67890xxx */
- C$FEE7,2;21 {if (carry) B = input_LEFT;
- C$FEE9,2;21 }
-*C$FEEB,2;21 {if ((A & (1<<3)) == 0) A = input_FIRE;
- C$FEED,2;21
- C$FEEF,2;21 }
-*C$FEF1,1;21 {A += B + C; /* Combine axis */
+cC$FECD,3;21 Load #REGbc with the port number of the keyboard half
+ ;21 row for keys 6/7/8/9/0
+ C$FED0,2;21 Read that port. We'll receive xxx67890
+ C$FED2,1;21 The keyboard is active low, so complement the value
+ C$FED3,3;21 Clear our left_right and up_down variables
+ C$FED6,1;21 Rotate '0' out: 0xxx6789
+; Up
+ C$FED7,1;21 Rotate '9' out: 90xxx678
+ C$FED8,2;21 If carry was set then '9' was pressed, otherwise skip
+ C$FEDA,2;21 up_down = input_UP
+; Down
+*C$FEDC,1;21 Rotate '8' out: 890xxx67
+ C$FEDD,2;21 If carry was set then '8' was pressed, otherwise skip
+ C$FEDF,2;21 up_down = input_DOWN
+; Right
+*C$FEE1,1;21 Rotate '7' out: 7890xxx6
+ C$FEE2,2;21 If carry was set then '7' was pressed, otherwise skip
+ C$FEE4,2;21 left_right = input_RIGHT
+; Left
+*C$FEE6,1;21 Rotate '6' out: 67890xxx
+ C$FEE7,2;21 If carry was set then '6' was pressed, otherwise skip
+ C$FEE9,2;21 left_right = input_LEFT
+; Fire
+*C$FEEB,2;21 Is '0' pressed?
+ C$FEED,2;21 Jump forward if not
+ C$FEEF,2;21 fire = input_FIRE
+*C$FEF1,1;21 {Combine the fire, up_down and left_right values
  C$FEF2,1;21 }
- C$FEF3,1;21 return;
+ C$FEF3,1;21 Return
 
 ; Data block at FEF4.
 ;
