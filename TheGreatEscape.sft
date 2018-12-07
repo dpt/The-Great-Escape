@@ -9879,17 +9879,17 @@ cC$B495,3;21 Get the door in range of the hero in #REGhl
 
 ; Use red key.
 @label=action_red_key
-cC$B4AE,2;21 A = room_22_REDKEY;
- C$B4B0,2;21 goto action_key;
+cC$B4AE,2;21 Set the room number in #REGa to room_22_REDKEY
+ C$B4B0,2;21 Jump to action_key
 
 ; Use yellow key.
 @label=action_yellow_key
-cC$B4B2,2;21 A = room_13_CORRIDOR;
- C$B4B4,2;21 goto action_key;
+cC$B4B2,2;21 Set the room number in #REGa to room_13_CORRIDOR
+ C$B4B4,2;21 Jump to action_key
 
 ; Use green key.
 @label=action_green_key
-cC$B4B6,2;21 A = room_14_TORCH;
+cC$B4B6,2;21 Set the room number in #REGa to room_14_TORCH
 ; FALL THROUGH into action_key.
 
 ; Use a key.
@@ -9898,19 +9898,19 @@ cC$B4B6,2;21 A = room_14_TORCH;
 ;
 ; I:A Room number to which the key applies.
 @label=action_key
-cC$B4B8,1;21
- C$B4B9,3;21 get_nearest_door();
- C$B4BC,1;21
- C$B4BD,1;21 if (!Z) return; /* No door nearby. */
- C$B4BE,1;21 {A = *HL & ~door_LOCKED; // mask off locked flag
- C$B4BF,2;21 }
- C$B4C1,1;21 if (A != B) <%
- C$B4C2,2;21 B = message_INCORRECT_KEY; %>
- C$B4C4,2;21 else <%
- C$B4C6,2;21 *HL &= ~door_LOCKED; /* Unlock. */
- C$B4C8,3;21 increase_morale_by_10_score_by_50();
- C$B4CB,2;21 B = message_IT_IS_OPEN; %>
-*C$B4CD,3;21 queue_message(B); // exit via
+cC$B4B8,1;21 Preserve the room number while we get the nearest door
+ C$B4B9,3;21 Return the door in range of the hero in #REGhl
+ C$B4BC,1;21 Restore the room number
+ C$B4BD,1;21 Return if no door was nearby
+ C$B4BE,1;21 Fetch door index + flag
+ C$B4BF,2;21 Mask off door_LOCKED flag to get door index alone
+ C$B4C1,1;21 Are they equal?
+ C$B4C2,2;21 Set #REGb to message_INCORRECT_KEY irrespectively
+ C$B4C4,2;21 Jump if not equal
+ C$B4C6,2;21 Unlock the door by resetting door_LOCKED ($80)
+ C$B4C8,3;21 Increase morale by 10, score by 50
+ C$B4CB,2;21 Set #REGb to message_IT_IS_OPEN
+*C$B4CD,3;21 Queue the message identified by #REGb
 
 ; Return the door in range of the hero.
 ;
