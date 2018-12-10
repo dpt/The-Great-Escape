@@ -10019,31 +10019,41 @@ cC$B4D0,3;21 Get global current room index
  C$B53C,2;21 ...loop
 
 ; Wall boundaries.
+;
+; #TABLE(default)
+; { =h Field | =h Description }
+; { minx     | Minimum x }
+; { maxx     | Maximum x }
+; { miny     | Minimum y }
+; { maxy     | Maximum y }
+; { minh     | Minimum height }
+; { maxh     | Maximum height }
+; TABLE#
 @label=walls
-bB$B53E,6;36 0x6A, 0x6E, 0x52, 0x62, 0, 11 ;  0: hut 1 (leftmost on main map)
- B$B544,6;36 0x5E, 0x62, 0x52, 0x62, 0, 11 ;  1: hut 2
- B$B54A,6;36 0x52, 0x56, 0x52, 0x62, 0, 11 ;  2: hut 3 (rightmost on main map)
- B$B550,6;36 0x3E, 0x5A, 0x6A, 0x80, 0, 48 ;  3: main building
- B$B556,6;36 0x34, 0x80, 0x72, 0x80, 0, 48 ;  4: main building
- B$B55C,6;36 0x7E, 0x98, 0x5E, 0x80, 0, 48 ;  5: main building
- B$B562,6;36 0x82, 0x98, 0x5A, 0x80, 0, 48 ;  6: main building
- B$B568,6;36 0x86, 0x8C, 0x46, 0x80, 0, 10 ;  7: west wall
- B$B56E,6;36 0x82, 0x86, 0x46, 0x4A, 0, 18 ;  8: west turret wall
- B$B574,6;36 0x6E, 0x82, 0x46, 0x47, 0, 10 ;  9: south wall
- B$B57A,6;36 0x6D, 0x6F, 0x45, 0x49, 0, 18 ; 10: gate wall left
- B$B580,6;36 0x67, 0x69, 0x45, 0x49, 0, 18 ; 11: gate wall right
- B$B586,6;36 0x46, 0x46, 0x46, 0x6A, 0, 8  ; 12: fence inner (vertical)
- B$B58C,6;36 0x3E, 0x3E, 0x3E, 0x6A, 0, 8  ; 13: fence outer (vertical)
- B$B592,6;36 0x4E, 0x4E, 0x2E, 0x3E, 0, 8  ; 14: fence outer exercise (vertical)
- B$B598,6;36 0x68, 0x68, 0x2E, 0x45, 0, 8  ; 15: fence outer exercise (vertical)
- B$B59E,6;36 0x3E, 0x68, 0x3E, 0x3E, 0, 8  ; 16: fence inner exercise (horizontal)
- B$B5A4,6;36 0x4E, 0x68, 0x2E, 0x2E, 0, 8  ; 17: fence outer exercise (horizontal)
- B$B5AA,6;36 0x46, 0x67, 0x46, 0x46, 0, 8  ; 18: fence inner (horizontal)
- B$B5B0,6;36 0x68, 0x6A, 0x38, 0x3A, 0, 8  ; 19: tower outside exercise yard
- B$B5B6,6;36 0x4E, 0x50, 0x2E, 0x30, 0, 8  ; 20: tower inside exercise yard
- B$B5BC,6;36 0x46, 0x48, 0x46, 0x48, 0, 8  ; 21: tower at corner of main yard
- B$B5C2,6;36 0x46, 0x48, 0x5E, 0x60, 0, 8  ; 22: tower at north east of main yard
- B$B5C8,6;36 0x69, 0x6D, 0x46, 0x49, 0, 8  ; 23: gate wall middle
+bB$B53E,6;36 0: (106-110,  82-98,  0-11) Hut 0 (leftmost on main map)
+ B$B544,6;36 1: ( 94-98,   82-98,  0-11) Hut 1 (home hut)
+ B$B54A,6;36 2: ( 82-86,   82-98,  0-11) Hut 2 (rightmost on main map)
+ B$B550,6;36 3: ( 62-90,  106-128, 0-48) Main building, top right
+ B$B556,6;36 4: ( 52-128, 114-128, 0-48) Main building, topmost/right
+ B$B55C,6;36 5: (126-152,  94-128, 0-48) Main building, top left
+ B$B562,6;36 6: (130-152,  90-128, 0-48) Main building, top left
+ B$B568,6;36 7: (134-140,  70-128, 0-10) Main building, left wall / west wall
+ B$B56E,6;36 8: (130-134,  70-74,  0-18) Corner, bottom left / west turret wall
+ B$B574,6;36 9: (110-130,  70-71,  0-10) Front wall / south wall
+ B$B57A,6;36 10: (109-111,  69-73,  0-18) Gate post (left)
+ B$B580,6;36 11: (103-105,  69-73,  0-18) Gate post (right)
+ B$B586,6;36 12: ( 70-70,   70-106, 0-8 ) Fence - right of main camp (vertical)
+ B$B58C,6;36 13: ( 62-62,   62-106, 0-8 ) Fence - rightmost fence (vertical)
+ B$B592,6;36 14: ( 78-78,   46-62,  0-8 ) Fence - rightmost of yard (vertical)
+ B$B598,6;36 15: (104-104,  46-69,  0-8 ) Fence - leftmost of yard (vertical)
+ B$B59E,6;36 16: ( 62-104,  62-62,  0-8 ) Fence - top of yard (horizontal)
+ B$B5A4,6;36 17: ( 78-104,  46-46,  0-8 ) Fence - bottom of yard (horizontal)
+ B$B5AA,6;36 18: ( 70-103,  70-70,  0-8 ) Fence - bottom of main camp (horizontal)
+ B$B5B0,6;36 19: (104-106,  56-58,  0-8 ) Fence - watchtower (left, outside of exercise yard)
+ B$B5B6,6;36 20: ( 78-80,   46-48,  0-8 ) Fence - watchtower (inside exercise yard)
+ B$B5BC,6;36 21: ( 70-72,   70-72,  0-8 ) Fence - watchtower (corner of main camp)
+ B$B5C2,6;36 22: ( 70-72,   94-96,  0-8 ) Fence - watchtower (top right of main camp)
+ B$B5C8,6;36 23: (105-109,  70-73,  0-8 ) Fence - gate wall middle
 
 ; Animate all visible characters.
 ;
