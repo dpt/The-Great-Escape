@@ -7539,7 +7539,7 @@ cC$A826,2;21 {Compute the row offset within a supertile from the map's
 ; Middle loop.
  C$A859,2;21 There are always five iterations (five supertiles in the
  ;21 middle section).
-; Start loop (outer) -- advanced for each supertile.
+; Start loop (outer) -- advanced for each supertile
 *C$A85B,1;21 Preserve the loop counter
  C$A85C,1;21 Fetch a supertile index from the map buffer pointer
  C$A85D,1;21 Switch register banks during the middle loop
@@ -7718,7 +7718,7 @@ cC$A8F4,2;21 Compute the column offset within a supertile from the
 ; Middle loop.
 *C$A93C,2;21 There are always three iterations (three supertiles in
  ;21 the middle section).
-; Start loop (outer) -- advanced for each supertile.
+; Start loop (outer) -- advanced for each supertile
 *C$A93E,1;21 Preserve the loop counter
  C$A93F,1;21 Fetch a supertile index from the map buffer pointer
  C$A940,1;21 Switch register banks during the middle loop
@@ -8686,9 +8686,9 @@ cC$ADBD,3;21 Point #REGhl at searchlight_state
  C$AE72,2;21 ...loop
  C$AE74,1;21 Return
 
-; Searchlight stuff
+; Searchlight state variables
 ;
-; (<- nighttime, searchlight_plot)
+; (Assigned by nighttime. Read by searchlight_plot.)
 @label=searchlight_clip_left
 gB$AE75,1
 ; Coordinates of searchlight when hero is caught.
@@ -9748,10 +9748,10 @@ cC$B3F6,3;21 {If the global current room index isn't
 ; The blockage boundary's x0 is set to 255. This invalidates the boundary by
 ; forcing the "x < bounds->x0" test at #R$B2D9 (in interior_bounds_check) to
 ; fail.
- C$B402,2;21 {roomdef_50_blocked_tunnel_boundary[0] = 255;
+ C$B402,2;21 {roomdef_50_blocked_tunnel_boundary[0] = 255
  C$B404,3;21 }
 ; Remove the blockage graphic.
- C$B407,1;21 {roomdef_50_blocked_tunnel_collapsed_tunnel = 0;
+ C$B407,1;21 {roomdef_50_blocked_tunnel_collapsed_tunnel = 0
  C$B408,3;21 }
  C$B40B,3;21 Setup the room
  C$B40E,3;21 Choose game window attributes
@@ -9848,8 +9848,8 @@ cC$B417,3;21 Point #REGhl at the 12th entry of the walls array: the
 ; #REGa is the direction + crawl flag. Proceed to making the hero cut the wire.
 *C$B470,1;21 Restore wall array pointer
 @nowarn
- C$B471,3;21 {Set hero's vischar.direction field (direction and walk/crawl flag) to #REGa
- C$B474,1;21 }
+ C$B471,3;21 {Set hero's vischar.direction field (direction and
+ C$B474,1;21 walk/crawl flag) to the direction selected above}
  C$B475,1;21 {Set hero's vischar.input field to input_KICK
  C$B476,2;21 }
  C$B478,3;21 {Set hero's vischar.flags to vischar_FLAGS_CUTTING_WIRE
@@ -9866,7 +9866,7 @@ cC$B417,3;21 Point #REGhl at the 12th entry of the walls array: the
 
 ; Use lockpick.
 @label=action_lockpick
-cC$B495,3;21 Get the door in range of the hero in #REGhl
+cC$B495,3;21 Get the nearest door in range of the hero in #REGhl
  C$B498,1;21 Return if no door was nearby
  C$B499,3;21 Store the door_t pointer in ptr_to_door_being_lockpicked
  C$B49C,3;21 {Lock out player control until the game counter becomes
@@ -9899,7 +9899,7 @@ cC$B4B6,2;21 Set the room number in #REGa to room_14_TORCH
 ; I:A Room number to which the key applies.
 @label=action_key
 cC$B4B8,1;21 Preserve the room number while we get the nearest door
- C$B4B9,3;21 Return the door in range of the hero in #REGhl
+ C$B4B9,3;21 Return the nearest door in range of the hero in #REGhl
  C$B4BC,1;21 Restore the room number
  C$B4BD,1;21 Return if no door was nearby
  C$B4BE,1;21 Fetch door index + flag
