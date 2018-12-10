@@ -9912,82 +9912,111 @@ cC$B4B8,1;21 Preserve the room number while we get the nearest door
  C$B4CB,2;21 Set #REGb to message_IT_IS_OPEN
 *C$B4CD,3;21 Queue the message identified by #REGb
 
-; Return the door in range of the hero.
+; Return the nearest door in range of the hero.
 ;
 ; Used by the routines at #R$B495 and #R$B4B8.
 ;
 ; O:HL Pointer to door in locked_doors.
-; O:F  Returns NZ if door not found.
+; O:F  Returns Z set if a door was found, clear otherwise.
 @label=get_nearest_door
-cC$B4D0,3;21 {if (room_index == room_0_OUTDOORS) goto outdoors; else goto indoors;
- C$B4D3,3;21
- C$B4D6,3;21 }
-; Bug: Needless jump.
-; .
+cC$B4D0,3;21 Get global current room index
+ C$B4D3,1;21 Is it room_0_OUTDOORS?
+ C$B4D4,2;21 Jump forward to handle outdoors if so
+; Bug: Could avoid this jump instruction by using fallthrough instead.
+ C$B4D6,3;21 Otherwise jump forward to handle indoors
 ; Outdoors.
-*C$B4D9,2;21 outdoors: B = 5; // 5 iterations
- C$B4DB,3;21 HL = &locked_doors[0];
-*C$B4DE,1;21 {do <% A = *HL & ~door_LOCKED;
- C$B4DF,2;21 }
- C$B4E1,1;21
- C$B4E2,3;21 HL = get_door();
- C$B4E5,1;21
- C$B4E6,3;21 door_in_range();
- C$B4E9,1;21
- C$B4EA,2;21 if (!C) goto not_in_range;
- C$B4EC,1;21 {  HL += 4;
+; .
+; Locked doors 0..4 include exterior doors.
+@label=gnd_outdoors
+*C$B4D9,2;21 Set #REGb for five iterations
+ C$B4DB,3;21 Point #REGhl at the locked door indices
+; Start loop
+@label=gnd_outdoors_loop
+*C$B4DE,1;21 Fetch the door index and door_LOCKED flag
+ C$B4DF,2;21 Mask off door_LOCKED flag to get the door index alone
+ C$B4E1,1;21 Switch register banks for this iteration
+ C$B4E2,3;21 Turn a door index into a door_t pointer in #REGhl
+ C$B4E5,1;21 Preserve the door_t pointer
+ C$B4E6,3;21 Call door_in_range. C is clear if it's in range
+ C$B4E9,1;21 Restore door_t pointer
+ C$B4EA,2;21 Jump forward if in range
+ C$B4EC,1;21 {Advance #REGhl to the next door_t
  C$B4ED,2;21
  C$B4EF,1;21 }
- C$B4F0,3;21 door_in_range();
- C$B4F3,2;21 if (!C) goto not_in_range;
- C$B4F5,1;21
- C$B4F6,1;21 HL++;
- C$B4F7,2;21 %> while (--B);
- C$B4F9,1;21 return;
-*C$B4FA,1;21 not_in_range:
- C$B4FB,1;21 A = 0;
- C$B4FC,1;21 return;
+ C$B4F0,3;21 Call door_in_range. C is clear if it's in range
+ C$B4F3,2;21 Jump forward if in range
+ C$B4F5,1;21 Unbank
+ C$B4F6,1;21 Advance to the next door index and flag in locked_doors
+ C$B4F7,2;21 ...loop
+ C$B4F9,1;21 Return with Z clear (from the INC HL above) (not found)
+@label=gnd_in_range
+*C$B4FA,1;21 Unbank
+ C$B4FB,1;21 Set Z flag (found)
+ C$B4FC,1;21 Return
 ; Indoors.
+; Locked doors 2..8 include interior doors.
 @nowarn
-*C$B4FD,3;21 indoors: HL = &locked_doors[2];
- C$B500,2;21 B = 8; // 8 iterations // Bug: Ought to be 7 iterations.
-*C$B502,1;21 {do <% C = *HL & ~door_LOCKED;
- C$B503,2;21
- C$B505,1;21 }
-; Search interior doors for C.
- C$B506,3;21 DE = &interior_doors;
-*C$B509,1;21 for (;;) <% A = *DE;
- C$B50A,2;21 {    if (A != door_NONE) <% // door_NONE => end of list
- C$B50C,2;21 }
- C$B50E,2;21 {      if ((A & ~door_REVERSE) == C) goto found;
- C$B510,1;21
- C$B511,2;21 }
- C$B513,1;21 {      DE++; %> %>
- C$B514,2;21 }
-*C$B516,1;21 next: HL++;
- C$B517,2;21 %> while (--B);
- C$B519,2;21 A |= 1;
- C$B51B,1;21 return;
-*C$B51C,1;21 found: A = *DE;
- C$B51D,1;21
- C$B51E,3;21 HL = get_door();
- C$B521,1;21 HL++;
- C$B522,1;21
-; Range check pattern (-2..+3).
- C$B523,3;21 HL = &saved_pos_x; // note: 16-bit values holding 8-bit values
- C$B526,2;21 B = 2; // 2 iterations
-*C$B528,1;21 {do <% if (*HL <= *DE - 3 || *HL > *DE + 3) goto exx_next;
- C$B529,8;21
- C$B531,2;21 }
- C$B533,1;21 {  HL += 2;
+@label=gnd_indoors
+*C$B4FD,3;21 Point #REGhl at the third locked door index
+; Bug: Ought to be 7 iterations.
+ C$B500,2;21 Set #REGb for eight iterations
+; Start loop
+@label=gnd_indoors_loop
+*C$B502,1;21 Fetch the door index and door_LOCKED flag
+ C$B503,2;21 Mask off door_LOCKED flag to get the door index alone
+ C$B505,1;21 Keep in #REGc for use during the loop
+; Search interior doors for the door index in #REGc.
+ C$B506,3;21 Point #REGde at interior_doors
+; Start loop (inner)
+@label=gnd_indoors_loop_2
+*C$B509,1;21 Fetch an interior door index
+ C$B50A,2;21 Is it door_NONE? (end of list)
+ C$B50C,2;21 Jump if so
+ C$B50E,2;21 Mask off door_REVERSE flag to get the door index alone
+ C$B510,1;21 Is it a locked door index?
+ C$B511,2;21 Jump if so
+ C$B513,1;21 Otherwise advance to the next interior door index
+; There's no termination condition here where you might expect a test to see if
+; we've run out of doors, but since every room has at least one door it *must*
+; find one.
+ C$B514,2;21 ...loop
+@label=gnd_next
+; Start loop
+*C$B516,1;21 Advance to the next door index and flag in locked_doors
+ C$B517,2;21 ...loop
+ C$B519,2;21 Clear the Z flag (not found)
+ C$B51B,1;21 Return
+@label=gnd_found
+*C$B51C,1;21 Fetch an interior door index
+ C$B51D,1;21 Switch register banks until we return
+ C$B51E,3;21 Turn a door index into a door_t pointer in #REGhl
+ C$B521,1;21 Advance door pointer to door.pos.x
+ C$B522,1;21 Move the door pointer into #REGde
+ C$B523,3;21 Point #REGhl at saved_pos_x
+ C$B526,2;21 Set #REGb for two iterations (two axis)
+; Note: This treats saved_pos as an 8-bit quantity in a 16-bit container.
+; .
+; Start loop -- once for each axis
+; .
+; On each axis if ((door - 2) <= pos and (door + 3) >= pos) then we're good.
+*C$B528,1;21 Fetch door.pos.x/y
+ C$B529,2;21 Compute the lower bound by subtracting 3
+ C$B52B,1;21 Is lower bound >= saved_pos_x/y?
+ C$B52C,2;21 Jump if so (out of bounds - try the next door)
+ C$B52E,2;21 Compute the upper bound by adding 6
+ C$B530,1;21 Is upper bound < saved_pos_x/y?
+ C$B531,2;21 Jump if so (out of bounds - try the next door)
+ C$B533,1;21 {Advance to the next saved_pos axis
  C$B534,1;21 }
- C$B535,1;21 DE++;
- C$B536,2;21 %> while (--B);
- C$B538,1;21
- C$B539,1;21 A = 0; // ok
- C$B53A,1;21 return;
-*C$B53B,1;21 exx_next:
- C$B53C,2;21 goto next;
+ C$B535,1;21 Advance to the next door.pos axis
+ C$B536,2;21 ...loop
+; If we arrive here then we're within the bounds
+ C$B538,1;21 Switch back
+ C$B539,1;21 Set Z flag (found)
+ C$B53A,1;21 Return
+@label=gnd_exx_next
+*C$B53B,1;21 Switch back
+ C$B53C,2;21 ...loop
 
 ; Wall boundaries.
 @label=walls
