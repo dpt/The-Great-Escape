@@ -10318,40 +10318,47 @@ cC$B729,1;21 Preserve vischar pointer
 ;
 ; Cause discovery of all items.
 @label=reset_game
-cC$B75A,3;21 B = item__LIMIT; C = 0;
-*C$B75D,1;21 do <%
- C$B75E,3;21 item_discovered(C); // pass C as C
- C$B761,1;21
- C$B762,1;21 C++;
- C$B763,2;21 %> while (--B);
-; Reset message queue.
- C$B765,3;21 {message_queue_pointer = message_queue + 2;
- C$B768,3;21 }
- C$B76B,3;21 reset_map_and_characters();
- C$B76E,1;21 {$8001 = 0; // vischars[0].flags = 0
+cC$B75A,3;21 Set #REGb for 16 iterations (item__LIMIT) and set #REGc
+ ;21 (item index) to zero
+; Start loop (once per item)
+*C$B75D,1;21 Preserve the iteration counter and item index over the
+ ;21 next call
+ C$B75E,3;21 Cause item #REGc to be discovered
+ C$B761,1;21 Restore
+ C$B762,1;21 Increment the item index
+ C$B763,2;21 ...loop
+; Reset the message queue.
+ C$B765,3;21 {Reset the message queue pointer to its default of
+ C$B768,3;21 message_queue[2]}
+ C$B76B,3;21 Reset all visible characters, clock, day_or_night flag,
+ ;21 general flags, collapsed tunnel objects, lock the gates,
+ ;21 reset all beds, clear the mess halls and reset characters
+ C$B76E,1;21 {Clear the hero's vischar flags
  C$B76F,3;21 }
-; Reset score digits, hero_in_breakfast, red_flag, automatic_player_counter, in_solitary, morale_exhausted.
- C$B772,3;21 HL = &score_digits[0];
- C$B775,2;21 B = 10; // iterations
-*C$B777,1;21 {do <% *HL++ = 0;
- C$B778,1;21 }
- C$B779,2;21 %> while (--B); // could do a memset
+; Reset score digits, hero_in_breakfast, red_flag, automatic_player_counter,
+; in_solitary and morale_exhausted which occupy a contiguous ten byte region.
+ C$B772,3;21 Point #REGhl at score_digits
+ C$B775,2;21 Set #REGb for ten iterations
+; Start loop (once per score digit)
+*C$B777,1;21 Zero the byte
+ C$B778,1;21 Then advance to the next byte
+ C$B779,2;21 ...loop
 ; Reset morale.
- C$B77B,2;21 morale = morale_MAX;
- C$B77D,3;21 plot_score();
+ C$B77B,2;21 Set morale to morale_MAX
+ C$B77D,3;21 Draw the current score to the screen
 ; Reset and redraw items.
- C$B780,3;21 {items_held = item_NONE | (item_NONE << 8);
+ C$B780,3;21 {Set both items_held to item_NONE ($FF)
  C$B783,3;21 }
- C$B786,3;21 draw_all_items();
+ C$B786,3;21 Draw both held items
 ; Reset the hero's sprite.
- C$B789,3;21 {$8015 = sprite_prisoner;
+ C$B789,3;21 {Set vischar.mi.sprite to the prisoner sprite set
  C$B78C,3;21 }
- C$B78F,2;21 {room_index = room_2_HUT2LEFT;
+ C$B78F,2;21 {Set the global current room index to room_2_HUT2LEFT
  C$B791,3;21 }
 ; Put the hero to bed.
- C$B794,3;21 hero_sleeps();
- C$B797,3;21 enter_room();
- C$B79A,1;21 return;
+ C$B794,3;21 The hero sleeps
+ C$B797,3;21 The hero enters a room
+ C$B79A,1;21 Return
 
 ; Resets all visible characters, clock, day_or_night flag, general flags,
 ; collapsed tunnel objects, locks the gates, resets all beds, clears the mess
