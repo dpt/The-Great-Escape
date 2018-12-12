@@ -10059,171 +10059,195 @@ bB$B53E,6;36 0: (106-110,  82-98,  0-11) Hut 0 (leftmost on main map)
 ;
 ; Used by the routines at #R$6939 and #R$9D7B.
 @label=animate
-cC$B5CE,2;23 iterate over all eight vischars
- C$B5D0,4;23 set IY to first vischar
-*C$B5D4,3;23 get vischar.flags
- C$B5D7,2;23 are flags set to vischar_FLAGS_EMPTY_SLOT?
- C$B5D9,3;23 if so - continue to next iteration
- C$B5DC,1;23 stack counter
- C$B5DD,4;23 set flag vischar_FLAGS_NO_COLLIDE
- C$B5E1,4;23 test vischar.input & input_KICK
- C$B5E5,3;23 if set goto 'kicked'
- C$B5E8,3;23 get vischar.anim in HL
- C$B5EB,3;23
- C$B5EE,3;23 ?anim index vischar.animindex
- C$B5F1,1;23 test vischar_ANIMINDEX_BIT7  up/down flag ?
- C$B5F2,3;23
- C$B5F5,2;23 mask off vischar_ANIMINDEX_BIT7
- C$B5F7,3;23 if result is zero goto 'end_bit'
- C$B5FA,1;23 { anim = HL + (A + 1) * 4 - 1
- C$B5FB,6;23
+cC$B5CE,2;23 Set #REGb for eight iterations
+ C$B5D0,4;23 Point #REGiy at the first vischar
+; Start loop
+@label=animate_loop
+*C$B5D4,3;23 Read the vischar's flags byte
+ C$B5D7,2;23 Is it vischar_FLAGS_EMPTY_SLOT? ($FF)
+ C$B5D9,3;23 Jump to the next iteration if so
+ C$B5DC,1;23 Preserve the loop counter
+ C$B5DD,4;23 Set flags byte to vischar_FLAGS_NO_COLLIDE ($80)
+ C$B5E1,4;23 Does the vischar's input field have flag input_KICK
+ ;23 set? ($80)
+ C$B5E5,3;23 Jump if so
+ C$B5E8,3;23 {Fetch vischar animation pointer into #REGhl
+ C$B5EB,3;23 }
+ C$B5EE,3;23 Fetch vischar animation index
+ C$B5F1,1;23 Is vischar_ANIMINDEX_REVERSE set? ($80)
+ C$B5F2,3;23 Jump if not
+ C$B5F5,2;23 Otherwise mask off vischar_ANIMINDEX_REVERSE to get our
+ ;23 frame number
+; Bug: This ought to check for $7F, not zero.
+ C$B5F7,3;23 Jump to initialisation if the result is zero
+ C$B5FA,1;23 {Calculate the animation frame pointer
+ C$B5FB,1;23 = (animation pointer) + (frame number + 1) * 4 - 1
+ C$B5FC,5;23
  C$B601,1;23 }
- C$B602,1;23 A = *HL; // a spriteindex_t
- C$B603,1;23 bank A
- C$B604,1;23 HL++
-*C$B605,1;23 decrement:
- C$B606,3;23 L = IY[0x0F]; // X axis
- C$B609,3;23 H = IY[0x10];
- C$B60C,1;23 A = *DE; // sampled DE=$CF9A,$CF9E,$CFBE,$CFC2,$CFB2,$CFB6,$CFA6,$CFAA (character_related_data)
- C$B60D,1;23 C = A;
- C$B60E,2;23 A &= 0x80;
- C$B610,2;23 {    if (A) A = 0xFF;
- C$B612,2;23 }
-*C$B614,1;23 B = A;
- C$B615,2;23 HL -= BC;
- C$B617,3;23 saved_pos_x = HL;
- C$B61A,1;23 DE++;
- C$B61B,3;23 L = IY[0x11]; // Y axis
- C$B61E,3;23 H = IY[0x12];
- C$B621,1;23 A = *DE;
- C$B622,1;23 C = A;
- C$B623,2;23 A &= 0x80;
- C$B625,2;23 {    if (A) A = 0xFF;
- C$B627,2;23 }
-*C$B629,1;23 B = A;
- C$B62A,2;23 HL -= BC;
- C$B62C,3;23 saved_pos_y = HL;
- C$B62F,1;23 DE++;
- C$B630,3;23 L = IY[0x13]; // height
- C$B633,3;23 H = IY[0x14];
- C$B636,1;23 A = *DE;
- C$B637,1;23 C = A;
- C$B638,2;23 A &= 0x80;
- C$B63A,2;23 {    if (A) A = 0xFF;
- C$B63C,2;23 }
-*C$B63E,1;23 B = A;
- C$B63F,2;23 HL -= BC;
- C$B641,3;23 saved_height = HL;
- C$B644,3;23 touch();
- C$B647,3;23 if (!Z) goto pop_next;
- C$B64A,3;23 IY[0x0C]--;
- C$B64D,2;23 %>
-*C$B64F,1;23 {  else <% if (A == *HL) goto end_bit;
- C$B650,3;23 }
- C$B653,1;23 {    HL += (A + 1) * 4;
- C$B654,5;23
+ C$B602,1;23 Fetch anim's sprite index
+ C$B603,1;23 Bank sprite index
+ C$B604,1;23 ...
+@label=animate_backwards
+*C$B605,1;23 Swap frame pointers
+; Apply frame deltas
+; .
+; saved_pos_x = vischar.mi.pos.x - frame->dx
+ C$B606,3;23 {Fetch vischar.mi.pos.x into #REGhl
+ C$B609,3;23 }
+ C$B60C,1;23 Load animation frame's delta X
+ C$B60D,1;23 {Sign extend into #REGbc
+ C$B60E,6;23
+*C$B614,1;23 }
+ C$B615,2;23 Subtract the delta
+ C$B617,3;23 Save it in saved_pos_x
+; saved_pos_y = vischar.mi.pos.y - frame->dy
+ C$B61A,1;23 Advance to animation frame's delta Y
+ C$B61B,3;23 {Fetch vischar.mi.pos.y into #REGhl
+ C$B61E,3;23 }
+ C$B621,1;23 Load animation frame's delta Y
+ C$B622,1;23 {Sign extend into #REGbc
+ C$B623,6;23
+*C$B629,1;23 }
+ C$B62A,2;23 Subtract the delta
+ C$B62C,3;23 Save it in saved_pos_y
+; saved_height = vischar.mi.pos.height - frame->dh
+ C$B62F,1;23 Advance to animation frame's delta height
+ C$B630,3;23 {Fetch vischar.mi.pos.height into #REGhl
+ C$B633,3;23 }
+ C$B636,1;23 Load animation frame's delta height
+ C$B637,1;23 {Sign extend into #REGbc
+ C$B638,6;23
+*C$B63E,1;23 }
+ C$B63F,2;23 Subtract the delta
+ C$B641,3;23 Save it in saved_height
+;
+ C$B644,3;23 Test for characters meeting obstacles like doors and
+ ;23 map bounds
+ C$B647,3;23 If outside bounds (collided with something), jump to
+ ;23 animate_pop_next to halt any animation
+ C$B64A,3;23 Decrement animation index (DPT: Was there a bug around here?)
+ C$B64D,2;23 (else)
+; Have we reached the end of the animation?
+*C$B64F,1;23 Is the animation index equal to the number of frames in
+ ;23 the animation?
+ C$B650,3;23 Jump if so
+ C$B653,1;23 {Calculate the animation frame pointer
+ C$B654,1;23 = (animation pointer) + (frame number + 1) * 4
+ C$B655,4;23
  C$B659,1;23 }
-*C$B65A,1;23 increment:
- C$B65B,1;23 A = *DE;
- C$B65C,1;23 L = A;
- C$B65D,2;23 A &= 0x80;
- C$B65F,2;23 {    if (A) A = 0xFF;
- C$B661,2;23 }
-*C$B663,1;23 H = A;
- C$B664,3;23 C = IY[0x0F]; // X axis
- C$B667,3;23 B = IY[0x10];
- C$B66A,1;23 HL += BC;
- C$B66B,3;23 saved_pos_x = HL;
- C$B66E,1;23 DE++;
- C$B66F,1;23 A = *DE;
- C$B670,1;23 L = A;
- C$B671,2;23 A &= 0x80;
- C$B673,2;23 {    if (A) A = 0xFF;
- C$B675,2;23 }
-*C$B677,1;23 H = A;
- C$B678,3;23 C = IY[0x11]; // Y axis
- C$B67B,3;23 B = IY[0x12];
- C$B67E,1;23 HL += BC;
- C$B67F,3;23 saved_pos_y = HL;
- C$B682,1;23 DE++;
- C$B683,1;23 A = *DE;
- C$B684,1;23 L = A;
- C$B685,2;23 A &= 0x80;
- C$B687,2;23 {    if (A) A = 0xFF;
- C$B689,2;23 }
-*C$B68B,1;23 H = A;
- C$B68C,3;23 C = IY[0x13]; // height
- C$B68F,3;23 B = IY[0x14];
- C$B692,1;23 HL += BC;
- C$B693,3;23 saved_height = HL;
- C$B696,1;23 DE++;
- C$B697,1;23 A = *DE; // sprite_index
- C$B698,1;23
- C$B699,3;23 touch();
- C$B69C,3;23 if (!Z) goto pop_next;
- C$B69F,3;23 IY[0x0C]++; %>
-*C$B6A2,2;23 {  HL = IY;
+@label=animate_forwards
+*C$B65A,1;23 Swap frame pointers
+; Apply frame deltas
+; .
+; saved_pos_x = vischar.mi.pos.x - frame->dx
+ C$B65B,1;23 Load animation frame's delta X
+ C$B65C,1;23 {Sign extend into #REGhl
+ C$B65D,6;23
+*C$B663,1;23 }
+ C$B664,3;23 {Fetch vischar.mi.pos.x into #REGbc
+ C$B667,3;23 }
+ C$B66A,1;23 Add the delta
+ C$B66B,3;23 Save it in saved_pos_x
+; saved_pos_y = vischar.mi.pos.y - frame->dy
+ C$B66E,1;23 Advance to animation frame's delta Y
+ C$B66F,1;23 Load animation frame's delta Y
+ C$B670,1;23 {Sign extend into #REGhl
+ C$B671,6;23
+*C$B677,1;23 }
+ C$B678,3;23 {Fetch vischar.mi.pos.y into #REGbc
+ C$B67B,3;23 }
+ C$B67E,1;23 Add the delta
+ C$B67F,3;23 Save it in saved_pos_y
+; saved_height = vischar.mi.pos.height - frame->dh
+ C$B682,1;23 Advance to animation frame's delta height
+ C$B683,1;23 Load animation frame's delta height
+ C$B684,1;23 {Sign extend into #REGhl
+ C$B685,6;23
+*C$B68B,1;23 }
+ C$B68C,3;23 {Fetch vischar.mi.pos.height into #REGbc
+ C$B68F,3;23 }
+ C$B692,1;23 Add the delta
+ C$B693,3;23 Save it in saved_height
+;
+ C$B696,1;23 Advance to animation frame's sprite index
+ C$B697,1;23 Load animation frame's sprite index
+ C$B698,1;23 Bank #REGa
+ C$B699,3;23 Test for characters meeting obstacles like doors and
+ ;23 map bounds
+ C$B69C,3;23 If outside bounds (collided with something), goto
+ ;23 animate_pop_next to halt any animation
+ C$B69F,3;23 Increment animation index
+*C$B6A2,2;23 {#REGhl = #REGiy
  C$B6A4,1;23 }
- C$B6A5,3;23 calc_vischar_iso_pos_from_state();
-*C$B6A8,1;23 pop_next:
- C$B6A9,3;23 {  if (IY[1] != vischar_FLAGS_EMPTY_SLOT) IY[1] &= ~vischar_FLAGS_NO_COLLIDE; // $8001
- C$B6AC,4;23
- C$B6B0,4;23 }
-*C$B6B4,3;23 next: DE = 32; // stride
- C$B6B7,2;23 IY += DE;
- C$B6B9,1;23 {%> while (--B);
+ C$B6A5,3;23 Calculate screen position for vischar from saved_pos
+@label=animate_pop_next
+*C$B6A8,1;23
+ C$B6A9,3;23 Read the vischar's flags byte
+ C$B6AC,2;23 Is it vischar_FLAGS_EMPTY_SLOT? ($FF)
+ C$B6AE,2;23 Jump forward if so
+ C$B6B0,4;23 Otherwise clear the vischar_FLAGS_NO_COLLIDE flag ($80)
+@label=animate_next
+*C$B6B4,3;23 Set #REGde to the vischar stride (32)
+ C$B6B7,2;23 Advance #REGiy to the next vischar
+ C$B6B9,1;23 {...loop
  C$B6BA,3;23 }
- C$B6BD,1;23 return;
-@label=kicked
-*C$B6BE,4;23 reset input_KICK flag
-@label=end_bit
-*C$B6C2,3;23 get vischar.direction
- C$B6C5,1;23 {multiply it by 9
+ C$B6BD,1;23 Return
+@label=animate_kicked
+*C$B6BE,4;23 Clear the input_KICK flag
+@label=animate_init
+*C$B6C2,3;23 Fetch vischar direction field
+ C$B6C5,1;23 {Multiply it by 9
  C$B6C6,3;23
  C$B6C9,1;23 }
- C$B6CA,3;23 add vischar.input to it
- C$B6CD,3;23
- C$B6D0,3;23 add it to animindices
- C$B6D3,1;23
- C$B6D4,1;23 fetch the (table entry)
- C$B6D5,1;23
- C$B6D6,3;23 HL = vischar.animbase
- C$B6D9,3;23
- C$B6DC,1;23 double A (and in doing so discard the top bit!)
- C$B6DD,1;23
- C$B6DE,1;23 (D is still zero from above)
- C$B6DF,1;23 { vischar.anim = *HL
- C$B6E0,5;23
+ C$B6CA,3;23 Add vischar input field to it
+ C$B6CD,1;23 {Shuffle it into #REGde
+ C$B6CE,2;23 }
+ C$B6D0,3;23 {Add it to the animindices base address
+ C$B6D3,1;23 }
+ C$B6D4,1;23 Fetch the index pointed to
+ C$B6D5,1;23 Stash in #REGc for later
+ C$B6D6,3;23 {Fetch vischar.animbase
+ C$B6D9,3;23 (animbase is always &animations[0])}
+ C$B6DC,1;23 Double #REGa (and in doing so discard the top bit!)
+ C$B6DD,1;23 Set #REGde to #REGa (we know #REGd is zero from above)
+ C$B6DE,1;23 Point at the #REGa'th frame pointer
+ C$B6DF,1;23 {Load the frame pointer into #REGde and set vischar
+ C$B6E0,1;23 anim field to it
+ C$B6E1,4;23
  C$B6E5,3;23 }
- C$B6E8,2;23 {if ((C & (1<<7)) == 0) <%
- C$B6EA,2;23 }
- C$B6EC,4;23 vischar.animindex = 0
- C$B6F0,1;23 {  DE += 2;
+ C$B6E8,2;23 Was the reverse bit set on the index?
+ C$B6EA,2;23 Jump forward if so
+ C$B6EC,4;23 Zero the vischar animindex field
+ C$B6F0,1;23 {Skip nframes and from fields. Advance #REGde to animB->to
  C$B6F1,1;23 }
- C$B6F2,1;23 { vischar.direction = *DE;
+ C$B6F2,1;23 {Set the vischar direction field to animB->to
  C$B6F3,3;23 }
- C$B6F6,1;23 {  DE += 2; // point to groups of four
+ C$B6F6,1;23 {Advance to animB->frames
  C$B6F7,1;23 }
- C$B6F8,1;23
- C$B6F9,3;23 goto increment
+ C$B6F8,1;23 Swap frame pointers
+ C$B6F9,3;23 Jump
 ; else
-*C$B6FC,1;23 A = *DE; // count of four-byte groups
- C$B6FD,1;23 C = A;
- C$B6FE,2;23 {  vischar.animindex = A | vischar_ANIMINDEX_BIT7;
+*C$B6FC,1;23 Fetch nframes
+ C$B6FD,1;23 Stash in #REGc for later
+; Bug: C port uses (nframes - 1) here to fix something... (add detail)
+ C$B6FE,2;23 {Set the vischar animindex field to (nframes | vischar_ANIMINDEX_REVERSE)
  C$B700,3;23 }
- C$B703,1;23 {  vischar.direction = *++DE;
- C$B704,1;23
+ C$B703,1;23 Advance to 'from'
+ C$B704,1;23 {Set the vischar direction field to 'from'
  C$B705,3;23 }
- C$B708,1;23 {  DE += 3; // point to groups of four
+; Bug: C port uses final frame here, not first... (add detail)
+ C$B708,1;23 {Advance to animB->frame[0]
  C$B709,1;23
  C$B70A,1;23 }
- C$B70B,2;23
- C$B70D,1;23 {  HL += C * 4 - 1;
+ C$B70B,1;23 Stack animB
+ C$B70C,1;23 Swap frame pointers
+ C$B70D,1;23 {Point #REGhl at anim[nframes - 1].spriteindex
  C$B70E,6;23
  C$B714,1;23 }
- C$B715,1;23 A = *HL;
- C$B716,2;23
- C$B718,3;23 goto decrement
+ C$B715,1;23 Fetch the new sprite index
+ C$B716,1;23 Swap the sprite indices
+ C$B717,1;23 Pop and swap?
+ C$B718,3;23 Jump
 
 ; Calculate screen position for vischar.
 ;
