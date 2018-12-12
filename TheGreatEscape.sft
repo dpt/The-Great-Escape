@@ -10543,92 +10543,118 @@ cC$B866,3;21 Locates a vischar or item to plot
  C$B894,3;21 Render the mask buffer
  C$B897,3;21 Call the sprite plotter for 16-pixel-wide sprites
  C$B89A,2;21 ...loop
+
+; Finds the next vischar or item to draw.
 ;
 ; Used by the routine at #R$B866.
 ;
-; O:IY vischar or itemstruct to plot.
+; O:F  Z set if a valid vischar or item was returned.
+; O:A  Returns (vischars_LENGTH - iters) if vischar, or ((item__LIMIT - iters) | (1 << 6)) if itemstruct.
+; O:IY The vischar or itemstruct to plot.
 @label=locate_vischar_or_itemstruct
-cC$B89C,3;22 BC = 0; // prev-x
- C$B89F,1;22 {DE = 0; // prev-y
+cC$B89C,3;22 {#REGbc and #REGde are previous_x and previous_y.
+ C$B89F,1;22 Zero them both
  C$B8A0,1;22 }
- C$B8A1,2;22 A = 0xFF; // 'nothing found' marker 0xFF
- C$B8A3,2;22
- C$B8A5,3;22 DE = 0;
- C$B8A8,3;22 B = 8; C = 32; // iterations, stride
- C$B8AB,3;22 HL = $8007; // vischar byte7
-*C$B8AE,2;22 {do <% if ((*HL & vischar_TOUCH_ENTERED) == 0) goto next;
- C$B8B0,2;22 }
- C$B8B2,2;22
- C$B8B4,2;22 {  HL += 8; // $8007 + 8 = $800F = mi.pos.x
+ C$B8A1,2;22 Load #REGa with a 'nothing found' marker ($FF)
+ C$B8A3,1;22 Bank it
+ C$B8A4,1;22 Bank the previous_x/y registers
+; Note that we maintain a previous_height but it's never usefully used.
+ C$B8A5,3;22 Initialise the previous_height to zero
+ C$B8A8,3;22 Set #REGb for eight iterations and set #REGc for a 32
+ ;22 byte stride simultaneously
+ C$B8AB,3;22 Point #REGhl at vischar 0's counter_and_flags
+; Start loop
+@label=lvoi_loop
+*C$B8AE,2;22 Is counter_and_flags' vischar_TOUCH_ENTERED flag set?
+ C$B8B0,2;22 Jump to next iteration if not
+ C$B8B2,1;22 Preserve the vischar pointer
+ C$B8B3,1;22 Preserve the loop counter and stride
+; Check the X axis
+ C$B8B4,2;22 {Point #REGhl at vischar.mi.pos.x
  C$B8B6,1;22
  C$B8B7,1;22 }
- C$B8B8,1;22 {  C = *HL++;
- C$B8B9,1;22 }
- C$B8BA,1;22 B = *HL;
- C$B8BB,1;22 {  BC += 4;
+ C$B8B8,1;22 {Load vischar.mi.pos.x into #REGbc
+ C$B8B9,1;22
+ C$B8BA,1;22 }
+ C$B8BB,1;22 {Add 4
  C$B8BC,2;22
  C$B8BE,1;22 }
- C$B8BF,6;22
- C$B8C5,2;22 JR C,pop_next
- C$B8C7,1;22 HL++;
- C$B8C8,1;22 {  C = *HL++;
- C$B8C9,1;22 }
- C$B8CA,1;22 B = *HL;
- C$B8CB,1;22 {  BC += 4;
+ C$B8BF,1;22 Stack it
+ C$B8C0,1;22 Switch banks to get spare #REGhl
+ C$B8C1,1;22 #REGhl = vischar.mi.pos.x + 4
+ C$B8C2,2;22 Subtract previous_x
+ C$B8C4,1;22 Bank
+ C$B8C5,2;22 Jump if (vischar.mi.pos.x + 4) < previous_x?
+; Check the Y axis
+ C$B8C7,1;22 {Load vischar.mi.pos.y into #REGbc
+ C$B8C8,2;22
+ C$B8CA,1;22 }
+ C$B8CB,1;22 {Add 4
  C$B8CC,2;22
  C$B8CE,1;22 }
- C$B8CF,6;22
- C$B8D5,2;22 JR C,pop_next
- C$B8D7,1;22 HL++;
- C$B8D8,2;22
- C$B8DA,2;22 {  A = 8 - B; /* Item index. */
+ C$B8CF,1;22 Stack it
+ C$B8D0,1;22 Switch banks to get spare #REGhl
+ C$B8D1,1;22 #REGhl = vischar.mi.pos.y + 4
+ C$B8D2,2;22 Subtract previous_y
+ C$B8D4,1;22 Bank
+ C$B8D5,2;22 Jump if (vischar.mi.pos.y + 4) < previous_y?
+ C$B8D7,1;22 Point #REGhl at vischar.mi.pos.height
+; We compute a vischar index here but the outer code never usefully uses it.
+ C$B8D8,1;22 {Fetch the loop counter from the stack
+ C$B8D9,1;22 }
+ C$B8DA,2;22 {Compute the vischar index (8 - #REGb)
  C$B8DC,1;22 }
- C$B8DD,1;22 // unpaired
- C$B8DE,1;22 {  E = *HL++;
- C$B8DF,1;22 }
- C$B8E0,1;22 D = *HL;
- C$B8E1,3;22
- C$B8E4,1;22 {  L -= 2;
+ C$B8DD,1;22 Bank it for return value
+ C$B8DE,1;22 {previous_height = vischar.mi.pos.height
+ C$B8DF,1;22
+ C$B8E0,1;22 }
+ C$B8E1,1;22 Preserve the vischar pointer
+ C$B8E2,1;22 Bank
+ C$B8E3,1;22 Restore vischar pointer to the other bank
+ C$B8E4,1;22 {Point #REGhl at vischar.mi.pos.y
  C$B8E5,1;22 }
- C$B8E6,1;22 {  D = *HL--;
- C$B8E7,1;22 }
- C$B8E8,1;22 {  E = *HL--;
+ C$B8E6,1;22 {previous_y = vischar.mi.pos.y
+ C$B8E7,2;22
  C$B8E9,1;22 }
- C$B8EA,1;22 {  B = *HL--;
- C$B8EB,1;22 }
- C$B8EC,1;22 C = *HL;
- C$B8ED,1;22 {  HL -= 15;
+ C$B8EA,1;22 {previous_x = vischar.mi.pos.x
+ C$B8EB,1;22
+ C$B8EC,1;22 }
+ C$B8ED,1;22 {Point #REGhl at vischar
  C$B8EE,2;22
  C$B8F0,1;22 }
- C$B8F1,1;22 {  IY = HL;
+ C$B8F1,1;22 {Set #REGiy to #REGhl
  C$B8F2,2;22 }
  C$B8F4,1;22
-*C$B8F5,1;22 pop_next:
- C$B8F6,1;22
-*C$B8F7,1;22 {  next: HL += C;
+@label=lvoi_pop_next
+*C$B8F5,1;22 Restore loop counter and stride
+ C$B8F6,1;22 Restore vischar pointer
+@label=lvoi_next
+*C$B8F7,1;22 {Advance to the next vischar
  C$B8F8,1;22
  C$B8F9,1;22 }
- C$B8FA,2;22 %> while (--B);
- C$B8FC,3;22 get_greatest_itemstruct();
- C$B8FF,1;22 // extract return value
-; If A' top bit remains set from initialisation, then no vischar was found.
-; (It's not affected by get_greatest_itemstruct which passes it through).
- C$B900,2;22 {if (A & (1<<7)) return;
- C$B902,1;22 }
- C$B903,2;22 {HL = IY;
+ C$B8FA,2;22 ...loop
+ C$B8FC,3;22 Iterate over all item_structs looking for nearby items
+ C$B8FF,1;22 Get the old #REGa back
+; If the topmost bit of #REGa' remains set from its initialisation at #R$B8A1,
+; then no vischar was found. It's preserved by the call to
+; get_greatest_itemstruct.
+ C$B900,2;22 Does bit 7 remain set from initialisation?
+ C$B902,1;22 Return with Z clear if so: nothing was found
+; Otherwise we've found a vischar
+ C$B903,2;22 {Get vischar in #REGhl
  C$B905,1;22 }
- C$B906,2;22 {if ((A & (1<<6)) == 0) <% // mysteryflagconst874 'item found' flag?
- C$B908,2;22 }
- C$B90A,4;22 IY[7] &= ~vischar_TOUCH_ENTERED;
- C$B90E,1;22 return; %>
-*C$B90F,1;22 {else <% HL[1] &= ~itemstruct_ROOM_FLAG_NEARBY_6; // looks wrong: HL points to a vischar here
- C$B910,2;22 }
-; This is odd. It tests the bit we've just cleared as if we're setting flags
-; for return, but we can't be as we're followed by another instruction...
-; unless DEC HL doesn't alter the Z flag... which is true, it doesn't.
- C$B912,2;22 {  BIT 6,HL[1]
- C$B914,1;22 }
- C$B915,1;22 return; %>
+ C$B906,2;22 Is item_FOUND set? ($40)
+ C$B908,2;22 Jump if so
+ C$B90A,4;22 Clear the vischar.counter_and_flags
+ ;22 vischar_TOUCH_ENTERED flag
+ C$B90E,1;22 Return with Z set
+@label=lvoi_item_found
+*C$B90F,1;22 Point #REGhl at itemstruct.room_and_flags
+ C$B910,2;22 Clear itemstruct_ROOM_FLAG_NEARBY_6
+ C$B912,2;22 Test the bit we've just cleared (odd!) - sets Z
+ C$B914,1;22 Point #REGhl back at the base of the itemstruct.
+ ;22 (Note that DEC HL doesn't alter the Z flag)
+ C$B915,1;22 Return with Z set
 
 ; Render the mask buffer.
 ;
