@@ -10513,31 +10513,36 @@ cC$B83B,2;21 {Copy the current visible character pointer into #REGhl
 ; .
 ;
 @label=plot_sprites
+; Start (infinite) loop
+; .
 ; This can return a vischar OR an itemstruct, but not both.
-cC$B866,3;21 locate_vischar_or_itemstruct();
- C$B869,1;21 if (!Z) return;
- C$B86A,2;21 {if ((A & (1<<6)) == 0) <% // mysteryflagconst874 'item found' flag
- C$B86C,2;21 }
- C$B86E,3;21 setup_vischar_plotting();
- C$B871,2;21 if (!Z) goto plot_sprites;
- C$B873,3;21 render_mask_buffer();
- C$B876,3;21 {  if (searchlight_state != searchlight_STATE_SEARCHING)
- C$B879,2;21 searchlight_mask_test();
- C$B87B,3;21 }
- C$B87E,3;21 A = IY[0x1E];
- C$B881,2;21 {  if (A != 3) <%
- C$B883,2;21 }
- C$B885,3;21 masked_sprite_plotter_24_wide_vischar();
- C$B888,2;21 goto plot_sprites; %>
-*C$B88A,3;21 if (Z) masked_sprite_plotter_16_wide_vischar(); // odd to test for Z since it's always set
- C$B88D,2;21 goto plot_sprites; %>
-*C$B88F,3;21 else <% setup_item_plotting();
- C$B892,2;21 if (!Z) goto plot_sprites;
- C$B894,3;21 render_mask_buffer();
- C$B897,3;21 masked_sprite_plotter_16_wide_item();
- C$B89A,2;21 goto plot_sprites; %>
-
-; Locates a vischar or item to plot.
+cC$B866,3;21 Locates a vischar or item to plot
+ C$B869,1;21 Return if nothing remains
+ C$B86A,2;21 Was an item returned?
+ C$B86C,2;21 Jump to item handling if so
+@label=plot_vischar
+ C$B86E,3;21 Set up vischar plotting
+ C$B871,2;21 If not visible (Z clear) ...loop
+ C$B873,3;21 Render the mask buffer
+ C$B876,3;21 Fetch the searchlight state
+ C$B879,2;21 Is it searchlight_STATE_SEARCHING? ($FF)
+ C$B87B,3;21 If not: check the mask buffer to see if the hero is hiding behind something
+ C$B87E,3;21 How wide is the vischar? (3 => 16 wide, 4 => 24 wide)
+ C$B881,2;21 16 wide?
+ C$B883,2;21 Jump if so
+@label=plot_24_wide
+ C$B885,3;21 Call the sprite plotter for 24-pixel-wide sprites
+ C$B888,2;21 ...loop
+@label=plot_16_wide
+; It's odd to test for Z here since it's always set.
+*C$B88A,3;21 Call (if Z set) the sprite plotter for 16-pixel-wide sprites
+ C$B88D,2;21 ...loop
+@label=plot_item
+*C$B88F,3;21 Set up item plotting
+ C$B892,2;21 If not visible (Z clear) ...loop
+ C$B894,3;21 Render the mask buffer
+ C$B897,3;21 Call the sprite plotter for 16-pixel-wide sprites
+ C$B89A,2;21 ...loop
 ;
 ; Used by the routine at #R$B866.
 ;
