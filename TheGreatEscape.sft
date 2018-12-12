@@ -10366,88 +10366,97 @@ cC$B75A,3;21 Set #REGb for 16 iterations (item__LIMIT) and set #REGc
 ;
 ; Used by the routines at #R$B75A and #R$CB98.
 @label=reset_map_and_characters
-cC$B79B,2;24 B = 7; // iterations
+cC$B79B,2;24 Set #REGb for seven iterations
 @nowarn
- C$B79D,3;24 HL = $8020; // iterate over non-player characters
-*C$B7A0,1;24 {do <%
- C$B7A1,1;24 }
- C$B7A2,3;24 {  reset_visible_character();
- C$B7A5,1;24 }
- C$B7A6,1;24 {  HL += 32;
- C$B7A7,3;24
- C$B7AA,1;24 }
- C$B7AB,2;24 %> while (--B);
- C$B7AD,2;24 {clock = 7;
- C$B7AF,3;24 }
- C$B7B2,1;24 {day_or_night = 0;
+ C$B79D,3;24 Point #REGhl at the second vischar
+; Start loop (iterate over non-player characters)
+*C$B7A0,1;24 Preserve the counter
+ C$B7A1,1;24 Preserve the vischar pointer
+ C$B7A2,3;24 Reset the visible character
+ C$B7A5,1;24 Restore the vischar pointer
+ C$B7A6,1;24 {Advance #REGhl to the next vischar (note shortcut)
+ C$B7A7,2;24
+ C$B7A9,1;24 }
+ C$B7AA,1;24 Restore the counter
+ C$B7AB,2;24 ...loop
+ C$B7AD,2;24 {Set the game clock to seven [unsure why seven in
+ C$B7AF,3;24 particular]}
+ C$B7B2,1;24 {Clear the night-time flag
  C$B7B3,3;24 }
- C$B7B6,3;24 ($8001) = 0; // flags
- C$B7B9,2;24 {roomdef_50_blocked_tunnel_collapsed_tunnel = interiorobject_COLLAPSED_TUNNEL_SW_NE;
- C$B7BB,3;24 }
- C$B7BE,2;24 {blockage = 0x34; /* Reset boundary. */
+ C$B7B6,3;24 Clear the hero's vischar flags
+ C$B7B9,2;24 {Set the roomdef_50_blocked_tunnel_collapsed_tunnel
+ C$B7BB,3;24 object to interiorobject_COLLAPSED_TUNNEL_SW_NE}
+ C$B7BE,2;24 {Set the blocked tunnel boundary
 @nowarn
  C$B7C0,3;24 }
-; Lock the gates.
- C$B7C3,3;24 HL = &locked_doors[0];
- C$B7C6,2;24 B = 9; // 9 iterations
-*C$B7C8,2;24 {do <% *HL++ |= door_LOCKED;
- C$B7CA,1;24 }
- C$B7CB,2;24 %> while (--B);
+; Lock the gates and doors.
+ C$B7C3,3;24 Point #REGhl at locked_doors[0]
+ C$B7C6,2;24 Set #REGb for nine iterations (nine locked doors)
+; Start loop
+*C$B7C8,2;24 {Set the door_LOCKED flag
+ C$B7CA,1;24 Advance #REGhl to the next locked door}
+ C$B7CB,2;24 ...loop
 ; Reset all beds.
- C$B7CD,2;24 B = 6; // iterations
- C$B7CF,2;24 {HL = &beds[0];
- C$B7D1,3;24 }
-*C$B7D4,1;24 {do <% E = *HL++;
- C$B7D5,1;24 }
- C$B7D6,1;24 {  D = *HL++;
+ C$B7CD,2;24 Set #REGb for six iterations (six beds)
+ C$B7CF,2;24 Preload #REGa with interiorobject_OCCUPIED_BED
+ C$B7D1,3;24 Point #REGhl at beds[0]
+; Start loop
+*C$B7D4,1;24 {Load the address of the bed object
+ C$B7D5,2;24
  C$B7D7,1;24 }
- C$B7D8,1;24 *DE = interiorobject_OCCUPIED_BED;
- C$B7D9,2;24 %> while (--B);
+ C$B7D8,1;24 Set the bed object to interiorobject_OCCUPIED_BED
+ C$B7D9,2;24 ...loop
 ; Clear the mess halls.
- C$B7DB,2;24 {roomdef_23_breakfast.bench_A = interiorobject_EMPTY_BENCH;
- C$B7DD,3;24 }
- C$B7E0,3;24 roomdef_23_breakfast.bench_B = interiorobject_EMPTY_BENCH;
- C$B7E3,3;24 roomdef_23_breakfast.bench_C = interiorobject_EMPTY_BENCH;
- C$B7E6,3;24 roomdef_25_breakfast.bench_D = interiorobject_EMPTY_BENCH;
- C$B7E9,3;24 roomdef_25_breakfast.bench_E = interiorobject_EMPTY_BENCH;
- C$B7EC,3;24 roomdef_25_breakfast.bench_F = interiorobject_EMPTY_BENCH;
- C$B7EF,3;24 roomdef_25_breakfast.bench_G = interiorobject_EMPTY_BENCH;
+ C$B7DB,2;24 Preload #REGa with interiorobject_EMPTY_BENCH
+ C$B7DD,3;24 Set to empty roomdef_23_breakfast_bench_A
+ C$B7E0,3;24 Set to empty roomdef_23_breakfast_bench_B
+ C$B7E3,3;24 Set to empty roomdef_23_breakfast_bench_C
+ C$B7E6,3;24 Set to empty roomdef_25_breakfast_bench_D
+ C$B7E9,3;24 Set to empty roomdef_25_breakfast_bench_E
+ C$B7EC,3;24 Set to empty roomdef_25_breakfast_bench_F
+ C$B7EF,3;24 Set to empty roomdef_25_breakfast_bench_G
 ; Reset characters 12..15 (guards) and 20..25 (prisoners).
- C$B7F2,3;24 DE = &character_structs[12].room;
- C$B7F5,2;24 C = 10; // iterations
+ C$B7F2,3;24 Point #REGde at character_structs[12].room
+ C$B7F5,2;24 Set #REGc for ten iterations
 @nowarn
- C$B7F7,3;24 HL = &character_reset_data[0];
-*C$B7FA,2;24 {do <% memcpy(DE, HL, 3); DE += 3; HL += 3;
-*C$B7FC,1;24
- C$B7FD,5;24
- C$B802,1;24 }
- C$B803,2;24 {  *DE++ = 18; /* Bug/Odd: This is reset to 18 but the initial data is 24. */
+ C$B7F7,3;24 Point #REGhl at character_reset_data[0]
+; Start loop
+*C$B7FA,2;24 Set #REGb for three iterations
+*C$B7FC,1;24 {Copy a byte and advance
+ C$B7FD,2;24
+ C$B7FF,1;24 }
+ C$B800,2;24 ...loop
+; #REGde now points to the height
+ C$B802,1;24 Swap
+; Bug: This is reset to 18 here but the initial value is 24.
+ C$B803,2;24 {Set height to 18 and advance
  C$B805,1;24 }
- C$B806,2;24 {  *DE++ = 0x00;
+ C$B806,2;24 {Set route index to zero (halt)
  C$B808,1;24 }
- C$B809,1;24 {  DE += 2;
- C$B80A,1;24
- C$B80B,1;24 }
- C$B80C,1;24 {  if (C == 7) DE = &character_structs[20].room;
- C$B80D,4;24
- C$B811,3;24 }
-*C$B814,1;24 {%> while (--C);
+ C$B809,1;24 {Advance to the next character struct
+ C$B80A,1;24 }
+ C$B80B,1;24 Swap
+ C$B80C,1;24 Get our loop counter
+ C$B80D,2;24 Do seven iterations remain?
+ C$B80F,2;24 Jump if not
+ C$B811,3;24 Otherwise point #REGde at character_structs[20].room
+*C$B814,1;24 {...loop
  C$B815,3;24 }
- C$B818,1;24 return;
-; 10 x 3-byte structs
+ C$B818,1;24 Return
+; Reset data for character_structs.
 ; .
 ; struct { byte room; byte x; byte y; }; // partial of character_struct
 @label=character_reset_data
- B$B819,3;24 room_3_HUT2RIGHT, 40,60 // for character 12
- B$B81C,3;24 room_3_HUT2RIGHT, 36,48 // for character 13
- B$B81F,3;24 room_5_HUT3RIGHT, 40,60 // for character 14
- B$B822,3;24 room_5_HUT3RIGHT, 36,34 // for character 15
- B$B825,3;24 room_NONE,        52,60 // for character 20
- B$B828,3;24 room_NONE,        52,44 // for character 21
- B$B82B,3;24 room_NONE,        52,28 // for character 22
- B$B82E,3;24 room_NONE,        52,60 // for character 23
- B$B831,3;24 room_NONE,        52,44 // for character 24
- B$B834,3;24 room_NONE,        52,28 // for character 25
+ B$B819,3;24 (room_3_HUT2RIGHT, 40,60) for character 12
+ B$B81C,3;24 (room_3_HUT2RIGHT, 36,48) for character 13
+ B$B81F,3;24 (room_5_HUT3RIGHT, 40,60) for character 14
+ B$B822,3;24 (room_5_HUT3RIGHT, 36,34) for character 15
+ B$B825,3;24 (room_NONE,        52,60) for character 20
+ B$B828,3;24 (room_NONE,        52,44) for character 21
+ B$B82B,3;24 (room_NONE,        52,28) for character 22
+ B$B82E,3;24 (room_NONE,        52,60) for character 23
+ B$B831,3;24 (room_NONE,        52,44) for character 24
+ B$B834,3;24 (room_NONE,        52,28) for character 25
 
 ; render_mask_buffer stuff.
 @label=clip_x0
