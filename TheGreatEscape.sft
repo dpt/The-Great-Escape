@@ -10474,35 +10474,37 @@ gB$B837,1
 ;
 ; I:IY Pointer to visible character.
 @label=searchlight_mask_test
-cC$B83B,2;21 {HL = IY;
+cC$B83B,2;21 {Copy the current visible character pointer into #REGhl
  C$B83D,1;21 }
- C$B83E,1;21 {if (L) return; /* Skip non-hero characters. */
- C$B83F,1;21
- C$B840,1;21 }
- C$B841,3;21 HL = $8100 + $31; // mask_buffer + 0x31
-; Bug: Does a fused load of BC, but doesn't use C after. Probably a leftover
-; stride constant.
- C$B844,3;21 BC = 0x0804; // 8 iterations
- C$B847,1;21 {do <% if (*HL != 0) goto still_in_searchlight;
-*C$B848,1;21
- C$B849,2;21 }
- C$B84B,1;21 {  HL += 4; // stride is 4?
+ C$B83E,1;21 Extract the visible character's offset
+ C$B83F,1;21 Is it zero?
+ C$B840,1;21 Return if not - skip non-hero characters
+; Start testing at approximately the middle of the character.
+ C$B841,3;21 Point #REGhl at mask_buffer ($8100) + $31
+; Bug: This does a fused load of #REGbc, but doesn't use #REGc after. It's
+; probably a leftover stride constant.
+ C$B844,3;21 Set #REGb for eight iterations
+; Start loop
+ C$B847,1;21 Preload #REGa with zero
+*C$B848,1;21 Is the mask byte zero?
+ C$B849,2;21 Jump to still_in_searchlight if not
+ C$B84B,1;21 {Advance #REGhl to the next row (note cheap increment due to alignment)
  C$B84C,2;21
  C$B84E,1;21 }
- C$B84F,2;21 %> while (--B);
+ C$B84F,2;21 ...loop
 ; Otherwise the hero has escaped the searchlight, so decrement the counter.
- C$B851,3;21 HL = &searchlight_state;
- C$B854,1;21 (*HL)--;
- C$B855,2;21 {if (searchlight_STATE_SEARCHING != *HL) return;
- C$B857,1;21
- C$B858,1;21 }
- C$B859,3;21 choose_game_window_attributes();
- C$B85C,3;21 set_game_window_attributes();
- C$B85F,1;21 return;
+ C$B851,3;21 Point #REGhl at searchlight_state
+ C$B854,1;21 Decrement it
+ C$B855,2;21 {Is it searchlight_STATE_SEARCHING?
+ C$B857,1;21 }
+ C$B858,1;21 Return if not
+ C$B859,3;21 Choose game window attributes
+ C$B85C,3;21 Set game window attributes
+ C$B85F,1;21 Return
 @label=still_in_searchlight
-*C$B860,3;21 {searchlight_state = searchlight_STATE_CAUGHT;
+*C$B860,3;21 {Set searchlight_state to searchlight_STATE_CAUGHT
  C$B863,2;21 }
- C$B865,1;21 return;
+ C$B865,1;21 Return
 
 ; Plot vischars and items in order.
 ;
