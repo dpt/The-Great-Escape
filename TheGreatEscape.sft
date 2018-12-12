@@ -10249,52 +10249,64 @@ cC$B5CE,2;23 Set #REGb for eight iterations
  C$B717,1;23 Pop and swap?
  C$B718,3;23 Jump
 
-; Calculate screen position for vischar.
+; Calculate screen position for the specified vischar from mi.pos.
 ;
 ; Used by the routines at #R$68F4, #R$697D, #R$A491, #R$B2FC and #R$C4E0.
 ;
 ; I:HL Pointer to visible character.
 @label=calc_vischar_iso_pos_from_vischar
-cC$B71B,1
-; Save a copy of the vischar's position + offset.
- C$B71C,2;21 {memcpy(&saved_pos_x, HL + 0x0F, 6);
- C$B71E,8;21
- C$B726,2;21 }
- C$B728,1
-; FALL THROUGH into calc_vischar_iso_pos_from_state.
+cC$B71B,1;21 Preserve vischar pointer
+; Save a copy of the vischar's position to global saved_pos.
+ C$B71C,2;21 {Point #REGhl at vischar.mi.pos
+ C$B71E,1;21
+ C$B71F,1;21 }
+ C$B720,3;21 Point #REGde at saved_pos
+ C$B723,3;21 Six bytes
+ C$B726,2;21 Block copy
+ C$B728,1;21 Restore vischar pointer
+; Now FALL THROUGH into calc_vischar_iso_pos_from_state which will read from
+; saved_pos.
 
-; Calculate screen position for vischars from saved_pos.
+; Calculate screen position for the specified vischar from saved_pos.
 ;
 ; Used by the routine at #R$B5CE.
 ; .
 ; Similar to drop_item_tail_interior.
 ;
 ; I:HL Pointer to visible character.
+;
+; .
 @label=calc_vischar_iso_pos_from_state
-cC$B729,1;21
- C$B72A,2;21 {HL += 0x18; // vischar->scrx/y
+; Set vischar.iso_pos.x to ($200 - saved_pos_x + saved_pos_y) * 2
+cC$B729,1;21 Preserve vischar pointer
+ C$B72A,2;21 {Point #REGde at vischar.iso_pos.x (note shortcut - no rollover into high byte)
  C$B72C,1;21
  C$B72D,1;21 }
- C$B72E,3;21 {DE = saved_pos_y + 0x0200;
+ C$B72E,3;21 {HL = saved_pos_y + $200
  C$B731,3;21
  C$B734,1;21 }
- C$B735,5;21
- C$B73A,2;21 {DE = (DE - saved_pos_x) * 2;
- C$B73C,1;21 }
- C$B73D,1;21
- C$B73E,1;21 {*HL++ = E;
- C$B73F,1;21 }
- C$B740,1;21 {*HL++ = D;
+ C$B735,4;21 Fetch saved_pos_x
+ C$B739,1;21 Clear the carry flag
+ C$B73A,2;21 HL -= saved_pos_x
+ C$B73C,1;21 Double the result
+ C$B73D,1;21 Restore vischar pointer
+ C$B73E,1;21 {Store result in vischar.iso_pos.x
+ C$B73F,2;21
  C$B741,1;21 }
- C$B742,1;21
- C$B743,3;21 {DE = 0x0800 - saved_pos_x - saved_height - saved_pos_y;
- C$B746,13;21
- C$B753,2;21 }
- C$B755,1;21
- C$B756,1;21 {*HL++ = E;
- C$B757,1;21 }
- C$B758,1;21 *HL = D;
- C$B759,1;21 return;
+; Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
+ C$B742,1;21 Preserve vischar pointer
+ C$B743,3;21 HL = $800
+ C$B746,1;21 Clear the carry flag
+ C$B747,2;21 HL -= saved_pos_x
+ C$B749,4;21 Fetch saved_height
+ C$B74D,2;21 HL -= saved_height
+ C$B74F,4;21 Fetch saved_pos_y
+ C$B753,2;21 HL -= saved_pos_y
+ C$B755,1;21 Restore vischar pointer
+ C$B756,1;21 {Store result in vischar.iso_pos.y
+ C$B757,1;21
+ C$B758,1;21 }
+ C$B759,1;21 Return
 
 ; Reset the game.
 ;
