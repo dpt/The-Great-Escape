@@ -10501,13 +10501,13 @@ cC$B79B,2;24 Set #REGb for seven iterations
  B$B834,3;24 (room_NONE,        52,28) for character 25
 
 ; render_mask_buffer stuff.
-@label=clip_x0
+@label=mask_left_skip
 gB$B837,1
-@label=clip_y0
+@label=mask_top_skip
  B$B838,1
-@label=clip_height
+@label=mask_run_height
  B$B839,1
-@label=clip_width
+@label=mask_run_width
  B$B83A,1
 
 ; Check the mask buffer to see if the hero is hiding behind something.
@@ -10700,262 +10700,371 @@ cC$B89C,3;22 {#REGbc and #REGde are previous_x and previous_y.
 
 ; Render the mask buffer.
 ;
+; The game uses a series of RLE encoded masks to characters to cut away pixels
+; belonging to foreground objects. This ensures that characters aren't drawn
+; atop of walls, huts and fences. This routine works out which masks intersect
+; with the current player position then overlays them into the mask buffer at
+; $8100.
+; .
+; At 32x40 pixels the mask buffer is small: sized to fit a single character.
+; .
 ; Used by the routine at #R$B866.
 ;
 ; .
 ;
-; Clear the mask buffer.
+; Set all the bits in the mask buffer at $8100..$819F. A clear bit in this
+; buffer means transparent; a set bit means opaque.
 @label=render_mask_buffer
 @nowarn
-cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
- C$B919,2;21
+cC$B916,3;21 Point #REGhl at the mask buffer
+ C$B919,2;21 Set its first byte to $FF
 @nowarn
- C$B91B,6;21
+ C$B91B,3;21 {Do a rolling fill: copy the first byte to the second
+ C$B91E,3;21 and so on until the buffer is filled
  C$B921,2;21 }
- C$B923,3;21 {if (room_index) <%
- C$B926,1;21
- C$B927,2;21 }
-; Indoors.
- C$B929,3;21 HL = &interior_mask_data;
- C$B92C,1;21 A = *HL; // count byte
- C$B92D,1;21 {  if (A == 0) return; // no masks
- C$B92E,1;21 }
- C$B92F,1;21 B = A; // iterations
- C$B930,1;21 {  HL += 3; %> // skip count byte, then off by 2 bytes
- C$B931,2;21
+ C$B923,3;21 Get the global current room index
+ C$B926,1;21 Are we outdoors?
+ C$B927,2;21 Jump if so
+; We're indoors - use the interior mask structures.
+@label=rmb_indoors
+ C$B929,3;21 Point #REGhl at interior_mask_data_count
+ C$B92C,1;21 Fetch the count of interior masks
+ C$B92D,1;21 Is the count zero?
+ C$B92E,1;21 Return if so - there are no masks to render
+ C$B92F,1;21 #REGb is now our outermost loop counter
+ C$B930,1;21 {Point #REGhl at interior_mask_data[0] + 2 bytes
+ C$B931,1;21 (mask.bounds.x1)
+ C$B932,1;21
  C$B933,2;21 }
-; Outdoors.
+; We're outdoors - use the exterior mask structures.
+@label=rmb_outdoors
+; .
+; Bug: The mask count of 59 here doesn't match the length of
+; exterior_mask_data[] which is only 58 entries long.
 @bfix-begin
-; Bug? This count of 59 doesn't match NELEMS(exterior_mask_data); which is 58.
-*C$B935,2;21 else <% B = 59; // 59 iterations
+*C$B935,2;21 Set #REGb for 59 iterations
 @bfix+else
-*$B935 LD B,$3A      ; else <% B = NELEMS(exterior_mask_data); // 58 iterations
+*$B935 LD B,$3A      ; Set #REGb for 58 iterations
 @bfix+end
- C$B937,3;21 HL = $EC03; // exterior_mask_data + 2 bytes %>
-; Mask against all.
-*C$B93A,1;21 do <%
- C$B93B,1;21
- C$B93C,3;21 {  A = iso_pos_x - 1;
+ C$B937,3;21 Point #REGhl at exterior_mask_data[0] + 2 bytes
+ ;21 (mask.bounds.x1)
+; Fill the mask buffer with the union of all matching masks.
+; .
+; Skip any masks which don't overlap the character. 'mask.bounds' is a bounding
+; on the map image (in isometric projected map space). 'mask.pos' is a map
+; coordinate (in map space). We use these to cull those masks which don't
+; intersect with the character being rendered and those which are behind the
+; character on the map.
+; .
+; Start loop
+@label=rmb_per_mask_loop
+*C$B93A,1;21 Preserve the mask loop counter
+ C$B93B,1;21 Preserve the mask data pointer
+; X axis part.
+ C$B93C,3;21 {Compute iso_pos_x - 1
  C$B93F,1;21 }
- C$B940,1;21 {  if (A >= HL[0] || A + 4 < HL[-1]) goto pop_next;
- C$B941,7;21
- C$B948,3;21 }
- C$B94B,1;21 {
+; Reject if the vischar's left edge is beyond the mask's right edge.
+ C$B940,1;21 Is (iso_pos_x - 1) >= mask.bounds.x1?
+ C$B941,3;21 Jump if so (process the next mask)
+; Reject if the vischar's right edge is beyond the mask's left edge.
+ C$B944,2;21 Compute (iso_pos_x - 1) + 4
+ C$B946,1;21 Point #REGhl at mask.bounds.x0
+ C$B947,1;21 Is (iso_pos_x - 1) + 4 < mask.bounds.x0?
+ C$B948,3;21 Jump if so (process the next mask)
+; Y axis part.
+ C$B94B,1;21 {Point #REGhl at mask.bounds.y1
  C$B94C,1;21
  C$B94D,1;21 }
- C$B94E,3;21 {  A = iso_pos_y - 1;
+ C$B94E,3;21 {Compute iso_pos_y - 1
  C$B951,1;21 }
- C$B952,1;21 {  if (A >= HL[2] || A + 5 < HL[1]) goto pop_next;
- C$B953,7;21
- C$B95A,3;21 }
- C$B95D,1;21 {
+; Reject if the vischar's top edge is beyond the mask's bottom edge.
+ C$B952,1;21 Is (iso_pos_y - 1) >= mask.bounds.y1?
+ C$B953,3;21 Jump if so (process the next mask)
+; Reject if the vischar's bottom edge is beyond the mask's top edge.
+ C$B956,2;21 Compute (iso_pos_y - 1) + 5
+ C$B958,1;21 Point #REGhl at mask.bounds.y0
+ C$B959,1;21 Is (iso_pos_y - 1) + 5 < mask.bounds.y0?
+ C$B95A,3;21 Jump if so (process the next mask)
+; Skip masks which the character is in front of. A character is in front of a
+; mask when either of its coordinates are less than mask.pos.
+; .
+; tinypos_stash contains the vischar's mi.pos scaled as required.
+; .
+; Reject if the character's X coordinate is not beyond mask.pos.x.
+ C$B95D,1;21 {Advance #REGhl to mask.pos.x
  C$B95E,1;21 }
- C$B95F,3;21 {  if (tinypos_stash_x <= HL[3]) goto pop_next;
- C$B962,7;21
- C$B969,1;21 }
- C$B96A,3;21 {  if (tinypos_stash_y < HL[4]) goto pop_next;
- C$B96D,4;21
- C$B971,1;21 }
- C$B972,3;21 A = tinypos_stash_height;
- C$B975,1;21 {  if (A) A--;
+ C$B95F,3;21 Fetch tinypos_stash_x
+ C$B962,1;21 Is tinypos_stash_x <= mask.pos.x?
+ C$B963,3;21 Jump if equal
+ C$B966,3;21 Or jump if less than
+; Reject if the character's Y coordinate is not beyond mask.pos.y.
+ C$B969,1;21 Advance #REGhl to mask.pos.y
+ C$B96A,3;21 Fetch tinypos_stash_y
+ C$B96D,1;21 Is tinypos_stash_y < mask.pos.y?
+ C$B96E,3;21 Jump if so
+; Reject if the character's height is beyond mask.pos.height.
+ C$B971,1;21 Advance #REGhl to mask.pos.height
+ C$B972,3;21 Fetch tinypos_stash_height
+ C$B975,1;21 {If tinypos_stash_height is non-zero: add one
  C$B976,2;21
  C$B978,1;21 }
-*C$B979,1;21 {  if (A >= HL[5]) goto pop_next;
- C$B97A,3;21 }
- C$B97D,1;21 {  HL -= 6;
+*C$B979,1;21 Is tinypos_stash_height >= mask.pos.height?
+ C$B97A,3;21 Jump if so (process the next mask)
+ C$B97D,1;21 {Step #REGhl back to mask.bounds.x0
  C$B97E,5;21
  C$B983,1;21 }
-; Clipping.
-*C$B984,3;21 A = iso_pos_x;
- C$B987,1;21 C = A;
- C$B988,1;21 {  if (A >= *HL) <%
- C$B989,3;21 }
- C$B98C,1;21 clip_x0 = A - *HL; // sampled HL=$81EC,$81F4,$EC12
- C$B98D,3;21
- C$B990,1;21 HL++;
- C$B991,1;21 {    A = *HL - C;
+; The mask is valid: now calculate the clipped dimensions.
+; .
+; X axis part.
+*C$B984,3;21 Fetch iso_pos_x
+ C$B987,1;21 Copy it to #REGc for use later
+ C$B988,1;21 Is iso_pos_x >= mask.bounds.x0?
+ C$B989,3;21 Jump if so
+; If we arrive here then mask.bounds.x0 is to the left of iso_pos_x. This means
+; that the mask starts beyond the left edge of our render buffer.
+; .
+; Set mask_left_skip to <left hand skip> and mask_run_width to <maximum width???>.
+ C$B98C,1;21 {Set left hand skip to (iso_pos_x - mask.bounds.x0)
+ C$B98D,3;21 }
+ C$B990,1;21 Advance #REGhl to mask.bounds.x1
+ C$B991,1;21 {Set run width to (mask.bounds.x1 - iso_pos_x)
  C$B992,1;21 }
- C$B993,2;21 {    if (A >= 3) A = 3;
- C$B995,2;21
- C$B997,2;21 }
-*C$B999,1;21 {    ($B83A) = ++A; // clip_width + 1 %>
- C$B99A,3;21 }
- C$B99D,2;21 else <%
-*C$B99F,1;21 B = *HL;
- C$B9A0,1;21 {    clip_x0 = 0;
+ C$B993,2;21 {The run width must not exceed 4 (byte width of the
+ C$B995,2;21 render buffer)
+ C$B997,2;21
+*C$B999,1;21 }
+ C$B99A,3;21 Store run width (how much of the mask to draw)
+ C$B99D,2;21 (else)
+; If we arrive here then mask.bounds.x0 is to the right of iso_pos_x.
+; .
+; Set mask_left_skip to zero and mask_run_width to <maximum width???>.
+*C$B99F,1;21 Fetch mask.bounds.x0
+ C$B9A0,1;21 {Set left hand skip to zero
  C$B9A1,3;21 }
- C$B9A4,1;21 {    C = 4 - (B - C);
- C$B9A5,5;21
+ C$B9A4,1;21 {Calculate maximum remaining space:
+ C$B9A5,1;21 (iso_pos_x + 4 - mask.bounds.x0)
+ C$B9A6,4;21
  C$B9AA,1;21 }
- C$B9AB,1;21 HL++;
- C$B9AC,1;21 {    A = (*HL - B) + 1;
- C$B9AD,1;21
+ C$B9AB,1;21 Advance #REGhl to mask.bounds.x1
+ C$B9AC,1;21 {Calculate total mask width:
+ C$B9AD,1;21 (mask.bounds.x1 - mask.bounds.x0) + 1
  C$B9AE,1;21 }
- C$B9AF,1;21 {    if (A >= C) A = C;
+ C$B9AF,1;21 {Choose the minimum of the two possible run widths
  C$B9B0,2;21
  C$B9B2,1;21 }
-*C$B9B3,3;21 ($B83A) = A; // clip_width + 1 %>
-*C$B9B6,1;21 HL++;
- C$B9B7,3;21 A = iso_pos_y;
- C$B9BA,1;21 C = A;
- C$B9BB,1;21 {  if (A >= *HL) <%
- C$B9BC,3;21 }
- C$B9BF,1;21 A -= *HL;
- C$B9C0,3;21 clip_y0 = A;
- C$B9C3,1;21 {    A = *++HL - C;
- C$B9C4,1;21
+*C$B9B3,3;21 Store mask_run_width
+; Y axis part.
+*C$B9B6,1;21
+ C$B9B7,3;21 Fetch iso_pos_y
+ C$B9BA,1;21 Copy it to #REGc for use later
+ C$B9BB,1;21 Is iso_pos_y >= mask.bounds.y0?
+ C$B9BC,3;21 Jump if so
+; If we arrive here then mask.bounds.y0 is above iso_pos_y. This means that the
+; mask starts beyond the top edge of our render buffer.
+; .
+; Set mask_top_skip to <top skip> and mask_run_height to <maximum height???>.
+ C$B9BF,1;21 {Set top skip to (iso_pos_y - mask.bounds.y0)
+ C$B9C0,3;21 }
+ C$B9C3,1;21 Advance #REGhl to mask.bounds.y1
+ C$B9C4,1;21 {Set run height to (mask.bounds.y1 - iso_pos_y)
  C$B9C5,1;21 }
- C$B9C6,2;21 {    if (A >= 4) A = 4;
- C$B9C8,2;21
- C$B9CA,2;21 }
-*C$B9CC,1;21 A++;
- C$B9CD,3;21 {    ($B839) = A; %>
- C$B9D0,2;21 }
-*C$B9D2,1;21 else <% B = *HL;
- C$B9D3,1;21 {    clip_y0 = 0;
+ C$B9C6,2;21 {The run height must not exceed 5 (UDG height of the
+ C$B9C8,2;21 render buffer)
+ C$B9CA,2;21
+*C$B9CC,1;21 }
+ C$B9CD,3;21 Store run height (how much of the mask to draw)
+ C$B9D0,2;21 (else)
+; If we arrive here then mask.bounds.y0 is below iso_pos_y.
+; .
+; Set mask_top_skip to zero and mask_run_height to <maximum height???>.
+*C$B9D2,1;21 Fetch mask.bounds.y0
+ C$B9D3,1;21 {Set top skip to zero
  C$B9D4,3;21 }
- C$B9D7,1;21 {    C = 5 - (B - C);
- C$B9D8,5;21
+ C$B9D7,1;21 {Calculate maximum remaining space:
+ C$B9D8,1;21 (iso_pos_y + 5 - mask.bounds.y0)
+ C$B9D9,4;21
  C$B9DD,1;21 }
- C$B9DE,1;21 {    A = (*++HL - B) + 1;
- C$B9DF,2;21
+ C$B9DE,1;21 Advance #REGhl to mask.bounds.y1
+ C$B9DF,1;21 {Calculate total mask height:
+ C$B9E0,1;21 (mask.bounds.y1 - mask.bounds.y0) + 1
  C$B9E1,1;21 }
- C$B9E2,1;21 {    if (A >= C) A = C;
+ C$B9E2,1;21 {Choose the minimum of the two possible run heights
  C$B9E3,2;21
  C$B9E5,1;21 }
-*C$B9E6,3;21 ($B839) = A; %>
-*C$B9E9,1;21 HL--;
- C$B9EA,3;21 BC = 0;
- C$B9ED,3;21 {  if (clip_y0 == 0) C = -iso_pos_y + *HL;
- C$B9F0,9;21
+*C$B9E6,3;21 Store mask_run_height
+; Calculate the initial mask buffer pointer.
+*C$B9E9,1;21 Step #REGhl back to mask.bounds.y0
+ C$B9EA,3;21 Initialise (x,y) vars to zero
+; When the mask has a top or left hand gap, calculate that.
+ C$B9ED,3;21 {If mask_top_skip is zero,
+ C$B9F0,1;21 calculate buf_top_skip = (mask.bounds.y0 - iso_pos_y)
+ C$B9F1,8;21
  C$B9F9,1;21 }
-*C$B9FA,1;21 {  HL -= 2;
+*C$B9FA,1;21 {Step back to mask.bounds.x0
  C$B9FB,1;21 }
- C$B9FC,3;21 {  if (clip_x0 == 0) B = -iso_pos_x + *HL;
- C$B9FF,9;21
+ C$B9FC,3;21 {If mask_left_skip is zero,
+ C$B9FF,1;21 calculate buf_left_skip = (mask.bounds.x0 - iso_pos_x)
+ C$BA00,8;21
  C$BA08,1;21 }
-*C$BA09,1;21 HL--;
- C$BA0A,1;21 A = *HL;
- C$BA0B,1;21
- C$BA0C,1;21 {  Adash = C * 32 + B;
+*C$BA09,1;21 Step back to mask.index
+ C$BA0A,1;21 Load it
+ C$BA0B,1;21 Bank it
+; buf_top_skip is in #REGc. buf_left_skip is in #REGb. The multiplier 32 is
+; MASK_BUFFER_ROWBYTES.
+ C$BA0C,1;21 {Calculate #REGa = (buf_top_skip * 32 + buf_left_skip)
  C$BA0D,5;21
  C$BA12,1;21 }
 @nowarn
- C$BA13,3;21 {  HL = mask_buffer + Adash;
+ C$BA13,3;21 {Add #REGa to mask_buffer to get the mask buffer pointer
  C$BA16,1;21
  C$BA17,1;21 }
- C$BA18,3;21 ($81A0) = HL; // mask buffer pointer
- C$BA1B,1;21
- C$BA1C,1;21 {  DE = mask_pointers[A];
+ C$BA18,3;21 Save the mask buffer pointer
+ C$BA1B,1;21 Unbank index
+ C$BA1C,1;21 {Point #REGde at mask_pointers[index]
  C$BA1D,9;21
  C$BA26,1;21 }
- C$BA27,3;21 L = clip_height; H = clip_width;
- C$BA2A,1;21 {  ($BA70) = L; // self modify
+ C$BA27,3;21 Load (#REGl,#REGh) with mask_run_height,mask_run_width
+ C$BA2A,1;21 {Self modify clip height loop
  C$BA2B,3;21 }
- C$BA2E,1;21 {  ($BA72) = H; // self modify
+ C$BA2E,1;21 {Self modify clip width loop
  C$BA2F,3;21 }
- C$BA32,1;21 {  ($BA90) = *DE - H; // self modify // *DE is the mask's width
- C$BA33,1;21
+ C$BA32,1;21 {Self modify mask row skip =
+ C$BA33,1;21 (mask width) - mask_run_width
  C$BA34,3;21 }
- C$BA37,2;21 {  ($BABA) = 32 - H; // self modify
- C$BA39,1;21
+ C$BA37,2;21 {Self modify buffer row skip =
+ C$BA39,1;21 MASK_BUFFER_ROWBYTES - mask_run_width
  C$BA3A,3;21 }
- C$BA3D,1;21
- C$BA3E,1;21 {  E = *DE;
+; Skip the initial clipped mask bytes. The masks are RLE compressed so we can't
+; jump directly to the first byte we need.
+; .
+; First, calculate the total number of mask tiles to skip.
+ C$BA3D,1;21 Preserve mask data pointer
+ C$BA3E,1;21 {Fetch the mask's width
  C$BA3F,1;21 }
- C$BA40,3;21 A = clip_y0;
- C$BA43,3;21 HL = multiply(); D = 0;
- C$BA46,3;21 {  E = clip_x0;
+ C$BA40,3;21 Fetch mask_top_skip
+ C$BA43,3;21 Multiply mask_top_skip by mask_width.
+ ;21 Result is returned in #REGhl.
+ ;21 Note: #REGd and #REGb are zeroed
+ C$BA46,3;21 {Fetch mask_left_skip
  C$BA49,1;21 }
- C$BA4A,1;21 HL += DE;
- C$BA4B,1;21
- C$BA4C,1;21 HL++; // iterations
-;
-; Skip the initial clipped mask bytes.
-;
-*C$BA4D,1;21 do <% A = *DE; // DE -> $E560 upwards (in exterior_mask_data)
- C$BA4E,1;21 {    if (A >= 128) <%
- C$BA4F,3;21 }  // jump if sign bit is set
- C$BA52,2;21 A &= 0x7F;
- C$BA54,1;21 DE++;
- C$BA55,1;21 {      HL -= A;
- C$BA56,2;21 }
- C$BA58,2;21 if (HL < 0) goto $BA69;
- C$BA5A,1;21 DE++; // doesn't affect flags
- C$BA5B,2;21 if (HL != 0) goto $BA4D;
- C$BA5D,1;21 A = 0;
- C$BA5E,2;21 goto $BA6C; %>
-*C$BA60,1;21 DE++;
- C$BA61,1;21 {  %> while (--HL);
- C$BA62,2;21
+ C$BA4A,1;21 Add mask_left_skip to #REGhl
+ C$BA4B,1;21 Restore mask data pointer
+ C$BA4C,1;21 + 1 [Explain]
+; Next, loop until we've stepped over that number of mask tiles.
+; .
+; Start loop
+@label=rmb_more_to_skip
+*C$BA4D,1;21 Read a byte. It could be a repeat count or a tile index
+ C$BA4E,1;21 Is the MASK_RUN_FLAG set?
+ C$BA4F,3;21 Jump if clear: it's a tile index (JP P => positive)
+ C$BA52,2;21 Otherwise mask it off, giving the repeat count
+ C$BA54,1;21 Advance the mask data pointer (over the count)
+ C$BA55,1;21 {Decrease mask_skip by repeat count
+ C$BA56,2;21 (#REGb is zeroed by #R$BACD call above)}
+ C$BA58,2;21 Jump if it went negative
+ C$BA5A,1;21 Otherwise advance the mask data pointer (over the value)
+ ;21 (doesn't affect flags)
+ C$BA5B,2;21 ...loop while mask_skip > 0
+ C$BA5D,1;21 Otherwise mask_skip must be zero. Zero the counter
+ C$BA5E,2;21 Jump to rmb_start_drawing
+@label=rmb_skipping_index
+*C$BA60,1;21 Advance the mask data pointer
+ C$BA61,1;21 Decrement mask_skip
+ C$BA62,1;21 {...loop while mask_skip > 0
+ C$BA63,1;21
  C$BA64,3;21 }
- C$BA67,2;21 goto $BA6C;
-*C$BA69,1;21 {  A = -L;
- C$BA6A,2;21 }
-*C$BA6C,3;21 HL = ($81A0); // mask buffer pointer
- C$BA6F,2;21 C = 1; // self modified
-*C$BA71,2;21 do <% B = 1; // self modified
-*C$BA73,1;21 do <%
- C$BA74,1;21 Adash = *DE;
- C$BA75,1;21 Adash &= Adash;
- C$BA76,3;21 if (!P) <%
- C$BA79,2;21 Adash &= 0x7F;
- C$BA7B,1;21 // bank the counter
- C$BA7C,1;21 DE++;
- C$BA7D,1;21 A = *DE; %>
-*C$BA7E,1;21 A &= A;
- C$BA7F,3;21 if (!Z) mask_against_tile();
- C$BA82,1;21 L++;
- C$BA83,1;21 // unpaired?
- C$BA84,1;21 {      if (A != 0 && --A != 0) DE--;
- C$BA85,5;21
- C$BA8A,1;21 }
-*C$BA8B,1;21 DE++;
- C$BA8C,2;21 %> while (--B);
- C$BA8E,1;21
- C$BA8F,2;21 B = 1; // self modified
- C$BA91,1;21 bank while we test B
- C$BA92,1;21 {    if (B) <%
- C$BA93,1;21
- C$BA94,3;21 }
- C$BA97,1;21 unbank
- C$BA98,1;21 {      if (A) goto $BAA3;
- C$BA99,2;21 }
-*C$BA9B,1;21 do <% A = *DE;
- C$BA9C,1;21 {        if (A >= 128) <%
- C$BA9D,3;21 }
- C$BAA0,2;21 A &= 0x7F;
- C$BAA2,1;21 DE++;
-*C$BAA3,1;21 {        B -= A;
+ C$BA67,2;21 Jump to rmb_start_drawing
+@label=rmb_skip_went_negative
+*C$BA69,1;21 How far did we overshoot?
+ C$BA6A,2;21 Negate it to create a positive mask emit(?) count
+;
+; #REGa = Count of blocks to emit
+; #REGde = Points to a value (if -ve case) .. but the upcoming code expects a flag byte...
+@label=rmb_start_drawing
+*C$BA6C,3;21 Get the mask buffer pointer
+ C$BA6F,2;21 Set #REGc for (self modified height) iterations
+; Start loop
+*C$BA71,2;21 Set #REGb for (self modified width) iterations
+; Start loop
+; .
+; DPT: The banking of #REGa is hard to follow here. It's difficult to see if
+; this section is entered with a skip value whether it will be handled
+; correctly.
+*C$BA73,1;21 Bank the <repeat length>
+ C$BA74,1;21 Read a byte. It could be a repeat count or a tile index
+ C$BA75,1;21 Is the MASK_RUN_FLAG set?
+ C$BA76,3;21 Jump if clear: it's a tile index (JP P => positive)
+ C$BA79,2;21 Otherwise mask it off, giving the repeat count
+ C$BA7B,1;21 Bank the repeat count; unbank the <repeat length>  REPLACING IT?
+ C$BA7C,1;21 Advance the mask data pointer
+ C$BA7D,1;21 Read the next byte (a tile)
+; Shortcut tile 0 which is blank.
+*C$BA7E,1;21 Is it tile zero?
+ C$BA7F,3;21 Call mask_against_tile if not
+ C$BA82,1;21 Advance mask buffer pointer (a tile was written)
+ C$BA83,1;21 Unbank the repeat count OR <repeat length>  CONFUSING
+; Advance the mask pointer when the repeat count reaches zero.
+ C$BA84,1;21 Is it zero?
+ C$BA85,2;21 Jump if so
+ C$BA87,1;21 Otherwise decrement the repeat count
+ C$BA88,2;21 Jump if it hit zero
+ C$BA8A,1;21 Otherwise undo the next instruction
+*C$BA8B,1;21 Advance the mask data pointer
+ C$BA8C,2;21 ...loop (width)
+ C$BA8E,1;21 Preserve the loop counter (#REGb will be zero here, #REGc = y)
+ C$BA8F,2;21 Set #REGb for (self modified, right hand skip) iterations
+ C$BA91,1;21 Bank the repeat count while we test #REGb
+ C$BA92,1;21 {Is the right hand skip zero?
+ C$BA93,1;21 }
+ C$BA94,3;21 Jump if so (process next mask)
+ C$BA97,1;21 Unbank the repeat count
+ C$BA98,1;21 Is it zero?
+ C$BA99,2;21 Jump if not: (CHECK) must be continuing with a nonzero repeat count
+; Start loop
+@label=rmb_trailskip_more_to_skip
+*C$BA9B,1;21 Read a byte. It could be a repeat count or a tile index
+ C$BA9C,1;21 Is the MASK_RUN_FLAG set?
+ C$BA9D,3;21 Jump if clear: it's a tile index (JP P => positive)
+; It's a repeat.
+ C$BAA0,2;21 Otherwise mask it off, giving the repeat count
+ C$BAA2,1;21 Advance the mask data pointer
+; (resume point)
+@label=rmb_trailskip_dive_in
+*C$BAA3,1;21 {right_skip = A = (right_skip - A)
  C$BAA4,2;21
  C$BAA6,1;21 }
- C$BAA7,2;21 if (B < 0) goto $BAB6;
- C$BAA9,1;21 DE++; // doesn't affect flags
- C$BAAA,2;21 if (B != 0) goto $BA9B;
- C$BAAC,1;21 // why not just jump instr earlier? // bank
- C$BAAD,2;21 goto $BAB9; %>
-*C$BAAF,1;21 DE++;
- C$BAB0,2;21 %> while (--B);
- C$BAB2,1;21 A = 0;
- C$BAB3,1;21 // why not just jump instr earlier? // bank
- C$BAB4,2;21 goto $BAB9;
-*C$BAB6,2;21 A = -A;
- C$BAB8,1;21 // bank %>
-*C$BAB9,2;21 {    HL += 32; // self modified
+ C$BAA7,2;21 Jump if it went negative
+ C$BAA9,1;21 Advance the mask data pointer (doesn't affect flags)
+ C$BAAA,2;21 if (right_skip > 0) goto START OF LOOP
+ C$BAAC,1;21 bank // could jump $BAB8 instead
+ C$BAAD,2;21 Otherwise right_skip must be zero, jump to rmb_next_line
+@label=rmb_something
+*C$BAAF,1;21 Advance the mask data pointer
+ C$BAB0,2;21 ...loop
+ C$BAB2,1;21 Reset counter (WHAT IS IT?)
+ C$BAB3,1;21 bank // could jump $BAB8 instead
+ C$BAB4,2;21 Jump to rmb_next_line
+@label=rmb_trailskip_negative
+*C$BAB6,2;21 Negate it to create a positive mask emit(?) count
+ C$BAB8,1;21 bank
+@label=rmb_next_line
+*C$BAB9,2;21 {Advance #REGhl by (self modified skip)
  C$BABB,1;21
  C$BABC,1;21 }
- C$BABD,1;21 // unbank
- C$BABE,1;21
- C$BABF,1;21 {  %> while (--C);
+ C$BABD,1;21 Unbank the <repeat length> (re-banked when loop continues)
+ C$BABE,1;21 Restore the height counter
+ C$BABF,1;21 {...loop (height)
  C$BAC0,3;21 }
-*C$BAC3,1;21 pop_next:
- C$BAC4,1;21
- C$BAC5,3;21 {  HL += 8;
+@label=rmb_pop_next
+*C$BAC3,1;21 Restore the mask data pointer
+ C$BAC4,1;21 Restore the mask loop counter
+ C$BAC5,3;21 {Advance #REGhl to the next mask_t
  C$BAC8,1;21 }
- C$BAC9,1;21 {%> while (--B);
+ C$BAC9,1;21 {...loop
  C$BACA,3;21 }
 @rfix-begin
-; Bug: RET is missing here. We fall through into multiply.
+; Bug: The RET instruction is missing from the end of the routine. If unfixed
+; the routine will harmlessly fall through into multiply.
 @rfix+else
        RET           ; Return
 @rfix+end
