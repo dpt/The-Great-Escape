@@ -10918,24 +10918,30 @@ cC$B916,3;21 {memset(mask_buffer, 0xFF, 0xA0);
        RET           ; Return
 @rfix+end
 
-; Multiply the two input values, A and E, returning a widened result in HL.
+; Multiply
 ;
+; Multiplies the two 8-bit values in #REGa and #REGe returning a 16-bit result
+; in #REGhl.
+; .
 ; Used by the routine at #R$B916.
 ;
-; I:A Left hand value.
-; I:E Right hand value.
-; O:D Zero.
+; I:A  Left hand value.
+; I:E  Right hand value.
+; O:D  Zero.
 ; O:HL Multiplied result.
 @label=multiply
-cC$BACD,2;21 B = 8; // iterations
- C$BACF,3;21 HL = 0;
- C$BAD2,1;21 D = 0;
-*C$BAD3,1;21 do <% HL += HL;
- C$BAD4,1;21 RLA  // carry = (A >> 7); A <<= 1; /* shift out of high end */
- C$BAD5,3;21 {  if (carry) HL += DE; /* shift into low end */
- C$BAD8,1;21 }
-*C$BAD9,2;21 %> while (--B);
- C$BADB,1;21 return;
+cC$BACD,2;21 Set #REGb for eight iterations (width of multiplicands)
+ C$BACF,3;21 Set our accumulator to zero
+ C$BAD2,1;21 Zero #REGd so that #REGde holds the full 16-bit right
+ ;21 hand value
+; Start loop
+*C$BAD3,1;21 Double our accumulator (shifting it left)
+ C$BAD4,1;21 Shift #REGa left. The shifted-out top bit becomes the
+ ;21 carry flag
+ C$BAD5,3;21 Jump if no carry
+ C$BAD8,1;21 Otherwise #REGhl += #REGde
+*C$BAD9,2;21 ...loop
+ C$BADB,1;21 Return
 
 ; AND a tile in the mask buffer against the specified mask tile.
 ;
