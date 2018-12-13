@@ -10947,25 +10947,33 @@ cC$BACD,2;21 Set #REGb for eight iterations (width of multiplicands)
 ;
 ; Used by the routine at #R$B916.
 ;
-; I:A Mask tile index.
-; I:HL Pointer to a tile to be masked.
+; I:A  Mask tile index.
+; I:HL Pointer to a tile in the mask buffer.
 @label=mask_against_tile
-cC$BADC,1;21 DEdash = HL
- C$BADD,1;21
- C$BADE,1;21 {HLdash = &mask_tiles[A];
- C$BADF,8;21
+cC$BADC,1;21 Save tile pointer
+ C$BADD,1;21 Switch register banks during the routine
+; Point #REGhl at mask_tiles[#REGa]
+ C$BADE,1;21 {Move the mask tile index into #REGhl
+ C$BADF,2;21 }
+ C$BAE1,1;21 {Multiply it by 8
+ C$BAE2,1;21
+ C$BAE3,1;21 }
+ C$BAE4,3;21 {Add base of mask_tiles array
  C$BAE7,1;21 }
- C$BAE8,1;21
- C$BAE9,2;21 Bdash = 8; // 8 iterations
-*C$BAEB,1;21 {do <% *DEdash &= *HLdash++;
- C$BAEC,2;21
- C$BAEE,1;21 }
- C$BAEF,1;21 {  DEdash += 4; /* mask buffer rowbytes */
+ C$BAE8,1;21 Retrieve tile pointer
+ C$BAE9,2;21 Set #REGb for 8 iterations
+; Start loop
+@label=mat_loop
+*C$BAEB,1;21 Fetch a byte of mask buffer
+ C$BAEC,1;21 Mask it against a byte of mask tile
+ C$BAED,1;21 Overwrite the input byte with result
+ C$BAEE,1;21 Advance the mask tile pointer by a row
+ C$BAEF,1;21 {Advance the mask buffer pointer by a row
  C$BAF0,2;21
  C$BAF2,1;21 }
- C$BAF3,2;21 %> while (--Bdash);
- C$BAF5,1;21
- C$BAF6,1;21 return;
+ C$BAF3,2;21 ...loop
+ C$BAF5,1;21 Switch register banks back
+ C$BAF6,1;21 Return
 
 ; Clipping vischars to the game window.
 ;
