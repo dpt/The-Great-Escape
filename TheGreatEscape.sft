@@ -12016,64 +12016,87 @@ cC$C5D3,1;21 A = *HL;
  C$C64E,2;21 *DE++ = *HL++;
  C$C650,1;21 return; %>
 
-; Gets a new location.
+; Return the coordinates of the route's current target.
 ;
+; Given a route_t return the coordinates the character should move to.
+; Coordinates are returned as a tinypos_t when moving to a door or an xy_t when
+; moving to a numbered location.
+; .
+; If the route specifies 'wander' then one of eight random locations starting
+; from route.step is chosen.
+; .
 ; Used by the routines at #R$A3BB, #R$C4E0, #R$C6A0 and #R$CB23.
 ;
-; I:HL Pointer to characterstruct + 5. // sampled HL=$768E,$7695,$769C,$7617
-; .    761E, 7625, 762C, 7633, 7656, 765D
-; O:A  0/128/255
-; O:HL Pointer to somewhere in word_783A.
+; I:HL Pointer to route.
+; O:A  0/128/255 => Target is a location / a door / the route ended.
+; O:HL Pointer to location or door.
 @label=get_target
-cC$C651,1;21 A = *HL;
- C$C652,2;21 {if (A == 0xFF) <%
- C$C654,2;21 }
- C$C656,1;21 {  A = *++HL & ~characterstruct_BYTE6_MASK_LO;
- C$C657,1;21
- C$C658,2;21 }
- C$C65A,1;21 *HL = A;
- C$C65B,3;21 random_nibble();
- C$C65E,2;21 A &= characterstruct_BYTE6_MASK_LO;
- C$C660,1;21 A += *HL;
- C$C661,1;21 {  *HL = A; %>
- C$C662,2;21 }
-*C$C664,1;21 else <%
- C$C665,1;21 {  C = *++HL; // route.step
+cC$C651,1;21 Get the route index
+ C$C652,2;21 Is it routeindex_255_WANDER? ($FF)
+ C$C654,2;21 Jump if not
+; Wander around randomly.
+; .
+; Uses route.step + rand(0..7) to index locations[].
+@label=gt_wander
+ C$C656,1;21 {Clear the bottom three bits of route.step
+ C$C657,3;21
+ C$C65A,1;21 }
+ C$C65B,3;21 Get a pseudo-random number in #REGa
+ C$C65E,2;21 Make it 0..7
+ C$C660,1;21 {Add the random value to route.step
+ C$C661,1;21 }
+ C$C662,2;21 Jump
+@label=gt_not_halt
+*C$C664,1;21 Preserve the route pointer
+ C$C665,1;21 {Load route.step
  C$C666,1;21 }
- C$C667,3;21 DE = get_route(A);
- C$C66A,2;21 H = 0;
- C$C66C,1;21 A = C;
- C$C66D,2;21 {  if (A == 0xFF) H--; // H = 0xFF
+; Control can arrive here with route.index set to zero. This happens when the
+; hero stands up during breakfast, is pursued by guards, then when left to idle
+; sits down and the pursuing guards resume their original positions. get_route()
+; will return in that case a zero pointer so it starts fetching from $0001. In
+; the Spectrum ROM location $0001 holds XOR A ($AF).
+ C$C667,3;21 Get the route for #REGa in #REGde
+; Since all of the routes are packed togther, this relies on being able to fetch
+; the previous route's terminator.
+ C$C66A,2;21 {High byte is set to zero unless...
+ C$C66C,1;21 route.step
+ C$C66D,2;21 is $FF
  C$C66F,2;21
- C$C671,1;21 }
-*C$C672,1;21 L = A; // HL == -1, or A
- C$C673,1;21 HL += DE;
- C$C674,1;21
- C$C675,1;21 routebyte = routebytes[step];
- C$C676,2;21 if (routebyte == routebyte_END) ...
- C$C678,1;21 // interleaved
- C$C679,2;21 ... goto return_255; // route ends
- C$C67B,2;21 A &= ~door_REVERSE;
- C$C67D,2;21 {  if (A < 40) <%
- C$C67F,2;21 }
- C$C681,1;21 A = *DE;
- C$C682,2;21 {    if (*HL & route_REVERSED) A ^= door_LOCKED; // sampled HL=$762C,$8002,$7672,$7679,$7680,$76A3,$76AA,$76B1,$76B8,$76BF ... looks quite general // route index
- C$C684,2;21
- C$C686,2;21 }
-*C$C688,3;21 HL = get_door();
- C$C68B,1;21 HL++;
- C$C68C,2;21 A = 0x80;
- C$C68E,1;21 return; %>
-*C$C68F,1;21 {  A = *DE - 40; %>
+ C$C671,1;21 when it's set to $FF}
+*C$C672,1;21 #REGhl = -1, or route.step
+ C$C673,1;21 {Point #REGde at the next route byte
+ C$C674,1;21 }
+;
+ C$C675,1;21 Read a byte of route
+ C$C676,2;21 Is it routebyte_END? ($FF)
+ C$C678,1;21 Irrespectively restore #REGhl
+ C$C679,2;21 Jump if so
+ C$C67B,2;21 Clear its door_REVERSE flag ($80)
+ C$C67D,2;21 Is it a door index?
+ C$C67F,2;21 Jump if not
+; Route byte < 40: A door.
+@label=gt_door
+ C$C681,1;21 Re-read routebyte to get the reversed flag
+ C$C682,2;21 Reversed?
+ C$C684,2;21 Jump if not
+ C$C686,2;21 Toggle reverse flag
+*C$C688,3;21 Turn the door index into a door_t pointer (in #REGhl)
+ C$C68B,1;21 Advance #REGhl to point at door.pos
+ C$C68C,2;21 {Return with #REGa set to 128
+ C$C68E,1;21 }
+; Route byte = 40..117: A location index.
+@label=gt_location
+*C$C68F,1;21 {The location index is offset by 40
  C$C690,2;21 }
-; sampled A=$38,2D,02,06,1E,20,21,3C,23,2B,3A,0B,2D,04,03,1C,1B,21,3C,...
-*C$C692,1;21 {HL = word_783A[A];
+@label=gt_pick_loc
+*C$C692,1;21 {Point #REGhl at location[#REGa]
  C$C693,7;21
  C$C69A,1;21 }
-*C$C69B,1;21 A = 0;
- C$C69C,1;21 return;
-*C$C69D,2;21 return_255: A = 255;
- C$C69F,1;21 return;
+*C$C69B,1;21 {Return with #REGa set to zero
+ C$C69C,1;21 }
+@label=gt_route_ends
+*C$C69D,2;21 {Return with #REGa set to 255
+ C$C69F,1;21 }
 
 ; Move characters around.
 ;
