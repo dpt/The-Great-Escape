@@ -11216,38 +11216,61 @@ cC$BB98,2;21 B = 8; // iterations
 ; O:A  Preserved.
 ; O:BC Pointer to tile set.
 @label=select_tile_set
-cC$BCAA,1;21
- C$BCAB,3;21 {if (room_index) <%
- C$BCAE,1;21
- C$BCAF,2;21 }
- C$BCB1,3;21 BC = &interior_tiles[0];
- C$BCB4,1;21
- C$BCB5,1;21 return; %>
-; Convert map position to an index into 7x5 supertile indices array.
-*C$BCB6,3;21 {else <% Adash = (((map_position >> 8) & 3) + L) >> 2;
- C$BCB9,4;21
- C$BCBD,1;21 }
- C$BCBE,2;21 {  L = (Adash & 0x3F) * 7; // vertical
- C$BCC0,5;21
- C$BCC5,1;21 }
- C$BCC6,3;21 {  Adash = (((map_position & 0xFF) & 3) + H) >> 2;
- C$BCC9,4;21
- C$BCCD,1;21 }
- C$BCCE,2;21 {  Adash = (Adash & 0x3F) + L; // horizontal
- C$BCD0,1;21 }
- C$BCD1,3;21 {  Adash = $FF58[Adash]; // (7x5) supertile refs
- C$BCD4,2;21
- C$BCD6,1;21 }
- C$BCD7,3;21 BC = &exterior_tiles[0];
- C$BCDA,2;21 {  if (Adash >= 45) <%
- C$BCDC,2;21 }
- C$BCDE,3;21 BC = &exterior_tiles[145];
- C$BCE1,2;21 {    if (Adash >= 139 && Adash < 204) <%
- C$BCE3,4;21
- C$BCE7,2;21 }
- C$BCE9,3;21 BC = &exterior_tiles[145 + 220]; %> %>
-*C$BCEC,1;21
- C$BCED,1;21 return; %>
+cC$BCAA,1;21 Preserve #REGa during this routine
+ C$BCAB,3;21 Fetch the global current room index
+ C$BCAE,1;21 Is it room_0_OUTDOORS?
+ C$BCAF,2;21 Jump if so
+@label=sts_interior
+ C$BCB1,3;21 Otherwise point #REGbc at interior_tiles[0]
+ C$BCB4,1;21 Restore #REGa
+ C$BCB5,1;21 Return
+; Convert map position to an index into map_buf: a 7x5 array of supertile indices.
+; .
+; Compute row offset
+@label=sts_exterior
+*C$BCB6,3;21 {Get the map position's Y component and
+ C$BCB9,2;21 isolate its low-order bits}
+ C$BCBB,1;21 Add on the Y shift from #REGl
+ C$BCBC,1;21 {Divide by two (rotate right by two then clear the
+ C$BCBD,1;21 rotated-out bits)
+ C$BCBE,2;21 }
+ C$BCC0,1;21 {Multiply by 7 (columns per row of supertiles)
+ C$BCC1,3;21
+ C$BCC4,1;21 }
+ C$BCC5,1;21 Save for later
+; Compute column offset
+ C$BCC6,3;21 {Get the map position's X component and
+ C$BCC9,2;21 isolate its low-order bits}
+ C$BCCB,1;21 Add on the X shift from #REGh
+ C$BCCC,1;21 {Divide by two (rotate right by two then clear the
+ C$BCCD,1;21 rotated-out bits)
+ C$BCCE,2;21 }
+; Combine offsets
+ C$BCD0,1;21 Combine the row and column offsets
+ C$BCD1,3;21 Point #REGhl at map_buf (a 7x5 cut-down copy of the main
+ ;21 map which holds supertile indices)
+ C$BCD4,1;21 {Add offset (quick version since the values can't
+ C$BCD5,1;21 overflow)}
+ C$BCD6,1;21 Fetch the supertile index from map_buf
+ C$BCD7,3;21 Point #REGbc at exterior_tiles[0]
+; Choose the tile index for the current supertile:
+; #TABLE(default)
+; { =h For supertile     | =h Use tile indices }
+; { 44 and lower         |   0..249 }
+; { 45..138 and 204..218 | 145..400 }
+; { 139..203             | 365..570 }
+; TABLE#
+ C$BCDA,2;21 Is the supertile index < 45?
+ C$BCDC,2;21 Jump if so
+ C$BCDE,3;21 Point #REGbc at exterior_tiles[145]
+ C$BCE1,2;21 Is the supertile index < 139?
+ C$BCE3,2;21 Jump if so
+ C$BCE5,2;21 Is the supertile index >= 204?
+ C$BCE7,2;21 Jump if so
+ C$BCE9,3;21 Point #REGbc at exterior_tiles[145 + 220]
+@label=sts_exit
+*C$BCEC,1;21 Restore #REGa
+ C$BCED,1;21 Return
 
 ; Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
 ;
