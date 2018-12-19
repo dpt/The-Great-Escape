@@ -3761,14 +3761,17 @@ cC$7BE4,1;21 Point to itemstruct.x
 ; Set #REGa' to ($200 + y - x) * 2
 cC$7BF2,13;21
  C$7BFF,1;21 Double
- C$7C00,2;21
- C$7C02,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa
+ C$7C00,1;21 {
+ C$7C01,1;21
+ C$7C02,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa}
  C$7C05,1;21
 ; Set #REGa to ($800 - x - y - height)
  C$7C06,5;21
  C$7C0B,1;21 #REGde points to x
- C$7C0C,16;21
- C$7C1C,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa
+ C$7C0C,14;21
+ C$7C1A,1;21 {
+ C$7C1B,1;21
+ C$7C1C,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa}
 ; Write the result to itemstruct.screenpos
  C$7C1F,6;21
  C$7C25,1;21 Return
