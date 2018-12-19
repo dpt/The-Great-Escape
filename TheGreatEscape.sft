@@ -8,7 +8,7 @@
 ; https://github.com/dpt/The-Great-Escape
 ;
 ; Copyright 1986 Ocean Software Ltd. (The Great Escape)
-; Copyright 2012-2018 David Thomas <dave@davespace.co.uk> (this disassembly)
+; Copyright 2012-2019 David Thomas <dave@davespace.co.uk> (this disassembly)
 ;
 @ofix+begin
 ; This disassembly contains ofix changes (operand fixes):
@@ -11126,7 +11126,7 @@ cC$BADC,1;21 Save tile pointer
  C$BAF5,1;21 Switch register banks back
  C$BAF6,1;21 Return
 
-; Clips the given vischar's dimensions to the game window.
+; Clip the given vischar's dimensions to the game window.
 ;
 ; Used by the routines at #R$BB98 and #R$E420.
 ;
@@ -11277,155 +11277,214 @@ cC$BAF7,3;22 Point #REGhl at iso_pos_x (vischar left edge)
 ;
 ; Used by the routine at #R$9D7B.
 @label=restore_tiles
-cC$BB98,2;21 B = 8; // iterations
- C$BB9A,4;21 IY = $8000;
-*C$BB9E,1;21 do <%
- C$BB9F,3;21 {  if (IY[1] == vischar_FLAGS_EMPTY_SLOT) goto next;
- C$BBA2,2;21
- C$BBA4,3;21 }
- C$BBA7,3;21 {  iso_pos_y = (IY[26] >> 3) | (IY[27] << 5); // divide by 8
- C$BBAA,12;21
- C$BBB6,3;21 }
- C$BBB9,3;21 {  iso_pos_x = (IY[24] >> 3) | (IY[25] << 5); // divide by 8
- C$BBBC,12;21
- C$BBC8,3;21 }
- C$BBCB,3;21 vischar_visible();
- C$BBCE,2;21 {  if (A == 0xFF) goto next; // vischar not visible
+cC$BB98,2;21 Set #REGb for eight iterations
+ C$BB9A,4;21 Point #REGiy at the first vischar
+; Start loop (once per vischar)
+@label=rt_loop
+*C$BB9E,1;21 Preserve the loop counter
+ C$BB9F,3;21 Read the vischar's flags byte
+ C$BBA2,2;21 Is it vischar_FLAGS_EMPTY_SLOT? ($FF)
+ C$BBA4,3;21 Jump to the next iteration if so
+; Get the visible character's position in screen space.
+; .
+; Compute iso_pos_y = vischar.iso_pos.y / 8.
+ C$BBA7,3;21 {Read vischar.iso_pos.y
+ C$BBAA,3;21 }
+ C$BBAD,2;21 {Shift it right by three bits
+ C$BBAF,6;21
+ C$BBB5,1;21 }
+ C$BBB6,3;21 Store low byte
+; Compute iso_pos_x = vischar.iso_pos.x / 8.
+ C$BBB9,3;21 {Read vischar.iso_pos.x
+ C$BBBC,3;21 }
+ C$BBBF,2;21 {Shift it right by three bits
+ C$BBC1,6;21
+ C$BBC7,1;21 }
+ C$BBC8,3;21 Store low byte
+; Clip.
+ C$BBCB,3;21 Clip the vischar's dimensions to the game window
+ C$BBCE,2;21 {Jump to next iteration if not visible ($FF)
  C$BBD0,3;21 }
- C$BBD3,1;21 {  A = ((E >> 3) & 31) + 2;
- C$BBD4,5;21
- C$BBD9,2;21 }
- C$BBDB,1;21
-;
- C$BBDC,3;21 {  A += iso_pos_y - map_position_y;
- C$BBDF,4;21
- C$BBE3,1;21 }
-;
- C$BBE4,2;21 if (A >= 0) <%
- C$BBE6,2;21 A -= 17;
- C$BBE8,2;21 {    if (A > 0) <%
+; Compute scaled clipped height = (clipped height / 8) + 2
+ C$BBD3,1;21 Copy clipped height
+ C$BBD4,1;21 {Shift it right by three bits
+ C$BBD5,1;21
+ C$BBD6,1;21 }
+ C$BBD7,2;21 Mask away the rotated-out bits
+ C$BBD9,2;21 Add two
+ C$BBDB,1;21 Save the computed height
+; DPT: It seems that the following chunk from $BBDC to $BC01 (the clamp-to-5)
+; duplicates the work done by vischar_visible. I can't see any benefit to it.
+; .
+; Compute bottom = height + iso_pos_y - map_position_y. This is the distance of
+; the (clipped) bottom edge of the vischar from the top of the window.
+ C$BBDC,3;21 Point #REGhl at iso_pos_y
+ C$BBDF,1;21 Add iso_pos_y to height
+ C$BBE0,3;21 Point #REGhl at map_position_y
+ C$BBE3,1;21 Subtract map_position_y from the total
+ C$BBE4,2;21 Jump if bottom is < 0 (the bottom edge is beyond the top edge of screen)
+; Bottom edge is on-screen, or off the bottom of the screen.
+ C$BBE6,2;21 Now reduce bottom by the height of the game window
+ C$BBE8,2;21 {Jump over if <= 17 (bottom edge off top of screen)
  C$BBEA,2;21 }
- C$BBEC,1;21 E = A;
- C$BBED,1;21
- C$BBEE,1;21 A -= E;
- C$BBEF,3;21 if (carry) goto next;
- C$BBF2,2;21 if (!Z) goto $BBF8;
- C$BBF4,3;21 goto next; %> %>
-*C$BBF7,1;21
-;
-*C$BBF8,2;21 {  if (A > 5) A = 5;
- C$BBFA,6;21
- C$BC00,2;21 }
-;
-*C$BC02,3;21 ($BC5F) = A; // self modify outer loop counter
- C$BC05,1;21 A = C;
- C$BC06,3;21 ($BC61) = A; // self modify inner loop counter
- C$BC09,3;21 ($BC89) = A; // self modify
- C$BC0C,2;21 {  A = 24 - C;
+; Bottom edge is now definitely visible
+ C$BBEC,1;21 Save new bottom
+ C$BBED,1;21 Get computed height back
+ C$BBEE,1;21 Calculate visible height = computed height - bottom
+ C$BBEF,3;21 If invisible (height < 0) goto next
+ C$BBF2,2;21 Jump if visible (height > 0)
+ C$BBF4,3;21 If invisible (height == 0) goto next
+@label=rt_visible
+*C$BBF7,1;21 Restore computed height
+; Clamp the height to a maximum of five.
+@label=rt_clamp_height
+*C$BBF8,2;21 Compare height to 5
+ C$BBFA,3;21 Jump over if equal to 5
+ C$BBFD,3;21 Jump over if less than 5
+ C$BC00,2;21 Otherwise set it to 5
+; Self modify the loops' control instructions.
+*C$BC02,3;21 Self modify the outer loop counter (= height)
+ C$BC05,1;21 Copy (clipped) width to #REGa
+ C$BC06,3;21 Self modify the inner loop counter (= width)
+ C$BC09,3;21 Self modify the "reset X" instruction (= width)
+ C$BC0C,2;21 {Compute tilebuf_skip = 24 - width (24 is window columns)
  C$BC0E,1;21 }
- C$BC0F,3;21 ($BC8E) = A; // self modify
- C$BC12,2;21 A += $A8;
- C$BC14,3;21 ($BC95) = A; // self modify
-;
+ C$BC0F,3;21 Self modify the "tilebuf row-to-row skip" instruction
+ C$BC12,2;21 Compute windowbuf_skip = (8 * 24) - width
+ C$BC14,3;21 Self modify the "windowbuf row-to-row skip" instruction
 ; Work out x,y offsets into the tile buffer.
- C$BC17,3;21 HL = &map_position;
- C$BC1A,1;21 A = B;
- C$BC1B,1;21 A &= A;
- C$BC1C,2;21 A = 0; // interleaved
- C$BC1E,2;21 if (Z) <%
- C$BC20,3;21 A = iso_pos_x;
- C$BC23,1;21 A -= *HL; %>
-*C$BC24,1;21 B = A;
-;
- C$BC25,1;21 A = D;
- C$BC26,1;21 A &= A;
- C$BC27,2;21 A = 0; // interleaved
- C$BC29,2;21 if (Z) <%
- C$BC2B,1;21 HL++;
- C$BC2C,3;21 A = iso_pos_y;
- C$BC2F,1;21 A -= *HL; %>
-*C$BC30,1;21 C = A;
-;
-; Calculate the offset into screen buffer.
-; C * 192 == C * 24 * 8
- C$BC31,1;21 {  DE = C << 7;
+; .
+; X part
+ C$BC17,3;21 Point #REGhl at map_position.x
+ C$BC1A,1;21 Copy the lefthand skip into #REGa
+ C$BC1B,1;21 Is it zero?
+ C$BC1C,2;21 Set X to zero (interleaved)
+ C$BC1E,2;21 Jump if not
+ C$BC20,3;21 {Compute x = iso_pos_x - map_position.x
+ C$BC23,1;21
+*C$BC24,1;21 }
+; Y part
+ C$BC25,1;21 Copy top skip into #REGa
+ C$BC26,1;21 Is it zero?
+ C$BC27,2;21 Set Y to zero (interleaved)
+ C$BC29,2;21 Jump if not
+ C$BC2B,1;21 Advance #REGhl to map_position.y
+ C$BC2C,3;21 {Compute y = iso_pos_y - map_position.y
+ C$BC2F,1;21
+*C$BC30,1;21 }
+; Calculate the offset into the window buffer.
+ C$BC31,1;21 {#REGde = y << 7 (== y * 128)
  C$BC32,5;21
  C$BC37,1;21 }
- C$BC38,2;21 {  HL = C << 6;
+ C$BC38,2;21 {#REGhl = y << 6 (== y * 64)
  C$BC3A,1;21
  C$BC3B,1;21 }
- C$BC3C,1;21 {  HL += DE + B + $F290; // screen buffer start address
- C$BC3D,7;21
- C$BC44,1;21 }
-;
- C$BC45,1;21 swap it into DE. HL about to be overwritten.
-;
-; Copy BC (x,y coord) into HL'
- C$BC46,2;21
- C$BC48,1;21 POP HLdash
- C$BC49,1;21
-;
- C$BC4A,1;21 A = B;
- C$BC4B,1;21 {  HL = C * 24 + A + $F0F8; // visible tiles array
- C$BC4C,16;21
- C$BC5C,1;21 }
- C$BC5D,1;21
- C$BC5E,2;21 C = 5; // iterations // self modified $BC5F
-*C$BC60,2;21 do <% B = 4; // iterations // self modified $BC61
-*C$BC62,1;21 do <%
- C$BC63,1;21 A = *DE;
- C$BC64,1;21
- C$BC65,1;21 POP DEdash // visible tiles array pointer
- C$BC66,1;21 PUSH HLdash // save x,y
- C$BC67,3;21 select_tile_set(); // call using banked registers
- C$BC6A,1;21 {      HLdash = A * 8 + BCdash;
- C$BC6B,5;21
- C$BC70,1;21 }
- C$BC71,3;21 Bdash, Cdash = 8, 24; // iterations, stride
-*C$BC74,1;21 {      do <% *DEdash = *HLdash++;
+ C$BC3C,1;21 Sum #REGde and #REGhl = y * 192 (== y * 24 * 8)
+ C$BC3D,1;21 {#REGhl += x
+ C$BC3E,2;21
+ C$BC40,1;21 }
+ C$BC41,3;21 Point #REGde at the window buffer's start address
+ ;21 (windowbuf)
+ C$BC44,1;21 Add
+ C$BC45,1;21 Swap the buffer offset into #REGde. #REGhl is about to be
+ ;21 overwritten
+; Calculate the offset into the tile buffer.
+; .
+; Compute pointer = C * 24 + A + $F0F8
+ C$BC46,1;21 Stack the x and y values
+ C$BC47,1;21 Bank
+ C$BC48,1;21 Restore into #REGhl
+ C$BC49,1;21 Unbank
+ C$BC4A,1;21 Copy x into #REGa
+ C$BC4B,1;21 {#REGhl = y
+ C$BC4C,2;21 }
+ C$BC4E,1;21 {Multiply it by 8
+ C$BC4F,1;21
+ C$BC50,1;21 }
+ C$BC51,1;21 {Copy result to #REGbc
+ C$BC52,1;21 }
+ C$BC53,1;21 Double result
+ C$BC54,1;21 = y * 8 + y * 16
+ C$BC55,1;21 {Copy x into #REGbc
+ C$BC56,2;21 }
+ C$BC58,1;21 = y * 24 + x
+ C$BC59,3;21 Point #REGde at the visible tiles array (tilebuf)
+ C$BC5C,1;21 = $F0F8 + y * 24 + x
+ C$BC5D,1;21 Move tilebuf pointer into #REGde
+; Loops start here.
+ C$BC5E,2;21 Set #REGc for <self modified by $BC5F> rows
+; Start loop
+@label=rt_copy_row
+*C$BC60,2;21 Set #REGb for <self modified by $BC61> columns
+; Start loop
+@label=rt_copy_column
+*C$BC62,1;21 Save windowbuf pointer
+ C$BC63,1;21 Read a tile from tilebuf
+ C$BC64,1;21 Bank
+ C$BC65,1;21 Restore windowbuf pointer
+ C$BC66,1;21 Save x,y
+ C$BC67,3;21 Turn a map ref into a tile set pointer (in #REGbc)
+; Copy the tile into the window buffer.
+; .
+; Compute the tile row pointer. (This is similar to #R$6B4F onwards).
+ C$BC6A,1;21 {Widen the tile index into #REGhl
+ C$BC6B,2;21 }
+ C$BC6D,1;21 {Multiply by 8
+ C$BC6E,1;21
+ C$BC6F,1;21 }
+ C$BC70,1;21 Add to tileset base address
+ C$BC71,3;21 Simultaneously set #REGb for eight iterations and #REGc
+ ;21 for a 24 byte stride
+; Start loop
+@label=rt_copy_tile
+*C$BC74,1;21 {Transfer a byte (a row) of tile across
  C$BC75,1;21 }
- C$BC76,1;21 {        DEdash += Cdash;
+ C$BC76,1;21 {Advance the screen buffer pointer by the stride
  C$BC77,4;21
+@label=rt_copy_tile_nocarry
 *C$BC7B,1;21
  C$BC7C,1;21 }
- C$BC7D,2;21 %> while (--Bdash);
- C$BC7F,1;21 POP HLdash
- C$BC80,1;21 Hdash++;
- C$BC81,1;21
- C$BC82,1;21 DE++;
- C$BC83,1;21 HL++;
- C$BC84,2;21 %> while (--B);
- C$BC86,1;21
- C$BC87,1;21 A = Hdash;
- C$BC88,2;21 A -= 0; // self modified $BC89
- C$BC8A,1;21 Hdash = A;
- C$BC8B,1;21 Ldash++;
- C$BC8C,1;21
- C$BC8D,2;21 A = 20; // self modified $BC8E
- C$BC8F,1;21 A += E;
- C$BC90,2;21 {    if (carry) D++;
- C$BC92,1;21 }
-*C$BC93,1;21 E = A;
- C$BC94,2;21 A = $BC; // self modified $BC95
- C$BC96,1;21 A += L;
- C$BC97,2;21 {    if (carry) H++;
- C$BC99,1;21 }
-*C$BC9A,1;21 L = A;
- C$BC9B,1;21 {  %> while (--C);
+ C$BC7D,2;21 ...loop for each byte of the tile
+; Move to next column.
+ C$BC7F,1;21 Restore x,y
+ C$BC80,1;21 Increment X
+ C$BC81,1;21 Unbank
+ C$BC82,1;21 Advance the tilebuf pointer
+ C$BC83,1;21 Advance the windowbuf pointer
+ C$BC84,2;21 ...loop (width counter)
+; Reset x offset. Advance to next row.
+ C$BC86,1;21 Bank
+ C$BC87,1;21 Get X
+ C$BC88,2;21 Reset X to initial value <self modified by $BC89>
+ C$BC8A,1;21 Save X
+ C$BC8B,1;21 Increment Y
+ C$BC8C,1;21 Unbank
+ C$BC8D,2;21 Get tilebuf row-to-row skip <self modified by $BC8E>
+ C$BC8F,1;21 {Increment tilebuf pointer #REGde
+ C$BC90,3;21
+@label=rt_tilebuf_nocarry
+*C$BC93,1;21 }
+ C$BC94,2;21 Get windowbuf row-to-row skip <self modified by $BC95>
+ C$BC96,1;21 {Increment windowbuf pointer #REGhl
+ C$BC97,3;21
+@label=rt_windowbuf_nocarry
+*C$BC9A,1;21 }
+ C$BC9B,1;21 {...loop
  C$BC9C,3;21 }
-*C$BC9F,1;21 next:
- C$BCA0,3;21 {  IY += 32; // stride
- C$BCA3,2;21
- C$BCA5,1;21 }
- C$BCA6,3;21 %> while (--B);
- C$BCA9,1;21 return;
+@label=rt_next_vischar
+*C$BC9F,1;21 Restore loop counter
+ C$BCA0,3;21 Set #REGde to the vischar stride (32)
+ C$BCA3,2;21 Advance #REGiy to the next vischar
+ C$BCA5,1;21 {...loop
+ C$BCA6,3;21 }
+ C$BCA9,1;21 Return
 
 ; Turn a map ref into a tile set pointer.
 ;
 ; Used by the routine at #R$BB98.
 ;
-; I:H X shift.
-; I:L Y shift.
+; I:H  X shift.
+; I:L  Y shift.
 ; O:A  Preserved.
 ; O:BC Pointer to tile set.
 @label=select_tile_set
