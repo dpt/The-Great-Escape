@@ -11678,63 +11678,92 @@ cC$C41C,3;21 Read the current map position into #REGhl
 *C$C47B,2;21 ...loop
  C$C47D,1;21 Return
 
-; Run through all visible characters, resetting them if they're off-screen.
+; Remove any off-screen non-player characters.
 ;
+; This is the opposite of #R$C41C.
+; .
 ; Used by the routine at #R$9D7B.
 @label=purge_invisible_characters
-cC$C47E,3;21 HL = &map_position;
- C$C481,1;21 {E = MAX(L - 9, 0);
- C$C482,5;21
-*C$C487,1;21 }
- C$C488,1;21 {D = MAX(H - 9, 0);
- C$C489,5;21
-*C$C48E,1;21 }
- C$C48F,2;21 B = 7; // 7 iterations
+cC$C47E,3;21 Read the current map position into #REGhl
+; Calculate clamped lower bound.
+; .
+; 9 is the size, in UDGs, of a buffer zone around the visible screen in which
+; visible characters will persist. (Compare to the spawning size of 8).
+ C$C481,1;21 Get map_position.x
+ C$C482,2;21 Subtract 9
+ C$C484,2;21 Jump if it was >= 9
+ C$C486,1;21 Otherwise zero it
+*C$C487,1;21 #REGe is the result: minx
+ C$C488,1;21 Get map_position.y
+ C$C489,2;21 Subtract 9
+ C$C48B,2;21 Jump if it was >= 9
+ C$C48D,1;21 Otherwise zero it
+*C$C48E,1;21 #REGd is the result: miny
+; Iterate over non-player characters.
+ C$C48F,2;21 Set #REGb for seven iterations
 @nowarn
- C$C491,3;21 HL = $8020; // iterate over non-player characters
-*C$C494,1;21 do <% A = *HL;
- C$C495,2;21 {  if (A == character_NONE) goto next;
- C$C497,3;21 }
- C$C49A,1;21
- C$C49B,2;21 {  HL += 28;
+ C$C491,3;21 Point #REGhl at the second visible character
+; Start loop
+; .
+; Ignore inactive characters.
+@label=pic_loop
+*C$C494,1;21 Fetch the vischar's character index
+ C$C495,2;21 Is it character_NONE?
+ C$C497,3;21 Jump to the next vischar if so
+ C$C49A,1;21 Preserve the vischar pointer
+; Reset this character if it's not in the current room.
+ C$C49B,2;21 {Point #REGhl at vischar.room
  C$C49D,1;21
  C$C49E,1;21 }
- C$C49F,3;21 {  if (room_index != *HL) goto reset; /* this character is not in the current room */
- C$C4A2,1;21
- C$C4A3,2;21 }
- C$C4A5,1;21 {  C = *--HL;
- C$C4A6,1;21 }
- C$C4A7,1;21 {  A = *--HL;
+ C$C49F,3;21 Get global current room index
+ C$C4A2,1;21 Is the vischar in the current room?
+ C$C4A3,2;21 Jump to reset if not
+; Handle Y part
+ C$C4A5,1;21 {Load vischar.iso_pos.y into (#REGc,#REGa)
+ C$C4A6,2;21
  C$C4A8,1;21 }
- C$C4A9,3;21 divide_by_8_with_rounding(C,A);
- C$C4AC,1;21 C = A;
- C$C4AD,1;21 {  if (C <= D || C > MIN(D + 34, 255)) goto reset;
- C$C4AE,9;21
-*C$C4B7,1;21
- C$C4B8,2;21 }
- C$C4BA,1;21 {  C = *--HL;
- C$C4BB,1;21 }
- C$C4BC,1;21 {  A = *--HL;
+ C$C4A9,3;21 Divide (#REGc,#REGa) by 8 with rounding. Result is in #REGa
+ C$C4AC,1;21 Copy result #REGc
+ C$C4AD,1;21 Copy miny to #REGa
+ C$C4AE,1;21 Is miny >= result?
+ C$C4AF,2;21 Jump to reset if so (out of bounds)
+; DPT: 16 is used for screen height here, but 24 is used for width below - so
+; that doesn't line up with the actual values which are 24x17.
+ C$C4B1,2;21 Add 16 + 2 * 9 (16 => screen height, 9 => buffer zone size)
+ C$C4B3,2;21 {Clamp to a maximum of 255
+ C$C4B5,2;21 }
+*C$C4B7,1;21 Is result > (miny + buffer size, clamped to 255)?
+ C$C4B8,2;21 Jump to reset if so (out of bounds)
+; Handle X part
+ C$C4BA,1;21 {Load vischar.iso_pos.x into (#REGc,#REGa)
+ C$C4BB,2;21
  C$C4BD,1;21 }
- C$C4BE,3;21 divide_by_8(C,A);
- C$C4C1,1;21 C = A;
- C$C4C2,1;21 {  if (C <= E || C > MIN(E + 42, 255)) goto reset;
- C$C4C3,1;21
- C$C4C4,2;21 }
- C$C4C6,2;21 {  goto pop_next;
- C$C4C8,4;21
-*C$C4CC,1;21
- C$C4CD,2;21 }
-*C$C4CF,1;21 reset:
- C$C4D0,3;21
- C$C4D3,3;21 reset_visible_character();
- C$C4D6,2;21
-*C$C4D8,1;21 pop_next:
-*C$C4D9,2;21 {  next: HL += 32;
+ C$C4BE,3;21 Divide (#REGc,#REGa) by 8 (with no rounding). Result is in #REGa
+ C$C4C1,1;21 Copy result #REGc
+ C$C4C2,1;21 Copy minx to #REGa
+ C$C4C3,1;21 Is minx >= result?
+ C$C4C4,2;21 Jump to reset if so (out of bounds)
+ C$C4C6,2;21 Add 24 + 2 * 9 (24 => screen width, 9 => buffer zone size)
+ C$C4C8,2;21 {Clamp to a maximum of 255
+ C$C4CA,2;21 }
+*C$C4CC,1;21 Is result > (minx + buffer size, clamped to 255)?
+ C$C4CD,2;21 Jump to reset if so (out of bounds)
+@label=pic_reset
+*C$C4CF,1;21 Restore the vischar pointer (reset_visible_character arg)
+ C$C4D0,1;21 Preserve the vischar pointer over the call
+ C$C4D1,1;21 Preserve minx/miny
+ C$C4D2,1;21 Preserve the loop counter
+ C$C4D3,3;21 Reset the visible character
+ C$C4D6,1;21 Restore the loop counter
+ C$C4D7,1;21 Restore minx/miny
+@label=pic_pop_next
+*C$C4D8,1;21 Restore the vischar pointer
+@label=pic_next
+*C$C4D9,2;21 {Advance to the next vischar
  C$C4DB,1;21
  C$C4DC,1;21 }
- C$C4DD,2;21 %> while (--B);
- C$C4DF,1;21 return;
+ C$C4DD,2;21 ...loop
+ C$C4DF,1;21 Return
 
 ; Adds characters to the visible character list.
 ;
