@@ -11596,76 +11596,87 @@ gW$C41A,2
 ;
 ; .
 ;
-; Form a clamped map position in DE.
+; Form a clamped map position in #REGde.
 @label=spawn_characters
-cC$C41C,3;21 HL = map_position;
- C$C41F,1;21 {E = (L < 8) ? 0 : L - 8;
- C$C420,5;21
-*C$C425,1;21 }
- C$C426,1;21 {D = (H < 8) ? 0 : H - 8;
- C$C427,5;21
-*C$C42C,1;21 }
+cC$C41C,3;21 Read the current map position into #REGhl
+ C$C41F,1;21 Get map_position.x
+ C$C420,2;21 Subtract 8
+ C$C422,2;21 Jump if it was >= 8
+ C$C424,1;21 Otherwise zero it
+*C$C425,1;21 #REGe is the result: map_x_clamped
+ C$C426,1;21 Get map_position.y
+ C$C427,2;21 Subtract 8
+ C$C429,2;21 Jump if it was >= 8
+ C$C42B,1;21 Otherwise zero it
+*C$C42C,1;21 #REGd is the result: map_y_clamped
 ; Walk all character structs.
- C$C42D,3;21 HL = &character_structs[0];
- C$C430,2;21 B = character_26_STOVE_1; // the 26 'real' characters
-*C$C432,2;21 {do <% if (*HL & characterstruct_FLAG_ON_SCREEN) goto skip;
- C$C434,2;21 }
-; Is the character in this room?
- C$C436,1;21 (stash HL)
- C$C437,1;21 HL++; // $7613
- C$C438,3;21 A = room_index;
- C$C43B,1;21 {  if (A != *HL) goto unstash_skip; // not in the visible room
- C$C43C,2;21 }
- C$C43E,1;21 {  if (A != 0) goto indoors;
- C$C43F,2;21 }
-; Outdoors.
- C$C441,1;21 HL++; // $7614
-; Screen Y calculation.
+ C$C42D,3;21 Point #REGhl at character_structs[0] (charstr)
+ C$C430,2;21 Set #REGb for 26 iterations (26 characters)
+; Start loop
+@label=sc_loop
+*C$C432,2;21 Fetch flags and test for characterstruct_FLAG_ON_SCREEN
+ C$C434,2;21 Jump if already on-screen
+; Is this character in the current room?
+ C$C436,1;21 Preserve the character struct pointer
+ C$C437,1;21 Point #REGhl at charstr.room
+ C$C438,3;21 Get global current room index
+ C$C43B,1;21 Same room?
+ C$C43C,2;21 Jump if not
+ C$C43E,1;21 Outdoors?
+ C$C43F,2;21 Jump if not
+; Handle outdoors.
+ C$C441,1;21 Point #REGhl at charstr.pos.x
+; Do screen Y calculation:
+; y = ((256 - charstr.pos.x) - charstr.pos.y) - charstr.pos.height
 ; .
-; A is zero here, and represents 0x200.
- C$C442,1;21 A -= *HL; // charstr->pos.x
- C$C443,1;21 HL++; // $7615
- C$C444,1;21 A -= *HL; // charstr->pos.y
- C$C445,1;21 HL++; // $7616
- C$C446,1;21 A -= *HL; // charstr->pos.height
- C$C447,1;21 C = A;
- C$C448,1;21 A = D;
- C$C449,1;21 {  if (C <= A) goto unstash_skip; // check
- C$C44A,2;21 }
- C$C44C,2;21 A += 32;
- C$C44E,2;21 {  if (A > 0xFF) A = 0xFF;
+; #REGa is zero here, and represents 0x100.
+ C$C442,1;21 Subtract charstr.pos.x
+ C$C443,1;21 Advance #REGhl to charstr.pos.y
+ C$C444,1;21 Subtract charstr.pos.y
+ C$C445,1;21 Advance #REGhl to charstr.pos.height
+ C$C446,1;21 Subtract charstr.pos.height
+ C$C447,1;21 Copy y to #REGc
+ C$C448,1;21 Copy map_y_clamped to #REGd
+ C$C449,1;21 Is map_y_clamped >= y?
+ C$C44A,2;21 Jump if so
+ C$C44C,2;21 Add 16 + 2 * 8 (16 => screen height, 8 => spawn zone size)
+ C$C44E,2;21 {Clamp to a maximum of 255
  C$C450,2;21 }
-*C$C452,1;21 {  if (C > A) goto unstash_skip; // check
- C$C453,2;21 }
-; Screen X calculation.
- C$C455,1;21 HL--; // $7615
- C$C456,2;21 A = 64;
- C$C458,1;21 A += *HL;
- C$C459,1;21 HL--; // $7614
- C$C45A,1;21 A -= *HL;
- C$C45B,1;21 A *= 2; // A == 128
- C$C45C,1;21 C = A;
- C$C45D,1;21 A = E;
- C$C45E,1;21 {  if (C <= A) goto unstash_skip; // check
- C$C45F,2;21 }
- C$C461,2;21 A += 40;
- C$C463,2;21 {  if (A > 0xFF) A = 0xFF;
+*C$C452,1;21 Is y > (map_y_clamped + spawn size, clamped to 255)?
+ C$C453,2;21 Jump if so
+; Do screen X calculation:
+; x = (64 - charstr.pos.x + charstr.pos.y) * 2
+ C$C455,1;21 Step #REGhl back to charstr.pos.y
+ C$C456,2;21 Start with x = 64
+ C$C458,1;21 Add charstr.pos.y
+ C$C459,1;21 Step #REGhl back to charstr.pos.x
+ C$C45A,1;21 Subtract charstr.pos.x
+ C$C45B,1;21 Double it
+ C$C45C,1;21 Copy x to #REGc
+ C$C45D,1;21 Copy map_x_clamped to #REGe
+ C$C45E,1;21 Is map_x_clamped >= x?
+ C$C45F,2;21 Jump if so
+ C$C461,2;21 Add 24 + 2 * 8 (24 => screen width, 8 => spawn zone size)
+ C$C463,2;21 {Clamp to a maximum of 255
  C$C465,2;21 }
-*C$C467,1;21 {  if (C > A) goto unstash_skip; // check
- C$C468,2;21 }
-*C$C46A,1;21 indoors: (unstash HL)
- C$C46B,1;21 {  (stash HL, DE, BC)
- C$C46C,1;21
- C$C46D,1;21 }
- C$C46E,3;21 spawn_character();
- C$C471,1;21 {  (unstash BC, DE)
- C$C472,1;21 }
-*C$C473,1;21 unstash_skip: (unstash HL)
-*C$C474,1;21 {skip: HL += 7; // stride
+*C$C467,1;21 Is x > (map_x_clamped + spawn size, clamped to 255)?
+ C$C468,2;21 Jump if so
+@label=sc_indoors
+*C$C46A,1;21 Restore the character struct pointer (spawn_character arg)
+ C$C46B,1;21 Preserve the character struct pointer over the call
+ C$C46C,1;21 Preserve map_x/y_clamped
+ C$C46D,1;21 Preserve the loop counter
+ C$C46E,3;21 Add characters to the visible character list
+ C$C471,1;21 Restore the loop counter
+ C$C472,1;21 Restore map_x/y_clamped
+@label=sc_unstash_next
+*C$C473,1;21 Restore the character struct pointer
+@label=sc_next
+*C$C474,1;21 {Advance to the next characterstruct
  C$C475,5;21
  C$C47A,1;21 }
-*C$C47B,2;21 %> while (--B);
- C$C47D,1;21 return;
+*C$C47B,2;21 ...loop
+ C$C47D,1;21 Return
 
 ; Run through all visible characters, resetting them if they're off-screen.
 ;
