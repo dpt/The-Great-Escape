@@ -11126,90 +11126,152 @@ cC$BADC,1;21 Save tile pointer
  C$BAF5,1;21 Switch register banks back
  C$BAF6,1;21 Return
 
-; Clipping vischars to the game window.
+; Clips the given vischar's dimensions to the game window.
 ;
 ; Used by the routines at #R$BB98 and #R$E420.
 ;
-; O:A 0 => visible, 0xFF => invisible.
-; O:BC Clipped width.
-; O:DE Clipped height.
-; O:IY Pointer to visible character.
+; I:IY Pointer to visible character.
+; O:A  0/255 => vischar visible/not visible.
+; O:B  Lefthand skip (bytes).
+; O:C  Clipped width (bytes).
+; O:D  Top skip (rows).
+; O:E  Clipped height (rows).
 ;
-; Width part.
+; To determine visibility and sort out clipping there are five cases to
+; consider per axis:
+; (A) the vischar is completely off the left/top of window,
+; (B) the vischar is clipped on its left/top,
+; (C) the vischar is entirely visible,
+; (D) the vischar is clipped on its right/bottom, and
+; (E) the vischar is completely off the right/bottom of window.
+; Note that no vischar will ever be wider than the window so we never need to
+; consider if clipping will occur on both sides.
+; .
+; First handle the horizontal cases.
 @label=vischar_visible
-cC$BAF7,3;22 HL = &iso_pos_x;
- C$BAFA,3;22 {A = map_position[0] + 24;
- C$BAFD,2;22 }
- C$BAFF,1;22 A -= *HL;
- C$BB00,3;22 {if (A > 0) <%
- C$BB03,3;22 }
- C$BB06,3;22 CP IY[30]  // if (A ?? IY[30])
- C$BB09,3;22 if (carry) <%
- C$BB0C,2;22 {    BC = A; %>
- C$BB0E,1;22 }
- C$BB0F,2;22 else <%
-*C$BB11,1;22 {    A = *HL + IY[30];
- C$BB12,3;22 }
- C$BB15,3;22 {    A -= map_position[0];
- C$BB18,1;22 }
- C$BB19,3;22 {    if (A <= 0) goto exit;
- C$BB1C,3;22 }
- C$BB1F,3;22 CP IY[30]
- C$BB22,3;22 if (carry) <%
- C$BB25,1;22 C = A;
- C$BB26,2;22 {      B = -A + IY[30]; %>
+cC$BAF7,3;22 Point #REGhl at iso_pos_x (vischar left edge)
+; Calculate the right edge of the window in map space.
+ C$BAFA,3;22 Load map X position
+ C$BAFD,2;22 Add 24 (number of window columns)
+; Subtract iso_pos_x giving the distance between the right edge of the window
+; and the current vischar's left edge (in bytes).
+ C$BAFF,1;22 available_right = (map_position.x + 24) - vischar_left_edge
+; Check for case (E): Vischar left edge beyond the window's right edge.
+ C$BB00,3;22 Jump to exit if zero (vischar left edge at right edge)
+ C$BB03,3;22 Jump to exit if negative (vischar left edge beyond
+ ;22 right edge)
+; Check for case (D): Vischar extends outside the window.
+ C$BB06,3;22 Compare result to (sprite width bytes + 1)
+ C$BB09,3;22 Jump if it fits
+; Vischar's right edge is outside the window: clip its width.
+ C$BB0C,2;22 No lefthand skip
+ C$BB0E,1;22 Clipped width = available_right
+ C$BB0F,2;22 Jump to height part
+; Calculate the right edge of the vischar
+@label=vv_not_clipped_on_right_edge
+*C$BB11,1;22 Load iso_pos_x (vischar left edge)
+ C$BB12,3;22 vischar_right_edge = iso_pos_x + (sprite width bytes + 1)
+; Subtract the map position's X giving the distance between the current
+; vischar's right edge and the left edge of the window (in bytes).
+ C$BB15,3;22 Load map X position
+ C$BB18,1;22 available_left = vischar_right_edge - map_position.x
+; Check for case (A): Vischar's right edge is beyond the window's left edge.
+ C$BB19,3;22 Jump to exit if zero (vischar right edge at left edge)
+ C$BB1C,3;22 Jump to exit if negative (vischar right edge beyond
+ ;22 left edge)
+; Check for case (B): Vischar's left edge is outside the window and its right
+; edge is inside the window.
+ C$BB1F,3;22 Compare result to (sprite width bytes + 1)
+ C$BB22,3;22 Jump if it fits
+; Vischar's left edge is outside the window: move the lefthand skip into #REGb
+; and the clipped width into #REGc.
+ C$BB25,1;22 Clipped width = available_left
+ C$BB26,2;22 {Lefthand skip = (sprite width bytes + 1) - available_left
  C$BB28,3;22
  C$BB2B,1;22 }
- C$BB2C,2;22 else <%
-*C$BB2E,2;22 {      BC = IY[30]; %> %>
- C$BB30,3;22 }
-; Height part.
-*C$BB33,3;22 {  HL = ((map_position >> 8) + 17) * 8;
- C$BB36,7;22
+ C$BB2C,2;22 (else)
+; Case (C): No clipping required.
+@label=vv_not_clipped
+*C$BB2E,2;22 No lefthand skip
+ C$BB30,3;22 Clipped width = (sprite width bytes + 1)
+; Handle vertical cases.
+; .
+; Note: This uses vischar.iso_pos, not state.iso_pos as above.
+; .
+; Calculate the bottom edge of the window in map space.
+@label=vv_height
+*C$BB33,3;22 {Load the map position's Y and add 17 (number of window
+ C$BB36,2;22 rows)}
+ C$BB38,1;22 {Multiply it by 8
+ C$BB39,4;22
  C$BB3D,1;22 }
- C$BB3E,3;22 E = IY[26];
- C$BB41,3;22 D = IY[27];
- C$BB44,1;22 A &= A;
- C$BB45,2;22 HL -= DE;
- C$BB47,3;22 {  if (result <= 0) goto exit;
- C$BB4A,3;22 }
- C$BB4D,1;22 {  if (H) goto exit;
+; Subtract vischar's Y giving the distance between the bottom edge of the
+; window and the current vischar's top (in rows).
+ C$BB3E,3;22 {Load vischar.iso_pos.y (vischar top edge)
+ C$BB41,3;22 }
+ C$BB44,1;22 Clear carry flag
+ C$BB45,2;22 available_bottom = window_bottom_edge * 8 - vischar->iso_pos.y
+; Check for case (E): Vischar top edge beyond the window's bottom edge.
+ C$BB47,3;22 Jump to exit if zero (vischar top edge at bottom edge)
+ C$BB4A,3;22 Jump to exit if negative (vischar top edge beyond
+ ;22 bottom edge)
+ C$BB4D,1;22 {Jump to exit if >= 256 (way out of range)
  C$BB4E,1;22
  C$BB4F,3;22 }
- C$BB52,1;22 A = L;
- C$BB53,3;22 CP IY[31]
- C$BB56,3;22 if (carry) <%
- C$BB59,1;22 {    DE = A; %>
- C$BB5A,2;22 }
- C$BB5C,2;22 else <%
-*C$BB5E,3;22 {    HL = IY[31] + DE;
- C$BB61,2;22
- C$BB63,1;22 }
- C$BB64,1;22 {    DE = map_position >> 8 * 8;
- C$BB65,9;22
- C$BB6E,1;22 }
- C$BB6F,1;22 A &= A; // likely: clear carry
- C$BB70,2;22 HL -= DE;
- C$BB72,3;22 {    if (result <= 0) goto exit;
- C$BB75,3;22 }
- C$BB78,1;22 {    if (H) goto exit;
+; Check for case (D): Vischar extends outside the window.
+ C$BB52,1;22 #REGa = available_bottom
+ C$BB53,3;22 Compare result to vischar.height
+ C$BB56,3;22 Jump if it fits (available_top >= vischar.height)
+; Vischar's bottom edge is outside the window: clip its height.
+ C$BB59,1;22 Clipped height = available_bottom
+ C$BB5A,2;22 No top skip
+ C$BB5C,2;22 Jump to exit
+; Calculate the bottom edge of the vischar.
+@label=vv_not_clipped_on_top_edge
+*C$BB5E,3;22 {Load sprite height and widen
+ C$BB61,2;22 }
+ C$BB63,1;22 vischar_bottom_edge = vischar.iso_pos.y + (sprite height)
+; Subtract map position's Y (scaled) giving the distance between the current
+; vischar's bottom edge and the top edge of the window (in rows).
+ C$BB64,1;22 Bank
+ C$BB65,3;22 {Load the map position's Y and widen
+ C$BB68,1;22
+ C$BB69,2;22 }
+ C$BB6B,1;22 {Multiply by 8
+ C$BB6C,1;22
+ C$BB6D,1;22 }
+ C$BB6E,1;22 Unbank
+ C$BB6F,1;22 Clear the carry flag
+ C$BB70,2;22 available_top = vischar_bottom_edge - map_pos_y * 8
+; Check for case (A): Vischar's bottom edge is beyond the window's top edge.
+ C$BB72,3;22 Jump to exit if negative (vischar bottom edge beyond
+ ;22 top edge)
+ C$BB75,3;22 Jump to exit if zero (vischar bottom edge at top edge)
+ C$BB78,1;22 {Jump to exit if >= 256 (way out of range)
  C$BB79,1;22
  C$BB7A,3;22 }
- C$BB7D,1;22 A = L;
- C$BB7E,3;22 CP IY[31]
- C$BB81,3;22 if (carry) <%
- C$BB84,1;22 E = A;
- C$BB85,2;22 {      D = -A + IY[31]; %>
+; Check for case (B): Vischar's top edge is outside the window and its bottom
+; edge is inside the window.
+ C$BB7D,1;22 #REGa = available_top
+ C$BB7E,3;22 Compare result to vischar.height
+ C$BB81,3;22 Jump if it fits (available_top >= vischar.height)
+; Vischar's top edge is outside the window: move the top skip into #REGd and the
+; clipped height into #REGe.
+ C$BB84,1;22 Clipped height = available_top
+ C$BB85,2;22 {Top skip = vischar.height - available_top
  C$BB87,3;22
  C$BB8A,1;22 }
- C$BB8B,2;22 else <%
-*C$BB8D,2;22 {      DE = IY[31]; %> %>
- C$BB8F,3;22 }
-*C$BB92,1;22 A = 0; // return Z (vischar is visible)
- C$BB93,1;22 return; %>
-*C$BB94,2;22 exit: A = 0xFF;
- C$BB96,1;22 A &= A; // return NZ (vischar is not visible)
- C$BB97,1;22 return;
+ C$BB8B,2;22 (else)
+; Case (C): No clipping required.
+*C$BB8D,2;22 No top skip
+ C$BB8F,3;22 Clipped height = vischar.height
+@label=vv_visible
+*C$BB92,1;22 Set Z (vischar is visible)
+ C$BB93,1;22 Return
+@label=vv_not_visible
+*C$BB94,2;22 Signal invisible
+ C$BB96,1;22 Clear Z (vischar is not visible)
+ C$BB97,1;22 Return
 
 ; Paint any tiles occupied by visible characters with tiles from tile_buf.
 ;
