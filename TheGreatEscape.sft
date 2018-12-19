@@ -6885,7 +6885,7 @@ cC$A3BB,1;21 {Clear the entered_move_characters flag so that the
  C$A3BF,1;21 Preserve for callers
  C$A3C0,1;21 Preserve route.step pointer
  C$A3C1,1;21 Point #REGhl at route.index
- C$A3C2,3;21 Get our next target - a location, a door or 'route
+ C$A3C2,3;21 Get our next target: a location, a door or 'route
  ;21 ends'. The result is returned in #REGa, target pointer
  ;21 returned in #REGhl
  C$A3C5,1;21 Restore route.step pointer to #REGde
@@ -11765,161 +11765,189 @@ cC$C47E,3;21 Read the current map position into #REGhl
  C$C4DD,2;21 ...loop
  C$C4DF,1;21 Return
 
-; Adds characters to the visible character list.
+; Add a character to the visible character list.
 ;
 ; Used by the routine at #R$C41C.
 ;
 ; I:HL Pointer to character to spawn.
 @label=spawn_character
-cC$C4E0,2;22 {if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character disabled */
- C$C4E2,1;22 }
- C$C4E3,1;22
+cC$C4E0,2;22 Is the character already on-screen?
+ ;22 (test flag characterstruct_FLAG_ON_SCREEN)
+ C$C4E2,1;22 Return if so
+ C$C4E3,1;22 Preserve the character pointer
 ; Find an empty slot in the visible character list.
+; .
+; Iterate over non-player characters.
 @nowarn
- C$C4E4,3;22 HL = $8020; // iterate over non-player characters
- C$C4E7,5;22
- C$C4EC,2;22 B = 7; // 7 iterations
-*C$C4EE,1;22 {do <% if (*HL == vischar_CHARACTER_EMPTY_SLOT) goto found_empty_slot;
- C$C4EF,2;22 }
- C$C4F1,1;22 HL += 32; // stride
- C$C4F2,2;22 %> while (--B);
- C$C4F4,1;22
- C$C4F5,1;22 return;
+ C$C4E4,3;22 Point #REGhl at the second visible character
+ C$C4E7,3;22 Prepare the vischar stride
+ C$C4EA,2;22 Prepare vischar_CHARACTER_EMPTY_SLOT
+ C$C4EC,2;22 Set #REGb for seven iterations (seven non-player vischars)
+; Start loop
+@label=spawn_find_slot
+*C$C4EE,1;22 Empty slot?
+ C$C4EF,2;22 Jump if so
+ C$C4F1,1;22 Advance to the next vischar
+ C$C4F2,2;22 ...loop
+@label=spawn_no_spare_slot
+ C$C4F4,1;22 Restore the character pointer
+ C$C4F5,1;22 Return
 ; Found an empty slot.
-*C$C4F6,1;22 found_empty_slot: // restore DE (-> character struct)
- C$C4F7,1;22 // save HL (-> empty vischar slot)
- C$C4F8,2;22 // restore IY (-> empty vischar slot)
- C$C4FA,1;22 // save HL (-> empty vischar slot)
- C$C4FB,1;22 // save DE (-> character struct)
- C$C4FC,1;22 DE++;
+@label=spawn_found_slot
+*C$C4F6,1;22 Restore the character pointer to #REGde
+ C$C4F7,1;22 {Point #REGiy at the empty vischar slot
+ C$C4F8,2;22 }
+ C$C4FA,1;22 Preserve the empty vischar slot pointer
+ C$C4FB,1;22 Preserve the character pointer
+ C$C4FC,1;22 Advance #REGde to point at charstr.room
 ; Scale coords dependent on which room the character is in.
- C$C4FD,3;22 HL = &saved_pos_x;
- C$C500,1;22 {A = *DE++;
- C$C501,1;22 }
- C$C502,1;22 A &= A;
- C$C503,2;22 if (A == 0) <%
- C$C505,2;22 A = 3; // 3 iterations
-*C$C507,1;22 do <%
- C$C508,1;22 {    BC = *DE * 8;
- C$C509,3;22 }
- C$C50C,1;22 {    *HL++ = C;
- C$C50D,1;22 }
- C$C50E,1;22 {    *HL++ = B;
+ C$C4FD,3;22 Point #REGhl at saved_pos_x
+ C$C500,1;22 Fetch charstr.room
+ C$C501,1;22 Advance #REGde to charstr.pos
+ C$C502,1;22 Is it outside?
+ C$C503,2;22 Jump if not
+; Outdoors
+ C$C505,2;22 Set #REGa for three iterations (x,y,height)
+; Start loop
+@label=spawn_outdoor_pos_loop
+*C$C507,1;22 Bank
+ C$C508,1;22 Read an (8-bit) coord
+ C$C509,3;22 Multiply it by 8 returning the result in #REGbc
+ C$C50C,1;22 {Store the result widened to 16-bit
+ C$C50D,2;22
  C$C50F,1;22 }
- C$C510,1;22 DE++;
- C$C511,1;22
- C$C512,1;22 {  %> while (--A); %>
+ C$C510,1;22 Advance to the next coord
+ C$C511,1;22 Unbank
+ C$C512,1;22 {...loop
  C$C513,3;22 }
- C$C516,2;22 else <%
-*C$C518,2;22 B = 3; // 3 iterations
-*C$C51A,1;22 {do <% *HL++ = *DE++;
- C$C51B,2;22
- C$C51D,1;22 }
- C$C51E,2;22 {  *HL++ = 0;
+ C$C516,2;22 (else)
+@label=spawn_indoors
+*C$C518,2;22 Set #REGb for three iterations
+; Start loop
+@label=spawn_indoor_pos_loop
+*C$C51A,1;22 Read an (8-bit) coord
+ C$C51B,1;22 {Store the coord widened to 16-bit
+ C$C51C,4;22
  C$C520,1;22 }
- C$C521,2;22 %> while (--B); %>
-*C$C523,3;22 collision();
- C$C526,3;22 if (Z) bounds_check();
- C$C529,1;22 // restore DE (-> character struct)
- C$C52A,1;22 // restore HL (-> empty vischar slot)
- C$C52B,1;22 RET NZ // if collision or bounds_check is nonzero, then return
- C$C52C,1;22 {A = *DE | characterstruct_FLAG_ON_SCREEN; /* Disable character */
- C$C52D,2;22 }
- C$C52F,1;22 *DE = A;
- C$C530,2;22 A &= characterstruct_CHARACTER_MASK;
- C$C532,1;22 {*HL++ = A;
+ C$C521,2;22 ...loop
+@label=spawn_check_collide
+*C$C523,3;22 Call collision
+ C$C526,3;22 If no collision, call bounds_check
+ C$C529,1;22 Restore the character pointer
+ C$C52A,1;22 Restore the empty vischar slot pointer
+ C$C52B,1;22 Return if collision or bounds_check returned non-zero
+; Transfer character struct to vischar.
+ C$C52C,1;22 {Set characterstruct_FLAG_ON_SCREEN in
+ C$C52D,2;22 charstr.character_and_flags
+ C$C52F,1;22 }
+ C$C530,2;22 {Mask #REGa against characterstruct_CHARACTER_MASK ($1F)
+ C$C532,1;22 and store that as vischar.character
  C$C533,1;22 }
- C$C534,2;22 *HL = 0;
- C$C536,1;22 // save DE (-> character struct)
- C$C537,3;22 DE = &character_meta_data[0]; /* Commandant */
- C$C53A,1;22 {if (A) <%
- C$C53B,2;22 }
+ C$C534,2;22 Clear the vischar.flags
+ C$C536,1;22 Preserve the charstr.character_and_flags pointer
+ C$C537,3;22 Point #REGde at the character_meta_data for the commandant
+ C$C53A,1;22 Is it character_0_COMMANDANT?
+ C$C53B,2;22 Jump if so
 @nowarn
- C$C53D,3;22 DE = &character_meta_data[1]; /* Guard */
- C$C540,2;22 {  if (A >= 16) <%
- C$C542,2;22 }
- C$C544,3;22 DE = &character_meta_data[2]; /* Dog */
- C$C547,2;22 {    if (A >= 20) <%
- C$C549,2;22 }
- C$C54B,3;22 DE = &character_meta_data[3]; %> %> %> /* Prisoner */
-*C$C54E,1;22
- C$C54F,2;22 {DE += 7;
+ C$C53D,3;22 Point #REGde at the character_meta_data for a guard
+ C$C540,2;22 Is it character_1_GUARD_1 to character_15_GUARD_15?
+ C$C542,2;22 Jump if so
+ C$C544,3;22 Point #REGde at the character_meta_data for a dog
+ C$C547,2;22 Is it character_16_GUARD_DOG_1 to character_19_GUARD_DOG_4?
+ C$C549,2;22 Jump if so
+ C$C54B,3;22 Point #REGde at the character_meta_data for a prisoner
+@label=spawn_metadata_set
+*C$C54E,1;22 Swap vischar into #REGde, metadata into #REGhl
+ C$C54F,2;22 {Point #REGde at vischar.animbase
  C$C551,1;22
  C$C552,1;22 }
- C$C553,2;22 *DE++ = *HL++;
- C$C555,2;22 *DE++ = *HL++;
- C$C557,2;22 {DE += 11;
+ C$C553,2;22 {Copy metadata.animbase to vischar.animbase
+ C$C555,2;22 }
+ C$C557,2;22 {Point #REGde at vischar.mi.sprite
  C$C559,1;22
  C$C55A,1;22 }
- C$C55B,2;22 *DE++ = *HL++;
- C$C55D,2;22 *DE++ = *HL++;
- C$C55F,1;22 {DE -= 8;
+ C$C55B,2;22 {Copy metadata.sprite to vischar.mi.sprite
+ C$C55D,2;22 }
+ C$C55F,1;22 {Rewind #REGde to vischar.mi.pos
  C$C560,2;22
  C$C562,1;22 }
- C$C563,3;22 {memcpy(DE, &saved_pos_x, 6);
+ C$C563,3;22 {Copy saved_pos to vischar.mi.pos
  C$C566,3;22
  C$C569,2;22 }
- C$C56B,1;22 // restore HL (-> character struct)
- C$C56C,1;22 {HL += 5; // charstr->route
+ C$C56B,1;22 Restore the #REGhl charstr.character_and_flags pointer
+ C$C56C,1;22 {Advance #REGhl to charstr.route
  C$C56D,3;22
  C$C570,1;22 }
- C$C571,2;22 {DE += 7;
+ C$C571,2;22 {Point #REGde at vischar.room
  C$C573,1;22
  C$C574,1;22 }
- C$C575,3;22 A = room_index;
- C$C578,1;22 *DE = A; // sampled DE=$803C (vischar->room)
- C$C579,1;22 {if (A) <%
- C$C57A,2;22 }
- C$C57C,3;22 {  play_speaker(sound_CHARACTER_ENTERS_2);
- C$C57F,3;22 }
- C$C582,3;22 {  play_speaker(sound_CHARACTER_ENTERS_1); %>
+ C$C575,3;22 {Set vischar.room to the global current room index
+ C$C578,1;22 }
+ C$C579,1;22 Are we outside?
+ C$C57A,2;22 Jump if so
+@label=spawn_indoors_sound
+ C$C57C,3;22 {Play the "character enters" sound effect
+ C$C57F,6;22
  C$C585,3;22 }
-*C$C588,1;22 {DE -= 26; // vischar->route
+@label=spawn_entered
+*C$C588,1;22 {Rewind #REGde to vischar.route
  C$C589,2;22
  C$C58B,1;22 }
- C$C58C,2;22 *DE++ = *HL++; // copy route from charstr
- C$C58E,2;22 *DE++ = *HL++;
- C$C590,1;22 {HL -= 2;
+ C$C58C,2;22 {vischar.route = charstr.route
+ C$C58E,2;22 }
+ C$C590,1;22 {Rewind #REGhl to charstr.route
  C$C591,1;22 }
-; @label=again
-*C$C592,1;22 {if (*HL == 0) <% // test charstr->route.index OR vischar->route.index (on 2nd pass)
- C$C593,1;22
- C$C594,2;22 }
- C$C596,2;22 {  DE += 3; %> // -> vischar->counter_and_flags
+@label=spawn_again
+; This can get entered twice via #R$C5B4.
+; On the first entry #REGhl points at charstr.route.index.
+; On the second entry #REGhl points at vischar.route.index.
+*C$C592,1;22 Load route.index
+ C$C593,1;22 Is this character stood still? (routeindex_0_HALT)
+ C$C594,2;22 Jump if not
+ C$C596,2;22 {Advance #REGde to vischar.counter_and_flags
  C$C598,1;22
  C$C599,1;22 }
- C$C59A,2;22 else <%
-*C$C59C,1;22 {  entered_move_characters = 0;
+ C$C59A,2;22 (else)
+@label=spawn_moving
+*C$C59C,1;22 {Clear the entered_move_characters flag
  C$C59D,3;22 }
- C$C5A0,1;22 // save vischar->pos
- C$C5A1,3;22 get_target(HL);
- C$C5A4,2;22 {  if (A == 255) <%
- C$C5A6,2;22 }
- C$C5A8,1;22 // restore vischar->pos
- C$C5A9,1;22 {    HL -= 2; // -> vischar->route
+ C$C5A0,1;22 Preserve the vischar.target pointer
+ C$C5A1,3;22 Get our next target: a location, a door or 'route
+ ;22 ends'. The result is returned in #REGa, target pointer
+ ;22 returned in #REGhl
+ C$C5A4,2;22 Did #R$C651 return get_target_ROUTE_ENDS? ($FF)
+ C$C5A6,2;22 Jump if not
+@label=spawn_route_ends
+ C$C5A8,1;22 Restore the vischar.target pointer
+ C$C5A9,1;22 {Rewind #REGhl to vischar.route
  C$C5AA,1;22 }
- C$C5AB,1;22 // save vischar->route
- C$C5AC,3;22 route_ended();
- C$C5AF,1;22 // HL = vischar->route
- C$C5B0,1;22 {    DE = HL + 2; // DE = vischar->pos
+ C$C5AB,1;22 Preserve the vischar.route pointer
+ C$C5AC,3;22 Route ended
+ C$C5AF,1;22 Restore the vischar.route pointer
+ C$C5B0,1;22 {Point #REGde at vischar.target
  C$C5B1,2;22
  C$C5B3,1;22 }
- C$C5B4,2;22 goto $C592; %>
-*C$C5B6,2;22 {  if (A == 128) IY[1] |= vischar_FLAGS_TARGET_IS_DOOR; // $8021
- C$C5B8,2;22
- C$C5BA,4;22 }
-*C$C5BE,1;22
- C$C5BF,3;22 {  memcpy(DE, HL, 3); %>
+ C$C5B4,2;22 Jump back and try again...
+@label=spawn_route_door_test
+*C$C5B6,2;22 Did #R$C651 return get_target_DOOR? ($80)
+ C$C5B8,2;22 Jump if not (it must be get_target_LOCATION)
+@label=spawn_route_door
+ C$C5BA,4;22 Set the vischar_FLAGS_TARGET_IS_DOOR flag
+@label=spawn_got_target
+*C$C5BE,1;22 Restore the vischar.target pointer
+ C$C5BF,3;22 {Copy the next target to vichar.target
  C$C5C2,2;22 }
-*C$C5C4,1;22 {*DE = 0; // zero vischar->counter_and_flags
+@label=spawn_end
+*C$C5C4,1;22 {Clear vischar.counter_and_flags
  C$C5C5,1;22 }
- C$C5C6,1;22 {DE -= 7;
+ C$C5C6,1;22 {Rewind #REGde back to vischar.character (first byte)
  C$C5C7,2;22
  C$C5C9,1;22 }
- C$C5CA,2;22
- C$C5CC,3;22 calc_vischar_iso_pos_from_vischar();
- C$C5CF,1;22
- C$C5D0,3;22 character_behaviour(); return; // exit via
+ C$C5CA,1;22 Swap vischar pointer into #REGhl
+ C$C5CB,1;22 Preserve vischar pointer
+ C$C5CC,3;22 Calculate screen position for the specified vischar
+ C$C5CF,1;22 Restore vischar pointer
+ C$C5D0,3;22 Exit via character_behaviour
 
 ; Reset a visible character (either a character or an object).
 ;
@@ -13015,14 +13043,16 @@ cC$CA81,3;21 A = IY[1];
 ; I:A  Character index?
 ; I:HL ?
 @label=get_target_assign_pos
-cC$CB23,1;21
- C$CB24,3;21 get_target();
- C$CB27,2;21 {if (A == 0xFF) <%
- C$CB29,3;21 }
- C$CB2C,1;21
+cC$CB23,1;21 Preserve the route pointer
+ C$CB24,3;21 Get our next target - a location, a door or 'route
+ ;21 ends'. The result is returned in #REGa, target pointer
+ ;21 returned in #REGhl
+ C$CB27,2;21 Did #R$C651 return get_target_ROUTE_ENDS? ($FF)
+ C$CB29,3;21 Jump if not
+ C$CB2C,1;21 Restore the route pointer
 ; FALL THROUGH into route_ended.
 
-; Called when a character has run out of route.
+; Called when get_target has run out of route.
 ;
 ; Used by the routine at #R$C4E0.
 ;
@@ -13030,62 +13060,66 @@ cC$CB23,1;21
 ;
 ; If not the hero's vischar ...
 @label=route_ended
-cC$CB2D,1;21 {  if (L != 0x02) <%
- C$CB2E,2;21
- C$CB30,3;21 }
- C$CB33,3;21 {    if (IY[0] & vischar_CHARACTER_MASK == 0) <%
- C$CB36,2;21
- C$CB38,2;21 }
- C$CB3A,1;21 {      A = *HL & ~route_REVERSED;
- C$CB3B,2;21 }
- C$CB3D,2;21 {      if (A == 36) goto $CB46; // character index
- C$CB3F,2;21 }
- C$CB41,1;21 A = 0; %> // forces next if statement to be taken
-*C$CB42,2;21 {    if (A <= character_11_GUARD_11) goto $CB50; %>
- C$CB44,2;21 }
+cC$CB2D,1;21 {Is this the hero's vischar?
+ C$CB2E,2;21 }
+ C$CB30,3;21 Jump if so
+; Non-player ...
+ C$CB33,3;21 Load vischar.character
+ C$CB36,2;21 Mask with vischar_CHARACTER_MASK to get character index
+ C$CB38,2;21 Jump if not character_0_COMMANDANT
+; Call character_event at the end of commandant route 36.
+ C$CB3A,1;21 Fetch route.index
+ C$CB3B,2;21 Mask off routeindexflag_REVERSED
+ C$CB3D,2;21 Is it routeindex_36_GO_TO_SOLITARY?
+ C$CB3F,2;21 Jump if so
+ C$CB41,1;21 Force next if statement to be taken
+; Reverse the route for guards 1..11. They have fixed roles so either stand
+; still or march back and forth along their route.
+*C$CB42,2;21 Is the character index <= character_11_GUARD_11?
+ C$CB44,2;21 Jump if so
 ; We arrive here if:
 ; - vischar is the hero, or
-; - character is character_0_COMMANDANT and (route.index & 0x7F) == 36, or
+; - character is character_0_COMMANDANT and (route.index & $7F) == 36, or
 ; - character is >= character_12_GUARD_12
+@label=do_character_event
 *C$CB46,1;21
- C$CB47,3;21 character_event();
+ C$CB47,3;21 character_event()
  C$CB4A,1;21
- C$CB4B,1;21 A = *HL;
- C$CB4C,1;21 {  if (A == 0) return;
- C$CB4D,1;21 }
- C$CB4E,2;21 get_target_assign_pos(); return; // exit via
+ C$CB4B,1;21 Fetch route.index
+ C$CB4C,1;21 Is it routeindex_0_HALT?
+ C$CB4D,1;21 Return 0 if so
+ C$CB4E,2;21 Otherwise exit via get_target_assign_pos() // re-enters/loops?
 ; We arrive here if:
 ; - vischar is not the hero, and
-;   - character is character_0_COMMANDANT and (route.index & 0x7F) != 36, or
+;   - character is character_0_COMMANDANT and (route.index & $7F) != 36, or
 ;   - character is character_1_GUARD_1 .. character_11_GUARD_11
-*C$CB50,1;21 {  *HL++ = *HL ^ 0x80;
+@label=reverse_route
+*C$CB50,1;21 {Toggle route direction
  C$CB51,3;21
  C$CB54,1;21 }
 ; Pattern: [-2]+1
- C$CB55,2;21 {  if (A & (1<<7)) <%
- C$CB57,2;21 }
- C$CB59,1;21 {    (*HL) -= 2; %>
- C$CB5A,1;21 }
-*C$CB5B,1;21 (*HL)++
- C$CB5C,1;21 HL--;
- C$CB5D,1;21 A = 0;
- C$CB5E,1;21 return; %> // strictly the terminating brace is after the following unreferenced bytes
+ C$CB55,2;21 {If the route is reversed then step backwards, otherwise forwards
+ C$CB57,4;21
+*C$CB5B,1;21
+ C$CB5C,1;21 }
+ C$CB5D,1;21 {Return 0
+ C$CB5E,1;21 }
 ;
- B$CB5F,2;21 Unreferenced bytes.
+ B$CB5F,2;21 Unreferenced bytes
 
-; (unknown) handle_target
+; "Didn't hit end of list" case. -- not really a routine in its own right
 ;
 ; Used by the routine at #R$CB23.
 @label=handle_target
-cC$CB61,2;22 {if (A == 128) <%
- C$CB63,3;22 }
- C$CB66,4;22 IY[1] |= vischar_FLAGS_TARGET_IS_DOOR; %>
-*C$CB6A,1;22
- C$CB6B,1;22 {memcpy(DE + 2, HL, 2);
+cC$CB61,2;22 Was the result of get_target get_target_DOOR? ($80)
+ C$CB63,3;22 Jump if not
+ C$CB66,4;22 Set vischar.flags flag vischar_FLAGS_TARGET_IS_DOOR
+*C$CB6A,1;22 Restore the route pointer
+ C$CB6B,1;22 {Copy #REGhl (ptr to doorpos or location) to vischar->target
  C$CB6C,4;22
  C$CB70,2;22 }
- C$CB72,2;22 A = 128;
- C$CB74,1;22 return;
+ C$CB72,2;22 (This return value is never used)
+ C$CB74,1;22 Return
 
 ; Widen A to BC (multiply by 1).
 @label=multiply_by_1
