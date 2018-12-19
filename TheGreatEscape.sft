@@ -11949,100 +11949,114 @@ cC$C4E0,2;22 Is the character already on-screen?
  C$C5CF,1;22 Restore vischar pointer
  C$C5D0,3;22 Exit via character_behaviour
 
-; Reset a visible character (either a character or an object).
+; Reset a visible character (either a character or a stove/crate object).
 ;
 ; Used by the routines at #R$68A2, #R$69C9, #R$B79B and #R$C47E.
 ;
 ; I:HL Pointer to visible character.
 @label=reset_visible_character
-cC$C5D3,1;21 A = *HL;
- C$C5D4,2;21 {if (A == character_NONE) return;
- C$C5D6,1;21 }
- C$C5D7,2;21 {if (A >= character_26_STOVE_1) <%
- C$C5D9,2;21
- C$C5DB,1;21 }
-; A stove or crate character.
- C$C5DC,2;21 {  HL[0] = character_NONE;
- C$C5DE,1;21 }
- C$C5DF,2;21 HL[1] = 0xFF; // flags
- C$C5E1,2;21 {  HL[7] = 0; // more flags
- C$C5E3,2;21
- C$C5E5,2;21 }
- C$C5E7,2;21 {  HL += 0x0F; // vischar + 0x0F
- C$C5E9,1;21
- C$C5EA,1;21 }
+cC$C5D3,1;21 Fetch the vischar's character index
+ C$C5D4,2;21 Is it character_NONE? ($FF)
+ C$C5D6,1;21 Return if so
+ C$C5D7,2;21 Is it a stove/crate character? (character_26_STOVE_1+)
+ C$C5D9,2;21 Jump if not
+ C$C5DB,1;21 Bank
+; It's a stove or crate character.
+ C$C5DC,2;21 Set vischar.character to $FF (character_NONE)
+ C$C5DE,1;21 Advance #REGhl to vischar.flags
+ C$C5DF,2;21 Reset flags to $FF (vischar_FLAGS_EMPTY_SLOT)
+ C$C5E1,2;21 {Point #REGhl at counter_and_flags
+ C$C5E3,1;21
+ C$C5E4,1;21 }
+ C$C5E5,2;21 Set counter_and_flags to zero
+ C$C5E7,2;21 {Point #REGhl at vischar.mi.pos
+ C$C5E9,1;21 }
+ C$C5EA,1;21 Unbank
 ; Save the old position.
- C$C5EB,3;21 DE = &movable_items[0]; // stove1
- C$C5EE,2;21 {  if (A != character_26_STOVE_1) <%
- C$C5F0,2;21 }
- C$C5F2,3;21 DE = &movable_items[2]; // stove2
- C$C5F5,2;21 {    if (A != character_27_STOVE_2) <%
- C$C5F7,2;21 }
- C$C5F9,3;21 DE = &movable_items[1]; %> %> // crate
-; The DOS version of the game has a difference here. Instead of
-; memcpy'ing the current vischar's position into the movable_items's
-; position, it only copies the first two bytes. The code is setup for a
-; copy of six bytes (cx is set to 3) but the 'movsw' ought to be a 'rep
-; movsw' for it to work. It fixes the bug where stoves get left in place
-; after a restarted game, but almost looks like an accident.
-*C$C5FC,3;21 {  memcpy(DE, HL, 6);
+ C$C5EB,3;21 Point #REGde at movable_items[0] / stove 1
+ C$C5EE,2;21 Is #REGa character_26_STOVE_1?
+ C$C5F0,2;21 Jump if so
+ C$C5F2,3;21 Point #REGde at movable_items[2] / stove 2
+ C$C5F5,2;21 Is #REGa character_27_STOVE_2?
+ C$C5F7,2;21 Jump if so
+ C$C5F9,3;21 Otherwise point #REGde at movable_items[1] / crate
+; Note: The DOS version of the game has a difference here. Instead of copying
+; the current vischar's position into the movable_items's position, it only
+; copies the first two bytes. The code is setup for a copy of six bytes (cx is
+; set to 3) but the 'movsw' ought to be a 'rep movsw' for it to work. It fixes
+; the bug where stoves get left in place after a restarted game, but almost
+; looks like an accident.
+@label=rvc_copy_mi
+*C$C5FC,3;21 {Copy six bytes to the movable_items entry
  C$C5FF,2;21 }
- C$C601,1;21 return; %>
+ C$C601,1;21 Return
 ; A non-object character.
-*C$C602,1;21 else <%
- C$C603,3;21 DE = get_character_struct(A);
- C$C606,2;21 *DE &= ~characterstruct_FLAG_ON_SCREEN;
- C$C608,2;21 {
+@label=rvc_humans
+*C$C602,1;21 Bank vischar pointer
+ C$C603,3;21 Get character struct for #REGa, result in #REGhl
+ C$C606,2;21 Clear flag characterstruct_FLAG_ON_SCREEN
+ C$C608,2;21 {Point #REGde at vischar.room
  C$C60A,1;21
  C$C60B,1;21 }
- C$C60C,1;21 A = HL[0x1C]; // room index
- C$C60D,1;21 {  *++DE = A; // characterstruct.room = room index;
- C$C60E,1;21
- C$C60F,1;21 }
- C$C610,1;21
- C$C611,1;21 {  HL[7] = 0; // more flags
- C$C612,3;21
- C$C615,2;21 }
- C$C617,2;21 {  HL += 0x0F; // vischar+0x0F
+ C$C60C,1;21 Fetch vischar.room
+ C$C60D,1;21 {Copy it to charstr.room
+ C$C60E,1;21 }
+ C$C60F,1;21 Bank room index
+ C$C610,1;21 Unbank vischar pointer
+ C$C611,1;21 {Point #REGhl at vischar.counter_and_flags
+ C$C612,2;21
+ C$C614,1;21 }
+ C$C615,2;21 Clear vischar.counter_and_flags
+ C$C617,2;21 {Point #REGhl at vischar.mi.pos
  C$C619,1;21 }
 ; Save the old position.
- C$C61A,1;21 {  DE++; // &characterstruct.x
- C$C61B,1;21 }
- C$C61C,1;21 {  if (A == 0) <%
- C$C61D,2;21 }
+ C$C61A,1;21 Point #REGde at charstr.pos.x
+ C$C61B,1;21 Unbank room index
+ C$C61C,1;21 Are we outdoors?
+ C$C61D,2;21 Jump if not
 ; Outdoors.
- C$C61F,3;21 pos_to_tinypos(HL,DE); %> // HL,DE updated
- C$C622,2;21 else <%
+ C$C61F,3;21 Scale down vischar.mi.pos to charstr.pos
+ C$C622,2;21 (else)
 ; Indoors.
-*C$C624,2;21 B = 3;
-*C$C626,1;21 {    do <% *DE++ = *HL;
+@label=rvc_indoors
+*C$C624,2;21 Set #REGb for three iterations
+; Start loop
+@label=rvc_indoors_loop
+*C$C626,1;21 {Copy coordinate
  C$C627,1;21 }
- C$C628,1;21 {      HL += 2;
+ C$C628,1;21 {Advance the source pointer
  C$C629,1;21
  C$C62A,1;21 }
- C$C62B,2;21 %> while (--B); %>
-*C$C62D,1;21 {  HL -= 21; // reset HL to point to original vischar
+ C$C62B,2;21 ...loop
+@label=rvc_reset_common
+*C$C62D,1;21 {Reset #REGhl to point to the original vischar
  C$C62E,2;21
  C$C630,1;21 }
- C$C631,1;21 A = *HL; // HL points to vischar // sampled HL=$8040,$8020,$8080,$80A0
- C$C632,2;21 {  *HL++ = character_NONE;
- C$C634,1;21 }
- C$C635,2;21 {  *HL++ = vischar_FLAGS_EMPTY_SLOT;
- C$C637,1;21 }
+ C$C631,1;21 Fetch character index
+ C$C632,2;21 Set vischar.character to $FF (character_NONE)
+ C$C634,1;21 Advance #REGhl to vischar.flags
+ C$C635,2;21 Reset flags to $FF (vischar_FLAGS_EMPTY_SLOT)
+ C$C637,1;21 Advance #REGhl to vischar.route
 ; Guard dogs only.
- C$C638,2;21 {  if (A >= character_16_GUARD_DOG_1 && A <= character_19_GUARD_DOG_4) <%
- C$C63A,4;21
+ C$C638,2;21 {Is this a guard dog character?
+ C$C63A,2;21 character_16_GUARD_DOG_1..character_19_GUARD_DOG_4
+ C$C63C,2;21
  C$C63E,2;21 }
- C$C640,2;21 {    *HL++ = 0xFF;
- C$C642,1;21 }
- C$C643,2;21 *HL = 0;
- C$C645,2;21 {    if (A >= character_18_GUARD_DOG_3) *HL = 24; /* Characters 18 and 19 */
- C$C647,2;21
- C$C649,2;21 }
-*C$C64B,1;21 HL--; %>
-*C$C64C,2;21 *DE++ = *HL++; // copy route into charstruct
- C$C64E,2;21 *DE++ = *HL++;
- C$C650,1;21 return; %>
+; Choose random locations in the fenced off area (right side).
+@label=rvc_dogs
+ C$C640,2;21 {Set route to (route_WANDER,0) ($FF,$00) -- wander from
+ C$C642,1;21 locations 0..7
+ C$C643,2;21 }
+ C$C645,2;21 Is this character_18_GUARD_DOG_3 or character_19_GUARD_DOG_4?
+ C$C647,2;21 Jump if not
+; Choose random locations in the fenced off area (bottom side).
+ C$C649,2;21 Set route.step to $18 -- wander from locations 24..31
+@label=rvc_dogs_done
+*C$C64B,1;21 Point #REGhl at vischar.route
+@label=rvc_end
+*C$C64C,2;21 {Copy route into charstr
+ C$C64E,2;21 }
+ C$C650,1;21 Return
 
 ; Return the coordinates of the route's current target.
 ;
