@@ -12337,62 +12337,74 @@ cC$C7B9,1;21 {Multiply #REGa by seven
 ; .
 ; Makes characters sit, sleep or other things TBD.
 ;
-; I:HL Points to character_struct.unk2 or vischar.route.
+; I:HL Points to character_struct.route or vischar.route.
 @label=character_event
-cC$C7C6,1;21 A = *HL;
- C$C7C7,2;21 {if (A >= character_7_GUARD_7  && A <= character_12_GUARD_12) goto character_sleeps;
- C$C7C9,4;21
- C$C7CD,3;21 }
-*C$C7D0,2;21 {if (A >= character_18_GUARD_DOG_3 && A <= character_22_PRISONER_3) goto character_sits;
- C$C7D2,2;21
- C$C7D4,2;21 Bug: Should be $18 (sixth prisoner doesn't sit for breakfast)
- C$C7D6,3;21 }
-*C$C7D9,1;21 // POPped by handlers
+cC$C7C6,1;21 Load route.index
+ C$C7C7,2;21 Is it less than routeindex 7?
+ C$C7C9,2;21 Jump if so
+ C$C7CB,2;21 Is it less than routeindex 13?
+ C$C7CD,3;21 Call 'character sleeps' if so (if indices 7..12)
+*C$C7D0,2;21 Is it less than routeindex_18?
+ C$C7D2,2;21 Jump if so
+; Bug: The sixth prisoner doesn't sit for breakfast because this should be $18.
+ C$C7D4,2;21 Is it less than routeindex 23?
+ C$C7D6,3;21 Call 'character sits' if so (if indices 18..22)
+*C$C7D9,1;21 Stack the route pointer - the event handlers will pop
 @nowarn
- C$C7DA,3;21 map = &character_to_event_handler_index_map[0];
- C$C7DD,2;21 B = NELEMS(character_to_event_handler_index_map); // 24 iterations
-; Locate the character in the map.
-*C$C7DF,1;21 {do <% if (A == map->character) goto call_action;
- C$C7E0,2;21 }
- C$C7E2,1;21 {  map += 2;
+; Locate the character in the character_to_event_handler_index_map.
+ C$C7DA,3;21 Point #REGhl at character_to_event_handler_index_map[0]
+ C$C7DD,2;21 Set #REGb for 24 iterations - length of the map
+; Start loop
+*C$C7DF,1;21 Does the route index in #REGa match the map's route index?
+ C$C7E0,2;21 Jump if so
+ C$C7E2,1;21 {Advance to the next map entry
  C$C7E3,1;21 }
- C$C7E4,2;21 %> while (--B);
- C$C7E6,1;21
- C$C7E7,2;21 *HL = 0; // no action
- C$C7E9,1;21 return;
-*C$C7EA,1;21 {call_action: goto character_event_handlers[*++HL];
- C$C7EB,5;21
+ C$C7E4,2;21 ...loop
+ C$C7E6,1;21 Unstack the route pointer
+ C$C7E7,2;21 Make the character stand still by setting the new route
+ ;21 index to routeindex_0_HALT
+ C$C7E9,1;21 Return
+@label=ce_call_action
+*C$C7EA,1;21 {Read the index of the handler from the map
+ C$C7EB,1;21 }
+ C$C7EC,1;21 Double it
+ C$C7ED,1;21 {Copy it to #REGbc
+ C$C7EE,2;21 }
 @nowarn
- C$C7F0,8;21
- C$C7F8,1;21 }
+ C$C7F0,3;21 {Point #REGhl at character_event_handlers[index]
+ C$C7F3,1;21 }
+ C$C7F4,1;21 {Load the event handler address into #REGhl
+ C$C7F5,2;21
+ C$C7F7,1;21 }
+ C$C7F8,1;21 Jump to the event handler
 ; character_to_event_handler_index_map
 ; .
 ; Array of (character + flags, character event handler index) mappings.
 @label=character_to_event_handler_index_map
- W$C7F9,2;21 character_6_GUARD_6       | 0b10100000, charevnt_0,
- W$C7FB,2;21 character_7_GUARD_7       | 0b10100000, charevnt_0,
- W$C7FD,2;21 character_8_GUARD_8       | 0b10100000, charevnt_1,
- W$C7FF,2;21 character_9_GUARD_9       | 0b10100000, charevnt_1,
- W$C801,2;21 character_5_GUARD_5       | 0b00000000, charevnt_0,
- W$C803,2;21 character_6_GUARD_6       | 0b00000000, charevnt_1,
- W$C805,2;21 character_5_GUARD_5       | 0b10000000, charevnt_3,  // checks byte_A13E case 1
- W$C807,2;21 character_6_GUARD_6       | 0b10000000, charevnt_3,  // checks byte_A13E case 1
- W$C809,2;21 character_14_GUARD_14     | 0b00000000, charevnt_2,
- W$C80B,2;21 character_15_GUARD_15     | 0b00000000, charevnt_2,
- W$C80D,2;21 character_14_GUARD_14     | 0b10000000, charevnt_0,
- W$C80F,2;21 character_15_GUARD_15     | 0b10000000, charevnt_1,
- W$C811,2;21 character_16_GUARD_DOG_1  | 0b00000000, charevnt_5,  // checks byte_A13E case 2
- W$C813,2;21 character_16_GUARD_DOG_2  | 0b00000000, charevnt_5,  // checks byte_A13E case 2
- W$C815,2;21 character_16_GUARD_DOG_1  | 0b10000000, charevnt_0,
- W$C817,2;21 character_16_GUARD_DOG_2  | 0b10000000, charevnt_1,
- W$C819,2;21 character_0_COMMANDANT    | 0b10100000, charevnt_0,
- W$C81B,2;21 character_1_GUARD_1       | 0b10100000, charevnt_1,
- W$C81D,2;21 character_10_GUARD_10     | 0b00100000, charevnt_7,
- W$C81F,2;21 character_12_GUARD_12     | 0b00100000, charevnt_8,  // hero sleeps
- W$C821,2;21 character_11_GUARD_11     | 0b00100000, charevnt_9,  // hero sits
- W$C823,2;21 character_4_GUARD_4       | 0b10100000, charevnt_6,  // go to 0x0315
- W$C825,2;21 character_4_GUARD_4       | 0b00100000, charevnt_10, // released from solitary
- W$C827,2;21 character_5_GUARD_5       | 0b00100000, charevnt_4,  // zero in_solitary
+ W$C7F9,2;21 routeindex_38_GUARD_12_BED         | REVERSE, 0 - wander between locations  8..15
+ W$C7FB,2;21 routeindex_39_GUARD_13_BED         | REVERSE, 0 - wander between locations  8..15
+ W$C7FD,2;21 routeindex_40_GUARD_14_BED         | REVERSE, 1 - wander between locations 16..23
+ W$C7FF,2;21 routeindex_41_GUARD_15_BED         | REVERSE, 1 - wander between locations 16..23
+ W$C801,2;21 routeindex_5_EXIT_HUT2,                       0 - wander between locations  8..15
+ W$C803,2;21 routeindex_6_EXIT_HUT3,                       1 - wander between locations 16..23
+ W$C805,2;21 routeindex_5_EXIT_HUT2             | REVERSE, 3 -
+ W$C807,2;21 routeindex_6_EXIT_HUT3             | REVERSE, 3 -
+ W$C809,2;21 routeindex_14_GO_TO_YARD,                     2 - wander between locations 56..63
+ W$C80B,2;21 routeindex_15_GO_TO_YARD,                     2 - wander between locations 56..63
+ W$C80D,2;21 routeindex_14_GO_TO_YARD           | REVERSE, 0 - wander between locations  8..15
+ W$C80F,2;21 routeindex_15_GO_TO_YARD           | REVERSE, 1 - wander between locations 16..23
+ W$C811,2;21 routeindex_16_BREAKFAST_25,                   5 -
+ W$C813,2;21 routeindex_17_BREAKFAST_23,                   5 -
+ W$C815,2;21 routeindex_16_BREAKFAST_25         | REVERSE, 0 - wander between locations  8..15
+ W$C817,2;21 routeindex_17_BREAKFAST_23         | REVERSE, 1 - wander between locations 16..23
+ W$C819,2;21 routeindex_32_GUARD_15_ROLL_CALL   | REVERSE, 0 - wander between locations  8..15
+ W$C81B,2;21 routeindex_33_PRISONER_4_ROLL_CALL | REVERSE, 1 - wander between locations 16..23
+ W$C81D,2;21 routeindex_42_HUT2_LEFT_TO_RIGHT,             7 -
+ W$C81F,2;21 routeindex_44_HUT2_RIGHT_TO_LEFT,             8 - hero sleeps
+ W$C821,2;21 routeindex_43_7833,                           9 - hero sits
+ W$C823,2;21 routeindex_36_GO_TO_SOLITARY       | REVERSE, 6 -
+ W$C825,2;21 routeindex_36_GO_TO_SOLITARY,                10 - hero released from solitary
+ W$C827,2;21 routeindex_37_HERO_LEAVE_SOLITARY,            4 - solitary ends
 ; character_event_handlers
 ; .
 ; Array of pointers to character event handlers.
@@ -12409,7 +12421,7 @@ cC$C7C6,1;21 A = *HL;
  C$C846,2;21 {*HL++ = 0x03;
  C$C848,1;21 }
  C$C849,2;21 *HL   = 0x15;
- C$C84B,1;21 return;
+ C$C84B,1;21 Return
 ; charevnt_hero_release
 @label=charevnt_hero_release
  C$C84C,1;21
@@ -12435,7 +12447,7 @@ cC$C7C6,1;21 A = *HL;
  C$C867,2;21 {*HL++ = 0xFF;
  C$C869,1;21 }
  C$C86A,1;21 *HL   = C;
- C$C86B,1;21 return;
+ C$C86B,1;21 Return
 ; charevnt_bed
 @label=charevnt_bed
  C$C86C,1;21
@@ -12454,7 +12466,7 @@ cC$C7C6,1;21 A = *HL;
  C$C883,2;21 {*HL++ = 0x05;
  C$C885,1;21 }
  C$C886,2;21 *HL   = 0x00;
- C$C888,1;21 return;
+ C$C888,1;21 Return
 ; charevnt_hero_sits
 @label=charevnt_hero_sits
  C$C889,1;21
