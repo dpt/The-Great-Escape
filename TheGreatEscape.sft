@@ -11859,7 +11859,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C719,2;21 %> while (--B);
  C$C71B,3;21 HL = &saved_pos_x;
  C$C71E,1;21 %>
-; Establish a maximum for passing into change_by_delta.
+; Establish a maximum for passing into move_towards.
 *C$C71F,1;21 {  if (DE[-1] == room_0_OUTDOORS)
  C$C720,3;21
  C$C723,2;21 A = 2;
@@ -11867,10 +11867,10 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C727,2;21 else A = 6;}
 *C$C729,1;21
  C$C72A,2;21 B = 0;
- C$C72C,3;21 change_by_delta(A, B, HL, DE);
+ C$C72C,3;21 move_towards(A, B, HL, DE);
  C$C72F,1;21 DE++;
  C$C730,1;21 HL++;
- C$C731,3;21 change_by_delta(A, B, HL, DE);
+ C$C731,3;21 move_towards(A, B, HL, DE);
  C$C734,1;21
  C$C735,1;21 {  if (B != 2) return; // managed to move
  C$C736,2;21
@@ -11914,7 +11914,7 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C76B,1;21 DE--; %> %>
  C$C76C,2;21 else <%
 *C$C76E,1;21
-; Establish a maximum for passing into change_by_delta.
+; Establish a maximum for passing into move_towards.
  C$C76F,1;21 {  room = DE[-1]; // DE -> charstr
  C$C770,1;21
  C$C771,1;21 }
@@ -11923,10 +11923,10 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
  C$C777,2;21 }
 *C$C779,1;21
  C$C77A,2;21 B = 0;
- C$C77C,3;21 change_by_delta(A, B, HL, DE);
+ C$C77C,3;21 move_towards(A, B, HL, DE);
  C$C77F,1;21 HL++;
  C$C780,1;21 DE++;
- C$C781,3;21 change_by_delta(A, B, HL, DE);
+ C$C781,3;21 move_towards(A, B, HL, DE);
  C$C784,1;21 DE++;
  C$C785,1;21 {  if (B != 2) return; %> // managed to move
  C$C786,4;21
@@ -11946,42 +11946,43 @@ cC$C6A0,2;21 {entered_move_characters = 0xFF;
 *C$C798,1;21 exit: (*HL)--; // route.step
  C$C799,1;21 return;
 
-; Increments 'first' by ('first' - 'second').
+; Moves the first value toward the second.
 ;
 ; Used by the routine at #R$C6A0.
 ;
-; I:A' A maximum value, usually 2 or 6.
-; I:B Return code. Incremented if delta is zero.
-; I:DE Pointer to bytes within character_structs. // 761b,761c, 7622,7623,
-; .    7629,762a, 7630,7631, 7653,...
-; I:HL Pointer to bytes within word_783A.         // 787a,787b, 787e,787f,
-; .    78b2,78b3, 7884,7885, 7892,...
-; O:B Incremented by one if no movement.
-@label=change_by_delta
-cC$C79A,1
- C$C79B,1;21 C = Adash; // ie. banked A // some maximum value
- C$C79C,1;21
- C$C79D,1;21 {A = *DE - *HL; // delta
+; I:A' Largest movement allowed. Either 2 or 6.
+; I:B  Return code. Incremented if delta is zero.
+; I:DE Pointer to the first value (byte).
+; I:HL Pointer to the second value (byte).
+; O:B  Incremented by one when no change.
+@label=move_towards
+cC$C79A,1;21 {Set #REGc to the largest movement allowed
+ C$C79B,1;21
+ C$C79C,1;21 }
+ C$C79D,1;21 {delta = first - second
  C$C79E,1;21 }
- C$C79F,2;21 if (A == 0) <%
- C$C7A1,1;21 B++;
- C$C7A2,1;21 return; %>
-*C$C7A3,2;21 else if (A < 0) <% // delta -ve => second > first
- C$C7A5,2;21 A = -A; // absolute value
- C$C7A7,1;21 {  if (A >= C) A = C;
+ C$C79F,2;21 Was the delta zero? Jump if not
+; Delta was zero
+ C$C7A1,1;21 Otherwise increment the result by one
+ C$C7A2,1;21 Return
+*C$C7A3,2;21 Was the delta negative? Jump if not
+; Delta was negative
+ C$C7A5,2;21 Get the absolute value
+ C$C7A7,1;21 {Clamp the delta to the largest movement
  C$C7A8,2;21
  C$C7AA,1;21 }
-*C$C7AB,1;21 {  *DE += A; // move first towards second
+*C$C7AB,1;21 {Move the first value towards second
  C$C7AC,2;21
  C$C7AE,1;21 }
- C$C7AF,1;21 return; %>
-*C$C7B0,1;21 {else <% if (A >= C) A = C; // delta +ve => first > second
+ C$C7AF,1;21 Return
+; Delta was positive
+*C$C7B0,1;21 {Clamp the delta to the largest movement
  C$C7B1,2;21
  C$C7B3,1;21 }
-*C$C7B4,1;21 {  *DE -= A; // move first towards second
+*C$C7B4,1;21 {Move the first value towards second
  C$C7B5,2;21
  C$C7B7,1;21 }
- C$C7B8,1;21 return; %>
+ C$C7B8,1;21 Return
 
 ; Get character struct.
 ;
