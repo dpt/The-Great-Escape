@@ -12062,18 +12062,8 @@ cC$C7C6,1;21 A = *HL;
 ; .
 ; Array of pointers to character event handlers.
 @label=character_event_handlers
- W$C829,2;21 charevnt_handler *character_event_handlers[] = { &charevnt_wander_top,
- W$C82B,2;21 &charevnt_wander_left,
- W$C82D,2;21 &charevnt_wander_yard,
- W$C82F,2;21 &charevnt_bed,
- W$C831,2;21 &charevnt_solitary_ends,
- W$C833,2;21 &charevnt_breakfast,
- W$C835,2;21 &charevnt_commandant_to_yard,
- W$C837,2;21 &charevnt_exit_hut2,
- W$C839,2;21 &charevnt_hero_sleeps,
- W$C83B,2;21 &charevnt_hero_sits,
- W$C83D,2;21 &charevnt_hero_release, };
-; charevnt_solitary_ends
+ W$C829,2*11;21
+; charevnt_solitary_end
 @label=charevnt_solitary_ends
  C$C83F,1;21 {in_solitary = 0; // enable player control
  C$C840,3;21 }
