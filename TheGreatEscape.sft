@@ -12840,7 +12840,7 @@ cC$CC37,2;23 {HL = IY;
  C$CCA7,3;23 hostiles_pursue();
  C$CCAA,1;23 return;
 
-; Guards pursue prisoners.
+; Hostiles pursue prisoners.
 ;
 ; Used by the routines at #R$C892, #R$CC37, #R$CCCD and #R$EF9A.
 ; .
@@ -12850,18 +12850,33 @@ cC$CC37,2;23 {HL = IY;
 ; Research: If I nop this out then guards don't spot the items I drop.
 @label=hostiles_pursue
 @nowarn
-cC$CCAB,3;21 {HL = $8020; // iterate over non-player characters
- C$CCAE,3;21 }
- C$CCB1,2;21 B = 7; // iterations
-*C$CCB3,1;21 do <%
-; HL[0x13] is the character's height, testing this excludes the guards in the
-; towers.
- C$CCB4,1;21 {  if (HL[0] <= character_19_GUARD_DOG_4 && HL[0x13] < 32) HL[1] = vischar_FLAGS_PURSUE;
- C$CCB5,19;21
-*C$CCC8,1;21 }
- C$CCC9,1;21 HL += 32; // stride
- C$CCCA,2;21 %> while (--B);
- C$CCCC,1;21 return;
+; Iterate non-player characters.
+cC$CCAB,3;21 Point #REGhl at the second vischar
+ C$CCAE,3;21 Prepare the vischar stride
+ C$CCB1,2;21 Set #REGb for seven iterations
+; Start loop
+@label=hp_loop
+*C$CCB3,1;21 Preserve the vischar pointer
+ C$CCB4,1;21 Fetch vischar.character
+; Include hostiles only.
+ C$CCB5,2;21 Is it character_20_PRISONER_1 or above?
+ C$CCB7,2;21 Jump if so
+; Exclude the guards placed high up in towers and over the gate.
+ C$CCB9,2;21 {Point #REGhl at vischar.mi.pos.height
+ C$CCBB,1;21
+ C$CCBC,1;21 }
+ C$CCBD,1;21 Fetch vischar.mi.pos.height
+ C$CCBE,2;21 Is it 32 or above?
+ C$CCC0,2;21 Jump if so
+ C$CCC2,1;21 {Point #REGhl at vischar.flags
+ C$CCC3,2;21
+ C$CCC5,1;21 }
+ C$CCC6,2;21 Set vischar.flags to vischar_FLAGS_PURSUE
+@label=hp_next
+*C$CCC8,1;21 Restore the vischar pointer
+ C$CCC9,1;21 Advance the vischar pointer
+ C$CCCA,2;21 ...loop
+ C$CCCC,1;21 Return
 
 ; Is item discoverable?
 ;
