@@ -12630,9 +12630,9 @@ cC$CB61,2;22 {if (A == 128) <%
 
 ; Widen A to BC (multiply by 1).
 @label=multiply_by_1
-cC$CB75,1;21 {BC = A; return;
- C$CB76,2;21
- C$CB78,1;21 }
+cC$CB75,1;21 {Widen #REGa into #REGbc
+ C$CB76,2;21 }
+ C$CB78,1;21 Return
 
 ; Return a route.
 ;
