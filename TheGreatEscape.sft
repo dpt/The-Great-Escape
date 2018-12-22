@@ -12640,12 +12640,11 @@ cC$CB75,1;21 {Widen #REGa into #REGbc
 ;
 ; I:A  Index.
 ; O:DE Pointer to route data.
-; O:HL $7738 + A*2 + 1
 @label=get_route
-cC$CB79,1;21 {DE = routes[A];
+cC$CB79,1;21 {Point #REGde at routes[#REGa]
  C$CB7A,9;21
  C$CB83,1;21 }
- C$CB84,1;21 return;
+ C$CB84,1;21 Return
 
 ; Pseudo-random number generator.
 ;
