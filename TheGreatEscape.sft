@@ -15173,8 +15173,8 @@ cC$E542,2;21 B = 3;
 ; I:C High.
 ; O:A Result.
 @label=divide_by_8_with_rounding
-cC$E550,2;21 A += 4;
- C$E552,2;21 {if (carry) C++;
+cC$E550,2;21 {Add 4 to AC
+ C$E552,2;21
  C$E554,1;21 }
 ; FALL THROUGH into divide_by_8.
 
@@ -15186,10 +15186,13 @@ cC$E550,2;21 A += 4;
 ; I:C High.
 ; O:A Result.
 @label=divide_by_8
-cC$E555,2;21 {A = (A >> 3) | (C << 5); C >>= 3;
- C$E557,6;21
+cC$E555,2;21 {Rotate a bit out of #REGc ...
+ C$E557,1;21 Rotate a bit ouf of #REGa ...
+ C$E558,2;21 {And again
+ C$E55A,1;21 }
+ C$E55B,2;21 {And again
  C$E55D,1;21 }
- C$E55E,1;21 return;
+ C$E55E,1;21 Return
 
 ; Masks
 ;
