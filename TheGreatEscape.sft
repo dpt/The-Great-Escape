@@ -15452,21 +15452,22 @@ cC$E420,2;21 {HL = &vischar->mi.pos;
 ; Divides the three input 16-bit words by 8, with rounding to nearest, storing
 ; the result as bytes.
 ;
-; I:HL Pointer to input words.
-; I:DE Pointer to output bytes.
+; I:HL Pointer to input pos_t.
+; I:DE Pointer to output tinypos_t.
 ; O:HL Updated.
 ; O:DE Updated.
 @label=pos_to_tinypos
-cC$E542,2;21 B = 3;
-*C$E544,1;21 {do <% A = *HL++;
- C$E545,1;21 }
- C$E546,1;21 C = *HL++;
- C$E547,3;21 divide_by_8_with_rounding(C,A);
- C$E54A,1;21 {  *DE++ = A;
- C$E54B,1;21
- C$E54C,1;21 }
- C$E54D,2;21 %> while (--B);
- C$E54F,1;21 return;
+cC$E542,2;21 Set #REGb for three iterations
+; Start loop
+*C$E544,1;21 {Load (#REGa, #REGc)
+ C$E545,1;21
+ C$E546,1;21 }
+ C$E547,3;21 Divide (#REGa, #REGc) by 8, with rounding to nearest
+ C$E54A,1;21 Save the result
+ C$E54B,1;21 Advance #REGhl to the next input pos
+ C$E54C,1;21 Advance #REGde to the next output tinypos
+ C$E54D,2;21 ...loop
+ C$E54F,1;21 Return
 
 ; Divide AC by 8, with rounding to nearest.
 ;
