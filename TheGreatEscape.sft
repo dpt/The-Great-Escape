@@ -15842,129 +15842,114 @@ wW$EDD3,2*128
 
 ; Plot the game screen.
 ;
+; This transfers the game's linear screen buffer into the game window region of
+; the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output
+; region is smaller at 23x16x8 bytes. The addresses are stored precalculated in
+; the table at #R$EDD3.
+; .
+; Scrolling to 4-bit nibble accuracy is permitted by implementing two cases
+; here: aligned and unaligned. Aligned transfers just have to move the bytes
+; across and so are fast. Unaligned transfers have to roll bytes right to effect
+; the left shift, so are much slower.
+; .
+; The aligned case copies 23 bytes per scanline starting at $F291 (one byte into buffer).
+; The unaligned case rolls the bytes right (so it moves left? CHECK) starting at $F290.
+; .
+; Uses the Z80 SP stack trick.
+; .
 ; Used by the routines at #R$9D7B and #R$A50B.
 @label=plot_game_window
-cC$EED3,4;21 saved_sp = SP;
- C$EED7,3;21 A = *(&game_window_offset + 1);
- C$EEDA,1;21 {if (A) goto unaligned;
- C$EEDB,3;21 }
+cC$EED3,4;21 Preserve the stack pointer
+ C$EED7,3;21 Read upper byte of game_window_offset
+ C$EEDA,1;21 Is it nonzero?
+ C$EEDB,3;21 Jump if so
+@label=pgw_aligned
 @nowarn
- C$EEDE,3;21 {HL = $F291 + game_window_offset;
- C$EEE1,7;21
+ C$EEDE,3;21 Point #REGhl at the screen buffer's start address + 1
+ C$EEE1,3;21 Read lower byte of game_window_offset
+ C$EEE4,1;21 {Combine
+ C$EEE5,3;21
 *C$EEE8,1;21 }
- C$EEE9,3;21 SP = game_window_start_addresses;
- C$EEEC,2;21 A = 128; // 128 rows
-*C$EEEE,1;21 do <% DE = *SP++; // output address
- C$EEEF,2;21 *DE++ = *HL++; /* unrolled: 23 copies */
- C$EEF1,2;21 *DE++ = *HL++;
- C$EEF3,2;21 *DE++ = *HL++;
- C$EEF5,2;21 *DE++ = *HL++;
- C$EEF7,2;21 *DE++ = *HL++;
- C$EEF9,2;21 *DE++ = *HL++;
- C$EEFB,2;21 *DE++ = *HL++;
- C$EEFD,2;21 *DE++ = *HL++;
- C$EEFF,2;21 *DE++ = *HL++;
- C$EF01,2;21 *DE++ = *HL++;
- C$EF03,2;21 *DE++ = *HL++;
- C$EF05,2;21 *DE++ = *HL++;
- C$EF07,2;21 *DE++ = *HL++;
- C$EF09,2;21 *DE++ = *HL++;
- C$EF0B,2;21 *DE++ = *HL++;
- C$EF0D,2;21 *DE++ = *HL++;
- C$EF0F,2;21 *DE++ = *HL++;
- C$EF11,2;21 *DE++ = *HL++;
- C$EF13,2;21 *DE++ = *HL++;
- C$EF15,2;21 *DE++ = *HL++;
- C$EF17,2;21 *DE++ = *HL++;
- C$EF19,2;21 *DE++ = *HL++;
- C$EF1B,2;21 *DE++ = *HL++;
- C$EF1D,1;21 HL++; // skip 24th
- C$EF1E,1;21 {%> while (--A);
+ C$EEE9,3;21 Point #REGsp at game_window_start_addresses
+ C$EEEC,2;21 There are 128 rows
+; Start loop
+*C$EEEE,1;21 Pop a target address off the stack
+ C$EEEF,2;21 {Copy 23 bytes
+ C$EEF1,42;21
+ C$EF1B,2;21 }
+ C$EF1D,1;21 Skip the 24th input byte
+ C$EF1E,1;21 {...loop
  C$EF1F,3;21 }
- C$EF22,4;21 SP = saved_sp;
- C$EF26,1;21 return;
-*C$EF27,3;21 {unaligned: HL = $F290 + game_window_offset; // screen buffer start address
- C$EF2A,7;21
+ C$EF22,4;21 Restore the stack pointer
+ C$EF26,1;21 Return
+;
+@label=pgw_unaligned
+*C$EF27,3;21 Point #REGhl at the screen buffer's start address
+ C$EF2A,3;21 Read lower byte of game_window_offset
+ C$EF2D,1;21 {Combine
+ C$EF2E,3;21
 *C$EF31,1;21 }
- C$EF32,1;21 {A = *HL++; // prime A
+ C$EF32,1;21 {Fetch a first source byte
  C$EF33,1;21 }
- C$EF34,3;21 SP = game_window_start_addresses;
- C$EF37,1;21 {Bdash = 128; // 128 rows
- C$EF38,2;21 }
-*C$EF3A,1;21 do <%
- C$EF3B,1;21 // output address
- C$EF3C,2;21 B = 4; // 4 iterations of 5 plus 3 at the end == 23
-*C$EF3E,1;21 do <% C = *HL;
- C$EF3F,2;21 RRD does this: tmp = *HL & 0x0F; *HL = (*HL >> 4) | (A << 4); A = (A & 0xF0) | tmp;
- C$EF41,1;21
- C$EF42,1;21 Adash = *HL;
- C$EF43,1;21 *DE++ = Adash;
- C$EF44,1;21 {    *HL++ = C;
- C$EF45,2;21
- C$EF47,1;21 }
- C$EF48,1;21 C = *HL;
- C$EF49,2;21 {    RRD
- C$EF4B,1;21 }
- C$EF4C,1;21 Adash = *HL;
- C$EF4D,1;21 *DE++ = Adash;
- C$EF4E,1;21 {    *HL++ = C;
- C$EF4F,2;21
+ C$EF34,3;21 Point #REGsp at game_window_start_addresses
+ C$EF37,1;21 Bank
+ C$EF38,2;21 There are 128 rows
+; Start loop
+*C$EF3A,1;21 Unbank
+ C$EF3B,1;21 Pop a target address off the stack
+ C$EF3C,2;21 4 iterations of 5, plus 3 at the end = 23
+; Start loop
+*C$EF3E,1;21 Fetch a second source byte (so we can restore it later)
+; RRD does a 12-bit rotate:
+; nibble_out = (HL) & $0F;
+; (HL) = ((HL) >> 4) | (A << 4);
+; A = (A & $F0) | nibble_out;
+ C$EF3F,2;21 Shift (#REGhl) down and rotate #REGa's bottom nibble
+ ;21 into the top of (#REGhl)
+ C$EF41,1;21 Bank
+ C$EF42,1;21 Load the rotated and merged value
+ C$EF43,1;21 Store it to the screen
+ C$EF44,1;21 Restore the corrupted byte
+ C$EF45,1;21 Unbank
+ C$EF46,1;21 Advance
+ C$EF47,1;21 Advance
+;
+ C$EF48,1;21 {Repeat
+ C$EF49,8;21
  C$EF51,1;21 }
- C$EF52,1;21 C = *HL;
- C$EF53,2;21 {    RRD
- C$EF55,1;21 }
- C$EF56,1;21 Adash = *HL;
- C$EF57,1;21 *DE++ = Adash;
- C$EF58,1;21 {    *HL++ = C;
- C$EF59,2;21
+;
+ C$EF52,1;21 {Repeat
+ C$EF53,8;21
  C$EF5B,1;21 }
- C$EF5C,1;21 C = *HL;
- C$EF5D,2;21 {    RRD
- C$EF5F,1;21 }
- C$EF60,1;21 Adash = *HL;
- C$EF61,1;21 *DE++ = Adash;
- C$EF62,1;21 {    *HL++ = C;
- C$EF63,2;21
+;
+ C$EF5C,1;21 {Repeat
+ C$EF5D,8;21
  C$EF65,1;21 }
- C$EF66,1;21 C = *HL;
- C$EF67,2;21 {    RRD
- C$EF69,1;21 }
- C$EF6A,1;21 Adash = *HL;
- C$EF6B,1;21 *DE++ = Adash;
- C$EF6C,1;21 {    *HL++ = C;
- C$EF6D,2;21
+;
+ C$EF66,1;21 {Repeat
+ C$EF67,8;21
  C$EF6F,1;21 }
- C$EF70,2;21 %> while (--B);
- C$EF72,1;21 C = *HL;
- C$EF73,2;21 {  RRD
- C$EF75,1;21 }
- C$EF76,1;21 Adash = *HL;
- C$EF77,1;21 *DE++ = Adash;
- C$EF78,1;21 {  *HL++ = C;
- C$EF79,2;21
+;
+ C$EF70,2;21 ...loop
+;
+ C$EF72,1;21 {Repeat
+ C$EF73,8;21
  C$EF7B,1;21 }
- C$EF7C,1;21 C = *HL;
- C$EF7D,2;21 {  RRD
- C$EF7F,1;21 }
- C$EF80,1;21 Adash = *HL;
- C$EF81,1;21 *DE++ = Adash;
- C$EF82,1;21 {  *HL++ = C;
- C$EF83,2;21
+;
+ C$EF7C,1;21 {Repeat
+ C$EF7D,8;21
  C$EF85,1;21 }
- C$EF86,1;21 C = *HL;
- C$EF87,2;21 {  RRD
- C$EF89,1;21 }
- C$EF8A,1;21 Adash = *HL;
- C$EF8B,1;21 *DE++ = Adash;
- C$EF8C,1;21 {  *HL++ = C;
- C$EF8D,2;21
+;
+ C$EF86,1;21 {Repeat
+ C$EF87,8;21
  C$EF8F,1;21 }
- C$EF90,1;21 {  A = *HL++;
- C$EF91,1;21
- C$EF92,1;21 }
- C$EF93,2;21 %> while (--Bdash);
- C$EF95,4;21 SP = saved_sp;
- C$EF99,1;21 return;
+;
+ C$EF90,1;21 {Preload the next scanline's first input byte
+ C$EF91,1;21 }
+ C$EF92,1;21 Unbank
+ C$EF93,2;21 ...loop
+ C$EF95,4;21 Restore the stack pointer
+ C$EF99,1;21 Return
 
 ; Event: roll call.
 ;
