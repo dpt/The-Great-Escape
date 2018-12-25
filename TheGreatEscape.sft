@@ -1444,7 +1444,7 @@ cC$68A2,1;21 Save position into #REGde
  ;21 (always $800D)
  C$68E6,1;21
  C$68E7,1;21 }
- C$68E8,2;21 !Set input to input_KICK (so the character is reset???)
+ C$68E8,2;21 Set input to input_KICK
  C$68EA,1;21 Point #REGhl at the visible character's direction field
  ;21 (always $800E)
  C$68EB,1;21 {Fetch the direction field and clear the non-direction
@@ -16041,56 +16041,67 @@ cC$EED3,4;21 Preserve the stack pointer
 
 ; Event: roll call.
 ;
-; Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
+; Range checking that X is in ($72..$7C) and Y is in ($6A..$72).
 ;
 ; .
 ;
 ; Is the hero within the roll call area bounds?
 @label=event_roll_call
 @keep
-cC$EF9A,3;21 DE = map_ROLL_CALL_X;
- C$EF9D,3;21 HL = &hero_map_position.x;
- C$EFA0,2;21 B = 2; // iterations
-*C$EFA2,1;21 do <% A = *HL++;
- C$EFA3,1;21 {  if (A < D || A >= E) goto not_at_roll_call;
- C$EFA4,5;21
- C$EFA9,1;21 }
+cC$EF9A,3;21 Load #REGde with the X coordinates of the roll call area
+ ;21 ($72..$7C)
+ C$EF9D,3;21 Point #REGhl at global map position (hero)
+ C$EFA0,2;21 Set #REGb for two iterations
+; Start loop
+*C$EFA2,1;21 Fetch the next coord
+ C$EFA3,1;21 {Jump if the hero's out of bounds
+ C$EFA4,3;21
+ C$EFA7,2;21 }
+ C$EFA9,1;21 On the second iteration advance to hero_map_position_y
+ ;21 ($6A..$72)
 @keep
- C$EFAA,3;21 DE = map_ROLL_CALL_Y;
- C$EFAD,2;21 %> while (--B);
-; All visible characters turn forward.
+ C$EFAA,3;21 On the second iteration load #REGde with the Y
+ ;21 coordinates of the main gate ($6A..$72)
+ C$EFAD,2;21 ...loop
+; Make all visible characters turn forward.
 @nowarn
- C$EFAF,3;21 HL = $800D;
- C$EFB2,2;21 B = 8; // iterations
-*C$EFB4,2;21 {do <% *HL++ = input_KICK;
- C$EFB6,1;21 }
- C$EFB7,2;21 *HL = 0x03; // direction (3 => face bottom left)
- C$EFB9,1;21 {  HL += 31;
+ C$EFAF,3;21 Point #REGhl at the visible character's input field
+ ;21 (always $800D)
+ C$EFB2,2;21 Set #REGb for 8 iterations
+; Start loop
+*C$EFB4,2;21 Set input to input_KICK
+ C$EFB6,1;21 Point #REGhl at the visible character's direction field
+ ;21 (always $800E)
+ C$EFB7,2;21 Set the direction field to 3 => face bottom left
+ C$EFB9,1;21 {Advance #REGhl to the next vischar
  C$EFBA,2;21
  C$EFBC,1;21 }
- C$EFBD,2;21 %> while (--B);
- C$EFBF,1;21 return;
-*C$EFC0,1;21 {not_at_roll_call: bell = bell_RING_PERPETUAL;
+ C$EFBD,2;21 ...loop
+ C$EFBF,1;21 Return
+@label=not_at_roll_call
+*C$EFC0,1;21 {Make the bell ring perpetually
  C$EFC1,3;21 }
- C$EFC4,1;21 {queue_message(message_MISSED_ROLL_CALL);
+ C$EFC4,1;21 {Queue the message "MISSED ROLL CALL"
  C$EFC5,3;21 }
- C$EFC8,3;21 hostiles_pursue(); // exit via
+ C$EFC8,3;21 Exit via hostiles_pursue
 
 ; Use papers.
 ;
 ; Is the hero within the main gate bounds?
+;
 ; .
+;
 ; Range checking that X is in ($69..$6D) and Y is in ($49..$4B).
 @label=action_papers
 @keep
 cC$EFCB,3;24 Load #REGde with the X coordinates of the main gate
  ;24 ($69..$6D)
- C$EFCE,3;24 Point #REGhl at hero_map_position_x
+ C$EFCE,3;24 Point #REGhl at global map position (hero)
  C$EFD1,2;24 Set #REGb for two iterations
 ; Start loop
 @label=ap_coord_check_loop
 *C$EFD3,1;24 Fetch the next coord
- C$EFD4,1;24 {Return if it's out of bounds
+ C$EFD4,1;24 {Return if the hero's out of bounds
  C$EFD5,2;24
  C$EFD7,1;24 }
  C$EFD8,1;24 On the second iteration advance to hero_map_position_y
