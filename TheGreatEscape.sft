@@ -16080,35 +16080,45 @@ cC$EF9A,3;21 DE = map_ROLL_CALL_X;
 ;
 ; Is the hero within the main gate bounds?
 ; .
-; Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
+; Range checking that X is in ($69..$6D) and Y is in ($49..$4B).
 @label=action_papers
 @keep
-cC$EFCB,3;24 DE = map_MAIN_GATE_X;
- C$EFCE,3;24 HL = &hero_map_position.y;
- C$EFD1,2;24 B = 2; // iterations
-*C$EFD3,1;24 do <% A = *HL++;
- C$EFD4,1;24 {  if (A < D || A >= E) return;
- C$EFD5,3;24
- C$EFD8,1;24 }
+cC$EFCB,3;24 Load #REGde with the X coordinates of the main gate
+ ;24 ($69..$6D)
+ C$EFCE,3;24 Point #REGhl at hero_map_position_x
+ C$EFD1,2;24 Set #REGb for two iterations
+; Start loop
+@label=ap_coord_check_loop
+*C$EFD3,1;24 Fetch the next coord
+ C$EFD4,1;24 {Return if it's out of bounds
+ C$EFD5,2;24
+ C$EFD7,1;24 }
+ C$EFD8,1;24 On the second iteration advance to hero_map_position_y
+ ;24 ($49..$4B)
 @keep
- C$EFD9,3;24 DE = map_MAIN_GATE_Y;
- C$EFDC,2;24 %> while (--B);
+ C$EFD9,3;24 On the second iteration load #REGde with the Y
+ ;24 coordinates of the main gate
+ C$EFDC,2;24 ...loop
+; The hero was within the bounds of the main gate.
+; .
 ; Using the papers at the main gate when not in uniform causes the hero to be
-; sent to solitary.
- C$EFDE,3;24 {if ($8015 != sprite_guard) goto solitary; // exit via
- C$EFE1,4;24
+; sent to solitary. Check for that.
+ C$EFDE,3;24 Point #REGde at the guard sprite set
+ C$EFE1,3;24 Load hero's vischar.mi.sprite
+ C$EFE4,1;24 {Jump to solitary if not using the guard sprite set
  C$EFE5,3;24 }
- C$EFE8,3;24 increase_morale_by_10_score_by_50();
- C$EFEB,1;24 {$801C = room_0_OUTDOORS; // set room index
+; The hero was wearing the uniform so is transported outside of the gate.
+ C$EFE8,3;24 Increase morale by 10, score by 50
+ C$EFEB,1;24 {Set hero's vischar.room to room_0_OUTDOORS
  C$EFEC,3;24 }
 ; Transition to outside the main gate.
 @nowarn
- C$EFEF,3;24 HL = &outside_main_gate; // pointer to location
- C$EFF2,4;24 IY = $8000; // hero character
- C$EFF6,3;24 transition(); return; // doesn't return: exits with goto main_loop
-; Position outside the main gate.
+ C$EFEF,3;24 Point #REGhl at outside_main_gate location
+ C$EFF2,4;24 Point #REGiy at the hero's vischar
+ C$EFF6,3;24 Jump to transition -- never returns
+; The position outside of the main gate to which the hero is transported.
 @label=outside_main_gate
- B$EFF9,3;24 static const tinypos_t outside_main_gate = <% 0xD6, 0x8A, 0x06 %>;
+ B$EFF9,3
 
 ; Wait for the user to press 'Y' or 'N'.
 ;
