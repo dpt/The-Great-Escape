@@ -15851,16 +15851,31 @@ cC$F20B,3;21 static_tiles_plot_direction = A;
 ; Clear the screen and attributes and set the screen border to black.
 ;
 ; Used by the routine at #R$F163.
+;
+; .
+;
 @label=wipe_full_screen_and_attributes
-cC$F257,3;21 {memset(screen, 0, 0x1800);
- C$F25A,10;21
- C$F264,1;21 }
- C$F265,1;21 {memset(atttributes, attribute_WHITE_OVER_BLACK, 0x300);
- C$F266,5;21
- C$F26B,2;21 }
- C$F26D,1;21 {border = 0; // black
- C$F26E,2;21 }
- C$F270,1;21 return;
+; Clear the pixels to zero
+cC$F257,3;21 Point #REGhl at the start of the screen (source address)
+ C$F25A,3;21 Point #REGde at the start of the screen plus a byte
+ ;21 (destination address)
+ C$F25D,2;21 Set the first screen byte to zero
+ C$F25F,3;21 6143 bytes
+ C$F262,2;21 Copy source to destination 6143 times, advancing until
+ ;21 the screen is cleared
+; Clear the attributes to white over black
+ C$F264,1;21 Advance #REGhl to the start of the attributes (source
+ ;21 address)
+ C$F265,1;21 Advance #REGde to the start of the attributes plus a byte
+ ;21 (destination address)
+ C$F266,2;21 Set the first attribute byte to seven (white over black)
+ C$F268,3;21 767 bytes
+ C$F26B,2;21 Copy source to destination 767 times, advancing until
+ ;21 the screen is cleared
+; Set the border to black
+ C$F26D,1;21 Set #REGa to zero
+ C$F26E,2;21 Set the border (and speaker)
+ C$F270,1;21 Return
 
 ; Menu screen key handling.
 ;
