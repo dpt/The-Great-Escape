@@ -16434,16 +16434,16 @@ uB$FAE0,8*96,1
 
 ; Loaded.
 ;
-; Very first entry point used to shunt the game image down into its proper
-; position.
+; This is the very first entry point used to shunt the game image down into its
+; proper position.
 @label=loaded
-cC$FDE1,1;21 Disable interrupts.
- C$FDE2,3;21 SP = 0xFFFF;
- C$FDE5,3;21 {memmove(0x5B00, 0x5E00, 0x9FE0);
+cC$FDE1,1;21 Disable interrupts
+ C$FDE2,3;21 Point #REGsp at the topmost byte of RAM
+ C$FDE5,3;21 {Relocate the $9FE0 bytes at $5E00 down to $5B00
 @nowarn
  C$FDE8,6;21
  C$FDEE,2;21 }
- C$FDF0,3;21 goto jump_to_main; /* exit via */
+ C$FDF0,3;21 Exit via jump_to_main
 
 ; Unreferenced bytes.
 uB$FDF3,8,5
