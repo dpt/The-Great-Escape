@@ -15974,21 +15974,26 @@ wW$F32B,2*5
 
 ; Wipe the game screen.
 ;
+; This wipes the area of the screen where the game window is plotted.
+; .
 ; Used by the routine at #R$F350.
 @label=wipe_game_window
-cC$F335,1;21 DI
- C$F336,4;21 saved_sp = SP;
- C$F33A,3;21 sp = game_window_start_addresses;
- C$F33D,2;21 A = 128; // 128 rows
-*C$F33F,1;21 do <% // start address
- C$F340,2;21 B = 23; // 23 columns
-*C$F342,2;21 do <% *HL = 0;
- C$F344,1;21 HL++;
- C$F345,2;21 %> while (--B);
- C$F347,1;21 {%> while (--A);
+cC$F335,1;21 Disable interrupts
+; This uses the optimisation trick of popping addresses from the stack.
+ C$F336,4;21 Save the stack pointer
+ C$F33A,3;21 Point the stack pointer at game_window_start_addresses
+ C$F33D,2;21 Set #REGa for 128 iterations (128 rows)
+; Start loop
+*C$F33F,1;21 Pull a start address from the stack
+ C$F340,2;21 Set #REGb for 23 iterations (23 bytes)
+; Start loop
+*C$F342,2;21 Write an empty byte
+ C$F344,1;21 Advance (note cheap increment)
+ C$F345,2;21 ...loop
+ C$F347,1;21 {...loop
  C$F348,3;21 }
- C$F34B,4;21 SP = saved_sp;
- C$F34F,1;21 return;
+ C$F34B,4;21 Restore the stack pointer
+ C$F34F,1;21 Return
 
 ; Choose keys.
 ;
