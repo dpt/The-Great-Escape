@@ -1601,7 +1601,7 @@ cC$6939,3;24 Reset all non-player visible characters
 ; Used by the routine at #R$6939 only. (!could merge into the above)
 @label=reset_nonplayer_visible_characters
 @nowarn
-cC$69C9,3;21 Start at the first visible character (hero is the zeroth)
+cC$69C9,3;21 Start at the second visible character
  C$69CC,3;21 Set #REGb for seven iterations and set #REGc for a 32
  ;21 byte stride simultaneously
 ; Start loop
@@ -9163,7 +9163,7 @@ cC$B107,3;23 Increase morale by 10, score by 50
 ; Iterate over hostile and visible non-player characters.
  C$B12E,2;23 7 iterations
 @nowarn
- C$B130,3;23 Start at the first visible character (hero is the zeroth)
+ C$B130,3;23 Start at the second visible character
 ; Start loop
 *C$B133,1;23 Fetch the character index
  C$B134,2;23 Is it > character_20_PRISONER_1?
