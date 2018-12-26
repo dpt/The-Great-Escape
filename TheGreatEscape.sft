@@ -16164,79 +16164,103 @@ bB$F076,23
 ;
 ; Used by the routine at #R$F068.
 @label=main
-cC$F163,1;30 Disable interrupts.
- C$F164,3;30 Set up stack pointer. Why is this $FFFE when squash_stack_goto_main sets it to $FFFF?
-; Set up screen.
- C$F167,3;30 wipe_full_screen_and_attributes();
- C$F16A,2;30 {set_morale_flag_screen_attributes(attribute_BRIGHT_GREEN_OVER_BLACK);
- C$F16C,3;30 }
- C$F16F,2;30 {set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);
- C$F171,3;30 }
- C$F174,3;30 plot_statics_and_menu_text();
- C$F177,3;30 plot_score();
- C$F17A,3;30 menu_screen();
-; Construct a table of 256 bit-reversed bytes at 0x7F00.
- C$F17D,3;30 HL = 0x7F00;
-*C$F180,1;30 do <% A = L;
- C$F181,2;30 C = 0;
- C$F183,2;30 B = 8; // iterations
-*C$F185,1;30 do <% carry = A & 1; A >>= 1; // flips a byte
- C$F186,2;30 C = (C << 1) | carry;
- C$F188,2;30 %> while (--B);
- C$F18A,1;30 {  *HL++ = C;
- C$F18B,1;30
- C$F18C,3;30 }
- C$F18F,1;30 %> while ((HL & 0xFF) != 0);
-; Initialise visible characters (HL is $8000).
-@nowarn
- C$F190,3;30 DE = &vischar_initial;
- C$F193,2;30 B = 8; // iterations
-*C$F195,1;30 do <%
- C$F196,1;30 {
- C$F197,1;30 }
- C$F198,3;30 {  memcpy(HL, DE, 23);
- C$F19B,1;30
- C$F19C,2;30 }
- C$F19E,1;30
- C$F19F,2;30 {  HL += 32;
- C$F1A1,1;30
- C$F1A2,1;30 }
- C$F1A3,1;30
- C$F1A4,1;30 {%> while (--B);
- C$F1A5,2;30 }
-; Write 0xFF 0xFF at 0x8020 and every 32 bytes after.
- C$F1A7,2;30 B = 7; // iterations
-@nowarn
- C$F1A9,3;30 HL = 0x8020; // iterate over non-player characters
- C$F1AC,5;30
-*C$F1B1,1;30 {do <% HL[0] = character_NONE;
- C$F1B2,1;30 }
- C$F1B3,1;30 HL[1] = 0xFF; // flags
- C$F1B4,1;30 HL += 32;
- C$F1B5,2;30 %> while (--B);
-; Zero 0x118 bytes at HL (== $8100 == mask_buffer) onwards.
+cC$F163,1;30 Disable interrupts
+; Q: Why is the stack pointer set to $FFFE here when squash_stack_goto_main
+; sets it to $FFFF?
+ C$F164,3;30 Point the stack pointer at the end of RAM
+; Clear the screen.
+ C$F167,3;30 Clear the full screen and attributes and set
+ ;30 the screen border to black
+; Set the morale flag to green.
+ C$F16A,2;30 Set #REGa to attribute_BRIGHT_GREEN_OVER_BLACK
+ C$F16C,3;30 Set the screen attributes of the morale flag
+; Draw everything else.
 ; .
-; This is likely wiping everything up until the start of tiles ($8218).
- C$F1B7,3;30 BC = 0x118;
-*C$F1BA,2;30 {do <% *HL++ = 0; %> while (--BC != 0); // turn into memset
- C$F1BC,4;30
+; Bug: This passes in index $44 to #R$F408 in #REGa, but it ought to be zero.
+ C$F16F,2;30 Set #REGe to attribute_BRIGHT_YELLOW_OVER_BLACK
+ C$F171,3;30 Set the screen attributes of the specified menu
+ ;30 item
+ C$F174,3;30 Plot all static graphics and menu text
+ C$F177,3;30 Draw the current score to screen
+; Run the menu screen.
+; .
+; We'll be in here for some time until the user selects their input method.
+; When we return we'll continue setting up the things required for the game,
+; then jump into the main loop.
+ C$F17A,3;30 Runs the menu screen
+; Construct a table of 256 bit-reversed bytes at $7F00.
+ C$F17D,3;30 Point #REGhl at $7F00
+; Start loop
+*C$F180,1;30 Shuffle
+ C$F181,2;30 Zero #REGc (DPT: Could have used XOR C)
+; Reverse a byte
+ C$F183,2;30 Set #REGb for eight iterations
+; Start loop
+*C$F185,1;30 Shift out lowest bit from #REGa into carry
+ C$F186,2;30 Shift carry into #REGc
+ C$F188,2;30 ...loop until the byte is completed
+ C$F18A,1;30 {Store the reversed byte
+ C$F18B,1;30 }
+ C$F18C,3;30 ...loop until #REGl becomes zero
+ C$F18F,1;30 Advance #REGhl to $8000
+; Initialise visible characters (#REGhl is $8000).
+@nowarn
+ C$F190,3;30 Point #REGde at vischar_initial
+ C$F193,2;30 Set #REGb for eight iterations
+; Start loop
+*C$F195,1;30 Preserve loop counter
+ C$F196,1;30 Preserve vischar_initial
+ C$F197,1;30 Preserve vischar pointer
+ C$F198,3;30 {Populate the vischar slot with
+ C$F19B,1;30 vischar_initial's data
+ C$F19C,2;30 }
+ C$F19E,1;30 Restore vischar pointer
+ C$F19F,2;30 {Advance #REGhl to the next vischar
+ C$F1A1,1;30 (assumes no overflow)
+ C$F1A2,1;30 }
+ C$F1A3,1;30 Restore vischar_initial
+ C$F1A4,1;30 {...loop until the vischars are populated
+ C$F1A5,2;30 }
+; Write $FF $FF at $8020 and every 32 bytes after.
+; (DPT: Possibly easier to do the inverse and clear those bytes at $8000).
+ C$F1A7,2;30 Set #REGb for seven iterations
+@nowarn
+; Iterate over non-player visible characters.
+ C$F1A9,3;30 Start at the second visible character
+ C$F1AC,3;30 Prepare the vischar stride, minus a byte
+ C$F1AF,2;30 Prepare the index / flags initialiser
+; Start loop
+*C$F1B1,1;30 Set the vischar's character index to $FF
+ C$F1B2,1;30 Advance #REGhl to the flags field
+ C$F1B3,1;30 Set the vischar's flags to $FF
+ C$F1B4,1;30 Advance the vischar pointer
+ C$F1B5,2;30 ...loop until the vischar flags are set
+; Zero $118 bytes at HL ($8100 is mask_buffer) onwards.
+; .
+; This wipes everything up until the start of tiles ($8218).
+ C$F1B7,3;30 Set #REGb to $118
+; Start loop
+*C$F1BA,2;30 {Zero and advance
+ C$F1BC,1;30 }
+ C$F1BD,1;30 {...loop until cleared
+ C$F1BE,2;30
  C$F1C0,3;30 }
- C$F1C3,3;30 reset_game();
- C$F1C6,3;30 goto main_loop_setup;
+ C$F1C3,3;30 Reset the game
+ C$F1C6,3;30 Jump to main_loop_setup
 ; Initial state of a visible character.
 @label=vischar_initial
  B$F1C9,1;30 character
  B$F1CA,1;30 flags
  W$F1CB,2;30 route
- B$F1CD,3;30 pos
- B$F1D0,1;30 b07
- W$F1D1,2;30 w08
- W$F1D3,2;30 w0A
+ B$F1CD,3;30 target
+ B$F1D0,1;30 counter_and_flags
+ W$F1D1,2;30 animbase
+ W$F1D3,2;30 anim
  B$F1D5,1;30 animindex
- B$F1D6,1;30 b0D
- B$F1D7,1;30 b0E
+ B$F1D6,1;30 input
+ B$F1D7,1;30 direction
  W$F1D8,6;30 mi.pos
- W$F1DE,2;30 mi.spriteset
+ W$F1DE,2;30 mi.sprite
 
 ; Plot all static graphics and menu text.
 ;
