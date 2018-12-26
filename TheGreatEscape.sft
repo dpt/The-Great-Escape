@@ -16509,23 +16509,26 @@ cC$F350,3;21 for (;;) <% wipe_game_window();
 ;
 ; Used by the routines at #R$F163 and #R$F271.
 ;
-; I:A Item index.
+; I:A Menu item index.
 ; I:E Attributes.
 @label=set_menu_item_attributes
-cC$F408,3;21 HL = 0x590D; // initial screen attribute address
+cC$F408,3;21 Point #REGhl at the first menu item's attributes
 ; Skip to the item's row.
- C$F40B,1;21 {if (A) <%
- C$F40C,2;21 }
- C$F40E,1;21 B = A;
-*C$F40F,1;21 {  do <% L += 32 * 2; %> while (--B); %> // skip two rows per iteration
- C$F410,3;21
- C$F413,2;21 }
-; Draw.
-*C$F415,2;21 B = 10;
-*C$F417,1;21 {do <% *HL++ = E; %> while (--B);
- C$F418,1;21
- C$F419,2;21 }
- C$F41B,1;21 return;
+ C$F40B,1;21 Is the index zero?
+ C$F40C,2;21 Jump if so - no need to advance the pointer
+ C$F40E,1;21 Set #REGb for (item index) iterations
+; Start loop
+*C$F40F,1;21 {Advance by two attribute rows per iteration (64 bytes)
+ C$F410,2;21
+ C$F412,1;21 }
+ C$F413,2;21 ...loop
+; Set the attributes.
+*C$F415,2;21 Set #REGb for ten iterations
+; Start loop
+*C$F417,1;21 Set one attribute byte
+ C$F418,1;21 Advance to the next
+ C$F419,2;21 ...loop
+ C$F41B,1;21 Return
 
 ; Scan for keys to select an input device.
 ;
