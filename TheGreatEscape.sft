@@ -15751,33 +15751,34 @@ cC$F163,1;30 Disable interrupts.
  W$F1D8,6;30 mi.pos
  W$F1DE,2;30 mi.spriteset
 
-; Plot statics and menu text.
+; Plot all static graphics and menu text.
 ;
 ; Used by the routine at #R$F163.
 @label=plot_statics_and_menu_text
-cC$F1E0,3;21 HL = &static_graphic_defs[0];
- C$F1E3,2;21 B = NELEMS(static_graphic_defs); // 18 iterations
-*C$F1E5,1;21 do <%
-; Fetch screen address.
- C$F1E6,1;21 {  E = *HL++;
- C$F1E7,1;21 }
- C$F1E8,1;21 {  D = *HL++;
+; Plot all static graphics.
+cC$F1E0,3;21 Point #REGhl at static_graphic_defs
+ C$F1E3,2;21 Set #REGb for 18 iterations
+; Start loop
+*C$F1E5,1;21 Preserve the loop counter
+ C$F1E6,1;21 {Read the target screen address
+ C$F1E7,2;21
  C$F1E9,1;21 }
- C$F1EA,2;21 {  if (*HL & statictiles_VERTICAL)
- C$F1EC,2;21 }
- C$F1EE,3;21 plot_static_tiles_vertical();
- C$F1F1,2;21 else
-*C$F1F3,3;21 plot_static_tiles_horizontal();
-*C$F1F6,1;21
- C$F1F7,2;21 %> while (--B);
+ C$F1EA,2;21 Is the statictiles_VERTICAL flag set?
+ C$F1EC,2;21 Jump if not
+ C$F1EE,3;21 Plot static tiles vertically
+ C$F1F1,2;21 (else)
+*C$F1F3,3;21 Plot static tiles horizontally
+*C$F1F6,1;21 Restore the loop counter
+ C$F1F7,2;21 ...loop
 ; Plot menu text.
- C$F1F9,2;21 B = 8; // 8 iterations
- C$F1FB,3;21 HL = &key_choice_screenlocstrings;
-*C$F1FE,1;21 do <%
- C$F1FF,3;21 screenlocstring_plot();
- C$F202,1;21
- C$F203,2;21 %> while (--B);
- C$F205,1;21 return;
+ C$F1F9,2;21 Set #REGb for 8 iterations
+ C$F1FB,3;21 Point #REGhl at key_choice_screenlocstrings
+; Start loop
+*C$F1FE,1;21 Preserve the loop counter
+ C$F1FF,3;21 Plot a single glyph (indirectly)
+ C$F202,1;21 Restore the loop counter
+ C$F203,2;21 ...loop
+ C$F205,1;21 Return
 
 ; Plot static tiles horizontally.
 ;
