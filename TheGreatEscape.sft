@@ -14826,39 +14826,40 @@ cC$E34E,2;21 {A = (A - 4) * 6; // jump table offset
  C$E3F6,3;21 }
  C$E3F9,1;21 return;
 
-; Reverses the 24 pixels in E,C,B and E',C',B'.
+; Horizontally flips the 24 pixels in E,C,B and counterpart masks in E',C',B'.
 ;
 ; Used by the routine at #R$E102.
 ;
-; I:E  First 8 pixels.
-; I:BC Second 16 pixels.
-; O:E  Reversed pixels.
-; O:BC Reversed pixels.
+; I:B Left 8 pixels.
+; I:C Middle 8 pixels.
+; I:E Right 8 pixels.
+; O:B Flipped left 8 pixels.
+; O:C Flipped middle 8 pixels.
+; O:E Flipped right 8 pixels.
 ;
-; Reverse the bitmap bytes.
+; Horizontally flip the bitmap bytes by looking up each byte in the flipped /
+; bit-reversed table at $7F00 and swapping the left and right pixels over.
 @label=flip_24_masked_pixels
-cC$E3FA,2;21 H = 0x7F;  // HL = 0x7F00 | (DE & 0x00FF); // 0x7F00 -> table of bit reversed bytes
- C$E3FC,1;21 L = E;
- C$E3FD,1;21 E = B;     // DE = (DE & 0xFF00) | (BC >> 8);
- C$E3FE,1;21 B = *HL;   // BC = (*HL << 8) | (BC & 0xFF);
- C$E3FF,1;21 L = E;     // HL = (HL & 0xFF00) | (DE & 0xFF);
- C$E400,1;21 E = *HL;   // DE = (DE & 0xFF00) | *HL;
- C$E401,1;21 L = C;     // HL = (HL & 0xFF00) | (BC & 0xFF);
- C$E402,1;21 C = *HL;   // BC = (BC & 0xFF00) | *HL;
- C$E403,1;21
-; Reverse the mask bytes.
- C$E404,2;21 Hdash = 0x7F;
- C$E406,1;21 Ldash = Edash;
- C$E407,1;21 Edash = Bdash;
- C$E408,1;21 Bdash = *HLdash;
- C$E409,1;21 Ldash = Edash;
- C$E40A,1;21 Edash = *HLdash;
- C$E40B,1;21 Ldash = Cdash;
- C$E40C,1;21 Cdash = *HLdash;
- C$E40D,1;21
- C$E40E,1;21 return;
-
-; Reverses the 16 pixels in D,E and D',E'.
+cC$E3FA,2;21 Point #REGhl into the table of 256 flipped bytes at $7Fxx
+ C$E3FC,1;21 Point #REGhl at the flipped byte for #REGe (right pixels)
+ C$E3FD,1;21 Shuffle
+ C$E3FE,1;21 Load the flipped byte into #REGb
+ C$E3FF,1;21 Point #REGhl at the flipped byte for #REGe (left pixels)
+ C$E400,1;21 Load the flipped byte into #REGe
+ C$E401,1;21 Point #REGhl at the flipped byte for #REGc (middle pixels)
+ C$E402,1;21 Load the flipped byte into #REGc
+; Likewise horizontally flip the mask bytes.
+ C$E403,1;21 Swap bank to mask bytes
+ C$E404,2;21 Point #REGhl into the table of 256 flipped bytes at $7Fxx
+ C$E406,1;21 Point #REGhl at the flipped byte for #REGe (right mask)
+ C$E407,1;21 Shuffle
+ C$E408,1;21 Load the flipped byte into #REGb
+ C$E409,1;21 Point #REGhl at the flipped byte for #REGe (left mask)
+ C$E40A,1;21 Load the flipped byte into #REGe
+ C$E40B,1;21 Point #REGhl at the flipped byte for #REGc (middle mask)
+ C$E40C,1;21 Load the flipped byte into #REGc
+ C$E40D,1;21 Restore original bank
+ C$E40E,1;21 Return
 ;
 ; Used by the routines at #R$E2AC and #R$E34E.
 ;
