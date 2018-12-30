@@ -14860,30 +14860,35 @@ cC$E3FA,2;21 Point #REGhl into the table of 256 flipped bytes at $7Fxx
  C$E40C,1;21 Load the flipped byte into #REGc
  C$E40D,1;21 Restore original bank
  C$E40E,1;21 Return
+
+; Horizontally flips the 16 pixels in D,E and counterpart masks in D',E'.
 ;
 ; Used by the routines at #R$E2AC and #R$E34E.
 ;
-; I:DE 16 pixels to reverse.
-; O:DE Reversed pixels.
+; I:D Left 8 pixels.
+; I:E Right 8 pixels.
+; O:D Flipped left 8 pixels.
+; O:E Flipped right 8 pixels.
 ;
-; Reverse the bitmap bytes.
+; Horizontally flip the bitmap bytes by looking up each byte in the flipped /
+; bit-reversed table at $7F00 and swapping the left and right pixels over.
 @label=flip_16_masked_pixels
-cC$E40F,2;21 H = 0x7F;  // HL = 0x7F00 | (DE >> 8); // 0x7F00 -> table of bit reversed bytes
- C$E411,1;21 L = D;
- C$E412,1;21 D = E;     // DE = (E << 8) | *HL;
- C$E413,1;21 E = *HL;
- C$E414,1;21 L = D;     // HL = (HL & 0xFF00) | (DE >> 8);
- C$E415,1;21 D = *HL;   // DE = (*HL << 8) | (DE & 0x00FF);
- C$E416,1;21
-; Reverse the mask bytes.
- C$E417,2;21 Hdash = 0x7F;
- C$E419,1;21 Ldash = Ddash;
- C$E41A,1;21 Ddash = Edash;
- C$E41B,1;21 Edash = *HLdash;
- C$E41C,1;21 Ldash = Ddash;
- C$E41D,1;21 Ddash = *HLdash;
- C$E41E,1;21
- C$E41F,1;21 return;
+cC$E40F,2;21 Point #REGhl into the table of 256 flipped bytes at $7Fxx
+ C$E411,1;21 Point #REGhl at the flipped byte for #REGd (left pixels)
+ C$E412,1;21 Shuffle
+ C$E413,1;21 Load the flipped byte into #REGe
+ C$E414,1;21 Point #REGhl at the flipped byte for #REGd (right pixels)
+ C$E415,1;21 Load the flipped byte into #REGd
+; Likewise horizontally flip the mask bytes.
+ C$E416,1;21 Swap bank to mask bytes
+ C$E417,2;21 Point #REGhl into the table of 256 flipped bytes at $7Fxx
+ C$E419,1;21 Point #REGhl at the flipped byte for #REGd (left mask)
+ C$E41A,1;21 Shuffle
+ C$E41B,1;21 Load the flipped byte into #REGe
+ C$E41C,1;21 Point #REGhl at the flipped byte for #REGd (right mask)
+ C$E41D,1;21 Load the flipped byte into #REGd
+ C$E41E,1;21 Restore original bank
+ C$E41F,1;21 Return
 
 ; Set up vischar plotting.
 ;
