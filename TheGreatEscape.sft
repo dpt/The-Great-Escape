@@ -3199,7 +3199,7 @@ bW$7738,2;44 {Array, 46 long, of pointers to
  W$773A,2;44 $FF-terminated runs.
  W$773C,2*43;44
  W$7792,2;44 }
- B$7794,1;44 could be a terminating $FF
+ B$7794,1;44 Fake terminator used by get_target
 @label=route_7795
  B$7795,4;44 L-shaped route in the fenced area  #ROUTE($7795)
 @label=route_7799
@@ -3701,7 +3701,7 @@ cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct
  C$7BC0,1;21 Point #REGhl at itemstruct.pos
  C$7BC1,1;21 Save for below
  C$7BC2,1;21 {Bug: HL is incremented by two here but then is
- C$7BC3,1;21 immediately overwritten by the LD HL at $7BC5. }
+ C$7BC3,1;21 immediately overwritten by the LD HL at $7BC5.}
  C$7BC4,1;21 Restore itemstruct.pos pointer into #REGde
  C$7BC5,3;21 Point #REGhl at the hero's map position
  C$7BC8,3;21 Scale down hero's map position (#REGhl) and assign the
@@ -3710,7 +3710,7 @@ cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct
  C$7BCB,1;21 Point at height field
  C$7BCC,2;21 {Set height to zero
  C$7BCE,1;21 }
- C$7BCF,1;21 Move itemstruct pointer into HL
+ C$7BCF,1;21 Move itemstruct pointer into #REGhl
 ; FALL THROUGH into calc_exterior_item_iso_pos.
 
 ; Calculate isometric screen position for dropped exterior items.
@@ -11167,7 +11167,7 @@ cC$BAF7,3;22 Point #REGhl at iso_pos_x (vischar left edge)
  C$BB0C,2;22 No lefthand skip
  C$BB0E,1;22 Clipped width = available_right
  C$BB0F,2;22 Jump to height part
-; Calculate the right edge of the vischar
+; Calculate the right edge of the vischar.
 @label=vv_not_clipped_on_right_edge
 *C$BB11,1;22 Load iso_pos_x (vischar left edge)
  C$BB12,3;22 vischar_right_edge = iso_pos_x + (sprite width bytes + 1)
@@ -15476,6 +15476,7 @@ cC$E40F,2;21 Point #REGhl into the table of 256 flipped bytes at $7Fxx
 ;
 ; I:HL Pointer to ? // observed: always the same as IY
 ; I:IY Pointer to visible character.
+; O:F  Z set if vischar is visible, NZ otherwise.
 @label=setup_vischar_plotting
 cC$E420,2;21 {HL = &vischar->mi.pos;
  C$E422,1;21
@@ -16214,8 +16215,8 @@ gB$F06B,2;20 Left
 ;
 ; #TABLE(default,centre)
 ; { =h Value | =h Meaning }
-; { 0 | Horizontal }
-; { 255 | Vertical }
+; {        0 | Horizontal }
+; {      255 | Vertical   }
 ; TABLE#
 @label=static_tiles_plot_direction
 gB$F075,1
@@ -16487,7 +16488,7 @@ cC$F20B,3;21 Save a copy of the plot direction
  C$F254,2;21 ...loop
  C$F256,1;21 Return
 
-; Clear the screen and attributes and set the screen border to black.
+; Clear the full screen and attributes and set the screen border to black.
 ;
 ; Used by the routine at #R$F163.
 ;
