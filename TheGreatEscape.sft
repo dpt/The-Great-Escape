@@ -16397,43 +16397,57 @@ cC$F257,3;21 Point #REGhl at the start of the screen (source address)
 ;
 ; Used by the routine at #R$F4B7.
 ; .
-; Scan for a keypress which either starts the game or selects an input device.
-; If an input device is chosen, update the menu highlight to match and record
-; which input device was chosen.
+; Scan for a keypress. It will either start the game, select an input device or
+; do nothing. If an input device is chosen, update the menu highlight to match
+; and record which input device was chosen.
 ; .
-; If the game is started then copy the input routine to $F075. If the chosen
-; input device is keyboard, then exit via choose_keys.
+; If the game is started then copy the required input routine to $F075. If the
+; chosen input device is the keyboard, then exit via choose_keys.
 @label=check_menu_keys
-cC$F271,3;21 A = menu_keyscan();
- C$F274,2;21 {if (A == 0xFF) return; /* no keypress */
- C$F276,1;21 }
- C$F277,1;21 {if (A) <%
- C$F278,2;21 }
- C$F27A,1;21 A--; // 1..4 -> 0..3
+cC$F271,3;21 Scan for keys that select an input device.
+ ;21 Result is in #REGa
+ C$F274,2;21 Nothing selected?
+ C$F276,1;21 Return if so
+ C$F277,1;21 Start game (zero) pressed?
+ C$F278,2;21 Jump if so
+ C$F27A,1;21 Turn 1..4 into 0..3
 ; Clear old selection.
- C$F27B,1;21
- C$F27C,3;21 A = chosen_input_device;
- C$F27F,2;21 {
- C$F281,3;21 set_menu_item_attributes(attribute_WHITE_OVER_BLACK);}
- C$F284,1;21
+ C$F27B,1;21 Preserve index
+ C$F27C,3;21 Load previously chosen input device index
+ C$F27F,2;21 Set #REGe to attribute_WHITE_OVER_BLACK
+ C$F281,3;21 Set the screen attributes of the specified menu item
+ C$F284,1;21 Restore index
 ; Highlight new selection.
- C$F285,3;21 chosen_input_device = A;
- C$F288,2;21 {
- C$F28A,3;21 set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);}
- C$F28D,1;21 return; %>
+ C$F285,3;21 Set chosen input device index
+ C$F288,2;21 Set #REGe to attribute_BRIGHT_YELLOW_OVER_BLACK
+ C$F28A,3;21 Set the screen attributes of the specified menu item
+ C$F28D,1;21 Return
 ; Zero pressed to start game.
-*C$F28E,3;21 {else <% A = chosen_input_device;
- C$F291,1;21 }
-; This is tricky. A' is left with the low byte of the inputroutine address. In
-; the case of the keyboard, it's zero. choose_keys relies on that in a
-; nonobvious way.
- C$F292,1;21 {  memcpy($F075, inputroutine[A], 0x4A); // copy input routine to $F075, length 0x4A
- C$F293,19;21
- C$F2A6,1;21 }
- C$F2A7,1;21 {  if (A == inputdevice_KEYBOARD) { choose_keys(); }
- C$F2A8,3;21 }
- C$F2AB,1;21 /* Discard previous frame and resume at main:$F17D. */
- C$F2AC,1;21 return; %>
+; .
+; Copy the input routine to $F075, choose keys if keyboard was chosen, then
+; return to main.
+@label=cmk_cpy_rout
+*C$F28E,3;21 Load chosen input device index
+ C$F291,1;21 Double it
+; This is tricky. #REGa' is left with the low byte of the inputroutine address.
+; In the case of the keyboard, it's zero. choose_keys relies on that in a
+; non-obvious way. [DPT: Check this comment]
+ C$F292,1;21 {Widen to #REGbc
+ C$F293,2;21 }
+ C$F295,1;21 Preserve index
+ C$F296,3;21 Point #REGhl at the list of available input routines
+ C$F299,1;21 Combine
+ C$F29A,1;21 {Fetch input routine address into #REGhl
+ C$F29B,2;21
+ C$F29D,1;21 }
+ C$F29E,3;21 Set the destination address
+ C$F2A1,3;21 Worst-case length of an input routine
+ C$F2A4,2;21 Copy
+ C$F2A6,1;21 Restore index
+ C$F2A7,1;21 Was the keyboard chosen?
+ C$F2A8,3;21 Call choose keys if so
+ C$F2AB,1;21 {Discard the previous return address and resume at
+ C$F2AC,1;21 #R$F17D}
 
 ; Key choice prompt strings.
 ;
@@ -16703,7 +16717,7 @@ cC$F408,3;21 Point #REGhl at the first menu item's attributes
  C$F419,2;21 ...loop
  C$F41B,1;21 Return
 
-; Scan for keys to select an input device.
+; Scan for keys that select an input device.
 ;
 ; Used by the routine at #R$F271.
 ;
@@ -16736,7 +16750,7 @@ cC$F41C,3;21 Set #REGbc to port_KEYBOARD_12345
  C$F43A,2;21 {Otherwise return $FF
  C$F43C,1;21 }
 
-; Available input routines.
+; List of available input routines.
 ;
 ; Array [4] of pointers to input routines.
 @label=inputroutines
