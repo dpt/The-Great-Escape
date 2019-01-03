@@ -3717,17 +3717,30 @@ cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct
 ;
 ; Used by the routine at #R$CD31.
 ;
-; I:HL Pointer to item struct.
+; I:HL Pointer to itemstruct's pos.height field.
 ;
 @label=calc_exterior_item_iso_pos
 ; Set #REGc to ($40 + y - x) * 2
-cC$7BD0,1;21 Point to itemstruct.y
- C$7BD1,7;21
+cC$7BD0,1;21 Step #REGhl back to itemstruct.pos.y
+ C$7BD1,2;21 Start with $40
+ C$7BD3,1;21 Add pos.y
+ C$7BD4,1;21 {Subtract pos.x
+ C$7BD5,1;21 }
+ C$7BD6,1;21 Double the result
+ C$7BD7,1;21 Save it in #REGc
 ; Set #REGb to ($200 - x - y - height)
- C$7BD8,1;21 Zero result - this acts like $200
- C$7BD9,7;21
-; Write the result to itemstruct.screenpos
- C$7BE0,3;21
+ C$7BD8,1;21 Zero the result; this acts like $200 for our purposes
+ C$7BD9,1;21 Subtract pos.x
+ C$7BDA,1;21 {Subtract pos.y
+ C$7BDB,1;21 }
+ C$7BDC,1;21 {Subtract pos.height
+ C$7BDD,1;21 }
+ C$7BDE,1;21 Save it in #REGb
+; Write the result to itemstruct.iso_pos
+ C$7BDF,1;21 Point #REGhl at itemstruct.iso_pos
+ C$7BE0,1;21 {Store #REGbc
+ C$7BE1,1;21
+ C$7BE2,1;21 }
  C$7BE3,1;21 Return
 
 ; Drop item, interior part.
