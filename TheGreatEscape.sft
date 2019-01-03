@@ -16635,81 +16635,102 @@ tB$F446,11;116 "CONTROLS" #HTML[/ #CALL:decode_screenlocstring($F446)]
  B$F4A8,15;116 "FOR NEW GAME" #HTML[/ #CALL:decode_screenlocstring($F4A8)]
 
 
-; Runs the menu screen.
+; Run the menu screen.
 ;
-; Used by the routine at #R$F163.
+; Waits for user to select an input device, waves the morale flag and plays the
+; title tune.
 ; .
-; While waiting for user to select an input device this waves the morale flag
-; and plays the title tune.
+; Used by the routine at #R$F163.
+;
+; .
+;
 @label=menu_screen
-cC$F4B7,3;21 for (;;) <% check_menu_keys();
- C$F4BA,3;21 wave_morale_flag();
+; Start loop (infinite)
+cC$F4B7,3;21 Handle menu screen keys.
+ ;21 When the user starts the game this call will cease to
+ ;21 return.
+ C$F4BA,3;21 Wave the morale flag (on every other turn)
 ; Play music.
- C$F4BD,3;21 {  HL = music_channel0_index + 1;
+ C$F4BD,3;21 {Fetch and increment the music channel 0 index
  C$F4C0,1;21 }
-; Loop until the end marker is encountered.
-*C$F4C1,3;21 for (;;) <% music_channel0_index = HL;
- C$F4C4,3;21 {    A = music_channel0_data[HL];
- C$F4C7,1;21
- C$F4C8,1;21 }
- C$F4C9,2;21 {    if (A != 0xFF) break; /* end marker */
- C$F4CB,2;21 }
- C$F4CD,3;21 HL = 0;
- C$F4D0,2;21 %>
-*C$F4D2,3;21 frequency_for_semitone();
- C$F4D5,1;21
-; Loop until the end marker is encountered.
- C$F4D6,3;21 {  HLdash = music_channel1_index + 1;
+; Start loop (infinite)
+@label=ms_loop0
+*C$F4C1,3;21 Save the music channel 0 index
+ C$F4C4,3;21 Point #REGde at music_channel0_data
+ C$F4C7,1;21 Add the index
+ C$F4C8,1;21 Fetch a semitone
+ C$F4C9,2;21 Was it the end of song marker? ($FF)
+ C$F4CB,2;21 Jump if not
+ C$F4CD,3;21 {Otherwise zero the index and start over
+ C$F4D0,2;21 }
+@label=ms_break0
+*C$F4D2,3;21 Get frequency for semitone
+ C$F4D5,1;21 Bank the channel 0 parameters
+ C$F4D6,3;21 {Fetch and increment the music channel 1 index
  C$F4D9,1;21 }
-*C$F4DA,3;21 for (;;) <% music_channel1_index = HLdash;
- C$F4DD,3;21 {    A = music_channel1_data[HLdash];
- C$F4E0,1;21
- C$F4E1,1;21 }
- C$F4E2,2;21 {    if (A != 0xFF) break; /* end marker */
- C$F4E4,2;21 }
- C$F4E6,3;21 HLdash = 0;
- C$F4E9,2;21 %>
-*C$F4EB,3;21 frequency_for_semitone(); /* using banked registers */
- C$F4EE,1;21 A = Bdash;
- C$F4EF,2;21
- C$F4F1,2;21 {  if (A == 0xFF) <%
- C$F4F3,2;21 }
- C$F4F5,1;21
- C$F4F6,1;21 POP BCdash
- C$F4F7,1;21 {    DEdash = BCdash;
+; Start loop (infinite)
+@label=ms_loop1
+*C$F4DA,3;21 Save the music channel 1 index
+ C$F4DD,3;21 Point #REGde at music_channel1_data
+ C$F4E0,1;21 Add the index
+ C$F4E1,1;21 Fetch a semitone
+ C$F4E2,2;21 Was it the end of song marker? ($FF)
+ C$F4E4,2;21 Jump if not
+ C$F4E6,3;21 {Otherwise zero the index and start over
+ C$F4E9,2;21 }
+@label=ms_break1
+*C$F4EB,3;21 Get frequency for semitone
+; When the second channel is silent use the first channel's frequency.
+ C$F4EE,1;21 Get the second channel's frequency low byte
+ ;21 (note #REGb is low here due to endian swap)
+ C$F4EF,1;21 Unbank the channel 0 parameters
+ C$F4F0,1;21 Save channel 0's frequency
+ C$F4F1,2;21 Is channel 1's frequency $xxFF?
+ C$F4F3,2;21 Jump if not
+ C$F4F5,1;21 Otherwise swap banks to channel 1's registers
+ C$F4F6,1;21 {Copy channel 0's frequency to channel 1
+ C$F4F7,1;21
  C$F4F8,1;21 }
- C$F4F9,1;21 - %>
- C$F4FA,2;21 else <%
-*C$F4FC,1;21 %>
-*C$F4FD,2;21 A = 24; /* overall tune speed (a delay: lower values are faster) */
-*C$F4FF,1;21 do <%
- C$F500,2;21 H = 0xFF; /* iterations */
-*C$F502,2;21 do <% if (--B == 0) <%
- C$F504,1;21 {        if (--C == 0) <%
- C$F505,3;21 }
- C$F508,1;21 {          L ^= 16;
- C$F509,2;21
- C$F50B,1;21 }
- C$F50C,2;21 OUT ($FE),L
- C$F50E,1;21 {          BC = DE; %> %>
+ C$F4F9,1;21 Bank again
+ C$F4FA,2;21 Jump
+*C$F4FC,1;21 Discard saved frequency
+; Iterate 6,120 times (24 * 255)
+*C$F4FD,2;21 Set major tune speed (a delay: lower means faster)
+; Start loop (major)
+*C$F4FF,1;21 Bank the major counter
+ C$F500,2;21 Set minor tune speed (a delay: lower means faster)
+; Start loop (minor)
+; .
+; Play channel 0's part
+*C$F502,2;21 Decrement #REGb (low). Jump over next block unless zero
+ C$F504,1;21 Decrement #REGc (high)
+ C$F505,3;21 Jump over next block unless zero
+; Countdown hit zero
+ C$F508,1;21 {Toggle the speaker bit
+ C$F509,2;21 (#REGl is zeroed by frequency_for_semitone)
+ C$F50B,1;21
+ C$F50C,2;21 }
+ C$F50E,1;21 {Reset counter
  C$F50F,1;21 }
-*C$F510,1;21
- C$F511,2;21 if (--Bdash == 0) <%
- C$F513,1;21 {        if (--Cdash == 0) <%
- C$F514,3;21 }
- C$F517,1;21 {          Ldash ^= 16;
- C$F518,2;21
- C$F51A,1;21 }
- C$F51B,2;21 OUT ($FE),Ldash
- C$F51D,1;21 {          BCdash = DEdash; %> %>
+*C$F510,1;21 Swap to registers for channel 1
+; Play channel 1's part
+ C$F511,2;21 Decrement #REGb (low). Jump over next block unless zero
+ C$F513,1;21 Decrement #REGc (high)
+ C$F514,3;21 Jump over next block unless zero
+; Countdown hit zero
+ C$F517,1;21 {Toggle the speaker bit
+ C$F518,2;21 (#REGl is zeroed by frequency_for_semitone)
+ C$F51A,1;21
+ C$F51B,2;21 }
+ C$F51D,1;21 {Reset counter
  C$F51E,1;21 }
-*C$F51F,1;21
- C$F520,1;21 {    %> while (--H);
+*C$F51F,1;21 Swap to registers for channel 0
+ C$F520,1;21 {...loop (minor tune speed) / 255 iterations
  C$F521,3;21 }
- C$F524,1;21
- C$F525,1;21 {  %> while (--A);
+ C$F524,1;21 Unbank the major counter
+ C$F525,1;21 {...loop (major tune speed) / 24 iterations
  C$F526,3;21 }
- C$F529,3;21 %>
+ C$F529,3;21 ...loop (infinite)
 
 ; Return the frequency to play at to generate the given semitone.
 ;
