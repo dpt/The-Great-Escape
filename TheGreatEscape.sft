@@ -3769,24 +3769,49 @@ cC$7BE4,1;21 Point to itemstruct.x
 ; .
 ; Used by the routine at #R$CD31.
 ;
-; I:HL Pointer to item struct + ?
+; I:HL Pointer to itemstruct's pos.height field.
 @label=calc_interior_item_iso_pos
 ; Set #REGa' to ($200 + y - x) * 2
-cC$7BF2,13;21
- C$7BFF,1;21 Double
- C$7C00,1;21 {
- C$7C01,1;21
- C$7C02,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa}
- C$7C05,1;21
+cC$7BF2,1;21 Step #REGhl back to itemstruct.pos.y
+ C$7BF3,2;21 {Start with $200 + pos.y
+ C$7BF5,1;21 }
+ C$7BF6,1;21 Use via #REGde now
+ C$7BF7,1;21 Step #REGde back to pos.x
+ C$7BF8,1;21 Fetch pos.x
+ C$7BF9,1;21 {Widen it to 16-bit
+ C$7BFA,2;21 }
+ C$7BFC,1;21 Clear carry flag
+ C$7BFD,2;21 Subtract (widened) pos.x
+ C$7BFF,1;21 Double the result
+ C$7C00,1;21 {Move result into (#REGc,#REGa)
+ C$7C01,1;21 }
+ C$7C02,3;21 Divide by 8 with rounding. Result is in #REGa
+ C$7C05,1;21 Bank x result
 ; Set #REGa to ($800 - x - y - height)
- C$7C06,5;21
- C$7C0B,1;21 #REGde points to x
- C$7C0C,14;21
- C$7C1A,1;21 {
- C$7C1B,1;21
- C$7C1C,3;21 Divide #REGhl by 8 with rounding. Assign the result to #REGa}
+ C$7C06,3;21 Start with $800
+ C$7C09,2;21 {Load and widen pos.x to 16-bit
+ C$7C0B,1;21
+ C$7C0C,1;21 }
+ C$7C0D,1;21 Clear carry flag
+ C$7C0E,2;21 Subtract (widened) pos.x
+ C$7C10,1;21 Advance #REGde to pos.y
+ C$7C11,1;21 {Load and widen pos.y to 16-bit (#REGb already zero)
+ C$7C12,1;21 }
+ C$7C13,2;21 Subtract (widened) pos.y
+ C$7C15,1;21 Advance #REGde to pos.height
+ C$7C16,1;21 {Load and widen pos.height to 16-bit (#REGb already zero)
+ C$7C17,1;21 }
+ C$7C18,2;21 Subtract (widened) pos.height
+ C$7C1A,1;21 {Move result into (#REGc,#REGa)
+ C$7C1B,1;21 }
+ C$7C1C,3;21 Divide by 8 with rounding. Result is in #REGa
 ; Write the result to itemstruct.screenpos
- C$7C1F,6;21
+ C$7C1F,1;21 {Advance #REGde to itemstruct.iso_pos
+ C$7C20,1;21 }
+ C$7C21,1;21 {Store #REGa (y result)
+ C$7C22,1;21 }
+ C$7C23,1;21 Unbank x result
+ C$7C24,1;21 Store #REGa (x result)
  C$7C25,1;21 Return
 
 ; Convert an item to an itemstruct pointer.
