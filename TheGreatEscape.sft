@@ -3387,9 +3387,18 @@ wW$783A,2;21 ( 68, 104)
 
 ; Door positions.
 ;
-; 62 pairs of four-byte structs (<- setup_doors)
+; 62 pairs of four-byte structs laid out as follows:
 ; .
-; #define BYTE0(room, direction) ((room << 2) | direction)
+; #TABLE(default)
+; { =h Type | =h Bytes | =h Name            | =h Meaning }
+; { Byte    |        1 | room_and_direction | Top six bits are a room index. Bottom two bits are a direction_t }
+; { TinyPos |        3 | pos                | Map position of the door }
+; TABLE#
+; .
+; Each door is stored as a pair of two "half doors". Each half of the pair
+; contains (room, direction, position) where the room is the *target* room, the
+; direction is the direction in which the door faces and the position is the
+; coordinates of the door in the current room.
 @label=doors
 bB$78D6,4;28 { BYTE0(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // gates
 @label=door_positions_1
@@ -12044,8 +12053,8 @@ cC$C5D3,1;21 Fetch the vischar's character index
  C$C63E,2;21 }
 ; Choose random locations in the fenced off area (right side).
 @label=rvc_dogs
- C$C640,2;21 {Set route to (route_WANDER,0) ($FF,$00) -- wander from
- C$C642,1;21 locations 0..7
+ C$C640,2;21 {Set route to (routeindex_255_WANDER,0) ($FF,$00) --
+ C$C642,1;21 wander from locations 0..7
  C$C643,2;21 }
  C$C645,2;21 Is this character_18_GUARD_DOG_3 or character_19_GUARD_DOG_4?
  C$C647,2;21 Jump if not
@@ -12071,7 +12080,7 @@ cC$C5D3,1;21 Fetch the vischar's character index
 ;
 ; I:HL Pointer to route.
 ; O:A  0/128/255 => Target is a location / a door / the route ended.
-; O:HL Pointer to location or door.
+; O:HL If the target is a location a pointer into locations[]; if a door a pointer into doors[] (returned as door.pos).
 @label=get_target
 cC$C651,1;21 Get the route index
  C$C652,2;21 Is it routeindex_255_WANDER? ($FF)
@@ -12140,184 +12149,226 @@ cC$C651,1;21 Get the route index
 *C$C69D,2;21 {Return with #REGa set to 255
  C$C69F,1;21 }
 
-; Move characters around.
+; Move one (off-screen) character around at a time.
 ;
 ; Used by the routine at #R$9D7B.
 @label=move_characters
-cC$C6A0,2;21 {entered_move_characters = 0xFF;
+cC$C6A0,2;21 {Set the 'character index is valid' flag
  C$C6A2,3;21 }
 ; Move to the next character, wrapping around after character 26.
- C$C6A5,3;21 {character = character_index + 1;
+ C$C6A5,3;21 {Load and increment the current character index
  C$C6A8,1;21 }
- C$C6A9,2;21 {if (character == character_26_STOVE_1)
- C$C6AB,2;21
- C$C6AD,1;21 character = character_0_COMMANDANT;}
-*C$C6AE,3;21 character_index = character;
-; Get its chararacter struct, exiting if it's not enabled.
- C$C6B1,3;21 HL = get_character_struct(character); // passing character in A
- C$C6B4,2;21 {if (*HL & characterstruct_FLAG_ON_SCREEN)
- C$C6B6,1;21 return; /* Disabled character. */}
- C$C6B7,1;21
+ C$C6A9,2;21 {If the character index became character_26_STOVE_1 then
+ C$C6AB,2;21 wrap around to character_0_COMMANDANT
+ C$C6AD,1;21 }
+@label=mc_didnt_wrap
+*C$C6AE,3;21 Store the character index
+; Get its chararacter struct, or exit if the character isn't on-screen.
+ C$C6B1,3;21 Get a pointer to the character struct for character index
+ ;21 #REGa, in #REGhl
+ C$C6B4,2;21 Is the character on-screen?
+ ;21 characterstruct_FLAG_ON_SCREEN
+ C$C6B6,1;21 It's not - return
+ C$C6B7,1;21 Preserve the character struct pointer
 ; Are any items to be found in the same room as the character?
- C$C6B8,1;21 {room = *++HL; // characterstruct room
+ C$C6B8,1;21 {Advance #REGhl to charstr.room and fetch it
  C$C6B9,1;21 }
- C$C6BA,1;21 {if (room != room_0_OUTDOORS) <%
- C$C6BB,2;21 }
-; This discovers one item at a time.
- C$C6BD,3;21 is_item_discoverable_interior(room); // passing room in A, returning item in ?
- C$C6C0,2;21 {  if (Z) item_discovered(item); %> // passing item in C
- C$C6C2,3;21 }
-*C$C6C5,1;21 HL = characterstruct
- C$C6C6,1;21 {HL += 2; // point at characterstruct pos
+ C$C6BA,1;21 Are we outdoors?
+ C$C6BB,2;21 Jump if so
+; Note: This discovers just one item at a time.
+ C$C6BD,3;21 Is the item discoverable indoors?
+ C$C6C0,2;21 Jump if not found
+ C$C6C2,3;21 Otherwise cause item #REGc to be discovered
+@label=mc_no_item
+*C$C6C5,1;21 Restore the character struct pointer
+ C$C6C6,1;21 {Advance #REGhl to charstr.pos
  C$C6C7,1;21 }
- C$C6C8,1;21
- C$C6C9,1;21 {HL += 3; // point at characterstruct target
+ C$C6C8,1;21 Preserve the charstr.pos pointer
+ C$C6C9,1;21 {Advance #REGhl to charstr.route
  C$C6CA,1;21
  C$C6CB,1;21 }
-; If standing still, return.
- C$C6CC,1;21 A = *HL; // charstr->route.index
- C$C6CD,1;21 {if (A == route_HALT) <%
- C$C6CE,2;21 }
- C$C6D0,1;21
- C$C6D1,1;21 return; %>
-*C$C6D2,3;21 get_target(); // "move towards" ? // returning ? in A, ? in HL
- C$C6D5,2;21 {if (A == get_target_ROUTE_ENDS) <%
- C$C6D7,3;21 }
-; When the route ends reverse the route.
- C$C6DA,3;21 character = character_index;
- C$C6DD,1;21 {  if (character != character_0_COMMANDANT) <%
- C$C6DE,2;21 }
+; If the character is standing still, return now.
+ C$C6CC,1;21 Fetch charstr.route.index
+ C$C6CD,1;21 Is it routeindex_0_HALT?
+ C$C6CE,2;21 Jump if not
+@label=mc_halted
+ C$C6D0,1;21 Restore the charstr.pos pointer
+ C$C6D1,1;21 Return
+@label=mc_not_halted
+*C$C6D2,3;21 Get our next target: a location, a door or 'route
+ ;21 ends'. The result is returned in #REGa, target pointer
+ ;21 returned in #REGhl
+ C$C6D5,2;21 Did #R$C651 return get_target_ROUTE_ENDS? ($FF)
+ C$C6D7,3;21 Jump if not
+; When the route ends, reverse the route.
+ C$C6DA,3;21 Fetch the current character index
+ C$C6DD,1;21 Is it the commandant? (character_0_COMMANDANT)
+ C$C6DE,2;21 Jump if so
 ; Not the commandant.
- C$C6E0,2;21 {    if (character >= character_12_GUARD_12)
- C$C6E2,2;21 goto character_12_or_higher;}
+ C$C6E0,2;21 Is it character_12_GUARD_12 or higher?
+ C$C6E2,2;21 Jump if so
 ; Characters 1..11.
-@label=character_1_to_11
-*C$C6E4,1;21 {    *HL++ ^= (1 << 7); // HLlocation->x
- C$C6E5,3;21
+@label=mc_reverse_route
+*C$C6E4,1;21 {Toggle charstr.route direction flag
+ C$C6E5,2;21 routeindexflag_REVERSED ($80)
+ C$C6E7,1;21
  C$C6E8,1;21 }
 ; Pattern: [-2]+1
- C$C6E9,2;21 {    if (A & (1 << 7)) (*HL) -= 2;
- C$C6EB,3;21
- C$C6EE,1;21 }
-*C$C6EF,1;21 (*HL)++; // i.e -1 or +1 // HLlocation->y
- C$C6F0,1;21
- C$C6F1,1;21 return; %>
+ C$C6E9,2;21 {If the route is reversed then step backwards, otherwise
+ C$C6EB,2;21 step forwards
+ C$C6ED,2;21
+@label=mc_route_fwd
+*C$C6EF,1;21 }
+ C$C6F0,1;21 Restore the charstr.pos pointer
+ C$C6F1,1;21 Return
 ; Commandant only.
-@label=commandant
-*C$C6F2,1;21 {  A = *HL & characterstruct_BYTE5_MASK; // sampled HL=$7617 (characterstruct + 5) // location
+@label=mc_commandant
+*C$C6F2,1;21 {Read the charstr.route index
  C$C6F3,2;21 }
- C$C6F5,2;21 {  if (A != 36) goto character_1_to_11;
+ C$C6F5,2;21 {Jump if it's not routeindex_36_GO_TO_SOLITARY
  C$C6F7,2;21 }
-@label=character_12_or_higher
-*C$C6F9,1;21
- C$C6FA,3;21 goto character_event; // exit via
-;   Two unused bytes.
- B$C6FD,2;21 %>
-*C$C6FF,2;21 {if (A == 0x80) <%
- C$C701,3;21 }
- C$C704,1;21 // DE points at characterstruct.pos - PUSH at $C6C8
- C$C705,1;21 {  room = DE[-1];
+; We arrive here if the character index is character_12_GUARD_12, or higher, or
+; if it's the commandant on route 36 ("go to solitary").
+@label=mc_trigger_event
+*C$C6F9,1;21 Restore the charstr.pos pointer
+ C$C6FA,3;21 Exit via character_event
+; Two unused bytes.
+ B$C6FD,2
+@label=mc_door
+*C$C6FF,2;21 Did #R$C651 return get_target_DOOR? ($80)
+ C$C701,3;21 Jump if not
+; Handle the target-is-a-door case.
+ C$C704,1;21 Restore the charstr.pos pointer (PUSH at #R$C6C8)
+ C$C705,1;21 {Get room index
  C$C706,1;21
  C$C707,1;21 }
- C$C708,1;21
- C$C709,1;21 {  if (room == room_0_OUTDOORS) <%
- C$C70A,3;21 }
- C$C70D,1;21
-; Divide the location at HL by 2 and store it to saved_pos.
- C$C70E,3;21 DE = &saved_pos_x;
- C$C711,2;21 B = 2; // 2 iters
-*C$C713,1;21 {    do <% *DE++ = *HL++ >> 1;
+ C$C708,1;21 Preserve the door.pos pointer
+ C$C709,1;21 Are we outdoors?
+ C$C70A,3;21 Jump if not
+; Outdoors
+ C$C70D,1;21 Preserve the charstr.pos pointer
+; Divide the door.pos location at #REGhl by two and store it to saved_pos.
+ C$C70E,3;21 Point #REGde at saved_pos_x
+ C$C711,2;21 Set #REGb for two iterations
+; Start loop
+@label=mc_door_copypos_loop
+*C$C713,1;21 {Copy X,Y of door.pos, each axis divided by two
  C$C714,4;21
  C$C718,1;21 }
- C$C719,2;21 %> while (--B);
- C$C71B,3;21 HL = &saved_pos_x;
- C$C71E,1;21 %>
-; Establish a maximum for passing into move_towards.
-*C$C71F,1;21 {  if (DE[-1] == room_0_OUTDOORS)
- C$C720,3;21
- C$C723,2;21 A = 2;
- C$C725,2;21
- C$C727,2;21 else A = 6;}
-*C$C729,1;21
- C$C72A,2;21 B = 0;
- C$C72C,3;21 move_towards(A, B, HL, DE);
- C$C72F,1;21 DE++;
- C$C730,1;21 HL++;
- C$C731,3;21 move_towards(A, B, HL, DE);
- C$C734,1;21
- C$C735,1;21 {  if (B != 2) return; // managed to move
- C$C736,2;21
- C$C738,1;21 }
-; So when we reach here a character is stuck.
+ C$C719,2;21 ...loop
+ C$C71B,3;21 Point #REGhl at saved_pos_x
+ C$C71E,1;21 Restore the charstr.room pointer
+; Decide on a maximum movement distance for move_towards to use.
+@label=mc_door_choose_maxdist
+*C$C71F,1;21 Rewind #REGde to point at charstr.room
+ C$C720,1;21 Fetch it
+ C$C721,1;21 Advance #REGde back
+ C$C722,1;21 Was charstr.room room_0_OUTDOORS?
+ C$C723,2;21 Set the maximum distance to two irrespectively
+ C$C725,2;21 Jump if it was
+ C$C727,2;21 Otherwise set the maximum distance to six
+@label=mc_door_maxdist_chosen
+*C$C729,1;21 Move maximum to #REGa'
+ C$C72A,2;21 Initialise the "arrived" counter to zero
+ C$C72C,3;21 Move charstr.pos.x (pointed to by #REGde) towards
+ ;21 tinypos.x (#REGhl), with a maximum delta of #REGa'.
+ ;21 #REGb is incremented if no movement was required
+ C$C72F,1;21 {Advance to Y axis
+ C$C730,1;21 }
+ C$C731,3;21 Move again, but on Y axis
+ C$C734,1;21 Restore the door.pos pointer
+ C$C735,1;21 {Did we move?
+ C$C736,2;21 }
+ C$C738,1;21 Return if so
+; If we reach here the character has arrived at their destination.
 ; .
-; Are we checking to see if a door is adjacent?
- C$C739,1;21 {  DE -= 2; // DE -> charstr->room
+; Our current target is a door, so change to the door's target room.
+@label=mc_door_reached
+ C$C739,1;21 {Rewind #REGde to charstr.room
  C$C73A,1;21 }
- C$C73B,1;21 HL--; // HL -> doorpos
- C$C73C,1;21 {  *DE = (*HL & ~door_FLAGS_MASK_DIRECTION) >> 2; // extract room field
- C$C73D,4;21
- C$C741,1;21 }
-; Stuff reading from doors[].
- C$C742,1;21 {  if ((*HL & door_FLAGS_MASK_DIRECTION) < 2) <% // sampled HL=$78FA,$794A,$78DA,$791E,$78E2,$790E,$796A,$790E,$791E,$7962,$791A
- C$C743,4;21
- C$C747,2;21 }
- C$C749,1;21 {    HL += 5; %> // next door's pos
+ C$C73B,1;21 Rewind #REGhl to door.room_and_direction
+ C$C73C,1;21 Fetch door.room_and_direction
+ C$C73D,2;21 {Isolate the room number
+ C$C73F,1;21
+ C$C740,1;21 }
+ C$C741,1;21 Assign to charstr.room (i.e. change room)
+; Determine the destination door.
+ C$C742,1;21 {Isolate the direction (door_FLAGS_MASK_DIRECTION)
+ C$C743,2;21 }
+ C$C745,2;21 Is the door facing top left or top right?
+ C$C747,2;21 Jump if neither
+ C$C749,1;21 {Otherwise calculate the address of the next door half
  C$C74A,3;21
  C$C74D,1;21 }
- C$C74E,2;21 else <%
-*C$C750,1;21 {    HL -= 3; %> // previous door's pos
+ C$C74E,2;21 (else)
+@label=mc_door_prev
+*C$C750,1;21 {Calculate the address of the previous door half
  C$C751,1;21
  C$C752,1;21 }
-*C$C753,1;21 {  room = *DE++;
- C$C754,1;21 }
- C$C755,1;21 {  if (room != room_0_OUTDOORS) <%
- C$C756,2;21 }
+@label=mc_door_copy_pos
+*C$C753,1;21 Fetch charstr.room
+ C$C754,1;21 Advance to charstr.pos
+ C$C755,1;21 Is it room_0_OUTDOORS?
+ C$C756,2;21 Jump if so
 ; Indoors. Copy the door's tinypos into the charstr's tinypos.
- C$C758,2;21 *DE++ = *HL++; // x
- C$C75A,2;21 *DE++ = *HL++; // y
- C$C75C,2;21 *DE++ = *HL++; // height
- C$C75E,1;21 DE--; %>
- C$C75F,2;21 else <%
+ C$C758,2;21 Copy X
+ C$C75A,2;21 Copy Y
+ C$C75C,2;21 Copy height
+ C$C75E,1;21 Rewind #REGde to charstr.pos.height
+ C$C75F,2;21 (else)
 ; Outdoors. Copy the door's tinypos into the charstr's tinypos, dividing by two.
-*C$C761,2;21 B = 3;
-*C$C763,1;21 {    do <% *DE++ = *HL++ >> 1;
+@label=mc_door_outdoors
+*C$C761,2;21 Set #REGb for three iterations
+; Start loop
+@label=mc_door_outdoors_loop
+*C$C763,1;21 {Copy X,Y of door.pos, each axis divided by two
  C$C764,4;21
  C$C768,1;21 }
- C$C769,2;21 %> while (--B)
- C$C76B,1;21 DE--; %> %>
- C$C76C,2;21 else <%
-*C$C76E,1;21
+ C$C769,2;21 ...loop
+ C$C76B,1;21 Rewind #REGde to charstr.pos.height
+ C$C76C,2;21 (else)
+; Normal move case.
+@label=mc_regular_move
+*C$C76E,1;21 Restore the charstr.pos pointer
 ; Establish a maximum for passing into move_towards.
- C$C76F,1;21 {  room = DE[-1]; // DE -> charstr
- C$C770,1;21
- C$C771,1;21 }
- C$C772,1;21 {  if (room == room_0_OUTDOORS) A = 2; else A = 6;
- C$C773,4;21
- C$C777,2;21 }
-*C$C779,1;21
- C$C77A,2;21 B = 0;
- C$C77C,3;21 move_towards(A, B, HL, DE);
- C$C77F,1;21 HL++;
- C$C780,1;21 DE++;
- C$C781,3;21 move_towards(A, B, HL, DE);
- C$C784,1;21 DE++;
- C$C785,1;21 {  if (B != 2) return; %> // managed to move
- C$C786,4;21
- C$C78A,1;21 }
-; So when we reach here a character is stuck.
-*C$C78B,1;21 DE++; // DE -> charstr->route
- C$C78C,1;21
- C$C78D,1;21 A = *HL; // sampled HL=$761E $7625 $768E $7695 $7656 $7695 $7680 // => character struct entry + 5 // route index
- C$C78E,2;21 {if (A == route_WANDER) return;
- C$C790,1;21 }
- C$C791,2;21 if ((A & route_REVERSED) != 0) ...
- C$C793,1;21 HL++;       // interleaved
-; sampled HL = $7618, $762D, $7634, $7657, $766C, $76AB, $76B2, $76B9, $76C0, $76C7 => final byte of charstruct
- C$C794,2;21 ... goto exit;
- C$C796,1;21 (*HL)++; // route.step
- C$C797,1;21 return;
-*C$C798,1;21 exit: (*HL)--; // route.step
- C$C799,1;21 return;
+@label=mc_regular_choose_maxdist
+ C$C76F,1;21 Rewind #REGde to point at charstr.room
+ C$C770,1;21 Fetch it
+ C$C771,1;21 Advance #REGde back
+ C$C772,1;21 Are we outdoors?
+ C$C773,2;21 Set maximum to two irrespectively
+ C$C775,2;21 Jump if we are
+ C$C777,2;21 Otherwise set maximum to six
+@label=mc_regular_maxdist_chosen
+*C$C779,1;21 Move maximum to #REGa'
+ C$C77A,2;21 Initialise the "arrived" counter to zero
+ C$C77C,3;21 Move charstr.pos.x (pointed to by #REGde) towards
+ ;21 tinypos.x (#REGhl), with a maximum delta of #REGa'.
+ ;21 #REGb is incremented if no movement was required
+ C$C77F,1;21 {Advance to Y axis
+ C$C780,1;21 }
+ C$C781,3;21 Move again, but on Y axis
+ C$C784,1;21 Advance #REGde to charstr.pos.height (possibly redundant)
+ C$C785,1;21 {Did we move?
+ C$C786,2;21 }
+ C$C788,2;21 Jump if not
+ C$C78A,1;21 Otherwise return
+; If we reach here the character has arrived at their destination.
+@label=mc_regular_reached
+*C$C78B,1;21 Advance #REGde to charstr.route
+ C$C78C,1;21 Swap charstr into #REGhl
+ C$C78D,1;21 Read charstr.route.index
+ C$C78E,2;21 Is the route index routeindex_255_WANDER? ($FF)
+ C$C790,1;21 Return if so
+ C$C791,2;21 {If the route is reversed then step backwards, otherwise
+ C$C793,1;21 step forwards
+ C$C794,2;21 }
+@label=mc_route_up
+ C$C796,1;21 Increment route.step
+ C$C797,1;21 Return
+@label=mc_route_down
+*C$C798,1;21 Decrement route.step
+ C$C799,1;21 Return
 
 ; Moves the first value toward the second.
 ;
@@ -12532,7 +12583,7 @@ gB$C891,1
 ;
 ; .
 @label=automatics
-cC$C892,1;21 {Clear the 'character index is valid' flag
+cC$C892,1;21 {Clear the 'character index is valid' flag [detail]
  C$C893,3;21 }
 ; Hostiles pursue if the bell is not ringing.
  C$C896,3;21 Read the bell ring counter/flag
@@ -13108,12 +13159,14 @@ cC$CB2D,1;21 {Is this the hero's vischar?
 ;   - character is character_0_COMMANDANT and (route.index & $7F) != 36, or
 ;   - character is character_1_GUARD_1 .. character_11_GUARD_11
 @label=reverse_route
-*C$CB50,1;21 {Toggle route direction
- C$CB51,3;21
+*C$CB50,1;21 {Toggle route direction flag
+ C$CB51,2;21 routeindexflag_REVERSED ($80)
+ C$CB53,1;21
  C$CB54,1;21 }
 ; Pattern: [-2]+1
- C$CB55,2;21 {If the route is reversed then step backwards, otherwise forwards
- C$CB57,4;21
+ C$CB55,2;21 {If the route is reversed then step backwards, otherwise
+ C$CB57,2;21 forwards
+ C$CB59,2;21
 *C$CB5B,1;21
  C$CB5C,1;21 }
  C$CB5D,1;21 {Return 0
