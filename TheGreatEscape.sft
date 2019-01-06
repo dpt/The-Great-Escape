@@ -584,7 +584,7 @@
 ; +-----+---------+-------------------------------------------------------------------------------+
 ; | $00 | byte    | character index, or $FF for none                                              |
 ; | $01 | byte    | flags                                                                         |
-; | $02 | byte[2] | route                                                                         |
+; | $02 | byte[2] | target (where we want to be)                                                  |
 ; | $04 | byte[3] | position                                                                      |
 ; | $07 | byte    | top nibble = flags, bottom nibble = counter used by character_behaviour only  |
 ; | $08 | pointer | pointer to animations                                                         |
@@ -592,7 +592,7 @@
 ; | $0C | byte    | bit 7 is up/down flag, other bits are a counter                               |
 ; | $0D | byte    | input .. previous direction?                                                  |
 ; | $0E | byte    | direction and walk/crawl flag                                                 |
-; | $0F | movitem | movable item struct (pos, cur sprite, sprite index)                           |
+; | $0F | movitem | movable item struct (pos (where we are), cur sprite, sprite index)            |
 ; | $18 | word[2] | screen x, y coord                                                             |
 ; | $1C | byte    | current room index                                                            |
 ; | $1D | byte    | (unused)                                                                      |
@@ -12400,89 +12400,125 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
  C$CA0D,1;22 HL--;
  C$CA0E,3;22 target_reached(); return; // exit via
 
-; Move character on the X axis.
+; Move a character on the X axis.
 ;
 ; Used by the routine at #R$C918.
 ;
-; I:HL Pointer to visible character block + 4.
+; I:HL Pointer to vischar.target.
 ; I:IY Pointer to visible character block.
-; O:A  8/4/0 .. meaning ?
+; O:A  New input: input_RIGHT + input_DOWN (8) if x > pos.x,
+; .    input_LEFT + input_UP (4) if x < pos.x,
+; .    input_NONE (0) if x == pos.x
 ; O:HL Pointer to visible character block + 5. (Ready to pass into vischar_move_y)
 @label=vischar_move_x
-cC$CA11,1;22 A = *HL; // sampled HL=$8004,$8044,$8064,$8084  vischar->pos.x
- C$CA12,3;22 BC = multiply_by_8(A); // self modified by #R$C9DA
- C$CA15,1;22 {HL += 11; // position on X axis ($800F etc.)
+cC$CA11,1;22 Read vischar.target.x (target position)
+ C$CA12,3;22 Multiply it by 1, 4 or 8 (self modified by #R$C9DA)
+ C$CA15,1;22 {Point #REGhl at vischar.mi.pos.x (current position)
  C$CA16,2;22
  C$CA18,1;22 }
-; Read vischar->mi.pos.x
- C$CA19,1;22 {E = *HL++;
- C$CA1A,1;22 }
- C$CA1B,1;22 D = *HL;
- C$CA1C,1;22
- C$CA1D,2;22 DE -= BC;  // delta
- C$CA1F,2;22 if (DE) <%
- C$CA21,3;22 if (DE > 0) <%
-; Positive delta
- C$CA24,1;22 {    if (D != 0   || E >= 3)  <% A = 8; return; %> %>
- C$CA25,1;22 else <% // -ve
- C$CA26,7;22
-*C$CA2D,2;22
+ C$CA19,1;22 {Read vischar.mi.pos.x
+ C$CA1A,1;22
+ C$CA1B,1;22 }
+ C$CA1C,1;22 Free up #REGhl
+ C$CA1D,2;22 Compute the delta: current position - target position
+ C$CA1F,2;22 Jump if it's zero
+ C$CA21,3;22 Jump if it's negative
+@label=vmx_positive
+; The delta was positive
+ C$CA24,1;22 {Delta >= 256?
+ C$CA25,1;22 }
+ C$CA26,2;22 Jump if so
+ C$CA28,1;22 {Delta < 3?
+ C$CA29,2;22 }
+ C$CA2B,2;22 Jump if it's in range
+@label=vmx_delta_too_big
+; The delta was three or greater
+*C$CA2D,2;22 {Return input_RIGHT + input_DOWN (6 + 2)
  C$CA2F,1;22 }
-; Negative delta
-*C$CA30,1;22 {    if (D != 255 || E < 254) <% A = 4; return; %> %>
- C$CA31,2;22 %>
- C$CA33,8;22
-*C$CA3B,2;22
+@label=vmx_negative
+; The delta was negative
+*C$CA30,1;22 {Delta < -256?
+ C$CA31,2;22 }
+ C$CA33,2;22 Jump if so
+ C$CA35,1;22 {Delta >= -2?
+ C$CA36,2;22 }
+ C$CA38,3;22 Jump if it's in range
+@label=vmx_delta_too_small
+; The delta was less than negative three
+*C$CA3B,2;22 {Return input_LEFT + input_UP (3 + 1)
  C$CA3D,1;22 }
-;
-*C$CA3E,1;22
- C$CA3F,1;22 {HL -= 11;
+@label=vmx_equal
+; The delta was -2..2
+*C$CA3E,1;22 Move vischar back into #REGhl
+ C$CA3F,1;22 {Point #REGhl at vischar->mi.pos.x
  C$CA40,2;22
  C$CA42,1;22 }
- C$CA43,4;22 IY[7] |= vischar_BYTE7_Y_DOMINANT;
- C$CA47,1;22 A = 0;
- C$CA48,1;22 return;
+ C$CA43,4;22 Set vischar.counter_and_flags flag
+ ;22 vischar_BYTE7_Y_DOMINANT so that next time we'll use
+ ;22 #R$CA49 in preference
+ C$CA47,1;22 {Return input_NONE (0)
+ C$CA48,1;22 }
 
-; Move character on the Y axis.
+; Move a character on the Y axis.
 ;
 ; Used by the routine at #R$C918.
 ; .
 ; Nearly identical to vischar_move_x above.
 ;
-; I:HL Pointer to visible character block + 5.
+; I:HL Pointer to vischar.target.
 ; I:IY Pointer to visible character block.
-; O:A  5/7/0 .. meaning ?
+; O:A  New input: input_LEFT + input_DOWN (5) if y > pos.y,
+; .    input_RIGHT + input_UP (7) if y < pos.y,
+; .    input_NONE (0) if y == pos.y
 ; O:HL Pointer to visible character block + 4. (Ready to pass into vischar_move_x)
 @label=vischar_move_y
-cC$CA49,1;22 A = *HL; // sampled HL=$8025,$8065,$8005
- C$CA4A,3;22 multiply_by_8(); // self modified by #R$C918
- C$CA4D,1;22 {HL += 12; // position on Y axis ($8011 etc.)
+cC$CA49,1;22 Read vischar.target.y (target position)
+ C$CA4A,3;22 Multiply it by 1, 4 or 8 (self modified by #R$C9DD)
+ C$CA4D,1;22 {Point #REGhl at vischar.mi.pos.y (current position)
  C$CA4E,2;22
  C$CA50,1;22 }
- C$CA51,1;22 {E = *HL++;
- C$CA52,1;22 }
- C$CA53,1;22 D = *HL;
- C$CA54,1;22
- C$CA55,2;22 DE -= BC;
- C$CA57,2;22 if (DE) <%
- C$CA59,3;22 if (DE > 0) <% // +ve
- C$CA5C,1;22 {    if (D != 0   || E >= 3)  <% A = 5; return; %> %>
- C$CA5D,1;22 else <% // -ve
- C$CA5E,7;22
-*C$CA65,2;22
+ C$CA51,1;22 {Read vischar.mi.pos.y
+ C$CA52,1;22
+ C$CA53,1;22 }
+ C$CA54,1;22 Free up #REGhl
+ C$CA55,2;22 Compute the delta: current position - target position
+ C$CA57,2;22 Jump if it's zero
+ C$CA59,3;22 Jump if it's negative
+@label=vmy_positive
+; The delta was positive
+ C$CA5C,1;22 {Delta >= 256?
+ C$CA5D,1;22 }
+ C$CA5E,2;22 Jump if so
+ C$CA60,1;22 {Delta < 3?
+ C$CA61,2;22 }
+ C$CA63,2;22 Jump if it's in range
+@label=vmy_delta_too_big
+; The delta was three or greater
+*C$CA65,2;22 {Return input_LEFT + input_DOWN (3 + 2)
  C$CA67,1;22 }
-*C$CA68,1;22 {    if (D != 255 || E < 254) <% A = 7; return; %> %>
- C$CA69,2;22 %>
- C$CA6B,8;22
-*C$CA73,2;22
+@label=vmy_negative
+; The delta was negative
+*C$CA68,1;22 {Delta < -256?
+ C$CA69,2;22 }
+ C$CA6B,2;22 Jump if so
+ C$CA6D,1;22 {Delta >= -2?
+ C$CA6E,2;22 }
+ C$CA70,3;22 Jump if it's in range
+@label=vmy_delta_too_small
+; The delta was less than negative three
+*C$CA73,2;22 {Return input_RIGHT + input_UP (6 + 1)
  C$CA75,1;22 }
-*C$CA76,1;22
- C$CA77,1;22 {HL -= 14;
+@label=vmy_equal
+; The delta was -2..2
+*C$CA76,1;22 Move vischar back into #REGhl
+ C$CA77,1;22 {Point #REGhl at vischar->mi.pos.y
  C$CA78,2;22
  C$CA7A,1;22 }
- C$CA7B,4;22 IY[7] &= ~vischar_BYTE7_Y_DOMINANT;
- C$CA7F,1;22 A = 0;
- C$CA80,1;22 return;
+ C$CA7B,4;22 Clear vischar.counter_and_flags flag
+ ;22 vischar_BYTE7_Y_DOMINANT so that next time we'll use
+ ;22 #R$CA11 in preference
+ C$CA7F,1;22 {Return input_NONE (0)
+ C$CA80,1;22 }
 
 ; Called when a character reaches its target.
 ;
