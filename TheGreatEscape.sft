@@ -16472,9 +16472,9 @@ tB$F2EB,6;40 "ENTER" #HTML[/ #CALL:decode_stringcounted($F2EB)]
 
 ; Table mapping key codes to glyph indices.
 ;
-; Each table entry is a character (in original code: a glyph index) OR if its
-; top bit is set then bottom seven bits are an index into special_key_names.
-@label=key_tables
+; Each table entry is a character (a glyph index) OR if its top bit is set then
+; bottom seven bits are an index into special_key_names.
+@label=keycode_to_glyph
 bB$F303,5;32 table_12345
  B$F308,5;32 table_09876
  B$F30D,5;32 table_QWERT
@@ -16517,132 +16517,166 @@ cC$F335,1;21 Disable interrupts
 ;
 ; .
 ;
-; Loop while the user does not confirm.
+@label=choose_keys
+; Start loop (infinite) - loops until the user confirms the key selection.
 ; .
 ; Clear the game window.
-@label=choose_keys
-cC$F350,3;21 for (;;) <% wipe_game_window();
- C$F353,2;21 {
- C$F355,3;21 set_game_window_attributes(attribute_WHITE_OVER_BLACK);}
-; Draw key choice prompt strings.
- C$F358,2;21 B = 6; // iterations
- C$F35A,3;21 HL = &define_key_prompts[0];
-*C$F35D,1;21 do <%
- C$F35E,1;21 {    E = *HL++;
- C$F35F,1;21 }
- C$F360,1;21 {    D = *HL++;
+cC$F350,3;21 Wipe the game screen
+ C$F353,2;21 {Set game window attributes to
+ C$F355,3;21 attribute_WHITE_OVER_BLACK}
+; Draw key choice prompts.
+ C$F358,2;21 Set #REGb for six iterations
+ C$F35A,3;21 Point #REGhl at define_key_prompts
+; Start loop (once per prompt)
+@label=ck_prompts_loop
+*C$F35D,1;21 Preserve the loop counter
+ C$F35E,1;21 {Read screen address
+ C$F35F,2;21
  C$F361,1;21 }
- C$F362,1;21 {    B = *HL++; // iterations
+ C$F362,1;21 {Read string length
  C$F363,1;21 }
-*C$F364,1;21 do <%
- C$F365,1;21 A = *HL; // redundant
- C$F366,3;21 plot_glyph();
- C$F369,1;21 HL++;
- C$F36A,1;21
- C$F36B,2;21 %> while (--B);
- C$F36D,1;21
- C$F36E,2;21 %> while (--B);
-; Wipe keydefs.
- C$F370,3;21 HL = &keydefs[0];
- C$F373,2;21 B = 10; // iterations
- C$F375,1;21 A = 0;
-*C$F376,1;21 {  do <% *HL++ = A;
- C$F377,1;21 }
- C$F378,2;21 %> while (--B);
- C$F37A,2;21 B = 5; // iterations L/R/U/D/F
- C$F37C,3;21 HL = &key_name_screen_addrs[0];
-*C$F37F,1;21 do <%
- C$F380,1;21 {    E = *HL++;
- C$F381,1;21 }
- C$F382,1;21 {    D = *HL++;
+; Draw the prompt's glyphs.
+; .
+; Start loop (once per character)
+@label=ck_draw_prompt
+*C$F364,1;21 Preserve string length
+; Bug: The next load is needless (plot_glyph does it already).
+ C$F365,1;21 Read a glyph
+ C$F366,3;21 Plot a single glyph (indirectly)
+ C$F369,1;21 Advance the string pointer
+ C$F36A,1;21 Restore string length
+ C$F36B,2;21 ...loop (once per character)
+ C$F36D,1;21 Restore the loop counter
+ C$F36E,2;21 ...loop (once per prompt)
+; Wipe key definitions.
+ C$F370,3;21 Point #REGhl at keydefs
+ C$F373,2;21 Set #REGb for 10 iterations
+ C$F375,1;21 Zero #REGa in preparation
+; Start loop
+@label=ck_clear_keydef
+*C$F376,1;21 Zero a byte of keydef
+ C$F377,1;21 Advance #REGhl
+ C$F378,2;21 ...loop
+; Now scan for keys.
+ C$F37A,2;21 Set #REGb for five iterations: left/right/up/down/fire
+ C$F37C,3;21 Point #REGhl at key_name_screen_addrs
+; Start loop (once per direction+fire)
+@label=ck_keyscan_loop
+*C$F37F,1;21 Preserve the loop counter
+ C$F380,1;21 {Read screen address
+ C$F381,2;21
  C$F383,1;21 }
- C$F384,1;21
- C$F385,4;21 ($F3E9) = DE; // self modify screen addr
- C$F389,2;21 A = 0xFF;
-*C$F38B,1;21 for (;;) <%
- C$F38C,3;21 HL = &keyboard_port_hi_bytes[-1]; // &byte_F2E1
- C$F38F,2;21 D = 0xFF;
-*C$F391,1;21 do <% HL++;
- C$F392,1;21 D++;
- C$F393,1;21 Adash = *HL;
- C$F394,1;21 {        if (Adash == 0) goto $F38B; // end of keyboard_port_hi_bytes
- C$F395,2;21 }
- C$F397,1;21 B = Adash;
- C$F398,2;21 C = 0xFE;
- C$F39A,2;21 IN Adash,(C)
- C$F39C,1;21 Adash = ~Adash;
- C$F39D,1;21 E = Adash;
- C$F39E,2;21 C = 0x20; // mask
-*C$F3A0,2;21 C >>= 1;
- C$F3A2,2;21 %> while (carry);  // loop structure is not quite right
- C$F3A4,1;21 {      Adash = C & E;
+ C$F384,1;21 Preserve screen address
+ C$F385,4;21 Self modify the "LD DE,$xxxx" at #R$F3E8 to load the
+ ;21 screen address
+ C$F389,2;21 Set the debounce flag. This is only set to zero once
+ ;21 we've checked the whole keyboard and no keys are pressed,
+ ;21 at which point it gets set to zero
+; Start loop (infinite)
+@label=ck_keyscan_inner
+*C$F38B,1;21 Bank the debounce flag
+ C$F38C,3;21 Point #REGhl at keyboard_port_hi_bytes[-1]
+ C$F38F,2;21 Initialise the port index
+; Start loop
+@label=ck_try_next_port
+*C$F391,1;21 Advance #REGhl to the next port high byte
+ C$F392,1;21 Increment the port index
+ C$F393,1;21 Read the port high byte
+ C$F394,1;21 Have we reached the end of keyboard_port_hi_bytes? ($00)
+ C$F395,2;21 ...loop if so
+ C$F397,1;21 Read port high byte
+ C$F398,2;21 Read port $FE
+ C$F39A,2;21 Read the keyboard port
+ C$F39C,1;21 Invert the bits to turn active low into active high
+ C$F39D,1;21 Copy the result into #REGe so we can restore it each time
+ C$F39E,2;21 Create a mask with bit 5 set
+; Test bits 4,3,2,1,0
+@label=ck_keyscan_detect<D-r>
+*C$F3A0,2;21 Shift the mask right
+ C$F3A2,2;21 Jump (to try next port) if the mask bit got shifted out
+ C$F3A4,1;21 {Mask the result
  C$F3A5,1;21 }
- C$F3A6,2;21 if (Adash == 0) goto $F3A0;
- C$F3A8,1;21
- C$F3A9,1;21 {      if (A) goto $F38B;
- C$F3AA,2;21 }
- C$F3AC,1;21 A = D;
- C$F3AD,1;21
- C$F3AE,3;21 HL = 0xF06A;
-*C$F3B1,1;21 HL++;
- C$F3B2,1;21 Adash = *HL;
- C$F3B3,1;21 {      if (Adash == 0) goto $F3C1;
- C$F3B4,2;21 }
- C$F3B6,1;21 if (A != B) ...
- C$F3B7,1;21 HL++; // interleaved
- C$F3B8,2;21 ... goto $F3B1;
- C$F3BA,1;21 Adash = *HL;
- C$F3BB,1;21 {      if (A != C) goto $F3B1;
- C$F3BC,2;21 }
- C$F3BE,3;21 %>
-; Assign key def.
-@label=assign_keydef
-*C$F3C1,1;21 {    *HL++ = B;
+ C$F3A6,2;21 ...loop while no keys are pressed
+; We arrive here if a key was pressed.
+ C$F3A8,1;21 Unbank the debounce flag
+ C$F3A9,1;21 Is it set?
+ C$F3AA,2;21 Restart the loop if so
+ C$F3AC,1;21 {Bank the port index
+ C$F3AD,1;21 }
+ C$F3AE,3;21 Point #REGhl at the byte before keydefs
+; Start loop
+@label=ck_next_keydef
+*C$F3B1,1;21 Advance to the next keydef
+ C$F3B2,1;21 Read the keydef.port
+ C$F3B3,1;21 Is it an empty slot?
+ C$F3B4,2;21 Jump if so (assign keydef)
+ C$F3B6,1;21 Does the port high byte match?
+ C$F3B7,1;21 Advance #REGhl (interleaved)
+ C$F3B8,2;21 ...loop if different
+ C$F3BA,1;21 Read keydef.mask
+ C$F3BB,1;21 Does the mask match?
+ C$F3BC,2;21 ...loop if different
+ C$F3BE,3;21 ...loop (infinite)  [to check: sets the debounce flag]
+; Assign key definition.
+@label=ck_assign_keydef
+*C$F3C1,1;21 {Store port
  C$F3C2,1;21 }
- C$F3C3,1;21 *HL = C;
- C$F3C4,1;21
- C$F3C5,1;21 {    A *= 5;
+ C$F3C3,1;21 Store mask
+ C$F3C4,1;21 Unbank the port index
+ C$F3C5,1;21 {Multiply it by 5
  C$F3C6,2;21
  C$F3C8,1;21 }
 @nowarn
- C$F3C9,3;21 HL = 0xF302;  // &key_tables[0] - 1 byte + A // strange: off by one
- C$F3CC,1;21 {    HL += A;
+ C$F3C9,3;21 Point #REGhl one byte prior to #R$F303. This is
+ ;21 off-by-one to compensate for the upcoming preincrement
+ C$F3CC,1;21 {Combine
  C$F3CD,3;21
  C$F3D0,1;21 }
-*C$F3D1,1;21 HL++;
- C$F3D2,2;21 RR C
- C$F3D4,2;21 JR NC,$F3D1
- C$F3D6,2;21 B = 1;
- C$F3D8,1;21 A = *HL;
- C$F3D9,1;21 A |= A;
- C$F3DA,3;21 JP P,$F3E8
-; If the top bit was set then it's a modifier key.
- C$F3DD,2;21 A &= 0x7F;
- C$F3DF,3;21 {    HL = &special_key_names[0] + A;
- C$F3E2,3;21
- C$F3E5,1;21 }
- C$F3E6,1;21 {    B = *HL++;
- C$F3E7,1;21 }
+; Skip entries until the mask carries out.
+@label=ck_find_key_glyph
+*C$F3D1,1;21 Advance the glyph pointer
+ C$F3D2,2;21 Shift mask
+ C$F3D4,2;21 ...loop until the mask carries out
+ C$F3D6,2;21 Set length to 1
+ C$F3D8,1;21 Load the glyph
+ C$F3D9,1;21 Test the top bit
+ C$F3DA,3;21 Jump if clear (JP P => positive)
+; If the top bit was set then it's a special key, like BREAK or ENTER.
+ C$F3DD,2;21 Extract the byte offset into special_key_names
+ C$F3DF,3;21 Point #REGde at special_key_names
+ C$F3E2,1;21 {Widen byte offset into #REGhl
+ C$F3E3,2;21 }
+ C$F3E5,1;21 Combine
+ C$F3E6,1;21 First byte is length of special key name
+ C$F3E7,1;21 Advance #REGhl to point at glyphs
 ; Plot.
-*C$F3E8,3;21 DE = 0x40D5; // self modified // screen address
-*C$F3EB,1;21 do <%
- C$F3EC,1;21 A = *HL; // Bug: Redundant.
- C$F3ED,3;21 plot_glyph();
- C$F3F0,1;21 HL++;
- C$F3F1,1;21
- C$F3F2,2;21 %> while (--B);
- C$F3F4,2;21
- C$F3F6,1;21 {  %> while (--B);
+@label=ck_plot_glyph
+*C$F3E8,3;21 Point #REGde at (a self modified screen address)
+; Start loop (draw key)
+@label=ck_plot_glyph_loop
+*C$F3EB,1;21 Preserve the loop counter
+; Bug: The next load is needless (plot_glyph does it already).
+ C$F3EC,1;21 Read a glyph
+ C$F3ED,3;21 Plot a single glyph (indirectly)
+ C$F3F0,1;21 Advance to next glyph index
+ C$F3F1,1;21 Restore the loop counter
+ C$F3F2,2;21 ...loop (draw key)
+ C$F3F4,1;21 Restore screen address
+ C$F3F5,1;21 Restore the loop counter
+ C$F3F6,1;21 {...loop (once per direction+fire)
  C$F3F7,2;21 }
 ; Delay loop.
- C$F3F9,3;21 BC = 0xFFFF;
-*C$F3FC,1;21 {  while (--BC);
+; .
+; This delays execution by approximately a third of a second (~1.25M T-states).
+ C$F3F9,3;21 Set #REGbc to $FFFF
+@label=ck_delay
+*C$F3FC,1;21 {Count down until it's zero
  C$F3FD,2;21
  C$F3FF,2;21 }
-; Wait for user's input.
- C$F401,3;21 user_confirm();
- C$F404,1;21 if (Z) return; // confirmed
- C$F405,3;21 %>
+; Wait for the user's confirmation.
+ C$F401,3;21 Wait for the user to confirm by pressing 'Y' or 'N'
+ C$F404,1;21 If Z set 'Y' was pressed so return
+ C$F405,3;21 ...loop (infinite)
 
 ; Set the screen attributes of the specified menu item.
 ;
