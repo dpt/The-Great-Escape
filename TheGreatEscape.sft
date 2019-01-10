@@ -3691,7 +3691,7 @@ cC$7B8B,3;21 Fetch the first held item
 ; I:A Item index.
 @label=drop_item_tail
 cC$7BB5,3;21 Convert the item index in #REGa into an itemstruct
- ;21 pointer
+ ;21 pointer in #REGhl
  C$7BB8,1;21 Advance #REGhl to point to the room index
  C$7BB9,3;21 Get the global current room index
  C$7BBC,1;21 Set the object's room index
@@ -13394,49 +13394,58 @@ cC$CCFB,1;21 C = A; // room ref
  C$CD2F,1;21 A = 0; // set Z (found)
  C$CD30,1;21 return;
 
-; Item discovered.
+; An item is discovered.
 ;
 ; Used by the routines at #R$B75A, #R$C6A0, #R$C892 and #R$CB98.
 ;
-; I:C Item.
+; I:C Item index.
 @label=item_discovered
-cC$CD31,1;21 A = C;
- C$CD32,2;21 {if (A == item_NONE) return;
- C$CD34,1;21 }
- C$CD35,2;21 A &= itemstruct_ITEM_MASK;
- C$CD37,1;21
- C$CD38,2;21 {queue_message(message_ITEM_DISCOVERED);
+cC$CD31,1;21 Copy item index to #REGa
+ C$CD32,2;21 Is it item_NONE? ($FF)
+ C$CD34,1;21 Return if so
+ C$CD35,2;21 Mask against itemstruct_ITEM_MASK
+ C$CD37,1;21 Preserve #REGa while we do calls
+ C$CD38,2;21 {Queue the message "ITEM DISCOVERED"
  C$CD3A,3;21 }
- C$CD3D,2;21 {decrease_morale(5);
+ C$CD3D,2;21 {Decrease morale by 5
  C$CD3F,3;21 }
- C$CD42,1;21
- C$CD43,1;21 {HL = &default_item_locations[A];
+ C$CD42,1;21 Restore #REGa
+ C$CD43,1;21 {Point #REGhl at default_item_locations[#REGa]
  C$CD44,7;21
  C$CD4B,1;21 }
- C$CD4C,1;21 A = HL->room_and_flags;
- C$CD4D,1;21 bank ptr
- C$CD4E,1;21 bank A
-; Bug: C is not masked, so could go out of range.
- C$CD4F,1;21 Adash = C;
- C$CD50,3;21 HL = item_to_itemstruct(Adash);
- C$CD53,2;21 *HL &= ~itemstruct_ITEM_FLAG_HELD;
- C$CD55,1;21
- C$CD56,1;21 DE++;
- C$CD57,3;21 {memcpy(DE, HL, 3); DE += 3; HL += 3; // reset location?
+ C$CD4C,1;21 Load default_item_location.room_and_flags
+ C$CD4D,1;21 Bank default_item_location pointer
+ C$CD4E,1;21 Bank room_and_flags
+; Bug: #REGc is not masked, so could go out of range.
+ C$CD4F,1;21 Copy item index to #REGa
+ C$CD50,3;21 Convert the item index into an itemstruct pointer in
+ ;21 #REGhl
+ C$CD53,2;21 Wipe the itemstruct.item_and_flags
+ ;21 itemstruct_ITEM_FLAG_HELD flag
+ C$CD55,1;21 Unbank default_item_location pointer
+ C$CD56,1;21 Advance #REGde to itemstruct.room_and_flags
+ C$CD57,3;21 {Copy room_and_flags and pos from default_item_location
  C$CD5A,2;21 }
- C$CD5C,2;21
- C$CD5E,1;21 {if (A == room_0_OUTDOORS) <%
- C$CD5F,2;21 }
- C$CD61,1;21 *HL = A; // A is already zero
- C$CD62,3;21 goto calc_exterior_item_iso_pos;
-*C$CD65,2;21 else <% *HL = 5;
- C$CD67,3;21 goto calc_interior_item_iso_pos;
+ C$CD5C,1;21 Swap itemstruct pointer back into #REGhl
+ C$CD5D,1;21 Unbank room_and_flags
+ C$CD5E,1;21 Is it room_0_OUTDOORS?
+ C$CD5F,2;21 Jump if not
+ C$CD61,1;21 Set height to zero. Note #REGa is already zero
+ C$CD62,3;21 Exit via calc_exterior_item_iso_pos
+@label=id_interior
+*C$CD65,2;21 Set height to 5
+ C$CD67,3;21 Exit via calc_interior_item_iso_pos
 
-; Default item locations.
+; Default locations of items.
 ;
-; Array of 16 three-byte structures.
+; An array of 16 three-byte structures.
 ; .
-; struct default_item_location { byte room_and_flags; byte x; byte y; };
+; #TABLE(default)
+; { =h Type | =h Bytes | =h Name        | =h Meaning }
+; { Byte    |        1 | room_and_flags | Room index; bits 6,7 = flags (T.B.D.) }
+; { Byte    |        1 | x              | X position  }
+; { Byte    |        1 | y              | Y position  }
+; TABLE#
 ; .
 ; #define ITEM_ROOM(room_no, flags) ((room_no & 0x3F) | (flags << 6))
 @label=default_item_locations
