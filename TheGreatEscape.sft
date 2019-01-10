@@ -12484,76 +12484,98 @@ gB$C891,1
 
 ; Make characters follow the hero if he's being suspicious.
 ;
+; Also handles food item discovery and automatic hero behaviour.
+; .
 ; Used by the routine at #R$9D7B.
-; .
-; Also: Food item discovery.
-; .
-; Also: Automatic hero behaviour.
 ;
 ; .
-;
-; (I've still no idea what this flag means).
 @label=automatics
-cC$C892,1;21 {entered_move_characters = 0;
+cC$C892,1;21 {Clear the 'character index is valid' flag
  C$C893,3;21 }
-; If the bell is not ringing, hostiles pursue.
- C$C896,3;21 {if (bell == bell_RING_PERPETUAL) hostiles_pursue();
- C$C899,1;21
- C$C89A,3;21 }
+; Hostiles pursue if the bell is not ringing.
+ C$C896,3;21 Read the bell ring counter/flag
+ C$C899,1;21 Is it bell_RING_PERPETUAL?
+ C$C89A,3;21 Call (hostiles pursue prisoners) if so
 ; If food was dropped then count down until it is discovered.
- C$C89D,3;21 {if (food_discovered_counter != 0 && --food_discovered_counter == 0) <%
- C$C8A0,5;21
- C$C8A5,2;21 }
+ C$C89D,3;21 Point #REGhl at food_discovered_counter
+ C$C8A0,1;21 Fetch the counter
+ C$C8A1,1;21 Is it zero?
+ C$C8A2,2;21 Jump if so (it already hit zero)
+ C$C8A4,1;21 Otherwise decrement it
+ C$C8A5,2;21 Jump if it's not zero
 ; De-poison the food.
 @nowarn
- C$C8A7,3;21 {  item_structs[item_FOOD].item &= ~itemstruct_ITEM_FLAG_POISONED;
- C$C8AA,2;21 }
- C$C8AC,2;21 C = item_FOOD;
- C$C8AE,3;21 item_discovered(); %>
+ C$C8A7,3;21 Point #REGhl at item_structs[item_FOOD].item
+ C$C8AA,2;21 Clear its itemstruct_ITEM_FLAG_POISONED flag
+ C$C8AC,2;21 Set #REGc to item_FOOD
+ C$C8AE,3;21 Cause item #REGc to be discovered
 ; Make supporting characters react.
+@label=auto_react
 @nowarn
-*C$C8B1,4;21 IY = $8020; // iterate over non-player characters
- C$C8B5,2;21 B = 7; // iterations
-*C$C8B7,1;21 do <%
- C$C8B8,3;21 {  if (IY[1] != empty slot) <% // flags
- C$C8BB,2;21
- C$C8BD,3;21 }
- C$C8C0,3;21 {    A = IY[0] & vischar_CHARACTER_MASK; // character index
- C$C8C3,2;21 }
- C$C8C5,2;21 {    if (A <= character_19_GUARD_DOG_4) <% // Hostile characters only.}
- C$C8C7,3;21
+*C$C8B1,4;21 Point #REGhl at the second visible character
+ C$C8B5,2;21 Set #REGb for seven iterations
+; Start loop
+@label=auto_react_loop
+*C$C8B7,1;21 Preserve the loop counter
+ C$C8B8,3;21 Load vischar.flags
+ C$C8BB,2;21 Is it an empty slot?
+ C$C8BD,3;21 Jump if so
+ C$C8C0,3;21 Load vischar.character
+ C$C8C3,2;21 Mask with vischar_CHARACTER_MASK to get character index
+ C$C8C5,2;21 Is it a hostile character?
+ ;21 (character_19_GUARD_DOG_4 or below)
+ C$C8C7,3;21 Jump if not
 ; Characters 0..19.
- C$C8CA,1;21
- C$C8CB,3;21 is_item_discoverable();
- C$C8CE,3;21 {      if (red_flag || automatic_player_counter > 0) guards_follow_suspicious_character();
- C$C8D1,7;21
-*C$C8D8,3;21 }
- C$C8DB,1
+ C$C8CA,1;21 Preserve the character index
+ C$C8CB,3;21 Is the item discoverable?
+ C$C8CE,3;21 {Is red_flag set?
+ C$C8D1,1;21 }
+ C$C8D2,2;21 Jump if so
+ C$C8D4,3;21 {Is automatic_player_counter non-zero?
+ C$C8D7,1;21 }
+@label=auto_follow
+*C$C8D8,3;21 Call (guards follow suspicious character) if so
+ C$C8DB,1;21 Restore character index
 ; Guard dogs 1..4 (characters 16..19).
- C$C8DC,2;21 {      if (A >= character_16_GUARD_DOG_1) <%
- C$C8DE,3;21
+ C$C8DC,2;21 Is this character a guard dog?
+ C$C8DE,3;21 {Jump if not
  C$C8E1,3;21 }
-; Is the food nearby?
- C$C8E4,2;21 {        if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_NEARBY_7) IY[1] = vischar_FLAGS_DOG_FOOD; %> %>
- C$C8E6,9;21
- C$C8EF,2;21 }
-*C$C8F1,3;21 character_behaviour(); %>
-*C$C8F4,1;21
- C$C8F5,3;21 {  IY += 32; // stride
+; Dog handling: Is the food nearby?
+ C$C8E4,2;21 {Copy global vischar pointer to #REGhl
+ C$C8E6,1;21 }
+ C$C8E7,1;21 Point #REGhl at vischar.flags
+ C$C8E8,3;21 Fetch item_structs[item_FOOD].room
+ C$C8EB,2;21 Test for itemstruct_ROOM_FLAG_NEARBY_7
+ C$C8ED,2;21 Jump if clear
+ C$C8EF,2;21 Set vischar.flags to vischar_FLAGS_DOG_FOOD
+@label=auto_behaviour
+*C$C8F1,3;21 Call (character behaviour)
+@label=auto_next
+*C$C8F4,1;21 Restore the loop counter
+ C$C8F5,3;21 {Advance to the next vischar
  C$C8F8,2;21 }
- C$C8FA,1;21 {%> while (--B);
+ C$C8FA,1;21 {...loop
  C$C8FB,3;21 }
 ; Inhibit hero automatic behaviour when the flag is red, or otherwise
 ; inhibited.
- C$C8FE,3;21 {if (!red_flag && (in_solitary || automatic_player_counter == 0)) <%}
- C$C901,1;21
-; Bug: Pointless JP NZ (jumps to RET, RET NZ would do).
- C$C902,14;21
-*C$C910,4;21 IY = $8000;
- C$C914,3;21 character_behaviour(); %>
-*C$C917,1;21 return;
+ C$C8FE,3;21 {Is red_flag set?
+ C$C901,1;21 }
+; Bug: Pointless JP NZ (jumps to a RET where a RET NZ would suffice).
+ C$C902,3;21 Jump (return) if so
+ C$C905,3;21 {Is in_solitary set?
+ C$C908,1;21 }
+ C$C909,2;21 Jump if so
+ C$C90B,3;21 {Is automatic_player_counter non-zero?
+ C$C90E,1;21 }
+ C$C90F,1;21 Return if so
+; Otherwise run character behaviour
+@label=auto_run_cb
+*C$C910,4;21 Point #REGiy at the hero's vischar
+ C$C914,3;21 Run character behaviour
+@label=auto_return
+*C$C917,1;21 Return
 
-; Character behaviour stuff.
+; Character behaviour.
 ;
 ; Used by the routines at #R$C4E0 and #R$C892.
 ;
