@@ -1519,7 +1519,7 @@ cC$6920,3;21 {Set the hero's visible character input field to
 ; Used by the routines at #R$68F4 and #R$B2FC.
 @label=setup_movable_items
 cC$6939,3;24 Reset all non-player visible characters
- C$693C,3;24 Get global current room index
+ C$693C,3;24 Get the global current room index
  C$693F,2;24 {If current room index is room_2_HUT2LEFT then jump
  C$6941,3;24 to setup_stove1
  C$6944,3;24
@@ -3649,10 +3649,10 @@ cC$7B36,3;21 Load both held items into #REGhl
 *C$7B77,1;21 Zero #REGa
  C$7B78,1;21 {Zero itemstruct->room_and_flags
  C$7B79,1;21 }
- C$7B7A,1;21 {Advance #REGhl to itemstruct->screenpos
+ C$7B7A,1;21 {Advance #REGhl to itemstruct->iso_pos
  C$7B7B,2;21
  C$7B7D,1;21 }
- C$7B7E,1;21 {Zero itemstruct->screenpos.screen_x and screen_y
+ C$7B7E,1;21 {Zero itemstruct->iso_pos.screen_x and screen_y
  C$7B7F,1;21
  C$7B80,1;21 }
  C$7B81,3;21 Draw both held items
@@ -3814,7 +3814,7 @@ cC$7BF2,1;21 Step #REGhl back to itemstruct.pos.y
  C$7C1A,1;21 {Move result into (#REGc,#REGa)
  C$7C1B,1;21 }
  C$7C1C,3;21 Divide by 8 with rounding. Result is in #REGa
-; Write the result to itemstruct.screenpos
+; Write the result to itemstruct.iso_pos
  C$7C1F,1;21 {Advance #REGde to itemstruct.iso_pos
  C$7C20,1;21 }
  C$7C21,1;21 {Store #REGa (y result)
@@ -3913,12 +3913,12 @@ cC$7C46,1;21 Save screen address of item
 ; Select a pick up radius based on the room.
 @label=find_nearby_item
 cC$7C82,2;21 Set the pick up radius to one
- C$7C84,3;21 Fetch global current room index
+ C$7C84,3;21 Fetch the global current room index
  C$7C87,1;21 Is it room_0_OUTDOORS?
  C$7C88,2;21 Jump if so
  C$7C8A,2;21 Otherwise set the pick up radius to six
 ; Loop for all items.
-*C$7C8C,2;21 Sixteen items (item__LIMIT)
+*C$7C8C,2;21 Set #REGb for 16 iterations (item__LIMIT)
  C$7C8E,3;21 Point #REGhl at the first item_struct's room member
 @label=find_nearby_item_loop
 *C$7C91,2;21 Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_7 flag set?
@@ -9970,7 +9970,7 @@ cC$B4B8,1;21 Preserve the room number while we get the nearest door
 ; O:HL Pointer to door in locked_doors.
 ; O:F  Returns Z set if a door was found, clear otherwise.
 @label=get_nearest_door
-cC$B4D0,3;21 Get global current room index
+cC$B4D0,3;21 Get the global current room index
  C$B4D3,1;21 Is it room_0_OUTDOORS?
  C$B4D4,2;21 Jump forward to handle outdoors if so
 ; Bug: Could avoid this jump instruction by using fallthrough instead.
@@ -11628,7 +11628,7 @@ cC$C41C,3;21 Read the current map position into #REGhl
 ; Is this character in the current room?
  C$C436,1;21 Preserve the character struct pointer
  C$C437,1;21 Point #REGhl at charstr.room
- C$C438,3;21 Get global current room index
+ C$C438,3;21 Get the global current room index
  C$C43B,1;21 Same room?
  C$C43C,2;21 Jump if not
  C$C43E,1;21 Outdoors?
@@ -11724,7 +11724,7 @@ cC$C47E,3;21 Read the current map position into #REGhl
  C$C49B,2;21 {Point #REGhl at vischar.room
  C$C49D,1;21
  C$C49E,1;21 }
- C$C49F,3;21 Get global current room index
+ C$C49F,3;21 Get the global current room index
  C$C4A2,1;21 Is the vischar in the current room?
  C$C4A3,2;21 Jump to reset if not
 ; Handle Y part
@@ -13294,7 +13294,7 @@ cC$CB98,2;23 {Set the bell ring counter/flag to bell_STOP
  C$CBE6,3;23 }
 ; DPT: I reckon this should instead be 24 which is the door between
 ; room_22_REDKEY and room_24_SOLITARY.
- C$CBE9,2;23 {Set global current door to 20
+ C$CBE9,2;23 {Set the global current door to 20
  C$CBEB,3;23 }
  C$CBEE,2;23 {Decrease morale by 35
  C$CBF0,3;23 }
@@ -13463,7 +13463,7 @@ cC$CCAB,3;21 Point #REGhl at the second vischar
 ; .
 ; Green key and food items are ignored.
 @label=is_item_discoverable
-cC$CCCD,3;21 Get global current room index
+cC$CCCD,3;21 Get the global current room index
  C$CCD0,1;21 Is it room_0_OUTDOORS?
  C$CCD1,2;21 Jump if so
 ; Interior.
@@ -14256,49 +14256,74 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 
 ; Mark nearby items.
 ;
-; Used by the routines at #R$6939 and #R$9D7B.
+; Iterates over item structs, testing to see if each item is within the range
+; (-1..22, 0..15) of the current map position. If it is it sets the flags
+; itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item,
+; otherwise it clears both of those flags.
 ; .
-; Iterates over item structs, testing to see if each item is within range
-; (-1..22, 0..15) of the map position.
+; Used by the routines at #R$6939 and #R$9D7B.
 ; .
 ; This is similar to is_item_discoverable_interior in that it iterates over all
 ; item_structs.
 @label=mark_nearby_items
-cC$DB9E,3;21 A = room_index;
- C$DBA1,2;21 {if (A == room_NONE) A = 0;
- C$DBA3,2;21
- C$DBA5,1;21 }
-*C$DBA6,1;21 C = A; // room ref
- C$DBA7,4;21 DE = map_position;
- C$DBAB,2;21 B = item__LIMIT;
- C$DBAD,3;21 HL = &item_structs[0].room;
-*C$DBB0,1;21 do <%
- C$DBB1,1;21 {  if (HL[0] & itemstruct_ROOM_MASK == C) <% // compare room
- C$DBB2,3;21
- C$DBB5,2;21 }
- C$DBB7,1;21 {    if (HL[4] > E - 2 && HL[4] < E + 23) <% // itemstruct.screenpos.x
- C$DBB8,11;21
-*C$DBC3,2;21
- C$DBC5,1;21
- C$DBC6,2;21 }
- C$DBC8,1;21 {      if (HL[5] > D - 1 && HL[5] < D + 16) <% // itemstruct.screenpos.y
- C$DBC9,7;21
-*C$DBD0,2;21
- C$DBD2,1;21
- C$DBD3,2;21 }
- C$DBD5,1;21
- C$DBD6,2;21 {        *HL |= itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7; // sampled HL=$772B &itemstruct_14.room
- C$DBD8,2;21 }
- C$DBDA,2;21 goto next; %> %> %>
-; Reset.
-*C$DBDC,1
- C$DBDD,2;21 {  *HL &= ~(itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7);
- C$DBDF,2;21 }
-*C$DBE1,2;21 {  next: HL += 7; // stride
+cC$DB9E,3;21 Get the global current room index
+ C$DBA1,2;21 Is it room_NONE?
+ C$DBA3,2;21 Jump if not
+ C$DBA5,1;21 Otherwise set it to room_0_OUTDOORS
+@label=mni_room_set
+*C$DBA6,1;21 Preload the room index into #REGc
+ C$DBA7,4;21 Point #REGde at the map position
+ C$DBAB,2;21 Set #REGb for 16 iterations (item__LIMIT)
+ C$DBAD,3;21 Point #REGhl at the first item_struct's room member
+; Start loop
+@label=mni_loop
+*C$DBB0,1;21 Preserve item_struct pointer
+; Compare room
+ C$DBB1,1;21 Load the room index
+ C$DBB2,2;21 Mask with itemstruct_ROOM_MASK
+ C$DBB4,1;21 Same room?
+ C$DBB5,2;21 Jump if not
+; Is the item's X coordinate within (-1..22) of the map's X position?
+ C$DBB7,1;21 {Advance #REGhl to itemstruct.iso_pos.x
+ C$DBB8,2;21
+ C$DBBA,1;21 }
+ C$DBBB,1;21 Copy map X position into #REGa
+ C$DBBC,1;21 {Reduce it by 2
+ C$DBBD,1;21 }
+ C$DBBE,1;21 Compare it to itemstruct.iso_pos.x
+ C$DBBF,2;21 Jump if equal (continuing test)
+ C$DBC1,2;21 Reset if under lower bound
+@label=mni_chk_x_hi
+*C$DBC3,2;21 Add 25 to make (map X position + 23)
+ C$DBC5,1;21 Compare to X value in itemstruct
+ C$DBC6,2;21 Reset if over upper bound
+; Is the item's Y coordinate within (0..15) of the map's Y position?
+ C$DBC8,1;21 Copy map Y position into #REGa
+ C$DBC9,1;21 Advance #REGhl to itemstruct.iso_pos.y
+ C$DBCA,1;21 Reduce it by 1
+ C$DBCB,1;21 Compare it to itemstruct.iso_pos.y
+ C$DBCC,2;21 Jump if equal (continuing test)
+ C$DBCE,2;21 Reset if under lower bound
+@label=mni_chk_y_hi
+*C$DBD0,2;21 Add 17 to make (map Y position + 16)
+ C$DBD2,1;21 Compare to Y value in itemstruct
+ C$DBD3,2;21 Reset if over upper bound
+@label=mni_set
+ C$DBD5,1;21 Restore itemstruct pointer
+ C$DBD6,2;21 {Set itemstruct_ROOM_FLAG_NEARBY_6 and
+ C$DBD8,2;21 itemstruct_ROOM_FLAG_NEARBY_7 }
+ C$DBDA,2;21 Jump to next iteration
+@label=mni_reset
+*C$DBDC,1;21 Restore itemstruct pointer
+ C$DBDD,2;21 {Clear itemstruct_ROOM_FLAG_NEARBY_6 and
+ C$DBDF,2;21 itemstruct_ROOM_FLAG_NEARBY_7 }
+@label=mni_advance
+*C$DBE1,2;21 {Advance #REGhl by stride
  C$DBE3,4;21
  C$DBE7,1;21 }
-*C$DBE8,2;21 %> while (--B);
- C$DBEA,1;21 return;
+@label=mni_next
+*C$DBE8,2;21 ...loop
+ C$DBEA,1;21 Return
 
 ; Iterates over all item_structs looking for nearby items.
 ;
