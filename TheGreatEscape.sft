@@ -13073,97 +13073,113 @@ cC$CB85,1;21 Preserve #REGhl
 ; Unreferenced bytes.
 uB$CB92,6
 
-; The hero has been sent to solitary.
+; Send the hero to solitary.
 ;
 ; Used by the routines at #R$A51C, #R$AFDF, #R$CA81 and #R$EFCB.
 ;
 ; .
-;
-; Silence bell.
 @label=solitary
-cC$CB98,2;23 {bell = bell_STOP;
+; Silence the bell.
+cC$CB98,2;23 {Set the bell ring counter/flag to bell_STOP
  C$CB9A,3;23 }
 ; Seize hero's held items.
- C$CB9D,3;23 HL = &items_held[0];
- C$CBA0,1;23 C = *HL;
- C$CBA1,1;23 *HL = item_NONE;
- C$CBA2,3;23 item_discovered();
- C$CBA5,3;23 HL = &items_held[1];
- C$CBA8,1;23 C = *HL;
- C$CBA9,2;23 *HL = item_NONE;
- C$CBAB,3;23 item_discovered();
- C$CBAE,3;23 draw_all_items();
+ C$CB9D,3;23 Point #REGhl at items_held[0]
+ C$CBA0,1;23 Fetch the item
+ C$CBA1,1;23 Set it to item_NONE
+ C$CBA2,3;23 Discover the item
+ C$CBA5,3;23 Point #REGhl at items_held[1]
+ C$CBA8,1;23 Fetch the item
+ C$CBA9,2;23 Set it to item_NONE
+ C$CBAB,3;23 Discover the item
+ C$CBAE,3;23 Redraw both held items
 ; Discover all items.
- C$CBB1,2;23 B = 16; // all items
- C$CBB3,3;23 HL = &item_structs[0].room;
-*C$CBB6,1;23 do <%
- C$CBB7,1
+ C$CBB1,2;23 Set #REGb to 16 iterations - once per item
+ C$CBB3,3;23 Point #REGhl at item_structs[0].room
+; Start loop
+*C$CBB6,1;23 Preserve loop counter
+ C$CBB7,1;23 Preserve itemstruct pointer
 ; Is the item outdoors?
- C$CBB8,1;23 {  A = *HL & itemstruct_ROOM_MASK;
- C$CBB9,2;23 }
- C$CBBB,2;23 if (A == room_0_OUTDOORS) <%
- C$CBBD,1;23 {    A = *--HL;
- C$CBBE,1;23 }
- C$CBBF,1;23 {    HL += 2;
+ C$CBB8,1;23 Fetch itemstruct.room_and_flags
+ C$CBB9,2;23 Mask off the room part. Is the item indoors?
+ C$CBBB,2;23 Jump if so
+ C$CBBD,1;23 Point #REGhl at itemstruct.item_and_flags
+ C$CBBE,1;23 Fetch it
+ C$CBBF,1;23 {Advance #REGhl to itemstruct.pos.x
  C$CBC0,1;23 }
- C$CBC1,2
- C$CBC3,1;23 A = 0;
-*C$CBC4,1;23 do <%
- C$CBC5,1
+ C$CBC1,1;23 Bank itemstruct pointer
+ C$CBC2,1;23 Bank item_and_flags
+ C$CBC3,1;23 Set area index to zero
+; Start loop
+*C$CBC4,1;23 Preserve area index
+ C$CBC5,1;23 Preserve itemstruct pointer
 ; If the item is within the camp bounds then it will be discovered.
- C$CBC6,3;23 within_camp_bounds();
- C$CBC9,2;23 if (Z) goto $CBD5;
- C$CBCB,2
- C$CBCD,1;23 {    %> while (++A != 3);
+ C$CBC6,3;23 Is the specified position within the bounds of the
+ ;23 indexed area?
+ C$CBC9,2;23 Jump if so
+ C$CBCB,1;23 Restore itemstruct pointer
+ C$CBCC,1;23 Restore area index
+ C$CBCD,1;23 {Loop until area index is 3
  C$CBCE,2;23
  C$CBD0,3;23 }
- C$CBD3,2;23 goto next;
-*C$CBD5,1
- C$CBD6,2
- C$CBD8,1;23 C = A;
- C$CBD9,3;23 item_discovered(); %>
-*C$CBDC,1;23 next:
- C$CBDD,1
- C$CBDE,3;23 {  HL += 7; // stride
+ C$CBD3,2;23 Jump to next
+@label=solitary_discovered
+*C$CBD5,1;23 Restore itemstruct pointer
+ C$CBD6,1;23 Restore area index
+ C$CBD7,1;23 Unbank item_and_flags
+ C$CBD8,1;23 {Discover the item
+ C$CBD9,3;23 }
+@label=solitary_next
+*C$CBDC,1;23 Restore itemstruct pointer
+ C$CBDD,1;23 Restore loop counter
+ C$CBDE,3;23 {Advance #REGhl to the next itemstruct
  C$CBE1,1;23 }
- C$CBE2,2;23 %> while (--B);
+ C$CBE2,2;23 ...loop
 ; Move the hero to solitary.
- C$CBE4,2;23 {$801C = room_24_SOLITARY;
+ C$CBE4,2;23 {Set vischar[0].room to room_24_SOLITARY
  C$CBE6,3;23 }
- C$CBE9,2;23 {current_door = 20;
+; DPT: I reckon this should instead be 24 which is the door between
+; room_22_REDKEY and room_24_SOLITARY.
+ C$CBE9,2;23 {Set global current door to 20
  C$CBEB,3;23 }
- C$CBEE,2;23 {decrease_morale(35);
+ C$CBEE,2;23 {Decrease morale by 35
  C$CBF0,3;23 }
- C$CBF3,3;23 reset_map_and_characters();
- C$CBF6,3;23 {memcpy(&character_structs[0].secondbyte, &solitary_hero_reset_data, 6);
- C$CBF9,6;23
+ C$CBF3,3;23 Reset all visible characters, clock, day_or_night flag,
+ ;23 general flags, collapsed tunnel objects, lock the
+ ;23 gates, reset all beds, clear the mess halls and reset
+ ;23 characters
+; Set the commandant on a path which results in the hero being released.
+ C$CBF6,3;23 Point #REGde at character_structs[character_0_COMMANDANT].room
+ C$CBF9,3;23 Point #REGhl at solitary_commandant_data
+ C$CBFC,3;23 {Copy six bytes
  C$CBFF,2;23 }
- C$CC01,2;23 {queue_message(message_YOU_ARE_IN_SOLITARY);
+; Queue solitary messages.
+ C$CC01,2;23 {Queue the message "YOU ARE IN SOLITARY"
  C$CC03,3;23 }
- C$CC06,2;23 {queue_message(message_WAIT_FOR_RELEASE);
+ C$CC06,2;23 {Queue the message "WAIT FOR RELEASE"
  C$CC08,3;23 }
- C$CC0B,2;23 {queue_message(message_ANOTHER_DAY_DAWNS);
+ C$CC0B,2;23 {Queue the message "ANOTHER DAY DAWNS"
  C$CC0D,3;23 }
- C$CC10,2;23 {in_solitary = 0xFF; // inhibit user input
+;
+ C$CC10,2;23 {Inhibit user input
  C$CC12,3;23 }
- C$CC15,1;23 {automatic_player_counter = 0; // immediately take automatic control of hero
+ C$CC15,1;23 {Immediately take automatic control of the hero
  C$CC16,3;23 }
- C$CC19,3;23 {$8015 = sprite_prisoner;
+ C$CC19,3;23 {Set vischar.mi.sprite to the prisoner sprite set
  C$CC1C,3;23 }
- C$CC1F,3;23 HL = &solitary_pos;
- C$CC22,4;23 IY = $8000;
- C$CC26,4;23 IY[0x0E] = direction_BOTTOM_LEFT; // character faces bottom left
- C$CC2A,1;23 {($8002) = 0; // route.index = route_HALT
+ C$CC1F,3;23 Point #REGhl at solitary_pos for transition
+ C$CC22,4;23 Point #REGiy at the hero's vischar
+ C$CC26,4;23 Set vischar.direction to direction_BOTTOM_LEFT
+ C$CC2A,1;23 {Set hero's route.index to routeindex_0_HALT
  C$CC2B,3;23 }
- C$CC2E,3;23 transition(); return; // exit via
+ C$CC2E,3;23 Exit via transition
 
 ; Partial character struct.
 ;
 ; (<- solitary)
-@label=solitary_hero_reset_data
-bB$CC31,1;24 room = room_0_OUTDOORS
- B$CC32,3;24 pos = 0x74, 0x64, 0x03
- B$CC35,2;24 route = 0x24, 0x00
+@label=solitary_commandant_data
+bB$CC31,1;24 room  = room_0_OUTDOORS
+ B$CC32,3;24 pos   = 116, 100, 3
+ B$CC35,2;24 route = 36, 0
 
 ; Guards follow suspicious character.
 ;
