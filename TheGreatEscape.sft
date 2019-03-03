@@ -12320,12 +12320,16 @@ cC$C79A,1;21 {Set #REGc to the largest movement allowed
 ; Used by the routines at #R$A38C, #R$C5D3 and #R$C6A0.
 ;
 ; I:A  Character index.
-; O:HL Character struct.
+; O:HL Points to character struct.
 @label=get_character_struct
-cC$C7B9,1;21 {HL = &character_structs[A];
- C$C7BA,10;21
+cC$C7B9,1;21 {Multiply #REGa by seven
+ C$C7BA,3;21
+ C$C7BD,1;21 }
+ C$C7BE,3;21 Point #REGhl at character_structs
+ C$C7C1,1;21 {Combine
+ C$C7C2,2;21
  C$C7C4,1;21 }
- C$C7C5,1;21 return;
+ C$C7C5,1;21 Return
 
 ; Character event.
 ;
