@@ -13258,38 +13258,44 @@ cC$CCAB,3;21 Point #REGhl at the second vischar
 ; .
 ; Green key and food items are ignored.
 @label=is_item_discoverable
-cC$CCCD,3;21 A = room_index;
- C$CCD0,1;21 {if (A != room_0_OUTDOORS) <%
- C$CCD1,2;21 }
+cC$CCCD,3;21 Get global current room index
+ C$CCD0,1;21 Is it room_0_OUTDOORS?
+ C$CCD1,2;21 Jump if so
 ; Interior.
- C$CCD3,3;21 is_item_discoverable_interior(A);
- C$CCD6,1;21 {  if (Z) hostiles_pursue(); /* Item found */
- C$CCD7,3;21 }
- C$CCDA,1;21 return; %>
+ C$CCD3,3;21 Is the item discoverable indoors?
+ C$CCD6,1;21 Return if not found
+; Item was found.
+ C$CCD7,3;21 Hostiles pursue prisoners
+ C$CCDA,1;21 Return
 ; Exterior.
-*C$CCDB,3;21 else <% HL = &item_structs[0].room;
- C$CCDE,3;21
- C$CCE1,2;21 B = 16; // iterations == n.itemstructs
-*C$CCE3,2;21 {  do <% if (HL[0] & itemstruct_ROOM_FLAG_NEARBY_7) goto nearby;
- C$CCE5,2;21 }
-*C$CCE7,1;21 next: HL += 7; // stride
- C$CCE8,2;21 %> while (--B);
- C$CCEA,1;21 return; %>
+*C$CCDB,3;21 Point #REGhl at item_structs[0].room
+ C$CCDE,3;21 Prepare the itemstruct stride
+ C$CCE1,2;21 Set #REGb for 16 iterations -- number of itemstructs
+; Start loop
+*C$CCE3,2;21 Is itemstruct.item_and_flags itemstruct_ROOM_FLAG_NEARBY_7 flag set?
+ C$CCE5,2;21 Jump if so
+@label=iid_next
+*C$CCE7,1;21 Advance to the next itemstruct
+ C$CCE8,2;21 ..loop
+ C$CCEA,1;21 Return
 ; Suspected bug: HL is decremented, but not re-incremented before 'goto next'.
 ; So it must be reading a byte early when iteration is resumed. Consequences? I
 ; think it'll screw up when multiple items are in range.
-*C$CCEB,1;21 nearby: HL--;
+@label=iid_nearby
+*C$CCEB,1;21
  C$CCEC,1;21 {A = *HL & itemstruct_ITEM_MASK; // sampled HL=$772A (&item_structs[item_PURSE].item)
  C$CCED,2;21 }
 @rfix+begin
-       INC HL        ; potentially a bug fix but needs thinking about
+; DPT: This is potentially a bugfix but will need some thought.
+       INC HL
 @rfix+end
 ; The green key and food items are ignored.
- C$CCEF,2;21 {if (A == item_GREEN_KEY || A == item_FOOD) goto next;
- C$CCF1,4;21
- C$CCF5,2;21 }
- C$CCF7,3;21 hostiles_pursue();
- C$CCFA,1;21 return;
+ C$CCEF,2;21 Is it item_GREEN_KEY?
+ C$CCF1,2;21 Jump to next iteration if so
+ C$CCF3,2;21 Is it item_FOOD?
+ C$CCF5,2;21 Jump to next iteration if so
+ C$CCF7,3;21 Otherwise, hostiles pursue prisoners
+ C$CCFA,1;21 Return
 
 ; Is an item discoverable indoors?
 ;
