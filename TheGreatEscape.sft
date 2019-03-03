@@ -16015,7 +16015,12 @@ gB$F075,1
 ;
 ; Only used by #R$F1E0.
 ; .
-; struct: w(addr), flags+length, attrs[length]
+; #TABLE(default)
+; { =h Type | =h Bytes | =h Name          | =h Meaning                }
+; { Pointer |        2 | screenloc        | Screen address to draw at }
+; { Byte    |        1 | flags_and_length | Direction flag and length }
+; { Byte    |   Length | tiles            | Index into static_tiles   }
+; TABLE#
 @label=static_graphic_defs
 @label=statics_flagpole
 bB$F076,23
@@ -16168,8 +16173,8 @@ cC$F1E0,3;21 Point #REGhl at static_graphic_defs
 ; I:DE Pointer to screen address.
 ; I:HL Pointer to [count, tile indices, ...].
 @label=plot_static_tiles_horizontal
-cC$F206,1;21 A = 0;
- C$F207,2;21 goto plot_static_tiles;
+cC$F206,1;21 Set direction flag to zero
+ C$F207,2;21 Exit via plot static tiles
 
 ; Plot static tiles vertically.
 ;
@@ -16177,64 +16182,77 @@ cC$F206,1;21 A = 0;
 ;
 ; I:DE Pointer to screen address.
 ; I:HL Pointer to [count, tile indices, ...].
-; I:HL Pointer to [count, tile indices, ...].
-; I:A Orientation: 0/255 = horizontal/vertical.
 @label=plot_static_tiles_vertical
-cC$F209,2;21 A = 255;
+cC$F209,2;21 Set the plot direction flag to $FF (vertical)
+; FALL THROUGH into plot_static_tiles
 
 ; Plot static tiles.
 ;
 ; Used by the routine at #R$F206.
 ;
-; I:DE Pointer to screen address.
+; I:A  Plot direction: 0 => horizontal, $FF => vertical.
+; I:DE Pointer to destination screen address.
+; I:HL Pointer to remainder of static graphic bytes [flags_and_length, tile indices...].
 @label=plot_static_tiles
-cC$F20B,3;21 static_tiles_plot_direction = A;
- C$F20E,1;21 {B = *HL++ & statictiles_COUNT_MASK; // loop iterations
- C$F20F,3;21
- C$F212,1;21 }
- C$F213,2;21
- C$F215,1;21 POP DEdash
- C$F216,1;21
-*C$F217,1;21 do <% A = *HL;
- C$F218,1;21
- C$F219,1;21 {  HLdash = &static_tiles[A]; // elements: 9 bytes each
- C$F21A,12;21
- C$F226,1;21 }
- C$F227,2;21 Bdash = 8; // 8 iterations
+cC$F20B,3;21 Save a copy of the plot direction
+ C$F20E,1;21 Load flags_and_length
+ C$F20F,2;21 Mask off length
+ C$F211,1;21 Set #REGb for loop iterations
+ C$F212,1;21 Advance to tile indices
+ C$F213,1;21 Preserve the pointer to screen address
+ C$F214,1;21 Bank
+ C$F215,1;21 Restore the pointer to screen address
+ C$F216,1;21 Unbank
+; Start loop (once for each tile)
+*C$F217,1;21 Read a tile index
+ C$F218,1;21 Bank
+; Point #REGhl at static_tiles[tileindex]
+ C$F219,1;21 {Multiply the tile index by 9
+ C$F21A,8;21
+ C$F222,1;21 }
+ C$F223,3;21 Point #REGbc at static_tiles[0]
+ C$F226,1;21 Combine
+ C$F227,2;21 Set #REGb for 8 iterations
 ; Plot a tile.
-*C$F229,1;21 {  do <% *DEdash = *HLdash++;
+; .
+; Start loop (once for each byte/row)
+*C$F229,1;21 {Copy a byte of tile
  C$F22A,1;21 }
- C$F22B,1;21 {    DEdash += 256; // next row
+ C$F22B,1;21 {Advance #REGde to the next screen row
  C$F22C,1;21 }
- C$F22D,2;21 %> while (--Bdash);
- C$F22F,1;21 DEdash -= 256;
- C$F230,1;21 PUSH DEdash
+ C$F22D,2;21 ...loop
+ C$F22F,1;21 Step #REGde back so it's still in the right block
+ C$F230,1;21 Preserve screen pointer
 ; Calculate screen attribute address of tile.
- C$F231,1;21 A = Ddash;
- C$F232,2;21 Ddash = 0x58; // screen attributes base
- C$F234,2;21 {  if (A >= 0x48) DEdash += 256;
+ C$F231,1;21 Get screen pointer high byte
+ C$F232,2;21 Set the attribute pointer to $58xx by default
+ C$F234,2;21 {If the screen pointer is $48xx...
  C$F236,2;21
- C$F238,1;21 }
- C$F239,2;21 {  if (A >= 0x50) DEdash += 256;
+ C$F238,1;21 set the attribute pointer to $59xx}
+ C$F239,2;21 {If the screen pointer is $50xx...
  C$F23B,2;21
- C$F23D,1;21 }
-*C$F23E,1;21 {  *DEdash = *HLdash; // copy attribute byte
+ C$F23D,1;21 set the attribute pointer to $5Axx}
+*C$F23E,1;21 {Copy the attribute byte which follows the tile data
  C$F23F,1;21 }
- C$F240,1;21 POP HLdash
- C$F241,3;21 A = static_tiles_plot_direction;
- C$F244,1;21 {  if (A == 0) <% // horizontal
- C$F245,2;21 }
- C$F247,1;21 {    Hdash -= 7;  // HLdash -= 7 * 256;
+ C$F240,1;21 Restore screen pointer
+ C$F241,3;21 Fetch static_tiles_plot_direction
+ C$F244,1;21 Is it vertical?
+ C$F245,2;21 Jump if so
+; Horizontal
+; .
+; Reset and advance the screen pointer
+ C$F247,1;21 {Rewind the screen pointer by 7 rows
  C$F248,2;21
  C$F24A,1;21 }
- C$F24B,1;21 Ldash++; %>
- C$F24C,2;21 else <% // vertical
-*C$F24E,3;21 next_scanline_down(); %>
-*C$F251,1;21 EX DEdash,HLdash
- C$F252,1;21
- C$F253,1;21 HL++;
- C$F254,2;21 %> while (--B);
- C$F256,1;21 return;
+ C$F24B,1;21 Advance to the next character
+ C$F24C,2;21 (else)
+; Vertical
+*C$F24E,3;21 Get the same position on the next scanline down
+*C$F251,1;21 Move new scanline pointer into #REGde
+ C$F252,1;21 Unbank
+ C$F253,1;21 Advance to the next input byte
+ C$F254,2;21 ...loop
+ C$F256,1;21 Return
 
 ; Clear the screen and attributes and set the screen border to black.
 ;
