@@ -14332,74 +14332,116 @@ cC$DC41,2;21 A &= 0x3F;
  C$DD00,1;21 A = 0;
  C$DD01,1;21 return; /* visible */
 
-; Clipping items to the game window.
+; Clip the given item's dimensions to the game window.
 ;
-; Used by the routine at #R$DC41.
-; .
 ; Counterpart to vischar_visible.
+; .
+; Used by the routine at #R$DC41.
 ;
-; O:AF Z => visible !Z => invisible
-; O:BC Clipped width.
-; O:DE Clipped height.
+; O:AF Z/!Z => visible/not visible.
+; O:B  Lefthand skip (bytes).
+; O:C  Clipped width (bytes).
+; O:D  Top skip (rows).
+; O:E  Clipped height (rows).
 ;
-; Width part.
+; First handle the horizontal cases.
 @label=item_visible
-cC$DD02,3;21 HL = &iso_pos_x;
- C$DD05,4;21 DE = map_position;
- C$DD09,1;21 {A = E + 24 - HL[0]; // xoff
- C$DD0A,2;21
- C$DD0C,1;21 }
- C$DD0D,2;21 {if (A <= 0) goto invisible;
- C$DD0F,2;21 }
- C$DD11,2;21 {if (A < 3) <%
- C$DD13,3;21 }
- C$DD16,2;21 {  BC = A; %>
- C$DD18,1;21 }
- C$DD19,2;21 else <%
-*C$DD1B,1;21 {  A = HL[0] + 3 - E;
- C$DD1C,2;21
- C$DD1E,1;21 }
- C$DD1F,2;21 {  if (A <= 0) goto invisible;
- C$DD21,2;21 }
- C$DD23,2;21 {  if (A < 3) <%
- C$DD25,3;21 }
- C$DD28,1;21 C = A;
- C$DD29,2;21 {    B = 3 - C; %>
+cC$DD02,3;21 Point #REGhl at iso_pos_x (item left edge)
+; Calculate the right edge of the window in map space.
+ C$DD05,4;21 Load map position (both X & Y)
+ C$DD09,1;21 Extract X
+ C$DD0A,2;21 Add 24 (number of window columns)
+; Subtract iso_pos_x giving the distance between the right edge of the window
+; and the current item's left edge (in bytes).
+ C$DD0C,1;21 available_right = (map_position.x + 24) - item_left_edge
+; Check for case (E): Item left edge beyond the window's right edge.
+ C$DD0D,2;21 Jump to exit if zero (item left edge at right edge)
+ C$DD0F,2;21 Jump to exit if negative (item left edge beyond right
+ ;21 edge)
+; Check for case (D): Item extends outside the window.
+ C$DD11,2;21 Compare result to (item width bytes (2) + 1)
+ C$DD13,3;21 Jump if it fits
+; Item's right edge is outside the window: clip its width.
+ C$DD16,2;21 No lefthand skip
+ C$DD18,1;21 Clipped width = available_right
+ C$DD19,2;21 Jump to height part
+; Calculate the right edge of the item.
+@label=iv_not_clipped_on_right_edge
+*C$DD1B,1;21 Load iso_pos_x (item left edge)
+ C$DD1C,2;21 item_right_edge = iso_pos_x + (item width bytes (2) + 1)
+; Subtract the map position's X giving the distance between the current item's
+; right edge and the left edge of the window (in bytes).
+ C$DD1E,1;21 available_left = item_right_edge - map_position.x
+; Check for case (A): Item's right edge is beyond the window's left edge.
+ C$DD1F,2;21 Jump to exit if zero (item right edge at left edge)
+ C$DD21,2;21 Jump to exit if negative (item right edge beyond left
+ ;21 edge)
+; Check for case (B): Item's left edge is outside the window and its right edge
+; is inside the window.
+ C$DD23,2;21 Compare result to (item width bytes (2) + 1)
+ C$DD25,3;21 Jump if it fits
+; Item's left edge is outside the window: move the lefthand skip into #REGb and
+; the clipped width into #REGc.
+ C$DD28,1;21 Clipped width = available_left
+ C$DD29,2;21 {Lefthand skip = (item width bytes (2) + 1) - available_left
  C$DD2B,1;21
  C$DD2C,1;21 }
- C$DD2D,2;21 else <%
-*C$DD2F,2;21 {    BC = 3; %> %>
- C$DD31,2;21 }
-; Height part.
-*C$DD33,1;21 {A = D + 17 - HL[1];
- C$DD34,3;21
- C$DD37,1;21 }
- C$DD38,2;21 {if (A <= 0) goto invisible;
- C$DD3A,2;21 }
- C$DD3C,2;21 {if (A < 2) <%
- C$DD3E,3;21 }
- C$DD41,2;21 {  DE = 8; %>
- C$DD43,2;21 }
- C$DD45,2;21 else <%
-*C$DD47,1;21 {  A = HL[1] + 2 - D;
- C$DD48,2;21
- C$DD4A,1;21 }
- C$DD4B,2;21 {  if (A <= 0) goto invisible;
- C$DD4D,2;21 }
- C$DD4F,2;21 {  if (A < 2) <%
- C$DD51,3;21 }
- C$DD54,3;21 {    E = item_height - 8;
+ C$DD2D,2;21 (else)
+; Case (C): No clipping required.
+*C$DD2F,2;21 No lefthand skip
+ C$DD31,2;21 Clipped width = (item width bytes (2) + 1)
+; Handle vertical cases.
+; .
+; Calculate the bottom edge of the window in map space.
+@label=iv_height
+*C$DD33,1;21 {Load the map position's Y and add 17 (number of window
+ C$DD34,2;21 rows)}
+; Subtract item's Y giving the distance between the bottom edge of the window
+; and the current item's top (in rows).
+ C$DD36,1;21 Point #REGhl at iso_pos.y (item top edge)
+ C$DD37,1;21 available_bottom = window_bottom_edge - iso_pos.y
+; Check for case (E): Item top edge beyond the window's bottom edge.
+ C$DD38,2;21 Jump to exit if zero (item top edge at bottom edge)
+ C$DD3A,2;21 Jump to exit if negative (item top edge beyond bottom
+ ;21 edge)
+; Check for case (D): Item extends outside the window.
+ C$DD3C,2;21 Compare result to item_height (2)
+ C$DD3E,3;21 Jump if it fits (available_top >= item_height)
+; Item's bottom edge is outside the window: clip its height.
+ C$DD41,2;21 Clipped height = available_bottom (8)
+ C$DD43,2;21 No top skip
+ C$DD45,2;21 Jump to exit
+; Calculate the bottom edge of the item.
+@label=iv_not_clipped_on_top_edge
+*C$DD47,1;21 {item_bottom_edge = iso_pos.y + item_height (2)
+ C$DD48,2;21 }
+; Subtract map position's Y giving the distance between the current item's
+; bottom edge and the top edge of the window (in rows).
+ C$DD4A,1;21 available_top = item_bottom_edge - map_pos_y
+; Check for case (A): Item's bottom edge is beyond the window's top edge.
+ C$DD4B,2;21 Jump to exit if zero (item bottom edge at top edge)
+ C$DD4D,2;21 Jump to exit if negative (item bottom edge beyond top edge)
+; Check for case (B): Item's top edge is outside the window and its bottom
+; edge is inside the window.
+ C$DD4F,2;21 Compare result to item_height (2)
+ C$DD51,3;21 Jump if it fits (available_top >= item_height)
+; Item's top edge is outside the window: move the top skip into #REGd and the
+; clipped height into #REGe.
+ C$DD54,3;21 {Clipped height = item_height - 8
  C$DD57,2;21
  C$DD59,1;21 }
- C$DD5A,2;21 D = 8; %>
- C$DD5C,2;21 else <%
-*C$DD5E,2;21 {    DE = item_height; %> %>
- C$DD60,3;21
+ C$DD5A,2;21 Top skip = 8
+ C$DD5C,2;21 (else)
+; Case (C): No clipping required.
+*C$DD5E,2;21 No top skip
+ C$DD60,3;21 {Clipped height = item_height
  C$DD63,1;21 }
-*C$DD64,1;21 visible: A = 0;
- C$DD65,1;21 return;
-*C$DD66,2;21 invisible: A |= 1;
- C$DD68,1;21 return;
+@label=iv_visible
+*C$DD64,1;21 Set Z (item is visible)
+ C$DD65,1;21 Return
+@label=iv_not_visible
+*C$DD66,2;21 Clear Z (item is not visible)
+ C$DD68,1;21 Return
 
 ; Item attributes.
 ;
