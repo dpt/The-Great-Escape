@@ -1,7 +1,7 @@
 ;
 ; SkoolKit ref file for The Great Escape by Denton Designs.
 ;
-; This disassembly copyright (c) David Thomas, 2012-2018. <dave@davespace.co.uk>
+; This disassembly copyright (c) David Thomas, 2012-2019. <dave@davespace.co.uk>
 ;
 
 [Page:Changelog]
@@ -18,6 +18,29 @@ SectionType=ListItems
 ; Second top-level item.
 ; ...
 
+[Changelog:20190313]
+The rewrite of the disassembly commentary continues. About 90% of the disassembly has now been rewritten in plain English.
+
+The disassembly is now built with SkoolKit 7.1.
+  The 'make install' step is no longer required.
+  The .skool file must sit alongside its .ref file now, so no longer gets put in the 'build' dir.
+  @assemble directive values were renumbered.
+
+Improvements to main disassembly commentary
+  The file prologue now has a "common types" section for types used across the file. The policy otherwise is to define a table next to where the structures are first used.
+  Music related changes
+    Renamings
+      $F52C/get_tuning -> frequency_for_semitone
+      $FA48/music_tuning_table -> semitone_to_frequency
+    Where the individual tunes start are identified, as are their names.
+    All of the notes in semitone_to_frequency are now documented.
+    The spare space at the end of semitone_to_frequency is noted (it's only spare when the menu screen is running).
+  Renamings
+    vischar_BYTE7_LOCATABLE -> vischar_TOUCH_ENTERED
+    vischar_BYTE7_MASK_HI -> vischar_BYTE7_COUNTER_MASK
+  $6BAD/rooms_and_tunnels: Added a table describing the room definition format.
+
+
 [Changelog:20180825]
 Small tweaks to the HTML output only.
 
@@ -27,9 +50,7 @@ The page footers now advertise the disassembly as "nearly complete" rather than 
 
 
 [Changelog:20180822]
-Huge rewrite of the disassembly commentary.
-
-The first 50% of the disassembly has now been rewritten in (hopefully!) plain English prose.
+Huge rewrite of the disassembly commentary. The first 50% of the disassembly has now been rewritten in (hopefully!) plain English prose.
 
 
 [Changelog:20180419]
