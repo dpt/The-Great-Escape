@@ -16583,7 +16583,7 @@ cC$F350,3;21 Wipe the game screen
  C$F392,1;21 Increment the port index
  C$F393,1;21 Read the port high byte
  C$F394,1;21 Have we reached the end of keyboard_port_hi_bytes? ($00)
- C$F395,2;21 ...loop if so
+ C$F395,2;21 ...loop if so (zero in #REGa becomes new debounce flag)
  C$F397,1;21 Read port high byte
  C$F398,2;21 Read port $FE
  C$F39A,2;21 Read the keyboard port
@@ -16591,7 +16591,7 @@ cC$F350,3;21 Wipe the game screen
  C$F39D,1;21 Copy the result into #REGe so we can restore it each time
  C$F39E,2;21 Create a mask with bit 5 set
 ; Test bits 4,3,2,1,0
-@label=ck_keyscan_detect<D-r>
+@label=ck_keyscan_detect
 *C$F3A0,2;21 Shift the mask right
  C$F3A2,2;21 Jump (to try next port) if the mask bit got shifted out
  C$F3A4,1;21 {Mask the result
@@ -16600,7 +16600,7 @@ cC$F350,3;21 Wipe the game screen
 ; We arrive here if a key was pressed.
  C$F3A8,1;21 Unbank the debounce flag
  C$F3A9,1;21 Is it set?
- C$F3AA,2;21 Restart the loop if so
+ C$F3AA,2;21 Restart the loop if so (#REGa is debounce flag)
  C$F3AC,1;21 {Bank the port index
  C$F3AD,1;21 }
  C$F3AE,3;21 Point #REGhl at the byte before keydefs
@@ -16616,7 +16616,7 @@ cC$F350,3;21 Wipe the game screen
  C$F3BA,1;21 Read keydef.mask
  C$F3BB,1;21 Does the mask match?
  C$F3BC,2;21 ...loop if different
- C$F3BE,3;21 ...loop (infinite)  [to check: sets the debounce flag]
+ C$F3BE,3;21 ...loop (infinite) (mask in #REGa becomes new debounce flag)
 ; Assign key definition.
 @label=ck_assign_keydef
 *C$F3C1,1;21 {Store port
