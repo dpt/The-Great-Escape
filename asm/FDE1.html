@@ -27,7 +27,7 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Very first entry point used to shunt the game image down into its proper position.
+This is the very first entry point used to shunt the game image down into its proper position.
 </div>
 </div>
 <table class="input-0">
@@ -48,19 +48,19 @@ Very first entry point used to shunt the game image down into its proper positio
 <td class="asm-label-1">loaded</td>
 <td class="address-2"><span id="fde1"></span>FDE1</td>
 <td class="instruction">DI</td>
-<td class="comment-11" rowspan="1">Disable interrupts.</td>
+<td class="comment-11" rowspan="1">Disable interrupts</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fde2"></span>FDE2</td>
 <td class="instruction">LD SP,$FFFF</td>
-<td class="comment-11" rowspan="1">SP = 0xFFFF;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">SP</span> at the topmost byte of RAM</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fde5"></span>FDE5</td>
 <td class="instruction">LD BC,$9FE0</td>
-<td class="comment-11" rowspan="4">memmove(0x5B00, 0x5E00, 0x9FE0);</td>
+<td class="comment-11" rowspan="4">Relocate the $9FE0 bytes at $5E00 down to $5B00</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -84,7 +84,7 @@ Very first entry point used to shunt the game image down into its proper positio
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fdf0"></span>FDF0</td>
 <td class="instruction">JP <a href="F068.html">jump_to_main</a></td>
-<td class="comment-11" rowspan="1">goto jump_to_main; /* exit via */</td>
+<td class="comment-11" rowspan="1">Exit via jump_to_main</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -95,9 +95,9 @@ Very first entry point used to shunt the game image down into its proper positio
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

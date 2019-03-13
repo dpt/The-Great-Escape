@@ -42,14 +42,6 @@ Used by the routine at <a href="F1E0.html">plot_statics_and_menu_text</a>.
 <td class="register">HL</td>
 <td class="register-desc">Pointer to [count, tile indices, ...].</td>
 </tr>
-<tr>
-<td class="register">HL</td>
-<td class="register-desc">Pointer to [count, tile indices, ...].</td>
-</tr>
-<tr>
-<td class="register">A</td>
-<td class="register-desc">Orientation: 0/255 = horizontal/vertical.</td>
-</tr>
 </table>
 <table class="output-0">
 <tr class="asm-output-header">
@@ -63,7 +55,17 @@ Used by the routine at <a href="F1E0.html">plot_statics_and_menu_text</a>.
 <td class="asm-label-1">plot_static_tiles_vertical</td>
 <td class="address-2"><span id="f209"></span>F209</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">A = 255;</td>
+<td class="comment-11" rowspan="1">Set the plot direction flag to $FF (vertical)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+
+<div class="comments">
+<div class="paragraph">
+FALL THROUGH into plot_static_tiles
+</div>
+</div>
+</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -74,9 +76,9 @@ Used by the routine at <a href="F1E0.html">plot_statics_and_menu_text</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

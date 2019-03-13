@@ -21,16 +21,16 @@
 <td class="next"><span class="next-1">Next: <a href="DD69.html">DD69</a></span></td>
 </tr>
 </table>
-<div class="description">DD02: Clipping items to the game window.</div>
+<div class="description">DD02: Clip the given item's dimensions to the game window.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="DC41.html">setup_item_plotting</a>.
+Counterpart to vischar_visible.
 </div>
 <div class="paragraph">
-Counterpart to vischar_visible.
+Used by the routine at <a href="DC41.html">setup_item_plotting</a>.
 </div>
 </div>
 <table class="input-0">
@@ -45,15 +45,23 @@ Counterpart to vischar_visible.
 </tr>
 <tr>
 <td class="register">AF</td>
-<td class="register-desc">Z =&gt; visible !Z =&gt; invisible</td>
+<td class="register-desc">Z/!Z =&gt; visible/not visible.</td>
 </tr>
 <tr>
-<td class="register">BC</td>
-<td class="register-desc">Clipped width.</td>
+<td class="register">B</td>
+<td class="register-desc">Lefthand skip (bytes).</td>
 </tr>
 <tr>
-<td class="register">DE</td>
-<td class="register-desc">Clipped height.</td>
+<td class="register">C</td>
+<td class="register-desc">Clipped width (bytes).</td>
+</tr>
+<tr>
+<td class="register">D</td>
+<td class="register-desc">Top skip (rows).</td>
+</tr>
+<tr>
+<td class="register">E</td>
+<td class="register-desc">Clipped height (rows).</td>
 </tr>
 </table>
 </td>
@@ -63,7 +71,7 @@ Counterpart to vischar_visible.
 <span id="dd02"></span>
 <div class="comments">
 <div class="paragraph">
-Width part.
+First handle the horizontal cases.
 </div>
 </div>
 </td>
@@ -72,127 +80,227 @@ Width part.
 <td class="asm-label-1">item_visible</td>
 <td class="address-2"><span id="dd02"></span>DD02</td>
 <td class="instruction">LD HL,$81B5</td>
-<td class="comment-11" rowspan="1">HL = &amp;iso_pos_x;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at iso_pos_x (item left edge)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd05"></span>
+<div class="comments">
+<div class="paragraph">
+Calculate the right edge of the window in map space.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd05"></span>DD05</td>
 <td class="instruction">LD DE,($81BB)</td>
-<td class="comment-11" rowspan="1">DE = map_position;</td>
+<td class="comment-11" rowspan="1">Load map position (both X &amp; Y)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd09"></span>DD09</td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="3">A = E + 24 - HL[0]; // xoff</td>
+<td class="comment-11" rowspan="1">Extract X</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd0a"></span>DD0A</td>
 <td class="instruction">ADD A,$18</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add 24 (number of window columns)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd0c"></span>
+<div class="comments">
+<div class="paragraph">
+Subtract iso_pos_x giving the distance between the right edge of the window and the current item's left edge (in bytes).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd0c"></span>DD0C</td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">available_right = (map_position.x + 24) - item_left_edge</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd0d"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (E): Item left edge beyond the window's right edge.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd0d"></span>DD0D</td>
-<td class="instruction">JR Z,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-11" rowspan="2">if (A &lt;= 0) goto invisible;</td>
+<td class="instruction">JR Z,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if zero (item left edge at right edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd0f"></span>DD0F</td>
-<td class="instruction">JR C,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if negative (item left edge beyond right edge)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd11"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (D): Item extends outside the window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd11"></span>DD11</td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="2">if (A &lt; 3) &lt;%</td>
+<td class="comment-11" rowspan="1">Compare result to (item width bytes (2) + 1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd13"></span>DD13</td>
-<td class="instruction">JP NC,<a href="DD02.html#dd1b">item_visible_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NC,<a href="DD02.html#dd1b">iv_not_clipped_on_right_edge</a></td>
+<td class="comment-11" rowspan="1">Jump if it fits</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd16"></span>
+<div class="comments">
+<div class="paragraph">
+Item's right edge is outside the window: clip its width.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd16"></span>DD16</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-11" rowspan="2">BC = A; %&gt;</td>
+<td class="comment-11" rowspan="1">No lefthand skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd18"></span>DD18</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clipped width = available_right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd19"></span>DD19</td>
-<td class="instruction">JR <a href="DD02.html#dd33">item_visible_2</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="instruction">JR <a href="DD02.html#dd33">iv_height</a></td>
+<td class="comment-11" rowspan="1">Jump to height part</td>
 </tr>
 <tr>
-<td class="asm-label-1">item_visible_0</td>
+<td class="routine-comment" colspan="4">
+<span id="dd1b"></span>
+<div class="comments">
+<div class="paragraph">
+Calculate the right edge of the item.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">iv_not_clipped_on_right_edge</td>
 <td class="address-2"><span id="dd1b"></span>DD1B</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">A = HL[0] + 3 - E;</td>
+<td class="comment-11" rowspan="1">Load iso_pos_x (item left edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd1c"></span>DD1C</td>
 <td class="instruction">ADD A,$03</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">item_right_edge = iso_pos_x + (item width bytes (2) + 1)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd1e"></span>
+<div class="comments">
+<div class="paragraph">
+Subtract the map position's X giving the distance between the current item's right edge and the left edge of the window (in bytes).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd1e"></span>DD1E</td>
 <td class="instruction">SUB E</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">available_left = item_right_edge - map_position.x</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd1f"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (A): Item's right edge is beyond the window's left edge.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd1f"></span>DD1F</td>
-<td class="instruction">JR Z,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-11" rowspan="2">if (A &lt;= 0) goto invisible;</td>
+<td class="instruction">JR Z,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if zero (item right edge at left edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd21"></span>DD21</td>
-<td class="instruction">JR C,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if negative (item right edge beyond left edge)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd23"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (B): Item's left edge is outside the window and its right edge is inside the window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd23"></span>DD23</td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="2">if (A &lt; 3) &lt;%</td>
+<td class="comment-11" rowspan="1">Compare result to (item width bytes (2) + 1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd25"></span>DD25</td>
-<td class="instruction">JP NC,<a href="DD02.html#dd2f">item_visible_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NC,<a href="DD02.html#dd2f">item_visible_0</a></td>
+<td class="comment-11" rowspan="1">Jump if it fits</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd28"></span>
+<div class="comments">
+<div class="paragraph">
+Item's left edge is outside the window: move the lefthand skip into <span class="register">B</span> and the clipped width into <span class="register">C</span>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd28"></span>DD28</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">C = A;</td>
+<td class="comment-11" rowspan="1">Clipped width = available_left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd29"></span>DD29</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-11" rowspan="3">B = 3 - C; %&gt;</td>
+<td class="comment-11" rowspan="3">Lefthand skip = (item width bytes (2) + 1) - available_left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -209,36 +317,49 @@ Width part.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd2d"></span>DD2D</td>
-<td class="instruction">JR <a href="DD02.html#dd33">item_visible_2</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="instruction">JR <a href="DD02.html#dd33">iv_height</a></td>
+<td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="asm-label-1">item_visible_1</td>
+<td class="routine-comment" colspan="4">
+<span id="dd2f"></span>
+<div class="comments">
+<div class="paragraph">
+Case (C): No clipping required.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">item_visible_0</td>
 <td class="address-2"><span id="dd2f"></span>DD2F</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-11" rowspan="2">BC = 3; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">No lefthand skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd31"></span>DD31</td>
 <td class="instruction">LD C,$03</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clipped width = (item width bytes (2) + 1)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="dd33"></span>
 <div class="comments">
 <div class="paragraph">
-Height part.
+Handle vertical cases.
+</div>
+<div class="paragraph">
+Calculate the bottom edge of the window in map space.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">item_visible_2</td>
+<td class="asm-label-1">iv_height</td>
 <td class="address-2"><span id="dd33"></span>DD33</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="4">A = D + 17 - HL[1];</td>
+<td class="comment-11" rowspan="2">Load the map position's Y and add 17 (number of window rows)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -247,64 +368,114 @@ Height part.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="dd36"></span>
+<div class="comments">
+<div class="paragraph">
+Subtract item's Y giving the distance between the bottom edge of the window and the current item's top (in rows).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd36"></span>DD36</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at iso_pos.y (item top edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd37"></span>DD37</td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">available_bottom = window_bottom_edge - iso_pos.y</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd38"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (E): Item top edge beyond the window's bottom edge.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd38"></span>DD38</td>
-<td class="instruction">JR Z,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-11" rowspan="2">if (A &lt;= 0) goto invisible;</td>
+<td class="instruction">JR Z,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if zero (item top edge at bottom edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd3a"></span>DD3A</td>
-<td class="instruction">JR C,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if negative (item top edge beyond bottom edge)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd3c"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (D): Item extends outside the window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd3c"></span>DD3C</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="2">if (A &lt; 2) &lt;%</td>
+<td class="comment-11" rowspan="1">Compare result to item_height (2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd3e"></span>DD3E</td>
-<td class="instruction">JP NC,<a href="DD02.html#dd47">item_visible_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NC,<a href="DD02.html#dd47">iv_not_clipped_on_top_edge</a></td>
+<td class="comment-11" rowspan="1">Jump if it fits (available_top &gt;= item_height)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd41"></span>
+<div class="comments">
+<div class="paragraph">
+Item's bottom edge is outside the window: clip its height.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd41"></span>DD41</td>
 <td class="instruction">LD E,$08</td>
-<td class="comment-11" rowspan="2">DE = 8; %&gt;</td>
+<td class="comment-11" rowspan="1">Clipped height = available_bottom (8)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd43"></span>DD43</td>
 <td class="instruction">LD D,$00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">No top skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd45"></span>DD45</td>
-<td class="instruction">JR <a href="DD02.html#dd64">item_visible_5</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="instruction">JR <a href="DD02.html#dd64">iv_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit</td>
 </tr>
 <tr>
-<td class="asm-label-1">item_visible_3</td>
+<td class="routine-comment" colspan="4">
+<span id="dd47"></span>
+<div class="comments">
+<div class="paragraph">
+Calculate the bottom edge of the item.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">iv_not_clipped_on_top_edge</td>
 <td class="address-2"><span id="dd47"></span>DD47</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">A = HL[1] + 2 - D;</td>
+<td class="comment-11" rowspan="2">item_bottom_edge = iso_pos.y + item_height (2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -313,40 +484,80 @@ Height part.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="dd4a"></span>
+<div class="comments">
+<div class="paragraph">
+Subtract map position's Y giving the distance between the current item's bottom edge and the top edge of the window (in rows).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd4a"></span>DD4A</td>
 <td class="instruction">SUB D</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">available_top = item_bottom_edge - map_pos_y</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd4b"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (A): Item's bottom edge is beyond the window's top edge.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd4b"></span>DD4B</td>
-<td class="instruction">JR Z,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-11" rowspan="2">if (A &lt;= 0) goto invisible;</td>
+<td class="instruction">JR Z,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if zero (item bottom edge at top edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd4d"></span>DD4D</td>
-<td class="instruction">JR C,<a href="DD02.html#dd66">item_visible_6</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="DD02.html#dd66">iv_not_visible</a></td>
+<td class="comment-11" rowspan="1">Jump to exit if negative (item bottom edge beyond top edge)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd4f"></span>
+<div class="comments">
+<div class="paragraph">
+Check for case (B): Item's top edge is outside the window and its bottom edge is inside the window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd4f"></span>DD4F</td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="2">if (A &lt; 2) &lt;%</td>
+<td class="comment-11" rowspan="1">Compare result to item_height (2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd51"></span>DD51</td>
-<td class="instruction">JP NC,<a href="DD02.html#dd5e">item_visible_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NC,<a href="DD02.html#dd5e">item_visible_1</a></td>
+<td class="comment-11" rowspan="1">Jump if it fits (available_top &gt;= item_height)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="dd54"></span>
+<div class="comments">
+<div class="paragraph">
+Item's top edge is outside the window: move the top skip into <span class="register">D</span> and the clipped height into <span class="register">E</span>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd54"></span>DD54</td>
 <td class="instruction">LD A,($8214)</td>
-<td class="comment-11" rowspan="3">E = item_height - 8;</td>
+<td class="comment-11" rowspan="3">Clipped height = item_height - 8</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -364,25 +575,35 @@ Height part.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd5a"></span>DD5A</td>
 <td class="instruction">LD D,$08</td>
-<td class="comment-11" rowspan="1">D = 8; %&gt;</td>
+<td class="comment-11" rowspan="1">Top skip = 8</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd5c"></span>DD5C</td>
-<td class="instruction">JR <a href="DD02.html#dd64">item_visible_5</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="instruction">JR <a href="DD02.html#dd64">iv_visible</a></td>
+<td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="asm-label-1">item_visible_4</td>
+<td class="routine-comment" colspan="4">
+<span id="dd5e"></span>
+<div class="comments">
+<div class="paragraph">
+Case (C): No clipping required.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">item_visible_1</td>
 <td class="address-2"><span id="dd5e"></span>DD5E</td>
 <td class="instruction">LD D,$00</td>
-<td class="comment-11" rowspan="3">DE = item_height; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">No top skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd60"></span>DD60</td>
 <td class="instruction">LD A,($8214)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Clipped height = item_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -391,28 +612,28 @@ Height part.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">item_visible_5</td>
+<td class="asm-label-1">iv_visible</td>
 <td class="address-2"><span id="dd64"></span>DD64</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">visible: A = 0;</td>
+<td class="comment-11" rowspan="1">Set Z (item is visible)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd65"></span>DD65</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">item_visible_6</td>
+<td class="asm-label-1">iv_not_visible</td>
 <td class="address-2"><span id="dd66"></span>DD66</td>
 <td class="instruction">OR $01</td>
-<td class="comment-11" rowspan="1">invisible: A |= 1;</td>
+<td class="comment-11" rowspan="1">Clear Z (item is not visible)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd68"></span>DD68</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -423,9 +644,9 @@ Height part.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

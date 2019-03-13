@@ -21,11 +21,14 @@
 <td class="next"><span class="next-1">Next: <a href="AFDF.html">AFDF</a></span></td>
 </tr>
 </table>
-<div class="description">AF8F: Stuff is touching. Also assigns saved_pos to specified vischar's pos and sets the sprite_index.</div>
+<div class="description">AF8F: Test for characters meeting obstacles like doors and map bounds.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
+<div class="paragraph">
+Also assigns saved_pos to specified vischar's pos and sets the sprite_index.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="B5CE.html">animate</a>.
 </div>
@@ -36,18 +39,21 @@ Used by the routine at <a href="B5CE.html">animate</a>.
 </tr>
 <tr>
 <td class="register">A'</td>
-<td class="register-desc">Flip flag + sprite offset.</td>
+<td class="register-desc">Flip flag and sprite offset.</td>
 </tr>
 <tr>
 <td class="register">IY</td>
 <td class="register-desc">Pointer to visible character block.</td>
 </tr>
 </table>
-<table class="output-0">
+<table class="output-1">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z/NZ =&gt; inside/outside bounds.</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -55,31 +61,31 @@ Used by the routine at <a href="B5CE.html">animate</a>.
 <td class="asm-label-1">touch</td>
 <td class="address-2"><span id="af8f"></span>AF8F</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Exchange <span class="register">A</span> registers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af90"></span>AF90</td>
 <td class="instruction">LD ($81AA),A</td>
-<td class="comment-11" rowspan="1">touch_stashed_A = A;</td>
+<td class="comment-11" rowspan="1">Stash the flip flag and sprite offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af93"></span>AF93</td>
 <td class="instruction">SET 6,(IY+$07)</td>
-<td class="comment-11" rowspan="2">IY[7] |= vischar_BYTE7_DONT_MOVE_MAP | vischar_BYTE7_LOCATABLE; // wild guess: clamp character in position?</td>
+<td class="comment-11" rowspan="1">Set the vischar's vischar_BYTE7_DONT_MOVE_MAP flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af97"></span>AF97</td>
 <td class="instruction">SET 7,(IY+$07)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set the vischar's vischar_TOUCH_ENTERED flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af9b"></span>AF9B</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="2">HL = IY;</td>
+<td class="comment-11" rowspan="2"><span class="register">HL</span> = <span class="register">IY</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -88,44 +94,44 @@ Used by the routine at <a href="B5CE.html">animate</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="af9e"></span>AF9E</td>
-<td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="1"></td>
-</tr>
-<tr>
 <td class="routine-comment" colspan="4">
-<span id="af9f"></span>
+<span id="af9e"></span>
 <div class="comments">
 <div class="paragraph">
-If hero is player controlled, then check for door transitions.
+If the hero is player controlled then check for door transitions.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
+<td class="address-1"><span id="af9e"></span>AF9E</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-11" rowspan="2">Which vischar are we processing?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="af9f"></span>AF9F</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="7">if (L == 0 &amp;&amp; automatic_player_counter &gt; 0) door_handling(); // L == 0 =&gt; HL == 0x8000</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afa0"></span>AFA0</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve the vischar low byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afa1"></span>AFA1</td>
 <td class="instruction">JR NZ,<a href="AF8F.html#afaa">touch_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward if not the hero's vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afa3"></span>AFA3</td>
 <td class="instruction">LD A,($A139)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">If the automatic player counter is positive (under player control)... call door_handling</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -143,14 +149,14 @@ If hero is player controlled, then check for door transitions.
 <td class="asm-label-1">touch_0</td>
 <td class="address-2"><span id="afaa"></span>AFAA</td>
 <td class="instruction">POP AF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore vischar low byte</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="afab"></span>
 <div class="comments">
 <div class="paragraph">
-If non-player character or hero is not cutting the fence.
+Check bounds if this is a non-player character or the hero is not cutting the fence.
 </div>
 </div>
 </td>
@@ -159,7 +165,7 @@ If non-player character or hero is not cutting the fence.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afab"></span>AFAB</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="7">if (L || (($8001 &amp; (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE)) != vischar_FLAGS_CUTTING_WIRE)) &lt;% if (bounds_check()) return 1; %&gt;</td>
+<td class="comment-11" rowspan="2">If it's a non-player vischar... jump foward to bounds check</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -171,7 +177,7 @@ If non-player character or hero is not cutting the fence.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afae"></span>AFAE</td>
 <td class="instruction">LD A,($8001)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">OR if it's the hero's vischar and its flags (vischar_FLAGS_PICKING_LOCK | vischar_FLAGS_CUTTING_WIRE) don't equal vischar_FLAGS_CUTTING_WIRE call bounds_check</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -195,14 +201,14 @@ If non-player character or hero is not cutting the fence.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afb8"></span>AFB8</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if a wall was hit</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="afb9"></span>
 <div class="comments">
 <div class="paragraph">
-Cutting wire only from here onwards?
+Check "real" characters for collisions.
 </div>
 </div>
 </td>
@@ -211,38 +217,38 @@ Cutting wire only from here onwards?
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afb9"></span>AFB9</td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment-11" rowspan="1">A = IY[0]; // $8000,$8020,$8040,$8060</td>
+<td class="comment-11" rowspan="1">Get this vischar's character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afbc"></span>AFBC</td>
 <td class="instruction">CP $1A</td>
-<td class="comment-11" rowspan="2">if (A &lt;= character_25_PRISONER_6) &lt;% // a character index</td>
+<td class="comment-11" rowspan="1">Is it &gt;= character_26_STOVE_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afbe"></span>AFBE</td>
 <td class="instruction">JR NC,<a href="AF8F.html#afc4">touch_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afc0"></span>AFC0</td>
 <td class="instruction">CALL <a href="AFDF.html">collision</a></td>
-<td class="comment-11" rowspan="1">collision();</td>
+<td class="comment-11" rowspan="1">Call collision</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afc3"></span>AFC3</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">if (!Z) return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return if there was a collision</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="afc4"></span>
 <div class="comments">
 <div class="paragraph">
-noncolliding characters and items only at this point
+At this point we handle non-colliding characters and items only.
 </div>
 </div>
 </td>
@@ -251,13 +257,13 @@ noncolliding characters and items only at this point
 <td class="asm-label-1">touch_2</td>
 <td class="address-2"><span id="afc4"></span>AFC4</td>
 <td class="instruction">RES 6,(IY+$07)</td>
-<td class="comment-11" rowspan="1">IY[7] &amp;= ~vischar_BYTE7_DONT_MOVE_MAP; // clear counter_and_flag</td>
+<td class="comment-11" rowspan="1">Clear vischar_BYTE7_DONT_MOVE_MAP</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afc8"></span>AFC8</td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment-11" rowspan="8">memcpy(IY + 15, &amp;saved_pos_x, 6); // $800F // vischar pos = saved_pos</td>
+<td class="comment-11" rowspan="8">Copy saved_pos to vischar's position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -305,25 +311,25 @@ noncolliding characters and items only at this point
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afd7"></span>AFD7</td>
 <td class="instruction">LD A,($81AA)</td>
-<td class="comment-11" rowspan="2">IY[0x17] = touch_stashed_A; // left/right flip flag / sprite offset</td>
+<td class="comment-11" rowspan="1">Unstash the flip flag and sprite offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afda"></span>AFDA</td>
 <td class="instruction">LD (IY+$17),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set it in the vischar's sprite_index field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afdd"></span>AFDD</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="1">Set flags to Z</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afde"></span>AFDE</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return 0;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -334,9 +340,9 @@ noncolliding characters and items only at this point
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

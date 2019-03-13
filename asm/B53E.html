@@ -26,7 +26,41 @@
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
-
+<div class="paragraph">
+The coordinates are in map space.
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Field</th>
+<th colspan="1" rowspan="1">Description</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">minx</td>
+<td class="" colspan="1" rowspan="1">Minimum x</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">maxx</td>
+<td class="" colspan="1" rowspan="1">Maximum x</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">miny</td>
+<td class="" colspan="1" rowspan="1">Minimum y</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">maxy</td>
+<td class="" colspan="1" rowspan="1">Maximum y</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">minh</td>
+<td class="" colspan="1" rowspan="1">Minimum height</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">maxh</td>
+<td class="" colspan="1" rowspan="1">Maximum height</td>
+</tr>
+</table>
+</div>
 </div>
 <table class="input-0">
 <tr class="asm-input-header">
@@ -46,145 +80,145 @@
 <td class="asm-label-1">walls</td>
 <td class="address-1"><span id="b53e"></span>B53E</td>
 <td class="instruction">DEFB $6A,$6E,$52,$62,$00,$0B</td>
-<td class="comment-11" rowspan="1">0x6A, 0x6E, 0x52, 0x62, 0, 11 ;  0: hut 1 (leftmost on main map)</td>
+<td class="comment-11" rowspan="1">0: (106-110,  82-98,  0-11) Hut 0 (leftmost on main map)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b544"></span>B544</td>
 <td class="instruction">DEFB $5E,$62,$52,$62,$00,$0B</td>
-<td class="comment-11" rowspan="1">0x5E, 0x62, 0x52, 0x62, 0, 11 ;  1: hut 2</td>
+<td class="comment-11" rowspan="1">1: ( 94-98,   82-98,  0-11) Hut 1 (home hut)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b54a"></span>B54A</td>
 <td class="instruction">DEFB $52,$56,$52,$62,$00,$0B</td>
-<td class="comment-11" rowspan="1">0x52, 0x56, 0x52, 0x62, 0, 11 ;  2: hut 3 (rightmost on main map)</td>
+<td class="comment-11" rowspan="1">2: ( 82-86,   82-98,  0-11) Hut 2 (rightmost on main map)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b550"></span>B550</td>
 <td class="instruction">DEFB $3E,$5A,$6A,$80,$00,$30</td>
-<td class="comment-11" rowspan="1">0x3E, 0x5A, 0x6A, 0x80, 0, 48 ;  3: main building</td>
+<td class="comment-11" rowspan="1">3: ( 62-90,  106-128, 0-48) Main building, top right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b556"></span>B556</td>
 <td class="instruction">DEFB $34,$80,$72,$80,$00,$30</td>
-<td class="comment-11" rowspan="1">0x34, 0x80, 0x72, 0x80, 0, 48 ;  4: main building</td>
+<td class="comment-11" rowspan="1">4: ( 52-128, 114-128, 0-48) Main building, topmost/right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b55c"></span>B55C</td>
 <td class="instruction">DEFB $7E,$98,$5E,$80,$00,$30</td>
-<td class="comment-11" rowspan="1">0x7E, 0x98, 0x5E, 0x80, 0, 48 ;  5: main building</td>
+<td class="comment-11" rowspan="1">5: (126-152,  94-128, 0-48) Main building, top left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b562"></span>B562</td>
 <td class="instruction">DEFB $82,$98,$5A,$80,$00,$30</td>
-<td class="comment-11" rowspan="1">0x82, 0x98, 0x5A, 0x80, 0, 48 ;  6: main building</td>
+<td class="comment-11" rowspan="1">6: (130-152,  90-128, 0-48) Main building, top left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b568"></span>B568</td>
 <td class="instruction">DEFB $86,$8C,$46,$80,$00,$0A</td>
-<td class="comment-11" rowspan="1">0x86, 0x8C, 0x46, 0x80, 0, 10 ;  7: west wall</td>
+<td class="comment-11" rowspan="1">7: (134-140,  70-128, 0-10) Main building, left wall / west wall</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b56e"></span>B56E</td>
 <td class="instruction">DEFB $82,$86,$46,$4A,$00,$12</td>
-<td class="comment-11" rowspan="1">0x82, 0x86, 0x46, 0x4A, 0, 18 ;  8: west turret wall</td>
+<td class="comment-11" rowspan="1">8: (130-134,  70-74,  0-18) Corner, bottom left / west turret wall</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b574"></span>B574</td>
 <td class="instruction">DEFB $6E,$82,$46,$47,$00,$0A</td>
-<td class="comment-11" rowspan="1">0x6E, 0x82, 0x46, 0x47, 0, 10 ;  9: south wall</td>
+<td class="comment-11" rowspan="1">9: (110-130,  70-71,  0-10) Front wall / south wall</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b57a"></span>B57A</td>
 <td class="instruction">DEFB $6D,$6F,$45,$49,$00,$12</td>
-<td class="comment-11" rowspan="1">0x6D, 0x6F, 0x45, 0x49, 0, 18 ; 10: gate wall left</td>
+<td class="comment-11" rowspan="1">10: (109-111,  69-73,  0-18) Gate post (left)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b580"></span>B580</td>
 <td class="instruction">DEFB $67,$69,$45,$49,$00,$12</td>
-<td class="comment-11" rowspan="1">0x67, 0x69, 0x45, 0x49, 0, 18 ; 11: gate wall right</td>
+<td class="comment-11" rowspan="1">11: (103-105,  69-73,  0-18) Gate post (right)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b586"></span>B586</td>
 <td class="instruction">DEFB $46,$46,$46,$6A,$00,$08</td>
-<td class="comment-11" rowspan="1">0x46, 0x46, 0x46, 0x6A, 0, 8  ; 12: fence inner (vertical)</td>
+<td class="comment-11" rowspan="1">12: ( 70-70,   70-106, 0-8 ) Fence - right of main camp (vertical)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b58c"></span>B58C</td>
 <td class="instruction">DEFB $3E,$3E,$3E,$6A,$00,$08</td>
-<td class="comment-11" rowspan="1">0x3E, 0x3E, 0x3E, 0x6A, 0, 8  ; 13: fence outer (vertical)</td>
+<td class="comment-11" rowspan="1">13: ( 62-62,   62-106, 0-8 ) Fence - rightmost fence (vertical)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b592"></span>B592</td>
 <td class="instruction">DEFB $4E,$4E,$2E,$3E,$00,$08</td>
-<td class="comment-11" rowspan="1">0x4E, 0x4E, 0x2E, 0x3E, 0, 8  ; 14: fence outer exercise (vertical)</td>
+<td class="comment-11" rowspan="1">14: ( 78-78,   46-62,  0-8 ) Fence - rightmost of yard (vertical)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b598"></span>B598</td>
 <td class="instruction">DEFB $68,$68,$2E,$45,$00,$08</td>
-<td class="comment-11" rowspan="1">0x68, 0x68, 0x2E, 0x45, 0, 8  ; 15: fence outer exercise (vertical)</td>
+<td class="comment-11" rowspan="1">15: (104-104,  46-69,  0-8 ) Fence - leftmost of yard (vertical)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b59e"></span>B59E</td>
 <td class="instruction">DEFB $3E,$68,$3E,$3E,$00,$08</td>
-<td class="comment-11" rowspan="1">0x3E, 0x68, 0x3E, 0x3E, 0, 8  ; 16: fence inner exercise (horizontal)</td>
+<td class="comment-11" rowspan="1">16: ( 62-104,  62-62,  0-8 ) Fence - top of yard (horizontal)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5a4"></span>B5A4</td>
 <td class="instruction">DEFB $4E,$68,$2E,$2E,$00,$08</td>
-<td class="comment-11" rowspan="1">0x4E, 0x68, 0x2E, 0x2E, 0, 8  ; 17: fence outer exercise (horizontal)</td>
+<td class="comment-11" rowspan="1">17: ( 78-104,  46-46,  0-8 ) Fence - bottom of yard (horizontal)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5aa"></span>B5AA</td>
 <td class="instruction">DEFB $46,$67,$46,$46,$00,$08</td>
-<td class="comment-11" rowspan="1">0x46, 0x67, 0x46, 0x46, 0, 8  ; 18: fence inner (horizontal)</td>
+<td class="comment-11" rowspan="1">18: ( 70-103,  70-70,  0-8 ) Fence - bottom of main camp (horizontal)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5b0"></span>B5B0</td>
 <td class="instruction">DEFB $68,$6A,$38,$3A,$00,$08</td>
-<td class="comment-11" rowspan="1">0x68, 0x6A, 0x38, 0x3A, 0, 8  ; 19: tower outside exercise yard</td>
+<td class="comment-11" rowspan="1">19: (104-106,  56-58,  0-8 ) Fence - watchtower (left, outside of exercise yard)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5b6"></span>B5B6</td>
 <td class="instruction">DEFB $4E,$50,$2E,$30,$00,$08</td>
-<td class="comment-11" rowspan="1">0x4E, 0x50, 0x2E, 0x30, 0, 8  ; 20: tower inside exercise yard</td>
+<td class="comment-11" rowspan="1">20: ( 78-80,   46-48,  0-8 ) Fence - watchtower (inside exercise yard)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5bc"></span>B5BC</td>
 <td class="instruction">DEFB $46,$48,$46,$48,$00,$08</td>
-<td class="comment-11" rowspan="1">0x46, 0x48, 0x46, 0x48, 0, 8  ; 21: tower at corner of main yard</td>
+<td class="comment-11" rowspan="1">21: ( 70-72,   70-72,  0-8 ) Fence - watchtower (corner of main camp)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5c2"></span>B5C2</td>
 <td class="instruction">DEFB $46,$48,$5E,$60,$00,$08</td>
-<td class="comment-11" rowspan="1">0x46, 0x48, 0x5E, 0x60, 0, 8  ; 22: tower at north east of main yard</td>
+<td class="comment-11" rowspan="1">22: ( 70-72,   94-96,  0-8 ) Fence - watchtower (top right of main camp)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b5c8"></span>B5C8</td>
 <td class="instruction">DEFB $69,$6D,$46,$49,$00,$08</td>
-<td class="comment-11" rowspan="1">0x69, 0x6D, 0x46, 0x49, 0, 8  ; 23: gate wall middle</td>
+<td class="comment-11" rowspan="1">23: (105-109,  70-73,  0-8 ) Fence - gate wall middle</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -195,9 +229,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

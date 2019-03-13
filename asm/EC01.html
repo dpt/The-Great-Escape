@@ -30,6 +30,37 @@
 58 mask_t structs.
 </div>
 <div class="paragraph">
+'mask_t' defines a mask:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Type</th>
+<th colspan="1" rowspan="1">Bytes</th>
+<th colspan="1" rowspan="1">Name</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">index</td>
+<td class="" colspan="1" rowspan="1">An index into mask_pointers</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">bounds_t</td>
+<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">bounds</td>
+<td class="" colspan="1" rowspan="1">The isometric projected bounds of the mask. Used for culling</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">tinypos_t</td>
+<td class="" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1">pos</td>
+<td class="" colspan="1" rowspan="1">If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
 Used by render_mask_buffer. Used in outdoor mode only.
 </div>
 </div>
@@ -404,9 +435,9 @@ Used by render_mask_buffer. Used in outdoor mode only.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

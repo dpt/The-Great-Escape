@@ -21,16 +21,41 @@
 <td class="next"><span class="next-1">Next: <a href="CD9A.html">CD9A</a></span></td>
 </tr>
 </table>
-<div class="description">CD6A: Default item locations.</div>
+<div class="description">CD6A: Default locations of items.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Array of 16 three-byte structures.
+An array of 16 three-byte structures.
 </div>
 <div class="paragraph">
-struct default_item_location { byte room_and_flags; byte x; byte y; };
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Type</th>
+<th colspan="1" rowspan="1">Bytes</th>
+<th colspan="1" rowspan="1">Name</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">room_and_flags</td>
+<td class="" colspan="1" rowspan="1">Room index; bits 6,7 = flags (T.B.D.)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">x</td>
+<td class="" colspan="1" rowspan="1">X position</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">y</td>
+<td class="" colspan="1" rowspan="1">Y position</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 #define ITEM_ROOM(room_no, flags) ((room_no &amp; 0x3F) | (flags &lt;&lt; 6)) do the next flags mean that the wiresnips are always or /never/ found?
@@ -155,9 +180,9 @@ struct default_item_location { byte room_and_flags; byte x; byte y; };
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

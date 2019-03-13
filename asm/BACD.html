@@ -21,11 +21,14 @@
 <td class="next"><span class="next-1">Next: <a href="BADC.html">BADC</a></span></td>
 </tr>
 </table>
-<div class="description">BACD: Multiply the two input values, A and E, returning a widened result in HL.</div>
+<div class="description">BACD: Multiply</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
+<div class="paragraph">
+Multiplies the two 8-bit values in <span class="register">A</span> and <span class="register">E</span> returning a 16-bit result in <span class="register">HL</span>.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="B916.html">render_mask_buffer</a>.
 </div>
@@ -62,55 +65,65 @@ Used by the routine at <a href="B916.html">render_mask_buffer</a>.
 <td class="asm-label-1">multiply</td>
 <td class="address-2"><span id="bacd"></span>BACD</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">B = 8; // iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations (width of multiplicands)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bacf"></span>BACF</td>
 <td class="instruction">LD HL,$0000</td>
-<td class="comment-11" rowspan="1">HL = 0;</td>
+<td class="comment-11" rowspan="1">Set our accumulator to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bad2"></span>BAD2</td>
 <td class="instruction">LD D,H</td>
-<td class="comment-11" rowspan="1">D = 0;</td>
+<td class="comment-11" rowspan="1">Zero <span class="register">D</span> so that <span class="register">DE</span> holds the full 16-bit right hand value</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="bad3"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">multiply_0</td>
 <td class="address-2"><span id="bad3"></span>BAD3</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-11" rowspan="1">do &lt;% HL += HL;</td>
+<td class="comment-11" rowspan="1">Double our accumulator (shifting it left)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bad4"></span>BAD4</td>
 <td class="instruction">RLA</td>
-<td class="comment-11" rowspan="1">RLA  // carry = (A &gt;&gt; 7); A &lt;&lt;= 1; /* shift out of high end */</td>
+<td class="comment-11" rowspan="1">Shift <span class="register">A</span> left. The shifted-out top bit becomes the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bad5"></span>BAD5</td>
 <td class="instruction">JP NC,<a href="BACD.html#bad9">multiply_1</a></td>
-<td class="comment-11" rowspan="2">if (carry) HL += DE; /* shift into low end */</td>
+<td class="comment-11" rowspan="1">Jump if no carry</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bad8"></span>BAD8</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Otherwise <span class="register">HL</span> += <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1">multiply_1</td>
 <td class="address-2"><span id="bad9"></span>BAD9</td>
 <td class="instruction">DJNZ <a href="BACD.html#bad3">multiply_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="badb"></span>BADB</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -121,9 +134,9 @@ Used by the routine at <a href="B916.html">render_mask_buffer</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

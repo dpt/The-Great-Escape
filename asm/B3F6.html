@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B417.html">B417</a></span></td>
 </tr>
 </table>
-<div class="description">B3F6: Use shovel.</div>
+<div class="description">B3F6: Use shovel. The shovel only works in the room with the blocked tunnel: number 50.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -46,7 +46,7 @@
 <td class="asm-label-1">action_shovel</td>
 <td class="address-2"><span id="b3f6"></span>B3F6</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index != room_50_BLOCKED_TUNNEL) return; /* Shovel only works in the blocked tunnel room. */</td>
+<td class="comment-11" rowspan="3">If the global current room index isn't room_50_BLOCKED_TUNNEL bail out</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -61,29 +61,45 @@
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="b3fc"></span>
+<div class="comments">
+<div class="paragraph">
+Bomb out if the blockage is already removed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3fc"></span>B3FC</td>
 <td class="instruction">LD A,($7077)</td>
-<td class="comment-11" rowspan="3">if (roomdef_50_blocked_tunnel_boundary[0] == 255) return; /* Blockage is already cleared. */</td>
+<td class="comment-11" rowspan="1">Fetch the room definition's first boundary byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ff"></span>B3FF</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it 255?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b401"></span>B401</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so - the blockage was already removed</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b402"></span>
 <div class="comments">
 <div class="paragraph">
-Release boundary.
+Otherwise we can remove the blockage
+</div>
+<div class="paragraph">
+(Note that the hero doesn't need to be adjacent to the blockage for this to work, only in the same room).
+</div>
+<div class="paragraph">
+The blockage boundary's x0 is set to 255. This invalidates the boundary by forcing the "x &lt; bounds-&gt;x0" test at <a href="B29F.html#b2d9">B2D9</a> (in interior_bounds_check) to fail.
 </div>
 </div>
 </td>
@@ -92,7 +108,7 @@ Release boundary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b402"></span>B402</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_boundary[0] = 255;</td>
+<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_boundary[0] = 255</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -105,7 +121,7 @@ Release boundary.
 <span id="b407"></span>
 <div class="comments">
 <div class="paragraph">
-Remove blockage graphic.
+Remove the blockage graphic.
 </div>
 </div>
 </td>
@@ -114,7 +130,7 @@ Remove blockage graphic.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b407"></span>B407</td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_collapsed_tunnel = 0;</td>
+<td class="comment-11" rowspan="2">roomdef_50_blocked_tunnel_collapsed_tunnel = 0</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -126,25 +142,25 @@ Remove blockage graphic.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b40b"></span>B40B</td>
 <td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
-<td class="comment-11" rowspan="1">setup_room();</td>
+<td class="comment-11" rowspan="1">Setup the room</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b40e"></span>B40E</td>
 <td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
+<td class="comment-11" rowspan="1">Choose game window attributes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b411"></span>B411</td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_interior_tiles();</td>
+<td class="comment-11" rowspan="1">Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b414"></span>B414</td>
 <td class="instruction">JP <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
-<td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50(); return; // exit via</td>
+<td class="comment-11" rowspan="1">Increase morale by 10, score by 50 and exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -155,9 +171,9 @@ Remove blockage graphic.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

@@ -39,7 +39,7 @@ Makes characters sit, sleep or other things TBD.
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Points to character_struct.unk2 or vischar.route.</td>
+<td class="register-desc">Points to character_struct.route or vischar.route.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -54,80 +54,100 @@ Makes characters sit, sleep or other things TBD.
 <td class="asm-label-1">character_event</td>
 <td class="address-2"><span id="c7c6"></span>C7C6</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Load route.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7c7"></span>C7C7</td>
 <td class="instruction">CP $07</td>
-<td class="comment-11" rowspan="4">if (A &gt;= character_7_GUARD_7  &amp;&amp; A &lt;= character_12_GUARD_12) goto character_sleeps;</td>
+<td class="comment-11" rowspan="1">Is it less than routeindex 7?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7c9"></span>C7C9</td>
 <td class="instruction">JR C,<a href="C7C6.html#c7d0">character_event_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7cb"></span>C7CB</td>
 <td class="instruction">CP $0D</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it less than routeindex 13?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7cd"></span>C7CD</td>
 <td class="instruction">JP C,<a href="A444.html">character_sleeps</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Call 'character sleeps' if so (if indices 7..12)</td>
 </tr>
 <tr>
 <td class="asm-label-1">character_event_0</td>
 <td class="address-2"><span id="c7d0"></span>C7D0</td>
 <td class="instruction">CP $12</td>
-<td class="comment-11" rowspan="4">if (A &gt;= character_18_GUARD_DOG_3 &amp;&amp; A &lt;= character_22_PRISONER_3) goto character_sits; Bug: Should be $18 (sixth prisoner doesn't sit for breakfast)</td>
+<td class="comment-11" rowspan="1">Is it less than routeindex_18?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7d2"></span>C7D2</td>
 <td class="instruction">JR C,<a href="C7C6.html#c7d9">character_event_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="c7d4"></span>
+<div class="comments">
+<div class="paragraph">
+Bug: The sixth prisoner doesn't sit for breakfast because this should be $18.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7d4"></span>C7D4</td>
 <td class="instruction">CP $17</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it less than routeindex 23?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7d6"></span>C7D6</td>
 <td class="instruction">JP C,<a href="A420.html">character_sits</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Call 'character sits' if so (if indices 18..22)</td>
 </tr>
 <tr>
 <td class="asm-label-1">character_event_1</td>
 <td class="address-2"><span id="c7d9"></span>C7D9</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">// POPped by handlers</td>
+<td class="comment-11" rowspan="1">Stack the route pointer - the event handlers will pop</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="c7da"></span>
+<div class="comments">
+<div class="paragraph">
+Locate the character in the character_to_event_handler_index_map.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7da"></span>C7DA</td>
 <td class="instruction">LD HL,$C7F9</td>
-<td class="comment-11" rowspan="1">map = &amp;character_to_event_handler_index_map[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at character_to_event_handler_index_map[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7dd"></span>C7DD</td>
 <td class="instruction">LD B,$18</td>
-<td class="comment-11" rowspan="1">B = NELEMS(character_to_event_handler_index_map); // 24 iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 24 iterations - length of the map</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="c7df"></span>
 <div class="comments">
 <div class="paragraph">
-Locate the character in the map.
+Start loop
 </div>
 </div>
 </td>
@@ -136,19 +156,19 @@ Locate the character in the map.
 <td class="asm-label-1">character_event_2</td>
 <td class="address-2"><span id="c7df"></span>C7DF</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% if (A == map-&gt;character) goto call_action;</td>
+<td class="comment-11" rowspan="1">Does the route index in <span class="register">A</span> match the map's route index?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e0"></span>C7E0</td>
-<td class="instruction">JR Z,<a href="C7C6.html#c7ea">character_event_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="C7C6.html#c7ea">ce_call_action</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e2"></span>C7E2</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">map += 2;</td>
+<td class="comment-11" rowspan="2">Advance to the next map entry</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -160,31 +180,31 @@ Locate the character in the map.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e4"></span>C7E4</td>
 <td class="instruction">DJNZ <a href="C7C6.html#c7df">character_event_2</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e6"></span>C7E6</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unstack the route pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e7"></span>C7E7</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-11" rowspan="1">*HL = 0; // no action</td>
+<td class="comment-11" rowspan="1">Make the character stand still by setting the new route index to routeindex_0_HALT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e9"></span>C7E9</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">character_event_3</td>
+<td class="asm-label-1">ce_call_action</td>
 <td class="address-2"><span id="c7ea"></span>C7EA</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="12">call_action: goto character_event_handlers[*++HL];</td>
+<td class="comment-11" rowspan="2">Read the index of the handler from the map</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -196,13 +216,13 @@ Locate the character in the map.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ec"></span>C7EC</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Double it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ed"></span>C7ED</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Copy it to <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -214,7 +234,7 @@ Locate the character in the map.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f0"></span>C7F0</td>
 <td class="instruction">LD HL,$C829</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Point <span class="register">HL</span> at character_event_handlers[index]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -226,7 +246,7 @@ Locate the character in the map.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f4"></span>C7F4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Load the event handler address into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -250,7 +270,7 @@ Locate the character in the map.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f8"></span>C7F8</td>
 <td class="instruction">JP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump to the event handler</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -269,145 +289,145 @@ Array of (character + flags, character event handler index) mappings.
 <td class="asm-label-1">character_to_event_handler_index_map</td>
 <td class="address-1"><span id="c7f9"></span>C7F9</td>
 <td class="instruction">DEFW $00A6</td>
-<td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b10100000, charevnt_0,</td>
+<td class="comment-11" rowspan="1">routeindex_38_GUARD_12_BED         | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7fb"></span>C7FB</td>
 <td class="instruction">DEFW $00A7</td>
-<td class="comment-11" rowspan="1">character_7_GUARD_7       | 0b10100000, charevnt_0,</td>
+<td class="comment-11" rowspan="1">routeindex_39_GUARD_13_BED         | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7fd"></span>C7FD</td>
 <td class="instruction">DEFW $01A8</td>
-<td class="comment-11" rowspan="1">character_8_GUARD_8       | 0b10100000, charevnt_1,</td>
+<td class="comment-11" rowspan="1">routeindex_40_GUARD_14_BED         | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ff"></span>C7FF</td>
 <td class="instruction">DEFW $01A9</td>
-<td class="comment-11" rowspan="1">character_9_GUARD_9       | 0b10100000, charevnt_1,</td>
+<td class="comment-11" rowspan="1">routeindex_41_GUARD_15_BED         | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c801"></span>C801</td>
 <td class="instruction">DEFW $0005</td>
-<td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b00000000, charevnt_0,</td>
+<td class="comment-11" rowspan="1">routeindex_5_EXIT_HUT2,                       0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c803"></span>C803</td>
 <td class="instruction">DEFW $0106</td>
-<td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b00000000, charevnt_1,</td>
+<td class="comment-11" rowspan="1">routeindex_6_EXIT_HUT3,                       1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c805"></span>C805</td>
 <td class="instruction">DEFW $0385</td>
-<td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b10000000, charevnt_3,  // checks byte_A13E case 1</td>
+<td class="comment-11" rowspan="1">routeindex_5_EXIT_HUT2             | REVERSE, 3 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c807"></span>C807</td>
 <td class="instruction">DEFW $0386</td>
-<td class="comment-11" rowspan="1">character_6_GUARD_6       | 0b10000000, charevnt_3,  // checks byte_A13E case 1</td>
+<td class="comment-11" rowspan="1">routeindex_6_EXIT_HUT3             | REVERSE, 3 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c809"></span>C809</td>
 <td class="instruction">DEFW $020E</td>
-<td class="comment-11" rowspan="1">character_14_GUARD_14     | 0b00000000, charevnt_2,</td>
+<td class="comment-11" rowspan="1">routeindex_14_GO_TO_YARD,                     2 - wander between locations 56..63</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c80b"></span>C80B</td>
 <td class="instruction">DEFW $020F</td>
-<td class="comment-11" rowspan="1">character_15_GUARD_15     | 0b00000000, charevnt_2,</td>
+<td class="comment-11" rowspan="1">routeindex_15_GO_TO_YARD,                     2 - wander between locations 56..63</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c80d"></span>C80D</td>
 <td class="instruction">DEFW $008E</td>
-<td class="comment-11" rowspan="1">character_14_GUARD_14     | 0b10000000, charevnt_0,</td>
+<td class="comment-11" rowspan="1">routeindex_14_GO_TO_YARD           | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c80f"></span>C80F</td>
 <td class="instruction">DEFW $018F</td>
-<td class="comment-11" rowspan="1">character_15_GUARD_15     | 0b10000000, charevnt_1,</td>
+<td class="comment-11" rowspan="1">routeindex_15_GO_TO_YARD           | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c811"></span>C811</td>
 <td class="instruction">DEFW $0510</td>
-<td class="comment-11" rowspan="1">character_16_GUARD_DOG_1  | 0b00000000, charevnt_5,  // checks byte_A13E case 2</td>
+<td class="comment-11" rowspan="1">routeindex_16_BREAKFAST_25,                   5 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c813"></span>C813</td>
 <td class="instruction">DEFW $0511</td>
-<td class="comment-11" rowspan="1">character_16_GUARD_DOG_2  | 0b00000000, charevnt_5,  // checks byte_A13E case 2</td>
+<td class="comment-11" rowspan="1">routeindex_17_BREAKFAST_23,                   5 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c815"></span>C815</td>
 <td class="instruction">DEFW $0090</td>
-<td class="comment-11" rowspan="1">character_16_GUARD_DOG_1  | 0b10000000, charevnt_0,</td>
+<td class="comment-11" rowspan="1">routeindex_16_BREAKFAST_25         | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c817"></span>C817</td>
 <td class="instruction">DEFW $0191</td>
-<td class="comment-11" rowspan="1">character_16_GUARD_DOG_2  | 0b10000000, charevnt_1,</td>
+<td class="comment-11" rowspan="1">routeindex_17_BREAKFAST_23         | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c819"></span>C819</td>
 <td class="instruction">DEFW $00A0</td>
-<td class="comment-11" rowspan="1">character_0_COMMANDANT    | 0b10100000, charevnt_0,</td>
+<td class="comment-11" rowspan="1">routeindex_32_GUARD_15_ROLL_CALL   | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c81b"></span>C81B</td>
 <td class="instruction">DEFW $01A1</td>
-<td class="comment-11" rowspan="1">character_1_GUARD_1       | 0b10100000, charevnt_1,</td>
+<td class="comment-11" rowspan="1">routeindex_33_PRISONER_4_ROLL_CALL | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c81d"></span>C81D</td>
 <td class="instruction">DEFW $072A</td>
-<td class="comment-11" rowspan="1">character_10_GUARD_10     | 0b00100000, charevnt_7,</td>
+<td class="comment-11" rowspan="1">routeindex_42_HUT2_LEFT_TO_RIGHT,             7 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c81f"></span>C81F</td>
 <td class="instruction">DEFW $082C</td>
-<td class="comment-11" rowspan="1">character_12_GUARD_12     | 0b00100000, charevnt_8,  // hero sleeps</td>
+<td class="comment-11" rowspan="1">routeindex_44_HUT2_RIGHT_TO_LEFT,             8 - hero sleeps</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c821"></span>C821</td>
 <td class="instruction">DEFW $092B</td>
-<td class="comment-11" rowspan="1">character_11_GUARD_11     | 0b00100000, charevnt_9,  // hero sits</td>
+<td class="comment-11" rowspan="1">routeindex_43_7833,                           9 - hero sits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c823"></span>C823</td>
 <td class="instruction">DEFW $06A4</td>
-<td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b10100000, charevnt_6,  // go to 0x0315</td>
+<td class="comment-11" rowspan="1">routeindex_36_GO_TO_SOLITARY       | REVERSE, 6 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c825"></span>C825</td>
 <td class="instruction">DEFW $0A24</td>
-<td class="comment-11" rowspan="1">character_4_GUARD_4       | 0b00100000, charevnt_10, // released from solitary</td>
+<td class="comment-11" rowspan="1">routeindex_36_GO_TO_SOLITARY,                10 - hero released from solitary</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c827"></span>C827</td>
 <td class="instruction">DEFW $0425</td>
-<td class="comment-11" rowspan="1">character_5_GUARD_5       | 0b00100000, charevnt_4,  // zero in_solitary</td>
+<td class="comment-11" rowspan="1">routeindex_37_HERO_LEAVE_SOLITARY,            4 - solitary ends</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -426,74 +446,74 @@ Array of pointers to character event handlers.
 <td class="asm-label-1">character_event_handlers</td>
 <td class="address-1"><span id="c829"></span>C829</td>
 <td class="instruction">DEFW <a href="C7C6.html#c864">charevnt_wander_top</a></td>
-<td class="comment-11" rowspan="1">charevnt_handler *character_event_handlers[] = { &amp;charevnt_wander_top,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c82b"></span>C82B</td>
 <td class="instruction">DEFW <a href="C7C6.html#c85c">charevnt_wander_left</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_wander_left,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c82d"></span>C82D</td>
 <td class="instruction">DEFW <a href="C7C6.html#c860">charevnt_wander_yard</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_wander_yard,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c82f"></span>C82F</td>
 <td class="instruction">DEFW <a href="C7C6.html#c86c">charevnt_bed</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_bed,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c831"></span>C831</td>
 <td class="instruction">DEFW <a href="C7C6.html#c83f">charevnt_solitary_ends</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_solitary_ends,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c833"></span>C833</td>
 <td class="instruction">DEFW <a href="C7C6.html#c877">charevnt_breakfast</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_breakfast,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c835"></span>C835</td>
 <td class="instruction">DEFW <a href="C7C6.html#c845">charevnt_commandant_to_yard</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_commandant_to_yard,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c837"></span>C837</td>
 <td class="instruction">DEFW <a href="C7C6.html#c882">charevnt_exit_hut2</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_exit_hut2,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c839"></span>C839</td>
 <td class="instruction">DEFW <a href="C7C6.html#c88d">charevnt_hero_sleeps</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_hero_sleeps,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c83b"></span>C83B</td>
 <td class="instruction">DEFW <a href="C7C6.html#c889">charevnt_hero_sits</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_hero_sits,</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c83d"></span>C83D</td>
 <td class="instruction">DEFW <a href="C7C6.html#c84c">charevnt_hero_release</a></td>
-<td class="comment-11" rowspan="1">&amp;charevnt_hero_release, };</td>
+<td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="c83f"></span>
 <div class="comments">
 <div class="paragraph">
-charevnt_solitary_ends
+charevnt_solitary_end
 </div>
 </div>
 </td>
@@ -554,7 +574,7 @@ charevnt_commandant_to_yard
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c84b"></span>C84B</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -633,7 +653,7 @@ charevnt_wander_left
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c85e"></span>C85E</td>
-<td class="instruction">JR <a href="C7C6.html#c866">character_event_4</a></td>
+<td class="instruction">JR <a href="C7C6.html#c866">character_event_3</a></td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
@@ -655,7 +675,7 @@ charevnt_wander_yard
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c862"></span>C862</td>
-<td class="instruction">JR <a href="C7C6.html#c866">character_event_4</a></td>
+<td class="instruction">JR <a href="C7C6.html#c866">character_event_3</a></td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
@@ -675,7 +695,7 @@ charevnt_wander_top
 <td class="comment-11" rowspan="1">C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062</td>
 </tr>
 <tr>
-<td class="asm-label-1">character_event_4</td>
+<td class="asm-label-1">character_event_3</td>
 <td class="address-2"><span id="c866"></span>C866</td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">exit:</td>
@@ -702,7 +722,7 @@ charevnt_wander_top
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c86b"></span>C86B</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -822,7 +842,7 @@ charevnt_exit_hut2
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c888"></span>C888</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -877,9 +897,9 @@ charevnt_hero_sleeps
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

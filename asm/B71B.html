@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B729.html">B729</a></span></td>
 </tr>
 </table>
-<div class="description">B71B: Reset position.</div>
+<div class="description">B71B: Calculate screen position for the specified vischar from mi.pos.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -51,14 +51,14 @@ Used by the routines at <a href="68F4.html">enter_room</a>, <a href="6939.html#6
 <td class="asm-label-1">calc_vischar_iso_pos_from_vischar</td>
 <td class="address-2"><span id="b71b"></span>B71B</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve vischar pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b71c"></span>
 <div class="comments">
 <div class="paragraph">
-Save a copy of the vischar's position + offset.
+Save a copy of the vischar's position to global saved_pos.
 </div>
 </div>
 </td>
@@ -67,7 +67,7 @@ Save a copy of the vischar's position + offset.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b71c"></span>B71C</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment-11" rowspan="6">memcpy(&amp;saved_pos_x, HL + 0x0F, 6);</td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.mi.pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -85,32 +85,32 @@ Save a copy of the vischar's position + offset.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b720"></span>B720</td>
 <td class="instruction">LD DE,$81A4</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at saved_pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b723"></span>B723</td>
 <td class="instruction">LD BC,$0006</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Six bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b726"></span>B726</td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Block copy</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b728"></span>B728</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH into calc_vischar_iso_pos_from_state.
+Now FALL THROUGH into calc_vischar_iso_pos_from_state which will read from saved_pos.
 </div>
 </div>
 </td>
@@ -124,9 +124,9 @@ FALL THROUGH into calc_vischar_iso_pos_from_state.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

@@ -43,130 +43,170 @@
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="b417"></span>
+<div class="comments">
+<div class="paragraph">
+Check the hero's position against the four vertically-oriented fences.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1">action_wiresnips</td>
 <td class="address-2"><span id="b417"></span>B417</td>
 <td class="instruction">LD HL,$B589</td>
-<td class="comment-11" rowspan="1">HL = &amp;walls[12] + 3;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the 12th entry of the walls array: the start of the vertically-oriented fences PLUS three bytes so it points at the maxy value.</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b41a"></span>B41A</td>
 <td class="instruction">LD DE,$81B9</td>
-<td class="comment-11" rowspan="1">DE = &amp;hero_map_position.x;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at hero_map_position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b41d"></span>B41D</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">B = 4; // iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for four iterations (four vertical fences)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b41f"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">action_wiresnips_0</td>
 <td class="address-2"><span id="b41f"></span>B41F</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">do &lt;% ...</td>
+<td class="comment-11" rowspan="1">Preserve the wall entry pointer during this iteration</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b420"></span>
+<div class="comments">
+<div class="paragraph">
+Are we in range on the Y axis?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b420"></span>B420</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch hero_map_position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b421"></span>B421</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A &gt;= *HL) goto next;</td>
+<td class="comment-11" rowspan="1">Is it &gt;= wall-&gt;maxy?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b422"></span>B422</td>
-<td class="instruction">JR NC,<a href="B417.html#b433">action_wiresnips_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="B417.html#b433">snips_next_vert</a></td>
+<td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b424"></span>B424</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="1">HL--;</td>
+<td class="comment-11" rowspan="1">Step <span class="register">HL</span> back to wall-&gt;miny</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b425"></span>B425</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A &lt; *HL) goto next;</td>
+<td class="comment-11" rowspan="1">Is it &lt; wall-&gt;miny?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b426"></span>B426</td>
-<td class="instruction">JR C,<a href="B417.html#b433">action_wiresnips_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="B417.html#b433">snips_next_vert</a></td>
+<td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b428"></span>
+<div class="comments">
+<div class="paragraph">
+Are we adjacent to the wall on the X axis?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b428"></span>B428</td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">DE--; // &amp;hero_map_position.y;</td>
+<td class="comment-11" rowspan="1">Step <span class="register">DE</span> back to hero_map_position.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b429"></span>B429</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch hero_map_position.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b42a"></span>B42A</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="1">HL--;</td>
+<td class="comment-11" rowspan="1">Step <span class="register">HL</span> back to wall-&gt;maxx</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b42b"></span>B42B</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A == *HL) goto set_to_4;</td>
+<td class="comment-11" rowspan="1">Is it == wall-&gt;maxx?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b42c"></span>B42C</td>
-<td class="instruction">JR Z,<a href="B417.html#b462">action_wiresnips_6</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="B417.html#b462">snips_crawl_tl</a></td>
+<td class="comment-11" rowspan="1">Jump to snips_crawl_tl if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b42e"></span>B42E</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="1">A--;</td>
+<td class="comment-11" rowspan="1">Try the opposite side</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b42f"></span>B42F</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A == *HL) goto set_to_6;</td>
+<td class="comment-11" rowspan="1">Is it == wall-&gt;maxx?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b430"></span>B430</td>
-<td class="instruction">JR Z,<a href="B417.html#b46a">action_wiresnips_8</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="B417.html#b46a">snips_crawl_br</a></td>
+<td class="comment-11" rowspan="1">Jump to snips_crawl_br if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b432"></span>B432</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++; // reset to Y</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to hero_map_position.y</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_1</td>
+<td class="asm-label-1">snips_next_vert</td>
 <td class="address-2"><span id="b433"></span>B433</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">next: ...</td>
+<td class="comment-11" rowspan="1">Restore wall array pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b434"></span>B434</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="5">HL += 6; // array stride</td>
+<td class="comment-11" rowspan="5">Advance <span class="register">HL</span> to the next wall array element PLUS 3 bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -183,7 +223,7 @@
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b438"></span>B438</td>
-<td class="instruction">JR NC,<a href="B417.html#b43b">action_wiresnips_2</a></td>
+<td class="instruction">JR NC,<a href="B417.html#b43b">action_wiresnips_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -193,22 +233,42 @@
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_2</td>
+<td class="asm-label-1">action_wiresnips_1</td>
 <td class="address-2"><span id="b43b"></span>B43B</td>
 <td class="instruction">DJNZ <a href="B417.html#b41f">action_wiresnips_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b43d"></span>
+<div class="comments">
+<div class="paragraph">
+Check the hero's position against the three horizontally-oriented fences.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b43d"></span>B43D</td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">DE--; // &amp;hero_map_position.y;</td>
+<td class="comment-11" rowspan="1">Step <span class="register">DE</span> back to hero_map_position.x</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b43e"></span>
+<div class="comments">
+<div class="paragraph">
+Point <span class="register">HL</span> at the 16th entry of walls array (start of horizontal fences).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b43e"></span>B43E</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="3">HL -= 3; // pointing to $B59E</td>
+<td class="comment-11" rowspan="3">Step <span class="register">HL</span> back to the 16th entry of the walls array PLUS 0 bytes (it's three ahead prior to this)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -226,115 +286,145 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b441"></span>B441</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">B = 3; // iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for three iterations (three horizontal fences)</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_3</td>
+<td class="routine-comment" colspan="4">
+<span id="b443"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">action_wiresnips_2</td>
 <td class="address-2"><span id="b443"></span>B443</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">do &lt;% ...</td>
+<td class="comment-11" rowspan="1">Preserve wall array pointer during this iteration</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b444"></span>
+<div class="comments">
+<div class="paragraph">
+Are we in range on the X axis?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b444"></span>B444</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch hero_map_position.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b445"></span>B445</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A &lt; *HL) goto next2;</td>
+<td class="comment-11" rowspan="1">Is it &lt; wall-&gt;minx?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b446"></span>B446</td>
-<td class="instruction">JR C,<a href="B417.html#b457">action_wiresnips_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="B417.html#b457">snips_next_horz</a></td>
+<td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b448"></span>B448</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to wall-&gt;maxx</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b449"></span>B449</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A &gt;= *HL) goto next2;</td>
+<td class="comment-11" rowspan="1">Is x &gt;= wall-&gt;maxx?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b44a"></span>B44A</td>
-<td class="instruction">JR NC,<a href="B417.html#b457">action_wiresnips_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="B417.html#b457">snips_next_horz</a></td>
+<td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b44c"></span>
+<div class="comments">
+<div class="paragraph">
+Are we adjacent to the wall on the Y axis?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b44c"></span>B44C</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to hero_map_position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b44d"></span>B44D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch hero_map_position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b44e"></span>B44E</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to wall-&gt;miny</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b44f"></span>B44F</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A == *HL) goto set_to_5;</td>
+<td class="comment-11" rowspan="1">Is it == wall-&gt;miny?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b450"></span>B450</td>
-<td class="instruction">JR Z,<a href="B417.html#b466">action_wiresnips_7</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="B417.html#b466">snips_crawl_tr</a></td>
+<td class="comment-11" rowspan="1">Jump to snips_crawl_tr if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b452"></span>B452</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="1">A--;</td>
+<td class="comment-11" rowspan="1">Try the opposite side</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b453"></span>B453</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">if (A == *HL) goto set_to_7;</td>
+<td class="comment-11" rowspan="1">Is it == wall-&gt;maxy?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b454"></span>B454</td>
-<td class="instruction">JR Z,<a href="B417.html#b46e">action_wiresnips_9</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="B417.html#b46e">snips_crawl_bl</a></td>
+<td class="comment-11" rowspan="1">Jump to snips_crawl_bl if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b456"></span>B456</td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">DE--;</td>
+<td class="comment-11" rowspan="1">Step <span class="register">DE</span> back to hero_map_position.x</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_4</td>
+<td class="asm-label-1">snips_next_horz</td>
 <td class="address-2"><span id="b457"></span>B457</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">next2: ...</td>
+<td class="comment-11" rowspan="1">Restore wall array pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b458"></span>B458</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="5">HL += 6; // array stride</td>
+<td class="comment-11" rowspan="5">Advance <span class="register">HL</span> to the next wall array element PLUS 3 bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -351,7 +441,7 @@
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b45c"></span>B45C</td>
-<td class="instruction">JR NC,<a href="B417.html#b45f">action_wiresnips_5</a></td>
+<td class="instruction">JR NC,<a href="B417.html#b45f">action_wiresnips_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -361,70 +451,80 @@
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_5</td>
+<td class="asm-label-1">action_wiresnips_3</td>
 <td class="address-2"><span id="b45f"></span>B45F</td>
-<td class="instruction">DJNZ <a href="B417.html#b443">action_wiresnips_3</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="B417.html#b443">action_wiresnips_2</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b461"></span>B461</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="3">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_6</td>
+<td class="asm-label-1">snips_crawl_tl</td>
 <td class="address-2"><span id="b462"></span>B462</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to 4 (direction_TOP_LEFT + vischar_DIRECTION_CRAWL)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b464"></span>B464</td>
-<td class="instruction">JR <a href="B417.html#b470">action_wiresnips_10</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR <a href="B417.html#b470">snips_tail</a></td>
+<td class="comment-11" rowspan="1">Jump forward</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_7</td>
+<td class="asm-label-1">snips_crawl_tr</td>
 <td class="address-2"><span id="b466"></span>B466</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment-11" rowspan="2">set_to_5: A = 5; goto action_wiresnips_tail; // crawl TR</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to 5 (direction_TOP_RIGHT + vischar_DIRECTION_CRAWL)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b468"></span>B468</td>
-<td class="instruction">JR <a href="B417.html#b470">action_wiresnips_10</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR <a href="B417.html#b470">snips_tail</a></td>
+<td class="comment-11" rowspan="1">Jump forward</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_8</td>
+<td class="asm-label-1">snips_crawl_br</td>
 <td class="address-2"><span id="b46a"></span>B46A</td>
 <td class="instruction">LD A,$06</td>
-<td class="comment-11" rowspan="2">set_to_6: A = 6; goto action_wiresnips_tail; // crawl BR</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to 6 (direction_BOTTOM_RIGHT + vischar_DIRECTION_CRAWL)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b46c"></span>B46C</td>
-<td class="instruction">JR <a href="B417.html#b470">action_wiresnips_10</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR <a href="B417.html#b470">snips_tail</a></td>
+<td class="comment-11" rowspan="1">Jump forward</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_9</td>
+<td class="asm-label-1">snips_crawl_bl</td>
 <td class="address-2"><span id="b46e"></span>B46E</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-11" rowspan="1">set_to_7: A = 7;                             // crawl BL</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to 7 (direction_BOTTOM_LEFT + vischar_DIRECTION_CRAWL)</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_wiresnips_10</td>
+<td class="routine-comment" colspan="4">
+<span id="b470"></span>
+<div class="comments">
+<div class="paragraph">
+<span class="register">A</span> is the direction + crawl flag. Proceed to making the hero cut the wire.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">snips_tail</td>
 <td class="address-2"><span id="b470"></span>B470</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">action_wiresnips_tail: ...</td>
+<td class="comment-11" rowspan="1">Restore wall array pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b471"></span>B471</td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment-11" rowspan="2">$800E = A; // walk/crawl flag</td>
+<td class="comment-11" rowspan="2">Set hero's vischar.direction field (direction and walk/crawl flag) to the direction selected above</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -436,7 +536,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b475"></span>B475</td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">$800D = input_KICK;</td>
+<td class="comment-11" rowspan="2">Set hero's vischar.input field to input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -448,7 +548,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b478"></span>B478</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment-11" rowspan="2">$8001 = vischar_FLAGS_CUTTING_WIRE;</td>
+<td class="comment-11" rowspan="2">Set hero's vischar.flags to vischar_FLAGS_CUTTING_WIRE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -460,7 +560,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b47d"></span>B47D</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment-11" rowspan="2">$8013 = 12; // set height</td>
+<td class="comment-11" rowspan="2">Set hero's vischar.mi.pos.height to 12</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -472,7 +572,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b482"></span>B482</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="comment-11" rowspan="2">$8015 = sprite_prisoner;</td>
+<td class="comment-11" rowspan="2">Set vischar.mi.sprite to the prisoner sprite set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -484,7 +584,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b488"></span>B488</td>
 <td class="instruction">LD A,($A12F)</td>
-<td class="comment-11" rowspan="3">player_locked_out_until = game_counter + 96;</td>
+<td class="comment-11" rowspan="3">Lock out the player until the game counter is now + 96</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -502,7 +602,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b490"></span>B490</td>
 <td class="instruction">LD B,$0B</td>
-<td class="comment-11" rowspan="2">queue_message(message_CUTTING_THE_WIRE);</td>
+<td class="comment-11" rowspan="2">Queue the message "CUTTING THE WIRE" and exit via</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -519,9 +619,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

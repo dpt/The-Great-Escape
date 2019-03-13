@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="CC31.html">CC31</a></span></td>
 </tr>
 </table>
-<div class="description">CB98: The hero has been sent to solitary.</div>
+<div class="description">CB98: Send the hero to solitary.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -30,11 +30,14 @@
 Used by the routines at <a href="A51C.html">escaped</a>, <a href="AFDF.html">collision</a>, <a href="CA81.html">target_reached</a> and <a href="EFCB.html">action_papers</a>.
 </div>
 </div>
-<table class="input-0">
+<table class="input-1">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
-
+<tr>
+<td class="register">Silence</td>
+<td class="register-desc">the bell.</td>
+</tr>
 </table>
 <table class="output-0">
 <tr class="asm-output-header">
@@ -45,20 +48,10 @@ Used by the routines at <a href="A51C.html">escaped</a>, <a href="AFDF.html">col
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="cb98"></span>
-<div class="comments">
-<div class="paragraph">
-Silence bell.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1">solitary</td>
 <td class="address-2"><span id="cb98"></span>CB98</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">bell = bell_STOP;</td>
+<td class="comment-11" rowspan="2">Set the bell ring counter/flag to bell_STOP</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -80,55 +73,55 @@ Seize hero's held items.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb9d"></span>CB9D</td>
 <td class="instruction">LD HL,$8215</td>
-<td class="comment-11" rowspan="1">HL = &amp;items_held[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at items_held[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cba0"></span>CBA0</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cba1"></span>CBA1</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = item_NONE;</td>
+<td class="comment-11" rowspan="1">Set it to item_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cba2"></span>CBA2</td>
 <td class="instruction">CALL <a href="CD31.html">item_discovered</a></td>
-<td class="comment-11" rowspan="1">item_discovered();</td>
+<td class="comment-11" rowspan="1">Discover the item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cba5"></span>CBA5</td>
 <td class="instruction">LD HL,$8216</td>
-<td class="comment-11" rowspan="1">HL = &amp;items_held[1];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at items_held[1]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cba8"></span>CBA8</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cba9"></span>CBA9</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment-11" rowspan="1">*HL = item_NONE;</td>
+<td class="comment-11" rowspan="1">Set it to item_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbab"></span>CBAB</td>
 <td class="instruction">CALL <a href="CD31.html">item_discovered</a></td>
-<td class="comment-11" rowspan="1">item_discovered();</td>
+<td class="comment-11" rowspan="1">Discover the item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbae"></span>CBAE</td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
-<td class="comment-11" rowspan="1">draw_all_items();</td>
+<td class="comment-11" rowspan="1">Redraw both held items</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -144,25 +137,35 @@ Discover all items.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbb1"></span>CBB1</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment-11" rowspan="1">B = 16; // all items</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> to 16 iterations - once per item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbb3"></span>CBB3</td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment-11" rowspan="1">HL = &amp;item_structs[0].room;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at item_structs[0].room</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="cbb6"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">solitary_0</td>
 <td class="address-2"><span id="cbb6"></span>CBB6</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbb7"></span>CBB7</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve itemstruct pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -178,37 +181,37 @@ Is the item outdoors?
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbb8"></span>CBB8</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL &amp; itemstruct_ROOM_MASK;</td>
+<td class="comment-11" rowspan="1">Fetch itemstruct.room_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbb9"></span>CBB9</td>
 <td class="instruction">AND $3F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Mask off the room part. Is the item indoors?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbbb"></span>CBBB</td>
-<td class="instruction">JR NZ,<a href="CB98.html#cbdc">solitary_3</a></td>
-<td class="comment-11" rowspan="1">if (A == room_0_OUTDOORS) &lt;%</td>
+<td class="instruction">JR NZ,<a href="CB98.html#cbdc">solitary_next</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbbd"></span>CBBD</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="2">A = *--HL;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at itemstruct.item_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbbe"></span>CBBE</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbbf"></span>CBBF</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">HL += 2;</td>
+<td class="comment-11" rowspan="2">Advance <span class="register">HL</span> to itemstruct.pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -220,31 +223,41 @@ Is the item outdoors?
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbc1"></span>CBC1</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank itemstruct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbc2"></span>CBC2</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank item_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbc3"></span>CBC3</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="1">Set area index to zero</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="cbc4"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">solitary_1</td>
 <td class="address-2"><span id="cbc4"></span>CBC4</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve area index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbc5"></span>CBC5</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve itemstruct pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -260,31 +273,31 @@ If the item is within the camp bounds then it will be discovered.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbc6"></span>CBC6</td>
 <td class="instruction">CALL <a href="A01A.html">within_camp_bounds</a></td>
-<td class="comment-11" rowspan="1">within_camp_bounds();</td>
+<td class="comment-11" rowspan="1">Is the specified position within the bounds of the indexed area?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbc9"></span>CBC9</td>
-<td class="instruction">JR Z,<a href="CB98.html#cbd5">solitary_2</a></td>
-<td class="comment-11" rowspan="1">if (Z) goto $CBD5;</td>
+<td class="instruction">JR Z,<a href="CB98.html#cbd5">solitary_discovered</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbcb"></span>CBCB</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore itemstruct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbcc"></span>CBCC</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore area index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbcd"></span>CBCD</td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="3">%&gt; while (++A != 3);</td>
+<td class="comment-11" rowspan="3">Loop until area index is 3</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -301,56 +314,56 @@ If the item is within the camp bounds then it will be discovered.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbd3"></span>CBD3</td>
-<td class="instruction">JR <a href="CB98.html#cbdc">solitary_3</a></td>
-<td class="comment-11" rowspan="1">goto next;</td>
+<td class="instruction">JR <a href="CB98.html#cbdc">solitary_next</a></td>
+<td class="comment-11" rowspan="1">Jump to next</td>
 </tr>
 <tr>
-<td class="asm-label-1">solitary_2</td>
+<td class="asm-label-1">solitary_discovered</td>
 <td class="address-2"><span id="cbd5"></span>CBD5</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore itemstruct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbd6"></span>CBD6</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore area index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbd7"></span>CBD7</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank item_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbd8"></span>CBD8</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">C = A;</td>
+<td class="comment-11" rowspan="2">Discover the item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbd9"></span>CBD9</td>
 <td class="instruction">CALL <a href="CD31.html">item_discovered</a></td>
-<td class="comment-11" rowspan="1">item_discovered(); %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">solitary_3</td>
+<td class="asm-label-1">solitary_next</td>
 <td class="address-2"><span id="cbdc"></span>CBDC</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">next:</td>
+<td class="comment-11" rowspan="1">Restore itemstruct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbdd"></span>CBDD</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbde"></span>CBDE</td>
 <td class="instruction">LD DE,$0007</td>
-<td class="comment-11" rowspan="2">HL += 7; // stride</td>
+<td class="comment-11" rowspan="2">Advance <span class="register">HL</span> to the next itemstruct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -362,7 +375,7 @@ If the item is within the camp bounds then it will be discovered.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbe2"></span>CBE2</td>
 <td class="instruction">DJNZ <a href="CB98.html#cbb6">solitary_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -378,7 +391,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbe4"></span>CBE4</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="2">$801C = room_24_SOLITARY;</td>
+<td class="comment-11" rowspan="2">Set vischar[0].room to room_24_SOLITARY</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -387,10 +400,20 @@ Move the hero to solitary.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="cbe9"></span>
+<div class="comments">
+<div class="paragraph">
+DPT: I reckon this should instead be 24 which is the door between room_22_REDKEY and room_24_SOLITARY.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbe9"></span>CBE9</td>
 <td class="instruction">LD A,$14</td>
-<td class="comment-11" rowspan="2">current_door = 20;</td>
+<td class="comment-11" rowspan="2">Set global current door to 20</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -402,7 +425,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbee"></span>CBEE</td>
 <td class="instruction">LD B,$23</td>
-<td class="comment-11" rowspan="2">decrease_morale(35);</td>
+<td class="comment-11" rowspan="2">Decrease morale by 35</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -414,25 +437,35 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbf3"></span>CBF3</td>
 <td class="instruction">CALL <a href="B79B.html">reset_map_and_characters</a></td>
-<td class="comment-11" rowspan="1">reset_map_and_characters();</td>
+<td class="comment-11" rowspan="1">Reset all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, lock the gates, reset all beds, clear the mess halls and reset characters</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="cbf6"></span>
+<div class="comments">
+<div class="paragraph">
+Set the commandant on a path which results in the hero being released.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbf6"></span>CBF6</td>
 <td class="instruction">LD DE,$7613</td>
-<td class="comment-11" rowspan="4">memcpy(&amp;character_structs[0].secondbyte, &amp;solitary_hero_reset_data, 6);</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at character_structs[character_0_COMMANDANT].room</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbf9"></span>CBF9</td>
 <td class="instruction">LD HL,$CC31</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at solitary_commandant_data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cbfc"></span>CBFC</td>
 <td class="instruction">LD BC,$0006</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Copy six bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -441,10 +474,20 @@ Move the hero to solitary.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="cc01"></span>
+<div class="comments">
+<div class="paragraph">
+Queue solitary messages.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc01"></span>CC01</td>
 <td class="instruction">LD B,$0D</td>
-<td class="comment-11" rowspan="2">queue_message(message_YOU_ARE_IN_SOLITARY);</td>
+<td class="comment-11" rowspan="2">Queue the message "YOU ARE IN SOLITARY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -456,7 +499,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc06"></span>CC06</td>
 <td class="instruction">LD B,$0E</td>
-<td class="comment-11" rowspan="2">queue_message(message_WAIT_FOR_RELEASE);</td>
+<td class="comment-11" rowspan="2">Queue the message "WAIT FOR RELEASE"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -468,7 +511,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc0b"></span>CC0B</td>
 <td class="instruction">LD B,$13</td>
-<td class="comment-11" rowspan="2">queue_message(message_ANOTHER_DAY_DAWNS);</td>
+<td class="comment-11" rowspan="2">Queue the message "ANOTHER DAY DAWNS"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -480,7 +523,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc10"></span>CC10</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">in_solitary = 0xFF; // inhibit user input</td>
+<td class="comment-11" rowspan="2">Inhibit user input</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -492,7 +535,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc15"></span>CC15</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">automatic_player_counter = 0; // immediately take automatic control of hero</td>
+<td class="comment-11" rowspan="2">Immediately take automatic control of the hero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -504,7 +547,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc19"></span>CC19</td>
 <td class="instruction">LD HL,$CE2E</td>
-<td class="comment-11" rowspan="2">$8015 = sprite_prisoner;</td>
+<td class="comment-11" rowspan="2">Set vischar.mi.sprite to the prisoner sprite set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -516,25 +559,25 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc1f"></span>CC1F</td>
 <td class="instruction">LD HL,$7AC6</td>
-<td class="comment-11" rowspan="1">HL = &amp;solitary_pos;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at solitary_pos for transition</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc22"></span>CC22</td>
 <td class="instruction">LD IY,$8000</td>
-<td class="comment-11" rowspan="1">IY = $8000;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">IY</span> at the hero's vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc26"></span>CC26</td>
 <td class="instruction">LD (IY+$0E),$03</td>
-<td class="comment-11" rowspan="1">IY[0x0E] = direction_BOTTOM_LEFT; // character faces bottom left</td>
+<td class="comment-11" rowspan="1">Set vischar.direction to direction_BOTTOM_LEFT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc2a"></span>CC2A</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">($8002) = 0; // route.index = route_HALT</td>
+<td class="comment-11" rowspan="2">Set hero's route.index to routeindex_0_HALT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -546,7 +589,7 @@ Move the hero to solitary.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cc2e"></span>CC2E</td>
 <td class="instruction">JP <a href="68A2.html">transition</a></td>
-<td class="comment-11" rowspan="1">transition(); return; // exit via</td>
+<td class="comment-11" rowspan="1">Exit via transition</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -557,9 +600,9 @@ Move the hero to solitary.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

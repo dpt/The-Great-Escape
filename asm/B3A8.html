@@ -49,7 +49,7 @@ This searches visible friendly characters only and returns the first found.
 <span id="b3a8"></span>
 <div class="comments">
 <div class="paragraph">
-Walk non-player visible characters.
+Iterate over non-player visible characters.
 </div>
 </div>
 </td>
@@ -58,49 +58,59 @@ Walk non-player visible characters.
 <td class="asm-label-1">action_bribe</td>
 <td class="address-2"><span id="b3a8"></span>B3A8</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">HL = $8020; // iterate over non-player characters</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second visible character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ab"></span>B3AB</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b3ad"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">action_bribe_0</td>
 <td class="address-2"><span id="b3ad"></span>B3AD</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">do &lt;% A = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch the vischar's character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ae"></span>B3AE</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="4">if ((A != character_NONE) &amp;&amp; (A &gt;= character_20_PRISONER_1)) goto found;</td>
+<td class="comment-11" rowspan="1">Is it character_NONE?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b0"></span>B3B0</td>
 <td class="instruction">JR Z,<a href="B3A8.html#b3b6">action_bribe_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump to the next vischar if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b2"></span>B3B2</td>
 <td class="instruction">CP $14</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it character_20_PRISONER_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3b4"></span>B3B4</td>
-<td class="instruction">JR NC,<a href="B3A8.html#b3bd">action_bribe_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="B3A8.html#b3bd">bribe_found</a></td>
+<td class="comment-11" rowspan="1">Jump to bribe_found if &gt;=</td>
 </tr>
 <tr>
 <td class="asm-label-1">action_bribe_1</td>
 <td class="address-2"><span id="b3b6"></span>B3B6</td>
 <td class="instruction">LD A,$20</td>
-<td class="comment-11" rowspan="3">HL += 32; // sizeof a character struct</td>
+<td class="comment-11" rowspan="3">Step to the next vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -118,37 +128,37 @@ Walk non-player visible characters.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ba"></span>B3BA</td>
 <td class="instruction">DJNZ <a href="B3A8.html#b3ad">action_bribe_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3bc"></span>B3BC</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">action_bribe_2</td>
+<td class="asm-label-1">bribe_found</td>
 <td class="address-2"><span id="b3bd"></span>B3BD</td>
 <td class="instruction">LD ($AF8E),A</td>
-<td class="comment-11" rowspan="1">found: bribed_character = A;</td>
+<td class="comment-11" rowspan="1">Set the global bribed character to <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3c0"></span>B3C0</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">HL[1] = vischar_FLAGS_PURSUE; // $8021 etc. // flag</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at vischar flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3c1"></span>B3C1</td>
 <td class="instruction">LD (HL),$01</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set flags to vischar_FLAGS_PURSUE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3c3"></span>B3C3</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -159,9 +169,9 @@ Walk non-player visible characters.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

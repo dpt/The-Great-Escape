@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="CD6A.html">CD6A</a></span></td>
 </tr>
 </table>
-<div class="description">CD31: Item discovered.</div>
+<div class="description">CD31: An item is discovered.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,7 +36,7 @@ Used by the routines at <a href="B75A.html">reset_game</a>, <a href="C6A0.html">
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc">Item.</td>
+<td class="register-desc">Item index.</td>
 </tr>
 </table>
 <table class="output-0">
@@ -51,37 +51,37 @@ Used by the routines at <a href="B75A.html">reset_game</a>, <a href="C6A0.html">
 <td class="asm-label-1">item_discovered</td>
 <td class="address-2"><span id="cd31"></span>CD31</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="1">A = C;</td>
+<td class="comment-11" rowspan="1">Copy item index to <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd32"></span>CD32</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == item_NONE) return;</td>
+<td class="comment-11" rowspan="1">Is it item_NONE? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd34"></span>CD34</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd35"></span>CD35</td>
 <td class="instruction">AND $0F</td>
-<td class="comment-11" rowspan="1">A &amp;= itemstruct_ITEM_MASK;</td>
+<td class="comment-11" rowspan="1">Mask against itemstruct_ITEM_MASK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd37"></span>CD37</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve <span class="register">A</span> while we do calls</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd38"></span>CD38</td>
 <td class="instruction">LD B,$10</td>
-<td class="comment-11" rowspan="2">queue_message(message_ITEM_DISCOVERED);</td>
+<td class="comment-11" rowspan="2">Queue the message "ITEM DISCOVERED"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -93,7 +93,7 @@ Used by the routines at <a href="B75A.html">reset_game</a>, <a href="C6A0.html">
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd3d"></span>CD3D</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment-11" rowspan="2">decrease_morale(5);</td>
+<td class="comment-11" rowspan="2">Decrease morale by 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -105,13 +105,13 @@ Used by the routines at <a href="B75A.html">reset_game</a>, <a href="C6A0.html">
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd42"></span>CD42</td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd43"></span>CD43</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="6">HL = &amp;default_item_locations[A];</td>
+<td class="comment-11" rowspan="6">Point <span class="register">HL</span> at default_item_locations[<span class="register">A</span>]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -147,26 +147,26 @@ Used by the routines at <a href="B75A.html">reset_game</a>, <a href="C6A0.html">
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd4c"></span>CD4C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = HL-&gt;room_and_flags;</td>
+<td class="comment-11" rowspan="1">Load default_item_location.room_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd4d"></span>CD4D</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">bank ptr</td>
+<td class="comment-11" rowspan="1">Bank default_item_location pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd4e"></span>CD4E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">bank A</td>
+<td class="comment-11" rowspan="1">Bank room_and_flags</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="cd4f"></span>
 <div class="comments">
 <div class="paragraph">
-Bug: C is not masked, so could go out of range.
+Bug: <span class="register">C</span> is not masked, so could go out of range.
 </div>
 </div>
 </td>
@@ -175,37 +175,37 @@ Bug: C is not masked, so could go out of range.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd4f"></span>CD4F</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="1">Adash = C;</td>
+<td class="comment-11" rowspan="1">Copy item index to <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd50"></span>CD50</td>
 <td class="instruction">CALL <a href="7C26.html">item_to_itemstruct</a></td>
-<td class="comment-11" rowspan="1">HL = item_to_itemstruct(Adash);</td>
+<td class="comment-11" rowspan="1">Convert the item index into an itemstruct pointer in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd53"></span>CD53</td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment-11" rowspan="1">*HL &amp;= ~itemstruct_ITEM_FLAG_HELD;</td>
+<td class="comment-11" rowspan="1">Wipe the itemstruct.item_and_flags itemstruct_ITEM_FLAG_HELD flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd55"></span>CD55</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank default_item_location pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd56"></span>CD56</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">DE++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to itemstruct.room_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd57"></span>CD57</td>
 <td class="instruction">LD BC,$0003</td>
-<td class="comment-11" rowspan="2">memcpy(DE, HL, 3); DE += 3; HL += 3; // reset location?</td>
+<td class="comment-11" rowspan="2">Copy room_and_flags and pos from default_item_location</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -217,49 +217,49 @@ Bug: C is not masked, so could go out of range.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd5c"></span>CD5C</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Swap itemstruct pointer back into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd5d"></span>CD5D</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank room_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd5e"></span>CD5E</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == room_0_OUTDOORS) &lt;%</td>
+<td class="comment-11" rowspan="1">Is it room_0_OUTDOORS?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd5f"></span>CD5F</td>
-<td class="instruction">JR NZ,<a href="CD31.html#cd65">item_discovered_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="CD31.html#cd65">id_interior</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd61"></span>CD61</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A; // A is already zero</td>
+<td class="comment-11" rowspan="1">Set height to zero. Note <span class="register">A</span> is already zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd62"></span>CD62</td>
 <td class="instruction">JP <a href="7BD0.html">calc_exterior_item_iso_pos</a></td>
-<td class="comment-11" rowspan="1">goto calc_exterior_item_iso_pos;</td>
+<td class="comment-11" rowspan="1">Exit via calc_exterior_item_iso_pos</td>
 </tr>
 <tr>
-<td class="asm-label-1">item_discovered_0</td>
+<td class="asm-label-1">id_interior</td>
 <td class="address-2"><span id="cd65"></span>CD65</td>
 <td class="instruction">LD (HL),$05</td>
-<td class="comment-11" rowspan="1">else &lt;% *HL = 5;</td>
+<td class="comment-11" rowspan="1">Set height to 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cd67"></span>CD67</td>
 <td class="instruction">JP <a href="7BF2.html">calc_interior_item_iso_pos</a></td>
-<td class="comment-11" rowspan="1">goto calc_interior_item_iso_pos;</td>
+<td class="comment-11" rowspan="1">Exit via calc_interior_item_iso_pos</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -270,9 +270,9 @@ Bug: C is not masked, so could go out of range.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

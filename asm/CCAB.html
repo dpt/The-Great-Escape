@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="CCCD.html">CCCD</a></span></td>
 </tr>
 </table>
-<div class="description">CCAB: Guards pursue prisoners.</div>
+<div class="description">CCAB: Hostiles pursue prisoners.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -33,7 +33,7 @@ Used by the routines at <a href="C892.html">automatics</a>, <a href="CC37.html">
 For all visible, hostile characters, at height &lt; 32, set the bribed/pursue flag.
 </div>
 <div class="paragraph">
-Research: If I nop this out then guards don't spot the items I drop.
+Research: If I nop this out then guards don't spot the items I drop. Iterate non-player characters.
 </div>
 </div>
 <table class="input-0">
@@ -54,59 +54,79 @@ Research: If I nop this out then guards don't spot the items I drop.
 <td class="asm-label-1">hostiles_pursue</td>
 <td class="address-2"><span id="ccab"></span>CCAB</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="2">HL = $8020; // iterate over non-player characters</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccae"></span>CCAE</td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Prepare the vischar stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccb1"></span>CCB1</td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">B = 7; // iterations</td>
-</tr>
-<tr>
-<td class="asm-label-1">hostiles_pursue_0</td>
-<td class="address-2"><span id="ccb3"></span>CCB3</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<span id="ccb4"></span>
+<span id="ccb3"></span>
 <div class="comments">
 <div class="paragraph">
-HL[0x13] is the character's height, testing this excludes the guards in the towers.
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">hp_loop</td>
+<td class="address-2"><span id="ccb3"></span>CCB3</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">Preserve the vischar pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ccb4"></span>CCB4</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">Fetch vischar.character</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ccb5"></span>
+<div class="comments">
+<div class="paragraph">
+Include hostiles only.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
-<td class="address-1"><span id="ccb4"></span>CCB4</td>
-<td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="14">if (HL[0] &lt;= character_19_GUARD_DOG_4 &amp;&amp; HL[0x13] &lt; 32) HL[1] = vischar_FLAGS_PURSUE;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
 <td class="address-1"><span id="ccb5"></span>CCB5</td>
 <td class="instruction">CP $14</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it character_20_PRISONER_1 or above?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccb7"></span>CCB7</td>
-<td class="instruction">JR NC,<a href="CCAB.html#ccc8">hostiles_pursue_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="CCAB.html#ccc8">hp_next</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ccb9"></span>
+<div class="comments">
+<div class="paragraph">
+Exclude the guards placed high up in towers and over the gate.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccb9"></span>CCB9</td>
 <td class="instruction">LD A,$13</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.mi.pos.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -124,25 +144,25 @@ HL[0x13] is the character's height, testing this excludes the guards in the towe
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccbd"></span>CCBD</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch vischar.mi.pos.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccbe"></span>CCBE</td>
 <td class="instruction">CP $20</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it 32 or above?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccc0"></span>CCC0</td>
-<td class="instruction">JR NC,<a href="CCAB.html#ccc8">hostiles_pursue_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="CCAB.html#ccc8">hp_next</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccc2"></span>CCC2</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -160,31 +180,31 @@ HL[0x13] is the character's height, testing this excludes the guards in the towe
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccc6"></span>CCC6</td>
 <td class="instruction">LD (HL),$01</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set vischar.flags to vischar_FLAGS_PURSUE</td>
 </tr>
 <tr>
-<td class="asm-label-1">hostiles_pursue_1</td>
+<td class="asm-label-1">hp_next</td>
 <td class="address-2"><span id="ccc8"></span>CCC8</td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccc9"></span>CCC9</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += 32; // stride</td>
+<td class="comment-11" rowspan="1">Advance the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ccca"></span>CCCA</td>
-<td class="instruction">DJNZ <a href="CCAB.html#ccb3">hostiles_pursue_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="CCAB.html#ccb3">hp_loop</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cccc"></span>CCCC</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -195,9 +215,9 @@ HL[0x13] is the character's height, testing this excludes the guards in the towe
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

@@ -45,82 +45,112 @@ Used by the routine at <a href="F163.html">main</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="f257"></span>
+<div class="comments">
+<div class="paragraph">
+Clear the pixels to zero
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1">wipe_full_screen_and_attributes</td>
 <td class="address-2"><span id="f257"></span>F257</td>
 <td class="instruction">LD HL,$4000</td>
-<td class="comment-11" rowspan="6">memset(screen, 0, 0x1800);</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the start of the screen (source address)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f25a"></span>F25A</td>
 <td class="instruction">LD DE,$4001</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the start of the screen plus a byte (destination address)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f25d"></span>F25D</td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set the first screen byte to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f25f"></span>F25F</td>
 <td class="instruction">LD BC,$17FF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">6143 bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f262"></span>F262</td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Copy source to destination 6143 times, advancing until the screen is cleared</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f264"></span>
+<div class="comments">
+<div class="paragraph">
+Clear the attributes to white over black
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f264"></span>F264</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to the start of the attributes (source address)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f265"></span>F265</td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="4">memset(atttributes, attribute_WHITE_OVER_BLACK, 0x300);</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to the start of the attributes plus a byte (destination address)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f266"></span>F266</td>
 <td class="instruction">LD (HL),$07</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set the first attribute byte to seven (white over black)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f268"></span>F268</td>
 <td class="instruction">LD BC,$02FF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">767 bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f26b"></span>F26B</td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Copy source to destination 767 times, advancing until the screen is cleared</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f26d"></span>
+<div class="comments">
+<div class="paragraph">
+Set the border to black
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f26d"></span>F26D</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">border = 0; // black</td>
+<td class="comment-11" rowspan="1">Set <span class="register">A</span> to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f26e"></span>F26E</td>
 <td class="instruction">OUT ($FE),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set the border (and speaker)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f270"></span>F270</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -131,9 +161,9 @@ Used by the routine at <a href="F163.html">main</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

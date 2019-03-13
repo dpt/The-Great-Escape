@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="C7B9.html">C7B9</a></span></td>
 </tr>
 </table>
-<div class="description">C79A: Increments 'first' by ('first' - 'second').</div>
+<div class="description">C79A: Moves the first value toward the second.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,7 +36,7 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 </tr>
 <tr>
 <td class="register">A'</td>
-<td class="register-desc">A maximum value, usually 2 or 6.</td>
+<td class="register-desc">Largest movement allowed. Either 2 or 6.</td>
 </tr>
 <tr>
 <td class="register">B</td>
@@ -44,11 +44,11 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 </tr>
 <tr>
 <td class="register">DE</td>
-<td class="register-desc">Pointer to bytes within character_structs. // 761b,761c, 7622,7623, 7629,762a, 7630,7631, 7653,...</td>
+<td class="register-desc">Pointer to the first value (byte).</td>
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to bytes within word_783A.         // 787a,787b, 787e,787f, 78b2,78b3, 7884,7885, 7892,...</td>
+<td class="register-desc">Pointer to the second value (byte).</td>
 </tr>
 </table>
 <table class="output-1">
@@ -57,34 +57,34 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 </tr>
 <tr>
 <td class="register">B</td>
-<td class="register-desc">Incremented by one if no movement.</td>
+<td class="register-desc">Incremented by one when no change.</td>
 </tr>
 </table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">change_by_delta</td>
+<td class="asm-label-1">move_towards</td>
 <td class="address-2"><span id="c79a"></span>C79A</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Set <span class="register">C</span> to the largest movement allowed</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c79b"></span>C79B</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">C = Adash; // ie. banked A // some maximum value</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c79c"></span>C79C</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c79d"></span>C79D</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">A = *DE - *HL; // delta</td>
+<td class="comment-11" rowspan="2">delta = first - second</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -95,43 +95,63 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c79f"></span>C79F</td>
-<td class="instruction">JR NZ,<a href="C79A.html#c7a3">change_by_delta_0</a></td>
-<td class="comment-11" rowspan="1">if (A == 0) &lt;%</td>
+<td class="instruction">JR NZ,<a href="C79A.html#c7a3">move_towards_0</a></td>
+<td class="comment-11" rowspan="1">Was the delta zero? Jump if not</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="c7a1"></span>
+<div class="comments">
+<div class="paragraph">
+Delta was zero
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a1"></span>C7A1</td>
 <td class="instruction">INC B</td>
-<td class="comment-11" rowspan="1">B++;</td>
+<td class="comment-11" rowspan="1">Otherwise increment the result by one</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a2"></span>C7A2</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">change_by_delta_0</td>
+<td class="asm-label-1">move_towards_0</td>
 <td class="address-2"><span id="c7a3"></span>C7A3</td>
-<td class="instruction">JR NC,<a href="C79A.html#c7b0">change_by_delta_2</a></td>
-<td class="comment-11" rowspan="1">else if (A &lt; 0) &lt;% // delta -ve =&gt; second &gt; first</td>
+<td class="instruction">JR NC,<a href="C79A.html#c7b0">move_towards_2</a></td>
+<td class="comment-11" rowspan="1">Was the delta negative? Jump if not</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="c7a5"></span>
+<div class="comments">
+<div class="paragraph">
+Delta was negative
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a5"></span>C7A5</td>
 <td class="instruction">NEG</td>
-<td class="comment-11" rowspan="1">A = -A; // absolute value</td>
+<td class="comment-11" rowspan="1">Get the absolute value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a7"></span>C7A7</td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="3">if (A &gt;= C) A = C;</td>
+<td class="comment-11" rowspan="3">Clamp the delta to the largest movement</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7a8"></span>C7A8</td>
-<td class="instruction">JR C,<a href="C79A.html#c7ab">change_by_delta_1</a></td>
+<td class="instruction">JR C,<a href="C79A.html#c7ab">move_towards_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -141,10 +161,10 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">change_by_delta_1</td>
+<td class="asm-label-1">move_towards_1</td>
 <td class="address-2"><span id="c7ab"></span>C7AB</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="4">*DE += A; // move first towards second</td>
+<td class="comment-11" rowspan="4">Move the first value towards second</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -168,18 +188,28 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7af"></span>C7AF</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">change_by_delta_2</td>
+<td class="routine-comment" colspan="4">
+<span id="c7b0"></span>
+<div class="comments">
+<div class="paragraph">
+Delta was positive
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">move_towards_2</td>
 <td class="address-2"><span id="c7b0"></span>C7B0</td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="3">else &lt;% if (A &gt;= C) A = C; // delta +ve =&gt; first &gt; second</td>
+<td class="comment-11" rowspan="3">Clamp the delta to the largest movement</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b1"></span>C7B1</td>
-<td class="instruction">JR C,<a href="C79A.html#c7b4">change_by_delta_3</a></td>
+<td class="instruction">JR C,<a href="C79A.html#c7b4">move_towards_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -189,10 +219,10 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">change_by_delta_3</td>
+<td class="asm-label-1">move_towards_3</td>
 <td class="address-2"><span id="c7b4"></span>C7B4</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="4">*DE -= A; // move first towards second</td>
+<td class="comment-11" rowspan="4">Move the first value towards second</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -216,7 +246,7 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7b8"></span>C7B8</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -227,9 +257,9 @@ Used by the routine at <a href="C6A0.html">move_characters</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

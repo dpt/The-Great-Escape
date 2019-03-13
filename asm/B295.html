@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B29F.html">B29F</a></span></td>
 </tr>
 </table>
-<div class="description">B295: Multiplies A by 4, returning the result in BC.</div>
+<div class="description">B295: Multiplies <span class="register">A</span> by 4, returning the result in <span class="register">BC</span>.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,7 +36,7 @@ Used by the routines at <a href="68A2.html">transition</a> and <a href="B252.htm
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Argument.</td>
+<td class="register-desc">Value to multiply.</td>
 </tr>
 </table>
 <table class="output-1">
@@ -45,7 +45,7 @@ Used by the routines at <a href="68A2.html">transition</a> and <a href="B252.htm
 </tr>
 <tr>
 <td class="register">BC</td>
-<td class="register-desc">Result of (A &lt;&lt; 2).</td>
+<td class="register-desc">Result of <span class="register">A</span> * 4.</td>
 </tr>
 </table>
 </td>
@@ -54,43 +54,43 @@ Used by the routines at <a href="68A2.html">transition</a> and <a href="B252.htm
 <td class="asm-label-1">multiply_by_4</td>
 <td class="address-2"><span id="b295"></span>B295</td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-11" rowspan="1">B = 0;</td>
+<td class="comment-11" rowspan="1">Initialise high byte of result to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b297"></span>B297</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="1">A &lt;&lt;= 1;</td>
+<td class="comment-11" rowspan="1">Double input value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b298"></span>B298</td>
 <td class="instruction">RL B</td>
-<td class="comment-11" rowspan="1">B = (B &lt;&lt; 1) + carry;</td>
+<td class="comment-11" rowspan="1">Shift carry out into high byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b29a"></span>B29A</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="1">A &lt;&lt;= 1;</td>
+<td class="comment-11" rowspan="1">Double input value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b29b"></span>B29B</td>
 <td class="instruction">RL B</td>
-<td class="comment-11" rowspan="1">B = (B &lt;&lt; 1) + carry;</td>
+<td class="comment-11" rowspan="1">Shift carry out into high byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b29d"></span>B29D</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">C = A;</td>
+<td class="comment-11" rowspan="1"><span class="register">BC</span> is the multiplied value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b29e"></span>B29E</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -101,9 +101,9 @@ Used by the routines at <a href="68A2.html">transition</a> and <a href="B252.htm
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

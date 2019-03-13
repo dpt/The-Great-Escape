@@ -62,59 +62,62 @@ Used by the routine at <a href="BB98.html">restore_tiles</a>.
 <td class="asm-label-1">select_tile_set</td>
 <td class="address-2"><span id="bcaa"></span>BCAA</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve <span class="register">A</span> during this routine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcab"></span>BCAB</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index) &lt;%</td>
+<td class="comment-11" rowspan="1">Fetch the global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcae"></span>BCAE</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it room_0_OUTDOORS?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcaf"></span>BCAF</td>
-<td class="instruction">JR Z,<a href="BCAA.html#bcb6">select_tile_set_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="BCAA.html#bcb6">sts_exterior</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label-1">sts_interior</td>
 <td class="address-1"><span id="bcb1"></span>BCB1</td>
 <td class="instruction">LD BC,$9768</td>
-<td class="comment-11" rowspan="1">BC = &amp;interior_tiles[0];</td>
+<td class="comment-11" rowspan="1">Otherwise point <span class="register">BC</span> at interior_tiles[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcb4"></span>BCB4</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcb5"></span>BCB5</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="bcb6"></span>
 <div class="comments">
 <div class="paragraph">
-Convert map position to an index into 7x5 supertile indices array.
+Convert map position to an index into map_buf: a 7x5 array of supertile indices.
+</div>
+<div class="paragraph">
+Compute row offset
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">select_tile_set_0</td>
+<td class="asm-label-1">sts_exterior</td>
 <td class="address-2"><span id="bcb6"></span>BCB6</td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="5">else &lt;% Adash = (((map_position &gt;&gt; 8) &amp; 3) + L) &gt;&gt; 2;</td>
+<td class="comment-11" rowspan="2">Get the map position's Y component and isolate its low-order bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -126,13 +129,13 @@ Convert map position to an index into 7x5 supertile indices array.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcbb"></span>BCBB</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add on the Y shift from <span class="register">L</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcbc"></span>BCBC</td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Divide by two (rotate right by two then clear the rotated-out bits)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -144,13 +147,13 @@ Convert map position to an index into 7x5 supertile indices array.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcbe"></span>BCBE</td>
 <td class="instruction">AND $3F</td>
-<td class="comment-11" rowspan="7">L = (Adash &amp; 0x3F) * 7; // vertical</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcc0"></span>BCC0</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="5">Multiply by 7 (columns per row of supertiles)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -180,13 +183,23 @@ Convert map position to an index into 7x5 supertile indices array.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcc5"></span>BCC5</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save for later</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="bcc6"></span>
+<div class="comments">
+<div class="paragraph">
+Compute column offset
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcc6"></span>BCC6</td>
 <td class="instruction">LD A,($81BB)</td>
-<td class="comment-11" rowspan="5">Adash = (((map_position &amp; 0xFF) &amp; 3) + H) &gt;&gt; 2;</td>
+<td class="comment-11" rowspan="2">Get the map position's X component and isolate its low-order bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -198,13 +211,13 @@ Convert map position to an index into 7x5 supertile indices array.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bccb"></span>BCCB</td>
 <td class="instruction">ADD A,H</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add on the X shift from <span class="register">H</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bccc"></span>BCCC</td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Divide by two (rotate right by two then clear the rotated-out bits)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -216,25 +229,35 @@ Convert map position to an index into 7x5 supertile indices array.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcce"></span>BCCE</td>
 <td class="instruction">AND $3F</td>
-<td class="comment-11" rowspan="2">Adash = (Adash &amp; 0x3F) + L; // horizontal</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="bcd0"></span>
+<div class="comments">
+<div class="paragraph">
+Combine offsets
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcd0"></span>BCD0</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Combine the row and column offsets</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcd1"></span>BCD1</td>
 <td class="instruction">LD HL,$FF58</td>
-<td class="comment-11" rowspan="4">Adash = $FF58[Adash]; // (7x5) supertile refs</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at map_buf (a 7x5 cut-down copy of the main map which holds supertile indices)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcd4"></span>BCD4</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Add offset (quick version since the values can't overflow)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -246,73 +269,100 @@ Convert map position to an index into 7x5 supertile indices array.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcd6"></span>BCD6</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch the supertile index from map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcd7"></span>BCD7</td>
 <td class="instruction">LD BC,$8590</td>
-<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at exterior_tiles[0]</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="bcda"></span>
+<div class="comments">
+<div class="paragraph">
+Choose the tile index for the current supertile: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">For supertile</th>
+<th colspan="1" rowspan="1">Use tile indices</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">44 and lower</td>
+<td class="" colspan="1" rowspan="1">0..249</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">45..138 and 204..218</td>
+<td class="" colspan="1" rowspan="1">145..400</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">139..203</td>
+<td class="" colspan="1" rowspan="1">365..570</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcda"></span>BCDA</td>
 <td class="instruction">CP $2D</td>
-<td class="comment-11" rowspan="2">if (Adash &gt;= 45) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the supertile index &lt; 45?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcdc"></span>BCDC</td>
-<td class="instruction">JR C,<a href="BCAA.html#bcec">select_tile_set_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="BCAA.html#bcec">sts_exit</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bcde"></span>BCDE</td>
 <td class="instruction">LD BC,$8A18</td>
-<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles[145];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at exterior_tiles[145]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bce1"></span>BCE1</td>
 <td class="instruction">CP $8B</td>
-<td class="comment-11" rowspan="4">if (Adash &gt;= 139 &amp;&amp; Adash &lt; 204) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the supertile index &lt; 139?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bce3"></span>BCE3</td>
-<td class="instruction">JR C,<a href="BCAA.html#bcec">select_tile_set_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="BCAA.html#bcec">sts_exit</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bce5"></span>BCE5</td>
 <td class="instruction">CP $CC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is the supertile index &gt;= 204?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bce7"></span>BCE7</td>
-<td class="instruction">JR NC,<a href="BCAA.html#bcec">select_tile_set_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NC,<a href="BCAA.html#bcec">sts_exit</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bce9"></span>BCE9</td>
 <td class="instruction">LD BC,$90F8</td>
-<td class="comment-11" rowspan="1">BC = &amp;exterior_tiles[145 + 220]; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at exterior_tiles[145 + 220]</td>
 </tr>
 <tr>
-<td class="asm-label-1">select_tile_set_1</td>
+<td class="asm-label-1">sts_exit</td>
 <td class="address-2"><span id="bcec"></span>BCEC</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bced"></span>BCED</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -323,9 +373,9 @@ Convert map position to an index into 7x5 supertile indices array.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

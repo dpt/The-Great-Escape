@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B75A.html">B75A</a></span></td>
 </tr>
 </table>
-<div class="description">B729: Calculate screen position for vischars from saved_pos.</div>
+<div class="description">B729: Calculate screen position for the specified vischar from saved_pos.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -51,16 +51,26 @@ Similar to drop_item_tail_interior.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="b729"></span>
+<div class="comments">
+<div class="paragraph">
+Set vischar.iso_pos.x to ($200 - saved_pos_x + saved_pos_y) * 2
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1">calc_vischar_iso_pos_from_state</td>
 <td class="address-2"><span id="b729"></span>B729</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b72a"></span>B72A</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="3">HL += 0x18; // vischar-&gt;scrx/y</td>
+<td class="comment-11" rowspan="3">Point <span class="register">DE</span> at vischar.iso_pos.x (note shortcut - no rollover into high byte)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -78,7 +88,7 @@ Similar to drop_item_tail_interior.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b72e"></span>B72E</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-11" rowspan="3">DE = saved_pos_y + 0x0200;</td>
+<td class="comment-11" rowspan="3">HL = saved_pos_y + $200</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -96,37 +106,37 @@ Similar to drop_item_tail_interior.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b735"></span>B735</td>
 <td class="instruction">LD BC,($81A4)</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch saved_pos_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b739"></span>B739</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b73a"></span>B73A</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="2">DE = (DE - saved_pos_x) * 2;</td>
+<td class="comment-11" rowspan="1">HL -= saved_pos_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b73c"></span>B73C</td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Double the result</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b73d"></span>B73D</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b73e"></span>B73E</td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-11" rowspan="2">*HL++ = E;</td>
+<td class="comment-11" rowspan="4">Store result in vischar.iso_pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -138,7 +148,7 @@ Similar to drop_item_tail_interior.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b740"></span>B740</td>
 <td class="instruction">LD (HL),D</td>
-<td class="comment-11" rowspan="2">*HL++ = D;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -147,64 +157,74 @@ Similar to drop_item_tail_interior.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="b742"></span>
+<div class="comments">
+<div class="paragraph">
+Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b742"></span>B742</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b743"></span>B743</td>
 <td class="instruction">LD HL,$0800</td>
-<td class="comment-11" rowspan="7">DE = 0x0800 - saved_pos_x - saved_height - saved_pos_y;</td>
+<td class="comment-11" rowspan="1">HL = $800</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b746"></span>B746</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b747"></span>B747</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">HL -= saved_pos_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b749"></span>B749</td>
 <td class="instruction">LD BC,($81A8)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch saved_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b74d"></span>B74D</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">HL -= saved_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b74f"></span>B74F</td>
 <td class="instruction">LD BC,($81A6)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch saved_pos_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b753"></span>B753</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">HL -= saved_pos_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b755"></span>B755</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b756"></span>B756</td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-11" rowspan="2">*HL++ = E;</td>
+<td class="comment-11" rowspan="3">Store result in vischar.iso_pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -216,13 +236,13 @@ Similar to drop_item_tail_interior.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b758"></span>B758</td>
 <td class="instruction">LD (HL),D</td>
-<td class="comment-11" rowspan="1">*HL = D;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b759"></span>B759</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -233,9 +253,9 @@ Similar to drop_item_tail_interior.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

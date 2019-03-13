@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="CA81.html">CA81</a></span></td>
 </tr>
 </table>
-<div class="description">CA49: Move character on the Y axis.</div>
+<div class="description">CA49: Move a character on the Y axis.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -39,7 +39,7 @@ Nearly identical to vischar_move_x above.
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to visible character block + 5.</td>
+<td class="register-desc">Pointer to vischar.target.</td>
 </tr>
 <tr>
 <td class="register">IY</td>
@@ -52,7 +52,7 @@ Nearly identical to vischar_move_x above.
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">5/7/0 .. meaning ?</td>
+<td class="register-desc">New input: input_LEFT + input_DOWN (5) if y &gt; pos.y, input_RIGHT + input_UP (7) if y &lt; pos.y, input_NONE (0) if y == pos.y</td>
 </tr>
 <tr>
 <td class="register">HL</td>
@@ -65,19 +65,19 @@ Nearly identical to vischar_move_x above.
 <td class="asm-label-1">vischar_move_y</td>
 <td class="address-2"><span id="ca49"></span>CA49</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL; // sampled HL=$8025,$8065,$8005</td>
+<td class="comment-11" rowspan="1">Read vischar.target.y (target position)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca4a"></span>CA4A</td>
 <td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
-<td class="comment-11" rowspan="1">multiply_by_8(); // self modified by <a href="C918.html">character_behaviour</a></td>
+<td class="comment-11" rowspan="1">Multiply it by 1, 4 or 8 (self modified by <a href="C918.html#c9dd">C9DD</a>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca4d"></span>CA4D</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">HL += 12; // position on Y axis ($8011 etc.)</td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.mi.pos.y (current position)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -95,7 +95,7 @@ Nearly identical to vischar_move_x above.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca51"></span>CA51</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="2">E = *HL++;</td>
+<td class="comment-11" rowspan="3">Read vischar.mi.pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -107,37 +107,47 @@ Nearly identical to vischar_move_x above.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca53"></span>CA53</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="1">D = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca54"></span>CA54</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Free up <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca55"></span>CA55</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">DE -= BC;</td>
+<td class="comment-11" rowspan="1">Compute the delta: current position - target position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca57"></span>CA57</td>
-<td class="instruction">JR Z,<a href="CA49.html#ca76">vischar_move_y_3</a></td>
-<td class="comment-11" rowspan="1">if (DE) &lt;%</td>
+<td class="instruction">JR Z,<a href="CA49.html#ca76">vmy_equal</a></td>
+<td class="comment-11" rowspan="1">Jump if it's zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca59"></span>CA59</td>
-<td class="instruction">JP M,<a href="CA49.html#ca68">vischar_move_y_1</a></td>
-<td class="comment-11" rowspan="1">if (DE &gt; 0) &lt;% // +ve</td>
+<td class="instruction">JP M,<a href="CA49.html#ca68">vmy_negative</a></td>
+<td class="comment-11" rowspan="1">Jump if it's negative</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="routine-comment" colspan="4">
+<span id="ca5c"></span>
+<div class="comments">
+<div class="paragraph">
+The delta was positive
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">vmy_positive</td>
 <td class="address-1"><span id="ca5c"></span>CA5C</td>
 <td class="instruction">LD A,H</td>
-<td class="comment-11" rowspan="8">if (D != 0   || E &gt;= 3)  &lt;% A = 5; return; %&gt; %&gt; else &lt;% // -ve</td>
+<td class="comment-11" rowspan="2">Delta &gt;= 256?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -148,14 +158,14 @@ Nearly identical to vischar_move_x above.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca5e"></span>CA5E</td>
-<td class="instruction">JR NZ,<a href="CA49.html#ca65">vischar_move_y_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="CA49.html#ca65">vmy_delta_too_big</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca60"></span>CA60</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Delta &lt; 3?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -166,14 +176,24 @@ Nearly identical to vischar_move_x above.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca63"></span>CA63</td>
-<td class="instruction">JR C,<a href="CA49.html#ca76">vischar_move_y_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR C,<a href="CA49.html#ca76">vmy_equal</a></td>
+<td class="comment-11" rowspan="1">Jump if it's in range</td>
 </tr>
 <tr>
-<td class="asm-label-1">vischar_move_y_0</td>
+<td class="routine-comment" colspan="4">
+<span id="ca65"></span>
+<div class="comments">
+<div class="paragraph">
+The delta was three or greater
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">vmy_delta_too_big</td>
 <td class="address-2"><span id="ca65"></span>CA65</td>
 <td class="instruction">LD A,$05</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Return input_LEFT + input_DOWN (3 + 2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -182,10 +202,20 @@ Nearly identical to vischar_move_x above.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">vischar_move_y_1</td>
+<td class="routine-comment" colspan="4">
+<span id="ca68"></span>
+<div class="comments">
+<div class="paragraph">
+The delta was negative
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">vmy_negative</td>
 <td class="address-2"><span id="ca68"></span>CA68</td>
 <td class="instruction">LD A,H</td>
-<td class="comment-11" rowspan="8">if (D != 255 || E &lt; 254) &lt;% A = 7; return; %&gt; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="2">Delta &lt; -256?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -196,14 +226,14 @@ Nearly identical to vischar_move_x above.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca6b"></span>CA6B</td>
-<td class="instruction">JR NZ,<a href="CA49.html#ca73">vischar_move_y_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="CA49.html#ca73">vmy_delta_too_small</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca6d"></span>CA6D</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Delta &gt;= -2?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -214,14 +244,24 @@ Nearly identical to vischar_move_x above.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca70"></span>CA70</td>
-<td class="instruction">JP NC,<a href="CA49.html#ca76">vischar_move_y_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NC,<a href="CA49.html#ca76">vmy_equal</a></td>
+<td class="comment-11" rowspan="1">Jump if it's in range</td>
 </tr>
 <tr>
-<td class="asm-label-1">vischar_move_y_2</td>
+<td class="routine-comment" colspan="4">
+<span id="ca73"></span>
+<div class="comments">
+<div class="paragraph">
+The delta was less than negative three
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">vmy_delta_too_small</td>
 <td class="address-2"><span id="ca73"></span>CA73</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Return input_RIGHT + input_UP (6 + 1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -230,16 +270,26 @@ Nearly identical to vischar_move_x above.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">vischar_move_y_3</td>
+<td class="routine-comment" colspan="4">
+<span id="ca76"></span>
+<div class="comments">
+<div class="paragraph">
+The delta was -2..2
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">vmy_equal</td>
 <td class="address-2"><span id="ca76"></span>CA76</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move vischar back into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca77"></span>CA77</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">HL -= 14;</td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar-&gt;mi.pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -257,19 +307,19 @@ Nearly identical to vischar_move_x above.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca7b"></span>CA7B</td>
 <td class="instruction">RES 5,(IY+$07)</td>
-<td class="comment-11" rowspan="1">IY[7] &amp;= ~vischar_BYTE7_Y_DOMINANT;</td>
+<td class="comment-11" rowspan="1">Clear vischar.counter_and_flags flag vischar_BYTE7_Y_DOMINANT so that next time we'll use <a href="CA11.html">vischar_move_x</a> in preference</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca7f"></span>CA7F</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="2">Return input_NONE (0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca80"></span>CA80</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -280,9 +330,9 @@ Nearly identical to vischar_move_x above.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

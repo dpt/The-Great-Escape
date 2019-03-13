@@ -51,127 +51,177 @@ Up/Down/Left/Right/Fire = keys 9/8/6/7/0.
 <td class="asm-label-1">inputroutine_sinclair</td>
 <td class="address-2"><span id="fecd"></span>FECD</td>
 <td class="instruction">LD BC,$EFFE</td>
-<td class="comment-11" rowspan="1">BC = port_KEYBOARD_09876;</td>
+<td class="comment-11" rowspan="1">Load <span class="register">BC</span> with the port number of the keyboard half row for keys 6/7/8/9/0</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fed0"></span>FED0</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Read that port. We'll receive xxx67890</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fed2"></span>FED2</td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="1">A = ~A; /* xxx67890 */</td>
+<td class="comment-11" rowspan="1">The keyboard is active low, so complement the value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fed3"></span>FED3</td>
 <td class="instruction">LD BC,$0000</td>
-<td class="comment-11" rowspan="1">BC = 0;</td>
+<td class="comment-11" rowspan="1">Clear our left_right and up_down variables</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fed6"></span>FED6</td>
 <td class="instruction">RRCA</td>
-<td class="comment-11" rowspan="1">RRCA /* 0xxx6789 */</td>
+<td class="comment-11" rowspan="1">Rotate '0' out: 0xxx6789</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="fed7"></span>
+<div class="comments">
+<div class="paragraph">
+Up
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fed7"></span>FED7</td>
 <td class="instruction">RRCA</td>
-<td class="comment-11" rowspan="1">RRCA /* 90xxx678 */</td>
+<td class="comment-11" rowspan="1">Rotate '9' out: 90xxx678</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fed8"></span>FED8</td>
 <td class="instruction">JR NC,<a href="FECD.html#fedc">inputroutine_sinclair_0</a></td>
-<td class="comment-11" rowspan="2">if (carry) C = input_UP;</td>
+<td class="comment-11" rowspan="1">If carry was set then '9' was pressed, otherwise skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="feda"></span>FEDA</td>
 <td class="instruction">LD C,$01</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">up_down = input_UP</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="fedc"></span>
+<div class="comments">
+<div class="paragraph">
+Down
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">inputroutine_sinclair_0</td>
 <td class="address-2"><span id="fedc"></span>FEDC</td>
 <td class="instruction">RRCA</td>
-<td class="comment-11" rowspan="1">RRCA /* 890xxx67 */</td>
+<td class="comment-11" rowspan="1">Rotate '8' out: 890xxx67</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fedd"></span>FEDD</td>
 <td class="instruction">JR NC,<a href="FECD.html#fee1">inputroutine_sinclair_1</a></td>
-<td class="comment-11" rowspan="2">if (carry) C = input_DOWN;</td>
+<td class="comment-11" rowspan="1">If carry was set then '8' was pressed, otherwise skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fedf"></span>FEDF</td>
 <td class="instruction">LD C,$02</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">up_down = input_DOWN</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="fee1"></span>
+<div class="comments">
+<div class="paragraph">
+Right
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">inputroutine_sinclair_1</td>
 <td class="address-2"><span id="fee1"></span>FEE1</td>
 <td class="instruction">RRCA</td>
-<td class="comment-11" rowspan="1">RRCA /* 7890xxx6 */</td>
+<td class="comment-11" rowspan="1">Rotate '7' out: 7890xxx6</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fee2"></span>FEE2</td>
 <td class="instruction">JR NC,<a href="FECD.html#fee6">inputroutine_sinclair_2</a></td>
-<td class="comment-11" rowspan="2">if (carry) B = input_RIGHT;</td>
+<td class="comment-11" rowspan="1">If carry was set then '7' was pressed, otherwise skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fee4"></span>FEE4</td>
 <td class="instruction">LD B,$06</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">left_right = input_RIGHT</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="fee6"></span>
+<div class="comments">
+<div class="paragraph">
+Left
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">inputroutine_sinclair_2</td>
 <td class="address-2"><span id="fee6"></span>FEE6</td>
 <td class="instruction">RRCA</td>
-<td class="comment-11" rowspan="1">RRCA /* 67890xxx */</td>
+<td class="comment-11" rowspan="1">Rotate '6' out: 67890xxx</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fee7"></span>FEE7</td>
 <td class="instruction">JR NC,<a href="FECD.html#feeb">inputroutine_sinclair_3</a></td>
-<td class="comment-11" rowspan="2">if (carry) B = input_LEFT;</td>
+<td class="comment-11" rowspan="1">If carry was set then '6' was pressed, otherwise skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fee9"></span>FEE9</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">left_right = input_LEFT</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="feeb"></span>
+<div class="comments">
+<div class="paragraph">
+Fire
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">inputroutine_sinclair_3</td>
 <td class="address-2"><span id="feeb"></span>FEEB</td>
 <td class="instruction">AND $08</td>
-<td class="comment-11" rowspan="3">if ((A &amp; (1&lt;&lt;3)) == 0) A = input_FIRE;</td>
+<td class="comment-11" rowspan="1">Is '0' pressed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="feed"></span>FEED</td>
 <td class="instruction">JR Z,<a href="FECD.html#fef1">inputroutine_sinclair_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="feef"></span>FEEF</td>
 <td class="instruction">LD A,$09</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">fire = input_FIRE</td>
 </tr>
 <tr>
 <td class="asm-label-1">inputroutine_sinclair_4</td>
 <td class="address-2"><span id="fef1"></span>FEF1</td>
 <td class="instruction">ADD A,B</td>
-<td class="comment-11" rowspan="2">A += B + C; /* Combine axis */</td>
+<td class="comment-11" rowspan="2">Combine the fire, up_down and left_right values</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -183,7 +233,7 @@ Up/Down/Left/Right/Fire = keys 9/8/6/7/0.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fef3"></span>FEF3</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -194,9 +244,9 @@ Up/Down/Left/Right/Fire = keys 9/8/6/7/0.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

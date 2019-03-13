@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B3F6.html">B3F6</a></span></td>
 </tr>
 </table>
-<div class="description">B3E1: Use uniform.</div>
+<div class="description">B3E1: Use guard's uniform.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -46,19 +46,29 @@
 <td class="asm-label-1">action_uniform</td>
 <td class="address-2"><span id="b3e1"></span>B3E1</td>
 <td class="instruction">LD HL,$8015</td>
-<td class="comment-11" rowspan="1">HL = $8015; // current character sprite set</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's vischar sprite set pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3e4"></span>B3E4</td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="comment-11" rowspan="1">DE = &amp;sprite_guard;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the guard sprite set</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b3e7"></span>
+<div class="comments">
+<div class="paragraph">
+Bail out if the hero's already in the uniform
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3e7"></span>B3E7</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">if (*HL == E) return; // cheap equality test /* Already in uniform. */</td>
+<td class="comment-11" rowspan="3">Cheap equality test</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -73,10 +83,20 @@
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="b3ea"></span>
+<div class="comments">
+<div class="paragraph">
+Can't don the uniform when in a tunnel
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3ea"></span>B3EA</td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">if (room_index &gt;= room_29_SECOND_TUNNEL_START) return; // can't don uniform when in a tunnel</td>
+<td class="comment-11" rowspan="3">If the global current room index is room_29_SECOND_TUNNEL_START or above... we're in the tunnels, so bail out</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -91,16 +111,26 @@
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="b3f0"></span>
+<div class="comments">
+<div class="paragraph">
+Otherwise the uniform can be worn
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f0"></span>B3F0</td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-11" rowspan="1">*HL++ = E;</td>
+<td class="comment-11" rowspan="3">Set the hero's sprite set to sprite_guard</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f1"></span>B3F1</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">*HL = D;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -112,7 +142,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3f3"></span>B3F3</td>
 <td class="instruction">JP <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
-<td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50(); return;</td>
+<td class="comment-11" rowspan="1">Increase morale by 10, score by 50 and exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -123,9 +153,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

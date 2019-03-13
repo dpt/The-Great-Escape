@@ -51,7 +51,7 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 <td class="asm-label-1">searchlight_mask_test</td>
 <td class="address-2"><span id="b83b"></span>B83B</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="2">HL = IY;</td>
+<td class="comment-11" rowspan="2">Copy the current visible character pointer into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -63,32 +63,42 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b83e"></span>B83E</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">if (L) return; /* Skip non-hero characters. */</td>
+<td class="comment-11" rowspan="1">Extract the visible character's offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b83f"></span>B83F</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b840"></span>B840</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if not - skip non-hero characters</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b841"></span>
+<div class="comments">
+<div class="paragraph">
+Start testing at approximately the middle of the character.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b841"></span>B841</td>
 <td class="instruction">LD HL,$8131</td>
-<td class="comment-11" rowspan="1">HL = $8100 + $31; // mask_buffer + 0x31</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at mask_buffer ($8100) + $31</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b844"></span>
 <div class="comments">
 <div class="paragraph">
-Bug: Does a fused load of BC, but doesn't use C after. Probably a leftover stride constant.
+Bug: This does a fused load of <span class="register">BC</span>, but doesn't use <span class="register">C</span> after. It's probably a leftover stride constant.
 </div>
 </div>
 </td>
@@ -97,31 +107,41 @@ Bug: Does a fused load of BC, but doesn't use C after. Probably a leftover strid
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b844"></span>B844</td>
 <td class="instruction">LD BC,$0804</td>
-<td class="comment-11" rowspan="1">BC = 0x0804; // 8 iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b847"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b847"></span>B847</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="3">do &lt;% if (*HL != 0) goto still_in_searchlight;</td>
+<td class="comment-11" rowspan="1">Preload <span class="register">A</span> with zero</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_mask_test_0</td>
 <td class="address-2"><span id="b848"></span>B848</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is the mask byte zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b849"></span>B849</td>
 <td class="instruction">JR NZ,<a href="B83B.html#b860">still_in_searchlight</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump to still_in_searchlight if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b84b"></span>B84B</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="4">HL += 4; // stride is 4?</td>
+<td class="comment-11" rowspan="4">Advance <span class="register">HL</span> to the next row (note cheap increment due to alignment)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -145,7 +165,7 @@ Bug: Does a fused load of BC, but doesn't use C after. Probably a leftover strid
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b84f"></span>B84F</td>
 <td class="instruction">DJNZ <a href="B83B.html#b848">searchlight_mask_test_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -161,19 +181,19 @@ Otherwise the hero has escaped the searchlight, so decrement the counter.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b851"></span>B851</td>
 <td class="instruction">LD HL,$81BD</td>
-<td class="comment-11" rowspan="1">HL = &amp;searchlight_state;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at searchlight_state</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b854"></span>B854</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment-11" rowspan="1">(*HL)--;</td>
+<td class="comment-11" rowspan="1">Decrement it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b855"></span>B855</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="3">if (searchlight_STATE_SEARCHING != *HL) return;</td>
+<td class="comment-11" rowspan="2">Is it searchlight_STATE_SEARCHING?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -185,31 +205,31 @@ Otherwise the hero has escaped the searchlight, so decrement the counter.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b858"></span>B858</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b859"></span>B859</td>
 <td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">choose_game_window_attributes();</td>
+<td class="comment-11" rowspan="1">Choose game window attributes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b85c"></span>B85C</td>
 <td class="instruction">CALL <a href="A15F.html">set_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">set_game_window_attributes();</td>
+<td class="comment-11" rowspan="1">Set game window attributes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b85f"></span>B85F</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1">still_in_searchlight</td>
 <td class="address-2"><span id="b860"></span>B860</td>
 <td class="instruction">LD HL,$81BD</td>
-<td class="comment-11" rowspan="2">searchlight_state = searchlight_STATE_CAUGHT;</td>
+<td class="comment-11" rowspan="2">Set searchlight_state to searchlight_STATE_CAUGHT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -221,7 +241,7 @@ Otherwise the hero has escaped the searchlight, so decrement the counter.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b865"></span>B865</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -232,9 +252,9 @@ Otherwise the hero has escaped the searchlight, so decrement the counter.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

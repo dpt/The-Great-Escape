@@ -27,6 +27,18 @@
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
+This transfers the game's linear screen buffer into the game window region of the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output region is smaller at 23x16x8 bytes. The addresses are stored precalculated in the table at <a href="EDD3.html">game_window_start_addresses</a>.
+</div>
+<div class="paragraph">
+Scrolling to 4-bit nibble accuracy is permitted by implementing two cases here: aligned and unaligned. Aligned transfers just have to move the bytes across and so are fast. Unaligned transfers have to roll bytes right to effect the left shift, so are much slower.
+</div>
+<div class="paragraph">
+The aligned case copies 23 bytes per scanline starting at $F291 (one byte into buffer). The unaligned case rolls the bytes right (so it moves left? CHECK) starting at $F290.
+</div>
+<div class="paragraph">
+Uses the Z80 SP stack trick.
+</div>
+<div class="paragraph">
 Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html">screen_reset</a>.
 </div>
 </div>
@@ -48,43 +60,43 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1">plot_game_window</td>
 <td class="address-2"><span id="eed3"></span>EED3</td>
 <td class="instruction">LD ($EDD1),SP</td>
-<td class="comment-11" rowspan="1">saved_sp = SP;</td>
+<td class="comment-11" rowspan="1">Preserve the stack pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eed7"></span>EED7</td>
 <td class="instruction">LD A,($A7C8)</td>
-<td class="comment-11" rowspan="1">A = *(&amp;game_window_offset + 1);</td>
+<td class="comment-11" rowspan="1">Read upper byte of game_window_offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eeda"></span>EEDA</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A) goto unaligned;</td>
+<td class="comment-11" rowspan="1">Is it nonzero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eedb"></span>EEDB</td>
-<td class="instruction">JP NZ,<a href="EED3.html#ef27">plot_game_window_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NZ,<a href="EED3.html#ef27">pgw_unaligned</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label-1">pgw_aligned</td>
 <td class="address-1"><span id="eede"></span>EEDE</td>
 <td class="instruction">LD HL,$F291</td>
-<td class="comment-11" rowspan="6">HL = $F291 + game_window_offset;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address + 1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eee1"></span>EEE1</td>
 <td class="instruction">LD A,($A7C7)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Read lower byte of game_window_offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eee4"></span>EEE4</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Combine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -108,169 +120,179 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eee9"></span>EEE9</td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment-11" rowspan="1">SP = game_window_start_addresses;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">SP</span> at game_window_start_addresses</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eeec"></span>EEEC</td>
 <td class="instruction">LD A,$80</td>
-<td class="comment-11" rowspan="1">A = 128; // 128 rows</td>
+<td class="comment-11" rowspan="1">There are 128 rows</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="eeee"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_game_window_1</td>
 <td class="address-2"><span id="eeee"></span>EEEE</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">do &lt;% DE = *SP++; // output address</td>
+<td class="comment-11" rowspan="1">Pop a target address off the stack</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eeef"></span>EEEF</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++; /* unrolled: 23 copies */</td>
+<td class="comment-11" rowspan="23">Copy 23 bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eef1"></span>EEF1</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eef3"></span>EEF3</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eef5"></span>EEF5</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eef7"></span>EEF7</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eef9"></span>EEF9</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eefb"></span>EEFB</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eefd"></span>EEFD</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="eeff"></span>EEFF</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef01"></span>EF01</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef03"></span>EF03</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef05"></span>EF05</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef07"></span>EF07</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef09"></span>EF09</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef0b"></span>EF0B</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef0d"></span>EF0D</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef0f"></span>EF0F</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef11"></span>EF11</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef13"></span>EF13</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef15"></span>EF15</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef17"></span>EF17</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef19"></span>EF19</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef1b"></span>EF1B</td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">*DE++ = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef1d"></span>EF1D</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; // skip 24th</td>
+<td class="comment-11" rowspan="1">Skip the 24th input byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef1e"></span>EF1E</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+<td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -282,36 +304,36 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef22"></span>EF22</td>
 <td class="instruction">LD SP,($EDD1)</td>
-<td class="comment-11" rowspan="1">SP = saved_sp;</td>
+<td class="comment-11" rowspan="1">Restore the stack pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef26"></span>EF26</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_2</td>
+<td class="asm-label-1">pgw_unaligned</td>
 <td class="address-2"><span id="ef27"></span>EF27</td>
 <td class="instruction">LD HL,$F290</td>
-<td class="comment-11" rowspan="6">unaligned: HL = $F290 + game_window_offset; // screen buffer start address</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef2a"></span>EF2A</td>
 <td class="instruction">LD A,($A7C7)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Read lower byte of game_window_offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef2d"></span>EF2D</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="4">Combine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef2e"></span>EF2E</td>
-<td class="instruction">JR NC,<a href="EED3.html#ef31">plot_game_window_3</a></td>
+<td class="instruction">JR NC,<a href="EED3.html#ef31">plot_game_window_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -321,7 +343,7 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_3</td>
+<td class="asm-label-1">plot_game_window_2</td>
 <td class="address-2"><span id="ef31"></span>EF31</td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
@@ -330,7 +352,7 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef32"></span>EF32</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++; // prime A</td>
+<td class="comment-11" rowspan="2">Fetch a first source byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -342,103 +364,133 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef34"></span>EF34</td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment-11" rowspan="1">SP = game_window_start_addresses;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">SP</span> at game_window_start_addresses</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef37"></span>EF37</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="2">Bdash = 128; // 128 rows</td>
+<td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef38"></span>EF38</td>
 <td class="instruction">LD B,$80</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">There are 128 rows</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_4</td>
+<td class="routine-comment" colspan="4">
+<span id="ef3a"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">plot_game_window_3</td>
 <td class="address-2"><span id="ef3a"></span>EF3A</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef3b"></span>EF3B</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">// output address</td>
+<td class="comment-11" rowspan="1">Pop a target address off the stack</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef3c"></span>EF3C</td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">B = 4; // 4 iterations of 5 plus 3 at the end == 23</td>
+<td class="comment-11" rowspan="1">4 iterations of 5, plus 3 at the end = 23</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_5</td>
+<td class="routine-comment" colspan="4">
+<span id="ef3e"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">plot_game_window_4</td>
 <td class="address-2"><span id="ef3e"></span>EF3E</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">do &lt;% C = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch a second source byte (so we can restore it later)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ef3f"></span>
+<div class="comments">
+<div class="paragraph">
+RRD does a 12-bit rotate: nibble_out = (HL) &amp; $0F; (HL) = ((HL) &gt;&gt; 4) | (A &lt;&lt; 4); A = (A &amp; $F0) | nibble_out;
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef3f"></span>EF3F</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="1">RRD does this: tmp = *HL &amp; 0x0F; *HL = (*HL &gt;&gt; 4) | (A &lt;&lt; 4); A = (A &amp; 0xF0) | tmp;</td>
+<td class="comment-11" rowspan="1">Shift (<span class="register">HL</span>) down and rotate <span class="register">A'</span>s bottom nibble into the top of (<span class="register">HL</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef41"></span>EF41</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef42"></span>EF42</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-11" rowspan="1">Load the rotated and merged value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef43"></span>EF43</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-11" rowspan="1">Store it to the screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef44"></span>EF44</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-11" rowspan="1">Restore the corrupted byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef45"></span>EF45</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef46"></span>EF46</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef47"></span>EF47</td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef48"></span>EF48</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="9">Repeat</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef49"></span>EF49</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="2">RRD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -450,19 +502,19 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef4c"></span>EF4C</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef4d"></span>EF4D</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef4e"></span>EF4E</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -486,13 +538,13 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef52"></span>EF52</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="9">Repeat</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef53"></span>EF53</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="2">RRD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -504,19 +556,19 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef56"></span>EF56</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef57"></span>EF57</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef58"></span>EF58</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -540,13 +592,13 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef5c"></span>EF5C</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="9">Repeat</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef5d"></span>EF5D</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="2">RRD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -558,19 +610,19 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef60"></span>EF60</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef61"></span>EF61</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef62"></span>EF62</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -594,13 +646,13 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef66"></span>EF66</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="9">Repeat</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef67"></span>EF67</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="2">RRD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -612,19 +664,19 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef6a"></span>EF6A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef6b"></span>EF6B</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef6c"></span>EF6C</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -647,20 +699,20 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef70"></span>EF70</td>
-<td class="instruction">DJNZ <a href="EED3.html#ef3e">plot_game_window_5</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="EED3.html#ef3e">plot_game_window_4</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef72"></span>EF72</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="9">Repeat</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef73"></span>EF73</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="2">RRD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -672,19 +724,19 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef76"></span>EF76</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef77"></span>EF77</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef78"></span>EF78</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -708,13 +760,13 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef7c"></span>EF7C</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="9">Repeat</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef7d"></span>EF7D</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="2">RRD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -726,19 +778,19 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef80"></span>EF80</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef81"></span>EF81</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef82"></span>EF82</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -762,13 +814,13 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef86"></span>EF86</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="9">Repeat</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef87"></span>EF87</td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="2">RRD</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -780,19 +832,19 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef8a"></span>EF8A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef8b"></span>EF8B</td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DE++ = Adash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef8c"></span>EF8C</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="4">*HL++ = C;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -816,7 +868,7 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef90"></span>EF90</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">A = *HL++;</td>
+<td class="comment-11" rowspan="2">Preload the next scanline's first input byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -828,25 +880,25 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef92"></span>EF92</td>
 <td class="instruction">EXX</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef93"></span>EF93</td>
-<td class="instruction">DJNZ <a href="EED3.html#ef3a">plot_game_window_4</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
+<td class="instruction">DJNZ <a href="EED3.html#ef3a">plot_game_window_3</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef95"></span>EF95</td>
 <td class="instruction">LD SP,($EDD1)</td>
-<td class="comment-11" rowspan="1">SP = saved_sp;</td>
+<td class="comment-11" rowspan="1">Restore the stack pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ef99"></span>EF99</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -857,9 +909,9 @@ Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

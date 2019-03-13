@@ -49,7 +49,7 @@ Used by the routines at <a href="68A2.html">transition</a> and <a href="9DE5.htm
 <span id="b2fc"></span>
 <div class="comments">
 <div class="paragraph">
-Reset hero.
+Reset hero's position.
 </div>
 </div>
 </td>
@@ -58,20 +58,20 @@ Reset hero.
 <td class="asm-label-1">reset_outdoors</td>
 <td class="address-2"><span id="b2fc"></span>B2FC</td>
 <td class="instruction">LD HL,$8000</td>
-<td class="comment-11" rowspan="1">HL = $8000;</td>
+<td class="comment-11" rowspan="2">Reset the hero's screen position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b2ff"></span>B2FF</td>
 <td class="instruction">CALL <a href="B71B.html">calc_vischar_iso_pos_from_vischar</a></td>
-<td class="comment-11" rowspan="1">calc_vischar_iso_pos_from_vischar();</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b302"></span>
 <div class="comments">
 <div class="paragraph">
-Centre the screen on the hero.
+Centre the map position on the hero.
 </div>
 </div>
 </td>
@@ -80,13 +80,13 @@ Centre the screen on the hero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b302"></span>B302</td>
 <td class="instruction">LD HL,$8018</td>
-<td class="comment-11" rowspan="1">HL = $8018; // (vischar.screenpos.x)</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's iso_pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b305"></span>B305</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++;</td>
+<td class="comment-11" rowspan="3">Read it into (<span class="register">A</span>, <span class="register">C</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -98,37 +98,47 @@ Centre the screen on the hero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b307"></span>B307</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b308"></span>B308</td>
 <td class="instruction">CALL <a href="E555.html">divide_by_8</a></td>
-<td class="comment-11" rowspan="1">divide_by_8(C,A);</td>
+<td class="comment-11" rowspan="1">Divide by 8. Result is in (<span class="register">A</span>, <span class="register">C</span>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b30b"></span>
+<div class="comments">
+<div class="paragraph">
+11 here is the width of the game screen minus half of the hero's width
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b30b"></span>B30B</td>
 <td class="instruction">SUB $0B</td>
-<td class="comment-11" rowspan="2">map_position.x = A - 11; // 11 would be screen width minus half of character width?</td>
+<td class="comment-11" rowspan="1">Subtract 11</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b30d"></span>B30D</td>
 <td class="instruction">LD ($81BB),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set map_position.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b310"></span>B310</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to the hero's iso_pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b311"></span>B311</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++;</td>
+<td class="comment-11" rowspan="3">Read it into (<span class="register">A</span>, <span class="register">C</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -140,31 +150,41 @@ Centre the screen on the hero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b313"></span>B313</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b314"></span>B314</td>
 <td class="instruction">CALL <a href="E555.html">divide_by_8</a></td>
-<td class="comment-11" rowspan="1">divide_by_8(C,A);</td>
+<td class="comment-11" rowspan="1">Divide by 8. Result is in (<span class="register">A</span>, <span class="register">C</span>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b317"></span>
+<div class="comments">
+<div class="paragraph">
+6 here is the height of the game screen minus half of the hero's height
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b317"></span>B317</td>
 <td class="instruction">SUB $06</td>
-<td class="comment-11" rowspan="2">map_position.y = A - 6; // 6 would be screen height minus half of character height?</td>
+<td class="comment-11" rowspan="1">Subtract 6</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b319"></span>B319</td>
 <td class="instruction">LD ($81BC),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set map_position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b31c"></span>B31C</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">room_index = room_0_OUTDOORS;</td>
+<td class="comment-11" rowspan="2">Set the global current room index to room_0_OUTDOORS</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -176,31 +196,31 @@ Centre the screen on the hero.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b320"></span>B320</td>
 <td class="instruction">CALL <a href="A7C9.html">get_supertiles</a></td>
-<td class="comment-11" rowspan="1">get_supertiles();</td>
+<td class="comment-11" rowspan="1">Update the supertiles in map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b323"></span>B323</td>
 <td class="instruction">CALL <a href="A8A2.html">plot_all_tiles</a></td>
-<td class="comment-11" rowspan="1">plot_all_tiles();</td>
+<td class="comment-11" rowspan="1">Plot all tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b326"></span>B326</td>
 <td class="instruction">CALL <a href="6939.html">setup_movable_items</a></td>
-<td class="comment-11" rowspan="1">setup_movable_items();</td>
+<td class="comment-11" rowspan="1">Setup movable items</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b329"></span>B329</td>
 <td class="instruction">CALL <a href="ABA0.html">zoombox</a></td>
-<td class="comment-11" rowspan="1">zoombox();</td>
+<td class="comment-11" rowspan="1">Zoombox the scene onto the screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b32c"></span>B32C</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -211,9 +231,9 @@ Centre the screen on the hero.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

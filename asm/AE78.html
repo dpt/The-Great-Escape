@@ -51,13 +51,23 @@ Used by the routine at <a href="ADBD.html">nighttime</a>.
 <td class="asm-label-1">searchlight_caught</td>
 <td class="address-2"><span id="ae78"></span>AE78</td>
 <td class="instruction">LD DE,($81BB)</td>
-<td class="comment-11" rowspan="1">DE = map_position;</td>
+<td class="comment-11" rowspan="1">Fetch map_position into <span class="register">DE</span>. <span class="register">E</span> is x, <span class="register">D</span> is y</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ae7c"></span>
+<div class="comments">
+<div class="paragraph">
+Detect when the searchlight overlaps the hero.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae7c"></span>AE7C</td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="12">if (HL[0] + 5 &gt;= E + 12 || HL[0] + 10 &lt; E + 10) return;</td>
+<td class="comment-11" rowspan="2">Compute map_position.x + 12</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -69,43 +79,53 @@ Used by the routine at <a href="ADBD.html">nighttime</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae7f"></span>AE7F</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save it in <span class="register">B</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae80"></span>AE80</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch searchlight.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae81"></span>AE81</td>
 <td class="instruction">ADD A,$05</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compute searchlight.x + 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae83"></span>AE83</td>
 <td class="instruction">CP B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is (searchlight.x + 5) &gt;= (map_position.x + 12)?</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ae84"></span>
+<div class="comments">
+<div class="paragraph">
+Is the searchlight hotspot left edge beyond the hero's right edge?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae84"></span>AE84</td>
 <td class="instruction">RET NC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so - the hero isn't in the hotspot</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae85"></span>AE85</td>
 <td class="instruction">ADD A,$05</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compute (searchlight.x + 5) + 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae87"></span>AE87</td>
 <td class="instruction">DEC B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Compute (map_position.x + 12) - 2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -117,25 +137,35 @@ Used by the routine at <a href="ADBD.html">nighttime</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae89"></span>AE89</td>
 <td class="instruction">CP B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is (searchlight.x + 10) &lt; (map_position.x + 10)?</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ae8a"></span>
+<div class="comments">
+<div class="paragraph">
+Is the searchlight hotspot right edge beyond the hero's left edge?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae8a"></span>AE8A</td>
 <td class="instruction">RET C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so - the hero isn't in the hotspot</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae8b"></span>AE8B</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="14">if (HL[1] + 5 &gt;= D + 10 || D + 6 &gt;= HL[1] + 12) return;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to searchlight.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae8c"></span>AE8C</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Compute map_position.y + 10</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -147,49 +177,59 @@ Used by the routine at <a href="ADBD.html">nighttime</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae8f"></span>AE8F</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save it in <span class="register">B</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae90"></span>AE90</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch searchlight.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae91"></span>AE91</td>
 <td class="instruction">ADD A,$05</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compute searchlight.y + 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae93"></span>AE93</td>
 <td class="instruction">CP B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is (searchlight.y + 5) &gt;= (map_position.y + 10)?</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ae94"></span>
+<div class="comments">
+<div class="paragraph">
+Is the searchlight hotspot top edge beyond the hero's bottom edge?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae94"></span>AE94</td>
 <td class="instruction">RET NC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so - the hero isn't in the hotspot</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae95"></span>AE95</td>
 <td class="instruction">ADD A,$07</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compute (searchlight.y + 5) + 7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae97"></span>AE97</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save it in <span class="register">C</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae98"></span>AE98</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Compute (map_position.y + 10) - 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -201,20 +241,33 @@ Used by the routine at <a href="ADBD.html">nighttime</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae9b"></span>AE9B</td>
 <td class="instruction">CP C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is (map_position.y + 6) &gt;= (searchlight.y + 12)?</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="ae9c"></span>
+<div class="comments">
+<div class="paragraph">
+Is the searchlight hotspot bottom edge beyond the hero's top edge?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae9c"></span>AE9C</td>
 <td class="instruction">RET NC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so - the hero isn't in the hotspot</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="ae9d"></span>
 <div class="comments">
 <div class="paragraph">
-It seems odd to not do this (cheaper) test sooner.
+The hero is in the hotspot.
+</div>
+<div class="paragraph">
+DPT: It seems odd to not do this next test first, since it's cheaper.
 </div>
 </div>
 </td>
@@ -223,7 +276,7 @@ It seems odd to not do this (cheaper) test sooner.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ae9d"></span>AE9D</td>
 <td class="instruction">LD A,($81BD)</td>
-<td class="comment-11" rowspan="3">if (searchlight_state == searchlight_STATE_CAUGHT) return;</td>
+<td class="comment-11" rowspan="2">Is searchlight_state set to searchlight_STATE_CAUGHT? ($1F)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -235,13 +288,13 @@ It seems odd to not do this (cheaper) test sooner.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aea2"></span>AEA2</td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aea3"></span>AEA3</td>
 <td class="instruction">LD A,$1F</td>
-<td class="comment-11" rowspan="2">searchlight_state = searchlight_STATE_CAUGHT;</td>
+<td class="comment-11" rowspan="2">Set searchlight_state to searchlight_STATE_CAUGHT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -253,7 +306,7 @@ It seems odd to not do this (cheaper) test sooner.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aea8"></span>AEA8</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="2">D = HL[0];</td>
+<td class="comment-11" rowspan="4">Assign searchlight_caught_coord from searchlight.x and .y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -265,19 +318,19 @@ It seems odd to not do this (cheaper) test sooner.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeaa"></span>AEAA</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="1">E = HL[1];</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeab"></span>AEAB</td>
 <td class="instruction">LD ($AE76),DE</td>
-<td class="comment-11" rowspan="1">searchlight_caught_coord = DE;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeaf"></span>AEAF</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">bell = bell_RING_PERPETUAL;</td>
+<td class="comment-11" rowspan="2">Make the bell ring perpetually</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -289,13 +342,13 @@ It seems odd to not do this (cheaper) test sooner.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeb3"></span>AEB3</td>
 <td class="instruction">LD B,$0A</td>
-<td class="comment-11" rowspan="2">decrease_morale(10); // exit via</td>
+<td class="comment-11" rowspan="1">Decrease morale by 10</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeb5"></span>AEB5</td>
 <td class="instruction">JP <a href="A0E0.html">decrease_morale</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Exit via decrease_morale</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -306,9 +359,9 @@ It seems odd to not do this (cheaper) test sooner.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

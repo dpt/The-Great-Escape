@@ -21,16 +21,16 @@
 <td class="next"><span class="next-1">Next: <a href="F52C.html">F52C</a></span></td>
 </tr>
 </table>
-<div class="description">F4B7: Runs the menu screen.</div>
+<div class="description">F4B7: Run the menu screen.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="F163.html">main</a>.
+Waits for user to select an input device, waves the morale flag and plays the title tune.
 </div>
 <div class="paragraph">
-While waiting for user to select an input device this waves the morale flag and plays the title tune.
+Used by the routine at <a href="F163.html">main</a>.
 </div>
 </div>
 <table class="input-0">
@@ -48,16 +48,26 @@ While waiting for user to select an input device this waves the morale flag and 
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="f4b7"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (infinite)
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1">menu_screen</td>
 <td class="address-2"><span id="f4b7"></span>F4B7</td>
 <td class="instruction">CALL <a href="F271.html">check_menu_keys</a></td>
-<td class="comment-11" rowspan="1">for (;;) &lt;% check_menu_keys();</td>
+<td class="comment-11" rowspan="1">Handle menu screen keys. When the user starts the game this call will cease to return.</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4ba"></span>F4BA</td>
 <td class="instruction">CALL <a href="A035.html">wave_morale_flag</a></td>
-<td class="comment-11" rowspan="1">wave_morale_flag();</td>
+<td class="comment-11" rowspan="1">Wave the morale flag (on every other turn)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -73,7 +83,7 @@ Play music.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4bd"></span>F4BD</td>
 <td class="instruction">LD HL,($F541)</td>
-<td class="comment-11" rowspan="2">HL = music_channel0_index + 1;</td>
+<td class="comment-11" rowspan="2">Fetch and increment the music channel 0 index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -86,86 +96,76 @@ Play music.
 <span id="f4c1"></span>
 <div class="comments">
 <div class="paragraph">
-Loop until the end marker is encountered.
+Start loop (infinite)
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_0</td>
+<td class="asm-label-1">ms_loop0</td>
 <td class="address-2"><span id="f4c1"></span>F4C1</td>
 <td class="instruction">LD ($F541),HL</td>
-<td class="comment-11" rowspan="1">for (;;) &lt;% music_channel0_index = HL;</td>
+<td class="comment-11" rowspan="1">Save the music channel 0 index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4c4"></span>F4C4</td>
 <td class="instruction">LD DE,$F546</td>
-<td class="comment-11" rowspan="3">A = music_channel0_data[HL];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at music_channel0_data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4c7"></span>F4C7</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add the index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4c8"></span>F4C8</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch a semitone</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4c9"></span>F4C9</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A != 0xFF) break; /* end marker */</td>
+<td class="comment-11" rowspan="1">Was it the end of song marker? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4cb"></span>F4CB</td>
-<td class="instruction">JR NZ,<a href="F4B7.html#f4d2">menu_screen_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="F4B7.html#f4d2">ms_break0</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4cd"></span>F4CD</td>
 <td class="instruction">LD HL,$0000</td>
-<td class="comment-11" rowspan="1">HL = 0;</td>
+<td class="comment-11" rowspan="2">Otherwise zero the index and start over</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4d0"></span>F4D0</td>
-<td class="instruction">JR <a href="F4B7.html#f4c1">menu_screen_0</a></td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="instruction">JR <a href="F4B7.html#f4c1">ms_loop0</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_1</td>
+<td class="asm-label-1">ms_break0</td>
 <td class="address-2"><span id="f4d2"></span>F4D2</td>
-<td class="instruction">CALL <a href="F52C.html">get_tuning</a></td>
-<td class="comment-11" rowspan="1">get_tuning();</td>
+<td class="instruction">CALL <a href="F52C.html">frequency_for_semitone</a></td>
+<td class="comment-11" rowspan="1">Get frequency for semitone</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4d5"></span>F4D5</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="f4d6"></span>
-<div class="comments">
-<div class="paragraph">
-Loop until the end marker is encountered.
-</div>
-</div>
-</td>
+<td class="comment-11" rowspan="1">Bank the channel 0 parameters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4d6"></span>F4D6</td>
 <td class="instruction">LD HL,($F543)</td>
-<td class="comment-11" rowspan="2">HLdash = music_channel1_index + 1;</td>
+<td class="comment-11" rowspan="2">Fetch and increment the music channel 1 index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -174,106 +174,126 @@ Loop until the end marker is encountered.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_2</td>
+<td class="routine-comment" colspan="4">
+<span id="f4da"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (infinite)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ms_loop1</td>
 <td class="address-2"><span id="f4da"></span>F4DA</td>
 <td class="instruction">LD ($F543),HL</td>
-<td class="comment-11" rowspan="1">for (;;) &lt;% music_channel1_index = HLdash;</td>
+<td class="comment-11" rowspan="1">Save the music channel 1 index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4dd"></span>F4DD</td>
 <td class="instruction">LD DE,$F7C7</td>
-<td class="comment-11" rowspan="3">A = music_channel1_data[HLdash];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at music_channel1_data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4e0"></span>F4E0</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add the index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4e1"></span>F4E1</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch a semitone</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4e2"></span>F4E2</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A != 0xFF) break; /* end marker */</td>
+<td class="comment-11" rowspan="1">Was it the end of song marker? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4e4"></span>F4E4</td>
-<td class="instruction">JR NZ,<a href="F4B7.html#f4eb">menu_screen_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="F4B7.html#f4eb">ms_break1</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4e6"></span>F4E6</td>
 <td class="instruction">LD HL,$0000</td>
-<td class="comment-11" rowspan="1">HLdash = 0;</td>
+<td class="comment-11" rowspan="2">Otherwise zero the index and start over</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4e9"></span>F4E9</td>
-<td class="instruction">JR <a href="F4B7.html#f4da">menu_screen_2</a></td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="instruction">JR <a href="F4B7.html#f4da">ms_loop1</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_3</td>
+<td class="asm-label-1">ms_break1</td>
 <td class="address-2"><span id="f4eb"></span>F4EB</td>
-<td class="instruction">CALL <a href="F52C.html">get_tuning</a></td>
-<td class="comment-11" rowspan="1">get_tuning(); /* using banked registers */</td>
+<td class="instruction">CALL <a href="F52C.html">frequency_for_semitone</a></td>
+<td class="comment-11" rowspan="1">Get frequency for semitone</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f4ee"></span>
+<div class="comments">
+<div class="paragraph">
+When the second channel is silent use the first channel's frequency.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4ee"></span>F4EE</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="1">A = Bdash;</td>
+<td class="comment-11" rowspan="1">Get the second channel's frequency low byte (note <span class="register">B</span> is low here due to endian swap)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4ef"></span>F4EF</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the channel 0 parameters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4f0"></span>F4F0</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save channel 0's frequency</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4f1"></span>F4F1</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A == 0xFF) &lt;%</td>
+<td class="comment-11" rowspan="1">Is channel 1's frequency $xxFF?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4f3"></span>F4F3</td>
-<td class="instruction">JR NZ,<a href="F4B7.html#f4fc">menu_screen_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="F4B7.html#f4fc">menu_screen_0</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4f5"></span>F4F5</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Otherwise swap banks to channel 1's registers</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4f6"></span>F4F6</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">POP BCdash</td>
+<td class="comment-11" rowspan="3">Copy channel 0's frequency to channel 1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4f7"></span>F4F7</td>
 <td class="instruction">LD E,C</td>
-<td class="comment-11" rowspan="2">DEdash = BCdash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -285,61 +305,104 @@ Loop until the end marker is encountered.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4f9"></span>F4F9</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">- %&gt;</td>
+<td class="comment-11" rowspan="1">Bank again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f4fa"></span>F4FA</td>
-<td class="instruction">JR <a href="F4B7.html#f4fd">menu_screen_5</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="instruction">JR <a href="F4B7.html#f4fd">menu_screen_1</a></td>
+<td class="comment-11" rowspan="1">Jump</td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_4</td>
+<td class="asm-label-1">menu_screen_0</td>
 <td class="address-2"><span id="f4fc"></span>F4FC</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">Discard saved frequency</td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_5</td>
+<td class="routine-comment" colspan="4">
+<span id="f4fd"></span>
+<div class="comments">
+<div class="paragraph">
+Iterate 6,120 times (24 * 255)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">menu_screen_1</td>
 <td class="address-2"><span id="f4fd"></span>F4FD</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="1">A = 24; /* overall tune speed (a delay: lower values are faster) */</td>
+<td class="comment-11" rowspan="1">Set major tune speed (a delay: lower means faster)</td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_6</td>
+<td class="routine-comment" colspan="4">
+<span id="f4ff"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (major)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">menu_screen_2</td>
 <td class="address-2"><span id="f4ff"></span>F4FF</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Bank the major counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f500"></span>F500</td>
 <td class="instruction">LD H,$FF</td>
-<td class="comment-11" rowspan="1">H = 0xFF; /* iterations */</td>
+<td class="comment-11" rowspan="1">Set minor tune speed (a delay: lower means faster)</td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_7</td>
+<td class="routine-comment" colspan="4">
+<span id="f502"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (minor)
+</div>
+<div class="paragraph">
+Play channel 0's part
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">menu_screen_3</td>
 <td class="address-2"><span id="f502"></span>F502</td>
-<td class="instruction">DJNZ <a href="F4B7.html#f510">menu_screen_8</a></td>
-<td class="comment-11" rowspan="1">do &lt;% if (--B == 0) &lt;%</td>
+<td class="instruction">DJNZ <a href="F4B7.html#f510">menu_screen_4</a></td>
+<td class="comment-11" rowspan="1">Decrement <span class="register">B</span> (low). Jump over next block unless zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f504"></span>F504</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">if (--C == 0) &lt;%</td>
+<td class="comment-11" rowspan="1">Decrement <span class="register">C</span> (high)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f505"></span>F505</td>
-<td class="instruction">JP NZ,<a href="F4B7.html#f510">menu_screen_8</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NZ,<a href="F4B7.html#f510">menu_screen_4</a></td>
+<td class="comment-11" rowspan="1">Jump over next block unless zero</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f508"></span>
+<div class="comments">
+<div class="paragraph">
+Countdown hit zero
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f508"></span>F508</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">L ^= 16;</td>
+<td class="comment-11" rowspan="4">Toggle the speaker bit (<span class="register">L</span> is zeroed by frequency_for_semitone)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -357,13 +420,13 @@ Loop until the end marker is encountered.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f50c"></span>F50C</td>
 <td class="instruction">OUT ($FE),A</td>
-<td class="comment-11" rowspan="1">OUT ($FE),L</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f50e"></span>F50E</td>
 <td class="instruction">LD C,E</td>
-<td class="comment-11" rowspan="2">BC = DE; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="2">Reset counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -372,34 +435,54 @@ Loop until the end marker is encountered.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_8</td>
+<td class="asm-label-1">menu_screen_4</td>
 <td class="address-2"><span id="f510"></span>F510</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Swap to registers for channel 1</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f511"></span>
+<div class="comments">
+<div class="paragraph">
+Play channel 1's part
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f511"></span>F511</td>
-<td class="instruction">DJNZ <a href="F4B7.html#f51f">menu_screen_9</a></td>
-<td class="comment-11" rowspan="1">if (--Bdash == 0) &lt;%</td>
+<td class="instruction">DJNZ <a href="F4B7.html#f51f">menu_screen_5</a></td>
+<td class="comment-11" rowspan="1">Decrement <span class="register">B</span> (low). Jump over next block unless zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f513"></span>F513</td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">if (--Cdash == 0) &lt;%</td>
+<td class="comment-11" rowspan="1">Decrement <span class="register">C</span> (high)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f514"></span>F514</td>
-<td class="instruction">JP NZ,<a href="F4B7.html#f51f">menu_screen_9</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NZ,<a href="F4B7.html#f51f">menu_screen_5</a></td>
+<td class="comment-11" rowspan="1">Jump over next block unless zero</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f517"></span>
+<div class="comments">
+<div class="paragraph">
+Countdown hit zero
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f517"></span>F517</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">Ldash ^= 16;</td>
+<td class="comment-11" rowspan="4">Toggle the speaker bit (<span class="register">L</span> is zeroed by frequency_for_semitone)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -417,13 +500,13 @@ Loop until the end marker is encountered.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f51b"></span>F51B</td>
 <td class="instruction">OUT ($FE),A</td>
-<td class="comment-11" rowspan="1">OUT ($FE),Ldash</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f51d"></span>F51D</td>
 <td class="instruction">LD C,E</td>
-<td class="comment-11" rowspan="2">BCdash = DEdash; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="2">Reset counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -432,46 +515,46 @@ Loop until the end marker is encountered.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_screen_9</td>
+<td class="asm-label-1">menu_screen_5</td>
 <td class="address-2"><span id="f51f"></span>F51F</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Swap to registers for channel 0</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f520"></span>F520</td>
 <td class="instruction">DEC H</td>
-<td class="comment-11" rowspan="2">%&gt; while (--H);</td>
+<td class="comment-11" rowspan="2">...loop (minor tune speed) / 255 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f521"></span>F521</td>
-<td class="instruction">JP NZ,<a href="F4B7.html#f502">menu_screen_7</a></td>
+<td class="instruction">JP NZ,<a href="F4B7.html#f502">menu_screen_3</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f524"></span>F524</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the major counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f525"></span>F525</td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">%&gt; while (--A);</td>
+<td class="comment-11" rowspan="2">...loop (major tune speed) / 24 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f526"></span>F526</td>
-<td class="instruction">JP NZ,<a href="F4B7.html#f4ff">menu_screen_6</a></td>
+<td class="instruction">JP NZ,<a href="F4B7.html#f4ff">menu_screen_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f529"></span>F529</td>
 <td class="instruction">JP <a href="F4B7.html#f4b7">menu_screen</a></td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">...loop (infinite)</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -482,9 +565,9 @@ Loop until the end marker is encountered.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

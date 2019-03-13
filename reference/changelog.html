@@ -15,6 +15,7 @@
 </tr>
 </table>
 <ul class="contents">
+<li><a href="#20190313">20190313</a></li>
 <li><a href="#20180825">20180825</a></li>
 <li><a href="#20180822">20180822</a></li>
 <li><a href="#20180419">20180419</a></li>
@@ -27,8 +28,47 @@
 <li><a href="#20141125">20141125</a></li>
 <li><a href="#20141019">20141019</a></li>
 </ul>
-<div><span id="20180825"></span></div>
+<div><span id="20190313"></span></div>
 <div class="list-entry list-entry-1">
+<div class="list-entry-title">20190313</div>
+<div class="list-entry-desc">The rewrite of the disassembly commentary continues. About 90% of the disassembly has now been rewritten in plain English.</div>
+<ul class="list-entry">
+<li>The disassembly is now built with SkoolKit 7.1.
+<ul class="list-entry1">
+<li>The 'make install' step is no longer required.</li>
+<li>The .skool file must sit alongside its .ref file now, so no longer gets put in the 'build' dir.</li>
+<li>@assemble directive values were renumbered.</li>
+</ul>
+</li>
+<li>Improvements to main disassembly commentary
+<ul class="list-entry1">
+<li>The file prologue now has a "common types" section for types used across the file. The policy otherwise is to define a table next to where the structures are first used.</li>
+<li>Music related changes
+<ul class="list-entry2">
+<li>Renamings
+<ul class="list-entry3">
+<li>$F52C/get_tuning -> frequency_for_semitone</li>
+<li>$FA48/music_tuning_table -> semitone_to_frequency</li>
+</ul>
+</li>
+<li>Where the individual tunes start are identified, as are their names.</li>
+<li>All of the notes in semitone_to_frequency are now documented.</li>
+<li>The spare space at the end of semitone_to_frequency is noted (it's only spare when the menu screen is running).</li>
+</ul>
+</li>
+<li>Renamings
+<ul class="list-entry2">
+<li>vischar_BYTE7_LOCATABLE -> vischar_TOUCH_ENTERED</li>
+<li>vischar_BYTE7_MASK_HI -> vischar_BYTE7_COUNTER_MASK</li>
+</ul>
+</li>
+<li>$6BAD/rooms_and_tunnels: Added a table describing the room definition format.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div><span id="20180825"></span></div>
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20180825</div>
 <div class="list-entry-desc">Small tweaks to the HTML output only.</div>
 <ul class="list-entry">
@@ -37,15 +77,13 @@
 </ul>
 </div>
 <div><span id="20180822"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20180822</div>
-<div class="list-entry-desc">Huge rewrite of the disassembly commentary.</div>
-<ul class="list-entry">
-<li>The first 50% of the disassembly has now been rewritten in (hopefully!) plain English prose.</li>
-</ul>
+<div class="list-entry-desc">Huge rewrite of the disassembly commentary. The first 50% of the disassembly has now been rewritten in (hopefully!) plain English prose.</div>
+
 </div>
 <div><span id="20180419"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20180419</div>
 <div class="list-entry-desc">The disassembly is now built with SkoolKit 6.4.</div>
 <ul class="list-entry">
@@ -184,7 +222,7 @@
 </ul>
 </div>
 <div><span id="20170325"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20170325</div>
 <div class="list-entry-desc">The disassembly is now built with SkoolKit 5.4.</div>
 <ul class="list-entry">
@@ -215,7 +253,7 @@
 <li>$7CFE is message_queue + 2.</li>
 <li>snipping_wire_new_inputs and collision_new_inputs values are summed not ORed.</li>
 <li><a href="../asm/CB2D.html#cb42">route_ended_0</a> JR C means less than, not equality.</li>
-<li><a href="../asm/C651.html#c688">get_target_2</a> isn't a call to transition() it's a call to get_door_position().</li>
+<li><a href="../asm/C651.html#c688">get_target_1</a> isn't a call to transition() it's a call to get_door_position().</li>
 </ul>
 </li>
 <li>Removed:
@@ -283,7 +321,7 @@
 <li><a href="../asm/BB98.html">restore_tiles</a> restore_tiles reworking.</li>
 <li><a href="../asm/B916.html">render_mask_buffer</a> render_mask_buffer reworking:
 <ul class="list-entry2">
-<li><a href="../asm/B837.html">clip_x0</a> byte_B837 & co. are now clip_{x0,y0,width,height}.</li>
+<li><a href="../asm/B837.html">mask_left_skip</a> byte_B837 & co. are now clip_{x0,y0,width,height}.</li>
 <li>Fixed <a href="../asm/B916.html#b9af">B9AF</a> comparison.</li>
 <li>multiply() returns HL. Zeros D as a side effect.</li>
 </ul>
@@ -322,7 +360,7 @@
 </ul>
 </div>
 <div><span id="20160326"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20160326</div>
 <div class="list-entry-desc">The disassembly is now built with SkoolKit 5.1.</div>
 <ul class="list-entry">
@@ -397,13 +435,13 @@
 </ul>
 </div>
 <div><span id="20151102"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20151102</div>
 <div class="list-entry-desc">Changelog begun and populated retrospectively.</div>
 
 </div>
 <div><span id="20151028"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20151028</div>
 <div class="list-entry-desc">28th October 2015 update.</div>
 <ul class="list-entry">
@@ -439,7 +477,7 @@
 </ul>
 </div>
 <div><span id="20150622"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20150622</div>
 <div class="list-entry-desc">22nd June 2015 update.</div>
 <ul class="list-entry">
@@ -488,7 +526,7 @@
 </ul>
 </div>
 <div><span id="20150123"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20150123</div>
 <div class="list-entry-desc">23rd January 2015 update.</div>
 <ul class="list-entry">
@@ -510,7 +548,7 @@
 </ul>
 </div>
 <div><span id="20141125"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20141125</div>
 <div class="list-entry-desc">15th November 2014 update.</div>
 <ul class="list-entry">
@@ -589,15 +627,15 @@
 </ul>
 </div>
 <div><span id="20141019"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20141019</div>
 <div class="list-entry-desc">19th October 2014 update.</div>
 
 </div>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

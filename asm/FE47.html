@@ -26,7 +26,9 @@
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
-
+<div class="paragraph">
+Up/Down/Left/Right/Fire = keys 7/6/5/8/0.
+</div>
 </div>
 <table class="input-0">
 <tr class="asm-input-header">
@@ -46,174 +48,194 @@
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="fe47"></span>
-<div class="comments">
-<div class="paragraph">
-Horizontal.
-</div>
-</div>
-</td>
-</tr>
-<tr>
 <td class="asm-label-1">inputroutine_protek</td>
 <td class="address-2"><span id="fe47"></span>FE47</td>
 <td class="instruction">LD BC,$F7FE</td>
-<td class="comment-11" rowspan="1">BC = port_KEYBOARD_12345;</td>
+<td class="comment-11" rowspan="1">Load <span class="register">BC</span> with the port number of the keyboard half row for keys 1/2/3/4/5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe4a"></span>FE4A</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Read that port. We'll receive xxx54321</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe4c"></span>FE4C</td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="2">A = ~A &amp; (1&lt;&lt;4); /* 5 == left */</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe4d"></span>FE4D</td>
-<td class="instruction">AND $10</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe4f"></span>FE4F</td>
-<td class="instruction">LD E,$03</td>
-<td class="comment-11" rowspan="1">E = input_LEFT;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe51"></span>FE51</td>
-<td class="instruction">LD B,$EF</td>
-<td class="comment-11" rowspan="1">B = 0xEF; /* port_KEYBOARD_09876 */</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe53"></span>FE53</td>
-<td class="instruction">JR NZ,<a href="FE47.html#fe60">inputroutine_protek_0</a></td>
-<td class="comment-11" rowspan="1">if (Z) &lt;%</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe55"></span>FE55</td>
-<td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe57"></span>FE57</td>
-<td class="instruction">CPL</td>
-<td class="comment-11" rowspan="2">A = ~A &amp; (1&lt;&lt;2);</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe58"></span>FE58</td>
-<td class="instruction">AND $04</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe5a"></span>FE5A</td>
-<td class="instruction">LD E,$06</td>
-<td class="comment-11" rowspan="1">E = input_RIGHT;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe5c"></span>FE5C</td>
-<td class="instruction">JR NZ,<a href="FE47.html#fe60">inputroutine_protek_0</a></td>
-<td class="comment-11" rowspan="1">if (Z)</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="fe5e"></span>FE5E</td>
-<td class="instruction">LD E,$00</td>
-<td class="comment-11" rowspan="1">E = 0; %&gt;</td>
+<td class="comment-11" rowspan="1">The keyboard is active low, so complement the value</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<span id="fe60"></span>
+<span id="fe4d"></span>
 <div class="comments">
 <div class="paragraph">
-Vertical.
+Check for left
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe4d"></span>FE4D</td>
+<td class="instruction">AND $10</td>
+<td class="comment-11" rowspan="1">Is '5' pressed?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe4f"></span>FE4F</td>
+<td class="instruction">LD E,$03</td>
+<td class="comment-11" rowspan="1">left_right = input_LEFT</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe51"></span>FE51</td>
+<td class="instruction">LD B,$EF</td>
+<td class="comment-11" rowspan="1">Load <span class="register">BC</span> with the port number of the keyboard half row for keys 0/9/8/7/6</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe53"></span>FE53</td>
+<td class="instruction">JR NZ,<a href="FE47.html#fe60">inputroutine_protek_0</a></td>
+<td class="comment-11" rowspan="1">Jump forward if '5'/left was pressed</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="fe55"></span>
+<div class="comments">
+<div class="paragraph">
+Check for right
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe55"></span>FE55</td>
+<td class="instruction">IN A,(C)</td>
+<td class="comment-11" rowspan="1">Read that port. We'll receive xxx67890</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe57"></span>FE57</td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="1">The keyboard is active low, so complement the value</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe58"></span>FE58</td>
+<td class="instruction">AND $04</td>
+<td class="comment-11" rowspan="1">Is '8' pressed?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe5a"></span>FE5A</td>
+<td class="instruction">LD E,$06</td>
+<td class="comment-11" rowspan="1">left_right = input_RIGHT</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe5c"></span>FE5C</td>
+<td class="instruction">JR NZ,<a href="FE47.html#fe60">inputroutine_protek_0</a></td>
+<td class="comment-11" rowspan="1">Jump forward if '8'/right was pressed</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="fe5e"></span>FE5E</td>
+<td class="instruction">LD E,$00</td>
+<td class="comment-11" rowspan="1">Otherwise left_right = 0</td>
+</tr>
+<tr>
 <td class="asm-label-1">inputroutine_protek_0</td>
 <td class="address-2"><span id="fe60"></span>FE60</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Read $EFFE again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe62"></span>FE62</td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="1">A = ~A;</td>
+<td class="comment-11" rowspan="1">The keyboard is active low, so complement the value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe63"></span>FE63</td>
 <td class="instruction">LD D,A</td>
-<td class="comment-11" rowspan="1">D = A;</td>
+<td class="comment-11" rowspan="1">Save a copy of the port value</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="fe64"></span>
+<div class="comments">
+<div class="paragraph">
+Check for up
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe64"></span>FE64</td>
 <td class="instruction">AND $08</td>
-<td class="comment-11" rowspan="1">A &amp;= (1&lt;&lt;3);</td>
+<td class="comment-11" rowspan="1">Is '7' pressed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe66"></span>FE66</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-11" rowspan="1">A = input_UP; /* interleaved */</td>
+<td class="comment-11" rowspan="1">up_down = input_UP</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe68"></span>FE68</td>
 <td class="instruction">JR NZ,<a href="FE47.html#fe72">inputroutine_protek_1</a></td>
-<td class="comment-11" rowspan="1">if (Z) &lt;%</td>
+<td class="comment-11" rowspan="1">Jump forward if '7'/up was pressed</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="fe6a"></span>
+<div class="comments">
+<div class="paragraph">
+Check for down
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe6a"></span>FE6A</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="1">A = D;</td>
+<td class="comment-11" rowspan="1">Restore the port value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe6b"></span>FE6B</td>
 <td class="instruction">AND $10</td>
-<td class="comment-11" rowspan="1">A &amp;= (1&lt;&lt;4);</td>
+<td class="comment-11" rowspan="1">Is '6' pressed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe6d"></span>FE6D</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-11" rowspan="1">A = input_DOWN; /* interleaved */</td>
+<td class="comment-11" rowspan="1">up_down = input_DOWN</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe6f"></span>FE6F</td>
 <td class="instruction">JR NZ,<a href="FE47.html#fe72">inputroutine_protek_1</a></td>
-<td class="comment-11" rowspan="1">if (Z)</td>
+<td class="comment-11" rowspan="1">Jump forward if '6'/down was pressed</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe71"></span>FE71</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = input_NONE; %&gt;</td>
+<td class="comment-11" rowspan="1">Otherwise up_down = 0</td>
 </tr>
 <tr>
 <td class="asm-label-1">inputroutine_protek_1</td>
 <td class="address-2"><span id="fe72"></span>FE72</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-11" rowspan="2">E += A; /* Combine axis */</td>
+<td class="comment-11" rowspan="2">Combine the up_down and left_right values</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -226,7 +248,7 @@ Vertical.
 <span id="fe74"></span>
 <div class="comments">
 <div class="paragraph">
-Fire.
+Check for fire
 </div>
 </div>
 </td>
@@ -235,43 +257,43 @@ Fire.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe74"></span>FE74</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="2">A = D &amp; (1&lt;&lt;0);</td>
+<td class="comment-11" rowspan="1">Restore the port value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe75"></span>FE75</td>
 <td class="instruction">AND $01</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is '0' pressed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe77"></span>FE77</td>
 <td class="instruction">LD A,$09</td>
-<td class="comment-11" rowspan="1">A = input_FIRE; /* interleaved */</td>
+<td class="comment-11" rowspan="1">fire = input_FIRE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe79"></span>FE79</td>
 <td class="instruction">JR NZ,<a href="FE47.html#fe7c">inputroutine_protek_2</a></td>
-<td class="comment-11" rowspan="2">if (Z) A = 0;</td>
+<td class="comment-11" rowspan="1">Jump forward if fire was pressed</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe7b"></span>FE7B</td>
 <td class="instruction">XOR A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">fire = 0</td>
 </tr>
 <tr>
 <td class="asm-label-1">inputroutine_protek_2</td>
 <td class="address-2"><span id="fe7c"></span>FE7C</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-11" rowspan="1">A += E; /* Combine axis */</td>
+<td class="comment-11" rowspan="1">Combine the (up_down + left_right) and fire values</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fe7d"></span>FE7D</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -282,9 +304,9 @@ Fire.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

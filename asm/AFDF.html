@@ -21,7 +21,7 @@
 <td class="next"><span class="next-1">Next: <a href="B107.html">B107</a></span></td>
 </tr>
 </table>
-<div class="description">AFDF: (unknown) Definitely something to do with moving objects around. Collisions?</div>
+<div class="description">AFDF: Handle collisions, including items being pushed around.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
@@ -36,11 +36,18 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 </tr>
 
 </table>
-<table class="output-0">
+<table class="output-1">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z/NZ =&gt; no collision/collision.</td>
+</tr>
+<tr>
+<td class="register">Iterate</td>
+<td class="register-desc">over characters being collided with (e.g. stove).</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -48,43 +55,63 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1">collision</td>
 <td class="address-2"><span id="afdf"></span>AFDF</td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment-11" rowspan="1">HL = $8001; // &amp;vischar[0].byte1;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first vischar's flags field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afe2"></span>AFE2</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">B = 8; // 8 iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="afe4"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_0</td>
 <td class="address-2"><span id="afe4"></span>AFE4</td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% if (*HL &amp; vischar_FLAGS_NO_COLLIDE) goto next; // $8001, $8021, ...</td>
+<td class="comment-11" rowspan="1">Is the vischar_FLAGS_NO_COLLIDE flag bit set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afe6"></span>AFE6</td>
-<td class="instruction">JP NZ,<a href="AFDF.html#b0fe">collision_21</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JP NZ,<a href="AFDF.html#b0fe">collision_19</a></td>
+<td class="comment-11" rowspan="1">Skip if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afe9"></span>AFE9</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afea"></span>AFEA</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve the vischar pointer</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="afeb"></span>
+<div class="comments">
+<div class="paragraph">
+Check for contact between the current vischar and saved_pos.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afeb"></span>AFEB</td>
 <td class="instruction">LD A,$0E</td>
-<td class="comment-11" rowspan="3">HL += 0x0E; // $800F etc. - X axis position</td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar's X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -103,7 +130,7 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <span id="afef"></span>
 <div class="comments">
 <div class="paragraph">
---------
+Check X
 </div>
 </div>
 </td>
@@ -112,7 +139,7 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="afef"></span>AFEF</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="2">C = *HL++;</td>
+<td class="comment-11" rowspan="3">Fetch X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -124,25 +151,25 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aff1"></span>AFF1</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-11" rowspan="1">B = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aff2"></span>AFF2</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save our vischar pointer while we compare bounds</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aff3"></span>AFF3</td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment-11" rowspan="1">HL = saved_pos_x;</td>
+<td class="comment-11" rowspan="1">Fetch saved_pos_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aff6"></span>AFF6</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="6">BC += 4;</td>
+<td class="comment-11" rowspan="5">Add 4 to the X position - our upper bound</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -172,31 +199,31 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="affd"></span>AFFD</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_1</td>
 <td class="address-2"><span id="affe"></span>AFFE</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="2">if (HL != BC) &lt;%</td>
+<td class="comment-11" rowspan="1">Compare saved_pos_x to (X position + 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b000"></span>B000</td>
 <td class="instruction">JR Z,<a href="AFDF.html#b014">collision_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Equal - jump forward to comparing Y position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b002"></span>B002</td>
-<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_20</a></td>
-<td class="comment-11" rowspan="1">if (HL &gt; BC) goto pop_next;</td>
+<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_pop_next</a></td>
+<td class="comment-11" rowspan="1">If (saved_pos_x &gt;= (X position + 4)) there was no collision, so jump to the next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b005"></span>B005</td>
 <td class="instruction">SUB $08</td>
-<td class="comment-11" rowspan="5">BC -= 8; // ie -4 over original</td>
+<td class="comment-11" rowspan="5">Reduce <span class="register">A</span> by 8 giving (X position - 4) - our lower bound</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -226,38 +253,38 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1">collision_2</td>
 <td class="address-2"><span id="b00c"></span>B00C</td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment-11" rowspan="2">HL = saved_pos_x;</td>
+<td class="comment-11" rowspan="1">Fetch saved_pos_x again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b00f"></span>B00F</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compare saved_pos_x to (X position - 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b011"></span>B011</td>
-<td class="instruction">JP C,<a href="AFDF.html#b0fc">collision_20</a></td>
-<td class="comment-11" rowspan="1">if (HL &lt; BC) goto pop_next; %&gt;</td>
+<td class="instruction">JP C,<a href="AFDF.html#b0fc">collision_pop_next</a></td>
+<td class="comment-11" rowspan="1">If (saved_pos_x &lt; (X position - 4)) there was no collision, so jump to the next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_3</td>
 <td class="address-2"><span id="b014"></span>B014</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore our vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b015"></span>B015</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance to Y position</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b016"></span>
 <div class="comments">
 <div class="paragraph">
---------
+Check Y
 </div>
 </div>
 </td>
@@ -266,7 +293,7 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b016"></span>B016</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="2">C = *HL++;</td>
+<td class="comment-11" rowspan="3">Fetch Y position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -278,25 +305,25 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b018"></span>B018</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-11" rowspan="1">B = *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b019"></span>B019</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Save our vischar pointer while we compare bounds</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b01a"></span>B01A</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-11" rowspan="1">HL = saved_pos_y;</td>
+<td class="comment-11" rowspan="1">Fetch saved_pos_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b01d"></span>B01D</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="6">BC += 4;</td>
+<td class="comment-11" rowspan="5">Add 4 to the Y position - our upper bound</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -326,31 +353,31 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b024"></span>B024</td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_4</td>
 <td class="address-2"><span id="b025"></span>B025</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="2">if (HL != BC) &lt;%</td>
+<td class="comment-11" rowspan="1">Compare saved_pos_y to (Y position + 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b027"></span>B027</td>
 <td class="instruction">JR Z,<a href="AFDF.html#b03b">collision_6</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Equal - jump forward to comparing height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b029"></span>B029</td>
-<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_20</a></td>
-<td class="comment-11" rowspan="1">if (HL &gt; BC) goto pop_next;</td>
+<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_pop_next</a></td>
+<td class="comment-11" rowspan="1">If (saved_pos_y &gt;= (Y position + 4)) there was no collision, so jump to the next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b02c"></span>B02C</td>
 <td class="instruction">SUB $08</td>
-<td class="comment-11" rowspan="5">BC -= 8;</td>
+<td class="comment-11" rowspan="5">Reduce <span class="register">A</span> by 8 giving (Y position - 4) - our lower bound</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -380,38 +407,38 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1">collision_5</td>
 <td class="address-2"><span id="b033"></span>B033</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-11" rowspan="2">HL = saved_pos_y;</td>
+<td class="comment-11" rowspan="1">Fetch saved_pos_y again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b036"></span>B036</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compare saved_pos_y to (Y position - 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b038"></span>B038</td>
-<td class="instruction">JP C,<a href="AFDF.html#b0fc">collision_20</a></td>
-<td class="comment-11" rowspan="1">if (HL &lt; BC) goto pop_next; %&gt;</td>
+<td class="instruction">JP C,<a href="AFDF.html#b0fc">collision_pop_next</a></td>
+<td class="comment-11" rowspan="1">If (saved_pos_y &lt; (Y position - 4)) there was no collision, so jump to the next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_6</td>
 <td class="address-2"><span id="b03b"></span>B03B</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore our vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b03c"></span>B03C</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance to height</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b03d"></span>
 <div class="comments">
 <div class="paragraph">
---------
+Check height
 </div>
 </div>
 </td>
@@ -420,111 +447,91 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b03d"></span>B03D</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">C = *HL;</td>
+<td class="comment-11" rowspan="1">Fetch height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b03e"></span>B03E</td>
 <td class="instruction">LD A,($81A8)</td>
-<td class="comment-11" rowspan="2">A = saved_height - C;</td>
+<td class="comment-11" rowspan="1">Fetch saved_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b041"></span>B041</td>
 <td class="instruction">SUB C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Subtract height from saved_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b042"></span>B042</td>
 <td class="instruction">JR NC,<a href="AFDF.html#b046">collision_7</a></td>
-<td class="comment-11" rowspan="1">if (A &lt; 0) &lt;%</td>
+<td class="comment-11" rowspan="2">If negative flip the sign - get the absolute value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b044"></span>B044</td>
 <td class="instruction">NEG</td>
-<td class="comment-11" rowspan="1">A = -A; %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_7</td>
 <td class="address-2"><span id="b046"></span>B046</td>
 <td class="instruction">CP $18</td>
-<td class="comment-11" rowspan="2">if (A &gt;= 24) goto pop_next;</td>
+<td class="comment-11" rowspan="2">If the result is &gt;= 24 then jump to the next iteration</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b048"></span>B048</td>
-<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_20</a></td>
+<td class="instruction">JP NC,<a href="AFDF.html#b0fc">collision_pop_next</a></td>
 <td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="b04b"></span>
-<div class="comments">
-<div class="paragraph">
-If specified vischar character has a bribe pending...
-</div>
-</div>
-</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b04b"></span>B04B</td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment-11" rowspan="2">A = IY[1] &amp; 0x0F; // sampled IY=$8020,$8040,$8060,$8000 // but this is *not* vischar_FLAGS_MASK, which is 0x1F</td>
+<td class="comment-11" rowspan="1">Read the vischar's flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b04e"></span>B04E</td>
 <td class="instruction">AND $0F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">AND the flags with vischar_FLAGS_PURSUIT_MASK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b050"></span>B050</td>
 <td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="2">if (A == vischar_FLAGS_PURSUE) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the result vischar_FLAGS_PURSUE?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b052"></span>B052</td>
 <td class="instruction">JR NZ,<a href="AFDF.html#b071">collision_9</a></td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="b054"></span>
-<div class="comments">
-<div class="paragraph">
-and current vischar is not the hero...
-</div>
-</div>
-</td>
+<td class="comment-11" rowspan="1">If not, jump forward to collision checking</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b054"></span>B054</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Restore vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b055"></span>B055</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">// sampled HL=$8021,$8041,$8061,$80A1</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b056"></span>B056</td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="1">HL--;</td>
+<td class="comment-11" rowspan="1">Point at vischar base, not flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b057"></span>B057</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">if ((HL &amp; 0xFF) == 0) &lt;% // ie. $8000</td>
+<td class="comment-11" rowspan="3">Is the current vischar the hero's? $8000</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -542,38 +549,48 @@ and current vischar is not the hero...
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b05b"></span>B05B</td>
 <td class="instruction">LD A,($AF8E)</td>
-<td class="comment-11" rowspan="3">if (bribed_character == IY[0]) &lt;%</td>
+<td class="comment-11" rowspan="1">Fetch global bribed character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b05e"></span>B05E</td>
 <td class="instruction">CP (IY+$00)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Does it match IY's vischar character?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b061"></span>B061</td>
 <td class="instruction">JR NZ,<a href="AFDF.html#b068">collision_8</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">No, jump forward to solitary check</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b063"></span>
+<div class="comments">
+<div class="paragraph">
+IY is a bribed character pursuing the hero. When the pursuer catches the hero the bribe will be accepted.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b063"></span>B063</td>
 <td class="instruction">CALL <a href="B107.html">accept_bribe</a></td>
-<td class="comment-11" rowspan="1">accept_bribe(); %&gt;</td>
+<td class="comment-11" rowspan="1">Call accept_bribe</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b066"></span>B066</td>
 <td class="instruction">JR <a href="AFDF.html#b071">collision_9</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b068"></span>
 <div class="comments">
 <div class="paragraph">
-A hostile catches the hero!
+IY is a hostile who's caught the hero!
 </div>
 </div>
 </td>
@@ -582,19 +599,19 @@ A hostile catches the hero!
 <td class="asm-label-1">collision_8</td>
 <td class="address-2"><span id="b068"></span>B068</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b069"></span>B069</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b06a"></span>B06A</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="3">HL = IY + 1;</td>
+<td class="comment-11" rowspan="3">Unused sequence: HL = IY + 1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -612,55 +629,65 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b06e"></span>B06E</td>
 <td class="instruction">JP <a href="CB98.html">solitary</a></td>
-<td class="comment-11" rowspan="1">solitary(); return; // exit via %&gt; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">Exit via solitary</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b071"></span>
+<div class="comments">
+<div class="paragraph">
+Check for collisions with items.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_9</td>
 <td class="address-2"><span id="b071"></span>B071</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b072"></span>B072</td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="1">HL--;</td>
+<td class="comment-11" rowspan="1">Point at vischar base, not flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b073"></span>B073</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL; // sampled HL=$80C0,$8040,$8000,$8020,$8060 // vischar_BYTE0</td>
+<td class="comment-11" rowspan="1">Fetch the vischar's character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b074"></span>B074</td>
 <td class="instruction">CP $1A</td>
-<td class="comment-11" rowspan="2">if (A &gt;= 26) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the character &gt;= character_26_STOVE_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b076"></span>B076</td>
 <td class="instruction">JR C,<a href="AFDF.html#b0b9">collision_16</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if NOT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b078"></span>B078</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b079"></span>B079</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank the character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b07a"></span>B07A</td>
 <td class="instruction">LD A,$11</td>
-<td class="comment-11" rowspan="3">HL += 17; // &amp;vischar-&gt;mi.pos.y</td>
+<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar-&gt;mi.pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -678,37 +705,47 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b07e"></span>B07E</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">tmpA = A; // retrieve character index</td>
+<td class="comment-11" rowspan="1">Retrieve the character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b07f"></span>B07F</td>
 <td class="instruction">LD BC,$0723</td>
-<td class="comment-11" rowspan="1">B = 7; C = 35;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> to 7 - the permitted range, in either direction, from the centre point and set <span class="register">C</span> to 35 - the centre point</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b082"></span>B082</td>
 <td class="instruction">CP $1C</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compare character index with character_28_CRATE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b084"></span>B084</td>
 <td class="instruction">LD A,(IY+$0E)</td>
-<td class="comment-11" rowspan="1">A = IY[14]; // interleaved</td>
+<td class="comment-11" rowspan="1">(interleaved) Fetch IY's direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b087"></span>B087</td>
 <td class="instruction">JR NZ,<a href="AFDF.html#b08f">collision_10</a></td>
-<td class="comment-11" rowspan="1">if (tmpA == character_28_CRATE) &lt;%</td>
+<td class="comment-11" rowspan="1">If it's not the crate then jump to the stove handling</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b089"></span>
+<div class="comments">
+<div class="paragraph">
+Handle the crate. It moves on the X axis (top left to bottom right) only.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b089"></span>B089</td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">L -= 2; // &amp;vischar-&gt;mi.pos.x</td>
+<td class="comment-11" rowspan="2">Point <span class="register">HL</span> at vischar-&gt;mi.pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -720,49 +757,69 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b08b"></span>B08B</td>
 <td class="instruction">LD C,$36</td>
-<td class="comment-11" rowspan="1">C = 54;</td>
+<td class="comment-11" rowspan="1">Centre point is 54 (crate will move 47..54..61)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b08d"></span>B08D</td>
 <td class="instruction">XOR $01</td>
-<td class="comment-11" rowspan="1">A ^= 1; %&gt;</td>
+<td class="comment-11" rowspan="1">Swap direction left&lt;=&gt;right</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b08f"></span>
+<div class="comments">
+<div class="paragraph">
+Top left case.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_10</td>
 <td class="address-2"><span id="b08f"></span>B08F</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
+<td class="comment-11" rowspan="1">Test the direction: Is it top left? (zero)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b090"></span>B090</td>
 <td class="instruction">JR NZ,<a href="AFDF.html#b09d">collision_12</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward to next check if not</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b092"></span>
+<div class="comments">
+<div class="paragraph">
+The player is pushing the movable item from the front, so centre it.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b092"></span>B092</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Load the coordinate</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b093"></span>B093</td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="2">if (A != C) &lt;%</td>
+<td class="comment-11" rowspan="1">Is it at the centre point?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b094"></span>B094</td>
 <td class="instruction">JR Z,<a href="AFDF.html#b0b8">collision_15</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b096"></span>B096</td>
 <td class="instruction">JR C,<a href="AFDF.html#b09a">collision_11</a></td>
-<td class="comment-11" rowspan="3">if (C &gt; A) (*HL) -= 2; // decrement by -2 then execute +1 anyway to avoid branch</td>
+<td class="comment-11" rowspan="4">If the coordinate is larger than the centre point then decrement, else increment its position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -780,31 +837,41 @@ A hostile catches the hero!
 <td class="asm-label-1">collision_11</td>
 <td class="address-2"><span id="b09a"></span>B09A</td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-11" rowspan="1">(*HL)++; %&gt; %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b09b"></span>B09B</td>
 <td class="instruction">JR <a href="AFDF.html#b0b8">collision_15</a></td>
-<td class="comment-11" rowspan="3">else if (A == 1) &lt;%</td>
+<td class="comment-11" rowspan="1">(else)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b09d"></span>
+<div class="comments">
+<div class="paragraph">
+Top right case.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_12</td>
 <td class="address-2"><span id="b09d"></span>B09D</td>
 <td class="instruction">CP $01</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Test the direction: Is it top right? (one)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b09f"></span>B09F</td>
 <td class="instruction">JR NZ,<a href="AFDF.html#b0a9">collision_13</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward to next check if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a1"></span>B0A1</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">A = C + B;</td>
+<td class="comment-11" rowspan="5">If the coordinate is not at its maximum (C+B) then increment its position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -816,7 +883,7 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a3"></span>B0A3</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="3">if (A != *HL) (*HL)++; %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -834,25 +901,35 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0a7"></span>B0A7</td>
 <td class="instruction">JR <a href="AFDF.html#b0b8">collision_15</a></td>
-<td class="comment-11" rowspan="3">else if (A == 2) &lt;%</td>
+<td class="comment-11" rowspan="1">(else)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b0a9"></span>
+<div class="comments">
+<div class="paragraph">
+Bottom right case.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_13</td>
 <td class="address-2"><span id="b0a9"></span>B0A9</td>
 <td class="instruction">CP $02</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Test the direction: Is it bottom right? (two)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ab"></span>B0AB</td>
 <td class="instruction">JR NZ,<a href="AFDF.html#b0b2">collision_14</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward to next check if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ad"></span>B0AD</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">A = C - B;</td>
+<td class="comment-11" rowspan="3">Set the position to minimum (C-B) irrespective. Note that this never seems to happen in practice in the game</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -864,19 +941,29 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0af"></span>B0AF</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">*HL = A; %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0b0"></span>B0B0</td>
 <td class="instruction">JR <a href="AFDF.html#b0b8">collision_15</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="comment-11" rowspan="1">(else)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b0b2"></span>
+<div class="comments">
+<div class="paragraph">
+Bottom left case.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_14</td>
 <td class="address-2"><span id="b0b2"></span>B0B2</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">A = C - B;</td>
+<td class="comment-11" rowspan="5">If the coordinate is not at its minimum (C-B) then decrement its position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -888,7 +975,7 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0b4"></span>B0B4</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="3">if (A != *HL) (*HL)--; %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -906,19 +993,29 @@ A hostile catches the hero!
 <td class="asm-label-1">collision_15</td>
 <td class="address-2"><span id="b0b8"></span>B0B8</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1">collision_16</td>
 <td class="address-2"><span id="b0b9"></span>B0B9</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b0ba"></span>
+<div class="comments">
+<div class="paragraph">
+Reorient the character? Not well understood. (?)
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ba"></span>B0BA</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">HL += 13;</td>
+<td class="comment-11" rowspan="3">Point at vischar input field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -936,31 +1033,31 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0be"></span>B0BE</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL &amp; ~input_KICK; // mask off kick flag // sampled HL=$806D,$804D,$802D,$808D,$800D</td>
+<td class="comment-11" rowspan="2">Load the input field and mask off the input_KICK flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0bf"></span>B0BF</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c1"></span>B0C1</td>
-<td class="instruction">JR Z,<a href="AFDF.html#b0db">collision_18</a></td>
-<td class="comment-11" rowspan="1">if (A) &lt;%</td>
+<td class="instruction">JR Z,<a href="AFDF.html#b0db">collision_17</a></td>
+<td class="comment-11" rowspan="1">Jump forward if the input field is zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c3"></span>B0C3</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Point at the direction field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c4"></span>B0C4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL ^ 2; // swap direction: top &lt;=&gt; bottom</td>
+<td class="comment-11" rowspan="2">Swap direction top &lt;=&gt; bottom</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -972,25 +1069,35 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0c7"></span>B0C7</td>
 <td class="instruction">CP (IY+$0E)</td>
-<td class="comment-11" rowspan="2">if (A != IY[14]) &lt;%</td>
+<td class="comment-11" rowspan="2">If direction != state-&gt;IY-&gt;direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ca"></span>B0CA</td>
-<td class="instruction">JR Z,<a href="AFDF.html#b0db">collision_18</a></td>
+<td class="instruction">JR Z,<a href="AFDF.html#b0db">collision_17</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0cc"></span>B0CC</td>
 <td class="instruction">LD (IY+$0D),$80</td>
-<td class="comment-11" rowspan="1">IY[13] = input_KICK;</td>
+<td class="comment-11" rowspan="1">Set IY's input to input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-1">collision_17</td>
+<td class="routine-comment" colspan="4">
+<span id="b0d0"></span>
+<div class="comments">
+<div class="paragraph">
+Delay calling character_behaviour for five turns. This delay controls how long it takes before a blocked character will try another direction.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">collided</td>
 <td class="address-2"><span id="b0d0"></span>B0D0</td>
 <td class="instruction">LD A,(IY+$07)</td>
-<td class="comment-11" rowspan="4">IY[7] = (IY[7] &amp; vischar_BYTE7_MASK_HI) | 5; // preserve flags and set 5? // sampled IY=$8000,$80E0</td>
+<td class="comment-11" rowspan="4">IY-&gt;counter_and_flags = (IY-&gt;counter_and_flags &amp; ~vischar_BYTE7_COUNTER_MASK) | 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -1014,13 +1121,23 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0da"></span>B0DA</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">if (!Z) return; /* odd */ %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">Return  DPT: This return works but it's odd that it's conditional</td>
 </tr>
 <tr>
-<td class="asm-label-1">collision_18</td>
+<td class="routine-comment" colspan="4">
+<span id="b0db"></span>
+<div class="comments">
+<div class="paragraph">
+... new input stuff Note: C direction field doesn't get masked, so will access out-of-bounds in new_inputs[] if we collide when crawling.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">collision_17</td>
 <td class="address-2"><span id="b0db"></span>B0DB</td>
 <td class="instruction">LD C,(IY+$0E)</td>
-<td class="comment-11" rowspan="2">BC = IY[14]; // sampled IY=$8000,$8040,$80E0</td>
+<td class="comment-11" rowspan="2">Fetch IY-&gt;direction, widening it to BC</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -1032,61 +1149,61 @@ A hostile catches the hero!
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e0"></span>B0E0</td>
 <td class="instruction">LD HL,$B0F8</td>
-<td class="comment-11" rowspan="4">IY[13] = collision_new_inputs[BC];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at collision_new_inputs</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e3"></span>B0E3</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Index it by direction (in BC)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e4"></span>B0E4</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch the direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e5"></span>B0E5</td>
 <td class="instruction">LD (IY+$0D),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">IY-&gt;input = A</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0e8"></span>B0E8</td>
 <td class="instruction">BIT 0,C</td>
-<td class="comment-11" rowspan="2">if ((C &amp; 1) == 0) &lt;%</td>
+<td class="comment-11" rowspan="1">If the new direction is TR or BL</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ea"></span>B0EA</td>
-<td class="instruction">JR NZ,<a href="AFDF.html#b0f2">collision_19</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="AFDF.html#b0f2">collision_18</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0ec"></span>B0EC</td>
 <td class="instruction">RES 5,(IY+$07)</td>
-<td class="comment-11" rowspan="1">IY[7] &amp;= ~vischar_BYTE7_Y_DOMINANT;</td>
+<td class="comment-11" rowspan="1">IY-&gt;counter_and_flags &amp;= ~vischar_BYTE7_Y_DOMINANT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0f0"></span>B0F0</td>
-<td class="instruction">JR <a href="AFDF.html#b0d0">collision_17</a></td>
-<td class="comment-11" rowspan="1">goto $B0D0; %&gt;</td>
+<td class="instruction">JR <a href="AFDF.html#b0d0">collided</a></td>
+<td class="comment-11" rowspan="1">Jump to 'collided'</td>
 </tr>
 <tr>
-<td class="asm-label-1">collision_19</td>
+<td class="asm-label-1">collision_18</td>
 <td class="address-2"><span id="b0f2"></span>B0F2</td>
 <td class="instruction">SET 5,(IY+$07)</td>
-<td class="comment-11" rowspan="1">else &lt;% IY[7] |= vischar_BYTE7_Y_DOMINANT;</td>
+<td class="comment-11" rowspan="1">IY-&gt;counter_and_flags |= vischar_BYTE7_Y_DOMINAN</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0f6"></span>B0F6</td>
-<td class="instruction">JR <a href="AFDF.html#b0d0">collision_17</a></td>
-<td class="comment-11" rowspan="1">goto $B0D0; %&gt;</td>
+<td class="instruction">JR <a href="AFDF.html#b0d0">collided</a></td>
+<td class="comment-11" rowspan="1">Jump to 'collided'</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -1102,43 +1219,43 @@ New inputs.
 <td class="asm-label-1">collision_new_inputs</td>
 <td class="address-1"><span id="b0f8"></span>B0F8</td>
 <td class="instruction">DEFB $85</td>
-<td class="comment-11" rowspan="1">input_DOWN + input_LEFT  + input_KICK</td>
+<td class="comment-11" rowspan="1">= input_DOWN + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0f9"></span>B0F9</td>
 <td class="instruction">DEFB $84</td>
-<td class="comment-11" rowspan="1">input_UP   + input_LEFT  + input_KICK</td>
+<td class="comment-11" rowspan="1">= input_UP   + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0fa"></span>B0FA</td>
 <td class="instruction">DEFB $87</td>
-<td class="comment-11" rowspan="1">input_UP   + input_RIGHT + input_KICK</td>
+<td class="comment-11" rowspan="1">= input_UP   + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0fb"></span>B0FB</td>
 <td class="instruction">DEFB $88</td>
-<td class="comment-11" rowspan="1">input_DOWN + input_RIGHT + input_KICK</td>
+<td class="comment-11" rowspan="1">= input_DOWN + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-1">collision_20</td>
+<td class="asm-label-1">collision_pop_next</td>
 <td class="address-2"><span id="b0fc"></span>B0FC</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">pop_next:</td>
+<td class="comment-11" rowspan="1">Restore the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b0fd"></span>B0FD</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1">collision_21</td>
+<td class="asm-label-1">collision_19</td>
 <td class="address-2"><span id="b0fe"></span>B0FE</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">next: HL += 32;</td>
+<td class="comment-11" rowspan="3">Step <span class="register">HL</span> to the next vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -1156,7 +1273,7 @@ New inputs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b102"></span>B102</td>
 <td class="instruction">DEC B</td>
-<td class="comment-11" rowspan="2">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="2">...loop for each vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -1168,7 +1285,7 @@ New inputs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b106"></span>B106</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; // return with Z set</td>
+<td class="comment-11" rowspan="1">Return with Z set</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -1179,9 +1296,9 @@ New inputs.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

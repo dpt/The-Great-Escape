@@ -21,13 +21,13 @@
 <td class="next"><span class="next-1">Next: <a href="F541.html">F541</a></span></td>
 </tr>
 </table>
-<div class="description">F52C: Get tuning.</div>
+<div class="description">F52C: Return the frequency to play at to generate the given semitone.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="4">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="F4B7.html">menu_screen</a>.
+The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
 </div>
 </div>
 <table class="input-1">
@@ -35,46 +35,45 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 <th colspan="2">Input</th>
 </tr>
 <tr>
-<td class="register">A</td>
-<td class="register-desc">Index (never larger than 42?).</td>
+<td class="register">Used</td>
+<td class="register-desc">by the routine at <a href="F4B7.html">menu_screen</a>.</td>
 </tr>
 </table>
-<table class="output-1">
+<table class="output-0">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-<tr>
-<td class="register">BC</td>
-<td class="register-desc">...</td>
-</tr>
-<tr>
-<td class="register">DE</td>
-<td class="register-desc">...</td>
-</tr>
-<tr>
-<td class="register">HL</td>
-<td class="register-desc">...</td>
-</tr>
+
 </table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">get_tuning</td>
+<td class="routine-comment" colspan="4">
+<span id="f52c"></span>
+<div class="comments">
+<div class="paragraph">
+I:A  Semitone index (never larger than 42 in this game). O:BC Frequency. O:DE Frequency. O:L  Zero.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">frequency_for_semitone</td>
 <td class="address-2"><span id="f52c"></span>F52C</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="8">BC = music_tuning_table[A];</td>
+<td class="comment-11" rowspan="1">Double <span class="register">A</span> for index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f52d"></span>F52D</td>
 <td class="instruction">LD HL,$FA48</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the semitone to frequency table</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f530"></span>F530</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Widen: <span class="register">DE</span> = <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -86,13 +85,13 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f533"></span>F533</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f534"></span>F534</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Fetch frequency from table</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -107,22 +106,32 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="4">
+<span id="f537"></span>
+<div class="comments">
+<div class="paragraph">
+DPT: This increment could be baked into the table itself.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f537"></span>F537</td>
 <td class="instruction">INC C</td>
-<td class="comment-11" rowspan="1">C++;</td>
+<td class="comment-11" rowspan="1">Increment</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f538"></span>F538</td>
 <td class="instruction">INC B</td>
-<td class="comment-11" rowspan="1">B++;</td>
+<td class="comment-11" rowspan="1">Increment</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f539"></span>F539</td>
-<td class="instruction">JR NZ,<a href="F52C.html#f53c">get_tuning_0</a></td>
-<td class="comment-11" rowspan="2">if (B == 0) C++;</td>
+<td class="instruction">JR NZ,<a href="F52C.html#f53c">frequency_for_semitone_0</a></td>
+<td class="comment-11" rowspan="2">If B rolled over, increment C (big endian?)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -131,16 +140,16 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">get_tuning_0</td>
+<td class="asm-label-1">frequency_for_semitone_0</td>
 <td class="address-2"><span id="f53c"></span>F53C</td>
 <td class="instruction">LD L,$00</td>
-<td class="comment-11" rowspan="1">L = 0;</td>
+<td class="comment-11" rowspan="1">Reset <span class="register">L</span> - this is the border+beeper value for OUT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f53e"></span>F53E</td>
 <td class="instruction">LD D,B</td>
-<td class="comment-11" rowspan="2">DE = BC;</td>
+<td class="comment-11" rowspan="2">Return <span class="register">DE</span> and <span class="register">BC</span> the same</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -152,7 +161,7 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f540"></span>F540</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -163,9 +172,9 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

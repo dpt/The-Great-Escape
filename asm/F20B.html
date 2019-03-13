@@ -35,8 +35,16 @@ Used by the routine at <a href="F206.html">plot_static_tiles_horizontal</a>.
 <th colspan="2">Input</th>
 </tr>
 <tr>
+<td class="register">A</td>
+<td class="register-desc">Plot direction: 0 =&gt; horizontal, $FF =&gt; vertical.</td>
+</tr>
+<tr>
 <td class="register">DE</td>
-<td class="register-desc">Pointer to screen address.</td>
+<td class="register-desc">Pointer to destination screen address.</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer to remainder of static graphic bytes [flags_and_length, tile indices...].</td>
 </tr>
 </table>
 <table class="output-0">
@@ -51,73 +59,93 @@ Used by the routine at <a href="F206.html">plot_static_tiles_horizontal</a>.
 <td class="asm-label-1">plot_static_tiles</td>
 <td class="address-2"><span id="f20b"></span>F20B</td>
 <td class="instruction">LD ($F075),A</td>
-<td class="comment-11" rowspan="1">static_tiles_plot_direction = A;</td>
+<td class="comment-11" rowspan="1">Save a copy of the plot direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f20e"></span>F20E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="4">B = *HL++ &amp; statictiles_COUNT_MASK; // loop iterations</td>
+<td class="comment-11" rowspan="1">Load flags_and_length</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f20f"></span>F20F</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Mask off length</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f211"></span>F211</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for loop iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f212"></span>F212</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance to tile indices</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f213"></span>F213</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve the pointer to screen address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f214"></span>F214</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f215"></span>F215</td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">POP DEdash</td>
+<td class="comment-11" rowspan="1">Restore the pointer to screen address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f216"></span>F216</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f217"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (once for each tile)
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_static_tiles_0</td>
 <td class="address-2"><span id="f217"></span>F217</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">do &lt;% A = *HL;</td>
+<td class="comment-11" rowspan="1">Read a tile index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f218"></span>F218</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f219"></span>
+<div class="comments">
+<div class="paragraph">
+Point <span class="register">HL</span> at static_tiles[tileindex]
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f219"></span>F219</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="10">HLdash = &amp;static_tiles[A]; // elements: 9 bytes each</td>
+<td class="comment-11" rowspan="8">Multiply the tile index by 9</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -165,19 +193,19 @@ Used by the routine at <a href="F206.html">plot_static_tiles_horizontal</a>.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f223"></span>F223</td>
 <td class="instruction">LD BC,$7F00</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at static_tiles[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f226"></span>F226</td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Combine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f227"></span>F227</td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">Bdash = 8; // 8 iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 8 iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -186,6 +214,9 @@ Used by the routine at <a href="F206.html">plot_static_tiles_horizontal</a>.
 <div class="paragraph">
 Plot a tile.
 </div>
+<div class="paragraph">
+Start loop (once for each byte/row)
+</div>
 </div>
 </td>
 </tr>
@@ -193,7 +224,7 @@ Plot a tile.
 <td class="asm-label-1">plot_static_tiles_1</td>
 <td class="address-2"><span id="f229"></span>F229</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% *DEdash = *HLdash++;</td>
+<td class="comment-11" rowspan="2">Copy a byte of tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -205,7 +236,7 @@ Plot a tile.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f22b"></span>F22B</td>
 <td class="instruction">INC D</td>
-<td class="comment-11" rowspan="2">DEdash += 256; // next row</td>
+<td class="comment-11" rowspan="2">Advance <span class="register">DE</span> to the next screen row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -217,19 +248,19 @@ Plot a tile.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f22d"></span>F22D</td>
 <td class="instruction">DJNZ <a href="F20B.html#f229">plot_static_tiles_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f22f"></span>F22F</td>
 <td class="instruction">DEC D</td>
-<td class="comment-11" rowspan="1">DEdash -= 256;</td>
+<td class="comment-11" rowspan="1">Step <span class="register">DE</span> back so it's still in the right block</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f230"></span>F230</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">PUSH DEdash</td>
+<td class="comment-11" rowspan="1">Preserve screen pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -245,19 +276,19 @@ Calculate screen attribute address of tile.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f231"></span>F231</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="1">A = Ddash;</td>
+<td class="comment-11" rowspan="1">Get screen pointer high byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f232"></span>F232</td>
 <td class="instruction">LD D,$58</td>
-<td class="comment-11" rowspan="1">Ddash = 0x58; // screen attributes base</td>
+<td class="comment-11" rowspan="1">Set the attribute pointer to $58xx by default</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f234"></span>F234</td>
 <td class="instruction">CP $48</td>
-<td class="comment-11" rowspan="3">if (A &gt;= 0x48) DEdash += 256;</td>
+<td class="comment-11" rowspan="3">If the screen pointer is $48xx... set the attribute pointer to $59xx</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -275,7 +306,7 @@ Calculate screen attribute address of tile.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f239"></span>F239</td>
 <td class="instruction">CP $50</td>
-<td class="comment-11" rowspan="3">if (A &gt;= 0x50) DEdash += 256;</td>
+<td class="comment-11" rowspan="3">If the screen pointer is $50xx... set the attribute pointer to $5Axx</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -293,7 +324,7 @@ Calculate screen attribute address of tile.
 <td class="asm-label-1">plot_static_tiles_2</td>
 <td class="address-2"><span id="f23e"></span>F23E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">*DEdash = *HLdash; // copy attribute byte</td>
+<td class="comment-11" rowspan="2">Copy the attribute byte which follows the tile data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -305,31 +336,44 @@ Calculate screen attribute address of tile.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f240"></span>F240</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">POP HLdash</td>
+<td class="comment-11" rowspan="1">Restore screen pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f241"></span>F241</td>
 <td class="instruction">LD A,($F075)</td>
-<td class="comment-11" rowspan="1">A = static_tiles_plot_direction;</td>
+<td class="comment-11" rowspan="1">Fetch static_tiles_plot_direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f244"></span>F244</td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) &lt;% // horizontal</td>
+<td class="comment-11" rowspan="1">Is it vertical?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f245"></span>F245</td>
 <td class="instruction">JR NZ,<a href="F20B.html#f24e">plot_static_tiles_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f247"></span>
+<div class="comments">
+<div class="paragraph">
+Horizontal
+</div>
+<div class="paragraph">
+Reset and advance the screen pointer
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f247"></span>F247</td>
 <td class="instruction">LD A,H</td>
-<td class="comment-11" rowspan="3">Hdash -= 7;  // HLdash -= 7 * 256;</td>
+<td class="comment-11" rowspan="3">Rewind the screen pointer by 7 rows</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -347,49 +391,59 @@ Calculate screen attribute address of tile.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f24b"></span>F24B</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Ldash++; %&gt;</td>
+<td class="comment-11" rowspan="1">Advance to the next character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f24c"></span>F24C</td>
 <td class="instruction">JR <a href="F20B.html#f251">plot_static_tiles_4</a></td>
-<td class="comment-11" rowspan="1">else &lt;% // vertical</td>
+<td class="comment-11" rowspan="1">(else)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f24e"></span>
+<div class="comments">
+<div class="paragraph">
+Vertical
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_static_tiles_3</td>
 <td class="address-2"><span id="f24e"></span>F24E</td>
 <td class="instruction">CALL <a href="7CE9.html">next_scanline_down</a></td>
-<td class="comment-11" rowspan="1">next_scanline_down(); %&gt;</td>
+<td class="comment-11" rowspan="1">Get the same position on the next scanline down</td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_static_tiles_4</td>
 <td class="address-2"><span id="f251"></span>F251</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">EX DEdash,HLdash</td>
+<td class="comment-11" rowspan="1">Move new scanline pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f252"></span>F252</td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f253"></span>F253</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance to the next input byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f254"></span>F254</td>
 <td class="instruction">DJNZ <a href="F20B.html#f217">plot_static_tiles_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f256"></span>F256</td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -400,9 +454,9 @@ Calculate screen attribute address of tile.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

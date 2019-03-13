@@ -49,7 +49,7 @@ Used by the routine at <a href="F271.html">check_menu_keys</a>.
 <span id="f350"></span>
 <div class="comments">
 <div class="paragraph">
-Loop while the user does not confirm.
+Start loop (infinite) - loops until the user confirms the key selection.
 </div>
 <div class="paragraph">
 Clear the game window.
@@ -61,13 +61,13 @@ Clear the game window.
 <td class="asm-label-1">choose_keys</td>
 <td class="address-2"><span id="f350"></span>F350</td>
 <td class="instruction">CALL <a href="F335.html">wipe_game_window</a></td>
-<td class="comment-11" rowspan="1">for (;;) &lt;% wipe_game_window();</td>
+<td class="comment-11" rowspan="1">Wipe the game screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f353"></span>F353</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-11" rowspan="2">set_game_window_attributes(attribute_WHITE_OVER_BLACK);</td>
+<td class="comment-11" rowspan="2">Set game window attributes to attribute_WHITE_OVER_BLACK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -80,7 +80,7 @@ Clear the game window.
 <span id="f358"></span>
 <div class="comments">
 <div class="paragraph">
-Draw key choice prompt strings.
+Draw key choice prompts.
 </div>
 </div>
 </td>
@@ -89,25 +89,35 @@ Draw key choice prompt strings.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f358"></span>F358</td>
 <td class="instruction">LD B,$06</td>
-<td class="comment-11" rowspan="1">B = 6; // iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for six iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f35a"></span>F35A</td>
 <td class="instruction">LD HL,$F2AD</td>
-<td class="comment-11" rowspan="1">HL = &amp;define_key_prompts[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at define_key_prompts</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_0</td>
+<td class="routine-comment" colspan="4">
+<span id="f35d"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (once per prompt)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_prompts_loop</td>
 <td class="address-2"><span id="f35d"></span>F35D</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f35e"></span>F35E</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="2">E = *HL++;</td>
+<td class="comment-11" rowspan="4">Read screen address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -119,7 +129,7 @@ Draw key choice prompt strings.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f360"></span>F360</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="2">D = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -131,7 +141,7 @@ Draw key choice prompt strings.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f362"></span>F362</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-11" rowspan="2">B = *HL++; // iterations</td>
+<td class="comment-11" rowspan="2">Read string length</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -140,59 +150,82 @@ Draw key choice prompt strings.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_1</td>
+<td class="routine-comment" colspan="4">
+<span id="f364"></span>
+<div class="comments">
+<div class="paragraph">
+Draw the prompt's glyphs.
+</div>
+<div class="paragraph">
+Start loop (once per character)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_draw_prompt</td>
 <td class="address-2"><span id="f364"></span>F364</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve string length</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f365"></span>
+<div class="comments">
+<div class="paragraph">
+Bug: The next load is needless (plot_glyph does it already).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f365"></span>F365</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL; // redundant</td>
+<td class="comment-11" rowspan="1">Read a glyph</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f366"></span>F366</td>
 <td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
-<td class="comment-11" rowspan="1">plot_glyph();</td>
+<td class="comment-11" rowspan="1">Plot a single glyph (indirectly)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f369"></span>F369</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance the string pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f36a"></span>F36A</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore string length</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f36b"></span>F36B</td>
-<td class="instruction">DJNZ <a href="F350.html#f364">choose_keys_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="F350.html#f364">ck_draw_prompt</a></td>
+<td class="comment-11" rowspan="1">...loop (once per character)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f36d"></span>F36D</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f36e"></span>F36E</td>
-<td class="instruction">DJNZ <a href="F350.html#f35d">choose_keys_0</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="F350.html#f35d">ck_prompts_loop</a></td>
+<td class="comment-11" rowspan="1">...loop (once per prompt)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="f370"></span>
 <div class="comments">
 <div class="paragraph">
-Wipe keydefs.
+Wipe key definitions.
 </div>
 </div>
 </td>
@@ -201,61 +234,91 @@ Wipe keydefs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f370"></span>F370</td>
 <td class="instruction">LD HL,$F06B</td>
-<td class="comment-11" rowspan="1">HL = &amp;keydefs[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at keydefs</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f373"></span>F373</td>
 <td class="instruction">LD B,$0A</td>
-<td class="comment-11" rowspan="1">B = 10; // iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 10 iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f375"></span>F375</td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="1">Zero <span class="register">A</span> in preparation</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_2</td>
+<td class="routine-comment" colspan="4">
+<span id="f376"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_clear_keydef</td>
 <td class="address-2"><span id="f376"></span>F376</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="2">do &lt;% *HL++ = A;</td>
+<td class="comment-11" rowspan="1">Zero a byte of keydef</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f377"></span>F377</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f378"></span>F378</td>
-<td class="instruction">DJNZ <a href="F350.html#f376">choose_keys_2</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="F350.html#f376">ck_clear_keydef</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f37a"></span>
+<div class="comments">
+<div class="paragraph">
+Now scan for keys.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f37a"></span>F37A</td>
 <td class="instruction">LD B,$05</td>
-<td class="comment-11" rowspan="1">B = 5; // iterations L/R/U/D/F</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for five iterations: left/right/up/down/fire</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f37c"></span>F37C</td>
 <td class="instruction">LD HL,$F32B</td>
-<td class="comment-11" rowspan="1">HL = &amp;key_name_screen_addrs[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at key_name_screen_addrs</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_3</td>
+<td class="routine-comment" colspan="4">
+<span id="f37f"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (once per direction+fire)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_keyscan_loop</td>
 <td class="address-2"><span id="f37f"></span>F37F</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f380"></span>F380</td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="2">E = *HL++;</td>
+<td class="comment-11" rowspan="4">Read screen address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -267,7 +330,7 @@ Wipe keydefs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f382"></span>F382</td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="2">D = *HL++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -279,121 +342,151 @@ Wipe keydefs.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f384"></span>F384</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve screen address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f385"></span>F385</td>
 <td class="instruction">LD ($F3E9),DE</td>
-<td class="comment-11" rowspan="1">($F3E9) = DE; // self modify screen addr</td>
+<td class="comment-11" rowspan="1">Self modify the "LD DE,$xxxx" at <a href="F350.html#f3e8">ck_plot_glyph</a> to load the screen address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f389"></span>F389</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">A = 0xFF;</td>
+<td class="comment-11" rowspan="1">Set the debounce flag. This is only set to zero once we've checked the whole keyboard and no keys are pressed, at which point it gets set to zero</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_4</td>
+<td class="routine-comment" colspan="4">
+<span id="f38b"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (infinite)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_keyscan_inner</td>
 <td class="address-2"><span id="f38b"></span>F38B</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">for (;;) &lt;%</td>
+<td class="comment-11" rowspan="1">Bank the debounce flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f38c"></span>F38C</td>
 <td class="instruction">LD HL,$F2E1</td>
-<td class="comment-11" rowspan="1">HL = &amp;keyboard_port_hi_bytes[-1]; // &amp;byte_F2E1</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at keyboard_port_hi_bytes[-1]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f38f"></span>F38F</td>
 <td class="instruction">LD D,$FF</td>
-<td class="comment-11" rowspan="1">D = 0xFF;</td>
+<td class="comment-11" rowspan="1">Initialise the port index</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_5</td>
+<td class="routine-comment" colspan="4">
+<span id="f391"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_try_next_port</td>
 <td class="address-2"><span id="f391"></span>F391</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">do &lt;% HL++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to the next port high byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f392"></span>F392</td>
 <td class="instruction">INC D</td>
-<td class="comment-11" rowspan="1">D++;</td>
+<td class="comment-11" rowspan="1">Increment the port index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f393"></span>F393</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-11" rowspan="1">Read the port high byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f394"></span>F394</td>
 <td class="instruction">OR A</td>
-<td class="comment-11" rowspan="2">if (Adash == 0) goto $F38B; // end of keyboard_port_hi_bytes</td>
+<td class="comment-11" rowspan="1">Have we reached the end of keyboard_port_hi_bytes? ($00)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f395"></span>F395</td>
-<td class="instruction">JR Z,<a href="F350.html#f38b">choose_keys_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="F350.html#f38b">ck_keyscan_inner</a></td>
+<td class="comment-11" rowspan="1">...loop if so (zero in <span class="register">A</span> becomes new debounce flag)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f397"></span>F397</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-11" rowspan="1">B = Adash;</td>
+<td class="comment-11" rowspan="1">Read port high byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f398"></span>F398</td>
 <td class="instruction">LD C,$FE</td>
-<td class="comment-11" rowspan="1">C = 0xFE;</td>
+<td class="comment-11" rowspan="1">Read port $FE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f39a"></span>F39A</td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1">IN Adash,(C)</td>
+<td class="comment-11" rowspan="1">Read the keyboard port</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f39c"></span>F39C</td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="1">Adash = ~Adash;</td>
+<td class="comment-11" rowspan="1">Invert the bits to turn active low into active high</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f39d"></span>F39D</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1">E = Adash;</td>
+<td class="comment-11" rowspan="1">Copy the result into <span class="register">E</span> so we can restore it each time</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f39e"></span>F39E</td>
 <td class="instruction">LD C,$20</td>
-<td class="comment-11" rowspan="1">C = 0x20; // mask</td>
+<td class="comment-11" rowspan="1">Create a mask with bit 5 set</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_6</td>
+<td class="routine-comment" colspan="4">
+<span id="f3a0"></span>
+<div class="comments">
+<div class="paragraph">
+Test bits 4,3,2,1,0
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_keyscan_detect</td>
 <td class="address-2"><span id="f3a0"></span>F3A0</td>
 <td class="instruction">SRL C</td>
-<td class="comment-11" rowspan="1">C &gt;&gt;= 1;</td>
+<td class="comment-11" rowspan="1">Shift the mask right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3a2"></span>F3A2</td>
-<td class="instruction">JR C,<a href="F350.html#f391">choose_keys_5</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (carry);  // loop structure is not quite right</td>
+<td class="instruction">JR C,<a href="F350.html#f391">ck_try_next_port</a></td>
+<td class="comment-11" rowspan="1">Jump (to try next port) if the mask bit got shifted out</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3a4"></span>F3A4</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="2">Adash = C &amp; E;</td>
+<td class="comment-11" rowspan="2">Mask the result</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -404,126 +497,146 @@ Wipe keydefs.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3a6"></span>F3A6</td>
-<td class="instruction">JR Z,<a href="F350.html#f3a0">choose_keys_6</a></td>
-<td class="comment-11" rowspan="1">if (Adash == 0) goto $F3A0;</td>
+<td class="instruction">JR Z,<a href="F350.html#f3a0">ck_keyscan_detect</a></td>
+<td class="comment-11" rowspan="1">...loop while no keys are pressed</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f3a8"></span>
+<div class="comments">
+<div class="paragraph">
+We arrive here if a key was pressed.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3a8"></span>F3A8</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the debounce flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3a9"></span>F3A9</td>
 <td class="instruction">OR A</td>
-<td class="comment-11" rowspan="2">if (A) goto $F38B;</td>
+<td class="comment-11" rowspan="1">Is it set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3aa"></span>F3AA</td>
-<td class="instruction">JR NZ,<a href="F350.html#f38b">choose_keys_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="F350.html#f38b">ck_keyscan_inner</a></td>
+<td class="comment-11" rowspan="1">Restart the loop if so (<span class="register">A</span> is debounce flag)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ac"></span>F3AC</td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="1">A = D;</td>
+<td class="comment-11" rowspan="2">Bank the port index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ad"></span>F3AD</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ae"></span>F3AE</td>
 <td class="instruction">LD HL,$F06A</td>
-<td class="comment-11" rowspan="1">HL = 0xF06A;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the byte before keydefs</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_7</td>
+<td class="routine-comment" colspan="4">
+<span id="f3b1"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_next_keydef</td>
 <td class="address-2"><span id="f3b1"></span>F3B1</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance to the next keydef</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3b2"></span>F3B2</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-11" rowspan="1">Read the keydef.port</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3b3"></span>F3B3</td>
 <td class="instruction">OR A</td>
-<td class="comment-11" rowspan="2">if (Adash == 0) goto $F3C1;</td>
+<td class="comment-11" rowspan="1">Is it an empty slot?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3b4"></span>F3B4</td>
-<td class="instruction">JR Z,<a href="F350.html#f3c1">assign_keydef</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="F350.html#f3c1">ck_assign_keydef</a></td>
+<td class="comment-11" rowspan="1">Jump if so (assign keydef)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3b6"></span>F3B6</td>
 <td class="instruction">CP B</td>
-<td class="comment-11" rowspan="1">if (A != B) ...</td>
+<td class="comment-11" rowspan="1">Does the port high byte match?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3b7"></span>F3B7</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; // interleaved</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> (interleaved)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3b8"></span>F3B8</td>
-<td class="instruction">JR NZ,<a href="F350.html#f3b1">choose_keys_7</a></td>
-<td class="comment-11" rowspan="1">... goto $F3B1;</td>
+<td class="instruction">JR NZ,<a href="F350.html#f3b1">ck_next_keydef</a></td>
+<td class="comment-11" rowspan="1">...loop if different</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ba"></span>F3BA</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Adash = *HL;</td>
+<td class="comment-11" rowspan="1">Read keydef.mask</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3bb"></span>F3BB</td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="2">if (A != C) goto $F3B1;</td>
+<td class="comment-11" rowspan="1">Does the mask match?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3bc"></span>F3BC</td>
-<td class="instruction">JR NZ,<a href="F350.html#f3b1">choose_keys_7</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="F350.html#f3b1">ck_next_keydef</a></td>
+<td class="comment-11" rowspan="1">...loop if different</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3be"></span>F3BE</td>
-<td class="instruction">JP <a href="F350.html#f38b">choose_keys_4</a></td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="instruction">JP <a href="F350.html#f38b">ck_keyscan_inner</a></td>
+<td class="comment-11" rowspan="1">...loop (infinite) (mask in <span class="register">A</span> becomes new debounce flag)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="f3c1"></span>
 <div class="comments">
 <div class="paragraph">
-Assign key def.
+Assign key definition.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">assign_keydef</td>
+<td class="asm-label-1">ck_assign_keydef</td>
 <td class="address-2"><span id="f3c1"></span>F3C1</td>
 <td class="instruction">LD (HL),B</td>
-<td class="comment-11" rowspan="2">*HL++ = B;</td>
+<td class="comment-11" rowspan="2">Store port</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -535,19 +648,19 @@ Assign key def.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3c3"></span>F3C3</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="1">*HL = C;</td>
+<td class="comment-11" rowspan="1">Store mask</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3c4"></span>F3C4</td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the port index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3c5"></span>F3C5</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-11" rowspan="4">A *= 5;</td>
+<td class="comment-11" rowspan="4">Multiply it by 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -571,13 +684,13 @@ Assign key def.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3c9"></span>F3C9</td>
 <td class="instruction">LD HL,$F302</td>
-<td class="comment-11" rowspan="1">HL = 0xF302;  // &amp;key_tables[0] - 1 byte + A // strange: off by one</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> one byte prior to <a href="F303.html">keycode_to_glyph</a>. This is off-by-one to compensate for the upcoming preincrement</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3cc"></span>F3CC</td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-11" rowspan="4">HL += A;</td>
+<td class="comment-11" rowspan="4">Combine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -588,7 +701,7 @@ Assign key def.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ce"></span>F3CE</td>
-<td class="instruction">JR NC,<a href="F350.html#f3d1">choose_keys_8</a></td>
+<td class="instruction">JR NC,<a href="F350.html#f3d1">ck_find_key_glyph</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -598,53 +711,63 @@ Assign key def.
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_8</td>
+<td class="routine-comment" colspan="4">
+<span id="f3d1"></span>
+<div class="comments">
+<div class="paragraph">
+Skip entries until the mask carries out.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_find_key_glyph</td>
 <td class="address-2"><span id="f3d1"></span>F3D1</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance the glyph pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3d2"></span>F3D2</td>
 <td class="instruction">RR C</td>
-<td class="comment-11" rowspan="1">RR C</td>
+<td class="comment-11" rowspan="1">Shift mask</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3d4"></span>F3D4</td>
-<td class="instruction">JR NC,<a href="F350.html#f3d1">choose_keys_8</a></td>
-<td class="comment-11" rowspan="1">JR NC,$F3D1</td>
+<td class="instruction">JR NC,<a href="F350.html#f3d1">ck_find_key_glyph</a></td>
+<td class="comment-11" rowspan="1">...loop until the mask carries out</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3d6"></span>F3D6</td>
 <td class="instruction">LD B,$01</td>
-<td class="comment-11" rowspan="1">B = 1;</td>
+<td class="comment-11" rowspan="1">Set length to 1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3d8"></span>F3D8</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL;</td>
+<td class="comment-11" rowspan="1">Load the glyph</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3d9"></span>F3D9</td>
 <td class="instruction">OR A</td>
-<td class="comment-11" rowspan="1">A |= A;</td>
+<td class="comment-11" rowspan="1">Test the top bit</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3da"></span>F3DA</td>
-<td class="instruction">JP P,<a href="F350.html#f3e8">choose_keys_9</a></td>
-<td class="comment-11" rowspan="1">JP P,$F3E8</td>
+<td class="instruction">JP P,<a href="F350.html#f3e8">ck_plot_glyph</a></td>
+<td class="comment-11" rowspan="1">Jump if clear (JP P =&gt; positive)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="f3dd"></span>
 <div class="comments">
 <div class="paragraph">
-If the top bit was set then it's a modifier key.
+If the top bit was set then it's a special key, like BREAK or ENTER.
 </div>
 </div>
 </td>
@@ -653,19 +776,19 @@ If the top bit was set then it's a modifier key.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3dd"></span>F3DD</td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1">A &amp;= 0x7F;</td>
+<td class="comment-11" rowspan="1">Extract the byte offset into special_key_names</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3df"></span>F3DF</td>
 <td class="instruction">LD DE,$F2EB</td>
-<td class="comment-11" rowspan="4">HL = &amp;special_key_names[0] + A;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at special_key_names</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3e2"></span>F3E2</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Widen byte offset into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -677,19 +800,19 @@ If the top bit was set then it's a modifier key.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3e5"></span>F3E5</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Combine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3e6"></span>F3E6</td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-11" rowspan="2">B = *HL++;</td>
+<td class="comment-11" rowspan="1">First byte is length of special key name</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3e7"></span>F3E7</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to point at glyphs</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
@@ -702,69 +825,89 @@ Plot.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_9</td>
+<td class="asm-label-1">ck_plot_glyph</td>
 <td class="address-2"><span id="f3e8"></span>F3E8</td>
 <td class="instruction">LD DE,$40D5</td>
-<td class="comment-11" rowspan="1">DE = 0x40D5; // self modified // screen address</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at (a self modified screen address)</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_10</td>
+<td class="routine-comment" colspan="4">
+<span id="f3eb"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop (draw key)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">ck_plot_glyph_loop</td>
 <td class="address-2"><span id="f3eb"></span>F3EB</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="f3ec"></span>
+<div class="comments">
+<div class="paragraph">
+Bug: The next load is needless (plot_glyph does it already).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ec"></span>F3EC</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL; // Bug: Redundant.</td>
+<td class="comment-11" rowspan="1">Read a glyph</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ed"></span>F3ED</td>
 <td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
-<td class="comment-11" rowspan="1">plot_glyph();</td>
+<td class="comment-11" rowspan="1">Plot a single glyph (indirectly)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f0"></span>F3F0</td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance to next glyph index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f1"></span>F3F1</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f2"></span>F3F2</td>
-<td class="instruction">DJNZ <a href="F350.html#f3eb">choose_keys_10</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="instruction">DJNZ <a href="F350.html#f3eb">ck_plot_glyph_loop</a></td>
+<td class="comment-11" rowspan="1">...loop (draw key)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f4"></span>F3F4</td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore screen address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f5"></span>F3F5</td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f6"></span>F3F6</td>
 <td class="instruction">DEC B</td>
-<td class="comment-11" rowspan="2">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="2">...loop (once per direction+fire)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f7"></span>F3F7</td>
-<td class="instruction">JR NZ,<a href="F350.html#f37f">choose_keys_3</a></td>
+<td class="instruction">JR NZ,<a href="F350.html#f37f">ck_keyscan_loop</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -774,6 +917,9 @@ Plot.
 <div class="paragraph">
 Delay loop.
 </div>
+<div class="paragraph">
+This delays execution by approximately a third of a second (~1.25M T-states).
+</div>
 </div>
 </td>
 </tr>
@@ -781,13 +927,13 @@ Delay loop.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3f9"></span>F3F9</td>
 <td class="instruction">LD BC,$FFFF</td>
-<td class="comment-11" rowspan="1">BC = 0xFFFF;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">BC</span> to $FFFF</td>
 </tr>
 <tr>
-<td class="asm-label-1">choose_keys_11</td>
+<td class="asm-label-1">ck_delay</td>
 <td class="address-2"><span id="f3fc"></span>F3FC</td>
 <td class="instruction">DEC BC</td>
-<td class="comment-11" rowspan="4">while (--BC);</td>
+<td class="comment-11" rowspan="4">Count down until it's zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -804,7 +950,7 @@ Delay loop.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f3ff"></span>F3FF</td>
-<td class="instruction">JR NZ,<a href="F350.html#f3fc">choose_keys_11</a></td>
+<td class="instruction">JR NZ,<a href="F350.html#f3fc">ck_delay</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
@@ -812,7 +958,7 @@ Delay loop.
 <span id="f401"></span>
 <div class="comments">
 <div class="paragraph">
-Wait for user's input.
+Wait for the user's confirmation.
 </div>
 </div>
 </td>
@@ -821,19 +967,19 @@ Wait for user's input.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f401"></span>F401</td>
 <td class="instruction">CALL <a href="EFFC.html">user_confirm</a></td>
-<td class="comment-11" rowspan="1">user_confirm();</td>
+<td class="comment-11" rowspan="1">Wait for the user to confirm by pressing 'Y' or 'N'</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f404"></span>F404</td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">if (Z) return; // confirmed</td>
+<td class="comment-11" rowspan="1">If Z set 'Y' was pressed so return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f405"></span>F405</td>
 <td class="instruction">JP NZ,<a href="F350.html#f350">choose_keys</a></td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">...loop (infinite)</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -844,9 +990,9 @@ Wait for user's input.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

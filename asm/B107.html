@@ -51,19 +51,19 @@ Used by the routines at <a href="AFDF.html">collision</a> and <a href="CA81.html
 <td class="asm-label-1">accept_bribe</td>
 <td class="address-2"><span id="b107"></span>B107</td>
 <td class="instruction">CALL <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
-<td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50();</td>
+<td class="comment-11" rowspan="1">Increase morale by 10, score by 50</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b10a"></span>B10A</td>
 <td class="instruction">LD (IY+$01),$00</td>
-<td class="comment-11" rowspan="1">IY[1] = 0;</td>
+<td class="comment-11" rowspan="1">Clear the vischar_PURSUIT_PURSUE flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b10e"></span>B10E</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="4">HL = IY + 2;</td>
+<td class="comment-11" rowspan="4">Point <span class="register">HL</span> at IY-&gt;route</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -87,62 +87,72 @@ Used by the routines at <a href="AFDF.html">collision</a> and <a href="CA81.html
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b113"></span>B113</td>
 <td class="instruction">CALL <a href="CB23.html">get_target_assign_pos</a></td>
-<td class="comment-11" rowspan="1">get_target_assign_pos();</td>
+<td class="comment-11" rowspan="1">Call get_target_assign_pos</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b116"></span>
+<div class="comments">
+<div class="paragraph">
+Return early if we have no bribes.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b116"></span>B116</td>
 <td class="instruction">LD DE,$8215</td>
-<td class="comment-11" rowspan="1">DE = &amp;items_held[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at items_held</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b119"></span>B119</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="7">if (*DE != item_BRIBE &amp;&amp; *++DE != item_BRIBE) return; // have no bribes</td>
+<td class="comment-11" rowspan="1">Fetch the first item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b11a"></span>B11A</td>
 <td class="instruction">CP $05</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Does it hold item_BRIBE?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b11c"></span>B11C</td>
 <td class="instruction">JR Z,<a href="B107.html#b123">accept_bribe_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward if it does</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b11e"></span>B11E</td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance to the second item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b11f"></span>B11F</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch the second item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b120"></span>B120</td>
 <td class="instruction">CP $05</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Does it hold item_BRIBE?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b122"></span>B122</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Return if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
 <span id="b123"></span>
 <div class="comments">
 <div class="paragraph">
-We have a bribe, take it away.
+Remove the bribe item.
 </div>
 </div>
 </td>
@@ -151,7 +161,7 @@ We have a bribe, take it away.
 <td class="asm-label-1">accept_bribe_0</td>
 <td class="address-2"><span id="b123"></span>B123</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">*DE = item_NONE;</td>
+<td class="comment-11" rowspan="2">Assign item_NONE to the item slot, removing the bribe item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -163,7 +173,7 @@ We have a bribe, take it away.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b126"></span>B126</td>
 <td class="instruction">AND $3F</td>
-<td class="comment-11" rowspan="2">item_structs[item_BRIBE].room = itemstruct_ROOM_MASK;</td>
+<td class="comment-11" rowspan="2">Set the bribe item's item_struct room to itemstruct_ROOM_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -175,53 +185,63 @@ We have a bribe, take it away.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b12b"></span>B12B</td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
-<td class="comment-11" rowspan="1">draw_all_items();</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="b12e"></span>B12E</td>
-<td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">B = 7; // 7 iterations</td>
+<td class="comment-11" rowspan="1">Draw both held items</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="4">
-<span id="b130"></span>
+<span id="b12e"></span>
 <div class="comments">
 <div class="paragraph">
-Iterate over hostile + visible non-player characters.
+Set the vischar_PURSUIT_SAW_BRIBE flag on all visible hostiles. Iterate over hostile and visible non-player characters.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
+<td class="address-1"><span id="b12e"></span>B12E</td>
+<td class="instruction">LD B,$07</td>
+<td class="comment-11" rowspan="1">7 iterations</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="b130"></span>B130</td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">HL = $8020;</td>
+<td class="comment-11" rowspan="1">Start at the second visible character</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b133"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">accept_bribe_1</td>
 <td class="address-2"><span id="b133"></span>B133</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">do &lt;% if (HL[0] &lt;= character_19_GUARD_DOG_4) &lt;% // Hostile characters only.</td>
+<td class="comment-11" rowspan="1">Fetch the character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b134"></span>B134</td>
 <td class="instruction">CP $14</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is it &gt; character_20_PRISONER_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b136"></span>B136</td>
 <td class="instruction">JR NC,<a href="B107.html#b13c">accept_bribe_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b138"></span>B138</td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="3">HL[1] = vischar_FLAGS_SAW_BRIBE; %&gt; // hostile will look for bribed character?</td>
+<td class="comment-11" rowspan="3">Set flags to vischar_FLAGS_SAW_BRIBE if hostile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -239,7 +259,7 @@ Iterate over hostile + visible non-player characters.
 <td class="asm-label-1">accept_bribe_2</td>
 <td class="address-2"><span id="b13c"></span>B13C</td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">HL += 32;</td>
+<td class="comment-11" rowspan="3">Advance to the next vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -257,13 +277,13 @@ Iterate over hostile + visible non-player characters.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b140"></span>B140</td>
 <td class="instruction">DJNZ <a href="B107.html#b133">accept_bribe_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b142"></span>B142</td>
 <td class="instruction">LD B,$11</td>
-<td class="comment-11" rowspan="2">queue_message(message_HE_TAKES_THE_BRIBE);</td>
+<td class="comment-11" rowspan="2">Queue the message "HE TAKES THE BRIBE"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -275,13 +295,13 @@ Iterate over hostile + visible non-player characters.
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b147"></span>B147</td>
 <td class="instruction">LD B,$12</td>
-<td class="comment-11" rowspan="1">queue_message(message_AND_ACTS_AS_DECOY);</td>
+<td class="comment-11" rowspan="1">Then queue the messsage "AND ACTS AS DECOY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b149"></span>B149</td>
 <td class="instruction">JP <a href="7D15.html">queue_message</a></td>
-<td class="comment-11" rowspan="1">return; // exit via</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -292,9 +312,9 @@ Iterate over hostile + visible non-player characters.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>

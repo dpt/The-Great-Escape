@@ -46,7 +46,7 @@
 <td class="asm-label-1">action_red_cross_parcel</td>
 <td class="address-2"><span id="b387"></span>B387</td>
 <td class="instruction">LD A,$3F</td>
-<td class="comment-11" rowspan="2">item_structs[item_RED_CROSS_PARCEL].room = itemstruct_ROOM_MASK; // room_NONE &amp; 0x3F;</td>
+<td class="comment-11" rowspan="2">Clear the red cross parcel item's room field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -58,13 +58,23 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b38c"></span>B38C</td>
 <td class="instruction">LD HL,$8215</td>
-<td class="comment-11" rowspan="1">HL = &amp;items_held;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at items_held</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b38f"></span>
+<div class="comments">
+<div class="paragraph">
+We've arrived here from a 'use' command, so one or the other item must be the red cross parcel.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b38f"></span>B38F</td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment-11" rowspan="4">if (*HL != item_RED_CROSS_PARCEL) HL++; /* One or the other must be a red cross parcel item, so advance. */</td>
+<td class="comment-11" rowspan="2">Is the first item the red cross parcel? (item_RED_CROSS_PARCEL)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -76,43 +86,53 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b392"></span>B392</td>
 <td class="instruction">JR Z,<a href="B387.html#b395">action_red_cross_parcel_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b394"></span>B394</td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance if not</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="4">
+<span id="b395"></span>
+<div class="comments">
+<div class="paragraph">
+<span class="register">HL</span> now points to the held item.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1">action_red_cross_parcel_0</td>
 <td class="address-2"><span id="b395"></span>B395</td>
 <td class="instruction">LD (HL),$FF</td>
-<td class="comment-11" rowspan="1">*HL = item_NONE; /* Parcel opened. */</td>
+<td class="comment-11" rowspan="1">Remove parcel from the inventory</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b397"></span>B397</td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
-<td class="comment-11" rowspan="1">draw_all_items();</td>
+<td class="comment-11" rowspan="1">Draw both held items</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b39a"></span>B39A</td>
 <td class="instruction">LD A,($A263)</td>
-<td class="comment-11" rowspan="1">A = red_cross_parcel_current_contents;</td>
+<td class="comment-11" rowspan="1">Fetch the value of the parcel's current contents</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b39d"></span>B39D</td>
 <td class="instruction">CALL <a href="7BB5.html">drop_item_tail</a></td>
-<td class="comment-11" rowspan="1">drop_item_tail();</td>
+<td class="comment-11" rowspan="1">Pass that into "drop item, tail part"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3a0"></span>B3A0</td>
 <td class="instruction">LD B,$0C</td>
-<td class="comment-11" rowspan="2">queue_message(message_YOU_OPEN_THE_BOX);</td>
+<td class="comment-11" rowspan="2">Queue the message "YOU OPEN THE BOX"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
@@ -124,7 +144,7 @@
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b3a5"></span>B3A5</td>
 <td class="instruction">JP <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
-<td class="comment-11" rowspan="1">increase_morale_by_10_score_by_50(); return; // exit via</td>
+<td class="comment-11" rowspan="1">Increase morale by 10, score by 50 and exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -135,9 +155,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20180825</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2018 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 6.4.</div>
+<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
 </footer>
 </body>
 </html>
