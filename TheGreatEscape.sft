@@ -12580,156 +12580,208 @@ cC$C892,1;21 {Clear the 'character index is valid' flag
 ; Used by the routines at #R$C4E0 and #R$C892.
 ;
 ; I:IY Pointer to visible character.
+;
+; Proceed into the character behaviour handling only when this delay field
+; hits zero. This stops characters navigating around obstacles too quickly.
 @label=character_behaviour
-cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
- C$C91B,1;22 B = A;
-; If the bottom nibble is set then decrement it.
- C$C91C,2;22 A &= vischar_BYTE7_MASK_LO;
- C$C91E,2;22 if (A) <%
- C$C920,1;22 {  IY[7] = --B; // decrement but don't affect flags
+cC$C918,3;22 Fetch vischar.counter_and_flags
+ C$C91B,1;22 Copy it to #REGb
+; If the counter field is set then decrement it and return.
+ C$C91C,2;22 Isolate the counter field in the bottom nibble
+ C$C91E,2;22 {Decrement the counter if it's positive
+ C$C920,1;22
  C$C921,3;22 }
- C$C924,1;22 return; %>
-*C$C925,2;22 {HL = IY;
+ C$C924,1;22 Return
+; We arrive here when the counter is zero.
+@label=cb_proceed
+*C$C925,2;22 {Copy the vischar pointer into #REGhl
  C$C927,1;22 }
- C$C928,1;22 {A = *++HL; // incremented HL is $8021 $8041 $8061
- C$C929,1;22 }
- C$C92A,1;22 {if (A != 0) <%
- C$C92B,3;22 }
- C$C92E,2;22 {  if (A == vischar_FLAGS_PURSUE) <%
- C$C930,2;22 }
-*C$C932,1;22
- C$C933,1;22
- C$C934,1;22 POP DEdash // ie. DEdash = HL
- C$C935,1;22 {    DEdash += 3;
+ C$C928,1;22 Advance #REGhl to vischar.flags
+ C$C929,1;22 Fetch the flags so we can check the mode field
+ C$C92A,1;22 Are any flag bits set?
+ C$C92B,3;22 Jump if not
+; Check for mode 1 ("pursue")
+ C$C92E,2;22 Is the mode vischar_FLAGS_PURSUE?
+ C$C930,2;22 Jump if not
+; Mode 1: Hero is chased by hostiles and sent to solitary if caught.
+@label=cb_pursue_hero
+*C$C932,1;22 Preserve vischar.flags pointer
+ C$C933,1;22 Bank
+ C$C934,1;22 Restore vischar.flags pointer
+ C$C935,1;22 {Advance #REGde to vischar.position
  C$C936,1;22
  C$C937,1;22 }
- C$C938,3;22 HLdash = &hero_map_position.x;
- C$C93B,2;22 *DEdash++ = *HLdash++;
- C$C93D,2;22 *DEdash++ = *HLdash++;
- C$C93F,1;22
- C$C940,3;22 goto end_bit; %>
-*C$C943,2;22 {  else if (A == vischar_FLAGS_HASSLE) <%
- C$C945,2;22 }
- C$C947,3;22 {    if (automatic_player_counter) goto $C932; // jump into case 1
- C$C94A,1;22
- C$C94B,2;22 }
- C$C94D,2;22 {    *HL++ = 0;
+ C$C938,3;22 Point #REGhl at the global map position (the hero's
+ ;22 position)
+ C$C93B,2;22 {Copy hero's (x,y) position to vischar.target
+ C$C93D,2;22 }
+ C$C93F,1;22 Unbank
+ C$C940,3;22 Jump to 'move'
+; Check for mode 2 ("hassle")
+@label=cb_hassle_check
+*C$C943,2;22 Is the mode vischar_FLAGS_HASSLE?
+ C$C945,2;22 Jump if not
+; Mode 2: Hero is chased by hostiles if under player control.
+ C$C947,3;22 {Is the automatic_player_counter non-zero?
+ C$C94A,1;22 }
+; The hero is under player control: pursue.
+ C$C94B,2;22 Jump into mode 1's pursue handler
+; Otherwise the hero is under automatic control: hostiles lose interest and
+; resume their original route.
+ C$C94D,2;22 {Clear vischar.flags
  C$C94F,1;22 }
- C$C950,3;22 get_target_assign_pos(); return; %> // exit via
-*C$C953,2;22 {  else if (A == vischar_FLAGS_DOG_FOOD) <%}
- C$C955,4;22
- C$C959,3;22 {    if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_NEARBY_7) <%
- C$C95C,2;22
- C$C95E,2;22 }
-; Moves dog toward poisoned food?
- C$C960,1;22 HL++;
- C$C961,1;22 {      DE += 3;
+ C$C950,3;22 Exit via get_target_assign_pos
+; Check for mode 3 ("dog food")
+@label=cb_dog_food_check
+*C$C953,2;22 Is the mode vischar_FLAGS_DOG_FOOD?
+ C$C955,2;22 Jump if not
+; Mode 3: The food item is near a guard dog.
+ C$C957,1;22 Preserve vischar.flags pointer
+ C$C958,1;22 (get it in #REGde)
+ C$C959,3;22 Point #REGhl at item_structs[item_FOOD].room
+ C$C95C,2;22 Is itemstruct_ROOM_FLAG_NEARBY_7 set?
+ C$C95E,2;22 Jump if not
+; Set the dog's target to the poisoned food location.
+ C$C960,1;22 Advance #REGhl to item_structs[item_FOOD].pos.x
+ C$C961,1;22 {Point #REGde at vischar.target.x
  C$C962,2;22
  C$C964,1;22 }
- C$C965,2;22 *DE++ = *HL++;
- C$C967,2;22 *DE++ = *HL++;
- C$C969,1;22
- C$C96A,2;22 goto end_bit; %>
-*C$C96C,1;22 else <% A = 0;
- C$C96D,1;22 *DE = A;
- C$C96E,1;22
- C$C96F,1;22 {      *++HL = 0xFF;
+ C$C965,2;22 {Copy (x,y)
+ C$C967,2;22 }
+ C$C969,1;22 Restore vischar.flags pointer
+ C$C96A,2;22 Jump to 'move'
+; Nearby flag wasn't set.
+@label=cb_dog_food_not_nearby
+*C$C96C,1;22 {Clear vischar.flags
+ C$C96D,1;22 }
+ C$C96E,1;22 (get vischar.flags pointer in #REGhl)
+ C$C96F,1;22 {Set vischar.route.index to routeindex_255_WANDER ($FF)
  C$C970,2;22 }
- C$C972,1;22 {      *++HL = 0;
+ C$C972,1;22 {Set vischar.route.step to zero -- wander from 0..7
  C$C973,2;22 }
- C$C975,1;22
- C$C976,3;22 get_target_assign_pos(); return; %> %> // exit via
-*C$C979,2;22 {  else if (A == vischar_FLAGS_SAW_BRIBE) <%
- C$C97B,2;22 }
- C$C97D,1;22
- C$C97E,3;22 A = bribed_character;
- C$C981,2;22 {    if (A != character_NONE) <%
- C$C983,2;22 }
- C$C985,1;22
- C$C986,2;22 B = 7; // 7 iterations
+ C$C975,1;22 Restore vischar.flags pointer
+ C$C976,3;22 Exit via get_target_assign_pos
+; Check for mode 4 ("saw bribe")
+@label=cb_saw_bribe_check
+*C$C979,2;22 Is the mode vischar_FLAGS_SAW_BRIBE?
+ C$C97B,2;22 Jump if not
+; Mode 4: Hostile character witnessed a bribe being given (in accept_bribe).
+ C$C97D,1;22 Preserve vischar.flags pointer
+ C$C97E,3;22 Get the global bribed character
+ C$C981,2;22 Is it character_NONE? ($FF)
+ C$C983,2;22 Jump if so
+ C$C985,1;22 Copy the bribed character to #REGc
+; Iterate over non-player characters.
+ C$C986,2;22 Set #REGb for seven iterations
 @nowarn               ;
- C$C988,3;22 HL = $8020; // iterate over non-player characters
-*C$C98B,1;22 do <%
- C$C98C,1;22 {        if (*HL == A) goto found_bribed;
- C$C98D,2;22 }
- C$C98F,2;22 {        HL += 32;
- C$C991,1;22
+ C$C988,3;22 Point #REGhl at the second visible character
+; Start loop
+@label=cb_bribe_loop
+*C$C98B,1;22 Copy bribed character to #REGa
+ C$C98C,1;22 Is this vischar the bribed character?
+ C$C98D,2;22 Jump if so
+ C$C98F,2;22 {Step #REGhl to the next vischar
+ C$C991,1
  C$C992,1;22 }
- C$C993,2;22 %> while (--B); %>
-*C$C995,1;22
-; Bribed character was not visible.
- C$C996,2;22 {    *HL++ = 0;
+ C$C993,2;22 ...loop
+@label=cb_bribe_not_found
+*C$C995,1;22 Restore vischar.flags pointer
+; Bribed character was not visible: hostiles lose interest and resume following
+; their original route.
+ C$C996,2;22 {Clear vischar.flags
  C$C998,1;22 }
- C$C999,3;22 get_target_assign_pos(); return; // exit via
-; Found bribed character.
-*C$C99C,2;22 {found_bribed: HL += 15;
+ C$C999,3;22 Exit via get_target_assign_pos
+; Found the bribed character in vischars: hostiles target him.
+@label=cb_bribed_visible
+*C$C99C,2;22 {Advance #REGhl to vischar.mi.pos
  C$C99E,1;22
  C$C99F,1;22 }
- C$C9A0,2;22
- C$C9A2,1;22 {    DE += 3;
+ C$C9A0,1;22 {Get the vischar pointer
+ C$C9A1,1;22 }
+ C$C9A2,1;22 {Point #REGde at vischar.target
  C$C9A3,2;22
  C$C9A5,1;22 }
- C$C9A6,3;22 {    if (room_index) <%
- C$C9A9,1;22
- C$C9AA,3;22 }
-; Outdoors.
- C$C9AD,3;22 pos_to_tinypos(HL,DE); %>
- C$C9B0,2;22 else <%
-; Indoors.
-*C$C9B2,2;22 *DE++ = *HL++;
- C$C9B4,1;22 HL++;
- C$C9B5,2;22 *DE++ = *HL++; %>
-*C$C9B7,1;22
- C$C9B8,2;22 goto end_bit; %> %>
+ C$C9A6,3;22 Get the global current room index
+ C$C9A9,1;22 Is it zero?
+ C$C9AA,3;22 Jump if not
+; Outdoors
+ C$C9AD,3;22 Scale down the bribed character's position to this
+ ;22 vischar's target field
+ C$C9B0,2;22 (else)
+; Indoors
+@label=cb_bribed_indoors
+*C$C9B2,2;22 {Scale down the bribed character's position to this
+ C$C9B4,1;22 vischar's target field
+ C$C9B5,2;22 }
+@label=cb_bribed_done
+*C$C9B7,1;22 Restore the vischar pointer
+ C$C9B8,2;22 Jump to 'move'
 ;
-*C$C9BA,1;22 {A = HL[1]; // route index
- C$C9BB,1;22
- C$C9BC,1;22 }
- C$C9BD,1;22 {if (A == 0) goto character_behaviour_set_input;
- C$C9BE,2;22 }
-*C$C9C0,1;22 end_bit: A = *HL; // HL is $8001
- C$C9C1,1;22
- C$C9C2,1;22 Cdash = A;
+@label=cb_check_halt
+*C$C9BA,1;22 Advance #REGhl to vischar.route.index
+ C$C9BB,1;22 Fetch it
+ C$C9BC,1;22 Step back
+ C$C9BD,1;22 Is it routeindex_0_HALT? ($00)
+ C$C9BE,2;22 Jump if so (set input)
+@label=cb_move
+*C$C9C0,1;22 Get vischar.flags
+ C$C9C1,1;22 Bank
+ C$C9C2,1;22 #REGc = flags
+; Select a scaling routine.
+ C$C9C3,3;22 Get the global current room index
+ C$C9C6,1;22 Is it outdoors? (zero)
+ C$C9C7,2;22 Jump if so
+@label=cb_scaling_indoors
+@nowarn
+ C$C9C9,3;22 Point #REGhl at multiply_by_1
+ C$C9CC,2;22 (else)
+@label=cb_scaling_door
+*C$C9CE,2;22 Is vischar.flags vischar_FLAGS_TARGET_IS_DOOR set?
+ C$C9D0,2;22 Jump if not
+@nowarn
+ C$C9D2,3;22 Point #REGhl at multiply_by_4
+ C$C9D5,2;22 (else)
+@label=cb_scaling_outdoors
+@nowarn
+*C$C9D7,3;22 Point #REGhl at multiply_by_8
 ; Self modify vischar_move_x/y routines.
- C$C9C3,3;22 {if (room_index > room_0_OUTDOORS) <%
- C$C9C6,1;22
- C$C9C7,2;22 }
-@nowarn
- C$C9C9,3;22 HLdash = &multiply_by_1; %>
- C$C9CC,2;22 else <%
-*C$C9CE,2;22 {  if (Cdash & vischar_FLAGS_TARGET_IS_DOOR) <%
- C$C9D0,2;22 }
-@nowarn
- C$C9D2,3;22 HLdash = &multiply_by_4; %>
- C$C9D5,2;22 else <%
-@nowarn
-*C$C9D7,3;22 HLdash = &multiply_by_8; %> %>
-*C$C9DA,3;22 ($CA13) = HLdash; // self-modify vischar_move_x:$CA13
- C$C9DD,3;22 ($CA4B) = HLdash; // self-modify vischar_move_y:$CA4B
- C$C9E0,1;22
- C$C9E1,4;22 {if (IY[7] & vischar_BYTE7_Y_DOMINANT) goto character_behaviour_impeded; // hit a wall etc.
- C$C9E5,2;22 }
- C$C9E7,1;22 {HL += 3;
+@label=cb_self_modify
+*C$C9DA,3;22 Self-modify vischar_move_x
+ C$C9DD,3;22 Self-modify vischar_move_y
+ C$C9E0,1;22 Unbank
+; If the vischar_BYTE7_Y_DOMINANT flag is set then #R$C9FF is used instead of
+; the code below, which is x dominant. i.e. It means "try moving y then x,
+; rather than x then y". This is the code which makes characters alternate
+; left/right when navigating.
+ C$C9E1,4;22 Does the vischar's counter_and_flags field have flag
+ ;22 vischar_BYTE7_Y_DOMINANT set? ($20)
+ C$C9E5,2;22 Jump if so
+@label=cb_move_x_dominant
+ C$C9E7,1;22 {Advance #REGhl to vischar.position.x
  C$C9E8,1;22
  C$C9E9,1;22 }
- C$C9EA,3;22 vischar_move_x();
- C$C9ED,2;22 if (Z) <%
- C$C9EF,3;22 vischar_move_y();
- C$C9F2,3;22 if (Z) goto target_reached; %> // exit via // character couldn't move?
+ C$C9EA,3;22 Call vischar_move_x
+ C$C9ED,2;22 {If it couldn't move call vischar_move_y
+ C$C9EF,3;22 }
+ C$C9F2,3;22 If it still couldn't move exit via target_reached
 ; This entry point is used by the routine at #R$CA81.
-*C$C9F5,3;22 {character_behaviour_set_input: if (A != IY[13]) IY[13] = A | input_KICK; // sampled IY=$8040,$8020,$8000
- C$C9F8,3;22
+@label=cb_set_input
+*C$C9F5,3;22 Is our new input different from the vischar's existing input?
+ C$C9F8,1;22 Return if not
+ C$C9F9,2;22 {Otherwise set the input_KICK flag
  C$C9FB,3;22 }
- C$C9FE,1;22 return;
-*C$C9FF,2;22 {character_behaviour_impeded: L += 4;
+ C$C9FE,1;22 Return
+;
+@label=cb_move_y_dominant
+*C$C9FF,2;22 {Advance #REGhl to vischar.position.y
  C$CA01,1;22
  C$CA02,1;22 }
- C$CA03,3;22 vischar_move_y();
- C$CA06,2;22 {if (Z) vischar_move_x();
+ C$CA03,3;22 Call vischar_move_y
+ C$CA06,2;22 {If it couldn't move call vischar_move_x
  C$CA08,3;22 }
- C$CA0B,2;22 if (!Z) goto character_behaviour_set_input; // likely: couldn't move, so .. do something
- C$CA0D,1;22 HL--;
- C$CA0E,3;22 target_reached(); return; // exit via
+ C$CA0B,2;22 If it could move, jump to cb_set_input
+ C$CA0D,1;22 Rewind #REGhl to vischar.position.x
+ C$CA0E,3;22 Exit via target_reached
 
 ; Move a character on the X axis.
 ;
@@ -12740,6 +12792,7 @@ cC$C918,3;22 A = IY[7]; // $8007 etc. // more flags
 ; O:A  New input: input_RIGHT + input_DOWN (8) if x > pos.x,
 ; .    input_LEFT + input_UP (4) if x < pos.x,
 ; .    input_NONE (0) if x == pos.x
+; O:F  Z set if zero returned, NZ otherwise
 ; O:HL Pointer to visible character block + 5. (Ready to pass into vischar_move_y)
 @label=vischar_move_x
 cC$CA11,1;22 Read vischar.target.x (target position)
@@ -12801,6 +12854,7 @@ cC$CA11,1;22 Read vischar.target.x (target position)
 ; O:A  New input: input_LEFT + input_DOWN (5) if y > pos.y,
 ; .    input_RIGHT + input_UP (7) if y < pos.y,
 ; .    input_NONE (0) if y == pos.y
+; O:F  Z set if zero returned, NZ otherwise
 ; O:HL Pointer to visible character block + 4. (Ready to pass into vischar_move_x)
 @label=vischar_move_y
 cC$CA49,1;22 Read vischar.target.y (target position)
