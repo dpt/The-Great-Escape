@@ -579,26 +579,26 @@
 ;
 ; The structures are 32 bytes long. Each structure is laid out as follows:
 ;
-; +-----+---------+-------------------------------------------------------------------------------+
-; | off | size    | purpose                                                                       |
-; +-----+---------+-------------------------------------------------------------------------------+
-; | $00 | byte    | character index, or $FF for none                                              |
-; | $01 | byte    | flags                                                                         |
-; | $02 | byte[2] | target (where we want to be)                                                  |
-; | $04 | byte[3] | position                                                                      |
-; | $07 | byte    | top nibble = flags, bottom nibble = counter used by character_behaviour only  |
-; | $08 | pointer | pointer to animations                                                         |
-; | $0A | pointer | pointer to value in animations                                                |
-; | $0C | byte    | bit 7 is up/down flag, other bits are a counter                               |
-; | $0D | byte    | input .. previous direction?                                                  |
-; | $0E | byte    | direction and walk/crawl flag                                                 |
-; | $0F | movitem | movable item struct (pos (where we are), cur sprite, sprite index)            |
-; | $18 | word[2] | screen x, y coord                                                             |
-; | $1C | byte    | current room index                                                            |
-; | $1D | byte    | (unused)                                                                      |
-; | $1E | byte    | copy of sprite width in bytes + 1                                             |
-; | $1F | byte    | copy of sprite height in rows                                                 |
-; +-----+---------+-------------------------------------------------------------------------------+
+; +-------------+-------+-------------------+-------------------------------------------------------------------------------+
+; | Type        | Bytes | Name              | Meaning                                                                       |
+; +-------------+-------+-------------------+-------------------------------------------------------------------------------+
+; | Character   |     1 | character         | Character index, or $FF if none                                               |
+; | Byte        |     1 | flags             | Flags                                                                         |
+; | Route       |     2 | route             | Route                                                                         |
+; | TinyPos     |     3 | target            | Target position                                                               |
+; | Byte        |     1 | counter_and_flags | Top nibble = flags, bottom nibble = counter used by character_behaviour only  |
+; | Pointer     |     2 | animbase          | Pointer to animation base (never changes)                                     |
+; | Pointer     |     2 | anim              | Pointer to value in animations                                                |
+; | Byte        |     1 | animindex         | Bit 7 is up/down flag, other bits are an animation counter                    |
+; | Byte        |     1 | input             | Input .. previous direction?                                                  |
+; | Byte        |     1 | direction         | Direction and walk/crawl flag                                                 |
+; | MovableItem |     9 | mi                | Movable item structure (pos (where we are), current sprite, sprite index)     |
+; | BigXY       |     4 | iso_pos           | Screen x, y coord                                                             |
+; | Room        |     1 | room              | Current room index                                                            |
+; | Byte        |     1 | unused            | -                                                                             |
+; | Byte        |     1 | width_bytes       | Copy of sprite width in bytes + 1                                             |
+; | Byte        |     1 | height            | Copy of sprite height in rows                                                 |
+; +-------------+-------+-------------------+-------------------------------------------------------------------------------+
 ;
 ; The first entry in the array is the hero.
 ;
