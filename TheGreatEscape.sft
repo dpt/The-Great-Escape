@@ -385,6 +385,11 @@
 ; morale_MIN                                    = 0,
 ; morale_MAX                                    = 112,
 ;
+; direction_TOP_LEFT                            = 0
+; direction_TOP_RIGHT                           = 1,
+; direction_BOTTOM_RIGHT                        = 2,
+; direction_BOTTOM_LEFT                         = 3,
+;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
 ; FLAGS
@@ -13338,83 +13343,112 @@ bB$CC31,1;24 room  = room_0_OUTDOORS
 
 ; Guards follow suspicious character.
 ;
+; This routine decides whether the given vischar pursues the hero.
+; - The commandant can see through the hero's disguise if he's wearing the
+;   guard's uniform, but other guards do not.
+; - Bribed characters will ignore the hero.
+; - When outdoors, line of sight checking is used to determine if the hero will
+;   be pursued.
+; - If the red_flag is in effect the hero will be pursued, otherwise he will
+;   just be hassled.
+;
 ; Used by the routine at #R$C892.
 ;
 ; I:IY Pointer to visible character.
 @label=guards_follow_suspicious_character
-cC$CC37,2;23 {HL = IY;
+cC$CC37,2;23 {Copy vischar pointer into #REGhl
  C$CC39,1;23 }
- C$CC3A,1;23 A = *HL;
-; Wearing the uniform stops anyone but the commandant from following the hero.
- C$CC3B,1;23 {if (A != character_0_COMMANDANT && *$8015 == sprite_guard) return;
- C$CC3C,9;23
+ C$CC3A,1;23 Fetch the character index
+; Wearing the uniform stops anyone but the commandant from pursuing the hero.
+ C$CC3B,1;23 Is it character_0_COMMANDANT?
+ C$CC3C,2;23 Jump if so (the commandant sees through the disguise)
+ C$CC3E,3;23 Read the bottom byte of the hero's sprite set pointer
+ C$CC41,3;23 Point #REGde at the guard sprite set
+ C$CC44,1;23 {Return if they match
  C$CC45,1;23 }
-; Which is the case here?
-; .
-; - Don't follow mad people, or
-; .
-; - Don't follow the hero when bribe has been used
-*C$CC46,1;23 {if (HL[1] == vischar_FLAGS_SAW_BRIBE) return; // $8041 etc. // 'gone mad' flag
- C$CC47,3;23
- C$CC4A,1;23 }
- C$CC4B,1;23
- C$CC4C,1;23 {HL += 15;
+; If this (hostile) character saw the bribe being used then ignore the hero.
+@label=gfsc_chk_bribe
+*C$CC46,1;23 Advance #REGhl to point at vischar.flags
+ C$CC47,1;23 Fetch vischar.flags
+ C$CC48,2;23 Is it vischar_FLAGS_SAW_BRIBE?
+ C$CC4A,1;23 Return if the bribe was seen
+; Do line of sight checking when outdoors.
+ C$CC4B,1;23 Rewind #REGhl to point at vischar.character
+ C$CC4C,1;23 {Point #REGhl at vischar.mi.pos
  C$CC4D,2;23
  C$CC4F,1;23 }
- C$CC50,3;23 DE = &tinypos_stash_x;
- C$CC53,3;23 {if (room_index == room_0_OUTDOORS) <%
+ C$CC50,3;23 Point #REGde at tinypos_stash_x
+ C$CC53,3;23 {If the global current room index is room_0_OUTDOORS...
  C$CC56,1;23
  C$CC57,3;23 }
- C$CC5A,3;23 pos_to_tinypos(HL,DE);
- C$CC5D,3;23 HL = &hero_map_position.x;
- C$CC60,3;23 DE = &tinypos_stash_x;
- C$CC63,3;23 A = IY[0x0E]; // ?
- C$CC66,1;23 carry = A & 1; A >>= 1;
- C$CC67,1;23 C = A;
- C$CC68,2;23 if (!carry) <% /* TL or BR */
-; Range check.
- C$CC6A,1;23 HL++;
- C$CC6B,1;23 DE++;
- C$CC6C,1;23 {    A = *DE - 1;
- C$CC6D,1;23 }
- C$CC6E,1;23 {    if (A >= *HL || A + 2 < *HL) return; // *DE - 1 .. *DE + 1
- C$CC6F,4;23
+ C$CC5A,3;23 Scale down vischar's map position (#REGhl) and assign
+ ;23 the result to tinypos_stash (#REGde). #REGde is updated
+ ;23 to point after tinypos_stash on return
+ C$CC5D,3;23 Point #REGhl at hero_map_position.x
+ C$CC60,3;23 Point #REGde at tinypos_stash_x
+ C$CC63,3;23 Get this vischar's direction
+; Check for TL/BR directions.
+ C$CC66,1;23 Shift out the bottom direction bit into carry
+ C$CC67,1;23 Save (rotated direction byte) in #REGc
+ C$CC68,2;23 Jump if not TL or BR
+; Handle TL/BR directions.
+; .
+; Does the hero approximately match our Y coordinate?
+@label=gfsc_chk_seen_y
+ C$CC6A,1;23 Advance #REGhl to hero_map_position.y
+ C$CC6B,1;23 Advance #REGde to tinypos_stash_y
+ C$CC6C,1;23 Fetch tinypos_stash_y
+ C$CC6D,1;23 {Return if (tinypos_stash_y - 1) >= hero_map_position.y
+ C$CC6E,1;23
+ C$CC6F,1;23 }
+ C$CC70,2;23 {Return if (tinypos_stash_y + 1) < hero_map_position.y
+ C$CC72,1;23
  C$CC73,1;23 }
- C$CC74,1;23 HL--;
- C$CC75,1;23 DE--;
- C$CC76,1;23 A = *DE;
- C$CC77,1;23 CP *HL  // TRICKY!
- C$CC78,2;23 {    BIT 0,C // if ((C & (1<<0)) == 0) carry = !carry; /* TL (can't be TR) */
- C$CC7A,2;23
- C$CC7C,1;23 }
-*C$CC7D,1;23 RET C   // This is odd: CCF then RET C? // will need to fall into 'else' clause
- C$CC7E,2;23 %>
-; Range check.
-*C$CC80,1;23 {  else <% A = *DE - 1;
- C$CC81,1;23 }
- C$CC82,1;23 {    if (A >= *HL || A + 2 < *HL) return; // *DE - 1 .. *DE + 1
- C$CC83,4;23
+; Are we facing the hero?
+ C$CC74,1;23 Rewind to hero_map_position_x
+ C$CC75,1;23 Rewind to tinypos_stash_x
+ C$CC76,1;23 {Set carry if tinypos_stash_x < hero_map_position_x
+ C$CC77,1;23 }
+ C$CC78,2;23 Check bit 1 of direction byte (direction_BOTTOM_*?)
+ C$CC7A,2;23 Jump if set?
+ C$CC7C,1;23 Otherwise invert the carry flag
+*C$CC7D,1;23 Return if set
+ C$CC7E,2;23 (else)
+; Handle TR/BL directions.
+; .
+; Does the hero approximately match our X coordinate?
+@label=gfsc_chk_seen_x
+*C$CC80,1;23 Fetch tinypos_stash_x
+ C$CC81,1;23 {Return if (tinypos_stash_x - 1) >= hero_map_position_x
+ C$CC82,1;23
+ C$CC83,1;23 }
+ C$CC84,2;23 {Return if (tinypos_stash_x + 1) < hero_map_position_x
+ C$CC86,1;23
  C$CC87,1;23 }
- C$CC88,1;23 HL++;
- C$CC89,1;23 DE++;
- C$CC8A,1;23 A = *DE;
- C$CC8B,1;23 CP *HL  // TRICKY!
- C$CC8C,2;23 {    BIT 0,C // if ((C & (1<<0)) == 0) carry = !carry; /* TL or TR */
- C$CC8E,2;23
- C$CC90,1;23 }
-*C$CC91,1;23 RET C %> %>
-*C$CC92,3;23 {if (!red_flag) <%
- C$CC95,1;23
- C$CC96,2;23 }
- C$CC98,3;23 A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
- C$CC9B,2;23 {  if (A < 32) // height
+; Are we facing the hero?
+ C$CC88,1;23 Advance to hero_map_position_y
+ C$CC89,1;23 Advance to tinypos_stash_y
+ C$CC8A,1;23 {Set carry if tinypos_stash_y < hero_map_position_y
+ C$CC8B,1;23 }
+ C$CC8C,2;23 Check bit 1 of direction byte (direction_BOTTOM_*?)
+ C$CC8E,2;23 Jump if set?
+ C$CC90,1;23 Otherwise invert the carry flag
+*C$CC91,1;23 Return if set
+@label=gfsc_chk_flag
+*C$CC92,3;23 {Is red_flag set?
+ C$CC95,1;23 }
+ C$CC96,2;23 Jump if so
+; Hostiles *not* in guard towers hassle the hero.
+ C$CC98,3;23 Fetch vischar.mi.pos.height
+ C$CC9B,2;23 {Return if it's 32 or greater
  C$CC9D,1;23 }
- C$CC9E,4;23 IY[1] = vischar_FLAGS_HASSLE;
- C$CCA2,1;23 return; %>
-*C$CCA3,1;23 {bell = bell_RING_PERPETUAL;
+ C$CC9E,4;23 Set vischar's flags to vischar_FLAGS_HASSLE
+ C$CCA2,1;23 Return
+@label=gfsc_bell
+*C$CCA3,1;23 {Make the bell ring perpetually
  C$CCA4,3;23 }
- C$CCA7,3;23 hostiles_pursue();
- C$CCAA,1;23 return;
+ C$CCA7,3;23 Call hostiles_pursue
+ C$CCAA,1;23 Return
 
 ; Hostiles pursue prisoners.
 ;
