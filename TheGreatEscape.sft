@@ -13538,50 +13538,64 @@ cC$CCCD,3;21 Get the global current room index
 
 ; Is an item discoverable indoors?
 ;
+; A discoverable item is one which has been moved away from its default room,
+; and one that isn't the red cross parcel.
+; .
 ; Used by the routines at #R$C6A0 and #R$CCCD.
-; .
-; A discoverable item is one moved away from its default room, and one that
-; isn't the red cross parcel.
 ;
-; I:A     Room ref.
-; O:Flags Z => found, NZ => not found.
-; O:C     Item (if found).
+; I:A Room index to check against
+; O:C Item (if found)
+; O:F Z set if found, Z clear otherwise
 @label=is_item_discoverable_interior
-cC$CCFB,1;21 C = A; // room ref
- C$CCFC,3;21 HL = &item_structs[0].room; // pointer to room ref
- C$CCFF,2;21 B = 16; // item__LIMIT
-*C$CD01,1;21 {do <% A = *HL & itemstruct_ROOM_MASK;
- C$CD02,2;21 }
+cC$CCFB,1;21 Save the room index in #REGc
+ C$CCFC,3;21 Point #REGhl at the first item_struct's room member
+ C$CCFF,2;21 Set #REGb for 16 iterations (item__LIMIT)
+; Start loop
+@label=iidi_loop
+*C$CD01,1;21 Load the room index and flags
+ C$CD02,2;21 Extract the room index
 ; Is the item in the specified room?
- C$CD04,1;21 {  if (A == C) <% // yes
- C$CD05,2;21 }
- C$CD07,1
-; Has the item been moved to a different room?
+ C$CD04,1;21 Same room?
+ C$CD05,2;21 Jump if not
+ C$CD07,1;21 Preserve the item_struct pointer
+; Has the item been moved to a room other than its default?
 ; .
-; Bug? Note that room_and_flags doesn't get its flags masked off. Does it need
-; & 0x3F ? (DOS version has it)
- C$CD08,1;21 {    A = default_item_locations[HL[-1] & itemstruct_ITEM_MASK].room_and_flags; // HL[-1] = itemstruct.item
- C$CD09,13;21
- C$CD16,1;21 }
- C$CD17,1;21 {    if (A != C) goto not_in_default_room;
- C$CD18,2;21 }
- C$CD1A,1;21 - %>
-*C$CD1B,3;21 {  next: HL += 7; // stride
+; Bug: room_and_flags doesn't get its flags masked off in the following
+; sequence. However, the only default_item which uses the flags is the
+; wiresnips. The DOS version of the game fixes this.
+ C$CD08,1;21 {Fetch item_and_flags
+ C$CD09,1;21 }
+ C$CD0A,2;21 Mask off the item
+ C$CD0C,1;21 {Multiply by three - the array stride
+ C$CD0D,1;21
+ C$CD0E,1;21 }
+ C$CD0F,1;21 {Widen to 16-bit
+ C$CD10,2;21 }
+ C$CD12,3;21 {Add to default_item_locations
+ C$CD15,1;21 }
+ C$CD16,1;21 Fetch the default item room_and_flags
+ C$CD17,1;21 Same room? (bug: not masked)
+ C$CD18,2;21 Jump if not
+ C$CD1A,1;21 Restore the item_struct pointer
+@label=iidi_next
+*C$CD1B,3;21 {Step #REGhl to the next item_struct
  C$CD1E,1;21 }
- C$CD1F,2;21 %> while (--B);
- C$CD21,1;21 return; // return with NZ set (not found)
-*C$CD22,1;21 not_in_default_room:
- C$CD23,1;21 {A = HL[-1] & itemstruct_ITEM_MASK; // itemstruct.item
- C$CD24,1;21
- C$CD25,2;21 }
-; Ignore red cross parcel.
- C$CD27,2;21 {if (A == item_RED_CROSS_PARCEL) <%
- C$CD29,2;21 }
- C$CD2B,1;21
- C$CD2C,2;21 goto next; %>
-*C$CD2E,1;21 C = A;
- C$CD2F,1;21 A = 0; // set Z (found)
- C$CD30,1;21 return;
+ C$CD1F,2;21 ...loop
+ C$CD21,1;21 Return with NZ set (not found)
+@label=iidi_not_default_room
+*C$CD22,1;21 Restore the item_struct pointer
+ C$CD23,1;21 {Fetch item_and_flags
+ C$CD24,1;21 }
+ C$CD25,2;21 Mask off the item
+; Ignore the red cross parcel.
+ C$CD27,2;21 Is this item the red cross parcel? (item_RED_CROSS_PARCEL)
+ C$CD29,2;21 Jump if not
+ C$CD2B,1;21 Otherwise advance #REGhl to room_and_flags
+ C$CD2C,2;21 Jump to the next iteration
+@label=iidi_found
+*C$CD2E,1;21 Return the item's index in #REGc
+ C$CD2F,1;21 {Return with Z set (found)
+ C$CD30,1;21 }
 
 ; An item is discovered.
 ;
@@ -14313,8 +14327,8 @@ cC$DB9E,3;21 Get the global current room index
 @label=mni_loop
 *C$DBB0,1;21 Preserve item_struct pointer
 ; Compare room
- C$DBB1,1;21 Load the room index
- C$DBB2,2;21 Mask with itemstruct_ROOM_MASK
+ C$DBB1,1;21 Load the room index and flags
+ C$DBB2,2;21 Extract the room index
  C$DBB4,1;21 Same room?
  C$DBB5,2;21 Jump if not
 ; Is the item's X coordinate within (-1..22) of the map's X position?
