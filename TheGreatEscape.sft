@@ -448,7 +448,7 @@
 ; itemstruct_ITEM_FLAG_POISONED                 = 1 << 5,
 ; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,       ; set when the item has been encountered
 ; itemstruct_ROOM_MASK                          = $3F,
-; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; unknown
+; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; possibly vestigal, needs more investigation
 ; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
 ;
 ; door_REVERSE                                  = 1 << 7,       ; used to reverse door transitions
@@ -14375,69 +14375,87 @@ cC$DB9E,3;21 Get the global current room index
 
 ; Iterates over all item_structs looking for nearby items.
 ;
-; Used by the routine at #R$B89C.
-; .
 ; Returns the furthest/highest/nearest item?
 ; .
 ; Iterates over all items. Uses multiply_by_8.
+; .
+; Used by the routine at #R$B89C.
 ;
-; I:BC' samples = 0, $1A, $1C, $1E, $20, $22,
-; I:DE' samples = 0, $22, $22, $22, $22, $22,
-; O:IY Pointer to to item struct. (result?)
-; O:A' result?
+; I:A'  A value to leave in #REGa' when nothing is found (e.g. 255)
+; I:BC' X position
+; I:DE' Y position
+; O:A'  Index of the greatest item with the item_FOUND flag set, if found
+; O:IY  Pointer to an item struct, if found
 @label=get_greatest_itemstruct
-cC$DBEB,3;21 B = item_LIMIT; // iterations
- C$DBEE,3;21 Outer_HL = &item_structs[0].room;
-*C$DBF1,2;21 {do <% if ((*Outer_HL & (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) == (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) <%
- C$DBF3,4;21
- C$DBF7,2;21 }
- C$DBF9,1;21 HL = Outer_HL;
- C$DBFA,1;21
- C$DBFB,1;21 {  HLdash = *++HL * 8; // x position
- C$DBFC,1;21
- C$DBFD,3;21 }
- C$DC00,3;21
- C$DC03,1;21 A &= A; // Clear carry flag.
- C$DC04,2;21 HLdash -= BCdash; // itemstr->pos.x * 8 - x
- C$DC06,1;21
- C$DC07,2;21 {  if (HLdash > 0) <%
- C$DC09,2;21 }
- C$DC0B,1;21 HL++; // y position
- C$DC0C,1;21 {    HLdash = *HL * 8;
- C$DC0D,3;21 }
- C$DC10,2;21
- C$DC12,1;21 // not clearing carry?
- C$DC13,2;21 HLdash -= BCdash; // itemstr->pos.y * 8 - y
- C$DC15,1;21
- C$DC16,2;21 {    if (HLdash > 0) <%
- C$DC18,2;21 }
- C$DC1A,1;21 {      HLdash = HL;
- C$DC1B,1;21
- C$DC1C,1;21 }
-; Get x,y for the next iteration.
- C$DC1D,1;21 {      DEdash = *HLdash-- * 8; // y position
- C$DC1E,5;21
- C$DC23,1;21 }
- C$DC24,1;21 {      BCdash = *HLdash-- * 8; // x position
- C$DC25,3;21 }
- C$DC28,1;21 {      HLdash--; // point to item
+cC$DBEB,3;21 Set #REGb for 16 iterations (item__LIMIT) and
+ ;21 set #REGc for a seven byte stride simultaneously
+ C$DBEE,3;21 Point #REGhl at the first item_struct's room member
+; Start loop
+@label=ggi_loop
+*C$DBF1,2;21 Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_7 flag set?
+ ;21 ($80)
+ C$DBF3,2;21 If not, jump to the next iteration
+ C$DBF5,2;21 Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_6 flag set?
+ ;21 ($40)
+ C$DBF7,2;21 If not, jump to the next iteration
+ C$DBF9,1;21 Preserve the item_struct pointer
+ C$DBFA,1;21 Preserve the item counter and stride
+ C$DBFB,1;21 Advance #REGhl to item_struct.pos.x
+ C$DBFC,1;21 Fetch item_struct.pos.x
+ C$DBFD,3;21 Multiply it by 8 returning the result in #REGbc
+ C$DC00,1;21 Preserve the result
+ C$DC01,1;21 Flip to banked regs - so we can subtract X position
+ C$DC02,1;21 Restore the result into #REGhl
+ C$DC03,1;21 Clear the carry flag prior to SBC
+ C$DC04,2;21 Calculate (item_struct.pos.x * 8 - x_position)
+ C$DC06,1;21 Flip to unbanked regs - now we have the result
+ C$DC07,2;21 Was (item_struct.pos.x * 8 <= x_position)?
+ C$DC09,2;21 Jump if so
+ C$DC0B,1;21 Advance #REGhl to item_struct.pos.y
+ C$DC0C,1;21 Fetch item_struct.pos.y
+ C$DC0D,3;21 Multiply it by 8 returning the result in #REGbc
+ C$DC10,1;21 Preserve the result
+ C$DC11,1;21 Flip to banked regs - so we can subtract Y position
+ C$DC12,1;21 Restore the result into #REGhl
+; Q. Why are we not clearing the carry flag like at #R$DC03?
+ C$DC13,2;21 Calculate (item_struct.pos.y * 8 - y_position)
+ C$DC15,1;21 Flip to unbanked regs - now we have the result
+ C$DC16,2;21 Was (item_struct.pos.y * 8 <= y_position)?
+ C$DC18,2;21 Jump if so
+ C$DC1A,1;21 Preserve the item_struct pointer
+ C$DC1B,1;21 Flip to banked regs - so we can store new X,Y positions
+ C$DC1C,1;21 Restore the item_struct pointer
+; Get (x,y) for the next iteration.
+ C$DC1D,1;21 Fetch item_struct.pos.y
+ C$DC1E,3;21 Multiply it by 8 returning the result in #REGbc
+ C$DC21,1;21 {#REGde = #REGbc
+ C$DC22,1;21 }
+ C$DC23,1;21 Rewind #REGhl to point at item_struct.pos.x
+ C$DC24,1;21 Fetch item_struct.pos.x
+ C$DC25,3;21 Multiply it by 8 returning the result in #REGbc
+ C$DC28,1;21 {Rewind #REGhl to point at item_struct (jump back over item & room bytes)
  C$DC29,1;21 }
- C$DC2A,1;21 {      IY = HLdash; // IY is not banked // sampled IY=$771C,7715 (pointing into item_structs)
+; #REGiy is used to return an item_struct here which is unusual compared to the
+; rest of the code which maintains #REGiy as a current vischar pointer.
+ C$DC2A,1;21 {Copy the item_struct pointer to #REGiy
  C$DC2B,2;21 }
- C$DC2D,1;21
- C$DC2E,1;21 - // fetch iter count
- C$DC2F,1;21
- C$DC30,2;21 {      A = (16 - B) | (1<<6); // item found flag
- C$DC32,1;21
- C$DC33,2;21 }
- C$DC35,1;21 %> %> // unpaired // returns the value in Adash
-*C$DC36,1;21
- C$DC37,1;21
-*C$DC38,1;21 {  %> Outer_HL += 7; // stride
+ C$DC2D,1;21 Flip to unbanked regs
+ C$DC2E,1;21 Restore the item counter and stride
+ C$DC2F,1;21 Preserve the item counter and stride
+ C$DC30,2;21 {Calculate the item index (item__LIMIT - item counter)
+ C$DC32,1;21 }
+ C$DC33,2;21 Set the item found flag
+ C$DC35,1;21 Return the value in #REGa'
+@label=ggi_next_pop
+*C$DC36,1;21 Restore item counter and stride
+ C$DC37,1;21 Restore item_struct pointer
+@label=ggi_next
+*C$DC38,1;21 {Advance by stride to next item
  C$DC39,4;21
  C$DC3D,1;21 }
-*C$DC3E,2;21 %> while (--B);
- C$DC40,1;21 return;
+@label=ggi_loop_end
+*C$DC3E,2;21 ...loop
+ C$DC40,1;21 Return
 
 ; Set up item plotting.
 ;
