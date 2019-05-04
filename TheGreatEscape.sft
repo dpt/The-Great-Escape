@@ -15620,181 +15620,234 @@ cC$E40F,2;21 Point #REGhl into the table of 256 flipped bytes at $7Fxx
 ; Set up vischar plotting.
 ;
 ; Used by the routine at #R$B866.
+; .
+; Counterpart of, and very similar to, the routine at #R$DC41.
 ;
-; I:HL Pointer to ? // observed: always the same as IY
-; I:IY Pointer to visible character.
-; O:F  Z set if vischar is visible, NZ otherwise.
+; I:HL Pointer to visible character
+; I:IY Pointer to visible character
+; O:F  Z set if vischar is visible, NZ otherwise
 @label=setup_vischar_plotting
-cC$E420,2;21 {HL = &vischar->mi.pos;
+cC$E420,2;21 {Advance #REGhl to vischar.mi.pos
  C$E422,1;21
  C$E423,1;21 }
- C$E424,3;21 DE = &tinypos_stash;
- C$E427,3;21 {if (room_index > room_0_OUTDOORS) <%
- C$E42A,1;21
- C$E42B,2;21 }
+ C$E424,3;21 Point #REGde at tinypos_stash
+ C$E427,3;21 Fetch the global current room index
+ C$E42A,1;21 Are we outdoors?
+ C$E42B,2;21 Jump if so
 ; Indoors.
- C$E42D,2;21 *DE++ = *HL++;
- C$E42F,1;21 HL++;
- C$E430,2;21 *DE++ = *HL++;
- C$E432,1;21 HL++;
- C$E433,2;21 *DE++ = *HL++;
- C$E435,1;21 HL++; %>
- C$E436,2;21 else <%
+; .
+; Copy vischar.mi.pos.* to tinypos_stash with narrowing.
+ C$E42D,2;21 {Copy vischar.mi.pos to tinypos_stash
+ C$E42F,1;21 (narrowing each element to a byte wide)
+ C$E430,5;21
+ C$E435,1;21 }
+ C$E436,2;21 (else)
 ; Outdoors.
-*C$E438,1;21 {  A = *HL++;
- C$E439,1;21 }
- C$E43A,1;21 C = *HL;
- C$E43B,3;21 divide_by_8_with_rounding(C,A);
- C$E43E,1;21 *DE++ = A;
- C$E43F,1;21 {  HL++;
- C$E440,1;21 }
- C$E441,2;21 B = 2; // 2 iterations
-*C$E443,1;21 {  do <% A = *HL++;
- C$E444,1;21 }
- C$E445,1;21 C = *HL;
- C$E446,3;21 divide_by_8(C,A);
- C$E449,1;21 *DE++ = A;
- C$E44A,1;21 {    HL++;
- C$E44B,1;21 }
- C$E44C,2;21 %> while (--B); %>
-*C$E44E,1;21 {C = *HL++;
- C$E44F,1;21 }
- C$E450,1;21 B = *HL++;
- C$E451,2;21
- C$E453,1;21 {sprite_index = *HL++; // set left/right flip flag / sprite offset
- C$E454,3;21 }
- C$E457,2;21
- C$E459,2;21 B = 2; // 2 iterations
-*C$E45B,1;21 {do <% Adash = *HL++;
- C$E45C,1;21 }
- C$E45D,1;21 C = *HL++;
- C$E45E,3;21 divide_by_8(C,Adash);
- C$E461,1;21 {  *DE++ = Adash;
- C$E462,1;21
- C$E463,1;21 }
- C$E464,2;21 %> while (--B);
- C$E466,2;21
- C$E468,1;21 {DE += A * 6; // point into sprite[] array
- C$E469,7;21
+; .
+; Copy vischar.mi.pos.* to tinypos_stash with scaling.
+@label=svp_outdoors
+*C$E438,1;21 {Fetch vischar.mi.pos.x
+ C$E439,1;21
+ C$E43A,1;21 }
+ C$E43B,3;21 Divide (#REGc,#REGa) by 8 with rounding.
+ ;21 Result is in #REGa
+ C$E43E,1;21 Store the result as tinypos_stash.x
+ C$E43F,1;21 Advance #REGhl to vischar.mi.pos.y
+ C$E440,1;21 Advance #REGde to tinypos_stash.y
+ C$E441,2;21 Set #REGb for two iterations
+@label=svp_pos_loop
+*C$E443,1;21 {Fetch vischar.mi.pos.y or .height
+ C$E444,1;21
+ C$E445,1;21 }
+ C$E446,3;21 Divide (#REGc,#REGa) by 8 (with no rounding).
+ ;21 Result is in #REGa
+ C$E449,1;21 Store the result as tinypos_stash.y or .height
+ C$E44A,1;21 Advance to the next vischar.mi.pos field
+ C$E44B,1;21 Advance to the next tinypos_stash field (then finally to
+ ;21 iso_pos - used later)
+ C$E44C,2;21 ...loop
+@label=svp_tinypos_set
+*C$E44E,1;21 {Load vischar.mi.sprite (a pointer to a spritedef_t) and
+ C$E44F,1;21 stack it
+ C$E450,1;21
+ C$E451,1;21 }
+ C$E452,1;21 Advance #REGhl to vischar.mi.sprite_index
+ C$E453,1;21 Load it
+ C$E454,3;21 Save global sprite_index and left/right flip flag
+ C$E457,1;21 Bank it too
+ C$E458,1;21 Advance #REGhl to vischar.iso_pos
+; Scale down iso_pos.*
+ C$E459,2;21 Set #REGb for two iterations
+@label=svp_isopos_loop
+*C$E45B,1;21 {Fetch vischar.iso_pos.x/y
+ C$E45C,1;21
+ C$E45D,1;21 }
+ C$E45E,3;21 Divide (#REGc,#REGa) by 8 (with no rounding).
+ ;21 Result is in #REGa
+ C$E461,1;21 Write the result to state.iso_pos.*
+ C$E462,1;21 Advance #REGhl to the next vischar.iso_pos element
+ C$E463,1;21 Advance #REGde to the next state.iso_pos element
+ C$E464,2;21 ...loop
+ C$E466,1;21 Unbank sprite index
+ C$E467,1;21 Restore sprite pointer
+ C$E468,1;21 {Multiply #REGa by six (width of a spritedef_t)
+ C$E469,2;21
+ C$E46B,1;21 }
+ C$E46C,1;21 {Add onto sprite base pointer
+ C$E46D,3;21
  C$E470,1;21 }
-*C$E471,1;21 {L += 2; // skip over room, unused bytes
+@label=svp_sprptr_ready
+*C$E471,1;21 {Skip over vischar.room and unused bytes
  C$E472,1;21 }
- C$E473,1;21
- C$E474,2;21 *DE++ = *HL++; // width in bytes
- C$E476,2;21 *DE++ = *HL++; // height in rows
- C$E478,3;21 {memcpy(bitmap_pointer, HL, 4); // copy bitmap pointer and mask pointer
- C$E47B,3;21
+ C$E473,1;21 Put sprite pointer into #REGde
+ C$E474,2;21 Copy spritedef width in bytes to vischar
+ C$E476,2;21 Copy spritedef height in rows to vischar
+ C$E478,3;21 {Copy spritedef bitmap and mask pointers to
+ C$E47B,3;21 global bitmap_pointer and mask_pointer
  C$E47E,2;21 }
- C$E480,3;21 vischar_visible();
- C$E483,1;21 {if (A) return; /* invisible */
- C$E484,1;21 }
- C$E485,1;21 // PUSH clipped_width
- C$E486,1;21 // PUSH clipped_height
- C$E487,3;21 A = IY[30]; // vischar width_bytes
- C$E48A,2;21 {if (A == 3) <% // 3 => 16 wide (4 => 24 wide)
- C$E48C,2;21 }
- C$E48E,1;21 {  ($E2C1 + 1) = E; // self modify masked_sprite_plotter_16_wide_left
- C$E48F,3;21 }
- C$E492,3;21 ($E362 + 1) = E; // self-modify masked_sprite_plotter_16_wide_right
- C$E495,2;21 A = 3;
- C$E497,3;21 HL = masked_sprite_plotter_16_enables; %>
- C$E49A,2;21 else <%
-*C$E49C,1;21
- C$E49D,3;21 ($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift right case)
- C$E4A0,3;21 ($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift left case)
- C$E4A3,2;21 A = 4;
- C$E4A5,3;21 HL = masked_sprite_plotter_24_enables; %>
-*C$E4A8,1;21 PUSH enables
- C$E4A9,3;21 ($E4BF + 1) = A; // self-modify
- C$E4AC,1;21 E = A;
- C$E4AD,1;21 A = B; // clipped width top byte (lefthand skip)
- C$E4AE,1;21 {if (A == 0) <%
- C$E4AF,2;21 }
- C$E4B1,2;21 A = 0x77; /* opcode of 'LD (HL),A' */
- C$E4B3,1;21
- C$E4B4,1;21 Adash = C; %>
- C$E4B5,2;21 else <%
-*C$E4B7,1;21 A = 0; /* opcode of 'LD (HL),A' */
- C$E4B8,1;21
- C$E4B9,1;21 {  Adash = E - C; %>
- C$E4BA,1;21 }
-*C$E4BB,1;21
- C$E4BC,1;21 POP enables
- C$E4BD,1;21 Cdash = Adash;
- C$E4BE,1;21
+ C$E480,3;21 Clip the vischar's dimensions to the game window
+ C$E483,1;21 Is it visible?
+ C$E484,1;21 Return if not [RET NZ would do]
+; The vischar is visible.
+ C$E485,1;21 Preserve the lefthand skip and clipped width
+ C$E486,1;21 Preserve the top skip and clipped height
+; Self modify the sprite plotter routines.
+ C$E487,3;21 Fetch vischar.width_bytes to check its width
+ C$E48A,2;21 Is it 3? (3 => 16 pixels wide, 4 => 24 pixels wide)
+ C$E48C,2;21 Jump if 24 wide
+@label=svp_16_wide
+ C$E48E,1;21 Copy the clipped height into #REGa
+ C$E48F,3;21 Write clipped height to the instruction at #R$E2C1
+ ;21 in masked_sprite_plotter_16_wide_left
+ C$E492,3;21 Write clipped height to the instruction at #R$E362
+ ;21 in masked_sprite_plotter_16_wide_right
+ C$E495,2;21 Set for three enables
+ C$E497,3;21 Point #REGhl at masked_sprite_plotter_16_enables
+ C$E49A,2;21 (else)
+@label=svp_24_wide
+*C$E49C,1;21 Copy the clipped height into #REGa
+ C$E49D,3;21 Write clipped height to the instruction at #R$E120
+ ;21 in masked_sprite_plotter_24_wide_vischar (shift right case)
+ C$E4A0,3;21 Write clipped height to the instruction at #R$E1E1
+ ;21 in masked_sprite_plotter_24_wide_vischar (shift left case)
+ C$E4A3,2;21 Set for four enables
+ C$E4A5,3;21 Point #REGhl at masked_sprite_plotter_24_enables
+@label=svp_do_enables
+*C$E4A8,1;21 Preserve enables pointer
+ C$E4A9,3;21 {Write enable count to the instruction at #R$E4BF (self
+ C$E4AC,1;21 modify) and keep a copy}
+ C$E4AD,1;21 {Is the lefthand skip zero?
+ C$E4AE,1;21 }
+ C$E4AF,2;21 Jump if not
+; There's no left hand skip - enable instructions.
+@label=svp_enable_is_one
+ C$E4B1,2;21 {Load #REGa' with the opcode of 'LD (HL),A'
+ C$E4B3,1;21 }
+ C$E4B4,1;21 Set a counter to clipped_width. We'll write out this
+ ;21 many bytes before clipping
+ C$E4B5,2;21 (else)
+@label=svp_enable_is_zero
+*C$E4B7,1;21 {Load #REGa' with the opcode of 'NOP'
+ C$E4B8,1;21 }
+ C$E4B9,1;21 {Set a counter to (enable_count - clipped_width). We'll
+ C$E4BA,1;21 clip until this many bytes have been written}
+@label=svp_enable_cont
+*C$E4BB,1;21 Bank
+ C$E4BC,1;21 Restore enables pointer
+ C$E4BD,1;21 Move counter to #REGc
+ C$E4BE,1;21 Unbank the opcode we'll write
 ; Set the addresses in the jump table to NOP or LD (HL),A.
-@label=setup_vischar_plotting_enables_iters
- C$E4BF,2;21 Bdash = 3; // 3 iterations // self modified by $E4A9
-*C$E4C1,1;21 {do <% Edash = *HLdash++;
- C$E4C2,1;21 }
- C$E4C3,1;21 Ddash = *HLdash++;
- C$E4C4,1;21 {  *DEdash = A;
- C$E4C5,1;21 }
- C$E4C6,1;21 {  Edash = *HLdash++;
- C$E4C7,1;21 }
- C$E4C8,1;21 {  Ddash = *HLdash++;
- C$E4C9,1;21 }
- C$E4CA,1;21 *DEdash = A;
- C$E4CB,1;21 Cdash--;
- C$E4CC,2;21 {  if (Z) A ^= 0x77; /* Toggle between LD and NOP. */
- C$E4CE,2;21 }
-*C$E4D0,2;21 %> while (--Bdash);
- C$E4D2,1;21
- C$E4D3,1;21 A = D;
- C$E4D4,1;21 A &= A;
- C$E4D5,3;21 DE = 0;
- C$E4D8,2;21 if (Z) <%
- C$E4DA,3;21 {  HL = $81BC * 8; // &map_position + 1;
+@label=svp_enables_iters
+ C$E4BF,2;21 Set #REGb for 3 iterations (self modified by $E4A9)
+; Start loop
+@label=svp_enables_loop
+*C$E4C1,1;21 {Fetch an address
+ C$E4C2,1;21
+ C$E4C3,1;21 }
+ C$E4C4,1;21 Write a new opcode
+ C$E4C5,1;21 Advance
+ C$E4C6,1;21 {Fetch an address
+ C$E4C7,1;21
+ C$E4C8,1;21 }
+ C$E4C9,1;21 Advance
+ C$E4CA,1;21 Write a new opcode
+ C$E4CB,1;21 Count down the counter
+ C$E4CC,2;21 Jump if nonzero
+ C$E4CE,2;21 Swap between LD (HL),A and NOP
+*C$E4D0,2;21 ...loop
+; Calculate Y plotting offset.
+; .
+; The full calculation can be avoided if we know there are rows to skip since in
+; that case the sprite always starts at the top of the screen.
+ C$E4D2,1;21 Bank
+ C$E4D3,1;21 {Is top skip zero?
+ C$E4D4,1;21 }
+ C$E4D5,3;21 Initialise our Y value to zero
+ C$E4D8,2;21 Jump if top skip isn't zero
+ C$E4DA,3;21 {Compute Y = map_position_y * 8 (pixels per column)
  C$E4DD,5;21
  C$E4E2,1;21 }
- C$E4E3,1;21
- C$E4E4,3;21 L = IY[26];
- C$E4E7,3;21 H = IY[27];
- C$E4EA,1;21 A &= A;
- C$E4EB,2;21
- C$E4ED,1;21 {  HL *= 24;
+ C$E4E3,1;21 Bank the temporary Y
+ C$E4E4,3;21 {Fetch vischar.iso_pos.y
+ C$E4E7,3;21 }
+ C$E4EA,1;21 Clear carry flag
+ C$E4EB,2;21 Compute Y = (vischar.iso_pos.y - Y)
+ C$E4ED,1;21 {Multiply Y by 24 (columns)
  C$E4EE,5;21
  C$E4F3,1;21 }
- C$E4F4,1;21 %>
-*C$E4F5,3;21 {HL = screenpos.x - map_position.x; // subtract + extend to 16-bit
- C$E4F8,5;21
- C$E4FD,2;21 }
- C$E4FF,2;21 {if (HL < 0) H = 0xFF; // sign extend
+ C$E4F4,1;21 Move Y into #REGde
+@label=svp_y_skip_set
+*C$E4F5,3;21 {Compute x = iso_pos_x - map_position_x
+ C$E4F8,3;21
+ C$E4FB,1;21 }
+ C$E4FC,1;21 {Copy x to #REGhl and sign extend it
+ C$E4FD,4;21
  C$E501,2;21 }
-*C$E503,1;21 {HL += DE + 0xF290; // &state->window_buf[x + y];
- C$E504,3;21
+@label=svp_x_skip_set
+*C$E503,1;21 Combine the x and y values
+ C$E504,3;21 {Add the screen buffer start address
  C$E507,1;21 }
 @nowarn
- C$E508,3;21 ($81A2) = HL;
+ C$E508,3;21 Save the finalised screen buffer pointer
 @nowarn
- C$E50B,3;21 HL = mask_buffer;
- C$E50E,2;21
- C$E510,1;21 {L += D * 4 + (IY[26] & 7) * 4;
- C$E511,12;21
+ C$E50B,3;21 Point #REGhl at the mask_buffer
+ C$E50E,1;21 {Retrieve the top skip and clipped height
+ C$E50F,1;21 }
+ C$E510,1;21 {#REGhl += top_skip * 4
+ C$E511,3;21
+ C$E514,1;21 }
+ C$E515,3;21 {#REGhl += (vischar.iso_pos.y & 7) * 4
+ C$E518,5;21
  C$E51D,1;21 }
- C$E51E,3;21 foreground_mask_pointer = HL;
- C$E521,1;21
- C$E522,1;21 A = D;
- C$E523,1;21 {if (A) <%
- C$E524,2;21 }
+ C$E51E,3;21 Set foreground_mask_pointer
+ C$E521,1;21 Retrieve the top skip and clipped height
+ C$E522,1;21 {Is top skip zero?
+ C$E523,1;21 }
+ C$E524,2;21 Jump if so
 ; Generic multiply loop.
- C$E526,1;21 D = A;
- C$E527,1;21 A = 0;
- C$E528,3;21 {  E = IY[30] - 1;
+ C$E526,1;21 Copy top_skip to loop counter
+ C$E527,1;21 Zero the accumulator
+ C$E528,3;21 {Set multiplier to (vischar.width_bytes - 1)
  C$E52B,1;21 }
-; D ends up as zero either way.
-*C$E52C,1;21 {  do <% A += E; %> while (--D); %>
- C$E52D,1;21
- C$E52E,3;21 }
-*C$E531,1;21 E = A;
- C$E532,3;21 {bitmap_pointer += DE;
+; Start loop
+@label=svp_mult_loop
+*C$E52C,1;21 Accumulate
+ C$E52D,1;21 Decrement counter
+ C$E52E,3;21 ...loop
+; #REGd will be set to zero here either way: if the loop terminates, or if
+; jumped into.
+*C$E531,1;21 Set #REGde to skip (result)
+ C$E532,3;21 {Advance bitmap_pointer by 'skip'
  C$E535,1;21
  C$E536,3;21 }
- C$E539,3;21 {mask_pointer += DE;
+ C$E539,3;21 {Advance mask_pointer by 'skip'
  C$E53C,1;21
  C$E53D,3;21 }
- C$E540,1;21
- C$E541,1;21 return; /* visible */
+; It's unclear as to why this value is preserved since it's not used by the
+; caller.
+ C$E540,1;21 Restore the lefthand skip and clipped width
+; The Z flag remains set from #R$E52E signalling "is visible".
+ C$E541,1;21 Return
 
 ; Scale down a pos_t and assign result to a tinypos_t.
 ;
