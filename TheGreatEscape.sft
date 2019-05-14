@@ -642,7 +642,7 @@
 ;
 ; Other things:
 ;
-; b $8100 mask buffer (0xA0 bytes - 4 * 8 * 5)
+; b $8100 mask buffer ($A0 bytes - 4 * 8 * 5)
 ; w $81A0 mask buffer pointer
 ; w $81A2 screen buffer pointer
 ;
@@ -1808,10 +1808,10 @@ cC$6A35,3;21 Wipe the visible tiles array
 ; { <w> <h>               | Width in tiles, Height in tiles }
 ; { =c2 Which are then followed by a repetition of the following bytes: }
 ; { <t>                   | Literal: Emit tile <t> }
-; { <0xFF> <0xFF>         | Escape: Emit <0xFF> }
-; { <0xFF> <128..254> <t> | Repetition: Emit tile <t> up to 126 times }
-; { <0xFF> <64..79> <t>   | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> }
-; { <0xFF> <other>        | Other encodings are not used }
+; { <$FF> <$FF>           | Escape: Emit <$FF> }
+; { <$FF> <128..254> <t>  | Repetition: Emit tile <t> up to 126 times }
+; { <$FF> <64..79> <t>    | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> }
+; { <$FF> <other>         | Other encodings are not used }
 ; TABLE#
 ; .
 ; Tile references of zero produce no output.
