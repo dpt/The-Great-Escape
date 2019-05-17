@@ -9605,7 +9605,8 @@ cC$B2FC,3;21 {Reset the hero's screen position
  C$B305,1;21 {Read it into (#REGa, #REGc)
  C$B306,1;21
  C$B307,1;21 }
- C$B308,3;21 Divide by 8. Result is in (#REGa, #REGc)
+ C$B308,3;21 Divide (#REGc,#REGa) by 8 (with no rounding). Result is
+ ;21 in #REGa
 ; 11 here is the width of the game screen minus half of the hero's width
  C$B30B,2;21 Subtract 11
  C$B30D,3;21 Set map_position.x
@@ -9613,7 +9614,8 @@ cC$B2FC,3;21 {Reset the hero's screen position
  C$B311,1;21 {Read it into (#REGa, #REGc)
  C$B312,1;21
  C$B313,1;21 }
- C$B314,3;21 Divide by 8. Result is in (#REGa, #REGc)
+ C$B314,3;21 Divide (#REGc,#REGa) by 8 (with no rounding). Result is
+ ;21 in #REGa
 ; 6 here is the height of the game screen minus half of the hero's height
  C$B317,2;21 Subtract 6
  C$B319,3;21 Set map_position.y
@@ -11752,7 +11754,8 @@ cC$C47E,3;21 Read the current map position into #REGhl
  C$C4BA,1;21 {Load vischar.iso_pos.x into (#REGc,#REGa)
  C$C4BB,2;21
  C$C4BD,1;21 }
- C$C4BE,3;21 Divide (#REGc,#REGa) by 8 (with no rounding). Result is in #REGa
+ C$C4BE,3;21 Divide (#REGc,#REGa) by 8 (with no rounding). Result is
+ ;21 in #REGa
  C$C4C1,1;21 Copy result #REGc
  C$C4C2,1;21 Copy minx to #REGa
  C$C4C3,1;21 Is minx >= result?
