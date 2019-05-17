@@ -15021,24 +15021,24 @@ wW$E0E0,2;21 masked_sprite_plotter_16_wide_case_1_enable0
 ;
 ; (<- setup_vischar_plotting)
 @label=masked_sprite_plotter_24_enables
-wW$E0EC,2;21 msp24_right_plot_enable_0
- W$E0EE,2;21 msp24_left_plot_enable_0
- W$E0F0,2;21 msp24_right_plot_enable_1
- W$E0F2,2;21 msp24_left_plot_enable_1
- W$E0F4,2;21 msp24_right_plot_enable_2
- W$E0F6,2;21 msp24_left_plot_enable_2
- W$E0F8,2;21 msp24_right_plot_enable_3
- W$E0FA,2;21 msp24_left_plot_enable_3
+wW$E0EC,2;21 pms24_right_plot_enable_0
+ W$E0EE,2;21 pms24_left_plot_enable_0
+ W$E0F0,2;21 pms24_right_plot_enable_1
+ W$E0F2,2;21 pms24_left_plot_enable_1
+ W$E0F4,2;21 pms24_right_plot_enable_2
+ W$E0F6,2;21 pms24_left_plot_enable_2
+ W$E0F8,2;21 pms24_right_plot_enable_3
+ W$E0FA,2;21 pms24_left_plot_enable_3
 ; These two look different. Unused?
- W$E0FC,2;21 msp16_wide_vischar
- W$E0FE,2;21 msp24_vischar
+ W$E0FC,2;21 plot_masked_sprite_16px
+ W$E0FE,2;21 plot_masked_sprite_24px
 
 ; Unused word?
 ;
 ; Unsure if related to the above masked_sprite_plotter_24_enables table.
 uW$E100,2
 
-; Sprite plotter for 24 pixel-wide sprites.
+; Sprite plotter for 24 pixel-wide masked sprites.
 ;
 ; This is used for characters and objects.
 ; .
@@ -15046,7 +15046,7 @@ uW$E100,2
 ;
 ; I:IY Pointer to visible character.
 ;
-@label=masked_sprite_plotter_24_wide_vischar
+@label=plot_masked_sprite_24px
 ; Mask off the bottom three bits of the vischar's (isometric projected) x
 ; position and treat it as a signed field. This tells us how far we need to
 ; shift the sprite left or right.
@@ -15074,10 +15074,10 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
  C$E119,3;21 }
  C$E11C,1;21 {Fetch bitmap_pointer
  C$E11D,3;21 }
-@label=msp24_right_height_iters
+@label=pms24_right_height_iters
  C$E120,2;21 Set #REGb for 32 iterations (self modified by #R$E49D)
 ; Start loop
-@label=msp24_right_loop
+@label=pms24_right_loop
 *C$E122,1;21 Preserve the loop counter
  C$E123,1;21 {Load the bitmap bytes bm0,bm1,bm2 into #REGb,#REGc,#REGe
  C$E124,4;21
@@ -15102,9 +15102,9 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
 ; Our 24px bitmap has three bitmap bytes to shift (#REGb,#REGc,#REGe) but we'll
 ; need an extra byte to capture the shift-out (#REGd).
  C$E140,2;21 bm3 = 0
-@label=msp24_right_bitmap_jump
+@label=pms24_right_bitmap_jump
  C$E142,2;21 Jump into shifter (self modified by #R$E115)
-@label=msp24_right_bitmap_jumptable_0
+@label=pms24_right_bitmap_jumptable_0
 ; Shift out the leftmost byte's bottom pixel into the carry flag.
 *C$E144,2;21 carry = bm0 & 1; bm0 >>= 1
 ; Shift out the next byte's bottom pixel into the carry flag while shifting in
@@ -15114,15 +15114,15 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
  C$E148,2;21 new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry
 ; Same again.
  C$E14A,2;21 new_carry = bm3 & 1; bm3 = (bm3 >> 1) | (carry << 7); carry = new_carry
-@label=msp24_right_bitmap_jumptable_1
+@label=pms24_right_bitmap_jumptable_1
  C$E14C,2;21 {Do the same again
  C$E14E,4;21
  C$E152,2;21 }
-@label=msp24_right_bitmap_jumptable_2
+@label=pms24_right_bitmap_jumptable_2
  C$E154,2;21 {Do the same again
  C$E156,4;21
  C$E15A,2;21 }
-@label=msp24_right_bitmap_jumptable_end
+@label=pms24_right_bitmap_jumptable_end
  C$E15C,1;21
 ; Shift the mask.
 ; .
@@ -15130,19 +15130,19 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
 ; carry flag are set by default.
  C$E15D,2;21 mask3 = $FF
  C$E15F,1;21 carry = 1
-@label=msp24_right_mask_jump
+@label=pms24_right_mask_jump
  C$E160,2;21 Jump into shifter (self modified by #R$E112)
-@label=msp24_right_mask_jumptable_0
+@label=pms24_right_mask_jumptable_0
 ; Rotate the mask right by a pixel
 *C$E162,2;21 new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry
  C$E164,2;21 new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry
  C$E166,2;21 new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry
  C$E168,2;21 new_carry = mask3 & 1; mask3 = (mask3 >> 1) | (carry << 7); carry = new_carry
-@label=msp24_right_mask_jumptable_1
+@label=pms24_right_mask_jumptable_1
  C$E16A,2;21 {Do the same again
  C$E16C,4;21
  C$E170,2;21 }
-@label=msp24_right_mask_jumptable_2
+@label=pms24_right_mask_jumptable_2
  C$E172,2;21 {Do the same again
  C$E174,4;21
  C$E178,2;21 }
@@ -15194,7 +15194,7 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
 ; {             1 |         1 |       1 | Set to white }
 ; TABLE#
 ;
-@label=msp24_right_mask_plot_0
+@label=pms24_right_mask_plot_0
  C$E17A,1;21 Load a foreground mask byte
  C$E17B,1;21 Invert it
  C$E17C,1;21 OR with mask byte mask0
@@ -15211,30 +15211,30 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
  C$E185,1;21 Combine terms
  C$E186,1;21 Advance foreground mask pointer
  C$E187,1;21 Swap to bitmaps etc.
-@label=msp24_right_plot_enable_0
+@label=pms24_right_plot_enable_0
  C$E188,1;21 Write pixel (self modified)
  C$E189,1;21 Advance to next output pixel
  C$E18A,1;21 Swap to masks etc.
-@label=msp24_right_mask_plot_1
+@label=pms24_right_mask_plot_1
  C$E18B,1;21 {Do the same again for mask1 & bm1
  C$E18C,13;21
-@label=msp24_right_plot_enable_1
+@label=pms24_right_plot_enable_1
  C$E199,2;21
  C$E19B,1;21 }
-@label=msp24_right_mask_plot_2
+@label=pms24_right_mask_plot_2
  C$E19C,1;21 {Do the same again for mask2 & bm2
  C$E19D,13;21
-@label=msp24_right_plot_enable_2
+@label=pms24_right_plot_enable_2
  C$E1AA,2;21
  C$E1AC,1;21 }
-@label=msp24_right_mask_plot_3
+@label=pms24_right_mask_plot_3
  C$E1AD,1;21 {Do the same again for mask3 & bm3
  C$E1AE,11;21
  C$E1B9,1;21 }
  C$E1BA,3;21 Save foreground_mask_pointer
  C$E1BD,1;21 Restore the mask pointer
  C$E1BE,1;21
-@label=msp24_right_plot_enable_3
+@label=pms24_right_plot_enable_3
  C$E1BF,1;21
 ;
  C$E1C0,3;21 {Advance screen buffer pointer by (24 - 3 = 21) bytes
@@ -15250,7 +15250,7 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
 ; .
 ; #REGa is 4..7 here, which we intepret as -4..-1: the amount by which we want
 ; to shift the sprite left.
-@label=msp24_left
+@label=pms24_left
 *C$E1CE,2;21 4..7 => jump table offset 0..3
  C$E1D0,1;21 {Multiply by eight to get the jump distance
  C$E1D1,1;21
@@ -15263,10 +15263,10 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
  C$E1DA,3;21 }
  C$E1DD,1;21 {Fetch bitmap_pointer
  C$E1DE,3;21 }
-@label=msp24_left_height_iters
+@label=pms24_left_height_iters
  C$E1E1,2;21 Set #REGb for 32 iterations (self modified by #R$E4A0)
 ; Start loop
-@label=msp24_left_loop
+@label=pms24_left_loop
 *C$E1E3,1;21 Preserve the loop counter
  C$E1E4,1;21 {Load the bitmap bytes bm2,bm1,bm0 into #REGb,#REGc,#REGe
  C$E1E5,4;21
@@ -15290,9 +15290,9 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
 ; Our 24px bitmap has three bitmap bytes to shift (#REGb,#REGc,#REGe) but we'll
 ; need an extra byte to capture the shift-out (#REGd).
  C$E201,2;21 bm3 = 0
-@label=msp24_left_bitmap_jump
+@label=pms24_left_bitmap_jump
  C$E203,2;21 Jump into shifter (self modified by #R$E1D6)
-@label=msp24_left_bitmap_jumptable_0
+@label=pms24_left_bitmap_jumptable_0
 ; Shift out the rightmost byte's top pixel into the carry flag.
 *C$E205,2;21 carry = bm0 >> 7; bm0 <<= 1
 ; Shift out the next byte's top pixel into the carry flag while shifting in the
@@ -15302,45 +15302,45 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
  C$E209,2;21 new_carry = bm2 >> 7; bm2 = (bm2 << 1) | carry; carry = new_carry
 ; Same again.
  C$E20B,2;21 new_carry = bm3 >> 7; bm3 = (bm3 << 1) | carry; carry = new_carry
-@label=msp24_left_bitmap_jumptable_1
+@label=pms24_left_bitmap_jumptable_1
  C$E20D,2;21 {Do the same again
  C$E20F,4;21
  C$E213,2;21 }
-@label=msp24_left_bitmap_jumptable_2
+@label=pms24_left_bitmap_jumptable_2
  C$E215,2;21 {Do the same again
  C$E217,4;21
  C$E21B,2;21 }
-@label=msp24_left_bitmap_jumptable_3
+@label=pms24_left_bitmap_jumptable_3
  C$E21D,2;21 {Do the same again
  C$E21F,4;21
  C$E223,2;21 }
-@label=msp24_left_bitmap_jumptable_end
+@label=pms24_left_bitmap_jumptable_end
  C$E225,1;21
 ; Shift the mask.
  C$E226,2;21 mask3 = $FF
  C$E228,1;21 carry = 1
-@label=msp24_left_mask_jump
+@label=pms24_left_mask_jump
  C$E229,2;21 Jump into shifter (self modified by #R$E1D3)
-@label=msp24_left_mask_jumptable_0
+@label=pms24_left_mask_jumptable_0
 ; Rotate the mask left by a pixel
 *C$E22B,2;21 new_carry = mask0 >> 7; mask0 = (mask0 << 1) | carry; carry = new_carry
  C$E22D,2;21 new_carry = mask1 >> 7; mask1 = (mask1 << 1) | carry; carry = new_carry
  C$E22F,2;21 new_carry = mask2 >> 7; mask2 = (mask2 << 1) | carry; carry = new_carry
  C$E231,2;21 new_carry = mask3 >> 7; mask3 = (mask3 << 1) | carry; carry = new_carry
-@label=msp24_left_mask_jumptable_1
+@label=pms24_left_mask_jumptable_1
  C$E233,2;21 {Do the same again
  C$E235,4;21
  C$E239,2;21 }
-@label=msp24_left_mask_jumptable_2
+@label=pms24_left_mask_jumptable_2
  C$E23B,2;21 {Do the same again
  C$E23D,4;21
  C$E241,2;21 }
-@label=msp24_left_mask_jumptable_3
+@label=pms24_left_mask_jumptable_3
  C$E243,2;21 {Do the same again
  C$E245,4;21
  C$E249,2;21 }
 ; Plot, using the foreground mask.
-@label=msp24_left_mask_plot_0
+@label=pms24_left_mask_plot_0
  C$E24B,1;21 Load a foreground mask byte
  C$E24C,1;21 Invert it
  C$E24D,1;21 OR with mask byte mask0
@@ -15357,30 +15357,30 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
  C$E256,1;21 Combine results
  C$E257,1;21 {Advance foreground mask pointer
  C$E258,1;21 }
-@label=msp24_left_plot_enable_0
+@label=pms24_left_plot_enable_0
  C$E259,1;21 Write pixel (self modified)
  C$E25A,1;21 Advance to next output pixel
  C$E25B,1;21
-@label=msp24_left_mask_plot_1
+@label=pms24_left_mask_plot_1
  C$E25C,1;21 {Do the same again for mask1 & bm1
  C$E25D,13;21
-@label=msp24_left_plot_enable_1
+@label=pms24_left_plot_enable_1
  C$E26A,2;21
  C$E26C,1;21 }
-@label=msp24_left_mask_plot_2
+@label=pms24_left_mask_plot_2
  C$E26D,1;21 {Do the same again for mask2 & bm2
  C$E26E,13;21
-@label=msp24_left_plot_enable_2
+@label=pms24_left_plot_enable_2
  C$E27B,2;21
  C$E27D,1;21 }
-@label=msp24_left_mask_plot_3
+@label=pms24_left_mask_plot_3
  C$E27E,1;21 {Do the same again for mask3 & bm3
  C$E27F,11;21
  C$E28A,1;21 }
  C$E28B,3;21 Save foreground_mask_pointer
  C$E28E,1;21 Restore the mask pointer
  C$E28F,1;21
-@label=msp24_left_plot_enable_3
+@label=pms24_left_plot_enable_3
  C$E290,1;21
 ;
  C$E291,3;21 {Advance screen buffer pointer by (24 - 3 = 21) bytes
@@ -15393,34 +15393,29 @@ cC$E102,3;21 {x = (vischar.iso_pos.x & 7)
  C$E29B,3;21 }
  C$E29E,1;21 Return
 
-; Entry point for masked_sprite_plotter_16_wide_left which assumes A == 0. (+
-; no vischar passed).
+; Alternative entry point for plot_masked_sprite_16px that assumes x is zero.
 ;
 ; Used by the routine at #R$B866.
-@label=masked_sprite_plotter_16_wide_item
-cC$E29F,1;21 A = 0
- C$E2A0,2;21 goto masked_sprite_plotter_16_wide_left
+@label=plot_masked_sprite_16px_x_is_zero
+cC$E29F,1;21 Zero x
+ C$E2A0,2;21 Jump to pms16_left
 
-; Sprite plotter for 16 pixel-wide sprites. Used for characters and objects.
+; Sprite plotter for 16 pixel-wide masked sprites.
 ;
+; Used for characters and objects.
+; .
 ; Used by the routine at #R$B866.
+; Used by the routine at #R$E29F.
+; Used by the routine at #R$E2A2.
 ;
 ; I:IY Pointer to visible character.
-@label=masked_sprite_plotter_16_wide_vischar
-cC$E2A2,3;21 {if ((A = IY[24] & 7) >= 4) goto masked_sprite_plotter_16_wide_right.
+@label=plot_masked_sprite_16px
+cC$E2A2,3;21 {if ((A = IY[24] & 7) >= 4) goto pms16_right.
  C$E2A5,4;21
  C$E2A9,3;21 }
-; FALL THROUGH into masked_sprite_plotter_16_wide_left.
-
 ; Sprite plotter "left" case.
-;
-; Used by the routine at #R$E29F.
-; .
-; Shifts left/right (unsure which atm).
-; .
-; Shifts left/right (unsure which atm).
-@label=masked_sprite_plotter_16_wide_left
-cC$E2AC,1;21 {A = (~A & 3) * 6; // jump table offset
+@label=pms16_left
+ C$E2AC,1;21 {A = (~A & 3) * 6; // jump table offset
  C$E2AD,5;21
  C$E2B2,1;21 }
  C$E2B3,3;21 ($E2DB + 1) = A; // self-modify: jump into mask rotate
@@ -15516,14 +15511,9 @@ cC$E2AC,1;21 {A = (~A & 3) * 6; // jump table offset
  C$E349,1;21
  C$E34A,3;21 }
  C$E34D,1;21 return;
-
 ; Sprite plotter "right" case.
-;
-; Used by the routine at #R$E2A2.
-; .
-; Counterpart of above routine.
-@label=masked_sprite_plotter_16_wide_right
-cC$E34E,2;21 {A = (A - 4) * 6; // jump table offset
+@label=pms16_right
+ C$E34E,2;21 {A = (A - 4) * 6; // jump table offset
  C$E350,3;21
  C$E353,1;21 }
  C$E354,3;21 ($E399 + 1) = A; // self-modify - first jump
@@ -15785,18 +15775,18 @@ cC$E420,2;21 {Advance #REGhl to vischar.mi.pos
 @label=svp_16_wide
  C$E48E,1;21 Copy the clipped height into #REGa
  C$E48F,3;21 Write clipped height to the instruction at #R$E2C1
- ;21 in masked_sprite_plotter_16_wide_left
+ ;21 in plot_masked_sprite_16px (shift right?? case)
  C$E492,3;21 Write clipped height to the instruction at #R$E362
- ;21 in masked_sprite_plotter_16_wide_right
+ ;21 in plot_masked_sprite_16px (shift left?? case)
  C$E495,2;21 Set for three enables
  C$E497,3;21 Point #REGhl at masked_sprite_plotter_16_enables
  C$E49A,2;21 (else)
 @label=svp_24_wide
 *C$E49C,1;21 Copy the clipped height into #REGa
  C$E49D,3;21 Write clipped height to the instruction at #R$E120
- ;21 in masked_sprite_plotter_24_wide_vischar (shift right case)
+ ;21 in plot_masked_sprite_24px (shift right case)
  C$E4A0,3;21 Write clipped height to the instruction at #R$E1E1
- ;21 in masked_sprite_plotter_24_wide_vischar (shift left case)
+ ;21 in plot_masked_sprite_24px (shift left case)
  C$E4A3,2;21 Set for four enables
  C$E4A5,3;21 Point #REGhl at masked_sprite_plotter_24_enables
 @label=svp_do_enables
