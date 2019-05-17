@@ -14587,11 +14587,11 @@ cC$DC41,2;21 A &= 0x3F;
 ; .
 ; Used by the routine at #R$DC41.
 ;
-; O:AF Z/!Z => visible/not visible.
-; O:B  Lefthand skip (bytes).
-; O:C  Clipped width (bytes).
-; O:D  Top skip (rows).
-; O:E  Clipped height (rows).
+; O:B Lefthand skip (bytes)
+; O:C Clipped width (bytes)
+; O:D Top skip (rows)
+; O:E Clipped height (rows)
+; O:F Z if visible, NZ otherwise
 ;
 ; First handle the horizontal cases.
 @label=item_visible
