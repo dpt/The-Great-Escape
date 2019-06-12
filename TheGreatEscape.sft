@@ -419,10 +419,10 @@
 ; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,       ; hero only
 ;
 ; Four pursuit modes:
-; vischar_FLAGS_PURSUE                          = 1 << 0,       ; non-hero only. this flag is set when a visible friendly was nearby when a bribe was used. it's also set by hostiles_pursue
-; vischar_FLAGS_HASSLE                          = 2 << 0,       ; this flag is set in guards_follow_suspicious_character when a hostile is following the hero
-; vischar_FLAGS_DOG_FOOD                        = 3 << 0,       ; set when food is in the vicinity of a dog
-; vischar_FLAGS_SAW_BRIBE                       = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
+; vischar_PURSUIT_PURSUE                        = 1 << 0,       ; non-hero only. this flag is set when a visible friendly was nearby when a bribe was used. it's also set by hostiles_pursue
+; vischar_PURSUIT_HASSLE                        = 2 << 0,       ; this flag is set in guards_follow_suspicious_character when a hostile is following the hero
+; vischar_PURSUIT_DOG_FOOD                      = 3 << 0,       ; set when food is in the vicinity of a dog
+; vischar_PURSUIT_SAW_BRIBE                     = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
 ;
 ; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,       ; affects scaling
 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
@@ -9052,7 +9052,7 @@ cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
 ;
  C$B04B,3;23 Read the vischar's flags
  C$B04E,2;23 AND the flags with vischar_FLAGS_PURSUIT_MASK
- C$B050,2;23 Is the result vischar_FLAGS_PURSUE?
+ C$B050,2;23 Is the result vischar_PURSUIT_PURSUE?
  C$B052,2;23 If not, jump forward to collision checking
 ;
  C$B054,1;23 {Restore vischar pointer
@@ -9220,7 +9220,7 @@ cC$B107,3;23 Increase morale by 10, score by 50
 *C$B133,1;23 Fetch the character index
  C$B134,2;23 Is it > character_20_PRISONER_1?
  C$B136,2;23 Jump forward if so
- C$B138,1;23 {Set flags to vischar_FLAGS_SAW_BRIBE if hostile
+ C$B138,1;23 {Set flags to vischar_PURSUIT_SAW_BRIBE if hostile
  C$B139,2;23
  C$B13B,1;23 }
 *C$B13C,1;23 {Advance to the next vischar
@@ -9749,7 +9749,7 @@ cC$B3A8,3;21 Point #REGhl at the second visible character
 @label=bribe_found
 *C$B3BD,3;21 Set the global bribed character to #REGa
  C$B3C0,1;21 Point #REGhl at vischar flags
- C$B3C1,2;21 Set flags to vischar_FLAGS_PURSUE
+ C$B3C1,2;21 Set flags to vischar_PURSUIT_PURSUE
  C$B3C3,1;21 Return
 
 ; Use poison.
@@ -12649,7 +12649,7 @@ cC$C892,1;21 {Clear the 'character index is valid' flag [detail]
  C$C8E8,3;21 Fetch item_structs[item_FOOD].room
  C$C8EB,2;21 Test for itemstruct_ROOM_FLAG_NEARBY_7
  C$C8ED,2;21 Jump if clear
- C$C8EF,2;21 Set vischar.flags to vischar_FLAGS_DOG_FOOD
+ C$C8EF,2;21 Set vischar.flags to vischar_PURSUIT_DOG_FOOD
 @label=auto_behaviour
 *C$C8F1,3;21 Call (character behaviour)
 @label=auto_next
@@ -12703,7 +12703,7 @@ cC$C918,3;22 Fetch vischar.counter_and_flags
  C$C92A,1;22 Are any flag bits set?
  C$C92B,3;22 Jump if not
 ; Check for mode 1 ("pursue")
- C$C92E,2;22 Is the mode vischar_FLAGS_PURSUE?
+ C$C92E,2;22 Is the mode vischar_PURSUIT_PURSUE?
  C$C930,2;22 Jump if not
 ; Mode 1: Hero is chased by hostiles and sent to solitary if caught.
 @label=cb_pursue_hero
@@ -12721,7 +12721,7 @@ cC$C918,3;22 Fetch vischar.counter_and_flags
  C$C940,3;22 Jump to 'move'
 ; Check for mode 2 ("hassle")
 @label=cb_hassle_check
-*C$C943,2;22 Is the mode vischar_FLAGS_HASSLE?
+*C$C943,2;22 Is the mode vischar_PURSUIT_HASSLE?
  C$C945,2;22 Jump if not
 ; Mode 2: Hero is chased by hostiles if under player control.
  C$C947,3;22 {Is the automatic_player_counter non-zero?
@@ -12735,7 +12735,7 @@ cC$C918,3;22 Fetch vischar.counter_and_flags
  C$C950,3;22 Exit via get_target_assign_pos
 ; Check for mode 3 ("dog food")
 @label=cb_dog_food_check
-*C$C953,2;22 Is the mode vischar_FLAGS_DOG_FOOD?
+*C$C953,2;22 Is the mode vischar_PURSUIT_DOG_FOOD?
  C$C955,2;22 Jump if not
 ; Mode 3: The food item is near a guard dog.
  C$C957,1;22 Preserve vischar.flags pointer
@@ -12765,7 +12765,7 @@ cC$C918,3;22 Fetch vischar.counter_and_flags
  C$C976,3;22 Exit via get_target_assign_pos
 ; Check for mode 4 ("saw bribe")
 @label=cb_saw_bribe_check
-*C$C979,2;22 Is the mode vischar_FLAGS_SAW_BRIBE?
+*C$C979,2;22 Is the mode vischar_PURSUIT_SAW_BRIBE?
  C$C97B,2;22 Jump if not
 ; Mode 4: Hostile character witnessed a bribe being given (in accept_bribe).
  C$C97D,1;22 Preserve vischar.flags pointer
@@ -13018,13 +13018,13 @@ cC$CA81,3;21 A = IY[1];
  C$CA84,1;21 C = A;
  C$CA85,2;21 A &= vischar_FLAGS_MASK;
  C$CA87,2;21 if (A) <%
- C$CA89,2;21 {  if (A == vischar_FLAGS_PURSUE) <%
+ C$CA89,2;21 {  if (A == vischar_PURSUIT_PURSUE) <%
  C$CA8B,2;21 }
  C$CA8D,3;21 {    if (IY[0] == bribed_character) <% accept_bribe(); return; %> // exit via
  C$CA90,3;21
  C$CA93,3;21 }
  C$CA96,3;21 else <% solitary(); return; %> %> // failed to bribe? // exit via
-*C$CA99,2;21 {  else if (A == vischar_FLAGS_HASSLE || A == vischar_FLAGS_SAW_BRIBE) <% return; %>
+*C$CA99,2;21 {  else if (A == vischar_PURSUIT_HASSLE || A == vischar_PURSUIT_SAW_BRIBE) <% return; %>
  C$CA9B,3;21
  C$CA9E,1;21 }
  C$CA9F,1
@@ -13374,7 +13374,7 @@ cC$CC37,2;23 {Copy vischar pointer into #REGhl
 @label=gfsc_chk_bribe
 *C$CC46,1;23 Advance #REGhl to point at vischar.flags
  C$CC47,1;23 Fetch vischar.flags
- C$CC48,2;23 Is it vischar_FLAGS_SAW_BRIBE?
+ C$CC48,2;23 Is it vischar_PURSUIT_SAW_BRIBE?
  C$CC4A,1;23 Return if the bribe was seen
 ; Do line of sight checking when outdoors.
  C$CC4B,1;23 Rewind #REGhl to point at vischar.character
@@ -13446,7 +13446,7 @@ cC$CC37,2;23 {Copy vischar pointer into #REGhl
  C$CC98,3;23 Fetch vischar.mi.pos.height
  C$CC9B,2;23 {Return if it's 32 or greater
  C$CC9D,1;23 }
- C$CC9E,4;23 Set vischar's flags to vischar_FLAGS_HASSLE
+ C$CC9E,4;23 Set vischar's flags to vischar_PURSUIT_HASSLE
  C$CCA2,1;23 Return
 @label=gfsc_bell
 *C$CCA3,1;23 {Make the bell ring perpetually
@@ -13485,7 +13485,7 @@ cC$CCAB,3;21 Point #REGhl at the second vischar
  C$CCC2,1;21 {Point #REGhl at vischar.flags
  C$CCC3,2;21
  C$CCC5,1;21 }
- C$CCC6,2;21 Set vischar.flags to vischar_FLAGS_PURSUE
+ C$CCC6,2;21 Set vischar.flags to vischar_PURSUIT_PURSUE
 @label=hp_next
 *C$CCC8,1;21 Restore the vischar pointer
  C$CCC9,1;21 Advance the vischar pointer
