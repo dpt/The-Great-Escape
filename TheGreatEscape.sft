@@ -14500,123 +14500,160 @@ cC$DBEB,3;21 Set #REGb for 16 iterations (item__LIMIT) and
 ; Set up item plotting.
 ;
 ; Used by the routine at #R$B866.
+; .
+; Counterpart of, and very similar to, the routine at #R$E420.
 ;
-; I:A  Item.
-; I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
+; I:A  Item index
+; I:IY Pointer to item_struct
+; O:F  Z set if item is visible, NZ otherwise
 ;
-; 0x3F looks like it ought to be 0x1F (item__LIMIT - 1). Potential bug: The use
-; of A later on does not re-clamp it to 0x1F.
+; The $3F mask here looks like it ought to be $1F (item__LIMIT - 1).
+; Potential bug: The use of #REGa later on does not re-clamp it to $1F.
 @label=setup_item_plotting
-cC$DC41,2;21 A &= 0x3F;
-; Bug: This writes to saved_item but it's never subsequently read from.
- C$DC43,3;21 saved_item = A;
- C$DC46,2;21 {HL = IY + 2;
- C$DC48,2;21
+cC$DC41,2;21 Mask off item_FOUND
+; Bug: This writes the item index to #R$8213 but that location is never
+; subsequently read from.
+ C$DC43,3;21 Store saved_item
+ C$DC46,2;21 {Copy the item_struct pointer into #REGhl
+ C$DC48,1;21 }
+ C$DC49,1;21 {Advance #REGhl to item_struct.pos
  C$DC4A,1;21 }
- C$DC4B,3;21 DE = &tinypos_stash_x;
- C$DC4E,3;21 BC = 5;
- C$DC51,3;21
- C$DC54,1;21 *HL = B; // B == 0 due to LDIR /* Items are never drawn flipped. */
- C$DC55,3;21 {HL = &item_definitions[A];
+ C$DC4B,3;21 {Copy item_struct.pos and item_struct.iso_pos to
+ C$DC4E,3;21 tinypos_stash and iso_pos (five contiguous bytes)
+ C$DC51,2;21 }
+; #REGhl now points at global sprite_index.
+ C$DC53,1;21 Point #REGde at item_struct.sprite_index
+ C$DC54,1;21 Zero sprite_index so that items are never drawn flipped
+ C$DC55,3;21 {Point #REGhl at item_definitions[item] (a spritedef_t)
  C$DC58,5;21
  C$DC5D,1;21 }
- C$DC5E,1;21 HL++; // &item_definitions[A].height
- C$DC5F,1;21 A = (HL);
- C$DC60,3;21 item_height = A;
- C$DC63,1;21 HL++;
- C$DC64,3;21 {memcpy(&bitmap_pointer, HL, 4); // copy bitmap and mask pointers
- C$DC67,3;21
+ C$DC5E,1;21 Advance #REGhl to spritedef.height
+ C$DC5F,1;21 Load it
+ C$DC60,3;21 Set item_height to spritedef.height
+ C$DC63,1;21 Advance #REGhl to spritedef.bitmap
+ C$DC64,3;21 {Copy spritedef bitmap and mask pointers to
+ C$DC67,3;21 global bitmap_pointer and mask_pointer
  C$DC6A,2;21 }
- C$DC6C,3;21 item_visible();
- C$DC6F,1;21 if (!Z) return; /* invisible */
- C$DC70,1;21 // clipped width
- C$DC71,1;21 // clipped height
- C$DC72,1;21 A = E;
- C$DC73,3;21 ($E2C1 + 1) = A; // self modify masked_sprite_plotter_16_wide_left
- C$DC76,1;21 A = B;
- C$DC77,1;21 {if (A == 0) <%
- C$DC78,3;21 }
- C$DC7B,2;21 A = 0x77; // 0b01110111 /* opcode of 'LD (HL),A' */
- C$DC7D,1;21 {  Adash = C; %>
- C$DC7E,1;21 }
- C$DC7F,2;21 else <%
-*C$DC81,1;21 A = 0; /* opcode of 'NOP' */
- C$DC82,1;21 {  Adash = 3 - C; %>
- C$DC83,2;21
- C$DC85,1;21 }
-*C$DC86,1;21
- C$DC87,1;21 Cdash = Adash;
- C$DC88,1;21
- C$DC89,3;21 HLdash = &masked_sprite_plotter_16_enables[0];
- C$DC8C,2;21 Bdash = 3; // iterations
-*C$DC8E,1;21 {do <% Edash = *HLdash++;
- C$DC8F,1;21 }
- C$DC90,1;21 Ddash = *HLdash;
- C$DC91,1;21 *DEdash = A;
- C$DC92,1;21 HLdash++;
- C$DC93,1;21 {  Edash = *HLdash++;
- C$DC94,1;21 }
- C$DC95,1;21 {  Ddash = *HLdash++;
- C$DC96,1;21 }
- C$DC97,1;21 *DEdash = A;
- C$DC98,1;21 {  if (--Cdash == 0) A ^= 0x77; /* Toggle between LD (HL),A and NOP. */
- C$DC99,2;21
- C$DC9B,2;21 }
-*C$DC9D,2;21 %> while (--Bdash);
- C$DC9F,1;21
- C$DCA0,1;21 A = D;
- C$DCA1,1;21 A &= A;
- C$DCA2,3;21 DE = 0;
- C$DCA5,2;21 if (Z) <%
- C$DCA7,3;21 HL = $81BC; // &map_position + 1;
- C$DCAA,3;21 {  A = ($81B6) - *HL;
+ C$DC6C,3;21 Clip the item's dimensions to the game window
+ C$DC6F,1;21 Return if the item is invisible
+; The item is visible.
+ C$DC70,1;21 Preserve the lefthand skip and clipped width
+ C$DC71,1;21 Preserve the top skip and clipped height
+; Self modify the sprite plotter routines.
+ C$DC72,1;21 Copy the clipped height into #REGa
+ C$DC73,3;21 Write clipped height to the instruction at #R$E2C1
+ ;21 in plot_masked_sprite_16px (shift right case)
+@label=sip_do_enables
+ C$DC76,1;21 {Is the lefthand skip zero?
+ C$DC77,1;21 }
+ C$DC78,3;21 Jump if not
+; There's no left hand skip - enable instructions.
+@label=sip_enable_is_one
+ C$DC7B,2;21 {Load #REGa' with the opcode of 'LD (HL),A'
+ C$DC7D,1;21 }
+ C$DC7E,1;21 Set a counter to clipped_width. We'll write out this
+ ;21 many bytes before clipping
+ C$DC7F,2;21 (else)
+@label=sip_enable_is_zero
+*C$DC81,1;21 {Load #REGa' with the opcode of 'NOP'
+ C$DC82,1;21 }
+ C$DC83,2;21 {Set a counter to (3 - clipped_width). We'll clip until
+ C$DC85,1;21 this many bytes have been written}
+@label=sip_enable_cont
+*C$DC86,1;21 Bank
+ C$DC87,1;21 Move counter to #REGc
+ C$DC88,1;21 Unbank the opcode we'll write`
+; Set the addresses in the jump table to NOP or LD (HL),A.
+@label=sip_enables_iters
+ C$DC89,3;21 Point #REGhl at masked_sprite_plotter_16_enables[0]
+ C$DC8C,2;21 Set #REGb for 3 iterations / 3 pairs of self modified locations
+; Start loop
+@label=sip_enables_loop
+*C$DC8E,1;21 {Fetch an address
+ C$DC8F,1;21
+ C$DC90,1;21 }
+ C$DC91,1;21 Write a new opcode
+ C$DC92,1;21 Advance
+ C$DC93,1;21 {Fetch an address
+ C$DC94,1;21
+ C$DC95,1;21 }
+ C$DC96,1;21 Advance
+ C$DC97,1;21 Write a new opcode
+ C$DC98,1;21 Count down the counter
+ C$DC99,2;21 Jump if nonzero
+ C$DC9B,2;21 Swap between LD (HL),A and NOP
+@label=sip_selfmod_next
+*C$DC9D,2;21 ...loop
+; Calculate Y plotting offset.
+; .
+; The full calculation can be avoided if we know there are rows to skip since
+; in that case the sprite always starts at top of the screen.
+ C$DC9F,1;21 Bank
+ C$DCA0,1;21 {Is top skip zero?
+ C$DCA1,1;21 }
+ C$DCA2,3;21 Initialise our Y value to zero
+ C$DCA5,2;21 Jump if top skip isn't zero
+ C$DCA7,3;21 {Compute Y = iso_pos_y - map_position_y
+ C$DCAA,3;21
  C$DCAD,1;21 }
- C$DCAE,1;21 {  HL = A * 192;
- C$DCAF,11;21
+ C$DCAE,1;21 {Multiply Y by the window buf stride (192) and store it
+ C$DCAF,2;21 in #REGhl
+ C$DCB1,9;21
  C$DCBA,1;21 }
- C$DCBB,1;21 %>
-*C$DCBC,3;21 A = iso_pos_x;
- C$DCBF,3;21 HL = $81BB; // &map_position;
- C$DCC2,1;21 A -= *HL; // x
- C$DCC3,1;21 {HL = A;
- C$DCC4,2;21 }
- C$DCC6,2;21 {if (carry) H = 0xFF;
+ C$DCBB,1;21 Move Y into #REGde
+@label=sip_y_skip_set
+*C$DCBC,3;21 {Compute x = iso_pos_x - map_position_x
+ C$DCBF,3;21
+ C$DCC2,1;21 }
+ C$DCC3,1;21 {Copy x to #REGhl and sign extend it
+ C$DCC4,4;21
  C$DCC8,2;21 }
-*C$DCCA,1;21 HL += DE;
- C$DCCB,3;21 DE = $F290; // screen buffer start address
- C$DCCE,1;21 HL += DE;
+@label=sip_x_skip_set
+*C$DCCA,1;21 Combine the x and y values
+ C$DCCB,3;21 {Add the screen buffer start address
+ C$DCCE,1;21 }
 @nowarn
- C$DCCF,3;21 ($81A2) = HL;  // screen buffer pointer
+ C$DCCF,3;21 Save the finalised screen buffer pointer
 @nowarn
- C$DCD2,3;21 HL = mask_buffer;
- C$DCD5,2;21
- C$DCD7,1;21 {L += D * 4;
+ C$DCD2,3;21 Point #REGhl at the mask_buffer
+ C$DCD5,1;21 {Retrieve the top skip and clipped height
+ C$DCD6,1;21 }
+ C$DCD7,1;21 {mask buffer pointer += top_skip * 4
  C$DCD8,3;21
  C$DCDB,1;21 }
- C$DCDC,3;21 ($81B0) = HL;
- C$DCDF,2;21
- C$DCE1,1;21 A = D;
- C$DCE2,1;21 {if (A) <%
- C$DCE3,2;21 }
-; Bug: Generic multiply loop which only ever multiplies by two...
- C$DCE5,1;21 D = A;
- C$DCE6,1;21 A = 0;
- C$DCE7,2;21 E = 3; // unusual (or self modified and i've not spotted the setter)
- C$DCE9,1;21 E--;
-*C$DCEA,1;21 {  do <% A += E; %> while (--D); %>
- C$DCEB,1;21
- C$DCEC,3;21 }
-; D ends up as zero either way.
-*C$DCEF,1;21 E = A;
- C$DCF0,3;21 {bitmap_pointer += DE;
+ C$DCDC,3;21 Set foreground_mask_pointer
+ C$DCDF,1;21 {Retrieve the top skip and clipped height (again)
+ C$DCE0,1;21 }
+ C$DCE1,1;21 {Is top skip zero?
+ C$DCE2,1;21 }
+ C$DCE3,2;21 Jump if so
+; Bug: This loop is setup as generic multiply but only ever multiplies by two.
+ C$DCE5,1;21 Copy top_skip to loop counter
+ C$DCE6,1;21 Zero the accumulator
+ C$DCE7,2;21 {Set multiplier to two (width bytes - 1)
+ C$DCE9,1;21 }
+; Start loop
+@label=sip_mult_loop
+*C$DCEA,1;21 Accumulate
+ C$DCEB,1;21 Decrement counter
+ C$DCEC,3;21 ...loop
+; #REGd will be set to zero here either way: if the loop terminates, or if
+; jumped into.
+*C$DCEF,1;21 Set #REGde to skip (result)
+ C$DCF0,3;21 {Advance bitmap_pointer by 'skip'
  C$DCF3,1;21
  C$DCF4,3;21 }
- C$DCF7,3;21 {mask_pointer += DE;
+ C$DCF7,3;21 {Advance mask_pointer by 'skip'
  C$DCFA,1;21
  C$DCFB,3;21 }
- C$DCFE,2;21
- C$DD00,1;21 A = 0;
- C$DD01,1;21 return; /* visible */
+; It's unclear as to why these values are preserved since they're not used by
+; the caller.
+ C$DCFE,1;21 Restore the lefthand skip and clipped width
+ C$DCFF,1;21 Restore the top skip and clipped height
+; This XOR A isn't strictly needed - the Z flag should still be set from
+; #R$DCEC. (The counterpart at #R$E541 doesn't have it).
+ C$DD00,1;21 Set Z flag to signal "is visible" for return
+ C$DD01,1;21 Return
 
 ; Clip the given item's dimensions to the game window.
 ;
@@ -15986,10 +16023,10 @@ cC$E420,2;21 {Advance #REGhl to vischar.mi.pos
  C$E50B,3;21 Point #REGhl at the mask_buffer
  C$E50E,1;21 {Retrieve the top skip and clipped height
  C$E50F,1;21 }
- C$E510,1;21 {#REGhl += top_skip * 4
+ C$E510,1;21 {mask buffer pointer += top_skip * 4
  C$E511,3;21
  C$E514,1;21 }
- C$E515,3;21 {#REGhl += (vischar.iso_pos.y & 7) * 4
+ C$E515,3;21 {mask buffer pointer += (vischar.iso_pos.y & 7) * 4
  C$E518,5;21
  C$E51D,1;21 }
  C$E51E,3;21 Set foreground_mask_pointer
