@@ -3401,9 +3401,9 @@ wW$783A,2;21 ( 68, 104)
 ; TABLE#
 ; .
 ; Each door is stored as a pair of two "half doors". Each half of the pair
-; contains (room, direction, position) where the room is the *target* room, the
-; direction is the direction in which the door faces and the position is the
-; coordinates of the door in the current room.
+; contains (room, direction, position) where the room is the *target* room
+; index, the direction is the direction in which the door faces and the position
+; is the coordinates of the door.
 @label=doors
 bB$78D6,4;28 { BYTE0(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // gates
 @label=door_positions_1
@@ -9726,7 +9726,9 @@ cC$B387,2;21 {Clear the red cross parcel item's room field
 
 ; The hero tries to bribe a prisoner.
 ;
-; This searches visible friendly characters only and returns the first found.
+; This searches through the visible, friendly characters only and returns the
+; first found. The selected character will then pursue the hero. Once they've
+; touched it will accept the bribe (see #R$CA8D).
 ;
 ; .
 ;
@@ -11904,7 +11906,7 @@ cC$C4E0,2;22 Is the character already on-screen?
  C$C579,1;22 Are we outside?
  C$C57A,2;22 Jump if so
 @label=spawn_indoors_sound
- C$C57C,3;22 {Play the "character enters" sound effect
+ C$C57C,3;22 {Play the "character enters" sound effects
  C$C57F,6;22
  C$C585,3;22 }
 @label=spawn_entered
@@ -13011,103 +13013,137 @@ cC$CA49,1;22 Read vischar.target.y (target position)
 ;
 ; Used by the routine at #R$C918.
 ;
-; I:IY Pointer to $8000, $8020, $8040, $8060, $8080
-; I:HL Pointer to $8004, $8024, $8044, $8064, $8084
+; I:IY Pointer to a vischar
+; I:HL Pointer to vischar + 4 bytes
 @label=target_reached
-cC$CA81,3;21 A = IY[1];
- C$CA84,1;21 C = A;
- C$CA85,2;21 A &= vischar_FLAGS_MASK;
- C$CA87,2;21 if (A) <%
- C$CA89,2;21 {  if (A == vischar_PURSUIT_PURSUE) <%
- C$CA8B,2;21 }
- C$CA8D,3;21 {    if (IY[0] == bribed_character) <% accept_bribe(); return; %> // exit via
- C$CA90,3;21
- C$CA93,3;21 }
- C$CA96,3;21 else <% solitary(); return; %> %> // failed to bribe? // exit via
-*C$CA99,2;21 {  else if (A == vischar_PURSUIT_HASSLE || A == vischar_PURSUIT_SAW_BRIBE) <% return; %>
- C$CA9B,3;21
- C$CA9E,1;21 }
- C$CA9F,1
-; Decide how long until food is discovered.
+cC$CA81,3;21 Fetch the vischar.flags
+ C$CA84,1;21 Copy to #REGc for the door check later
+; Check for a pursuit mode.
+ C$CA85,2;21 Mask with vischar_FLAGS_MASK to get the pursuit mode
+ C$CA87,2;21 Jump if not in a pursuit mode
+; We're in one of the pursuit modes - find out which one.
+ C$CA89,2;21 Is it vischar_PURSUIT_PURSUE?
+ C$CA8B,2;21 Jump if not
+@label=tr_pursue
+ C$CA8D,3;21 {Is this vischar the (pending) bribed character?
+ C$CA90,3;21 }
+ C$CA93,3;21 Jump to accept_bribe if so (exit via)
+ C$CA96,3;21 Otherwise the pursuing character caught its target. This
+ ;21 must be the case when a guard pursues the hero, so send
+ ;21 the hero to solitary (exit via)
+@label=tr_not_pursue
+*C$CA99,2;21 Is it vischar_PURSUIT_HASSLE?
+ C$CA9B,1;21 Exit if so
+ C$CA9C,2;21 Is it vischar_PURSUIT_SAW_BRIBE?
+ C$CA9E,1;21 Exit if so
+; Otherwise we're in vischar_PURSUIT_DOG_FOOD mode. automatics() only permits
+; dogs to enter this mode.
+; .
+; Decide how long remains until the food is discovered. Use 32 if the food is
+; poisoned, 255 otherwise.
+ C$CA9F,1;21 Save the vischar pointer
 @nowarn
- C$CAA0,3;21 {  if ((item_structs[item_FOOD].item & itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;
- C$CAA3,6;21
- C$CAA9,2;21 }
-*C$CAAB,3;21 food_discovered_counter = A;
- C$CAAE,1;21
- C$CAAF,1;21 {  HL -= 2;
+ C$CAA0,3;21 Point #REGhl at item_structs_food
+ C$CAA3,2;21 Is the itemstruct_ITEM_FLAG_POISONED flag set?
+ C$CAA5,2;21 Set the counter to 32 irrespectively
+ C$CAA7,2;21 Jump if the flag was set
+ C$CAA9,2;21 Otherwise set the counter to 255
+@label=tr_set_food_counter
+*C$CAAB,3;21 Assign food_discovered_counter
+ C$CAAE,1;21 Restore the vischar pointer
+ C$CAAF,1;21 {Rewind #REGhl to point at vischar.route.index
  C$CAB0,1;21 }
- C$CAB1,1;21 {  *HL = 0;
+; This dog has been poisoned, so make it halt.
+ C$CAB1,1;21 {vischar.route.index = routeindex_0_HALT
  C$CAB2,1;21 }
- C$CAB3,3;21 goto character_behaviour_set_input; %> // exit via
-*C$CAB6,2;21 {if (C & vischar_FLAGS_TARGET_IS_DOOR) <%
- C$CAB8,2;21 }
-; Results in character entering.
- C$CABA,1;21 {  C = *--HL; // 80a3, 8083, 8063, 8003 // route.step
- C$CABB,1;21 }
- C$CABC,1;21 {  A = *--HL;
- C$CABD,1;21 }
- C$CABE,1;21
- C$CABF,3;21 DE = get_route(A);
- C$CAC2,1;21
- C$CAC3,1;21 {  DE += C;
+ C$CAB3,3;21 Exit via character_behaviour_set_input
+ ;21 (#REGa is zero here: that's passed as the new input)
+@label=tr_door_check
+*C$CAB6,2;21 Is the flag vischar_FLAGS_TARGET_IS_DOOR set?
+ C$CAB8,2;21 Jump if not
+; Handle the door - this results in the character entering.
+ C$CABA,1;21 Rewind #REGhl to point at vischar.route.step
+ C$CABB,1;21 Fetch route.step
+ C$CABC,1;21 Rewind
+ C$CABD,1;21 Fetch route.index
+ C$CABE,1;21 Preserve route pointer
+ C$CABF,3;21 Call get_route. #REGa is the index arg. A route *data*
+ ;21 pointer is returned in #REGde
+ C$CAC2,1;21 Restore route pointer
+ C$CAC3,1;21 {Advance the route data pointer by 'step' bytes
  C$CAC4,4;21
  C$CAC8,1;21 }
-*C$CAC9,1;21 A = *DE;
- C$CACA,2;21 {  if (*HL & route_REVERSED) A ^= door_REVERSE;
- C$CACC,2;21
- C$CACE,2;21 }
-*C$CAD0,1;21
- C$CAD1,1;21 {  A = *HL++; // $8002, ...
- C$CAD2,1;21 }
+@label=tr_routebyte_is_door
+*C$CAC9,1;21 Fetch a route byte, which here is a door index
+ C$CACA,2;21 Is the route index's route_REVERSED flag set? ($80)
+ C$CACC,2;21 Jump if not
+ C$CACE,2;21 Otherwise toggle the reverse flag
+@label=tr_store_door
+*C$CAD0,1;21 Preserve the door index
+ C$CAD1,1;21 Fetch route.index
+ C$CAD2,1;21 Advance to route.step
 ; Pattern: [-2]+1
- C$CAD3,2;21 {  if (A & route_REVERSED) (*HL) -= 2; // $8003, ... // route.step
- C$CAD5,3;21
- C$CAD8,1;21 }
-*C$CAD9,1;21 (*HL)++; // route.step
- C$CADA,1;21
- C$CADB,3;21 HL = get_door();
- C$CADE,1;21 {  IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is doors[0] room mask shifted right 2
- C$CADF,4;21
- C$CAE3,3;21 }
-; TOP_LEFT or TOP_RIGHT => next door pos
-; .
-; BOTTOM_RIGHT or BOTTOM_LEFT => current door pos
- C$CAE6,1;21 {  A = *HL & door_FLAGS_MASK_DIRECTION; // door position thingy, lowest two bits -- index?
- C$CAE7,2;21 }
- C$CAE9,2;21 {  if (A < 2) HL += 5; else HL -= 3;
- C$CAEB,10;21
-*C$CAF5,1;21
+ C$CAD3,2;21 {If the route is reversed then step backwards, otherwise
+ C$CAD5,2;21 step forwards
+ C$CAD7,2;21
+@label=tr_route_step
+*C$CAD9,1;21 }
+; Get the door structure for the door index and start processing it.
+ C$CADA,1;21 Restore door index
+ C$CADB,3;21 Call get_door. A door_t pointer is returned in #REGhl
+ C$CADE,1;21 Fetch door.room_and_direction
+ C$CADF,1;21 {Discard the bottom two bits
+ C$CAE0,1;21 }
+ C$CAE1,2;21 Extract the room index
+ C$CAE3,3;21 Move the vischar to that room (vischar.room = room index)
+; In which direction is the door facing?
+ C$CAE6,1;21 Fetch door.room_and_direction
+ C$CAE7,2;21 Mask against door_FLAGS_MASK_DIRECTION
+; Each door in the doors array is a pair of two "half doors" where each half
+; represents one side of the doorway. We test the direction of the half door we
+; find ourselves pointing at and use it to find the counterpart door's
+; position.
+ C$CAE9,2;21 Is it direction_TOP_*?
+ C$CAEB,3;21 Jump if not
+ C$CAEE,1;21 {Point #REGhl at door[1].pos
+ C$CAEF,4;21
+ C$CAF3,2;21 }
+@label=tr_door_top
+*C$CAF5,1;21 {Otherwise point #REGhl at door[-1].pos
  C$CAF6,1;21
  C$CAF7,1;21 }
-*C$CAF8,1;21
- C$CAF9,2;21 {  HL = IY;
+@label=tr_door_found
+*C$CAF8,1;21 Preserve the door.pos pointer
+ C$CAF9,2;21 {Copy the current visible character pointer into #REGhl
  C$CAFB,1;21 }
- C$CAFC,1;21 {  if (L == 0) <%
- C$CAFD,1;21
- C$CAFE,3;21 }
+ C$CAFC,1;21 {Is this vischar the hero?
+ C$CAFD,1;21 }
+ C$CAFE,3;21 Jump if not
 ; Hero's vischar only.
- C$CB01,1;21 HL++; // $8000 -> $8001
- C$CB02,2;21 {    *HL++ &= ~vischar_FLAGS_TARGET_IS_DOOR;
- C$CB04,1;21 }
- C$CB05,3;21 get_target_assign_pos(); %>
-*C$CB08,1;21
- C$CB09,3;21 transition();
- C$CB0C,3;21 {  play_speaker(sound_CHARACTER_ENTERS_1);
+ C$CB01,1;21 Advance #REGhl to point at vischar.flags
+ C$CB02,2;21 Clear vischar.flags vischar_FLAGS_TARGET_IS_DOOR flag
+ C$CB04,1;21 Advance #REGhl to point at vischar.route
+ C$CB05,3;21 Call get_target_assign_pos
+@label=tr_transition
+*C$CB08,1;21 Restore the door.pos pointer
+ C$CB09,3;21 Call transition
+ C$CB0C,3;21 {Play the "character enters 1" sound
  C$CB0F,3;21 }
- C$CB12,1;21 return; %>
-*C$CB13,1;21 {HL -= 2;
+ C$CB12,1;21 Return
+@label=tr_set_route
+*C$CB13,1;21 {Point #REGhl at vischar.route.index
  C$CB14,1;21 }
- C$CB15,1;21 A = *HL; // $8002 etc. // route
- C$CB16,2;21 {if (A != 0xFF) <%
- C$CB18,2;21 }
- C$CB1A,1;21 HL++;
- C$CB1B,2;21 {  if (A & route_REVERSED) <%
- C$CB1D,2;21 }
- C$CB1F,1;21 {    (*HL) -= 2; %> // $8003 etc.
- C$CB20,1;21 }
-*C$CB21,1;21 else <% (*HL)++;
- C$CB22,1;21 HL--; %> %>
+ C$CB15,1;21 Load the route.index
+ C$CB16,2;21 Is it routeindex_255_WANDER?
+ C$CB18,2;21 Jump if so
+ C$CB1A,1;21 Advance #REGhl to vischar.route.step
+; Pattern: [-2]+1
+ C$CB1B,2;21 {If the route is reversed then step backwards,
+ C$CB1D,2;21 otherwise step forwards
+ C$CB1F,2;21
+@label=tr_another_route_step
+*C$CB21,1;21 }
+ C$CB22,1;21 Rewind #REGhl to vischar.route.index
 ; FALL THROUGH to get_target_assign_pos.
 
 ; (unknown) get_target_assign_pos
