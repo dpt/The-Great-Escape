@@ -5674,8 +5674,12 @@ bB$9F15,4;28 Corridor to exercise yard
  B$9F19,4;28 Hut area
  B$9F1D,4;28 Exercise yard area
 
-; Check the hero's map position and colour the flag accordingly.
+; Check the hero's map position, check for escape and colour the flag
+; accordingly.
 ;
+; This also sets the main (hero's) map position in #R$81B8 to that of the hero's
+; vischar position.
+; .
 ; Used by the routine at #R$9D7B.
 @label=in_permitted_area
 cC$9F21,3;21 Point #REGhl at the hero's vischar position
@@ -5683,9 +5687,11 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$9F27,3;21 Get the global current room index
  C$9F2A,1;21 Is it indoors?
  C$9F2B,3;21 Jump if so
-; Outdoors.
- C$9F2E,3;21 Scale down the vischar position and assign result to the
- ;21 hero's map position
+@label=ipa_outdoors
+ C$9F2E,3;21 Scale down the vischar position and assign the result to
+ ;21 the hero's map position
+; Check for the hero escaping across the edge of the map (obviously this only
+; can happen outdoors).
  C$9F31,3;21 {If the hero's isometric x position is 217 * 8 or
  C$9F34,3;21 higher...
  C$9F37,2;21
@@ -5695,11 +5701,12 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$9F42,2;21
  C$9F44,3;21 jump to "hero has escaped"}
  C$9F47,2;21 Otherwise jump over the indoors handling
-; Indoors.
+@label=ipa_indoors
 *C$9F49,2;21 {Copy position across
  C$9F4B,4;21
  C$9F4F,2;21 }
 ; Set the flag red if picking a lock, or cutting wire.
+@label=ipa_picking_or_cutting
 *C$9F51,3;21 Read hero's vischar flags
  C$9F54,2;21 AND the flags with (vischar_FLAGS_PICKING_LOCK OR
  ;21 vischar_FLAGS_CUTTING_WIRE)
@@ -5710,16 +5717,18 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$9F5C,2;21 If it's 100 or higher then it's night time
  C$9F5E,2;21 Jump if it's not night time
 ; At night, home room is the only safe place.
-@label=night_time
+@label=ipa_night
  C$9F60,3;21 What room are we in?
- C$9F63,2;21 Is it the home room: room_2_HUT2LEFT?
- C$9F65,3;21 Jump to set_flag_green if so
- C$9F68,3;21 Otherwise jump to set_flag_red
+ C$9F63,2;21 Is it the home room? (room_2_HUT2LEFT)
+ C$9F65,3;21 Jump if so
+ C$9F68,3;21 Otherwise set the flag red
 ; If in solitary then bypass all checks.
-@label=day_time
+@label=ipa_day
 *C$9F6B,3;21 {Are we in solitary?
  C$9F6E,1;21 }
- C$9F6F,3;21 Jump to set_flag_green if we are
+ C$9F6F,3;21 Jump if we are
+; Not in solitary: turn the route into an area number then check that area is a
+; permitted one.
  C$9F72,3;21 Point #REGhl at the hero's vischar route
  C$9F75,1;21 Load the route index
  C$9F76,1;21 {Load the route step
@@ -5727,58 +5736,68 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$9F78,2;21 Is the route index's route_REVERSED flag set? ($80)
  C$9F7A,2;21 Jump if not
  C$9F7C,1;21 Otherwise increment the route step
+@label=ipa_check_wander
 *C$9F7D,2;21 Is the route index routeindex_255_WANDER? ($FF)
  C$9F7F,2;21 Jump if not
+; Hero is wandering.
  C$9F81,1;21 {Load the route step again and clear its bottom three
  C$9F82,2;21 bits}
  C$9F84,2;21 {If step is 8 then set #REGa to 1 (hut area)
  C$9F86,4;21
  C$9F8A,2;21 otherwise set #REGa to 2 (exercise yard area)}
+@label=ipa_bounds_check
 *C$9F8C,3;21 Check that the hero is in the specified room or camp
  ;21 bounds
- C$9F8F,2;21 If within the permitted area (Z set) goto set_flag_green
+ C$9F8F,2;21 Jump if within the permitted area (Z set)
  C$9F91,2;21 Otherwise goto set_flag_red
+; Hero is en route.
+; .
 ; Check regular routes against route_to_permitted.
+@label=ipa_en_route
 *C$9F93,2;21 Mask off the route_REVERSED flag
- C$9F95,3;21 Point #REGhl at route_to_permitted[]
+ C$9F95,3;21 Point #REGhl at route_to_permitted table
  C$9F98,2;21 Set #REGb for seven iterations
 ; Start loop
+@label=ipa_route_check_loop
 *C$9F9A,1;21 {Does the first byte of the entry match the route index?
  C$9F9B,1;21 }
  C$9F9C,2;21 Jump if so
  C$9F9E,1;21 {Otherwise move to the next entry
  C$9F9F,1;21 }
  C$9FA0,2;21 ...loop
- C$9FA2,2;21 Route index wasn't found in the table - jump to
- ;21 set_flag_green
-@label=found
+; If the route is not found in route_to_permitted assume a green flag
+ C$9FA2,2;21 Jump if route index wasn't found in the table
+; Route index was found in route_to_permitted.
+@label=ipa_route_check_found
 *C$9FA4,1;21 {Load #REGde with the sub-table's address
  C$9FA5,1;21
  C$9FA6,1;21 }
  C$9FA7,1;21 {Move it into #REGhl
  C$9FA8,1;21 }
  C$9FA9,2;21 Zero #REGb so we can use #REGbc in the next instruction
- C$9FAB,1;21 {Fetch byte at HL[BC]
+ C$9FAB,1;21 {Fetch byte at #REGhl + #REGbc
  C$9FAC,1;21 }
  C$9FAD,1;21 Save the sub-table's address
  C$9FAE,3;21 Check that the hero is in the specified room or camp
  ;21 bounds
  C$9FB1,1;21 Restore the sub-table address
- C$9FB2,2;21 If within the permitted area (Z set) jump to
- ;21 set_flag_green
+ C$9FB2,2;21 Jump if within the permitted area (Z set)
  C$9FB4,3;21 Load the hero's vischar route index
  C$9FB7,2;21 {If the route index's route_REVERSED flag is set ($80)
  C$9FB9,2;21
  C$9FBB,1;21 move the sub-table pointer forward by a byte}
-; Search through the list for (... CHECK)
+; Search through the list testing against the places permitted for the route
+; we're on.
+@label=ipa_check_route_places
 *C$9FBC,3;21 Initialise index
 ; Start loop
+@label=ipa_check_route_places_loop
 *C$9FBF,1;21 Save index
  C$9FC0,1;21 Save sub-table address
- C$9FC1,1;21 {Fetch byte at HL[BC]
+ C$9FC1,1;21 {Fetch byte at #REGhl + #REGbc
  C$9FC2,1;21 }
  C$9FC3,2;21 Did we hit the end of the list?
- C$9FC5,2;21 Jump to pop_and_set_flag_red if we did
+ C$9FC5,2;21 Jump if we did
  C$9FC7,3;21 Check that the hero is in the specified room or camp
  ;21 bounds
  C$9FCA,1;21 Restore the sub-table address
@@ -5786,20 +5805,20 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$9FCC,2;21 If within the area (Z set) break out of the loop
  C$9FCE,1;21 Increment counter
  C$9FCF,2;21 ...loop
-@label=set_route_then_set_flag_green
+@label=ipa_set_route_then_set_flag_green
 *C$9FD1,3;21 {Fetch the hero's route index
  C$9FD4,1;21 }
- C$9FD5,3;21 Set the hero's route (to A,C) unless in solitary
- C$9FD8,2;21 Jump to set_flag_green
-@label=pop_and_set_flag_red
+ C$9FD5,3;21 Set the hero's route (to #REGa,#REGc) unless in solitary
+ C$9FD8,2;21 Jump to "set flag green"
+@label=ipa_pop_and_set_flag_red
 *C$9FDA,1;21 {Restore the stack pointer position - don't care about
  C$9FDB,1;21 order}
- C$9FDC,2;21 Jump to set_flag_red
+ C$9FDC,2;21 Jump to "set flag red"
 ; Green flag code path.
-@label=set_flag_green
+@label=ipa_set_flag_green
 *C$9FDE,1;21 Clear the red flag
  C$9FDF,2;21 Load #REGc with attribute_BRIGHT_GREEN_OVER_BLACK
-@label=flag_select
+@label=ipa_flag_select
 *C$9FE1,3;21 Assign red_flag
  C$9FE4,1;21 Shuffle wanted attribute value into #REGa
  C$9FE5,3;21 Point #REGhl at the first attribute byte of the morale
@@ -5813,7 +5832,7 @@ cC$9F21,3;21 Point #REGhl at the hero's vischar position
  C$9FF4,1;21 Shuffle wanted attribute value into #REGa
  C$9FF5,3;21 Exit via set_morale_flag_screen_attributes
 ; Red flag code path.
-@label=set_flag_red
+@label=ipa_set_flag_red
 *C$9FF8,2;21 Load #REGc with attribute_BRIGHT_RED_OVER_BLACK
  C$9FFA,3;21 Fetch the first attribute byte of the morale flag
  C$9FFD,1;21 Is the flag already the correct colour?
