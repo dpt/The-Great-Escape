@@ -34,8 +34,6 @@ SkoolKit
 
 In addition to producing the cross-referenced HTML disassembly SkoolKit can also produce an annotated assembly listing. We can use this to reassemble the game to a .TAP file which you can load into an emulator. You can use it to alter the game and fix 30-year-old bugs!
 
-Other SkoolKit disassemblies are normally written in a one comment per line style but I've chosen to attempt to reconstruct the logic of the original code as pseudo-C-style control structures. This makes it look weirder than I'd like but eases the conversion to C. My current work involves "normalising" the assembly: removing the pseudocode and replacing it with prose.
-
 Building the Cross-Referenced Disassembly
 -----------------------------------------
 
@@ -54,41 +52,40 @@ If all's well you will see output like:
     Extracting The Great Escape.tzx
     Writing build/TheGreatEscape.z80
     mkdir -p build
-    sna2skool.py --skool-hex --sft TheGreatEscape.sft build/TheGreatEscape.pristine.z80 > build/TheGreatEscape.skool
+    sna2skool.py --hex --sft TheGreatEscape.sft build/TheGreatEscape.pristine.z80 > TheGreatEscape.skool
     Using skool file template: TheGreatEscape.sft
-    skool2html.py --hex --asm-labels --rebuild-images build/TheGreatEscape.skool
-    Using skool file: build/TheGreatEscape.skool
+    skool2html.py --hex --asm-labels --rebuild-images TheGreatEscape.skool
     Using ref files: TheGreatEscape.ref, TheGreatEscapeBugs.ref, TheGreatEscapeChangelog.ref, TheGreatEscapeFacts.ref, TheGreatEscapeGame.ref, TheGreatEscapeGlossary.ref, TheGreatEscapeGraphics.ref
-    Parsing build/TheGreatEscape.skool
-    Creating directory build/TheGreatEscape
-    Copying /usr/local/lib/python3.6/site-packages/skoolkit/resources/skoolkit.css to build/TheGreatEscape/skoolkit.css
-    Copying TheGreatEscape.css to build/TheGreatEscape/TheGreatEscape.css
-    Copying static-images/BarbedWire.png to build/TheGreatEscape/static-images/BarbedWire.png
-    Copying static-images/GameWindow.png to build/TheGreatEscape/static-images/GameWindow.png
-    Copying static-images/JoystickControls.png to build/TheGreatEscape/static-images/JoystickControls.png
-      Writing disassembly files in build/TheGreatEscape/asm
-      Writing build/TheGreatEscape/maps/all.html
-      Writing build/TheGreatEscape/maps/routines.html
-      Writing build/TheGreatEscape/maps/data.html
-      Writing build/TheGreatEscape/maps/messages.html
-      Writing build/TheGreatEscape/maps/unused.html
-      Writing build/TheGreatEscape/buffers/gbuffer.html
-      Writing build/TheGreatEscape/reference/bugs.html
-      Writing build/TheGreatEscape/reference/changelog.html
-      Writing build/TheGreatEscape/reference/facts.html
-      Writing build/TheGreatEscape/reference/glossary.html
-      Writing build/TheGreatEscape/graphics/glitches.html
-      Writing build/TheGreatEscape/Intro.html
-      Writing build/TheGreatEscape/Controls.html
-      Writing build/TheGreatEscape/Completion.html
-      Writing build/TheGreatEscape/Characters.html
-      Writing build/TheGreatEscape/Items.html
-      Writing build/TheGreatEscape/Masks.html
+    Parsing TheGreatEscape.skool
+    Output directory: build/TheGreatEscape
+    Copying /usr/local/lib/python3.7/site-packages/skoolkit/resources/skoolkit.css to skoolkit.css
+    Copying TheGreatEscape.css to TheGreatEscape.css
+    Copying static-images/BarbedWire.png to static-images/BarbedWire.png
+    Copying static-images/GameWindow.png to static-images/GameWindow.png
+    Copying static-images/JoystickControls.png to static-images/JoystickControls.png
+    Writing disassembly files in asm
+    Writing maps/all.html
+    Writing maps/routines.html
+    Writing maps/data.html
+    Writing maps/messages.html
+    Writing maps/unused.html
+    Writing buffers/gbuffer.html
+    Writing reference/bugs.html
+    Writing reference/changelog.html
+    Writing reference/facts.html
+    Writing reference/glossary.html
+    Writing graphics/glitches.html
+    Writing Intro.html
+    Writing Controls.html
+    Writing Completion.html
+    Writing Characters.html
+    Writing Items.html
+    Writing Masks.html
     suggested width 17 > actual 16
-      Writing build/TheGreatEscape/RoomObjects.html
-      Writing build/TheGreatEscape/Rooms.html
-      Writing build/TheGreatEscape/Map.html
-      Writing build/TheGreatEscape/index.html
+    Writing RoomObjects.html
+    Writing Rooms.html
+    Writing Map.html
+    Writing index.html
 
 * Open up `build/TheGreatEscape/index.html` in your browser and dive in.
 
@@ -117,9 +114,7 @@ If skool files are not to your taste and you prefer a regular assembly listing: 
 Current State of the Project
 ----------------------------
 
-Work on reverse engineering progresses but slowly as this is a limited spare time (late night) project for me. (I've been chipping away at it since 2012...)
-
-I switch between the reimplemented C version and the disassembly as while a disassembled function may make sense in of itself, transforming it into functioning C forces a great deal more detail to be thought about.
+The reverse engineering of the game is now complete, but work will continue to improve the accuracy and readability of the disassembly.
 
 Presentation
 ------------
