@@ -3167,7 +3167,7 @@ bB$7612,7;40 character_0_COMMANDANT,   room_11_PAPERS,   ( 46,  46, 24), (0x03, 
  B$76BA,7;40 character_24_PRISONER_5,  room_NONE,        ( 52,  44, 24), (0x00, 0x10)
  B$76C1,7;40 character_25_PRISONER_6,  room_NONE,        ( 52,  28, 24), (0x00, 0x10)
 
-; Item structures.
+; Item structures (a.k.a. itemstructs).
 ;
 ; This array contains one of these 7-byte structures for each of the 16 game items:
 ; .
@@ -3761,7 +3761,7 @@ cC$7BD0,1;21 Step #REGhl back to itemstruct.pos.y
 ;
 ; Used by the routine at #R$7BB5.
 ;
-; I:HL Pointer to item struct.
+; I:HL Pointer to itemstruct.room.
 @label=drop_item_interior
 cC$7BE4,1;21 Point to itemstruct.x
  C$7BE5,3;21 Point #REGde at the hero's map position.x
@@ -6548,7 +6548,7 @@ cC$A228,3;24 Fetch the red cross parcel's room (and flags)
  C$A246,3;24 number}
  C$A249,3;24 {Copy the red cross parcel reset data over the red
 @nowarn
- C$A24C,3;24 cross parcel item struct
+ C$A24C,3;24 cross parcel itemstruct
  C$A24F,3;24
  C$A252,2;24 }
  C$A254,2;24 {Queue the message "RED CROSS PARCEL" and exit via
@@ -14343,7 +14343,7 @@ bB$D026,8;44 {bitmap: COMMANDANT FACING TOP LEFT 4
 
 ; Mark nearby items.
 ;
-; Iterates over item structs, testing to see if each item is within the range
+; Iterates over itemstructs, testing to see if each item is within the range
 ; (-1..22, 0..15) of the current map position. If it is it sets the flags
 ; itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item,
 ; otherwise it clears both of those flags.
@@ -14424,7 +14424,7 @@ cC$DB9E,3;21 Get the global current room index
 ; I:BC' X position
 ; I:DE' Y position
 ; O:A'  Index of the greatest item with the item_FOUND flag set, if found
-; O:IY  Pointer to an item struct, if found
+; O:IY  Pointer to an itemstruct, if found
 @label=get_greatest_itemstruct
 cC$DBEB,3;21 Set #REGb for 16 iterations (item__LIMIT) and
  ;21 set #REGc for a seven byte stride simultaneously
