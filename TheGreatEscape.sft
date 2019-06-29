@@ -53,33 +53,6 @@
 ;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
-; STYLE
-; //////////////////////////////////////////////////////////////////////////////
-;
-; The disassembly is (presently) not written as a plain English explanation but
-; instead in a C style of pseudocode.
-;
-; Using C style braces { } conflict with SkoolKit's own use of braces, so we
-; use the C99 digraphs <% and %> instead.
-;
-; Braces, 'do' keywords and the like are syntactic sugar and have no
-; corresponding assembly instruction so must share a line with another op. For
-; this reason the C style pseudocode is formatted in an uneven way to best fit
-; the lines to which it is assigned.
-; e.g.
-;     if (condition) <%
-;         statement; %>
-;     else <% statement;
-;     %>
-;
-; I replace registers with constants when the value is used only once (e.g. for
-; strides when walking through arrays).
-;
-; June 2018: The disassembly is currently being converted into plain English.
-; Approximately 20% of the routines are now converted.
-;
-;
-; //////////////////////////////////////////////////////////////////////////////
 ; ASSEMBLY PATTERNS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
