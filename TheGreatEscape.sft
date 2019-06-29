@@ -13146,12 +13146,11 @@ cC$CA81,3;21 Fetch the vischar.flags
  C$CB22,1;21 Rewind #REGhl to vischar.route.index
 ; FALL THROUGH to get_target_assign_pos.
 
-; (unknown) get_target_assign_pos
+; Calls get_target then puts coords in vischar.target and set flags.
 ;
 ; Used by the routines at #R$A3BB, #R$B107, #R$C918, #R$CA81 and #R$CB2D.
 ;
-; I:A  Character index?
-; I:HL ?
+; I:HL Pointer to route
 @label=get_target_assign_pos
 cC$CB23,1;21 Preserve the route pointer
  C$CB24,3;21 Get our next target - a location, a door or 'route
