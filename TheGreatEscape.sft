@@ -4480,10 +4480,16 @@ gB$81D6,4
 
 ; Interior mask data.
 ;
-; Used by the routines at #R$6A35, #R$B916.
-;
-; FIXME: First byte is a count.
-;
+; Used by the routines at #R$6A35 and #R$B916.
+; .
+; The first byte is a count, followed by 'count' mask_t's:
+; .
+; #TABLE(default)
+; { =h Type   | =h Bytes | =h Name | =h Meaning }
+; { Byte      |        1 | index   | Index into mask_pointers }
+; { bounds_t  |        4 | bounds  | Isometric projected bounds of the mask. Used for culling. }
+; { tinypos_t |        3 | pos     | If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal). }
+; TABLE#
 @label=interior_mask_data
 gB$81DA,8*7,1
 
