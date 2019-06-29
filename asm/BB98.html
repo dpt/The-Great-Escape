@@ -24,7 +24,7 @@
 <div class="description">BB98: Paint any tiles occupied by visible characters with tiles from tile_buf.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="9D7B.html">main_loop</a>.
@@ -47,17 +47,19 @@ Used by the routine at <a href="9D7B.html">main_loop</a>.
 <tr>
 <td class="asm-label-1">restore_tiles</td>
 <td class="address-2"><span id="bb98"></span>BB98</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb9a"></span>BB9A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD IY,$8000</td>
 <td class="comment-11" rowspan="1">Point <span class="register">IY</span> at the first vischar</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb9e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -69,29 +71,33 @@ Start loop (once per vischar)
 <tr>
 <td class="asm-label-1">rt_loop</td>
 <td class="address-2"><span id="bb9e"></span>BB9E</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb9f"></span>BB9F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$01)</td>
 <td class="comment-11" rowspan="1">Read the vischar's flags byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bba2"></span>BBA2</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="1">Is it vischar_FLAGS_EMPTY_SLOT? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bba4"></span>BBA4</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="BB98.html#bc9f">rt_next_vischar</a></td>
 <td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bba7"></span>
 <div class="comments">
 <div class="paragraph">
@@ -106,59 +112,68 @@ Compute iso_pos_y = vischar.iso_pos.y / 8.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bba7"></span>BBA7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$1B)</td>
 <td class="comment-11" rowspan="2">Read vischar.iso_pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbaa"></span>BBAA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$1A)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbad"></span>BBAD</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-11" rowspan="6">Shift it right by three bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbaf"></span>BBAF</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbb0"></span>BBB0</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbb2"></span>BBB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbb3"></span>BBB3</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbb5"></span>BBB5</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbb6"></span>BBB6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($81B6),A</td>
 <td class="comment-11" rowspan="1">Store low byte</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bbb9"></span>
 <div class="comments">
 <div class="paragraph">
@@ -170,59 +185,68 @@ Compute iso_pos_x = vischar.iso_pos.x / 8.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbb9"></span>BBB9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$19)</td>
 <td class="comment-11" rowspan="2">Read vischar.iso_pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbbc"></span>BBBC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$18)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbbf"></span>BBBF</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-11" rowspan="6">Shift it right by three bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbc1"></span>BBC1</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbc2"></span>BBC2</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbc4"></span>BBC4</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbc5"></span>BBC5</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbc7"></span>BBC7</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbc8"></span>BBC8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($81B5),A</td>
 <td class="comment-11" rowspan="1">Store low byte</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bbcb"></span>
 <div class="comments">
 <div class="paragraph">
@@ -234,23 +258,26 @@ Clip.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbcb"></span>BBCB</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="BAF7.html">vischar_visible</a></td>
 <td class="comment-11" rowspan="1">Clip the vischar's dimensions to the game window</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbce"></span>BBCE</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">Jump to next iteration if not visible ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbd0"></span>BBD0</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="BB98.html#bc9f">rt_next_vischar</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bbd3"></span>
 <div class="comments">
 <div class="paragraph">
@@ -262,47 +289,54 @@ Compute scaled clipped height = (clipped height / 8) + 2
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbd3"></span>BBD3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="1">Copy clipped height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbd4"></span>BBD4</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="3">Shift it right by three bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbd5"></span>BBD5</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbd6"></span>BBD6</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbd7"></span>BBD7</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
 <td class="comment-11" rowspan="1">Mask away the rotated-out bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbd9"></span>BBD9</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$02</td>
 <td class="comment-11" rowspan="1">Add two</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbdb"></span>BBDB</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">Save the computed height</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bbdc"></span>
 <div class="comments">
 <div class="paragraph">
@@ -317,35 +351,40 @@ Compute bottom = height + iso_pos_y - map_position_y. This is the distance of th
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbdc"></span>BBDC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81B6</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at iso_pos_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbdf"></span>BBDF</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(HL)</td>
 <td class="comment-11" rowspan="1">Add iso_pos_y to height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbe0"></span>BBE0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BC</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at map_position_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbe3"></span>BBE3</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">Subtract map_position_y from the total</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbe4"></span>BBE4</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="BB98.html#bbf7">rt_visible</a></td>
 <td class="comment-11" rowspan="1">Jump if bottom is &lt; 0 (the bottom edge is beyond the top edge of screen)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bbe6"></span>
 <div class="comments">
 <div class="paragraph">
@@ -357,23 +396,26 @@ Bottom edge is on-screen, or off the bottom of the screen.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbe6"></span>BBE6</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $11</td>
 <td class="comment-11" rowspan="1">Now reduce bottom by the height of the game window</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbe8"></span>BBE8</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="BB98.html#bbf7">rt_visible</a></td>
 <td class="comment-11" rowspan="2">Jump over if &lt;= 17 (bottom edge off top of screen)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbea"></span>BBEA</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="BB98.html#bbf7">rt_visible</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bbec"></span>
 <div class="comments">
 <div class="paragraph">
@@ -385,47 +427,54 @@ Bottom edge is now definitely visible
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbec"></span>BBEC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-11" rowspan="1">Save new bottom</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbed"></span>BBED</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Get computed height back</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbee"></span>BBEE</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB E</td>
 <td class="comment-11" rowspan="1">Calculate visible height = computed height - bottom</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbef"></span>BBEF</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="BB98.html#bc9f">rt_next_vischar</a></td>
 <td class="comment-11" rowspan="1">If invisible (height &lt; 0) goto next</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbf2"></span>BBF2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="BB98.html#bbf8">rt_clamp_height</a></td>
 <td class="comment-11" rowspan="1">Jump if visible (height &gt; 0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbf4"></span>BBF4</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="BB98.html#bc9f">rt_next_vischar</a></td>
 <td class="comment-11" rowspan="1">If invisible (height == 0) goto next</td>
 </tr>
 <tr>
 <td class="asm-label-1">rt_visible</td>
 <td class="address-2"><span id="bbf7"></span>BBF7</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Restore computed height</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bbf8"></span>
 <div class="comments">
 <div class="paragraph">
@@ -437,29 +486,33 @@ Clamp the height to a maximum of five.
 <tr>
 <td class="asm-label-1">rt_clamp_height</td>
 <td class="address-2"><span id="bbf8"></span>BBF8</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $05</td>
 <td class="comment-11" rowspan="1">Compare height to 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbfa"></span>BBFA</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="BB98.html#bc02">restore_tiles_0</a></td>
 <td class="comment-11" rowspan="1">Jump over if equal to 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bbfd"></span>BBFD</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="BB98.html#bc02">restore_tiles_0</a></td>
 <td class="comment-11" rowspan="1">Jump over if less than 5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc00"></span>BC00</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$05</td>
 <td class="comment-11" rowspan="1">Otherwise set it to 5</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc02"></span>
 <div class="comments">
 <div class="paragraph">
@@ -471,59 +524,68 @@ Self modify the loops' control instructions.
 <tr>
 <td class="asm-label-1">restore_tiles_0</td>
 <td class="address-2"><span id="bc02"></span>BC02</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($BC5F),A</td>
 <td class="comment-11" rowspan="1">Self modify the outer loop counter (= height)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc05"></span>BC05</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">Copy (clipped) width to <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc06"></span>BC06</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($BC61),A</td>
 <td class="comment-11" rowspan="1">Self modify the inner loop counter (= width)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc09"></span>BC09</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($BC89),A</td>
 <td class="comment-11" rowspan="1">Self modify the "reset X" instruction (= width)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc0c"></span>BC0C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-11" rowspan="2">Compute tilebuf_skip = 24 - width (24 is window columns)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc0e"></span>BC0E</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc0f"></span>BC0F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($BC8E),A</td>
 <td class="comment-11" rowspan="1">Self modify the "tilebuf row-to-row skip" instruction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc12"></span>BC12</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$A8</td>
 <td class="comment-11" rowspan="1">Compute windowbuf_skip = (8 * 24) - width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc14"></span>BC14</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($BC95),A</td>
 <td class="comment-11" rowspan="1">Self modify the "windowbuf row-to-row skip" instruction</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc17"></span>
 <div class="comments">
 <div class="paragraph">
@@ -538,53 +600,61 @@ X part
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc17"></span>BC17</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BB</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at map_position.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc1a"></span>BC1A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
 <td class="comment-11" rowspan="1">Copy the lefthand skip into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc1b"></span>BC1B</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc1c"></span>BC1C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$00</td>
 <td class="comment-11" rowspan="1">Set X to zero (interleaved)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc1e"></span>BC1E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="BB98.html#bc24">restore_tiles_1</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc20"></span>BC20</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81B5)</td>
 <td class="comment-11" rowspan="3">Compute x = iso_pos_x - map_position.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc23"></span>BC23</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">restore_tiles_1</td>
 <td class="address-2"><span id="bc24"></span>BC24</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc25"></span>
 <div class="comments">
 <div class="paragraph">
@@ -596,53 +666,61 @@ Y part
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc25"></span>BC25</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
 <td class="comment-11" rowspan="1">Copy top skip into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc26"></span>BC26</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc27"></span>BC27</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$00</td>
 <td class="comment-11" rowspan="1">Set Y to zero (interleaved)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc29"></span>BC29</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="BB98.html#bc30">restore_tiles_2</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc2b"></span>BC2B</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to map_position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc2c"></span>BC2C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81B6)</td>
 <td class="comment-11" rowspan="3">Compute y = iso_pos_y - map_position.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc2f"></span>BC2F</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">restore_tiles_2</td>
 <td class="address-2"><span id="bc30"></span>BC30</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc31"></span>
 <div class="comments">
 <div class="paragraph">
@@ -654,101 +732,117 @@ Calculate the offset into the window buffer.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc31"></span>BC31</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,C</td>
 <td class="comment-11" rowspan="6"><span class="register">DE</span> = y &lt;&lt; 7 (== y * 128)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc32"></span>BC32</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc33"></span>BC33</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc35"></span>BC35</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc36"></span>BC36</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc37"></span>BC37</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc38"></span>BC38</td>
+<td class="bytes-0"></td>
 <td class="instruction">SRL H</td>
 <td class="comment-11" rowspan="3"><span class="register">HL</span> = y &lt;&lt; 6 (== y * 64)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc3a"></span>BC3A</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc3b"></span>BC3B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc3c"></span>BC3C</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">Sum <span class="register">DE</span> and <span class="register">HL</span> = y * 192 (== y * 24 * 8)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc3d"></span>BC3D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,B</td>
 <td class="comment-11" rowspan="3"><span class="register">HL</span> += x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc3e"></span>BC3E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc40"></span>BC40</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc41"></span>BC41</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F290</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the window buffer's start address (windowbuf)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc44"></span>BC44</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">Add</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc45"></span>BC45</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">Swap the buffer offset into <span class="register">DE</span>. <span class="register">HL</span> is about to be overwritten</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc46"></span>
 <div class="comments">
 <div class="paragraph">
@@ -763,125 +857,145 @@ Compute pointer = C * 24 + A + $F0F8
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc46"></span>BC46</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Stack the x and y values</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc47"></span>BC47</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc48"></span>BC48</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Restore into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc49"></span>BC49</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc4a"></span>BC4A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
 <td class="comment-11" rowspan="1">Copy x into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc4b"></span>BC4B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,C</td>
 <td class="comment-11" rowspan="2"><span class="register">HL</span> = y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc4c"></span>BC4C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc4e"></span>BC4E</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-11" rowspan="3">Multiply it by 8</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc4f"></span>BC4F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc50"></span>BC50</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc51"></span>BC51</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,L</td>
 <td class="comment-11" rowspan="2">Copy result to <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc52"></span>BC52</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc53"></span>BC53</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-11" rowspan="1">Double result</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc54"></span>BC54</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">= y * 8 + y * 16</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc55"></span>BC55</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="2">Copy x into <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc56"></span>BC56</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc58"></span>BC58</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">= y * 24 + x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc59"></span>BC59</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$F0F8</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the visible tiles array (tilebuf)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc5c"></span>BC5C</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">= $F0F8 + y * 24 + x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc5d"></span>BC5D</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">Move tilebuf pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc5e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -893,11 +1007,12 @@ Loops start here.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc5e"></span>BC5E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$05</td>
 <td class="comment-11" rowspan="1">Set <span class="register">C</span> for &lt;self modified by $BC5F&gt; rows</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc60"></span>
 <div class="comments">
 <div class="paragraph">
@@ -909,11 +1024,12 @@ Start loop
 <tr>
 <td class="asm-label-1">rt_copy_row</td>
 <td class="address-2"><span id="bc60"></span>BC60</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for &lt;self modified by $BC61&gt; columns</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc62"></span>
 <div class="comments">
 <div class="paragraph">
@@ -925,41 +1041,47 @@ Start loop
 <tr>
 <td class="asm-label-1">rt_copy_column</td>
 <td class="address-2"><span id="bc62"></span>BC62</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Save windowbuf pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc63"></span>BC63</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">Read a tile from tilebuf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc64"></span>BC64</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc65"></span>BC65</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="1">Restore windowbuf pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc66"></span>BC66</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Save x,y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc67"></span>BC67</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="BCAA.html">select_tile_set</a></td>
 <td class="comment-11" rowspan="1">Turn a map ref into a tile set pointer (in <span class="register">BC</span>)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc6a"></span>
 <div class="comments">
 <div class="paragraph">
@@ -974,47 +1096,54 @@ Compute the tile row pointer. (This is similar to <a href="6B42.html#6b4f">6B4F<
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc6a"></span>BC6A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="2">Widen the tile index into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc6b"></span>BC6B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc6d"></span>BC6D</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-11" rowspan="3">Multiply by 8</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc6e"></span>BC6E</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc6f"></span>BC6F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc70"></span>BC70</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">Add to tileset base address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc71"></span>BC71</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0818</td>
 <td class="comment-11" rowspan="1">Simultaneously set <span class="register">B</span> for eight iterations and <span class="register">C</span> for a 24 byte stride</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc74"></span>
 <div class="comments">
 <div class="paragraph">
@@ -1026,59 +1155,68 @@ Start loop
 <tr>
 <td class="asm-label-1">rt_copy_tile</td>
 <td class="address-2"><span id="bc74"></span>BC74</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">Transfer a byte (a row) of tile across</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc75"></span>BC75</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc76"></span>BC76</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="6">Advance the screen buffer pointer by the stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc77"></span>BC77</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc78"></span>BC78</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="BB98.html#bc7b">rt_copy_tile_nocarry</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc7a"></span>BC7A</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">rt_copy_tile_nocarry</td>
 <td class="address-2"><span id="bc7b"></span>BC7B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc7c"></span>BC7C</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc7d"></span>BC7D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="BB98.html#bc74">rt_copy_tile</a></td>
 <td class="comment-11" rowspan="1">...loop for each byte of the tile</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc7f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -1090,41 +1228,47 @@ Move to next column.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc7f"></span>BC7F</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Restore x,y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc80"></span>BC80</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-11" rowspan="1">Increment X</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc81"></span>BC81</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc82"></span>BC82</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">Advance the tilebuf pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc83"></span>BC83</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Advance the windowbuf pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc84"></span>BC84</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="BB98.html#bc62">rt_copy_column</a></td>
 <td class="comment-11" rowspan="1">...loop (width counter)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bc86"></span>
 <div class="comments">
 <div class="paragraph">
@@ -1136,144 +1280,168 @@ Reset x offset. Advance to next row.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc86"></span>BC86</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc87"></span>BC87</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="1">Get X</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc88"></span>BC88</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $00</td>
 <td class="comment-11" rowspan="1">Reset X to initial value &lt;self modified by $BC89&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc8a"></span>BC8A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,A</td>
 <td class="comment-11" rowspan="1">Save X</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc8b"></span>BC8B</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">Increment Y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc8c"></span>BC8C</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc8d"></span>BC8D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$14</td>
 <td class="comment-11" rowspan="1">Get tilebuf row-to-row skip &lt;self modified by $BC8E&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc8f"></span>BC8F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,E</td>
 <td class="comment-11" rowspan="4">Increment tilebuf pointer <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc90"></span>BC90</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="BB98.html#bc93">rt_tilebuf_nocarry</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc92"></span>BC92</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">rt_tilebuf_nocarry</td>
 <td class="address-2"><span id="bc93"></span>BC93</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc94"></span>BC94</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$BC</td>
 <td class="comment-11" rowspan="1">Get windowbuf row-to-row skip &lt;self modified by $BC95&gt;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc96"></span>BC96</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="4">Increment windowbuf pointer <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc97"></span>BC97</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="BB98.html#bc9a">rt_windowbuf_nocarry</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc99"></span>BC99</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">rt_windowbuf_nocarry</td>
 <td class="address-2"><span id="bc9a"></span>BC9A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc9b"></span>BC9B</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bc9c"></span>BC9C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="BB98.html#bc60">rt_copy_row</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">rt_next_vischar</td>
 <td class="address-2"><span id="bc9f"></span>BC9F</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">Restore loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bca0"></span>BCA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="1">Set <span class="register">DE</span> to the vischar stride (32)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bca3"></span>BCA3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD IY,DE</td>
 <td class="comment-11" rowspan="1">Advance <span class="register">IY</span> to the next vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bca5"></span>BCA5</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC B</td>
 <td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bca6"></span>BCA6</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="BB98.html#bb9e">rt_loop</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bca9"></span>BCA9</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -1286,9 +1454,9 @@ Reset x offset. Advance to next row.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

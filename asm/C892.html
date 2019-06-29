@@ -24,7 +24,7 @@
 <div class="description">C892: Make characters follow the hero if he's being suspicious.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Also handles food item discovery and automatic hero behaviour.
@@ -50,17 +50,19 @@ Used by the routine at <a href="9D7B.html">main_loop</a>.
 <tr>
 <td class="asm-label-1">automatics</td>
 <td class="address-2"><span id="c892"></span>C892</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">Clear the 'character index is valid' flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c893"></span>C893</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($A13E),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c896"></span>
 <div class="comments">
 <div class="paragraph">
@@ -72,23 +74,26 @@ Hostiles pursue if the bell is not ringing.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c896"></span>C896</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A130)</td>
 <td class="comment-11" rowspan="1">Read the bell ring counter/flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c899"></span>C899</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is it bell_RING_PERPETUAL?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c89a"></span>C89A</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL Z,<a href="CCAB.html">hostiles_pursue</a></td>
 <td class="comment-11" rowspan="1">Call (hostiles pursue prisoners) if so</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c89d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -100,41 +105,47 @@ If food was dropped then count down until it is discovered.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c89d"></span>C89D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$C891</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at food_discovered_counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8a0"></span>C8A0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch the counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8a1"></span>C8A1</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8a2"></span>C8A2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C892.html#c8b1">auto_react</a></td>
 <td class="comment-11" rowspan="1">Jump if so (it already hit zero)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8a4"></span>C8A4</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">Otherwise decrement it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8a5"></span>C8A5</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C892.html#c8b1">auto_react</a></td>
 <td class="comment-11" rowspan="1">Jump if it's not zero</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c8a7"></span>
 <div class="comments">
 <div class="paragraph">
@@ -146,29 +157,33 @@ De-poison the food.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8a7"></span>C8A7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$76F9</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at item_structs[item_FOOD].item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8aa"></span>C8AA</td>
+<td class="bytes-0"></td>
 <td class="instruction">RES 5,(HL)</td>
 <td class="comment-11" rowspan="1">Clear its itemstruct_ITEM_FLAG_POISONED flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8ac"></span>C8AC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$07</td>
 <td class="comment-11" rowspan="1">Set <span class="register">C</span> to item_FOOD</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8ae"></span>C8AE</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CD31.html">item_discovered</a></td>
 <td class="comment-11" rowspan="1">Cause item <span class="register">C</span> to be discovered</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c8b1"></span>
 <div class="comments">
 <div class="paragraph">
@@ -180,17 +195,19 @@ Make supporting characters react.
 <tr>
 <td class="asm-label-1">auto_react</td>
 <td class="address-2"><span id="c8b1"></span>C8B1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD IY,$8020</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second visible character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8b5"></span>C8B5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$07</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c8b7"></span>
 <div class="comments">
 <div class="paragraph">
@@ -202,53 +219,61 @@ Start loop
 <tr>
 <td class="asm-label-1">auto_react_loop</td>
 <td class="address-2"><span id="c8b7"></span>C8B7</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8b8"></span>C8B8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$01)</td>
 <td class="comment-11" rowspan="1">Load vischar.flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8bb"></span>C8BB</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="1">Is it an empty slot?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8bd"></span>C8BD</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="C892.html#c8f4">auto_next</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8c0"></span>C8C0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$00)</td>
 <td class="comment-11" rowspan="1">Load vischar.character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8c3"></span>C8C3</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
 <td class="comment-11" rowspan="1">Mask with vischar_CHARACTER_MASK to get character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8c5"></span>C8C5</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $14</td>
 <td class="comment-11" rowspan="1">Is it a hostile character? (character_19_GUARD_DOG_4 or below)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8c7"></span>C8C7</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="C892.html#c8f1">auto_behaviour</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c8ca"></span>
 <div class="comments">
 <div class="paragraph">
@@ -260,59 +285,68 @@ Characters 0..19.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8ca"></span>C8CA</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">Preserve the character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8cb"></span>C8CB</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CCCD.html">is_item_discoverable</a></td>
 <td class="comment-11" rowspan="1">Is the item discoverable?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8ce"></span>C8CE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A138)</td>
 <td class="comment-11" rowspan="2">Is red_flag set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8d1"></span>C8D1</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8d2"></span>C8D2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C892.html#c8d8">auto_follow</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8d4"></span>C8D4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A139)</td>
 <td class="comment-11" rowspan="2">Is automatic_player_counter non-zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8d7"></span>C8D7</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">auto_follow</td>
 <td class="address-2"><span id="c8d8"></span>C8D8</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL NZ,<a href="CC37.html">guards_follow_suspicious_character</a></td>
 <td class="comment-11" rowspan="1">Call (guards follow suspicious character) if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8db"></span>C8DB</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Restore character index</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c8dc"></span>
 <div class="comments">
 <div class="paragraph">
@@ -324,23 +358,26 @@ Guard dogs 1..4 (characters 16..19).
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8dc"></span>C8DC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $0F</td>
 <td class="comment-11" rowspan="1">Is this character a guard dog?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8de"></span>C8DE</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="C892.html#c8f1">auto_behaviour</a></td>
 <td class="comment-11" rowspan="2">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8e1"></span>C8E1</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="C892.html#c8f1">auto_behaviour</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c8e4"></span>
 <div class="comments">
 <div class="paragraph">
@@ -352,83 +389,96 @@ Dog handling: Is the food nearby?
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8e4"></span>C8E4</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH IY</td>
 <td class="comment-11" rowspan="2">Copy global vischar pointer to <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8e6"></span>C8E6</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8e7"></span>C8E7</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at vischar.flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8e8"></span>C8E8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($76FA)</td>
 <td class="comment-11" rowspan="1">Fetch item_structs[item_FOOD].room</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8eb"></span>C8EB</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
 <td class="comment-11" rowspan="1">Test for itemstruct_ROOM_FLAG_NEARBY_7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8ed"></span>C8ED</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C892.html#c8f1">auto_behaviour</a></td>
 <td class="comment-11" rowspan="1">Jump if clear</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8ef"></span>C8EF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$03</td>
-<td class="comment-11" rowspan="1">Set vischar.flags to vischar_FLAGS_DOG_FOOD</td>
+<td class="comment-11" rowspan="1">Set vischar.flags to vischar_PURSUIT_DOG_FOOD</td>
 </tr>
 <tr>
 <td class="asm-label-1">auto_behaviour</td>
 <td class="address-2"><span id="c8f1"></span>C8F1</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C918.html">character_behaviour</a></td>
 <td class="comment-11" rowspan="1">Call (character behaviour)</td>
 </tr>
 <tr>
 <td class="asm-label-1">auto_next</td>
 <td class="address-2"><span id="c8f4"></span>C8F4</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8f5"></span>C8F5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="2">Advance to the next vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8f8"></span>C8F8</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD IY,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8fa"></span>C8FA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC B</td>
 <td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8fb"></span>C8FB</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="C892.html#c8b7">auto_react_loop</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c8fe"></span>
 <div class="comments">
 <div class="paragraph">
@@ -440,17 +490,19 @@ Inhibit hero automatic behaviour when the flag is red, or otherwise inhibited.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c8fe"></span>C8FE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A138)</td>
 <td class="comment-11" rowspan="2">Is red_flag set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c901"></span>C901</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c902"></span>
 <div class="comments">
 <div class="paragraph">
@@ -462,47 +514,54 @@ Bug: Pointless JP NZ (jumps to a RET where a RET NZ would suffice).
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c902"></span>C902</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="C892.html#c917">auto_return</a></td>
 <td class="comment-11" rowspan="1">Jump (return) if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c905"></span>C905</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A13A)</td>
 <td class="comment-11" rowspan="2">Is in_solitary set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c908"></span>C908</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c909"></span>C909</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C892.html#c910">auto_run_cb</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c90b"></span>C90B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A139)</td>
 <td class="comment-11" rowspan="2">Is automatic_player_counter non-zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c90e"></span>C90E</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c90f"></span>C90F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c910"></span>
 <div class="comments">
 <div class="paragraph">
@@ -514,18 +573,21 @@ Otherwise run character behaviour
 <tr>
 <td class="asm-label-1">auto_run_cb</td>
 <td class="address-2"><span id="c910"></span>C910</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD IY,$8000</td>
 <td class="comment-11" rowspan="1">Point <span class="register">IY</span> at the hero's vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c914"></span>C914</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C918.html">character_behaviour</a></td>
 <td class="comment-11" rowspan="1">Run character behaviour</td>
 </tr>
 <tr>
 <td class="asm-label-1">auto_return</td>
 <td class="address-2"><span id="c917"></span>C917</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -538,9 +600,9 @@ Otherwise run character behaviour
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div class="description">7C33: Draw both held items.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html">drop_item</a>, <a href="B107.html">accept_bribe</a>, <a href="B387.html">action_red_cross_parcel</a>, <a href="B3C4.html">action_poison</a>, <a href="B75A.html">reset_game</a> and <a href="CB98.html">solitary</a>.
@@ -47,42 +47,49 @@ Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html
 <tr>
 <td class="asm-label-1">draw_all_items</td>
 <td class="address-2"><span id="7c33"></span>7C33</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$5087</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen address of item 1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c36"></span>7C36</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($8215)</td>
 <td class="comment-11" rowspan="1">Fetch the first held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c39"></span>7C39</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C46.html">draw_item</a></td>
 <td class="comment-11" rowspan="1">Draw the item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c3c"></span>7C3C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$508A</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen address of item 2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c3f"></span>7C3F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($8216)</td>
 <td class="comment-11" rowspan="1">Fetch the second held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c42"></span>7C42</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C46.html">draw_item</a></td>
 <td class="comment-11" rowspan="1">Draw the item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c45"></span>7C45</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -95,9 +102,9 @@ Used by the routines at <a href="7B36.html">pick_up_item</a>, <a href="7B8B.html
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

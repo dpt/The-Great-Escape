@@ -24,7 +24,7 @@
 <div class="description">6A27: Wipe the visible tiles array.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="6A35.html">setup_room</a>, <a href="A50B.html">screen_reset</a> and <a href="AB6B.html">choose_game_window_attributes</a>.
@@ -47,36 +47,42 @@ Used by the routines at <a href="6A35.html">setup_room</a>, <a href="A50B.html">
 <tr>
 <td class="asm-label-1">wipe_visible_tiles</td>
 <td class="address-2"><span id="6a27"></span>6A27</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F0F9</td>
 <td class="comment-11" rowspan="5">Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a2a"></span>6A2A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F0F8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a2d"></span>6A2D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0197</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a30"></span>6A30</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a32"></span>6A32</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a34"></span>6A34</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -89,9 +95,9 @@ Used by the routines at <a href="6A35.html">setup_room</a>, <a href="A50B.html">
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

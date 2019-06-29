@@ -24,7 +24,7 @@
 <div class="description">AA05: Shunt the map right.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="AAB2.html">move_map</a>.
@@ -47,47 +47,54 @@ Used by the routine at <a href="AAB2.html">move_map</a>.
 <tr>
 <td class="asm-label-1">shunt_map_right</td>
 <td class="address-2"><span id="aa05"></span>AA05</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BB</td>
 <td class="comment-11" rowspan="2">Move the map position to the right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa08"></span>AA08</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa09"></span>AA09</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A7C9.html">get_supertiles</a></td>
 <td class="comment-11" rowspan="1">Update the supertiles in map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa0c"></span>AA0C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F28E</td>
 <td class="comment-11" rowspan="4">Shunt the tile_buf forward by one byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa0f"></span>AA0F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F28F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa12"></span>AA12</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0197</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa15"></span>AA15</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDDR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="aa17"></span>
 <div class="comments">
 <div class="paragraph">
@@ -99,36 +106,42 @@ Bug: The length in the following is one byte too long.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa17"></span>AA17</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$FF4F</td>
 <td class="comment-11" rowspan="4">Shunt the window_buf forward by one byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa1a"></span>AA1A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$FF50</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa1d"></span>AA1D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0CC0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa20"></span>AA20</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDDR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa22"></span>AA22</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A8E7.html">plot_leftmost_tiles</a></td>
 <td class="comment-11" rowspan="1">Plot the complete leftmost column of tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa25"></span>AA25</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -141,9 +154,9 @@ Bug: The length in the following is one byte too long.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

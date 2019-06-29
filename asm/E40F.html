@@ -24,10 +24,10 @@
 <div class="description">E40F: Horizontally flips the 16 pixels in D,E and counterpart masks in D',E'.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="E2AC.html">masked_sprite_plotter_16_wide_left</a> and <a href="E34E.html">masked_sprite_plotter_16_wide_right</a>.
+Used by the routines at <a href="E2A2.html#e2ac">pms16_right</a> and <a href="E2A2.html#e34e">pms16_left</a>.
 </div>
 </div>
 <table class="input-1">
@@ -59,7 +59,7 @@ Used by the routines at <a href="E2AC.html">masked_sprite_plotter_16_wide_left</
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="e40f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -71,41 +71,47 @@ Horizontally flip the bitmap bytes by looking up each byte in the flipped / bit-
 <tr>
 <td class="asm-label-1">flip_16_masked_pixels</td>
 <td class="address-2"><span id="e40f"></span>E40F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$7F</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> into the table of 256 flipped bytes at $7Fxx</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e411"></span>E411</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the flipped byte for <span class="register">D</span> (left pixels)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e412"></span>E412</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,E</td>
 <td class="comment-11" rowspan="1">Shuffle</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e413"></span>E413</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="1">Load the flipped byte into <span class="register">E</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e414"></span>E414</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the flipped byte for <span class="register">D</span> (right pixels)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e415"></span>E415</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="1">Load the flipped byte into <span class="register">D</span></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="e416"></span>
 <div class="comments">
 <div class="paragraph">
@@ -117,54 +123,63 @@ Likewise horizontally flip the mask bytes.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e416"></span>E416</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Swap bank to mask bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e417"></span>E417</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$7F</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> into the table of 256 flipped bytes at $7Fxx</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e419"></span>E419</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the flipped byte for <span class="register">D</span> (left mask)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e41a"></span>E41A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,E</td>
 <td class="comment-11" rowspan="1">Shuffle</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e41b"></span>E41B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="1">Load the flipped byte into <span class="register">E</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e41c"></span>E41C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,D</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the flipped byte for <span class="register">D</span> (right mask)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e41d"></span>E41D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="1">Load the flipped byte into <span class="register">D</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e41e"></span>E41E</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Restore original bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e41f"></span>E41F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -177,9 +192,9 @@ Likewise horizontally flip the mask bytes.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

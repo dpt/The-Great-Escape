@@ -24,7 +24,7 @@
 <div class="description">A491: Common end of hero sits/sleeps.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="A47F.html">hero_sits</a>.
@@ -50,29 +50,33 @@ Used by the routine at <a href="A47F.html">hero_sits</a>.
 <tr>
 <td class="asm-label-1">hero_sit_sleep_common</td>
 <td class="address-2"><span id="a491"></span>A491</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$FF</td>
 <td class="comment-11" rowspan="1">Set the sit/sleep flag, whichever it was</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a493"></span>A493</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="3">Stand still - set the hero's route to route_HALT ($00)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a494"></span>A494</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8002</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a497"></span>A497</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a498"></span>
 <div class="comments">
 <div class="paragraph">
@@ -84,48 +88,56 @@ Set hero position (x,y) to zero.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a498"></span>A498</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-11" rowspan="5">Zero $800F..$8012</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a49b"></span>A49B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">hero_sit_sleep_common_0</td>
 <td class="address-2"><span id="a49d"></span>A49D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a49e"></span>A49E</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a49f"></span>A49F</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="A491.html#a49d">hero_sit_sleep_common_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a1"></span>A4A1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8000</td>
 <td class="comment-11" rowspan="2">Reset the hero's screen position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a4"></span>A4A4</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B71B.html">calc_vischar_iso_pos_from_vischar</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4a7"></span>A4A7</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A479.html">select_room_and_plot</a></td>
 <td class="comment-11" rowspan="1">Exit via select_room_and_plot</td>
 </tr>
@@ -138,9 +150,9 @@ Set hero position (x,y) to zero.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

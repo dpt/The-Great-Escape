@@ -24,7 +24,7 @@
 <div class="description">FDE1: Loaded.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 This is the very first entry point used to shunt the game image down into its proper position.
@@ -47,42 +47,49 @@ This is the very first entry point used to shunt the game image down into its pr
 <tr>
 <td class="asm-label-1">loaded</td>
 <td class="address-2"><span id="fde1"></span>FDE1</td>
+<td class="bytes-0"></td>
 <td class="instruction">DI</td>
 <td class="comment-11" rowspan="1">Disable interrupts</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fde2"></span>FDE2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD SP,$FFFF</td>
 <td class="comment-11" rowspan="1">Point <span class="register">SP</span> at the topmost byte of RAM</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fde5"></span>FDE5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$9FE0</td>
 <td class="comment-11" rowspan="4">Relocate the $9FE0 bytes at $5E00 down to $5B00</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fde8"></span>FDE8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$5E00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fdeb"></span>FDEB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$5B00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fdee"></span>FDEE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="fdf0"></span>FDF0</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="F068.html">jump_to_main</a></td>
 <td class="comment-11" rowspan="1">Exit via jump_to_main</td>
 </tr>
@@ -95,9 +102,9 @@ This is the very first entry point used to shunt the game image down into its pr
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

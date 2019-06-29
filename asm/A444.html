@@ -24,7 +24,7 @@
 <div class="description">A444: Character sleeps.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="C7C6.html">character_event</a>.
@@ -54,29 +54,33 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <tr>
 <td class="asm-label-1">character_sleeps</td>
 <td class="address-2"><span id="a444"></span>A444</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">Save the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a445"></span>A445</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $07</td>
 <td class="comment-11" rowspan="1">Route indices 7..12 map to beds array indices 0..5</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a447"></span>A447</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="1">Turn index into an offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a448"></span>A448</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">Move the route pointer into <span class="register">DE</span> for the common part later</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a449"></span>
 <div class="comments">
 <div class="paragraph">
@@ -88,95 +92,110 @@ Poke object.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a449"></span>A449</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="7">Fetch the bed object pointer from beds array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a44a"></span>A44A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a44c"></span>A44C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$6B79</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a44f"></span>A44F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a450"></span>A450</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a451"></span>A451</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a452"></span>A452</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a453"></span>A453</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$17</td>
 <td class="comment-11" rowspan="2">Write interiorobject_OCCUPIED_BED to the bed object</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a455"></span>A455</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (BC),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a456"></span>A456</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Restore the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a457"></span>A457</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $0A</td>
 <td class="comment-11" rowspan="1">Is the route index greater than or equal to routeindex_10_PRISONER_SLEEPS_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a459"></span>A459</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="A444.html#a460">character_sleeps_0</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a45c"></span>A45C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$03</td>
 <td class="comment-11" rowspan="2">Otherwise room is room_3_HUT2RIGHT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a45e"></span>A45E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A462.html">character_sit_sleep_common</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">character_sleeps_0</td>
 <td class="address-2"><span id="a460"></span>A460</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$05</td>
 <td class="comment-11" rowspan="1">Room is room_5_HUT3RIGHT</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 
 <div class="comments">
 <div class="paragraph">
@@ -194,9 +213,9 @@ FALL THROUGH into character_sit_sleep_common.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

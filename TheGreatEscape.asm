@@ -28,33 +28,6 @@
 ;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
-; STYLE
-; //////////////////////////////////////////////////////////////////////////////
-;
-; The disassembly is (presently) not written as a plain English explanation but
-; instead in a C style of pseudocode.
-;
-; Using C style braces { } conflict with SkoolKit's own use of braces, so we
-; use the C99 digraphs <% and %> instead.
-;
-; Braces, 'do' keywords and the like are syntactic sugar and have no
-; corresponding assembly instruction so must share a line with another op. For
-; this reason the C style pseudocode is formatted in an uneven way to best fit
-; the lines to which it is assigned.
-; e.g.
-;     if (condition) <%
-;         statement; %>
-;     else <% statement;
-;     %>
-;
-; I replace registers with constants when the value is used only once (e.g. for
-; strides when walking through arrays).
-;
-; June 2018: The disassembly is currently being converted into plain English.
-; Approximately 20% of the routines are now converted.
-;
-;
-; //////////////////////////////////////////////////////////////////////////////
 ; ASSEMBLY PATTERNS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
@@ -340,17 +313,6 @@
 ; interiorobjecttile_MAX                        = 194,  ; number of tiles at $9768 interior_tiles
 ; interiorobjecttile_ESCAPE                     = 255,  ; escape character
 ;
-; location_000E                                 = $000E,
-; location_0010                                 = $0010,
-; location_002A                                 = $002A,
-; location_002B                                 = $002B,
-; location_002C                                 = $002C,
-; location_002D                                 = $002D,
-; location_012C                                 = $012C,
-; location_0285                                 = $0285,
-; location_0390                                 = $0390,
-; location_048E                                 = $048E,
-;
 ; sound_CHARACTER_ENTERS_1                      = $2030,
 ; sound_CHARACTER_ENTERS_2                      = $2040,
 ; sound_BELL_RINGER                             = $2530,
@@ -359,6 +321,11 @@
 ;
 ; morale_MIN                                    = 0,
 ; morale_MAX                                    = 112,
+;
+; direction_TOP_LEFT                            = 0
+; direction_TOP_RIGHT                           = 1,
+; direction_BOTTOM_RIGHT                        = 2,
+; direction_BOTTOM_LEFT                         = 3,
 ;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
@@ -389,10 +356,10 @@
 ; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,       ; hero only
 ;
 ; Four pursuit modes:
-; vischar_FLAGS_PURSUE                          = 1 << 0,       ; non-hero only. this flag is set when a visible friendly was nearby when a bribe was used. it's also set by hostiles_pursue
-; vischar_FLAGS_HASSLE                          = 2 << 0,       ; this flag is set in guards_follow_suspicious_character when a hostile is following the hero
-; vischar_FLAGS_DOG_FOOD                        = 3 << 0,       ; set when food is in the vicinity of a dog
-; vischar_FLAGS_SAW_BRIBE                       = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
+; vischar_PURSUIT_PURSUE                        = 1 << 0,       ; non-hero only. this flag is set when a visible friendly was nearby when a bribe was used. it's also set by hostiles_pursue
+; vischar_PURSUIT_HASSLE                        = 2 << 0,       ; this flag is set in guards_follow_suspicious_character when a hostile is following the hero
+; vischar_PURSUIT_DOG_FOOD                      = 3 << 0,       ; set when food is in the vicinity of a dog
+; vischar_PURSUIT_SAW_BRIBE                     = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
 ;
 ; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,       ; affects scaling
 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
@@ -418,7 +385,7 @@
 ; itemstruct_ITEM_FLAG_POISONED                 = 1 << 5,
 ; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,       ; set when the item has been encountered
 ; itemstruct_ROOM_MASK                          = $3F,
-; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; unknown
+; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; possibly vestigal, needs more investigation
 ; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
 ;
 ; door_REVERSE                                  = 1 << 7,       ; used to reverse door transitions
@@ -554,26 +521,26 @@
 ;
 ; The structures are 32 bytes long. Each structure is laid out as follows:
 ;
-; +-----+---------+-------------------------------------------------------------------------------+
-; | off | size    | purpose                                                                       |
-; +-----+---------+-------------------------------------------------------------------------------+
-; | $00 | byte    | character index, or $FF for none                                              |
-; | $01 | byte    | flags                                                                         |
-; | $02 | byte[2] | target (where we want to be)                                                  |
-; | $04 | byte[3] | position                                                                      |
-; | $07 | byte    | top nibble = flags, bottom nibble = counter used by character_behaviour only  |
-; | $08 | pointer | pointer to animations                                                         |
-; | $0A | pointer | pointer to value in animations                                                |
-; | $0C | byte    | bit 7 is up/down flag, other bits are a counter                               |
-; | $0D | byte    | input .. previous direction?                                                  |
-; | $0E | byte    | direction and walk/crawl flag                                                 |
-; | $0F | movitem | movable item struct (pos (where we are), cur sprite, sprite index)            |
-; | $18 | word[2] | screen x, y coord                                                             |
-; | $1C | byte    | current room index                                                            |
-; | $1D | byte    | (unused)                                                                      |
-; | $1E | byte    | copy of sprite width in bytes + 1                                             |
-; | $1F | byte    | copy of sprite height in rows                                                 |
-; +-----+---------+-------------------------------------------------------------------------------+
+; +-------------+-------+-------------------+-------------------------------------------------------------------------------+
+; | Type        | Bytes | Name              | Meaning                                                                       |
+; +-------------+-------+-------------------+-------------------------------------------------------------------------------+
+; | Character   |     1 | character         | Character index, or $FF if none                                               |
+; | Byte        |     1 | flags             | Flags                                                                         |
+; | Route       |     2 | route             | Route                                                                         |
+; | TinyPos     |     3 | target            | Target position                                                               |
+; | Byte        |     1 | counter_and_flags | Top nibble = flags, bottom nibble = counter used by character_behaviour only  |
+; | Pointer     |     2 | animbase          | Pointer to animation base (never changes)                                     |
+; | Pointer     |     2 | anim              | Pointer to value in animations                                                |
+; | Byte        |     1 | animindex         | Bit 7 is up/down flag, other bits are an animation counter                    |
+; | Byte        |     1 | input             | Input .. previous direction?                                                  |
+; | Byte        |     1 | direction         | Direction and walk/crawl flag                                                 |
+; | MovableItem |     9 | mi                | Movable item structure (pos (where we are), current sprite, sprite index)     |
+; | BigXY       |     4 | iso_pos           | Screen x, y coord                                                             |
+; | Room        |     1 | room              | Current room index                                                            |
+; | Byte        |     1 | unused            | -                                                                             |
+; | Byte        |     1 | width_bytes       | Copy of sprite width in bytes + 1                                             |
+; | Byte        |     1 | height            | Copy of sprite height in rows                                                 |
+; +-------------+-------+-------------------+-------------------------------------------------------------------------------+
 ;
 ; The first entry in the array is the hero.
 ;
@@ -612,7 +579,7 @@
 ;
 ; Other things:
 ;
-; b $8100 mask buffer (0xA0 bytes - 4 * 8 * 5)
+; b $8100 mask buffer ($A0 bytes - 4 * 8 * 5)
 ; w $81A0 mask buffer pointer
 ; w $81A2 screen buffer pointer
 ;
@@ -1844,7 +1811,7 @@ transition_4:
   LD A,$0C                ; Point HL at the visible character's input field (always $800D)
   ADD A,L                 ;
   LD L,A                  ;
-  LD (HL),$80             ; !Set input to input_KICK (so the character is reset???)
+  LD (HL),$80             ; Set input to input_KICK
   INC L                   ; Point HL at the visible character's direction field (always $800E)
   LD A,(HL)               ; Fetch the direction field and clear the non-direction bits, resetting the crawl flag
   AND $03                 ;
@@ -1911,7 +1878,7 @@ set_hero_sprite_for_room_0:
 ; Used by the routines at enter_room and reset_outdoors.
 setup_movable_items:
   CALL reset_nonplayer_visible_characters ; Reset all non-player visible characters
-  LD A,(room_index)       ; Get global current room index
+  LD A,(room_index)       ; Get the global current room index
   CP $02                      ; If current room index is room_2_HUT2LEFT then jump to setup_stove1
   JP NZ,setup_movable_items_0 ;
   CALL setup_stove1           ;
@@ -2212,16 +2179,16 @@ setup_room_6:
 ;
 ; Object format:
 ;
-; +--------------------------------------------------------------------------+
-; | Each object starts with two bytes which specify its dimensions:          |
-; | <w> <h>               | Width in tiles, Height in tiles                  |
-; | Which are then followed by a repetition of the following bytes:          |
-; | <t>                   | Literal: Emit tile <t>                           |
-; | <0xFF> <0xFF>         | Escape: Emit <0xFF>                              |
-; | <0xFF> <128..254> <t> | Repetition: Emit tile <t> up to 126 times        |
-; | <0xFF> <64..79> <t>   | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> |
-; | <0xFF> <other>        | Other encodings are not used                     |
-; +-----------------------+--------------------------------------------------+
+; +-------------------------------------------------------------------------+
+; | Each object starts with two bytes which specify its dimensions:         |
+; | <w> <h>              | Width in tiles, Height in tiles                  |
+; | Which are then followed by a repetition of the following bytes:         |
+; | <t>                  | Literal: Emit tile <t>                           |
+; | <$FF> <$FF>          | Escape: Emit <$FF>                               |
+; | <$FF> <128..254> <t> | Repetition: Emit tile <t> up to 126 times        |
+; | <$FF> <64..79> <t>   | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> |
+; | <$FF> <other>        | Other encodings are not used                     |
+; +----------------------+--------------------------------------------------+
 ;
 ; Tile references of zero produce no output.
 ;
@@ -3685,7 +3652,7 @@ character_structs:
   DEFB $0E,$05,$28,$3C,$18,$00,$10 ; character_14_GUARD_14,    room_5_HUT3RIGHT, ( 40,  60, 24), (0x00, 0x10)
   DEFB $0F,$05,$24,$22,$18,$00,$10 ; character_15_GUARD_15,    room_5_HUT3RIGHT, ( 36,  34, 24), (0x00, 0x10)
   DEFB $10,$00,$44,$54,$01,$FF,$00 ; character_16_GUARD_DOG_1, room_0_OUTDOORS,  ( 68,  84,  1), (0xFF, 0x00)
-  DEFB $11,$00,$44,$68,$01,$FF,$00 ; character_16_GUARD_DOG_2, room_0_OUTDOORS,  ( 68, 104,  1), (0xFF, 0x00)
+  DEFB $11,$00,$44,$68,$01,$FF,$00 ; character_17_GUARD_DOG_2, room_0_OUTDOORS,  ( 68, 104,  1), (0xFF, 0x00)
   DEFB $12,$00,$66,$44,$01,$FF,$18 ; character_18_GUARD_DOG_3, room_0_OUTDOORS,  (102,  68,  1), (0xFF, 0x18)
   DEFB $13,$00,$58,$44,$01,$FF,$18 ; character_19_GUARD_DOG_4, room_0_OUTDOORS,  ( 88,  68,  1), (0xFF, 0x18)
   DEFB $14,$FF,$34,$3C,$18,$00,$08 ; character_20_PRISONER_1,  room_NONE,        ( 52,  60, 24), (0x00, 0x08)
@@ -3695,7 +3662,7 @@ character_structs:
   DEFB $18,$FF,$34,$2C,$18,$00,$10 ; character_24_PRISONER_5,  room_NONE,        ( 52,  44, 24), (0x00, 0x10)
   DEFB $19,$FF,$34,$1C,$18,$00,$10 ; character_25_PRISONER_6,  room_NONE,        ( 52,  28, 24), (0x00, 0x10)
 
-; Item structures.
+; Item structures (a.k.a. itemstructs).
 ;
 ; This array contains one of these 7-byte structures for each of the 16 game items:
 ;
@@ -3774,7 +3741,7 @@ routes:
   DEFW route_7833                 ;
   DEFW route_hut2_right_to_left   ;
   DEFW route_hero_roll_call       ;
-  DEFB $FF                ; could be a terminating $FF
+  DEFB $FF                ; Fake terminator used by get_target
 route_7795:
   DEFB $48,$49,$4A,$FF    ; L-shaped route in the fenced area  [ location(32), location(33), location(34), (end) ]
 route_7799:
@@ -3942,136 +3909,146 @@ locations:
 
 ; Door positions.
 ;
-; 62 pairs of four-byte structs (<- setup_doors)
+; 62 pairs of four-byte structs laid out as follows:
 ;
-; #define BYTE0(room, direction) ((room << 2) | direction)
+; +---------+-------+--------------------+------------------------------------------------------------------+
+; | Type    | Bytes | Name               | Meaning                                                          |
+; +---------+-------+--------------------+------------------------------------------------------------------+
+; | Byte    | 1     | room_and_direction | Top six bits are a room index. Bottom two bits are a direction_t |
+; | TinyPos | 3     | pos                | Map position of the door                                         |
+; +---------+-------+--------------------+------------------------------------------------------------------+
+;
+; Each door is stored as a pair of two "half doors". Each half of the pair contains (room, direction, position) where the room is the *target* room index, the direction is the direction in which the door faces and the position is the
+; coordinates of the door. Outdoor coordinates are divided by four.
 doors:
-  DEFB $01,$B2,$8A,$06    ; BYTE0(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // gates
-door_positions_1:
-  DEFB $03,$B2,$8E,$06    ; BYTE0(room_0_OUTDOORS,             3), 0xB2, 0x8E,  6 }, // gates
-  DEFB $01,$B2,$7A,$06    ; BYTE0(room_0_OUTDOORS,             1), 0xB2, 0x7A,  6 },
-  DEFB $03,$B2,$7E,$06    ; BYTE0(room_0_OUTDOORS,             3), 0xB2, 0x7E,  6 },
-  DEFB $88,$8A,$B3,$06    ; BYTE0(room_34,                     0), 0x8A, 0xB3,  6 },
-  DEFB $02,$10,$34,$0C    ; BYTE0(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
-  DEFB $C0,$CC,$79,$06    ; BYTE0(room_48,                     0), 0xCC, 0x79,  6 },
-  DEFB $02,$10,$34,$0C    ; BYTE0(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
-  DEFB $71,$D9,$A3,$06    ; BYTE0(room_28_HUT1LEFT,            1), 0xD9, 0xA3,  6 },
-  DEFB $03,$2A,$1C,$18    ; BYTE0(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $04,$D4,$BD,$06    ; BYTE0(room_1_HUT1RIGHT,            0), 0xD4, 0xBD,  6 },
-  DEFB $02,$1E,$2E,$18    ; BYTE0(room_0_OUTDOORS,             2), 0x1E, 0x2E, 24 },
-; If I set the room number to $80 in the next entry then I can't use the (left) door to exit, entering the door from the otherside puts me in a tunnel (I think).
-  DEFB $09,$C1,$A3,$06    ; BYTE0(room_2_HUT2LEFT,             1), 0xC1, 0xA3,  6 },
-  DEFB $03,$2A,$1C,$18    ; BYTE0(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $0C,$BC,$BD,$06    ; BYTE0(room_3_HUT2RIGHT,            0), 0xBC, 0xBD,  6 },
-  DEFB $02,$20,$2E,$18    ; BYTE0(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
-  DEFB $11,$A9,$A3,$06    ; BYTE0(room_4_HUT3LEFT,             1), 0xA9, 0xA3,  6 },
-  DEFB $03,$2A,$1C,$18    ; BYTE0(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $14,$A4,$BD,$06    ; BYTE0(room_5_HUT3RIGHT,            0), 0xA4, 0xBD,  6 },
-  DEFB $02,$20,$2E,$18    ; BYTE0(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
-  DEFB $54,$FC,$CA,$06    ; BYTE0(room_21_CORRIDOR,            0), 0xFC, 0xCA,  6 }, // 10
-  DEFB $02,$1C,$24,$18    ; BYTE0(room_0_OUTDOORS,             2), 0x1C, 0x24, 24 },
-  DEFB $50,$FC,$DA,$06    ; BYTE0(room_20_REDCROSS,            0), 0xFC, 0xDA,  6 },
-  DEFB $02,$1A,$22,$18    ; BYTE0(room_0_OUTDOORS,             2), 0x1A, 0x22, 24 },
-  DEFB $3D,$F7,$E3,$06    ; BYTE0(room_15_UNIFORM,             1), 0xF7, 0xE3,  6 },
-  DEFB $03,$26,$19,$18    ; BYTE0(room_0_OUTDOORS,             3), 0x26, 0x19, 24 },
-  DEFB $35,$DF,$E3,$06    ; BYTE0(room_13_CORRIDOR,            1), 0xDF, 0xE3,  6 },
-  DEFB $03,$2A,$1C,$18    ; BYTE0(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $21,$97,$D3,$06    ; BYTE0(room_8_CORRIDOR,             1), 0x97, 0xD3,  6 },
-  DEFB $03,$2A,$15,$18    ; BYTE0(room_0_OUTDOORS,             3), 0x2A, 0x15, 24 },
-  DEFB $19,$00,$00,$00    ; BYTE0(room_6,                      1), 0x00, 0x00,  0 }, // unused room
-  DEFB $03,$22,$22,$18    ; BYTE0(room_0_OUTDOORS,             3), 0x22, 0x22, 24 },
-  DEFB $05,$2C,$34,$18    ; BYTE0(room_1_HUT1RIGHT,            1), 0x2C, 0x34, 24 },
-  DEFB $73,$26,$1A,$18    ; BYTE0(room_28_HUT1LEFT,            3), 0x26, 0x1A, 24 },
-  DEFB $0D,$24,$36,$18    ; BYTE0(room_3_HUT2RIGHT,            1), 0x24, 0x36, 24 }, // 17
-  DEFB $0B,$26,$1A,$18    ; BYTE0(room_2_HUT2LEFT,             3), 0x26, 0x1A, 24 },
-  DEFB $15,$24,$36,$18    ; BYTE0(room_5_HUT3RIGHT,            1), 0x24, 0x36, 24 },
-  DEFB $13,$26,$1A,$18    ; BYTE0(room_4_HUT3LEFT,             3), 0x26, 0x1A, 24 },
-  DEFB $5D,$28,$42,$18    ; BYTE0(room_23_BREAKFAST,           1), 0x28, 0x42, 24 },
-  DEFB $67,$26,$18,$18    ; BYTE0(room_25_BREAKFAST,           3), 0x26, 0x18, 24 },
-  DEFB $5C,$3E,$24,$18    ; BYTE0(room_23_BREAKFAST,           0), 0x3E, 0x24, 24 },
-  DEFB $56,$20,$2E,$18    ; BYTE0(room_21_CORRIDOR,            2), 0x20, 0x2E, 24 },
-  DEFB $4D,$22,$42,$18    ; BYTE0(room_19_FOOD,                1), 0x22, 0x42, 24 },
-  DEFB $5F,$22,$1C,$18    ; BYTE0(room_23_BREAKFAST,           3), 0x22, 0x1C, 24 },
-  DEFB $49,$24,$36,$18    ; BYTE0(room_18_RADIO,               1), 0x24, 0x36, 24 },
-  DEFB $4F,$38,$22,$18    ; BYTE0(room_19_FOOD,                3), 0x38, 0x22, 24 },
-  DEFB $55,$2C,$36,$18    ; BYTE0(room_21_CORRIDOR,            1), 0x2C, 0x36, 24 },
-  DEFB $5B,$22,$1C,$18    ; BYTE0(room_22_REDKEY,              3), 0x22, 0x1C, 24 },
-  DEFB $59,$2C,$36,$18    ; BYTE0(room_22_REDKEY,              1), 0x2C, 0x36, 24 },
-  DEFB $63,$2A,$26,$18    ; BYTE0(room_24_SOLITARY,            3), 0x2A, 0x26, 24 },
-  DEFB $31,$42,$3A,$18    ; BYTE0(room_12_CORRIDOR,            1), 0x42, 0x3A, 24 },
-  DEFB $4B,$22,$1C,$18    ; BYTE0(room_18_RADIO,               3), 0x22, 0x1C, 24 },
-  DEFB $44,$3C,$24,$18    ; BYTE0(room_17_CORRIDOR,            0), 0x3C, 0x24, 24 },
-  DEFB $1E,$1C,$22,$18    ; BYTE0(room_7_CORRIDOR,             2), 0x1C, 0x22, 24 },
-  DEFB $3C,$40,$28,$18    ; BYTE0(room_15_UNIFORM,             0), 0x40, 0x28, 24 },
-  DEFB $3A,$1E,$28,$18    ; BYTE0(room_14_TORCH,               2), 0x1E, 0x28, 24 },
-  DEFB $41,$22,$42,$18    ; BYTE0(room_16_CORRIDOR,            1), 0x22, 0x42, 24 },
-  DEFB $3B,$22,$1C,$18    ; BYTE0(room_14_TORCH,               3), 0x22, 0x1C, 24 },
-  DEFB $40,$3E,$2E,$18    ; BYTE0(room_16_CORRIDOR,            0), 0x3E, 0x2E, 24 },
-  DEFB $36,$1A,$22,$18    ; BYTE0(room_13_CORRIDOR,            2), 0x1A, 0x22, 24 },
-  DEFB $00,$44,$30,$18    ; BYTE0(room_0_OUTDOORS,             0), 0x44, 0x30, 24 },
-  DEFB $02,$20,$30,$18    ; BYTE0(room_0_OUTDOORS,             2), 0x20, 0x30, 24 },
-  DEFB $34,$4A,$28,$18    ; BYTE0(room_13_CORRIDOR,            0), 0x4A, 0x28, 24 },
-  DEFB $2E,$1A,$22,$18    ; BYTE0(room_11_PAPERS,              2), 0x1A, 0x22, 24 },
-  DEFB $1C,$40,$24,$18    ; BYTE0(room_7_CORRIDOR,             0), 0x40, 0x24, 24 },
-  DEFB $42,$1A,$22,$18    ; BYTE0(room_16_CORRIDOR,            2), 0x1A, 0x22, 24 },
-  DEFB $28,$36,$35,$18    ; BYTE0(room_10_LOCKPICK,            0), 0x36, 0x35, 24 },
-  DEFB $22,$17,$26,$18    ; BYTE0(room_8_CORRIDOR,             2), 0x17, 0x26, 24 },
-  DEFB $24,$36,$1C,$18    ; BYTE0(room_9_CRATE,                0), 0x36, 0x1C, 24 },
-  DEFB $22,$1A,$22,$18    ; BYTE0(room_8_CORRIDOR,             2), 0x1A, 0x22, 24 },
-  DEFB $30,$3E,$24,$18    ; BYTE0(room_12_CORRIDOR,            0), 0x3E, 0x24, 24 },
-  DEFB $46,$1A,$22,$18    ; BYTE0(room_17_CORRIDOR,            2), 0x1A, 0x22, 24 },
-  DEFB $75,$36,$36,$18    ; BYTE0(room_29_SECOND_TUNNEL_START, 1), 0x36, 0x36, 24 },
-  DEFB $27,$38,$0A,$0C    ; BYTE0(room_9_CRATE,                3), 0x38, 0x0A, 12 },
-  DEFB $D1,$38,$62,$0C    ; BYTE0(room_52,                     1), 0x38, 0x62, 12 },
-  DEFB $7B,$38,$0A,$0C    ; BYTE0(room_30,                     3), 0x38, 0x0A, 12 },
-  DEFB $78,$64,$34,$0C    ; BYTE0(room_30,                     0), 0x64, 0x34, 12 },
-  DEFB $7E,$38,$26,$0C    ; BYTE0(room_31,                     2), 0x38, 0x26, 12 },
-  DEFB $79,$38,$62,$0C    ; BYTE0(room_30,                     1), 0x38, 0x62, 12 },
-  DEFB $93,$38,$0A,$0C    ; BYTE0(room_36,                     3), 0x38, 0x0A, 12 },
-  DEFB $7C,$64,$34,$0C    ; BYTE0(room_31,                     0), 0x64, 0x34, 12 },
-  DEFB $82,$0A,$34,$0C    ; BYTE0(room_32,                     2), 0x0A, 0x34, 12 },
-  DEFB $81,$38,$62,$0C    ; BYTE0(room_32,                     1), 0x38, 0x62, 12 },
-  DEFB $87,$20,$34,$0C    ; BYTE0(room_33,                     3), 0x20, 0x34, 12 },
-  DEFB $85,$40,$34,$0C    ; BYTE0(room_33,                     1), 0x40, 0x34, 12 },
-  DEFB $8F,$38,$0A,$0C    ; BYTE0(room_35,                     3), 0x38, 0x0A, 12 },
-  DEFB $8C,$64,$34,$0C    ; BYTE0(room_35,                     0), 0x64, 0x34, 12 },
-  DEFB $8A,$0A,$34,$0C    ; BYTE0(room_34,                     2), 0x0A, 0x34, 12 },
-  DEFB $90,$64,$34,$0C    ; BYTE0(room_36,                     0), 0x64, 0x34, 12 },
-  DEFB $8E,$38,$1C,$0C    ; BYTE0(room_35,                     2), 0x38, 0x1C, 12 },
-  DEFB $94,$3E,$22,$18    ; BYTE0(room_37,                     0), 0x3E, 0x22, 24 }, // tunnel entrance
-  DEFB $0A,$10,$34,$0C    ; BYTE0(room_2_HUT2LEFT,             2), 0x10, 0x34, 12 },
-  DEFB $98,$64,$34,$0C    ; BYTE0(room_38,                     0), 0x64, 0x34, 12 },
-  DEFB $96,$10,$34,$0C    ; BYTE0(room_37,                     2), 0x10, 0x34, 12 },
-  DEFB $9D,$40,$34,$0C    ; BYTE0(room_39,                     1), 0x40, 0x34, 12 },
-  DEFB $9B,$20,$34,$0C    ; BYTE0(room_38,                     3), 0x20, 0x34, 12 },
-  DEFB $A0,$64,$34,$0C    ; BYTE0(room_40,                     0), 0x64, 0x34, 12 },
-  DEFB $9A,$38,$54,$0C    ; BYTE0(room_38,                     2), 0x38, 0x54, 12 },
-  DEFB $A1,$38,$62,$0C    ; BYTE0(room_40,                     1), 0x38, 0x62, 12 },
-  DEFB $A7,$38,$0A,$0C    ; BYTE0(room_41,                     3), 0x38, 0x0A, 12 },
-  DEFB $A4,$64,$34,$0C    ; BYTE0(room_41,                     0), 0x64, 0x34, 12 },
-  DEFB $AA,$38,$26,$0C    ; BYTE0(room_42,                     2), 0x38, 0x26, 12 },
-  DEFB $A5,$38,$62,$0C    ; BYTE0(room_41,                     1), 0x38, 0x62, 12 },
-  DEFB $B7,$38,$0A,$0C    ; BYTE0(room_45,                     3), 0x38, 0x0A, 12 },
-  DEFB $B4,$64,$34,$0C    ; BYTE0(room_45,                     0), 0x64, 0x34, 12 },
-  DEFB $B2,$38,$1C,$0C    ; BYTE0(room_44,                     2), 0x38, 0x1C, 12 },
-  DEFB $AD,$20,$34,$0C    ; BYTE0(room_43,                     1), 0x20, 0x34, 12 },
-  DEFB $B3,$38,$0A,$0C    ; BYTE0(room_44,                     3), 0x38, 0x0A, 12 },
-  DEFB $A9,$38,$62,$0C    ; BYTE0(room_42,                     1), 0x38, 0x62, 12 },
-  DEFB $AF,$20,$34,$0C    ; BYTE0(room_43,                     3), 0x20, 0x34, 12 },
-  DEFB $B8,$64,$34,$0C    ; BYTE0(room_46,                     0), 0x64, 0x34, 12 },
-  DEFB $9E,$38,$1C,$0C    ; BYTE0(room_39,                     2), 0x38, 0x1C, 12 },
-  DEFB $BD,$38,$62,$0C    ; BYTE0(room_47,                     1), 0x38, 0x62, 12 },
-  DEFB $BB,$20,$34,$0C    ; BYTE0(room_46,                     3), 0x20, 0x34, 12 },
-  DEFB $C8,$64,$34,$0C    ; BYTE0(room_50_BLOCKED_TUNNEL,      0), 0x64, 0x34, 12 },
-  DEFB $BE,$38,$56,$0C    ; BYTE0(room_47,                     2), 0x38, 0x56, 12 },
-  DEFB $C9,$38,$62,$0C    ; BYTE0(room_50_BLOCKED_TUNNEL,      1), 0x38, 0x62, 12 },
-  DEFB $C7,$38,$0A,$0C    ; BYTE0(room_49,                     3), 0x38, 0x0A, 12 },
-  DEFB $C4,$64,$34,$0C    ; BYTE0(room_49,                     0), 0x64, 0x34, 12 },
-  DEFB $C2,$38,$1C,$0C    ; BYTE0(room_48,                     2), 0x38, 0x1C, 12 },
-  DEFB $CD,$38,$62,$0C    ; BYTE0(room_51,                     1), 0x38, 0x62, 12 },
-  DEFB $77,$20,$34,$0C    ; BYTE0(room_29_SECOND_TUNNEL_START, 3), 0x20, 0x34, 12 },
-  DEFB $D0,$64,$34,$0C    ; BYTE0(room_52,                     0), 0x64, 0x34, 12 },
-  DEFB $CE,$38,$54,$0C    ; BYTE0(room_51,                     2), 0x38, 0x54, 12 },
+  DEFB $01,$B2,$8A,$06    ; BYTE(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // 0
+  DEFB $03,$B2,$8E,$06    ; BYTE(room_0_OUTDOORS,             3), 0xB2, 0x8E,  6 },
+  DEFB $01,$B2,$7A,$06    ; BYTE(room_0_OUTDOORS,             1), 0xB2, 0x7A,  6 },
+  DEFB $03,$B2,$7E,$06    ; BYTE(room_0_OUTDOORS,             3), 0xB2, 0x7E,  6 },
+  DEFB $88,$8A,$B3,$06    ; BYTE(room_34,                     0), 0x8A, 0xB3,  6 },
+  DEFB $02,$10,$34,$0C    ; BYTE(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
+  DEFB $C0,$CC,$79,$06    ; BYTE(room_48,                     0), 0xCC, 0x79,  6 },
+  DEFB $02,$10,$34,$0C    ; BYTE(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
+  DEFB $71,$D9,$A3,$06    ; BYTE(room_28_HUT1LEFT,            1), 0xD9, 0xA3,  6 },
+  DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
+  DEFB $04,$D4,$BD,$06    ; BYTE(room_1_HUT1RIGHT,            0), 0xD4, 0xBD,  6 },
+  DEFB $02,$1E,$2E,$18    ; BYTE(room_0_OUTDOORS,             2), 0x1E, 0x2E, 24 },
+doors_home_to_outside:
+  DEFB $09,$C1,$A3,$06    ; BYTE(room_2_HUT2LEFT,             1), 0xC1, 0xA3,  6 },
+  DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
+  DEFB $0C,$BC,$BD,$06    ; BYTE(room_3_HUT2RIGHT,            0), 0xBC, 0xBD,  6 },
+  DEFB $02,$20,$2E,$18    ; BYTE(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
+  DEFB $11,$A9,$A3,$06    ; BYTE(room_4_HUT3LEFT,             1), 0xA9, 0xA3,  6 },
+  DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
+  DEFB $14,$A4,$BD,$06    ; BYTE(room_5_HUT3RIGHT,            0), 0xA4, 0xBD,  6 },
+  DEFB $02,$20,$2E,$18    ; BYTE(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
+  DEFB $54,$FC,$CA,$06    ; BYTE(room_21_CORRIDOR,            0), 0xFC, 0xCA,  6 }, // 10
+  DEFB $02,$1C,$24,$18    ; BYTE(room_0_OUTDOORS,             2), 0x1C, 0x24, 24 },
+  DEFB $50,$FC,$DA,$06    ; BYTE(room_20_REDCROSS,            0), 0xFC, 0xDA,  6 },
+  DEFB $02,$1A,$22,$18    ; BYTE(room_0_OUTDOORS,             2), 0x1A, 0x22, 24 },
+  DEFB $3D,$F7,$E3,$06    ; BYTE(room_15_UNIFORM,             1), 0xF7, 0xE3,  6 },
+  DEFB $03,$26,$19,$18    ; BYTE(room_0_OUTDOORS,             3), 0x26, 0x19, 24 },
+  DEFB $35,$DF,$E3,$06    ; BYTE(room_13_CORRIDOR,            1), 0xDF, 0xE3,  6 },
+  DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
+  DEFB $21,$97,$D3,$06    ; BYTE(room_8_CORRIDOR,             1), 0x97, 0xD3,  6 },
+  DEFB $03,$2A,$15,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x15, 24 },
+doors_unused:
+  DEFB $19,$00,$00,$00    ; BYTE(room_6,                      1), 0x00, 0x00,  0 },
+  DEFB $03,$22,$22,$18    ; BYTE(room_0_OUTDOORS,             3), 0x22, 0x22, 24 },
+  DEFB $05,$2C,$34,$18    ; BYTE(room_1_HUT1RIGHT,            1), 0x2C, 0x34, 24 },
+  DEFB $73,$26,$1A,$18    ; BYTE(room_28_HUT1LEFT,            3), 0x26, 0x1A, 24 },
+  DEFB $0D,$24,$36,$18    ; BYTE(room_3_HUT2RIGHT,            1), 0x24, 0x36, 24 },
+doors_home_to_inside:
+  DEFB $0B,$26,$1A,$18    ; BYTE(room_2_HUT2LEFT,             3), 0x26, 0x1A, 24 },
+  DEFB $15,$24,$36,$18    ; BYTE(room_5_HUT3RIGHT,            1), 0x24, 0x36, 24 },
+  DEFB $13,$26,$1A,$18    ; BYTE(room_4_HUT3LEFT,             3), 0x26, 0x1A, 24 },
+  DEFB $5D,$28,$42,$18    ; BYTE(room_23_BREAKFAST,           1), 0x28, 0x42, 24 },
+  DEFB $67,$26,$18,$18    ; BYTE(room_25_BREAKFAST,           3), 0x26, 0x18, 24 },
+  DEFB $5C,$3E,$24,$18    ; BYTE(room_23_BREAKFAST,           0), 0x3E, 0x24, 24 }, // 20
+  DEFB $56,$20,$2E,$18    ; BYTE(room_21_CORRIDOR,            2), 0x20, 0x2E, 24 },
+  DEFB $4D,$22,$42,$18    ; BYTE(room_19_FOOD,                1), 0x22, 0x42, 24 },
+  DEFB $5F,$22,$1C,$18    ; BYTE(room_23_BREAKFAST,           3), 0x22, 0x1C, 24 },
+  DEFB $49,$24,$36,$18    ; BYTE(room_18_RADIO,               1), 0x24, 0x36, 24 },
+  DEFB $4F,$38,$22,$18    ; BYTE(room_19_FOOD,                3), 0x38, 0x22, 24 },
+  DEFB $55,$2C,$36,$18    ; BYTE(room_21_CORRIDOR,            1), 0x2C, 0x36, 24 },
+  DEFB $5B,$22,$1C,$18    ; BYTE(room_22_REDKEY,              3), 0x22, 0x1C, 24 },
+  DEFB $59,$2C,$36,$18    ; BYTE(room_22_REDKEY,              1), 0x2C, 0x36, 24 },
+  DEFB $63,$2A,$26,$18    ; BYTE(room_24_SOLITARY,            3), 0x2A, 0x26, 24 },
+  DEFB $31,$42,$3A,$18    ; BYTE(room_12_CORRIDOR,            1), 0x42, 0x3A, 24 },
+  DEFB $4B,$22,$1C,$18    ; BYTE(room_18_RADIO,               3), 0x22, 0x1C, 24 },
+  DEFB $44,$3C,$24,$18    ; BYTE(room_17_CORRIDOR,            0), 0x3C, 0x24, 24 },
+  DEFB $1E,$1C,$22,$18    ; BYTE(room_7_CORRIDOR,             2), 0x1C, 0x22, 24 },
+  DEFB $3C,$40,$28,$18    ; BYTE(room_15_UNIFORM,             0), 0x40, 0x28, 24 },
+  DEFB $3A,$1E,$28,$18    ; BYTE(room_14_TORCH,               2), 0x1E, 0x28, 24 },
+  DEFB $41,$22,$42,$18    ; BYTE(room_16_CORRIDOR,            1), 0x22, 0x42, 24 },
+  DEFB $3B,$22,$1C,$18    ; BYTE(room_14_TORCH,               3), 0x22, 0x1C, 24 },
+  DEFB $40,$3E,$2E,$18    ; BYTE(room_16_CORRIDOR,            0), 0x3E, 0x2E, 24 },
+  DEFB $36,$1A,$22,$18    ; BYTE(room_13_CORRIDOR,            2), 0x1A, 0x22, 24 },
+  DEFB $00,$44,$30,$18    ; BYTE(room_0_OUTDOORS,             0), 0x44, 0x30, 24 }, // 30
+  DEFB $02,$20,$30,$18    ; BYTE(room_0_OUTDOORS,             2), 0x20, 0x30, 24 },
+  DEFB $34,$4A,$28,$18    ; BYTE(room_13_CORRIDOR,            0), 0x4A, 0x28, 24 },
+  DEFB $2E,$1A,$22,$18    ; BYTE(room_11_PAPERS,              2), 0x1A, 0x22, 24 },
+  DEFB $1C,$40,$24,$18    ; BYTE(room_7_CORRIDOR,             0), 0x40, 0x24, 24 },
+  DEFB $42,$1A,$22,$18    ; BYTE(room_16_CORRIDOR,            2), 0x1A, 0x22, 24 },
+  DEFB $28,$36,$35,$18    ; BYTE(room_10_LOCKPICK,            0), 0x36, 0x35, 24 },
+  DEFB $22,$17,$26,$18    ; BYTE(room_8_CORRIDOR,             2), 0x17, 0x26, 24 },
+  DEFB $24,$36,$1C,$18    ; BYTE(room_9_CRATE,                0), 0x36, 0x1C, 24 },
+  DEFB $22,$1A,$22,$18    ; BYTE(room_8_CORRIDOR,             2), 0x1A, 0x22, 24 },
+  DEFB $30,$3E,$24,$18    ; BYTE(room_12_CORRIDOR,            0), 0x3E, 0x24, 24 },
+  DEFB $46,$1A,$22,$18    ; BYTE(room_17_CORRIDOR,            2), 0x1A, 0x22, 24 },
+  DEFB $75,$36,$36,$18    ; BYTE(room_29_SECOND_TUNNEL_START, 1), 0x36, 0x36, 24 },
+  DEFB $27,$38,$0A,$0C    ; BYTE(room_9_CRATE,                3), 0x38, 0x0A, 12 },
+  DEFB $D1,$38,$62,$0C    ; BYTE(room_52,                     1), 0x38, 0x62, 12 },
+  DEFB $7B,$38,$0A,$0C    ; BYTE(room_30,                     3), 0x38, 0x0A, 12 },
+  DEFB $78,$64,$34,$0C    ; BYTE(room_30,                     0), 0x64, 0x34, 12 },
+  DEFB $7E,$38,$26,$0C    ; BYTE(room_31,                     2), 0x38, 0x26, 12 },
+  DEFB $79,$38,$62,$0C    ; BYTE(room_30,                     1), 0x38, 0x62, 12 },
+  DEFB $93,$38,$0A,$0C    ; BYTE(room_36,                     3), 0x38, 0x0A, 12 },
+  DEFB $7C,$64,$34,$0C    ; BYTE(room_31,                     0), 0x64, 0x34, 12 }, // 40
+  DEFB $82,$0A,$34,$0C    ; BYTE(room_32,                     2), 0x0A, 0x34, 12 },
+  DEFB $81,$38,$62,$0C    ; BYTE(room_32,                     1), 0x38, 0x62, 12 },
+  DEFB $87,$20,$34,$0C    ; BYTE(room_33,                     3), 0x20, 0x34, 12 },
+  DEFB $85,$40,$34,$0C    ; BYTE(room_33,                     1), 0x40, 0x34, 12 },
+  DEFB $8F,$38,$0A,$0C    ; BYTE(room_35,                     3), 0x38, 0x0A, 12 },
+  DEFB $8C,$64,$34,$0C    ; BYTE(room_35,                     0), 0x64, 0x34, 12 },
+  DEFB $8A,$0A,$34,$0C    ; BYTE(room_34,                     2), 0x0A, 0x34, 12 },
+  DEFB $90,$64,$34,$0C    ; BYTE(room_36,                     0), 0x64, 0x34, 12 },
+  DEFB $8E,$38,$1C,$0C    ; BYTE(room_35,                     2), 0x38, 0x1C, 12 },
+doors_home_to_tunnel:
+  DEFB $94,$3E,$22,$18    ; BYTE(room_37,                     0), 0x3E, 0x22, 24 },
+  DEFB $0A,$10,$34,$0C    ; BYTE(room_2_HUT2LEFT,             2), 0x10, 0x34, 12 },
+  DEFB $98,$64,$34,$0C    ; BYTE(room_38,                     0), 0x64, 0x34, 12 },
+  DEFB $96,$10,$34,$0C    ; BYTE(room_37,                     2), 0x10, 0x34, 12 },
+  DEFB $9D,$40,$34,$0C    ; BYTE(room_39,                     1), 0x40, 0x34, 12 },
+  DEFB $9B,$20,$34,$0C    ; BYTE(room_38,                     3), 0x20, 0x34, 12 },
+  DEFB $A0,$64,$34,$0C    ; BYTE(room_40,                     0), 0x64, 0x34, 12 },
+  DEFB $9A,$38,$54,$0C    ; BYTE(room_38,                     2), 0x38, 0x54, 12 },
+  DEFB $A1,$38,$62,$0C    ; BYTE(room_40,                     1), 0x38, 0x62, 12 },
+  DEFB $A7,$38,$0A,$0C    ; BYTE(room_41,                     3), 0x38, 0x0A, 12 },
+  DEFB $A4,$64,$34,$0C    ; BYTE(room_41,                     0), 0x64, 0x34, 12 }, // 50
+  DEFB $AA,$38,$26,$0C    ; BYTE(room_42,                     2), 0x38, 0x26, 12 },
+  DEFB $A5,$38,$62,$0C    ; BYTE(room_41,                     1), 0x38, 0x62, 12 },
+  DEFB $B7,$38,$0A,$0C    ; BYTE(room_45,                     3), 0x38, 0x0A, 12 },
+  DEFB $B4,$64,$34,$0C    ; BYTE(room_45,                     0), 0x64, 0x34, 12 },
+  DEFB $B2,$38,$1C,$0C    ; BYTE(room_44,                     2), 0x38, 0x1C, 12 },
+  DEFB $AD,$20,$34,$0C    ; BYTE(room_43,                     1), 0x20, 0x34, 12 },
+  DEFB $B3,$38,$0A,$0C    ; BYTE(room_44,                     3), 0x38, 0x0A, 12 },
+  DEFB $A9,$38,$62,$0C    ; BYTE(room_42,                     1), 0x38, 0x62, 12 },
+  DEFB $AF,$20,$34,$0C    ; BYTE(room_43,                     3), 0x20, 0x34, 12 },
+  DEFB $B8,$64,$34,$0C    ; BYTE(room_46,                     0), 0x64, 0x34, 12 },
+  DEFB $9E,$38,$1C,$0C    ; BYTE(room_39,                     2), 0x38, 0x1C, 12 },
+  DEFB $BD,$38,$62,$0C    ; BYTE(room_47,                     1), 0x38, 0x62, 12 },
+  DEFB $BB,$20,$34,$0C    ; BYTE(room_46,                     3), 0x20, 0x34, 12 },
+  DEFB $C8,$64,$34,$0C    ; BYTE(room_50_BLOCKED_TUNNEL,      0), 0x64, 0x34, 12 },
+  DEFB $BE,$38,$56,$0C    ; BYTE(room_47,                     2), 0x38, 0x56, 12 },
+  DEFB $C9,$38,$62,$0C    ; BYTE(room_50_BLOCKED_TUNNEL,      1), 0x38, 0x62, 12 },
+  DEFB $C7,$38,$0A,$0C    ; BYTE(room_49,                     3), 0x38, 0x0A, 12 },
+  DEFB $C4,$64,$34,$0C    ; BYTE(room_49,                     0), 0x64, 0x34, 12 },
+  DEFB $C2,$38,$1C,$0C    ; BYTE(room_48,                     2), 0x38, 0x1C, 12 },
+  DEFB $CD,$38,$62,$0C    ; BYTE(room_51,                     1), 0x38, 0x62, 12 }, // 60
+  DEFB $77,$20,$34,$0C    ; BYTE(room_29_SECOND_TUNNEL_START, 3), 0x20, 0x34, 12 },
+  DEFB $D0,$64,$34,$0C    ; BYTE(room_52,                     0), 0x64, 0x34, 12 },
+  DEFB $CE,$38,$54,$0C    ; BYTE(room_51,                     2), 0x38, 0x54, 12 },
 
 ; Solitary map position.
 ;
@@ -4202,11 +4179,11 @@ pick_up_item_2:
   XOR A                   ; Zero A
   INC HL                  ; Zero itemstruct->room_and_flags
   LD (HL),A               ;
-  INC HL                  ; Advance HL to itemstruct->screenpos
+  INC HL                  ; Advance HL to itemstruct->iso_pos
   INC HL                  ;
   INC HL                  ;
   INC HL                  ;
-  LD (HL),A               ; Zero itemstruct->screenpos.screen_x and screen_y
+  LD (HL),A               ; Zero itemstruct->iso_pos.screen_x and screen_y
   INC HL                  ;
   LD (HL),A               ;
   CALL draw_all_items     ; Draw both held items
@@ -4305,7 +4282,7 @@ calc_exterior_item_iso_pos:
 ;
 ; Used by the routine at drop_item_tail.
 ;
-; I:HL Pointer to item struct.
+; I:HL Pointer to itemstruct.room.
 drop_item_interior:
   INC HL                  ; Point to itemstruct.x
   LD DE,$800F             ; Point DE at the hero's map position.x
@@ -4362,7 +4339,7 @@ calc_interior_item_iso_pos:
   LD C,H                  ; Move result into (C,A)
   LD A,L                  ;
   CALL divide_by_8_with_rounding ; Divide by 8 with rounding. Result is in A
-; Write the result to itemstruct.screenpos
+; Write the result to itemstruct.iso_pos
   INC DE                  ; Advance DE to itemstruct.iso_pos
   INC DE                  ;
   LD (DE),A               ; Store A (y result)
@@ -4471,13 +4448,13 @@ draw_item_0:
 ; Select a pick up radius based on the room.
 find_nearby_item:
   LD C,$01                ; Set the pick up radius to one
-  LD A,(room_index)       ; Fetch global current room index
+  LD A,(room_index)       ; Fetch the global current room index
   AND A                   ; Is it room_0_OUTDOORS?
   JR Z,find_nearby_item_0 ; Jump if so
   LD C,$06                ; Otherwise set the pick up radius to six
 ; Loop for all items.
 find_nearby_item_0:
-  LD B,$10                ; Sixteen items (item__LIMIT)
+  LD B,$10                ; Set B for 16 iterations (item__LIMIT)
   LD HL,$76C9             ; Point HL at the first item_struct's room member
 find_nearby_item_loop:
   BIT 7,(HL)              ; Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_7 flag set? ($80)
@@ -5049,9 +5026,17 @@ interior_doors:
 
 ; Interior mask data.
 ;
-; Used by the routines at setup_room, render_mask_buffer.
+; Used by the routines at setup_room and render_mask_buffer.
 ;
-; FIXME: First byte is a count.
+; The first byte is a count, followed by 'count' mask_t's:
+;
+; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------+
+; | Type      | Bytes | Name   | Meaning                                                                                                                                          |
+; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------+
+; | Byte      | 1     | index  | Index into mask_pointers                                                                                                                         |
+; | bounds_t  | 4     | bounds | Isometric projected bounds of the mask. Used for culling.                                                                                        |
+; | tinypos_t | 3     | pos    | If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal). |
+; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------+
 interior_mask_data:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -6227,7 +6212,9 @@ permitted_bounds:
   DEFB $4E,$84,$47,$74    ; Hut area
   DEFB $4F,$69,$2F,$3F    ; Exercise yard area
 
-; Check the hero's map position and colour the flag accordingly.
+; Check the hero's map position, check for escape and colour the flag accordingly.
+;
+; This also sets the main (hero's) map position in hero_map_position_x to that of the hero's vischar position.
 ;
 ; Used by the routine at main_loop.
 in_permitted_area:
@@ -6235,9 +6222,10 @@ in_permitted_area:
   LD DE,hero_map_position_x ; Point DE at the hero's map position
   LD A,(room_index)       ; Get the global current room index
   AND A                   ; Is it indoors?
-  JP NZ,in_permitted_area_0 ; Jump if so
-; Outdoors.
-  CALL pos_to_tinypos     ; Scale down the vischar position and assign result to the hero's map position
+  JP NZ,ipa_indoors       ; Jump if so
+ipa_outdoors:
+  CALL pos_to_tinypos     ; Scale down the vischar position and assign the result to the hero's map position
+; Check for the hero escaping across the edge of the map (obviously this only can happen outdoors).
   LD HL,($8018)           ; If the hero's isometric x position is 217 * 8 or higher... jump to "hero has escaped"
   LD DE,$06C8             ;
   SBC HL,DE               ;
@@ -6246,116 +6234,121 @@ in_permitted_area:
   LD DE,$0448             ;
   SBC HL,DE               ;
   JP NC,escaped           ;
-  JR in_permitted_area_1  ; Otherwise jump over the indoors handling
-; Indoors.
-in_permitted_area_0:
+  JR ipa_picking_or_cutting ; Otherwise jump over the indoors handling
+ipa_indoors:
   LDI                     ; Copy position across
   INC L                   ;
   LDI                     ;
   INC L                   ;
   LDI                     ;
 ; Set the flag red if picking a lock, or cutting wire.
-in_permitted_area_1:
+ipa_picking_or_cutting:
   LD A,($8001)            ; Read hero's vischar flags
   AND $03                 ; AND the flags with (vischar_FLAGS_PICKING_LOCK OR vischar_FLAGS_CUTTING_WIRE)
-  JP NZ,set_flag_red      ; If either of those flags is set then set the morale flag red
+  JP NZ,ipa_set_flag_red  ; If either of those flags is set then set the morale flag red
 ; Is it night time?
   LD A,(clock)            ; Read the game clock
   CP $64                  ; If it's 100 or higher then it's night time
-  JR C,day_time           ; Jump if it's not night time
+  JR C,ipa_day            ; Jump if it's not night time
 ; At night, home room is the only safe place.
-night_time:
+ipa_night:
   LD A,(room_index)       ; What room are we in?
-  CP $02                  ; Is it the home room: room_2_HUT2LEFT?
-  JP Z,set_flag_green     ; Jump to set_flag_green if so
-  JP set_flag_red         ; Otherwise jump to set_flag_red
+  CP $02                  ; Is it the home room? (room_2_HUT2LEFT)
+  JP Z,ipa_set_flag_green ; Jump if so
+  JP ipa_set_flag_red     ; Otherwise set the flag red
 ; If in solitary then bypass all checks.
-day_time:
+ipa_day:
   LD A,(in_solitary)      ; Are we in solitary?
   AND A                   ;
-  JP NZ,set_flag_green    ; Jump to set_flag_green if we are
+  JP NZ,ipa_set_flag_green ; Jump if we are
+; Not in solitary: turn the route into an area number then check that area is a permitted one.
   LD HL,$8002             ; Point HL at the hero's vischar route
   LD A,(HL)               ; Load the route index
   INC L                   ; Load the route step
   LD C,(HL)               ;
   BIT 7,A                 ; Is the route index's route_REVERSED flag set? ($80)
-  JR Z,in_permitted_area_2 ; Jump if not
+  JR Z,ipa_check_wander   ; Jump if not
   INC C                   ; Otherwise increment the route step
-in_permitted_area_2:
+ipa_check_wander:
   CP $FF                  ; Is the route index routeindex_255_WANDER? ($FF)
-  JR NZ,in_permitted_area_4 ; Jump if not
+  JR NZ,ipa_en_route      ; Jump if not
+; Hero is wandering.
   LD A,(HL)               ; Load the route step again and clear its bottom three bits
   AND $F8                 ;
-  CP $08                   ; If step is 8 then set A to 1 (hut area) otherwise set A to 2 (exercise yard area)
-  LD A,$01                 ;
-  JR Z,in_permitted_area_3 ;
-  LD A,$02                 ;
-in_permitted_area_3:
+  CP $08                  ; If step is 8 then set A to 1 (hut area) otherwise set A to 2 (exercise yard area)
+  LD A,$01                ;
+  JR Z,ipa_bounds_check   ;
+  LD A,$02                ;
+ipa_bounds_check:
   CALL in_permitted_area_end_bit ; Check that the hero is in the specified room or camp bounds
-  JR Z,set_flag_green     ; If within the permitted area (Z set) goto set_flag_green
-  JR set_flag_red         ; Otherwise goto set_flag_red
+  JR Z,ipa_set_flag_green ; Jump if within the permitted area (Z set)
+  JR ipa_set_flag_red     ; Otherwise goto set_flag_red
+; Hero is en route.
+;
 ; Check regular routes against route_to_permitted.
-in_permitted_area_4:
+ipa_en_route:
   AND $7F                 ; Mask off the route_REVERSED flag
-  LD HL,route_to_permitted ; Point HL at route_to_permitted[]
+  LD HL,route_to_permitted ; Point HL at route_to_permitted table
   LD B,$07                ; Set B for seven iterations
 ; Start loop
-in_permitted_area_5:
+ipa_route_check_loop:
   CP (HL)                 ; Does the first byte of the entry match the route index?
   INC HL                  ;
-  JR Z,found              ; Jump if so
+  JR Z,ipa_route_check_found ; Jump if so
   INC HL                  ; Otherwise move to the next entry
   INC HL                  ;
-  DJNZ in_permitted_area_5 ; ...loop
-  JR set_flag_green       ; Route index wasn't found in the table - jump to set_flag_green
-found:
+  DJNZ ipa_route_check_loop ; ...loop
+; If the route is not found in route_to_permitted assume a green flag
+  JR ipa_set_flag_green   ; Jump if route index wasn't found in the table
+; Route index was found in route_to_permitted.
+ipa_route_check_found:
   LD E,(HL)               ; Load DE with the sub-table's address
   INC HL                  ;
   LD D,(HL)               ;
   PUSH DE                 ; Move it into HL
   POP HL                  ;
   LD B,$00                ; Zero B so we can use BC in the next instruction
-  ADD HL,BC               ; Fetch byte at HL[BC]
+  ADD HL,BC               ; Fetch byte at HL + BC
   LD A,(HL)               ;
   PUSH DE                 ; Save the sub-table's address
   CALL in_permitted_area_end_bit ; Check that the hero is in the specified room or camp bounds
   POP HL                  ; Restore the sub-table address
-  JR Z,set_flag_green     ; If within the permitted area (Z set) jump to set_flag_green
+  JR Z,ipa_set_flag_green ; Jump if within the permitted area (Z set)
   LD A,($8002)            ; Load the hero's vischar route index
-  BIT 7,A                  ; If the route index's route_REVERSED flag is set ($80) move the sub-table pointer forward by a byte
-  JR Z,in_permitted_area_6 ;
-  INC HL                   ;
-; Search through the list for (... CHECK)
-in_permitted_area_6:
+  BIT 7,A                     ; If the route index's route_REVERSED flag is set ($80) move the sub-table pointer forward by a byte
+  JR Z,ipa_check_route_places ;
+  INC HL                      ;
+; Search through the list testing against the places permitted for the route we're on.
+ipa_check_route_places:
   LD BC,$0000             ; Initialise index
 ; Start loop
-in_permitted_area_7:
+ipa_check_route_places_loop:
   PUSH BC                 ; Save index
   PUSH HL                 ; Save sub-table address
-  ADD HL,BC               ; Fetch byte at HL[BC]
+  ADD HL,BC               ; Fetch byte at HL + BC
   LD A,(HL)               ;
   CP $FF                  ; Did we hit the end of the list?
-  JR Z,pop_and_set_flag_red ; Jump to pop_and_set_flag_red if we did
+  JR Z,ipa_pop_and_set_flag_red ; Jump if we did
   CALL in_permitted_area_end_bit ; Check that the hero is in the specified room or camp bounds
   POP HL                  ; Restore the sub-table address
   POP BC                  ; Restore the index
-  JR Z,set_route_then_set_flag_green ; If within the area (Z set) break out of the loop
+  JR Z,ipa_set_route_then_set_flag_green ; If within the area (Z set) break out of the loop
   INC C                   ; Increment counter
-  JR in_permitted_area_7  ; ...loop
-set_route_then_set_flag_green:
+  JR ipa_check_route_places_loop ; ...loop
+ipa_set_route_then_set_flag_green:
   LD A,($8002)            ; Fetch the hero's route index
   LD B,A                  ;
   CALL set_hero_route     ; Set the hero's route (to A,C) unless in solitary
-  JR set_flag_green       ; Jump to set_flag_green
-pop_and_set_flag_red:
+  JR ipa_set_flag_green   ; Jump to "set flag green"
+ipa_pop_and_set_flag_red:
   POP BC                  ; Restore the stack pointer position - don't care about order
   POP HL                  ;
-  JR set_flag_red         ; Jump to set_flag_red
+  JR ipa_set_flag_red     ; Jump to "set flag red"
 ; Green flag code path.
-set_flag_green:
+ipa_set_flag_green:
   XOR A                   ; Clear the red flag
   LD C,$44                ; Load C with attribute_BRIGHT_GREEN_OVER_BLACK
-flag_select:
+ipa_flag_select:
   LD (red_flag),A         ; Assign red_flag
   LD A,C                  ; Shuffle wanted attribute value into A
   LD HL,$5842             ; Point HL at the first attribute byte of the morale flag
@@ -6368,7 +6361,7 @@ flag_select:
   LD A,C                  ; Shuffle wanted attribute value into A
   JP set_morale_flag_screen_attributes ; Exit via set_morale_flag_screen_attributes
 ; Red flag code path.
-set_flag_red:
+ipa_set_flag_red:
   LD C,$42                ; Load C with attribute_BRIGHT_RED_OVER_BLACK
   LD A,($5842)            ; Fetch the first attribute byte of the morale flag
   CP C                    ; Is the flag already the correct colour?
@@ -6376,7 +6369,7 @@ set_flag_red:
   XOR A                   ; Set the vischar's input to 0
   LD ($800D),A            ;
   LD A,$FF                ; Set the red flag flag
-  JR flag_select          ; Jump to flag_select
+  JR ipa_flag_select      ; Jump to flag_select
 
 ; Check that the hero is in the specified room or camp bounds.
 ;
@@ -7103,7 +7096,7 @@ event_new_red_cross_parcel_0:
 parcel_found:
   LD A,(DE)                                ; Set red_cross_parcel_current_contents to the item number
   LD (red_cross_parcel_current_contents),A ;
-  LD DE,$771D                       ; Copy the red cross parcel reset data over the red cross parcel item struct
+  LD DE,$771D                       ; Copy the red cross parcel reset data over the red cross parcel itemstruct
   LD HL,red_cross_parcel_reset_data ;
   LD BC,$0006                       ;
   LDIR                              ;
@@ -7447,7 +7440,7 @@ set_route:
   PUSH BC                 ; Preserve for callers
   PUSH HL                 ; Preserve route.step pointer
   DEC L                   ; Point HL at route.index
-  CALL get_target         ; Get our next target - a location, a door or 'route ends'. The result is returned in A, target pointer returned in HL
+  CALL get_target         ; Get our next target: a location, a door or 'route ends'. The result is returned in A, target pointer returned in HL
   POP DE                  ; Restore route.step pointer to DE
   INC E                   ; Point DE at vischar.target
   LDI                     ; Copy target across
@@ -8441,6 +8434,7 @@ plot_tile:
   EXX                     ; Unbank input registers
   EX AF,AF'               ; Bank the tile index
   LD A,(HL)               ; Fetch a supertile index from map_buf
+; Now map the tile index and supertile index into a tile pointer:
 ; +---------------------------------+------------------------------------+
 ; | Supertiles 44 and lower         | use tiles   0..249 (249 tile span) |
 ; | Supertiles 45..138 and 204..218 | use tiles 145..400 (255 tile span) |
@@ -8509,7 +8503,7 @@ shunt_map_right:
   LD HL,map_position      ; Move the map position to the right
   DEC (HL)                ;
   CALL get_supertiles     ; Update the supertiles in map_buf
-  LD HL,check_menu_keys_0 ; Shunt the tile_buf forward by one byte
+  LD HL,cmk_cpy_rout      ; Shunt the tile_buf forward by one byte
   LD DE,$F28F             ;
   LD BC,$0197             ;
   LDDR                    ;
@@ -8588,7 +8582,7 @@ shunt_map_down_left:
   LD (map_position),HL    ;
   CALL get_supertiles     ; Update the supertiles in map_buf
   LD HL,$F277             ; Shunt the tile_buf down
-  LD DE,check_menu_keys_0 ;
+  LD DE,cmk_cpy_rout      ;
   LD BC,$017F             ;
   LDDR                    ;
   LD HL,$FE8F             ; Shunt the window_buf down
@@ -9724,7 +9718,7 @@ collision_7:
   JP NC,collision_pop_next ;
   LD A,(IY+$01)           ; Read the vischar's flags
   AND $0F                 ; AND the flags with vischar_FLAGS_PURSUIT_MASK
-  CP $01                  ; Is the result vischar_FLAGS_PURSUE?
+  CP $01                  ; Is the result vischar_PURSUIT_PURSUE?
   JR NZ,collision_9       ; If not, jump forward to collision checking
   POP HL                  ; Restore vischar pointer
   PUSH HL                 ;
@@ -9796,7 +9790,7 @@ collision_12:
 collision_13:
   CP $02                  ; Test the direction: Is it bottom right? (two)
   JR NZ,collision_14      ; Jump forward to next check if not
-  LD A,C                  ; Set the position to minimum (C-B) irrespective. Note that this never seems to happen in practice in the game
+  LD A,C                  ; Set the position to minimum (C-B) irrespective Note that this never seems to happen in practice in the game
   SUB B                   ;
   LD (HL),A               ;
   JR collision_15         ; (else)
@@ -9900,7 +9894,7 @@ accept_bribe_1:
   LD A,(HL)               ; Fetch the character index
   CP $14                  ; Is it > character_20_PRISONER_1?
   JR NC,accept_bribe_2    ; Jump forward if so
-  INC L                   ; Set flags to vischar_FLAGS_SAW_BRIBE if hostile
+  INC L                   ; Set flags to vischar_PURSUIT_SAW_BRIBE if hostile
   LD (HL),$04             ;
   DEC L                   ;
 accept_bribe_2:
@@ -10069,7 +10063,7 @@ door_handling:
   LD A,E                  ; Is it direction_BOTTOM_RIGHT or direction_BOTTOM_LEFT?
   CP $02                  ;
   JR C,door_handling_0    ; Jump if not
-  LD HL,door_positions_1  ; Point HL at the second entry in doors[]
+  LD HL,$78DA             ; Point HL at the second entry in doors[]
 door_handling_0:
   LD D,$03                ; Preload door_FLAGS_MASK_DIRECTION mask ($03) into D
 ; The first 16 (pairs of) entries in doors[] are the only ones with outdoors as a destination, so only consider those.
@@ -10307,7 +10301,7 @@ reset_outdoors:
   LD A,(HL)               ; Read it into (A, C)
   INC L                   ;
   LD C,(HL)               ;
-  CALL divide_by_8        ; Divide by 8. Result is in (A, C)
+  CALL divide_by_8        ; Divide (C,A) by 8 (with no rounding). Result is in A
 ; 11 here is the width of the game screen minus half of the hero's width
   SUB $0B                 ; Subtract 11
   LD (map_position),A     ; Set map_position.x
@@ -10315,7 +10309,7 @@ reset_outdoors:
   LD A,(HL)               ; Read it into (A, C)
   INC L                   ;
   LD C,(HL)               ;
-  CALL divide_by_8        ; Divide by 8. Result is in (A, C)
+  CALL divide_by_8        ; Divide (C,A) by 8 (with no rounding). Result is in A
 ; 6 here is the height of the game screen minus half of the hero's height
   SUB $06                 ; Subtract 6
   LD ($81BC),A            ; Set map_position.y
@@ -10429,7 +10423,7 @@ action_red_cross_parcel_0:
 
 ; The hero tries to bribe a prisoner.
 ;
-; This searches visible friendly characters only and returns the first found.
+; This searches through the visible, friendly characters only and returns the first found. The selected character will then pursue the hero. Once they've touched it will accept the bribe (see tr_pursue).
 ;
 ; Iterate over non-player visible characters.
 action_bribe:
@@ -10451,7 +10445,7 @@ action_bribe_1:
 bribe_found:
   LD (bribed_character),A ; Set the global bribed character to A
   INC L                   ; Point HL at vischar flags
-  LD (HL),$01             ; Set flags to vischar_FLAGS_PURSUE
+  LD (HL),$01             ; Set flags to vischar_PURSUIT_PURSUE
   RET                     ; Return
 
 ; Use poison.
@@ -10673,7 +10667,7 @@ action_key_0:
 ; O:HL Pointer to door in locked_doors.
 ; O:F Returns Z set if a door was found, clear otherwise.
 get_nearest_door:
-  LD A,(room_index)       ; Get global current room index
+  LD A,(room_index)       ; Get the global current room index
   AND A                   ; Is it room_0_OUTDOORS?
   JR Z,gnd_outdoors       ; Jump forward to handle outdoors if so
 ; Bug: Could avoid this jump instruction by using fallthrough instead.
@@ -11304,17 +11298,17 @@ plot_vischar:
   CP $03                  ; 16 wide?
   JR Z,plot_16_wide       ; Jump if so
 plot_24_wide:
-  CALL masked_sprite_plotter_24_wide_vischar ; Call the sprite plotter for 24-pixel-wide sprites
+  CALL plot_masked_sprite_24px ; Call the sprite plotter for 24-pixel-wide sprites
   JR plot_sprites         ; ...loop
 ; It's odd to test for Z here since it's always set.
 plot_16_wide:
-  CALL Z,masked_sprite_plotter_16_wide_vischar ; Call (if Z set) the sprite plotter for 16-pixel-wide sprites
+  CALL Z,plot_masked_sprite_16px ; Call (if Z set) the sprite plotter for 16-pixel-wide sprites
   JR plot_sprites         ; ...loop
 plot_item:
   CALL setup_item_plotting ; Set up item plotting
   JR NZ,plot_sprites      ; If not visible (Z clear) ...loop
   CALL render_mask_buffer ; Render the mask buffer
-  CALL masked_sprite_plotter_16_wide_item ; Call the sprite plotter for 16-pixel-wide sprites
+  CALL plot_masked_sprite_16px_x_is_zero ; Call the sprite plotter for 16-pixel-wide sprites
   JR plot_sprites         ; ...loop
 
 ; Finds the next vischar or item to draw.
@@ -11324,6 +11318,7 @@ plot_item:
 ; O:F Z set if a valid vischar or item was returned.
 ; O:A Returns (vischars_LENGTH - iters) if vischar, or ((item__LIMIT - iters) | (1 << 6)) if itemstruct.
 ; O:IY The vischar or itemstruct to plot.
+; O:HL The vischar or itemstruct to plot.
 locate_vischar_or_itemstruct:
   LD BC,$0000             ; BC and DE are previous_x and previous_y. Zero them both
   LD D,C                  ;
@@ -11891,7 +11886,7 @@ vischar_visible:
   LD B,$00                ; No lefthand skip
   LD C,A                  ; Clipped width = available_right
   JR vv_height            ; Jump to height part
-; Calculate the right edge of the vischar
+; Calculate the right edge of the vischar.
 vv_not_clipped_on_right_edge:
   LD A,(HL)               ; Load iso_pos_x (vischar left edge)
   ADD A,(IY+$1E)          ; vischar_right_edge = iso_pos_x + (sprite width bytes + 1)
@@ -12254,6 +12249,7 @@ sts_exterior:
   LD L,A                  ;
   LD A,(HL)               ; Fetch the supertile index from map_buf
   LD BC,exterior_tiles    ; Point BC at exterior_tiles[0]
+; Choose the tile index for the current supertile:
 ; +----------------------+------------------+
 ; | For supertile        | Use tile indices |
 ; +----------------------+------------------+
@@ -12366,7 +12362,7 @@ sc_loop:
 ; Is this character in the current room?
   PUSH HL                 ; Preserve the character struct pointer
   INC HL                  ; Point HL at charstr.room
-  LD A,(room_index)       ; Get global current room index
+  LD A,(room_index)       ; Get the global current room index
   CP (HL)                 ; Same room?
   JR NZ,sc_unstash_next   ; Jump if not
   AND A                   ; Outdoors?
@@ -12465,7 +12461,7 @@ pic_loop:
   LD A,$1C                ; Point HL at vischar.room
   ADD A,L                 ;
   LD L,A                  ;
-  LD A,(room_index)       ; Get global current room index
+  LD A,(room_index)       ; Get the global current room index
   CP (HL)                 ; Is the vischar in the current room?
   JR NZ,pic_reset         ; Jump to reset if not
 ; Handle Y part
@@ -12518,279 +12514,294 @@ pic_next:
   DJNZ pic_loop           ; ...loop
   RET                     ; Return
 
-; Adds characters to the visible character list.
+; Add a character to the visible character list.
 ;
 ; Used by the routine at spawn_characters.
 ;
 ; I:HL Pointer to character to spawn.
 spawn_character:
-  BIT 6,(HL)              ; if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* character disabled */
-  RET NZ                  ;
-  PUSH HL
+  BIT 6,(HL)              ; Is the character already on-screen? (test flag characterstruct_FLAG_ON_SCREEN)
+  RET NZ                  ; Return if so
+  PUSH HL                 ; Preserve the character pointer
 ; Find an empty slot in the visible character list.
-  LD HL,$8020             ; HL = $8020; // iterate over non-player characters
-  LD DE,$0020
-  LD A,$FF
-  LD B,$07                ; B = 7; // 7 iterations
-spawn_character_0:
-  CP (HL)                 ; do <% if (*HL == vischar_CHARACTER_EMPTY_SLOT) goto found_empty_slot;
-  JR Z,spawn_character_1  ;
-  ADD HL,DE               ; HL += 32; // stride
-  DJNZ spawn_character_0  ; %> while (--B);
-  POP HL
-  RET                     ; return;
+;
+; Iterate over non-player characters.
+  LD HL,$8020             ; Point HL at the second visible character
+  LD DE,$0020             ; Prepare the vischar stride
+  LD A,$FF                ; Prepare vischar_CHARACTER_EMPTY_SLOT
+  LD B,$07                ; Set B for seven iterations (seven non-player vischars)
+; Start loop
+spawn_find_slot:
+  CP (HL)                 ; Empty slot?
+  JR Z,spawn_found_slot   ; Jump if so
+  ADD HL,DE               ; Advance to the next vischar
+  DJNZ spawn_find_slot    ; ...loop
+spawn_no_spare_slot:
+  POP HL                  ; Restore the character pointer
+  RET                     ; Return
 ; Found an empty slot.
-spawn_character_1:
-  POP DE                  ; found_empty_slot: // restore DE (-> character struct)
-  PUSH HL                 ; // save HL (-> empty vischar slot)
-  POP IY                  ; // restore IY (-> empty vischar slot)
-  PUSH HL                 ; // save HL (-> empty vischar slot)
-  PUSH DE                 ; // save DE (-> character struct)
-  INC DE                  ; DE++;
+spawn_found_slot:
+  POP DE                  ; Restore the character pointer to DE
+  PUSH HL                 ; Point IY at the empty vischar slot
+  POP IY                  ;
+  PUSH HL                 ; Preserve the empty vischar slot pointer
+  PUSH DE                 ; Preserve the character pointer
+  INC DE                  ; Advance DE to point at charstr.room
 ; Scale coords dependent on which room the character is in.
-  LD HL,saved_pos_x       ; HL = &saved_pos_x;
-  LD A,(DE)               ; A = *DE++;
+  LD HL,saved_pos_x       ; Point HL at saved_pos_x
+  LD A,(DE)               ; Fetch charstr.room
+  INC DE                  ; Advance DE to charstr.pos
+  AND A                   ; Is it outside?
+  JR NZ,spawn_indoors     ; Jump if not
+; Outdoors
+  LD A,$03                ; Set A for three iterations (x,y,height)
+; Start loop
+spawn_outdoor_pos_loop:
+  EX AF,AF'               ; Bank
+  LD A,(DE)               ; Read an (8-bit) coord
+  CALL multiply_by_8      ; Multiply it by 8 returning the result in BC
+  LD (HL),C               ; Store the result widened to 16-bit
+  INC HL                  ;
+  LD (HL),B               ;
+  INC HL                  ;
+  INC DE                  ; Advance to the next coord
+  EX AF,AF'               ; Unbank
+  DEC A                        ; ...loop
+  JP NZ,spawn_outdoor_pos_loop ;
+  JR spawn_check_collide  ; (else)
+spawn_indoors:
+  LD B,$03                ; Set B for three iterations
+; Start loop
+spawn_indoor_pos_loop:
+  LD A,(DE)               ; Read an (8-bit) coord
+  LD (HL),A               ; Store the coord widened to 16-bit
   INC DE                  ;
-  AND A                   ; A &= A;
-  JR NZ,spawn_character_3 ; if (A == 0) <%
-  LD A,$03                ; A = 3; // 3 iterations
-spawn_character_2:
-  EX AF,AF'               ; do <%
-  LD A,(DE)               ; BC = *DE * 8;
-  CALL multiply_by_8      ;
-  LD (HL),C               ; *HL++ = C;
   INC HL                  ;
-  LD (HL),B               ; *HL++ = B;
+  LD (HL),$00             ;
   INC HL                  ;
-  INC DE                  ; DE++;
-  EX AF,AF'
-  DEC A                   ; %> while (--A); %>
-  JP NZ,spawn_character_2 ;
-  JR spawn_character_5    ; else <%
-spawn_character_3:
-  LD B,$03                ; B = 3; // 3 iterations
-spawn_character_4:
-  LD A,(DE)               ; do <% *HL++ = *DE++;
-  LD (HL),A               ;
-  INC DE                  ;
-  INC HL                  ;
-  LD (HL),$00             ; *HL++ = 0;
-  INC HL                  ;
-  DJNZ spawn_character_4  ; %> while (--B); %>
-spawn_character_5:
-  CALL collision          ; collision();
-  CALL Z,bounds_check     ; if (Z) bounds_check();
-  POP DE                  ; // restore DE (-> character struct)
-  POP HL                  ; // restore HL (-> empty vischar slot)
-  RET NZ                  ; RET NZ // if collision or bounds_check is nonzero, then return
-  LD A,(DE)               ; A = *DE | characterstruct_FLAG_ON_SCREEN; /* Disable character */
+  DJNZ spawn_indoor_pos_loop ; ...loop
+spawn_check_collide:
+  CALL collision          ; Call collision
+  CALL Z,bounds_check     ; If no collision, call bounds_check
+  POP DE                  ; Restore the character pointer
+  POP HL                  ; Restore the empty vischar slot pointer
+  RET NZ                  ; Return if collision or bounds_check returned non-zero
+; Transfer character struct to vischar.
+  LD A,(DE)               ; Set characterstruct_FLAG_ON_SCREEN in charstr.character_and_flags
   OR $40                  ;
-  LD (DE),A               ; *DE = A;
-  AND $1F                 ; A &= characterstruct_CHARACTER_MASK;
-  LD (HL),A               ; *HL++ = A;
+  LD (DE),A               ;
+  AND $1F                 ; Mask A against characterstruct_CHARACTER_MASK ($1F) and store that as vischar.character
+  LD (HL),A               ;
   INC L                   ;
-  LD (HL),$00             ; *HL = 0;
-  PUSH DE                 ; // save DE (-> character struct)
-  LD DE,character_meta_data_commandant ; DE = &character_meta_data[0]; /* Commandant */
-  AND A                   ; if (A) <%
-  JR Z,spawn_character_6  ;
-  LD DE,character_meta_data_guard ; DE = &character_meta_data[1]; /* Guard */
-  CP $10                  ; if (A >= 16) <%
-  JR C,spawn_character_6  ;
-  LD DE,character_meta_data_dog ; DE = &character_meta_data[2]; /* Dog */
-  CP $14                  ; if (A >= 20) <%
-  JR C,spawn_character_6  ;
-  LD DE,character_meta_data_prisoner ; DE = &character_meta_data[3]; %> %> %> /* Prisoner */
-spawn_character_6:
-  EX DE,HL
-  LD A,$07                ; DE += 7;
+  LD (HL),$00             ; Clear the vischar.flags
+  PUSH DE                 ; Preserve the charstr.character_and_flags pointer
+  LD DE,character_meta_data_commandant ; Point DE at the character_meta_data for the commandant
+  AND A                   ; Is it character_0_COMMANDANT?
+  JR Z,spawn_metadata_set ; Jump if so
+  LD DE,character_meta_data_guard ; Point DE at the character_meta_data for a guard
+  CP $10                  ; Is it character_1_GUARD_1 to character_15_GUARD_15?
+  JR C,spawn_metadata_set ; Jump if so
+  LD DE,character_meta_data_dog ; Point DE at the character_meta_data for a dog
+  CP $14                  ; Is it character_16_GUARD_DOG_1 to character_19_GUARD_DOG_4?
+  JR C,spawn_metadata_set ; Jump if so
+  LD DE,character_meta_data_prisoner ; Point DE at the character_meta_data for a prisoner
+spawn_metadata_set:
+  EX DE,HL                ; Swap vischar into DE, metadata into HL
+  LD A,$07                ; Point DE at vischar.animbase
   ADD A,E                 ;
   LD E,A                  ;
-  LDI                     ; *DE++ = *HL++;
-  LDI                     ; *DE++ = *HL++;
-  LD A,$0B                ; DE += 11;
+  LDI                     ; Copy metadata.animbase to vischar.animbase
+  LDI                     ;
+  LD A,$0B                ; Point DE at vischar.mi.sprite
   ADD A,E                 ;
   LD E,A                  ;
-  LDI                     ; *DE++ = *HL++;
-  LDI                     ; *DE++ = *HL++;
-  LD A,E                  ; DE -= 8;
+  LDI                     ; Copy metadata.sprite to vischar.mi.sprite
+  LDI                     ;
+  LD A,E                  ; Rewind DE to vischar.mi.pos
   SUB $08                 ;
   LD E,A                  ;
-  LD HL,saved_pos_x       ; memcpy(DE, &saved_pos_x, 6);
+  LD HL,saved_pos_x       ; Copy saved_pos to vischar.mi.pos
   LD BC,$0006             ;
   LDIR                    ;
-  POP HL                  ; // restore HL (-> character struct)
-  INC HL                  ; HL += 5; // charstr->route
+  POP HL                  ; Restore the HL charstr.character_and_flags pointer
+  INC HL                  ; Advance HL to charstr.route
   INC HL                  ;
   INC HL                  ;
   INC HL                  ;
   INC HL                  ;
-  LD A,$07                ; DE += 7;
+  LD A,$07                ; Point DE at vischar.room
   ADD A,E                 ;
   LD E,A                  ;
-  LD A,(room_index)       ; A = room_index;
-  LD (DE),A               ; *DE = A; // sampled DE=$803C (vischar->room)
-  AND A                   ; if (A) <%
-  JR Z,spawn_character_7  ;
-  LD BC,$2040             ; play_speaker(sound_CHARACTER_ENTERS_2);
+  LD A,(room_index)       ; Set vischar.room to the global current room index
+  LD (DE),A               ;
+  AND A                   ; Are we outside?
+  JR Z,spawn_entered      ; Jump if so
+spawn_indoors_sound:
+  LD BC,$2040             ; Play the "character enters" sound effects
   CALL play_speaker       ;
-  LD BC,$2030             ; play_speaker(sound_CHARACTER_ENTERS_1); %>
+  LD BC,$2030             ;
   CALL play_speaker       ;
-spawn_character_7:
-  LD A,E                  ; DE -= 26; // vischar->route
+spawn_entered:
+  LD A,E                  ; Rewind DE to vischar.route
   SUB $1A                 ;
   LD E,A                  ;
-  LDI                     ; *DE++ = *HL++; // copy route from charstr
-  LDI                     ; *DE++ = *HL++;
-  DEC HL                  ; HL -= 2;
+  LDI                     ; vischar.route = charstr.route
+  LDI                     ;
+  DEC HL                  ; Rewind HL to charstr.route
   DEC HL                  ;
-; @label=again
-spawn_character_8:
-  LD A,(HL)               ; if (*HL == 0) <% // test charstr->route.index OR vischar->route.index (on 2nd pass)
-  AND A                   ;
-  JR NZ,spawn_character_9 ;
-  LD A,$03                ; DE += 3; %> // -> vischar->counter_and_flags
+; This can get entered twice via C5B4. On the first entry HL points at charstr.route.index. On the second entry HL points at vischar.route.index.
+spawn_again:
+  LD A,(HL)               ; Load route.index
+  AND A                   ; Is this character stood still? (routeindex_0_HALT)
+  JR NZ,spawn_moving      ; Jump if not
+  LD A,$03                ; Advance DE to vischar.counter_and_flags
   ADD A,E                 ;
   LD E,A                  ;
-  JR spawn_character_12   ; else <%
-spawn_character_9:
-  XOR A                          ; entered_move_characters = 0;
+  JR spawn_end            ; (else)
+spawn_moving:
+  XOR A                          ; Clear the entered_move_characters flag
   LD (entered_move_characters),A ;
-  PUSH DE                 ; // save vischar->pos
-  CALL get_target         ; get_target(HL);
-  CP $FF                   ; if (A == 255) <%
-  JR NZ,spawn_character_10 ;
-  POP HL                  ; // restore vischar->pos
-  DEC L                   ; HL -= 2; // -> vischar->route
+  PUSH DE                 ; Preserve the vischar.target pointer
+  CALL get_target         ; Get our next target: a location, a door or 'route ends'. The result is returned in A, target pointer returned in HL
+  CP $FF                  ; Did get_target return get_target_ROUTE_ENDS? ($FF)
+  JR NZ,spawn_route_door_test ; Jump if not
+spawn_route_ends:
+  POP HL                  ; Restore the vischar.target pointer
+  DEC L                   ; Rewind HL to vischar.route
   DEC L                   ;
-  PUSH HL                 ; // save vischar->route
-  CALL route_ended        ; route_ended();
-  POP HL                  ; // HL = vischar->route
-  LD D,H                  ; DE = HL + 2; // DE = vischar->pos
+  PUSH HL                 ; Preserve the vischar.route pointer
+  CALL route_ended        ; Route ended
+  POP HL                  ; Restore the vischar.route pointer
+  LD D,H                  ; Point DE at vischar.target
   LD E,L                  ;
   INC E                   ;
   INC E                   ;
-  JR spawn_character_8    ; goto $C592; %>
-spawn_character_10:
-  CP $80                   ; if (A == 128) IY[1] |= vischar_FLAGS_TARGET_IS_DOOR; // $8021
-  JR NZ,spawn_character_11 ;
-  SET 6,(IY+$01)           ;
-spawn_character_11:
-  POP DE
-  LD BC,$0003             ; memcpy(DE, HL, 3); %>
+  JR spawn_again          ; Jump back and try again...
+spawn_route_door_test:
+  CP $80                  ; Did get_target return get_target_DOOR? ($80)
+  JR NZ,spawn_got_target  ; Jump if not (it must be get_target_LOCATION)
+spawn_route_door:
+  SET 6,(IY+$01)          ; Set the vischar_FLAGS_TARGET_IS_DOOR flag
+spawn_got_target:
+  POP DE                  ; Restore the vischar.target pointer
+  LD BC,$0003             ; Copy the next target to vichar.target
   LDIR                    ;
-spawn_character_12:
-  XOR A                   ; *DE = 0; // zero vischar->counter_and_flags
+spawn_end:
+  XOR A                   ; Clear vischar.counter_and_flags
   LD (DE),A               ;
-  LD A,E                  ; DE -= 7;
+  LD A,E                  ; Rewind DE back to vischar.character (first byte)
   SUB $07                 ;
   LD E,A                  ;
-  EX DE,HL
-  PUSH HL
-  CALL calc_vischar_iso_pos_from_vischar ; calc_vischar_iso_pos_from_vischar();
-  POP HL
-  JP character_behaviour  ; character_behaviour(); return; // exit via
+  EX DE,HL                ; Swap vischar pointer into HL
+  PUSH HL                 ; Preserve vischar pointer
+  CALL calc_vischar_iso_pos_from_vischar ; Calculate screen position for the specified vischar
+  POP HL                  ; Restore vischar pointer
+  JP character_behaviour  ; Exit via character_behaviour
 
-; Reset a visible character (either a character or an object).
+; Reset a visible character (either a character or a stove/crate object).
 ;
 ; Used by the routines at transition, reset_nonplayer_visible_characters, reset_map_and_characters and purge_invisible_characters.
 ;
 ; I:HL Pointer to visible character.
 reset_visible_character:
-  LD A,(HL)               ; A = *HL;
-  CP $FF                  ; if (A == character_NONE) return;
-  RET Z                   ;
-  CP $1A                         ; if (A >= character_26_STOVE_1) <%
-  JR C,reset_visible_character_1 ;
-  EX AF,AF'                      ;
-; A stove or crate character.
-  LD (HL),$FF             ; HL[0] = character_NONE;
-  INC L                   ;
-  LD (HL),$FF             ; HL[1] = 0xFF; // flags
-  LD A,$06                ; HL[7] = 0; // more flags
+  LD A,(HL)               ; Fetch the vischar's character index
+  CP $FF                  ; Is it character_NONE? ($FF)
+  RET Z                   ; Return if so
+  CP $1A                  ; Is it a stove/crate character? (character_26_STOVE_1+)
+  JR C,rvc_humans         ; Jump if not
+  EX AF,AF'               ; Bank
+; It's a stove or crate character.
+  LD (HL),$FF             ; Set vischar.character to $FF (character_NONE)
+  INC L                   ; Advance HL to vischar.flags
+  LD (HL),$FF             ; Reset flags to $FF (vischar_FLAGS_EMPTY_SLOT)
+  LD A,$06                ; Point HL at counter_and_flags
   ADD A,L                 ;
   LD L,A                  ;
-  LD (HL),$00             ;
-  ADD A,$08               ; HL += 0x0F; // vischar + 0x0F
+  LD (HL),$00             ; Set counter_and_flags to zero
+  ADD A,$08               ; Point HL at vischar.mi.pos
   LD L,A                  ;
-  EX AF,AF'               ;
+  EX AF,AF'               ; Unbank
 ; Save the old position.
-  LD DE,movable_item_stove1 ; DE = &movable_items[0]; // stove1
-  CP $1A                         ; if (A != character_26_STOVE_1) <%
-  JR Z,reset_visible_character_0 ;
-  LD DE,movable_item_stove2 ; DE = &movable_items[2]; // stove2
-  CP $1B                         ; if (A != character_27_STOVE_2) <%
-  JR Z,reset_visible_character_0 ;
-  LD DE,movable_item_crate ; DE = &movable_items[1]; %> %> // crate
-; The DOS version of the game has a difference here. Instead of memcpy'ing the current vischar's position into the movable_items's position, it only copies the first two bytes. The code is setup for a copy of six bytes (cx is set to 3) but
-; the 'movsw' ought to be a 'rep movsw' for it to work. It fixes the bug where stoves get left in place after a restarted game, but almost looks like an accident.
-reset_visible_character_0:
-  LD BC,$0006             ; memcpy(DE, HL, 6);
+  LD DE,movable_item_stove1 ; Point DE at movable_items[0] / stove 1
+  CP $1A                  ; Is A character_26_STOVE_1?
+  JR Z,rvc_copy_mi        ; Jump if so
+  LD DE,movable_item_stove2 ; Point DE at movable_items[2] / stove 2
+  CP $1B                  ; Is A character_27_STOVE_2?
+  JR Z,rvc_copy_mi        ; Jump if so
+  LD DE,movable_item_crate ; Otherwise point DE at movable_items[1] / crate
+; Note: The DOS version of the game has a difference here. Instead of copying the current vischar's position into the movable_items's position, it only copies the first two bytes. The code is setup for a copy of six bytes (cx is set to 3)
+; but the 'movsw' ought to be a 'rep movsw' for it to work. It fixes the bug where stoves get left in place after a restarted game, but almost looks like an accident.
+rvc_copy_mi:
+  LD BC,$0006             ; Copy six bytes to the movable_items entry
   LDIR                    ;
-  RET                     ; return; %>
+  RET                     ; Return
 ; A non-object character.
-reset_visible_character_1:
-  EX DE,HL                ; else <%
-  CALL get_character_struct ; DE = get_character_struct(A);
-  RES 6,(HL)              ; *DE &= ~characterstruct_FLAG_ON_SCREEN;
-  LD A,$1C                ;
+rvc_humans:
+  EX DE,HL                ; Bank vischar pointer
+  CALL get_character_struct ; Get character struct for A, result in HL
+  RES 6,(HL)              ; Clear flag characterstruct_FLAG_ON_SCREEN
+  LD A,$1C                ; Point DE at vischar.room
   ADD A,E                 ;
   LD E,A                  ;
-  LD A,(DE)               ; A = HL[0x1C]; // room index
-  INC HL                  ; *++DE = A; // characterstruct.room = room index;
+  LD A,(DE)               ; Fetch vischar.room
+  INC HL                  ; Copy it to charstr.room
   LD (HL),A               ;
-  EX AF,AF'               ;
-  EX DE,HL
-  LD A,L                  ; HL[7] = 0; // more flags
+  EX AF,AF'               ; Bank room index
+  EX DE,HL                ; Unbank vischar pointer
+  LD A,L                  ; Point HL at vischar.counter_and_flags
   SUB $15                 ;
   LD L,A                  ;
-  LD (HL),$00             ;
-  ADD A,$08               ; HL += 0x0F; // vischar+0x0F
+  LD (HL),$00             ; Clear vischar.counter_and_flags
+  ADD A,$08               ; Point HL at vischar.mi.pos
   LD L,A                  ;
 ; Save the old position.
-  INC DE                  ; DE++; // &characterstruct.x
-  EX AF,AF'               ;
-  AND A                           ; if (A == 0) <%
-  JR NZ,reset_visible_character_2 ;
+  INC DE                  ; Point DE at charstr.pos.x
+  EX AF,AF'               ; Unbank room index
+  AND A                   ; Are we outdoors?
+  JR NZ,rvc_indoors       ; Jump if not
 ; Outdoors.
-  CALL pos_to_tinypos     ; pos_to_tinypos(HL,DE); %> // HL,DE updated
-  JR reset_visible_character_4 ; else <%
+  CALL pos_to_tinypos     ; Scale down vischar.mi.pos to charstr.pos
+  JR rvc_reset_common     ; (else)
 ; Indoors.
-reset_visible_character_2:
-  LD B,$03                ; B = 3;
-reset_visible_character_3:
-  LD A,(HL)               ; do <% *DE++ = *HL;
+rvc_indoors:
+  LD B,$03                ; Set B for three iterations
+; Start loop
+rvc_indoors_loop:
+  LD A,(HL)               ; Copy coordinate
   LD (DE),A               ;
-  INC L                   ; HL += 2;
+  INC L                   ; Advance the source pointer
   INC L                   ;
   INC DE                  ;
-  DJNZ reset_visible_character_3 ; %> while (--B); %>
-reset_visible_character_4:
-  LD A,L                  ; HL -= 21; // reset HL to point to original vischar
+  DJNZ rvc_indoors_loop   ; ...loop
+rvc_reset_common:
+  LD A,L                  ; Reset HL to point to the original vischar
   SUB $15                 ;
   LD L,A                  ;
-  LD A,(HL)               ; A = *HL; // HL points to vischar // sampled HL=$8040,$8020,$8080,$80A0
-  LD (HL),$FF             ; *HL++ = character_NONE;
-  INC L                   ;
-  LD (HL),$FF             ; *HL++ = vischar_FLAGS_EMPTY_SLOT;
-  INC L                   ;
+  LD A,(HL)               ; Fetch character index
+  LD (HL),$FF             ; Set vischar.character to $FF (character_NONE)
+  INC L                   ; Advance HL to vischar.flags
+  LD (HL),$FF             ; Reset flags to $FF (vischar_FLAGS_EMPTY_SLOT)
+  INC L                   ; Advance HL to vischar.route
 ; Guard dogs only.
-  CP $10                          ; if (A >= character_16_GUARD_DOG_1 && A <= character_19_GUARD_DOG_4) <%
-  JR C,reset_visible_character_6  ;
-  CP $14                          ;
-  JR NC,reset_visible_character_6 ;
-  LD (HL),$FF             ; *HL++ = 0xFF;
+  CP $10                  ; Is this a guard dog character? character_16_GUARD_DOG_1..character_19_GUARD_DOG_4
+  JR C,rvc_end            ;
+  CP $14                  ;
+  JR NC,rvc_end           ;
+; Choose random locations in the fenced off area (right side).
+rvc_dogs:
+  LD (HL),$FF             ; Set route to (routeindex_255_WANDER,0) ($FF,$00) -- wander from locations 0..7
   INC L                   ;
-  LD (HL),$00             ; *HL = 0;
-  CP $12                         ; if (A >= character_18_GUARD_DOG_3) *HL = 24; /* Characters 18 and 19 */
-  JR C,reset_visible_character_5 ;
-  LD (HL),$18                    ;
-reset_visible_character_5:
-  DEC L                   ; HL--; %>
-reset_visible_character_6:
-  LDI                     ; *DE++ = *HL++; // copy route into charstruct
-  LDI                     ; *DE++ = *HL++;
-  RET                     ; return; %>
+  LD (HL),$00             ;
+  CP $12                  ; Is this character_18_GUARD_DOG_3 or character_19_GUARD_DOG_4?
+  JR C,rvc_dogs_done      ; Jump if not
+; Choose random locations in the fenced off area (bottom side).
+  LD (HL),$18             ; Set route.step to $18 -- wander from locations 24..31
+rvc_dogs_done:
+  DEC L                   ; Point HL at vischar.route
+rvc_end:
+  LDI                     ; Copy route into charstr
+  LDI                     ;
+  RET                     ; Return
 
 ; Return the coordinates of the route's current target.
 ;
@@ -12802,7 +12813,7 @@ reset_visible_character_6:
 ;
 ; I:HL Pointer to route.
 ; O:A 0/128/255 => Target is a location / a door / the route ended.
-; O:HL Pointer to location or door.
+; O:HL If the target is a location a pointer into locations[]; if a door a pointer into doors[] (returned as door.pos).
 get_target:
   LD A,(HL)               ; Get the route index
   CP $FF                  ; Is it routeindex_255_WANDER? ($FF)
@@ -12873,217 +12884,226 @@ gt_route_ends:
   LD A,$FF                ; Return with A set to 255
   RET                     ;
 
-; Move characters around.
+; Move one (off-screen) character around at a time.
 ;
 ; Used by the routine at main_loop.
 move_characters:
-  LD A,$FF                       ; entered_move_characters = 0xFF;
+  LD A,$FF                       ; Set the 'character index is valid' flag
   LD (entered_move_characters),A ;
 ; Move to the next character, wrapping around after character 26.
-  LD A,(character_index)  ; character = character_index + 1;
+  LD A,(character_index)  ; Load and increment the current character index
   INC A                   ;
-  CP $1A                  ; if (character == character_26_STOVE_1) character = character_0_COMMANDANT;
-  JR NZ,move_characters_0 ;
+  CP $1A                  ; If the character index became character_26_STOVE_1 then wrap around to character_0_COMMANDANT
+  JR NZ,mc_didnt_wrap     ;
   XOR A                   ;
-move_characters_0:
-  LD (character_index),A  ; character_index = character;
-; Get its chararacter struct, exiting if it's not enabled.
-  CALL get_character_struct ; HL = get_character_struct(character); // passing character in A
-  BIT 6,(HL)              ; if (*HL & characterstruct_FLAG_ON_SCREEN) return; /* Disabled character. */
-  RET NZ                  ;
-  PUSH HL
+mc_didnt_wrap:
+  LD (character_index),A  ; Store the character index
+; Get its chararacter struct, or exit if the character isn't on-screen.
+  CALL get_character_struct ; Get a pointer to the character struct for character index A, in HL
+  BIT 6,(HL)              ; Is the character on-screen? characterstruct_FLAG_ON_SCREEN
+  RET NZ                  ; It's not - return
+  PUSH HL                 ; Preserve the character struct pointer
 ; Are any items to be found in the same room as the character?
-  INC HL                  ; room = *++HL; // characterstruct room
+  INC HL                  ; Advance HL to charstr.room and fetch it
   LD A,(HL)               ;
-  AND A                   ; if (room != room_0_OUTDOORS) <%
-  JR Z,move_characters_1  ;
-; This discovers one item at a time.
-  CALL is_item_discoverable_interior ; is_item_discoverable_interior(room); // passing room in A, returning item in ?
-  JR NZ,move_characters_1 ; if (Z) item_discovered(item); %> // passing item in C
-  CALL item_discovered    ;
-move_characters_1:
-  POP HL                  ; HL = characterstruct
-  INC HL                  ; HL += 2; // point at characterstruct pos
+  AND A                   ; Are we outdoors?
+  JR Z,mc_no_item         ; Jump if so
+; Note: This discovers just one item at a time.
+  CALL is_item_discoverable_interior ; Is the item discoverable indoors?
+  JR NZ,mc_no_item        ; Jump if not found
+  CALL item_discovered    ; Otherwise cause item C to be discovered
+mc_no_item:
+  POP HL                  ; Restore the character struct pointer
+  INC HL                  ; Advance HL to charstr.pos
   INC HL                  ;
-  PUSH HL
-  INC HL                  ; HL += 3; // point at characterstruct target
+  PUSH HL                 ; Preserve the charstr.pos pointer
+  INC HL                  ; Advance HL to charstr.route
   INC HL                  ;
   INC HL                  ;
-; If standing still, return.
-  LD A,(HL)               ; A = *HL; // charstr->route.index
-  AND A                   ; if (A == route_HALT) <%
-  JR NZ,move_characters_2 ;
-  POP HL
-  RET                     ; return; %>
-move_characters_2:
-  CALL get_target         ; get_target(); // "move towards" ? // returning ? in A, ? in HL
-  CP $FF                  ; if (A == get_target_ROUTE_ENDS) <%
-  JP NZ,move_characters_4 ;
-; When the route ends reverse the route.
-  LD A,(character_index)  ; character = character_index;
-  AND A                   ; if (character != character_0_COMMANDANT) <%
-  JR Z,commandant         ;
+; If the character is standing still, return now.
+  LD A,(HL)               ; Fetch charstr.route.index
+  AND A                   ; Is it routeindex_0_HALT?
+  JR NZ,mc_not_halted     ; Jump if not
+mc_halted:
+  POP HL                  ; Restore the charstr.pos pointer
+  RET                     ; Return
+mc_not_halted:
+  CALL get_target         ; Get our next target: a location, a door or 'route ends'. The result is returned in A, target pointer returned in HL
+  CP $FF                  ; Did get_target return get_target_ROUTE_ENDS? ($FF)
+  JP NZ,mc_door           ; Jump if not
+; When the route ends, reverse the route.
+  LD A,(character_index)  ; Fetch the current character index
+  AND A                   ; Is it the commandant? (character_0_COMMANDANT)
+  JR Z,mc_commandant      ; Jump if so
 ; Not the commandant.
-  CP $0C                       ; if (character >= character_12_GUARD_12) goto character_12_or_higher;
-  JR NC,character_12_or_higher ;
+  CP $0C                  ; Is it character_12_GUARD_12 or higher?
+  JR NC,mc_trigger_event  ; Jump if so
 ; Characters 1..11.
-character_1_to_11:
-  LD A,(HL)               ; *HL++ ^= (1 << 7); // HLlocation->x
+mc_reverse_route:
+  LD A,(HL)               ; Toggle charstr.route direction flag routeindexflag_REVERSED ($80)
   XOR $80                 ;
   LD (HL),A               ;
   INC HL                  ;
 ; Pattern: [-2]+1
-  BIT 7,A                 ; if (A & (1 << 7)) (*HL) -= 2;
-  JR Z,move_characters_3  ;
+  BIT 7,A                 ; If the route is reversed then step backwards, otherwise step forwards
+  JR Z,mc_route_fwd       ;
   DEC (HL)                ;
   DEC (HL)                ;
-move_characters_3:
-  INC (HL)                ; (*HL)++; // i.e -1 or +1 // HLlocation->y
-  POP HL
-  RET                     ; return; %>
+mc_route_fwd:
+  INC (HL)                ;
+  POP HL                  ; Restore the charstr.pos pointer
+  RET                     ; Return
 ; Commandant only.
-commandant:
-  LD A,(HL)               ; A = *HL & characterstruct_BYTE5_MASK; // sampled HL=$7617 (characterstruct + 5) // location
+mc_commandant:
+  LD A,(HL)               ; Read the charstr.route index
   AND $7F                 ;
-  CP $24                  ; if (A != 36) goto character_1_to_11;
-  JR NZ,character_1_to_11 ;
-character_12_or_higher:
-  POP DE
-  JP character_event      ; goto character_event; // exit via
+  CP $24                  ; Jump if it's not routeindex_36_GO_TO_SOLITARY
+  JR NZ,mc_reverse_route  ;
+; We arrive here if the character index is character_12_GUARD_12, or higher, or if it's the commandant on route 36 ("go to solitary").
+mc_trigger_event:
+  POP DE                  ; Restore the charstr.pos pointer
+  JP character_event      ; Exit via character_event
 ; Two unused bytes.
-  DEFB $18,$6F            ; %>
-move_characters_4:
-  CP $80                   ; if (A == 0x80) <%
-  JP NZ,move_characters_12 ;
-  POP DE                  ; // DE points at characterstruct.pos - PUSH at $C6C8
-  DEC DE                  ; room = DE[-1];
+  DEFB $18,$6F
+mc_door:
+  CP $80                  ; Did get_target return get_target_DOOR? ($80)
+  JP NZ,mc_regular_move   ; Jump if not
+; Handle the target-is-a-door case.
+  POP DE                  ; Restore the charstr.pos pointer (PUSH at C6C8)
+  DEC DE                  ; Get room index
   LD A,(DE)               ;
   INC DE                  ;
-  PUSH HL
-  AND A                   ; if (room == room_0_OUTDOORS) <%
-  JP NZ,move_characters_6 ;
-  PUSH DE
-; Divide the location at HL by 2 and store it to saved_pos.
-  LD DE,saved_pos_x       ; DE = &saved_pos_x;
-  LD B,$02                ; B = 2; // 2 iters
-move_characters_5:
-  LD A,(HL)               ; do <% *DE++ = *HL++ >> 1;
+  PUSH HL                 ; Preserve the door.pos pointer
+  AND A                   ; Are we outdoors?
+  JP NZ,mc_door_choose_maxdist ; Jump if not
+; Outdoors
+  PUSH DE                 ; Preserve the charstr.pos pointer
+; Divide the door.pos location at HL by two and store it to saved_pos.
+  LD DE,saved_pos_x       ; Point DE at saved_pos_x
+  LD B,$02                ; Set B for two iterations
+; Start loop
+mc_door_copypos_loop:
+  LD A,(HL)               ; Copy X,Y of door.pos, each axis divided by two
   AND A                   ;
   RRA                     ;
   LD (DE),A               ;
   INC HL                  ;
   INC DE                  ;
-  DJNZ move_characters_5  ; %> while (--B);
-  LD HL,saved_pos_x       ; HL = &saved_pos_x;
-  POP DE                  ; %>
-; Establish a maximum for passing into move_towards.
-move_characters_6:
-  DEC DE                  ; if (DE[-1] == room_0_OUTDOORS) A = 2; else A = 6;
-  LD A,(DE)               ;
-  INC DE                  ;
-  AND A                   ;
-  LD A,$02                ;
-  JR Z,move_characters_7  ;
-  LD A,$06                ;
-move_characters_7:
-  EX AF,AF'
-  LD B,$00                ; B = 0;
-  CALL move_towards       ; move_towards(A, B, HL, DE);
-  INC DE                  ; DE++;
-  INC HL                  ; HL++;
-  CALL move_towards       ; move_towards(A, B, HL, DE);
-  POP HL
-  LD A,B                  ; if (B != 2) return; // managed to move
+  DJNZ mc_door_copypos_loop ; ...loop
+  LD HL,saved_pos_x       ; Point HL at saved_pos_x
+  POP DE                  ; Restore the charstr.room pointer
+; Decide on a maximum movement distance for move_towards to use.
+mc_door_choose_maxdist:
+  DEC DE                  ; Rewind DE to point at charstr.room
+  LD A,(DE)               ; Fetch it
+  INC DE                  ; Advance DE back
+  AND A                   ; Was charstr.room room_0_OUTDOORS?
+  LD A,$02                ; Set the maximum distance to two irrespectively
+  JR Z,mc_door_maxdist_chosen ; Jump if it was
+  LD A,$06                ; Otherwise set the maximum distance to six
+mc_door_maxdist_chosen:
+  EX AF,AF'               ; Move maximum to A'
+  LD B,$00                ; Initialise the "arrived" counter to zero
+  CALL move_towards       ; Move charstr.pos.x (pointed to by DE) towards tinypos.x (HL), with a maximum delta of A'. B is incremented if no movement was required
+  INC DE                  ; Advance to Y axis
+  INC HL                  ;
+  CALL move_towards       ; Move again, but on Y axis
+  POP HL                  ; Restore the door.pos pointer
+  LD A,B                  ; Did we move?
   CP $02                  ;
-  RET NZ                  ;
-; So when we reach here a character is stuck.
+  RET NZ                  ; Return if so
+; If we reach here the character has arrived at their destination.
 ;
-; Are we checking to see if a door is adjacent?
-  DEC DE                  ; DE -= 2; // DE -> charstr->room
+; Our current target is a door, so change to the door's target room.
+mc_door_reached:
+  DEC DE                  ; Rewind DE to charstr.room
   DEC DE                  ;
-  DEC HL                  ; HL--; // HL -> doorpos
-  LD A,(HL)               ; *DE = (*HL & ~door_FLAGS_MASK_DIRECTION) >> 2; // extract room field
-  AND $FC                 ;
+  DEC HL                  ; Rewind HL to door.room_and_direction
+  LD A,(HL)               ; Fetch door.room_and_direction
+  AND $FC                 ; Isolate the room number
   RRA                     ;
   RRA                     ;
-  LD (DE),A               ;
-; Stuff reading from doors[].
-  LD A,(HL)               ; if ((*HL & door_FLAGS_MASK_DIRECTION) < 2) <% // sampled HL=$78FA,$794A,$78DA,$791E,$78E2,$790E,$796A,$790E,$791E,$7962,$791A
+  LD (DE),A               ; Assign to charstr.room (i.e. change room)
+; Determine the destination door.
+  LD A,(HL)               ; Isolate the direction (door_FLAGS_MASK_DIRECTION)
   AND $03                 ;
-  CP $02                  ;
-  JR NC,move_characters_8 ;
-  INC HL                  ; HL += 5; %> // next door's pos
+  CP $02                  ; Is the door facing top left or top right?
+  JR NC,mc_door_prev      ; Jump if neither
+  INC HL                  ; Otherwise calculate the address of the next door half
   INC HL                  ;
   INC HL                  ;
   INC HL                  ;
   INC HL                  ;
-  JR move_characters_9    ; else <%
-move_characters_8:
-  DEC HL                  ; HL -= 3; %> // previous door's pos
+  JR mc_door_copy_pos     ; (else)
+mc_door_prev:
+  DEC HL                  ; Calculate the address of the previous door half
   DEC HL                  ;
   DEC HL                  ;
-move_characters_9:
-  LD A,(DE)               ; room = *DE++;
-  INC DE                  ;
-  AND A                   ; if (room != room_0_OUTDOORS) <%
-  JR Z,move_characters_10 ;
+mc_door_copy_pos:
+  LD A,(DE)               ; Fetch charstr.room
+  INC DE                  ; Advance to charstr.pos
+  AND A                   ; Is it room_0_OUTDOORS?
+  JR Z,mc_door_outdoors   ; Jump if so
 ; Indoors. Copy the door's tinypos into the charstr's tinypos.
-  LDI                     ; *DE++ = *HL++; // x
-  LDI                     ; *DE++ = *HL++; // y
-  LDI                     ; *DE++ = *HL++; // height
-  DEC DE                  ; DE--; %>
-  JR move_characters_14   ; else <%
+  LDI                     ; Copy X
+  LDI                     ; Copy Y
+  LDI                     ; Copy height
+  DEC DE                  ; Rewind DE to charstr.pos.height
+  JR mc_regular_reached   ; (else)
 ; Outdoors. Copy the door's tinypos into the charstr's tinypos, dividing by two.
-move_characters_10:
-  LD B,$03                ; B = 3;
-move_characters_11:
-  LD A,(HL)               ; do <% *DE++ = *HL++ >> 1;
+mc_door_outdoors:
+  LD B,$03                ; Set B for three iterations
+; Start loop
+mc_door_outdoors_loop:
+  LD A,(HL)               ; Copy X,Y of door.pos, each axis divided by two
   AND A                   ;
   RRA                     ;
   LD (DE),A               ;
   INC HL                  ;
   INC DE                  ;
-  DJNZ move_characters_11 ; %> while (--B)
-  DEC DE                  ; DE--; %> %>
-  JR move_characters_14   ; else <%
-move_characters_12:
-  POP DE
+  DJNZ mc_door_outdoors_loop ; ...loop
+  DEC DE                  ; Rewind DE to charstr.pos.height
+  JR mc_regular_reached   ; (else)
+; Normal move case.
+mc_regular_move:
+  POP DE                  ; Restore the charstr.pos pointer
 ; Establish a maximum for passing into move_towards.
-  DEC DE                  ; room = DE[-1]; // DE -> charstr
-  LD A,(DE)               ;
+mc_regular_choose_maxdist:
+  DEC DE                  ; Rewind DE to point at charstr.room
+  LD A,(DE)               ; Fetch it
+  INC DE                  ; Advance DE back
+  AND A                   ; Are we outdoors?
+  LD A,$02                ; Set maximum to two irrespectively
+  JR Z,mc_regular_maxdist_chosen ; Jump if we are
+  LD A,$06                ; Otherwise set maximum to six
+mc_regular_maxdist_chosen:
+  EX AF,AF'               ; Move maximum to A'
+  LD B,$00                ; Initialise the "arrived" counter to zero
+  CALL move_towards       ; Move charstr.pos.x (pointed to by DE) towards tinypos.x (HL), with a maximum delta of A'. B is incremented if no movement was required
+  INC HL                  ; Advance to Y axis
   INC DE                  ;
-  AND A                   ; if (room == room_0_OUTDOORS) A = 2; else A = 6;
-  LD A,$02                ;
-  JR Z,move_characters_13 ;
-  LD A,$06                ;
-move_characters_13:
-  EX AF,AF'
-  LD B,$00                ; B = 0;
-  CALL move_towards       ; move_towards(A, B, HL, DE);
-  INC HL                  ; HL++;
-  INC DE                  ; DE++;
-  CALL move_towards       ; move_towards(A, B, HL, DE);
-  INC DE                  ; DE++;
-  LD A,B                  ; if (B != 2) return; %> // managed to move
+  CALL move_towards       ; Move again, but on Y axis
+  INC DE                  ; Advance DE to charstr.pos.height (possibly redundant)
+  LD A,B                  ; Did we move?
   CP $02                  ;
-  JR Z,move_characters_14 ;
-  RET                     ;
-; So when we reach here a character is stuck.
-move_characters_14:
-  INC DE                  ; DE++; // DE -> charstr->route
-  EX DE,HL
-  LD A,(HL)               ; A = *HL; // sampled HL=$761E $7625 $768E $7695 $7656 $7695 $7680 // => character struct entry + 5 // route index
-  CP $FF                  ; if (A == route_WANDER) return;
-  RET Z                   ;
-  BIT 7,A                 ; if ((A & route_REVERSED) != 0) ...
-  INC HL                  ; HL++;       // interleaved
-; sampled HL = $7618, $762D, $7634, $7657, $766C, $76AB, $76B2, $76B9, $76C0, $76C7 => final byte of charstruct
-  JR NZ,move_characters_15 ; ... goto exit;
-  INC (HL)                ; (*HL)++; // route.step
-  RET                     ; return;
-move_characters_15:
-  DEC (HL)                ; exit: (*HL)--; // route.step
-  RET                     ; return;
+  JR Z,mc_regular_reached ; Jump if not
+  RET                     ; Otherwise return
+; If we reach here the character has arrived at their destination.
+mc_regular_reached:
+  INC DE                  ; Advance DE to charstr.route
+  EX DE,HL                ; Swap charstr into HL
+  LD A,(HL)               ; Read charstr.route.index
+  CP $FF                  ; Is the route index routeindex_255_WANDER? ($FF)
+  RET Z                   ; Return if so
+  BIT 7,A                 ; If the route is reversed then step backwards, otherwise step forwards
+  INC HL                  ;
+  JR NZ,mc_route_down     ;
+mc_route_up:
+  INC (HL)                ; Increment route.step
+  RET                     ; Return
+mc_route_down:
+  DEC (HL)                ; Decrement route.step
+  RET                     ; Return
 
 ; Moves the first value toward the second.
 ;
@@ -13373,7 +13393,7 @@ auto_follow:
   LD A,($76FA)            ; Fetch item_structs[item_FOOD].room
   BIT 7,A                 ; Test for itemstruct_ROOM_FLAG_NEARBY_7
   JR Z,auto_behaviour     ; Jump if clear
-  LD (HL),$03             ; Set vischar.flags to vischar_FLAGS_DOG_FOOD
+  LD (HL),$03             ; Set vischar.flags to vischar_PURSUIT_DOG_FOOD
 auto_behaviour:
   CALL character_behaviour ; Call (character behaviour)
 auto_next:
@@ -13405,173 +13425,194 @@ auto_return:
 ; Used by the routines at spawn_character and automatics.
 ;
 ; I:IY Pointer to visible character.
+;
+; Proceed into the character behaviour handling only when this delay field hits zero. This stops characters navigating around obstacles too quickly.
 character_behaviour:
-  LD A,(IY+$07)           ; A = IY[7]; // $8007 etc. // more flags
-  LD B,A                  ; B = A;
-; If the bottom nibble is set then decrement it.
-  AND $0F                 ; A &= vischar_BYTE7_MASK_LO;
-  JR Z,character_behaviour_0 ; if (A) <%
-  DEC B                   ; IY[7] = --B; // decrement but don't affect flags
+  LD A,(IY+$07)           ; Fetch vischar.counter_and_flags
+  LD B,A                  ; Copy it to B
+; If the counter field is set then decrement it and return.
+  AND $0F                 ; Isolate the counter field in the bottom nibble
+  JR Z,cb_proceed         ; Decrement the counter if it's positive
+  DEC B                   ;
   LD (IY+$07),B           ;
-  RET                     ; return; %>
-character_behaviour_0:
-  PUSH IY                 ; HL = IY;
+  RET                     ; Return
+; We arrive here when the counter is zero.
+cb_proceed:
+  PUSH IY                 ; Copy the vischar pointer into HL
   POP HL                  ;
-  INC L                   ; A = *++HL; // incremented HL is $8021 $8041 $8061
-  LD A,(HL)               ;
-  AND A                       ; if (A != 0) <%
-  JP Z,character_behaviour_11 ;
-  CP $01                      ; if (A == vischar_FLAGS_PURSUE) <%
-  JR NZ,character_behaviour_2 ;
-character_behaviour_1:
-  PUSH HL
-  EXX
-  POP DE                  ; POP DEdash // ie. DEdash = HL
-  INC E                   ; DEdash += 3;
+  INC L                   ; Advance HL to vischar.flags
+  LD A,(HL)               ; Fetch the flags so we can check the mode field
+  AND A                   ; Are any flag bits set?
+  JP Z,cb_check_halt      ; Jump if not
+; Check for mode 1 ("pursue")
+  CP $01                  ; Is the mode vischar_PURSUIT_PURSUE?
+  JR NZ,cb_hassle_check   ; Jump if not
+; Mode 1: Hero is chased by hostiles and sent to solitary if caught.
+cb_pursue_hero:
+  PUSH HL                 ; Preserve vischar.flags pointer
+  EXX                     ; Bank
+  POP DE                  ; Restore vischar.flags pointer
+  INC E                   ; Advance DE to vischar.position
   INC E                   ;
   INC E                   ;
-  LD HL,hero_map_position_x ; HLdash = &hero_map_position.x;
-  LDI                     ; *DEdash++ = *HLdash++;
-  LDI                     ; *DEdash++ = *HLdash++;
-  EXX
-  JP character_behaviour_12 ; goto end_bit; %>
-character_behaviour_2:
-  CP $02                      ; else if (A == vischar_FLAGS_HASSLE) <%
-  JR NZ,character_behaviour_3 ;
-  LD A,(automatic_player_counter) ; if (automatic_player_counter) goto $C932; // jump into case 1
+  LD HL,hero_map_position_x ; Point HL at the global map position (the hero's position)
+  LDI                     ; Copy hero's (x,y) position to vischar.target
+  LDI                     ;
+  EXX                     ; Unbank
+  JP cb_move              ; Jump to 'move'
+; Check for mode 2 ("hassle")
+cb_hassle_check:
+  CP $02                  ; Is the mode vischar_PURSUIT_HASSLE?
+  JR NZ,cb_dog_food_check ; Jump if not
+; Mode 2: Hero is chased by hostiles if under player control.
+  LD A,(automatic_player_counter) ; Is the automatic_player_counter non-zero?
   AND A                           ;
-  JR NZ,character_behaviour_1     ;
-  LD (HL),$00             ; *HL++ = 0;
+; The hero is under player control: pursue.
+  JR NZ,cb_pursue_hero    ; Jump into mode 1's pursue handler
+; Otherwise the hero is under automatic control: hostiles lose interest and resume their original route.
+  LD (HL),$00             ; Clear vischar.flags
   INC L                   ;
-  JP get_target_assign_pos ; get_target_assign_pos(); return; %> // exit via
-character_behaviour_3:
-  CP $03                  ; else if (A == vischar_FLAGS_DOG_FOOD) <%
-  JR NZ,character_behaviour_5
-  PUSH HL
-  EX DE,HL
-  LD HL,$76FA                ; if (item_structs[item_FOOD].room & itemstruct_ROOM_FLAG_NEARBY_7) <%
-  BIT 7,(HL)                 ;
-  JR Z,character_behaviour_4 ;
-; Moves dog toward poisoned food?
-  INC HL                  ; HL++;
-  LD A,E                  ; DE += 3;
+  JP get_target_assign_pos ; Exit via get_target_assign_pos
+; Check for mode 3 ("dog food")
+cb_dog_food_check:
+  CP $03                  ; Is the mode vischar_PURSUIT_DOG_FOOD?
+  JR NZ,cb_saw_bribe_check ; Jump if not
+; Mode 3: The food item is near a guard dog.
+  PUSH HL                 ; Preserve vischar.flags pointer
+  EX DE,HL                ; (get it in DE)
+  LD HL,$76FA             ; Point HL at item_structs[item_FOOD].room
+  BIT 7,(HL)              ; Is itemstruct_ROOM_FLAG_NEARBY_7 set?
+  JR Z,cb_dog_food_not_nearby ; Jump if not
+; Set the dog's target to the poisoned food location.
+  INC HL                  ; Advance HL to item_structs[item_FOOD].pos.x
+  LD A,E                  ; Point DE at vischar.target.x
   ADD A,$03               ;
   LD E,A                  ;
-  LDI                     ; *DE++ = *HL++;
-  LDI                     ; *DE++ = *HL++;
-  POP HL
-  JR character_behaviour_12 ; goto end_bit; %>
-character_behaviour_4:
-  XOR A                   ; else <% A = 0;
-  LD (DE),A               ; *DE = A;
-  EX DE,HL
-  INC L                   ; *++HL = 0xFF;
+  LDI                     ; Copy (x,y)
+  LDI                     ;
+  POP HL                  ; Restore vischar.flags pointer
+  JR cb_move              ; Jump to 'move'
+; Nearby flag wasn't set.
+cb_dog_food_not_nearby:
+  XOR A                   ; Clear vischar.flags
+  LD (DE),A               ;
+  EX DE,HL                ; (get vischar.flags pointer in HL)
+  INC L                   ; Set vischar.route.index to routeindex_255_WANDER ($FF)
   LD (HL),$FF             ;
-  INC L                   ; *++HL = 0;
+  INC L                   ; Set vischar.route.step to zero -- wander from 0..7
   LD (HL),$00             ;
-  POP HL
-  JP get_target_assign_pos ; get_target_assign_pos(); return; %> %> // exit via
-character_behaviour_5:
-  CP $04                       ; else if (A == vischar_FLAGS_SAW_BRIBE) <%
-  JR NZ,character_behaviour_11 ;
-  PUSH HL
-  LD A,(bribed_character) ; A = bribed_character;
-  CP $FF                     ; if (A != character_NONE) <%
-  JR Z,character_behaviour_7 ;
-  LD C,A
-  LD B,$07                ; B = 7; // 7 iterations
-  LD HL,$8020             ; HL = $8020; // iterate over non-player characters
-character_behaviour_6:
-  LD A,C                  ; do <%
-  CP (HL)                    ; if (*HL == A) goto found_bribed;
-  JR Z,character_behaviour_8 ;
-  LD A,$20                ; HL += 32;
+  POP HL                  ; Restore vischar.flags pointer
+  JP get_target_assign_pos ; Exit via get_target_assign_pos
+; Check for mode 4 ("saw bribe")
+cb_saw_bribe_check:
+  CP $04                  ; Is the mode vischar_PURSUIT_SAW_BRIBE?
+  JR NZ,cb_check_halt     ; Jump if not
+; Mode 4: Hostile character witnessed a bribe being given (in accept_bribe).
+  PUSH HL                 ; Preserve vischar.flags pointer
+  LD A,(bribed_character) ; Get the global bribed character
+  CP $FF                  ; Is it character_NONE? ($FF)
+  JR Z,cb_bribe_not_found ; Jump if so
+  LD C,A                  ; Copy the bribed character to C
+; Iterate over non-player characters.
+  LD B,$07                ; Set B for seven iterations
+  LD HL,$8020             ; Point HL at the second visible character
+; Start loop
+cb_bribe_loop:
+  LD A,C                  ; Copy bribed character to A
+  CP (HL)                 ; Is this vischar the bribed character?
+  JR Z,cb_bribed_visible  ; Jump if so
+  LD A,$20                ; Step HL to the next vischar
   ADD A,L                 ;
   LD L,A                  ;
-  DJNZ character_behaviour_6 ; %> while (--B); %>
-character_behaviour_7:
-  POP HL
-; Bribed character was not visible.
-  LD (HL),$00             ; *HL++ = 0;
+  DJNZ cb_bribe_loop      ; ...loop
+cb_bribe_not_found:
+  POP HL                  ; Restore vischar.flags pointer
+; Bribed character was not visible: hostiles lose interest and resume following their original route.
+  LD (HL),$00             ; Clear vischar.flags
   INC L                   ;
-  JP get_target_assign_pos ; get_target_assign_pos(); return; // exit via
-; Found bribed character.
-character_behaviour_8:
-  LD A,$0F                ; found_bribed: HL += 15;
+  JP get_target_assign_pos ; Exit via get_target_assign_pos
+; Found the bribed character in vischars: hostiles target him.
+cb_bribed_visible:
+  LD A,$0F                ; Advance HL to vischar.mi.pos
   ADD A,L                 ;
   LD L,A                  ;
-  POP DE
-  PUSH DE
-  LD A,E                  ; DE += 3;
+  POP DE                  ; Get the vischar pointer
+  PUSH DE                 ;
+  LD A,E                  ; Point DE at vischar.target
   ADD A,$03               ;
   LD E,A                  ;
-  LD A,(room_index)           ; if (room_index) <%
-  AND A                       ;
-  JP NZ,character_behaviour_9 ;
-; Outdoors.
-  CALL pos_to_tinypos     ; pos_to_tinypos(HL,DE); %>
-  JR character_behaviour_10 ; else <%
-; Indoors.
-character_behaviour_9:
-  LDI                     ; *DE++ = *HL++;
-  INC L                   ; HL++;
-  LDI                     ; *DE++ = *HL++; %>
-character_behaviour_10:
-  POP HL
-  JR character_behaviour_12 ; goto end_bit; %> %>
-character_behaviour_11:
-  INC L                   ; A = HL[1]; // route index
-  LD A,(HL)               ;
-  DEC L                   ;
-  AND A                       ; if (A == 0) goto character_behaviour_set_input;
-  JR Z,character_behaviour_16 ;
-character_behaviour_12:
-  LD A,(HL)               ; end_bit: A = *HL; // HL is $8001
-  EXX
-  LD C,A                  ; Cdash = A;
+  LD A,(room_index)       ; Get the global current room index
+  AND A                   ; Is it zero?
+  JP NZ,cb_bribed_indoors ; Jump if not
+; Outdoors
+  CALL pos_to_tinypos     ; Scale down the bribed character's position to this vischar's target field
+  JR cb_bribed_done       ; (else)
+; Indoors
+cb_bribed_indoors:
+  LDI                     ; Scale down the bribed character's position to this vischar's target field
+  INC L                   ;
+  LDI                     ;
+cb_bribed_done:
+  POP HL                  ; Restore the vischar pointer
+  JR cb_move              ; Jump to 'move'
+cb_check_halt:
+  INC L                   ; Advance HL to vischar.route.index
+  LD A,(HL)               ; Fetch it
+  DEC L                   ; Step back
+  AND A                   ; Is it routeindex_0_HALT? ($00)
+  JR Z,cb_set_input       ; Jump if so (set input)
+cb_move:
+  LD A,(HL)               ; Get vischar.flags
+  EXX                     ; Bank
+  LD C,A                  ; C = flags
+; Select a scaling routine.
+  LD A,(room_index)       ; Get the global current room index
+  AND A                   ; Is it outdoors? (zero)
+  JR Z,cb_scaling_door    ; Jump if so
+cb_scaling_indoors:
+  LD HL,multiply_by_1     ; Point HL at multiply_by_1
+  JR cb_self_modify       ; (else)
+cb_scaling_door:
+  BIT 6,C                 ; Is vischar.flags vischar_FLAGS_TARGET_IS_DOOR set?
+  JR Z,cb_scaling_outdoors ; Jump if not
+  LD HL,multiply_by_4     ; Point HL at multiply_by_4
+  JR cb_self_modify       ; (else)
+cb_scaling_outdoors:
+  LD HL,multiply_by_8     ; Point HL at multiply_by_8
 ; Self modify vischar_move_x/y routines.
-  LD A,(room_index)           ; if (room_index > room_0_OUTDOORS) <%
-  AND A                       ;
-  JR Z,character_behaviour_13 ;
-  LD HL,multiply_by_1     ; HLdash = &multiply_by_1; %>
-  JR character_behaviour_15 ; else <%
-character_behaviour_13:
-  BIT 6,C                     ; if (Cdash & vischar_FLAGS_TARGET_IS_DOOR) <%
-  JR Z,character_behaviour_14 ;
-  LD HL,multiply_by_4     ; HLdash = &multiply_by_4; %>
-  JR character_behaviour_15 ; else <%
-character_behaviour_14:
-  LD HL,multiply_by_8     ; HLdash = &multiply_by_8; %> %>
-character_behaviour_15:
-  LD ($CA13),HL           ; ($CA13) = HLdash; // self-modify vischar_move_x:$CA13
-  LD ($CA4B),HL           ; ($CA4B) = HLdash; // self-modify vischar_move_y:$CA4B
-  EXX
-  BIT 5,(IY+$07)               ; if (IY[7] & vischar_BYTE7_Y_DOMINANT) goto character_behaviour_impeded; // hit a wall etc.
-  JR NZ,character_behaviour_17 ;
-  INC L                   ; HL += 3;
+cb_self_modify:
+  LD ($CA13),HL           ; Self-modify vischar_move_x
+  LD ($CA4B),HL           ; Self-modify vischar_move_y
+  EXX                     ; Unbank
+; If the vischar_BYTE7_Y_DOMINANT flag is set then cb_move_y_dominant is used instead of the code below, which is x dominant. i.e. It means "try moving y then x, rather than x then y". This is the code which makes characters alternate
+; left/right when navigating.
+  BIT 5,(IY+$07)          ; Does the vischar's counter_and_flags field have flag vischar_BYTE7_Y_DOMINANT set? ($20)
+  JR NZ,cb_move_y_dominant ; Jump if so
+cb_move_x_dominant:
+  INC L                   ; Advance HL to vischar.position.x
   INC L                   ;
   INC L                   ;
-  CALL vischar_move_x     ; vischar_move_x();
-  JR NZ,character_behaviour_16 ; if (Z) <%
-  CALL vischar_move_y     ; vischar_move_y();
-  JP Z,target_reached     ; if (Z) goto target_reached; %> // exit via // character couldn't move?
+  CALL vischar_move_x     ; Call vischar_move_x
+  JR NZ,cb_set_input      ; If it couldn't move call vischar_move_y
+  CALL vischar_move_y     ;
+  JP Z,target_reached     ; If it still couldn't move exit via target_reached
 ; This entry point is used by the routine at target_reached.
-character_behaviour_16:
-  CP (IY+$0D)             ; character_behaviour_set_input: if (A != IY[13]) IY[13] = A | input_KICK; // sampled IY=$8040,$8020,$8000
-  RET Z                   ;
-  OR $80                  ;
+cb_set_input:
+  CP (IY+$0D)             ; Is our new input different from the vischar's existing input?
+  RET Z                   ; Return if not
+  OR $80                  ; Otherwise set the input_KICK flag
   LD (IY+$0D),A           ;
-  RET                     ; return;
-character_behaviour_17:
-  LD A,$04                ; character_behaviour_impeded: L += 4;
+  RET                     ; Return
+cb_move_y_dominant:
+  LD A,$04                ; Advance HL to vischar.position.y
   ADD A,L                 ;
   LD L,A                  ;
-  CALL vischar_move_y     ; vischar_move_y();
-  JR NZ,character_behaviour_16 ; if (Z) vischar_move_x();
-  CALL vischar_move_x          ;
-  JR NZ,character_behaviour_16 ; if (!Z) goto character_behaviour_set_input; // likely: couldn't move, so .. do something
-  DEC L                   ; HL--;
-  JP target_reached       ; target_reached(); return; // exit via
+  CALL vischar_move_y     ; Call vischar_move_y
+  JR NZ,cb_set_input      ; If it couldn't move call vischar_move_x
+  CALL vischar_move_x     ;
+  JR NZ,cb_set_input      ; If it could move, jump to cb_set_input
+  DEC L                   ; Rewind HL to vischar.position.x
+  JP target_reached       ; Exit via target_reached
 
 ; Move a character on the X axis.
 ;
@@ -13580,10 +13621,11 @@ character_behaviour_17:
 ; I:HL Pointer to vischar.target.
 ; I:IY Pointer to visible character block.
 ; O:A New input: input_RIGHT + input_DOWN (8) if x > pos.x, input_LEFT + input_UP (4) if x < pos.x, input_NONE (0) if x == pos.x
+; O:F Z set if zero returned, NZ otherwise
 ; O:HL Pointer to visible character block + 5. (Ready to pass into vischar_move_y)
 vischar_move_x:
   LD A,(HL)               ; Read vischar.target.x (target position)
-  CALL multiply_by_8      ; Multiply it by 1, 4 or 8 (self modified by character_behaviour_15)
+  CALL multiply_by_8      ; Multiply it by 1, 4 or 8 (self modified by cb_self_modify)
   LD A,L                  ; Point HL at vischar.mi.pos.x (current position)
   ADD A,$0B               ;
   LD L,A                  ;
@@ -13637,6 +13679,7 @@ vmx_equal:
 ; I:HL Pointer to vischar.target.
 ; I:IY Pointer to visible character block.
 ; O:A New input: input_LEFT + input_DOWN (5) if y > pos.y, input_RIGHT + input_UP (7) if y < pos.y, input_NONE (0) if y == pos.y
+; O:F Z set if zero returned, NZ otherwise
 ; O:HL Pointer to visible character block + 4. (Ready to pass into vischar_move_x)
 vischar_move_y:
   LD A,(HL)               ; Read vischar.target.y (target position)
@@ -13689,205 +13732,214 @@ vmy_equal:
 ;
 ; Used by the routine at character_behaviour.
 ;
-; I:IY Pointer to $8000, $8020, $8040, $8060, $8080
-; I:HL Pointer to $8004, $8024, $8044, $8064, $8084
+; I:IY Pointer to a vischar
+; I:HL Pointer to vischar + 4 bytes
 target_reached:
-  LD A,(IY+$01)           ; A = IY[1];
-  LD C,A                  ; C = A;
-  AND $3F                 ; A &= vischar_FLAGS_MASK;
-  JR Z,target_reached_2   ; if (A) <%
-  CP $01                  ; if (A == vischar_FLAGS_PURSUE) <%
-  JR NZ,target_reached_0  ;
-  LD A,(bribed_character) ; if (IY[0] == bribed_character) <% accept_bribe(); return; %> // exit via
+  LD A,(IY+$01)           ; Fetch the vischar.flags
+  LD C,A                  ; Copy to C for the door check later
+; Check for a pursuit mode.
+  AND $3F                 ; Mask with vischar_FLAGS_MASK to get the pursuit mode
+  JR Z,tr_door_check      ; Jump if not in a pursuit mode
+; We're in one of the pursuit modes - find out which one.
+  CP $01                  ; Is it vischar_PURSUIT_PURSUE?
+  JR NZ,tr_not_pursue     ; Jump if not
+tr_pursue:
+  LD A,(bribed_character) ; Is this vischar the (pending) bribed character?
   CP (IY+$00)             ;
-  JP Z,accept_bribe       ;
-  JP solitary             ; else <% solitary(); return; %> %> // failed to bribe? // exit via
-target_reached_0:
-  CP $02                  ; else if (A == vischar_FLAGS_HASSLE || A == vischar_FLAGS_SAW_BRIBE) <% return; %>
-  RET Z                   ;
-  CP $04                  ;
-  RET Z                   ;
-  PUSH HL
-; Decide how long until food is discovered.
-  LD HL,item_structs_food ; if ((item_structs[item_FOOD].item & itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;
-  BIT 5,(HL)              ;
-  LD A,$20                ;
-  JR Z,target_reached_1   ;
-  LD A,$FF                ;
-target_reached_1:
-  LD (food_discovered_counter),A ; food_discovered_counter = A;
-  POP HL
-  DEC L                   ; HL -= 2;
-  DEC L                   ;
-  XOR A                   ; *HL = 0;
-  LD (HL),A               ;
-  JP character_behaviour_16 ; goto character_behaviour_set_input; %> // exit via
-target_reached_2:
-  BIT 6,C                 ; if (C & vischar_FLAGS_TARGET_IS_DOOR) <%
-  JR Z,target_reached_9   ;
-; Results in character entering.
-  DEC L                   ; C = *--HL; // 80a3, 8083, 8063, 8003 // route.step
-  LD C,(HL)               ;
-  DEC L                   ; A = *--HL;
-  LD A,(HL)               ;
-  PUSH HL
-  CALL get_route          ; DE = get_route(A);
-  POP HL
-  LD A,E                  ; DE += C;
-  ADD A,C                 ;
-  LD E,A                  ;
-  JR NC,target_reached_3  ;
-  INC D                   ;
-target_reached_3:
-  LD A,(DE)               ; A = *DE;
-  BIT 7,(HL)              ; if (*HL & route_REVERSED) A ^= door_REVERSE;
-  JR Z,target_reached_4   ;
-  XOR $80                 ;
-target_reached_4:
-  PUSH AF
-  LD A,(HL)               ; A = *HL++; // $8002, ...
-  INC L                   ;
-; Pattern: [-2]+1
-  BIT 7,A                 ; if (A & route_REVERSED) (*HL) -= 2; // $8003, ... // route.step
-  JR Z,target_reached_5   ;
-  DEC (HL)                ;
-  DEC (HL)                ;
-target_reached_5:
-  INC (HL)                ; (*HL)++; // route.step
-  POP AF
-  CALL get_door           ; HL = get_door();
-  LD A,(HL)               ; IY[0x1C] = (*HL >> 2) & 0x3F; // IY=$8000 => $801C (room index) // HL=$790E,$7962,$795E => door position thingy // 0x3F is doors[0] room mask shifted right 2
-  RRA                     ;
-  RRA                     ;
-  AND $3F                 ;
-  LD (IY+$1C),A           ;
-; TOP_LEFT or TOP_RIGHT => next door pos
+  JP Z,accept_bribe       ; Jump to accept_bribe if so (exit via)
+  JP solitary             ; Otherwise the pursuing character caught its target. This must be the case when a guard pursues the hero, so send the hero to solitary (exit via)
+tr_not_pursue:
+  CP $02                  ; Is it vischar_PURSUIT_HASSLE?
+  RET Z                   ; Exit if so
+  CP $04                  ; Is it vischar_PURSUIT_SAW_BRIBE?
+  RET Z                   ; Exit if so
+; Otherwise we're in vischar_PURSUIT_DOG_FOOD mode. automatics() only permits dogs to enter this mode.
 ;
-; BOTTOM_RIGHT or BOTTOM_LEFT => current door pos
-  LD A,(HL)               ; A = *HL & door_FLAGS_MASK_DIRECTION; // door position thingy, lowest two bits -- index?
-  AND $03                 ;
-  CP $02                  ; if (A < 2) HL += 5; else HL -= 3;
-  JP NC,target_reached_6  ;
-  INC HL                  ;
-  INC HL                  ;
-  INC HL                  ;
-  INC HL                  ;
-  INC HL                  ;
-  JR target_reached_7     ;
-target_reached_6:
-  DEC HL                  ;
-  DEC HL                  ;
-  DEC HL                  ;
-target_reached_7:
-  PUSH HL
-  PUSH IY                 ; HL = IY;
-  POP HL                  ;
-  LD A,L                  ; if (L == 0) <%
-  AND A                   ;
-  JP NZ,target_reached_8  ;
-; Hero's vischar only.
-  INC L                   ; HL++; // $8000 -> $8001
-  RES 6,(HL)              ; *HL++ &= ~vischar_FLAGS_TARGET_IS_DOOR;
-  INC L                   ;
-  CALL get_target_assign_pos ; get_target_assign_pos(); %>
-target_reached_8:
-  POP HL
-  CALL transition         ; transition();
-  LD BC,$2030             ; play_speaker(sound_CHARACTER_ENTERS_1);
-  CALL play_speaker       ;
-  RET                     ; return; %>
-target_reached_9:
-  DEC L                   ; HL -= 2;
+; Decide how long remains until the food is discovered. Use 32 if the food is poisoned, 255 otherwise.
+  PUSH HL                 ; Save the vischar pointer
+  LD HL,item_structs_food ; Point HL at item_structs_food
+  BIT 5,(HL)              ; Is the itemstruct_ITEM_FLAG_POISONED flag set?
+  LD A,$20                ; Set the counter to 32 irrespectively
+  JR Z,tr_set_food_counter ; Jump if the flag was set
+  LD A,$FF                ; Otherwise set the counter to 255
+tr_set_food_counter:
+  LD (food_discovered_counter),A ; Assign food_discovered_counter
+  POP HL                  ; Restore the vischar pointer
+  DEC L                   ; Rewind HL to point at vischar.route.index
   DEC L                   ;
-  LD A,(HL)               ; A = *HL; // $8002 etc. // route
-  CP $FF                     ; if (A != 0xFF) <%
-  JR Z,get_target_assign_pos ;
-  INC L                   ; HL++;
-  BIT 7,A                 ; if (A & route_REVERSED) <%
-  JR Z,target_reached_10  ;
-  DEC (HL)                ; (*HL) -= 2; %> // $8003 etc.
+; This dog has been poisoned, so make it halt.
+  XOR A                   ; vischar.route.index = routeindex_0_HALT
+  LD (HL),A               ;
+  JP cb_set_input         ; Exit via character_behaviour_set_input (A is zero here: that's passed as the new input)
+tr_door_check:
+  BIT 6,C                 ; Is the flag vischar_FLAGS_TARGET_IS_DOOR set?
+  JR Z,tr_set_route       ; Jump if not
+; Handle the door - this results in the character entering.
+  DEC L                   ; Rewind HL to point at vischar.route.step
+  LD C,(HL)               ; Fetch route.step
+  DEC L                   ; Rewind
+  LD A,(HL)               ; Fetch route.index
+  PUSH HL                 ; Preserve route pointer
+  CALL get_route          ; Call get_route. A is the index arg. A route *data* pointer is returned in DE
+  POP HL                  ; Restore route pointer
+  LD A,E                     ; Advance the route data pointer by 'step' bytes
+  ADD A,C                    ;
+  LD E,A                     ;
+  JR NC,tr_routebyte_is_door ;
+  INC D                      ;
+tr_routebyte_is_door:
+  LD A,(DE)               ; Fetch a route byte, which here is a door index
+  BIT 7,(HL)              ; Is the route index's route_REVERSED flag set? ($80)
+  JR Z,tr_store_door      ; Jump if not
+  XOR $80                 ; Otherwise toggle the reverse flag
+tr_store_door:
+  PUSH AF                 ; Preserve the door index
+  LD A,(HL)               ; Fetch route.index
+  INC L                   ; Advance to route.step
+; Pattern: [-2]+1
+  BIT 7,A                 ; If the route is reversed then step backwards, otherwise step forwards
+  JR Z,tr_route_step      ;
   DEC (HL)                ;
-target_reached_10:
-  INC (HL)                ; else <% (*HL)++;
-  DEC L                   ; HL--; %> %>
+  DEC (HL)                ;
+tr_route_step:
+  INC (HL)                ;
+; Get the door structure for the door index and start processing it.
+  POP AF                  ; Restore door index
+  CALL get_door           ; Call get_door. A door_t pointer is returned in HL
+  LD A,(HL)               ; Fetch door.room_and_direction
+  RRA                     ; Discard the bottom two bits
+  RRA                     ;
+  AND $3F                 ; Extract the room index
+  LD (IY+$1C),A           ; Move the vischar to that room (vischar.room = room index)
+; In which direction is the door facing?
+  LD A,(HL)               ; Fetch door.room_and_direction
+  AND $03                 ; Mask against door_FLAGS_MASK_DIRECTION
+; Each door in the doors array is a pair of two "half doors" where each half represents one side of the doorway. We test the direction of the half door we find ourselves pointing at and use it to find the counterpart door's position.
+  CP $02                  ; Is it direction_TOP_*?
+  JP NC,tr_door_top       ; Jump if not
+  INC HL                  ; Point HL at door[1].pos
+  INC HL                  ;
+  INC HL                  ;
+  INC HL                  ;
+  INC HL                  ;
+  JR tr_door_found        ;
+tr_door_top:
+  DEC HL                  ; Otherwise point HL at door[-1].pos
+  DEC HL                  ;
+  DEC HL                  ;
+tr_door_found:
+  PUSH HL                 ; Preserve the door.pos pointer
+  PUSH IY                 ; Copy the current visible character pointer into HL
+  POP HL                  ;
+  LD A,L                  ; Is this vischar the hero?
+  AND A                   ;
+  JP NZ,tr_transition     ; Jump if not
+; Hero's vischar only.
+  INC L                   ; Advance HL to point at vischar.flags
+  RES 6,(HL)              ; Clear vischar.flags vischar_FLAGS_TARGET_IS_DOOR flag
+  INC L                   ; Advance HL to point at vischar.route
+  CALL get_target_assign_pos ; Call get_target_assign_pos
+tr_transition:
+  POP HL                  ; Restore the door.pos pointer
+  CALL transition         ; Call transition
+  LD BC,$2030             ; Play the "character enters 1" sound
+  CALL play_speaker       ;
+  RET                     ; Return
+tr_set_route:
+  DEC L                   ; Point HL at vischar.route.index
+  DEC L                   ;
+  LD A,(HL)               ; Load the route.index
+  CP $FF                  ; Is it routeindex_255_WANDER?
+  JR Z,get_target_assign_pos ; Jump if so
+  INC L                   ; Advance HL to vischar.route.step
+; Pattern: [-2]+1
+  BIT 7,A                    ; If the route is reversed then step backwards, otherwise step forwards
+  JR Z,tr_another_route_step ;
+  DEC (HL)                   ;
+  DEC (HL)                   ;
+tr_another_route_step:
+  INC (HL)                   ;
+  DEC L                   ; Rewind HL to vischar.route.index
 ; FALL THROUGH to get_target_assign_pos.
 
-; (unknown) get_target_assign_pos
+; Calls get_target then puts coords in vischar.target and set flags.
 ;
 ; Used by the routines at set_route, accept_bribe, character_behaviour, target_reached and route_ended.
 ;
-; I:A Character index?
-; I:HL ?
+; I:HL Pointer to route
 get_target_assign_pos:
-  PUSH HL
-  CALL get_target         ; get_target();
-  CP $FF                  ; if (A == 0xFF) <%
-  JP NZ,handle_target     ;
-  POP HL
+  PUSH HL                 ; Preserve the route pointer
+  CALL get_target         ; Get our next target - a location, a door or 'route ends'. The result is returned in A, target pointer returned in HL
+  CP $FF                  ; Did get_target return get_target_ROUTE_ENDS? ($FF)
+  JP NZ,handle_target     ; Jump if not
+  POP HL                  ; Restore the route pointer
 ; FALL THROUGH into route_ended.
 
-; Called when a character has run out of route.
+; Called when get_target has run out of route.
 ;
 ; Used by the routine at spawn_character.
 ;
 ; If not the hero's vischar ...
 route_ended:
-  LD A,L                  ; if (L != 0x02) <%
+  LD A,L                  ; Is this the hero's vischar?
   CP $02                  ;
-  JP Z,route_ended_1      ;
-  LD A,(IY+$00)           ; if (IY[0] & vischar_CHARACTER_MASK == 0) <%
-  AND $1F                 ;
-  JR NZ,route_ended_0     ;
-  LD A,(HL)               ; A = *HL & ~route_REVERSED;
-  AND $7F                 ;
-  CP $24                  ; if (A == 36) goto $CB46; // character index
-  JR Z,route_ended_1      ;
-  XOR A                   ; A = 0; %> // forces next if statement to be taken
+  JP Z,do_character_event ; Jump if so
+; Non-player ...
+  LD A,(IY+$00)           ; Load vischar.character
+  AND $1F                 ; Mask with vischar_CHARACTER_MASK to get character index
+  JR NZ,route_ended_0     ; Jump if not character_0_COMMANDANT
+; Call character_event at the end of commandant route 36.
+  LD A,(HL)               ; Fetch route.index
+  AND $7F                 ; Mask off routeindexflag_REVERSED
+  CP $24                  ; Is it routeindex_36_GO_TO_SOLITARY?
+  JR Z,do_character_event ; Jump if so
+  XOR A                   ; Force next if statement to be taken
+; Reverse the route for guards 1..11. They have fixed roles so either stand still or march back and forth along their route.
 route_ended_0:
-  CP $0C                  ; if (A <= character_11_GUARD_11) goto $CB50; %>
-  JR C,route_ended_2      ;
-; We arrive here if: - vischar is the hero, or - character is character_0_COMMANDANT and (route.index & 0x7F) == 36, or - character is >= character_12_GUARD_12
-route_ended_1:
+  CP $0C                  ; Is the character index <= character_11_GUARD_11?
+  JR C,reverse_route      ; Jump if so
+; We arrive here if: - vischar is the hero, or - character is character_0_COMMANDANT and (route.index & $7F) == 36, or - character is >= character_12_GUARD_12
+do_character_event:
   PUSH HL
-  CALL character_event    ; character_event();
+  CALL character_event    ; character_event()
   POP HL
-  LD A,(HL)               ; A = *HL;
-  AND A                   ; if (A == 0) return;
-  RET Z                   ;
-  JR get_target_assign_pos ; get_target_assign_pos(); return; // exit via
-; We arrive here if: - vischar is not the hero, and - character is character_0_COMMANDANT and (route.index & 0x7F) != 36, or - character is character_1_GUARD_1 .. character_11_GUARD_11
-route_ended_2:
-  LD A,(HL)               ; *HL++ = *HL ^ 0x80;
+  LD A,(HL)               ; Fetch route.index
+  AND A                   ; Is it routeindex_0_HALT?
+  RET Z                   ; Return 0 if so
+  JR get_target_assign_pos ; Otherwise exit via get_target_assign_pos() // re-enters/loops?
+; We arrive here if: - vischar is not the hero, and - character is character_0_COMMANDANT and (route.index & $7F) != 36, or - character is character_1_GUARD_1 .. character_11_GUARD_11
+reverse_route:
+  LD A,(HL)               ; Toggle route direction flag routeindexflag_REVERSED ($80)
   XOR $80                 ;
   LD (HL),A               ;
   INC HL                  ;
 ; Pattern: [-2]+1
-  BIT 7,A                 ; if (A & (1<<7)) <%
-  JR Z,route_ended_3      ;
-  DEC (HL)                ; (*HL) -= 2; %>
+  BIT 7,A                 ; If the route is reversed then step backwards, otherwise forwards
+  JR Z,route_ended_1      ;
   DEC (HL)                ;
-route_ended_3:
-  INC (HL)                ; (*HL)++
-  DEC HL                  ; HL--;
-  XOR A                   ; A = 0;
-  RET                     ; return; %> // strictly the terminating brace is after the following unreferenced bytes
-  DEFB $18,$09            ; Unreferenced bytes.
+  DEC (HL)                ;
+route_ended_1:
+  INC (HL)                ;
+  DEC HL                  ;
+  XOR A                   ; Return 0
+  RET                     ;
+  DEFB $18,$09            ; Unreferenced bytes
 
-; (unknown) handle_target
+; "Didn't hit end of list" case. -- not really a routine in its own right
 ;
 ; Used by the routine at get_target_assign_pos.
 handle_target:
-  CP $80                  ; if (A == 128) <%
-  JP NZ,handle_target_0   ;
-  SET 6,(IY+$01)          ; IY[1] |= vischar_FLAGS_TARGET_IS_DOOR; %>
+  CP $80                  ; Was the result of get_target get_target_DOOR? ($80)
+  JP NZ,handle_target_0   ; Jump if not
+  SET 6,(IY+$01)          ; Set vischar.flags flag vischar_FLAGS_TARGET_IS_DOOR
 handle_target_0:
-  POP DE
-  INC E                   ; memcpy(DE + 2, HL, 2);
+  POP DE                  ; Restore the route pointer
+  INC E                   ; Copy HL (ptr to doorpos or location) to vischar->target
   INC E                   ;
   LD BC,$0002             ;
   LDIR                    ;
-  LD A,$80                ; A = 128;
-  RET                     ; return;
+  LD A,$80                ; (This return value is never used)
+  RET                     ; Return
 
 ; Widen A to BC (multiply by 1).
 multiply_by_1:
@@ -13999,7 +14051,7 @@ solitary_next:
   LD A,$18                ; Set vischar[0].room to room_24_SOLITARY
   LD ($801C),A            ;
 ; DPT: I reckon this should instead be 24 which is the door between room_22_REDKEY and room_24_SOLITARY.
-  LD A,$14                ; Set global current door to 20
+  LD A,$14                ; Set the global current door to 20
   LD (current_door),A     ;
   LD B,$23                ; Decrease morale by 35
   CALL decrease_morale    ;
@@ -14039,97 +14091,106 @@ solitary_commandant_data:
 
 ; Guards follow suspicious character.
 ;
+; This routine decides whether the given vischar pursues the hero. - The commandant can see through the hero's disguise if he's wearing the guard's uniform, but other guards do not. - Bribed characters will ignore the hero. - When outdoors,
+; line of sight checking is used to determine if the hero will be pursued. - If the red_flag is in effect the hero will be pursued, otherwise he will just be hassled.
+;
 ; Used by the routine at automatics.
 ;
 ; I:IY Pointer to visible character.
 guards_follow_suspicious_character:
-  PUSH IY                 ; HL = IY;
+  PUSH IY                 ; Copy vischar pointer into HL
   POP HL                  ;
-  LD A,(HL)               ; A = *HL;
-; Wearing the uniform stops anyone but the commandant from following the hero.
-  AND A                                     ; if (A != character_0_COMMANDANT && *$8015 == sprite_guard) return;
-  JR Z,guards_follow_suspicious_character_0 ;
-  LD A,($8015)                              ;
-  LD DE,sprite_guard                        ;
-  CP E                                      ;
-  RET Z                                     ;
-; Which is the case here?
-;
-; - Don't follow mad people, or
-;
-; - Don't follow the hero when bribe has been used
-guards_follow_suspicious_character_0:
-  INC L                   ; if (HL[1] == vischar_FLAGS_SAW_BRIBE) return; // $8041 etc. // 'gone mad' flag
-  LD A,(HL)               ;
-  CP $04                  ;
+  LD A,(HL)               ; Fetch the character index
+; Wearing the uniform stops anyone but the commandant from pursuing the hero.
+  AND A                   ; Is it character_0_COMMANDANT?
+  JR Z,gfsc_chk_bribe     ; Jump if so (the commandant sees through the disguise)
+  LD A,($8015)            ; Read the bottom byte of the hero's sprite set pointer
+  LD DE,sprite_guard      ; Point DE at the guard sprite set
+  CP E                    ; Return if they match
   RET Z                   ;
-  DEC L
-  LD A,L                  ; HL += 15;
+; If this (hostile) character saw the bribe being used then ignore the hero.
+gfsc_chk_bribe:
+  INC L                   ; Advance HL to point at vischar.flags
+  LD A,(HL)               ; Fetch vischar.flags
+  CP $04                  ; Is it vischar_PURSUIT_SAW_BRIBE?
+  RET Z                   ; Return if the bribe was seen
+; Do line of sight checking when outdoors.
+  DEC L                   ; Rewind HL to point at vischar.character
+  LD A,L                  ; Point HL at vischar.mi.pos
   ADD A,$0F               ;
   LD L,A                  ;
-  LD DE,tinypos_stash_x   ; DE = &tinypos_stash_x;
-  LD A,(room_index)                          ; if (room_index == room_0_OUTDOORS) <%
-  AND A                                      ;
-  JP NZ,guards_follow_suspicious_character_4 ;
-  CALL pos_to_tinypos     ; pos_to_tinypos(HL,DE);
-  LD HL,hero_map_position_x ; HL = &hero_map_position.x;
-  LD DE,tinypos_stash_x   ; DE = &tinypos_stash_x;
-  LD A,(IY+$0E)           ; A = IY[0x0E]; // ?
-  RRA                     ; carry = A & 1; A >>= 1;
-  LD C,A                  ; C = A;
-  JR C,guards_follow_suspicious_character_2 ; if (!carry) <% /* TL or BR */
-; Range check.
-  INC HL                  ; HL++;
-  INC DE                  ; DE++;
-  LD A,(DE)               ; A = *DE - 1;
-  DEC A                   ;
-  CP (HL)                 ; if (A >= *HL || A + 2 < *HL) return; // *DE - 1 .. *DE + 1
+  LD DE,tinypos_stash_x   ; Point DE at tinypos_stash_x
+  LD A,(room_index)       ; If the global current room index is room_0_OUTDOORS...
+  AND A                   ;
+  JP NZ,gfsc_chk_flag     ;
+  CALL pos_to_tinypos     ; Scale down vischar's map position (HL) and assign the result to tinypos_stash (DE). DE is updated to point after tinypos_stash on return
+  LD HL,hero_map_position_x ; Point HL at hero_map_position.x
+  LD DE,tinypos_stash_x   ; Point DE at tinypos_stash_x
+  LD A,(IY+$0E)           ; Get this vischar's direction
+; Check for TL/BR directions.
+  RRA                     ; Shift out the bottom direction bit into carry
+  LD C,A                  ; Save (rotated direction byte) in C
+  JR C,gfsc_chk_seen_x    ; Jump if not TL or BR
+; Handle TL/BR directions.
+;
+; Does the hero approximately match our Y coordinate?
+gfsc_chk_seen_y:
+  INC HL                  ; Advance HL to hero_map_position.y
+  INC DE                  ; Advance DE to tinypos_stash_y
+  LD A,(DE)               ; Fetch tinypos_stash_y
+  DEC A                   ; Return if (tinypos_stash_y - 1) >= hero_map_position.y
+  CP (HL)                 ;
   RET NC                  ;
-  ADD A,$02               ;
+  ADD A,$02               ; Return if (tinypos_stash_y + 1) < hero_map_position.y
   CP (HL)                 ;
   RET C                   ;
-  DEC HL                  ; HL--;
-  DEC DE                  ; DE--;
-  LD A,(DE)               ; A = *DE;
-  CP (HL)                 ; CP *HL  // TRICKY!
-  BIT 0,C                                    ; BIT 0,C // if ((C & (1<<0)) == 0) carry = !carry; /* TL (can't be TR) */
-  JR NZ,guards_follow_suspicious_character_1 ;
-  CCF                                        ;
+; Are we facing the hero?
+  DEC HL                  ; Rewind to hero_map_position_x
+  DEC DE                  ; Rewind to tinypos_stash_x
+  LD A,(DE)               ; Set carry if tinypos_stash_x < hero_map_position_x
+  CP (HL)                 ;
+  BIT 0,C                 ; Check bit 1 of direction byte (direction_BOTTOM_*?)
+  JR NZ,guards_follow_suspicious_character_0 ; Jump if set?
+  CCF                     ; Otherwise invert the carry flag
+guards_follow_suspicious_character_0:
+  RET C                   ; Return if set
+  JR gfsc_chk_flag        ; (else)
+; Handle TR/BL directions.
+;
+; Does the hero approximately match our X coordinate?
+gfsc_chk_seen_x:
+  LD A,(DE)               ; Fetch tinypos_stash_x
+  DEC A                   ; Return if (tinypos_stash_x - 1) >= hero_map_position_x
+  CP (HL)                 ;
+  RET NC                  ;
+  ADD A,$02               ; Return if (tinypos_stash_x + 1) < hero_map_position_x
+  CP (HL)                 ;
+  RET C                   ;
+; Are we facing the hero?
+  INC HL                  ; Advance to hero_map_position_y
+  INC DE                  ; Advance to tinypos_stash_y
+  LD A,(DE)               ; Set carry if tinypos_stash_y < hero_map_position_y
+  CP (HL)                 ;
+  BIT 0,C                 ; Check bit 1 of direction byte (direction_BOTTOM_*?)
+  JR NZ,guards_follow_suspicious_character_1 ; Jump if set?
+  CCF                     ; Otherwise invert the carry flag
 guards_follow_suspicious_character_1:
-  RET C                   ; RET C   // This is odd: CCF then RET C? // will need to fall into 'else' clause
-  JR guards_follow_suspicious_character_4 ; %>
-; Range check.
-guards_follow_suspicious_character_2:
-  LD A,(DE)               ; else <% A = *DE - 1;
-  DEC A                   ;
-  CP (HL)                 ; if (A >= *HL || A + 2 < *HL) return; // *DE - 1 .. *DE + 1
+  RET C                   ; Return if set
+gfsc_chk_flag:
+  LD A,(red_flag)         ; Is red_flag set?
+  AND A                   ;
+  JR NZ,gfsc_bell         ; Jump if so
+; Hostiles *not* in guard towers hassle the hero.
+  LD A,(IY+$13)           ; Fetch vischar.mi.pos.height
+  CP $20                  ; Return if it's 32 or greater
   RET NC                  ;
-  ADD A,$02               ;
-  CP (HL)                 ;
-  RET C                   ;
-  INC HL                  ; HL++;
-  INC DE                  ; DE++;
-  LD A,(DE)               ; A = *DE;
-  CP (HL)                 ; CP *HL  // TRICKY!
-  BIT 0,C                                    ; BIT 0,C // if ((C & (1<<0)) == 0) carry = !carry; /* TL or TR */
-  JR NZ,guards_follow_suspicious_character_3 ;
-  CCF                                        ;
-guards_follow_suspicious_character_3:
-  RET C                   ; RET C %> %>
-guards_follow_suspicious_character_4:
-  LD A,(red_flag)                            ; if (!red_flag) <%
-  AND A                                      ;
-  JR NZ,guards_follow_suspicious_character_5 ;
-  LD A,(IY+$13)           ; A = IY[0x13]; // sampled IY=$8020 // saw this breakpoint hit when outdoors
-  CP $20                  ; if (A < 32) // height
-  RET NC                  ;
-  LD (IY+$01),$02         ; IY[1] = vischar_FLAGS_HASSLE;
-  RET                     ; return; %>
-guards_follow_suspicious_character_5:
-  XOR A                   ; bell = bell_RING_PERPETUAL;
+  LD (IY+$01),$02         ; Set vischar's flags to vischar_PURSUIT_HASSLE
+  RET                     ; Return
+gfsc_bell:
+  XOR A                   ; Make the bell ring perpetually
   LD (bell),A             ;
-  CALL hostiles_pursue    ; hostiles_pursue();
-  RET                     ; return;
+  CALL hostiles_pursue    ; Call hostiles_pursue
+  RET                     ; Return
 
 ; Hostiles pursue prisoners.
 ;
@@ -14159,7 +14220,7 @@ hp_loop:
   LD A,L                  ; Point HL at vischar.flags
   SUB $12                 ;
   LD L,A                  ;
-  LD (HL),$01             ; Set vischar.flags to vischar_FLAGS_PURSUE
+  LD (HL),$01             ; Set vischar.flags to vischar_PURSUIT_PURSUE
 hp_next:
   POP HL                  ; Restore the vischar pointer
   ADD HL,DE               ; Advance the vischar pointer
@@ -14174,7 +14235,7 @@ hp_next:
 ;
 ; Green key and food items are ignored.
 is_item_discoverable:
-  LD A,(room_index)       ; Get global current room index
+  LD A,(room_index)       ; Get the global current room index
   AND A                   ; Is it room_0_OUTDOORS?
   JR Z,is_item_discoverable_0 ; Jump if so
 ; Interior.
@@ -14211,60 +14272,61 @@ iid_nearby:
 
 ; Is an item discoverable indoors?
 ;
+; A discoverable item is one which has been moved away from its default room, and one that isn't the red cross parcel.
+;
 ; Used by the routines at move_characters and is_item_discoverable.
 ;
-; A discoverable item is one moved away from its default room, and one that isn't the red cross parcel.
-;
-; I:A Room ref.
-; O:Flags Z => found, NZ => not found.
-; O:C Item (if found).
+; I:A Room index to check against
+; O:C Item (if found)
+; O:F Z set if found, Z clear otherwise
 is_item_discoverable_interior:
-  LD C,A                  ; C = A; // room ref
-  LD HL,$76C9             ; HL = &item_structs[0].room; // pointer to room ref
-  LD B,$10                ; B = 16; // item__LIMIT
-is_item_discoverable_interior_0:
-  LD A,(HL)               ; do <% A = *HL & itemstruct_ROOM_MASK;
-  AND $3F                 ;
+  LD C,A                  ; Save the room index in C
+  LD HL,$76C9             ; Point HL at the first item_struct's room member
+  LD B,$10                ; Set B for 16 iterations (item__LIMIT)
+; Start loop
+iidi_loop:
+  LD A,(HL)               ; Load the room index and flags
+  AND $3F                 ; Extract the room index
 ; Is the item in the specified room?
-  CP C                                  ; if (A == C) <% // yes
-  JR NZ,is_item_discoverable_interior_1 ;
-  PUSH HL
-; Has the item been moved to a different room?
+  CP C                    ; Same room?
+  JR NZ,iidi_next         ; Jump if not
+  PUSH HL                 ; Preserve the item_struct pointer
+; Has the item been moved to a room other than its default?
 ;
-; Bug? Note that room_and_flags doesn't get its flags masked off. Does it need & 0x3F ? (DOS version has it)
-  DEC HL                       ; A = default_item_locations[HL[-1] & itemstruct_ITEM_MASK].room_and_flags; // HL[-1] = itemstruct.item
-  LD A,(HL)                    ;
-  AND $0F                      ;
-  LD E,A                       ;
-  ADD A,A                      ;
-  ADD A,E                      ;
-  LD E,A                       ;
-  LD D,$00                     ;
-  LD HL,default_item_locations ;
-  ADD HL,DE                    ;
-  LD A,(HL)                    ;
-  CP C                                  ; if (A != C) goto not_in_default_room;
-  JR NZ,is_item_discoverable_interior_2 ;
-  POP HL                  ; - %>
-is_item_discoverable_interior_1:
-  LD DE,$0007             ; next: HL += 7; // stride
-  ADD HL,DE               ;
-  DJNZ is_item_discoverable_interior_0 ; %> while (--B);
-  RET                     ; return; // return with NZ set (not found)
-is_item_discoverable_interior_2:
-  POP HL                  ; not_in_default_room:
-  DEC HL                  ; A = HL[-1] & itemstruct_ITEM_MASK; // itemstruct.item
+; Bug: room_and_flags doesn't get its flags masked off in the following sequence. However, the only default_item which uses the flags is the wiresnips. The DOS version of the game fixes this.
+  DEC HL                  ; Fetch item_and_flags
   LD A,(HL)               ;
-  AND $0F                 ;
-; Ignore red cross parcel.
-  CP $0C                                ; if (A == item_RED_CROSS_PARCEL) <%
-  JR NZ,is_item_discoverable_interior_3 ;
-  INC HL
-  JR is_item_discoverable_interior_1 ; goto next; %>
-is_item_discoverable_interior_3:
-  LD C,A                  ; C = A;
-  XOR A                   ; A = 0; // set Z (found)
-  RET                     ; return;
+  AND $0F                 ; Mask off the item
+  LD E,A                  ; Multiply by three - the array stride
+  ADD A,A                 ;
+  ADD A,E                 ;
+  LD E,A                  ; Widen to 16-bit
+  LD D,$00                ;
+  LD HL,default_item_locations ; Add to default_item_locations
+  ADD HL,DE                    ;
+  LD A,(HL)               ; Fetch the default item room_and_flags
+  CP C                    ; Same room? (bug: not masked)
+  JR NZ,iidi_not_default_room ; Jump if not
+  POP HL                  ; Restore the item_struct pointer
+iidi_next:
+  LD DE,$0007             ; Step HL to the next item_struct
+  ADD HL,DE               ;
+  DJNZ iidi_loop          ; ...loop
+  RET                     ; Return with NZ set (not found)
+iidi_not_default_room:
+  POP HL                  ; Restore the item_struct pointer
+  DEC HL                  ; Fetch item_and_flags
+  LD A,(HL)               ;
+  AND $0F                 ; Mask off the item
+; Ignore the red cross parcel.
+  CP $0C                  ; Is this item the red cross parcel? (item_RED_CROSS_PARCEL)
+  JR NZ,iidi_found        ; Jump if not
+  INC HL                  ; Otherwise advance HL to room_and_flags
+  JR iidi_next            ; Jump to the next iteration
+iidi_found:
+  LD C,A                  ; Return the item's index in C
+  XOR A                   ; Return with Z set (found)
+  RET                     ;
 
 ; An item is discovered.
 ;
@@ -14945,232 +15007,256 @@ mask_stove:
 
 ; Mark nearby items.
 ;
-; Used by the routines at setup_movable_items and main_loop.
+; Iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it
+; clears both of those flags.
 ;
-; Iterates over item structs, testing to see if each item is within range (-1..22, 0..15) of the map position.
+; Used by the routines at setup_movable_items and main_loop.
 ;
 ; This is similar to is_item_discoverable_interior in that it iterates over all item_structs.
 mark_nearby_items:
-  LD A,(room_index)       ; A = room_index;
-  CP $FF                    ; if (A == room_NONE) A = 0;
-  JR NZ,mark_nearby_items_0 ;
-  XOR A                     ;
-mark_nearby_items_0:
-  LD C,A                  ; C = A; // room ref
-  LD DE,(map_position)    ; DE = map_position;
-  LD B,$10                ; B = item__LIMIT;
-  LD HL,$76C9             ; HL = &item_structs[0].room;
-mark_nearby_items_1:
-  PUSH HL                 ; do <%
-  LD A,(HL)                 ; if (HL[0] & itemstruct_ROOM_MASK == C) <% // compare room
-  AND $3F                   ;
-  CP C                      ;
-  JR NZ,mark_nearby_items_4 ;
-  INC HL                    ; if (HL[4] > E - 2 && HL[4] < E + 23) <% // itemstruct.screenpos.x
-  INC HL                    ;
-  INC HL                    ;
-  INC HL                    ;
-  LD A,E                    ;
-  DEC A                     ;
-  DEC A                     ;
-  CP (HL)                   ;
-  JR Z,mark_nearby_items_2  ;
-  JR NC,mark_nearby_items_4 ;
-mark_nearby_items_2:
-  ADD A,$19                 ;
-  CP (HL)                   ;
-  JR C,mark_nearby_items_4  ;
-  LD A,D                    ; if (HL[5] > D - 1 && HL[5] < D + 16) <% // itemstruct.screenpos.y
-  INC HL                    ;
-  DEC A                     ;
-  CP (HL)                   ;
-  JR Z,mark_nearby_items_3  ;
-  JR NC,mark_nearby_items_4 ;
-mark_nearby_items_3:
-  ADD A,$11                 ;
-  CP (HL)                   ;
-  JR C,mark_nearby_items_4  ;
-  POP HL
-  SET 7,(HL)              ; *HL |= itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7; // sampled HL=$772B &itemstruct_14.room
+  LD A,(room_index)       ; Get the global current room index
+  CP $FF                  ; Is it room_NONE?
+  JR NZ,mni_room_set      ; Jump if not
+  XOR A                   ; Otherwise set it to room_0_OUTDOORS
+mni_room_set:
+  LD C,A                  ; Preload the room index into C
+  LD DE,(map_position)    ; Point DE at the map position
+  LD B,$10                ; Set B for 16 iterations (item__LIMIT)
+  LD HL,$76C9             ; Point HL at the first item_struct's room member
+; Start loop
+mni_loop:
+  PUSH HL                 ; Preserve item_struct pointer
+; Compare room
+  LD A,(HL)               ; Load the room index and flags
+  AND $3F                 ; Extract the room index
+  CP C                    ; Same room?
+  JR NZ,mni_reset         ; Jump if not
+; Is the item's X coordinate within (-1..22) of the map's X position?
+  INC HL                  ; Advance HL to itemstruct.iso_pos.x
+  INC HL                  ;
+  INC HL                  ;
+  INC HL                  ;
+  LD A,E                  ; Copy map X position into A
+  DEC A                   ; Reduce it by 2
+  DEC A                   ;
+  CP (HL)                 ; Compare it to itemstruct.iso_pos.x
+  JR Z,mni_chk_x_hi       ; Jump if equal (continuing test)
+  JR NC,mni_reset         ; Reset if under lower bound
+mni_chk_x_hi:
+  ADD A,$19               ; Add 25 to make (map X position + 23)
+  CP (HL)                 ; Compare to X value in itemstruct
+  JR C,mni_reset          ; Reset if over upper bound
+; Is the item's Y coordinate within (0..15) of the map's Y position?
+  LD A,D                  ; Copy map Y position into A
+  INC HL                  ; Advance HL to itemstruct.iso_pos.y
+  DEC A                   ; Reduce it by 1
+  CP (HL)                 ; Compare it to itemstruct.iso_pos.y
+  JR Z,mni_chk_y_hi       ; Jump if equal (continuing test)
+  JR NC,mni_reset         ; Reset if under lower bound
+mni_chk_y_hi:
+  ADD A,$11               ; Add 17 to make (map Y position + 16)
+  CP (HL)                 ; Compare to Y value in itemstruct
+  JR C,mni_reset          ; Reset if over upper bound
+mni_set:
+  POP HL                  ; Restore itemstruct pointer
+  SET 7,(HL)              ; Set itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7
   SET 6,(HL)              ;
-  JR mark_nearby_items_5  ; goto next; %> %> %>
-; Reset.
-mark_nearby_items_4:
-  POP HL
-  RES 7,(HL)              ; *HL &= ~(itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7);
+  JR mni_advance          ; Jump to next iteration
+mni_reset:
+  POP HL                  ; Restore itemstruct pointer
+  RES 7,(HL)              ; Clear itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7
   RES 6,(HL)              ;
-mark_nearby_items_5:
-  LD A,$07                  ; next: HL += 7; // stride
-  ADD A,L                   ;
-  LD L,A                    ;
-  JR NC,mark_nearby_items_6 ;
-  INC H                     ;
-mark_nearby_items_6:
-  DJNZ mark_nearby_items_1 ; %> while (--B);
-  RET                     ; return;
+mni_advance:
+  LD A,$07                ; Advance HL by stride
+  ADD A,L                 ;
+  LD L,A                  ;
+  JR NC,mni_next          ;
+  INC H                   ;
+mni_next:
+  DJNZ mni_loop           ; ...loop
+  RET                     ; Return
 
 ; Iterates over all item_structs looking for nearby items.
-;
-; Used by the routine at locate_vischar_or_itemstruct.
 ;
 ; Returns the furthest/highest/nearest item?
 ;
 ; Iterates over all items. Uses multiply_by_8.
 ;
-; I:BC' samples = 0, $1A, $1C, $1E, $20, $22,
-; I:DE' samples = 0, $22, $22, $22, $22, $22,
-; O:IY Pointer to to item struct. (result?)
-; O:A' result?
+; Used by the routine at locate_vischar_or_itemstruct.
+;
+; I:A' A value to leave in A' when nothing is found (e.g. 255)
+; I:BC' X position
+; I:DE' Y position
+; O:A' Index of the greatest item with the item_FOUND flag set, if found
+; O:IY Pointer to an itemstruct, if found
 get_greatest_itemstruct:
-  LD BC,$1007             ; B = item_LIMIT; // iterations
-  LD HL,$76C9             ; Outer_HL = &item_structs[0].room;
-get_greatest_itemstruct_0:
-  BIT 7,(HL)                     ; do <% if ((*Outer_HL & (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) == (itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7)) <%
-  JR Z,get_greatest_itemstruct_2 ;
-  BIT 6,(HL)                     ;
-  JR Z,get_greatest_itemstruct_2 ;
-  PUSH HL                 ; HL = Outer_HL;
-  PUSH BC
-  INC HL                  ; HLdash = *++HL * 8; // x position
-  LD A,(HL)               ;
-  CALL multiply_by_8      ;
-  PUSH BC
-  EXX
-  POP HL
-  AND A                   ; A &= A; // Clear carry flag.
-  SBC HL,BC               ; HLdash -= BCdash; // itemstr->pos.x * 8 - x
-  EXX
-  JR Z,get_greatest_itemstruct_1 ; if (HLdash > 0) <%
-  JR C,get_greatest_itemstruct_1 ;
-  INC HL                  ; HL++; // y position
-  LD A,(HL)               ; HLdash = *HL * 8;
-  CALL multiply_by_8      ;
-  PUSH BC
-  EXX
-  POP HL                  ; // not clearing carry?
-  SBC HL,DE               ; HLdash -= BCdash; // itemstr->pos.y * 8 - y
-  EXX
-  JR Z,get_greatest_itemstruct_1 ; if (HLdash > 0) <%
-  JR C,get_greatest_itemstruct_1 ;
-  PUSH HL                 ; HLdash = HL;
-  EXX                     ;
-  POP HL                  ;
-; Get x,y for the next iteration.
-  LD A,(HL)               ; DEdash = *HLdash-- * 8; // y position
-  CALL multiply_by_8      ;
-  LD E,C                  ;
+  LD BC,$1007             ; Set B for 16 iterations (item__LIMIT) and set C for a seven byte stride simultaneously
+  LD HL,$76C9             ; Point HL at the first item_struct's room member
+; Start loop
+ggi_loop:
+  BIT 7,(HL)              ; Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_7 flag set? ($80)
+  JR Z,ggi_next           ; If not, jump to the next iteration
+  BIT 6,(HL)              ; Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_6 flag set? ($40)
+  JR Z,ggi_next           ; If not, jump to the next iteration
+  PUSH HL                 ; Preserve the item_struct pointer
+  PUSH BC                 ; Preserve the item counter and stride
+  INC HL                  ; Advance HL to item_struct.pos.x
+  LD A,(HL)               ; Fetch item_struct.pos.x
+  CALL multiply_by_8      ; Multiply it by 8 returning the result in BC
+  PUSH BC                 ; Preserve the result
+  EXX                     ; Flip to banked regs - so we can subtract X position
+  POP HL                  ; Restore the result into HL
+  AND A                   ; Clear the carry flag prior to SBC
+  SBC HL,BC               ; Calculate (item_struct.pos.x * 8 - x_position)
+  EXX                     ; Flip to unbanked regs - now we have the result
+  JR Z,ggi_next_pop       ; Was (item_struct.pos.x * 8 <= x_position)?
+  JR C,ggi_next_pop       ; Jump if so
+  INC HL                  ; Advance HL to item_struct.pos.y
+  LD A,(HL)               ; Fetch item_struct.pos.y
+  CALL multiply_by_8      ; Multiply it by 8 returning the result in BC
+  PUSH BC                 ; Preserve the result
+  EXX                     ; Flip to banked regs - so we can subtract Y position
+  POP HL                  ; Restore the result into HL
+; Q. Why are we not clearing the carry flag like at DC03?
+  SBC HL,DE               ; Calculate (item_struct.pos.y * 8 - y_position)
+  EXX                     ; Flip to unbanked regs - now we have the result
+  JR Z,ggi_next_pop       ; Was (item_struct.pos.y * 8 <= y_position)?
+  JR C,ggi_next_pop       ; Jump if so
+  PUSH HL                 ; Preserve the item_struct pointer
+  EXX                     ; Flip to banked regs - so we can store new X,Y positions
+  POP HL                  ; Restore the item_struct pointer
+; Get (x,y) for the next iteration.
+  LD A,(HL)               ; Fetch item_struct.pos.y
+  CALL multiply_by_8      ; Multiply it by 8 returning the result in BC
+  LD E,C                  ; DE = BC
   LD D,B                  ;
+  DEC HL                  ; Rewind HL to point at item_struct.pos.x
+  LD A,(HL)               ; Fetch item_struct.pos.x
+  CALL multiply_by_8      ; Multiply it by 8 returning the result in BC
+  DEC HL                  ; Rewind HL to point at item_struct (jump back over item & room bytes)
   DEC HL                  ;
-  LD A,(HL)               ; BCdash = *HLdash-- * 8; // x position
-  CALL multiply_by_8      ;
-  DEC HL                  ; HLdash--; // point to item
-  DEC HL                  ;
-  PUSH HL                 ; IY = HLdash; // IY is not banked // sampled IY=$771C,7715 (pointing into item_structs)
+; IY is used to return an item_struct here which is unusual compared to the rest of the code which maintains IY as a current vischar pointer.
+  PUSH HL                 ; Copy the item_struct pointer to IY
   POP IY                  ;
-  EXX
-  POP BC                  ; - // fetch iter count
-  PUSH BC
-  LD A,$10                ; A = (16 - B) | (1<<6); // item found flag
+  EXX                     ; Flip to unbanked regs
+  POP BC                  ; Restore the item counter and stride
+  PUSH BC                 ; Preserve the item counter and stride
+  LD A,$10                ; Calculate the item index (item__LIMIT - item counter)
   SUB B                   ;
-  OR $40                  ;
-  EX AF,AF'               ; %> %> // unpaired // returns the value in Adash
-get_greatest_itemstruct_1:
-  POP BC
-  POP HL
-get_greatest_itemstruct_2:
-  LD A,C                          ; %> Outer_HL += 7; // stride
-  ADD A,L                         ;
-  LD L,A                          ;
-  JR NC,get_greatest_itemstruct_3 ;
-  INC H                           ;
-get_greatest_itemstruct_3:
-  DJNZ get_greatest_itemstruct_0 ; %> while (--B);
-  RET                     ; return;
+  OR $40                  ; Set the item found flag
+  EX AF,AF'               ; Return the value in A'
+ggi_next_pop:
+  POP BC                  ; Restore item counter and stride
+  POP HL                  ; Restore item_struct pointer
+ggi_next:
+  LD A,C                  ; Advance by stride to next item
+  ADD A,L                 ;
+  LD L,A                  ;
+  JR NC,ggi_loop_end      ;
+  INC H                   ;
+ggi_loop_end:
+  DJNZ ggi_loop           ; ...loop
+  RET                     ; Return
 
 ; Set up item plotting.
 ;
 ; Used by the routine at plot_sprites.
 ;
-; I:A Item.
-; I:IY Pointer to itemstruct. (samples = 0x771C, 0x76F9)
+; Counterpart of, and very similar to, the routine at setup_vischar_plotting.
 ;
-; 0x3F looks like it ought to be 0x1F (item__LIMIT - 1). Potential bug: The use of A later on does not re-clamp it to 0x1F.
+; I:A Item index
+; I:IY Pointer to item_struct
+; O:F Z set if item is visible, NZ otherwise
+;
+; The $3F mask here looks like it ought to be $1F (item__LIMIT - 1). Potential bug: The use of A later on does not re-clamp it to $1F.
 setup_item_plotting:
-  AND $3F                 ; A &= 0x3F;
-; Bug: This writes to saved_item but it's never subsequently read from.
-  LD (saved_item),A       ; saved_item = A;
-  PUSH IY                 ; HL = IY + 2;
+  AND $3F                 ; Mask off item_FOUND
+; Bug: This writes the item index to saved_item but that location is never subsequently read from.
+  LD (saved_item),A       ; Store saved_item
+  PUSH IY                 ; Copy the item_struct pointer into HL
   POP HL                  ;
+  INC HL                  ; Advance HL to item_struct.pos
   INC HL                  ;
-  INC HL                  ;
-  LD DE,tinypos_stash_x   ; DE = &tinypos_stash_x;
-  LD BC,$0005             ; BC = 5;
-  LDIR
-  EX DE,HL
-  LD (HL),B               ; *HL = B; // B == 0 due to LDIR /* Items are never drawn flipped. */
-  LD HL,item_definitions  ; HL = &item_definitions[A];
+  LD DE,tinypos_stash_x   ; Copy item_struct.pos and item_struct.iso_pos to tinypos_stash and iso_pos (five contiguous bytes)
+  LD BC,$0005             ;
+  LDIR                    ;
+; HL now points at global sprite_index.
+  EX DE,HL                ; Point DE at item_struct.sprite_index
+  LD (HL),B               ; Zero sprite_index so that items are never drawn flipped
+  LD HL,item_definitions  ; Point HL at item_definitions[item] (a spritedef_t)
   ADD A,A                 ;
   LD C,A                  ;
   ADD A,A                 ;
   ADD A,C                 ;
   LD C,A                  ;
   ADD HL,BC               ;
-  INC HL                  ; HL++; // &item_definitions[A].height
-  LD A,(HL)               ; A = (HL);
-  LD (item_height),A      ; item_height = A;
-  INC HL                  ; HL++;
-  LD DE,bitmap_pointer    ; memcpy(&bitmap_pointer, HL, 4); // copy bitmap and mask pointers
+  INC HL                  ; Advance HL to spritedef.height
+  LD A,(HL)               ; Load it
+  LD (item_height),A      ; Set item_height to spritedef.height
+  INC HL                  ; Advance HL to spritedef.bitmap
+  LD DE,bitmap_pointer    ; Copy spritedef bitmap and mask pointers to global bitmap_pointer and mask_pointer
   LD BC,$0004             ;
   LDIR                    ;
-  CALL item_visible       ; item_visible();
-  RET NZ                  ; if (!Z) return; /* invisible */
-  PUSH BC                 ; // clipped width
-  PUSH DE                 ; // clipped height
-  LD A,E                  ; A = E;
-  LD ($E2C2),A            ; ($E2C1 + 1) = A; // self modify masked_sprite_plotter_16_wide_left
-  LD A,B                  ; A = B;
-  AND A                       ; if (A == 0) <%
-  JP NZ,setup_item_plotting_0 ;
-  LD A,$77                ; A = 0x77; // 0b01110111 /* opcode of 'LD (HL),A' */
-  EX AF,AF'               ; Adash = C; %>
-  LD A,C                  ;
-  JR setup_item_plotting_1 ; else <%
-setup_item_plotting_0:
-  XOR A                   ; A = 0; /* opcode of 'NOP' */
-  EX AF,AF'               ; Adash = 3 - C; %>
-  LD A,$03                ;
+  CALL item_visible       ; Clip the item's dimensions to the game window
+  RET NZ                  ; Return if the item is invisible
+; The item is visible.
+  PUSH BC                 ; Preserve the lefthand skip and clipped width
+  PUSH DE                 ; Preserve the top skip and clipped height
+; Self modify the sprite plotter routines.
+  LD A,E                  ; Copy the clipped height into A
+  LD ($E2C2),A            ; Write clipped height to the instruction at pms16_right_height_iters in plot_masked_sprite_16px (shift right case)
+sip_do_enables:
+  LD A,B                  ; Is the lefthand skip zero?
+  AND A                   ;
+  JP NZ,sip_enable_is_zero ; Jump if not
+; There's no left hand skip - enable instructions.
+sip_enable_is_one:
+  LD A,$77                ; Load A' with the opcode of 'LD (HL),A'
+  EX AF,AF'               ;
+  LD A,C                  ; Set a counter to clipped_width. We'll write out this many bytes before clipping
+  JR sip_enable_cont      ; (else)
+sip_enable_is_zero:
+  XOR A                   ; Load A' with the opcode of 'NOP'
+  EX AF,AF'               ;
+  LD A,$03                ; Set a counter to (3 - clipped_width). We'll clip until this many bytes have been written
   SUB C                   ;
-setup_item_plotting_1:
-  EXX
-  LD C,A                  ; Cdash = Adash;
-  EX AF,AF'
-  LD HL,masked_sprite_plotter_16_enables ; HLdash = &masked_sprite_plotter_16_enables[0];
-  LD B,$03                ; Bdash = 3; // iterations
-setup_item_plotting_2:
-  LD E,(HL)               ; do <% Edash = *HLdash++;
+sip_enable_cont:
+  EXX                     ; Bank
+  LD C,A                  ; Move counter to C
+  EX AF,AF'               ; Unbank the opcode we'll write`
+; Set the addresses in the jump table to NOP or LD (HL),A.
+sip_enables_iters:
+  LD HL,masked_sprite_plotter_16_enables ; Point HL at masked_sprite_plotter_16_enables[0]
+  LD B,$03                ; Set B for 3 iterations / 3 pairs of self modified locations
+; Start loop
+sip_enables_loop:
+  LD E,(HL)               ; Fetch an address
   INC HL                  ;
-  LD D,(HL)               ; Ddash = *HLdash;
-  LD (DE),A               ; *DEdash = A;
-  INC HL                  ; HLdash++;
-  LD E,(HL)               ; Edash = *HLdash++;
+  LD D,(HL)               ;
+  LD (DE),A               ; Write a new opcode
+  INC HL                  ; Advance
+  LD E,(HL)               ; Fetch an address
   INC HL                  ;
-  LD D,(HL)               ; Ddash = *HLdash++;
-  INC HL                  ;
-  LD (DE),A               ; *DEdash = A;
-  DEC C                       ; if (--Cdash == 0) A ^= 0x77; /* Toggle between LD (HL),A and NOP. */
-  JR NZ,setup_item_plotting_3 ;
-  XOR $77                     ;
-setup_item_plotting_3:
-  DJNZ setup_item_plotting_2 ; %> while (--Bdash);
-  EXX
-  LD A,D                  ; A = D;
-  AND A                   ; A &= A;
-  LD DE,$0000             ; DE = 0;
-  JR NZ,setup_item_plotting_4 ; if (Z) <%
-  LD HL,$81BC             ; HL = $81BC; // &map_position + 1;
-  LD A,(iso_pos_y)        ; A = ($81B6) - *HL;
+  LD D,(HL)               ;
+  INC HL                  ; Advance
+  LD (DE),A               ; Write a new opcode
+  DEC C                   ; Count down the counter
+  JR NZ,sip_selfmod_next  ; Jump if nonzero
+  XOR $77                 ; Swap between LD (HL),A and NOP
+sip_selfmod_next:
+  DJNZ sip_enables_loop   ; ...loop
+; Calculate Y plotting offset.
+;
+; The full calculation can be avoided if we know there are rows to skip since in that case the sprite always starts at top of the screen.
+  EXX                     ; Bank
+  LD A,D                  ; Is top skip zero?
+  AND A                   ;
+  LD DE,$0000             ; Initialise our Y value to zero
+  JR NZ,sip_y_skip_set    ; Jump if top skip isn't zero
+  LD HL,$81BC             ; Compute Y = iso_pos_y - map_position_y
+  LD A,(iso_pos_y)        ;
   SUB (HL)                ;
-  LD L,A                  ; HL = A * 192;
+  LD L,A                  ; Multiply Y by the window buf stride (192) and store it in HL
   LD H,$00                ;
   ADD HL,HL               ;
   ADD HL,HL               ;
@@ -15182,56 +15268,59 @@ setup_item_plotting_3:
   LD D,H                  ;
   ADD HL,HL               ;
   ADD HL,DE               ;
-  EX DE,HL                ; %>
-setup_item_plotting_4:
-  LD A,(iso_pos_x)        ; A = iso_pos_x;
-  LD HL,map_position      ; HL = $81BB; // &map_position;
-  SUB (HL)                ; A -= *HL; // x
-  LD L,A                  ; HL = A;
+  EX DE,HL                ; Move Y into DE
+sip_y_skip_set:
+  LD A,(iso_pos_x)        ; Compute x = iso_pos_x - map_position_x
+  LD HL,map_position      ;
+  SUB (HL)                ;
+  LD L,A                  ; Copy x to HL and sign extend it
   LD H,$00                ;
-  JR NC,setup_item_plotting_5 ; if (carry) H = 0xFF;
-  LD H,$FF                    ;
-setup_item_plotting_5:
-  ADD HL,DE               ; HL += DE;
-  LD DE,$F290             ; DE = $F290; // screen buffer start address
-  ADD HL,DE               ; HL += DE;
-  LD ($81A2),HL           ; ($81A2) = HL;  // screen buffer pointer
-  LD HL,$8100             ; HL = mask_buffer;
-  POP DE
-  PUSH DE
-  LD A,D                  ; L += D * 4;
+  JR NC,sip_x_skip_set    ;
+  LD H,$FF                ;
+sip_x_skip_set:
+  ADD HL,DE               ; Combine the x and y values
+  LD DE,$F290             ; Add the screen buffer start address
+  ADD HL,DE               ;
+  LD ($81A2),HL           ; Save the finalised screen buffer pointer
+  LD HL,$8100             ; Point HL at the mask_buffer
+  POP DE                  ; Retrieve the top skip and clipped height
+  PUSH DE                 ;
+  LD A,D                  ; mask buffer pointer += top_skip * 4
   ADD A,A                 ;
   ADD A,A                 ;
   ADD A,L                 ;
   LD L,A                  ;
-  LD (foreground_mask_pointer),HL ; ($81B0) = HL;
-  POP DE
-  PUSH DE
-  LD A,D                  ; A = D;
-  AND A                      ; if (A) <%
-  JR Z,setup_item_plotting_7 ;
-; Bug: Generic multiply loop which only ever multiplies by two...
-  LD D,A                  ; D = A;
-  XOR A                   ; A = 0;
-  LD E,$03                ; E = 3; // unusual (or self modified and i've not spotted the setter)
-  DEC E                   ; E--;
-setup_item_plotting_6:
-  ADD A,E                     ; do <% A += E; %> while (--D); %>
-  DEC D                       ;
-  JP NZ,setup_item_plotting_6 ;
-; D ends up as zero either way.
-setup_item_plotting_7:
-  LD E,A                  ; E = A;
-  LD HL,(bitmap_pointer)  ; bitmap_pointer += DE;
+  LD (foreground_mask_pointer),HL ; Set foreground_mask_pointer
+  POP DE                  ; Retrieve the top skip and clipped height (again)
+  PUSH DE                 ;
+  LD A,D                  ; Is top skip zero?
+  AND A                   ;
+  JR Z,setup_item_plotting_0 ; Jump if so
+; Bug: This loop is setup as generic multiply but only ever multiplies by two.
+  LD D,A                  ; Copy top_skip to loop counter
+  XOR A                   ; Zero the accumulator
+  LD E,$03                ; Set multiplier to two (width bytes - 1)
+  DEC E                   ;
+; Start loop
+sip_mult_loop:
+  ADD A,E                 ; Accumulate
+  DEC D                   ; Decrement counter
+  JP NZ,sip_mult_loop     ; ...loop
+; D will be set to zero here either way: if the loop terminates, or if jumped into.
+setup_item_plotting_0:
+  LD E,A                  ; Set DE to skip (result)
+  LD HL,(bitmap_pointer)  ; Advance bitmap_pointer by 'skip'
   ADD HL,DE               ;
   LD (bitmap_pointer),HL  ;
-  LD HL,(mask_pointer)    ; mask_pointer += DE;
+  LD HL,(mask_pointer)    ; Advance mask_pointer by 'skip'
   ADD HL,DE               ;
   LD (mask_pointer),HL    ;
-  POP BC
-  POP DE
-  XOR A                   ; A = 0;
-  RET                     ; return; /* visible */
+; It's unclear as to why these values are preserved since they're not used by the caller.
+  POP BC                  ; Restore the lefthand skip and clipped width
+  POP DE                  ; Restore the top skip and clipped height
+; This XOR A isn't strictly needed - the Z flag should still be set from DCEC. (The counterpart at E541 doesn't have it).
+  XOR A                   ; Set Z flag to signal "is visible" for return
+  RET                     ; Return
 
 ; Clip the given item's dimensions to the game window.
 ;
@@ -15239,11 +15328,11 @@ setup_item_plotting_7:
 ;
 ; Used by the routine at setup_item_plotting.
 ;
-; O:AF Z/!Z => visible/not visible.
-; O:B Lefthand skip (bytes).
-; O:C Clipped width (bytes).
-; O:D Top skip (rows).
-; O:E Clipped height (rows).
+; O:B Lefthand skip (bytes)
+; O:C Clipped width (bytes)
+; O:D Top skip (rows)
+; O:E Clipped height (rows)
+; O:F Z if visible, NZ otherwise
 ;
 ; First handle the horizontal cases.
 item_visible:
@@ -15870,28 +15959,28 @@ LE0D7:
 ;
 ; (<- setup_item_plotting, setup_vischar_plotting)
 masked_sprite_plotter_16_enables:
-  DEFW masked_sprite_plotter_16_wide_case_1_enable0 ; masked_sprite_plotter_16_wide_case_1_enable0
-  DEFW masked_sprite_plotter_16_wide_case_2_enable1 ; masked_sprite_plotter_16_wide_case_2_enable1
-  DEFW masked_sprite_plotter_16_wide_case_1_enable2 ; masked_sprite_plotter_16_wide_case_1_enable2
-  DEFW masked_sprite_plotter_16_wide_case_2_enable3 ; masked_sprite_plotter_16_wide_case_2_enable3
-  DEFW masked_sprite_plotter_16_wide_case_1_enable4 ; masked_sprite_plotter_16_wide_case_1_enable4
-  DEFW masked_sprite_plotter_16_wide_case_2_enable5 ; masked_sprite_plotter_16_wide_case_2_enable5
+  DEFW pms16_right_plot_enable_0 ; pms16_right_plot_enable_0
+  DEFW pms16_left_plot_enable_0 ; pms16_left_plot_enable_0
+  DEFW pms16_right_plot_enable_1 ; pms16_right_plot_enable_1
+  DEFW pms16_left_plot_enable_1 ; pms16_left_plot_enable_1
+  DEFW pms16_right_plot_enable_2 ; pms16_right_plot_enable_2
+  DEFW pms16_left_plot_enable_2 ; pms16_left_plot_enable_2
 
 ; Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
 ;
 ; (<- setup_vischar_plotting)
 masked_sprite_plotter_24_enables:
-  DEFW masked_sprite_plotter_24_wide_enable0 ; masked_sprite_plotter_24_wide_enable0
-  DEFW masked_sprite_plotter_24_wide_enable1 ; masked_sprite_plotter_24_wide_enable1
-  DEFW masked_sprite_plotter_24_wide_enable2 ; masked_sprite_plotter_24_wide_enable2
-  DEFW masked_sprite_plotter_24_wide_enable3 ; masked_sprite_plotter_24_wide_enable3
-  DEFW masked_sprite_plotter_24_wide_enable4 ; masked_sprite_plotter_24_wide_enable4
-  DEFW masked_sprite_plotter_24_wide_enable5 ; masked_sprite_plotter_24_wide_enable5
-  DEFW masked_sprite_plotter_24_wide_enable6 ; masked_sprite_plotter_24_wide_enable6
-  DEFW masked_sprite_plotter_24_wide_enable7 ; masked_sprite_plotter_24_wide_enable7
+  DEFW pms24_right_plot_enable_0 ; pms24_right_plot_enable_0
+  DEFW pms24_left_plot_enable_0 ; pms24_left_plot_enable_0
+  DEFW pms24_right_plot_enable_1 ; pms24_right_plot_enable_1
+  DEFW pms24_left_plot_enable_1 ; pms24_left_plot_enable_1
+  DEFW pms24_right_plot_enable_2 ; pms24_right_plot_enable_2
+  DEFW pms24_left_plot_enable_2 ; pms24_left_plot_enable_2
+  DEFW pms24_right_plot_enable_3 ; pms24_right_plot_enable_3
+  DEFW pms24_left_plot_enable_3 ; pms24_left_plot_enable_3
 ; These two look different. Unused?
-  DEFW masked_sprite_plotter_16_wide_vischar ; masked_sprite_plotter_16_wide_vischar
-  DEFW masked_sprite_plotter_24_wide_vischar ; masked_sprite_plotter_24_wide_vischar
+  DEFW plot_masked_sprite_16px ; plot_masked_sprite_16px
+  DEFW plot_masked_sprite_24px ; plot_masked_sprite_24px
 
 ; Unused word?
 ;
@@ -15899,93 +15988,353 @@ masked_sprite_plotter_24_enables:
 LE100:
   DEFW $0806
 
-; Sprite plotter for 24-pixel-wide sprites. Used for characters and objects.
+; Sprite plotter for 24 pixel-wide masked sprites.
+;
+; This is used for characters and objects.
 ;
 ; Used by the routine at plot_sprites.
 ;
 ; I:IY Pointer to visible character.
-masked_sprite_plotter_24_wide_vischar:
-  LD A,(IY+$18)                                 ; if ((A = (IY[24] & 7)) >= 4) goto unaligned;
-  AND $07                                       ;
-  CP $04                                        ;
-  JP NC,masked_sprite_plotter_24_wide_unaligned ;
-; Shift right?
-  CPL                     ; A = (~A & 3) * 8; // jump table offset (on input, A is 0..3)
+;
+; Mask off the bottom three bits of the vischar's (isometric projected) x position and treat it as a signed field. This tells us how far we need to shift the sprite left or right. -4..-1 => left shift by 4..1px; 0..3 => right shift by
+; 0..3px.
+plot_masked_sprite_24px:
+  LD A,(IY+$18)           ; x = (vischar.iso_pos.x & 7)
+  AND $07                 ;
+  CP $04                  ; Is x equal to 4 or above? (-4..-1)
+  JP NC,pms24_left        ; Jump if so
+; Right shifting case.
+;
+; A is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (8 bytes) to obtain
+; the jump offset.
+  CPL                     ; x = (~x & 3)
   AND $03                 ;
+  ADD A,A                 ; Multiply by eight to get the jump distance
   ADD A,A                 ;
   ADD A,A                 ;
-  ADD A,A                 ;
-  LD ($E161),A            ; ($E160 + 1) = A; // self-modify: jump into mask rotate
-  LD ($E143),A            ; ($E142 + 1) = A; // self-modify: jump into bitmap rotate
-  EXX                     ; maskptr = mask_pointer;
+  LD ($E161),A            ; Self modify the JR at pms24_right_mask_jump to jump into the mask rotate sequence
+  LD ($E143),A            ; Self modify the JR at pms24_right_bitmap_jump to jump into the bitmap rotate sequence
+  EXX                     ; Fetch mask_pointer
   LD HL,(mask_pointer)    ;
-  EXX                     ; bitmapptr = bitmap_pointer;
+  EXX                     ; Fetch bitmap_pointer
   LD HL,(bitmap_pointer)  ;
-masked_sprite_plotter_24_wide_height_iters:
-  LD B,$20                ; iters = 32; // iterations // clipped_height & 0xFF // self modified
-; Load bitmap bytes into B,C,E.
-masked_sprite_plotter_24_wide_vischar_0:
-  PUSH BC                 ; do <% bm0 = *bitmapptr++; // bitmap bytes
-  LD B,(HL)               ;
+pms24_right_height_iters:
+  LD B,$20                ; Set B for 32 iterations (self modified by E49D)
+; Start loop
+pms24_right_loop:
+  PUSH BC                 ; Preserve the loop counter
+  LD B,(HL)               ; Load the bitmap bytes bm0,bm1,bm2 into B,C,E
   INC HL                  ;
-  LD C,(HL)               ; bm1 = *bitmapptr++;
+  LD C,(HL)               ;
   INC HL                  ;
-  LD E,(HL)               ; bm2 = *bitmapptr++;
+  LD E,(HL)               ;
   INC HL                  ;
-  PUSH HL                 ;
-  EXX                     ;
-; Load mask bytes into B',C',E'.
-  LD B,(HL)               ; mask0 = *maskptr++; // mask bytes
+  PUSH HL                 ; Preserve the bitmap pointer
+  EXX                     ; Bank
+  LD B,(HL)               ; Load the mask bytes mask0,mask1,mask2 into B',C',E'
   INC HL                  ;
-  LD C,(HL)               ; mask1 = *maskptr++;
+  LD C,(HL)               ;
   INC HL                  ;
-  LD E,(HL)               ; mask2 = *maskptr++;
+  LD E,(HL)               ;
   INC HL                  ;
-  PUSH HL                 ;
-  LD A,(flip_sprite)           ; if (flip_sprite & (1<<7)) flip_24_masked_pixels();
-  AND A                        ;
-  CALL M,flip_24_masked_pixels ;
-  LD HL,(foreground_mask_pointer) ; foremaskptr = foreground_mask_pointer;
+  PUSH HL                 ; Preserve the mask pointer
+  LD A,(flip_sprite)      ; Is the top bit of flip_sprite set?
+  AND A                   ;
+  CALL M,flip_24_masked_pixels ; Call flip_24_masked_pixels if so
+  LD HL,(foreground_mask_pointer) ; Fetch foreground_mask_pointer
   EXX                             ;
-  LD HL,($81A2)           ; screenptr = ($81A2); // moved compared to the other routines
-; Shift bitmap.
-  LD D,$00                ; bm3 = 0;
-masked_sprite_plotter_24_wide_jump0:
-  JR masked_sprite_plotter_24_wide_vischar_1 ; goto $E144; // self-modified // jump table
-masked_sprite_plotter_24_wide_vischar_1:
-  SRL B                   ; SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
-  RR C                    ; RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
-  RR E                    ; RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry;
-  RR D                    ; RR bm3       // new_carry = bm3 & 1; bm3 = (bm3 >> 1) | (carry << 7); carry = new_carry;
-  SRL B                   ; SRL bm0 // 1
-  RR C                    ; RR bm1
-  RR E                    ; RR bm2
-  RR D                    ; RR bm3
-  SRL B                   ; SRL bm0 // 2
-  RR C                    ; RR bm1
-  RR E                    ; RR bm2
-  RR D                    ; RR bm3
+; Note: This instruction is moved compared to the other routines.
+  LD HL,($81A2)           ; Load screen buffer pointer
+; Shift the bitmap right.
+;
+; Our 24px wide bitmap has three bytes to shift (B,C,E) but we'll need an extra byte to capture any shifted-out bits (D).
+  LD D,$00                ; bm3 = 0
+pms24_right_bitmap_jump:
+  JR pms24_right_bitmap_jumptable_0 ; Jump into shifter (self modified by E115)
+; Rotate the bitmap bytes (B,C,E,D) right by one pixel.
+;
+; Shift out the leftmost byte's bottom pixel into the carry flag.
+pms24_right_bitmap_jumptable_0:
+  SRL B                   ; carry = bm0 & 1; bm0 >>= 1
+; Shift out the next byte's bottom pixel into the carry flag while shifting in the previous carry at the top. (x3)
+  RR C                    ; new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry
+  RR E                    ; new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry
+  RR D                    ; new_carry = bm3 & 1; bm3 = (bm3 >> 1) | (carry << 7); carry = new_carry
+pms24_right_bitmap_jumptable_1:
+  SRL B                   ; Do the same again
+  RR C                    ;
+  RR E                    ;
+  RR D                    ;
+pms24_right_bitmap_jumptable_2:
+  SRL B                   ; Do the same again
+  RR C                    ;
+  RR E                    ;
+  RR D                    ;
+pms24_right_bitmap_jumptable_end:
+  EXX                     ; Swap to masks bank
+; Shift the mask right.
+;
+; This follows the same process as the bitmap shifting above, but the mask and a carry flag are set by default.
+  LD D,$FF                ; mask3 = $FF
+  SCF                     ; carry = 1
+pms24_right_mask_jump:
+  JR pms24_right_mask_jumptable_0 ; Jump into shifter (self modified by E112)
+; Rotate the mask bytes (B,C,E,D) right by one pixel.
+pms24_right_mask_jumptable_0:
+  RR B                    ; new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry
+  RR C                    ; new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry
+  RR E                    ; new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry
+  RR D                    ; new_carry = mask3 & 1; mask3 = (mask3 >> 1) | (carry << 7); carry = new_carry
+pms24_right_mask_jumptable_1:
+  RR B                    ; Do the same again
+  RR C                    ;
+  RR E                    ;
+  RR D                    ;
+pms24_right_mask_jumptable_2:
+  RR B                    ; Do the same again
+  RR C                    ;
+  RR E                    ;
+  RR D                    ;
+; Plot using the foreground mask.
+;
+; In TGE the bitmap pixels are set to 0 for black and 1 for white, and the mask pixels are set to 0 for opaque and 1 for transparent.
+;
+; TGE uses "AND-OR" type masks. In this type of mask the screen contents are ANDed with the mask (preserving only those pixels set in the mask) then the bitmap is ORed into place, like so: result = (mask & screen) | bitmap
+;
+; +--------+------+---------------------------------+
+; | Bitmap | Mask | Result                          |
+; +--------+------+---------------------------------+
+; | 0      | 0    | Set to black                    |
+; | 0      | 1    | Set to background (transparent) |
+; | 1      | 0    | Set to white                    |
+; | 1      | 1    | Set to white                    |
+; +--------+------+---------------------------------+
+;
+; See also https://skoolkit.ca/docs/skoolkit-6.2/skool-macros.html#masks
+;
+; However TGE also has a foreground layer to consider. This allows objects to be in front of a sprite too. The foreground mask removes from a sprite the pixels of objects in front of it. This gives us our final expression: result =
+; ((~foreground_mask | mask) & screen) | (bitmap & foreground_mask)
+;
+; In the left term: ((~foreground_mask | mask) & screen) :: The foreground mask is first inverted so that it will preserve the foreground layer's pixels. It's then ORed with the vischar's mask so that it preserves the transparent pixels
+; around the vischar. The result is ANDed with the screen (buffer) pixels, creating a "hole" into which we will insert the bitmap pixels.
+;
+; In the right term: (bitmap & foreground_mask) :: We take the vischar's bitmap pixels and mask them against the foreground mask. This means that we retain the parts of the vischar outside of the foreground mask.
+;
+; Finally the OR merges the result with the screen-with-a-hole-cut-out.
+;
+; +------------+--------+------+---------------------------------+
+; | Foreground | Bitmap | Mask | Result                          |
+; +------------+--------+------+---------------------------------+
+; | 0          | any    | any  | Set to foreground               |
+; | 1          | 0      | 0    | Set to black                    |
+; | 1          | 0      | 1    | Set to background (transparent) |
+; | 1          | 1      | 0    | Set to white                    |
+; | 1          | 1      | 1    | Set to white                    |
+; +------------+--------+------+---------------------------------+
+pms24_right_plot_0:
+  LD A,(HL)               ; Load a foreground mask byte
+  CPL                     ; Invert it
+  OR B                    ; OR with mask byte mask0
+  EXX                     ; Swap to bank containing bitmap bytes (in BC & DE) and screen buffer pointer (in HL)
+  AND (HL)                ; AND combined masks with screen byte
+  EX AF,AF'               ; Bank left hand term
+  LD A,B                  ; Get bitmap byte bm0
+  EXX                     ; Swap to bank containing mask bytes (in BC' & DE') and foreground mask pointer (in HL')
+  AND (HL)                ; AND with foreground mask byte
+  LD B,A                  ; Save right hand term
+  EX AF,AF'               ; Unbank left hand term
+  OR B                    ; Combine terms
+  INC L                   ; Advance foreground mask pointer
+  EXX                     ; Swap to bitmaps bank
+pms24_right_plot_enable_0:
+  LD (HL),A               ; Write pixel (self modified)
+  INC HL                  ; Advance to next output pixel
+  EXX                     ; Swap to masks bank
+pms24_right_plot_1:
+  LD A,(HL)               ; Do the same again for mask1 & bm1
+  CPL                     ;
+  OR C                    ;
   EXX                     ;
-; Shift mask.
-  LD D,$FF                ; mask3 = 0xFF;
-  SCF                     ; carry = 1;
-masked_sprite_plotter_24_wide_jump1:
-  JR masked_sprite_plotter_24_wide_vischar_2 ; goto $E162; // self-modified // jump table
-masked_sprite_plotter_24_wide_vischar_2:
-  RR B                    ; RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
-  RR C                    ; RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
-  RR E                    ; RR mask2      // new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry;
-  RR D                    ; RR mask3      // new_carry = mask3 & 1; mask3 = (mask3 >> 1) | (carry << 7); carry = new_carry;
-  RR B                    ; RR mask0 // 1
-  RR C                    ; RR mask1
-  RR E                    ; RR mask2
-  RR D                    ; RR mask3
-  RR B                    ; RR mask0 // 2
-  RR C                    ; RR mask1
-  RR E                    ; RR mask2
-  RR D                    ; RR mask3
-; Plot, using foreground mask.
-  LD A,(HL)               ; A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
+  AND (HL)                ;
+  EX AF,AF'               ;
+  LD A,C                  ;
+  EXX                     ;
+  AND (HL)                ;
+  LD C,A                  ;
+  EX AF,AF'               ;
+  OR C                    ;
+  INC L                   ;
+  EXX                     ;
+pms24_right_plot_enable_1:
+  LD (HL),A               ;
+  INC HL                  ;
+  EXX                     ;
+pms24_right_plot_2:
+  LD A,(HL)               ; Do the same again for mask2 & bm2
+  CPL                     ;
+  OR E                    ;
+  EXX                     ;
+  AND (HL)                ;
+  EX AF,AF'               ;
+  LD A,E                  ;
+  EXX                     ;
+  AND (HL)                ;
+  LD E,A                  ;
+  EX AF,AF'               ;
+  OR E                    ;
+  INC L                   ;
+  EXX                     ;
+pms24_right_plot_enable_2:
+  LD (HL),A               ;
+  INC HL                  ;
+  EXX                     ;
+pms24_right_plot_3:
+  LD A,(HL)               ; Do the same again for mask3 & bm3
+  CPL                     ;
+  OR D                    ;
+  EXX                     ;
+  AND (HL)                ;
+  EX AF,AF'               ;
+  LD A,D                  ;
+  EXX                     ;
+  AND (HL)                ;
+  LD D,A                  ;
+  EX AF,AF'               ;
+  OR D                    ;
+  INC L                   ;
+  LD (foreground_mask_pointer),HL ; Save foreground_mask_pointer
+  POP HL                  ; Restore the mask pointer
+  EXX
+pms24_right_plot_enable_3:
+  LD (HL),A
+  LD BC,$0015             ; Advance screen buffer pointer by (24 - 3 = 21) bytes
+  ADD HL,BC               ;
+  LD ($81A2),HL           ; Save the screen buffer pointer
+  POP HL                  ; Restore the bitmap pointer
+  POP BC                  ; Restore the loop counter
+  DEC B                   ; ...loop
+  JP NZ,pms24_right_loop  ;
+  RET                     ; Return
+; Left shifting case.
+;
+; A is 4..7 here, which we intepret as -4..-1: the amount by which we want to shift the sprite left.
+pms24_left:
+  SUB $04                 ; 4..7 => jump table offset 0..3
+  RLCA                    ; Multiply by eight to get the jump distance
+  RLCA                    ;
+  RLCA                    ;
+  LD ($E22A),A            ; Self modify the JR at pms24_left_mask_jump to jump into the mask rotate sequence
+  LD ($E204),A            ; Self modify the JR at pms24_left_bitmap_jump to jump into the bitmap rotate sequence
+  EXX                     ; Fetch mask_pointer
+  LD HL,(mask_pointer)    ;
+  EXX                     ; Fetch bitmap_pointer
+  LD HL,(bitmap_pointer)  ;
+pms24_left_height_iters:
+  LD B,$20                ; Set B for 32 iterations (self modified by E4A0)
+; Start loop
+pms24_left_loop:
+  PUSH BC                 ; Preserve the loop counter
+  LD B,(HL)               ; Load the bitmap bytes bm1,bm2,bm3 into B,C,E
+  INC HL                  ;
+  LD C,(HL)               ;
+  INC HL                  ;
+  LD E,(HL)               ;
+  INC HL                  ;
+  PUSH HL                 ; Preserve the bitmap pointer
+  EXX                     ; Bank
+  LD B,(HL)               ; Load the mask bytes mask1,mask2,mask3 into B',C',E'
+  INC HL                  ;
+  LD C,(HL)               ;
+  INC HL                  ;
+  LD E,(HL)               ;
+  INC HL                  ;
+  PUSH HL                 ; Preserve the mask pointer
+  LD A,(flip_sprite)      ; Is the top bit of flip_sprite set?
+  AND A                   ;
+  CALL M,flip_24_masked_pixels ; Call flip_24_masked_pixels if so
+  LD HL,(foreground_mask_pointer) ; Fetch foreground_mask_pointer
+  EXX                             ;
+  LD HL,($81A2)           ; Load screen buffer pointer
+; Shift the bitmap left.
+;
+; Our 24px wide bitmap has three bytes to shift (B,C,E) but we'll need an extra byte to capture any shifted-out bits (D).
+  LD D,$00                ; bm0 = 0
+pms24_left_bitmap_jump:
+  JR pms24_left_bitmap_jumptable_0 ; Jump into shifter (self modified by E1D6)
+; Rotate the bitmap bytes (D,B,C,E) left by one pixel.
+;
+; Shift out the rightmost byte's top pixel into the carry flag.
+pms24_left_bitmap_jumptable_0:
+  SLA E                   ; carry = bm3 >> 7; bm3 <<= 1
+; Shift out the next byte's top pixel into the carry flag while shifting in the previous carry at the bottom. (x3)
+  RL C                    ; new_carry = bm2 >> 7; bm2 = (bm2 << 1) | carry; carry = new_carry
+  RL B                    ; new_carry = bm1 >> 7; bm1 = (bm1 << 1) | carry; carry = new_carry
+  RL D                    ; new_carry = bm0 >> 7; bm0 = (bm0 << 1) | carry; carry = new_carry
+pms24_left_bitmap_jumptable_1:
+  SLA E                   ; Do the same again
+  RL C                    ;
+  RL B                    ;
+  RL D                    ;
+pms24_left_bitmap_jumptable_2:
+  SLA E                   ; Do the same again
+  RL C                    ;
+  RL B                    ;
+  RL D                    ;
+pms24_left_bitmap_jumptable_3:
+  SLA E                   ; Do the same again
+  RL C                    ;
+  RL B                    ;
+  RL D                    ;
+pms24_left_bitmap_jumptable_end:
+  EXX                     ; Swap to masks bank
+; Shift the mask left.
+  LD D,$FF                ; mask0 = $FF
+  SCF                     ; carry = 1
+pms24_left_mask_jump:
+  JR pms24_left_mask_jumptable_0 ; Jump into shifter (self modified by E1D3)
+; Rotate the mask bytes (D,B,C,E) left by one pixel.
+pms24_left_mask_jumptable_0:
+  RL E                    ; new_carry = mask3 >> 7; mask3 = (mask3 << 1) | carry; carry = new_carry
+  RL C                    ; new_carry = mask2 >> 7; mask2 = (mask2 << 1) | carry; carry = new_carry
+  RL B                    ; new_carry = mask1 >> 7; mask1 = (mask1 << 1) | carry; carry = new_carry
+  RL D                    ; new_carry = mask0 >> 7; mask0 = (mask0 << 1) | carry; carry = new_carry
+pms24_left_mask_jumptable_1:
+  RL E                    ; Do the same again
+  RL C                    ;
+  RL B                    ;
+  RL D                    ;
+pms24_left_mask_jumptable_2:
+  RL E                    ; Do the same again
+  RL C                    ;
+  RL B                    ;
+  RL D                    ;
+pms24_left_mask_jumptable_3:
+  RL E                    ; Do the same again
+  RL C                    ;
+  RL B                    ;
+  RL D                    ;
+; Plot, using the foreground mask.
+pms24_left_plot_0:
+  LD A,(HL)               ; Load a foreground mask byte
+  CPL                     ; Invert it
+  OR D                    ; OR with mask byte mask0
+  EXX                     ; Swap to bank containing bitmap bytes (in BC & DE) and screen buffer pointer (in HL)
+  AND (HL)                ; AND combined masks with screen byte
+  EX AF,AF'               ; Bank left hand term
+  LD A,D                  ; Get bitmap byte bm0
+  EXX                     ; Swap to bank containing mask bytes (in BC' & DE') and foreground mask pointer (in HL')
+  AND (HL)                ; AND with foreground mask byte
+  LD D,A                  ; Save right hand term
+  EX AF,AF'               ; Unbank left hand term
+  OR D                    ; Combine results
+  INC L                   ; Advance foreground mask pointer
+  EXX                     ; Swap to bitmaps bank
+pms24_left_plot_enable_0:
+  LD (HL),A               ; Write pixel (self modified)
+  INC HL                  ; Advance to next output pixel
+  EXX                     ; Swap to masks bank
+pms24_left_plot_1:
+  LD A,(HL)               ; Do the same again for mask1 & bm1
   CPL                     ;
   OR B                    ;
   EXX                     ;
@@ -15997,13 +16346,14 @@ masked_sprite_plotter_24_wide_vischar_2:
   LD B,A                  ;
   EX AF,AF'               ;
   OR B                    ;
-  INC L                   ; foremaskptr++;
+  INC L                   ;
   EXX                     ;
-masked_sprite_plotter_24_wide_enable0:
-  LD (HL),A               ; *screenptr++ = A;          // enable/disable 0
+pms24_left_plot_enable_1:
+  LD (HL),A               ;
   INC HL                  ;
   EXX                     ;
-  LD A,(HL)               ; A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
+pms24_left_plot_2:
+  LD A,(HL)               ; Do the same again for mask2 & bm2
   CPL                     ;
   OR C                    ;
   EXX                     ;
@@ -16015,13 +16365,14 @@ masked_sprite_plotter_24_wide_enable0:
   LD C,A                  ;
   EX AF,AF'               ;
   OR C                    ;
-  INC L                   ; foremaskptr++;
+  INC L                   ;
   EXX                     ;
-masked_sprite_plotter_24_wide_enable2:
-  LD (HL),A               ; *screenptr++ = A;          // enable/disable 2
+pms24_left_plot_enable_2:
+  LD (HL),A               ;
   INC HL                  ;
   EXX                     ;
-  LD A,(HL)               ; A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
+pms24_left_plot_3:
+  LD A,(HL)               ; Do the same again for mask3 & bm3
   CPL                     ;
   OR E                    ;
   EXX                     ;
@@ -16033,319 +16384,149 @@ masked_sprite_plotter_24_wide_enable2:
   LD E,A                  ;
   EX AF,AF'               ;
   OR E                    ;
-  INC L                   ; foremaskptr++;
-  EXX                     ;
-masked_sprite_plotter_24_wide_enable4:
-  LD (HL),A               ; *screenptr++ = A;          // enable/disable 4
-  INC HL                  ;
-  EXX                     ;
-  LD A,(HL)               ; A = ((~*foremaskptr | mask3) & *screenptr) | (bm3 & *foremaskptr);
-  CPL                     ;
-  OR D                    ;
-  EXX                     ;
-  AND (HL)                ;
-  EX AF,AF'               ;
-  LD A,D                  ;
-  EXX                     ;
-  AND (HL)                ;
-  LD D,A                  ;
-  EX AF,AF'               ;
-  OR D                    ;
-  INC L                   ; foremaskptr++;
-  LD (foreground_mask_pointer),HL ; foreground_mask_pointer = foremaskptr;
-  POP HL                          ;
-  EXX                             ;
-masked_sprite_plotter_24_wide_enable6:
-  LD (HL),A               ; *screenptr = A;            // enable/disable 6
-  LD BC,$0015             ; screenptr += 21; // stride (24 - 3)
+  INC L                   ;
+  LD (foreground_mask_pointer),HL ; Save foreground_mask_pointer
+  POP HL                  ; Restore the mask pointer
+  EXX
+pms24_left_plot_enable_3:
+  LD (HL),A
+  LD BC,$0015             ; Advance screen buffer pointer by (24 - 3 = 21) bytes
   ADD HL,BC               ;
-  LD ($81A2),HL           ; ($81A2) = screenptr;
-  POP HL                  ;
-  POP BC                                        ; %> while (--iters);
-  DEC B                                         ;
-  JP NZ,masked_sprite_plotter_24_wide_vischar_0 ;
-  RET                     ; return;
-; Shift left?
-masked_sprite_plotter_24_wide_unaligned:
-  SUB $04                 ; unaligned: A -= 4;
-  RLCA                    ; RLCA
-  RLCA                    ; RLCA
-  RLCA                    ; RLCA
-  LD ($E22A),A            ; ($E229 + 1) = A; // self-modify: jump into mask rotate
-  LD ($E204),A            ; ($E203 + 1) = A; // self-modify: jump into bitmap rotate
-  EXX                     ; HLdash = mask_pointer;
-  LD HL,(mask_pointer)    ;
-  EXX                     ; HL = bitmap_pointer;
-  LD HL,(bitmap_pointer)  ;
-masked_sprite_plotter_24_wide_unaligned_height_iters:
-  LD B,$20                ; B = 32; // iterations // clipped_height & 0xFF // self modified
-; Load bitmap bytes into B,C,E.
-masked_sprite_plotter_24_wide_vischar_3:
-  PUSH BC                 ; do <%
-  LD B,(HL)               ; B = *HL++;
-  INC HL                  ;
-  LD C,(HL)               ; C = *HL++;
-  INC HL                  ;
-  LD E,(HL)               ; E = *HL++;
-  INC HL                  ;
-  PUSH HL
-  EXX
-; Load mask bytes into B',C',E'.
-  LD B,(HL)               ; B = *HL++;
-  INC HL                  ;
-  LD C,(HL)               ; C = *HL++;
-  INC HL                  ;
-  LD E,(HL)               ; E = *HL++;
-  INC HL                  ;
-  PUSH HL
-  LD A,(flip_sprite)           ; if (flip_sprite & (1<<7)) flip_24_masked_pixels();
-  AND A                        ;
-  CALL M,flip_24_masked_pixels ;
-  LD HL,(foreground_mask_pointer) ; HL = foreground_mask_pointer;
-  EXX
-  LD HL,($81A2)           ; HL = ($81A2); // screen pointer
-; Shift bitmap.
-  LD D,$00                ; D = 0;
-masked_sprite_plotter_24_wide_jump2:
-  JR masked_sprite_plotter_24_wide_vischar_4 ; goto $E205; // self-modified to jump into ...;
-masked_sprite_plotter_24_wide_vischar_4:
-  SLA E                   ; SLA E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-  SLA E                   ; SLA E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-  SLA E                   ; SLA E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-  SLA E                   ; SLA E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-  EXX
-; Shift mask.
-  LD D,$FF                ; D = 255;
-  SCF                     ; SCF
-masked_sprite_plotter_24_wide_jump3:
-  JR masked_sprite_plotter_24_wide_vischar_5 ; goto $E22B; // self-modified to jump into ...;
-masked_sprite_plotter_24_wide_vischar_5:
-  RL E                    ; RL E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-  RL E                    ; RL E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-  RL E                    ; RL E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-  RL E                    ; RL E
-  RL C                    ; RL C
-  RL B                    ; RL B
-  RL D                    ; RL D
-; Plot, using foreground mask.
-  LD A,(HL)               ; A = ~*HL | D;       // 1
-  CPL                     ;
-  OR D                    ;
-  EXX
-  AND (HL)                ; A &= *HL;
-  EX AF,AF'
-  LD A,D                  ; A = D;
-  EXX
-  AND (HL)                ; A &= *HL;
-  LD D,A                  ; D = A;
-  EX AF,AF'
-  OR D                    ; A |= D;
-  INC L                   ; L++;
-  EXX
-masked_sprite_plotter_24_wide_enable1:
-  LD (HL),A               ; *HL++ = A;          // enable/disable 1
-  INC HL                  ;
-  EXX
-  LD A,(HL)               ; A = ~*HL | B;       // 2
-  CPL                     ;
-  OR B                    ;
-  EXX
-  AND (HL)                ; A &= *HL;
-  EX AF,AF'
-  LD A,B                  ; A = B;
-  EXX
-  AND (HL)                ; A &= *HL;
-  LD B,A                  ; B = A;
-  EX AF,AF'
-  OR B                    ; A |= B;
-  INC L                   ; L++;
-  EXX
-masked_sprite_plotter_24_wide_enable3:
-  LD (HL),A               ; *HL++ = A;          // enable/disable 3
-  INC HL                  ;
-  EXX
-  LD A,(HL)               ; A = ~*HL | C;       // 3
-  CPL                     ;
-  OR C                    ;
-  EXX
-  AND (HL)                ; A &= *HL;
-  EX AF,AF'
-  LD A,C                  ; A = C;
-  EXX
-  AND (HL)                ; A &= *HL;
-  LD C,A                  ; C = A;
-  EX AF,AF'
-  OR C                    ; A |= C;
-  INC L                   ; L++;
-  EXX
-masked_sprite_plotter_24_wide_enable5:
-  LD (HL),A               ; *HL++ = A;          // enable/disable 5
-  INC HL                  ;
-  EXX
-  LD A,(HL)               ; A = ~*HL | E;       // 4
-  CPL                     ;
-  OR E                    ;
-  EXX
-  AND (HL)                ; A &= *HL;
-  EX AF,AF'
-  LD A,E                  ; A = E;
-  EXX
-  AND (HL)                ; A &= *HL;
-  LD E,A                  ; E = A;
-  EX AF,AF'
-  OR E                    ; A |= E;
-  INC L                   ; L++;
-  LD (foreground_mask_pointer),HL ; foreground_mask_pointer = HL;
-  POP HL
-  EXX
-masked_sprite_plotter_24_wide_enable7:
-  LD (HL),A               ; *HL = A;            // enable/disable 7
-  LD BC,$0015             ; HL += 21;
-  ADD HL,BC               ;
-  LD ($81A2),HL           ; ($81A2) = HL;
-  POP HL
-  POP BC
-  DEC B                                         ; %> while (--B);
-  JP NZ,masked_sprite_plotter_24_wide_vischar_3 ;
-  RET                     ; return;
+  LD ($81A2),HL           ; Save the screen buffer pointer
+  POP HL                  ; Restore the bitmap pointer
+  POP BC                  ; Restore the loop counter
+  DEC B                   ; ...loop
+  JP NZ,pms24_left_loop   ;
+  RET                     ; Return
 
-; Entry point for masked_sprite_plotter_16_wide_left which assumes A == 0. (+ no vischar passed).
+; Alternative entry point for plot_masked_sprite_16px that assumes x is zero.
 ;
 ; Used by the routine at plot_sprites.
-masked_sprite_plotter_16_wide_item:
-  XOR A                   ; A = 0;
-  JR masked_sprite_plotter_16_wide_left ; goto masked_sprite_plotter_16_wide_left;
+plot_masked_sprite_16px_x_is_zero:
+  XOR A                   ; Zero x
+  JR pms16_right          ; Jump to pms16_left
 
-; Sprite plotter. Used for characters and objects.
+; Sprite plotter for 16 pixel-wide masked sprites.
 ;
-; Used by the routine at plot_sprites.
+; This is used for characters and objects.
 ;
-; Looks like it plots a two byte-wide sprite with mask into a three byte-wide destination.
+; Used by the routines at plot_sprites, plot_masked_sprite_16px_x_is_zero and plot_masked_sprite_16px.
 ;
 ; I:IY Pointer to visible character.
-masked_sprite_plotter_16_wide_vischar:
-  LD A,(IY+$18)                             ; if ((A = IY[24] & 7) >= 4) goto masked_sprite_plotter_16_wide_right.
-  AND $07                                   ;
-  CP $04                                    ;
-  JP NC,masked_sprite_plotter_16_wide_right ;
-; FALL THROUGH into masked_sprite_plotter_16_wide_left.
-
-; Sprite plotter "left" case.
 ;
-; Used by the routine at masked_sprite_plotter_16_wide_item.
+; Mask off the bottom three bits of the vischar's (isometric projected) x position and treat it as a signed field. This tells us how far we need to shift the sprite left or right. -4..-1 => left shift by 4..1px; 0..3 => right shift by
+; 0..3px.
+plot_masked_sprite_16px:
+  LD A,(IY+$18)           ; x = (vischar.iso_pos.x & 7)
+  AND $07                 ;
+  CP $04                  ; Is x equal to 4 or above? (-4..-1)
+  JP NC,pms16_left        ; Jump if so
+; Right shifting case.
 ;
-; Shifts left/right (unsure which atm).
-;
-; Shifts left/right (unsure which atm).
-masked_sprite_plotter_16_wide_left:
-  CPL                     ; A = (~A & 3) * 6; // jump table offset
+; A is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (6 bytes) to obtain
+; the jump offset.
+pms16_right:
+  CPL                     ; x = (~x & 3)
   AND $03                 ;
-  ADD A,A                 ;
+  ADD A,A                 ; Multiply by six to get the jump distance
   LD H,A                  ;
   ADD A,A                 ;
   ADD A,H                 ;
-  LD ($E2DC),A            ; ($E2DB + 1) = A; // self-modify: jump into mask rotate
-  LD ($E2F4),A            ; ($E2F3 + 1) = A; // self-modify: jump into bitmap rotate
-  EXX                     ; maskptr = mask_pointer; // maskptr = HL'  // observed: $D505 (a mask)
+  LD ($E2DC),A            ; Self modify the JR at pms16_right_mask_jump to jump into the mask rotate sequence
+  LD ($E2F4),A            ; Self modify the JR at pms16_right_bitmap_jump to jump into the bitmap rotate sequence
+  EXX                     ; Fetch mask_pointer
   LD HL,(mask_pointer)    ;
-  EXX                     ;
-  LD HL,(bitmap_pointer)  ; bitmapptr = bitmap_pointer; // bitmapptr = HL  // observed: $D256 (a bitmap)
-masked_sprite_plotter_16_wide_case_1_height_iters:
-  LD B,$20                ; B = 32; // iterations // height? // self modified
-; Load bitmap bytes into D,E.
-masked_sprite_plotter_16_wide_left_0:
-  LD D,(HL)               ; do <% bm0 = *bitmapptr++; // D
+  EXX                     ; Fetch bitmap_pointer
+  LD HL,(bitmap_pointer)  ;
+pms16_right_height_iters:
+  LD B,$20                ; Set B for 32 iterations (self modified by DC73)
+; Start loop
+pms16_right_loop:
+  LD D,(HL)               ; Load the bitmap bytes bm0,bm1 into D,E
   INC HL                  ;
-  LD E,(HL)               ; bm1 = *bitmapptr++; // E
+  LD E,(HL)               ;
   INC HL                  ;
-; Load mask bytes into D',E'.
-  PUSH HL                 ; mask0 = *maskptr++; // D'
-  EXX                     ;
-  LD D,(HL)               ;
+  PUSH HL                 ; Preserve the bitmap pointer
+  EXX                     ; Bank
+  LD D,(HL)               ; Load the mask bytes mask0,mask1 into D',E'
   INC HL                  ;
-  LD E,(HL)               ; mask1 = *maskptr++; // E'
+  LD E,(HL)               ;
   INC HL                  ;
-  PUSH HL                 ;
-  LD A,(flip_sprite)           ; if (flip_sprite & (1<<7)) flip_16_masked_pixels();
-  AND A                        ;
-  CALL M,flip_16_masked_pixels ;
-  LD HL,(foreground_mask_pointer) ; foremaskptr = foreground_mask_pointer;  // observed: $8100 = mask_buffer
-; Shift mask.
+  PUSH HL                 ; Preserve the mask pointer
+  LD A,(flip_sprite)      ; Is the top bit of flip_sprite set?
+  AND A                   ;
+  CALL M,flip_16_masked_pixels ; Call flip_16_masked_pixels if so
+  LD HL,(foreground_mask_pointer) ; Fetch foreground_mask_pointer
+; Shift the mask.
 ;
-; 24 version does bitmap rotates then mask rotates. Is this the opposite way around to save a bank switch?
-  LD C,$FF                ; mask2 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
-  SCF                     ; carry = 1; // mask OFF
-masked_sprite_plotter_16_wide_case_1_jump0:
-  JR masked_sprite_plotter_16_wide_left_1 ; goto $E2DD; // self modified // jump table
-masked_sprite_plotter_16_wide_left_1:
-  RR D                    ; RR mask0 // 0 // new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry;
-  RR E                    ; RR mask1      // new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry;
-  RR C                    ; RR mask2      // new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry;
-  RR D                    ; RR mask0 // 1
-  RR E                    ; RR mask1
-  RR C                    ; RR mask2
-  RR D                    ; RR mask0 // 2
-  RR E                    ; RR mask1
-  RR C                    ; RR mask2
-; Shift bitmap.
-  EXX                     ; bm2 = 0; // all bits clear => pixels OFF
-  LD C,$00                ;
-  AND A                   ; A &= A; // I do not grok this. Setting carry flag?
-masked_sprite_plotter_16_wide_case_1_jump1:
-  JR masked_sprite_plotter_16_wide_left_2 ; goto $E2F5; // self modified // jump table
-masked_sprite_plotter_16_wide_left_2:
-  SRL D                   ; SRL bm0 // 0 // carry = bm0 & 1; bm0 >>= 1;
-  RR E                    ; RR bm1       // new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry;
-  RR C                    ; RR bm2       // new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry;
-  SRL D                   ; SRL bm0 // 1
-  RR E                    ; RR bm1
-  RR C                    ; RR bm2
-  SRL D                   ; SRL bm0 // 2
-  RR E                    ; RR bm1
-  RR C                    ; RR bm2
-; Plot, using foreground mask.
-  LD HL,($81A2)           ; screenptr = ($81A2);
-  EXX                     ; A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
-  LD A,(HL)               ;
-  CPL                     ;
-  OR D                    ;
-  EXX                     ;
-  AND (HL)                ;
-  EX AF,AF'               ;
-  LD A,D                  ;
-  EXX                     ;
-  AND (HL)                ;
-  LD D,A                  ;
-  EX AF,AF'               ;
-  OR D                    ;
-  INC L                   ; foremaskptr++;
-  EXX                     ;
-masked_sprite_plotter_16_wide_case_1_enable0:
-  LD (HL),A               ; *screenptr++ = A; // entry point jump0
-  INC HL                  ;
-  EXX                     ; A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
-  LD A,(HL)               ;
+; Note: The 24px version does bitmap rotates then mask rotates. Is this the opposite way around to save a bank switch?
+  LD C,$FF                ; mask2 = $FF
+  SCF                     ; carry = 1
+pms16_right_mask_jump:
+  JR pms16_right_mask_jumptable_0 ; Jump into shifter (self modified by E2B3)
+; Rotate the mask bytes (D,E,C) right by one pixel.
+pms16_right_mask_jumptable_0:
+  RR D                    ; new_carry = mask0 & 1; mask0 = (mask0 >> 1) | (carry << 7); carry = new_carry
+  RR E                    ; new_carry = mask1 & 1; mask1 = (mask1 >> 1) | (carry << 7); carry = new_carry
+  RR C                    ; new_carry = mask2 & 1; mask2 = (mask2 >> 1) | (carry << 7); carry = new_carry
+pms16_right_mask_jumptable_1:
+  RR D                    ; Do the same again
+  RR E                    ;
+  RR C                    ;
+pms16_right_mask_jumptable_2:
+  RR D                    ; Do the same again
+  RR E                    ;
+  RR C                    ;
+; Shift the bitmap.
+;
+; Our 16px bitmap has two bitmap bytes to shift (D,E) but we'll need an extra byte to capture the shift-out (C).
+pms16_right_mask_jumptable_end:
+  EXX                     ; Swap to bitmaps bank
+  LD C,$00                ; bm2 = 0
+  AND A                   ; (Suspect this is a stray instruction)
+pms16_right_bitmap_jump:
+  JR pms16_right_bitmap_jumptable_0 ; Jump into shifter (self modified by E2B6)
+; Rotate the bitmap bytes (D,E,C) right by one pixel.
+;
+; Shift out the leftmost byte's bottom pixel into the carry flag.
+pms16_right_bitmap_jumptable_0:
+  SRL D                   ; carry = bm0 & 1; bm0 >>= 1
+; Shift out the next byte's bottom pixel into the carry flag while shifting in the previous carry at the top. (x2)
+  RR E                    ; new_carry = bm1 & 1; bm1 = (bm1 >> 1) | (carry << 7); carry = new_carry
+  RR C                    ; new_carry = bm2 & 1; bm2 = (bm2 >> 1) | (carry << 7); carry = new_carry
+pms16_right_bitmap_jumptable_1:
+  SRL D                   ; Do the same again
+  RR E                    ;
+  RR C                    ;
+pms16_right_bitmap_jumptable_2:
+  SRL D                   ; Do the same again
+  RR E                    ;
+  RR C                    ;
+pms16_right_bitmap_jumptable_end:
+  LD HL,($81A2)           ; Load screen buffer pointer
+  EXX                     ; Swap to bitmaps bank
+; Plot, using the foreground mask. See pms24_right_plot_0 for a discussion of this masking operation.
+pms16_right_plot_0:
+  LD A,(HL)               ; Load a foreground mask byte
+  CPL                     ; Invert it
+  OR D                    ; OR with mask byte mask0
+  EXX                     ; Swap to bank containing bitmap bytes (in D & E) and screen buffer pointer (in HL)
+  AND (HL)                ; AND combined masks with screen byte
+  EX AF,AF'               ; Bank left hand term
+  LD A,D                  ; Get bitmap byte bm0
+  EXX                     ; Swap to bank containing mask bytes (in D' & E') and foreground mask pointer (in HL')
+  AND (HL)                ; AND with foreground mask byte
+  LD D,A                  ; Save right hand term
+  EX AF,AF'               ; Unbank left hand term
+  OR D                    ; Combine terms
+  INC L                   ; Advance foreground mask pointer
+  EXX                     ; Swap to bitmaps bank
+pms16_right_plot_enable_0:
+  LD (HL),A               ; Write pixel (self modified)
+  INC HL                  ; Advance to next output pixel
+  EXX                     ; Swap to masks bank
+pms16_right_plot_1:
+  LD A,(HL)               ; Do the same again for mask1 & bm1
   CPL                     ;
   OR E                    ;
   EXX                     ;
@@ -16357,13 +16538,14 @@ masked_sprite_plotter_16_wide_case_1_enable0:
   LD E,A                  ;
   EX AF,AF'               ;
   OR E                    ;
-  INC L                   ; foremaskptr++;
+  INC L                   ;
   EXX                     ;
-masked_sprite_plotter_16_wide_case_1_enable2:
-  LD (HL),A               ; *screenptr++ = A; // entry point jump2
+pms16_right_plot_enable_1:
+  LD (HL),A               ;
   INC HL                  ;
-  EXX                     ; A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
-  LD A,(HL)               ;
+  EXX                     ;
+pms16_right_plot_2:
+  LD A,(HL)               ; Do the same again for mask2 & bm2
   CPL                     ;
   OR C                    ;
   EXX                     ;
@@ -16375,115 +16557,125 @@ masked_sprite_plotter_16_wide_case_1_enable2:
   LD C,A                  ;
   EX AF,AF'               ;
   OR C                    ;
-  INC L                   ; foremaskptr += 2;
+  INC L                   ; Advance foreground_mask_pointer by two (buffer is 4 bytes wide)
   INC L                   ;
-  LD (foreground_mask_pointer),HL ; foreground_mask_pointer = foremaskptr;
-  POP HL                          ;
-  EXX                             ;
-masked_sprite_plotter_16_wide_case_1_enable4:
-  LD (HL),A               ; *screenptr = A; // entry point jump4
-  LD DE,$0016             ; screenptr += 22; // stride (24 - 2)
+  LD (foreground_mask_pointer),HL ; Save foreground_mask_pointer
+  POP HL                  ; Restore the mask pointer
+  EXX
+pms16_right_plot_enable_2:
+  LD (HL),A
+  LD DE,$0016             ; Advance screen buffer pointer by (24 - 2 = 22) bytes
   ADD HL,DE               ;
-  LD ($81A2),HL           ; ($81A2) = screenptr;
-  POP HL                                     ; %> while (--B);
-  DEC B                                      ;
-  JP NZ,masked_sprite_plotter_16_wide_left_0 ;
-  RET                     ; return;
-
-; Sprite plotter "right" case.
+  LD ($81A2),HL           ; Save the screen buffer pointer
+  POP HL                  ; Restore the bitmap pointer
+  DEC B                   ; ...loop
+  JP NZ,pms16_right_loop  ;
+  RET                     ; Return
+; Left shifting case.
 ;
-; Used by the routine at masked_sprite_plotter_16_wide_vischar.
-;
-; Counterpart of above routine.
-masked_sprite_plotter_16_wide_right:
-  SUB $04                 ; A = (A - 4) * 6; // jump table offset
-  ADD A,A                 ;
+; A is 4..7 here, which we intepret as -4..-1: the amount by which we want to shift the sprite left.
+pms16_left:
+  SUB $04                 ; 4..7 => jump table offset 0..3
+  ADD A,A                 ; Multiply by six to get the jump distance
   LD L,A                  ;
   ADD A,A                 ;
   ADD A,L                 ;
-  LD ($E39A),A            ; ($E399 + 1) = A; // self-modify - first jump
-  LD ($E37D),A            ; ($E37C + 1) = A; // self-modify - second jump
-  EXX                     ; maskptr = mask_pointer;
+  LD ($E39A),A            ; Self modify the JR at pms16_left_bitmap_jump to jump into the bitmap rotate sequence
+  LD ($E37D),A            ; Self modify the JR at pms16_left_mask_jump to jump into the mask rotate sequence
+  EXX                     ; Fetch mask_pointer
   LD HL,(mask_pointer)    ;
-  EXX                     ; bitmapptr = bitmap_pointer;
+  EXX                     ; Fetch bitmap_pointer
   LD HL,(bitmap_pointer)  ;
-masked_sprite_plotter_16_wide_case_2_height_iters:
-  LD B,$20                ; B = 32; // iterations // height? // self modified
-masked_sprite_plotter_16_wide_right_0:
-  LD D,(HL)               ; do <% bm1 = *bitmapptr++; // numbering of the masks ... unsure
+pms16_left_height_iters:
+  LD B,$20                ; Set B for 32 iterations (self modified by E492)
+; Start loop
+pms16_left_loop:
+  LD D,(HL)               ; Load the bitmap bytes bm1,bm2 into D,E
   INC HL                  ;
-  LD E,(HL)               ; bm2 = *bitmapptr++;
+  LD E,(HL)               ;
   INC HL                  ;
-  PUSH HL                 ; mask1 = *maskptr++;
-  EXX                     ;
-  LD D,(HL)               ;
+  PUSH HL                 ; Preserve the bitmap pointer
+  EXX                     ; Bank
+  LD D,(HL)               ; Load the mask bytes mask1,mask2 into D',E'
   INC HL                  ;
-  LD E,(HL)               ; mask2 = *maskptr++;
+  LD E,(HL)               ;
   INC HL                  ;
-  PUSH HL                      ; if (flip_sprite & (1<<7)) flip_16_masked_pixels();
-  LD A,(flip_sprite)           ;
-  AND A                        ;
-  CALL M,flip_16_masked_pixels ;
-  LD HL,(foreground_mask_pointer) ; foremaskptr = foreground_mask_pointer;
-; Shift mask.
-  LD C,$FF                ; mask0 = 0xFF; // all bits set => mask OFF (that would match the observed stored mask format)
-  SCF                     ; carry = 1; // mask OFF
-masked_sprite_plotter_16_wide_case_2_jump0:
-  JR masked_sprite_plotter_16_wide_right_1 ; goto $E37E; // self modified // jump table
-masked_sprite_plotter_16_wide_right_1:
-  RL E                    ; RL mask2 // 0 // new_carry = mask2 >> 7; mask2 = (mask2 << 1) | (carry << 0); carry = new_carry;
-  RL D                    ; RL mask1      // new_carry = mask1 >> 7; mask1 = (mask1 << 1) | (carry << 0); carry = new_carry;
-  RL C                    ; RL mask0      // new_carry = mask0 >> 7; mask0 = (mask0 << 1) | (carry << 0); carry = new_carry;
-  RL E                    ; RL mask2 // 1
-  RL D                    ; RL mask1
-  RL C                    ; RL mask0
-  RL E                    ; RL mask2 // 2
-  RL D                    ; RL mask1
-  RL C                    ; RL mask0
-  RL E                    ; RL mask2 // 3 // four groups of shifting in this routine, compared to three above.
-  RL D                    ; RL mask1
-  RL C                    ; RL mask0
-; Shift bitmap.
-  EXX                     ; bm0 = 0; // all bits clear => pixels OFF
-  XOR A                   ;
+  PUSH HL                 ; Preserve the mask pointer
+  LD A,(flip_sprite)      ; Is the top bit of flip_sprite set?
+  AND A                   ;
+  CALL M,flip_16_masked_pixels ; Call flip_16_masked_pixels if so
+  LD HL,(foreground_mask_pointer) ; Fetch foreground_mask_pointer
+; Shift the mask.
+  LD C,$FF                ; mask0 = $FF
+  SCF                     ; carry = 1
+pms16_left_mask_jump:
+  JR pms16_left_mask_jumptable_0 ; Jump into shifter (self modified by E357)
+; Rotate the mask bytes (C,D,E) left by one pixel.
+pms16_left_mask_jumptable_0:
+  RL E                    ; new_carry = mask2 >> 7; mask2 = (mask2 << 1) | carry; carry = new_carry
+  RL D                    ; new_carry = mask1 >> 7; mask1 = (mask1 << 1) | carry; carry = new_carry
+  RL C                    ; new_carry = mask0 >> 7; mask0 = (mask0 << 1) | carry; carry = new_carry
+pms16_left_mask_jumptable_1:
+  RL E                    ; Do the same again
+  RL D                    ;
+  RL C                    ;
+pms16_left_mask_jumptable_2:
+  RL E                    ; Do the same again
+  RL D                    ;
+  RL C                    ;
+pms16_left_mask_jumptable_3:
+  RL E                    ; Do the same again
+  RL D                    ;
+  RL C                    ;
+; Shift the bitmap.
+pms16_left_mask_jumptable_end:
+  EXX                     ; Swap to bitmaps bank
+  XOR A                   ; bm0 = 0
   LD C,A                  ;
-masked_sprite_plotter_16_wide_case_2_jump1:
-  JR masked_sprite_plotter_16_wide_right_2 ; goto $E39B; // self modified // jump table
-masked_sprite_plotter_16_wide_right_2:
-  SLA E                   ; SLA bm2 // 0 // carry = bm2 >> 7; bm2 <<= 1;
-  RL D                    ; RL bm1       // new_carry = bm1 >> 7; bm1 = (bm1 << 1) | (carry << 0); carry = new_carry;
-  RL C                    ; RL bm0       // new_carry = bm0 >> 7; bm0 = (bm0 << 1) | (carry << 0); carry = new_carry;
-  SLA E                   ; SLA bm2
-  RL D                    ; RL bm1
-  RL C                    ; RL bm0
-  SLA E                   ; SLA bm2
-  RL D                    ; RL bm1
-  RL C                    ; RL bm0
-  SLA E                   ; SLA bm2
-  RL D                    ; RL bm1
-  RL C                    ; RL bm0
-; Plot, using foreground mask.
-  LD HL,($81A2)           ; screenptr = ($81A2);
-  EXX                     ; A = ((~*foremaskptr | mask0) & *screenptr) | (bm0 & *foremaskptr);
-  LD A,(HL)               ;
-  CPL                     ;
-  OR C                    ;
-  EXX                     ;
-  AND (HL)                ;
-  EX AF,AF'               ;
-  LD A,C                  ;
-  EXX                     ;
-  AND (HL)                ;
-  LD C,A                  ;
-  EX AF,AF'               ;
-  OR C                    ;
-  INC L                   ; foremaskptr++;
-  EXX                     ;
-masked_sprite_plotter_16_wide_case_2_enable1:
-  LD (HL),A               ; *screenptr++ = A; // entry point jump1
-  INC HL                  ;
-  EXX                     ; A = ((~*foremaskptr | mask1) & *screenptr) | (bm1 & *foremaskptr);
-  LD A,(HL)               ;
+pms16_left_bitmap_jump:
+  JR pms16_left_bitmap_jumptable_0 ; Jump into shifter (self modified by E354)
+; Rotate the bitmap bytes (C,D,E) left by one pixel.
+pms16_left_bitmap_jumptable_0:
+  SLA E                   ; carry = bm2 >> 7; bm2 <<= 1
+  RL D                    ; new_carry = bm1 >> 7; bm1 = (bm1 << 1) | (carry << 0); carry = new_carry
+  RL C                    ; new_carry = bm0 >> 7; bm0 = (bm0 << 1) | (carry << 0); carry = new_carry
+pms16_left_bitmap_jumptable_1:
+  SLA E                   ; Do the same again
+  RL D                    ;
+  RL C                    ;
+pms16_left_bitmap_jumptable_2:
+  SLA E                   ; Do the same again
+  RL D                    ;
+  RL C                    ;
+pms16_left_bitmap_jumptable_3:
+  SLA E                   ; Do the same again
+  RL D                    ;
+  RL C                    ;
+; Plot, using foreground mask. See pms24_right_plot_0 for a discussion of this masking operation.
+pms16_left_bitmap_jumptable_end:
+  LD HL,($81A2)           ; Load screen buffer pointer
+  EXX                     ; Swap to masks bank
+pms16_left_plot_0:
+  LD A,(HL)               ; Load a foreground mask byte
+  CPL                     ; Invert it
+  OR C                    ; OR with mask byte mask0
+  EXX                     ; Swap to bank containing bitmap bytes (in D & E) and screen buffer pointer (in HL)
+  AND (HL)                ; AND combined masks with screen byte
+  EX AF,AF'               ; Bank left hand term
+  LD A,C                  ; Get bitmap byte bm0
+  EXX                     ; Swap to bank containing mask bytes (in D' & E') and foreground mask pointer (in HL')
+  AND (HL)                ; AND with foreground mask byte
+  LD C,A                  ; Save right hand term
+  EX AF,AF'               ; Unbank left hand term
+  OR C                    ; Combine terms
+  INC L                   ; Advance foreground mask pointer
+  EXX                     ; Swap to bitmaps bank
+pms16_left_plot_enable_0:
+  LD (HL),A               ; Write pixel (self modified)
+  INC HL                  ; Advance to next output pixel
+  EXX                     ; Swap to masks bank
+pms16_left_plot_1:
+  LD A,(HL)               ; Do the same again for mask1 & bm1
   CPL                     ;
   OR D                    ;
   EXX                     ;
@@ -16495,13 +16687,14 @@ masked_sprite_plotter_16_wide_case_2_enable1:
   LD D,A                  ;
   EX AF,AF'               ;
   OR D                    ;
-  INC L                   ; foremaskptr++;
+  INC L                   ;
   EXX                     ;
-masked_sprite_plotter_16_wide_case_2_enable3:
-  LD (HL),A               ; *screenptr++ = A; // entry point jump3
+pms16_left_plot_enable_1:
+  LD (HL),A               ;
   INC HL                  ;
-  EXX                     ; A = ((~*foremaskptr | mask2) & *screenptr) | (bm2 & *foremaskptr);
-  LD A,(HL)               ;
+  EXX                     ;
+pms16_left_plot_2:
+  LD A,(HL)               ; Do the same again for mask2 & bm2
   CPL                     ;
   OR E                    ;
   EXX                     ;
@@ -16513,24 +16706,24 @@ masked_sprite_plotter_16_wide_case_2_enable3:
   LD E,A                  ;
   EX AF,AF'               ;
   OR E                    ;
-  INC L                   ; foremaskptr += 2;
+  INC L                   ; Advance foreground_mask_pointer by two (buffer is 4 bytes wide)
   INC L                   ;
-  LD (foreground_mask_pointer),HL ; foreground_mask_pointer = foremaskptr;
-  POP HL                          ;
-  EXX                             ;
-masked_sprite_plotter_16_wide_case_2_enable5:
-  LD (HL),A               ; *screenptr = A; // entry point jump5
-  LD DE,$0016             ; screenptr += 22; // stride (24 - 2)
+  LD (foreground_mask_pointer),HL ; Save foreground_mask_pointer
+  POP HL                  ; Restore the mask pointer
+  EXX
+pms16_left_plot_enable_2:
+  LD (HL),A
+  LD DE,$0016             ; Advance screen buffer pointer by (24 - 2 = 22) bytes
   ADD HL,DE               ;
-  LD ($81A2),HL           ; ($81A2) = screenptr;
-  POP HL                                      ; %> while (--B);
-  DEC B                                       ;
-  JP NZ,masked_sprite_plotter_16_wide_right_0 ;
-  RET                     ; return;
+  LD ($81A2),HL           ; Save the screen buffer pointer
+  POP HL                  ; Restore the bitmap pointer
+  DEC B                   ; ...loop
+  JP NZ,pms16_left_loop   ;
+  RET                     ; Return
 
 ; Horizontally flips the 24 pixels in E,C,B and counterpart masks in E',C',B'.
 ;
-; Used by the routine at masked_sprite_plotter_24_wide_vischar.
+; Used by the routine at plot_masked_sprite_24px.
 ;
 ; I:B Left 8 pixels.
 ; I:C Middle 8 pixels.
@@ -16564,7 +16757,7 @@ flip_24_masked_pixels:
 
 ; Horizontally flips the 16 pixels in D,E and counterpart masks in D',E'.
 ;
-; Used by the routines at masked_sprite_plotter_16_wide_left and masked_sprite_plotter_16_wide_right.
+; Used by the routines at pms16_right and pms16_left.
 ;
 ; I:D Left 8 pixels.
 ; I:E Right 8 pixels.
@@ -16594,218 +16787,238 @@ flip_16_masked_pixels:
 ;
 ; Used by the routine at plot_sprites.
 ;
-; I:HL Pointer to ? // observed: always the same as IY
-; I:IY Pointer to visible character.
+; Counterpart of, and very similar to, the routine at setup_item_plotting.
+;
+; I:HL Pointer to visible character
+; I:IY Pointer to visible character
+; O:F Z set if vischar is visible, NZ otherwise
 setup_vischar_plotting:
-  LD A,$0F                ; HL = &vischar->mi.pos;
+  LD A,$0F                ; Advance HL to vischar.mi.pos
   ADD A,L                 ;
   LD L,A                  ;
-  LD DE,tinypos_stash_x   ; DE = &tinypos_stash;
-  LD A,(room_index)             ; if (room_index > room_0_OUTDOORS) <%
-  AND A                         ;
-  JR Z,setup_vischar_plotting_0 ;
+  LD DE,tinypos_stash_x   ; Point DE at tinypos_stash
+  LD A,(room_index)       ; Fetch the global current room index
+  AND A                   ; Are we outdoors?
+  JR Z,svp_outdoors       ; Jump if so
 ; Indoors.
-  LDI                     ; *DE++ = *HL++;
-  INC L                   ; HL++;
-  LDI                     ; *DE++ = *HL++;
-  INC L                   ; HL++;
-  LDI                     ; *DE++ = *HL++;
-  INC L                   ; HL++; %>
-  JR setup_vischar_plotting_2 ; else <%
+;
+; Copy vischar.mi.pos.* to tinypos_stash with narrowing.
+  LDI                     ; Copy vischar.mi.pos to tinypos_stash (narrowing each element to a byte wide)
+  INC L                   ;
+  LDI                     ;
+  INC L                   ;
+  LDI                     ;
+  INC L                   ;
+  JR svp_tinypos_set      ; (else)
 ; Outdoors.
-setup_vischar_plotting_0:
-  LD A,(HL)               ; A = *HL++;
+;
+; Copy vischar.mi.pos.* to tinypos_stash with scaling.
+svp_outdoors:
+  LD A,(HL)               ; Fetch vischar.mi.pos.x
   INC L                   ;
-  LD C,(HL)               ; C = *HL;
-  CALL divide_by_8_with_rounding ; divide_by_8_with_rounding(C,A);
-  LD (DE),A               ; *DE++ = A;
-  INC L                   ; HL++;
-  INC DE                  ;
-  LD B,$02                ; B = 2; // 2 iterations
-setup_vischar_plotting_1:
-  LD A,(HL)               ; do <% A = *HL++;
+  LD C,(HL)               ;
+  CALL divide_by_8_with_rounding ; Divide (C,A) by 8 with rounding. Result is in A
+  LD (DE),A               ; Store the result as tinypos_stash.x
+  INC L                   ; Advance HL to vischar.mi.pos.y
+  INC DE                  ; Advance DE to tinypos_stash.y
+  LD B,$02                ; Set B for two iterations
+svp_pos_loop:
+  LD A,(HL)               ; Fetch vischar.mi.pos.y or .height
   INC L                   ;
-  LD C,(HL)               ; C = *HL;
-  CALL divide_by_8        ; divide_by_8(C,A);
-  LD (DE),A               ; *DE++ = A;
-  INC L                   ; HL++;
-  INC DE                  ;
-  DJNZ setup_vischar_plotting_1 ; %> while (--B); %>
-setup_vischar_plotting_2:
-  LD C,(HL)               ; C = *HL++;
+  LD C,(HL)               ;
+  CALL divide_by_8        ; Divide (C,A) by 8 (with no rounding). Result is in A
+  LD (DE),A               ; Store the result as tinypos_stash.y or .height
+  INC L                   ; Advance to the next vischar.mi.pos field
+  INC DE                  ; Advance to the next tinypos_stash field (then finally to iso_pos - used later)
+  DJNZ svp_pos_loop       ; ...loop
+svp_tinypos_set:
+  LD C,(HL)               ; Load vischar.mi.sprite (a pointer to a spritedef_t) and stack it
   INC L                   ;
-  LD B,(HL)               ; B = *HL++;
-  PUSH BC
-  INC L
-  LD A,(HL)               ; sprite_index = *HL++; // set left/right flip flag / sprite offset
-  LD (flip_sprite),A      ;
-  EX AF,AF'
-  INC L
-  LD B,$02                ; B = 2; // 2 iterations
-setup_vischar_plotting_3:
-  LD A,(HL)               ; do <% Adash = *HL++;
+  LD B,(HL)               ;
+  PUSH BC                 ;
+  INC L                   ; Advance HL to vischar.mi.sprite_index
+  LD A,(HL)               ; Load it
+  LD (flip_sprite),A      ; Save global sprite_index and left/right flip flag
+  EX AF,AF'               ; Bank it too
+  INC L                   ; Advance HL to vischar.iso_pos
+; Scale down iso_pos.*
+  LD B,$02                ; Set B for two iterations
+svp_isopos_loop:
+  LD A,(HL)               ; Fetch vischar.iso_pos.x/y
   INC L                   ;
-  LD C,(HL)               ; C = *HL++;
-  CALL divide_by_8        ; divide_by_8(C,Adash);
-  LD (DE),A               ; *DE++ = Adash;
+  LD C,(HL)               ;
+  CALL divide_by_8        ; Divide (C,A) by 8 (with no rounding). Result is in A
+  LD (DE),A               ; Write the result to state.iso_pos.*
+  INC L                   ; Advance HL to the next vischar.iso_pos element
+  INC DE                  ; Advance DE to the next state.iso_pos element
+  DJNZ svp_isopos_loop    ; ...loop
+  EX AF,AF'               ; Unbank sprite index
+  POP DE                  ; Restore sprite pointer
+  ADD A,A                 ; Multiply A by six (width of a spritedef_t)
+  LD C,A                  ;
+  ADD A,A                 ;
+  ADD A,C                 ;
+  ADD A,E                 ; Add onto sprite base pointer
+  LD E,A                  ;
+  JR NC,svp_sprptr_ready  ;
+  INC D                   ;
+svp_sprptr_ready:
+  INC L                   ; Skip over vischar.room and unused bytes
   INC L                   ;
-  INC DE                  ;
-  DJNZ setup_vischar_plotting_3 ; %> while (--B);
-  EX AF,AF'
-  POP DE
-  ADD A,A                        ; DE += A * 6; // point into sprite[] array
-  LD C,A                         ;
-  ADD A,A                        ;
-  ADD A,C                        ;
-  ADD A,E                        ;
-  LD E,A                         ;
-  JR NC,setup_vischar_plotting_4 ;
-  INC D                          ;
-setup_vischar_plotting_4:
-  INC L                   ; L += 2; // skip over room, unused bytes
-  INC L                   ;
-  EX DE,HL
-  LDI                     ; *DE++ = *HL++; // width in bytes
-  LDI                     ; *DE++ = *HL++; // height in rows
-  LD DE,bitmap_pointer    ; memcpy(bitmap_pointer, HL, 4); // copy bitmap pointer and mask pointer
+  EX DE,HL                ; Put sprite pointer into DE
+  LDI                     ; Copy spritedef width in bytes to vischar
+  LDI                     ; Copy spritedef height in rows to vischar
+  LD DE,bitmap_pointer    ; Copy spritedef bitmap and mask pointers to global bitmap_pointer and mask_pointer
   LD BC,$0004             ;
   LDIR                    ;
-  CALL vischar_visible    ; vischar_visible();
-  AND A                   ; if (A) return; /* invisible */
-  RET NZ                  ;
-  PUSH BC                 ; // PUSH clipped_width
-  PUSH DE                 ; // PUSH clipped_height
-  LD A,(IY+$1E)           ; A = IY[30]; // vischar width_bytes
-  CP $03                         ; if (A == 3) <% // 3 => 16 wide (4 => 24 wide)
-  JR NZ,setup_vischar_plotting_5 ;
-  LD A,E                  ; ($E2C1 + 1) = E; // self modify masked_sprite_plotter_16_wide_left
-  LD ($E2C2),A            ;
-  LD ($E363),A            ; ($E362 + 1) = E; // self-modify masked_sprite_plotter_16_wide_right
-  LD A,$03                ; A = 3;
-  LD HL,masked_sprite_plotter_16_enables ; HL = masked_sprite_plotter_16_enables; %>
-  JR setup_vischar_plotting_6 ; else <%
-setup_vischar_plotting_5:
-  LD A,E
-  LD ($E121),A            ; ($E120 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift right case)
-  LD ($E1E2),A            ; ($E1E1 + 1) = E; // self-modify masked_sprite_plotter_24_wide_vischar (shift left case)
-  LD A,$04                ; A = 4;
-  LD HL,masked_sprite_plotter_24_enables ; HL = masked_sprite_plotter_24_enables; %>
-setup_vischar_plotting_6:
-  PUSH HL                 ; PUSH enables
-  LD ($E4C0),A            ; ($E4BF + 1) = A; // self-modify
-  LD E,A                  ; E = A;
-  LD A,B                  ; A = B; // clipped width top byte (lefthand skip)
-  AND A                          ; if (A == 0) <%
-  JR NZ,setup_vischar_plotting_7 ;
-  LD A,$77                ; A = 0x77; /* opcode of 'LD (HL),A' */
-  EX AF,AF'
-  LD A,C                  ; Adash = C; %>
-  JR setup_vischar_plotting_8 ; else <%
-setup_vischar_plotting_7:
-  XOR A                   ; A = 0; /* opcode of 'LD (HL),A' */
-  EX AF,AF'
-  LD A,E                  ; Adash = E - C; %>
+  CALL vischar_visible    ; Clip the vischar's dimensions to the game window
+  AND A                   ; Is it visible?
+  RET NZ                  ; Return if not [RET NZ would do]
+; The vischar is visible.
+  PUSH BC                 ; Preserve the lefthand skip and clipped width
+  PUSH DE                 ; Preserve the top skip and clipped height
+; Self modify the sprite plotter routines.
+  LD A,(IY+$1E)           ; Fetch vischar.width_bytes to check its width
+  CP $03                  ; Is it 3? (3 => 16 pixels wide, 4 => 24 pixels wide)
+  JR NZ,svp_24_wide       ; Jump if 24 wide
+svp_16_wide:
+  LD A,E                  ; Copy the clipped height into A
+  LD ($E2C2),A            ; Write clipped height to the instruction at pms16_right_height_iters in plot_masked_sprite_16px (shift right case)
+  LD ($E363),A            ; Write clipped height to the instruction at pms16_left_height_iters in plot_masked_sprite_16px (shift left case)
+  LD A,$03                ; Set for three enables
+  LD HL,masked_sprite_plotter_16_enables ; Point HL at masked_sprite_plotter_16_enables
+  JR svp_do_enables       ; (else)
+svp_24_wide:
+  LD A,E                  ; Copy the clipped height into A
+  LD ($E121),A            ; Write clipped height to the instruction at pms24_right_height_iters in plot_masked_sprite_24px (shift right case)
+  LD ($E1E2),A            ; Write clipped height to the instruction at pms24_left_height_iters in plot_masked_sprite_24px (shift left case)
+  LD A,$04                ; Set for four enables
+  LD HL,masked_sprite_plotter_24_enables ; Point HL at masked_sprite_plotter_24_enables
+svp_do_enables:
+  PUSH HL                 ; Preserve enables pointer
+  LD ($E4C0),A            ; Write enable count to the instruction at svp_enables_iters (self modify) and keep a copy
+  LD E,A                  ;
+  LD A,B                  ; Is the lefthand skip zero?
+  AND A                   ;
+  JR NZ,svp_enable_is_zero ; Jump if not
+; There's no left hand skip - enable instructions.
+svp_enable_is_one:
+  LD A,$77                ; Load A' with the opcode of 'LD (HL),A'
+  EX AF,AF'               ;
+  LD A,C                  ; Set a counter to clipped_width. We'll write out this many bytes before clipping
+  JR svp_enable_cont      ; (else)
+svp_enable_is_zero:
+  XOR A                   ; Load A' with the opcode of 'NOP'
+  EX AF,AF'               ;
+  LD A,E                  ; Set a counter to (enable_count - clipped_width). We'll clip until this many bytes have been written
   SUB C                   ;
-setup_vischar_plotting_8:
-  EXX
-  POP HL                  ; POP enables
-  LD C,A                  ; Cdash = Adash;
-  EX AF,AF'
+svp_enable_cont:
+  EXX                     ; Bank
+  POP HL                  ; Restore enables pointer
+  LD C,A                  ; Move counter to C
+  EX AF,AF'               ; Unbank the opcode we'll write
 ; Set the addresses in the jump table to NOP or LD (HL),A.
-setup_vischar_plotting_enables_iters:
-  LD B,$03                ; Bdash = 3; // 3 iterations // self modified by $E4A9
-setup_vischar_plotting_9:
-  LD E,(HL)               ; do <% Edash = *HLdash++;
+svp_enables_iters:
+  LD B,$03                ; Set B for 3 iterations (self modified by $E4A9)
+; Start loop
+svp_enables_loop:
+  LD E,(HL)               ; Fetch an address
   INC HL                  ;
-  LD D,(HL)               ; Ddash = *HLdash++;
-  LD (DE),A               ; *DEdash = A;
+  LD D,(HL)               ;
+  LD (DE),A               ; Write a new opcode
+  INC HL                  ; Advance
+  LD E,(HL)               ; Fetch an address
   INC HL                  ;
-  LD E,(HL)               ; Edash = *HLdash++;
-  INC HL                  ;
-  LD D,(HL)               ; Ddash = *HLdash++;
-  INC HL                  ;
-  LD (DE),A               ; *DEdash = A;
-  DEC C                   ; Cdash--;
-  JR NZ,setup_vischar_plotting_10 ; if (Z) A ^= 0x77; /* Toggle between LD and NOP. */
-  XOR $77                         ;
-setup_vischar_plotting_10:
-  DJNZ setup_vischar_plotting_9 ; %> while (--Bdash);
-  EXX
-  LD A,D                  ; A = D;
-  AND A                   ; A &= A;
-  LD DE,$0000             ; DE = 0;
-  JR NZ,setup_vischar_plotting_11 ; if (Z) <%
-  LD A,($81BC)            ; HL = $81BC * 8; // &map_position + 1;
+  LD D,(HL)               ;
+  INC HL                  ; Advance
+  LD (DE),A               ; Write a new opcode
+  DEC C                   ; Count down the counter
+  JR NZ,setup_vischar_plotting_0 ; Jump if nonzero
+  XOR $77                 ; Swap between LD (HL),A and NOP
+setup_vischar_plotting_0:
+  DJNZ svp_enables_loop   ; ...loop
+; Calculate Y plotting offset.
+;
+; The full calculation can be avoided if we know there are rows to skip since in that case the sprite always starts at the top of the screen.
+  EXX                     ; Bank
+  LD A,D                  ; Is top skip zero?
+  AND A                   ;
+  LD DE,$0000             ; Initialise our Y value to zero
+  JR NZ,svp_y_skip_set    ; Jump if top skip isn't zero
+  LD A,($81BC)            ; Compute Y = map_position_y * 8 (pixels per column)
   LD L,A                  ;
   LD H,$00                ;
   ADD HL,HL               ;
   ADD HL,HL               ;
   ADD HL,HL               ;
-  EX DE,HL
-  LD L,(IY+$1A)           ; L = IY[26];
-  LD H,(IY+$1B)           ; H = IY[27];
-  AND A                   ; A &= A;
-  SBC HL,DE
-  ADD HL,HL               ; HL *= 24;
+  EX DE,HL                ; Bank the temporary Y
+  LD L,(IY+$1A)           ; Fetch vischar.iso_pos.y
+  LD H,(IY+$1B)           ;
+  AND A                   ; Clear carry flag
+  SBC HL,DE               ; Compute Y = (vischar.iso_pos.y - Y)
+  ADD HL,HL               ; Multiply Y by 24 (columns)
   ADD HL,HL               ;
   ADD HL,HL               ;
   LD E,L                  ;
   LD D,H                  ;
   ADD HL,HL               ;
   ADD HL,DE               ;
-  EX DE,HL                ; %>
-setup_vischar_plotting_11:
-  LD A,(iso_pos_x)        ; HL = screenpos.x - map_position.x; // subtract + extend to 16-bit
+  EX DE,HL                ; Move Y into DE
+svp_y_skip_set:
+  LD A,(iso_pos_x)        ; Compute x = iso_pos_x - map_position_x
   LD HL,map_position      ;
   SUB (HL)                ;
-  LD L,A                  ;
+  LD L,A                  ; Copy x to HL and sign extend it
   LD H,$00                ;
-  JR NC,setup_vischar_plotting_12 ; if (HL < 0) H = 0xFF; // sign extend
-  LD H,$FF                        ;
-setup_vischar_plotting_12:
-  ADD HL,DE               ; HL += DE + 0xF290; // &state->window_buf[x + y];
-  LD DE,$F290             ;
+  JR NC,svp_x_skip_set    ;
+  LD H,$FF                ;
+svp_x_skip_set:
+  ADD HL,DE               ; Combine the x and y values
+  LD DE,$F290             ; Add the screen buffer start address
   ADD HL,DE               ;
-  LD ($81A2),HL           ; ($81A2) = HL;
-  LD HL,$8100             ; HL = mask_buffer;
-  POP DE
-  PUSH DE
-  LD A,D                  ; L += D * 4 + (IY[26] & 7) * 4;
+  LD ($81A2),HL           ; Save the finalised screen buffer pointer
+  LD HL,$8100             ; Point HL at the mask_buffer
+  POP DE                  ; Retrieve the top skip and clipped height
+  PUSH DE                 ;
+  LD A,D                  ; mask buffer pointer += top_skip * 4
   ADD A,A                 ;
   ADD A,A                 ;
   ADD A,L                 ;
   LD L,A                  ;
-  LD A,(IY+$1A)           ;
+  LD A,(IY+$1A)           ; mask buffer pointer += (vischar.iso_pos.y & 7) * 4
   AND $07                 ;
   ADD A,A                 ;
   ADD A,A                 ;
   ADD A,L                 ;
   LD L,A                  ;
-  LD (foreground_mask_pointer),HL ; foreground_mask_pointer = HL;
-  POP DE
-  LD A,D                  ; A = D;
-  AND A                          ; if (A) <%
-  JR Z,setup_vischar_plotting_14 ;
+  LD (foreground_mask_pointer),HL ; Set foreground_mask_pointer
+  POP DE                  ; Retrieve the top skip and clipped height
+  LD A,D                  ; Is top skip zero?
+  AND A                   ;
+  JR Z,setup_vischar_plotting_1 ; Jump if so
 ; Generic multiply loop.
-  LD D,A                  ; D = A;
-  XOR A                   ; A = 0;
-  LD E,(IY+$1E)           ; E = IY[30] - 1;
+  LD D,A                  ; Copy top_skip to loop counter
+  XOR A                   ; Zero the accumulator
+  LD E,(IY+$1E)           ; Set multiplier to (vischar.width_bytes - 1)
   DEC E                   ;
-; D ends up as zero either way.
-setup_vischar_plotting_13:
-  ADD A,E                         ; do <% A += E; %> while (--D); %>
-  DEC D                           ;
-  JP NZ,setup_vischar_plotting_13 ;
-setup_vischar_plotting_14:
-  LD E,A                  ; E = A;
-  LD HL,(bitmap_pointer)  ; bitmap_pointer += DE;
+; Start loop
+svp_mult_loop:
+  ADD A,E                 ; Accumulate
+  DEC D                   ; Decrement counter
+  JP NZ,svp_mult_loop     ; ...loop
+; D will be set to zero here either way: if the loop terminates, or if jumped into.
+setup_vischar_plotting_1:
+  LD E,A                  ; Set DE to skip (result)
+  LD HL,(bitmap_pointer)  ; Advance bitmap_pointer by 'skip'
   ADD HL,DE               ;
   LD (bitmap_pointer),HL  ;
-  LD HL,(mask_pointer)    ; mask_pointer += DE;
+  LD HL,(mask_pointer)    ; Advance mask_pointer by 'skip'
   ADD HL,DE               ;
   LD (mask_pointer),HL    ;
-  POP BC
-  RET                     ; return; /* visible */
+; It's unclear as to why this value is preserved since it's not used by the caller.
+  POP BC                  ; Restore the lefthand skip and clipped width
+; The Z flag remains set from E52E signalling "is visible".
+  RET                     ; Return
 
 ; Scale down a pos_t and assign result to a tinypos_t.
 ;
@@ -17542,74 +17755,80 @@ plot_game_window_4:
 
 ; Event: roll call.
 ;
-; Range checking. X in (0x72..0x7C) and Y in (0x6A..0x72).
+; Range checking that X is in ($72..$7C) and Y is in ($6A..$72).
 ;
 ; Is the hero within the roll call area bounds?
 event_roll_call:
-  LD DE,$727C             ; DE = map_ROLL_CALL_X;
-  LD HL,hero_map_position_x ; HL = &hero_map_position.x;
-  LD B,$02                ; B = 2; // iterations
+  LD DE,$727C             ; Load DE with the X coordinates of the roll call area ($72..$7C)
+  LD HL,hero_map_position_x ; Point HL at global map position (hero)
+  LD B,$02                ; Set B for two iterations
+; Start loop
 event_roll_call_0:
-  LD A,(HL)               ; do <% A = *HL++;
-  CP D                    ; if (A < D || A >= E) goto not_at_roll_call;
-  JR C,event_roll_call_2  ;
+  LD A,(HL)               ; Fetch the next coord
+  CP D                    ; Jump if the hero's out of bounds
+  JR C,not_at_roll_call   ;
   CP E                    ;
-  JR NC,event_roll_call_2 ;
-  INC HL                  ;
-  LD DE,$6A72             ; DE = map_ROLL_CALL_Y;
-  DJNZ event_roll_call_0  ; %> while (--B);
-; All visible characters turn forward.
-  LD HL,$800D             ; HL = $800D;
-  LD B,$08                ; B = 8; // iterations
+  JR NC,not_at_roll_call  ;
+  INC HL                  ; On the second iteration advance to hero_map_position_y ($6A..$72)
+  LD DE,$6A72             ; On the second iteration load DE with the Y coordinates of the main gate ($6A..$72)
+  DJNZ event_roll_call_0  ; ...loop
+; Make all visible characters turn forward.
+  LD HL,$800D             ; Point HL at the visible character's input field (always $800D)
+  LD B,$08                ; Set B for 8 iterations
+; Start loop
 event_roll_call_1:
-  LD (HL),$80             ; do <% *HL++ = input_KICK;
-  INC L                   ;
-  LD (HL),$03             ; *HL = 0x03; // direction (3 => face bottom left)
-  LD A,L                  ; HL += 31;
+  LD (HL),$80             ; Set input to input_KICK
+  INC L                   ; Point HL at the visible character's direction field (always $800E)
+  LD (HL),$03             ; Set the direction field to 3 => face bottom left
+  LD A,L                  ; Advance HL to the next vischar
   ADD A,$1F               ;
   LD L,A                  ;
-  DJNZ event_roll_call_1  ; %> while (--B);
-  RET                     ; return;
-event_roll_call_2:
-  XOR A                   ; not_at_roll_call: bell = bell_RING_PERPETUAL;
+  DJNZ event_roll_call_1  ; ...loop
+  RET                     ; Return
+not_at_roll_call:
+  XOR A                   ; Make the bell ring perpetually
   LD (bell),A             ;
-  LD B,A                  ; queue_message(message_MISSED_ROLL_CALL);
+  LD B,A                  ; Queue the message "MISSED ROLL CALL"
   CALL queue_message      ;
-  JP hostiles_pursue      ; hostiles_pursue(); // exit via
+  JP hostiles_pursue      ; Exit via hostiles_pursue
 
 ; Use papers.
 ;
 ; Is the hero within the main gate bounds?
 ;
-; Range checking. X in (0x69..0x6D) and Y in (0x49..0x4B).
+; Range checking that X is in ($69..$6D) and Y is in ($49..$4B).
 action_papers:
-  LD DE,$696D             ; DE = map_MAIN_GATE_X;
-  LD HL,hero_map_position_x ; HL = &hero_map_position.y;
-  LD B,$02                ; B = 2; // iterations
-action_papers_0:
-  LD A,(HL)               ; do <% A = *HL++;
-  CP D                    ; if (A < D || A >= E) return;
+  LD DE,$696D             ; Load DE with the X coordinates of the main gate ($69..$6D)
+  LD HL,hero_map_position_x ; Point HL at global map position (hero)
+  LD B,$02                ; Set B for two iterations
+; Start loop
+ap_coord_check_loop:
+  LD A,(HL)               ; Fetch the next coord
+  CP D                    ; Return if the hero's out of bounds
   RET C                   ;
   CP E                    ;
   RET NC                  ;
-  INC HL                  ;
-  LD DE,$494B             ; DE = map_MAIN_GATE_Y;
-  DJNZ action_papers_0    ; %> while (--B);
-; Using the papers at the main gate when not in uniform causes the hero to be sent to solitary.
-  LD DE,sprite_guard      ; if ($8015 != sprite_guard) goto solitary; // exit via
-  LD A,($8015)            ;
-  CP E                    ;
+  INC HL                  ; On the second iteration advance to hero_map_position_y ($49..$4B)
+  LD DE,$494B             ; On the second iteration load DE with the Y coordinates of the main gate
+  DJNZ ap_coord_check_loop ; ...loop
+; The hero was within the bounds of the main gate.
+;
+; Using the papers at the main gate when not in uniform causes the hero to be sent to solitary. Check for that.
+  LD DE,sprite_guard      ; Point DE at the guard sprite set
+  LD A,($8015)            ; Load hero's vischar.mi.sprite
+  CP E                    ; Jump to solitary if not using the guard sprite set
   JP NZ,solitary          ;
-  CALL increase_morale_by_10_score_by_50 ; increase_morale_by_10_score_by_50();
-  XOR A                   ; $801C = room_0_OUTDOORS; // set room index
+; The hero was wearing the uniform so is transported outside of the gate.
+  CALL increase_morale_by_10_score_by_50 ; Increase morale by 10, score by 50
+  XOR A                   ; Set hero's vischar.room to room_0_OUTDOORS
   LD ($801C),A            ;
 ; Transition to outside the main gate.
-  LD HL,outside_main_gate ; HL = &outside_main_gate; // pointer to location
-  LD IY,$8000             ; IY = $8000; // hero character
-  JP transition           ; transition(); return; // doesn't return: exits with goto main_loop
-; Position outside the main gate.
+  LD HL,outside_main_gate ; Point HL at outside_main_gate location
+  LD IY,$8000             ; Point IY at the hero's vischar
+  JP transition           ; Jump to transition -- never returns
+; The position outside of the main gate to which the hero is transported.
 outside_main_gate:
-  DEFB $D6,$8A,$06        ; static const tinypos_t outside_main_gate = <% 0xD6, 0x8A, 0x06 %>;
+  DEFB $D6,$8A,$06
 
 ; Wait for the user to press 'Y' or 'N'.
 ;
@@ -17966,7 +18185,7 @@ plot_static_tiles_4:
   DJNZ plot_static_tiles_0 ; ...loop
   RET                     ; Return
 
-; Clear the screen and attributes and set the screen border to black.
+; Clear the full screen and attributes and set the screen border to black.
 ;
 ; Used by the routine at main.
 ;
@@ -17992,49 +18211,51 @@ wipe_full_screen_and_attributes:
 ;
 ; Used by the routine at menu_screen.
 ;
-; Scan for a keypress which either starts the game or selects an input device. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
+; Scan for a keypress. It will either start the game, select an input device or do nothing. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
 ;
-; If the game is started then copy the input routine to $F075. If the chosen input device is keyboard, then exit via choose_keys.
+; If the game is started then copy the required input routine to $F075. If the chosen input device is the keyboard, then exit via choose_keys.
 check_menu_keys:
-  CALL menu_keyscan       ; A = menu_keyscan();
-  CP $FF                  ; if (A == 0xFF) return; /* no keypress */
-  RET Z                   ;
-  AND A                   ; if (A) <%
-  JR Z,check_menu_keys_0  ;
-  DEC A                   ; A--; // 1..4 -> 0..3
+  CALL menu_keyscan       ; Scan for keys that select an input device. Result is in A
+  CP $FF                  ; Nothing selected?
+  RET Z                   ; Return if so
+  AND A                   ; Start game (zero) pressed?
+  JR Z,cmk_cpy_rout       ; Jump if so
+  DEC A                   ; Turn 1..4 into 0..3
 ; Clear old selection.
-  PUSH AF
-  LD A,(chosen_input_device) ; A = chosen_input_device;
-  LD E,$07                      ; set_menu_item_attributes(attribute_WHITE_OVER_BLACK);
-  CALL set_menu_item_attributes ;
-  POP AF
+  PUSH AF                 ; Preserve index
+  LD A,(chosen_input_device) ; Load previously chosen input device index
+  LD E,$07                ; Set E to attribute_WHITE_OVER_BLACK
+  CALL set_menu_item_attributes ; Set the screen attributes of the specified menu item
+  POP AF                  ; Restore index
 ; Highlight new selection.
-  LD (chosen_input_device),A ; chosen_input_device = A;
-  LD E,$46                      ; set_menu_item_attributes(attribute_BRIGHT_YELLOW_OVER_BLACK);
-  CALL set_menu_item_attributes ;
-  RET                     ; return; %>
+  LD (chosen_input_device),A ; Set chosen input device index
+  LD E,$46                ; Set E to attribute_BRIGHT_YELLOW_OVER_BLACK
+  CALL set_menu_item_attributes ; Set the screen attributes of the specified menu item
+  RET                     ; Return
 ; Zero pressed to start game.
-check_menu_keys_0:
-  LD A,(chosen_input_device) ; else <% A = chosen_input_device;
-  ADD A,A                    ;
-; This is tricky. A' is left with the low byte of the inputroutine address. In the case of the keyboard, it's zero. choose_keys relies on that in a nonobvious way.
-  LD C,A                            ; memcpy($F075, inputroutine[A], 0x4A); // copy input routine to $F075, length 0x4A
-  LD B,$00                          ;
-  EX AF,AF'                         ;
-  LD HL,inputroutines               ;
-  ADD HL,BC                         ;
-  LD A,(HL)                         ;
-  INC HL                            ;
-  LD H,(HL)                         ;
-  LD L,A                            ;
-  LD DE,static_tiles_plot_direction ;
-  LD BC,$004A                       ;
-  LDIR                              ;
-  EX AF,AF'                         ;
-  AND A                   ; if (A == inputdevice_KEYBOARD) { choose_keys(); }
-  CALL Z,choose_keys      ;
-  POP BC                  ; /* Discard previous frame and resume at main:$F17D. */
-  RET                     ; return; %>
+;
+; Copy the input routine to $F075, choose keys if keyboard was chosen, then return to main.
+cmk_cpy_rout:
+  LD A,(chosen_input_device) ; Load chosen input device index
+  ADD A,A                 ; Double it
+; This is tricky. A' is left with the low byte of the inputroutine address. In the case of the keyboard, it's zero. choose_keys relies on that in a non-obvious way. [DPT: Check this comment]
+  LD C,A                  ; Widen to BC
+  LD B,$00                ;
+  EX AF,AF'               ; Preserve index
+  LD HL,inputroutines     ; Point HL at the list of available input routines
+  ADD HL,BC               ; Combine
+  LD A,(HL)               ; Fetch input routine address into HL
+  INC HL                  ;
+  LD H,(HL)               ;
+  LD L,A                  ;
+  LD DE,static_tiles_plot_direction ; Set the destination address
+  LD BC,$004A             ; Worst-case length of an input routine
+  LDIR                    ; Copy
+  EX AF,AF'               ; Restore index
+  AND A                   ; Was the keyboard chosen?
+  CALL Z,choose_keys      ; Call choose keys if so
+  POP BC                  ; Discard the previous return address and resume at F17D
+  RET                     ;
 
 ; Key choice prompt strings.
 define_key_prompts:
@@ -18307,7 +18528,7 @@ set_menu_item_attributes_2:
   DJNZ set_menu_item_attributes_2 ; ...loop
   RET                     ; Return
 
-; Scan for keys to select an input device.
+; Scan for keys that select an input device.
 ;
 ; Used by the routine at check_menu_keys.
 ;
@@ -18339,7 +18560,7 @@ mk_check_for_0:
   LD A,$FF                ; Otherwise return $FF
   RET                     ;
 
-; Available input routines.
+; List of available input routines.
 ;
 ; Array [4] of pointers to input routines.
 inputroutines:

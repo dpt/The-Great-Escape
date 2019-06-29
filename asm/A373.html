@@ -24,7 +24,7 @@
 <div class="description">A373: Set joint routes for all characters in prisoners_and_guards.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the route passed in (<span class="register">A'</span>,<span class="register">C</span>). The second half of the list (guards 14,15 and prisoners 4,5,6) are set to route (<span class="register">A'</span>+1,<span class="register">C</span>).
@@ -57,17 +57,19 @@ Used by the routines at <a href="A289.html">wake_up</a>, <a href="A2E2.html">end
 <tr>
 <td class="asm-label-1">set_prisoners_and_guards_route_B</td>
 <td class="address-2"><span id="a373"></span>A373</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A27F</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at prisoners_and_guards table of character indices</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a376"></span>A376</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$0A</td>
 <td class="comment-11" rowspan="1">Iterate over the ten entries</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a378"></span>
 <div class="comments">
 <div class="paragraph">
@@ -79,35 +81,40 @@ Start loop
 <tr>
 <td class="asm-label-1">set_prisoners_and_guards_route_B_0</td>
 <td class="address-2"><span id="a378"></span>A378</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Save</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a379"></span>A379</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Save</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a37a"></span>A37A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch the character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a37b"></span>A37B</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A38C.html">set_character_route</a></td>
 <td class="comment-11" rowspan="1">Set the route for the character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a37e"></span>A37E</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">Check the loop index</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a37f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -119,60 +126,70 @@ When this is 6, the character being processed is character_22_PRISONER_3 and the
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a37f"></span>A37F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
 <td class="comment-11" rowspan="2">Is it six?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a380"></span>A380</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $06</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a382"></span>A382</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A373.html#a387">set_prisoners_and_guards_route_B_1</a></td>
 <td class="comment-11" rowspan="1">Jump over if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a384"></span>A384</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="3">Otherwise increment the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a385"></span>A385</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a386"></span>A386</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">set_prisoners_and_guards_route_B_1</td>
 <td class="address-2"><span id="a387"></span>A387</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a388"></span>A388</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Advance to the next character</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a389"></span>A389</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="A373.html#a378">set_prisoners_and_guards_route_B_0</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a38b"></span>A38B</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -185,9 +202,9 @@ When this is 6, the character being processed is character_22_PRISONER_3 and the
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

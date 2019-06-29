@@ -24,7 +24,7 @@
 <div class="description">B495: Use lockpick.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 
 </div>
@@ -45,60 +45,70 @@
 <tr>
 <td class="asm-label-1">action_lockpick</td>
 <td class="address-2"><span id="b495"></span>B495</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B4D0.html">get_nearest_door</a></td>
 <td class="comment-11" rowspan="1">Get the nearest door in range of the hero in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b498"></span>B498</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">Return if no door was nearby</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b499"></span>B499</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($A143),HL</td>
 <td class="comment-11" rowspan="1">Store the door_t pointer in ptr_to_door_being_lockpicked</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b49c"></span>B49C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A12F)</td>
 <td class="comment-11" rowspan="3">Lock out player control until the game counter becomes now + 255</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b49f"></span>B49F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b4a1"></span>B4A1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($A145),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b4a4"></span>B4A4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8001</td>
 <td class="comment-11" rowspan="2">Set hero's vischar.flags to vischar_FLAGS_PICKING_LOCK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b4a7"></span>B4A7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$01</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b4a9"></span>B4A9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$0A</td>
 <td class="comment-11" rowspan="2">Queue the message "PICKING THE LOCK" and exit via</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b4ab"></span>B4AB</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="7D15.html">queue_message</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
@@ -111,9 +121,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div class="description">A8A2: Plot all tiles.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Renders the complete screen by plotting all vertical columns in turn.
@@ -53,41 +53,47 @@ Note: Exits with banked registers active.
 <tr>
 <td class="asm-label-1">plot_all_tiles</td>
 <td class="address-2"><span id="a8a2"></span>A8A2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F0F8</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the 24x17 visible tiles array ("tile_buf")</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8a5"></span>A8A5</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8a6"></span>A8A6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$FF58</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL'</span> at the 7x5 supertile indices buffer ("map_buf")</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8a9"></span>A8A9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F290</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE'</span> at the 24x17x8 screen buffer ("window_buf")</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8ac"></span>A8AC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="1">Get map X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8af"></span>A8AF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$18</td>
 <td class="comment-11" rowspan="1">Set 24 iterations (screen columns)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a8b1"></span>
 <div class="comments">
 <div class="paragraph">
@@ -99,150 +105,175 @@ Start loop
 <tr>
 <td class="asm-label-1">plot_all_tiles_0</td>
 <td class="address-2"><span id="a8b1"></span>A8B1</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b2"></span>A8B2</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1">Preserve the screen buffer pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b3"></span>A8B3</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Preserve the supertile indices pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b4"></span>A8B4</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">Preserve the map X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b5"></span>A8B5</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b6"></span>A8B6</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1">Preserve the visible tiles pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b7"></span>A8B7</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8b8"></span>A8B8</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A8F4.html">plot_vertical_tiles_common</a></td>
 <td class="comment-11" rowspan="1">Plot a complete column of tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bb"></span>A8BB</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bc"></span>A8BC</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="2">Restore and advance the visible tiles pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bd"></span>A8BD</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8be"></span>A8BE</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8bf"></span>A8BF</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Restore the map X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c0"></span>A8C0</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Restore the supertile indices pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c1"></span>A8C1</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
 <td class="comment-11" rowspan="1">Advance the map X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c2"></span>A8C2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Save the result in <span class="register">C</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c3"></span>A8C3</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
 <td class="comment-11" rowspan="3">If the X position hits a multiple of 4 advance to the next supertile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c5"></span>A8C5</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A8A2.html#a8c8">plot_all_tiles_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c7"></span>A8C7</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">plot_all_tiles_1</td>
 <td class="address-2"><span id="a8c8"></span>A8C8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">Restore the map X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8c9"></span>A8C9</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="2">Restore and advance the screen buffer pointer to the next column</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8ca"></span>A8CA</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8cb"></span>A8CB</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8cc"></span>A8CC</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="A8A2.html#a8b1">plot_all_tiles_0</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a8ce"></span>A8CE</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -255,9 +286,9 @@ Start loop
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div class="description">7D99: Change to displaying the next queued game message.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="7D48.html">message_display</a>.
@@ -50,180 +50,210 @@ Called when messages.display_index == 128.
 <tr>
 <td class="asm-label-1">next_message</td>
 <td class="address-2"><span id="7d99"></span>7D99</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,($7D11)</td>
 <td class="comment-11" rowspan="1">Get the message queue pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d9c"></span>7D9C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$7CFE</td>
 <td class="comment-11" rowspan="1">Queue start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7d9f"></span>7D9F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="2">Is the queue pointer at the start of the queue?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da0"></span>7DA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da1"></span>7DA1</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da2"></span>7DA2</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da3"></span>7DA3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">Get message index from queue</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da4"></span>7DA4</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da5"></span>7DA5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="1">Bug: C is loaded here but not used. This could be a hangover from 16-bit message IDs</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da6"></span>7DA6</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="10">Set current message character pointer to messages_table[A]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7da7"></span>7DA7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$7DCD</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7daa"></span>7DAA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dab"></span>7DAB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dad"></span>7DAD</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dae"></span>7DAE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7daf"></span>7DAF</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7db0"></span>7DB0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7db1"></span>7DB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7db2"></span>7DB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($7D13),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7db5"></span>7DB5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$7CFC</td>
 <td class="comment-11" rowspan="4">Shunt the whole queue back by two bytes discarding the first element</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7db8"></span>7DB8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$7CFE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dbb"></span>7DBB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0010</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dbe"></span>7DBE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc0"></span>7DC0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,($7D11)</td>
 <td class="comment-11" rowspan="4">Move the message queue pointer back</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc3"></span>7DC3</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc4"></span>7DC4</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc5"></span>7DC5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($7D11),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc8"></span>7DC8</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">Zero the message display index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dc9"></span>7DC9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($7D10),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7dcc"></span>7DCC</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -236,9 +266,9 @@ Called when messages.display_index == 128.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

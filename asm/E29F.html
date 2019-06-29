@@ -21,10 +21,10 @@
 <td class="next"><span class="next-1">Next: <a href="E2A2.html">E2A2</a></span></td>
 </tr>
 </table>
-<div class="description">E29F: Entry point for masked_sprite_plotter_16_wide_left which assumes A == 0. (+ no vischar passed).</div>
+<div class="description">E29F: Alternative entry point for plot_masked_sprite_16px that assumes x is zero.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="B866.html">plot_sprites</a>.
@@ -45,16 +45,18 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">masked_sprite_plotter_16_wide_item</td>
+<td class="asm-label-1">plot_masked_sprite_16px_x_is_zero</td>
 <td class="address-2"><span id="e29f"></span>E29F</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="1">Zero x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e2a0"></span>E2A0</td>
-<td class="instruction">JR <a href="E2AC.html">masked_sprite_plotter_16_wide_left</a></td>
-<td class="comment-11" rowspan="1">goto masked_sprite_plotter_16_wide_left;</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="E2A2.html#e2ac">pms16_right</a></td>
+<td class="comment-11" rowspan="1">Jump to pms16_left</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -65,9 +67,9 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

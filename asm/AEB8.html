@@ -24,7 +24,7 @@
 <div class="description">AEB8: Plot the searchlight.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Note: In terms of attributes the game window is at (7,2)-(29,17) inclusive.
@@ -53,23 +53,26 @@ Used by the routine at <a href="ADBD.html">nighttime</a>.
 <tr>
 <td class="asm-label-1">searchlight_plot</td>
 <td class="address-2"><span id="aeb8"></span>AEB8</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank the screen attribute pointer supplied in <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeb9"></span>AEB9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$AF3E</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the spotlight bitmap searchlight_shape[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aebc"></span>AEBC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$10</td>
 <td class="comment-11" rowspan="1">16 iterations - one per row of searchlight bitmap</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="aebe"></span>
 <div class="comments">
 <div class="paragraph">
@@ -81,11 +84,12 @@ Start loop (outer)
 <tr>
 <td class="asm-label-1">searchlight_plot_0</td>
 <td class="address-2"><span id="aebe"></span>AEBE</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Switch register banks for this iteration</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="aebf"></span>
 <div class="comments">
 <div class="paragraph">
@@ -97,11 +101,12 @@ Note: I'm presently unable to discern the intent of the 'clip' flag.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aebf"></span>AEBF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AE75)</td>
 <td class="comment-11" rowspan="1">Fetch the clip flag</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="aec2"></span>
 <div class="comments">
 <div class="paragraph">
@@ -113,71 +118,82 @@ Stop if we're beyond the maximum Y
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aec2"></span>AEC2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$5A40</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen attribute (0,18). This is max_y_attrs: the bottom of the game window</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aec5"></span>AEC5</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is the clip flag zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aec6"></span>AEC6</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="AEB8.html#aed2">searchlight_plot_1</a></td>
 <td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aec9"></span>AEC9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="2">Extract the X position from the screen attribute pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeca"></span>AECA</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aecc"></span>AECC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $16</td>
 <td class="comment-11" rowspan="1">Is it &lt; 22?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aece"></span>AECE</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="AEB8.html#aed2">searchlight_plot_1</a></td>
 <td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aed0"></span>AED0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,$20</td>
 <td class="comment-11" rowspan="1">Otherwise point <span class="register">HL</span> at screen attribute (0,17)</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_plot_1</td>
 <td class="address-2"><span id="aed2"></span>AED2</td>
+<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1">Is the screen attribute pointer &gt;= max_y_attrs?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aed4"></span>AED4</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET C</td>
 <td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aed5"></span>AED5</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1">Preserve the screen attribute pointer</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="aed6"></span>
 <div class="comments">
 <div class="paragraph">
@@ -189,113 +205,131 @@ Skip rows until we're in bounds
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aed6"></span>AED6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$5840</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at screen attribute (0,2). This is min_y_attrs: the first row that has the game window on it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aed9"></span>AED9</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is the clip flag zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeda"></span>AEDA</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="AEB8.html#aee6">searchlight_plot_2</a></td>
 <td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aedd"></span>AEDD</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="2">Extract the X position from the screen attribute pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aede"></span>AEDE</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aee0"></span>AEE0</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $07</td>
 <td class="comment-11" rowspan="1">Is it &lt; 7?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aee2"></span>AEE2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="AEB8.html#aee6">searchlight_plot_2</a></td>
 <td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aee4"></span>AEE4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,$20</td>
 <td class="comment-11" rowspan="1">Otherwise point <span class="register">HL</span> at screen attribute (0,1)</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_plot_2</td>
 <td class="address-2"><span id="aee6"></span>AEE6</td>
+<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1">Is the screen attribute pointer &gt;= min_y_attrs?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aee8"></span>AEE8</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="AEB8.html#aef0">searchlight_plot_3</a></td>
 <td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeea"></span>AEEA</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="4">Otherwise we need to skip this row. Increment the (banked) shape pointer by a row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeeb"></span>AEEB</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeec"></span>AEEC</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeed"></span>AEED</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeee"></span>AEEE</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AEB8.html#af32">next_row</a></td>
 <td class="comment-11" rowspan="1">Then jump to the next row, skipping all of the plotting</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_plot_3</td>
 <td class="address-2"><span id="aef0"></span>AEF0</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">Move shape pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aef1"></span>AEF1</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aef2"></span>AEF2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$02</td>
 <td class="comment-11" rowspan="1">Two iterations (two bytes per row)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="aef4"></span>
 <div class="comments">
 <div class="paragraph">
@@ -307,35 +341,40 @@ Start loop (inner)
 <tr>
 <td class="asm-label-1">searchlight_plot_4</td>
 <td class="address-2"><span id="aef4"></span>AEF4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">Fetch eight pixels from the shape data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aef5"></span>AEF5</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aef6"></span>AEF6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$071E</td>
 <td class="comment-11" rowspan="1">Preload <span class="register">D</span> with 7 (left hand clip) and <span class="register">E</span> with 30 (right hand clip)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aef9"></span>AEF9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Save the shape pixels to <span class="register">C</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aefa"></span>AEFA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$08</td>
 <td class="comment-11" rowspan="1">Eight iterations (bits per byte)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="aefc"></span>
 <div class="comments">
 <div class="paragraph">
@@ -350,77 +389,89 @@ Clip right hand edge
 <tr>
 <td class="asm-label-1">searchlight_plot_5</td>
 <td class="address-2"><span id="aefc"></span>AEFC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AE75)</td>
 <td class="comment-11" rowspan="1">Fetch the clip flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aeff"></span>AEFF</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is the clip flag zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af00"></span>AF00</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="1">Fetch the screen attribute pointer low byte (interleaved)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af01"></span>AF01</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="AEB8.html#af0c">searchlight_plot_6</a></td>
 <td class="comment-11" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af04"></span>AF04</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
 <td class="comment-11" rowspan="1">Get X</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af06"></span>AF06</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $16</td>
 <td class="comment-11" rowspan="1">Is it &gt;= 22?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af08"></span>AF08</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="AEB8.html#af1b">dont_plot</a></td>
 <td class="comment-11" rowspan="1">Jump to don't plot if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af0a"></span>AF0A</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AEB8.html#af18">searchlight_plot_8</a></td>
 <td class="comment-11" rowspan="1">Otherwise jump to plot test</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_plot_6</td>
 <td class="address-2"><span id="af0c"></span>AF0C</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
 <td class="comment-11" rowspan="1">Get X</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af0e"></span>AF0E</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP E</td>
 <td class="comment-11" rowspan="1">Is it &lt; 30? (<span class="register">E</span> is 30 here, as set by <a href="AEB8.html#aef6">AEF6</a>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af0f"></span>AF0F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="AEB8.html#af18">searchlight_plot_8</a></td>
 <td class="comment-11" rowspan="1">Jump to plot test if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af11"></span>AF11</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="af12"></span>
 <div class="comments">
 <div class="paragraph">
@@ -432,29 +483,33 @@ Tight loop to increment <span class="register">DE</span> by <span class="registe
 <tr>
 <td class="asm-label-1">searchlight_plot_7</td>
 <td class="address-2"><span id="af12"></span>AF12</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="2">Skip the remainder of the shape's row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af13"></span>AF13</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="AEB8.html#af12">searchlight_plot_7</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af15"></span>AF15</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af16"></span>AF16</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AEB8.html#af32">next_row</a></td>
 <td class="comment-11" rowspan="1">Jump to next_row</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="af18"></span>
 <div class="comments">
 <div class="paragraph">
@@ -466,143 +521,166 @@ Clip left hand edge
 <tr>
 <td class="asm-label-1">searchlight_plot_8</td>
 <td class="address-2"><span id="af18"></span>AF18</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP D</td>
 <td class="comment-11" rowspan="1">Is <span class="register">A</span> &gt;= 8? (<a href="AEB8.html#aef6">AEF6</a> previously stored 7 in <span class="register">D</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af19"></span>AF19</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="AEB8.html#af1f">do_plot</a></td>
 <td class="comment-11" rowspan="1">Jump to plot if so</td>
 </tr>
 <tr>
 <td class="asm-label-1">dont_plot</td>
 <td class="address-2"><span id="af1b"></span>AF1B</td>
+<td class="bytes-0"></td>
 <td class="instruction">RL C</td>
 <td class="comment-11" rowspan="1">Extract the next bit from shape's pixels</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af1d"></span>AF1D</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AEB8.html#af2a">searchlight_plot_10</a></td>
 <td class="comment-11" rowspan="1">Jump to the next pixel</td>
 </tr>
 <tr>
 <td class="asm-label-1">do_plot</td>
 <td class="address-2"><span id="af1f"></span>AF1F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RL C</td>
 <td class="comment-11" rowspan="1">Extract the next bit from shape's pixels</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af21"></span>AF21</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="AEB8.html#af28">searchlight_plot_9</a></td>
 <td class="comment-11" rowspan="1">Jump if the pixel is not set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af24"></span>AF24</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$06</td>
 <td class="comment-11" rowspan="1">Set screen attribute to attribute_YELLOW_OVER_BLACK</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af26"></span>AF26</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AEB8.html#af2a">searchlight_plot_10</a></td>
 <td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_plot_9</td>
 <td class="address-2"><span id="af28"></span>AF28</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$41</td>
 <td class="comment-11" rowspan="1">Set screen attribute to attribute_BRIGHT_BLUE_OVER_BLACK</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_plot_10</td>
 <td class="address-2"><span id="af2a"></span>AF2A</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Advance to the next pixel and attribute</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af2b"></span>AF2B</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="AEB8.html#aefc">searchlight_plot_5</a></td>
 <td class="comment-11" rowspan="1">...loop (inner inner)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af2d"></span>AF2D</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af2e"></span>AF2E</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">Advance shape pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af2f"></span>AF2F</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="AEB8.html#aef4">searchlight_plot_4</a></td>
 <td class="comment-11" rowspan="1">...loop (inner)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af31"></span>AF31</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">next_row</td>
 <td class="address-2"><span id="af32"></span>AF32</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af33"></span>AF33</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="2">Move the attribute pointer to the next scanline</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af36"></span>AF36</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af37"></span>AF37</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af38"></span>AF38</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af39"></span>AF39</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC C</td>
 <td class="comment-11" rowspan="1">Decrement row counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af3a"></span>AF3A</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="AEB8.html#aebe">searchlight_plot_0</a></td>
 <td class="comment-11" rowspan="1">...loop while row &gt; 0 (outer)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af3d"></span>AF3D</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="af3e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -614,96 +692,112 @@ Searchlight circle shape.
 <tr>
 <td class="asm-label-1">searchlight_shape</td>
 <td class="address-1"><span id="af3e"></span>AF3E</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af40"></span>AF40</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af42"></span>AF42</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af44"></span>AF44</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $01,$80</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af46"></span>AF46</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $07,$E0</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af48"></span>AF48</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af4a"></span>AF4A</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af4c"></span>AF4C</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $1F,$F8</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af4e"></span>AF4E</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $1F,$F8</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af50"></span>AF50</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af52"></span>AF52</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0F,$F0</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af54"></span>AF54</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $07,$E0</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af56"></span>AF56</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $01,$80</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af58"></span>AF58</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af5a"></span>AF5A</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="af5c"></span>AF5C</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
@@ -716,9 +810,9 @@ Searchlight circle shape.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

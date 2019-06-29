@@ -24,7 +24,7 @@
 <div class="description">B89C: Finds the next vischar or item to draw.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="B866.html">plot_sprites</a>.
@@ -52,47 +52,57 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 <td class="register">IY</td>
 <td class="register-desc">The vischar or itemstruct to plot.</td>
 </tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">The vischar or itemstruct to plot.</td>
+</tr>
 </table>
 </td>
 </tr>
 <tr>
 <td class="asm-label-1">locate_vischar_or_itemstruct</td>
 <td class="address-2"><span id="b89c"></span>B89C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0000</td>
 <td class="comment-11" rowspan="3"><span class="register">BC</span> and <span class="register">DE</span> are previous_x and previous_y. Zero them both</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b89f"></span>B89F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8a0"></span>B8A0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8a1"></span>B8A1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">Load <span class="register">A</span> with a 'nothing found' marker ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8a3"></span>B8A3</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">Bank it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8a4"></span>B8A4</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank the previous_x/y registers</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b8a5"></span>
 <div class="comments">
 <div class="paragraph">
@@ -104,23 +114,26 @@ Note that we maintain a previous_height but it's never usefully used.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8a5"></span>B8A5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0000</td>
 <td class="comment-11" rowspan="1">Initialise the previous_height to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8a8"></span>B8A8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0820</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations and set <span class="register">C</span> for a 32 byte stride simultaneously</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ab"></span>B8AB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8007</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at vischar 0's counter_and_flags</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b8ae"></span>
 <div class="comments">
 <div class="paragraph">
@@ -132,29 +145,33 @@ Start loop
 <tr>
 <td class="asm-label-1">lvoi_loop</td>
 <td class="address-2"><span id="b8ae"></span>B8AE</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="1">Is counter_and_flags' vischar_TOUCH_ENTERED flag set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b0"></span>B8B0</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B89C.html#b8f7">lvoi_next</a></td>
 <td class="comment-11" rowspan="1">Jump to next iteration if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b2"></span>B8B2</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Preserve the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b3"></span>B8B3</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Preserve the loop counter and stride</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b8b4"></span>
 <div class="comments">
 <div class="paragraph">
@@ -166,101 +183,117 @@ Check the X axis
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b4"></span>B8B4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$08</td>
 <td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.mi.pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b6"></span>B8B6</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b7"></span>B8B7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b8"></span>B8B8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="3">Load vischar.mi.pos.x into <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8b9"></span>B8B9</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ba"></span>B8BA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8bb"></span>B8BB</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-11" rowspan="4">Add 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8bc"></span>B8BC</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8bd"></span>B8BD</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8be"></span>B8BE</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8bf"></span>B8BF</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Stack it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c0"></span>B8C0</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Switch banks to get spare <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c1"></span>B8C1</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"><span class="register">HL</span> = vischar.mi.pos.x + 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c2"></span>B8C2</td>
+<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-11" rowspan="1">Subtract previous_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c4"></span>B8C4</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c5"></span>B8C5</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B89C.html#b8f5">lvoi_pop_next</a></td>
 <td class="comment-11" rowspan="1">Jump if (vischar.mi.pos.x + 4) &lt; previous_x?</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b8c7"></span>
 <div class="comments">
 <div class="paragraph">
@@ -272,95 +305,110 @@ Check the Y axis
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c7"></span>B8C7</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="4">Load vischar.mi.pos.y into <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c8"></span>B8C8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8c9"></span>B8C9</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ca"></span>B8CA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8cb"></span>B8CB</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-11" rowspan="4">Add 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8cc"></span>B8CC</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8cd"></span>B8CD</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ce"></span>B8CE</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8cf"></span>B8CF</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Stack it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d0"></span>B8D0</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Switch banks to get spare <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d1"></span>B8D1</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"><span class="register">HL</span> = vischar.mi.pos.y + 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d2"></span>B8D2</td>
+<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1">Subtract previous_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d4"></span>B8D4</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d5"></span>B8D5</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B89C.html#b8f5">lvoi_pop_next</a></td>
 <td class="comment-11" rowspan="1">Jump if (vischar.mi.pos.y + 4) &lt; previous_y?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d7"></span>B8D7</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at vischar.mi.pos.height</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b8d8"></span>
 <div class="comments">
 <div class="paragraph">
@@ -372,209 +420,243 @@ We compute a vischar index here but the outer code never usefully uses it.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d8"></span>B8D8</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="2">Fetch the loop counter from the stack</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8d9"></span>B8D9</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8da"></span>B8DA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$08</td>
 <td class="comment-11" rowspan="2">Compute the vischar index (8 - <span class="register">B</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8dc"></span>B8DC</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8dd"></span>B8DD</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">Bank it for return value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8de"></span>B8DE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="3">previous_height = vischar.mi.pos.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8df"></span>B8DF</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e0"></span>B8E0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e1"></span>B8E1</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Preserve the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e2"></span>B8E2</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e3"></span>B8E3</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Restore vischar pointer to the other bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e4"></span>B8E4</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="2">Point <span class="register">HL</span> at vischar.mi.pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e5"></span>B8E5</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e6"></span>B8E6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="4">previous_y = vischar.mi.pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e7"></span>B8E7</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e8"></span>B8E8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8e9"></span>B8E9</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ea"></span>B8EA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="3">previous_x = vischar.mi.pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8eb"></span>B8EB</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ec"></span>B8EC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ed"></span>B8ED</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ee"></span>B8EE</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $0F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8f0"></span>B8F0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8f1"></span>B8F1</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="2">Set <span class="register">IY</span> to <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8f2"></span>B8F2</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP IY</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8f4"></span>B8F4</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">lvoi_pop_next</td>
 <td class="address-2"><span id="b8f5"></span>B8F5</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">Restore loop counter and stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8f6"></span>B8F6</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1">lvoi_next</td>
 <td class="address-2"><span id="b8f7"></span>B8F7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">Advance to the next vischar</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8f8"></span>B8F8</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8f9"></span>B8F9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8fa"></span>B8FA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="B89C.html#b8ae">lvoi_loop</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8fc"></span>B8FC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="DBEB.html">get_greatest_itemstruct</a></td>
 <td class="comment-11" rowspan="1">Iterate over all item_structs looking for nearby items</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b8ff"></span>B8FF</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-11" rowspan="1">Get the old <span class="register">A</span> back</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b900"></span>
 <div class="comments">
 <div class="paragraph">
@@ -586,17 +668,19 @@ If the topmost bit of <span class="register">A'</span> remains set from its init
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b900"></span>B900</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
 <td class="comment-11" rowspan="1">Does bit 7 remain set from initialisation?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b902"></span>B902</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">Return with Z clear if so: nothing was found</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b903"></span>
 <div class="comments">
 <div class="paragraph">
@@ -608,66 +692,77 @@ Otherwise we've found a vischar
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b903"></span>B903</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH IY</td>
 <td class="comment-11" rowspan="2">Get vischar in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b905"></span>B905</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b906"></span>B906</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 6,A</td>
 <td class="comment-11" rowspan="1">Is item_FOUND set? ($40)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b908"></span>B908</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="B89C.html#b90f">lvoi_item_found</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b90a"></span>B90A</td>
+<td class="bytes-0"></td>
 <td class="instruction">RES 7,(IY+$07)</td>
 <td class="comment-11" rowspan="1">Clear the vischar.counter_and_flags vischar_TOUCH_ENTERED flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b90e"></span>B90E</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return with Z set</td>
 </tr>
 <tr>
 <td class="asm-label-1">lvoi_item_found</td>
 <td class="address-2"><span id="b90f"></span>B90F</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at itemstruct.room_and_flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b910"></span>B910</td>
+<td class="bytes-0"></td>
 <td class="instruction">RES 6,(HL)</td>
 <td class="comment-11" rowspan="1">Clear itemstruct_ROOM_FLAG_NEARBY_6</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b912"></span>B912</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 6,(HL)</td>
 <td class="comment-11" rowspan="1">Test the bit we've just cleared (odd!) - sets Z</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b914"></span>B914</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> back at the base of the itemstruct. (Note that DEC HL doesn't alter the Z flag)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b915"></span>B915</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return with Z set</td>
 </tr>
@@ -680,9 +775,9 @@ Otherwise we've found a vischar
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

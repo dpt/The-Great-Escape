@@ -24,7 +24,7 @@
 <div class="description">A09E: Ring the alarm bell.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="9D7B.html">main_loop</a>.
@@ -50,41 +50,47 @@ Called three times from main_loop.
 <tr>
 <td class="asm-label-1">ring_bell</td>
 <td class="address-2"><span id="a09e"></span>A09E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A130</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at bell ring counter/flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0a1"></span>A0A1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch its value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0a2"></span>A0A2</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">If it's bell_STOP then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0a4"></span>A0A4</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0a5"></span>A0A5</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">If it's bell_RING_PERPETUAL then jump over the decrement code</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0a6"></span>A0A6</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A09E.html#a0b0">ring_bell_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a0a8"></span>
 <div class="comments">
 <div class="paragraph">
@@ -96,23 +102,26 @@ Decrement the ring counter.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0a8"></span>A0A8</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="2">Decrement and store</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0a9"></span>A0A9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0aa"></span>A0AA</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A09E.html#a0b0">ring_bell_0</a></td>
 <td class="comment-11" rowspan="1">If it didn't hit zero then jump over the stop code</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a0ac"></span>
 <div class="comments">
 <div class="paragraph">
@@ -124,23 +133,26 @@ Counter hit zero - stop ringing.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0ac"></span>A0AC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">Stop the bell</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0ae"></span>A0AE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0af"></span>A0AF</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a0b0"></span>
 <div class="comments">
 <div class="paragraph">
@@ -152,29 +164,33 @@ Fetch visible state of bell from the screen.
 <tr>
 <td class="asm-label-1">ring_bell_0</td>
 <td class="address-2"><span id="a0b0"></span>A0B0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($518E)</td>
 <td class="comment-11" rowspan="1">Fetch the bell ringing graphic from the screen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0b3"></span>A0B3</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $3F</td>
 <td class="comment-11" rowspan="1">Is it $3F? (63)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0b5"></span>A0B5</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="A09E.html#a0c6">ring_bell_2</a></td>
 <td class="comment-11" rowspan="1">If so, jump to plot "off" code</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0b8"></span>A0B8</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A09E.html#a0bb">ring_bell_1</a></td>
 <td class="comment-11" rowspan="1">Bug: Pointless jump to adjacent instruction</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a0bb"></span>
 <div class="comments">
 <div class="paragraph">
@@ -186,29 +202,33 @@ Plot UDG for the bell ringer "on" and make the bell sound
 <tr>
 <td class="asm-label-1">ring_bell_1</td>
 <td class="address-2"><span id="a0bb"></span>A0BB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$A153</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at bell_ringer_bitmap_on</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0be"></span>A0BE</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A0C9.html">plot_ringer</a></td>
 <td class="comment-11" rowspan="1">Plot ringer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0c1"></span>A0C1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$2530</td>
 <td class="comment-11" rowspan="2">Play the "bell ringing" sound, exiting via it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a0c4"></span>A0C4</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A11D.html">play_speaker</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a0c6"></span>
 <div class="comments">
 <div class="paragraph">
@@ -220,11 +240,12 @@ Plot UDG for the bell ringer "off".
 <tr>
 <td class="asm-label-1">ring_bell_2</td>
 <td class="address-2"><span id="a0c6"></span>A0C6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$A147</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at bell_ringer_bitmap_on</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 
 <div class="comments">
 <div class="paragraph">
@@ -242,9 +263,9 @@ FALL THROUGH to plot_ringer.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

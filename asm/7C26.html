@@ -24,7 +24,7 @@
 <div class="description">7C26: Convert an item to an itemstruct pointer.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.html">event_new_red_cross_parcel</a> and <a href="CD31.html">item_discovered</a>.
@@ -53,66 +53,77 @@ Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.ht
 <tr>
 <td class="asm-label-1">item_to_itemstruct</td>
 <td class="address-2"><span id="7c26"></span>7C26</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="5">Multiply item index by seven</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c27"></span>7C27</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c28"></span>7C28</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c29"></span>7C29</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c2a"></span>7C2A</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c2b"></span>7C2B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$76C8</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first element of item_structs</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c2e"></span>7C2E</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="4">Add the two</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c2f"></span>7C2F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c30"></span>7C30</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c31"></span>7C31</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7c32"></span>7C32</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return i'th element of item_structs in <span class="register">HL</span></td>
 </tr>
@@ -125,9 +136,9 @@ Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.ht
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

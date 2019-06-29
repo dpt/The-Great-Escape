@@ -24,7 +24,7 @@
 <div class="description">AA6C: Shunt the map down.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="AAB2.html">move_map</a>.
@@ -47,78 +47,91 @@ Used by the routine at <a href="AAB2.html">move_map</a>.
 <tr>
 <td class="asm-label-1">shunt_map_down</td>
 <td class="address-2"><span id="aa6c"></span>AA6C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BC</td>
 <td class="comment-11" rowspan="2">Move the map position down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa6f"></span>AA6F</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa70"></span>AA70</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A7C9.html">get_supertiles</a></td>
 <td class="comment-11" rowspan="1">Update the supertiles in map_buf</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa73"></span>AA73</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F277</td>
 <td class="comment-11" rowspan="4">Shunt the tile_buf down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa76"></span>AA76</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F28F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa79"></span>AA79</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0180</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa7c"></span>AA7C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDDR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa7e"></span>AA7E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$FE8F</td>
 <td class="comment-11" rowspan="4">Shunt the window_buf down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa81"></span>AA81</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$FF4F</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa84"></span>AA84</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0C00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa87"></span>AA87</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDDR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa89"></span>AA89</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A819.html">plot_topmost_tiles</a></td>
 <td class="comment-11" rowspan="1">Plot the complete topmost row of tiles</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aa8c"></span>AA8C</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -131,9 +144,9 @@ Used by the routine at <a href="AAB2.html">move_map</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

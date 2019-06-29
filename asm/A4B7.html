@@ -24,7 +24,7 @@
 <div class="description">A4B7: Set hero's and prisoners_and_guards's routes to "go to yard" reversed.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="A215.html">event_exercise_time</a>.
@@ -47,36 +47,42 @@ Used by the routine at <a href="A215.html">event_exercise_time</a>.
 <tr>
 <td class="asm-label-1">set_route_go_to_yard_reversed</td>
 <td class="address-2"><span id="a4b7"></span>A4B7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$8E04</td>
 <td class="comment-11" rowspan="2">Set the hero's route to (REVERSED routeindex_14_GO_TO_YARD, 4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4ba"></span>A4BA</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4bd"></span>A4BD</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$8E</td>
 <td class="comment-11" rowspan="4">And set the routes of all characters in prisoners_and_guards to the same route (exit via)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4bf"></span>A4BF</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4c0"></span>A4C0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$04</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a4c2"></span>A4C2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A373.html">set_prisoners_and_guards_route_B</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
@@ -89,9 +95,9 @@ Used by the routine at <a href="A215.html">event_exercise_time</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

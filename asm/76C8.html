@@ -21,10 +21,10 @@
 <td class="next"><span class="next-1">Next: <a href="7738.html">7738</a></span></td>
 </tr>
 </table>
-<div class="description">76C8: Item structures.</div>
+<div class="description">76C8: Item structures (a.k.a. itemstructs).</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 This array contains one of these 7-byte structures for each of the 16 game items:
@@ -81,96 +81,112 @@ This array contains one of these 7-byte structures for each of the 16 game items
 <tr>
 <td class="asm-label-1">item_structs</td>
 <td class="address-1"><span id="76c8"></span>76C8</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$FF,$40,$20,$02,$78,$F4</td>
 <td class="comment-11" rowspan="1">item_WIRESNIPS,        room_NONE,        (64, 32,  2), (0x78, 0xF4) // &lt;- item_to_itemstruct, find_nearby_item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="76cf"></span>76CF</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $01,$09,$3E,$30,$00,$7C,$F2</td>
 <td class="comment-11" rowspan="1">item_SHOVEL,           room_9_CRATE,     (62, 48,  0), (0x7C, 0xF2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="76d6"></span>76D6</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $02,$0A,$49,$24,$10,$77,$F0</td>
 <td class="comment-11" rowspan="1">item_LOCKPICK,         room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="76dd"></span>76DD</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $03,$0B,$2A,$3A,$04,$84,$F3</td>
 <td class="comment-11" rowspan="1">item_PAPERS,           room_11_PAPERS,   (42, 58,  4), (0x84, 0xF3)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="76e4"></span>76E4</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $04,$0E,$32,$18,$02,$7A,$F6</td>
 <td class="comment-11" rowspan="1">item_TORCH,            room_14_TORCH,    (34, 24,  2), (0x7A, 0xF6)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="76eb"></span>76EB</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $05,$FF,$24,$2C,$04,$7E,$F4</td>
 <td class="comment-11" rowspan="1">item_BRIBE,            room_NONE,        (36, 44,  4), (0x7E, 0xF4) // &lt;- accept_bribe</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="76f2"></span>76F2</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $06,$0F,$2C,$41,$10,$87,$F1</td>
 <td class="comment-11" rowspan="1">item_UNIFORM,          room_15_UNIFORM,  (44, 65, 16), (0x87, 0xF1)</td>
 </tr>
 <tr>
 <td class="asm-label-1">item_structs_food</td>
 <td class="address-1"><span id="76f9"></span>76F9</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $07,$13,$40,$30,$10,$7E,$F0</td>
 <td class="comment-11" rowspan="1">item_FOOD,             room_19_FOOD,     (64, 48, 16), (0x7E, 0xF0) // &lt;- action_poison, called_from_main_loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7700"></span>7700</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $08,$01,$42,$34,$04,$7C,$F1</td>
 <td class="comment-11" rowspan="1">item_POISON,           room_1_HUT1RIGHT, (66, 52,  4), (0x7C, 0xF1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7707"></span>7707</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $09,$16,$3C,$2A,$00,$7B,$F2</td>
 <td class="comment-11" rowspan="1">item_RED_KEY,          room_22_REDKEY,   (60, 42,  0), (0x7B, 0xF2)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="770e"></span>770E</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0A,$0B,$1C,$22,$00,$81,$F8</td>
 <td class="comment-11" rowspan="1">item_YELLOW_KEY,       room_11_PAPERS,   (28, 34,  0), (0x81, 0xF8)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7715"></span>7715</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0B,$00,$4A,$48,$00,$7A,$6E</td>
 <td class="comment-11" rowspan="1">item_GREEN_KEY,        room_0_OUTDOORS,  (74, 72,  0), (0x7A, 0x6E)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="771c"></span>771C</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0C,$FF,$1C,$32,$0C,$85,$F6</td>
 <td class="comment-11" rowspan="1">item_RED_CROSS_PARCEL, room_NONE,        (28, 50, 12), (0x85, 0xF6) // &lt;- event_new_red_cross_parcel, new_red_cross_parcel</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7723"></span>7723</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0D,$12,$24,$3A,$08,$85,$F4</td>
 <td class="comment-11" rowspan="1">item_RADIO,            room_18_RADIO,    (36, 58,  8), (0x85, 0xF4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="772a"></span>772A</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0E,$FF,$24,$2C,$04,$7E,$F4</td>
 <td class="comment-11" rowspan="1">item_PURSE,            room_NONE,        (36, 44,  4), (0x7E, 0xF4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7731"></span>7731</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $0F,$FF,$34,$1C,$04,$7E,$F4</td>
 <td class="comment-11" rowspan="1">item_COMPASS,          room_NONE,        (52, 28,  4), (0x7E, 0xF4)</td>
 </tr>
@@ -183,9 +199,9 @@ This array contains one of these 7-byte structures for each of the 16 game items
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

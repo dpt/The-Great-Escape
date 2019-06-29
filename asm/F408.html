@@ -24,7 +24,7 @@
 <div class="description">F408: Set the screen attributes of the specified menu item.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="F163.html">main</a> and <a href="F271.html">check_menu_keys</a>.
@@ -54,11 +54,12 @@ Used by the routines at <a href="F163.html">main</a> and <a href="F271.html">che
 <tr>
 <td class="asm-label-1">set_menu_item_attributes</td>
 <td class="address-2"><span id="f408"></span>F408</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$590D</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first menu item's attributes</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="f40b"></span>
 <div class="comments">
 <div class="paragraph">
@@ -70,23 +71,26 @@ Skip to the item's row.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f40b"></span>F40B</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is the index zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f40c"></span>F40C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="F408.html#f415">set_menu_item_attributes_1</a></td>
 <td class="comment-11" rowspan="1">Jump if so - no need to advance the pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f40e"></span>F40E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for (item index) iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="f40f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -98,29 +102,33 @@ Start loop
 <tr>
 <td class="asm-label-1">set_menu_item_attributes_0</td>
 <td class="address-2"><span id="f40f"></span>F40F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="3">Advance by two attribute rows per iteration (64 bytes)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f410"></span>F410</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$40</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f412"></span>F412</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f413"></span>F413</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F408.html#f40f">set_menu_item_attributes_0</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="f415"></span>
 <div class="comments">
 <div class="paragraph">
@@ -132,11 +140,12 @@ Set the attributes.
 <tr>
 <td class="asm-label-1">set_menu_item_attributes_1</td>
 <td class="address-2"><span id="f415"></span>F415</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$0A</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for ten iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="f417"></span>
 <div class="comments">
 <div class="paragraph">
@@ -148,24 +157,28 @@ Start loop
 <tr>
 <td class="asm-label-1">set_menu_item_attributes_2</td>
 <td class="address-2"><span id="f417"></span>F417</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),E</td>
 <td class="comment-11" rowspan="1">Set one attribute byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f418"></span>F418</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">Advance to the next</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f419"></span>F419</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F408.html#f417">set_menu_item_attributes_2</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f41b"></span>F41B</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -178,9 +191,9 @@ Start loop
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div class="description">A2E2: End of breakfast time.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="A202.html">event_breakfast_time</a>.
@@ -47,77 +47,89 @@ Used by the routine at <a href="A202.html">event_breakfast_time</a>.
 <tr>
 <td class="asm-label-1">end_of_breakfast</td>
 <td class="address-2"><span id="a2e2"></span>A2E2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A137)</td>
 <td class="comment-11" rowspan="3">If the hero's not at breakfast, jump forward (note: it could jump one instruction later instead)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2e5"></span>A2E5</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2e6"></span>A2E6</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="A2E2.html#a2f2">end_of_breakfast_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2e9"></span>A2E9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$800F</td>
 <td class="comment-11" rowspan="5">Set the hero's vischar position to (52,62)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2ec"></span>A2EC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$34</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2ee"></span>A2EE</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2ef"></span>A2EF</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2f0"></span>A2F0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$3E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">end_of_breakfast_0</td>
 <td class="address-2"><span id="a2f2"></span>A2F2</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">Clear the 'at breakfast' flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2f3"></span>A2F3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($A137),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2f6"></span>A2F6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$9003</td>
 <td class="comment-11" rowspan="2">Set the hero's route to (REVERSED routeindex_16_BREAKFAST_25, 3)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2f9"></span>A2F9</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a2fc"></span>
 <div class="comments">
 <div class="paragraph">
@@ -129,29 +141,33 @@ Position all six prisoners.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2fc"></span>A2FC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$769F</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at characterstruct 20's room field (character 20 is the first of the prisoners)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a2ff"></span>A2FF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0007</td>
 <td class="comment-11" rowspan="1">Prepare the characterstruct stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a302"></span>A302</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$19</td>
 <td class="comment-11" rowspan="1">Prepare room_25_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a304"></span>A304</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">Do the first three prisoner characters</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a306"></span>
 <div class="comments">
 <div class="paragraph">
@@ -163,35 +179,40 @@ Start loop
 <tr>
 <td class="asm-label-1">end_of_breakfast_1</td>
 <td class="address-2"><span id="a306"></span>A306</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">Set this characterstruct's room to room_25_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a307"></span>A307</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">Advance to the next characterstruct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a308"></span>A308</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="A2E2.html#a306">end_of_breakfast_1</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a30a"></span>A30A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$17</td>
 <td class="comment-11" rowspan="1">Prepare room_23_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a30c"></span>A30C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
 <td class="comment-11" rowspan="1">Do the second three prisoner characters</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a30e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -203,47 +224,54 @@ Start loop
 <tr>
 <td class="asm-label-1">end_of_breakfast_2</td>
 <td class="address-2"><span id="a30e"></span>A30E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">Set this characterstruct's room to room_23_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a30f"></span>A30F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">Advance to the next characterstruct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a310"></span>A310</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="A2E2.html#a30e">end_of_breakfast_2</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a312"></span>A312</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$90</td>
 <td class="comment-11" rowspan="2">Set initial route index in <span class="register">A'</span>. This gets incremented by set_prisoners_and_guards_route_B for every route it assigns</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a314"></span>A314</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a315"></span>A315</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$03</td>
 <td class="comment-11" rowspan="1">Set route step to 3</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a317"></span>A317</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A373.html">set_prisoners_and_guards_route_B</a></td>
 <td class="comment-11" rowspan="1">Set the routes of all characters in prisoners_and_guards</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a31a"></span>
 <div class="comments">
 <div class="paragraph">
@@ -255,90 +283,105 @@ Update all the benches to be empty.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a31a"></span>A31A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$0D</td>
 <td class="comment-11" rowspan="1">Prepare interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a31c"></span>A31C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($6F17),A</td>
 <td class="comment-11" rowspan="1">Set room definition 23's bench_A object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a31f"></span>A31F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($6F1A),A</td>
 <td class="comment-11" rowspan="1">Set room definition 23's bench_B object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a322"></span>A322</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($6F1D),A</td>
 <td class="comment-11" rowspan="1">Set room definition 23's bench_C object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a325"></span>A325</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($6F4F),A</td>
 <td class="comment-11" rowspan="1">Set room definition 25's bench_D object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a328"></span>A328</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($6F52),A</td>
 <td class="comment-11" rowspan="1">Set room definition 25's bench_E object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a32b"></span>A32B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($6F55),A</td>
 <td class="comment-11" rowspan="1">Set room definition 25's bench_F object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a32e"></span>A32E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($6F58),A</td>
 <td class="comment-11" rowspan="1">Set room definition 25's bench_G object to interiorobject_EMPTY_BENCH</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a331"></span>A331</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="5">If the global current room index is outdoors, or a tunnel room then return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a334"></span>A334</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a335"></span>A335</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a336"></span>A336</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $1D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a338"></span>A338</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a339"></span>A339</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
 <td class="comment-11" rowspan="1">Expand out the room definition for room_index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a33c"></span>A33C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="6B42.html">plot_interior_tiles</a></td>
 <td class="comment-11" rowspan="1">Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer and exit via (note: different to wake_up's end)</td>
 </tr>
@@ -351,9 +394,9 @@ Update all the benches to be empty.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

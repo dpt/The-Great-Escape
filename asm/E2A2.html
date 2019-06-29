@@ -18,19 +18,19 @@
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="E29F.html">E29F</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#e2a2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="E2AC.html">E2AC</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="E3FA.html">E3FA</a></span></td>
 </tr>
 </table>
-<div class="description">E2A2: Sprite plotter. Used for characters and objects.</div>
+<div class="description">E2A2: Sprite plotter for 16 pixel-wide masked sprites.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="B866.html">plot_sprites</a>.
+This is used for characters and objects.
 </div>
 <div class="paragraph">
-Looks like it plots a two byte-wide sprite with mask into a three byte-wide destination.
+Used by the routines at <a href="B866.html">plot_sprites</a>, <a href="E29F.html">plot_masked_sprite_16px_x_is_zero</a> and <a href="E2A2.html">plot_masked_sprite_16px</a>.
 </div>
 </div>
 <table class="input-1">
@@ -51,51 +51,1851 @@ Looks like it plots a two byte-wide sprite with mask into a three byte-wide dest
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">masked_sprite_plotter_16_wide_vischar</td>
+<td class="routine-comment" colspan="5">
+<span id="e2a2"></span>
+<div class="comments">
+<div class="paragraph">
+Mask off the bottom three bits of the vischar's (isometric projected) x position and treat it as a signed field. This tells us how far we need to shift the sprite left or right. -4..-1 =&gt; left shift by 4..1px; 0..3 =&gt; right shift by 0..3px.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">plot_masked_sprite_16px</td>
 <td class="address-2"><span id="e2a2"></span>E2A2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$18)</td>
-<td class="comment-11" rowspan="4">if ((A = IY[24] &amp; 7) &gt;= 4) goto masked_sprite_plotter_16_wide_right.</td>
+<td class="comment-11" rowspan="2">x = (vischar.iso_pos.x &amp; 7)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e2a5"></span>E2A5</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e2a7"></span>E2A7</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $04</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is x equal to 4 or above? (-4..-1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="e2a9"></span>E2A9</td>
-<td class="instruction">JP NC,<a href="E34E.html">masked_sprite_plotter_16_wide_right</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JP NC,<a href="E2A2.html#e34e">pms16_left</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-
+<td class="routine-comment" colspan="5">
+<span id="e2ac"></span>
 <div class="comments">
 <div class="paragraph">
-FALL THROUGH into masked_sprite_plotter_16_wide_left.
+Right shifting case.
+</div>
+<div class="paragraph">
+<span class="register">A</span> is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (6 bytes) to obtain the jump offset.
 </div>
 </div>
 </td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right</td>
+<td class="address-1"><span id="e2ac"></span>E2AC</td>
+<td class="bytes-0"></td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="2">x = (~x &amp; 3)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2ad"></span>E2AD</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND $03</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2af"></span>E2AF</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-11" rowspan="4">Multiply by six to get the jump distance</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2b0"></span>E2B0</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD H,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2b1"></span>E2B1</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2b2"></span>E2B2</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD A,H</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2b3"></span>E2B3</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($E2DC),A</td>
+<td class="comment-11" rowspan="1">Self modify the JR at <a href="E2A2.html#e2db">pms16_right_mask_jump</a> to jump into the mask rotate sequence</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2b6"></span>E2B6</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($E2F4),A</td>
+<td class="comment-11" rowspan="1">Self modify the JR at <a href="E2A2.html#e2f3">pms16_right_bitmap_jump</a> to jump into the bitmap rotate sequence</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2b9"></span>E2B9</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">Fetch mask_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2ba"></span>E2BA</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81AE)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2bd"></span>E2BD</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">Fetch bitmap_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2be"></span>E2BE</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81AC)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_height_iters</td>
+<td class="address-1"><span id="e2c1"></span>E2C1</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD B,$20</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 32 iterations (self modified by <a href="DC41.html#dc73">DC73</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2c3"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_loop</td>
+<td class="address-2"><span id="e2c3"></span>E2C3</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment-11" rowspan="4">Load the bitmap bytes bm0,bm1 into <span class="register">D</span>,<span class="register">E</span></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2c4"></span>E2C4</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2c5"></span>E2C5</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2c6"></span>E2C6</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2c7"></span>E2C7</td>
+<td class="bytes-0"></td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">Preserve the bitmap pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2c8"></span>E2C8</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Bank</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2c9"></span>E2C9</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment-11" rowspan="4">Load the mask bytes mask0,mask1 into <span class="register">D'</span>,<span class="register">E'</span></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2ca"></span>E2CA</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2cb"></span>E2CB</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2cc"></span>E2CC</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2cd"></span>E2CD</td>
+<td class="bytes-0"></td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">Preserve the mask pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2ce"></span>E2CE</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,($81B7)</td>
+<td class="comment-11" rowspan="2">Is the top bit of flip_sprite set?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2d1"></span>E2D1</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2d2"></span>E2D2</td>
+<td class="bytes-0"></td>
+<td class="instruction">CALL M,<a href="E40F.html">flip_16_masked_pixels</a></td>
+<td class="comment-11" rowspan="1">Call flip_16_masked_pixels if so</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2d5"></span>E2D5</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81B0)</td>
+<td class="comment-11" rowspan="1">Fetch foreground_mask_pointer</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2d8"></span>
+<div class="comments">
+<div class="paragraph">
+Shift the mask.
+</div>
+<div class="paragraph">
+Note: The 24px version does bitmap rotates then mask rotates. Is this the opposite way around to save a bank switch?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2d8"></span>E2D8</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD C,$FF</td>
+<td class="comment-11" rowspan="1">mask2 = $FF</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2da"></span>E2DA</td>
+<td class="bytes-0"></td>
+<td class="instruction">SCF</td>
+<td class="comment-11" rowspan="1">carry = 1</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_mask_jump</td>
+<td class="address-1"><span id="e2db"></span>E2DB</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="E2A2.html#e2dd">pms16_right_mask_jumptable_0</a></td>
+<td class="comment-11" rowspan="1">Jump into shifter (self modified by <a href="E2A2.html#e2b3">E2B3</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2dd"></span>
+<div class="comments">
+<div class="paragraph">
+Rotate the mask bytes (<span class="register">D</span>,<span class="register">E</span>,<span class="register">C</span>) right by one pixel.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_mask_jumptable_0</td>
+<td class="address-2"><span id="e2dd"></span>E2DD</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="1">new_carry = mask0 &amp; 1; mask0 = (mask0 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2df"></span>E2DF</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">new_carry = mask1 &amp; 1; mask1 = (mask1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2e1"></span>E2E1</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">new_carry = mask2 &amp; 1; mask2 = (mask2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_mask_jumptable_1</td>
+<td class="address-1"><span id="e2e3"></span>E2E3</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2e5"></span>E2E5</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2e7"></span>E2E7</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_mask_jumptable_2</td>
+<td class="address-1"><span id="e2e9"></span>E2E9</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR D</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2eb"></span>E2EB</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2ed"></span>E2ED</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2ef"></span>
+<div class="comments">
+<div class="paragraph">
+Shift the bitmap.
+</div>
+<div class="paragraph">
+Our 16px bitmap has two bitmap bytes to shift (<span class="register">D</span>,<span class="register">E</span>) but we'll need an extra byte to capture the shift-out (<span class="register">C</span>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_mask_jumptable_end</td>
+<td class="address-1"><span id="e2ef"></span>E2EF</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bitmaps bank</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2f0"></span>E2F0</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-11" rowspan="1">bm2 = 0</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2f2"></span>E2F2</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND A</td>
+<td class="comment-11" rowspan="1">(Suspect this is a stray instruction)</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_bitmap_jump</td>
+<td class="address-1"><span id="e2f3"></span>E2F3</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="E2A2.html#e2f5">pms16_right_bitmap_jumptable_0</a></td>
+<td class="comment-11" rowspan="1">Jump into shifter (self modified by <a href="E2A2.html#e2b6">E2B6</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2f5"></span>
+<div class="comments">
+<div class="paragraph">
+Rotate the bitmap bytes (<span class="register">D</span>,<span class="register">E</span>,<span class="register">C</span>) right by one pixel.
+</div>
+<div class="paragraph">
+Shift out the leftmost byte's bottom pixel into the carry flag.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_bitmap_jumptable_0</td>
+<td class="address-2"><span id="e2f5"></span>E2F5</td>
+<td class="bytes-0"></td>
+<td class="instruction">SRL D</td>
+<td class="comment-11" rowspan="1">carry = bm0 &amp; 1; bm0 &gt;&gt;= 1</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2f7"></span>
+<div class="comments">
+<div class="paragraph">
+Shift out the next byte's bottom pixel into the carry flag while shifting in the previous carry at the top. (x2)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2f7"></span>E2F7</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR E</td>
+<td class="comment-11" rowspan="1">new_carry = bm1 &amp; 1; bm1 = (bm1 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2f9"></span>E2F9</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR C</td>
+<td class="comment-11" rowspan="1">new_carry = bm2 &amp; 1; bm2 = (bm2 &gt;&gt; 1) | (carry &lt;&lt; 7); carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_bitmap_jumptable_1</td>
+<td class="address-1"><span id="e2fb"></span>E2FB</td>
+<td class="bytes-0"></td>
+<td class="instruction">SRL D</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2fd"></span>E2FD</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e2ff"></span>E2FF</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_bitmap_jumptable_2</td>
+<td class="address-1"><span id="e301"></span>E301</td>
+<td class="bytes-0"></td>
+<td class="instruction">SRL D</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e303"></span>E303</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e305"></span>E305</td>
+<td class="bytes-0"></td>
+<td class="instruction">RR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_bitmap_jumptable_end</td>
+<td class="address-1"><span id="e307"></span>E307</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81A2)</td>
+<td class="comment-11" rowspan="1">Load screen buffer pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e30a"></span>E30A</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bitmaps bank</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e30b"></span>
+<div class="comments">
+<div class="paragraph">
+Plot, using the foreground mask. See <a href="E102.html#e17a">pms24_right_plot_0</a> for a discussion of this masking operation.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_plot_0</td>
+<td class="address-1"><span id="e30b"></span>E30B</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">Load a foreground mask byte</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e30c"></span>E30C</td>
+<td class="bytes-0"></td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="1">Invert it</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e30d"></span>E30D</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR D</td>
+<td class="comment-11" rowspan="1">OR with mask byte mask0</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e30e"></span>E30E</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bank containing bitmap bytes (in <span class="register">D</span> &amp; <span class="register">E</span>) and screen buffer pointer (in <span class="register">HL</span>)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e30f"></span>E30F</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">AND combined masks with screen byte</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e310"></span>E310</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">Bank left hand term</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e311"></span>E311</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,D</td>
+<td class="comment-11" rowspan="1">Get bitmap byte bm0</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e312"></span>E312</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bank containing mask bytes (in <span class="register">D'</span> &amp; <span class="register">E'</span>) and foreground mask pointer (in <span class="register">HL'</span>)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e313"></span>E313</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">AND with foreground mask byte</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e314"></span>E314</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD D,A</td>
+<td class="comment-11" rowspan="1">Save right hand term</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e315"></span>E315</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">Unbank left hand term</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e316"></span>E316</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR D</td>
+<td class="comment-11" rowspan="1">Combine terms</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e317"></span>E317</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">Advance foreground mask pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e318"></span>E318</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bitmaps bank</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_plot_enable_0</td>
+<td class="address-1"><span id="e319"></span>E319</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1">Write pixel (self modified)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e31a"></span>E31A</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">Advance to next output pixel</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e31b"></span>E31B</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to masks bank</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_plot_1</td>
+<td class="address-1"><span id="e31c"></span>E31C</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="17">Do the same again for mask1 &amp; bm1</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e31d"></span>E31D</td>
+<td class="bytes-0"></td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e31e"></span>E31E</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e31f"></span>E31F</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e320"></span>E320</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e321"></span>E321</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e322"></span>E322</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e323"></span>E323</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e324"></span>E324</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e325"></span>E325</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e326"></span>E326</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e327"></span>E327</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e328"></span>E328</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e329"></span>E329</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_plot_enable_1</td>
+<td class="address-1"><span id="e32a"></span>E32A</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e32b"></span>E32B</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e32c"></span>E32C</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_plot_2</td>
+<td class="address-1"><span id="e32d"></span>E32D</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="12">Do the same again for mask2 &amp; bm2</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e32e"></span>E32E</td>
+<td class="bytes-0"></td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e32f"></span>E32F</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e330"></span>E330</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e331"></span>E331</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e332"></span>E332</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e333"></span>E333</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e334"></span>E334</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e335"></span>E335</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e336"></span>E336</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e337"></span>E337</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e338"></span>E338</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e339"></span>E339</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="2">Advance foreground_mask_pointer by two (buffer is 4 bytes wide)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e33a"></span>E33A</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e33b"></span>E33B</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($81B0),HL</td>
+<td class="comment-11" rowspan="1">Save foreground_mask_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e33e"></span>E33E</td>
+<td class="bytes-0"></td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">Restore the mask pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e33f"></span>E33F</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_right_plot_enable_2</td>
+<td class="address-1"><span id="e340"></span>E340</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e341"></span>E341</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD DE,$0016</td>
+<td class="comment-11" rowspan="2">Advance screen buffer pointer by (24 - 2 = 22) bytes</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e344"></span>E344</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e345"></span>E345</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($81A2),HL</td>
+<td class="comment-11" rowspan="1">Save the screen buffer pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e348"></span>E348</td>
+<td class="bytes-0"></td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">Restore the bitmap pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e349"></span>E349</td>
+<td class="bytes-0"></td>
+<td class="instruction">DEC B</td>
+<td class="comment-11" rowspan="2">...loop</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e34a"></span>E34A</td>
+<td class="bytes-0"></td>
+<td class="instruction">JP NZ,<a href="E2A2.html#e2c3">pms16_right_loop</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e34d"></span>E34D</td>
+<td class="bytes-0"></td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">Return</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e34e"></span>
+<div class="comments">
+<div class="paragraph">
+Left shifting case.
+</div>
+<div class="paragraph">
+<span class="register">A</span> is 4..7 here, which we intepret as -4..-1: the amount by which we want to shift the sprite left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left</td>
+<td class="address-1"><span id="e34e"></span>E34E</td>
+<td class="bytes-0"></td>
+<td class="instruction">SUB $04</td>
+<td class="comment-11" rowspan="1">4..7 =&gt; jump table offset 0..3</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e350"></span>E350</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-11" rowspan="4">Multiply by six to get the jump distance</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e351"></span>E351</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD L,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e352"></span>E352</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e353"></span>E353</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD A,L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e354"></span>E354</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($E39A),A</td>
+<td class="comment-11" rowspan="1">Self modify the JR at <a href="E2A2.html#e399">pms16_left_bitmap_jump</a> to jump into the bitmap rotate sequence</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e357"></span>E357</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($E37D),A</td>
+<td class="comment-11" rowspan="1">Self modify the JR at <a href="E2A2.html#e37c">pms16_left_mask_jump</a> to jump into the mask rotate sequence</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e35a"></span>E35A</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">Fetch mask_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e35b"></span>E35B</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81AE)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e35e"></span>E35E</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="2">Fetch bitmap_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e35f"></span>E35F</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81AC)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_height_iters</td>
+<td class="address-1"><span id="e362"></span>E362</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD B,$20</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 32 iterations (self modified by <a href="E420.html#e492">E492</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e364"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_loop</td>
+<td class="address-2"><span id="e364"></span>E364</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment-11" rowspan="4">Load the bitmap bytes bm1,bm2 into <span class="register">D</span>,<span class="register">E</span></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e365"></span>E365</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e366"></span>E366</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e367"></span>E367</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e368"></span>E368</td>
+<td class="bytes-0"></td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">Preserve the bitmap pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e369"></span>E369</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Bank</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e36a"></span>E36A</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment-11" rowspan="4">Load the mask bytes mask1,mask2 into <span class="register">D'</span>,<span class="register">E'</span></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e36b"></span>E36B</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e36c"></span>E36C</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e36d"></span>E36D</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e36e"></span>E36E</td>
+<td class="bytes-0"></td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">Preserve the mask pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e36f"></span>E36F</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,($81B7)</td>
+<td class="comment-11" rowspan="2">Is the top bit of flip_sprite set?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e372"></span>E372</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e373"></span>E373</td>
+<td class="bytes-0"></td>
+<td class="instruction">CALL M,<a href="E40F.html">flip_16_masked_pixels</a></td>
+<td class="comment-11" rowspan="1">Call flip_16_masked_pixels if so</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e376"></span>E376</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81B0)</td>
+<td class="comment-11" rowspan="1">Fetch foreground_mask_pointer</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e379"></span>
+<div class="comments">
+<div class="paragraph">
+Shift the mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e379"></span>E379</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD C,$FF</td>
+<td class="comment-11" rowspan="1">mask0 = $FF</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e37b"></span>E37B</td>
+<td class="bytes-0"></td>
+<td class="instruction">SCF</td>
+<td class="comment-11" rowspan="1">carry = 1</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_mask_jump</td>
+<td class="address-1"><span id="e37c"></span>E37C</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="E2A2.html#e37e">pms16_left_mask_jumptable_0</a></td>
+<td class="comment-11" rowspan="1">Jump into shifter (self modified by <a href="E2A2.html#e357">E357</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e37e"></span>
+<div class="comments">
+<div class="paragraph">
+Rotate the mask bytes (<span class="register">C</span>,<span class="register">D</span>,<span class="register">E</span>) left by one pixel.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_mask_jumptable_0</td>
+<td class="address-2"><span id="e37e"></span>E37E</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="1">new_carry = mask2 &gt;&gt; 7; mask2 = (mask2 &lt;&lt; 1) | carry; carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e380"></span>E380</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">new_carry = mask1 &gt;&gt; 7; mask1 = (mask1 &lt;&lt; 1) | carry; carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e382"></span>E382</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">new_carry = mask0 &gt;&gt; 7; mask0 = (mask0 &lt;&lt; 1) | carry; carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_mask_jumptable_1</td>
+<td class="address-1"><span id="e384"></span>E384</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e386"></span>E386</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e388"></span>E388</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_mask_jumptable_2</td>
+<td class="address-1"><span id="e38a"></span>E38A</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e38c"></span>E38C</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e38e"></span>E38E</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_mask_jumptable_3</td>
+<td class="address-1"><span id="e390"></span>E390</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL E</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e392"></span>E392</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e394"></span>E394</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e396"></span>
+<div class="comments">
+<div class="paragraph">
+Shift the bitmap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_mask_jumptable_end</td>
+<td class="address-1"><span id="e396"></span>E396</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bitmaps bank</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e397"></span>E397</td>
+<td class="bytes-0"></td>
+<td class="instruction">XOR A</td>
+<td class="comment-11" rowspan="2">bm0 = 0</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e398"></span>E398</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD C,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_bitmap_jump</td>
+<td class="address-1"><span id="e399"></span>E399</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="E2A2.html#e39b">pms16_left_bitmap_jumptable_0</a></td>
+<td class="comment-11" rowspan="1">Jump into shifter (self modified by <a href="E2A2.html#e354">E354</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e39b"></span>
+<div class="comments">
+<div class="paragraph">
+Rotate the bitmap bytes (<span class="register">C</span>,<span class="register">D</span>,<span class="register">E</span>) left by one pixel.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_bitmap_jumptable_0</td>
+<td class="address-2"><span id="e39b"></span>E39B</td>
+<td class="bytes-0"></td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="1">carry = bm2 &gt;&gt; 7; bm2 &lt;&lt;= 1</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e39d"></span>E39D</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-11" rowspan="1">new_carry = bm1 &gt;&gt; 7; bm1 = (bm1 &lt;&lt; 1) | (carry &lt;&lt; 0); carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e39f"></span>E39F</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-11" rowspan="1">new_carry = bm0 &gt;&gt; 7; bm0 = (bm0 &lt;&lt; 1) | (carry &lt;&lt; 0); carry = new_carry</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_bitmap_jumptable_1</td>
+<td class="address-1"><span id="e3a1"></span>E3A1</td>
+<td class="bytes-0"></td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3a3"></span>E3A3</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3a5"></span>E3A5</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_bitmap_jumptable_2</td>
+<td class="address-1"><span id="e3a7"></span>E3A7</td>
+<td class="bytes-0"></td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3a9"></span>E3A9</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3ab"></span>E3AB</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_bitmap_jumptable_3</td>
+<td class="address-1"><span id="e3ad"></span>E3AD</td>
+<td class="bytes-0"></td>
+<td class="instruction">SLA E</td>
+<td class="comment-11" rowspan="3">Do the same again</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3af"></span>E3AF</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3b1"></span>E3B1</td>
+<td class="bytes-0"></td>
+<td class="instruction">RL C</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e3b3"></span>
+<div class="comments">
+<div class="paragraph">
+Plot, using foreground mask. See <a href="E102.html#e17a">pms24_right_plot_0</a> for a discussion of this masking operation.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_bitmap_jumptable_end</td>
+<td class="address-1"><span id="e3b3"></span>E3B3</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD HL,($81A2)</td>
+<td class="comment-11" rowspan="1">Load screen buffer pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3b6"></span>E3B6</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to masks bank</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_plot_0</td>
+<td class="address-1"><span id="e3b7"></span>E3B7</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="1">Load a foreground mask byte</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3b8"></span>E3B8</td>
+<td class="bytes-0"></td>
+<td class="instruction">CPL</td>
+<td class="comment-11" rowspan="1">Invert it</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3b9"></span>E3B9</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR C</td>
+<td class="comment-11" rowspan="1">OR with mask byte mask0</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3ba"></span>E3BA</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bank containing bitmap bytes (in <span class="register">D</span> &amp; <span class="register">E</span>) and screen buffer pointer (in <span class="register">HL</span>)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3bb"></span>E3BB</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">AND combined masks with screen byte</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3bc"></span>E3BC</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">Bank left hand term</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3bd"></span>E3BD</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,C</td>
+<td class="comment-11" rowspan="1">Get bitmap byte bm0</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3be"></span>E3BE</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bank containing mask bytes (in <span class="register">D'</span> &amp; <span class="register">E'</span>) and foreground mask pointer (in <span class="register">HL'</span>)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3bf"></span>E3BF</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-11" rowspan="1">AND with foreground mask byte</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c0"></span>E3C0</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD C,A</td>
+<td class="comment-11" rowspan="1">Save right hand term</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c1"></span>E3C1</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-11" rowspan="1">Unbank left hand term</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c2"></span>E3C2</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR C</td>
+<td class="comment-11" rowspan="1">Combine terms</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c3"></span>E3C3</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="1">Advance foreground mask pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c4"></span>E3C4</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to bitmaps bank</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_plot_enable_0</td>
+<td class="address-1"><span id="e3c5"></span>E3C5</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1">Write pixel (self modified)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c6"></span>E3C6</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-11" rowspan="1">Advance to next output pixel</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c7"></span>E3C7</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1">Swap to masks bank</td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_plot_1</td>
+<td class="address-1"><span id="e3c8"></span>E3C8</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="17">Do the same again for mask1 &amp; bm1</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3c9"></span>E3C9</td>
+<td class="bytes-0"></td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3ca"></span>E3CA</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3cb"></span>E3CB</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3cc"></span>E3CC</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3cd"></span>E3CD</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3ce"></span>E3CE</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3cf"></span>E3CF</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d0"></span>E3D0</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d1"></span>E3D1</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD D,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d2"></span>E3D2</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d3"></span>E3D3</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR D</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d4"></span>E3D4</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d5"></span>E3D5</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_plot_enable_1</td>
+<td class="address-1"><span id="e3d6"></span>E3D6</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d7"></span>E3D7</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC HL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3d8"></span>E3D8</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_plot_2</td>
+<td class="address-1"><span id="e3d9"></span>E3D9</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-11" rowspan="12">Do the same again for mask2 &amp; bm2</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3da"></span>E3DA</td>
+<td class="bytes-0"></td>
+<td class="instruction">CPL</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3db"></span>E3DB</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3dc"></span>E3DC</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3dd"></span>E3DD</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3de"></span>E3DE</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3df"></span>E3DF</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e0"></span>E3E0</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e1"></span>E3E1</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e2"></span>E3E2</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD E,A</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e3"></span>E3E3</td>
+<td class="bytes-0"></td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e4"></span>E3E4</td>
+<td class="bytes-0"></td>
+<td class="instruction">OR E</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e5"></span>E3E5</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-11" rowspan="2">Advance foreground_mask_pointer by two (buffer is 4 bytes wide)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e6"></span>E3E6</td>
+<td class="bytes-0"></td>
+<td class="instruction">INC L</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3e7"></span>E3E7</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($81B0),HL</td>
+<td class="comment-11" rowspan="1">Save foreground_mask_pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3ea"></span>E3EA</td>
+<td class="bytes-0"></td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">Restore the mask pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3eb"></span>E3EB</td>
+<td class="bytes-0"></td>
+<td class="instruction">EXX</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">pms16_left_plot_enable_2</td>
+<td class="address-1"><span id="e3ec"></span>E3EC</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-11" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3ed"></span>E3ED</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD DE,$0016</td>
+<td class="comment-11" rowspan="2">Advance screen buffer pointer by (24 - 2 = 22) bytes</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3f0"></span>E3F0</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3f1"></span>E3F1</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD ($81A2),HL</td>
+<td class="comment-11" rowspan="1">Save the screen buffer pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3f4"></span>E3F4</td>
+<td class="bytes-0"></td>
+<td class="instruction">POP HL</td>
+<td class="comment-11" rowspan="1">Restore the bitmap pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3f5"></span>E3F5</td>
+<td class="bytes-0"></td>
+<td class="instruction">DEC B</td>
+<td class="comment-11" rowspan="2">...loop</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3f6"></span>E3F6</td>
+<td class="bytes-0"></td>
+<td class="instruction">JP NZ,<a href="E2A2.html#e364">pms16_left_loop</a></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="e3f9"></span>E3F9</td>
+<td class="bytes-0"></td>
+<td class="instruction">RET</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev"><span class="prev-1">Prev: <a href="E29F.html">E29F</a></span></td>
 <td class="up">Up: <a href="../maps/all.html#e2a2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="E2AC.html">E2AC</a></span></td>
+<td class="next"><span class="next-1">Next: <a href="E3FA.html">E3FA</a></span></td>
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

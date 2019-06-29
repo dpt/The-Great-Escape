@@ -24,10 +24,13 @@
 <div class="description">DC41: Set up item plotting.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="B866.html">plot_sprites</a>.
+</div>
+<div class="paragraph">
+Counterpart of, and very similar to, the routine at <a href="E420.html">setup_vischar_plotting</a>.
 </div>
 </div>
 <table class="input-1">
@@ -36,27 +39,30 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Item.</td>
+<td class="register-desc">Item index</td>
 </tr>
 <tr>
 <td class="register">IY</td>
-<td class="register-desc">Pointer to itemstruct. (samples = 0x771C, 0x76F9)</td>
+<td class="register-desc">Pointer to item_struct</td>
 </tr>
 </table>
-<table class="output-0">
+<table class="output-1">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
-
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if item is visible, NZ otherwise</td>
+</tr>
 </table>
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="dc41"></span>
 <div class="comments">
 <div class="paragraph">
-0x3F looks like it ought to be 0x1F (item__LIMIT - 1). Potential bug: The use of A later on does not re-clamp it to 0x1F.
+The $3F mask here looks like it ought to be $1F (item__LIMIT - 1). Potential bug: The use of <span class="register">A</span> later on does not re-clamp it to $1F.
 </div>
 </div>
 </td>
@@ -64,15 +70,16 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 <tr>
 <td class="asm-label-1">setup_item_plotting</td>
 <td class="address-2"><span id="dc41"></span>DC41</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $3F</td>
-<td class="comment-11" rowspan="1">A &amp;= 0x3F;</td>
+<td class="comment-11" rowspan="1">Mask off item_FOUND</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="dc43"></span>
 <div class="comments">
 <div class="paragraph">
-Bug: This writes to saved_item but it's never subsequently read from.
+Bug: This writes the item index to <a href="8213.html">saved_item</a> but that location is never subsequently read from.
 </div>
 </div>
 </td>
@@ -80,645 +87,824 @@ Bug: This writes to saved_item but it's never subsequently read from.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc43"></span>DC43</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($8213),A</td>
-<td class="comment-11" rowspan="1">saved_item = A;</td>
+<td class="comment-11" rowspan="1">Store saved_item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc46"></span>DC46</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="4">HL = IY + 2;</td>
+<td class="comment-11" rowspan="2">Copy the item_struct pointer into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc48"></span>DC48</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc49"></span>DC49</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Advance <span class="register">HL</span> to item_struct.pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc4a"></span>DC4A</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc4b"></span>DC4B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81B2</td>
-<td class="comment-11" rowspan="1">DE = &amp;tinypos_stash_x;</td>
+<td class="comment-11" rowspan="3">Copy item_struct.pos and item_struct.iso_pos to tinypos_stash and iso_pos (five contiguous bytes)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc4e"></span>DC4E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0005</td>
-<td class="comment-11" rowspan="1">BC = 5;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc51"></span>DC51</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dc53"></span>
+<div class="comments">
+<div class="paragraph">
+<span class="register">HL</span> now points at global sprite_index.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc53"></span>DC53</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at item_struct.sprite_index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc54"></span>DC54</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),B</td>
-<td class="comment-11" rowspan="1">*HL = B; // B == 0 due to LDIR /* Items are never drawn flipped. */</td>
+<td class="comment-11" rowspan="1">Zero sprite_index so that items are never drawn flipped</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc55"></span>DC55</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$DD7D</td>
-<td class="comment-11" rowspan="7">HL = &amp;item_definitions[A];</td>
+<td class="comment-11" rowspan="7">Point <span class="register">HL</span> at item_definitions[item] (a spritedef_t)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc58"></span>DC58</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc59"></span>DC59</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5a"></span>DC5A</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5b"></span>DC5B</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5c"></span>DC5C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5d"></span>DC5D</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5e"></span>DC5E</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++; // &amp;item_definitions[A].height</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to spritedef.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc5f"></span>DC5F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = (HL);</td>
+<td class="comment-11" rowspan="1">Load it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc60"></span>DC60</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($8214),A</td>
-<td class="comment-11" rowspan="1">item_height = A;</td>
+<td class="comment-11" rowspan="1">Set item_height to spritedef.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc63"></span>DC63</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to spritedef.bitmap</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc64"></span>DC64</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81AC</td>
-<td class="comment-11" rowspan="3">memcpy(&amp;bitmap_pointer, HL, 4); // copy bitmap and mask pointers</td>
+<td class="comment-11" rowspan="3">Copy spritedef bitmap and mask pointers to global bitmap_pointer and mask_pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc67"></span>DC67</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0004</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc6a"></span>DC6A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc6c"></span>DC6C</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="DD02.html">item_visible</a></td>
-<td class="comment-11" rowspan="1">item_visible();</td>
+<td class="comment-11" rowspan="1">Clip the item's dimensions to the game window</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc6f"></span>DC6F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">if (!Z) return; /* invisible */</td>
+<td class="comment-11" rowspan="1">Return if the item is invisible</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dc70"></span>
+<div class="comments">
+<div class="paragraph">
+The item is visible.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc70"></span>DC70</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">// clipped width</td>
+<td class="comment-11" rowspan="1">Preserve the lefthand skip and clipped width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc71"></span>DC71</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">// clipped height</td>
+<td class="comment-11" rowspan="1">Preserve the top skip and clipped height</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dc72"></span>
+<div class="comments">
+<div class="paragraph">
+Self modify the sprite plotter routines.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc72"></span>DC72</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="1">A = E;</td>
+<td class="comment-11" rowspan="1">Copy the clipped height into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc73"></span>DC73</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($E2C2),A</td>
-<td class="comment-11" rowspan="1">($E2C1 + 1) = A; // self modify masked_sprite_plotter_16_wide_left</td>
+<td class="comment-11" rowspan="1">Write clipped height to the instruction at <a href="E2A2.html#e2c1">pms16_right_height_iters</a> in plot_masked_sprite_16px (shift right case)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label-1">sip_do_enables</td>
 <td class="address-1"><span id="dc76"></span>DC76</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="1">A = B;</td>
+<td class="comment-11" rowspan="2">Is the lefthand skip zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc77"></span>DC77</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A == 0) &lt;%</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc78"></span>DC78</td>
-<td class="instruction">JP NZ,<a href="DC41.html#dc81">setup_item_plotting_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JP NZ,<a href="DC41.html#dc81">sip_enable_is_zero</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="routine-comment" colspan="5">
+<span id="dc7b"></span>
+<div class="comments">
+<div class="paragraph">
+There's no left hand skip - enable instructions.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">sip_enable_is_one</td>
 <td class="address-1"><span id="dc7b"></span>DC7B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$77</td>
-<td class="comment-11" rowspan="1">A = 0x77; // 0b01110111 /* opcode of 'LD (HL),A' */</td>
+<td class="comment-11" rowspan="2">Load <span class="register">A'</span> with the opcode of 'LD (HL),A'</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc7d"></span>DC7D</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="2">Adash = C; %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc7e"></span>DC7E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set a counter to clipped_width. We'll write out this many bytes before clipping</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc7f"></span>DC7F</td>
-<td class="instruction">JR <a href="DC41.html#dc86">setup_item_plotting_1</a></td>
-<td class="comment-11" rowspan="1">else &lt;%</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="DC41.html#dc86">sip_enable_cont</a></td>
+<td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_item_plotting_0</td>
+<td class="asm-label-1">sip_enable_is_zero</td>
 <td class="address-2"><span id="dc81"></span>DC81</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0; /* opcode of 'NOP' */</td>
+<td class="comment-11" rowspan="2">Load <span class="register">A'</span> with the opcode of 'NOP'</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc82"></span>DC82</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="3">Adash = 3 - C; %&gt;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc83"></span>DC83</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Set a counter to (3 - clipped_width). We'll clip until this many bytes have been written</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc85"></span>DC85</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_item_plotting_1</td>
+<td class="asm-label-1">sip_enable_cont</td>
 <td class="address-2"><span id="dc86"></span>DC86</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc87"></span>DC87</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Cdash = Adash;</td>
+<td class="comment-11" rowspan="1">Move counter to <span class="register">C</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc88"></span>DC88</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Unbank the opcode we'll write`</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="routine-comment" colspan="5">
+<span id="dc89"></span>
+<div class="comments">
+<div class="paragraph">
+Set the addresses in the jump table to NOP or LD (HL),A.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">sip_enables_iters</td>
 <td class="address-1"><span id="dc89"></span>DC89</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$E0E0</td>
-<td class="comment-11" rowspan="1">HLdash = &amp;masked_sprite_plotter_16_enables[0];</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at masked_sprite_plotter_16_enables[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc8c"></span>DC8C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">Bdash = 3; // iterations</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 3 iterations / 3 pairs of self modified locations</td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_item_plotting_2</td>
+<td class="routine-comment" colspan="5">
+<span id="dc8e"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">sip_enables_loop</td>
 <td class="address-2"><span id="dc8e"></span>DC8E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="2">do &lt;% Edash = *HLdash++;</td>
+<td class="comment-11" rowspan="3">Fetch an address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc8f"></span>DC8F</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc90"></span>DC90</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="1">Ddash = *HLdash;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc91"></span>DC91</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DEdash = A;</td>
+<td class="comment-11" rowspan="1">Write a new opcode</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc92"></span>DC92</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">HLdash++;</td>
+<td class="comment-11" rowspan="1">Advance</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc93"></span>DC93</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="2">Edash = *HLdash++;</td>
+<td class="comment-11" rowspan="3">Fetch an address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc94"></span>DC94</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc95"></span>DC95</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-11" rowspan="2">Ddash = *HLdash++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc96"></span>DC96</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc97"></span>DC97</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">*DEdash = A;</td>
+<td class="comment-11" rowspan="1">Write a new opcode</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc98"></span>DC98</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="3">if (--Cdash == 0) A ^= 0x77; /* Toggle between LD (HL),A and NOP. */</td>
+<td class="comment-11" rowspan="1">Count down the counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc99"></span>DC99</td>
-<td class="instruction">JR NZ,<a href="DC41.html#dc9d">setup_item_plotting_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NZ,<a href="DC41.html#dc9d">sip_selfmod_next</a></td>
+<td class="comment-11" rowspan="1">Jump if nonzero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc9b"></span>DC9B</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR $77</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Swap between LD (HL),A and NOP</td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_item_plotting_3</td>
+<td class="asm-label-1">sip_selfmod_next</td>
 <td class="address-2"><span id="dc9d"></span>DC9D</td>
-<td class="instruction">DJNZ <a href="DC41.html#dc8e">setup_item_plotting_2</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--Bdash);</td>
+<td class="bytes-0"></td>
+<td class="instruction">DJNZ <a href="DC41.html#dc8e">sip_enables_loop</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dc9f"></span>
+<div class="comments">
+<div class="paragraph">
+Calculate Y plotting offset.
+</div>
+<div class="paragraph">
+The full calculation can be avoided if we know there are rows to skip since in that case the sprite always starts at top of the screen.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dc9f"></span>DC9F</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dca0"></span>DCA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="1">A = D;</td>
+<td class="comment-11" rowspan="2">Is top skip zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dca1"></span>DCA1</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">A &amp;= A;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dca2"></span>DCA2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0000</td>
-<td class="comment-11" rowspan="1">DE = 0;</td>
+<td class="comment-11" rowspan="1">Initialise our Y value to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dca5"></span>DCA5</td>
-<td class="instruction">JR NZ,<a href="DC41.html#dcbc">setup_item_plotting_4</a></td>
-<td class="comment-11" rowspan="1">if (Z) &lt;%</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NZ,<a href="DC41.html#dcbc">sip_y_skip_set</a></td>
+<td class="comment-11" rowspan="1">Jump if top skip isn't zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dca7"></span>DCA7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BC</td>
-<td class="comment-11" rowspan="1">HL = $81BC; // &amp;map_position + 1;</td>
+<td class="comment-11" rowspan="3">Compute Y = iso_pos_y - map_position_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcaa"></span>DCAA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81B6)</td>
-<td class="comment-11" rowspan="2">A = ($81B6) - *HL;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcad"></span>DCAD</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcae"></span>DCAE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="12">HL = A * 192;</td>
+<td class="comment-11" rowspan="12">Multiply Y by the window buf stride (192) and store it in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcaf"></span>DCAF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb1"></span>DCB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb2"></span>DCB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb3"></span>DCB3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb4"></span>DCB4</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb5"></span>DCB5</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb6"></span>DCB6</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb7"></span>DCB7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb8"></span>DCB8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcb9"></span>DCB9</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcba"></span>DCBA</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcbb"></span>DCBB</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">%&gt;</td>
+<td class="comment-11" rowspan="1">Move Y into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_item_plotting_4</td>
+<td class="asm-label-1">sip_y_skip_set</td>
 <td class="address-2"><span id="dcbc"></span>DCBC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="comment-11" rowspan="1">A = iso_pos_x;</td>
+<td class="comment-11" rowspan="3">Compute x = iso_pos_x - map_position_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcbf"></span>DCBF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BB</td>
-<td class="comment-11" rowspan="1">HL = $81BB; // &amp;map_position;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc2"></span>DCC2</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-11" rowspan="1">A -= *HL; // x</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc3"></span>DCC3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="2">HL = A;</td>
+<td class="comment-11" rowspan="4">Copy x to <span class="register">HL</span> and sign extend it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc4"></span>DCC4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc6"></span>DCC6</td>
-<td class="instruction">JR NC,<a href="DC41.html#dcca">setup_item_plotting_5</a></td>
-<td class="comment-11" rowspan="2">if (carry) H = 0xFF;</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NC,<a href="DC41.html#dcca">sip_x_skip_set</a></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcc8"></span>DCC8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_item_plotting_5</td>
+<td class="asm-label-1">sip_x_skip_set</td>
 <td class="address-2"><span id="dcca"></span>DCCA</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-11" rowspan="1">Combine the x and y values</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dccb"></span>DCCB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F290</td>
-<td class="comment-11" rowspan="1">DE = $F290; // screen buffer start address</td>
+<td class="comment-11" rowspan="2">Add the screen buffer start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcce"></span>DCCE</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">HL += DE;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dccf"></span>DCCF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($81A2),HL</td>
-<td class="comment-11" rowspan="1">($81A2) = HL;  // screen buffer pointer</td>
+<td class="comment-11" rowspan="1">Save the finalised screen buffer pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd2"></span>DCD2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8100</td>
-<td class="comment-11" rowspan="1">HL = mask_buffer;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the mask_buffer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd5"></span>DCD5</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Retrieve the top skip and clipped height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd6"></span>DCD6</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd7"></span>DCD7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="5">L += D * 4;</td>
+<td class="comment-11" rowspan="5">mask buffer pointer += top_skip * 4</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd8"></span>DCD8</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcd9"></span>DCD9</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcda"></span>DCDA</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcdb"></span>DCDB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcdc"></span>DCDC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($81B0),HL</td>
-<td class="comment-11" rowspan="1">($81B0) = HL;</td>
+<td class="comment-11" rowspan="1">Set foreground_mask_pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcdf"></span>DCDF</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Retrieve the top skip and clipped height (again)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce0"></span>DCE0</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce1"></span>DCE1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="1">A = D;</td>
+<td class="comment-11" rowspan="2">Is top skip zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce2"></span>DCE2</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">if (A) &lt;%</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce3"></span>DCE3</td>
-<td class="instruction">JR Z,<a href="DC41.html#dcef">setup_item_plotting_7</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="DC41.html#dcef">setup_item_plotting_0</a></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="dce5"></span>
 <div class="comments">
 <div class="paragraph">
-Bug: Generic multiply loop which only ever multiplies by two...
+Bug: This loop is setup as generic multiply but only ever multiplies by two.
 </div>
 </div>
 </td>
@@ -726,120 +912,168 @@ Bug: Generic multiply loop which only ever multiplies by two...
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce5"></span>DCE5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,A</td>
-<td class="comment-11" rowspan="1">D = A;</td>
+<td class="comment-11" rowspan="1">Copy top_skip to loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce6"></span>DCE6</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="1">Zero the accumulator</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce7"></span>DCE7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,$03</td>
-<td class="comment-11" rowspan="1">E = 3; // unusual (or self modified and i've not spotted the setter)</td>
+<td class="comment-11" rowspan="2">Set multiplier to two (width bytes - 1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dce9"></span>DCE9</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC E</td>
-<td class="comment-11" rowspan="1">E--;</td>
-</tr>
-<tr>
-<td class="asm-label-1">setup_item_plotting_6</td>
-<td class="address-2"><span id="dcea"></span>DCEA</td>
-<td class="instruction">ADD A,E</td>
-<td class="comment-11" rowspan="3">do &lt;% A += E; %&gt; while (--D); %&gt;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="dceb"></span>DCEB</td>
-<td class="instruction">DEC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="dcec"></span>DCEC</td>
-<td class="instruction">JP NZ,<a href="DC41.html#dcea">setup_item_plotting_6</a></td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="dcef"></span>
+<td class="routine-comment" colspan="5">
+<span id="dcea"></span>
 <div class="comments">
 <div class="paragraph">
-D ends up as zero either way.
+Start loop
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_item_plotting_7</td>
+<td class="asm-label-1">sip_mult_loop</td>
+<td class="address-2"><span id="dcea"></span>DCEA</td>
+<td class="bytes-0"></td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-11" rowspan="1">Accumulate</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="dceb"></span>DCEB</td>
+<td class="bytes-0"></td>
+<td class="instruction">DEC D</td>
+<td class="comment-11" rowspan="1">Decrement counter</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="dcec"></span>DCEC</td>
+<td class="bytes-0"></td>
+<td class="instruction">JP NZ,<a href="DC41.html#dcea">sip_mult_loop</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dcef"></span>
+<div class="comments">
+<div class="paragraph">
+<span class="register">D</span> will be set to zero here either way: if the loop terminates, or if jumped into.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">setup_item_plotting_0</td>
 <td class="address-2"><span id="dcef"></span>DCEF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1">E = A;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">DE</span> to skip (result)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf0"></span>DCF0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81AC)</td>
-<td class="comment-11" rowspan="3">bitmap_pointer += DE;</td>
+<td class="comment-11" rowspan="3">Advance bitmap_pointer by 'skip'</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf3"></span>DCF3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf4"></span>DCF4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($81AC),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcf7"></span>DCF7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81AE)</td>
-<td class="comment-11" rowspan="3">mask_pointer += DE;</td>
+<td class="comment-11" rowspan="3">Advance mask_pointer by 'skip'</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcfa"></span>DCFA</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcfb"></span>DCFB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($81AE),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="dcfe"></span>
+<div class="comments">
+<div class="paragraph">
+It's unclear as to why these values are preserved since they're not used by the caller.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcfe"></span>DCFE</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the lefthand skip and clipped width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dcff"></span>DCFF</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the top skip and clipped height</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dd00"></span>
+<div class="comments">
+<div class="paragraph">
+This XOR A isn't strictly needed - the Z flag should still be set from <a href="DC41.html#dcec">DCEC</a>. (The counterpart at <a href="E420.html#e541">E541</a> doesn't have it).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd00"></span>DD00</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">A = 0;</td>
+<td class="comment-11" rowspan="1">Set Z flag to signal "is visible" for return</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dd01"></span>DD01</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; /* visible */</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -850,9 +1084,9 @@ D ends up as zero either way.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

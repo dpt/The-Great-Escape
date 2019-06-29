@@ -24,7 +24,7 @@
 <div class="description">B75A: Reset the game.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="9DE5.html">keyscan_break</a>, <a href="A51C.html">escaped</a> and <a href="F163.html">main</a>.
@@ -45,7 +45,7 @@ Used by the routines at <a href="9DE5.html">keyscan_break</a>, <a href="A51C.htm
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b75a"></span>
 <div class="comments">
 <div class="paragraph">
@@ -57,11 +57,12 @@ Cause discovery of all items.
 <tr>
 <td class="asm-label-1">reset_game</td>
 <td class="address-2"><span id="b75a"></span>B75A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$1000</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for 16 iterations (item__LIMIT) and set <span class="register">C</span> (item index) to zero</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b75d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -73,35 +74,40 @@ Start loop (once per item)
 <tr>
 <td class="asm-label-1">reset_game_0</td>
 <td class="address-2"><span id="b75d"></span>B75D</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Preserve the iteration counter and item index over the next call</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b75e"></span>B75E</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CD31.html">item_discovered</a></td>
 <td class="comment-11" rowspan="1">Cause item <span class="register">C</span> to be discovered</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b761"></span>B761</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">Restore</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b762"></span>B762</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC C</td>
 <td class="comment-11" rowspan="1">Increment the item index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b763"></span>B763</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="B75A.html#b75d">reset_game_0</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b765"></span>
 <div class="comments">
 <div class="paragraph">
@@ -113,35 +119,40 @@ Reset the message queue.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b765"></span>B765</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$7CFE</td>
 <td class="comment-11" rowspan="2">Reset the message queue pointer to its default of message_queue[2]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b768"></span>B768</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($7D11),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b76b"></span>B76B</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B79B.html">reset_map_and_characters</a></td>
 <td class="comment-11" rowspan="1">Reset all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, lock the gates, reset all beds, clear the mess halls and reset characters</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b76e"></span>B76E</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">Clear the hero's vischar flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b76f"></span>B76F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($8001),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b772"></span>
 <div class="comments">
 <div class="paragraph">
@@ -153,17 +164,19 @@ Reset score digits, hero_in_breakfast, red_flag, automatic_player_counter, in_so
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b772"></span>B772</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A132</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at score_digits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b775"></span>B775</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$0A</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for ten iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b777"></span>
 <div class="comments">
 <div class="paragraph">
@@ -175,23 +188,26 @@ Start loop (once per score digit)
 <tr>
 <td class="asm-label-1">reset_game_1</td>
 <td class="address-2"><span id="b777"></span>B777</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">Zero the byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b778"></span>B778</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Then advance to the next byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b779"></span>B779</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="B75A.html#b777">reset_game_1</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b77b"></span>
 <div class="comments">
 <div class="paragraph">
@@ -203,17 +219,19 @@ Reset morale.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b77b"></span>B77B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$70</td>
 <td class="comment-11" rowspan="1">Set morale to morale_MAX</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b77d"></span>B77D</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A10B.html">plot_score</a></td>
 <td class="comment-11" rowspan="1">Draw the current score to the screen</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b780"></span>
 <div class="comments">
 <div class="paragraph">
@@ -225,23 +243,26 @@ Reset and redraw items.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b780"></span>B780</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$FFFF</td>
 <td class="comment-11" rowspan="2">Set both items_held to item_NONE ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b783"></span>B783</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($8215),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b786"></span>B786</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
 <td class="comment-11" rowspan="1">Draw both held items</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b789"></span>
 <div class="comments">
 <div class="paragraph">
@@ -253,29 +274,33 @@ Reset the hero's sprite.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b789"></span>B789</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$CE2E</td>
 <td class="comment-11" rowspan="2">Set vischar.mi.sprite to the prisoner sprite set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b78c"></span>B78C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($8015),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b78f"></span>B78F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-11" rowspan="2">Set the global current room index to room_2_HUT2LEFT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b791"></span>B791</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($68A0),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b794"></span>
 <div class="comments">
 <div class="paragraph">
@@ -287,18 +312,21 @@ Put the hero to bed.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b794"></span>B794</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A489.html">hero_sleeps</a></td>
 <td class="comment-11" rowspan="1">The hero sleeps</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b797"></span>B797</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="68F4.html">enter_room</a></td>
 <td class="comment-11" rowspan="1">The hero enters a room</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b79a"></span>B79A</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -311,9 +339,9 @@ Put the hero to bed.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

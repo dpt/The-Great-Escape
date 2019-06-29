@@ -15,6 +15,7 @@
 </tr>
 </table>
 <ul class="contents">
+<li><a href="#20190629">20190629</a></li>
 <li><a href="#20190313">20190313</a></li>
 <li><a href="#20180825">20180825</a></li>
 <li><a href="#20180822">20180822</a></li>
@@ -28,8 +29,33 @@
 <li><a href="#20141125">20141125</a></li>
 <li><a href="#20141019">20141019</a></li>
 </ul>
-<div><span id="20190313"></span></div>
+<div><span id="20190629"></span></div>
 <div class="list-entry list-entry-1">
+<div class="list-entry-title">20190629</div>
+<div class="list-entry-desc">The disassembly is now built with SkoolKit 7.2.</div>
+<ul class="list-entry">
+<li>Major changes
+<ul class="list-entry1">
+<li>100% of the disassembly has now been rewritten in plain English.</li>
+</ul>
+</li>
+<li>Improvements to main disassembly commentary
+<ul class="list-entry1">
+<li>$81DA/interior_mask_data gains a structure description for mask_t.</li>
+<li>The last of the 0x syntax has been replaced with $.</li>
+</ul>
+</li>
+<li>Improvements to disassembly symbols only
+<ul class="list-entry1">
+<li>Renamed vischar_FLAGS_* constants for pursuit to vischar_PURSUIT_*.</li>
+<li>Some old location constants were removed.</li>
+</ul>
+</li>
+<li>The stylesheet now draws a thin border under each contiguous comment.</li>
+</ul>
+</div>
+<div><span id="20190313"></span></div>
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20190313</div>
 <div class="list-entry-desc">The rewrite of the disassembly commentary continues. About 90% of the disassembly has now been rewritten in plain English.</div>
 <ul class="list-entry">
@@ -68,7 +94,7 @@
 </ul>
 </div>
 <div><span id="20180825"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20180825</div>
 <div class="list-entry-desc">Small tweaks to the HTML output only.</div>
 <ul class="list-entry">
@@ -77,13 +103,13 @@
 </ul>
 </div>
 <div><span id="20180822"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20180822</div>
 <div class="list-entry-desc">Huge rewrite of the disassembly commentary. The first 50% of the disassembly has now been rewritten in (hopefully!) plain English prose.</div>
 
 </div>
 <div><span id="20180419"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20180419</div>
 <div class="list-entry-desc">The disassembly is now built with SkoolKit 6.4.</div>
 <ul class="list-entry">
@@ -222,7 +248,7 @@
 </ul>
 </div>
 <div><span id="20170325"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20170325</div>
 <div class="list-entry-desc">The disassembly is now built with SkoolKit 5.4.</div>
 <ul class="list-entry">
@@ -270,9 +296,9 @@
 <li>vischar_BYTE14_CRAWL -> vischar_DIRECTION_CRAWL</li>
 <li>Added vischar_DIRECTION_MASK to replace literal value 3 masks.</li>
 <li>vischar.b0C -> animindex</li>
-<li><a href="../asm/E29F.html">masked_sprite_plotter_16_wide_item</a> masked_sprite_plotter_16_wide_searchlight -> masked_sprite_plotter_16_wide_item - It's used for items only and is nothing to do with the searchlight. No idea why I thought it was.</li>
-<li><a href="../asm/E2A2.html">masked_sprite_plotter_16_wide_vischar</a> masked_sprite_plotter_16_wide -> masked_sprite_plotter_16_wide_vischar</li>
-<li><a href="../asm/E102.html">masked_sprite_plotter_24_wide_vischar</a> masked_sprite_plotter_24_wide -> masked_sprite_plotter_24_wide_vischar</li>
+<li><a href="../asm/E29F.html">plot_masked_sprite_16px_x_is_zero</a> masked_sprite_plotter_16_wide_searchlight -> masked_sprite_plotter_16_wide_item - It's used for items only and is nothing to do with the searchlight. No idea why I thought it was.</li>
+<li><a href="../asm/E2A2.html">plot_masked_sprite_16px</a> masked_sprite_plotter_16_wide -> masked_sprite_plotter_16_wide_vischar</li>
+<li><a href="../asm/E102.html">plot_masked_sprite_24px</a> masked_sprite_plotter_24_wide -> masked_sprite_plotter_24_wide_vischar</li>
 <li><a href="../asm/78D6.html">doors</a> door_positions -> doors</li>
 <li><a href="../asm/6A12.html">get_door</a> get_door_position -> get_door</li>
 <li><a href="../asm/CDF2.html">animations</a>: anim_A -> anim_walk_tl etc.</li>
@@ -303,7 +329,7 @@
 </li>
 <li>Commentary:
 <ul class="list-entry1">
-<li><a href="../asm/C5D3.html#c5fc">reset_visible_character_0</a> in reset_visible_character: Comment on how the DOS version resets stoves and crates when re-entering a room.</li>
+<li><a href="../asm/C5D3.html#c5fc">rvc_copy_mi</a> in reset_visible_character: Comment on how the DOS version resets stoves and crates when re-entering a room.</li>
 <li>Experiment rewriting <a href="../asm/B5CE.html">animate</a> called_from_main_loop_9 commentary in the usual assembly one-comment-per-line style.</li>
 <li>Note that <a href="../asm/BACD.html">multiply</a> multiply sets D to zero.</li>
 <li><a href="../asm/B75A.html">reset_game</a> reset_game: 'Reset score' part starting at <a href="../asm/B75A.html#b772">B772</a> resets a number of other vars too.</li>
@@ -360,7 +386,7 @@
 </ul>
 </div>
 <div><span id="20160326"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20160326</div>
 <div class="list-entry-desc">The disassembly is now built with SkoolKit 5.1.</div>
 <ul class="list-entry">
@@ -394,7 +420,7 @@
 <li>Fix: <a href="../asm/6CC9.html#6ce6">roomdef_5_hut2_right_bed_D</a> roomdef_3 beds -> roomdef_5 beds.</li>
 <li>Fix: character_16_GUARD_DOG_2 -> character_17_...</li>
 <li>searchlight_states -> searchlight_movements.</li>
-<li>Fix: References in comments to <a href="../asm/E2A2.html">masked_sprite_plotter_16_wide_vischar</a> missed when it was renamed masked_sprite_plotter_16_wide.</li>
+<li>Fix: References in comments to <a href="../asm/E2A2.html">plot_masked_sprite_16px</a> missed when it was renamed masked_sprite_plotter_16_wide.</li>
 <li>Fix: Some old names had crept in.</li>
 <li>Typo: action_shove -> action_shovel.</li>
 <li>stashed_A -> touch_stashed_A.</li>
@@ -435,13 +461,13 @@
 </ul>
 </div>
 <div><span id="20151102"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20151102</div>
 <div class="list-entry-desc">Changelog begun and populated retrospectively.</div>
 
 </div>
 <div><span id="20151028"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20151028</div>
 <div class="list-entry-desc">28th October 2015 update.</div>
 <ul class="list-entry">
@@ -477,7 +503,7 @@
 </ul>
 </div>
 <div><span id="20150622"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20150622</div>
 <div class="list-entry-desc">22nd June 2015 update.</div>
 <ul class="list-entry">
@@ -526,7 +552,7 @@
 </ul>
 </div>
 <div><span id="20150123"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20150123</div>
 <div class="list-entry-desc">23rd January 2015 update.</div>
 <ul class="list-entry">
@@ -548,7 +574,7 @@
 </ul>
 </div>
 <div><span id="20141125"></span></div>
-<div class="list-entry list-entry-1">
+<div class="list-entry list-entry-2">
 <div class="list-entry-title">20141125</div>
 <div class="list-entry-desc">15th November 2014 update.</div>
 <ul class="list-entry">
@@ -627,15 +653,15 @@
 </ul>
 </div>
 <div><span id="20141019"></span></div>
-<div class="list-entry list-entry-2">
+<div class="list-entry list-entry-1">
 <div class="list-entry-title">20141019</div>
 <div class="list-entry-desc">19th October 2014 update.</div>
 
 </div>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

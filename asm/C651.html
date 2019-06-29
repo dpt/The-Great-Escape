@@ -24,7 +24,7 @@
 <div class="description">C651: Return the coordinates of the route's current target.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Given a route_t return the coordinates the character should move to. Coordinates are returned as a tinypos_t when moving to a door or an xy_t when moving to a numbered location.
@@ -55,7 +55,7 @@ Used by the routines at <a href="A3BB.html">set_route</a>, <a href="C4E0.html">s
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to location or door.</td>
+<td class="register-desc">If the target is a location a pointer into locations[]; if a door a pointer into doors[] (returned as door.pos).</td>
 </tr>
 </table>
 </td>
@@ -63,23 +63,26 @@ Used by the routines at <a href="A3BB.html">set_route</a>, <a href="C4E0.html">s
 <tr>
 <td class="asm-label-1">get_target</td>
 <td class="address-2"><span id="c651"></span>C651</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Get the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c652"></span>C652</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="1">Is it routeindex_255_WANDER? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c654"></span>C654</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C651.html#c664">gt_not_halt</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c656"></span>
 <div class="comments">
 <div class="paragraph">
@@ -94,77 +97,89 @@ Uses route.step + rand(0..7) to index locations[].
 <tr>
 <td class="asm-label-1">gt_wander</td>
 <td class="address-1"><span id="c656"></span>C656</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="4">Clear the bottom three bits of route.step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c657"></span>C657</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c658"></span>C658</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $F8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c65a"></span>C65A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c65b"></span>C65B</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CB85.html">random_nibble</a></td>
 <td class="comment-11" rowspan="1">Get a pseudo-random number in <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c65e"></span>C65E</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $07</td>
 <td class="comment-11" rowspan="1">Make it 0..7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c660"></span>C660</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(HL)</td>
 <td class="comment-11" rowspan="2">Add the random value to route.step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c661"></span>C661</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c662"></span>C662</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="C651.html#c692">gt_pick_loc</a></td>
 <td class="comment-11" rowspan="1">Jump</td>
 </tr>
 <tr>
 <td class="asm-label-1">gt_not_halt</td>
 <td class="address-2"><span id="c664"></span>C664</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Preserve the route pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c665"></span>C665</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">Load route.step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c666"></span>C666</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c667"></span>
 <div class="comments">
 <div class="paragraph">
@@ -176,11 +191,12 @@ Control can arrive here with route.index set to zero. This happens when the hero
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c667"></span>C667</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CB79.html">get_route</a></td>
 <td class="comment-11" rowspan="1">Get the route for <span class="register">A</span> in <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c66a"></span>
 <div class="comments">
 <div class="paragraph">
@@ -192,95 +208,110 @@ Since all of the routes are packed togther, this relies on being able to fetch t
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c66a"></span>C66A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-11" rowspan="5">High byte is set to zero unless... route.step is $FF when it's set to $FF</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c66c"></span>C66C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c66d"></span>C66D</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c66f"></span>C66F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C651.html#c672">get_target_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c671"></span>C671</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">get_target_0</td>
 <td class="address-2"><span id="c672"></span>C672</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="1"><span class="register">HL</span> = -1, or route.step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c673"></span>C673</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="2">Point <span class="register">DE</span> at the next route byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c674"></span>C674</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c675"></span>C675</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">Read a byte of route</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c676"></span>C676</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="1">Is it routebyte_END? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c678"></span>C678</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Irrespectively restore <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c679"></span>C679</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C651.html#c69d">gt_route_ends</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c67b"></span>C67B</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $7F</td>
 <td class="comment-11" rowspan="1">Clear its door_REVERSE flag ($80)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c67d"></span>C67D</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $28</td>
 <td class="comment-11" rowspan="1">Is it a door index?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c67f"></span>C67F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C651.html#c68f">gt_location</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c681"></span>
 <div class="comments">
 <div class="paragraph">
@@ -292,53 +323,61 @@ Route byte &lt; 40: A door.
 <tr>
 <td class="asm-label-1">gt_door</td>
 <td class="address-1"><span id="c681"></span>C681</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="1">Re-read routebyte to get the reversed flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c682"></span>C682</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="1">Reversed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c684"></span>C684</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C651.html#c688">get_target_1</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c686"></span>C686</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR $80</td>
 <td class="comment-11" rowspan="1">Toggle reverse flag</td>
 </tr>
 <tr>
 <td class="asm-label-1">get_target_1</td>
 <td class="address-2"><span id="c688"></span>C688</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6A12.html">get_door</a></td>
 <td class="comment-11" rowspan="1">Turn the door index into a door_t pointer (in <span class="register">HL</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c68b"></span>C68B</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to point at door.pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c68c"></span>C68C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$80</td>
 <td class="comment-11" rowspan="2">Return with <span class="register">A</span> set to 128</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c68e"></span>C68E</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c68f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -350,72 +389,84 @@ Route byte = 40..117: A location index.
 <tr>
 <td class="asm-label-1">gt_location</td>
 <td class="address-2"><span id="c68f"></span>C68F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
 <td class="comment-11" rowspan="2">The location index is offset by 40</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c690"></span>C690</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $28</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">gt_pick_loc</td>
 <td class="address-2"><span id="c692"></span>C692</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="6">Point <span class="register">HL</span> at location[<span class="register">A</span>]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c693"></span>C693</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$783A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c696"></span>C696</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c697"></span>C697</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c698"></span>C698</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C651.html#c69b">get_target_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c69a"></span>C69A</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">get_target_2</td>
 <td class="address-2"><span id="c69b"></span>C69B</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">Return with <span class="register">A</span> set to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c69c"></span>C69C</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">gt_route_ends</td>
 <td class="address-2"><span id="c69d"></span>C69D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">Return with <span class="register">A</span> set to 255</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c69f"></span>C69F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
@@ -428,9 +479,9 @@ Route byte = 40..117: A location index.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

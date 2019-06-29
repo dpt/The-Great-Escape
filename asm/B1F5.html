@@ -24,7 +24,7 @@
 <div class="description">B1F5: Door handling.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="AF8F.html">touch</a>.
@@ -50,11 +50,12 @@ Used by the routine at <a href="AF8F.html">touch</a>.
 <tr>
 <td class="asm-label-1">door_handling</td>
 <td class="address-2"><span id="b1f5"></span>B1F5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b1f8"></span>
 <div class="comments">
 <div class="paragraph">
@@ -66,17 +67,19 @@ Interior doors are handled by another routine.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1f8"></span>B1F8</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is it indoors?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1f9"></span>B1F9</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="B32D.html">door_handling_interior</a></td>
 <td class="comment-11" rowspan="1">Exit via the interior door handling routine if so</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b1fc"></span>
 <div class="comments">
 <div class="paragraph">
@@ -88,47 +91,54 @@ Select a start position in doors[] based on the direction the hero is facing.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1fc"></span>B1FC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$78D6</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first entry in doors[]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1ff"></span>B1FF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(IY+$0E)</td>
 <td class="comment-11" rowspan="1">Fetch current vischar's direction field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b202"></span>B202</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
 <td class="comment-11" rowspan="2">Is it direction_BOTTOM_RIGHT or direction_BOTTOM_LEFT?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b203"></span>B203</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b205"></span>B205</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B1F5.html#b20a">door_handling_0</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b207"></span>B207</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$78DA</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second entry in doors[]</td>
 </tr>
 <tr>
 <td class="asm-label-1">door_handling_0</td>
 <td class="address-2"><span id="b20a"></span>B20A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,$03</td>
 <td class="comment-11" rowspan="1">Preload door_FLAGS_MASK_DIRECTION mask ($03) into <span class="register">D</span></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b20c"></span>
 <div class="comments">
 <div class="paragraph">
@@ -140,11 +150,12 @@ The first 16 (pairs of) entries in doors[] are the only ones with outdoors as a 
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b20c"></span>B20C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$10</td>
 <td class="comment-11" rowspan="1">16 iterations / 16 pairs of entries</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b20e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -156,29 +167,33 @@ Start loop
 <tr>
 <td class="asm-label-1">door_handling_1</td>
 <td class="address-2"><span id="b20e"></span>B20E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Load the door entry's room_and_direction field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b20f"></span>B20F</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND D</td>
 <td class="comment-11" rowspan="1">Extract the direction field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b210"></span>B210</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP E</td>
 <td class="comment-11" rowspan="1">Does it match the vischar's direction?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b211"></span>B211</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="B1F5.html#b21e">door_handling_next</a></td>
 <td class="comment-11" rowspan="1">Jump forward if not</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b213"></span>
 <div class="comments">
 <div class="paragraph">
@@ -190,89 +205,103 @@ A match
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b213"></span>B213</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Preserve loop counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b214"></span>B214</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Preserve door entry pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b215"></span>B215</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
 <td class="comment-11" rowspan="1">Preserve direction mask</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b216"></span>B216</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B252.html">door_in_range</a></td>
 <td class="comment-11" rowspan="1">Call door_in_range -- returns C clear if in range</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b219"></span>B219</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
 <td class="comment-11" rowspan="3">Restore the registers stored prior to call</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b21a"></span>B21A</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b21b"></span>B21B</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b21c"></span>B21C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B1F5.html#b229">door_handling_found</a></td>
 <td class="comment-11" rowspan="1">If not in range, jump to door_handling_found</td>
 </tr>
 <tr>
 <td class="asm-label-1">door_handling_next</td>
 <td class="address-2"><span id="b21e"></span>B21E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$08</td>
 <td class="comment-11" rowspan="5">Step forward two entries</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b220"></span>B220</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b221"></span>B221</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b222"></span>B222</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B1F5.html#b225">door_handling_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b224"></span>B224</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">door_handling_2</td>
 <td class="address-2"><span id="b225"></span>B225</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="B1F5.html#b20e">door_handling_1</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b227"></span>
 <div class="comments">
 <div class="paragraph">
@@ -284,113 +313,131 @@ DPT: This seems to exist to set Z, but this routine doesn't return anything!
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b227"></span>B227</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND B</td>
 <td class="comment-11" rowspan="1">Set Z (<span class="register">B</span> is zero here)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b228"></span>B228</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1">door_handling_found</td>
 <td class="address-2"><span id="b229"></span>B229</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$10</td>
 <td class="comment-11" rowspan="3">current door = 16 - iterations</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b22b"></span>B22B</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b22c"></span>B22C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($68A1),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b22f"></span>B22F</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Switch register banks over the call</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b230"></span>B230</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B1D4.html">is_door_locked</a></td>
 <td class="comment-11" rowspan="1">Call is_door_locked -- returns Z clear if locked</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b233"></span>B233</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">Return if the door was locked</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b234"></span>B234</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-11" rowspan="1">Switch registers back</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b235"></span>B235</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch door entry's room_and_direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b236"></span>B236</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-11" rowspan="2">Rotate it by two bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b237"></span>B237</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b238"></span>B238</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $3F</td>
 <td class="comment-11" rowspan="1">Clear the top two bits rotated in</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b23a"></span>B23A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$1C),A</td>
 <td class="comment-11" rowspan="1">Store in vischar-&gt;room</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b23d"></span>B23D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch door entry's room_and_direction again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b23e"></span>B23E</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
 <td class="comment-11" rowspan="1">Extract the direction field</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b240"></span>B240</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
 <td class="comment-11" rowspan="1">Is it direction_BOTTOM_RIGHT or direction_BOTTOM_LEFT?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b242"></span>B242</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B1F5.html#b24c">door_handling_3</a></td>
 <td class="comment-11" rowspan="1">Jump if either of those</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b244"></span>
 <div class="comments">
 <div class="paragraph">
@@ -402,41 +449,47 @@ Point to the next door entry's pos
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b244"></span>B244</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="5">Step forward five bytes to the next door entry</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b245"></span>B245</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b246"></span>B246</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b247"></span>B247</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b248"></span>B248</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b249"></span>B249</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="68A2.html">transition</a></td>
 <td class="comment-11" rowspan="1">Jump to transition -- never returns</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="b24c"></span>
 <div class="comments">
 <div class="paragraph">
@@ -448,24 +501,28 @@ Point to the previous door entry's pos
 <tr>
 <td class="asm-label-1">door_handling_3</td>
 <td class="address-2"><span id="b24c"></span>B24C</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="3">Step back three bytes to the previous door entry</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b24d"></span>B24D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b24e"></span>B24E</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b24f"></span>B24F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="68A2.html">transition</a></td>
 <td class="comment-11" rowspan="1">Jump to transition -- never returns</td>
 </tr>
@@ -478,9 +535,9 @@ Point to the previous door entry's pos
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

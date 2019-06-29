@@ -24,7 +24,7 @@
 <div class="description">B1C7: Multiplies <span class="register">A</span> by 8, returning the result in <span class="register">BC</span>.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="B14C.html">bounds_check</a>, <a href="C4E0.html">spawn_character</a>, <a href="CA11.html">vischar_move_x</a>, <a href="CA49.html">vischar_move_y</a> and <a href="DBEB.html">get_greatest_itemstruct</a>.
@@ -53,54 +53,63 @@ Used by the routines at <a href="B14C.html">bounds_check</a>, <a href="C4E0.html
 <tr>
 <td class="asm-label-1">multiply_by_8</td>
 <td class="address-2"><span id="b1c7"></span>B1C7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1c9"></span>B1C9</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="1">Double the input argument</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1ca"></span>B1CA</td>
+<td class="bytes-0"></td>
 <td class="instruction">RL B</td>
 <td class="comment-11" rowspan="1">Merge the carry out from the doubling into <span class="register">B</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1cc"></span>B1CC</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="2">Double it again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1cd"></span>B1CD</td>
+<td class="bytes-0"></td>
 <td class="instruction">RL B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1cf"></span>B1CF</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="2">And double it again</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1d0"></span>B1D0</td>
+<td class="bytes-0"></td>
 <td class="instruction">RL B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1d2"></span>B1D2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Move low part of result into <span class="register">C</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="b1d3"></span>B1D3</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -113,9 +122,9 @@ Used by the routines at <a href="B14C.html">bounds_check</a>, <a href="C4E0.html
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div class="description">7BD0: Calculate isometric screen position for dropped exterior items.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="CD31.html">item_discovered</a>.
@@ -48,7 +48,7 @@ Used by the routine at <a href="CD31.html">item_discovered</a>.
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="7bd0"></span>
 <div class="comments">
 <div class="paragraph">
@@ -60,47 +60,54 @@ Set <span class="register">C</span> to ($40 + y - x) * 2
 <tr>
 <td class="asm-label-1">calc_exterior_item_iso_pos</td>
 <td class="address-2"><span id="7bd0"></span>7BD0</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">Step <span class="register">HL</span> back to itemstruct.pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd1"></span>7BD1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$40</td>
 <td class="comment-11" rowspan="1">Start with $40</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd3"></span>7BD3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(HL)</td>
 <td class="comment-11" rowspan="1">Add pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd4"></span>7BD4</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">Subtract pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd5"></span>7BD5</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd6"></span>7BD6</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="1">Double the result</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd7"></span>7BD7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Save it in <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="7bd8"></span>
 <div class="comments">
 <div class="paragraph">
@@ -112,47 +119,54 @@ Set <span class="register">B</span> to ($200 - x - y - height)
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd8"></span>7BD8</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">Zero the result; this acts like $200 for our purposes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bd9"></span>7BD9</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">Subtract pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bda"></span>7BDA</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">Subtract pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bdb"></span>7BDB</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bdc"></span>7BDC</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">Subtract pos.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bdd"></span>7BDD</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bde"></span>7BDE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">Save it in <span class="register">B</span></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="7bdf"></span>
 <div class="comments">
 <div class="paragraph">
@@ -164,30 +178,35 @@ Write the result to itemstruct.iso_pos
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bdf"></span>7BDF</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at itemstruct.iso_pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7be0"></span>7BE0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-11" rowspan="3">Store <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7be1"></span>7BE1</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7be2"></span>7BE2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7be3"></span>7BE3</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -200,9 +219,9 @@ Write the result to itemstruct.iso_pos
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

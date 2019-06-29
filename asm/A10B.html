@@ -24,7 +24,7 @@
 <div class="description">A10B: Draws the current score to screen.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="B75A.html">reset_game</a> and <a href="F163.html">main</a>.
@@ -47,23 +47,26 @@ Used by the routines at <a href="B75A.html">reset_game</a> and <a href="F163.htm
 <tr>
 <td class="asm-label-1">plot_score</td>
 <td class="address-2"><span id="a10b"></span>A10B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A132</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first of the score digits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a10e"></span>A10E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$5094</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the screen address of the score</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a111"></span>A111</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$05</td>
 <td class="comment-11" rowspan="1">Plot five digits</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a113"></span>
 <div class="comments">
 <div class="paragraph">
@@ -75,42 +78,49 @@ Start loop
 <tr>
 <td class="asm-label-1">plot_score_0</td>
 <td class="address-2"><span id="a113"></span>A113</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1">Save BC</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a114"></span>A114</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
 <td class="comment-11" rowspan="1">Plot a single glyph pointed to by <span class="register">HL</span> at <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a117"></span>A117</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Move to the next score digit</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a118"></span>A118</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">Move to the next character position (in addition to plot_glyph's increment)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a119"></span>A119</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1">Restore BC</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a11a"></span>A11A</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="A10B.html#a113">plot_score_0</a></td>
 <td class="comment-11" rowspan="1">...loop until all digits plotted</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a11c"></span>A11C</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -123,9 +133,9 @@ Start loop
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

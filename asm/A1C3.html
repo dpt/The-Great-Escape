@@ -24,7 +24,7 @@
 <div class="description">A1C3: Event: Night time.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 
 </div>
@@ -45,42 +45,49 @@
 <tr>
 <td class="asm-label-1">event_night_time</td>
 <td class="address-2"><span id="a1c3"></span>A1C3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A13F)</td>
 <td class="comment-11" rowspan="2">Is the hero already in his bed?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c6"></span>A1C6</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c7"></span>A1C7</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A1C3.html#a1cf">event_night_time_0</a></td>
 <td class="comment-11" rowspan="1">Skip route setting if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1c9"></span>A1C9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$2C01</td>
 <td class="comment-11" rowspan="2">If not in bed set the hero's route to (routeindex_44_HUT2_RIGHT_TO_LEFT, 1) to make him move to bed</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1cc"></span>A1CC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A33F.html">set_hero_route</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">event_night_time_0</td>
 <td class="address-2"><span id="a1cf"></span>A1CF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">Set the night time flag ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a1d1"></span>A1D1</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A1D3.html#a1de">set_attrs</a></td>
 <td class="comment-11" rowspan="1">Jump to set_attrs</td>
 </tr>
@@ -93,9 +100,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

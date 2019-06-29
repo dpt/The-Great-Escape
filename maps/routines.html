@@ -497,7 +497,7 @@
 <td class="map-c"><span id="9f21"></span><a href="../asm/9F21.html">9F21</a></td>
 <td class="map-length-0">230</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/9F21.html">Check the hero's map position and colour the flag accordingly.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/9F21.html">Check the hero's map position, check for escape and colour the flag accordingly.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2057,7 +2057,7 @@
 <td class="map-c"><span id="c4e0"></span><a href="../asm/C4E0.html">C4E0</a></td>
 <td class="map-length-0">243</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/C4E0.html">Adds characters to the visible character list.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/C4E0.html">Add a character to the visible character list.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2069,7 +2069,7 @@
 <td class="map-c"><span id="c5d3"></span><a href="../asm/C5D3.html">C5D3</a></td>
 <td class="map-length-0">126</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/C5D3.html">Reset a visible character (either a character or an object).</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/C5D3.html">Reset a visible character (either a character or a stove/crate object).</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2093,7 +2093,7 @@
 <td class="map-c"><span id="c6a0"></span><a href="../asm/C6A0.html">C6A0</a></td>
 <td class="map-length-0">250</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/C6A0.html">Move characters around.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/C6A0.html">Move one (off-screen) character around at a time.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2201,7 +2201,7 @@
 <td class="map-c"><span id="cb23"></span><a href="../asm/CB23.html">CB23</a></td>
 <td class="map-length-0">10</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/CB23.html">(unknown) get_target_assign_pos</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/CB23.html">Calls get_target then puts coords in vischar.target and set flags.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2213,7 +2213,7 @@
 <td class="map-c"><span id="cb2d"></span><a href="../asm/CB2D.html">CB2D</a></td>
 <td class="map-length-0">52</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/CB2D.html">Called when a character has run out of route.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/CB2D.html">Called when get_target has run out of route.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2225,7 +2225,7 @@
 <td class="map-c"><span id="cb61"></span><a href="../asm/CB61.html">CB61</a></td>
 <td class="map-length-0">20</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/CB61.html">(unknown) handle_target</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/CB61.html">"Didn't hit end of list" case. -- not really a routine in its own right</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2393,7 +2393,7 @@
 <td class="map-c"><span id="e102"></span><a href="../asm/E102.html">E102</a></td>
 <td class="map-length-0">413</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E102.html">Sprite plotter for 24-pixel-wide sprites. Used for characters and objects.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E102.html">Sprite plotter for 24 pixel-wide masked sprites.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2405,7 +2405,7 @@
 <td class="map-c"><span id="e29f"></span><a href="../asm/E29F.html">E29F</a></td>
 <td class="map-length-0">3</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E29F.html">Entry point for masked_sprite_plotter_16_wide_left which assumes A == 0. (+ no vischar passed).</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E29F.html">Alternative entry point for plot_masked_sprite_16px that assumes x is zero.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2415,33 +2415,9 @@
 <td class="map-page-0">226</td>
 <td class="map-byte-0">162</td>
 <td class="map-c"><span id="e2a2"></span><a href="../asm/E2A2.html">E2A2</a></td>
-<td class="map-length-0">10</td>
+<td class="map-length-0">344</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E2A2.html">Sprite plotter. Used for characters and objects.</a></div>
-<div class="map-entry-desc-0">
-
-</div>
-</td>
-</tr>
-<tr>
-<td class="map-page-0">226</td>
-<td class="map-byte-0">172</td>
-<td class="map-c"><span id="e2ac"></span><a href="../asm/E2AC.html">E2AC</a></td>
-<td class="map-length-0">162</td>
-<td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E2AC.html">Sprite plotter "left" case.</a></div>
-<div class="map-entry-desc-0">
-
-</div>
-</td>
-</tr>
-<tr>
-<td class="map-page-0">227</td>
-<td class="map-byte-0">78</td>
-<td class="map-c"><span id="e34e"></span><a href="../asm/E34E.html">E34E</a></td>
-<td class="map-length-0">172</td>
-<td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E34E.html">Sprite plotter "right" case.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/E2A2.html">Sprite plotter for 16 pixel-wide masked sprites.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2645,7 +2621,7 @@
 <td class="map-c"><span id="f257"></span><a href="../asm/F257.html">F257</a></td>
 <td class="map-length-0">26</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/F257.html">Clear the screen and attributes and set the screen border to black.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/F257.html">Clear the full screen and attributes and set the screen border to black.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2705,7 +2681,7 @@
 <td class="map-c"><span id="f41c"></span><a href="../asm/F41C.html">F41C</a></td>
 <td class="map-length-0">33</td>
 <td class="map-c-desc">
-<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/F41C.html">Scan for keys to select an input device.</a></div>
+<div class="map-entry-title-10"><a class="map-entry-title" href="../asm/F41C.html">Scan for keys that select an input device.</a></div>
 <div class="map-entry-desc-0">
 
 </div>
@@ -2809,9 +2785,9 @@
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

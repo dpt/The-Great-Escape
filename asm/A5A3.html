@@ -24,7 +24,7 @@
 <div class="description">A5A3: Return a bitmask indicating the presence of items required for escape.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="A59C.html">join_item_to_escapeitem</a>.
@@ -53,102 +53,119 @@ Used by the routine at <a href="A59C.html">join_item_to_escapeitem</a>.
 <tr>
 <td class="asm-label-1">item_to_escapeitem</td>
 <td class="address-2"><span id="a5a3"></span>A5A3</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $0F</td>
 <td class="comment-11" rowspan="1">Is it item_COMPASS?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5a5"></span>A5A5</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A5A3.html#a5aa">item_to_escapeitem_0</a></td>
 <td class="comment-11" rowspan="1">No - try the next interesting item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5a7"></span>A5A7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-11" rowspan="2">Otherwise return flag escapeitem_COMPASS</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5a9"></span>A5A9</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">item_to_escapeitem_0</td>
 <td class="address-2"><span id="a5aa"></span>A5AA</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="1">Is it item_PAPERS?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5ac"></span>A5AC</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A5A3.html#a5b1">item_to_escapeitem_1</a></td>
 <td class="comment-11" rowspan="1">No - try the next interesting item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5ae"></span>A5AE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-11" rowspan="2">Otherwise return flag escapeitem_PAPERS</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5b0"></span>A5B0</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">item_to_escapeitem_1</td>
 <td class="address-2"><span id="a5b1"></span>A5B1</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $0E</td>
 <td class="comment-11" rowspan="1">Is it item_PURSE?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5b3"></span>A5B3</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A5A3.html#a5b8">item_to_escapeitem_2</a></td>
 <td class="comment-11" rowspan="1">No - try the next interesting item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5b5"></span>A5B5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-11" rowspan="2">Otherwise return flag escapeitem_PURSE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5b7"></span>A5B7</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">item_to_escapeitem_2</td>
 <td class="address-2"><span id="a5b8"></span>A5B8</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $06</td>
 <td class="comment-11" rowspan="1">Is it item_UNIFORM?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5ba"></span>A5BA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$08</td>
 <td class="comment-11" rowspan="2">Return escapeitem_UNIFORM if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5bc"></span>A5BC</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5bd"></span>A5BD</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">Otherwise return zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a5be"></span>A5BE</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
@@ -161,9 +178,9 @@ Used by the routine at <a href="A59C.html">join_item_to_escapeitem</a>.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

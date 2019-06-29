@@ -24,7 +24,7 @@
 <div class="description">C7C6: Character event.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="C6A0.html">move_characters</a> and <a href="CB2D.html">route_ended</a>.
@@ -53,47 +53,54 @@ Makes characters sit, sleep or other things TBD.
 <tr>
 <td class="asm-label-1">character_event</td>
 <td class="address-2"><span id="c7c6"></span>C7C6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Load route.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7c7"></span>C7C7</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $07</td>
 <td class="comment-11" rowspan="1">Is it less than routeindex 7?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7c9"></span>C7C9</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="C7C6.html#c7d0">character_event_0</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7cb"></span>C7CB</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $0D</td>
 <td class="comment-11" rowspan="1">Is it less than routeindex 13?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7cd"></span>C7CD</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="A444.html">character_sleeps</a></td>
 <td class="comment-11" rowspan="1">Call 'character sleeps' if so (if indices 7..12)</td>
 </tr>
 <tr>
 <td class="asm-label-1">character_event_0</td>
 <td class="address-2"><span id="c7d0"></span>C7D0</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $12</td>
 <td class="comment-11" rowspan="1">Is it less than routeindex_18?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7d2"></span>C7D2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="C7C6.html#c7d9">character_event_1</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c7d4"></span>
 <div class="comments">
 <div class="paragraph">
@@ -105,23 +112,26 @@ Bug: The sixth prisoner doesn't sit for breakfast because this should be $18.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7d4"></span>C7D4</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $17</td>
 <td class="comment-11" rowspan="1">Is it less than routeindex 23?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7d6"></span>C7D6</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="A420.html">character_sits</a></td>
 <td class="comment-11" rowspan="1">Call 'character sits' if so (if indices 18..22)</td>
 </tr>
 <tr>
 <td class="asm-label-1">character_event_1</td>
 <td class="address-2"><span id="c7d9"></span>C7D9</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Stack the route pointer - the event handlers will pop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c7da"></span>
 <div class="comments">
 <div class="paragraph">
@@ -133,17 +143,19 @@ Locate the character in the character_to_event_handler_index_map.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7da"></span>C7DA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$C7F9</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at character_to_event_handler_index_map[0]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7dd"></span>C7DD</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$18</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for 24 iterations - length of the map</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c7df"></span>
 <div class="comments">
 <div class="paragraph">
@@ -155,125 +167,145 @@ Start loop
 <tr>
 <td class="asm-label-1">character_event_2</td>
 <td class="address-2"><span id="c7df"></span>C7DF</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
 <td class="comment-11" rowspan="1">Does the route index in <span class="register">A</span> match the map's route index?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e0"></span>C7E0</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C7C6.html#c7ea">ce_call_action</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e2"></span>C7E2</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">Advance to the next map entry</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e3"></span>C7E3</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e4"></span>C7E4</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="C7C6.html#c7df">character_event_2</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e6"></span>C7E6</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Unstack the route pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e7"></span>C7E7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="1">Make the character stand still by setting the new route index to routeindex_0_HALT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7e9"></span>C7E9</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1">ce_call_action</td>
 <td class="address-2"><span id="c7ea"></span>C7EA</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">Read the index of the handler from the map</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7eb"></span>C7EB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ec"></span>C7EC</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="1">Double it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ed"></span>C7ED</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="2">Copy it to <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ee"></span>C7EE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f0"></span>C7F0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$C829</td>
 <td class="comment-11" rowspan="2">Point <span class="register">HL</span> at character_event_handlers[index]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f3"></span>C7F3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f4"></span>C7F4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="4">Load the event handler address into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f5"></span>C7F5</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f6"></span>C7F6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f7"></span>C7F7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7f8"></span>C7F8</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP (HL)</td>
 <td class="comment-11" rowspan="1">Jump to the event handler</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c7f9"></span>
 <div class="comments">
 <div class="paragraph">
@@ -288,149 +320,173 @@ Array of (character + flags, character event handler index) mappings.
 <tr>
 <td class="asm-label-1">character_to_event_handler_index_map</td>
 <td class="address-1"><span id="c7f9"></span>C7F9</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $00A6</td>
 <td class="comment-11" rowspan="1">routeindex_38_GUARD_12_BED         | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7fb"></span>C7FB</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $00A7</td>
 <td class="comment-11" rowspan="1">routeindex_39_GUARD_13_BED         | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7fd"></span>C7FD</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $01A8</td>
 <td class="comment-11" rowspan="1">routeindex_40_GUARD_14_BED         | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c7ff"></span>C7FF</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $01A9</td>
 <td class="comment-11" rowspan="1">routeindex_41_GUARD_15_BED         | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c801"></span>C801</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0005</td>
 <td class="comment-11" rowspan="1">routeindex_5_EXIT_HUT2,                       0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c803"></span>C803</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0106</td>
 <td class="comment-11" rowspan="1">routeindex_6_EXIT_HUT3,                       1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c805"></span>C805</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0385</td>
 <td class="comment-11" rowspan="1">routeindex_5_EXIT_HUT2             | REVERSE, 3 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c807"></span>C807</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0386</td>
 <td class="comment-11" rowspan="1">routeindex_6_EXIT_HUT3             | REVERSE, 3 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c809"></span>C809</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $020E</td>
 <td class="comment-11" rowspan="1">routeindex_14_GO_TO_YARD,                     2 - wander between locations 56..63</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c80b"></span>C80B</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $020F</td>
 <td class="comment-11" rowspan="1">routeindex_15_GO_TO_YARD,                     2 - wander between locations 56..63</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c80d"></span>C80D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $008E</td>
 <td class="comment-11" rowspan="1">routeindex_14_GO_TO_YARD           | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c80f"></span>C80F</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $018F</td>
 <td class="comment-11" rowspan="1">routeindex_15_GO_TO_YARD           | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c811"></span>C811</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0510</td>
 <td class="comment-11" rowspan="1">routeindex_16_BREAKFAST_25,                   5 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c813"></span>C813</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0511</td>
 <td class="comment-11" rowspan="1">routeindex_17_BREAKFAST_23,                   5 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c815"></span>C815</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0090</td>
 <td class="comment-11" rowspan="1">routeindex_16_BREAKFAST_25         | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c817"></span>C817</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0191</td>
 <td class="comment-11" rowspan="1">routeindex_17_BREAKFAST_23         | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c819"></span>C819</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $00A0</td>
 <td class="comment-11" rowspan="1">routeindex_32_GUARD_15_ROLL_CALL   | REVERSE, 0 - wander between locations  8..15</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c81b"></span>C81B</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $01A1</td>
 <td class="comment-11" rowspan="1">routeindex_33_PRISONER_4_ROLL_CALL | REVERSE, 1 - wander between locations 16..23</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c81d"></span>C81D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $072A</td>
 <td class="comment-11" rowspan="1">routeindex_42_HUT2_LEFT_TO_RIGHT,             7 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c81f"></span>C81F</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $082C</td>
 <td class="comment-11" rowspan="1">routeindex_44_HUT2_RIGHT_TO_LEFT,             8 - hero sleeps</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c821"></span>C821</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $092B</td>
 <td class="comment-11" rowspan="1">routeindex_43_7833,                           9 - hero sits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c823"></span>C823</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $06A4</td>
 <td class="comment-11" rowspan="1">routeindex_36_GO_TO_SOLITARY       | REVERSE, 6 -</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c825"></span>C825</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0A24</td>
 <td class="comment-11" rowspan="1">routeindex_36_GO_TO_SOLITARY,                10 - hero released from solitary</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c827"></span>C827</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW $0425</td>
 <td class="comment-11" rowspan="1">routeindex_37_HERO_LEAVE_SOLITARY,            4 - solitary ends</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c829"></span>
 <div class="comments">
 <div class="paragraph">
@@ -445,71 +501,82 @@ Array of pointers to character event handlers.
 <tr>
 <td class="asm-label-1">character_event_handlers</td>
 <td class="address-1"><span id="c829"></span>C829</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c864">charevnt_wander_top</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c82b"></span>C82B</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c85c">charevnt_wander_left</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c82d"></span>C82D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c860">charevnt_wander_yard</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c82f"></span>C82F</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c86c">charevnt_bed</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c831"></span>C831</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c83f">charevnt_solitary_ends</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c833"></span>C833</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c877">charevnt_breakfast</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c835"></span>C835</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c845">charevnt_commandant_to_yard</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c837"></span>C837</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c882">charevnt_exit_hut2</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c839"></span>C839</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c88d">charevnt_hero_sleeps</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c83b"></span>C83B</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c889">charevnt_hero_sits</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c83d"></span>C83D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="C7C6.html#c84c">charevnt_hero_release</a></td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c83f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -521,23 +588,26 @@ charevnt_solitary_end
 <tr>
 <td class="asm-label-1">charevnt_solitary_ends</td>
 <td class="address-1"><span id="c83f"></span>C83F</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">in_solitary = 0; // enable player control</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c840"></span>C840</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($A13A),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c843"></span>C843</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="C7C6.html#c864">charevnt_wander_top</a></td>
 <td class="comment-11" rowspan="1">goto charevnt_wander_top;</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c845"></span>
 <div class="comments">
 <div class="paragraph">
@@ -549,35 +619,40 @@ charevnt_commandant_to_yard
 <tr>
 <td class="asm-label-1">charevnt_commandant_to_yard</td>
 <td class="address-1"><span id="c845"></span>C845</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">// (popped) sampled HL=$80C2 (x2),$8042  // route</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c846"></span>C846</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$03</td>
 <td class="comment-11" rowspan="2">*HL++ = 0x03;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c848"></span>C848</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c849"></span>C849</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$15</td>
 <td class="comment-11" rowspan="1">*HL   = 0x15;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c84b"></span>C84B</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c84c"></span>
 <div class="comments">
 <div class="paragraph">
@@ -589,53 +664,61 @@ charevnt_hero_release
 <tr>
 <td class="asm-label-1">charevnt_hero_release</td>
 <td class="address-1"><span id="c84c"></span>C84C</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c84d"></span>C84D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$A4</td>
 <td class="comment-11" rowspan="2">*HL++ = 0xA4;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c84f"></span>C84F</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c850"></span>C850</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$03</td>
 <td class="comment-11" rowspan="1">*HL   = 0x03;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c852"></span>C852</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">automatic_player_counter = 0; // force automatic control</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c853"></span>C853</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($A139),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c856"></span>C856</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$2500</td>
 <td class="comment-11" rowspan="2">set_hero_route(0x0025); return;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c859"></span>C859</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A344.html">set_hero_route_force</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c85c"></span>
 <div class="comments">
 <div class="paragraph">
@@ -647,17 +730,19 @@ charevnt_wander_left
 <tr>
 <td class="asm-label-1">charevnt_wander_left</td>
 <td class="address-1"><span id="c85c"></span>C85C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$10</td>
 <td class="comment-11" rowspan="1">C = 0x10; // 0xFF10</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c85e"></span>C85E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="C7C6.html#c866">character_event_3</a></td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c860"></span>
 <div class="comments">
 <div class="paragraph">
@@ -669,17 +754,19 @@ charevnt_wander_yard
 <tr>
 <td class="asm-label-1">charevnt_wander_yard</td>
 <td class="address-1"><span id="c860"></span>C860</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$38</td>
 <td class="comment-11" rowspan="1">C = 0x38; // 0xFF38</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c862"></span>C862</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="C7C6.html#c866">character_event_3</a></td>
 <td class="comment-11" rowspan="1">goto exit;</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c864"></span>
 <div class="comments">
 <div class="paragraph">
@@ -691,41 +778,47 @@ charevnt_wander_top
 <tr>
 <td class="asm-label-1">charevnt_wander_top</td>
 <td class="address-2"><span id="c864"></span>C864</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$08</td>
 <td class="comment-11" rowspan="1">C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062</td>
 </tr>
 <tr>
 <td class="asm-label-1">character_event_3</td>
 <td class="address-2"><span id="c866"></span>C866</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">exit:</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c867"></span>C867</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$FF</td>
 <td class="comment-11" rowspan="2">*HL++ = 0xFF;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c869"></span>C869</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c86a"></span>C86A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-11" rowspan="1">*HL   = C;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c86b"></span>C86B</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c86c"></span>
 <div class="comments">
 <div class="paragraph">
@@ -737,35 +830,40 @@ charevnt_bed
 <tr>
 <td class="asm-label-1">charevnt_bed</td>
 <td class="address-1"><span id="c86c"></span>C86C</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c86d"></span>C86D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A13E)</td>
 <td class="comment-11" rowspan="4">if (entered_move_characters == 0) goto character_bed_vischar; else goto character_bed_state;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c870"></span>C870</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c871"></span>C871</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="A3F8.html">character_bed_vischar</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c874"></span>C874</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A3F3.html">character_bed_state</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c877"></span>
 <div class="comments">
 <div class="paragraph">
@@ -777,35 +875,40 @@ charevnt_breakfast
 <tr>
 <td class="asm-label-1">charevnt_breakfast</td>
 <td class="address-1"><span id="c877"></span>C877</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c878"></span>C878</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($A13E)</td>
 <td class="comment-11" rowspan="4">if (entered_move_characters == 0) goto charevnt_breakfast_vischar; else goto charevnt_breakfast_state;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c87b"></span>C87B</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c87c"></span>C87C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="A4D8.html">charevnt_breakfast_vischar</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c87f"></span>C87F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A4D3.html">charevnt_breakfast_state</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c882"></span>
 <div class="comments">
 <div class="paragraph">
@@ -817,35 +920,40 @@ charevnt_exit_hut2
 <tr>
 <td class="asm-label-1">charevnt_exit_hut2</td>
 <td class="address-1"><span id="c882"></span>C882</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c883"></span>C883</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$05</td>
 <td class="comment-11" rowspan="2">*HL++ = 0x05;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c885"></span>C885</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c886"></span>C886</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="1">*HL   = 0x00;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c888"></span>C888</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c889"></span>
 <div class="comments">
 <div class="paragraph">
@@ -857,17 +965,19 @@ charevnt_hero_sits
 <tr>
 <td class="asm-label-1">charevnt_hero_sits</td>
 <td class="address-1"><span id="c889"></span>C889</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c88a"></span>C88A</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A47F.html">hero_sits</a></td>
 <td class="comment-11" rowspan="1">goto hero_sits;</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="c88d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -879,12 +989,14 @@ charevnt_hero_sleeps
 <tr>
 <td class="asm-label-1">charevnt_hero_sleeps</td>
 <td class="address-1"><span id="c88d"></span>C88D</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="c88e"></span>C88E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A489.html">hero_sleeps</a></td>
 <td class="comment-11" rowspan="1">goto hero_sleeps;</td>
 </tr>
@@ -897,9 +1009,9 @@ charevnt_hero_sleeps
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

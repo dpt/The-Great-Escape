@@ -24,7 +24,7 @@
 <div class="description">F335: Wipe the game screen.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 This wipes the area of the screen where the game window is plotted.
@@ -50,11 +50,12 @@ Used by the routine at <a href="F350.html">choose_keys</a>.
 <tr>
 <td class="asm-label-1">wipe_game_window</td>
 <td class="address-2"><span id="f335"></span>F335</td>
+<td class="bytes-0"></td>
 <td class="instruction">DI</td>
 <td class="comment-11" rowspan="1">Disable interrupts</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="f336"></span>
 <div class="comments">
 <div class="paragraph">
@@ -66,23 +67,26 @@ This uses the optimisation trick of popping addresses from the stack.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f336"></span>F336</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($EDD1),SP</td>
 <td class="comment-11" rowspan="1">Save the stack pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f33a"></span>F33A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD SP,$EDD3</td>
 <td class="comment-11" rowspan="1">Point the stack pointer at game_window_start_addresses</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f33d"></span>F33D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$80</td>
 <td class="comment-11" rowspan="1">Set <span class="register">A</span> for 128 iterations (128 rows)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="f33f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -94,17 +98,19 @@ Start loop
 <tr>
 <td class="asm-label-1">wipe_game_window_0</td>
 <td class="address-2"><span id="f33f"></span>F33F</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Pull a start address from the stack</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f340"></span>F340</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$17</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> for 23 iterations (23 bytes)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="f342"></span>
 <div class="comments">
 <div class="paragraph">
@@ -116,42 +122,49 @@ Start loop
 <tr>
 <td class="asm-label-1">wipe_game_window_1</td>
 <td class="address-2"><span id="f342"></span>F342</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-11" rowspan="1">Write an empty byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f344"></span>F344</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">Advance (note cheap increment)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f345"></span>F345</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F335.html#f342">wipe_game_window_1</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f347"></span>F347</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="2">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f348"></span>F348</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="F335.html#f33f">wipe_game_window_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f34b"></span>F34B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD SP,($EDD1)</td>
 <td class="comment-11" rowspan="1">Restore the stack pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="f34f"></span>F34F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -164,9 +177,9 @@ Start loop
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

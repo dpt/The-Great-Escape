@@ -24,7 +24,7 @@
 <div class="description">A404: Common end of above two routines.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="A3F3.html">character_bed_state</a> and <a href="A3F8.html">character_bed_vischar</a>.
@@ -54,90 +54,105 @@ Used by the routines at <a href="A3F3.html">character_bed_state</a> and <a href=
 <tr>
 <td class="asm-label-1">character_bed_common</td>
 <td class="address-2"><span id="a404"></span>A404</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">Clear route's step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a405"></span>A405</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a407"></span>A407</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $13</td>
 <td class="comment-11" rowspan="1">Is the character a hostile? (its index less than or equal to character_19_GUARD_DOG_4)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a409"></span>A409</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="A404.html#a413">character_bed_hostile</a></td>
 <td class="comment-11" rowspan="2">Jump to hostile handling if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a40c"></span>A40C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="A404.html#a413">character_bed_hostile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a40f"></span>A40F</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $0D</td>
 <td class="comment-11" rowspan="1">Compute the route index by subtracting 13 from the character index, e.g. character 20 is assigned route 7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a411"></span>A411</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A404.html#a41d">character_bed_common_0</a></td>
 <td class="comment-11" rowspan="1">Jump to end part</td>
 </tr>
 <tr>
 <td class="asm-label-1">character_bed_hostile</td>
 <td class="address-2"><span id="a413"></span>A413</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 0,A</td>
 <td class="comment-11" rowspan="1">Does this hostile have an odd numbered character index?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a415"></span>A415</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$0D</td>
 <td class="comment-11" rowspan="1">Set the default route index to 13</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a417"></span>A417</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A404.html#a41d">character_bed_common_0</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if it had an even numbered character index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a419"></span>A419</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$01</td>
 <td class="comment-11" rowspan="2">Otherwise reverse its route by setting the route step to 1 and setting the reversed route flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a41b"></span>A41B</td>
+<td class="bytes-0"></td>
 <td class="instruction">OR $80</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">character_bed_common_0</td>
 <td class="address-2"><span id="a41d"></span>A41D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">Save route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a41e"></span>A41E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a41f"></span>A41F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -150,9 +165,9 @@ Used by the routines at <a href="A3F3.html">character_bed_state</a> and <a href=
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

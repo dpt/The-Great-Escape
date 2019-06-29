@@ -24,7 +24,7 @@
 <div class="description">AD59: Decides searchlight movement.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="ADBD.html">nighttime</a>.
@@ -50,41 +50,47 @@ Used by the routine at <a href="ADBD.html">nighttime</a>.
 <tr>
 <td class="asm-label-1">searchlight_movement</td>
 <td class="address-2"><span id="ad59"></span>AD59</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch movement.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad5a"></span>AD5A</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Step over</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad5b"></span>AD5B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch movement.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad5c"></span>AD5C</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Step over</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad5d"></span>AD5D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">Decrement movement.counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad5e"></span>AD5E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="AD59.html#ad99">searchlight_movement_6</a></td>
 <td class="comment-11" rowspan="1">Jump if it's non-zero</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ad61"></span>
 <div class="comments">
 <div class="paragraph">
@@ -96,47 +102,54 @@ End of previous sweep: work out the next.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad61"></span>AD61</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="2">Advance to movement.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad62"></span>AD62</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad63"></span>AD63</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch movement.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad64"></span>AD64</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
 <td class="comment-11" rowspan="1">Is the reverse direction flag set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad66"></span>AD66</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="AD59.html#ad76">searchlight_movement_2</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad69"></span>AD69</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $7F</td>
 <td class="comment-11" rowspan="1">Clear the reverse direction flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad6b"></span>AD6B</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="AD59.html#ad72">searchlight_movement_0</a></td>
 <td class="comment-11" rowspan="1">Jump if non-zero index</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ad6e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -148,17 +161,19 @@ Index is zero.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad6e"></span>AD6E</td>
+<td class="bytes-0"></td>
 <td class="instruction">RES 7,(HL)</td>
 <td class="comment-11" rowspan="1">Clear direction bit when index hits zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad70"></span>AD70</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AD59.html#ad74">searchlight_movement_1</a></td>
 <td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ad72"></span>
 <div class="comments">
 <div class="paragraph">
@@ -170,23 +185,26 @@ Index is non-zero.
 <tr>
 <td class="asm-label-1">searchlight_movement_0</td>
 <td class="address-2"><span id="ad72"></span>AD72</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">Decrement movement.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad73"></span>AD73</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1">Decrement local copy too (sans direction bit)</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_1</td>
 <td class="address-2"><span id="ad74"></span>AD74</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AD59.html#ad78">searchlight_movement_3</a></td>
 <td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ad76"></span>
 <div class="comments">
 <div class="paragraph">
@@ -198,143 +216,166 @@ Not reverse direction.
 <tr>
 <td class="asm-label-1">searchlight_movement_2</td>
 <td class="address-2"><span id="ad76"></span>AD76</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
 <td class="comment-11" rowspan="1">Count up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad77"></span>AD77</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">Assign to movement.index</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_3</td>
 <td class="address-2"><span id="ad78"></span>AD78</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Advance to movement.pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad79"></span>AD79</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="3">Load pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad7a"></span>AD7A</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad7b"></span>AD7B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad7c"></span>AD7C</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">Backtrack to movement.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad7d"></span>AD7D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad7e"></span>AD7E</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="5">Index in <span class="register">A</span> doubled and added to pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad7f"></span>AD7F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad80"></span>AD80</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad81"></span>AD81</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="AD59.html#ad84">searchlight_movement_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad83"></span>AD83</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC B</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_4</td>
 <td class="address-2"><span id="ad84"></span>AD84</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
 <td class="comment-11" rowspan="1">Fetch movement byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad85"></span>AD85</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="2">End of list?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad87"></span>AD87</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="AD59.html#ad90">searchlight_movement_5</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad8a"></span>AD8A</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">!overshot? count down counter byte</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad8b"></span>AD8B</td>
+<td class="bytes-0"></td>
 <td class="instruction">SET 7,(HL)</td>
 <td class="comment-11" rowspan="1">!go negative</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad8d"></span>AD8D</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC BC</td>
 <td class="comment-11" rowspan="2">Pointer -= 2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad8e"></span>AD8E</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad8f"></span>AD8F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
 <td class="comment-11" rowspan="1">Bug: <span class="register">A</span> is loaded but never used again</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_5</td>
 <td class="address-2"><span id="ad90"></span>AD90</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="2">HL -= 2;</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad91"></span>AD91</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ad92"></span>
 <div class="comments">
 <div class="paragraph">
@@ -346,204 +387,238 @@ Copy counter + direction_t.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad92"></span>AD92</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
 <td class="comment-11" rowspan="4">Copy counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad93"></span>AD93</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad94"></span>AD94</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad95"></span>AD95</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad96"></span>AD96</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
 <td class="comment-11" rowspan="2">Copy direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad97"></span>AD97</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad98"></span>AD98</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_6</td>
 <td class="address-2"><span id="ad99"></span>AD99</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Advance to direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad9a"></span>AD9A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="2">Fetch direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad9b"></span>AD9B</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad9c"></span>AD9C</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,(HL)</td>
 <td class="comment-11" rowspan="1">!Test sign</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ad9e"></span>AD9E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="AD59.html#ada2">searchlight_movement_7</a></td>
 <td class="comment-11" rowspan="1">Jump if clear</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ada0"></span>ADA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR $02</td>
 <td class="comment-11" rowspan="1">Toggle direction</td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_7</td>
 <td class="address-2"><span id="ada2"></span>ADA2</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
 <td class="comment-11" rowspan="5">If direction &lt;= direction_TOP_RIGHT, y-- else y++</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ada4"></span>ADA4</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="AD59.html#ada8">searchlight_movement_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ada6"></span>ADA6</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ada7"></span>ADA7</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_8</td>
 <td class="address-2"><span id="ada8"></span>ADA8</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ada9"></span>ADA9</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="9">If direction is RIGHT, x+=2 else x-=2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adaa"></span>ADAA</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="AD59.html#adb4">searchlight_movement_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adac"></span>ADAC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $03</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adae"></span>ADAE</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="AD59.html#adb4">searchlight_movement_9</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adb0"></span>ADB0</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adb1"></span>ADB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adb2"></span>ADB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="AD59.html#adb6">searchlight_movement_10</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_9</td>
 <td class="address-2"><span id="adb4"></span>ADB4</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adb5"></span>ADB5</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC E</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">searchlight_movement_10</td>
 <td class="address-2"><span id="adb6"></span>ADB6</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="3">Backtrack to (x,y)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adb7"></span>ADB7</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adb8"></span>ADB8</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adb9"></span>ADB9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),D</td>
 <td class="comment-11" rowspan="2">Store y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adba"></span>ADBA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adbb"></span>ADBB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),E</td>
 <td class="comment-11" rowspan="1">Store x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="adbc"></span>ADBC</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -556,9 +631,9 @@ Copy counter + direction_t.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

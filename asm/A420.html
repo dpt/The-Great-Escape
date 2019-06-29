@@ -24,7 +24,7 @@
 <div class="description">A420: Character sits.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="C7C6.html">character_event</a>.
@@ -54,53 +54,61 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <tr>
 <td class="asm-label-1">character_sits</td>
 <td class="address-2"><span id="a420"></span>A420</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">Save the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a421"></span>A421</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">Move the route pointer into <span class="register">DE</span> for the common part later</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a422"></span>A422</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $12</td>
 <td class="comment-11" rowspan="1">Bias the route index by 18</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a424"></span>A424</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$6F4F</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at room definition 25's bench_D</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a427"></span>A427</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="2">Is <span class="register">A</span> equal to two or lower? Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a429"></span>A429</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="A420.html#a430">character_sits_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a42b"></span>A42B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$6F17</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at room definition 23's bench_A</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a42e"></span>A42E</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB $03</td>
 <td class="comment-11" rowspan="1">Bias...</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a430"></span>
 <div class="comments">
 <div class="paragraph">
@@ -112,78 +120,91 @@ Poke object.
 <tr>
 <td class="asm-label-1">character_sits_0</td>
 <td class="address-2"><span id="a430"></span>A430</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="3">Triple <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a431"></span>A431</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a432"></span>A432</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a433"></span>A433</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-11" rowspan="2">Move it into <span class="register">BC</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a435"></span>A435</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a436"></span>A436</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">Point to the required object</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a437"></span>A437</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$05</td>
 <td class="comment-11" rowspan="1">Set the object at <span class="register">HL</span> to interiorobject_PRISONER_SAT_MID_TABLE ($05)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a439"></span>A439</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Restore the route index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a43a"></span>A43A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$19</td>
 <td class="comment-11" rowspan="1">Room is room_25_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a43c"></span>A43C</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $15</td>
 <td class="comment-11" rowspan="1">Is the route index less than routeindex_21_PRISONER_SITS_1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a43e"></span>A43E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="A462.html">character_sit_sleep_common</a></td>
 <td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a440"></span>A440</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$17</td>
 <td class="comment-11" rowspan="1">Otherwise room is room_23_BREAKFAST</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a442"></span>A442</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A462.html">character_sit_sleep_common</a></td>
 <td class="comment-11" rowspan="1">Jump to character_sit_sleep_common</td>
 </tr>
@@ -196,9 +217,9 @@ Poke object.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

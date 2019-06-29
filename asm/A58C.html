@@ -24,7 +24,7 @@
 <div class="description">A58C: Check for any key press.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="A51C.html">escaped</a>.
@@ -50,11 +50,12 @@ Used by the routine at <a href="A51C.html">escaped</a>.
 <tr>
 <td class="asm-label-1">keyscan_all</td>
 <td class="address-2"><span id="a58c"></span>A58C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$FEFE</td>
 <td class="comment-11" rowspan="1">Set <span class="register">B</span> to $FE (initial keyboard half-row selector) and <span class="register">C</span> to $FE (keyboard port number)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a58f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -66,48 +67,56 @@ Start loop
 <tr>
 <td class="asm-label-1">keyscan_all_0</td>
 <td class="address-2"><span id="a58f"></span>A58F</td>
+<td class="bytes-0"></td>
 <td class="instruction">IN A,(C)</td>
 <td class="comment-11" rowspan="1">Read the port</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a591"></span>A591</td>
+<td class="bytes-0"></td>
 <td class="instruction">CPL</td>
 <td class="comment-11" rowspan="1">Complement the value returned to change it from active-low</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a592"></span>A592</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
 <td class="comment-11" rowspan="1">Discard any non-key flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a594"></span>A594</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
 <td class="comment-11" rowspan="1">Return with Z clear if any key was pressed</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a595"></span>A595</td>
+<td class="bytes-0"></td>
 <td class="instruction">RLC B</td>
 <td class="comment-11" rowspan="1">Rotate the half-row selector ($FE -&gt; $FD -&gt; $FB -&gt; .. -&gt; $7F)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a597"></span>A597</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="A58C.html#a58f">keyscan_all_0</a></td>
 <td class="comment-11" rowspan="1">...loop until the zero bit shifts out (eight iterations)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a59a"></span>A59A</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="2">No keys were pressed - return with Z set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a59b"></span>A59B</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
@@ -120,9 +129,9 @@ Start loop
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

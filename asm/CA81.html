@@ -24,7 +24,7 @@
 <div class="description">CA81: Called when a character reaches its target.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="C918.html">character_behaviour</a>.
@@ -36,11 +36,11 @@ Used by the routine at <a href="C918.html">character_behaviour</a>.
 </tr>
 <tr>
 <td class="register">IY</td>
-<td class="register-desc">Pointer to $8000, $8020, $8040, $8060, $8080</td>
+<td class="register-desc">Pointer to a vischar</td>
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to $8004, $8024, $8044, $8064, $8084</td>
+<td class="register-desc">Pointer to vischar + 4 bytes</td>
 </tr>
 </table>
 <table class="output-0">
@@ -54,193 +54,255 @@ Used by the routine at <a href="C918.html">character_behaviour</a>.
 <tr>
 <td class="asm-label-1">target_reached</td>
 <td class="address-2"><span id="ca81"></span>CA81</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment-11" rowspan="1">A = IY[1];</td>
+<td class="comment-11" rowspan="1">Fetch the vischar.flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ca84"></span>CA84</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">C = A;</td>
+<td class="comment-11" rowspan="1">Copy to <span class="register">C</span> for the door check later</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca85"></span>CA85</td>
-<td class="instruction">AND $3F</td>
-<td class="comment-11" rowspan="1">A &amp;= vischar_FLAGS_MASK;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca87"></span>CA87</td>
-<td class="instruction">JR Z,<a href="CA81.html#cab6">target_reached_2</a></td>
-<td class="comment-11" rowspan="1">if (A) &lt;%</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca89"></span>CA89</td>
-<td class="instruction">CP $01</td>
-<td class="comment-11" rowspan="2">if (A == vischar_FLAGS_PURSUE) &lt;%</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca8b"></span>CA8B</td>
-<td class="instruction">JR NZ,<a href="CA81.html#ca99">target_reached_0</a></td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca8d"></span>CA8D</td>
-<td class="instruction">LD A,($AF8E)</td>
-<td class="comment-11" rowspan="3">if (IY[0] == bribed_character) &lt;% accept_bribe(); return; %&gt; // exit via</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca90"></span>CA90</td>
-<td class="instruction">CP (IY+$00)</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca93"></span>CA93</td>
-<td class="instruction">JP Z,<a href="B107.html">accept_bribe</a></td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca96"></span>CA96</td>
-<td class="instruction">JP <a href="CB98.html">solitary</a></td>
-<td class="comment-11" rowspan="1">else &lt;% solitary(); return; %&gt; %&gt; // failed to bribe? // exit via</td>
-</tr>
-<tr>
-<td class="asm-label-1">target_reached_0</td>
-<td class="address-2"><span id="ca99"></span>CA99</td>
-<td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="4">else if (A == vischar_FLAGS_HASSLE || A == vischar_FLAGS_SAW_BRIBE) &lt;% return; %&gt;</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca9b"></span>CA9B</td>
-<td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca9c"></span>CA9C</td>
-<td class="instruction">CP $04</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca9e"></span>CA9E</td>
-<td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="ca9f"></span>CA9F</td>
-<td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="4">
-<span id="caa0"></span>
+<td class="routine-comment" colspan="5">
+<span id="ca85"></span>
 <div class="comments">
 <div class="paragraph">
-Decide how long until food is discovered.
+Check for a pursuit mode.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
+<td class="address-1"><span id="ca85"></span>CA85</td>
+<td class="bytes-0"></td>
+<td class="instruction">AND $3F</td>
+<td class="comment-11" rowspan="1">Mask with vischar_FLAGS_MASK to get the pursuit mode</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca87"></span>CA87</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="CA81.html#cab6">tr_door_check</a></td>
+<td class="comment-11" rowspan="1">Jump if not in a pursuit mode</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ca89"></span>
+<div class="comments">
+<div class="paragraph">
+We're in one of the pursuit modes - find out which one.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca89"></span>CA89</td>
+<td class="bytes-0"></td>
+<td class="instruction">CP $01</td>
+<td class="comment-11" rowspan="1">Is it vischar_PURSUIT_PURSUE?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca8b"></span>CA8B</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NZ,<a href="CA81.html#ca99">tr_not_pursue</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
+</tr>
+<tr>
+<td class="asm-label-1">tr_pursue</td>
+<td class="address-1"><span id="ca8d"></span>CA8D</td>
+<td class="bytes-0"></td>
+<td class="instruction">LD A,($AF8E)</td>
+<td class="comment-11" rowspan="2">Is this vischar the (pending) bribed character?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca90"></span>CA90</td>
+<td class="bytes-0"></td>
+<td class="instruction">CP (IY+$00)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca93"></span>CA93</td>
+<td class="bytes-0"></td>
+<td class="instruction">JP Z,<a href="B107.html">accept_bribe</a></td>
+<td class="comment-11" rowspan="1">Jump to accept_bribe if so (exit via)</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca96"></span>CA96</td>
+<td class="bytes-0"></td>
+<td class="instruction">JP <a href="CB98.html">solitary</a></td>
+<td class="comment-11" rowspan="1">Otherwise the pursuing character caught its target. This must be the case when a guard pursues the hero, so send the hero to solitary (exit via)</td>
+</tr>
+<tr>
+<td class="asm-label-1">tr_not_pursue</td>
+<td class="address-2"><span id="ca99"></span>CA99</td>
+<td class="bytes-0"></td>
+<td class="instruction">CP $02</td>
+<td class="comment-11" rowspan="1">Is it vischar_PURSUIT_HASSLE?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca9b"></span>CA9B</td>
+<td class="bytes-0"></td>
+<td class="instruction">RET Z</td>
+<td class="comment-11" rowspan="1">Exit if so</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca9c"></span>CA9C</td>
+<td class="bytes-0"></td>
+<td class="instruction">CP $04</td>
+<td class="comment-11" rowspan="1">Is it vischar_PURSUIT_SAW_BRIBE?</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca9e"></span>CA9E</td>
+<td class="bytes-0"></td>
+<td class="instruction">RET Z</td>
+<td class="comment-11" rowspan="1">Exit if so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ca9f"></span>
+<div class="comments">
+<div class="paragraph">
+Otherwise we're in vischar_PURSUIT_DOG_FOOD mode. automatics() only permits dogs to enter this mode.
+</div>
+<div class="paragraph">
+Decide how long remains until the food is discovered. Use 32 if the food is poisoned, 255 otherwise.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="ca9f"></span>CA9F</td>
+<td class="bytes-0"></td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-11" rowspan="1">Save the vischar pointer</td>
+</tr>
+<tr>
+<td class="asm-label-1"></td>
 <td class="address-1"><span id="caa0"></span>CAA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$76F9</td>
-<td class="comment-11" rowspan="5">if ((item_structs[item_FOOD].item &amp; itemstruct_ITEM_FLAG_POISONED) == 0) A = 32; else A = 255;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at item_structs_food</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caa3"></span>CAA3</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 5,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Is the itemstruct_ITEM_FLAG_POISONED flag set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caa5"></span>CAA5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$20</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Set the counter to 32 irrespectively</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caa7"></span>CAA7</td>
-<td class="instruction">JR Z,<a href="CA81.html#caab">target_reached_1</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="CA81.html#caab">tr_set_food_counter</a></td>
+<td class="comment-11" rowspan="1">Jump if the flag was set</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caa9"></span>CAA9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Otherwise set the counter to 255</td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_1</td>
+<td class="asm-label-1">tr_set_food_counter</td>
 <td class="address-2"><span id="caab"></span>CAAB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($C891),A</td>
-<td class="comment-11" rowspan="1">food_discovered_counter = A;</td>
+<td class="comment-11" rowspan="1">Assign food_discovered_counter</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caae"></span>CAAE</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the vischar pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caaf"></span>CAAF</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">HL -= 2;</td>
+<td class="comment-11" rowspan="2">Rewind <span class="register">HL</span> to point at vischar.route.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cab0"></span>CAB0</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="cab1"></span>
+<div class="comments">
+<div class="paragraph">
+This dog has been poisoned, so make it halt.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cab1"></span>CAB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">*HL = 0;</td>
+<td class="comment-11" rowspan="2">vischar.route.index = routeindex_0_HALT</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cab2"></span>CAB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cab3"></span>CAB3</td>
-<td class="instruction">JP <a href="C918.html#c9f5">character_behaviour_16</a></td>
-<td class="comment-11" rowspan="1">goto character_behaviour_set_input; %&gt; // exit via</td>
+<td class="bytes-0"></td>
+<td class="instruction">JP <a href="C918.html#c9f5">cb_set_input</a></td>
+<td class="comment-11" rowspan="1">Exit via character_behaviour_set_input (<span class="register">A</span> is zero here: that's passed as the new input)</td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_2</td>
+<td class="asm-label-1">tr_door_check</td>
 <td class="address-2"><span id="cab6"></span>CAB6</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 6,C</td>
-<td class="comment-11" rowspan="2">if (C &amp; vischar_FLAGS_TARGET_IS_DOOR) &lt;%</td>
+<td class="comment-11" rowspan="1">Is the flag vischar_FLAGS_TARGET_IS_DOOR set?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cab8"></span>CAB8</td>
-<td class="instruction">JR Z,<a href="CA81.html#cb13">target_reached_9</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="CA81.html#cb13">tr_set_route</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="caba"></span>
 <div class="comments">
 <div class="paragraph">
-Results in character entering.
+Handle the door - this results in the character entering.
 </div>
 </div>
 </td>
@@ -248,119 +310,138 @@ Results in character entering.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caba"></span>CABA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">C = *--HL; // 80a3, 8083, 8063, 8003 // route.step</td>
+<td class="comment-11" rowspan="1">Rewind <span class="register">HL</span> to point at vischar.route.step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cabb"></span>CABB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch route.step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cabc"></span>CABC</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">A = *--HL;</td>
+<td class="comment-11" rowspan="1">Rewind</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cabd"></span>CABD</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Fetch route.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cabe"></span>CABE</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve route pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cabf"></span>CABF</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CB79.html">get_route</a></td>
-<td class="comment-11" rowspan="1">DE = get_route(A);</td>
+<td class="comment-11" rowspan="1">Call get_route. <span class="register">A</span> is the index arg. A route *data* pointer is returned in <span class="register">DE</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cac2"></span>CAC2</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore route pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cac3"></span>CAC3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="5">DE += C;</td>
+<td class="comment-11" rowspan="5">Advance the route data pointer by 'step' bytes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cac4"></span>CAC4</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cac5"></span>CAC5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cac6"></span>CAC6</td>
-<td class="instruction">JR NC,<a href="CA81.html#cac9">target_reached_3</a></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NC,<a href="CA81.html#cac9">tr_routebyte_is_door</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cac8"></span>CAC8</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC D</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_3</td>
+<td class="asm-label-1">tr_routebyte_is_door</td>
 <td class="address-2"><span id="cac9"></span>CAC9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">A = *DE;</td>
+<td class="comment-11" rowspan="1">Fetch a route byte, which here is a door index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caca"></span>CACA</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="3">if (*HL &amp; route_REVERSED) A ^= door_REVERSE;</td>
+<td class="comment-11" rowspan="1">Is the route index's route_REVERSED flag set? ($80)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cacc"></span>CACC</td>
-<td class="instruction">JR Z,<a href="CA81.html#cad0">target_reached_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="CA81.html#cad0">tr_store_door</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cace"></span>CACE</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR $80</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Otherwise toggle the reverse flag</td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_4</td>
+<td class="asm-label-1">tr_store_door</td>
 <td class="address-2"><span id="cad0"></span>CAD0</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve the door index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cad1"></span>CAD1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL++; // $8002, ...</td>
+<td class="comment-11" rowspan="1">Fetch route.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cad2"></span>CAD2</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance to route.step</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="cad3"></span>
 <div class="comments">
 <div class="paragraph">
@@ -372,84 +453,103 @@ Pattern: [-2]+1
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cad3"></span>CAD3</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="4">if (A &amp; route_REVERSED) (*HL) -= 2; // $8003, ... // route.step</td>
+<td class="comment-11" rowspan="5">If the route is reversed then step backwards, otherwise step forwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cad5"></span>CAD5</td>
-<td class="instruction">JR Z,<a href="CA81.html#cad9">target_reached_5</a></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="CA81.html#cad9">tr_route_step</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cad7"></span>CAD7</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cad8"></span>CAD8</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_5</td>
+<td class="asm-label-1">tr_route_step</td>
 <td class="address-2"><span id="cad9"></span>CAD9</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-11" rowspan="1">(*HL)++; // route.step</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="cada"></span>
+<div class="comments">
+<div class="paragraph">
+Get the door structure for the door index and start processing it.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cada"></span>CADA</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore door index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cadb"></span>CADB</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6A12.html">get_door</a></td>
-<td class="comment-11" rowspan="1">HL = get_door();</td>
+<td class="comment-11" rowspan="1">Call get_door. A door_t pointer is returned in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cade"></span>CADE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="5">IY[0x1C] = (*HL &gt;&gt; 2) &amp; 0x3F; // IY=$8000 =&gt; $801C (room index) // HL=$790E,$7962,$795E =&gt; door position thingy // 0x3F is doors[0] room mask shifted right 2</td>
+<td class="comment-11" rowspan="1">Fetch door.room_and_direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cadf"></span>CADF</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Discard the bottom two bits</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cae0"></span>CAE0</td>
+<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cae1"></span>CAE1</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $3F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Extract the room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cae3"></span>CAE3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$1C),A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Move the vischar to that room (vischar.room = room index)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="cae6"></span>
 <div class="comments">
 <div class="paragraph">
-TOP_LEFT or TOP_RIGHT =&gt; next door pos
-</div>
-<div class="paragraph">
-BOTTOM_RIGHT or BOTTOM_LEFT =&gt; current door pos
+In which direction is the door facing?
 </div>
 </div>
 </td>
@@ -457,119 +557,148 @@ BOTTOM_RIGHT or BOTTOM_LEFT =&gt; current door pos
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cae6"></span>CAE6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">A = *HL &amp; door_FLAGS_MASK_DIRECTION; // door position thingy, lowest two bits -- index?</td>
+<td class="comment-11" rowspan="1">Fetch door.room_and_direction</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cae7"></span>CAE7</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Mask against door_FLAGS_MASK_DIRECTION</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="cae9"></span>
+<div class="comments">
+<div class="paragraph">
+Each door in the doors array is a pair of two "half doors" where each half represents one side of the doorway. We test the direction of the half door we find ourselves pointing at and use it to find the counterpart door's position.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cae9"></span>CAE9</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="11">if (A &lt; 2) HL += 5; else HL -= 3;</td>
+<td class="comment-11" rowspan="1">Is it direction_TOP_*?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caeb"></span>CAEB</td>
-<td class="instruction">JP NC,<a href="CA81.html#caf5">target_reached_6</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JP NC,<a href="CA81.html#caf5">tr_door_top</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caee"></span>CAEE</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="6">Point <span class="register">HL</span> at door[1].pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caef"></span>CAEF</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caf0"></span>CAF0</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caf1"></span>CAF1</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caf2"></span>CAF2</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caf3"></span>CAF3</td>
-<td class="instruction">JR <a href="CA81.html#caf8">target_reached_7</a></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="CA81.html#caf8">tr_door_found</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_6</td>
+<td class="asm-label-1">tr_door_top</td>
 <td class="address-2"><span id="caf5"></span>CAF5</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="3">Otherwise point <span class="register">HL</span> at door[-1].pos</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caf6"></span>CAF6</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caf7"></span>CAF7</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_7</td>
+<td class="asm-label-1">tr_door_found</td>
 <td class="address-2"><span id="caf8"></span>CAF8</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Preserve the door.pos pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="caf9"></span>CAF9</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="2">HL = IY;</td>
+<td class="comment-11" rowspan="2">Copy the current visible character pointer into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cafb"></span>CAFB</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cafc"></span>CAFC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">if (L == 0) &lt;%</td>
+<td class="comment-11" rowspan="2">Is this vischar the hero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cafd"></span>CAFD</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cafe"></span>CAFE</td>
-<td class="instruction">JP NZ,<a href="CA81.html#cb08">target_reached_8</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JP NZ,<a href="CA81.html#cb08">tr_transition</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="cb01"></span>
 <div class="comments">
 <div class="paragraph">
@@ -581,131 +710,162 @@ Hero's vischar only.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb01"></span>CB01</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++; // $8000 -&gt; $8001</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to point at vischar.flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb02"></span>CB02</td>
+<td class="bytes-0"></td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="comment-11" rowspan="2">*HL++ &amp;= ~vischar_FLAGS_TARGET_IS_DOOR;</td>
+<td class="comment-11" rowspan="1">Clear vischar.flags vischar_FLAGS_TARGET_IS_DOOR flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb04"></span>CB04</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to point at vischar.route</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb05"></span>CB05</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CB23.html">get_target_assign_pos</a></td>
-<td class="comment-11" rowspan="1">get_target_assign_pos(); %&gt;</td>
+<td class="comment-11" rowspan="1">Call get_target_assign_pos</td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_8</td>
+<td class="asm-label-1">tr_transition</td>
 <td class="address-2"><span id="cb08"></span>CB08</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore the door.pos pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb09"></span>CB09</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="68A2.html">transition</a></td>
-<td class="comment-11" rowspan="1">transition();</td>
+<td class="comment-11" rowspan="1">Call transition</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb0c"></span>CB0C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$2030</td>
-<td class="comment-11" rowspan="2">play_speaker(sound_CHARACTER_ENTERS_1);</td>
+<td class="comment-11" rowspan="2">Play the "character enters 1" sound</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb0f"></span>CB0F</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A11D.html">play_speaker</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb12"></span>CB12</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return; %&gt;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_9</td>
+<td class="asm-label-1">tr_set_route</td>
 <td class="address-2"><span id="cb13"></span>CB13</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">HL -= 2;</td>
+<td class="comment-11" rowspan="2">Point <span class="register">HL</span> at vischar.route.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb14"></span>CB14</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb15"></span>CB15</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">A = *HL; // $8002 etc. // route</td>
+<td class="comment-11" rowspan="1">Load the route.index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb16"></span>CB16</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="2">if (A != 0xFF) &lt;%</td>
+<td class="comment-11" rowspan="1">Is it routeindex_255_WANDER?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb18"></span>CB18</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="CB23.html">get_target_assign_pos</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb1a"></span>CB1A</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">HL++;</td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to vischar.route.step</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="cb1b"></span>
+<div class="comments">
+<div class="paragraph">
+Pattern: [-2]+1
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb1b"></span>CB1B</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="2">if (A &amp; route_REVERSED) &lt;%</td>
+<td class="comment-11" rowspan="5">If the route is reversed then step backwards, otherwise step forwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb1d"></span>CB1D</td>
-<td class="instruction">JR Z,<a href="CA81.html#cb21">target_reached_10</a></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="CA81.html#cb21">tr_another_route_step</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb1f"></span>CB1F</td>
-<td class="instruction">DEC (HL)</td>
-<td class="comment-11" rowspan="2">(*HL) -= 2; %&gt; // $8003 etc.</td>
-</tr>
-<tr>
-<td class="asm-label-1"></td>
-<td class="address-1"><span id="cb20"></span>CB20</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">target_reached_10</td>
+<td class="asm-label-1"></td>
+<td class="address-1"><span id="cb20"></span>CB20</td>
+<td class="bytes-0"></td>
+<td class="instruction">DEC (HL)</td>
+<td class="comment-01" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label-1">tr_another_route_step</td>
 <td class="address-2"><span id="cb21"></span>CB21</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-11" rowspan="1">else &lt;% (*HL)++;</td>
+<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="cb22"></span>CB22</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="1">HL--; %&gt; %&gt;</td>
+<td class="comment-11" rowspan="1">Rewind <span class="register">HL</span> to vischar.route.index</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 
 <div class="comments">
 <div class="paragraph">
@@ -723,9 +883,9 @@ FALL THROUGH to get_target_assign_pos.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

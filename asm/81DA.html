@@ -24,20 +24,48 @@
 <div class="description">81DA: Interior mask data.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="6A35.html">setup_room</a>, <a href="B916.html">render_mask_buffer</a>.
+Used by the routines at <a href="6A35.html">setup_room</a> and <a href="B916.html">render_mask_buffer</a>.
+</div>
+<div class="paragraph">
+The first byte is a count, followed by 'count' mask_t's:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Type</th>
+<th colspan="1" rowspan="1">Bytes</th>
+<th colspan="1" rowspan="1">Name</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">index</td>
+<td class="" colspan="1" rowspan="1">Index into mask_pointers</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">bounds_t</td>
+<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">bounds</td>
+<td class="" colspan="1" rowspan="1">Isometric projected bounds of the mask. Used for culling.</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">tinypos_t</td>
+<td class="" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1">pos</td>
+<td class="" colspan="1" rowspan="1">If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal).</td>
+</tr>
+</table>
 </div>
 </div>
-<table class="input-1">
+<table class="input-0">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
-<tr>
-<td class="register"></td>
-<td class="register-desc">First byte is a count.</td>
-</tr>
+
 </table>
 <table class="output-0">
 <tr class="asm-output-header">
@@ -50,48 +78,56 @@ Used by the routines at <a href="6A35.html">setup_room</a>, <a href="B916.html">
 <tr>
 <td class="asm-label-1">interior_mask_data</td>
 <td class="address-1"><span id="81da"></span>81DA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="81e2"></span>81E2</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="81ea"></span>81EA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="81f2"></span>81F2</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="81fa"></span>81FA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="8202"></span>8202</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="820a"></span>820A</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="8212"></span>8212</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
 <td class="comment-10" rowspan="1"></td>
 </tr>
@@ -104,9 +140,9 @@ Used by the routines at <a href="6A35.html">setup_room</a>, <a href="B916.html">
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

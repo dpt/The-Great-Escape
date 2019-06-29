@@ -24,7 +24,7 @@
 <div class="description">ABA0: Zoombox.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Animate the window buffer onto the screen via a zooming box effect.
@@ -50,77 +50,89 @@ Used by the routines at <a href="68F4.html">enter_room</a>, <a href="A50B.html">
 <tr>
 <td class="asm-label-1">zoombox</td>
 <td class="address-2"><span id="aba0"></span>ABA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$0C</td>
 <td class="comment-11" rowspan="2">Initialise zoombox_x to 12</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aba2"></span>ABA2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($AB66),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aba5"></span>ABA5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$08</td>
 <td class="comment-11" rowspan="2">Initialise zoombox_y to 8</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aba7"></span>ABA7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($AB68),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abaa"></span>ABAA</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
 <td class="comment-11" rowspan="1">Choose the game window attributes (the chosen attribute is returned in <span class="register">A</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abad"></span>ABAD</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,A</td>
 <td class="comment-11" rowspan="2">Duplicate attribute into both bytes of <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abae"></span>ABAE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abaf"></span>ABAF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($5932),HL</td>
 <td class="comment-11" rowspan="2">Set the attributes of the initial zoombox fill rectangle</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abb2"></span>ABB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($5952),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abb5"></span>ABB5</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="3">Set zoombox_width and zoombox_height to zero</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abb6"></span>ABB6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($AB67),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abb9"></span>ABB9</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($AB69),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="abbc"></span>
 <div class="comments">
 <div class="paragraph">
@@ -132,59 +144,68 @@ Start loop Shrink X and grow width until X is 1
 <tr>
 <td class="asm-label-1">zoombox_0</td>
 <td class="address-2"><span id="abbc"></span>ABBC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$AB66</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at zoombox_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abbf"></span>ABBF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abc0"></span>ABC0</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $01</td>
 <td class="comment-11" rowspan="1">Is it 1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abc2"></span>ABC2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="ABA0.html#abca">zoombox_1</a></td>
 <td class="comment-11" rowspan="1">Skip the next chunk if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abc5"></span>ABC5</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">Decrement zoombox_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abc6"></span>ABC6</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1">And the register copy too</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abc7"></span>ABC7</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at zoombox_width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abc8"></span>ABC8</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">Increment zoombox_width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abc9"></span>ABC9</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">Step back</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="abca"></span>
 <div class="comments">
 <div class="paragraph">
@@ -196,35 +217,40 @@ Grow width until it's 22
 <tr>
 <td class="asm-label-1">zoombox_1</td>
 <td class="address-2"><span id="abca"></span>ABCA</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at zoombox_width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abcb"></span>ABCB</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(HL)</td>
 <td class="comment-11" rowspan="1">Add width to x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abcc"></span>ABCC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $16</td>
 <td class="comment-11" rowspan="1">Did we hit 22?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abce"></span>ABCE</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="ABA0.html#abd2">zoombox_2</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abd1"></span>ABD1</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">Increment zoombox_width</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="abd2"></span>
 <div class="comments">
 <div class="paragraph">
@@ -236,59 +262,68 @@ Shrink Y and grow height until Y is 1
 <tr>
 <td class="asm-label-1">zoombox_2</td>
 <td class="address-2"><span id="abd2"></span>ABD2</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at zoombox_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abd3"></span>ABD3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abd4"></span>ABD4</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $01</td>
 <td class="comment-11" rowspan="1">Is it 1?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abd6"></span>ABD6</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="ABA0.html#abde">zoombox_3</a></td>
 <td class="comment-11" rowspan="1">Skip the next chunk if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abd9"></span>ABD9</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-11" rowspan="1">Decrement zoombox_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abda"></span>ABDA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1">And the register copy too</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abdb"></span>ABDB</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abdc"></span>ABDC</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">Increment zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abdd"></span>ABDD</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">Step back</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="abde"></span>
 <div class="comments">
 <div class="paragraph">
@@ -300,78 +335,91 @@ Grow height until it's 15
 <tr>
 <td class="asm-label-1">zoombox_3</td>
 <td class="address-2"><span id="abde"></span>ABDE</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abdf"></span>ABDF</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(HL)</td>
 <td class="comment-11" rowspan="1">Add height to y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abe0"></span>ABE0</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $0F</td>
 <td class="comment-11" rowspan="1">Did we hit 15?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abe2"></span>ABE2</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="ABA0.html#abe6">zoombox_4</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abe5"></span>ABE5</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
 <td class="comment-11" rowspan="1">Increment zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_4</td>
 <td class="address-2"><span id="abe6"></span>ABE6</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ABF9.html">zoombox_fill</a></td>
 <td class="comment-11" rowspan="1">Draw the zoombox contents</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abe9"></span>ABE9</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="AC6F.html">zoombox_draw_border</a></td>
 <td class="comment-11" rowspan="1">Draw the zoombox border</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abec"></span>ABEC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$AB67</td>
 <td class="comment-11" rowspan="3">Sum the width and height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abef"></span>ABEF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AB69)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abf2"></span>ABF2</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abf3"></span>ABF3</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $23</td>
 <td class="comment-11" rowspan="2">If it's less than 35 then ...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abf5"></span>ABF5</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="ABA0.html#abbc">zoombox_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="abf8"></span>ABF8</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -384,9 +432,9 @@ Grow height until it's 15
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

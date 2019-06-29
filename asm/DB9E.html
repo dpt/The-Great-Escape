@@ -24,13 +24,13 @@
 <div class="description">DB9E: Mark nearby items.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
+Iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it clears both of those flags.
 </div>
 <div class="paragraph">
-Iterates over item structs, testing to see if each item is within range (-1..22, 0..15) of the map position.
+Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
 <div class="paragraph">
 This is similar to is_item_discoverable_interior in that it iterates over all item_structs.
@@ -53,306 +53,385 @@ This is similar to is_item_discoverable_interior in that it iterates over all it
 <tr>
 <td class="asm-label-1">mark_nearby_items</td>
 <td class="address-2"><span id="db9e"></span>DB9E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">A = room_index;</td>
+<td class="comment-11" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dba1"></span>DBA1</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="3">if (A == room_NONE) A = 0;</td>
+<td class="comment-11" rowspan="1">Is it room_NONE?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dba3"></span>DBA3</td>
-<td class="instruction">JR NZ,<a href="DB9E.html#dba6">mark_nearby_items_0</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NZ,<a href="DB9E.html#dba6">mni_room_set</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dba5"></span>DBA5</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Otherwise set it to room_0_OUTDOORS</td>
 </tr>
 <tr>
-<td class="asm-label-1">mark_nearby_items_0</td>
+<td class="asm-label-1">mni_room_set</td>
 <td class="address-2"><span id="dba6"></span>DBA6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">C = A; // room ref</td>
+<td class="comment-11" rowspan="1">Preload the room index into <span class="register">C</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dba7"></span>DBA7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,($81BB)</td>
-<td class="comment-11" rowspan="1">DE = map_position;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the map position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbab"></span>DBAB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$10</td>
-<td class="comment-11" rowspan="1">B = item__LIMIT;</td>
+<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 16 iterations (item__LIMIT)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbad"></span>DBAD</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment-11" rowspan="1">HL = &amp;item_structs[0].room;</td>
+<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first item_struct's room member</td>
 </tr>
 <tr>
-<td class="asm-label-1">mark_nearby_items_1</td>
+<td class="routine-comment" colspan="5">
+<span id="dbb0"></span>
+<div class="comments">
+<div class="paragraph">
+Start loop
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label-1">mni_loop</td>
 <td class="address-2"><span id="dbb0"></span>DBB0</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">do &lt;%</td>
+<td class="comment-11" rowspan="1">Preserve item_struct pointer</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dbb1"></span>
+<div class="comments">
+<div class="paragraph">
+Compare room
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb1"></span>DBB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="4">if (HL[0] &amp; itemstruct_ROOM_MASK == C) &lt;% // compare room</td>
+<td class="comment-11" rowspan="1">Load the room index and flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb2"></span>DBB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND $3F</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Extract the room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb4"></span>DBB4</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Same room?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb5"></span>DBB5</td>
-<td class="instruction">JR NZ,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NZ,<a href="DB9E.html#dbdc">mni_reset</a></td>
+<td class="comment-11" rowspan="1">Jump if not</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dbb7"></span>
+<div class="comments">
+<div class="paragraph">
+Is the item's X coordinate within (-1..22) of the map's X position?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb7"></span>DBB7</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="13">if (HL[4] &gt; E - 2 &amp;&amp; HL[4] &lt; E + 23) &lt;% // itemstruct.screenpos.x</td>
+<td class="comment-11" rowspan="4">Advance <span class="register">HL</span> to itemstruct.iso_pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb8"></span>DBB8</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbb9"></span>DBB9</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbba"></span>DBBA</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbb"></span>DBBB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Copy map X position into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbc"></span>DBBC</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="2">Reduce it by 2</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbd"></span>DBBD</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbe"></span>DBBE</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compare it to itemstruct.iso_pos.x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbbf"></span>DBBF</td>
-<td class="instruction">JR Z,<a href="DB9E.html#dbc3">mark_nearby_items_2</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="DB9E.html#dbc3">mni_chk_x_hi</a></td>
+<td class="comment-11" rowspan="1">Jump if equal (continuing test)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc1"></span>DBC1</td>
-<td class="instruction">JR NC,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NC,<a href="DB9E.html#dbdc">mni_reset</a></td>
+<td class="comment-11" rowspan="1">Reset if under lower bound</td>
 </tr>
 <tr>
-<td class="asm-label-1">mark_nearby_items_2</td>
+<td class="asm-label-1">mni_chk_x_hi</td>
 <td class="address-2"><span id="dbc3"></span>DBC3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$19</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add 25 to make (map X position + 23)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc5"></span>DBC5</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compare to X value in itemstruct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc6"></span>DBC6</td>
-<td class="instruction">JR C,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR C,<a href="DB9E.html#dbdc">mni_reset</a></td>
+<td class="comment-11" rowspan="1">Reset if over upper bound</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dbc8"></span>
+<div class="comments">
+<div class="paragraph">
+Is the item's Y coordinate within (0..15) of the map's Y position?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc8"></span>DBC8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="9">if (HL[5] &gt; D - 1 &amp;&amp; HL[5] &lt; D + 16) &lt;% // itemstruct.screenpos.y</td>
+<td class="comment-11" rowspan="1">Copy map Y position into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbc9"></span>DBC9</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to itemstruct.iso_pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbca"></span>DBCA</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Reduce it by 1</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbcb"></span>DBCB</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compare it to itemstruct.iso_pos.y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbcc"></span>DBCC</td>
-<td class="instruction">JR Z,<a href="DB9E.html#dbd0">mark_nearby_items_3</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR Z,<a href="DB9E.html#dbd0">mni_chk_y_hi</a></td>
+<td class="comment-11" rowspan="1">Jump if equal (continuing test)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbce"></span>DBCE</td>
-<td class="instruction">JR NC,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NC,<a href="DB9E.html#dbdc">mni_reset</a></td>
+<td class="comment-11" rowspan="1">Reset if under lower bound</td>
 </tr>
 <tr>
-<td class="asm-label-1">mark_nearby_items_3</td>
+<td class="asm-label-1">mni_chk_y_hi</td>
 <td class="address-2"><span id="dbd0"></span>DBD0</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$11</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Add 17 to make (map Y position + 16)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd2"></span>DBD2</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-01" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Compare to Y value in itemstruct</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd3"></span>DBD3</td>
-<td class="instruction">JR C,<a href="DB9E.html#dbdc">mark_nearby_items_4</a></td>
-<td class="comment-01" rowspan="1"></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR C,<a href="DB9E.html#dbdc">mni_reset</a></td>
+<td class="comment-11" rowspan="1">Reset if over upper bound</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label-1">mni_set</td>
 <td class="address-1"><span id="dbd5"></span>DBD5</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore itemstruct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd6"></span>DBD6</td>
+<td class="bytes-0"></td>
 <td class="instruction">SET 7,(HL)</td>
-<td class="comment-11" rowspan="2">*HL |= itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7; // sampled HL=$772B &amp;itemstruct_14.room</td>
+<td class="comment-11" rowspan="2">Set itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbd8"></span>DBD8</td>
+<td class="bytes-0"></td>
 <td class="instruction">SET 6,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbda"></span>DBDA</td>
-<td class="instruction">JR <a href="DB9E.html#dbe1">mark_nearby_items_5</a></td>
-<td class="comment-11" rowspan="1">goto next; %&gt; %&gt; %&gt;</td>
+<td class="bytes-0"></td>
+<td class="instruction">JR <a href="DB9E.html#dbe1">mni_advance</a></td>
+<td class="comment-11" rowspan="1">Jump to next iteration</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
-<span id="dbdc"></span>
-<div class="comments">
-<div class="paragraph">
-Reset.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label-1">mark_nearby_items_4</td>
+<td class="asm-label-1">mni_reset</td>
 <td class="address-2"><span id="dbdc"></span>DBDC</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-11" rowspan="1">Restore itemstruct pointer</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbdd"></span>DBDD</td>
+<td class="bytes-0"></td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment-11" rowspan="2">*HL &amp;= ~(itemstruct_ROOM_FLAG_NEARBY_6 | itemstruct_ROOM_FLAG_NEARBY_7);</td>
+<td class="comment-11" rowspan="2">Clear itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbdf"></span>DBDF</td>
+<td class="bytes-0"></td>
 <td class="instruction">RES 6,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mark_nearby_items_5</td>
+<td class="asm-label-1">mni_advance</td>
 <td class="address-2"><span id="dbe1"></span>DBE1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-11" rowspan="5">next: HL += 7; // stride</td>
+<td class="comment-11" rowspan="5">Advance <span class="register">HL</span> by stride</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe3"></span>DBE3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe4"></span>DBE4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe5"></span>DBE5</td>
-<td class="instruction">JR NC,<a href="DB9E.html#dbe8">mark_nearby_items_6</a></td>
+<td class="bytes-0"></td>
+<td class="instruction">JR NC,<a href="DB9E.html#dbe8">mni_next</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbe7"></span>DBE7</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mark_nearby_items_6</td>
+<td class="asm-label-1">mni_next</td>
 <td class="address-2"><span id="dbe8"></span>DBE8</td>
-<td class="instruction">DJNZ <a href="DB9E.html#dbb0">mark_nearby_items_1</a></td>
-<td class="comment-11" rowspan="1">%&gt; while (--B);</td>
+<td class="bytes-0"></td>
+<td class="instruction">DJNZ <a href="DB9E.html#dbb0">mni_loop</a></td>
+<td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="dbea"></span>DBEA</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">return;</td>
+<td class="comment-11" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -363,9 +442,9 @@ Reset.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

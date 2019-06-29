@@ -24,7 +24,7 @@
 <div class="description">A819: Plot the complete topmost row of tiles.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="AA6C.html">shunt_map_down</a> and <a href="AA8D.html">shunt_map_down_left</a>.
@@ -47,35 +47,40 @@ Used by the routines at <a href="AA6C.html">shunt_map_down</a> and <a href="AA8D
 <tr>
 <td class="asm-label-1">plot_topmost_tiles</td>
 <td class="address-2"><span id="a819"></span>A819</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F0F8</td>
 <td class="comment-11" rowspan="2">Point <span class="register">DE'</span> at the start of tile_buf's first row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a81c"></span>A81C</td>
+<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a81d"></span>A81D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$FF58</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the start of map_buf's first row</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a820"></span>A820</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BC)</td>
 <td class="comment-11" rowspan="1">Get the map's Y coordinate</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a823"></span>A823</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F290</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the start of window_buf's first row</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 
 <div class="comments">
 <div class="paragraph">
@@ -93,9 +98,9 @@ FALL THROUGH into plot_horizontal_tiles_common
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div class="description">7B8B: Drop the first held item then shuffle the second into the first slot.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="7AC9.html">process_player_input_fire</a>.
@@ -45,7 +45,7 @@ Used by the routine at <a href="7AC9.html">process_player_input_fire</a>.
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="7b8b"></span>
 <div class="comments">
 <div class="paragraph">
@@ -57,23 +57,26 @@ Return if no items held.
 <tr>
 <td class="asm-label-1">drop_item</td>
 <td class="address-2"><span id="7b8b"></span>7B8B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($8215)</td>
 <td class="comment-11" rowspan="1">Fetch the first held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b8e"></span>7B8E</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="1">Is the item item_NONE? ($FF)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b90"></span>7B90</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">Return if so - there are no items to drop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="7b91"></span>
 <div class="comments">
 <div class="paragraph">
@@ -85,35 +88,40 @@ When dropping the uniform reset the hero's sprite.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b91"></span>7B91</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $06</td>
 <td class="comment-11" rowspan="1">Does <span class="register">A</span> contain item_UNIFORM? (6)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b93"></span>7B93</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="7B8B.html#7b9c">drop_item_0</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b96"></span>7B96</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$CE2E</td>
 <td class="comment-11" rowspan="2">Set the hero's sprite definition pointer to <a href="CE22.html#ce2e">sprite_prisoner</a> to remove the guard's uniform</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b99"></span>7B99</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD ($8015),HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">drop_item_0</td>
 <td class="address-2"><span id="7b9c"></span>7B9C</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">Save item</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="7b9d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -125,35 +133,40 @@ Shuffle items down.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7b9d"></span>7B9D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8216</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ba0"></span>7BA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch its value</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ba1"></span>7BA1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$FF</td>
 <td class="comment-11" rowspan="1">Set it to item_NONE</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ba3"></span>7BA3</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
 <td class="comment-11" rowspan="1">Now point to the first held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ba4"></span>7BA4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-11" rowspan="1">Store the fetched item there</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="7ba5"></span>
 <div class="comments">
 <div class="paragraph">
@@ -165,41 +178,47 @@ Redraw
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ba5"></span>7BA5</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
 <td class="comment-11" rowspan="1">Draw both held items</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7ba8"></span>7BA8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$3040</td>
 <td class="comment-11" rowspan="2">Play the "drop item" sound</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bab"></span>7BAB</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A11D.html">play_speaker</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bae"></span>7BAE</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
 <td class="comment-11" rowspan="1">Choose game window attributes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bb1"></span>7BB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A15F.html">set_game_window_attributes</a></td>
 <td class="comment-11" rowspan="1">Set game window attributes</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="7bb4"></span>7BB4</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Restore item</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 
 <div class="comments">
 <div class="paragraph">
@@ -217,9 +236,9 @@ FALL THROUGH into drop_item_tail.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

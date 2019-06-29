@@ -24,7 +24,7 @@
 <div class="description">6A35: Expand out the room definition for room_index.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="68F4.html">enter_room</a>, <a href="7B36.html">pick_up_item</a>, <a href="9E07.html">process_player_input</a>, <a href="A289.html">wake_up</a>, <a href="A2E2.html">end_of_breakfast</a>, <a href="A479.html">select_room_and_plot</a> and <a href="B3F6.html">action_shovel</a>.
@@ -47,11 +47,12 @@ Used by the routines at <a href="68F4.html">enter_room</a>, <a href="7B36.html">
 <tr>
 <td class="asm-label-1">setup_room</td>
 <td class="address-2"><span id="6a35"></span>6A35</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6A27.html">wipe_visible_tiles</a></td>
 <td class="comment-11" rowspan="1">Wipe the visible tiles array</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a38"></span>
 <div class="comments">
 <div class="paragraph">
@@ -63,89 +64,103 @@ Form the address of rooms_and_tunnels[room_index - 1] in <span class="register">
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a38"></span>6A38</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
 <td class="comment-11" rowspan="1">Fetch the global current room index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a3b"></span>6A3B</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="1">Double it so we can index rooms_and_tunnels[]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a3c"></span>6A3C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$6BAB</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at <a href="6BAD.html">rooms_and_tunnels</a> rooms_and_tunnels[-1]</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a3f"></span>6A3F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="4"><span class="register">HL</span> + <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a40"></span>6A40</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a41"></span>6A41</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="6A35.html#6a44">setup_room_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a43"></span>6A43</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_room_0</td>
 <td class="address-2"><span id="6a44"></span>6A44</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="4">Fetch room pointer in <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a45"></span>6A45</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a46"></span>6A46</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a47"></span>6A47</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a48"></span>6A48</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1">Push it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a49"></span>6A49</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="69DC.html">setup_doors</a></td>
 <td class="comment-11" rowspan="1">Setup interior doors</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a4c"></span>6A4C</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1">Pop it</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a4d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -157,17 +172,19 @@ Copy the count of boundaries into state.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a4d"></span>6A4D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81BE</td>
 <td class="comment-11" rowspan="1">Point DE at <a href="81BE.html">roomdef_bounds_index</a> roomdef_bounds_index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a50"></span>6A50</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
 <td class="comment-11" rowspan="1">Copy first byte of roomdef into roomdef_bounds_index. (DE, HL incremented).</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a52"></span>
 <div class="comments">
 <div class="paragraph">
@@ -182,77 +199,89 @@ Copy all boundary structures into state, if any.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a52"></span>6A52</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch count of boundaries</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a53"></span>6A53</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a54"></span>6A54</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">Store it irrespectively</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a55"></span>6A55</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="6A35.html#6a5a">setup_room_1</a></td>
 <td class="comment-11" rowspan="1">No, jump to copying step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a57"></span>6A57</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Skip roomdef count of boundaries</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a58"></span>6A58</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="6A35.html#6a62">setup_room_2</a></td>
 <td class="comment-11" rowspan="1">Jump to mask copying</td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_room_1</td>
 <td class="address-2"><span id="6a5a"></span>6A5A</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="3">Multiply <span class="register">A</span> by four (size of boundary structures) then add one (skip current counter) == size of boundary structures</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a5b"></span>6A5B</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a5c"></span>6A5C</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a5d"></span>6A5D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="3">Copy all boundary structures</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a5e"></span>6A5E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a60"></span>6A60</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a62"></span>
 <div class="comments">
 <div class="paragraph">
@@ -264,53 +293,61 @@ Copy interior mask into interior_mask_data.
 <tr>
 <td class="asm-label-1">setup_room_2</td>
 <td class="address-2"><span id="6a62"></span>6A62</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81DA</td>
 <td class="comment-11" rowspan="1">Point <span class="register">DE</span> at interior_mask_data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a65"></span>6A65</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Get count of interior masks</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a66"></span>6A66</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Step</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a67"></span>6A67</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-11" rowspan="1">Write it out</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a68"></span>6A68</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is the count non-zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a69"></span>6A69</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="6A35.html#6a8c">setup_room_4</a></td>
 <td class="comment-11" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a6b"></span>6A6B</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-11" rowspan="1">Skip over the written count</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a6c"></span>6A6C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1"><span class="register">B</span> is our loop counter</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a6d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -325,137 +362,159 @@ interior_mask_data holds indices into interior_mask_data_source[].
 <tr>
 <td class="asm-label-1">setup_room_3</td>
 <td class="address-2"><span id="6a6d"></span>6A6D</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a6e"></span>6A6E</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a6f"></span>6A6F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,(HL)</td>
 <td class="comment-11" rowspan="2">Fetch an index (from roomdef?)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a70"></span>6A70</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a72"></span>6A72</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,H</td>
 <td class="comment-11" rowspan="2"><span class="register">BC</span> = <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a73"></span>6A73</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a74"></span>6A74</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-11" rowspan="3">Multiply it by eight</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a75"></span>6A75</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a76"></span>6A76</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a77"></span>6A77</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a78"></span>6A78</td>
+<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
 <td class="comment-11" rowspan="1">Final offset is index * 7</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a7a"></span>6A7A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$EA7C</td>
 <td class="comment-11" rowspan="1">Point at interior_mask_data_source</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a7d"></span>6A7D</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
 <td class="comment-11" rowspan="1">Form the address of the mask data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a7e"></span>6A7E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0007</td>
 <td class="comment-11" rowspan="1">Width of mask data</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a81"></span>6A81</td>
+<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
 <td class="comment-11" rowspan="1">Copy it</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a83"></span>6A83</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$20</td>
 <td class="comment-11" rowspan="3">Constant final byte is always 32</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a85"></span>6A85</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a86"></span>6A86</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a87"></span>6A87</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a88"></span>6A88</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a89"></span>6A89</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8a"></span>6A8A</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="6A35.html#6a6d">setup_room_3</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a8c"></span>
 <div class="comments">
 <div class="paragraph">
@@ -467,35 +526,40 @@ Plot all objects (as tiles).
 <tr>
 <td class="asm-label-1">setup_room_4</td>
 <td class="address-2"><span id="6a8c"></span>6A8C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
 <td class="comment-11" rowspan="1">Count of objects</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8d"></span>6A8D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8e"></span>6A8E</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Is it zero?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a8f"></span>6A8F</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
 <td class="comment-11" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a90"></span>6A90</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Skip the count</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a91"></span>
 <div class="comments">
 <div class="paragraph">
@@ -507,47 +571,54 @@ Start loop: for every object in the roomdef
 <tr>
 <td class="asm-label-1">setup_room_5</td>
 <td class="address-2"><span id="6a91"></span>6A91</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a92"></span>6A92</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch the object index</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a93"></span>6A93</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a94"></span>6A94</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Fetch the column</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a95"></span>6A95</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a96"></span>6A96</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a97"></span>6A97</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,(HL)</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="6a98"></span>
 <div class="comments">
 <div class="paragraph">
@@ -559,132 +630,154 @@ Plot the object into the visible tiles array
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a98"></span>6A98</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-11" rowspan="15"><span class="register">DE</span> = $F0F8 + row * 24 + column.</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a9a"></span>6A9A</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a9b"></span>6A9B</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a9c"></span>6A9C</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a9d"></span>6A9D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a9e"></span>6A9E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6a9f"></span>6A9F</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aa0"></span>6AA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aa1"></span>6AA1</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aa2"></span>6AA2</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aa3"></span>6AA3</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="6A35.html#6aa6">setup_room_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aa5"></span>6AA5</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">setup_room_6</td>
 <td class="address-2"><span id="6aa6"></span>6AA6</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F0F8</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aa9"></span>6AA9</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aaa"></span>6AAA</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aab"></span>6AAB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aac"></span>6AAC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6AB5.html">expand_object</a></td>
 <td class="comment-11" rowspan="1">Expand RLE-encoded object out to a set of tile references</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6aaf"></span>6AAF</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab0"></span>6AB0</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab1"></span>6AB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab2"></span>6AB2</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="6A35.html#6a91">setup_room_5</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="6ab4"></span>6AB4</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -697,9 +790,9 @@ Plot the object into the visible tiles array
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div class="description">AC6F: Draw the zoombox border.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="ABA0.html">zoombox</a>.
@@ -47,95 +47,110 @@ Used by the routine at <a href="ABA0.html">zoombox</a>.
 <tr>
 <td class="asm-label-1">zoombox_draw_border</td>
 <td class="address-2"><span id="ac6f"></span>AC6F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AB68)</td>
 <td class="comment-11" rowspan="1">Fetch zoombox_y</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac72"></span>AC72</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1">Subtract one so that we draw around the zoombox fill area</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac73"></span>AC73</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-11" rowspan="4">Multiply it by 16 producing an offset into the game_window_start_addresses array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac74"></span>AC74</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac75"></span>AC75</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac76"></span>AC76</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac77"></span>AC77</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$EDD3</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the game_window_start_addresses array</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac7a"></span>AC7A</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="4">Combine it with the offset</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac7b"></span>AC7B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac7c"></span>AC7C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="AC6F.html#ac7f">zoombox_draw_border_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac7e"></span>AC7E</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_0</td>
 <td class="address-2"><span id="ac7f"></span>AC7F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="4">Fetch the game window start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac80"></span>AC80</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac81"></span>AC81</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,(HL)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac82"></span>AC82</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ac83"></span>
 <div class="comments">
 <div class="paragraph">
@@ -147,47 +162,54 @@ Top left corner tile.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac83"></span>AC83</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AB66)</td>
 <td class="comment-11" rowspan="1">Fetch zoombox_x</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac86"></span>AC86</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
 <td class="comment-11" rowspan="1">Subtract one so that we draw around the zoombox fill area</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac87"></span>AC87</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
 <td class="comment-11" rowspan="2">Combine with game window start address</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac88"></span>AC88</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac89"></span>AC89</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$00</td>
 <td class="comment-11" rowspan="2">Draw a top-left zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac8b"></span>AC8B</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac8e"></span>AC8E</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">Move the destination pointer forward</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ac8f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -199,17 +221,19 @@ Top horizontal run, moving right.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac8f"></span>AC8F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AB67)</td>
 <td class="comment-11" rowspan="1">Fetch zoombox_width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac92"></span>AC92</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">Set iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ac93"></span>
 <div class="comments">
 <div class="paragraph">
@@ -221,29 +245,33 @@ Start loop
 <tr>
 <td class="asm-label-1">zoombox_draw_border_1</td>
 <td class="address-2"><span id="ac93"></span>AC93</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-11" rowspan="2">Draw a horizontal zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac95"></span>AC95</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac98"></span>AC98</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
 <td class="comment-11" rowspan="1">Move the destination pointer forward</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac99"></span>AC99</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="AC6F.html#ac93">zoombox_draw_border_1</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ac9b"></span>
 <div class="comments">
 <div class="paragraph">
@@ -255,53 +283,61 @@ Top right corner tile.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac9b"></span>AC9B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-11" rowspan="2">Draw a top-right zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ac9d"></span>AC9D</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aca0"></span>ACA0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="6">See similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aca3"></span>ACA3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aca4"></span>ACA4</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $E0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aca6"></span>ACA6</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="AC6F.html#acaa">zoombox_draw_border_2</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aca8"></span>ACA8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,$07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_2</td>
 <td class="address-2"><span id="acaa"></span>ACAA</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="acab"></span>
 <div class="comments">
 <div class="paragraph">
@@ -313,17 +349,19 @@ Right hand vertical run, moving down.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acab"></span>ACAB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AB69)</td>
 <td class="comment-11" rowspan="1">Fetch zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acae"></span>ACAE</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">Set iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="acaf"></span>
 <div class="comments">
 <div class="paragraph">
@@ -335,59 +373,68 @@ Start loop
 <tr>
 <td class="asm-label-1">zoombox_draw_border_3</td>
 <td class="address-2"><span id="acaf"></span>ACAF</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-11" rowspan="2">Draw a vertical zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acb1"></span>ACB1</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acb4"></span>ACB4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0020</td>
 <td class="comment-11" rowspan="6">See similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acb7"></span>ACB7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acb8"></span>ACB8</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $E0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acba"></span>ACBA</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="AC6F.html#acbe">zoombox_draw_border_4</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acbc"></span>ACBC</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,$07</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_4</td>
 <td class="address-2"><span id="acbe"></span>ACBE</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acbf"></span>ACBF</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="AC6F.html#acaf">zoombox_draw_border_3</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="acc1"></span>
 <div class="comments">
 <div class="paragraph">
@@ -399,23 +446,26 @@ Bottom right corner tile.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acc1"></span>ACC1</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-11" rowspan="2">Draw a bottom-right zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acc3"></span>ACC3</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acc6"></span>ACC6</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="1">Move the destination pointer backwards</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="acc7"></span>
 <div class="comments">
 <div class="paragraph">
@@ -427,17 +477,19 @@ Bottom horizontal run, moving left.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acc7"></span>ACC7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AB67)</td>
 <td class="comment-11" rowspan="1">Fetch zoombox_width</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acca"></span>ACCA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">Set iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="accb"></span>
 <div class="comments">
 <div class="paragraph">
@@ -449,29 +501,33 @@ Start loop
 <tr>
 <td class="asm-label-1">zoombox_draw_border_5</td>
 <td class="address-2"><span id="accb"></span>ACCB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-11" rowspan="2">Draw a horizontal zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="accd"></span>ACCD</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd0"></span>ACD0</td>
+<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
 <td class="comment-11" rowspan="1">Move the destination pointer backwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd1"></span>ACD1</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="AC6F.html#accb">zoombox_draw_border_5</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="acd3"></span>
 <div class="comments">
 <div class="paragraph">
@@ -483,53 +539,61 @@ Bottom left corner tile.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd3"></span>ACD3</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$05</td>
 <td class="comment-11" rowspan="2">Draw a bottom-left zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd5"></span>ACD5</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acd8"></span>ACD8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$FFE0</td>
 <td class="comment-11" rowspan="6">Inversion of similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acdb"></span>ACDB</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acdc"></span>ACDC</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $20</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acde"></span>ACDE</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="AC6F.html#ace3">zoombox_draw_border_6</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ace0"></span>ACE0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F8E0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_6</td>
 <td class="address-2"><span id="ace3"></span>ACE3</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ace4"></span>
 <div class="comments">
 <div class="paragraph">
@@ -541,17 +605,19 @@ Left hand vertical run, moving up.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ace4"></span>ACE4</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($AB69)</td>
 <td class="comment-11" rowspan="1">Fetch zoombox_height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="ace7"></span>ACE7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-11" rowspan="1">Set iterations</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="ace8"></span>
 <div class="comments">
 <div class="paragraph">
@@ -563,60 +629,70 @@ Start loop
 <tr>
 <td class="asm-label-1">zoombox_draw_border_7</td>
 <td class="address-2"><span id="ace8"></span>ACE8</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-11" rowspan="2">Draw a vertical zoombox border tile</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acea"></span>ACEA</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ACFC.html">zoombox_draw_tile</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="aced"></span>ACED</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$FFE0</td>
 <td class="comment-11" rowspan="6">Inversion of similar code at <a href="ABF9.html#ac5f">AC5F</a> onwards</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acf0"></span>ACF0</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acf1"></span>ACF1</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $20</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acf3"></span>ACF3</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="AC6F.html#acf8">zoombox_draw_border_8</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acf5"></span>ACF5</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F8E0</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">zoombox_draw_border_8</td>
 <td class="address-2"><span id="acf8"></span>ACF8</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acf9"></span>ACF9</td>
+<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="AC6F.html#ace8">zoombox_draw_border_7</a></td>
 <td class="comment-11" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="acfb"></span>ACFB</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -629,9 +705,9 @@ Start loop
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

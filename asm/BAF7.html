@@ -24,7 +24,7 @@
 <div class="description">BAF7: Clip the given vischar's dimensions to the game window.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="BB98.html">restore_tiles</a> and <a href="E420.html">setup_vischar_plotting</a>.
@@ -67,7 +67,7 @@ Used by the routines at <a href="BB98.html">restore_tiles</a> and <a href="E420.
 </td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="baf7"></span>
 <div class="comments">
 <div class="paragraph">
@@ -82,11 +82,12 @@ First handle the horizontal cases.
 <tr>
 <td class="asm-label-1">vischar_visible</td>
 <td class="address-2"><span id="baf7"></span>BAF7</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81B5</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at iso_pos_x (vischar left edge)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bafa"></span>
 <div class="comments">
 <div class="paragraph">
@@ -98,17 +99,19 @@ Calculate the right edge of the window in map space.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bafa"></span>BAFA</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BB)</td>
 <td class="comment-11" rowspan="1">Load map X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bafd"></span>BAFD</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$18</td>
 <td class="comment-11" rowspan="1">Add 24 (number of window columns)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="baff"></span>
 <div class="comments">
 <div class="paragraph">
@@ -120,11 +123,12 @@ Subtract iso_pos_x giving the distance between the right edge of the window and 
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="baff"></span>BAFF</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">available_right = (map_position.x + 24) - vischar_left_edge</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb00"></span>
 <div class="comments">
 <div class="paragraph">
@@ -136,17 +140,19 @@ Check for case (E): Vischar left edge beyond the window's right edge.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb00"></span>BB00</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if zero (vischar left edge at right edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb03"></span>BB03</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if negative (vischar left edge beyond right edge)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb06"></span>
 <div class="comments">
 <div class="paragraph">
@@ -158,17 +164,19 @@ Check for case (D): Vischar extends outside the window.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb06"></span>BB06</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (IY+$1E)</td>
 <td class="comment-11" rowspan="1">Compare result to (sprite width bytes + 1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb09"></span>BB09</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="BAF7.html#bb11">vv_not_clipped_on_right_edge</a></td>
 <td class="comment-11" rowspan="1">Jump if it fits</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb0c"></span>
 <div class="comments">
 <div class="paragraph">
@@ -180,27 +188,30 @@ Vischar's right edge is outside the window: clip its width.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb0c"></span>BB0C</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-11" rowspan="1">No lefthand skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb0e"></span>BB0E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Clipped width = available_right</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb0f"></span>BB0F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="BAF7.html#bb33">vv_height</a></td>
 <td class="comment-11" rowspan="1">Jump to height part</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb11"></span>
 <div class="comments">
 <div class="paragraph">
-Calculate the right edge of the vischar
+Calculate the right edge of the vischar.
 </div>
 </div>
 </td>
@@ -208,17 +219,19 @@ Calculate the right edge of the vischar
 <tr>
 <td class="asm-label-1">vv_not_clipped_on_right_edge</td>
 <td class="address-2"><span id="bb11"></span>BB11</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-11" rowspan="1">Load iso_pos_x (vischar left edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb12"></span>BB12</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(IY+$1E)</td>
 <td class="comment-11" rowspan="1">vischar_right_edge = iso_pos_x + (sprite width bytes + 1)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb15"></span>
 <div class="comments">
 <div class="paragraph">
@@ -230,17 +243,19 @@ Subtract the map position's X giving the distance between the current vischar's 
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb15"></span>BB15</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BB</td>
 <td class="comment-11" rowspan="1">Load map X position</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb18"></span>BB18</td>
+<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-11" rowspan="1">available_left = vischar_right_edge - map_position.x</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb19"></span>
 <div class="comments">
 <div class="paragraph">
@@ -252,17 +267,19 @@ Check for case (A): Vischar's right edge is beyond the window's left edge.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb19"></span>BB19</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if zero (vischar right edge at left edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb1c"></span>BB1C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if negative (vischar right edge beyond left edge)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb1f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -274,17 +291,19 @@ Check for case (B): Vischar's left edge is outside the window and its right edge
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb1f"></span>BB1F</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (IY+$1E)</td>
 <td class="comment-11" rowspan="1">Compare result to (sprite width bytes + 1)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb22"></span>BB22</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="BAF7.html#bb2e">vv_not_clipped</a></td>
 <td class="comment-11" rowspan="1">Jump if it fits</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb25"></span>
 <div class="comments">
 <div class="paragraph">
@@ -296,35 +315,40 @@ Vischar's left edge is outside the window: move the lefthand skip into <span cla
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb25"></span>BB25</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
 <td class="comment-11" rowspan="1">Clipped width = available_left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb26"></span>BB26</td>
+<td class="bytes-0"></td>
 <td class="instruction">NEG</td>
 <td class="comment-11" rowspan="3">Lefthand skip = (sprite width bytes + 1) - available_left</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb28"></span>BB28</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(IY+$1E)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb2b"></span>BB2B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb2c"></span>BB2C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="BAF7.html#bb33">vv_height</a></td>
 <td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb2e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -336,17 +360,19 @@ Case (C): No clipping required.
 <tr>
 <td class="asm-label-1">vv_not_clipped</td>
 <td class="address-2"><span id="bb2e"></span>BB2E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
 <td class="comment-11" rowspan="1">No lefthand skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb30"></span>BB30</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,(IY+$1E)</td>
 <td class="comment-11" rowspan="1">Clipped width = (sprite width bytes + 1)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb33"></span>
 <div class="comments">
 <div class="paragraph">
@@ -364,47 +390,54 @@ Calculate the bottom edge of the window in map space.
 <tr>
 <td class="asm-label-1">vv_height</td>
 <td class="address-2"><span id="bb33"></span>BB33</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BC)</td>
 <td class="comment-11" rowspan="2">Load the map position's Y and add 17 (number of window rows)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb36"></span>BB36</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,$11</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb38"></span>BB38</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-11" rowspan="5">Multiply it by 8</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb39"></span>BB39</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb3b"></span>BB3B</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb3c"></span>BB3C</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb3d"></span>BB3D</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb3e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -416,29 +449,33 @@ Subtract vischar's Y giving the distance between the bottom edge of the window a
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb3e"></span>BB3E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(IY+$1A)</td>
 <td class="comment-11" rowspan="2">Load vischar.iso_pos.y (vischar top edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb41"></span>BB41</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,(IY+$1B)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb44"></span>BB44</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Clear carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb45"></span>BB45</td>
+<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1">available_bottom = window_bottom_edge * 8 - vischar-&gt;iso_pos.y</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb47"></span>
 <div class="comments">
 <div class="paragraph">
@@ -450,35 +487,40 @@ Check for case (E): Vischar top edge beyond the window's bottom edge.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb47"></span>BB47</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if zero (vischar top edge at bottom edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb4a"></span>BB4A</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if negative (vischar top edge beyond bottom edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb4d"></span>BB4D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="3">Jump to exit if &gt;= 256 (way out of range)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb4e"></span>BB4E</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb4f"></span>BB4F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb52"></span>
 <div class="comments">
 <div class="paragraph">
@@ -490,23 +532,26 @@ Check for case (D): Vischar extends outside the window.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb52"></span>BB52</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="1"><span class="register">A</span> = available_bottom</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb53"></span>BB53</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (IY+$1F)</td>
 <td class="comment-11" rowspan="1">Compare result to vischar.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb56"></span>BB56</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="BAF7.html#bb5e">vv_not_clipped_on_top_edge</a></td>
 <td class="comment-11" rowspan="1">Jump if it fits (available_top &gt;= vischar.height)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb59"></span>
 <div class="comments">
 <div class="paragraph">
@@ -518,23 +563,26 @@ Vischar's bottom edge is outside the window: clip its height.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb59"></span>BB59</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-11" rowspan="1">Clipped height = available_bottom</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb5a"></span>BB5A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-11" rowspan="1">No top skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb5c"></span>BB5C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="BAF7.html#bb92">vv_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb5e"></span>
 <div class="comments">
 <div class="paragraph">
@@ -546,23 +594,26 @@ Calculate the bottom edge of the vischar.
 <tr>
 <td class="asm-label-1">vv_not_clipped_on_top_edge</td>
 <td class="address-2"><span id="bb5e"></span>BB5E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,(IY+$1F)</td>
 <td class="comment-11" rowspan="2">Load sprite height and widen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb61"></span>BB61</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb63"></span>BB63</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-11" rowspan="1">vischar_bottom_edge = vischar.iso_pos.y + (sprite height)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb64"></span>
 <div class="comments">
 <div class="paragraph">
@@ -574,65 +625,75 @@ Subtract map position's Y (scaled) giving the distance between the current visch
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb64"></span>BB64</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">Bank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb65"></span>BB65</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BC)</td>
 <td class="comment-11" rowspan="3">Load the map position's Y and widen</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb68"></span>BB68</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb69"></span>BB69</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb6b"></span>BB6B</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-11" rowspan="3">Multiply by 8</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb6c"></span>BB6C</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb6d"></span>BB6D</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb6e"></span>BB6E</td>
+<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-11" rowspan="1">Unbank</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb6f"></span>BB6F</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb70"></span>BB70</td>
+<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
 <td class="comment-11" rowspan="1">available_top = vischar_bottom_edge - map_pos_y * 8</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb72"></span>
 <div class="comments">
 <div class="paragraph">
@@ -644,35 +705,40 @@ Check for case (A): Vischar's bottom edge is beyond the window's top edge.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb72"></span>BB72</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if negative (vischar bottom edge beyond top edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb75"></span>BB75</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-11" rowspan="1">Jump to exit if zero (vischar bottom edge at top edge)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb78"></span>BB78</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,H</td>
 <td class="comment-11" rowspan="3">Jump to exit if &gt;= 256 (way out of range)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb79"></span>BB79</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb7a"></span>BB7A</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="BAF7.html#bb94">vv_not_visible</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb7d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -684,23 +750,26 @@ Check for case (B): Vischar's top edge is outside the window and its bottom edge
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb7d"></span>BB7D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
 <td class="comment-11" rowspan="1"><span class="register">A</span> = available_top</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb7e"></span>BB7E</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP (IY+$1F)</td>
 <td class="comment-11" rowspan="1">Compare result to vischar.height</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb81"></span>BB81</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="BAF7.html#bb8d">vischar_visible_0</a></td>
 <td class="comment-11" rowspan="1">Jump if it fits (available_top &gt;= vischar.height)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb84"></span>
 <div class="comments">
 <div class="paragraph">
@@ -712,35 +781,40 @@ Vischar's top edge is outside the window: move the top skip into <span class="re
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb84"></span>BB84</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
 <td class="comment-11" rowspan="1">Clipped height = available_top</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb85"></span>BB85</td>
+<td class="bytes-0"></td>
 <td class="instruction">NEG</td>
 <td class="comment-11" rowspan="3">Top skip = vischar.height - available_top</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb87"></span>BB87</td>
+<td class="bytes-0"></td>
 <td class="instruction">ADD A,(IY+$1F)</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb8a"></span>BB8A</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,A</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb8b"></span>BB8B</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="BAF7.html#bb92">vv_visible</a></td>
 <td class="comment-11" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="bb8d"></span>
 <div class="comments">
 <div class="paragraph">
@@ -752,42 +826,49 @@ Case (C): No clipping required.
 <tr>
 <td class="asm-label-1">vischar_visible_0</td>
 <td class="address-2"><span id="bb8d"></span>BB8D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-11" rowspan="1">No top skip</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb8f"></span>BB8F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD E,(IY+$1F)</td>
 <td class="comment-11" rowspan="1">Clipped height = vischar.height</td>
 </tr>
 <tr>
 <td class="asm-label-1">vv_visible</td>
 <td class="address-2"><span id="bb92"></span>BB92</td>
+<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
 <td class="comment-11" rowspan="1">Set Z (vischar is visible)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb93"></span>BB93</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="asm-label-1">vv_not_visible</td>
 <td class="address-2"><span id="bb94"></span>BB94</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="1">Signal invisible</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb96"></span>BB96</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="1">Clear Z (vischar is not visible)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="bb97"></span>BB97</td>
+<td class="bytes-0"></td>
 <td class="instruction">RET</td>
 <td class="comment-11" rowspan="1">Return</td>
 </tr>
@@ -800,9 +881,9 @@ Case (C): No clipping required.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

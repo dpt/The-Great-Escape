@@ -24,7 +24,7 @@
 <div class="description">A51C: Hero has escaped.</div>
 <table class="disassembly">
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routine at <a href="9F21.html">in_permitted_area</a>.
@@ -50,11 +50,12 @@ Print 'well done' message then test to see if the correct objects were used in t
 <tr>
 <td class="asm-label-1">escaped</td>
 <td class="address-2"><span id="a51c"></span>A51C</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A50B.html">screen_reset</a></td>
 <td class="comment-11" rowspan="1">Reset the screen</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a51f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -66,29 +67,33 @@ Print standard prefix messages.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a51f"></span>A51F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A5CE</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the escape messages</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a522"></span>A522</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-11" rowspan="3">Print "WELL DONE" "YOU HAVE ESCAPED" "FROM THE CAMP" (each print call advances <span class="register">HL</span>)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a525"></span>A525</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a528"></span>A528</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a52b"></span>
 <div class="comments">
 <div class="paragraph">
@@ -100,35 +105,40 @@ Form an escape items bitfield.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a52b"></span>A52B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD C,$00</td>
 <td class="comment-11" rowspan="1">Clear the item flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a52d"></span>A52D</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8215</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a530"></span>A530</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A59C.html">join_item_to_escapeitem</a></td>
 <td class="comment-11" rowspan="1">Turn the item into a flag</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a533"></span>A533</td>
+<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second held item</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a534"></span>A534</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A59C.html">join_item_to_escapeitem</a></td>
 <td class="comment-11" rowspan="1">Turn the item into a flag, merging with previous result</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a537"></span>
 <div class="comments">
 <div class="paragraph">
@@ -140,173 +150,201 @@ Print item-tailored messages.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a537"></span>A537</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
 <td class="comment-11" rowspan="1">Move flags into <span class="register">A</span></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a538"></span>A538</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $05</td>
 <td class="comment-11" rowspan="2">If the flags show we're holding are escapeitem_COMPASS and escapeitem_PURSE then jump to the success case</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a53a"></span>A53A</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A51C.html#a540">escaped_success</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a53c"></span>A53C</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $03</td>
 <td class="comment-11" rowspan="2">Otherwise if we don't have both escapeitem_COMPASS and escapeitem_PAPERS jump to the captured case</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a53e"></span>A53E</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A51C.html#a54e">escaped_captured</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_success</td>
 <td class="address-2"><span id="a540"></span>A540</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A5FD</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the fourth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a543"></span>A543</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-11" rowspan="2">Print "AND WILL CROSS THE "BORDER SUCCESSFULLY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a546"></span>A546</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a549"></span>A549</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-11" rowspan="2">Signal to reset the game at the end of this routine</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a54b"></span>A54B</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a54c"></span>A54C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A51C.html#a56e">escaped_press_any_key</a></td>
 <td class="comment-11" rowspan="1">Jump to "press any key"</td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_captured</td>
 <td class="address-2"><span id="a54e"></span>A54E</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-11" rowspan="1">Save flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a54f"></span>A54F</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A628</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the sixth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a552"></span>A552</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-11" rowspan="1">Print "BUT WERE RECAPTURED"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a555"></span>A555</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="2">Fetch flags</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a556"></span>A556</td>
+<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a557"></span>A557</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $08</td>
 <td class="comment-11" rowspan="2">If flags include escapeitem_UNIFORM print "AND SHOT AS A SPY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a559"></span>A559</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="A51C.html#a56b">escaped_plot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a55b"></span>A55B</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A652</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the eighth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a55e"></span>A55E</td>
+<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
 <td class="comment-11" rowspan="2">If flags is zero then print "TOTALLY UNPREPARED"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a55f"></span>A55F</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A51C.html#a56b">escaped_plot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a561"></span>A561</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A667</td>
 <td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the ninth escape message</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a564"></span>A564</td>
+<td class="bytes-0"></td>
 <td class="instruction">BIT 0,A</td>
 <td class="comment-11" rowspan="2">If there was no compass then print "TOTALLY LOST"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a566"></span>A566</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A51C.html#a56b">escaped_plot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a568"></span>A568</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A676</td>
 <td class="comment-11" rowspan="1">Print "DUE TO LACK OF PAPERS"</td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_plot</td>
 <td class="address-2"><span id="a56b"></span>A56B</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-11" rowspan="1">Print</td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_press_any_key</td>
 <td class="address-2"><span id="a56e"></span>A56E</td>
+<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A68E</td>
 <td class="comment-11" rowspan="2">Print "PRESS ANY KEY"</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a571"></span>A571</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a574"></span>
 <div class="comments">
 <div class="paragraph">
@@ -318,35 +356,40 @@ Wait for a keypress.
 <tr>
 <td class="asm-label-1">escaped_0</td>
 <td class="address-2"><span id="a574"></span>A574</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A58C.html">keyscan_all</a></td>
 <td class="comment-11" rowspan="2">Wait for a key down</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a577"></span>A577</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A51C.html#a574">escaped_0</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1">escaped_1</td>
 <td class="address-2"><span id="a579"></span>A579</td>
+<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A58C.html">keyscan_all</a></td>
 <td class="comment-11" rowspan="2">Wait for a key up</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a57c"></span>A57C</td>
+<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A51C.html#a579">escaped_1</a></td>
 <td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a57e"></span>A57E</td>
+<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
 <td class="comment-11" rowspan="1">Fetch flags</td>
 </tr>
 <tr>
-<td class="routine-comment" colspan="4">
+<td class="routine-comment" colspan="5">
 <span id="a57f"></span>
 <div class="comments">
 <div class="paragraph">
@@ -358,30 +401,35 @@ Reset the game, or send the hero to solitary.
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a57f"></span>A57F</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
 <td class="comment-11" rowspan="1">Are the flags $FF?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a581"></span>A581</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="B75A.html">reset_game</a></td>
 <td class="comment-11" rowspan="1">Reset the game if so (exit via)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a584"></span>A584</td>
+<td class="bytes-0"></td>
 <td class="instruction">CP $08</td>
 <td class="comment-11" rowspan="1">Are the flags greater or equal to escapeitem_UNIFORM?</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a586"></span>A586</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="B75A.html">reset_game</a></td>
 <td class="comment-11" rowspan="1">Reset the game if so (exit via)</td>
 </tr>
 <tr>
 <td class="asm-label-1"></td>
 <td class="address-1"><span id="a589"></span>A589</td>
+<td class="bytes-0"></td>
 <td class="instruction">JP <a href="CB98.html">solitary</a></td>
 <td class="comment-11" rowspan="1">Otherwise send the hero to solitary (exit via)</td>
 </tr>
@@ -394,9 +442,9 @@ Reset the game, or send the hero to solitary.
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>

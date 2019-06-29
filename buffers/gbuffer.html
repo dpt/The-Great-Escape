@@ -329,7 +329,38 @@ Used by the routines at <a href="../asm/69DC.html">setup_doors</a>, <a href="../
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81DA.html">Interior mask data.</a></div>
 <div class="map-entry-desc-1">
 <div class="paragraph">
-Used by the routines at <a href="../asm/6A35.html">setup_room</a>, <a href="../asm/B916.html">render_mask_buffer</a>.
+Used by the routines at <a href="../asm/6A35.html">setup_room</a> and <a href="../asm/B916.html">render_mask_buffer</a>.
+</div>
+<div class="paragraph">
+The first byte is a count, followed by 'count' mask_t's:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Type</th>
+<th colspan="1" rowspan="1">Bytes</th>
+<th colspan="1" rowspan="1">Name</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">index</td>
+<td class="" colspan="1" rowspan="1">Index into mask_pointers</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">bounds_t</td>
+<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">bounds</td>
+<td class="" colspan="1" rowspan="1">Isometric projected bounds of the mask. Used for culling.</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">tinypos_t</td>
+<td class="" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1">pos</td>
+<td class="" colspan="1" rowspan="1">If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal).</td>
+</tr>
+</table>
 </div>
 </div>
 </td>
@@ -984,9 +1015,9 @@ Pairs of (port, key mask).
 </tr>
 </table>
 <footer>
-<div class="release">The nearly complete The Great Escape disassembly 20190312</div>
+<div class="release">The complete The Great Escape disassembly 20190629</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="http://skoolkit.ca/">SkoolKit</a> 7.1.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
 </footer>
 </body>
 </html>
