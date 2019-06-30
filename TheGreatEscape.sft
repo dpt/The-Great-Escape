@@ -1865,15 +1865,14 @@ cC$6AB5,1;21 {Fetch the object pointer from #R$7095[A] into #REGhl
  C$6B17,2;21 Jump to main expand loop
 ; Escape + 64..79 case: emit an ascending range of bytes
 @label=range
-@rfix-begin
 ; .
 ; Bug: This self-modifies the INC A at #R$6B28 at the end of the loop body, but
 ; nothing else in the code modifies it! Possible evidence that other encodings
 ; (e.g. 'DEC A') were attempted.
+@rfix=!$6B19-$6B1B
 *C$6B19,2;21 {Make the instruction at #R$6B28 an 'INC A'
 @nowarn
  C$6B1B,3;21 }
-@rfix-end
  C$6B1E,1;21 Fetch flags+count byte
  C$6B1F,2;21 Mask off the bottom nibble which contains the range
  ;21 counter
@@ -3537,9 +3536,8 @@ cC$7AC9,2;21 Is the input event fire + up?
 @label=use_item_common
 *C$7AF8,2;21 Is the item in #REGa item_NONE? ($FF)
  C$7AFA,1;21 Return if so
-@rfix-begin
+@rfix=!$7AFB
  C$7AFB,2;21 Bug: Pointless jump to adjacent instruction
-@rfix-end
 *C$7AFD,1;21 {Point #REGhl at the #REGa'th entry of
  C$7AFE,1;21 item_actions_jump_table
  C$7AFF,2;21
@@ -3912,13 +3910,10 @@ cC$7C82,2;21 Set the pick up radius to one
  ;21 return value
  C$7CAD,1;21 Restore item counter
  C$7CAE,1;21 Set Z (found)
-@bfix-begin
-; Bug: The next instruction is written as RET Z but there's no need for it to
-; be conditional.
+@bfix=; Bug: The next instruction is written as RET Z but there's no need for
+@bfix=; it to be conditional.
+@bfix=RET Z          ; Return
  C$7CAF,1;21 Return
-@bfix+else
- $7CAF RET           ; Return
-@bfix+end
 @label=find_nearby_pop_next
 *C$7CB0,1;21 Restore item_struct pointer
  C$7CB1,1;21 Restore item counter
@@ -6012,9 +6007,8 @@ cC$A09E,3;21 Point #REGhl at bell ring counter/flag
 *C$A0B0,3;21 Fetch the bell ringing graphic from the screen
  C$A0B3,2;21 Is it $3F? (63)
  C$A0B5,3;21 If so, jump to plot "off" code
-@rfix-begin
+@rfix=!$A0B8
  C$A0B8,3;21 Bug: Pointless jump to adjacent instruction
-@rfix-end
 ; Plot UDG for the bell ringer "on" and make the bell sound
 *C$A0BB,3;21 Point #REGde at bell_ringer_bitmap_on
  C$A0BE,3;21 Plot ringer
@@ -6645,13 +6639,11 @@ cC$A289,3;21 {If the hero's not in bed, jump forward
  C$A2C1,2;21 Prepare interiorobject_EMPTY_BED
  C$A2C3,3;21 Point #REGhl at table of pointers to prisoner bed
  ;21 objects
-@bfix-begin
-; Bug: Seven iterations are specified here BUT there are only six beds in the
-; 'beds' array. This results in a spurious write to ROM location $1A42.
- C$A2C6,2;21 Set seven iterations
-@bfix+else
- $A2C6 LD B,$06      ; Set six iteratons
-@bfix+end
+@bfix=; Bug: Seven iterations are specified here BUT there are only six beds in
+@bfix=; the 'beds' array. This results in a spurious write to ROM location
+@bfix=; $1A42.
+@bfix=LD B,$07       ; Set seven iterations
+ C$A2C6,2;21 Set six iteratons
 ; Start loop
 *C$A2C8,1;21 {Load the current bed object address into #REGde
  C$A2C9,2;21
@@ -10748,11 +10740,8 @@ cC$B916,3;21 Point #REGhl at the mask buffer
 ; .
 ; Bug: The mask count of 59 here doesn't match the length of
 ; exterior_mask_data[] which is only 58 entries long.
-@bfix-begin
-*C$B935,2;21 Set #REGb for 59 iterations
-@bfix+else
-*$B935 LD B,$3A      ; Set #REGb for 58 iterations
-@bfix+end
+@bfix=LD B,$3B       ; Set #REGb for 59 iterations
+*C$B935,2;21 Set #REGb for 58 iterations
  C$B937,3;21 Point #REGhl at exterior_mask_data[0] + 2 bytes
  ;21 (mask.bounds.x1)
 ; Fill the mask buffer with the union of all matching masks.
@@ -11067,13 +11056,10 @@ cC$B916,3;21 Point #REGhl at the mask buffer
  C$BAC5,3;21 {Advance #REGhl to the next mask_t
  C$BAC8,1;21 }
  C$BAC9,1;21 {...loop
- C$BACA,3;21 }
-@rfix-begin
 ; Bug: The RET instruction is missing from the end of the routine. If unfixed
 ; the routine will harmlessly fall through into multiply.
-@rfix+else
-       RET           ; Return
-@rfix+end
+@rfix=+RET
+ C$BACA,3;21 }
 
 ; Multiply
 ;
@@ -13551,10 +13537,8 @@ cC$CCCD,3;21 Get the global current room index
 *C$CCEB,1;21
  C$CCEC,1;21 {A = *HL & itemstruct_ITEM_MASK; // sampled HL=$772A (&item_structs[item_PURSE].item)
  C$CCED,2;21 }
-@rfix+begin
-; DPT: This is potentially a bugfix but will need some thought.
-       INC HL
-@rfix+end
+@rfix=; DPT: This is potentially a bugfix but will need some thought.
+@rfix=INC HL
 ; The green key and food items are ignored.
  C$CCEF,2;21 Is it item_GREEN_KEY?
  C$CCF1,2;21 Jump to next iteration if so
