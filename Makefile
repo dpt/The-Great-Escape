@@ -6,30 +6,29 @@ GAME=TheGreatEscape
 BUILD?=build
 OPTIONS=--hex
 
-SFT=$(GAME).sft
+CTL=$(GAME).ctl
 
 ASM=$(BUILD)/$(GAME).asm
 BIN=$(BUILD)/$(GAME).bin
-CTL=$(BUILD)/$(GAME).ctl
 PRISTINEZ80=$(BUILD)/$(GAME).pristine.z80
 SKOOL=$(GAME).skool
 TAP=$(BUILD)/$(GAME).tap
 Z80=$(BUILD)/$(GAME).z80
-GENERATED_SFT=$(BUILD)/$(GAME).sft
+GENERATED_CTL=$(BUILD)/$(GAME).ctl
 
 .PHONY: usage
 usage:
 	@echo "Supported targets:"
 	@echo "  usage		Show this help"
 	@echo "  all		Build virtually everything"
-	@echo "  pristine	Fetch a version of $(NAME) and output a pristine Z80 snapshot"
-	@echo "  skool		Build a skool file from the skool file template + pristine Z80 snapshot"
+	@echo "  pristine	Fetch a tape image of $(NAME) and convert it into a pristine Z80 snapshot"
+	@echo "  skool		Build a skool file from the control file and the snapshot"
 	@echo "  disasm	Build the $(NAME) disassembly"
-	@echo "  asm		Build the $(NAME) assembly"
-	@echo "  z80		Build the $(NAME) Z80 snapshot"
-	@echo "  tap		Build the $(NAME) TAP file"
-	@echo "  sft		Build the $(NAME) skool file template"
-	@echo "  ctl		Build the $(NAME) control file"
+	@echo "  asm		Build assembly sources from the skool file"
+	@echo "  z80		Build a Z80 snapshot from the skool file"
+	@echo "  tap		Build a TAP file from the skool file"
+	@echo "  ctl		Build a new control file from the skool file"
+	@echo "  commit		Rebuild the main control file from the skool file"
 	@echo "  clean		Clean a previous build"
 	@echo ""
 	@echo "Environment variables:"
@@ -49,9 +48,9 @@ $(PRISTINEZ80):
 .PHONY: skool
 skool: $(SKOOL)
 
-$(SKOOL): $(PRISTINEZ80) $(SFT)
+$(SKOOL): $(PRISTINEZ80) $(CTL)
 	mkdir -p $(BUILD)
-	sna2skool.py --hex --sft $(SFT) $(PRISTINEZ80) > $@
+	sna2skool.py $(OPTIONS) --ctl $(CTL) $(PRISTINEZ80) > $@
 
 .PHONY: disasm
 disasm: $(SKOOL)
@@ -76,24 +75,18 @@ tap: $(TAP)
 $(TAP): $(SKOOL)
 	skool2bin.py $< - | bin2tap.py --org 16384 --stack 65535 --start 61795 - $@
 
-.PHONY: sft
-sft: $(GENERATED_SFT)
-
-$(GENERATED_SFT): $(SKOOL)
-	mkdir -p $(BUILD)
-	skool2sft.py $(OPTIONS) $(SKOOL) > $@
-
-# Use when ready for commit
-.PHONY: commit
-commit: sft
-	cp $(GENERATED_SFT) $(BUILD)/../
-
 .PHONY: ctl
-ctl: $(CTL)
+ctl: $(GENERATED_CTL)
 
-$(CTL): $(SKOOL)
+$(GENERATED_CTL): $(SKOOL)
 	mkdir -p $(BUILD)
 	skool2ctl.py $(OPTIONS) $(SKOOL) > $@
+
+# Brings changes from .skool back to .ctl
+# Use when ready for commit
+.PHONY: commit
+commit: ctl
+	cp $(GENERATED_CTL) $(BUILD)/../
 
 .PHONY: clean
 clean:
