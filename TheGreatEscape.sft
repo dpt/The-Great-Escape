@@ -8240,6 +8240,7 @@ cC$ABA0,2;21 {Initialise zoombox_x to 12
  C$ABB6,3;21
  C$ABB9,3;21 }
 ; Start loop
+; .
 ; Shrink X and grow width until X is 1
 *C$ABBC,3;21 Point #REGhl at zoombox_x
  C$ABBF,1;21 Fetch it
@@ -9052,6 +9053,7 @@ cC$AFDF,3;23 Point #REGhl at the first vischar's flags field
  C$B05E,3;23 Does it match IY's vischar character?
  C$B061,2;23 No, jump forward to solitary check
 ; IY is a bribed character pursuing the hero.
+; .
 ; When the pursuer catches the hero the bribe will be accepted.
  C$B063,3;23 Call accept_bribe
  C$B066,2;23 (else)
@@ -9221,10 +9223,7 @@ cC$B107,3;23 Increase morale by 10, score by 50
 
 ; Tests whether the position in saved_pos touches any wall or fence boundary.
 ;
-; A position (x,y,h) touches a wall if the following returns true:
-; (minx + 2 >= x <= maxx + 3) and
-; (miny     >= y <= maxy + 3) and
-; (minh     >= h <= maxh + 1)
+; A position (x,y,h) touches a wall if (minx + 2 >= x <= maxx + 3) and (miny >= y <= maxy + 3) and (minh >= h <= maxh + 1).
 ; .
 ; Used by the routines at #R$AF8F and #R$C4E0.
 ;
@@ -9779,6 +9778,7 @@ cC$B3E1,3;21 Point #REGhl at the hero's vischar sprite set pointer
 
 ; Use shovel.
 @label=action_shovel
+; .
 ; The shovel only works in the room with the blocked tunnel: number 50.
 cC$B3F6,3;21 {If the global current room index isn't
  C$B3F9,2;21 room_50_BLOCKED_TUNNEL
@@ -10001,6 +10001,7 @@ cC$B4D0,3;21 Get the global current room index
  C$B4FB,1;21 Set Z flag (found)
  C$B4FC,1;21 Return
 ; Indoors.
+; .
 ; Locked doors 2..8 include interior doors.
 @nowarn
 @label=gnd_indoors
@@ -10983,8 +10984,7 @@ cC$B916,3;21 Point #REGhl at the mask buffer
 @label=rmb_skip_went_negative
 *C$BA69,1;21 How far did we overshoot?
  C$BA6A,2;21 Negate it to create a positive mask emit(?) count
-;
-; #REGa = Count of blocks to emit
+; #REGa = Count of blocks to emit.
 ; #REGde = Points to a value (if -ve case) .. but the upcoming code expects a flag byte...
 @label=rmb_start_drawing
 *C$BA6C,3;21 Get the mask buffer pointer
@@ -11150,6 +11150,7 @@ cC$BADC,1;21 Save tile pointer
 ; (C) the vischar is entirely visible,
 ; (D) the vischar is clipped on its right/bottom, and
 ; (E) the vischar is completely off the right/bottom of window.
+; .
 ; Note that no vischar will ever be wider than the window so we never need to
 ; consider if clipping will occur on both sides.
 ; .
@@ -11633,6 +11634,7 @@ cC$C41C,3;21 Read the current map position into #REGhl
 ; Handle outdoors.
  C$C441,1;21 Point #REGhl at charstr.pos.x
 ; Do screen Y calculation:
+; .
 ; y = ((256 - charstr.pos.x) - charstr.pos.y) - charstr.pos.height
 ; .
 ; #REGa is zero here, and represents 0x100.
@@ -11651,6 +11653,7 @@ cC$C41C,3;21 Read the current map position into #REGhl
 *C$C452,1;21 Is y > (map_y_clamped + spawn size, clamped to 255)?
  C$C453,2;21 Jump if so
 ; Do screen X calculation:
+; .
 ; x = (64 - charstr.pos.x + charstr.pos.y) * 2
  C$C455,1;21 Step #REGhl back to charstr.pos.y
  C$C456,2;21 Start with x = 64
@@ -12578,8 +12581,6 @@ gB$C891,1
 ; Also handles food item discovery and automatic hero behaviour.
 ; .
 ; Used by the routine at #R$9D7B.
-;
-; .
 @label=automatics
 cC$C892,1;21 {Clear the 'character index is valid' flag
  C$C893,3;21 }
@@ -15697,7 +15698,7 @@ cC$E2A2,3;21 {x = (vischar.iso_pos.x & 7)
  C$E3B1,2;21 }
 @label=pms16_left_bitmap_jumptable_end
 ; Plot, using foreground mask.
-;
+; .
 ; See #R$E17A for a discussion of this masking operation.
 @nowarn
  C$E3B3,3;21 Load screen buffer pointer
@@ -16770,6 +16771,8 @@ cC$F163,1;30 Disable interrupts
 ; Plot all static graphics and menu text.
 ;
 ; Used by the routine at #R$F163.
+;
+; .
 @label=plot_statics_and_menu_text
 ; Plot all static graphics.
 cC$F1E0,3;21 Point #REGhl at static_graphic_defs
@@ -17402,7 +17405,7 @@ cC$F4B7,3;21 Handle menu screen keys.
 ;
 ; The frequency returned is the number of iterations that the music routine
 ; should count for before flipping the speaker output bit.
-;
+; .
 ; Used by the routine at #R$F4B7.
 ;
 ; I:A  Semitone index (never larger than 42 in this game).
@@ -17449,7 +17452,7 @@ bB$F546,8*16,6
 ; End of song marker
  B$F7C6,1
 ; Low music channel notes (semitones).
-;
+; .
 ; Start of The Great Escape theme.
 @label=music_channel1_data
  B$F7C7,8*16,6
@@ -17460,9 +17463,9 @@ bB$F546,8*16,6
 ; End of song marker
  B$FA47,1
 ; The frequency to use to produce the given semitone.
-;
+; .
 ; Covers full octaves from C2 to B6 and C7 only.
-;
+; .
 ; Used by #R$F52C
 @label=semitone_to_frequency
  W$FA48,2;20 delay
@@ -17789,7 +17792,6 @@ cC$FECD,3;21 Load #REGbc with the port number of the keyboard half
 ;
 ; The final standard speed data block on the tape is loaded at $FC60..$FF81.
 ; The bytes from here up to $FF81 come from that block.
-;
 bB$FEF4,8*12,4
 ; UDGs 'A' to 'E' follow, with 'F' truncated at its second byte.
 @label=map_buf
