@@ -7259,7 +7259,8 @@ C $B3EA,6 If the global current room index is room_29_SECOND_TUNNEL_START or abo
 N $B3F0 Otherwise the uniform can be worn
 C $B3F0,3 Set the hero's sprite set to sprite_guard
 C $B3F3,3 Increase morale by 10, score by 50 and exit via
-c $B3F6 Use shovel. . The shovel only works in the room with the blocked tunnel: number 50.
+c $B3F6 Use shovel.
+D $B3F6 The shovel only works in the room with the blocked tunnel: number 50.
 @ $B3F6 label=action_shovel
 C $B3F6,6 If the global current room index isn't room_50_BLOCKED_TUNNEL bail out
 N $B3FC Bomb out if the blockage is already removed.
@@ -12056,7 +12057,6 @@ W $F1D8,6,6 mi.pos
 W $F1DE,2,2 mi.sprite
 c $F1E0 Plot all static graphics and menu text.
 D $F1E0 Used by the routine at #R$F163.
-R $F1E0 Plot all static graphics.
 @ $F1E0 label=plot_statics_and_menu_text
 C $F1E0,3 Point #REGhl at static_graphic_defs
 C $F1E3,2 Set #REGb for 18 iterations
