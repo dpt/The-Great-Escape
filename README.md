@@ -102,7 +102,7 @@ To Edit, Rebuild and Run the Game
 ---------------------------------
 
 * `make skool` -- to build the .skool file
-* Edit `build/TheGreatEscape.skool`
+* Edit `TheGreatEscape.skool`
 * `make tap`
 * Reload `build/TheGreatEscape.tap` in your emulator
 
