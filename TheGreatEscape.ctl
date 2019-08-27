@@ -397,7 +397,7 @@
 > $4000 ; vischar_BYTE7_COUNTER_MASK                    = $F0,
 > $4000 ; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
 > $4000 ; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,       ; set while touch() entered
-> $4000 ; vischar_TOUCH_ENTERED                         = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
+> $4000 ; vischar_TOUCH_ENTERED                         = 1 << 7,       ; stops get_next_drawable considering a vischar
 > $4000 ;
 > $4000 ; ; $800C, $802C, $804C, ...
 > $4000 ; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
@@ -595,7 +595,7 @@
 > $4000 ;          $07 -> character faces bottom left  (crawling)
 > $4000 ; w $800F position on X axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 > $4000 ; w $8011 position on Y axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-> $4000 ; w $8013 character's height // set to 24 in process_player_input, cutting_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_iso_pos_from_vischar,  read by animate ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
+> $4000 ; w $8013 character's height // set to 24 in process_player_input, cutting_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_iso_pos_from_vischar,  read by animate ($B68C) (via IY), get_next_drawable ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 > $4000 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 > $4000 ; b $8017 touch sets this to touch_stashed_A
 > $4000 ; w $8018 points to something (gets $06C8 subtracted from it) (<- in_permitted_area)
@@ -7845,7 +7845,7 @@ D $B866 Used by the routines at #R$6939 and #R$9D7B.
 N $B866 Start (infinite) loop
 N $B866 This can return a vischar OR an itemstruct, but not both.
 @ $B866 label=plot_sprites
-C $B866,3 Locates a vischar or item to plot
+C $B866,3 Finds the next vischar or item to draw
 C $B869,1 Return if nothing remains
 C $B86A,2 Was an item returned?
 C $B86C,2 Jump to item handling if so
@@ -7878,7 +7878,7 @@ R $B89C O:F Z set if a valid vischar or item was returned.
 R $B89C O:A Returns (vischars_LENGTH - iters) if vischar, or ((item__LIMIT - iters) | (1 << 6)) if itemstruct.
 R $B89C O:IY The vischar or itemstruct to plot.
 R $B89C O:HL The vischar or itemstruct to plot.
-@ $B89C label=locate_vischar_or_itemstruct
+@ $B89C label=get_next_drawable
 C $B89C,5 #REGbc and #REGde are previous_x and previous_y. Zero them both
 C $B8A1,2 Load #REGa with a 'nothing found' marker ($FF)
 C $B8A3,1 Bank it
@@ -10507,6 +10507,7 @@ C $DBF5,2 Is the itemstruct_ROOM_FLAG_ITEM_NEARBY_6 flag set? ($40)
 C $DBF7,2 If not, jump to the next iteration
 C $DBF9,1 Preserve the item_struct pointer
 C $DBFA,1 Preserve the item counter and stride
+N $DBFB Select an item if it's behind the point (x,y).
 C $DBFB,1 Advance #REGhl to item_struct.pos.x
 C $DBFC,1 Fetch item_struct.pos.x
 C $DBFD,3 Multiply it by 8 returning the result in #REGbc
