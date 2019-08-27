@@ -397,7 +397,7 @@
 > $4000 ; vischar_BYTE7_COUNTER_MASK                    = $F0,
 > $4000 ; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
 > $4000 ; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,       ; set while touch() entered
-> $4000 ; vischar_TOUCH_ENTERED                         = 1 << 7,       ; stops get_next_drawable considering a vischar
+> $4000 ; vischar_DRAWABLE                              = 1 << 7,       ; vischar should be drawn
 > $4000 ;
 > $4000 ; ; $800C, $802C, $804C, ...
 > $4000 ; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
@@ -6613,7 +6613,7 @@ R $AF8F O:F Z/NZ => inside/outside bounds.
 C $AF8F,1 Exchange #REGa registers
 C $AF90,3 Stash the flip flag and sprite offset
 C $AF93,4 Set the vischar's vischar_BYTE7_DONT_MOVE_MAP flag
-C $AF97,4 Set the vischar's vischar_TOUCH_ENTERED flag
+C $AF97,4 Set the vischar's vischar_DRAWABLE flag
 C $AF9B,3 #REGhl = #REGiy
 N $AF9E If the hero is player controlled then check for door transitions.
 C $AF9E,2 Which vischar are we processing?
@@ -7890,7 +7890,7 @@ C $B8AB,3 Point #REGhl at vischar 0's counter_and_flags
 N $B8AE Find the rearmost vischar that is flagged for drawing.
 N $B8AE Start loop
 @ $B8AE label=lvoi_loop
-C $B8AE,2 Is counter_and_flags' vischar_TOUCH_ENTERED flag set?
+C $B8AE,2 Is counter_and_flags' vischar_DRAWABLE flag set?
 C $B8B0,2 Jump to next iteration if not
 C $B8B2,1 Preserve the vischar pointer
 C $B8B3,1 Preserve the loop counter and stride
@@ -7942,7 +7942,7 @@ N $B903 Otherwise we've found a vischar
 C $B903,3 Get vischar in #REGhl
 C $B906,2 Is item_FOUND set? ($40)
 C $B908,2 Jump if so
-C $B90A,4 Clear the vischar.counter_and_flags vischar_TOUCH_ENTERED flag
+C $B90A,4 Clear the vischar.counter_and_flags vischar_DRAWABLE flag
 C $B90E,1 Return with Z set
 @ $B90F label=lvoi_item_found
 C $B90F,1 Point #REGhl at itemstruct.room_and_flags
