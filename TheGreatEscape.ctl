@@ -7887,6 +7887,7 @@ N $B8A5 Note that we maintain a previous_height but it's never usefully used.
 C $B8A5,3 Initialise the previous_height to zero
 C $B8A8,3 Set #REGb for eight iterations and set #REGc for a 32 byte stride simultaneously
 C $B8AB,3 Point #REGhl at vischar 0's counter_and_flags
+N $B8AE Find the rearmost vischar that is flagged for drawing.
 N $B8AE Start loop
 @ $B8AE label=lvoi_loop
 C $B8AE,2 Is counter_and_flags' vischar_TOUCH_ENTERED flag set?
@@ -7934,7 +7935,7 @@ C $B8F7,3 Advance to the next vischar
 C $B8FA,2 ...loop
 C $B8FC,3 Iterate over all item_structs looking for nearby items
 C $B8FF,1 Get the old #REGa back
-N $B900 If the topmost bit of #REGa' remains set from its initialisation at #R$B8A1, then no vischar was found. It's preserved by the call to get_greatest_itemstruct.
+N $B900 If the topmost bit of #REGa' remains set from its initialisation at #R$B8A1, then no vischar was found. It's preserved by the call to get_next_drawable_itemstruct.
 C $B900,2 Does bit 7 remain set from initialisation?
 C $B902,1 Return with Z clear if so: nothing was found
 N $B903 Otherwise we've found a vischar
@@ -10488,16 +10489,14 @@ C $DBE1,7 Advance #REGhl by stride
 @ $DBE8 label=mni_next
 C $DBE8,2 ...loop
 C $DBEA,1 Return
-c $DBEB Iterates over all item_structs looking for nearby items.
-D $DBEB Returns the furthest/highest/nearest item?
-D $DBEB Iterates over all items. Uses multiply_by_8.
+c $DBEB Find the next item to draw that is furthest behind (x,y).
 D $DBEB Used by the routine at #R$B89C.
 R $DBEB I:A' A value to leave in #REGa' when nothing is found (e.g. 255)
 R $DBEB I:BC' X position
 R $DBEB I:DE' Y position
 R $DBEB O:A' Index of the greatest item with the item_FOUND flag set, if found
 R $DBEB O:IY Pointer to an itemstruct, if found
-@ $DBEB label=get_greatest_itemstruct
+@ $DBEB label=get_next_drawable_itemstruct
 C $DBEB,3 Set #REGb for 16 iterations (item__LIMIT) and set #REGc for a seven byte stride simultaneously
 C $DBEE,3 Point #REGhl at the first item_struct's room member
 N $DBF1 Start loop
@@ -10533,7 +10532,7 @@ C $DC18,2 Jump if so
 C $DC1A,1 Preserve the item_struct pointer
 C $DC1B,1 Flip to banked regs - so we can store new X,Y positions
 C $DC1C,1 Restore the item_struct pointer
-N $DC1D Get (x,y) for the next iteration.
+N $DC1D Calculate (x,y) for the next iteration.
 C $DC1D,1 Fetch item_struct.pos.y
 C $DC1E,3 Multiply it by 8 returning the result in #REGbc
 C $DC21,2 #REGde = #REGbc
