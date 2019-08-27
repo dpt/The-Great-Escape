@@ -1374,15 +1374,15 @@ B $6C1F,4,4 54, 68, 55, 68 }, // boundary
 B $6C23,1,1 4 // count of mask bytes
 B $6C24,4,4 [0, 1, 3, 10] // data mask bytes
 B $6C28,1,1 10 // count of objects
-B $6C29,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-B $6C2C,3,3 interiorobject_WIDE_WINDOW,                  8,  0 },
-B $6C2F,3,3 interiorobject_WIDE_WINDOW,                  2,  3 },
-B $6C32,3,3 interiorobject_OCCUPIED_BED,                10,  5 },
-B $6C35,3,3 interiorobject_OCCUPIED_BED,                 6,  7 },
-B $6C38,3,3 interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-B $6C3B,3,3 interiorobject_ORNATE_WARDROBE_FACING_SW,   18,  5 },
-B $6C3E,3,3 interiorobject_ORNATE_WARDROBE_FACING_SW,   20,  6 },
-B $6C41,3,3 interiorobject_EMPTY_BED,                    2,  9 },
+B $6C29,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+B $6C2C,3,3 interiorobject_WIDE_WINDOW,                  8, 0 },
+B $6C2F,3,3 interiorobject_WIDE_WINDOW,                  2, 3 },
+B $6C32,3,3 interiorobject_OCCUPIED_BED,                10, 5 },
+B $6C35,3,3 interiorobject_OCCUPIED_BED,                 6, 7 },
+B $6C38,3,3 interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+B $6C3B,3,3 interiorobject_ORNATE_WARDROBE_FACING_SW,   18, 5 },
+B $6C3E,3,3 interiorobject_ORNATE_WARDROBE_FACING_SW,   20, 6 },
+B $6C41,3,3 interiorobject_EMPTY_BED,                    2, 9 },
 B $6C44,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 > $6C47 ; Illustration
 > $6C47 ;
@@ -1422,15 +1422,15 @@ B $6C4D,4,4 24, 38, 26, 40 }, // boundary (table)
 B $6C51,1,1 2 // count of mask bytes
 B $6C52,2,2 [13, 8] // data mask bytes
 B $6C54,1,1 8 // count of objects
-B $6C55,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-B $6C58,3,3 interiorobject_WIDE_WINDOW,                  6,  2 },
-B $6C5B,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
-B $6C5E,3,3 interiorobject_STOVE_PIPE,                   4,  5 },
+B $6C55,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+B $6C58,3,3 interiorobject_WIDE_WINDOW,                  6, 2 },
+B $6C5B,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
+B $6C5E,3,3 interiorobject_STOVE_PIPE,                   4, 5 },
 @ $6C61 label=roomdef_2_hut2_left_heros_bed
-B $6C61,3,3 interiorobject_OCCUPIED_BED,                 8,  7 },
-B $6C64,3,3 interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+B $6C61,3,3 interiorobject_OCCUPIED_BED,                 8, 7 },
+B $6C64,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
 B $6C67,3,3 interiorobject_TABLE,                       11, 12 },
-B $6C6A,3,3 interiorobject_SMALL_TUNNEL_ENTRANCE,        5,  9 },
+B $6C6A,3,3 interiorobject_SMALL_TUNNEL_ENTRANCE,        5, 9 },
 b $6C6D Room 3: Hut 2, far side.
 @ $6C6D label=roomdef_3_hut2_right
 B $6C6D,1,1 0
@@ -1441,18 +1441,18 @@ B $6C77,4,4 54, 68, 55, 68 }, // boundary
 B $6C7B,1,1 4 // count of mask bytes
 B $6C7C,4,4 [0, 1, 3, 10] // data mask bytes
 B $6C80,1,1 10 // count of objects
-B $6C81,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-B $6C84,3,3 interiorobject_WIDE_WINDOW,                  8,  0 },
-B $6C87,3,3 interiorobject_WIDE_WINDOW,                  2,  3 },
+B $6C81,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+B $6C84,3,3 interiorobject_WIDE_WINDOW,                  8, 0 },
+B $6C87,3,3 interiorobject_WIDE_WINDOW,                  2, 3 },
 @ $6C8A label=roomdef_3_hut2_right_bed_A
-B $6C8A,3,3 interiorobject_OCCUPIED_BED,                10,  5 },
+B $6C8A,3,3 interiorobject_OCCUPIED_BED,                10, 5 },
 @ $6C8D label=roomdef_3_hut2_right_bed_B
-B $6C8D,3,3 interiorobject_OCCUPIED_BED,                 6,  7 },
+B $6C8D,3,3 interiorobject_OCCUPIED_BED,                 6, 7 },
 @ $6C90 label=roomdef_3_hut2_right_bed_C
-B $6C90,3,3 interiorobject_OCCUPIED_BED,                 2,  9 },
-B $6C93,3,3 interiorobject_CHEST_OF_DRAWERS,            16,  5 },
-B $6C96,3,3 interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-B $6C99,3,3 interiorobject_SHORT_WARDROBE,              18,  5 },
+B $6C90,3,3 interiorobject_OCCUPIED_BED,                 2, 9 },
+B $6C93,3,3 interiorobject_CHEST_OF_DRAWERS,            16, 5 },
+B $6C96,3,3 interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+B $6C99,3,3 interiorobject_SHORT_WARDROBE,              18, 5 },
 B $6C9C,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 b $6C9F Room 4: Hut 3, near side.
 @ $6C9F label=roomdef_4_hut3_left
@@ -1463,12 +1463,12 @@ B $6CA5,4,4 48, 64, 43, 56 }, // boundary
 B $6CA9,1,1 3 // count of mask bytes
 B $6CAA,3,3 [18, 20, 8] // data mask bytes
 B $6CAD,1,1 9 // count of objects
-B $6CAE,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-B $6CB1,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
-B $6CB4,3,3 interiorobject_WIDE_WINDOW,                  6,  2 },
-B $6CB7,3,3 interiorobject_STOVE_PIPE,                   4,  5 },
-B $6CBA,3,3 interiorobject_EMPTY_BED,                    8,  7 },
-B $6CBD,3,3 interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+B $6CAE,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+B $6CB1,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
+B $6CB4,3,3 interiorobject_WIDE_WINDOW,                  6, 2 },
+B $6CB7,3,3 interiorobject_STOVE_PIPE,                   4, 5 },
+B $6CBA,3,3 interiorobject_EMPTY_BED,                    8, 7 },
+B $6CBD,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
 B $6CC0,3,3 interiorobject_CHAIR_FACING_SE,             11, 11 },
 B $6CC3,3,3 interiorobject_CHAIR_FACING_SW,             13, 10 },
 B $6CC6,3,3 interiorobject_STUFF,                       14, 14 },
@@ -1482,18 +1482,18 @@ B $6CD3,4,4 54, 68, 55, 68 }, // boundary
 B $6CD7,1,1 4 // count of mask bytes
 B $6CD8,4,4 [0, 1, 3, 10] // data mask bytes
 B $6CDC,1,1 10 // count of objects
-B $6CDD,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-B $6CE0,3,3 interiorobject_WIDE_WINDOW,                  8,  0 },
-B $6CE3,3,3 interiorobject_WIDE_WINDOW,                  2,  3 },
+B $6CDD,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+B $6CE0,3,3 interiorobject_WIDE_WINDOW,                  8, 0 },
+B $6CE3,3,3 interiorobject_WIDE_WINDOW,                  2, 3 },
 @ $6CE6 label=roomdef_5_hut2_right_bed_D
-B $6CE6,3,3 interiorobject_OCCUPIED_BED,                10,  5 },
+B $6CE6,3,3 interiorobject_OCCUPIED_BED,                10, 5 },
 @ $6CE9 label=roomdef_5_hut2_right_bed_E
-B $6CE9,3,3 interiorobject_OCCUPIED_BED,                 6,  7 },
+B $6CE9,3,3 interiorobject_OCCUPIED_BED,                 6, 7 },
 @ $6CEC label=roomdef_5_hut2_right_bed_F
-B $6CEC,3,3 interiorobject_OCCUPIED_BED,                 2,  9 },
-B $6CEF,3,3 interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-B $6CF2,3,3 interiorobject_CHEST_OF_DRAWERS,            16,  5 },
-B $6CF5,3,3 interiorobject_CHEST_OF_DRAWERS,            20,  7 },
+B $6CEC,3,3 interiorobject_OCCUPIED_BED,                 2, 9 },
+B $6CEF,3,3 interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+B $6CF2,3,3 interiorobject_CHEST_OF_DRAWERS,            16, 5 },
+B $6CF5,3,3 interiorobject_CHEST_OF_DRAWERS,            20, 7 },
 B $6CF8,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 b $6CFB Room 8: Corridor.
 @ $6CFB label=roomdef_8_corridor
@@ -1515,16 +1515,16 @@ B $6D11,4,4 58, 64, 28, 42 }, // boundary
 B $6D15,1,1 2 // count of mask bytes
 B $6D16,2,2 [4, 21] // data mask bytes
 B $6D18,1,1 10 // count of objects
-B $6D19,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-B $6D1C,3,3 interiorobject_SMALL_WINDOW,                 6,  3 },
-B $6D1F,3,3 interiorobject_SMALL_SHELF,                  9,  4 },
-B $6D22,3,3 interiorobject_TINY_DOOR_FRAME_NW_SE,       12,  6 },
+B $6D19,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+B $6D1C,3,3 interiorobject_SMALL_WINDOW,                 6, 3 },
+B $6D1F,3,3 interiorobject_SMALL_SHELF,                  9, 4 },
+B $6D22,3,3 interiorobject_TINY_DOOR_FRAME_NW_SE,       12, 6 },
 B $6D25,3,3 interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-B $6D28,3,3 interiorobject_TALL_WARDROBE,               16,  6 },
-B $6D2B,3,3 interiorobject_SHORT_WARDROBE,              18,  8 },
-B $6D2E,3,3 interiorobject_CUPBOARD,                     3,  6 },
-B $6D31,3,3 interiorobject_SMALL_CRATE,                  6,  8 },
-B $6D34,3,3 interiorobject_SMALL_CRATE,                  4,  9 },
+B $6D28,3,3 interiorobject_TALL_WARDROBE,               16, 6 },
+B $6D2B,3,3 interiorobject_SHORT_WARDROBE,              18, 8 },
+B $6D2E,3,3 interiorobject_CUPBOARD,                     3, 6 },
+B $6D31,3,3 interiorobject_SMALL_CRATE,                  6, 8 },
+B $6D34,3,3 interiorobject_SMALL_CRATE,                  4, 9 },
 b $6D37 Room 10: Room with lockpick.
 @ $6D37 label=roomdef_10_lockpick
 B $6D37,1,1 4
@@ -1534,20 +1534,20 @@ B $6D3D,4,4 36, 47, 48, 60 }, // boundary
 B $6D41,1,1 3 // count of mask bytes
 B $6D42,3,3 [6, 14, 22] // data mask bytes
 B $6D45,1,1 14 // count of objects
-B $6D46,3,3 interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
+B $6D46,3,3 interiorobject_ROOM_OUTLINE_22x12_B,         1, 4 },
 B $6D49,3,3 interiorobject_DOOR_FRAME_SW_NE,            15, 10 },
-B $6D4C,3,3 interiorobject_SMALL_WINDOW,                 4,  1 },
-B $6D4F,3,3 interiorobject_KEY_RACK,                     2,  3 },
-B $6D52,3,3 interiorobject_KEY_RACK,                     7,  2 },
-B $6D55,3,3 interiorobject_TALL_WARDROBE,               10,  2 },
-B $6D58,3,3 interiorobject_CUPBOARD_42,                 13,  3 },
-B $6D5B,3,3 interiorobject_CUPBOARD_42,                 15,  4 },
-B $6D5E,3,3 interiorobject_CUPBOARD_42,                 17,  5 },
-B $6D61,3,3 interiorobject_TABLE,                       14,  8 },
-B $6D64,3,3 interiorobject_CHEST_OF_DRAWERS,            18,  8 },
-B $6D67,3,3 interiorobject_CHEST_OF_DRAWERS,            20,  9 },
-B $6D6A,3,3 interiorobject_SMALL_CRATE,                  6,  5 },
-B $6D6D,3,3 interiorobject_TABLE,                        2,  6 },
+B $6D4C,3,3 interiorobject_SMALL_WINDOW,                 4, 1 },
+B $6D4F,3,3 interiorobject_KEY_RACK,                     2, 3 },
+B $6D52,3,3 interiorobject_KEY_RACK,                     7, 2 },
+B $6D55,3,3 interiorobject_TALL_WARDROBE,               10, 2 },
+B $6D58,3,3 interiorobject_CUPBOARD_42,                 13, 3 },
+B $6D5B,3,3 interiorobject_CUPBOARD_42,                 15, 4 },
+B $6D5E,3,3 interiorobject_CUPBOARD_42,                 17, 5 },
+B $6D61,3,3 interiorobject_TABLE,                       14, 8 },
+B $6D64,3,3 interiorobject_CHEST_OF_DRAWERS,            18, 8 },
+B $6D67,3,3 interiorobject_CHEST_OF_DRAWERS,            20, 9 },
+B $6D6A,3,3 interiorobject_SMALL_CRATE,                  6, 5 },
+B $6D6D,3,3 interiorobject_TABLE,                        2, 6 },
 b $6D70 Room 11: Room with papers.
 @ $6D70 label=roomdef_11_papers
 B $6D70,1,1 4
@@ -1556,14 +1556,14 @@ B $6D72,4,4 27, 44, 36, 48 }, // boundary
 B $6D76,1,1 1 // count of mask bytes
 B $6D77,1,1 [23] // data mask bytes
 B $6D78,1,1 9 // count of objects
-B $6D79,3,3 interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
-B $6D7C,3,3 interiorobject_SMALL_SHELF,                  6,  3 },
-B $6D7F,3,3 interiorobject_TALL_WARDROBE,               12,  3 },
-B $6D82,3,3 interiorobject_TALL_DRAWERS,                10,  3 },
-B $6D85,3,3 interiorobject_SHORT_WARDROBE,              14,  5 },
-B $6D88,3,3 interiorobject_END_DOOR_FRAME_SW_NE,         2,  2 },
-B $6D8B,3,3 interiorobject_TALL_DRAWERS,                18,  7 },
-B $6D8E,3,3 interiorobject_TALL_DRAWERS,                20,  8 },
+B $6D79,3,3 interiorobject_ROOM_OUTLINE_22x12_B,         1, 4 },
+B $6D7C,3,3 interiorobject_SMALL_SHELF,                  6, 3 },
+B $6D7F,3,3 interiorobject_TALL_WARDROBE,               12, 3 },
+B $6D82,3,3 interiorobject_TALL_DRAWERS,                10, 3 },
+B $6D85,3,3 interiorobject_SHORT_WARDROBE,              14, 5 },
+B $6D88,3,3 interiorobject_END_DOOR_FRAME_SW_NE,         2, 2 },
+B $6D8B,3,3 interiorobject_TALL_DRAWERS,                18, 7 },
+B $6D8E,3,3 interiorobject_TALL_DRAWERS,                20, 8 },
 B $6D91,3,3 interiorobject_DESK,                        12, 10 },
 b $6D94 Room 12: Corridor.
 @ $6D94 label=roomdef_12_corridor
@@ -1599,15 +1599,15 @@ B $6DC8,4,4 54, 68, 54, 68 }, // boundary
 B $6DCC,1,1 1 // count of mask bytes
 B $6DCD,1,1 [1] // data mask bytes
 B $6DCE,1,1 9 // count of objects
-B $6DCF,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-B $6DD2,3,3 interiorobject_END_DOOR_FRAME_SW_NE,         4,  3 },
-B $6DD5,3,3 interiorobject_TINY_DRAWERS,                 8,  5 },
-B $6DD8,3,3 interiorobject_EMPTY_BED,                   10,  5 },
-B $6DDB,3,3 interiorobject_CHEST_OF_DRAWERS,            16,  5 },
-B $6DDE,3,3 interiorobject_SHORT_WARDROBE,              18,  5 },
-B $6DE1,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        20,  4 },
-B $6DE4,3,3 interiorobject_SMALL_SHELF,                  2,  7 },
-B $6DE7,3,3 interiorobject_EMPTY_BED,                    2,  9 },
+B $6DCF,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+B $6DD2,3,3 interiorobject_END_DOOR_FRAME_SW_NE,         4, 3 },
+B $6DD5,3,3 interiorobject_TINY_DRAWERS,                 8, 5 },
+B $6DD8,3,3 interiorobject_EMPTY_BED,                   10, 5 },
+B $6DDB,3,3 interiorobject_CHEST_OF_DRAWERS,            16, 5 },
+B $6DDE,3,3 interiorobject_SHORT_WARDROBE,              18, 5 },
+B $6DE1,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        20, 4 },
+B $6DE4,3,3 interiorobject_SMALL_SHELF,                  2, 7 },
+B $6DE7,3,3 interiorobject_EMPTY_BED,                    2, 9 },
 b $6DEA Room 15: Room with uniform.
 @ $6DEA label=roomdef_15_uniform
 B $6DEA,1,1 0
@@ -1619,16 +1619,16 @@ B $6DF8,4,4 30, 40, 56, 67 }, // boundary
 B $6DFC,1,1 4 // count of mask bytes
 B $6DFD,4,4 [1, 5, 10, 15] // data mask bytes
 B $6E01,1,1 10 // count of objects
-B $6E02,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-B $6E05,3,3 interiorobject_SHORT_WARDROBE,              16,  4 },
-B $6E08,3,3 interiorobject_EMPTY_BED,                   10,  5 },
-B $6E0B,3,3 interiorobject_TINY_DRAWERS,                 8,  5 },
-B $6E0E,3,3 interiorobject_TINY_DRAWERS,                 6,  6 },
-B $6E11,3,3 interiorobject_SMALL_SHELF,                  2,  7 },
-B $6E14,3,3 interiorobject_EMPTY_BED,                    2,  9 },
+B $6E02,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+B $6E05,3,3 interiorobject_SHORT_WARDROBE,              16, 4 },
+B $6E08,3,3 interiorobject_EMPTY_BED,                   10, 5 },
+B $6E0B,3,3 interiorobject_TINY_DRAWERS,                 8, 5 },
+B $6E0E,3,3 interiorobject_TINY_DRAWERS,                 6, 6 },
+B $6E11,3,3 interiorobject_SMALL_SHELF,                  2, 7 },
+B $6E14,3,3 interiorobject_EMPTY_BED,                    2, 9 },
 B $6E17,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
-B $6E1A,3,3 interiorobject_DOOR_FRAME_SW_NE,            13,  9 },
-B $6E1D,3,3 interiorobject_TABLE,                       18,  8 },
+B $6E1A,3,3 interiorobject_DOOR_FRAME_SW_NE,            13, 9 },
+B $6E1D,3,3 interiorobject_TABLE,                       18, 8 },
 b $6E20 Room 16: Corridor.
 @ $6E20 label=roomdef_16_corridor
 B $6E20,1,1 1
@@ -1661,16 +1661,16 @@ B $6E4D,4,4 22, 32, 48, 60 }, // boundary
 B $6E51,1,1 5 // count of mask bytes
 B $6E52,5,5 [11, 17, 16, 24, 25] // data mask bytes
 B $6E57,1,1 10 // count of objects
-B $6E58,3,3 interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
-B $6E5B,3,3 interiorobject_CUPBOARD,                     1,  4 },
-B $6E5E,3,3 interiorobject_SMALL_WINDOW,                 4,  1 },
-B $6E61,3,3 interiorobject_SMALL_SHELF,                  7,  2 },
-B $6E64,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        10,  1 },
-B $6E67,3,3 interiorobject_TABLE,                       12,  7 },
-B $6E6A,3,3 interiorobject_MESS_BENCH_SHORT,            12,  9 },
-B $6E6D,3,3 interiorobject_TABLE,                       18, 10 },
-B $6E70,3,3 interiorobject_TINY_TABLE,                  16, 12 },
-B $6E73,3,3 interiorobject_DOOR_FRAME_NW_SE,             5,  7 },
+B $6E58,3,3 interiorobject_ROOM_OUTLINE_22x12_B, 1,  4 },
+B $6E5B,3,3 interiorobject_CUPBOARD, 1,  4 },
+B $6E5E,3,3 interiorobject_SMALL_WINDOW, 4,  1 },
+B $6E61,3,3 interiorobject_SMALL_SHELF, 7,  2 },
+B $6E64,3,3 interiorobject_END_DOOR_FRAME_NW_SE, 10,  1 },
+B $6E67,3,3 interiorobject_TABLE, 12,  7 },
+B $6E6A,3,3 interiorobject_MESS_BENCH_SHORT, 12,  9 },
+B $6E6D,3,3 interiorobject_TABLE, 18, 10 },
+B $6E70,3,3 interiorobject_TINY_TABLE, 16, 12 },
+B $6E73,3,3 interiorobject_DOOR_FRAME_NW_SE, 5,  7 },
 b $6E76 Room 19: Room with food.
 @ $6E76 label=roomdef_19_food
 B $6E76,1,1 1
@@ -1679,16 +1679,16 @@ B $6E78,4,4 52, 64, 47, 56 }, // boundary
 B $6E7C,1,1 1 // count of mask bytes
 B $6E7D,1,1 [7] // data mask bytes
 B $6E7E,1,1 11 // count of objects
-B $6E7F,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-B $6E82,3,3 interiorobject_SMALL_WINDOW,                 6,  3 },
-B $6E85,3,3 interiorobject_CUPBOARD,                     9,  3 },
-B $6E88,3,3 interiorobject_CUPBOARD_42,                 12,  3 },
-B $6E8B,3,3 interiorobject_CUPBOARD_42,                 14,  4 },
-B $6E8E,3,3 interiorobject_TABLE,                        9,  6 },
-B $6E91,3,3 interiorobject_SMALL_SHELF,                  3,  5 },
-B $6E94,3,3 interiorobject_SINK,                         3,  7 },
-B $6E97,3,3 interiorobject_CHEST_OF_DRAWERS,            14,  7 },
-B $6E9A,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
+B $6E7F,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+B $6E82,3,3 interiorobject_SMALL_WINDOW,                 6, 3 },
+B $6E85,3,3 interiorobject_CUPBOARD,                     9, 3 },
+B $6E88,3,3 interiorobject_CUPBOARD_42,                 12, 3 },
+B $6E8B,3,3 interiorobject_CUPBOARD_42,                 14, 4 },
+B $6E8E,3,3 interiorobject_TABLE,                        9, 6 },
+B $6E91,3,3 interiorobject_SMALL_SHELF,                  3, 5 },
+B $6E94,3,3 interiorobject_SINK,                         3, 7 },
+B $6E97,3,3 interiorobject_CHEST_OF_DRAWERS,            14, 7 },
+B $6E9A,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
 B $6E9D,3,3 interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
 b $6EA0 Room 20: Room with red cross parcel.
 @ $6EA0 label=roomdef_20_redcross
@@ -1699,17 +1699,17 @@ B $6EA6,4,4 50, 64, 46, 54 }, // boundary
 B $6EAA,1,1 2 // count of mask bytes
 B $6EAB,2,2 [21, 4] // data mask bytes
 B $6EAD,1,1 11 // count of objects
-B $6EAE,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+B $6EAE,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
 B $6EB1,3,3 interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-B $6EB4,3,3 interiorobject_SMALL_SHELF,                  9,  4 },
-B $6EB7,3,3 interiorobject_CUPBOARD,                     3,  6 },
-B $6EBA,3,3 interiorobject_SMALL_CRATE,                  6,  8 },
-B $6EBD,3,3 interiorobject_SMALL_CRATE,                  4,  9 },
-B $6EC0,3,3 interiorobject_TABLE,                        9,  6 },
-B $6EC3,3,3 interiorobject_TALL_WARDROBE,               14,  5 },
-B $6EC6,3,3 interiorobject_TALL_WARDROBE,               16,  6 },
-B $6EC9,3,3 interiorobject_ORNATE_WARDROBE_FACING_SW,   18,  8 },
-B $6ECC,3,3 interiorobject_TINY_TABLE,                  11,  8 },
+B $6EB4,3,3 interiorobject_SMALL_SHELF,                  9, 4 },
+B $6EB7,3,3 interiorobject_CUPBOARD,                     3, 6 },
+B $6EBA,3,3 interiorobject_SMALL_CRATE,                  6, 8 },
+B $6EBD,3,3 interiorobject_SMALL_CRATE,                  4, 9 },
+B $6EC0,3,3 interiorobject_TABLE,                        9, 6 },
+B $6EC3,3,3 interiorobject_TALL_WARDROBE,               14, 5 },
+B $6EC6,3,3 interiorobject_TALL_WARDROBE,               16, 6 },
+B $6EC9,3,3 interiorobject_ORNATE_WARDROBE_FACING_SW,   18, 8 },
+B $6ECC,3,3 interiorobject_TINY_TABLE,                  11, 8 },
 b $6ECF Room 22: Room with red key.
 @ $6ECF label=roomdef_22_red_key
 B $6ECF,1,1 3
@@ -1719,13 +1719,13 @@ B $6ED5,4,4 58, 64, 36, 44 }, // boundary
 B $6ED9,1,1 2 // count of mask bytes
 B $6EDA,2,2 [12, 21] // data mask bytes
 B $6EDC,1,1 7 // count of objects
-B $6EDD,3,3 interiorobject_ROOM_OUTLINE_15x8,            5,  6 },
-B $6EE0,3,3 interiorobject_NOTICEBOARD,                  4,  4 },
-B $6EE3,3,3 interiorobject_SMALL_SHELF,                  9,  4 },
-B $6EE6,3,3 interiorobject_SMALL_CRATE,                  6,  8 },
-B $6EE9,3,3 interiorobject_DOOR_FRAME_NW_SE,             9,  8 },
-B $6EEC,3,3 interiorobject_TABLE,                        9,  6 },
-B $6EEF,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
+B $6EDD,3,3 interiorobject_ROOM_OUTLINE_15x8,            5, 6 },
+B $6EE0,3,3 interiorobject_NOTICEBOARD,                  4, 4 },
+B $6EE3,3,3 interiorobject_SMALL_SHELF,                  9, 4 },
+B $6EE6,3,3 interiorobject_SMALL_CRATE,                  6, 8 },
+B $6EE9,3,3 interiorobject_DOOR_FRAME_NW_SE,             9, 8 },
+B $6EEC,3,3 interiorobject_TABLE,                        9, 6 },
+B $6EEF,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
 b $6EF2 Room 23: Breakfast room.
 @ $6EF2 label=roomdef_23_breakfast
 B $6EF2,1,1 0
@@ -1734,21 +1734,21 @@ B $6EF4,4,4 54, 68, 34, 68 }, // boundary
 B $6EF8,1,1 2 // count of mask bytes
 B $6EF9,2,2 [10, 3] // data mask bytes
 B $6EFB,1,1 12 // count of objects
-B $6EFC,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-B $6EFF,3,3 interiorobject_SMALL_WINDOW,                 8,  0 },
-B $6F02,3,3 interiorobject_SMALL_WINDOW,                 2,  3 },
+B $6EFC,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+B $6EFF,3,3 interiorobject_SMALL_WINDOW,                 8, 0 },
+B $6F02,3,3 interiorobject_SMALL_WINDOW,                 2, 3 },
 B $6F05,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
-B $6F08,3,3 interiorobject_MESS_TABLE,                   5,  4 },
-B $6F0B,3,3 interiorobject_CUPBOARD_42,                 18,  4 },
-B $6F0E,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        20,  4 },
-B $6F11,3,3 interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-B $6F14,3,3 interiorobject_MESS_BENCH,                   7,  6 },
+B $6F08,3,3 interiorobject_MESS_TABLE,                   5, 4 },
+B $6F0B,3,3 interiorobject_CUPBOARD_42,                 18, 4 },
+B $6F0E,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        20, 4 },
+B $6F11,3,3 interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+B $6F14,3,3 interiorobject_MESS_BENCH,                   7, 6 },
 @ $6F17 label=roomdef_23_breakfast_bench_A
-B $6F17,3,3 interiorobject_EMPTY_BENCH,                 12,  5 },
+B $6F17,3,3 interiorobject_EMPTY_BENCH,                 12, 5 },
 @ $6F1A label=roomdef_23_breakfast_bench_B
-B $6F1A,3,3 interiorobject_EMPTY_BENCH,                 10,  6 },
+B $6F1A,3,3 interiorobject_EMPTY_BENCH,                 10, 6 },
 @ $6F1D label=roomdef_23_breakfast_bench_C
-B $6F1D,3,3 interiorobject_EMPTY_BENCH,                  8,  7 },
+B $6F1D,3,3 interiorobject_EMPTY_BENCH,                  8, 7 },
 b $6F20 Room 24: Solitary confinement cell.
 @ $6F20 label=roomdef_24_solitary
 B $6F20,1,1 3
@@ -1757,9 +1757,9 @@ B $6F22,4,4 48, 54, 38, 46 }, // boundary
 B $6F26,1,1 1 // count of mask bytes
 B $6F27,1,1 [26] // data mask bytes
 B $6F28,1,1 3 // count of objects
-B $6F29,3,3 interiorobject_ROOM_OUTLINE_15x8,            5,  6 },
-B $6F2C,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
-B $6F2F,3,3 interiorobject_TINY_TABLE,                  10,  9 },
+B $6F29,3,3 interiorobject_ROOM_OUTLINE_15x8,            5, 6 },
+B $6F2C,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
+B $6F2F,3,3 interiorobject_TINY_TABLE,                  10, 9 },
 b $6F32 Room 25: Breakfast room.
 @ $6F32 label=roomdef_25_breakfast
 B $6F32,1,1 0
@@ -1767,21 +1767,21 @@ B $6F33,1,1 1 // count of boundaries
 B $6F34,4,4 54, 68, 34, 68 }, // boundary
 B $6F38,1,1 0 // count of mask bytes
 B $6F39,1,1 11 // count of objects
-B $6F3A,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-B $6F3D,3,3 interiorobject_SMALL_WINDOW,                 8,  0 },
-B $6F40,3,3 interiorobject_CUPBOARD,                     5,  3 },
-B $6F43,3,3 interiorobject_SMALL_WINDOW,                 2,  3 },
-B $6F46,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        18,  3 },
-B $6F49,3,3 interiorobject_MESS_TABLE,                   5,  4 },
-B $6F4C,3,3 interiorobject_MESS_BENCH,                   7,  6 },
+B $6F3A,3,3 interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+B $6F3D,3,3 interiorobject_SMALL_WINDOW,                 8, 0 },
+B $6F40,3,3 interiorobject_CUPBOARD,                     5, 3 },
+B $6F43,3,3 interiorobject_SMALL_WINDOW,                 2, 3 },
+B $6F46,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        18, 3 },
+B $6F49,3,3 interiorobject_MESS_TABLE,                   5, 4 },
+B $6F4C,3,3 interiorobject_MESS_BENCH,                   7, 6 },
 @ $6F4F label=roomdef_25_breakfast_bench_D
-B $6F4F,3,3 interiorobject_EMPTY_BENCH,                 12,  5 },
+B $6F4F,3,3 interiorobject_EMPTY_BENCH,                 12, 5 },
 @ $6F52 label=roomdef_25_breakfast_bench_E
-B $6F52,3,3 interiorobject_EMPTY_BENCH,                 10,  6 },
+B $6F52,3,3 interiorobject_EMPTY_BENCH,                 10, 6 },
 @ $6F55 label=roomdef_25_breakfast_bench_F
-B $6F55,3,3 interiorobject_EMPTY_BENCH,                  8,  7 },
+B $6F55,3,3 interiorobject_EMPTY_BENCH,                  8, 7 },
 @ $6F58 label=roomdef_25_breakfast_bench_G
-B $6F58,3,3 interiorobject_EMPTY_BENCH,                 14,  4 },
+B $6F58,3,3 interiorobject_EMPTY_BENCH,                 14, 4 },
 b $6F5B Room 28: Hut 1, near side.
 @ $6F5B label=roomdef_28_hut1_left
 B $6F5B,1,1 1
@@ -1791,12 +1791,12 @@ B $6F61,4,4 48, 63, 44, 56 }, // boundary
 B $6F65,1,1 3 // count of mask bytes
 B $6F66,3,3 [8, 13, 19] // data mask bytes
 B $6F69,1,1 8 // count of objects
-B $6F6A,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-B $6F6D,3,3 interiorobject_WIDE_WINDOW,                  6,  2 },
-B $6F70,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
-B $6F73,3,3 interiorobject_CUPBOARD,                     3,  6 },
-B $6F76,3,3 interiorobject_OCCUPIED_BED,                 8,  7 },
-B $6F79,3,3 interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+B $6F6A,3,3 interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+B $6F6D,3,3 interiorobject_WIDE_WINDOW,                  6, 2 },
+B $6F70,3,3 interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
+B $6F73,3,3 interiorobject_CUPBOARD,                     3, 6 },
+B $6F76,3,3 interiorobject_OCCUPIED_BED,                 8, 7 },
+B $6F79,3,3 interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
 B $6F7C,3,3 interiorobject_CHAIR_FACING_SW,             15, 10 },
 B $6F7F,3,3 interiorobject_TABLE,                       11, 12 },
 b $6F82 Room 29: Start of second tunnel.
@@ -1806,12 +1806,12 @@ B $6F83,1,1 0 // count of boundaries
 B $6F84,1,1 6 // count of mask bytes
 B $6F85,6,6 [30, 31, 32, 33, 34, 35] // data mask bytes
 B $6F8B,1,1 6 // count of objects
-B $6F8C,3,3 interiorobject_TUNNEL_SW_NE,                20,  0 },
-B $6F8F,3,3 interiorobject_TUNNEL_SW_NE,                16,  2 },
-B $6F92,3,3 interiorobject_TUNNEL_SW_NE,                12,  4 },
-B $6F95,3,3 interiorobject_TUNNEL_SW_NE,                 8,  6 },
-B $6F98,3,3 interiorobject_TUNNEL_SW_NE,                 4,  8 },
-B $6F9B,3,3 interiorobject_TUNNEL_SW_NE,                 0, 10 },
+B $6F8C,3,3 interiorobject_TUNNEL_SW_NE, 20,  0 },
+B $6F8F,3,3 interiorobject_TUNNEL_SW_NE, 16,  2 },
+B $6F92,3,3 interiorobject_TUNNEL_SW_NE, 12,  4 },
+B $6F95,3,3 interiorobject_TUNNEL_SW_NE, 8,  6 },
+B $6F98,3,3 interiorobject_TUNNEL_SW_NE, 4,  8 },
+B $6F9B,3,3 interiorobject_TUNNEL_SW_NE, 0, 10 },
 b $6F9E Room 31.
 @ $6F9E label=roomdef_31
 B $6F9E,1,1 6
@@ -1819,12 +1819,12 @@ B $6F9F,1,1 0 // count of boundaries
 B $6FA0,1,1 6 // count of mask bytes
 B $6FA1,6,6 [36, 37, 38, 39, 40, 41] // data mask bytes
 B $6FA7,1,1 6 // count of objects
-B $6FA8,3,3 interiorobject_TUNNEL_NW_SE,                 0,  0 },
-B $6FAB,3,3 interiorobject_TUNNEL_NW_SE,                 4,  2 },
-B $6FAE,3,3 interiorobject_TUNNEL_NW_SE,                 8,  4 },
-B $6FB1,3,3 interiorobject_TUNNEL_NW_SE,                12,  6 },
-B $6FB4,3,3 interiorobject_TUNNEL_NW_SE,                16,  8 },
-B $6FB7,3,3 interiorobject_TUNNEL_NW_SE,                20, 10 },
+B $6FA8,3,3 interiorobject_TUNNEL_NW_SE, 0,  0 },
+B $6FAB,3,3 interiorobject_TUNNEL_NW_SE, 4,  2 },
+B $6FAE,3,3 interiorobject_TUNNEL_NW_SE, 8,  4 },
+B $6FB1,3,3 interiorobject_TUNNEL_NW_SE, 12,  6 },
+B $6FB4,3,3 interiorobject_TUNNEL_NW_SE, 16,  8 },
+B $6FB7,3,3 interiorobject_TUNNEL_NW_SE, 20, 10 },
 b $6FBA Room 36.
 @ $6FBA label=roomdef_36
 B $6FBA,1,1 7
@@ -1832,11 +1832,11 @@ B $6FBB,1,1 0 // count of boundaries
 B $6FBC,1,1 6 // count of mask bytes
 B $6FBD,6,6 [31, 32, 33, 34, 35, 45] // data mask bytes
 B $6FC3,1,1 5 // count of objects
-B $6FC4,3,3 interiorobject_TUNNEL_SW_NE,                20,  0 },
-B $6FC7,3,3 interiorobject_TUNNEL_SW_NE,                16,  2 },
-B $6FCA,3,3 interiorobject_TUNNEL_SW_NE,                12,  4 },
-B $6FCD,3,3 interiorobject_TUNNEL_SW_NE,                 8,  6 },
-B $6FD0,3,3 interiorobject_TUNNEL_14,                    4,  8 },
+B $6FC4,3,3 interiorobject_TUNNEL_SW_NE, 20,  0 },
+B $6FC7,3,3 interiorobject_TUNNEL_SW_NE, 16,  2 },
+B $6FCA,3,3 interiorobject_TUNNEL_SW_NE, 12,  4 },
+B $6FCD,3,3 interiorobject_TUNNEL_SW_NE, 8,  6 },
+B $6FD0,3,3 interiorobject_TUNNEL_14, 4,  8 },
 b $6FD3 Room 32.
 @ $6FD3 label=roomdef_32
 B $6FD3,1,1 8
@@ -1844,11 +1844,11 @@ B $6FD4,1,1 0 // count of boundaries
 B $6FD5,1,1 6 // count of mask bytes
 B $6FD6,6,6 [36, 37, 38, 39, 40, 42] // data mask bytes
 B $6FDC,1,1 5 // count of objects
-B $6FDD,3,3 interiorobject_TUNNEL_NW_SE,                 0,  0 },
-B $6FE0,3,3 interiorobject_TUNNEL_NW_SE,                 4,  2 },
-B $6FE3,3,3 interiorobject_TUNNEL_NW_SE,                 8,  4 },
-B $6FE6,3,3 interiorobject_TUNNEL_NW_SE,                12,  6 },
-B $6FE9,3,3 interiorobject_TUNNEL_17,                   16,  8 },
+B $6FDD,3,3 interiorobject_TUNNEL_NW_SE, 0,  0 },
+B $6FE0,3,3 interiorobject_TUNNEL_NW_SE, 4,  2 },
+B $6FE3,3,3 interiorobject_TUNNEL_NW_SE, 8,  4 },
+B $6FE6,3,3 interiorobject_TUNNEL_NW_SE, 12,  6 },
+B $6FE9,3,3 interiorobject_TUNNEL_17, 16,  8 },
 b $6FEC Room 34.
 @ $6FEC label=roomdef_34
 B $6FEC,1,1 6
@@ -1856,12 +1856,12 @@ B $6FED,1,1 0 // count of boundaries
 B $6FEE,1,1 6 // count of mask bytes
 B $6FEF,6,6 [36, 37, 38, 39, 40, 46] // data mask bytes
 B $6FF5,1,1 6 // count of objects
-B $6FF6,3,3 interiorobject_TUNNEL_NW_SE,                 0,  0 },
-B $6FF9,3,3 interiorobject_TUNNEL_NW_SE,                 4,  2 },
-B $6FFC,3,3 interiorobject_TUNNEL_NW_SE,                 8,  4 },
-B $6FFF,3,3 interiorobject_TUNNEL_NW_SE,                12,  6 },
-B $7002,3,3 interiorobject_TUNNEL_NW_SE,                16,  8 },
-B $7005,3,3 interiorobject_TUNNEL_JOIN_18,              20, 10 },
+B $6FF6,3,3 interiorobject_TUNNEL_NW_SE, 0,  0 },
+B $6FF9,3,3 interiorobject_TUNNEL_NW_SE, 4,  2 },
+B $6FFC,3,3 interiorobject_TUNNEL_NW_SE, 8,  4 },
+B $6FFF,3,3 interiorobject_TUNNEL_NW_SE, 12,  6 },
+B $7002,3,3 interiorobject_TUNNEL_NW_SE, 16,  8 },
+B $7005,3,3 interiorobject_TUNNEL_JOIN_18, 20, 10 },
 b $7008 Room 35.
 @ $7008 label=roomdef_35
 B $7008,1,1 6
@@ -1869,12 +1869,12 @@ B $7009,1,1 0 // count of boundaries
 B $700A,1,1 6 // count of mask bytes
 B $700B,6,6 [36, 37, 38, 39, 40, 41] // data mask bytes
 B $7011,1,1 6 // count of objects
-B $7012,3,3 interiorobject_TUNNEL_NW_SE,                 0,  0 },
-B $7015,3,3 interiorobject_TUNNEL_NW_SE,                 4,  2 },
-B $7018,3,3 interiorobject_TUNNEL_T_JOIN_NW_SE,          8,  4 },
-B $701B,3,3 interiorobject_TUNNEL_NW_SE,                12,  6 },
-B $701E,3,3 interiorobject_TUNNEL_NW_SE,                16,  8 },
-B $7021,3,3 interiorobject_TUNNEL_NW_SE,                20, 10 },
+B $7012,3,3 interiorobject_TUNNEL_NW_SE, 0,  0 },
+B $7015,3,3 interiorobject_TUNNEL_NW_SE, 4,  2 },
+B $7018,3,3 interiorobject_TUNNEL_T_JOIN_NW_SE, 8,  4 },
+B $701B,3,3 interiorobject_TUNNEL_NW_SE, 12,  6 },
+B $701E,3,3 interiorobject_TUNNEL_NW_SE, 16,  8 },
+B $7021,3,3 interiorobject_TUNNEL_NW_SE, 20, 10 },
 b $7024 Room 30.
 @ $7024 label=roomdef_30
 B $7024,1,1 5
@@ -1882,12 +1882,12 @@ B $7025,1,1 0 // count of boundaries
 B $7026,1,1 7 // count of mask bytes
 B $7027,7,7 [30, 31, 32, 33, 34, 35, 44] // data mask bytes
 B $702E,1,1 6 // count of objects
-B $702F,3,3 interiorobject_TUNNEL_SW_NE,                20,  0 },
-B $7032,3,3 interiorobject_TUNNEL_SW_NE,                16,  2 },
-B $7035,3,3 interiorobject_TUNNEL_SW_NE,                12,  4 },
-B $7038,3,3 interiorobject_TUNNEL_CORNER_6,              8,  6 },
-B $703B,3,3 interiorobject_TUNNEL_SW_NE,                 4,  8 },
-B $703E,3,3 interiorobject_TUNNEL_SW_NE,                 0, 10 },
+B $702F,3,3 interiorobject_TUNNEL_SW_NE, 20,  0 },
+B $7032,3,3 interiorobject_TUNNEL_SW_NE, 16,  2 },
+B $7035,3,3 interiorobject_TUNNEL_SW_NE, 12,  4 },
+B $7038,3,3 interiorobject_TUNNEL_CORNER_6, 8,  6 },
+B $703B,3,3 interiorobject_TUNNEL_SW_NE, 4,  8 },
+B $703E,3,3 interiorobject_TUNNEL_SW_NE, 0, 10 },
 b $7041 Room 40.
 @ $7041 label=roomdef_40
 B $7041,1,1 9
@@ -1895,12 +1895,12 @@ B $7042,1,1 0 // count of boundaries
 B $7043,1,1 6 // count of mask bytes
 B $7044,6,6 [30, 31, 32, 33, 34, 43] // data mask bytes
 B $704A,1,1 6 // count of objects
-B $704B,3,3 interiorobject_TUNNEL_CORNER_7,             20,  0 },
-B $704E,3,3 interiorobject_TUNNEL_SW_NE,                16,  2 },
-B $7051,3,3 interiorobject_TUNNEL_SW_NE,                12,  4 },
-B $7054,3,3 interiorobject_TUNNEL_SW_NE,                 8,  6 },
-B $7057,3,3 interiorobject_TUNNEL_SW_NE,                 4,  8 },
-B $705A,3,3 interiorobject_TUNNEL_SW_NE,                 0, 10 },
+B $704B,3,3 interiorobject_TUNNEL_CORNER_7, 20,  0 },
+B $704E,3,3 interiorobject_TUNNEL_SW_NE, 16,  2 },
+B $7051,3,3 interiorobject_TUNNEL_SW_NE, 12,  4 },
+B $7054,3,3 interiorobject_TUNNEL_SW_NE, 8,  6 },
+B $7057,3,3 interiorobject_TUNNEL_SW_NE, 4,  8 },
+B $705A,3,3 interiorobject_TUNNEL_SW_NE, 0, 10 },
 b $705D Room 44.
 @ $705D label=roomdef_44
 B $705D,1,1 8
@@ -1908,11 +1908,11 @@ B $705E,1,1 0 // count of boundaries
 B $705F,1,1 5 // count of mask bytes
 B $7060,5,5 [36, 37, 38, 39, 40] // data mask bytes
 B $7065,1,1 5 // count of objects
-B $7066,3,3 interiorobject_TUNNEL_NW_SE,                 0,  0 },
-B $7069,3,3 interiorobject_TUNNEL_NW_SE,                 4,  2 },
-B $706C,3,3 interiorobject_TUNNEL_NW_SE,                 8,  4 },
-B $706F,3,3 interiorobject_TUNNEL_NW_SE,                12,  6 },
-B $7072,3,3 interiorobject_TUNNEL_CORNER_NW_NE,         16,  8 },
+B $7066,3,3 interiorobject_TUNNEL_NW_SE, 0,  0 },
+B $7069,3,3 interiorobject_TUNNEL_NW_SE, 4,  2 },
+B $706C,3,3 interiorobject_TUNNEL_NW_SE, 8,  4 },
+B $706F,3,3 interiorobject_TUNNEL_NW_SE, 12,  6 },
+B $7072,3,3 interiorobject_TUNNEL_CORNER_NW_NE, 16,  8 },
 b $7075 Room 50: Blocked tunnel.
 @ $7075 label=roomdef_50_blocked_tunnel
 B $7075,1,1 5
@@ -1922,13 +1922,13 @@ B $7077,4,4 52, 58, 32, 54 }, // boundary
 B $707B,1,1 6 // count of mask bytes
 B $707C,6,6 [30, 31, 32, 33, 34, 43] // data mask bytes
 B $7082,1,1 6 // count of objects
-B $7083,3,3 interiorobject_TUNNEL_CORNER_7,             20,  0 },
-B $7086,3,3 interiorobject_TUNNEL_SW_NE,                16,  2 },
-B $7089,3,3 interiorobject_TUNNEL_SW_NE,                12,  4 },
+B $7083,3,3 interiorobject_TUNNEL_CORNER_7, 20,  0 },
+B $7086,3,3 interiorobject_TUNNEL_SW_NE, 16,  2 },
+B $7089,3,3 interiorobject_TUNNEL_SW_NE, 12,  4 },
 @ $708C label=roomdef_50_blocked_tunnel_collapsed_tunnel
-B $708C,3,3 interiorobject_COLLAPSED_TUNNEL_SW_NE,       8,  6 },
-B $708F,3,3 interiorobject_TUNNEL_SW_NE,                 4,  8 },
-B $7092,3,3 interiorobject_TUNNEL_SW_NE,                 0, 10 },
+B $708C,3,3 interiorobject_COLLAPSED_TUNNEL_SW_NE, 8, 6 },
+B $708F,3,3 interiorobject_TUNNEL_SW_NE, 4,  8 },
+B $7092,3,3 interiorobject_TUNNEL_SW_NE, 0, 10 },
 b $7095 Interior object definitions.
 @ $7095 label=interior_object_defs
 W $7095,108,2 Array of pointer to interior object definitions, 54 entries long (== number of interior objects).
@@ -2243,65 +2243,65 @@ b $7612 Character structures.
 D $7612 This array contains one of these 7-byte structures for each of the 26 game characters:
 D $7612 #TABLE(default) { =h Type   | =h Bytes | =h Name             | =h Meaning } { Character |        1 | character_and_flags | Character index; bit 6 = on-screen flag } { Room      |        1 | room                | The room the character's in, and flags } { TinyPos   |        3 | pos                 | Map position of the character } { Route     |        2 | route               | The route the character's on } TABLE#
 @ $7612 label=character_structs
-B $7612,7,7 character_0_COMMANDANT,   room_11_PAPERS,   ( 46,  46, 24), (0x03, 0x00)
-B $7619,7,7 character_1_GUARD_1,      room_0_OUTDOORS,  (102,  68,  3), (0x01, 0x00)
-B $7620,7,7 character_2_GUARD_2,      room_0_OUTDOORS,  ( 68, 104,  3), (0x01, 0x02)
-B $7627,7,7 character_3_GUARD_3,      room_16_CORRIDOR, ( 46,  46, 24), (0x03, 0x13)
-B $762E,7,7 character_4_GUARD_4,      room_0_OUTDOORS,  ( 61, 103,  3), (0x02, 0x04)
-B $7635,7,7 character_5_GUARD_5,      room_0_OUTDOORS,  (106,  56, 13), (0x00, 0x00)
-B $763C,7,7 character_6_GUARD_6,      room_0_OUTDOORS,  ( 72,  94, 13), (0x00, 0x00)
-B $7643,7,7 character_7_GUARD_7,      room_0_OUTDOORS,  ( 72,  70, 13), (0x00, 0x00)
-B $764A,7,7 character_8_GUARD_8,      room_0_OUTDOORS,  ( 80,  46, 13), (0x00, 0x00)
-B $7651,7,7 character_9_GUARD_9,      room_0_OUTDOORS,  (108,  71, 21), (0x04, 0x00)
-B $7658,7,7 character_10_GUARD_10,    room_0_OUTDOORS,  ( 92,  52,  3), (0xFF, 0x38)
-B $765F,7,7 character_11_GUARD_11,    room_0_OUTDOORS,  (109,  69,  3), (0x00, 0x00)
-B $7666,7,7 character_12_GUARD_12,    room_3_HUT2RIGHT, ( 40,  60, 24), (0x00, 0x08)
+B $7612,7,7 character_0_COMMANDANT, room_11_PAPERS,   ( 46,  46, 24), (0x03, 0x00)
+B $7619,7,7 character_1_GUARD_1, room_0_OUTDOORS, (102,  68,  3), (0x01, 0x00)
+B $7620,7,7 character_2_GUARD_2, room_0_OUTDOORS, ( 68, 104,  3), (0x01, 0x02)
+B $7627,7,7 character_3_GUARD_3, room_16_CORRIDOR, ( 46,  46, 24), (0x03, 0x13)
+B $762E,7,7 character_4_GUARD_4, room_0_OUTDOORS, ( 61, 103,  3), (0x02, 0x04)
+B $7635,7,7 character_5_GUARD_5, room_0_OUTDOORS, (106,  56, 13), (0x00, 0x00)
+B $763C,7,7 character_6_GUARD_6, room_0_OUTDOORS, ( 72,  94, 13), (0x00, 0x00)
+B $7643,7,7 character_7_GUARD_7, room_0_OUTDOORS, ( 72,  70, 13), (0x00, 0x00)
+B $764A,7,7 character_8_GUARD_8, room_0_OUTDOORS, ( 80,  46, 13), (0x00, 0x00)
+B $7651,7,7 character_9_GUARD_9, room_0_OUTDOORS, (108,  71, 21), (0x04, 0x00)
+B $7658,7,7 character_10_GUARD_10, room_0_OUTDOORS,  ( 92,  52,  3), (0xFF, 0x38)
+B $765F,7,7 character_11_GUARD_11, room_0_OUTDOORS,  (109,  69,  3), (0x00, 0x00)
+B $7666,7,7 character_12_GUARD_12, room_3_HUT2RIGHT, ( 40,  60, 24), (0x00, 0x08)
 N $766D Bug: The room field here is 2 but reset_map_and_characters will reset it to 3.
-B $766D,7,7 character_13_GUARD_13,    room_2_HUT2LEFT,  ( 36,  48, 24), (0x00, 0x08)
-B $7674,7,7 character_14_GUARD_14,    room_5_HUT3RIGHT, ( 40,  60, 24), (0x00, 0x10)
-B $767B,7,7 character_15_GUARD_15,    room_5_HUT3RIGHT, ( 36,  34, 24), (0x00, 0x10)
+B $766D,7,7 character_13_GUARD_13, room_2_HUT2LEFT,  ( 36,  48, 24), (0x00, 0x08)
+B $7674,7,7 character_14_GUARD_14, room_5_HUT3RIGHT, ( 40,  60, 24), (0x00, 0x10)
+B $767B,7,7 character_15_GUARD_15, room_5_HUT3RIGHT, ( 36,  34, 24), (0x00, 0x10)
 B $7682,7,7 character_16_GUARD_DOG_1, room_0_OUTDOORS,  ( 68,  84,  1), (0xFF, 0x00)
 B $7689,7,7 character_17_GUARD_DOG_2, room_0_OUTDOORS,  ( 68, 104,  1), (0xFF, 0x00)
 B $7690,7,7 character_18_GUARD_DOG_3, room_0_OUTDOORS,  (102,  68,  1), (0xFF, 0x18)
 B $7697,7,7 character_19_GUARD_DOG_4, room_0_OUTDOORS,  ( 88,  68,  1), (0xFF, 0x18)
-B $769E,7,7 character_20_PRISONER_1,  room_NONE,        ( 52,  60, 24), (0x00, 0x08)
-B $76A5,7,7 character_21_PRISONER_2,  room_NONE,        ( 52,  44, 24), (0x00, 0x08)
-B $76AC,7,7 character_22_PRISONER_3,  room_NONE,        ( 52,  28, 24), (0x00, 0x08)
-B $76B3,7,7 character_23_PRISONER_4,  room_NONE,        ( 52,  60, 24), (0x00, 0x10)
-B $76BA,7,7 character_24_PRISONER_5,  room_NONE,        ( 52,  44, 24), (0x00, 0x10)
-B $76C1,7,7 character_25_PRISONER_6,  room_NONE,        ( 52,  28, 24), (0x00, 0x10)
+B $769E,7,7 character_20_PRISONER_1,  room_NONE, ( 52,  60, 24), (0x00, 0x08)
+B $76A5,7,7 character_21_PRISONER_2,  room_NONE, ( 52,  44, 24), (0x00, 0x08)
+B $76AC,7,7 character_22_PRISONER_3,  room_NONE, ( 52,  28, 24), (0x00, 0x08)
+B $76B3,7,7 character_23_PRISONER_4,  room_NONE, ( 52,  60, 24), (0x00, 0x10)
+B $76BA,7,7 character_24_PRISONER_5,  room_NONE, ( 52,  44, 24), (0x00, 0x10)
+B $76C1,7,7 character_25_PRISONER_6,  room_NONE, ( 52,  28, 24), (0x00, 0x10)
 b $76C8 Item structures (a.k.a. itemstructs).
 D $76C8 This array contains one of these 7-byte structures for each of the 16 game items:
 D $76C8 #TABLE(default) { =h Type | =h Bytes | =h Name        | =h Meaning } { Item    |        1 | item_and_flags | bits 0..3 = item; bits 4..7 = flags } { Room    |        1 | room_and_flags | bits 0..5 = room; bits 6..7 = flags } { TinyPos |        3 | pos            | Map position of the item } { IsoPos  |        2 | iso_pos        | Isometric projected position of the item } TABLE#
 @ $76C8 label=item_structs
-B $76C8,7,7 item_WIRESNIPS,        room_NONE,        (64, 32,  2), (0x78, 0xF4) // <- item_to_itemstruct, find_nearby_item
-B $76CF,7,7 item_SHOVEL,           room_9_CRATE,     (62, 48,  0), (0x7C, 0xF2)
-B $76D6,7,7 item_LOCKPICK,         room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0)
-B $76DD,7,7 item_PAPERS,           room_11_PAPERS,   (42, 58,  4), (0x84, 0xF3)
-B $76E4,7,7 item_TORCH,            room_14_TORCH,    (34, 24,  2), (0x7A, 0xF6)
-B $76EB,7,7 item_BRIBE,            room_NONE,        (36, 44,  4), (0x7E, 0xF4) // <- accept_bribe
-B $76F2,7,7 item_UNIFORM,          room_15_UNIFORM,  (44, 65, 16), (0x87, 0xF1)
+B $76C8,7,7 item_WIRESNIPS,        room_NONE, (64, 32,  2), (0x78, 0xF4) // <- item_to_itemstruct, find_nearby_item
+B $76CF,7,7 item_SHOVEL,           room_9_CRATE, (62, 48,  0), (0x7C, 0xF2)
+B $76D6,7,7 item_LOCKPICK, room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0)
+B $76DD,7,7 item_PAPERS, room_11_PAPERS,   (42, 58,  4), (0x84, 0xF3)
+B $76E4,7,7 item_TORCH,            room_14_TORCH, (34, 24,  2), (0x7A, 0xF6)
+B $76EB,7,7 item_BRIBE,            room_NONE, (36, 44,  4), (0x7E, 0xF4) // <- accept_bribe
+B $76F2,7,7 item_UNIFORM, room_15_UNIFORM,  (44, 65, 16), (0x87, 0xF1)
 @ $76F9 label=item_structs_food
-B $76F9,7,7 item_FOOD,             room_19_FOOD,     (64, 48, 16), (0x7E, 0xF0) // <- action_poison, called_from_main_loop
-B $7700,7,7 item_POISON,           room_1_HUT1RIGHT, (66, 52,  4), (0x7C, 0xF1)
-B $7707,7,7 item_RED_KEY,          room_22_REDKEY,   (60, 42,  0), (0x7B, 0xF2)
-B $770E,7,7 item_YELLOW_KEY,       room_11_PAPERS,   (28, 34,  0), (0x81, 0xF8)
-B $7715,7,7 item_GREEN_KEY,        room_0_OUTDOORS,  (74, 72,  0), (0x7A, 0x6E)
-B $771C,7,7 item_RED_CROSS_PARCEL, room_NONE,        (28, 50, 12), (0x85, 0xF6) // <- event_new_red_cross_parcel, new_red_cross_parcel
-B $7723,7,7 item_RADIO,            room_18_RADIO,    (36, 58,  8), (0x85, 0xF4)
-B $772A,7,7 item_PURSE,            room_NONE,        (36, 44,  4), (0x7E, 0xF4)
-B $7731,7,7 item_COMPASS,          room_NONE,        (52, 28,  4), (0x7E, 0xF4)
+B $76F9,7,7 item_FOOD,             room_19_FOOD, (64, 48, 16), (0x7E, 0xF0) // <- action_poison, called_from_main_loop
+B $7700,7,7 item_POISON, room_1_HUT1RIGHT, (66, 52,  4), (0x7C, 0xF1)
+B $7707,7,7 item_RED_KEY, room_22_REDKEY,   (60, 42,  0), (0x7B, 0xF2)
+B $770E,7,7 item_YELLOW_KEY, room_11_PAPERS, (28, 34,  0), (0x81, 0xF8)
+B $7715,7,7 item_GREEN_KEY, room_0_OUTDOORS, (74, 72,  0), (0x7A, 0x6E)
+B $771C,7,7 item_RED_CROSS_PARCEL, room_NONE, (28, 50, 12), (0x85, 0xF6) // <- event_new_red_cross_parcel, new_red_cross_parcel
+B $7723,7,7 item_RADIO,            room_18_RADIO, (36, 58,  8), (0x85, 0xF4)
+B $772A,7,7 item_PURSE,            room_NONE, (36, 44,  4), (0x7E, 0xF4)
+B $7731,7,7 item_COMPASS,          room_NONE, (52, 28,  4), (0x7E, 0xF4)
 @ $7738 assemble=,1
 b $7738 Table of pointers to routes.
 @ $7738 label=routes
 W $7738,92,2 Array, 46 long, of pointers to $FF-terminated runs.
 B $7794,1,1 Fake terminator used by get_target
 @ $7795 label=route_7795
-B $7795,4,4 L-shaped route in the fenced area  #ROUTE($7795)
+B $7795,4,4 L-shaped route in the fenced area #ROUTE($7795)
 @ $7799 label=route_7799
 B $7799,7,7 guard's route around the front perimeter wall  #ROUTE($7799)
 @ $77A0 label=route_commandant
-B $77A0,45,8*5,5 the commandant's route - the longest of all the routes  #ROUTE($77A0)
+B $77A0,45,8*5,5 the commandant's route - the longest of all the routes #ROUTE($77A0)
 @ $77CD label=route_77CD
 B $77CD,3,3 guard's route marching over the front gate  #ROUTE($77CD)
 @ $77D0 label=route_exit_hut2
@@ -2309,11 +2309,11 @@ B $77D0,4,4 route_exit_hut2  #ROUTE($77D0)
 @ $77D4 label=route_exit_hut3
 B $77D4,4,4 route_exit_hut3  #ROUTE($77D4)
 @ $77D8 label=route_prisoner_sleeps_1
-B $77D8,2,2 route_prisoner_sleeps_1  #ROUTE($77D8)
+B $77D8,2,2 route_prisoner_sleeps_1 #ROUTE($77D8)
 @ $77DA label=route_prisoner_sleeps_2
-B $77DA,2,2 route_prisoner_sleeps_2  #ROUTE($77DA)
+B $77DA,2,2 route_prisoner_sleeps_2 #ROUTE($77DA)
 @ $77DC label=route_prisoner_sleeps_3
-B $77DC,2,2 route_prisoner_sleeps_3  #ROUTE($77DC)
+B $77DC,2,2 route_prisoner_sleeps_3 #ROUTE($77DC)
 @ $77DE label=route_77DE
 B $77DE,3,3 route_77DE  #ROUTE($77DE)
 @ $77E1 label=route_77E1
@@ -2323,39 +2323,39 @@ B $77E7,5,5 route_77E7  #ROUTE($77E7)
 @ $77EC label=route_77EC
 B $77EC,5,5 route_77EC  #ROUTE($77EC)
 @ $77F1 label=route_prisoner_sits_1
-B $77F1,2,2 route_prisoner_sits_1  #ROUTE($77F1)
+B $77F1,2,2 route_prisoner_sits_1 #ROUTE($77F1)
 @ $77F3 label=route_prisoner_sits_2
-B $77F3,2,2 route_prisoner_sits_2  #ROUTE($77F3)
+B $77F3,2,2 route_prisoner_sits_2 #ROUTE($77F3)
 @ $77F5 label=route_prisoner_sits_3
-B $77F5,2,2 route_prisoner_sits_3  #ROUTE($77F5)
+B $77F5,2,2 route_prisoner_sits_3 #ROUTE($77F5)
 @ $77F7 label=route_guardA_breakfast
-B $77F7,2,2 route_guardA_breakfast  #ROUTE($77F7)
+B $77F7,2,2 route_guardA_breakfast #ROUTE($77F7)
 @ $77F9 label=route_guardB_breakfast
-B $77F9,2,2 route_guardB_breakfast  #ROUTE($77F9)
+B $77F9,2,2 route_guardB_breakfast #ROUTE($77F9)
 @ $77FB label=route_guard_12_roll_call
-B $77FB,2,2 route_guard_12_roll_call  #ROUTE($77FB)
+B $77FB,2,2 route_guard_12_roll_call #ROUTE($77FB)
 @ $77FD label=route_guard_13_roll_call
-B $77FD,2,2 route_guard_13_roll_call  #ROUTE($77FD)
+B $77FD,2,2 route_guard_13_roll_call #ROUTE($77FD)
 @ $77FF label=route_guard_14_roll_call
-B $77FF,2,2 route_guard_14_roll_call  #ROUTE($77FF)
+B $77FF,2,2 route_guard_14_roll_call #ROUTE($77FF)
 @ $7801 label=route_guard_15_roll_call
-B $7801,2,2 route_guard_15_roll_call  #ROUTE($7801)
+B $7801,2,2 route_guard_15_roll_call #ROUTE($7801)
 @ $7803 label=route_prisoner_1_roll_call
-B $7803,2,2 route_prisoner_1_roll_call  #ROUTE($7803)
+B $7803,2,2 route_prisoner_1_roll_call #ROUTE($7803)
 @ $7805 label=route_prisoner_2_roll_call
-B $7805,2,2 route_prisoner_2_roll_call  #ROUTE($7805)
+B $7805,2,2 route_prisoner_2_roll_call #ROUTE($7805)
 @ $7807 label=route_prisoner_3_roll_call
-B $7807,2,2 route_prisoner_3_roll_call  #ROUTE($7807)
+B $7807,2,2 route_prisoner_3_roll_call #ROUTE($7807)
 @ $7809 label=route_prisoner_4_roll_call
-B $7809,2,2 route_prisoner_4_roll_call  #ROUTE($7809)
+B $7809,2,2 route_prisoner_4_roll_call #ROUTE($7809)
 @ $780B label=route_prisoner_5_roll_call
-B $780B,2,2 route_prisoner_5_roll_call  #ROUTE($780B)
+B $780B,2,2 route_prisoner_5_roll_call #ROUTE($780B)
 @ $780D label=route_prisoner_6_roll_call
-B $780D,2,2 route_prisoner_6_roll_call  #ROUTE($780D)
+B $780D,2,2 route_prisoner_6_roll_call #ROUTE($780D)
 @ $780F label=route_go_to_solitary
-B $780F,6,6 route_go_to_solitary  #ROUTE($780F)
+B $780F,6,6 route_go_to_solitary #ROUTE($780F)
 @ $7815 label=route_hero_leave_solitary
-B $7815,5,5 route_hero_leave_solitary  #ROUTE($7815)
+B $7815,5,5 route_hero_leave_solitary #ROUTE($7815)
 @ $781A label=route_guard_12_bed
 B $781A,5,5 route_guard_12_bed  #ROUTE($781A)
 @ $781F label=route_guard_13_bed
@@ -2365,13 +2365,13 @@ B $7825,6,6 route_guard_14_bed  #ROUTE($7825)
 @ $782B label=route_guard_15_bed
 B $782B,6,6 route_guard_15_bed  #ROUTE($782B)
 @ $7831 label=route_hut2_left_to_right
-B $7831,2,2 route_hut2_left_to_right  #ROUTE($7831)
+B $7831,2,2 route_hut2_left_to_right #ROUTE($7831)
 @ $7833 label=route_7833
 B $7833,2,2 route_7833  #ROUTE($7833)
 @ $7835 label=route_hut2_right_to_left
-B $7835,3,3 route_hut2_right_to_left  #ROUTE($7835)
+B $7835,3,3 route_hut2_right_to_left #ROUTE($7835)
 @ $7838 label=route_hero_roll_call
-B $7838,2,2 route_hero_roll_call  #ROUTE($7838)
+B $7838,2,2 route_hero_roll_call #ROUTE($7838)
 @ $783A assemble=,0
 w $783A Table of map locations used in routes.
 D $783A Array, 78 long, of two-byte locations (x,y)
@@ -2481,39 +2481,39 @@ D $78D6 62 pairs of four-byte structs laid out as follows:
 D $78D6 #TABLE(default) { =h Type | =h Bytes | =h Name            | =h Meaning } { Byte    |        1 | room_and_direction | Top six bits are a room index. Bottom two bits are a direction_t } { TinyPos |        3 | pos                | Map position of the door } TABLE#
 D $78D6 Each door is stored as a pair of two "half doors". Each half of the pair contains (room, direction, position) where the room is the *target* room index, the direction is the direction in which the door faces and the position is the coordinates of the door. Outdoor coordinates are divided by four.
 @ $78D6 label=doors
-B $78D6,4,4 BYTE(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // 0
-B $78DA,4,4 BYTE(room_0_OUTDOORS,             3), 0xB2, 0x8E,  6 },
-B $78DE,4,4 BYTE(room_0_OUTDOORS,             1), 0xB2, 0x7A,  6 },
-B $78E2,4,4 BYTE(room_0_OUTDOORS,             3), 0xB2, 0x7E,  6 },
-B $78E6,4,4 BYTE(room_34,                     0), 0x8A, 0xB3,  6 },
+B $78D6,4,4 BYTE(room_0_OUTDOORS,             1), 0xB2, 0x8A, 6 }, // 0
+B $78DA,4,4 BYTE(room_0_OUTDOORS,             3), 0xB2, 0x8E, 6 },
+B $78DE,4,4 BYTE(room_0_OUTDOORS,             1), 0xB2, 0x7A, 6 },
+B $78E2,4,4 BYTE(room_0_OUTDOORS,             3), 0xB2, 0x7E, 6 },
+B $78E6,4,4 BYTE(room_34,                     0), 0x8A, 0xB3, 6 },
 B $78EA,4,4 BYTE(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
-B $78EE,4,4 BYTE(room_48,                     0), 0xCC, 0x79,  6 },
+B $78EE,4,4 BYTE(room_48,                     0), 0xCC, 0x79, 6 },
 B $78F2,4,4 BYTE(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
-B $78F6,4,4 BYTE(room_28_HUT1LEFT,            1), 0xD9, 0xA3,  6 },
+B $78F6,4,4 BYTE(room_28_HUT1LEFT,            1), 0xD9, 0xA3, 6 },
 B $78FA,4,4 BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-B $78FE,4,4 BYTE(room_1_HUT1RIGHT,            0), 0xD4, 0xBD,  6 },
+B $78FE,4,4 BYTE(room_1_HUT1RIGHT,            0), 0xD4, 0xBD, 6 },
 B $7902,4,4 BYTE(room_0_OUTDOORS,             2), 0x1E, 0x2E, 24 },
 @ $7906 label=doors_home_to_outside
-B $7906,4,4 BYTE(room_2_HUT2LEFT,             1), 0xC1, 0xA3,  6 },
+B $7906,4,4 BYTE(room_2_HUT2LEFT,             1), 0xC1, 0xA3, 6 },
 B $790A,4,4 BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-B $790E,4,4 BYTE(room_3_HUT2RIGHT,            0), 0xBC, 0xBD,  6 },
+B $790E,4,4 BYTE(room_3_HUT2RIGHT,            0), 0xBC, 0xBD, 6 },
 B $7912,4,4 BYTE(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
-B $7916,4,4 BYTE(room_4_HUT3LEFT,             1), 0xA9, 0xA3,  6 },
+B $7916,4,4 BYTE(room_4_HUT3LEFT,             1), 0xA9, 0xA3, 6 },
 B $791A,4,4 BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-B $791E,4,4 BYTE(room_5_HUT3RIGHT,            0), 0xA4, 0xBD,  6 },
+B $791E,4,4 BYTE(room_5_HUT3RIGHT,            0), 0xA4, 0xBD, 6 },
 B $7922,4,4 BYTE(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
-B $7926,4,4 BYTE(room_21_CORRIDOR,            0), 0xFC, 0xCA,  6 }, // 10
+B $7926,4,4 BYTE(room_21_CORRIDOR,            0), 0xFC, 0xCA, 6 }, // 10
 B $792A,4,4 BYTE(room_0_OUTDOORS,             2), 0x1C, 0x24, 24 },
-B $792E,4,4 BYTE(room_20_REDCROSS,            0), 0xFC, 0xDA,  6 },
+B $792E,4,4 BYTE(room_20_REDCROSS,            0), 0xFC, 0xDA, 6 },
 B $7932,4,4 BYTE(room_0_OUTDOORS,             2), 0x1A, 0x22, 24 },
-B $7936,4,4 BYTE(room_15_UNIFORM,             1), 0xF7, 0xE3,  6 },
+B $7936,4,4 BYTE(room_15_UNIFORM,             1), 0xF7, 0xE3, 6 },
 B $793A,4,4 BYTE(room_0_OUTDOORS,             3), 0x26, 0x19, 24 },
-B $793E,4,4 BYTE(room_13_CORRIDOR,            1), 0xDF, 0xE3,  6 },
+B $793E,4,4 BYTE(room_13_CORRIDOR,            1), 0xDF, 0xE3, 6 },
 B $7942,4,4 BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-B $7946,4,4 BYTE(room_8_CORRIDOR,             1), 0x97, 0xD3,  6 },
+B $7946,4,4 BYTE(room_8_CORRIDOR,             1), 0x97, 0xD3, 6 },
 B $794A,4,4 BYTE(room_0_OUTDOORS,             3), 0x2A, 0x15, 24 },
 @ $794E label=doors_unused
-B $794E,4,4 BYTE(room_6,                      1), 0x00, 0x00,  0 },
+B $794E,4,4 BYTE(room_6,                      1), 0x00, 0x00, 0 },
 B $7952,4,4 BYTE(room_0_OUTDOORS,             3), 0x22, 0x22, 24 },
 B $7956,4,4 BYTE(room_1_HUT1RIGHT,            1), 0x2C, 0x34, 24 },
 B $795A,4,4 BYTE(room_28_HUT1LEFT,            3), 0x26, 0x1A, 24 },
@@ -8135,7 +8135,7 @@ C $BA74,1 Read a byte. It could be a repeat count or a tile index
 C $BA75,1 Is the MASK_RUN_FLAG set?
 C $BA76,3 Jump if clear: it's a tile index (JP P => positive)
 C $BA79,2 Otherwise mask it off, giving the repeat count
-C $BA7B,1 Bank the repeat count; unbank the <repeat length>  REPLACING IT?
+C $BA7B,1 Bank the repeat count; unbank the <repeat length> REPLACING IT?
 C $BA7C,1 Advance the mask data pointer
 C $BA7D,1 Read the next byte (a tile)
 N $BA7E Shortcut tile 0 which is blank.
@@ -10122,22 +10122,22 @@ D $CD6A An array of 16 three-byte structures.
 D $CD6A #TABLE(default) { =h Type | =h Bytes | =h Name        | =h Meaning } { Byte    |        1 | room_and_flags | Room index; bits 6,7 = flags (T.B.D.) } { Byte    |        1 | x              | X position  } { Byte    |        1 | y              | Y position  } TABLE#
 D $CD6A #define ITEM_ROOM(room_no, flags) ((room_no & 0x3F) | (flags << 6)) do the next flags mean that the wiresnips are always or /never/ found?
 @ $CD6A label=default_item_locations
-B $CD6A,3,3 item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),       ... }
-B $CD6D,3,3 item_SHOVEL           { ITEM_ROOM(room_9, 0),          ... }
-B $CD70,3,3 item_LOCKPICK         { ITEM_ROOM(room_10, 0),         ... }
-B $CD73,3,3 item_PAPERS           { ITEM_ROOM(room_11, 0),         ... }
-B $CD76,3,3 item_TORCH            { ITEM_ROOM(room_14, 0),         ... }
-B $CD79,3,3 item_BRIBE            { ITEM_ROOM(room_NONE, 0),       ... }
-B $CD7C,3,3 item_UNIFORM          { ITEM_ROOM(room_15, 0),         ... }
-B $CD7F,3,3 item_FOOD             { ITEM_ROOM(room_19, 0),         ... }
-B $CD82,3,3 item_POISON           { ITEM_ROOM(room_1, 0),          ... }
-B $CD85,3,3 item_RED_KEY          { ITEM_ROOM(room_22, 0),         ... }
-B $CD88,3,3 item_YELLOW_KEY       { ITEM_ROOM(room_11, 0),         ... }
+B $CD6A,3,3 item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3), ... }
+B $CD6D,3,3 item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }
+B $CD70,3,3 item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }
+B $CD73,3,3 item_PAPERS           { ITEM_ROOM(room_11, 0), ... }
+B $CD76,3,3 item_TORCH            { ITEM_ROOM(room_14, 0), ... }
+B $CD79,3,3 item_BRIBE            { ITEM_ROOM(room_NONE, 0), ... }
+B $CD7C,3,3 item_UNIFORM          { ITEM_ROOM(room_15, 0), ... }
+B $CD7F,3,3 item_FOOD             { ITEM_ROOM(room_19, 0), ... }
+B $CD82,3,3 item_POISON           { ITEM_ROOM(room_1, 0), ... }
+B $CD85,3,3 item_RED_KEY          { ITEM_ROOM(room_22, 0), ... }
+B $CD88,3,3 item_YELLOW_KEY       { ITEM_ROOM(room_11, 0), ... }
 B $CD8B,3,3 item_GREEN_KEY        { ITEM_ROOM(room_0_OUTDOORS, 0), ... }
-B $CD8E,3,3 item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0),       ... }
-B $CD91,3,3 item_RADIO            { ITEM_ROOM(room_18, 0),         ... }
-B $CD94,3,3 item_PURSE            { ITEM_ROOM(room_NONE, 0),       ... }
-B $CD97,3,3 item_COMPASS          { ITEM_ROOM(room_NONE, 0),       ... }
+B $CD8E,3,3 item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0), ... }
+B $CD91,3,3 item_RADIO            { ITEM_ROOM(room_18, 0), ... }
+B $CD94,3,3 item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }
+B $CD97,3,3 item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }
 w $CD9A Data for the four classes of characters. (<- spawn_character)
 @ $CD9A label=character_meta_data_commandant
 W $CD9A,2,2 &animations[0]
