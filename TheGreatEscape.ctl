@@ -6514,7 +6514,7 @@ R $AEB8 I:DE Pointer to screen attributes.
 @ $AEB8 label=searchlight_plot
 C $AEB8,1 Bank the screen attribute pointer supplied in #REGde
 @ $AEB9 nowarn
-C $AEB9,3 Point #REGde at the spotlight bitmap searchlight_shape[0]
+C $AEB9,3 Point #REGde at the searchlight bitmap searchlight_shape[0]
 C $AEBC,2 16 iterations - one per row of searchlight bitmap
 N $AEBE Start loop (outer)
 C $AEBE,1 Switch register banks for this iteration
