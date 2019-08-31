@@ -4195,7 +4195,7 @@ C $9D81,3 Incrementally wipe and display queued game messages
 C $9D84,3 Process player input
 C $9D87,3 Check the hero's map position and colour the flag accordingly
 C $9D8A,3 Paint any tiles occupied by visible characters with tiles from tile_buf
-C $9D8D,3 Move characters around
+C $9D8D,3 Move a character around
 C $9D90,3 Make characters follow the hero if he's being suspicious
 C $9D93,3 Run through all visible characters, resetting them if they're off-screen
 C $9D96,3 Spawn characters
@@ -4780,8 +4780,8 @@ B $A13D,1,1
 g $A13E 'Character index is valid' flag.
 D $A13E In character_bed_state etc.: when non-zero, character_index is valid, otherwise IY points to character_struct.
 D $A13E Read-only by charevnt_bed, charevnt_breakfast.
-D $A13E Write/read-write by set_route, spawn_character, move_characters, automatics, set_route.
-@ $A13E label=entered_move_characters
+D $A13E Write/read-write by set_route, spawn_character, move_character, automatics, set_route.
+@ $A13E label=entered_move_a_character
 B $A13E,1,1
 g $A13F 'Hero in bed' flag.
 D $A13F Read-only by event_night_time,
@@ -5190,7 +5190,7 @@ D $A3BB Used by the routine at #R$A33F.
 R $A3BB I:HL Points to route.step.
 R $A3BB O:BC Preserved.
 @ $A3BB label=set_route
-C $A3BB,4 Clear the entered_move_characters flag so that the vischar pointed to by #REGiy is used for character events
+C $A3BB,4 Clear the entered_move_a_character flag so that the vischar pointed to by #REGiy is used for character events
 C $A3BF,1 Preserve for callers
 C $A3C0,1 Preserve route.step pointer
 C $A3C1,1 Point #REGhl at route.index
@@ -5231,13 +5231,13 @@ C $A3EE,1 Store the route index
 C $A3EF,1 Bank the route index
 C $A3F0,2 Store the route step
 C $A3F2,1 Return
-c $A3F3 Character goes to bed: used when entered_move_characters is non-zero.
+c $A3F3 Character goes to bed: used when entered_move_a_character is non-zero.
 D $A3F3 Used by the routine at #R$C7C6.
 R $A3F3 I:HL Pointer to location.
 @ $A3F3 label=character_bed_state
 C $A3F3,3 Get the current character index
 C $A3F6,2 Jump to character_bed_common
-c $A3F8 Character goes to bed: used when entered_move_characters is zero.
+c $A3F8 Character goes to bed: used when entered_move_a_character is zero.
 D $A3F8 Used by the routine at #R$C7C6.
 R $A3F8 I:HL Pointer to location.
 @ $A3F8 label=character_bed_vischar
@@ -5362,13 +5362,13 @@ D $A4C5 Used by the routine at #R$A1F9.
 @ $A4C5 label=set_route_go_to_breakfast
 C $A4C5,6 Set the hero's route to (routeindex_16_BREAKFAST_25, 0)
 C $A4CB,8 And set the routes of all characters in prisoners_and_guards to the same route (exit via)
-c $A4D3 Character event: used when entered_move_characters is non-zero.
+c $A4D3 Character event: used when entered_move_a_character is non-zero.
 D $A4D3 Used by the routine at #R$C7C6.
 D $A4D3 Something character related [very similar to the routine at $A3F3].
 @ $A4D3 label=charevnt_breakfast_state
 C $A4D3,3 Get the current character index
 C $A4D6,2 Jump to charevnt_breakfast_common
-c $A4D8 Character event: used when entered_move_characters is zero.
+c $A4D8 Character event: used when entered_move_a_character is zero.
 D $A4D8 Used by the routine at #R$C7C6.
 @ $A4D8 label=charevnt_breakfast_vischar
 C $A4D8,3 Read the current vischar's character index
@@ -8835,7 +8835,7 @@ C $C594,2 Jump if not
 C $C596,4 Advance #REGde to vischar.counter_and_flags
 C $C59A,2 (else)
 @ $C59C label=spawn_moving
-C $C59C,4 Clear the entered_move_characters flag
+C $C59C,4 Clear the entered_move_a_character flag
 C $C5A0,1 Preserve the vischar.target pointer
 C $C5A1,3 Get our next target: a location, a door or 'route ends'. The result is returned in #REGa, target pointer returned in #REGhl
 C $C5A4,2 Did #R$C651 return get_target_ROUTE_ENDS? ($FF)
@@ -8998,7 +8998,7 @@ C $C69B,2 Return with #REGa set to zero
 C $C69D,3 Return with #REGa set to 255
 c $C6A0 Move one (off-screen) character around at a time.
 D $C6A0 Used by the routine at #R$9D7B.
-@ $C6A0 label=move_characters
+@ $C6A0 label=move_a_character
 C $C6A0,5 Set the 'character index is valid' flag
 N $C6A5 Move to the next character, wrapping around after character 26.
 C $C6A5,4 Load and increment the current character index
@@ -9302,10 +9302,10 @@ C $C86A,1 *HL   = C;
 C $C86B,1 Return
 N $C86C charevnt_bed
 @ $C86C label=charevnt_bed
-C $C86D,10 if (entered_move_characters == 0) goto character_bed_vischar; else goto character_bed_state;
+C $C86D,10 if (entered_move_a_character == 0) goto character_bed_vischar; else goto character_bed_state;
 N $C877 charevnt_breakfast
 @ $C877 label=charevnt_breakfast
-C $C878,10 if (entered_move_characters == 0) goto charevnt_breakfast_vischar; else goto charevnt_breakfast_state;
+C $C878,10 if (entered_move_a_character == 0) goto charevnt_breakfast_vischar; else goto charevnt_breakfast_state;
 N $C882 charevnt_exit_hut2
 @ $C882 label=charevnt_exit_hut2
 C $C883,3 *HL++ = 0x05;
