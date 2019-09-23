@@ -6641,7 +6641,7 @@ C $AFDE,1 Return
 c $AFDF Handle collisions, including items being pushed around.
 D $AFDF Used by the routines at #R$AF8F and #R$C4E0.
 R $AFDF O:F Z/NZ => no collision/collision.
-R $AFDF Iterate over characters being collided with (e.g. stove).
+N $AFDF Iterate over characters being collided with (e.g. stove).
 @ $AFDF label=collision
 C $AFDF,3 Point #REGhl at the first vischar's flags field
 C $AFE2,2 Set #REGb for eight iterations
@@ -6650,9 +6650,9 @@ C $AFE4,2 Is the vischar_FLAGS_NO_COLLIDE flag bit set?
 C $AFE6,3 Skip if so
 C $AFE9,1 Preserve the loop counter
 C $AFEA,1 Preserve the vischar pointer
-N $AFEB Check for contact between the current vischar and saved_pos.
+N $AFEB Test for contact between the current vischar and saved_pos.
 C $AFEB,4 Point #REGhl at vischar's X position
-N $AFEF Check X
+N $AFEF Check X is within (-4..+4)
 C $AFEF,3 Fetch X position
 C $AFF2,1 Save our vischar pointer while we compare bounds
 C $AFF3,3 Fetch saved_pos_x
@@ -6667,7 +6667,7 @@ C $B00F,2 Compare saved_pos_x to (X position - 4)
 C $B011,3 If (saved_pos_x < (X position - 4)) there was no collision, so jump to the next iteration
 C $B014,1 Restore our vischar pointer
 C $B015,1 Advance to Y position
-N $B016 Check Y
+N $B016 Check Y is within (-4..+4)
 C $B016,3 Fetch Y position
 C $B019,1 Save our vischar pointer while we compare bounds
 C $B01A,3 Fetch saved_pos_y
@@ -6682,27 +6682,30 @@ C $B036,2 Compare saved_pos_y to (Y position - 4)
 C $B038,3 If (saved_pos_y < (Y position - 4)) there was no collision, so jump to the next iteration
 C $B03B,1 Restore our vischar pointer
 C $B03C,1 Advance to height
-N $B03D Check height
+N $B03D Ensure that the heights are within 24 of each other. This will stop the character colliding with any guards high up in watchtowers.
 C $B03D,1 Fetch height
 C $B03E,3 Fetch saved_height
 C $B041,1 Subtract height from saved_height
 C $B042,4 If negative flip the sign - get the absolute value
 C $B046,5 If the result is >= 24 then jump to the next iteration
+N $B04B Check for pursuit.
 C $B04B,3 Read the vischar's flags
 C $B04E,2 AND the flags with vischar_FLAGS_PURSUIT_MASK
 C $B050,2 Is the result vischar_PURSUIT_PURSUE?
 C $B052,2 If not, jump forward to collision checking
+N $B054 Vischar (IY) is pursuing.
 C $B054,2 Restore vischar pointer
 C $B056,1 Point at vischar base, not flags
-C $B057,4 Is the current vischar the hero's? $8000
+C $B057,4 Is the current vischar the hero's? ($8000)
+N $B05B Currently tested vischar (HL) is the hero's.
 C $B05B,3 Fetch global bribed character
 C $B05E,3 Does it match IY's vischar character?
 C $B061,2 No, jump forward to solitary check
-N $B063 IY is a bribed character pursuing the hero.
+N $B063 Vischar IY is a bribed character pursuing the hero.
 N $B063 When the pursuer catches the hero the bribe will be accepted.
 C $B063,3 Call accept_bribe
 C $B066,2 (else)
-N $B068 IY is a hostile who's caught the hero!
+N $B068 Vischar IY is a hostile who's caught the hero!
 C $B068,1 Restore vischar pointer
 C $B069,1 Restore loop counter
 C $B06A,4 Unused sequence: HL = IY + 1
@@ -6713,24 +6716,26 @@ C $B072,1 Point at vischar base, not flags
 C $B073,1 Fetch the vischar's character
 C $B074,2 Is the character >= character_26_STOVE_1?
 C $B076,2 Jump if NOT
+N $B078 It's an item.
 C $B078,1 Preserve the vischar pointer
 C $B079,1 Bank the character index
 C $B07A,4 Point #REGhl at vischar->mi.pos.y
 C $B07E,1 Retrieve the character index
+N $B07F By default, setup for the stove. It can move on the Y axis only (bottom left to top right).
 C $B07F,3 Set #REGb to 7 - the permitted range, in either direction, from the centre point and set #REGc to 35 - the centre point
 C $B082,2 Compare character index with character_28_CRATE
 C $B084,3 (interleaved) Fetch IY's direction
 C $B087,2 If it's not the crate then jump to the stove handling
-N $B089 Handle the crate. It moves on the X axis (top left to bottom right) only.
+N $B089 Handle the crate. It can move on the X axis only (top left to bottom right).
 C $B089,2 Point #REGhl at vischar->mi.pos.x
 C $B08B,2 Centre point is 54 (crate will move 47..54..61)
-C $B08D,2 Swap direction left<=>right
+C $B08D,2 Swap axis left<=>right
 N $B08F Top left case.
 C $B08F,1 Test the direction: Is it top left? (zero)
 C $B090,2 Jump forward to next check if not
-N $B092 The player is pushing the movable item from the front, so centre it.
+N $B092 The player is pushing the movable item from its front, so centre it.
 C $B092,1 Load the coordinate
-C $B093,1 Is it at the centre point?
+C $B093,1 Is it already at the centre point?
 C $B094,2 Jump forward if so
 C $B096,5 If the coordinate is larger than the centre point then decrement, else increment its position
 C $B09B,2 (else)
@@ -6742,37 +6747,40 @@ C $B0A7,2 (else)
 N $B0A9 Bottom right case.
 C $B0A9,2 Test the direction: Is it bottom right? (two)
 C $B0AB,2 Jump forward to next check if not
-C $B0AD,3 Set the position to minimum (C-B) irrespective Note that this never seems to happen in practice in the game
+C $B0AD,3 Set the position to minimum (C-B) irrespective. Note that this never seems to happen in practice in the game
 C $B0B0,2 (else)
 N $B0B2 Bottom left case.
 C $B0B2,6 If the coordinate is not at its minimum (C-B) then decrement its position
 C $B0B8,1 Restore the vischar pointer
 C $B0B9,1 Restore the loop counter
-N $B0BA Reorient the character? Not well understood. (?)
+N $B0BA Check for collisions with characters.
 C $B0BA,4 Point at vischar input field
 C $B0BE,3 Load the input field and mask off the input_KICK flag
 C $B0C1,2 Jump forward if the input field is zero
 C $B0C3,1 Point at the direction field
 C $B0C4,3 Swap direction top <=> bottom
 C $B0C7,5 If direction != state->IY->direction
+@ $B0CC label=collided_not_facing
 C $B0CC,4 Set IY's input to input_KICK
 N $B0D0 Delay calling character_behaviour for five turns. This delay controls how long it takes before a blocked character will try another direction.
-@ $B0D0 label=collided
+@ $B0D0 label=collided_set_delay
 C $B0D0,10 IY->counter_and_flags = (IY->counter_and_flags & ~vischar_BYTE7_COUNTER_MASK) | 5
-C $B0DA,1 Return  DPT: This return works but it's odd that it's conditional
-N $B0DB ... new input stuff Note: C direction field doesn't get masked, so will access out-of-bounds in new_inputs[] if we collide when crawling.
+N $B0DA Note: The following return does work but it's odd that it's conditional.
+C $B0DA,1 Return
+N $B0DB Note: #REGc direction field doesn't get masked, so will access out-of-bounds in new_inputs[] if we collide when crawling.
+@ $B0DB label=collided_facing
 C $B0DB,5 Fetch IY->direction, widening it to BC
 @ $B0E0 nowarn
 C $B0E0,3 Point #REGhl at collision_new_inputs
 C $B0E3,1 Index it by direction (in BC)
 C $B0E4,1 Fetch the direction
-C $B0E5,3 IY->input = A
-C $B0E8,2 If the new direction is TR or BL
+C $B0E5,3 IY->input = direction
+C $B0E8,2 Is the new direction TR or BL?
 C $B0EA,2 Jump if so
 C $B0EC,4 IY->counter_and_flags &= ~vischar_BYTE7_Y_DOMINANT
-C $B0F0,2 Jump to 'collided'
+C $B0F0,2 Jump to 'collided_set_delay'
 C $B0F2,4 IY->counter_and_flags |= vischar_BYTE7_Y_DOMINAN
-C $B0F6,2 Jump to 'collided'
+C $B0F6,2 Jump to 'collided_set_delay'
 N $B0F8 New inputs.
 @ $B0F8 label=collision_new_inputs
 B $B0F8,1,1 = input_DOWN + input_LEFT  + input_KICK
