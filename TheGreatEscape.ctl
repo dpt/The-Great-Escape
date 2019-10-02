@@ -6767,7 +6767,7 @@ N $B0D0 Delay calling character_behaviour for five turns. This delay controls ho
 C $B0D0,10 IY->counter_and_flags = (IY->counter_and_flags & ~vischar_BYTE7_COUNTER_MASK) | 5
 N $B0DA Note: The following return does work but it's odd that it's conditional.
 C $B0DA,1 Return
-N $B0DB Note: #REGc direction field doesn't get masked, so will access out-of-bounds in new_inputs[] if we collide when crawling.
+N $B0DB Note: The #REGc direction field ought to be masked so that we don't access out-of-bounds in new_inputs[] if we collide when crawling.
 @ $B0DB label=collided_facing
 C $B0DB,5 Fetch IY->direction, widening it to BC
 @ $B0E0 nowarn
@@ -6781,12 +6781,12 @@ C $B0EC,4 IY->counter_and_flags &= ~vischar_BYTE7_Y_DOMINANT
 C $B0F0,2 Jump to 'collided_set_delay'
 C $B0F2,4 IY->counter_and_flags |= vischar_BYTE7_Y_DOMINAN
 C $B0F6,2 Jump to 'collided_set_delay'
-N $B0F8 New inputs.
+N $B0F8 Inputs which move the character in the next anticlockwise direction.
 @ $B0F8 label=collision_new_inputs
-B $B0F8,1,1 = input_DOWN + input_LEFT  + input_KICK
-B $B0F9,1,1 = input_UP   + input_LEFT  + input_KICK
-B $B0FA,1,1 = input_UP   + input_RIGHT + input_KICK
-B $B0FB,1,1 = input_DOWN + input_RIGHT + input_KICK
+B $B0F8,1,1 = input_(DOWN+LEFT +KICK) => if facing TL, move D+L
+B $B0F9,1,1 = input_(UP  +LEFT +KICK) => if facing TR, move U+L
+B $B0FA,1,1 = input_(UP  +RIGHT+KICK) => if facing BR, move U+R
+B $B0FB,1,1 = input_(DOWN+RIGHT+KICK) => if facing BL, move D+R
 @ $B0FC label=collision_pop_next
 C $B0FC,1 Restore the vischar pointer
 C $B0FD,1 Restore the loop counter
