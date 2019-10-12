@@ -387,7 +387,7 @@
 > $4000 ; vischar_PURSUIT_SAW_BRIBE                     = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
 > $4000 ;
 > $4000 ; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,       ; affects scaling
-> $4000 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
+> $4000 ; vischar.FLAGS.NO.COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
 > $4000 ;
 > $4000 ; ; $8002, $8022, $8042, ...
 > $4000 ; route_REVERSED                                = 1 << 7,       ; set if the route is to be followed in reverse order
@@ -8378,7 +8378,7 @@ C $BBD4,3 Shift it right by three bits
 C $BBD7,2 Mask away the rotated-out bits
 C $BBD9,2 Add two
 C $BBDB,1 Save the computed height
-N $BBDC DPT: It seems that the following chunk from $BBDC to $BC01 (the clamp-to-5) duplicates the work done by vischar_visible. I can't see any benefit to it.
+N $BBDC DPT: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
 N $BBDC Compute bottom = height + iso_pos_y - map_position_y. This is the distance of the (clipped) bottom edge of the vischar from the top of the window.
 C $BBDC,3 Point #REGhl at iso_pos_y
 C $BBDF,1 Add iso_pos_y to height
@@ -8388,7 +8388,7 @@ C $BBE4,2 Jump if bottom is < 0 (the bottom edge is beyond the top edge of scree
 N $BBE6 Bottom edge is on-screen, or off the bottom of the screen.
 C $BBE6,2 Now reduce bottom by the height of the game window
 C $BBE8,4 Jump over if <= 17 (bottom edge off top of screen)
-N $BBEC Bottom edge is now definitely visible
+N $BBEC Bottom edge is now definitely visible.
 C $BBEC,1 Save new bottom
 C $BBED,1 Get computed height back
 C $BBEE,1 Calculate visible height = computed height - bottom
@@ -8407,7 +8407,7 @@ N $BC02 Self modify the loops' control instructions.
 C $BC02,3 Self modify the outer loop counter (= height)
 C $BC05,1 Copy (clipped) width to #REGa
 C $BC06,3 Self modify the inner loop counter (= width)
-C $BC09,3 Self modify the "reset X" instruction (= width)
+C $BC09,3 Self modify the "reset x" instruction (= width)
 C $BC0C,3 Compute tilebuf_skip = 24 - width (24 is window columns)
 C $BC0F,3 Self modify the "tilebuf row-to-row skip" instruction
 C $BC12,2 Compute windowbuf_skip = (8 * 24) - width
@@ -8417,7 +8417,7 @@ N $BC17 X part
 C $BC17,3 Point #REGhl at map_position.x
 C $BC1A,1 Copy the lefthand skip into #REGa
 C $BC1B,1 Is it zero?
-C $BC1C,2 Set X to zero (interleaved)
+C $BC1C,2 Set x to zero (interleaved)
 C $BC1E,2 Jump if not
 C $BC20,5 Compute x = iso_pos_x - map_position.x
 N $BC25 Y part
@@ -8479,17 +8479,17 @@ C $BC76,7 Advance the screen buffer pointer by the stride
 C $BC7D,2 ...loop for each byte of the tile
 N $BC7F Move to next column.
 C $BC7F,1 Restore x,y
-C $BC80,1 Increment X
+C $BC80,1 Increment x
 C $BC81,1 Unbank
 C $BC82,1 Advance the tilebuf pointer
 C $BC83,1 Advance the windowbuf pointer
 C $BC84,2 ...loop (width counter)
 N $BC86 Reset x offset. Advance to next row.
 C $BC86,1 Bank
-C $BC87,1 Get X
-C $BC88,2 Reset X to initial value <self modified by $BC89>
-C $BC8A,1 Save X
-C $BC8B,1 Increment Y
+C $BC87,1 Get x
+C $BC88,2 Reset x to initial value <self modified by $BC89>
+C $BC8A,1 Save x
+C $BC8B,1 Increment y
 C $BC8C,1 Unbank
 C $BC8D,2 Get tilebuf row-to-row skip <self modified by $BC8E>
 @ $BC93 label=rt_tilebuf_nocarry
