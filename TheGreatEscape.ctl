@@ -199,9 +199,9 @@
 > $4000 ; room_20_REDCROSS                              = 20,
 > $4000 ; room_21_CORRIDOR                              = 21,
 > $4000 ; room_22_REDKEY                                = 22,
-> $4000 ; room_23_BREAKFAST                             = 23,
+> $4000 ; room_23_MESS_HALL                             = 23,
 > $4000 ; room_24_SOLITARY                              = 24,
-> $4000 ; room_25_BREAKFAST                             = 25,
+> $4000 ; room_25_MESS_HALL                             = 25,
 > $4000 ; room_26                                       = 26,   ; unused room index
 > $4000 ; room_27                                       = 27,   ; unused room index
 > $4000 ; room_28_HUT1LEFT                              = 28,
@@ -2522,12 +2522,12 @@ B $795E,4,4 BYTE(room_3_HUT2RIGHT,            1), 0x24, 0x36, 24 },
 B $7962,4,4 BYTE(room_2_HUT2LEFT,             3), 0x26, 0x1A, 24 },
 B $7966,4,4 BYTE(room_5_HUT3RIGHT,            1), 0x24, 0x36, 24 },
 B $796A,4,4 BYTE(room_4_HUT3LEFT,             3), 0x26, 0x1A, 24 },
-B $796E,4,4 BYTE(room_23_BREAKFAST,           1), 0x28, 0x42, 24 },
-B $7972,4,4 BYTE(room_25_BREAKFAST,           3), 0x26, 0x18, 24 },
-B $7976,4,4 BYTE(room_23_BREAKFAST,           0), 0x3E, 0x24, 24 }, // 20
+B $796E,4,4 BYTE(room_23_MESS_HALL,           1), 0x28, 0x42, 24 },
+B $7972,4,4 BYTE(room_25_MESS_HALL,           3), 0x26, 0x18, 24 },
+B $7976,4,4 BYTE(room_23_MESS_HALL,           0), 0x3E, 0x24, 24 }, // 20
 B $797A,4,4 BYTE(room_21_CORRIDOR,            2), 0x20, 0x2E, 24 },
 B $797E,4,4 BYTE(room_19_FOOD,                1), 0x22, 0x42, 24 },
-B $7982,4,4 BYTE(room_23_BREAKFAST,           3), 0x22, 0x1C, 24 },
+B $7982,4,4 BYTE(room_23_MESS_HALL,           3), 0x22, 0x1C, 24 },
 B $7986,4,4 BYTE(room_18_RADIO,               1), 0x24, 0x36, 24 },
 B $798A,4,4 BYTE(room_19_FOOD,                3), 0x38, 0x22, 24 },
 B $798E,4,4 BYTE(room_21_CORRIDOR,            1), 0x2C, 0x36, 24 },
@@ -5057,16 +5057,16 @@ C $A2F6,6 Set the hero's route to (REVERSED routeindex_16_BREAKFAST_25, 3)
 N $A2FC Position all six prisoners.
 C $A2FC,3 Point #REGhl at characterstruct 20's room field (character 20 is the first of the prisoners)
 C $A2FF,3 Prepare the characterstruct stride
-C $A302,2 Prepare room_25_BREAKFAST
+C $A302,2 Prepare room_25_MESS_HALL
 C $A304,2 Do the first three prisoner characters
 N $A306 Start loop
-C $A306,1 Set this characterstruct's room to room_25_BREAKFAST
+C $A306,1 Set this characterstruct's room to room_25_MESS_HALL
 C $A307,1 Advance to the next characterstruct
 C $A308,2 ...loop
-C $A30A,2 Prepare room_23_BREAKFAST
+C $A30A,2 Prepare room_23_MESS_HALL
 C $A30C,2 Do the second three prisoner characters
 N $A30E Start loop
-C $A30E,1 Set this characterstruct's room to room_23_BREAKFAST
+C $A30E,1 Set this characterstruct's room to room_23_MESS_HALL
 C $A30F,1 Advance to the next characterstruct
 C $A310,2 ...loop
 C $A312,3 Set initial route index in #REGa'. This gets incremented by set_prisoners_and_guards_route_B for every route it assigns
@@ -5279,10 +5279,10 @@ C $A433,3 Move it into #REGbc
 C $A436,1 Point to the required object
 C $A437,2 Set the object at #REGhl to interiorobject_PRISONER_SAT_MID_TABLE ($05)
 C $A439,1 Restore the route index
-C $A43A,2 Room is room_25_BREAKFAST
+C $A43A,2 Room is room_25_MESS_HALL
 C $A43C,2 Is the route index less than routeindex_21_PRISONER_SITS_1?
 C $A43E,2 Jump if so
-C $A440,2 Otherwise room is room_23_BREAKFAST
+C $A440,2 Otherwise room is room_23_MESS_HALL
 C $A442,2 Jump to character_sit_sleep_common
 c $A444 Character sleeps.
 D $A444 Used by the routine at #R$C7C6.
