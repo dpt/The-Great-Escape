@@ -8760,9 +8760,9 @@ C $C4F1,1 Advance to the next vischar
 C $C4F2,2 ...loop
 @ $C4F4 label=spawn_no_spare_slot
 C $C4F4,1 Restore the character pointer
-C $C4F5,1 Return
+C $C4F5,1 Return (Z set)
 N $C4F6 Found an empty slot.
-@ $C4F6 label=spawn_found_slot
+@ $C4F6 label=spawn_found_empty_slot
 C $C4F6,1 Restore the character pointer to #REGde
 C $C4F7,3 Point #REGiy at the empty vischar slot
 C $C4FA,1 Preserve the empty vischar slot pointer
