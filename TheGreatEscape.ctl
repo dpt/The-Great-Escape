@@ -9013,10 +9013,10 @@ C $C6A5,4 Load and increment the current character index
 C $C6A9,5 If the character index became character_26_STOVE_1 then wrap around to character_0_COMMANDANT
 @ $C6AE label=mc_didnt_wrap
 C $C6AE,3 Store the character index
-N $C6B1 Get its chararacter struct, or exit if the character isn't on-screen.
+N $C6B1 Get its chararacter struct and exit if the character is on-screen.
 C $C6B1,3 Get a pointer to the character struct for character index #REGa, in #REGhl
 C $C6B4,2 Is the character on-screen? characterstruct_FLAG_ON_SCREEN
-C $C6B6,1 It's not - return
+C $C6B6,1 It is - return
 C $C6B7,1 Preserve the character struct pointer
 N $C6B8 Are any items to be found in the same room as the character?
 C $C6B8,2 Advance #REGhl to charstr.room and fetch it
