@@ -12247,11 +12247,11 @@ C $F2A8,3 Call choose keys if so
 C $F2AB,2 Discard the previous return address and resume at #R$F17D
 t $F2AD Key choice prompt strings.
 @ $F2AD label=define_key_prompts
-B $F2AD,14,12:T1:1 "CHOOSE KEYS" #HTML[/ #CALL:decode_screenlocstring($F2AD)]
-B $F2BB,8,7:T1 "LEFT." #HTML[/ #CALL:decode_screenlocstring($F2BB)]
-B $F2C3,9,8:T1 "RIGHT." #HTML[/ #CALL:decode_screenlocstring($F2C3)]
-B $F2CC,6,5:T1 "UP." #HTML[/ #CALL:decode_screenlocstring($F2CC)]
-B $F2D2,8,7:T1 "DOWN." #HTML[/ #CALL:decode_screenlocstring($F2D2)]
+B $F2AD,14,12:c1:1 "CHOOSE KEYS" #HTML[/ #CALL:decode_screenlocstring($F2AD)]
+B $F2BB,8,7:c1 "LEFT." #HTML[/ #CALL:decode_screenlocstring($F2BB)]
+B $F2C3,9,8:c1 "RIGHT." #HTML[/ #CALL:decode_screenlocstring($F2C3)]
+B $F2CC,6,5:c1 "UP." #HTML[/ #CALL:decode_screenlocstring($F2CC)]
+B $F2D2,8,7:c1 "DOWN." #HTML[/ #CALL:decode_screenlocstring($F2D2)]
 B $F2DA,7,7 "FIRE." #HTML[/ #CALL:decode_screenlocstring($F2DA)]
 b $F2E1 byte_F2E1
 D $F2E1 Unsure if anything reads this byte for real, but its address is taken prior to accessing keyboard_port_hi_bytes.
