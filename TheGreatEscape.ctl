@@ -9121,6 +9121,7 @@ C $C749,5 Otherwise calculate the address of the next door half
 C $C74E,2 (else)
 @ $C750 label=mc_door_prev
 C $C750,3 Calculate the address of the previous door half
+N $C753 Copy the door's tinypos position into the charstr.
 @ $C753 label=mc_door_copy_pos
 C $C753,1 Fetch charstr.room
 C $C754,1 Advance to charstr.pos
