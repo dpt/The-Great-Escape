@@ -34,14 +34,11 @@ class TheGreatEscapeWriter:
         s = "[ "
         while self.snapshot[address] != 0xFF:
             byte = self.snapshot[address]
-            reversed = (byte >= 128)
             other = (byte & 0x7F)
             if other < 40:
+                reversed = (byte >= 128)
                 # it's a door
-                if reversed:
-                    r = " reversed"
-                else:
-                    r = ""
+                r = " reversed" if reversed else ""
                 s += "door(%d%s), " % (other, r)
             else:
                 # it's a location index
@@ -220,7 +217,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
 
         for y in range(height):
             udg_array.append([])  # start new row
-            for x in range(width):
+            for _ in range(width):
                 udg_array[-1].append(self._interior_tile(cwd, tiles.pop()))
 
         fname = '{ScreenshotImagePath}/object-%d' % index
@@ -243,13 +240,13 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
             if b == 0xFF:
                 c = self.snapshot[p]
                 p += 1
-                if c == 0xFF:
+                if c == 0xFF or c < 128 and c < 64 and c:
                     s.append(c)
                     iters -= 1
                 elif c >= 128:  # repeat the next byte (c - 128) times
                     d = self.snapshot[p]
                     p += 1
-                    for i in range(1, 1 + c - 128):
+                    for _ in range(1, 1 + c - 128):
                         s.append(d)
                         iters -= 1
                 elif c >= 64:  # generate a range starting at <next byte> (c - 64) times
@@ -258,9 +255,6 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
                     for i in range(d, d + c - 64):
                         s.append(i)
                         iters -= 1
-                elif c:
-                    s.append(c)
-                    iters -= 1
             else:
                 s.append(b)
                 iters -= 1
@@ -345,7 +339,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
 
         for y in range(height):
             udg_array.append([])  # start new row
-            for x in range(width):
+            for _ in range(width):
                 udg_array[-1].append(self._mask_tile(cwd, tiles.pop()))
 
         return udg_array
@@ -377,7 +371,7 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
             if b >= 128:
                 c = self.snapshot[p]
                 p += 1
-                for i in range(1, 1 + b - 128):
+                for _ in range(1, 1 + b - 128):
                     s.append(c)
                     iters -= 1
             else:
@@ -603,18 +597,15 @@ class TheGreatEscapeHtmlWriter(HtmlWriter, TheGreatEscapeWriter):
 
     # Internal
     def _room_dimensions_info(self, cwd, all_rooms, room, object_rooms):
-        s = "Dimensions: " + str(room['dimensions'])
-        return s
+        return "Dimensions: " + str(room['dimensions'])
 
     # Internal
     def _room_boundary_info(self, cwd, all_rooms, room, object_rooms):
-        s = "Number of boundaries: %d" % len(room['boundaries'])
-        return s
+        return "Number of boundaries: %d" % len(room['boundaries'])
 
     # Internal
     def _room_mask_info(self, cwd, all_rooms, room, object_rooms):
-        s = "Number of masks: %d" % len(room['masks'])
-        return s
+        return "Number of masks: %d" % len(room['masks'])
 
     # Internal
     def _room_object_info(self, cwd, all_rooms, room, object_rooms):
