@@ -119,4 +119,9 @@ The reverse engineering of the game is now complete, but work will continue to i
 Presentation
 ------------
 
-Here's the [slides from a presentation](http://slides.com/dpt/the-great-escape) I delivered to my colleagues about the project in January 2016.
+Here's the [slides from a presentation](http://slides.com/dpt/the-great-escape) I delivered to my colleagues about the project in January 2016. There's a [more recently updated version too](https://slides.com/dpt/the-great-escape-42cbed).
+
+Write-up
+--------
+
+In 2019 I did a big write-up about the project: http://www.davespace.co.uk/the.great.escape/
